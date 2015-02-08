@@ -16,8 +16,10 @@ all: $(ANDROID_PACKAGE_FILE)
 $(ANDROID_PACKAGE_FILE): AndroidManifest.xml $(ANDROID_LOCAL_FILES)
 	ant debug
 
-$(ANDROID_LOCAL_FILES):
+$(ANDROID_LOCAL_FILES): FORCE
 	android update project --path .
+
+FORCE:
 
 clean::
 	-rm -f $(ANDROID_LOCAL_FILES)
