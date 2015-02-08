@@ -52,13 +52,40 @@ public class InputService extends InputMethodService {
     Log.d(LOG_TAG, "input service disconnected");
   }
 
+  public static void logKeyEvent (int code, boolean press, String description) {
+    if (ApplicationParameters.LOG_KEYBOARD_EVENTS) {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append("key ");
+      sb.append((press? "press": "release"));
+      sb.append(' ');
+      sb.append(description);
+
+      sb.append(": ");
+      sb.append(code);
+      sb.append(" (");
+      sb.append(KeyEvent.keyCodeToString(code));
+      sb.append(")");
+
+      Log.d(LOG_TAG, sb.toString());
+    }
+  }
+
+  public static void logKeyEventReceived (int code, boolean press) {
+    logKeyEvent(code, press, "received");
+  }
+
   @Override
   public boolean onKeyDown (int code, KeyEvent event) {
+    logKeyEventReceived(code, true);
+
     return super.onKeyDown(code, event);
   }
 
   @Override
   public boolean onKeyUp (int code, KeyEvent event) {
+    logKeyEventReceived(code, false);
+
     return super.onKeyUp(code, event);
   }
 }
