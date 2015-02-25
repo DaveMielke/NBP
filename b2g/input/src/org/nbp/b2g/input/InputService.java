@@ -35,14 +35,24 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
+    addKeyAction(KeyMask.Dots7, KeyEvent.KEYCODE_DEL);
+    addKeyAction(KeyMask.Dots8, KeyEvent.KEYCODE_ENTER);
+
     addKeyAction((KeyMask.Space | KeyMask.Dots123456), KeyEvent.KEYCODE_HOME);
-    addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
-    addKeyAction((KeyMask.Space | KeyMask.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
+    addKeyAction((KeyMask.Space | KeyMask.Dots45), KeyEvent.KEYCODE_TAB);
 
     addKeyAction((KeyMask.Space | KeyMask.Dots1), KeyEvent.KEYCODE_DPAD_UP);
     addKeyAction((KeyMask.Space | KeyMask.Dots4), KeyEvent.KEYCODE_DPAD_DOWN);
     addKeyAction((KeyMask.Space | KeyMask.Dots3), KeyEvent.KEYCODE_DPAD_LEFT);
     addKeyAction((KeyMask.Space | KeyMask.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
+
+    addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
+    addKeyAction((KeyMask.Space | KeyMask.Dots145), KeyEvent.KEYCODE_DEL);
+    addKeyAction((KeyMask.Space | KeyMask.Dots124), KeyEvent.KEYCODE_SEARCH);
+    addKeyAction((KeyMask.Space | KeyMask.Dots134), KeyEvent.KEYCODE_MENU);
+    addKeyAction((KeyMask.Space | KeyMask.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
+
+    addKeyAction((KeyMask.Space | KeyMask.Dots1456), KeyEvent.KEYCODE_ASSIST);
   }
 
   @Override
