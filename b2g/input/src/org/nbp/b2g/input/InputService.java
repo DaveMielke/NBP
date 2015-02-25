@@ -12,6 +12,8 @@ public class InputService extends InputMethodService {
 
   private static volatile InputService inputService = null;
 
+  private int pressedKeys = 0;
+
   public static InputService getInputService () {
     return inputService;
   }
@@ -79,12 +81,22 @@ public class InputService extends InputMethodService {
   public boolean onKeyDown (int code, KeyEvent event) {
     logKeyEventReceived(code, true);
 
+    int bit = KeyCode.toKeyBit(event.getKeyCode());
+    if (bit != 0) {
+      pressedKeys |= bit;
+    }
+
     return super.onKeyDown(code, event);
   }
 
   @Override
   public boolean onKeyUp (int code, KeyEvent event) {
     logKeyEventReceived(code, false);
+
+    int bit = KeyCode.toKeyBit(event.getKeyCode());
+    if (bit != 0) {
+      pressedKeys &= ~bit;
+    }
 
     return super.onKeyUp(code, event);
   }
