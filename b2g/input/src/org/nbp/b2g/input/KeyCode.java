@@ -1,49 +1,47 @@
 package org.nbp.b2g.input;
 
+import android.util.Log;
+
+import android.view.KeyEvent;
+
 public class KeyCode {
-  public final static int Up      = 0X103;
-  public final static int Left    = 0X105;
-  public final static int Right   = 0X106;
-  public final static int Down    = 0X108;
-  public final static int Center  = 0X352;
+  private static final String LOG_TAG = InputService.class.getName();
 
-  public final static int Forward = 0X197;
-  public final static int Back    = 0X19C;
+  private static int getKeyCode (String name) {
+    int code = KeyEvent.keyCodeFromString(name);
+    Log.d(LOG_TAG, "key code for " + name + ": " + code);
+    return code;
+  }
 
-  public final static int Dot1    = 0X1F1;
-  public final static int Dot2    = 0X1F2;
-  public final static int Dot3    = 0X1F3;
-  public final static int Dot4    = 0X1F4;
-  public final static int Dot5    = 0X1F5;
-  public final static int Dot6    = 0X1F6;
-  public final static int Dot7    = 0X1F7;
-  public final static int Dot8    = 0X1F8;
-  public final static int Dot9    = 0X1F9;
+  public final static int Dot1    = 769; //  getKeyCode("KEYCODE_BRL_DOT1");
+  public final static int Dot2    = 770; //  getKeyCode("KEYCODE_BRL_DOT2");
+  public final static int Dot3    = 771; //  getKeyCode("KEYCODE_BRL_DOT3");
+  public final static int Dot4    = 772; //  getKeyCode("KEYCODE_BRL_DOT4");
+  public final static int Dot5    = 773; //  getKeyCode("KEYCODE_BRL_DOT5");
+  public final static int Dot6    = 774; //  getKeyCode("KEYCODE_BRL_DOT6");
+  public final static int Dot7    = 775; //  getKeyCode("KEYCODE_BRL_DOT7");
+  public final static int Dot8    = 776; //  getKeyCode("KEYCODE_BRL_DOT8");
+  public final static int Dot9    = 777; //  getKeyCode("KEYCODE_BRL_DOT9");
 
-  public final static int Cursor1 = 0X2D0;
-  public final static int Cursor2 = 0X2E4;
+  public final static int Cursor1 = 778; //  getKeyCode("KEYCODE_BRL_CURSOR0");
+  public final static int Cursor2 = 798; //  getKeyCode("KEYCODE_BRL_CURSOR20");
+
+  public final static int Back    = 818; //  getKeyCode("KEYCODE_BRL_BACK");
+  public final static int Forward = 819; //  getKeyCode("KEYCODE_BRL_FORWARD");
 
   public static int toKeyBit (int code) {
-    switch (code) {
-      case KeyCode.Dot4:    return KeyBit.Dot1;
-      case KeyCode.Dot3:    return KeyBit.Dot2;
-      case KeyCode.Dot2:    return KeyBit.Dot3;
-      case KeyCode.Dot5:    return KeyBit.Dot4;
-      case KeyCode.Dot6:    return KeyBit.Dot5;
-      case KeyCode.Dot7:    return KeyBit.Dot6;
-      case KeyCode.Dot1:    return KeyBit.Dot7;
-      case KeyCode.Dot8:    return KeyBit.Dot8;
-      case KeyCode.Dot9:    return KeyBit.Space;
+    if (code == KeyCode.Dot4)    return KeyBit.Dot1;
+    if (code == KeyCode.Dot3)    return KeyBit.Dot2;
+    if (code == KeyCode.Dot2)    return KeyBit.Dot3;
+    if (code == KeyCode.Dot5)    return KeyBit.Dot4;
+    if (code == KeyCode.Dot6)    return KeyBit.Dot5;
+    if (code == KeyCode.Dot7)    return KeyBit.Dot6;
+    if (code == KeyCode.Dot1)    return KeyBit.Dot7;
+    if (code == KeyCode.Dot8)    return KeyBit.Dot8;
+    if (code == KeyCode.Dot9)    return KeyBit.Space;
 
-      case KeyCode.Forward: return KeyBit.Forward;
-      case KeyCode.Back:    return KeyBit.Back;
-
-      case KeyCode.Left:    return KeyBit.Left;
-      case KeyCode.Right:   return KeyBit.Right;
-      case KeyCode.Up:      return KeyBit.Up;
-      case KeyCode.Down:    return KeyBit.Down;
-      case KeyCode.Center:  return KeyBit.Center;
-    }
+    if (code == KeyCode.Forward) return KeyBit.Forward;
+    if (code == KeyCode.Back)    return KeyBit.Back;
 
     return 0;
   }
