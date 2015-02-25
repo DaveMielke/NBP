@@ -35,7 +35,14 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
-    addKeyAction((KeyBit.Dots1), KeyEvent.KEYCODE_DPAD_UP);
+    addKeyAction((KeyBit.Space | KeyBit.Dots123456), KeyEvent.KEYCODE_HOME);
+    addKeyAction((KeyBit.Space | KeyBit.Dots12), KeyEvent.KEYCODE_BACK);
+    addKeyAction((KeyBit.Space | KeyBit.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
+
+    addKeyAction((KeyBit.Space | KeyBit.Dots1), KeyEvent.KEYCODE_DPAD_UP);
+    addKeyAction((KeyBit.Space | KeyBit.Dots4), KeyEvent.KEYCODE_DPAD_DOWN);
+    addKeyAction((KeyBit.Space | KeyBit.Dots3), KeyEvent.KEYCODE_DPAD_LEFT);
+    addKeyAction((KeyBit.Space | KeyBit.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
   }
 
   @Override
@@ -130,6 +137,7 @@ public class InputService extends InputMethodService {
       case KeyEvent.KEYCODE_DPAD_RIGHT:
       case KeyEvent.KEYCODE_DPAD_UP:
       case KeyEvent.KEYCODE_DPAD_DOWN:
+      case KeyEvent.KEYCODE_DPAD_CENTER:
         return true;
 
       default:
