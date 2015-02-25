@@ -1,6 +1,6 @@
 package org.nbp.b2g.input;
 
-public class KeyBit {
+public class KeyMask {
   public final static int Dot1    = 0X0001;
   public final static int Dot2    = 0X0002;
   public final static int Dot3    = 0X0004;

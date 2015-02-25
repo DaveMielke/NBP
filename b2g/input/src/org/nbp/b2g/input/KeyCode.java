@@ -29,19 +29,19 @@ public class KeyCode {
   public final static int Back    = 818; //  getKeyCode("KEYCODE_BRL_BACK");
   public final static int Forward = 819; //  getKeyCode("KEYCODE_BRL_FORWARD");
 
-  public static int toKeyBit (int code) {
-    if (code == KeyCode.Dot4)    return KeyBit.Dot1;
-    if (code == KeyCode.Dot3)    return KeyBit.Dot2;
-    if (code == KeyCode.Dot2)    return KeyBit.Dot3;
-    if (code == KeyCode.Dot5)    return KeyBit.Dot4;
-    if (code == KeyCode.Dot6)    return KeyBit.Dot5;
-    if (code == KeyCode.Dot7)    return KeyBit.Dot6;
-    if (code == KeyCode.Dot1)    return KeyBit.Dot7;
-    if (code == KeyCode.Dot8)    return KeyBit.Dot8;
-    if (code == KeyCode.Dot9)    return KeyBit.Space;
+  public static int toKeyMask (int code) {
+    if (code == KeyCode.Dot4)    return KeyMask.Dot1;
+    if (code == KeyCode.Dot3)    return KeyMask.Dot2;
+    if (code == KeyCode.Dot2)    return KeyMask.Dot3;
+    if (code == KeyCode.Dot5)    return KeyMask.Dot4;
+    if (code == KeyCode.Dot6)    return KeyMask.Dot5;
+    if (code == KeyCode.Dot7)    return KeyMask.Dot6;
+    if (code == KeyCode.Dot1)    return KeyMask.Dot7;
+    if (code == KeyCode.Dot8)    return KeyMask.Dot8;
+    if (code == KeyCode.Dot9)    return KeyMask.Space;
 
-    if (code == KeyCode.Forward) return KeyBit.Forward;
-    if (code == KeyCode.Back)    return KeyBit.Back;
+    if (code == KeyCode.Forward) return KeyMask.Forward;
+    if (code == KeyCode.Back)    return KeyMask.Back;
 
     return 0;
   }

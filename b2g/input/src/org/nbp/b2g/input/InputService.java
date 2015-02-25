@@ -35,14 +35,14 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
-    addKeyAction((KeyBit.Space | KeyBit.Dots123456), KeyEvent.KEYCODE_HOME);
-    addKeyAction((KeyBit.Space | KeyBit.Dots12), KeyEvent.KEYCODE_BACK);
-    addKeyAction((KeyBit.Space | KeyBit.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
+    addKeyAction((KeyMask.Space | KeyMask.Dots123456), KeyEvent.KEYCODE_HOME);
+    addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
+    addKeyAction((KeyMask.Space | KeyMask.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
 
-    addKeyAction((KeyBit.Space | KeyBit.Dots1), KeyEvent.KEYCODE_DPAD_UP);
-    addKeyAction((KeyBit.Space | KeyBit.Dots4), KeyEvent.KEYCODE_DPAD_DOWN);
-    addKeyAction((KeyBit.Space | KeyBit.Dots3), KeyEvent.KEYCODE_DPAD_LEFT);
-    addKeyAction((KeyBit.Space | KeyBit.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
+    addKeyAction((KeyMask.Space | KeyMask.Dots1), KeyEvent.KEYCODE_DPAD_UP);
+    addKeyAction((KeyMask.Space | KeyMask.Dots4), KeyEvent.KEYCODE_DPAD_DOWN);
+    addKeyAction((KeyMask.Space | KeyMask.Dots3), KeyEvent.KEYCODE_DPAD_LEFT);
+    addKeyAction((KeyMask.Space | KeyMask.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
   }
 
   @Override
@@ -149,7 +149,7 @@ public class InputService extends InputMethodService {
   public boolean onKeyDown (int code, KeyEvent event) {
     logKeyEventReceived(code, true);
     if (isSystemKey(code)) return false;
-    int bit = KeyCode.toKeyBit(code);
+    int bit = KeyCode.toKeyMask(code);
 
     if (bit != 0) {
       if ((pressedKeyMask & bit) == 0) {
@@ -165,7 +165,7 @@ public class InputService extends InputMethodService {
   public boolean onKeyUp (int code, KeyEvent event) {
     logKeyEventReceived(code, false);
     if (isSystemKey(code)) return false;
-    int bit = KeyCode.toKeyBit(code);
+    int bit = KeyCode.toKeyMask(code);
 
     if (bit != 0) {
       if (activeKeyMask > 0) {
@@ -173,8 +173,8 @@ public class InputService extends InputMethodService {
 
         if (action != null) {
           action.performAction();
-        } else if (activeKeyMask <= KeyBit.Space) {
-          char character = characterMap.getCharacter(activeKeyMask & ~KeyBit.Space);
+        } else if (activeKeyMask <= KeyMask.Space) {
+          char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.Space);
           inputCharacter(character);
         }
 
