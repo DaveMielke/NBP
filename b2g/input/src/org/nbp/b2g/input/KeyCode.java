@@ -38,10 +38,16 @@ public class KeyCode {
     if (code == KeyCode.Dot6)    return KeyMask.Dot6;
     if (code == KeyCode.Dot7)    return KeyMask.Dot7;
     if (code == KeyCode.Dot8)    return KeyMask.Dot8;
-    if (code == KeyCode.Space)   return KeyMask.Space;
 
+    if (code == KeyCode.Space)   return KeyMask.Space;
     if (code == KeyCode.Forward) return KeyMask.Forward;
     if (code == KeyCode.Back)    return KeyMask.Back;
+
+    if (code == KeyEvent.KEYCODE_DPAD_CENTER) return KeyMask.Center;
+    if (code == KeyEvent.KEYCODE_DPAD_LEFT)   return KeyMask.Left;
+    if (code == KeyEvent.KEYCODE_DPAD_RIGHT)  return KeyMask.Right;
+    if (code == KeyEvent.KEYCODE_DPAD_UP)     return KeyMask.Up;
+    if (code == KeyEvent.KEYCODE_DPAD_DOWN)   return KeyMask.Down;
 
     return 0;
   }

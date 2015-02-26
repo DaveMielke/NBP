@@ -35,6 +35,12 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
+    addKeyAction(KeyMask.Center, KeyEvent.KEYCODE_DPAD_CENTER);
+    addKeyAction(KeyMask.Left, KeyEvent.KEYCODE_DPAD_LEFT);
+    addKeyAction(KeyMask.Right, KeyEvent.KEYCODE_DPAD_RIGHT);
+    addKeyAction(KeyMask.Up, KeyEvent.KEYCODE_DPAD_UP);
+    addKeyAction(KeyMask.Down, KeyEvent.KEYCODE_DPAD_DOWN);
+
     addKeyAction(KeyMask.Dots7, KeyEvent.KEYCODE_DEL);
     addKeyAction(KeyMask.Dots8, KeyEvent.KEYCODE_ENTER);
 
@@ -143,11 +149,6 @@ public class InputService extends InputMethodService {
     switch (code) {
       case KeyEvent.KEYCODE_HOME:
       case KeyEvent.KEYCODE_BACK:
-      case KeyEvent.KEYCODE_DPAD_LEFT:
-      case KeyEvent.KEYCODE_DPAD_RIGHT:
-      case KeyEvent.KEYCODE_DPAD_UP:
-      case KeyEvent.KEYCODE_DPAD_DOWN:
-      case KeyEvent.KEYCODE_DPAD_CENTER:
         return true;
 
       default:

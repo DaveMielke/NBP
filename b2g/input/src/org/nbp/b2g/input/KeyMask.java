@@ -14,6 +14,12 @@ public class KeyMask {
   public final static int Forward = 0X0200;
   public final static int Back    = 0X0400;
 
+  public final static int Center  = 0X0800;
+  public final static int Left    = 0X1000;
+  public final static int Right   = 0X2000;
+  public final static int Up      = 0X4000;
+  public final static int Down    = 0X8000;
+
   public final static int DotsNone = (0);
   public final static int Dots1 = (Dot1);
   public final static int Dots2 = (Dot2);
