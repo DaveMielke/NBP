@@ -75,6 +75,11 @@ setValue() {
    sqlite3 "update ${table} set value="\"${value}\"" where name=\"${property}\""
 }
 
+verifyPackageInstalled() {
+   local output="$(execute pm path "${settingContainer}")"
+   [ -n "${output}" ] || semanticError "package not installed: ${settingName}"
+}
+
 showSetting_database() {
    getValue "${settingContainer}" "${settingObject}"
 }
@@ -129,6 +134,7 @@ changeSetting_accessibility() {
 
       ${onValue})
          [ -z "${enabledAccessibilityServiceIndex}" ] || return
+         verifyPackageInstalled
          enabledAccessibilityServices+=( "${settingContainer}/${settingObject}" )
          ;;
 
