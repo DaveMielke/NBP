@@ -3,18 +3,18 @@
 settingsDatabase="/data/data/com.android.providers.settings/databases/settings.db"
 
 declare -A settingTable=(
-   ["country"]="property persist.sys.country"
-   ["language"]="property persist.sys.language"
+   ["country"]="property territory persist.sys.country"
+   ["language"]="property language persist.sys.language"
 
-   ["accessibility"]="database accessibility_enabled secure"
-   ["foreign"]="database install_non_market_apps secure"
-   ["nolock"]="database lockscreen.disabled secure"
+   ["accessibility"]="database boolean accessibility_enabled secure"
+   ["foreign"]="database boolean install_non_market_apps secure"
+   ["nolock"]="database boolean lockscreen.disabled secure"
 
-   ["timeout"]="database screen_off_timeout system"
+   ["timeout"]="database integer screen_off_timeout system"
 
-   ["brltty"]="accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
-   ["spiel"]="accessibility info.spielproject.spiel.SpielService info.spielproject.spiel"
-   ["talkback"]="accessibility .TalkBackService com.google.android.marvin.talkback"
+   ["brltty"]="accessibility boolean org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
+   ["spiel"]="accessibility boolean info.spielproject.spiel.SpielService info.spielproject.spiel"
+   ["talkback"]="accessibility boolean .TalkBackService com.google.android.marvin.talkback"
 )
 
 programName="${0##*/}"
@@ -29,6 +29,13 @@ syntaxError() {
 
    programMessage "${message}"
    exit 2
+}
+
+semanticError() {
+   local message="${1}"
+
+   programMessage "${message}"
+   exit 3
 }
 
 execute() {
@@ -66,14 +73,14 @@ changeSetting_database() {
 
 getEnabledAccessibilityServices() {
    local services="$(getValue secure enabled_accessibility_services)"
-   accessibilityServices=( ${services//:/ } )
+   enabledAccessibilityServices=( ${services//:/ } )
 }
 
-testAccessibilityService() {
+testEnabledAccessibilityService() {
    local service
    local package
 
-   for service in "${accessibilityServices[@]}"
+   for service in "${enabledAccessibilityServices[@]}"
    do
       package="${service%%/*}"
       [ "${package}" != "${settingContainer}" ] || return 0
@@ -85,7 +92,7 @@ testAccessibilityService() {
 showSetting_accessibility() {
    getEnabledAccessibilityServices
    local enabled=1
-   testAccessibilityService || enabled=0
+   testEnabledAccessibilityService || enabled=0
    echo "${enabled}"
 }
 
@@ -95,6 +102,44 @@ showSetting_property() {
 
 changeSetting_property() {
    execute setprop "${settingObject}" "${settingValue}"
+}
+
+verifyValue_boolean() {
+   if [[ "${settingValue}" =~ ^(0|off|false)$ ]]
+   then
+      settingValue=0
+   elif [[ "${settingValue}" =~ ^(1|on|true)$ ]]
+   then
+      settingValue=1
+   else
+      return 1
+   fi
+
+   return 0
+}
+
+verifyValue_integer() {
+   [[ "${settingValue}" =~ ^(0|1[0-9]*)$ ]] || return 1
+   return 0
+}
+
+verifyValue_language() {
+   [ "${#settingValue}" -ne 2 ] || {
+      [ "${settingValue,,*}" != "${settingValue}" ] || {
+         return 0
+      }
+   }
+
+   return 1
+}
+verifyValue_territory() {
+   [ "${#settingValue}" -ne 2 ] || {
+      [ "${settingValue^^*}" != "${settingValue}" ] || {
+         return 0
+      }
+   }
+
+   return 1
 }
 
 useEmulator=false
@@ -118,12 +163,13 @@ shift 1
 settingDescriptor="${settingTable["${settingName}"]}"
 [ -n "${settingDescriptor}" ] || syntaxError "unknown setting name: ${settingName}";
 settingAttributes=( ${settingDescriptor} )
-settingType="${settingAttributes[0]}"
-settingObject="${settingAttributes[1]}"
-settingContainer="${settingAttributes[2]}"
+settingClass="${settingAttributes[0]}"
+settingType="${settingAttributes[1]}"
+settingObject="${settingAttributes[2]}"
+settingContainer="${settingAttributes[3]}"
 
 [ "${#}" -gt 0 ] || {
-   "showSetting_${settingType}"
+   "showSetting_${settingClass}"
    exit 0
 }
 
@@ -131,5 +177,7 @@ settingValue="${1}"
 shift 1
 [ "${#}" -eq 0 ] || syntaxError "too many parameters"
 
-"changeSetting_${settingType}"
+"verifyValue_${settingType}" || syntaxError "invalid setting value: ${settingName}=${settingValue}"
+exit 0
+"changeSetting_${settingClass}"
 exit 0
