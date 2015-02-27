@@ -13,6 +13,8 @@ declare -A settingTable=(
    ["brltty"]="accessibility boolean org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
    ["spiel"]="accessibility boolean info.spielproject.spiel.SpielService info.spielproject.spiel"
    ["talkback"]="accessibility boolean .TalkBackService com.google.android.marvin.talkback"
+
+   ["input"]="input boolean default_input_method secure"
 )
 
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
@@ -143,6 +145,28 @@ changeSetting_accessibility() {
    local services="${enabledAccessibilityServices[*]}"
    services="${services// /:}"
    setDatabaseValue secure enabled_accessibility_services "${services}"
+}
+
+showSetting_input() {
+   showSetting_database
+}
+
+changeSetting_input() {
+   local component="org.nbp.b2g.input/.InputService"
+
+   case "${settingValue}"
+   in
+      ${offValue})
+         executeShellCommand "ime disable ${component}"
+         ;;
+
+      ${onValue})
+         executeShellCommand "ime enable ${component}"
+         executeShellCommand "ime set ${component}"
+         ;;
+
+      *) internalError "unimplemented value: ${settingValue}";;
+   esac
 }
 
 showSetting_property() {
