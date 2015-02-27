@@ -9,8 +9,8 @@ public class KeyMask {
   public final static int Dot6    = 0X0020;
   public final static int Dot7    = 0X0040;
   public final static int Dot8    = 0X0080;
-
   public final static int Space   = 0X0100;
+
   public final static int Forward = 0X0200;
   public final static int Back    = 0X0400;
 
