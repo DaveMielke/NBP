@@ -9,5 +9,8 @@ b2g-set timeout 1800000
 b2g-set foreign on
 b2g-set accessibility on
 b2g-set input on
+b2g-set brltty on
+b2g-set talkback on
+b2g-set spiel off
 
 exit 0
