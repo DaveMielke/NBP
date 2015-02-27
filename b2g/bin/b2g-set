@@ -17,6 +17,9 @@ declare -A settingTable=(
    ["talkback"]="accessibility boolean .TalkBackService com.google.android.marvin.talkback"
 )
 
+offValue=0
+onValue=1
+
 programName="${0##*/}"
 programMessage() {
    local message="${1}"
@@ -38,8 +41,17 @@ semanticError() {
    exit 3
 }
 
+internalError() {
+   local message="${1}"
+
+   programMessage "${message}"
+   exit 4
+}
+
 execute() {
-   adb shell "${@}"
+   local output="$(adb shell "${@}")"
+   output="${output//$'\r'}"
+   [ -z "${output}" ] || echo "${output}"
 }
 
 sqlite3() {
@@ -76,24 +88,56 @@ getEnabledAccessibilityServices() {
    enabledAccessibilityServices=( ${services//:/ } )
 }
 
-testEnabledAccessibilityService() {
+findEnabledAccessibilityService() {
+   enabledAccessibilityServiceIndex=0
+
    local service
    local package
 
    for service in "${enabledAccessibilityServices[@]}"
    do
       package="${service%%/*}"
-      [ "${package}" != "${settingContainer}" ] || return 0
+      [ "${package}" != "${settingContainer}" ] || return
+      let "enabledAccessibilityServiceIndex+=1"
    done
 
-   return 1
+   enabledAccessibilityServiceIndex=""
 }
 
 showSetting_accessibility() {
    getEnabledAccessibilityServices
-   local enabled=1
-   testEnabledAccessibilityService || enabled=0
-   echo "${enabled}"
+   findEnabledAccessibilityService
+
+   if [ -n "${enabledAccessibilityServiceIndex}" ]
+   then
+      echo "${onValue}"
+   else
+      echo "${offValue}"
+   fi
+}
+
+changeSetting_accessibility() {
+   getEnabledAccessibilityServices
+   findEnabledAccessibilityService
+
+   case "${settingValue}"
+   in
+      ${offValue})
+         [ -n "${enabledAccessibilityServiceIndex}" ] || return
+         unset enabledAccessibilityServices["${enabledAccessibilityServiceIndex}"]
+         ;;
+
+      ${onValue})
+         [ -z "${enabledAccessibilityServiceIndex}" ] || return
+         enabledAccessibilityServices+=( "${settingContainer}/${settingObject}" )
+         ;;
+
+      *) internalError "unimplemented value: ${settingValue}";;
+   esac
+
+   local services="${enabledAccessibilityServices[*]}"
+   services="${services// /:}"
+   setValue secure enabled_accessibility_services "${services}"
 }
 
 showSetting_property() {
@@ -105,15 +149,17 @@ changeSetting_property() {
 }
 
 verifyValue_boolean() {
-   if [[ "${settingValue}" =~ ^(0|off|false)$ ]]
-   then
-      settingValue=0
-   elif [[ "${settingValue}" =~ ^(1|on|true)$ ]]
-   then
-      settingValue=1
-   else
-      return 1
-   fi
+   [ "${settingValue}" = "${offValue}" -o "${settingValue}" = "${onValue}" ] || {
+      if [[ "${settingValue}" =~ ^(off|false)$ ]]
+      then
+         settingValue="${offValue}"
+      elif [[ "${settingValue}" =~ ^(on|true)$ ]]
+      then
+         settingValue="${onValue}"
+      else
+         return 1
+      fi
+   }
 
    return 0
 }
@@ -132,6 +178,7 @@ verifyValue_language() {
 
    return 1
 }
+
 verifyValue_territory() {
    [ "${#settingValue}" -ne 2 ] || {
       [ "${settingValue^^*}" != "${settingValue}" ] || {
@@ -151,7 +198,7 @@ do
    in
       :) syntaxError "missing option value: -${OPTARG}";;
      \?) syntaxError "unknown option: -${OPTARG}";;
-      *) syntaxError "unimplemented option: -${option}";;
+      *) internalError "unimplemented option: -${option}";;
    esac
 done
 shift $((OPTIND - 1))
@@ -178,6 +225,5 @@ shift 1
 [ "${#}" -eq 0 ] || syntaxError "too many parameters"
 
 "verifyValue_${settingType}" || syntaxError "invalid setting value: ${settingName}=${settingValue}"
-exit 0
 "changeSetting_${settingClass}"
 exit 0
