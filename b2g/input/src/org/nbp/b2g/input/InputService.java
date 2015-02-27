@@ -30,16 +30,20 @@ public class InputService extends InputMethodService {
     actionMap.put(new Integer(keyMask), action);
   }
 
+  private void addNullAction (int keyMask) {
+    addAction(keyMask, new Action(this));
+  }
+
   private void addKeyAction (int keyMask, int keyCode) {
     addAction(keyMask, new KeyAction(this, keyCode));
   }
 
   private void addActions () {
-    addKeyAction(KeyMask.Center, KeyEvent.KEYCODE_DPAD_CENTER);
-    addKeyAction(KeyMask.Left, KeyEvent.KEYCODE_DPAD_LEFT);
-    addKeyAction(KeyMask.Right, KeyEvent.KEYCODE_DPAD_RIGHT);
-    addKeyAction(KeyMask.Up, KeyEvent.KEYCODE_DPAD_UP);
-    addKeyAction(KeyMask.Down, KeyEvent.KEYCODE_DPAD_DOWN);
+    addNullAction(KeyMask.Center);
+    addNullAction(KeyMask.Left);
+    addNullAction(KeyMask.Right);
+    addNullAction(KeyMask.Up);
+    addNullAction(KeyMask.Down);
 
     addKeyAction(KeyMask.Dots7, KeyEvent.KEYCODE_DEL);
     addKeyAction(KeyMask.Dots8, KeyEvent.KEYCODE_ENTER);

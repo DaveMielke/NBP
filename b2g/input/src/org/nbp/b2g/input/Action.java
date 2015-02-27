@@ -2,8 +2,10 @@ package org.nbp.b2g.input;
 
 import android.inputmethodservice.InputMethodService;
 
-public abstract class Action {
-  public abstract boolean performAction ();
+public class Action {
+  public boolean performAction () {
+    return true;
+  }
 
   protected final InputService inputService;
 
