@@ -1,0 +1,87 @@
+#!/bin/bash
+
+settingsDatabase="/data/data/com.android.providers.settings/databases/settings.db"
+
+declare -A settingTable=(
+   ["country"]="property persist.sys.country"
+   ["foreign"]="database install_non_market_apps secure"
+   ["language"]="property persist.sys.language"
+   ["timeout"]="database screen_off_timeout system"
+)
+
+programName="${0##*/}"
+programMessage() {
+   local message="${1}"
+
+   echo >&2 "${programName}: ${message}"
+}
+
+syntaxError() {
+   local message="${1}"
+
+   programMessage "${message}"
+   exit 2
+}
+
+execute() {
+   adb shell "${@}"
+}
+
+sqlite3() {
+   local command="${1}"
+
+   execute sqlite3 "${settingsDatabase}" "${command}"
+}
+
+showSetting_property() {
+   execute getprop "${settingProperty}"
+}
+
+changeSetting_property() {
+   execute setprop "${settingProperty}" "${settingValue}"
+}
+
+showSetting_database() {
+   sqlite3 "select value from ${settingTable} where name=\"${settingProperty}\""
+}
+
+changeSetting_database() {
+   sqlite3 "update ${settingTable} set value="\"${settingValue}\"" where name=\"${settingProperty}\""
+}
+
+useEmulator=false
+deviceSerialNumber=""
+
+while getopts ":d:e" option
+do
+   case "${option}"
+   in
+      :) syntaxError "missing option value: -${OPTARG}";;
+     \?) syntaxError "unknown option: -${OPTARG}";;
+      *) syntaxError "unimplemented option: -${option}";;
+   esac
+done
+shift $((OPTIND - 1))
+
+[ "${#}" -gt 0 ] || syntaxError "missing setting name"
+settingName="${1}"
+shift 1
+
+settingDescriptor="${settingTable["${settingName}"]}"
+[ -n "${settingDescriptor}" ] || syntaxError "unknown setting name: ${settingName}";
+settingAttributes=( ${settingDescriptor} )
+settingType="${settingAttributes[0]}"
+settingProperty="${settingAttributes[1]}"
+settingTable="${settingAttributes[2]}"
+
+[ "${#}" -gt 0 ] || {
+   "showSetting_${settingType}"
+   exit 0
+}
+
+settingValue="${1}"
+shift 1
+[ "${#}" -eq 0 ] || syntaxError "too many parameters"
+
+"changeSetting_${settingType}"
+exit 0
