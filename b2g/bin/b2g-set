@@ -1,7 +1,5 @@
 #!/bin/bash
 
-settingsDatabase="/data/data/com.android.providers.settings/databases/settings.db"
-
 declare -A settingTable=(
    ["country"]="property territory persist.sys.country"
    ["language"]="property language persist.sys.language"
@@ -17,6 +15,7 @@ declare -A settingTable=(
    ["talkback"]="accessibility boolean .TalkBackService com.google.android.marvin.talkback"
 )
 
+databasePath="/data/data/com.android.providers.settings/databases/settings.db"
 offValue=0
 onValue=1
 
@@ -48,48 +47,48 @@ internalError() {
    exit 4
 }
 
-execute() {
+executeShellCommand() {
    local output="$(adb shell "${@}")"
    output="${output//$'\r'}"
    [ -z "${output}" ] || echo "${output}"
 }
 
-sqlite3() {
+executeDatabaseCommand() {
    local command="${1}"
 
-   execute sqlite3 "${settingsDatabase}" "${command}"
+   executeShellCommand sqlite3 "${databasePath}" "${command}"
 }
 
-getValue() {
+getDatabaseValue() {
    local table="${1}"
    local property="${2}"
 
-   sqlite3 "select value from ${table} where name=\"${property}\""
+   executeDatabaseCommand "select value from ${table} where name=\"${property}\""
 }
 
-setValue() {
+setDatabaseValue() {
    local table="${1}"
    local property="${2}"
    local value="${3}"
 
-   sqlite3 "update ${table} set value="\"${value}\"" where name=\"${property}\""
+   executeDatabaseCommand "update ${table} set value="\"${value}\"" where name=\"${property}\""
 }
 
 verifyPackageInstalled() {
-   local output="$(execute pm path "${settingContainer}")"
+   local output="$(executeShellCommand pm path "${settingContainer}")"
    [ -n "${output}" ] || semanticError "package not installed: ${settingName}"
 }
 
 showSetting_database() {
-   getValue "${settingContainer}" "${settingObject}"
+   getDatabaseValue "${settingContainer}" "${settingObject}"
 }
 
 changeSetting_database() {
-   setValue "${settingContainer}" "${settingObject}" "${settingValue}"
+   setDatabaseValue "${settingContainer}" "${settingObject}" "${settingValue}"
 }
 
 getEnabledAccessibilityServices() {
-   local services="$(getValue secure enabled_accessibility_services)"
+   local services="$(getDatabaseValue secure enabled_accessibility_services)"
    enabledAccessibilityServices=( ${services//:/ } )
 }
 
@@ -143,15 +142,15 @@ changeSetting_accessibility() {
 
    local services="${enabledAccessibilityServices[*]}"
    services="${services// /:}"
-   setValue secure enabled_accessibility_services "${services}"
+   setDatabaseValue secure enabled_accessibility_services "${services}"
 }
 
 showSetting_property() {
-   execute getprop "${settingObject}"
+   executeShellCommand getprop "${settingObject}"
 }
 
 changeSetting_property() {
-   execute setprop "${settingObject}" "${settingValue}"
+   executeShellCommand setprop "${settingObject}" "${settingValue}"
 }
 
 verifyValue_boolean() {
