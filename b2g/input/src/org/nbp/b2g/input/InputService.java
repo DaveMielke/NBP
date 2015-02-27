@@ -39,11 +39,11 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
-    addNullAction(KeyMask.Center);
-    addNullAction(KeyMask.Left);
-    addNullAction(KeyMask.Right);
-    addNullAction(KeyMask.Up);
-    addNullAction(KeyMask.Down);
+    addKeyAction(KeyMask.Center, KeyEvent.KEYCODE_DPAD_CENTER);
+    addKeyAction(KeyMask.Left, KeyEvent.KEYCODE_DPAD_LEFT);
+    addKeyAction(KeyMask.Right, KeyEvent.KEYCODE_DPAD_RIGHT);
+    addKeyAction(KeyMask.Up, KeyEvent.KEYCODE_DPAD_UP);
+    addKeyAction(KeyMask.Down, KeyEvent.KEYCODE_DPAD_DOWN);
 
     addKeyAction(KeyMask.Dots7, KeyEvent.KEYCODE_DEL);
     addKeyAction(KeyMask.Dots8, KeyEvent.KEYCODE_ENTER);
@@ -51,10 +51,10 @@ public class InputService extends InputMethodService {
     addKeyAction((KeyMask.Space | KeyMask.Dots123456), KeyEvent.KEYCODE_HOME);
     addKeyAction((KeyMask.Space | KeyMask.Dots45), KeyEvent.KEYCODE_TAB);
 
-    addKeyAction((KeyMask.Space | KeyMask.Dots1), KeyEvent.KEYCODE_DPAD_UP);
-    addKeyAction((KeyMask.Space | KeyMask.Dots4), KeyEvent.KEYCODE_DPAD_DOWN);
-    addKeyAction((KeyMask.Space | KeyMask.Dots3), KeyEvent.KEYCODE_DPAD_LEFT);
-    addKeyAction((KeyMask.Space | KeyMask.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
+    addNullAction((KeyMask.Space | KeyMask.Dots1));
+    addNullAction((KeyMask.Space | KeyMask.Dots4));
+    addNullAction((KeyMask.Space | KeyMask.Dots3));
+    addNullAction((KeyMask.Space | KeyMask.Dots6));
 
     addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
     addKeyAction((KeyMask.Space | KeyMask.Dots145), KeyEvent.KEYCODE_DEL);
