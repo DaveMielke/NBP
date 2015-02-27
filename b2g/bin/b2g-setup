@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+cd "$(dirname "${0}")"
+export PATH=".:${PATH}"
+
+b2g-set nolock on
+b2g-set timeout 1800000
+b2g-set foreign on
+b2g-set accessibility on
+b2g-set input on
+
+exit 0
