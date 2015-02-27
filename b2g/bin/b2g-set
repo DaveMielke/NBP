@@ -4,9 +4,17 @@ settingsDatabase="/data/data/com.android.providers.settings/databases/settings.d
 
 declare -A settingTable=(
    ["country"]="property persist.sys.country"
-   ["foreign"]="database install_non_market_apps secure"
    ["language"]="property persist.sys.language"
+
+   ["accessibility"]="database accessibility_enabled secure"
+   ["foreign"]="database install_non_market_apps secure"
+   ["nolock"]="database lockscreen.disabled secure"
+
    ["timeout"]="database screen_off_timeout system"
+
+   ["brltty"]="accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
+   ["spiel"]="accessibility info.spielproject.spiel.SpielService info.spielproject.spiel"
+   ["talkback"]="accessibility .TalkBackService com.google.android.marvin.talkback"
 )
 
 programName="${0##*/}"
@@ -33,20 +41,60 @@ sqlite3() {
    execute sqlite3 "${settingsDatabase}" "${command}"
 }
 
-showSetting_property() {
-   execute getprop "${settingProperty}"
+getValue() {
+   local table="${1}"
+   local property="${2}"
+
+   sqlite3 "select value from ${table} where name=\"${property}\""
 }
 
-changeSetting_property() {
-   execute setprop "${settingProperty}" "${settingValue}"
+setValue() {
+   local table="${1}"
+   local property="${2}"
+   local value="${3}"
+
+   sqlite3 "update ${table} set value="\"${value}\"" where name=\"${property}\""
 }
 
 showSetting_database() {
-   sqlite3 "select value from ${settingTable} where name=\"${settingProperty}\""
+   getValue "${settingContainer}" "${settingObject}"
 }
 
 changeSetting_database() {
-   sqlite3 "update ${settingTable} set value="\"${settingValue}\"" where name=\"${settingProperty}\""
+   setValue "${settingContainer}" "${settingObject}" "${settingValue}"
+}
+
+getEnabledAccessibilityServices() {
+   local services="$(getValue secure enabled_accessibility_services)"
+   accessibilityServices=( ${services//:/ } )
+}
+
+testAccessibilityService() {
+   local service
+   local package
+
+   for service in "${accessibilityServices[@]}"
+   do
+      package="${service%%/*}"
+      [ "${package}" != "${settingContainer}" ] || return 0
+   done
+
+   return 1
+}
+
+showSetting_accessibility() {
+   getEnabledAccessibilityServices
+   local enabled=1
+   testAccessibilityService || enabled=0
+   echo "${enabled}"
+}
+
+showSetting_property() {
+   execute getprop "${settingObject}"
+}
+
+changeSetting_property() {
+   execute setprop "${settingObject}" "${settingValue}"
 }
 
 useEmulator=false
@@ -71,8 +119,8 @@ settingDescriptor="${settingTable["${settingName}"]}"
 [ -n "${settingDescriptor}" ] || syntaxError "unknown setting name: ${settingName}";
 settingAttributes=( ${settingDescriptor} )
 settingType="${settingAttributes[0]}"
-settingProperty="${settingAttributes[1]}"
-settingTable="${settingAttributes[2]}"
+settingObject="${settingAttributes[1]}"
+settingContainer="${settingAttributes[2]}"
 
 [ "${#}" -gt 0 ] || {
    "showSetting_${settingType}"
