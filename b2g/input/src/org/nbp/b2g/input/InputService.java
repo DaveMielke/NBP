@@ -51,10 +51,17 @@ public class InputService extends InputMethodService {
     addKeyAction((KeyMask.Space | KeyMask.Dots123456), KeyEvent.KEYCODE_HOME);
     addKeyAction((KeyMask.Space | KeyMask.Dots45), KeyEvent.KEYCODE_TAB);
 
-    addNullAction((KeyMask.Space | KeyMask.Dots1));
-    addNullAction((KeyMask.Space | KeyMask.Dots4));
-    addNullAction((KeyMask.Space | KeyMask.Dots3));
-    addNullAction((KeyMask.Space | KeyMask.Dots6));
+    if (ApplicationParameters.CHORDS_SEND_ARROWS) {
+      addNullAction((KeyMask.Space | KeyMask.Dots1));
+      addNullAction((KeyMask.Space | KeyMask.Dots4));
+      addNullAction((KeyMask.Space | KeyMask.Dots3));
+      addNullAction((KeyMask.Space | KeyMask.Dots6));
+    } else {
+      addKeyAction((KeyMask.Space | KeyMask.Dots1), KeyEvent.KEYCODE_DPAD_UP);
+      addKeyAction((KeyMask.Space | KeyMask.Dots4), KeyEvent.KEYCODE_DPAD_DOWN);
+      addKeyAction((KeyMask.Space | KeyMask.Dots3), KeyEvent.KEYCODE_DPAD_LEFT);
+      addKeyAction((KeyMask.Space | KeyMask.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
+    }
 
     addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
     addKeyAction((KeyMask.Space | KeyMask.Dots145), KeyEvent.KEYCODE_DEL);
@@ -119,6 +126,10 @@ public class InputService extends InputMethodService {
 
     if (connection != null) {
       if (connection.commitText(Character.toString(character), 1)) {
+        if (ApplicationParameters.LOG_KEYBOARD_EVENTS) {
+          Log.d(LOG_TAG, "character injected: " + character);
+        }
+
         return true;
       }
     }
