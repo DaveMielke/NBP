@@ -50,6 +50,18 @@ internalError() {
    exit 4
 }
 
+getComponentPackage() {
+   local component="${1}"
+
+   echo "${component%/*}"
+}
+
+getComponentClass() {
+   local component="${1}"
+
+   echo "${component#*/}"
+}
+
 makeComponent() {
    local package="${1}"
    local class="${2}"
@@ -109,12 +121,12 @@ getEnabledAccessibilityServices() {
 findEnabledAccessibilityService() {
    enabledAccessibilityServiceIndex=0
 
-   local service
+   local component
    local package
 
-   for service in "${enabledAccessibilityServices[@]}"
+   for component in "${enabledAccessibilityServices[@]}"
    do
-      package="${service%%/*}"
+      package="$(getComponentPackage "${component}")"
       [ "${package}" != "${settingContainer}" ] || return
       let "enabledAccessibilityServiceIndex+=1"
    done
@@ -148,7 +160,7 @@ changeSetting_accessibility() {
       ${onValue})
          [ -z "${enabledAccessibilityServiceIndex}" ] || return
          verifyPackageInstalled
-         enabledAccessibilityServices+=( "${settingContainer}/${settingObject}" )
+         enabledAccessibilityServices+=( "$(makeSettingComponent)" )
          ;;
 
       *) internalError "unimplemented value: ${settingValue}";;
@@ -212,10 +224,10 @@ changeSetting_property() {
 
 verifyValue_boolean() {
    [ "${settingValue}" = "${offValue}" -o "${settingValue}" = "${onValue}" ] || {
-      if [[ "${settingValue}" =~ ^(off|false)$ ]]
+      if [[ "${settingValue}" =~ ^(off|no|false)$ ]]
       then
          settingValue="${offValue}"
-      elif [[ "${settingValue}" =~ ^(on|true)$ ]]
+      elif [[ "${settingValue}" =~ ^(on|yes|true)$ ]]
       then
          settingValue="${onValue}"
       else
