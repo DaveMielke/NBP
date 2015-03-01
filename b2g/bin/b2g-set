@@ -1,21 +1,17 @@
 #!/bin/bash
 
 declare -A settingTable=(
-   ["ADB"]="property boolean persist.service.adb.enable"
-   ["country"]="property territory persist.sys.country"
-   ["language"]="property language persist.sys.language"
-
-   ["accessibility"]="database boolean accessibility_enabled secure"
-   ["foreign"]="database boolean install_non_market_apps secure"
-   ["nolock"]="database boolean lockscreen.disabled secure"
-
-   ["timeout"]="database integer screen_off_timeout system"
-
-   ["brltty"]="accessibility boolean org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
-   ["spiel"]="accessibility boolean info.spielproject.spiel.SpielService info.spielproject.spiel"
-   ["talkback"]="accessibility boolean .TalkBackService com.google.android.marvin.talkback"
-
-   ["input"]="input boolean .InputService org.nbp.b2g.input"
+   ["ADB"]="boolean property persist.service.adb.enable"
+   ["accessibility"]="boolean database accessibility_enabled secure"
+   ["brltty"]="boolean accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
+   ["country"]="territory property persist.sys.country"
+   ["foreign"]="boolean database install_non_market_apps secure"
+   ["input"]="boolean input .InputService org.nbp.b2g.input"
+   ["language"]="language property persist.sys.language"
+   ["nolock"]="boolean database lockscreen.disabled secure"
+   ["spiel"]="boolean accessibility info.spielproject.spiel.SpielService info.spielproject.spiel"
+   ["talkback"]="boolean accessibility .TalkBackService com.google.android.marvin.talkback"
+   ["timeout"]="integer database screen_off_timeout system"
 )
 
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
@@ -222,6 +218,21 @@ changeSetting_property() {
    setPropertyValue "${settingObject}" "${settingValue}"
 }
 
+getSettingAttributes() {
+   local descriptor="${settingTable["${settingName}"]}"
+   [ -n "${descriptor}" ] || syntaxError "unknown setting name: ${settingName}";
+
+   local attributes=( ${descriptor} )
+   settingType="${attributes[0]}"
+   settingClass="${attributes[1]}"
+   settingObject="${attributes[2]}"
+   settingContainer="${attributes[3]}"
+}
+
+showSetting() {
+   "showSetting_${settingClass}"
+}
+
 verifyValue_boolean() {
    [ "${settingValue}" = "${offValue}" -o "${settingValue}" = "${onValue}" ] || {
       if [[ "${settingValue}" =~ ^(off|no|false)$ ]]
@@ -277,20 +288,27 @@ do
 done
 shift $((OPTIND - 1))
 
-[ "${#}" -gt 0 ] || syntaxError "missing setting name"
+[ "${#}" -gt 0 ] || {
+   settingNames=${!settingTable[*]}
+   settingNames="${settingNames// /$'\n'}"
+   settingNames="$(echo "${settingNames}" | sort)"
+
+   for settingName in ${settingNames}
+   do
+      getSettingAttributes
+      settingValue="$(showSetting)"
+      echo "${settingName}: ${settingValue}"
+   done
+
+   exit 0
+}
+
 settingName="${1}"
 shift 1
-
-settingDescriptor="${settingTable["${settingName}"]}"
-[ -n "${settingDescriptor}" ] || syntaxError "unknown setting name: ${settingName}";
-settingAttributes=( ${settingDescriptor} )
-settingClass="${settingAttributes[0]}"
-settingType="${settingAttributes[1]}"
-settingObject="${settingAttributes[2]}"
-settingContainer="${settingAttributes[3]}"
+getSettingAttributes
 
 [ "${#}" -gt 0 ] || {
-   "showSetting_${settingClass}"
+   showSetting
    exit 0
 }
 
