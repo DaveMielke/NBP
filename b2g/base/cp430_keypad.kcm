@@ -1,0 +1,1363 @@
+# Copyright (C) 2010 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#
+# Emulator keyboard character map #1.
+#
+# This file is no longer used as the platform's default keyboard character map.
+# Refer to Generic.kcm and Virtual.kcm instead.
+#
+
+########################################################################
+#####     {KW} :                                                 #######
+#####     This key character map file is based on qwerty.kcm     #######
+#####     The original entries are kept unchanged                #######
+#####     Some of the original entries are still used            #######
+#####     cp430_keypad entries are appended below                #######
+########################################################################
+
+type FULL
+
+key A {
+    label:                              'A'
+    number:                             '2'
+    base:                               'a'
+    shift, capslock:                    'A'
+    alt:                                '#'
+    shift+alt, capslock+alt:            none
+}
+
+key B {
+    label:                              'B'
+    number:                             '2'
+    base:                               'b'
+    shift, capslock:                    'B'
+    alt:                                '<'
+    shift+alt, capslock+alt:            none
+}
+
+key C {
+    label:                              'C'
+    number:                             '2'
+    base:                               'c'
+    shift, capslock:                    'C'
+    alt:                                '9'
+    shift+alt, capslock+alt:            '\u00e7'
+}
+
+key D {
+    label:                              'D'
+    number:                             '3'
+    base:                               'd'
+    shift, capslock:                    'D'
+    alt:                                '5'
+    shift+alt, capslock+alt:            none
+}
+
+key E {
+    label:                              'E'
+    number:                             '3'
+    base:                               'e'
+    shift, capslock:                    'E'
+    alt:                                '2'
+    shift+alt, capslock+alt:            '\u0301'
+}
+
+key F {
+    label:                              'F'
+    number:                             '3'
+    base:                               'f'
+    shift, capslock:                    'F'
+    alt:                                '6'
+    shift+alt, capslock+alt:            '\u00a5'
+}
+
+key G {
+    label:                              'G'
+    number:                             '4'
+    base:                               'g'
+    shift, capslock:                    'G'
+    alt:                                '-'
+    shift+alt, capslock+alt:            '_'
+}
+
+key H {
+    label:                              'H'
+    number:                             '4'
+    base:                               'h'
+    shift, capslock:                    'H'
+    alt:                                '['
+    shift+alt, capslock+alt:            '{'
+}
+
+key I {
+    label:                              'I'
+    number:                             '4'
+    base:                               'i'
+    shift, capslock:                    'I'
+    alt:                                '$'
+    shift+alt, capslock+alt:            '\u0302'
+}
+
+key J {
+    label:                              'J'
+    number:                             '5'
+    base:                               'j'
+    shift, capslock:                    'J'
+    alt:                                ']'
+    shift+alt, capslock+alt:            '}'
+}
+
+key K {
+    label:                              'K'
+    number:                             '5'
+    base:                               'k'
+    shift, capslock:                    'K'
+    alt:                                '"'
+    shift+alt, capslock+alt:            '~'
+}
+
+key L {
+    label:                              'L'
+    number:                             '5'
+    base:                               'l'
+    shift, capslock:                    'L'
+    alt:                                '\''
+    shift+alt, capslock+alt:            '`'
+}
+
+key M {
+    label:                              'M'
+    number:                             '6'
+    base:                               'm'
+    shift, capslock:                    'M'
+    alt:                                '!'
+    shift+alt, capslock+alt:            none
+}
+
+key N {
+    label:                              'N'
+    number:                             '6'
+    base:                               'n'
+    shift, capslock:                    'N'
+    alt:                                '>'
+    shift+alt, capslock+alt:            '\u0303'
+}
+
+key O {
+    label:                              'O'
+    number:                             '6'
+    base:                               'o'
+    shift, capslock:                    'O'
+    alt:                                '('
+    shift+alt, capslock+alt:            none
+}
+
+key P {
+    label:                              'P'
+    number:                             '7'
+    base:                               'p'
+    shift, capslock:                    'P'
+    alt:                                ')'
+    shift+alt, capslock+alt:            none
+}
+
+key Q {
+    label:                              'Q'
+    number:                             '7'
+    base:                               'q'
+    shift, capslock:                    'Q'
+    alt:                                '*'
+    shift+alt, capslock+alt:            '\u0300'
+}
+
+key R {
+    label:                              'R'
+    number:                             '7'
+    base:                               'r'
+    shift, capslock:                    'R'
+    alt:                                '3'
+    shift+alt, capslock+alt:            '\u20ac'
+}
+
+key S {
+    label:                              'S'
+    number:                             '7'
+    base:                               's'
+    shift, capslock:                    'S'
+    alt:                                '4'
+    shift+alt, capslock+alt:            '\u00df'
+}
+
+key T {
+    label:                              'T'
+    number:                             '8'
+    base:                               't'
+    shift, capslock:                    'T'
+    alt:                                '+'
+    shift+alt, capslock+alt:            '\u00a3'
+}
+
+key U {
+    label:                              'U'
+    number:                             '8'
+    base:                               'u'
+    shift, capslock:                    'U'
+    alt:                                '&'
+    shift+alt, capslock+alt:            '\u0308'
+}
+
+key V {
+    label:                              'V'
+    number:                             '8'
+    base:                               'v'
+    shift, capslock:                    'V'
+    alt:                                '='
+    shift+alt, capslock+alt:            '^'
+}
+
+key W {
+    label:                              'W'
+    number:                             '9'
+    base:                               'w'
+    shift, capslock:                    'W'
+    alt:                                '1'
+    shift+alt, capslock+alt:            none
+}
+
+key X {
+    label:                              'X'
+    number:                             '9'
+    base:                               'x'
+    shift, capslock:                    'X'
+    alt:                                '8'
+    shift+alt, capslock+alt:            '\uef00'
+}
+
+key Y {
+    label:                              'Y'
+    number:                             '9'
+    base:                               'y'
+    shift, capslock:                    'Y'
+    alt:                                '%'
+    shift+alt, capslock+alt:            '\u00a1'
+}
+
+key Z {
+    label:                              'Z'
+    number:                             '9'
+    base:                               'z'
+    shift, capslock:                    'Z'
+    alt:                                '7'
+    shift+alt, capslock+alt:            none
+}
+
+key COMMA {
+    label:                              ','
+    number:                             ','
+    base:                               ','
+    shift:                              ';'
+    alt:                                ';'
+    shift+alt:                          '|'
+}
+
+key PERIOD {
+    label:                              '.'
+    number:                             '.'
+    base:                               '.'
+    shift:                              ':'
+    alt:                                ':'
+    shift+alt:                          '\u2026'
+}
+
+key AT {
+    label:                              '@'
+    number:                             '0'
+    base:                               '@'
+    shift:                              '0'
+    alt:                                '0'
+    shift+alt:                          '\u2022'
+}
+
+key SLASH {
+    label:                              '/'
+    number:                             '/'
+    base:                               '/'
+    shift:                              '?'
+    alt:                                '?'
+    shift+alt:                          '\\'
+}
+
+key SPACE {
+    label:                              ' '
+    number:                             ' '
+    base:                               ' '
+    shift:                              ' '
+    alt:                                '\uef01'
+    shift+alt:                          '\uef01'
+}
+
+key ENTER {
+    label:                              '\n'
+    number:                             '\n'
+    base:                               '\n'
+    shift:                              '\n'
+    alt:                                '\n'
+    shift+alt:                          '\n'
+}
+
+key TAB {
+    label:                              '\t'
+    number:                             '\t'
+    base:                               '\t'
+    shift:                              '\t'
+    alt:                                '\t'
+    shift+alt:                          '\t'
+}
+
+key 0 {
+    label:                              '0'
+    number:                             '0'
+    base:                               '0'
+    shift:                              ')'
+    alt:                                ')'
+    shift+alt:                          ')'
+}
+
+key 1 {
+    label:                              '1'
+    number:                             '1'
+    base:                               '1'
+    shift:                              '!'
+    alt:                                '!'
+    shift+alt:                          '!'
+}
+
+key 2 {
+    label:                              '2'
+    number:                             '2'
+    base:                               '2'
+    shift:                              '@'
+    alt:                                '@'
+    shift+alt:                          '@'
+}
+
+key 3 {
+    label:                              '3'
+    number:                             '3'
+    base:                               '3'
+    shift:                              '#'
+    alt:                                '#'
+    shift+alt:                          '#'
+}
+
+key 4 {
+    label:                              '4'
+    number:                             '4'
+    base:                               '4'
+    shift:                              '$'
+    alt:                                '$'
+    shift+alt:                          '$'
+}
+
+key 5 {
+    label:                              '5'
+    number:                             '5'
+    base:                               '5'
+    shift:                              '%'
+    alt:                                '%'
+    shift+alt:                          '%'
+}
+
+key 6 {
+    label:                              '6'
+    number:                             '6'
+    base:                               '6'
+    shift:                              '^'
+    alt:                                '^'
+    shift+alt:                          '^'
+}
+
+key 7 {
+    label:                              '7'
+    number:                             '7'
+    base:                               '7'
+    shift:                              '&'
+    alt:                                '&'
+    shift+alt:                          '&'
+}
+
+key 8 {
+    label:                              '8'
+    number:                             '8'
+    base:                               '8'
+    shift:                              '*'
+    alt:                                '*'
+    shift+alt:                          '*'
+}
+
+key 9 {
+    label:                              '9'
+    number:                             '9'
+    base:                               '9'
+    shift:                              '('
+    alt:                                '('
+    shift+alt:                          '('
+}
+
+key GRAVE {
+    label:                              '`'
+    number:                             '`'
+    base:                               '`'
+    shift:                              '~'
+    alt:                                '`'
+    shift+alt:                          '~'
+}
+
+key MINUS {
+    label:                              '-'
+    number:                             '-'
+    base:                               '-'
+    shift:                              '_'
+    alt:                                '-'
+    shift+alt:                          '_'
+}
+
+key EQUALS {
+    label:                              '='
+    number:                             '='
+    base:                               '='
+    shift:                              '+'
+    alt:                                '='
+    shift+alt:                          '+'
+}
+
+key LEFT_BRACKET {
+    label:                              '['
+    number:                             '['
+    base:                               '['
+    shift:                              '{'
+    alt:                                '['
+    shift+alt:                          '{'
+}
+
+key RIGHT_BRACKET {
+    label:                              ']'
+    number:                             ']'
+    base:                               ']'
+    shift:                              '}'
+    alt:                                ']'
+    shift+alt:                          '}'
+}
+
+key BACKSLASH {
+    label:                              '\\'
+    number:                             '\\'
+    base:                               '\\'
+    shift:                              '|'
+    alt:                                '\\'
+    shift+alt:                          '|'
+}
+
+key SEMICOLON {
+    label:                              ';'
+    number:                             ';'
+    base:                               ';'
+    shift:                              ':'
+    alt:                                ';'
+    shift+alt:                          ':'
+}
+
+key APOSTROPHE {
+    label:                              '\''
+    number:                             '\''
+    base:                               '\''
+    shift:                              '"'
+    alt:                                '\''
+    shift+alt:                          '"'
+}
+
+key STAR {
+    label:                              '*'
+    number:                             '*'
+    base:                               '*'
+    shift:                              '*'
+    alt:                                '*'
+    shift+alt:                          '*'
+}
+
+key POUND {
+    label:                              '#'
+    number:                             '#'
+    base:                               '#'
+    shift:                              '#'
+    alt:                                '#'
+    shift+alt:                          '#'
+}
+
+key PLUS {
+   label:                              '+'
+   number:                             '+'
+   base:                               '+'
+   shift:                              '+'
+   alt:                                '+'
+   shift+alt:                          '+'
+}
+
+
+########################################################################
+########          {KW}: cp430_keypad entried follow         ############
+########################################################################
+
+
+######################################################################
+#  {KW}: 256 Braille keys                                            #
+#        Uncomment The lines when assigning a valid unicode value.   #   
+#        A meaning full name may be assigned if needed.              #
+#        The name should correspond to that of all the files-        #
+#        -which cantain keycodes/ scancodes.                         #
+######################################################################
+
+# key BRL_COMB_1{ base: 'k'}
+
+key  BRL_APOSTROPHE { 
+	base: '\''
+}
+
+# key BRL_COMB_3{ base: 'k'}
+
+key BRL_1 { 
+	base: '1'
+}
+
+# key BRL_COMB_5{ base: 'k'}
+
+key BRL_2 { 
+	base: '2'
+}
+
+# key BRL_COMB_7{ base: 'k'}
+
+key BRL_LOWERA { 
+	base: 'a'
+}
+
+key BRL_UPPERA { 
+	base: 'A'
+}
+
+key BRL_LOWERK { 
+	base: 'k'
+}
+
+key BRL_UPPERK { 
+	base: 'K'
+}
+
+key BRL_LOWERB { 
+	base: 'b'
+}
+
+key BRL_UPPERB {
+	base: 'B'
+}
+
+key BRL_LOWERL { 
+	base: 'l'
+}
+
+key BRL_UPPERL { 
+	base: 'L'
+}
+
+key BRL_GRAVE { 
+	base: '`'
+}
+
+key BRL_AT { 
+	base: '@'
+}
+
+key BRL_SLASH { 
+	base: '/'
+}
+
+# key BRL_COMB_19{ base: 'k'}
+
+key BRL_LOWERI { 
+	base: 'i'
+}
+
+key BRL_UPPERI { 
+	base: 'I'
+}
+
+key BRL_LOWERS { 
+	base: 's'
+}
+
+key BRL_UPPERS { 
+	base: 'S'
+}
+
+key BRL_LOWERC { 
+	base: 'c'
+}
+
+key BRL_UPPERC { 
+	base: 'C'
+}
+
+key BRL_LOWERM { 
+	base: 'm'
+}
+
+key BRL_UPPERM { 
+	base: 'M'
+}
+
+key BRL_LOWERF { 
+	base: 'f'
+}
+
+key BRL_UPPERF { 
+	base: 'F'
+}
+
+key BRL_LOWERP { 
+	base: 'p'
+}
+
+key BRL_UPPERP { 
+	base: 'P'
+}
+
+key BRL_QUOTE { 
+	base: '"'
+}
+
+# key BRL_COMB_33{ base: 'k'}
+
+key BRL_9 { 
+	base: '9'
+}
+
+# key BRL_COMB_35{ base: 'k'}
+
+key BRL_3 { 
+	base: '3'
+}
+
+# key BRL_COMB_37{ base: 'k'}
+
+key BRL_6 { 
+	base: '6'
+}
+
+# key BRL_COMB_39{ base: 'k'}
+
+key BRL_LOWERE { 
+	base: 'e'
+}
+
+key BRL_UPPERE { 
+	base: 'E'
+}
+
+key BRL_LOWERO { 
+	base: 'o'
+}
+
+key BRL_UPPERO { 
+	base: 'O'
+}
+
+key BRL_LOWERH { 
+	base: 'h'
+}
+
+key BRL_UPPERH { 
+	base: 'H'
+}
+
+key BRL_LOWERR { 
+	base: 'r'
+}
+
+key BRL_UPPERR { 
+	base: 'R'
+}
+
+key BRL_NOT { 
+	base: '~'
+}
+
+key BRL_CARET { 
+	base: '^'
+}
+
+key BRL_GREATER_THAN { 
+	base: '>'
+}
+
+# key BRL_COMB_51{ base: 'k'}
+
+key BRL_LOWERJ { 
+	base: 'j'
+}
+
+key BRL_UPPERJ { 
+	base: 'J'
+}
+
+key BRL_LOWERT { 
+	base: 't'
+}
+
+key BRL_UPPERT { 
+base: 'T'
+}
+
+key BRL_LOWERD { 
+	base: 'd'
+}
+
+key BRL_UPPERD { 
+	base: 'D'
+}
+
+key BRL_LOWERN { 
+	base: 'n'
+}
+
+key BRL_UPPERN { 
+	base: 'N'
+}
+
+key BRL_LOWERG { 
+	base: 'g'
+}
+
+key BRL_UPPERG { 
+	base: 'G'
+}
+
+key BRL_LOWERQ	{ 
+	base: 'q'
+}
+
+key BRL_UPPERQ { 
+	base: 'Q'
+}
+
+key BRL_COMMA { 
+	base: ','
+}
+
+# key BRL_COMB_65{ base: 'k'}
+
+key BRL_MINUS { 
+	base: '-'
+}
+
+# key BRL_COMB_67{ base: 'k'}
+
+key BRL_5 { 
+	base: '5'
+}
+
+# key BRL_COMB_69{ base: 'k'}
+
+key BRL_8 { 
+	base: '8'
+}
+
+# key BRL_COMB_71{ base: 'k'}
+
+key BRL_STAR { 
+	base: '*'
+}
+
+# key BRL_COMB_73{ base: 'k'}
+
+key BRL_LOWERU { 
+	base: 'u'
+}
+
+key BRL_UPPERU { 
+	base: 'U'
+}
+
+key BRL_LESS_THAN { 
+	base: '<'
+}
+
+# key BRL_COMB_77{ base: 'k'}
+
+key BRL_LOWERV { 
+	base: 'v'
+}
+
+key BRL_UPPERV { 
+	base: 'V'
+}
+
+key BRL_PERIOD { 
+	base: '.'
+}
+
+# key BRL_COMB_81{ base: 'k'}
+
+key BRL_PLS { 
+	base: '+'
+}
+
+# key BRL_COMB_83{ base: 'k'}
+
+key BRL_LEFT_CB { 
+	base: '{'
+}
+
+key BRL_LEFT_BRACKET { 
+	base: '['
+}
+
+key BRL_EXCLAMATION { 
+	base: '!'
+}
+
+# key BRL_COMB_87{ base: 'k'}
+
+key BRL_PERCENT { 
+	base: '%'
+}
+
+# key BRL_COMB_89{ base: 'k'}
+
+key BRL_LOWERX { 
+	base: 'x'
+}
+
+key BRL_UPPERX { 
+	base: 'X'
+}
+
+key BRL_DOLLAR { 
+	base: '$'
+}
+
+# key BRL_COMB_93{ base: 'k'}
+
+key BRL_AND	{ 
+	base: '&'
+}
+
+# key BRL_COMB_95{ base: 'k'}
+
+key BRL_SEMICOLON { 
+	base: ';'
+}
+
+# key BRL_COMB_97{ base: 'k'}
+
+key BRL_0 { 
+	base: '0'
+}
+
+# key BRL_COMB_99{ base: 'k'}
+
+key BRL_4 { 
+	base: '4'
+}
+
+# key BRL_COMB_101{ base: 'k'}
+
+key BRL_7 { 
+	base: '7'
+}
+
+# key BRL_COMB_103{ base: 'k'}
+
+key BRL_COLON { 
+	base: ':'
+}
+
+# key BRL_COMB_105{ base: 'k'}
+
+key BRL_LOWERZ { 
+	base: 'z'
+}
+
+key BRL_UPPERZ { 
+	base: 'Z'
+}
+
+key BRL_OR { 
+	base: '|'
+}
+
+key BRL_BACKSLASH { 
+	base: '\\'
+}
+
+key BRL_LEFT_BRACE { 
+	base: '('
+}
+
+# key BRL_COMB_111{ base: 'k'}
+
+key BRL_UNDERSCORE { 
+	base: '_'
+}
+
+# key BRL_COMB_113{ base: 'k'}
+
+key BRL_POUND { 
+	base: '#'
+}
+
+# key BRL_COMB_115{ base: 'k'}
+
+key BRL_LOWERW { 
+	base: 'w'
+}
+
+key BRL_UPPERW { 
+	base: 'W'
+}
+
+key BRL_RIGHT_BRACE { 
+	base: ')'
+}
+
+# key BRL_COMB_119{ base: 'k'}
+
+key BRL_QUESTION { 
+	base: '?'
+}
+
+# key BRL_COMB_121{ base: 'k'}
+
+key BRL_LOWERY { 
+	base: 'y'
+}
+
+key BRL_UPPERY { 
+	base: 'Y'
+}
+
+key BRL_RIGHT_CB { 
+	base: '}'
+}
+
+key BRL_RIGHT_BRACKET { 
+	base: ']'
+}
+
+key BRL_EQUALS { 
+	base: '='
+}
+
+
+
+# key BRL_COMB_127{ base: 'k'}
+# key BRL_COMB_128{ base: 'u'}
+# key BRL_COMB_129{ base: 'k'}
+# key BRL_COMB_130{ base: 'u'}
+# key BRL_COMB_131{ base: 'k'}
+# key BRL_COMB_132{ base: 'u'}
+# key BRL_COMB_133{ base: 'k'}
+# key BRL_COMB_134{ base: 'u'}
+# key BRL_COMB_135{ base: 'k'}
+# key BRL_COMB_136{ base: 'u'}
+# key BRL_COMB_137{ base: 'k'}
+# key BRL_COMB_138{ base: 'u'}
+# key BRL_COMB_139{ base: 'k'}
+# key BRL_COMB_140{ base: 'u'}
+# key BRL_COMB_141{ base: 'k'}
+# key BRL_COMB_142{ base: 'u'}
+# key BRL_COMB_143{ base: 'k'}
+# key BRL_COMB_144{ base: 'u'}
+# key BRL_COMB_145{ base: 'k'}
+# key BRL_COMB_146{ base: 'u'}
+# key BRL_COMB_147{ base: 'k'}
+# key BRL_COMB_148{ base: 'u'}
+# key BRL_COMB_149{ base: 'k'}
+# key BRL_COMB_150{ base: 'u'}
+# key BRL_COMB_151{ base: 'k'}
+# key BRL_COMB_152{ base: 'u'}
+# key BRL_COMB_153{ base: 'k'}
+# key BRL_COMB_154{ base: 'u'}
+# key BRL_COMB_155{ base: 'k'}
+# key BRL_COMB_156{ base: 'u'}
+# key BRL_COMB_157{ base: 'k'}
+# key BRL_COMB_158{ base: 'u'}
+# key BRL_COMB_159{ base: 'k'}
+# key BRL_COMB_160{ base: 'u'}
+# key BRL_COMB_161{ base: 'k'}
+# key BRL_COMB_162{ base: 'u'}
+# key BRL_COMB_163{ base: 'k'}
+# key BRL_COMB_164{ base: 'u'}
+# key BRL_COMB_165{ base: 'k'}
+# key BRL_COMB_166{ base: 'u'}
+# key BRL_COMB_167{ base: 'k'}
+# key BRL_COMB_168{ base: 'u'}
+# key BRL_COMB_169{ base: 'k'}
+# key BRL_COMB_170{ base: 'u'}
+# key BRL_COMB_171{ base: 'k'}
+# key BRL_COMB_172{ base: 'u'}
+# key BRL_COMB_173{ base: 'k'}
+# key BRL_COMB_174{ base: 'u'}
+# key BRL_COMB_175{ base: 'k'}
+# key BRL_COMB_176{ base: 'u'}
+# key BRL_COMB_177{ base: 'k'}
+# key BRL_COMB_178{ base: 'u'}
+# key BRL_COMB_179{ base: 'k'}
+# key BRL_COMB_180{ base: 'u'}
+# key BRL_COMB_181{ base: 'k'}
+# key BRL_COMB_182{ base: 'u'}
+# key BRL_COMB_183{ base: 'k'}
+# key BRL_COMB_184{ base: 'u'}
+# key BRL_COMB_185{ base: 'k'}
+# key BRL_COMB_186{ base: 'u'}
+# key BRL_COMB_187{ base: 'k'}
+# key BRL_COMB_188{ base: 'u'}
+# key BRL_COMB_189{ base: 'k'}
+# key BRL_COMB_190{ base: 'u'}
+# key BRL_COMB_191{ base: 'k'}
+# key BRL_COMB_192{ base: 'u'}
+# key BRL_COMB_193{ base: 'k'}
+# key BRL_COMB_194{ base: 'u'}
+# key BRL_COMB_195{ base: 'k'}
+# key BRL_COMB_196{ base: 'u'}
+# key BRL_COMB_197{ base: 'k'}
+# key BRL_COMB_198{ base: 'u'}
+# key BRL_COMB_199{ base: 'k'}
+# key BRL_COMB_200{ base: 'u'}
+# key BRL_COMB_201{ base: 'k'}
+# key BRL_COMB_202{ base: 'u'}
+# key BRL_COMB_203{ base: 'k'}
+# key BRL_COMB_204{ base: 'u'}
+# key BRL_COMB_205{ base: 'k'}
+# key BRL_COMB_206{ base: 'u'}
+# key BRL_COMB_207{ base: 'k'}
+# key BRL_COMB_208{ base: 'u'}
+# key BRL_COMB_209{ base: 'k'}
+# key BRL_COMB_210{ base: 'u'}
+# key BRL_COMB_211{ base: 'k'}
+# key BRL_COMB_212{ base: 'u'}
+# key BRL_COMB_213{ base: 'k'}
+# key BRL_COMB_214{ base: 'u'}
+# key BRL_COMB_215{ base: 'k'}
+# key BRL_COMB_216{ base: 'u'}
+# key BRL_COMB_217{ base: 'k'}
+# key BRL_COMB_218{ base: 'u'}
+# key BRL_COMB_219{ base: 'k'}
+# key BRL_COMB_220{ base: 'u'}
+# key BRL_COMB_221{ base: 'k'}
+# key BRL_COMB_222{ base: 'u'}
+# key BRL_COMB_223{ base: 'k'}
+# key BRL_COMB_224{ base: 'u'}
+# key BRL_COMB_225{ base: 'k'}
+# key BRL_COMB_226{ base: 'u'}
+# key BRL_COMB_227{ base: 'k'}
+# key BRL_COMB_228{ base: 'u'}
+# key BRL_COMB_229{ base: 'k'}
+# key BRL_COMB_230{ base: 'u'}
+# key BRL_COMB_231{ base: 'k'}
+# key BRL_COMB_232{ base: 'u'}
+# key BRL_COMB_233{ base: 'k'}
+# key BRL_COMB_234{ base: 'u'}
+# key BRL_COMB_235{ base: 'k'}
+# key BRL_COMB_236{ base: 'u'}
+# key BRL_COMB_237{ base: 'k'}
+# key BRL_COMB_238{ base: 'u'}
+# key BRL_COMB_239{ base: 'k'}
+# key BRL_COMB_240{ base: 'u'}
+# key BRL_COMB_241{ base: 'k'}
+# key BRL_COMB_242{ base: 'u'}
+# key BRL_COMB_243{ base: 'k'}
+# key BRL_COMB_244{ base: 'u'}
+# key BRL_COMB_245{ base: 'k'}
+# key BRL_COMB_246{ base: 'u'}
+# key BRL_COMB_247{ base: 'k'}
+# key BRL_COMB_248{ base: 'u'}
+# key BRL_COMB_249{ base: 'k'}
+# key BRL_COMB_250{ base: 'u'}
+# key BRL_COMB_251{ base: 'k'}
+# key BRL_COMB_252{ base: 'u'}
+# key BRL_COMB_253{ base: 'k'}
+# key BRL_COMB_254{ base: 'u'}
+# key BRL_COMB_255{ base: 'k'}
+
+######################################################################
+#  {KW}: 256 Chorded keys                                            #
+#        Uncomment when assigning a valid unicode/Android_fn value.  #   
+#        A meaning full name may be assigned if needed.              #
+#        The name should correspond to that of all the files-        #
+#        -which cantain keycodes/ scancodes.                         #
+######################################################################
+# key CHORD_COMB_1{ base: '%'}
+# key CHORD_COMB_2{ base: '@'}
+# key CHORD_COMB_3{ base: '%'}
+# key CHORD_COMB_4{ base: '@'}
+# key CHORD_COMB_5{ base: '%'}
+# key CHORD_COMB_6{ base: '@'}
+# key CHORD_COMB_7{ base: '%'}
+# key CHORD_COMB_8{ base: '@'}
+# key CHORD_COMB_9{ base: '%'}
+# key CHORD_COMB_10{ base: '@'}
+# key CHORD_COMB_11{ base: '%'}
+# key CHORD_COMB_12{ base: '@'}
+# key CHORD_COMB_13{ base: '%'}
+# key CHORD_COMB_14{ base: '@'}
+# key CHORD_COMB_15{ base: '%'}
+# key CHORD_COMB_16{ base: '@'}
+# key CHORD_COMB_17{ base: '%'}
+# key CHORD_COMB_18{ base: '@'}
+# key CHORD_COMB_19{ base: '%'}
+# key CHORD_COMB_20{ base: '@'}
+# key CHORD_COMB_21{ base: '%'}
+# key CHORD_COMB_22{ base: '@'}
+# key CHORD_COMB_23{ base: '%'}
+# key CHORD_COMB_24{ base: '@'}
+# key CHORD_COMB_25{ base: '%'}
+# key CHORD_COMB_26{ base: '@'}
+# key CHORD_COMB_27{ base: '%'}
+# key CHORD_COMB_28{ base: '@'}
+# key CHORD_COMB_29{ base: '%'}
+# key CHORD_COMB_30{ base: '@'}
+# key CHORD_COMB_31{ base: '%'}
+# key CHORD_COMB_32{ base: '@'}
+# key CHORD_COMB_33{ base: '%'}
+# key CHORD_COMB_34{ base: '@'}
+# key CHORD_COMB_35{ base: '%'}
+# key CHORD_COMB_36{ base: '@'}
+# key CHORD_COMB_37{ base: '%'}
+# key CHORD_COMB_38{ base: '@'}
+# key CHORD_COMB_39{ base: '%'}
+# key CHORD_COMB_40{ base: '@'}
+# key CHORD_COMB_41{ base: '%'}
+# key CHORD_COMB_42{ base: '@'}
+# key CHORD_COMB_43{ base: '%'}
+# key CHORD_COMB_44{ base: '@'}
+# key CHORD_COMB_45{ base: '%'}
+# key CHORD_COMB_46{ base: '@'}
+# key CHORD_COMB_47{ base: '%'}
+# key CHORD_COMB_48{ base: '@'}
+# key CHORD_COMB_49{ base: '%'}
+# key CHORD_COMB_50{ base: '@'}
+# key CHORD_COMB_51{ base: '%'}
+# key CHORD_COMB_52{ base: '@'}
+# key CHORD_COMB_53{ base: '%'}
+# key CHORD_COMB_54{ base: '@'}
+# key CHORD_COMB_55{ base: '%'}
+# key CHORD_COMB_56{ base: '@'}
+# key CHORD_COMB_57{ base: '%'}
+# key CHORD_COMB_58{ base: '@'}
+# key CHORD_COMB_59{ base: '%'}
+# key CHORD_COMB_60{ base: '@'}
+# key CHORD_COMB_61{ base: '%'}
+# key CHORD_COMB_62{ base: '@'}
+# key CHORD_COMB_63{ base: '%'}
+# key CHORD_COMB_64{ base: '@'}
+# key CHORD_COMB_65{ base: '%'}
+# key CHORD_COMB_66{ base: '@'}
+# key CHORD_COMB_67{ base: '%'}
+# key CHORD_COMB_68{ base: '@'}
+# key CHORD_COMB_69{ base: '%'}
+# key CHORD_COMB_70{ base: '@'}
+# key CHORD_COMB_71{ base: '%'}
+# key CHORD_COMB_72{ base: '@'}
+# key CHORD_COMB_73{ base: '%'}
+# key CHORD_COMB_74{ base: '@'}
+# key CHORD_COMB_75{ base: '%'}
+# key CHORD_COMB_76{ base: '@'}
+# key CHORD_COMB_77{ base: '%'}
+# key CHORD_COMB_78{ base: '@'}
+# key CHORD_COMB_79{ base: '%'}
+# key CHORD_COMB_80{ base: '@'}
+# key CHORD_COMB_81{ base: '%'}
+# key CHORD_COMB_82{ base: '@'}
+# key CHORD_COMB_83{ base: '%'}
+# key CHORD_COMB_84{ base: '@'}
+# key CHORD_COMB_85{ base: '%'}
+# key CHORD_COMB_86{ base: '@'}
+# key CHORD_COMB_87{ base: '%'}
+# key CHORD_COMB_88{ base: '@'}
+# key CHORD_COMB_89{ base: '%'}
+# key CHORD_COMB_90{ base: '@'}
+# key CHORD_COMB_91{ base: '%'}
+# key CHORD_COMB_92{ base: '@'}
+# key CHORD_COMB_93{ base: '%'}
+# key CHORD_COMB_94{ base: '@'}
+# key CHORD_COMB_95{ base: '%'}
+# key CHORD_COMB_96{ base: '@'}
+# key CHORD_COMB_97{ base: '%'}
+# key CHORD_COMB_98{ base: '@'}
+# key CHORD_COMB_99{ base: '%'}
+# key CHORD_COMB_100{ base: '@'}
+# key CHORD_COMB_101{ base: '%'}
+# key CHORD_COMB_102{ base: '@'}
+# key CHORD_COMB_103{ base: '%'}
+# key CHORD_COMB_104{ base: '@'}
+# key CHORD_COMB_105{ base: '%'}
+# key CHORD_COMB_106{ base: '@'}
+# key CHORD_COMB_107{ base: '%'}
+# key CHORD_COMB_108{ base: '@'}
+# key CHORD_COMB_109{ base: '%'}
+# key CHORD_COMB_110{ base: '@'}
+# key CHORD_COMB_111{ base: '%'}
+# key CHORD_COMB_112{ base: '@'}
+# key CHORD_COMB_113{ base: '%'}
+# key CHORD_COMB_114{ base: '@'}
+# key CHORD_COMB_115{ base: '%'}
+# key CHORD_COMB_116{ base: '@'}
+# key CHORD_COMB_117{ base: '%'}
+# key CHORD_COMB_118{ base: '@'}
+# key CHORD_COMB_119{ base: '%'}
+# key CHORD_COMB_120{ base: '@'}
+# key CHORD_COMB_121{ base: '%'}
+# key CHORD_COMB_122{ base: '@'}
+# key CHORD_COMB_123{ base: '%'}
+# key CHORD_COMB_124{ base: '@'}
+# key CHORD_COMB_125{ base: '%'}
+# key CHORD_COMB_126{ base: '@'}
+# key CHORD_COMB_127{ base: '%'}
+# key CHORD_COMB_128{ base: '@'}
+# key CHORD_COMB_129{ base: '%'}
+# key CHORD_COMB_130{ base: '@'}
+# key CHORD_COMB_131{ base: '%'}
+# key CHORD_COMB_132{ base: '@'}
+# key CHORD_COMB_133{ base: '%'}
+# key CHORD_COMB_134{ base: '@'}
+# key CHORD_COMB_135{ base: '%'}
+# key CHORD_COMB_136{ base: '@'}
+# key CHORD_COMB_137{ base: '%'}
+# key CHORD_COMB_138{ base: '@'}
+# key CHORD_COMB_139{ base: '%'}
+# key CHORD_COMB_140{ base: '%'}
+# key CHORD_COMB_142{ base: '@'}
+# key CHORD_COMB_143{ base: '%'}
+# key CHORD_COMB_144{ base: '@'}
+# key CHORD_COMB_145{ base: '%'}
+# key CHORD_COMB_146{ base: '@'}
+# key CHORD_COMB_147{ base: '%'}
+# key CHORD_COMB_148{ base: '@'}
+# key CHORD_COMB_149{ base: '%'}
+# key CHORD_COMB_150{ base: '%'}
+# key CHORD_COMB_152{ base: '@'}
+# key CHORD_COMB_153{ base: '%'}
+# key CHORD_COMB_154{ base: '@'}
+# key CHORD_COMB_155{ base: '%'}
+# key CHORD_COMB_156{ base: '@'}
+# key CHORD_COMB_157{ base: '%'}
+# key CHORD_COMB_158{ base: '@'}
+# key CHORD_COMB_159{ base: '%'}
+# key CHORD_COMB_160{ base: '@'}
+# key CHORD_COMB_161{ base: '%'}
+# key CHORD_COMB_162{ base: '@'}
+# key CHORD_COMB_163{ base: '%'}
+# key CHORD_COMB_164{ base: '@'}
+# key CHORD_COMB_165{ base: '%'}
+# key CHORD_COMB_166{ base: '@'}
+# key CHORD_COMB_167{ base: '%'}
+# key CHORD_COMB_168{ base: '@'}
+# key CHORD_COMB_169{ base: '%'}
+# key CHORD_COMB_170{ base: '@'}
+# key CHORD_COMB_171{ base: '%'}
+# key CHORD_COMB_172{ base: '@'}
+# key CHORD_COMB_173{ base: '%'}
+# key CHORD_COMB_174{ base: '@'}
+# key CHORD_COMB_175{ base: '%'}
+# key CHORD_COMB_176{ base: '@'}
+# key CHORD_COMB_177{ base: '%'}
+# key CHORD_COMB_178{ base: '@'}
+# key CHORD_COMB_179{ base: '%'}
+# key CHORD_COMB_180{ base: '@'}
+# key CHORD_COMB_181{ base: '%'}
+# key CHORD_COMB_182{ base: '@'}
+# key CHORD_COMB_183{ base: '%'}
+# key CHORD_COMB_184{ base: '@'}
+# key CHORD_COMB_185{ base: '%'}
+# key CHORD_COMB_186{ base: '@'}
+# key CHORD_COMB_187{ base: '%'}
+# key CHORD_COMB_188{ base: '@'}
+# key CHORD_COMB_189{ base: '%'}
+# key CHORD_COMB_190{ base: '@'}
+# key CHORD_COMB_191{ base: '%'}
+# key CHORD_COMB_192{ base: '@'}
+# key CHORD_COMB_193{ base: '%'}
+# key CHORD_COMB_194{ base: '@'}
+# key CHORD_COMB_195{ base: '%'}
+# key CHORD_COMB_196{ base: '@'}
+# key CHORD_COMB_197{ base: '%'}
+# key CHORD_COMB_198{ base: '@'}
+# key CHORD_COMB_199{ base: '%'}
+# key CHORD_COMB_200{ base: '@'}
+# key CHORD_COMB_201{ base: '%'}
+# key CHORD_COMB_202{ base: '@'}
+# key CHORD_COMB_203{ base: '%'}
+# key CHORD_COMB_204{ base: '@'}
+# key CHORD_COMB_205{ base: '%'}
+# key CHORD_COMB_206{ base: '@'}
+# key CHORD_COMB_207{ base: '%'}
+# key CHORD_COMB_208{ base: '@'}
+# key CHORD_COMB_209{ base: '%'}
+# key CHORD_COMB_210{ base: '@'}
+# key CHORD_COMB_211{ base: '%'}
+# key CHORD_COMB_212{ base: '@'}
+# key CHORD_COMB_213{ base: '%'}
+# key CHORD_COMB_214{ base: '@'}
+# key CHORD_COMB_215{ base: '%'}
+# key CHORD_COMB_216{ base: '@'}
+# key CHORD_COMB_217{ base: '%'}
+# key CHORD_COMB_218{ base: '@'}
+# key CHORD_COMB_219{ base: '%'}
+# key CHORD_COMB_220{ base: '@'}
+# key CHORD_COMB_221{ base: '%'}
+# key CHORD_COMB_222{ base: '@'}
+# key CHORD_COMB_223{ base: '%'}
+# key CHORD_COMB_224{ base: '@'}
+# key CHORD_COMB_225{ base: '%'}
+# key CHORD_COMB_226{ base: '@'}
+# key CHORD_COMB_227{ base: '%'}
+# key CHORD_COMB_228{ base: '@'}
+# key CHORD_COMB_229{ base: '%'}
+# key CHORD_COMB_230{ base: '@'}
+# key CHORD_COMB_231{ base: '%'}
+# key CHORD_COMB_232{ base: '@'}
+# key CHORD_COMB_233{ base: '%'}
+# key CHORD_COMB_234{ base: '@'}
+# key CHORD_COMB_235{ base: '%'}
+# key CHORD_COMB_236{ base: '@'}
+# key CHORD_COMB_237{ base: '%'}
+# key CHORD_COMB_238{ base: '@'}
+# key CHORD_COMB_239{ base: '%'}
+# key CHORD_COMB_240{ base: '@'}
+# key CHORD_COMB_241{ base: '%'}
+# key CHORD_COMB_242{ base: '@'}
+# key CHORD_COMB_243{ base: '%'}
+# key CHORD_COMB_244{ base: '@'}
+# key CHORD_COMB_245{ base: '%'}
+# key CHORD_COMB_246{ base: '@'}
+# key CHORD_COMB_247{ base: '%'}
+# key CHORD_COMB_248{ base: '@'}
+# key CHORD_COMB_249{ base: '%'}
+# key CHORD_COMB_250{ base: '@'}
+# key CHORD_COMB_251{ base: '%'}
+# key CHORD_COMB_252{ base: '@'}
+# key CHORD_COMB_253{ base: '%'}
+# key CHORD_COMB_254{ base: '@'}
+# key CHORD_COMB_255{ base: '%'}
