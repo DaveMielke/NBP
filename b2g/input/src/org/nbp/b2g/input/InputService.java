@@ -21,6 +21,7 @@ public class InputService extends InputMethodService {
 
   private Map<Integer, Action> actionMap = new HashMap<Integer, Action>();
   private final CharacterMap characterMap = new CharacterMap();
+  private boolean controlModifier = false;
 
   public static InputService getInputService () {
     return inputService;
@@ -70,6 +71,14 @@ public class InputService extends InputMethodService {
     addKeyAction((KeyMask.Space | KeyMask.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
 
     addKeyAction((KeyMask.Space | KeyMask.Dots1456), KeyEvent.KEYCODE_ASSIST);
+
+    addAction((KeyMask.Space | KeyMask.Dots1346), new Action(this) {
+      @Override
+      public final boolean performAction () {
+        controlModifier = !controlModifier;
+        return true;
+      }
+    });
   }
 
   @Override
@@ -197,10 +206,14 @@ public class InputService extends InputMethodService {
       if (activeKeyMask > 0) {
         Action action = actionMap.get(new Integer(activeKeyMask));
 
+        boolean control = controlModifier;
+        controlModifier = false;
+
         if (action != null) {
           action.performAction();
         } else if (activeKeyMask <= KeyMask.Space) {
           char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.Space);
+          if (control) character &= 0X1F;
           inputCharacter(character);
         }
 
