@@ -7,6 +7,11 @@ import android.view.KeyEvent;
 public final class KeyAction extends Action {
   protected final int keyCode;
 
+  @Override
+  public String getActionName () {
+    return KeyEvent.keyCodeToString(keyCode);
+  }
+
   public void logKeyEventSent (int code, boolean press) {
     inputService.logKeyEvent(code, press, "sent");
   }

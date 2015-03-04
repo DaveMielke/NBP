@@ -135,15 +135,15 @@ public class InputService extends InputMethodService {
     return null;
   }
 
-  private boolean inputCharacter (char character) {
+  private boolean insertCharacter (char character) {
     InputConnection connection = getInputConnection();
+
+    if (ApplicationParameters.LOG_ACTIONS) {
+      Log.d(LOG_TAG, "inserting character: " + character);
+    }
 
     if (connection != null) {
       if (connection.commitText(Character.toString(character), 1)) {
-        if (ApplicationParameters.LOG_KEYBOARD_EVENTS) {
-          Log.d(LOG_TAG, "character injected: " + character);
-        }
-
         return true;
       }
     }
@@ -152,7 +152,7 @@ public class InputService extends InputMethodService {
   }
 
   public static void logKeyEvent (int code, boolean press, String description) {
-    if (ApplicationParameters.LOG_KEYBOARD_EVENTS) {
+    if (ApplicationParameters.LOG_KEY_EVENTS) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("key ");
@@ -215,11 +215,15 @@ public class InputService extends InputMethodService {
         controlModifier = false;
 
         if (action != null) {
+          if (ApplicationParameters.LOG_ACTIONS) {
+            Log.d(LOG_TAG, "performing action: " + action.getActionName());
+          }
+
           action.performAction();
         } else if (activeKeyMask <= KeyMask.Space) {
           char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.Space);
           if (control) character &= 0X1F;
-          inputCharacter(character);
+          insertCharacter(character);
         }
 
         activeKeyMask = 0;

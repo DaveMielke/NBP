@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class ClockActivity extends Activity {
   public TextView timeView;
-  SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+  SimpleDateFormat dateFormatter = new SimpleDateFormat(ApplicationParameters.CLOCK_TIME_FORMAT);
 
   private class ClockUpdateTask extends TimerTask {
     private final Timer timer = new Timer();
@@ -35,7 +35,9 @@ public class ClockActivity extends Activity {
             if (isClockUpdateScheduled()) {
               Date date = new Date();
               timeView.setText(dateFormatter.format(date));
-              scheduleClockUpdate(1000 - (date.getTime() % 1000));
+
+              long interval = ApplicationParameters.CLOCK_UPDATE_INTERVAL;
+              scheduleClockUpdate(interval - (date.getTime() % interval));
             }
           }
         }

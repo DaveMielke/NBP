@@ -6,6 +6,11 @@ public final class ActivityAction extends Action {
   protected final Class activityClass;
 
   @Override
+  public String getActionName () {
+    return activityClass.getName();
+  }
+
+  @Override
   public final boolean performAction () {
     Intent intent = new Intent(inputService, activityClass);
 

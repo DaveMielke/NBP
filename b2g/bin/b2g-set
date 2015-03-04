@@ -1,17 +1,18 @@
 #!/bin/bash
 
-declare -A settingTable=(
+declare -A settingDescriptors=(
    ["ADB"]="boolean property persist.service.adb.enable"
    ["accessibility"]="boolean database accessibility_enabled secure"
    ["brltty"]="boolean accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
    ["country"]="territory property persist.sys.country"
+   ["developer"]="boolean database development_settings_enabled secure"
    ["foreign"]="boolean database install_non_market_apps secure"
    ["input"]="boolean input .InputService org.nbp.b2g.input"
    ["language"]="language property persist.sys.language"
    ["nolock"]="boolean database lockscreen.disabled secure"
    ["spiel"]="boolean accessibility info.spielproject.spiel.SpielService info.spielproject.spiel"
    ["talkback"]="boolean accessibility .TalkBackService com.google.android.marvin.talkback"
-   ["timeout"]="integer database screen_off_timeout system"
+   ["timeout"]="milliseconds database screen_off_timeout system"
 )
 
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
@@ -218,21 +219,6 @@ changeSetting_property() {
    setPropertyValue "${settingObject}" "${settingValue}"
 }
 
-getSettingAttributes() {
-   local descriptor="${settingTable["${settingName}"]}"
-   [ -n "${descriptor}" ] || syntaxError "unknown setting name: ${settingName}";
-
-   local attributes=( ${descriptor} )
-   settingType="${attributes[0]}"
-   settingClass="${attributes[1]}"
-   settingObject="${attributes[2]}"
-   settingContainer="${attributes[3]}"
-}
-
-showSetting() {
-   "showSetting_${settingClass}"
-}
-
 verifyValue_boolean() {
    [ "${settingValue}" = "${offValue}" -o "${settingValue}" = "${onValue}" ] || {
       if [[ "${settingValue}" =~ ^(off|no|false)$ ]]
@@ -249,11 +235,6 @@ verifyValue_boolean() {
    return 0
 }
 
-verifyValue_integer() {
-   [[ "${settingValue}" =~ ^(0|1[0-9]*)$ ]] || return 1
-   return 0
-}
-
 verifyValue_language() {
    [ "${#settingValue}" -ne 2 ] || {
       [ "${settingValue,,*}" != "${settingValue}" ] || {
@@ -264,6 +245,11 @@ verifyValue_language() {
    return 1
 }
 
+verifyValue_milliseconds() {
+   [[ "${settingValue}" =~ ^(0|1[0-9]*)$ ]] || return 1
+   return 0
+}
+
 verifyValue_territory() {
    [ "${#settingValue}" -ne 2 ] || {
       [ "${settingValue^^*}" != "${settingValue}" ] || {
@@ -272,6 +258,44 @@ verifyValue_territory() {
    }
 
    return 1
+}
+
+getSettingAttributes() {
+   local descriptor="${settingDescriptors["${settingName}"]}"
+   [ -n "${descriptor}" ] || syntaxError "unknown setting name: ${settingName}";
+
+   local attributes=( ${descriptor} )
+   settingType="${attributes[0]}"
+   settingClass="${attributes[1]}"
+   settingObject="${attributes[2]}"
+   settingContainer="${attributes[3]}"
+}
+
+showMilliseconds() {
+   local value="${1}"
+   echo "${value}"
+}
+
+showSetting() {
+   local value="$("showSetting_${settingClass}")"
+
+   case "${settingType}"
+   in
+      milliseconds) showMilliseconds "${value}";;
+      *) echo "${value}";;
+   esac
+}
+
+showAllSettings() {
+   local settingNames=${!settingDescriptors[*]}
+   settingNames="${settingNames// /$'\n'}"
+   settingNames="$(echo "${settingNames}" | sort)"
+
+   for settingName in ${settingNames}
+   do
+      getSettingAttributes
+      echo "${settingName}: $(showSetting)"
+   done
 }
 
 useEmulator=false
@@ -289,17 +313,7 @@ done
 shift $((OPTIND - 1))
 
 [ "${#}" -gt 0 ] || {
-   settingNames=${!settingTable[*]}
-   settingNames="${settingNames// /$'\n'}"
-   settingNames="$(echo "${settingNames}" | sort)"
-
-   for settingName in ${settingNames}
-   do
-      getSettingAttributes
-      settingValue="$(showSetting)"
-      echo "${settingName}: ${settingValue}"
-   done
-
+   showAllSettings
    exit 0
 }
 
