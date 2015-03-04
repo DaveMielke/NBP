@@ -1549,7 +1549,7 @@
 	<enum name="KEYCODE_BRL_GRAVE" value="272"	/>
 	<enum name="KEYCODE_BRL_AT" value="273"	/>
 	<enum name="KEYCODE_BRL_SLASH" value="274"	/>
-	<enum name="KEYCODE_BRL_DOTS_79" value="275"	/>
+	<enum name="KEYCODE_BRL_DOTS_347" value="275"	/>
 	<enum name="KEYCODE_BRL_LOWERI" value="276"	/>
 	<enum name="KEYCODE_BRL_UPPERI" value="277"	/>
 	<enum name="KEYCODE_BRL_LOWERS" value="278"	/>
@@ -1563,13 +1563,13 @@
 	<enum name="KEYCODE_BRL_LOWERP" value="286"	/>
 	<enum name="KEYCODE_BRL_UPPERP" value="287"	/>
 	<enum name="KEYCODE_BRL_QUOTE" value="288"	/>
-	<enum name="KEYCODE_BRL_DOTS_373" value="289"	/>
+	<enum name="KEYCODE_BRL_DOTS_57" value="289"	/>
 	<enum name="KEYCODE_BRL_9" value="290"	/>
-	<enum name="KEYCODE_BRL_DOTS_375" value="291"	/>
+	<enum name="KEYCODE_BRL_DOTS_357" value="291"	/>
 	<enum name="KEYCODE_BRL_3" value="292"	/>
-	<enum name="KEYCODE_BRL_DOTS_377" value="293"	/>
+	<enum name="KEYCODE_BRL_DOTS_257" value="293"	/>
 	<enum name="KEYCODE_BRL_6" value="294"	/>
-	<enum name="KEYCODE_BRL_DOTS_379" value="295"	/>
+	<enum name="KEYCODE_BRL_DOTS_2357" value="295"	/>
 	<enum name="KEYCODE_BRL_LOWERE" value="296"	/>
 	<enum name="KEYCODE_BRL_UPPERE" value="297"	/>
 	<enum name="KEYCODE_BRL_LOWERO" value="298"	/>
@@ -1581,7 +1581,7 @@
 	<enum name="KEYCODE_BRL_NOT" value="304"	/>
 	<enum name="KEYCODE_BRL_CARET" value="305"	/>
 	<enum name="KEYCODE_BRL_GREATER_THAN" value="306"	/>
-	<enum name="KEYCODE_BRL_DOTS_271" value="307"	/>
+	<enum name="KEYCODE_BRL_DOTS_3457" value="307"	/>
 	<enum name="KEYCODE_BRL_LOWERJ" value="308"	/>
 	<enum name="KEYCODE_BRL_UPPERJ" value="309"	/>
 	<enum name="KEYCODE_BRL_LOWERT" value="310"	/>
@@ -1595,197 +1595,197 @@
 	<enum name="KEYCODE_BRL_LOWERQ" value="318"	/>
 	<enum name="KEYCODE_BRL_UPPERQ" value="319"	/>
 	<enum name="KEYCODE_BRL_COMMA" value="320"	/>
-	<enum name="KEYCODE_BRL_DOTS_235" value="321"	/>
+	<enum name="KEYCODE_BRL_DOTS_67" value="321"	/>
 	<enum name="KEYCODE_BRL_MINUS" value="322"	/>
-	<enum name="KEYCODE_BRL_DOTS_237" value="323"	/>
+	<enum name="KEYCODE_BRL_DOTS_367" value="323"	/>
 	<enum name="KEYCODE_BRL_5" value="324"	/>
-	<enum name="KEYCODE_BRL_DOTS_239" value="325"	/>
+	<enum name="KEYCODE_BRL_DOTS_267" value="325"	/>
 	<enum name="KEYCODE_BRL_8" value="326"	/>
-	<enum name="KEYCODE_BRL_DOTS_2371" value="327"	/>
+	<enum name="KEYCODE_BRL_DOTS_2367" value="327"	/>
 	<enum name="KEYCODE_BRL_STAR" value="328"	/>
-	<enum name="KEYCODE_BRL_DOTS_2373" value="329"	/>
+	<enum name="KEYCODE_BRL_DOTS_167" value="329"	/>
 	<enum name="KEYCODE_BRL_LOWERU" value="330"	/>
 	<enum name="KEYCODE_BRL_UPPERU" value="331"	/>
 	<enum name="KEYCODE_BRL_LESS_THAN" value="332"	/>
-	<enum name="KEYCODE_BRL_DOTS_2377" value="333"	/>
+	<enum name="KEYCODE_BRL_DOTS_1267" value="333"	/>
 	<enum name="KEYCODE_BRL_LOWERV" value="334"	/>
 	<enum name="KEYCODE_BRL_UPPERV" value="335"	/>
 	<enum name="KEYCODE_BRL_PERIOD" value="336"	/>
-	<enum name="KEYCODE_BRL_DOTS_11" value="337"	/>
+	<enum name="KEYCODE_BRL_DOTS_467" value="337"	/>
 	<enum name="KEYCODE_BRL_PLS" value="338"	/>
-	<enum name="KEYCODE_BRL_DOTS_13" value="339"	/>
+	<enum name="KEYCODE_BRL_DOTS_3467" value="339"	/>
 	<enum name="KEYCODE_BRL_LEFT_CB" value="340"	/>
 	<enum name="KEYCODE_BRL_LEFT_BRACKET" value="341"	/>
 	<enum name="KEYCODE_BRL_EXCLAMATION" value="342"	/>
-	<enum name="KEYCODE_BRL_DOTS_17" value="343"	/>
+	<enum name="KEYCODE_BRL_DOTS_23467" value="343"	/>
 	<enum name="KEYCODE_BRL_PERCENT" value="344"	/>
-	<enum name="KEYCODE_BRL_DOTS_19" value="345"	/>
+	<enum name="KEYCODE_BRL_DOTS_1467" value="345"	/>
 	<enum name="KEYCODE_BRL_LOWERX" value="346"	/>
 	<enum name="KEYCODE_BRL_UPPERX" value="347"	/>
 	<enum name="KEYCODE_BRL_DOLLAR" value="348"	/>
-	<enum name="KEYCODE_BRL_DOTS_173" value="349"	/>
+	<enum name="KEYCODE_BRL_DOTS_12467" value="349"	/>
 	<enum name="KEYCODE_BRL_AND" value="350"	/>
-	<enum name="KEYCODE_BRL_DOTS_175" value="351"	/>
+	<enum name="KEYCODE_BRL_DOTS_123467" value="351"	/>
 	<enum name="KEYCODE_BRL_SEMICOLON" value="352"	/>
-	<enum name="KEYCODE_BRL_DOTS_177" value="353"	/>
+	<enum name="KEYCODE_BRL_DOTS_567" value="353"	/>
 	<enum name="KEYCODE_BRL_0" value="354"	/>
-	<enum name="KEYCODE_BRL_DOTS_179" value="355"	/>
+	<enum name="KEYCODE_BRL_DOTS_3567" value="355"	/>
 	<enum name="KEYCODE_BRL_4" value="356"	/>
-	<enum name="KEYCODE_BRL_DOTS_701" value="357"	/>
+	<enum name="KEYCODE_BRL_DOTS_2567" value="357"	/>
 	<enum name="KEYCODE_BRL_7" value="358"	/>
-	<enum name="KEYCODE_BRL_DOTS_703" value="359"	/>
+	<enum name="KEYCODE_BRL_DOTS_23567" value="359"	/>
 	<enum name="KEYCODE_BRL_COLON" value="360"	/>
-	<enum name="KEYCODE_BRL_DOTS_705" value="361"	/>
+	<enum name="KEYCODE_BRL_DOTS_1567" value="361"	/>
 	<enum name="KEYCODE_BRL_LOWERZ" value="362"	/>
 	<enum name="KEYCODE_BRL_UPPERZ" value="363"	/>
 	<enum name="KEYCODE_BRL_OR" value="364"	/>
 	<enum name="KEYCODE_BRL_BACKSLASH" value="365"	/>
 	<enum name="KEYCODE_BRL_LEFT_BRACE" value="366"	/>
-	<enum name="KEYCODE_BRL_DOTS_711" value="367"	/>
+	<enum name="KEYCODE_BRL_DOTS_123567" value="367"	/>
 	<enum name="KEYCODE_BRL_UNDERSCORE" value="368"	/>
-	<enum name="KEYCODE_BRL_DOTS_713" value="369"	/>
+	<enum name="KEYCODE_BRL_DOTS_4567" value="369"	/>
 	<enum name="KEYCODE_BRL_POUND" value="370"	/>
-	<enum name="KEYCODE_BRL_DOTS_715" value="371"	/>
+	<enum name="KEYCODE_BRL_DOTS_34567" value="371"	/>
 	<enum name="KEYCODE_BRL_LOWERW" value="372"	/>
 	<enum name="KEYCODE_BRL_UPPERW" value="373"	/>
 	<enum name="KEYCODE_BRL_RIGHT_BRACE" value="374"	/>
-	<enum name="KEYCODE_BRL_DOTS_719" value="375"	/>
+	<enum name="KEYCODE_BRL_DOTS_234567" value="375"	/>
 	<enum name="KEYCODE_BRL_QUESTION" value="376"	/>
-	<enum name="KEYCODE_BRL_DOTS_721" value="377"	/>
+	<enum name="KEYCODE_BRL_DOTS_14567" value="377"	/>
 	<enum name="KEYCODE_BRL_LOWERY" value="378"	/>
 	<enum name="KEYCODE_BRL_UPPERY" value="379"	/>
 	<enum name="KEYCODE_BRL_RIGHT_CB" value="380"	/>
 	<enum name="KEYCODE_BRL_RIGHT_BRACKET" value="381"	/>
 	<enum name="KEYCODE_BRL_EQUALS" value="382"	/>
-	<enum name="KEYCODE_BRL_DOTS_727" value="383"	/>
-	<enum name="KEYCODE_BRL_DOTS_728" value="384"	/>
-	<enum name="KEYCODE_BRL_DOTS_729" value="385"	/>
-	<enum name="KEYCODE_BRL_DOTS_730" value="386"	/>
-	<enum name="KEYCODE_BRL_DOTS_731" value="387"	/>
-	<enum name="KEYCODE_BRL_DOTS_732" value="388"	/>
-	<enum name="KEYCODE_BRL_DOTS_733" value="389"	/>
-	<enum name="KEYCODE_BRL_DOTS_734" value="390"	/>
-	<enum name="KEYCODE_BRL_DOTS_735" value="391"	/>
-	<enum name="KEYCODE_BRL_DOTS_736" value="392"	/>
-	<enum name="KEYCODE_BRL_DOTS_737" value="393"	/>
-	<enum name="KEYCODE_BRL_DOTS_738" value="394"	/>
-	<enum name="KEYCODE_BRL_DOTS_739" value="395"	/>
-	<enum name="KEYCODE_BRL_DOTS_740" value="396"	/>
-	<enum name="KEYCODE_BRL_DOTS_741" value="397"	/>
-	<enum name="KEYCODE_BRL_DOTS_742" value="398"	/>
-	<enum name="KEYCODE_BRL_DOTS_743" value="399"	/>
-	<enum name="KEYCODE_BRL_DOTS_744" value="400"	/>
-	<enum name="KEYCODE_BRL_DOTS_745" value="401"	/>
-	<enum name="KEYCODE_BRL_DOTS_746" value="402"	/>
-	<enum name="KEYCODE_BRL_DOTS_747" value="403"	/>
-	<enum name="KEYCODE_BRL_DOTS_748" value="404"	/>
-	<enum name="KEYCODE_BRL_DOTS_749" value="405"	/>
-	<enum name="KEYCODE_BRL_DOTS_750" value="406"	/>
-	<enum name="KEYCODE_BRL_DOTS_751" value="407"	/>
-	<enum name="KEYCODE_BRL_DOTS_752" value="408"	/>
-	<enum name="KEYCODE_BRL_DOTS_753" value="409"	/>
-	<enum name="KEYCODE_BRL_DOTS_754" value="410"	/>
-	<enum name="KEYCODE_BRL_DOTS_755" value="411"	/>
-	<enum name="KEYCODE_BRL_DOTS_756" value="412"	/>
-	<enum name="KEYCODE_BRL_DOTS_757" value="413"	/>
-	<enum name="KEYCODE_BRL_DOTS_758" value="414"	/>
-	<enum name="KEYCODE_BRL_DOTS_759" value="415"	/>
-	<enum name="KEYCODE_BRL_DOTS_760" value="416"	/>
-	<enum name="KEYCODE_BRL_DOTS_761" value="417"	/>
-	<enum name="KEYCODE_BRL_DOTS_762" value="418"	/>
-	<enum name="KEYCODE_BRL_DOTS_763" value="419"	/>
-	<enum name="KEYCODE_BRL_DOTS_764" value="420"	/>
-	<enum name="KEYCODE_BRL_DOTS_765" value="421"	/>
-	<enum name="KEYCODE_BRL_DOTS_766" value="422"	/>
-	<enum name="KEYCODE_BRL_DOTS_767" value="423"	/>
-	<enum name="KEYCODE_BRL_DOTS_768" value="424"	/>
-	<enum name="KEYCODE_BRL_DOTS_769" value="425"	/>
-	<enum name="KEYCODE_BRL_DOTS_770" value="426"	/>
-	<enum name="KEYCODE_BRL_DOTS_771" value="427"	/>
-	<enum name="KEYCODE_BRL_DOTS_772" value="428"	/>
-	<enum name="KEYCODE_BRL_DOTS_773" value="429"	/>
-	<enum name="KEYCODE_BRL_DOTS_774" value="430"	/>
-	<enum name="KEYCODE_BRL_DOTS_775" value="431"	/>
-	<enum name="KEYCODE_BRL_DOTS_776" value="432"	/>
-	<enum name="KEYCODE_BRL_DOTS_777" value="433"	/>
-	<enum name="KEYCODE_BRL_DOTS_778" value="434"	/>
-	<enum name="KEYCODE_BRL_DOTS_779" value="435"	/>
-	<enum name="KEYCODE_BRL_DOTS_780" value="436"	/>
-	<enum name="KEYCODE_BRL_DOTS_781" value="437"	/>
-	<enum name="KEYCODE_BRL_DOTS_782" value="438"	/>
-	<enum name="KEYCODE_BRL_DOTS_783" value="439"	/>
-	<enum name="KEYCODE_BRL_DOTS_784" value="440"	/>
-	<enum name="KEYCODE_BRL_DOTS_785" value="441"	/>
-	<enum name="KEYCODE_BRL_DOTS_786" value="442"	/>
-	<enum name="KEYCODE_BRL_DOTS_787" value="443"	/>
-	<enum name="KEYCODE_BRL_DOTS_788" value="444"	/>
-	<enum name="KEYCODE_BRL_DOTS_789" value="445"	/>
-	<enum name="KEYCODE_BRL_DOTS_790" value="446"	/>
-	<enum name="KEYCODE_BRL_DOTS_791" value="447"	/>
-	<enum name="KEYCODE_BRL_DOTS_792" value="448"	/>
-	<enum name="KEYCODE_BRL_DOTS_793" value="449"	/>
-	<enum name="KEYCODE_BRL_DOTS_794" value="450"	/>
-	<enum name="KEYCODE_BRL_DOTS_795" value="451"	/>
-	<enum name="KEYCODE_BRL_DOTS_796" value="452"	/>
-	<enum name="KEYCODE_BRL_DOTS_797" value="453"	/>
-	<enum name="KEYCODE_BRL_DOTS_798" value="454"	/>
-	<enum name="KEYCODE_BRL_DOTS_799" value="455"	/>
-	<enum name="KEYCODE_BRL_DOTS_300" value="456"	/>
-	<enum name="KEYCODE_BRL_DOTS_301" value="457"	/>
-	<enum name="KEYCODE_BRL_DOTS_302" value="458"	/>
-	<enum name="KEYCODE_BRL_DOTS_303" value="459"	/>
-	<enum name="KEYCODE_BRL_DOTS_304" value="460"	/>
-	<enum name="KEYCODE_BRL_DOTS_305" value="461"	/>
-	<enum name="KEYCODE_BRL_DOTS_306" value="462"	/>
-	<enum name="KEYCODE_BRL_DOTS_307" value="463"	/>
-	<enum name="KEYCODE_BRL_DOTS_308" value="464"	/>
-	<enum name="KEYCODE_BRL_DOTS_309" value="465"	/>
-	<enum name="KEYCODE_BRL_DOTS_310" value="466"	/>
-	<enum name="KEYCODE_BRL_DOTS_311" value="467"	/>
-	<enum name="KEYCODE_BRL_DOTS_312" value="468"	/>
-	<enum name="KEYCODE_BRL_DOTS_313" value="469"	/>
-	<enum name="KEYCODE_BRL_DOTS_314" value="470"	/>
-	<enum name="KEYCODE_BRL_DOTS_315" value="471"	/>
-	<enum name="KEYCODE_BRL_DOTS_316" value="472"	/>
-	<enum name="KEYCODE_BRL_DOTS_317" value="473"	/>
-	<enum name="KEYCODE_BRL_DOTS_318" value="474"	/>
-	<enum name="KEYCODE_BRL_DOTS_319" value="475"	/>
-	<enum name="KEYCODE_BRL_DOTS_320" value="476"	/>
-	<enum name="KEYCODE_BRL_DOTS_321" value="477"	/>
-	<enum name="KEYCODE_BRL_DOTS_322" value="478"	/>
-	<enum name="KEYCODE_BRL_DOTS_323" value="479"	/>
-	<enum name="KEYCODE_BRL_DOTS_324" value="480"	/>
-	<enum name="KEYCODE_BRL_DOTS_325" value="481"	/>
-	<enum name="KEYCODE_BRL_DOTS_326" value="482"	/>
-	<enum name="KEYCODE_BRL_DOTS_327" value="483"	/>
-	<enum name="KEYCODE_BRL_DOTS_328" value="484"	/>
-	<enum name="KEYCODE_BRL_DOTS_329" value="485"	/>
-	<enum name="KEYCODE_BRL_DOTS_330" value="486"	/>
-	<enum name="KEYCODE_BRL_DOTS_331" value="487"	/>
-	<enum name="KEYCODE_BRL_DOTS_332" value="488"	/>
-	<enum name="KEYCODE_BRL_DOTS_333" value="489"	/>
-	<enum name="KEYCODE_BRL_DOTS_334" value="490"	/>
-	<enum name="KEYCODE_BRL_DOTS_335" value="491"	/>
-	<enum name="KEYCODE_BRL_DOTS_336" value="492"	/>
-	<enum name="KEYCODE_BRL_DOTS_337" value="493"	/>
-	<enum name="KEYCODE_BRL_DOTS_338" value="494"	/>
-	<enum name="KEYCODE_BRL_DOTS_339" value="495"	/>
-	<enum name="KEYCODE_BRL_DOTS_340" value="496"	/>
-	<enum name="KEYCODE_BRL_DOTS_341" value="497"	/>
-	<enum name="KEYCODE_BRL_DOTS_342" value="498"	/>
-	<enum name="KEYCODE_BRL_DOTS_343" value="499"	/>
-	<enum name="KEYCODE_BRL_DOTS_344" value="500"	/>
-	<enum name="KEYCODE_BRL_DOTS_345" value="501"	/>
-	<enum name="KEYCODE_BRL_DOTS_346" value="502"	/>
-	<enum name="KEYCODE_BRL_DOTS_347" value="503"	/>
-	<enum name="KEYCODE_BRL_DOTS_348" value="504"	/>
-	<enum name="KEYCODE_BRL_DOTS_349" value="505"	/>
-	<enum name="KEYCODE_BRL_DOTS_350" value="506"	/>
-	<enum name="KEYCODE_BRL_DOTS_351" value="507"	/>
-	<enum name="KEYCODE_BRL_DOTS_352" value="508"	/>
-	<enum name="KEYCODE_BRL_DOTS_353" value="509"	/>
-	<enum name="KEYCODE_BRL_DOTS_354" value="510"	/>
-	<enum name="KEYCODE_BRL_DOTS_355" value="511"	/>
+	<enum name="KEYCODE_BRL_DOTS_1234567" value="383"	/>
+	<enum name="KEYCODE_BRL_DOTS_8" value="384"	/>
+	<enum name="KEYCODE_BRL_DOTS_78" value="385"	/>
+	<enum name="KEYCODE_BRL_DOTS_38" value="386"	/>
+	<enum name="KEYCODE_BRL_DOTS_378" value="387"	/>
+	<enum name="KEYCODE_BRL_DOTS_28" value="388"	/>
+	<enum name="KEYCODE_BRL_DOTS_278" value="389"	/>
+	<enum name="KEYCODE_BRL_DOTS_238" value="390"	/>
+	<enum name="KEYCODE_BRL_DOTS_2378" value="391"	/>
+	<enum name="KEYCODE_BRL_DOTS_18" value="392"	/>
+	<enum name="KEYCODE_BRL_DOTS_178" value="393"	/>
+	<enum name="KEYCODE_BRL_DOTS_138" value="394"	/>
+	<enum name="KEYCODE_BRL_DOTS_1378" value="395"	/>
+	<enum name="KEYCODE_BRL_DOTS_128" value="396"	/>
+	<enum name="KEYCODE_BRL_DOTS_1278" value="397"	/>
+	<enum name="KEYCODE_BRL_DOTS_1238" value="398"	/>
+	<enum name="KEYCODE_BRL_DOTS_12378" value="399"	/>
+	<enum name="KEYCODE_BRL_DOTS_48" value="400"	/>
+	<enum name="KEYCODE_BRL_DOTS_478" value="401"	/>
+	<enum name="KEYCODE_BRL_DOTS_348" value="402"	/>
+	<enum name="KEYCODE_BRL_DOTS_3478" value="403"	/>
+	<enum name="KEYCODE_BRL_DOTS_248" value="404"	/>
+	<enum name="KEYCODE_BRL_DOTS_2478" value="405"	/>
+	<enum name="KEYCODE_BRL_DOTS_2348" value="406"	/>
+	<enum name="KEYCODE_BRL_DOTS_23478" value="407"	/>
+	<enum name="KEYCODE_BRL_DOTS_148" value="408"	/>
+	<enum name="KEYCODE_BRL_DOTS_1478" value="409"	/>
+	<enum name="KEYCODE_BRL_DOTS_1348" value="410"	/>
+	<enum name="KEYCODE_BRL_DOTS_13478" value="411"	/>
+	<enum name="KEYCODE_BRL_DOTS_1248" value="412"	/>
+	<enum name="KEYCODE_BRL_DOTS_12478" value="413"	/>
+	<enum name="KEYCODE_BRL_DOTS_12348" value="414"	/>
+	<enum name="KEYCODE_BRL_DOTS_123478" value="415"	/>
+	<enum name="KEYCODE_BRL_DOTS_58" value="416"	/>
+	<enum name="KEYCODE_BRL_DOTS_578" value="417"	/>
+	<enum name="KEYCODE_BRL_DOTS_358" value="418"	/>
+	<enum name="KEYCODE_BRL_DOTS_3578" value="419"	/>
+	<enum name="KEYCODE_BRL_DOTS_258" value="420"	/>
+	<enum name="KEYCODE_BRL_DOTS_2578" value="421"	/>
+	<enum name="KEYCODE_BRL_DOTS_2358" value="422"	/>
+	<enum name="KEYCODE_BRL_DOTS_23578" value="423"	/>
+	<enum name="KEYCODE_BRL_DOTS_158" value="424"	/>
+	<enum name="KEYCODE_BRL_DOTS_1578" value="425"	/>
+	<enum name="KEYCODE_BRL_DOTS_1358" value="426"	/>
+	<enum name="KEYCODE_BRL_DOTS_13578" value="427"	/>
+	<enum name="KEYCODE_BRL_DOTS_1258" value="428"	/>
+	<enum name="KEYCODE_BRL_DOTS_12578" value="429"	/>
+	<enum name="KEYCODE_BRL_DOTS_12358" value="430"	/>
+	<enum name="KEYCODE_BRL_DOTS_123578" value="431"	/>
+	<enum name="KEYCODE_BRL_DOTS_458" value="432"	/>
+	<enum name="KEYCODE_BRL_DOTS_4578" value="433"	/>
+	<enum name="KEYCODE_BRL_DOTS_3458" value="434"	/>
+	<enum name="KEYCODE_BRL_DOTS_34578" value="435"	/>
+	<enum name="KEYCODE_BRL_DOTS_2458" value="436"	/>
+	<enum name="KEYCODE_BRL_DOTS_24578" value="437"	/>
+	<enum name="KEYCODE_BRL_DOTS_23458" value="438"	/>
+	<enum name="KEYCODE_BRL_DOTS_234578" value="439"	/>
+	<enum name="KEYCODE_BRL_DOTS_1458" value="440"	/>
+	<enum name="KEYCODE_BRL_DOTS_14578" value="441"	/>
+	<enum name="KEYCODE_BRL_DOTS_13458" value="442"	/>
+	<enum name="KEYCODE_BRL_DOTS_134578" value="443"	/>
+	<enum name="KEYCODE_BRL_DOTS_12458" value="444"	/>
+	<enum name="KEYCODE_BRL_DOTS_124578" value="445"	/>
+	<enum name="KEYCODE_BRL_DOTS_123458" value="446"	/>
+	<enum name="KEYCODE_BRL_DOTS_1234578" value="447"	/>
+	<enum name="KEYCODE_BRL_DOTS_68" value="448"	/>
+	<enum name="KEYCODE_BRL_DOTS_678" value="449"	/>
+	<enum name="KEYCODE_BRL_DOTS_368" value="450"	/>
+	<enum name="KEYCODE_BRL_DOTS_3678" value="451"	/>
+	<enum name="KEYCODE_BRL_DOTS_268" value="452"	/>
+	<enum name="KEYCODE_BRL_DOTS_2678" value="453"	/>
+	<enum name="KEYCODE_BRL_DOTS_2368" value="454"	/>
+	<enum name="KEYCODE_BRL_DOTS_23678" value="455"	/>
+	<enum name="KEYCODE_BRL_DOTS_168" value="456"	/>
+	<enum name="KEYCODE_BRL_DOTS_1678" value="457"	/>
+	<enum name="KEYCODE_BRL_DOTS_1368" value="458"	/>
+	<enum name="KEYCODE_BRL_DOTS_13678" value="459"	/>
+	<enum name="KEYCODE_BRL_DOTS_1268" value="460"	/>
+	<enum name="KEYCODE_BRL_DOTS_12678" value="461"	/>
+	<enum name="KEYCODE_BRL_DOTS_12368" value="462"	/>
+	<enum name="KEYCODE_BRL_DOTS_123678" value="463"	/>
+	<enum name="KEYCODE_BRL_DOTS_468" value="464"	/>
+	<enum name="KEYCODE_BRL_DOTS_4678" value="465"	/>
+	<enum name="KEYCODE_BRL_DOTS_3468" value="466"	/>
+	<enum name="KEYCODE_BRL_DOTS_34678" value="467"	/>
+	<enum name="KEYCODE_BRL_DOTS_2468" value="468"	/>
+	<enum name="KEYCODE_BRL_DOTS_24678" value="469"	/>
+	<enum name="KEYCODE_BRL_DOTS_23468" value="470"	/>
+	<enum name="KEYCODE_BRL_DOTS_234678" value="471"	/>
+	<enum name="KEYCODE_BRL_DOTS_1468" value="472"	/>
+	<enum name="KEYCODE_BRL_DOTS_14678" value="473"	/>
+	<enum name="KEYCODE_BRL_DOTS_13468" value="474"	/>
+	<enum name="KEYCODE_BRL_DOTS_134678" value="475"	/>
+	<enum name="KEYCODE_BRL_DOTS_12468" value="476"	/>
+	<enum name="KEYCODE_BRL_DOTS_124678" value="477"	/>
+	<enum name="KEYCODE_BRL_DOTS_123468" value="478"	/>
+	<enum name="KEYCODE_BRL_DOTS_1234678" value="479"	/>
+	<enum name="KEYCODE_BRL_DOTS_568" value="480"	/>
+	<enum name="KEYCODE_BRL_DOTS_5678" value="481"	/>
+	<enum name="KEYCODE_BRL_DOTS_3568" value="482"	/>
+	<enum name="KEYCODE_BRL_DOTS_35678" value="483"	/>
+	<enum name="KEYCODE_BRL_DOTS_2568" value="484"	/>
+	<enum name="KEYCODE_BRL_DOTS_25678" value="485"	/>
+	<enum name="KEYCODE_BRL_DOTS_23568" value="486"	/>
+	<enum name="KEYCODE_BRL_DOTS_235678" value="487"	/>
+	<enum name="KEYCODE_BRL_DOTS_1568" value="488"	/>
+	<enum name="KEYCODE_BRL_DOTS_15678" value="489"	/>
+	<enum name="KEYCODE_BRL_DOTS_13568" value="490"	/>
+	<enum name="KEYCODE_BRL_DOTS_135678" value="491"	/>
+	<enum name="KEYCODE_BRL_DOTS_12568" value="492"	/>
+	<enum name="KEYCODE_BRL_DOTS_125678" value="493"	/>
+	<enum name="KEYCODE_BRL_DOTS_123568" value="494"	/>
+	<enum name="KEYCODE_BRL_DOTS_1235678" value="495"	/>
+	<enum name="KEYCODE_BRL_DOTS_4568" value="496"	/>
+	<enum name="KEYCODE_BRL_DOTS_45678" value="497"	/>
+	<enum name="KEYCODE_BRL_DOTS_34568" value="498"	/>
+	<enum name="KEYCODE_BRL_DOTS_345678" value="499"	/>
+	<enum name="KEYCODE_BRL_DOTS_24568" value="500"	/>
+	<enum name="KEYCODE_BRL_DOTS_245678" value="501"	/>
+	<enum name="KEYCODE_BRL_DOTS_234568" value="502"	/>
+	<enum name="KEYCODE_BRL_DOTS_2345678" value="503"	/>
+	<enum name="KEYCODE_BRL_DOTS_14568" value="504"	/>
+	<enum name="KEYCODE_BRL_DOTS_145678" value="505"	/>
+	<enum name="KEYCODE_BRL_DOTS_134568" value="506"	/>
+	<enum name="KEYCODE_BRL_DOTS_1345678" value="507"	/>
+	<enum name="KEYCODE_BRL_DOTS_124568" value="508"	/>
+	<enum name="KEYCODE_BRL_DOTS_1245678" value="509"	/>
+	<enum name="KEYCODE_BRL_DOTS_1234568" value="510"	/>
+	<enum name="KEYCODE_BRL_DOTS_12345678" value="511"	/>
 	
 	<!--KW 256 Chorded key combinations-->
 	<enum name="KEYCODE_CHORD_DOTS_7" value="513"	/>
@@ -1797,252 +1797,252 @@
 	<enum name="KEYCODE_CHORD_DOTS_237" value="519"	/>
 <!--	<enum name="KEYCODE_CHORD_DOTS_1" value="520"	/> mapped to DPAD_UP -->	
 	<enum name="KEYCODE_CHORD_DOTS_17" value="521"	/>
-	<enum name="KEYCODE_CHORD_DOTS_70" value="522"	/>
-	<enum name="KEYCODE_CHORD_DOTS_71" value="523"	/>
-<!--	<enum name="KEYCODE_CHORD_DOTS_72" value="524"	/> mapped to BACK -->
-	<enum name="KEYCODE_CHORD_DOTS_73" value="525"	/>
-	<enum name="KEYCODE_CHORD_DOTS_74" value="526"	/>
-	<enum name="KEYCODE_CHORD_DOTS_75" value="527"	/>
-<!--	<enum name="KEYCODE_CHORD_DOTS_76" value="528"	/> mapped to DPAD_DOWN -->
-	<enum name="KEYCODE_CHORD_DOTS_77" value="529"	/>
-	<enum name="KEYCODE_CHORD_DOTS_78" value="530"	/>
-	<enum name="KEYCODE_CHORD_DOTS_79" value="531"	/>
-	<enum name="KEYCODE_CHORD_DOTS_30" value="532"	/>
-	<enum name="KEYCODE_CHORD_DOTS_31" value="533"	/>
-	<enum name="KEYCODE_CHORD_DOTS_32" value="534"	/>
-	<enum name="KEYCODE_CHORD_DOTS_33" value="535"	/>
-	<enum name="KEYCODE_CHORD_DOTS_34" value="536"	/>
-	<enum name="KEYCODE_CHORD_DOTS_35" value="537"	/>
-<!--	<enum name="KEYCODE_CHORD_DOTS_36" value="538"	/> mapped to MENU -->
-	<enum name="KEYCODE_CHORD_DOTS_37" value="539"	/>
-<!--	<enum name="KEYCODE_CHORD_DOTS_38" value="540"	/> mapped to SEARCH -->
-	<enum name="KEYCODE_CHORD_DOTS_39" value="541"	/>
-	<enum name="KEYCODE_CHORD_DOTS_370" value="542"	/>
-	<enum name="KEYCODE_CHORD_DOTS_371" value="543"	/>
-	<enum name="KEYCODE_CHORD_DOTS_372" value="544"	/>
-	<enum name="KEYCODE_CHORD_DOTS_373" value="545"	/>
-	<enum name="KEYCODE_CHORD_DOTS_374" value="546"	/>
-	<enum name="KEYCODE_CHORD_DOTS_375" value="547"	/>
-	<enum name="KEYCODE_CHORD_DOTS_376" value="548"	/>
-	<enum name="KEYCODE_CHORD_DOTS_377" value="549"	/>
-	<enum name="KEYCODE_CHORD_DOTS_378" value="550"	/>
-	<enum name="KEYCODE_CHORD_DOTS_379" value="551"	/>
-	<enum name="KEYCODE_CHORD_DOTS_20" value="552"	/>
-	<enum name="KEYCODE_CHORD_DOTS_21" value="553"	/>
-	<enum name="KEYCODE_CHORD_DOTS_22" value="554"	/>
-	<enum name="KEYCODE_CHORD_DOTS_23" value="555"	/>
-	<enum name="KEYCODE_CHORD_DOTS_24" value="556"	/>
-	<enum name="KEYCODE_CHORD_DOTS_25" value="557"	/>
-	<enum name="KEYCODE_CHORD_DOTS_26" value="558"	/>
-	<enum name="KEYCODE_CHORD_DOTS_27" value="559"	/>
-	<enum name="KEYCODE_CHORD_DOTS_28" value="560"	/>
-	<enum name="KEYCODE_CHORD_DOTS_29" value="561"	/>
-	<enum name="KEYCODE_CHORD_DOTS_270" value="562"	/>
-	<enum name="KEYCODE_CHORD_DOTS_271" value="563"	/>
-	<enum name="KEYCODE_CHORD_DOTS_272" value="564"	/>
-	<enum name="KEYCODE_CHORD_DOTS_273" value="565"	/>
-	<enum name="KEYCODE_CHORD_DOTS_274" value="566"	/>
-	<enum name="KEYCODE_CHORD_DOTS_275" value="567"	/>
-<!--	<enum name="KEYCODE_CHORD_DOTS_276" value="568"	/> mapped to DEL -->
-	<enum name="KEYCODE_CHORD_DOTS_277" value="569"	/>
-	<enum name="KEYCODE_CHORD_DOTS_278" value="570"	/>
-	<enum name="KEYCODE_CHORD_DOTS_279" value="571"	/>
-	<enum name="KEYCODE_CHORD_DOTS_230" value="572"	/>
-	<enum name="KEYCODE_CHORD_DOTS_231" value="573"	/>
-	<enum name="KEYCODE_CHORD_DOTS_232" value="574"	/>
-	<enum name="KEYCODE_CHORD_DOTS_233" value="575"	/>
-<!--	<enum name="KEYCODE_CHORD_DOTS_234" value="576"	/> mapped to DPAD_RIGHT -->
-	<enum name="KEYCODE_CHORD_DOTS_235" value="577"	/>
-	<enum name="KEYCODE_CHORD_DOTS_236" value="578"	/>
-	<enum name="KEYCODE_CHORD_DOTS_237" value="579"	/>
-	<enum name="KEYCODE_CHORD_DOTS_238" value="580"	/>
-	<enum name="KEYCODE_CHORD_DOTS_239" value="581"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2370" value="582"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2371" value="583"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2372" value="584"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2373" value="585"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2374" value="586"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2375" value="587"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2376" value="588"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2377" value="589"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2378" value="590"	/>
-	<enum name="KEYCODE_CHORD_DOTS_2379" value="591"	/>
-	<enum name="KEYCODE_CHORD_DOTS_10" value="592"	/>
-	<enum name="KEYCODE_CHORD_DOTS_11" value="593"	/>
-	<enum name="KEYCODE_CHORD_DOTS_12" value="594"	/>
-	<enum name="KEYCODE_CHORD_DOTS_13" value="595"	/>
-	<enum name="KEYCODE_CHORD_DOTS_14" value="596"	/>
-	<enum name="KEYCODE_CHORD_DOTS_15" value="597"	/>
-	<enum name="KEYCODE_CHORD_DOTS_16" value="598"	/>
-	<enum name="KEYCODE_CHORD_DOTS_17" value="599"	/>
-	<enum name="KEYCODE_CHORD_DOTS_18" value="600"	/>
-	<enum name="KEYCODE_CHORD_DOTS_19" value="601"	/>
-	<enum name="KEYCODE_CHORD_DOTS_170" value="602"	/>
-	<enum name="KEYCODE_CHORD_DOTS_171" value="603"	/>
-	<enum name="KEYCODE_CHORD_DOTS_172" value="604"	/>
-	<enum name="KEYCODE_CHORD_DOTS_173" value="605"	/>
-	<enum name="KEYCODE_CHORD_DOTS_174" value="606"	/>
-	<enum name="KEYCODE_CHORD_DOTS_175" value="607"	/>
-	<enum name="KEYCODE_CHORD_DOTS_176" value="608"	/>
-	<enum name="KEYCODE_CHORD_DOTS_177" value="609"	/>
-	<enum name="KEYCODE_CHORD_DOTS_178" value="610"	/>
-	<enum name="KEYCODE_CHORD_DOTS_179" value="611"	/>
-	<enum name="KEYCODE_CHORD_DOTS_700" value="612"	/>
-	<enum name="KEYCODE_CHORD_DOTS_701" value="613"	/>
-	<enum name="KEYCODE_CHORD_DOTS_702" value="614"	/>
-	<enum name="KEYCODE_CHORD_DOTS_703" value="615"	/>
-	<enum name="KEYCODE_CHORD_DOTS_704" value="616"	/>
-	<enum name="KEYCODE_CHORD_DOTS_705" value="617"	/>
-	<enum name="KEYCODE_CHORD_DOTS_706" value="618"	/>
-	<enum name="KEYCODE_CHORD_DOTS_707" value="619"	/>
-	<enum name="KEYCODE_CHORD_DOTS_708" value="620"	/>
-	<enum name="KEYCODE_CHORD_DOTS_709" value="621"	/>
-	<enum name="KEYCODE_CHORD_DOTS_710" value="622"	/>
-	<enum name="KEYCODE_CHORD_DOTS_711" value="623"	/>
-	<enum name="KEYCODE_CHORD_DOTS_712" value="624"	/>
-	<enum name="KEYCODE_CHORD_DOTS_713" value="625"	/>
-	<enum name="KEYCODE_CHORD_DOTS_714" value="626"	/>
-	<enum name="KEYCODE_CHORD_DOTS_715" value="627"	/>
-	<enum name="KEYCODE_CHORD_DOTS_716" value="628"	/>
-	<enum name="KEYCODE_CHORD_DOTS_717" value="629"	/>
-	<enum name="KEYCODE_CHORD_DOTS_718" value="630"	/>
-	<enum name="KEYCODE_CHORD_DOTS_719" value="631"	/>
-	<enum name="KEYCODE_CHORD_DOTS_720" value="632"	/>
-	<enum name="KEYCODE_CHORD_DOTS_721" value="633"	/>
-	<enum name="KEYCODE_CHORD_DOTS_722" value="634"	/>
-	<enum name="KEYCODE_CHORD_DOTS_723" value="635"	/>
-	<enum name="KEYCODE_CHORD_DOTS_724" value="636"	/>
-	<enum name="KEYCODE_CHORD_DOTS_725" value="637"	/>
-<!--	<enum name="KEYCODE_CHORD_DOTS_726" value="638"	/> mapped to HOME -->
-	<enum name="KEYCODE_CHORD_DOTS_727" value="639"	/>
-	<enum name="KEYCODE_CHORD_DOTS_728" value="640"	/>
-	<enum name="KEYCODE_CHORD_DOTS_729" value="641"	/>
-	<enum name="KEYCODE_CHORD_DOTS_730" value="642"	/>
-	<enum name="KEYCODE_CHORD_DOTS_731" value="643"	/>
-	<enum name="KEYCODE_CHORD_DOTS_732" value="644"	/>
-	<enum name="KEYCODE_CHORD_DOTS_733" value="645"	/>
-	<enum name="KEYCODE_CHORD_DOTS_734" value="646"	/>
-	<enum name="KEYCODE_CHORD_DOTS_735" value="647"	/>
-	<enum name="KEYCODE_CHORD_DOTS_736" value="648"	/>
-	<enum name="KEYCODE_CHORD_DOTS_737" value="649"	/>
-	<enum name="KEYCODE_CHORD_DOTS_738" value="650"	/>
-	<enum name="KEYCODE_CHORD_DOTS_739" value="651"	/>
-	<enum name="KEYCODE_CHORD_DOTS_740" value="652"	/>
-	<enum name="KEYCODE_CHORD_DOTS_741" value="653"	/>
-	<enum name="KEYCODE_CHORD_DOTS_742" value="654"	/>
-	<enum name="KEYCODE_CHORD_DOTS_743" value="655"	/>
-	<enum name="KEYCODE_CHORD_DOTS_744" value="656"	/>
-	<enum name="KEYCODE_CHORD_DOTS_745" value="657"	/>
-	<enum name="KEYCODE_CHORD_DOTS_746" value="658"	/>
-	<enum name="KEYCODE_CHORD_DOTS_747" value="659"	/>
-	<enum name="KEYCODE_CHORD_DOTS_748" value="660"	/>
-	<enum name="KEYCODE_CHORD_DOTS_749" value="661"	/>
-	<enum name="KEYCODE_CHORD_DOTS_750" value="662"	/>
-	<enum name="KEYCODE_CHORD_DOTS_751" value="663"	/>
-	<enum name="KEYCODE_CHORD_DOTS_752" value="664"	/>
-	<enum name="KEYCODE_CHORD_DOTS_753" value="665"	/>
-	<enum name="KEYCODE_CHORD_DOTS_754" value="666"	/>
-	<enum name="KEYCODE_CHORD_DOTS_755" value="667"	/>
-	<enum name="KEYCODE_CHORD_DOTS_756" value="668"	/>
-	<enum name="KEYCODE_CHORD_DOTS_757" value="669"	/>
-	<enum name="KEYCODE_CHORD_DOTS_758" value="670"	/>
-	<enum name="KEYCODE_CHORD_DOTS_759" value="671"	/>
-	<enum name="KEYCODE_CHORD_DOTS_760" value="672"	/>
-	<enum name="KEYCODE_CHORD_DOTS_761" value="673"	/>
-	<enum name="KEYCODE_CHORD_DOTS_762" value="674"	/>
-	<enum name="KEYCODE_CHORD_DOTS_763" value="675"	/>
-	<enum name="KEYCODE_CHORD_DOTS_764" value="676"	/>
-	<enum name="KEYCODE_CHORD_DOTS_765" value="677"	/>
-	<enum name="KEYCODE_CHORD_DOTS_766" value="678"	/>
-	<enum name="KEYCODE_CHORD_DOTS_767" value="679"	/>
-	<enum name="KEYCODE_CHORD_DOTS_768" value="680"	/>
-	<enum name="KEYCODE_CHORD_DOTS_769" value="681"	/>
-	<enum name="KEYCODE_CHORD_DOTS_770" value="682"	/>
-	<enum name="KEYCODE_CHORD_DOTS_771" value="683"	/>
-	<enum name="KEYCODE_CHORD_DOTS_772" value="684"	/>
-	<enum name="KEYCODE_CHORD_DOTS_773" value="685"	/>
-	<enum name="KEYCODE_CHORD_DOTS_774" value="686"	/>
-	<enum name="KEYCODE_CHORD_DOTS_775" value="687"	/>
-	<enum name="KEYCODE_CHORD_DOTS_776" value="688"	/>
-	<enum name="KEYCODE_CHORD_DOTS_777" value="689"	/>
-	<enum name="KEYCODE_CHORD_DOTS_778" value="690"	/>
-	<enum name="KEYCODE_CHORD_DOTS_779" value="691"	/>
-	<enum name="KEYCODE_CHORD_DOTS_780" value="692"	/>
-	<enum name="KEYCODE_CHORD_DOTS_781" value="693"	/>
-	<enum name="KEYCODE_CHORD_DOTS_782" value="694"	/>
-	<enum name="KEYCODE_CHORD_DOTS_783" value="695"	/>
-	<enum name="KEYCODE_CHORD_DOTS_784" value="696"	/>
-	<enum name="KEYCODE_CHORD_DOTS_785" value="697"	/>
-	<enum name="KEYCODE_CHORD_DOTS_786" value="698"	/>
-	<enum name="KEYCODE_CHORD_DOTS_787" value="699"	/>
-	<enum name="KEYCODE_CHORD_DOTS_788" value="700"	/>
-	<enum name="KEYCODE_CHORD_DOTS_789" value="701"	/>
-	<enum name="KEYCODE_CHORD_DOTS_790" value="702"	/>
-	<enum name="KEYCODE_CHORD_DOTS_791" value="703"	/>
-	<enum name="KEYCODE_CHORD_DOTS_792" value="704"	/>
-	<enum name="KEYCODE_CHORD_DOTS_793" value="705"	/>
-	<enum name="KEYCODE_CHORD_DOTS_794" value="706"	/>
-	<enum name="KEYCODE_CHORD_DOTS_795" value="707"	/>
-	<enum name="KEYCODE_CHORD_DOTS_796" value="708"	/>
-	<enum name="KEYCODE_CHORD_DOTS_797" value="709"	/>
-	<enum name="KEYCODE_CHORD_DOTS_798" value="710"	/>
-	<enum name="KEYCODE_CHORD_DOTS_799" value="711"	/>
-	<enum name="KEYCODE_CHORD_DOTS_300" value="712"	/>
-	<enum name="KEYCODE_CHORD_DOTS_301" value="713"	/>
-	<enum name="KEYCODE_CHORD_DOTS_302" value="714"	/>
-	<enum name="KEYCODE_CHORD_DOTS_303" value="715"	/>
-	<enum name="KEYCODE_CHORD_DOTS_304" value="716"	/>
-	<enum name="KEYCODE_CHORD_DOTS_305" value="717"	/>
-	<enum name="KEYCODE_CHORD_DOTS_306" value="718"	/>
-	<enum name="KEYCODE_CHORD_DOTS_307" value="719"	/>
-	<enum name="KEYCODE_CHORD_DOTS_308" value="720"	/>
-	<enum name="KEYCODE_CHORD_DOTS_309" value="721"	/>
-	<enum name="KEYCODE_CHORD_DOTS_310" value="722"	/>
-	<enum name="KEYCODE_CHORD_DOTS_311" value="723"	/>
-	<enum name="KEYCODE_CHORD_DOTS_312" value="724"	/>
-	<enum name="KEYCODE_CHORD_DOTS_313" value="725"	/>
-	<enum name="KEYCODE_CHORD_DOTS_314" value="726"	/>
-	<enum name="KEYCODE_CHORD_DOTS_315" value="727"	/>
-	<enum name="KEYCODE_CHORD_DOTS_316" value="728"	/>
-	<enum name="KEYCODE_CHORD_DOTS_317" value="729"	/>
-	<enum name="KEYCODE_CHORD_DOTS_318" value="730"	/>
-	<enum name="KEYCODE_CHORD_DOTS_319" value="731"	/>
-	<enum name="KEYCODE_CHORD_DOTS_320" value="732"	/>
-	<enum name="KEYCODE_CHORD_DOTS_321" value="733"	/>
-	<enum name="KEYCODE_CHORD_DOTS_322" value="734"	/>
-	<enum name="KEYCODE_CHORD_DOTS_323" value="735"	/>
-	<enum name="KEYCODE_CHORD_DOTS_324" value="736"	/>
-	<enum name="KEYCODE_CHORD_DOTS_325" value="737"	/>
-	<enum name="KEYCODE_CHORD_DOTS_326" value="738"	/>
-	<enum name="KEYCODE_CHORD_DOTS_327" value="739"	/>
-	<enum name="KEYCODE_CHORD_DOTS_328" value="740"	/>
-	<enum name="KEYCODE_CHORD_DOTS_329" value="741"	/>
-	<enum name="KEYCODE_CHORD_DOTS_330" value="742"	/>
-	<enum name="KEYCODE_CHORD_DOTS_331" value="743"	/>
-	<enum name="KEYCODE_CHORD_DOTS_332" value="744"	/>
-	<enum name="KEYCODE_CHORD_DOTS_333" value="745"	/>
-	<enum name="KEYCODE_CHORD_DOTS_334" value="746"	/>
-	<enum name="KEYCODE_CHORD_DOTS_335" value="747"	/>
-	<enum name="KEYCODE_CHORD_DOTS_336" value="748"	/>
-	<enum name="KEYCODE_CHORD_DOTS_337" value="749"	/>
-	<enum name="KEYCODE_CHORD_DOTS_338" value="750"	/>
-	<enum name="KEYCODE_CHORD_DOTS_339" value="751"	/>
-	<enum name="KEYCODE_CHORD_DOTS_340" value="752"	/>
-	<enum name="KEYCODE_CHORD_DOTS_341" value="753"	/>
-	<enum name="KEYCODE_CHORD_DOTS_342" value="754"	/>
-	<enum name="KEYCODE_CHORD_DOTS_343" value="755"	/>
-	<enum name="KEYCODE_CHORD_DOTS_344" value="756"	/>
-	<enum name="KEYCODE_CHORD_DOTS_345" value="757"	/>
-	<enum name="KEYCODE_CHORD_DOTS_346" value="758"	/>
-	<enum name="KEYCODE_CHORD_DOTS_347" value="759"	/>
-	<enum name="KEYCODE_CHORD_DOTS_348" value="760"	/>
-	<enum name="KEYCODE_CHORD_DOTS_349" value="761"	/>
-	<enum name="KEYCODE_CHORD_DOTS_350" value="762"	/>
-	<enum name="KEYCODE_CHORD_DOTS_351" value="763"	/>
-	<enum name="KEYCODE_CHORD_DOTS_352" value="764"	/>
-	<enum name="KEYCODE_CHORD_DOTS_353" value="765"	/>
-	<enum name="KEYCODE_CHORD_DOTS_354" value="766"	/>
-	<enum name="KEYCODE_CHORD_DOTS_355" value="767"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13" value="522"	/>
+	<enum name="KEYCODE_CHORD_DOTS_137" value="523"	/>
+<!--	<enum name="KEYCODE_CHORD_DOTS_12" value="524"	/> mapped to BACK -->
+	<enum name="KEYCODE_CHORD_DOTS_127" value="525"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123" value="526"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1237" value="527"	/>
+<!--	<enum name="KEYCODE_CHORD_DOTS_4" value="528"	/> mapped to DPAD_DOWN -->
+	<enum name="KEYCODE_CHORD_DOTS_47" value="529"	/>
+	<enum name="KEYCODE_CHORD_DOTS_34" value="530"	/>
+	<enum name="KEYCODE_CHORD_DOTS_347" value="531"	/>
+	<enum name="KEYCODE_CHORD_DOTS_24" value="532"	/>
+	<enum name="KEYCODE_CHORD_DOTS_247" value="533"	/>
+	<enum name="KEYCODE_CHORD_DOTS_234" value="534"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2347" value="535"	/>
+	<enum name="KEYCODE_CHORD_DOTS_14" value="536"	/>
+	<enum name="KEYCODE_CHORD_DOTS_147" value="537"	/>
+<!--	<enum name="KEYCODE_CHORD_DOTS_134" value="538"	/> mapped to MENU -->
+	<enum name="KEYCODE_CHORD_DOTS_1347" value="539"	/>
+<!--	<enum name="KEYCODE_CHORD_DOTS_124" value="540"	/> mapped to SEARCH -->
+	<enum name="KEYCODE_CHORD_DOTS_1247" value="541"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1234" value="542"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12347" value="543"	/>
+	<enum name="KEYCODE_CHORD_DOTS_5" value="544"	/>
+	<enum name="KEYCODE_CHORD_DOTS_57" value="545"	/>
+	<enum name="KEYCODE_CHORD_DOTS_35" value="546"	/>
+	<enum name="KEYCODE_CHORD_DOTS_357" value="547"	/>
+	<enum name="KEYCODE_CHORD_DOTS_25" value="548"	/>
+	<enum name="KEYCODE_CHORD_DOTS_257" value="549"	/>
+	<enum name="KEYCODE_CHORD_DOTS_235" value="550"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2357" value="551"	/>
+	<enum name="KEYCODE_CHORD_DOTS_15" value="552"	/>
+	<enum name="KEYCODE_CHORD_DOTS_157" value="553"	/>
+	<enum name="KEYCODE_CHORD_DOTS_135" value="554"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1357" value="555"	/>
+	<enum name="KEYCODE_CHORD_DOTS_125" value="556"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1257" value="557"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1235" value="558"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12357" value="559"	/>
+	<enum name="KEYCODE_CHORD_DOTS_45" value="560"	/>
+	<enum name="KEYCODE_CHORD_DOTS_457" value="561"	/>
+	<enum name="KEYCODE_CHORD_DOTS_345" value="562"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3457" value="563"	/>
+	<enum name="KEYCODE_CHORD_DOTS_245" value="564"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2457" value="565"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2345" value="566"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23457" value="567"	/>
+<!--	<enum name="KEYCODE_CHORD_DOTS_145" value="568"	/> mapped to DEL -->
+	<enum name="KEYCODE_CHORD_DOTS_1457" value="569"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1345" value="570"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13457" value="571"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1245" value="572"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12457" value="573"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12345" value="574"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123457" value="575"	/>
+<!--	<enum name="KEYCODE_CHORD_DOTS_6" value="576"	/> mapped to DPAD_RIGHT -->
+	<enum name="KEYCODE_CHORD_DOTS_67" value="577"	/>
+	<enum name="KEYCODE_CHORD_DOTS_36" value="578"	/>
+	<enum name="KEYCODE_CHORD_DOTS_367" value="579"	/>
+	<enum name="KEYCODE_CHORD_DOTS_26" value="580"	/>
+	<enum name="KEYCODE_CHORD_DOTS_267" value="581"	/>
+	<enum name="KEYCODE_CHORD_DOTS_236" value="582"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2367" value="583"	/>
+	<enum name="KEYCODE_CHORD_DOTS_16" value="584"	/>
+	<enum name="KEYCODE_CHORD_DOTS_167" value="585"	/>
+	<enum name="KEYCODE_CHORD_DOTS_136" value="586"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1367" value="587"	/>
+	<enum name="KEYCODE_CHORD_DOTS_126" value="588"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1267" value="589"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1236" value="590"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12367" value="591"	/>
+	<enum name="KEYCODE_CHORD_DOTS_46" value="592"	/>
+	<enum name="KEYCODE_CHORD_DOTS_467" value="593"	/>
+	<enum name="KEYCODE_CHORD_DOTS_346" value="594"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3467" value="595"	/>
+	<enum name="KEYCODE_CHORD_DOTS_246" value="596"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2467" value="597"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2346" value="598"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23467" value="599"	/>
+	<enum name="KEYCODE_CHORD_DOTS_146" value="600"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1467" value="601"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1346" value="602"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13467" value="603"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1246" value="604"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12467" value="605"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12346" value="606"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123467" value="607"	/>
+	<enum name="KEYCODE_CHORD_DOTS_56" value="608"	/>
+	<enum name="KEYCODE_CHORD_DOTS_567" value="609"	/>
+	<enum name="KEYCODE_CHORD_DOTS_356" value="610"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3567" value="611"	/>
+	<enum name="KEYCODE_CHORD_DOTS_256" value="612"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2567" value="613"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2356" value="614"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23567" value="615"	/>
+	<enum name="KEYCODE_CHORD_DOTS_156" value="616"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1567" value="617"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1356" value="618"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13567" value="619"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1256" value="620"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12567" value="621"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12356" value="622"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123567" value="623"	/>
+	<enum name="KEYCODE_CHORD_DOTS_456" value="624"	/>
+	<enum name="KEYCODE_CHORD_DOTS_4567" value="625"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3456" value="626"	/>
+	<enum name="KEYCODE_CHORD_DOTS_34567" value="627"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2456" value="628"	/>
+	<enum name="KEYCODE_CHORD_DOTS_24567" value="629"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23456" value="630"	/>
+	<enum name="KEYCODE_CHORD_DOTS_234567" value="631"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1456" value="632"	/>
+	<enum name="KEYCODE_CHORD_DOTS_14567" value="633"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13456" value="634"	/>
+	<enum name="KEYCODE_CHORD_DOTS_134567" value="635"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12456" value="636"	/>
+	<enum name="KEYCODE_CHORD_DOTS_124567" value="637"	/>
+<!--	<enum name="KEYCODE_CHORD_DOTS_123456" value="638"	/> mapped to HOME -->
+	<enum name="KEYCODE_CHORD_DOTS_1234567" value="639"	/>
+	<enum name="KEYCODE_CHORD_DOTS_8" value="640"	/>
+	<enum name="KEYCODE_CHORD_DOTS_78" value="641"	/>
+	<enum name="KEYCODE_CHORD_DOTS_38" value="642"	/>
+	<enum name="KEYCODE_CHORD_DOTS_378" value="643"	/>
+	<enum name="KEYCODE_CHORD_DOTS_28" value="644"	/>
+	<enum name="KEYCODE_CHORD_DOTS_278" value="645"	/>
+	<enum name="KEYCODE_CHORD_DOTS_238" value="646"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2378" value="647"	/>
+	<enum name="KEYCODE_CHORD_DOTS_18" value="648"	/>
+	<enum name="KEYCODE_CHORD_DOTS_178" value="649"	/>
+	<enum name="KEYCODE_CHORD_DOTS_138" value="650"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1378" value="651"	/>
+	<enum name="KEYCODE_CHORD_DOTS_128" value="652"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1278" value="653"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1238" value="654"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12378" value="655"	/>
+	<enum name="KEYCODE_CHORD_DOTS_48" value="656"	/>
+	<enum name="KEYCODE_CHORD_DOTS_478" value="657"	/>
+	<enum name="KEYCODE_CHORD_DOTS_348" value="658"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3478" value="659"	/>
+	<enum name="KEYCODE_CHORD_DOTS_248" value="660"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2478" value="661"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2348" value="662"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23478" value="663"	/>
+	<enum name="KEYCODE_CHORD_DOTS_148" value="664"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1478" value="665"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1348" value="666"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13478" value="667"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1248" value="668"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12478" value="669"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12348" value="670"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123478" value="671"	/>
+	<enum name="KEYCODE_CHORD_DOTS_58" value="672"	/>
+	<enum name="KEYCODE_CHORD_DOTS_578" value="673"	/>
+	<enum name="KEYCODE_CHORD_DOTS_358" value="674"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3578" value="675"	/>
+	<enum name="KEYCODE_CHORD_DOTS_258" value="676"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2578" value="677"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2358" value="678"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23578" value="679"	/>
+	<enum name="KEYCODE_CHORD_DOTS_158" value="680"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1578" value="681"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1358" value="682"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13578" value="683"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1258" value="684"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12578" value="685"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12358" value="686"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123578" value="687"	/>
+	<enum name="KEYCODE_CHORD_DOTS_458" value="688"	/>
+	<enum name="KEYCODE_CHORD_DOTS_4578" value="689"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3458" value="690"	/>
+	<enum name="KEYCODE_CHORD_DOTS_34578" value="691"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2458" value="692"	/>
+	<enum name="KEYCODE_CHORD_DOTS_24578" value="693"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23458" value="694"	/>
+	<enum name="KEYCODE_CHORD_DOTS_234578" value="695"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1458" value="696"	/>
+	<enum name="KEYCODE_CHORD_DOTS_14578" value="697"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13458" value="698"	/>
+	<enum name="KEYCODE_CHORD_DOTS_134578" value="699"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12458" value="700"	/>
+	<enum name="KEYCODE_CHORD_DOTS_124578" value="701"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123458" value="702"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1234578" value="703"	/>
+	<enum name="KEYCODE_CHORD_DOTS_68" value="704"	/>
+	<enum name="KEYCODE_CHORD_DOTS_678" value="705"	/>
+	<enum name="KEYCODE_CHORD_DOTS_368" value="706"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3678" value="707"	/>
+	<enum name="KEYCODE_CHORD_DOTS_268" value="708"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2678" value="709"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2368" value="710"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23678" value="711"	/>
+	<enum name="KEYCODE_CHORD_DOTS_168" value="712"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1678" value="713"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1368" value="714"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13678" value="715"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1268" value="716"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12678" value="717"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12368" value="718"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123678" value="719"	/>
+	<enum name="KEYCODE_CHORD_DOTS_468" value="720"	/>
+	<enum name="KEYCODE_CHORD_DOTS_4678" value="721"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3468" value="722"	/>
+	<enum name="KEYCODE_CHORD_DOTS_34678" value="723"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2468" value="724"	/>
+	<enum name="KEYCODE_CHORD_DOTS_24678" value="725"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23468" value="726"	/>
+	<enum name="KEYCODE_CHORD_DOTS_234678" value="727"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1468" value="728"	/>
+	<enum name="KEYCODE_CHORD_DOTS_14678" value="729"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13468" value="730"	/>
+	<enum name="KEYCODE_CHORD_DOTS_134678" value="731"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12468" value="732"	/>
+	<enum name="KEYCODE_CHORD_DOTS_124678" value="733"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123468" value="734"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1234678" value="735"	/>
+	<enum name="KEYCODE_CHORD_DOTS_568" value="736"	/>
+	<enum name="KEYCODE_CHORD_DOTS_5678" value="737"	/>
+	<enum name="KEYCODE_CHORD_DOTS_3568" value="738"	/>
+	<enum name="KEYCODE_CHORD_DOTS_35678" value="739"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2568" value="740"	/>
+	<enum name="KEYCODE_CHORD_DOTS_25678" value="741"	/>
+	<enum name="KEYCODE_CHORD_DOTS_23568" value="742"	/>
+	<enum name="KEYCODE_CHORD_DOTS_235678" value="743"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1568" value="744"	/>
+	<enum name="KEYCODE_CHORD_DOTS_15678" value="745"	/>
+	<enum name="KEYCODE_CHORD_DOTS_13568" value="746"	/>
+	<enum name="KEYCODE_CHORD_DOTS_135678" value="747"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12568" value="748"	/>
+	<enum name="KEYCODE_CHORD_DOTS_125678" value="749"	/>
+	<enum name="KEYCODE_CHORD_DOTS_123568" value="750"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1235678" value="751"	/>
+	<enum name="KEYCODE_CHORD_DOTS_4568" value="752"	/>
+	<enum name="KEYCODE_CHORD_DOTS_45678" value="753"	/>
+	<enum name="KEYCODE_CHORD_DOTS_34568" value="754"	/>
+	<enum name="KEYCODE_CHORD_DOTS_345678" value="755"	/>
+	<enum name="KEYCODE_CHORD_DOTS_24568" value="756"	/>
+	<enum name="KEYCODE_CHORD_DOTS_245678" value="757"	/>
+	<enum name="KEYCODE_CHORD_DOTS_234568" value="758"	/>
+	<enum name="KEYCODE_CHORD_DOTS_2345678" value="759"	/>
+	<enum name="KEYCODE_CHORD_DOTS_14568" value="760"	/>
+	<enum name="KEYCODE_CHORD_DOTS_145678" value="761"	/>
+	<enum name="KEYCODE_CHORD_DOTS_134568" value="762"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1345678" value="763"	/>
+	<enum name="KEYCODE_CHORD_DOTS_124568" value="764"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1245678" value="765"	/>
+	<enum name="KEYCODE_CHORD_DOTS_1234568" value="766"	/>
+	<enum name="KEYCODE_CHORD_DOTS_12345678" value="767"	/>
 	<!--KW-->  
 
 	<!--KW individual Braille keys-->

@@ -593,7 +593,7 @@ key BRL_SLASH {
 	base: '/'
 }
 
-# key BRL_DOTS_79{ base: 'k'}
+# key BRL_DOTS_347{ base: 'k'}
 
 key BRL_LOWERI { 
 	base: 'i'
@@ -647,25 +647,25 @@ key BRL_QUOTE {
 	base: '"'
 }
 
-# key BRL_DOTS_373{ base: 'k'}
+# key BRL_DOTS_57{ base: 'k'}
 
 key BRL_9 { 
 	base: '9'
 }
 
-# key BRL_DOTS_375{ base: 'k'}
+# key BRL_DOTS_357{ base: 'k'}
 
 key BRL_3 { 
 	base: '3'
 }
 
-# key BRL_DOTS_377{ base: 'k'}
+# key BRL_DOTS_257{ base: 'k'}
 
 key BRL_6 { 
 	base: '6'
 }
 
-# key BRL_DOTS_379{ base: 'k'}
+# key BRL_DOTS_2357{ base: 'k'}
 
 key BRL_LOWERE { 
 	base: 'e'
@@ -711,7 +711,7 @@ key BRL_GREATER_THAN {
 	base: '>'
 }
 
-# key BRL_DOTS_271{ base: 'k'}
+# key BRL_DOTS_3457{ base: 'k'}
 
 key BRL_LOWERJ { 
 	base: 'j'
@@ -765,31 +765,31 @@ key BRL_COMMA {
 	base: ','
 }
 
-# key BRL_DOTS_235{ base: 'k'}
+# key BRL_DOTS_67{ base: 'k'}
 
 key BRL_MINUS { 
 	base: '-'
 }
 
-# key BRL_DOTS_237{ base: 'k'}
+# key BRL_DOTS_367{ base: 'k'}
 
 key BRL_5 { 
 	base: '5'
 }
 
-# key BRL_DOTS_239{ base: 'k'}
+# key BRL_DOTS_267{ base: 'k'}
 
 key BRL_8 { 
 	base: '8'
 }
 
-# key BRL_DOTS_2371{ base: 'k'}
+# key BRL_DOTS_2367{ base: 'k'}
 
 key BRL_STAR { 
 	base: '*'
 }
 
-# key BRL_DOTS_2373{ base: 'k'}
+# key BRL_DOTS_167{ base: 'k'}
 
 key BRL_LOWERU { 
 	base: 'u'
@@ -803,7 +803,7 @@ key BRL_LESS_THAN {
 	base: '<'
 }
 
-# key BRL_DOTS_2377{ base: 'k'}
+# key BRL_DOTS_1267{ base: 'k'}
 
 key BRL_LOWERV { 
 	base: 'v'
@@ -817,13 +817,13 @@ key BRL_PERIOD {
 	base: '.'
 }
 
-# key BRL_DOTS_11{ base: 'k'}
+# key BRL_DOTS_467{ base: 'k'}
 
 key BRL_PLS { 
 	base: '+'
 }
 
-# key BRL_DOTS_13{ base: 'k'}
+# key BRL_DOTS_3467{ base: 'k'}
 
 key BRL_LEFT_CB { 
 	base: '{'
@@ -837,13 +837,13 @@ key BRL_EXCLAMATION {
 	base: '!'
 }
 
-# key BRL_DOTS_17{ base: 'k'}
+# key BRL_DOTS_23467{ base: 'k'}
 
 key BRL_PERCENT { 
 	base: '%'
 }
 
-# key BRL_DOTS_19{ base: 'k'}
+# key BRL_DOTS_1467{ base: 'k'}
 
 key BRL_LOWERX { 
 	base: 'x'
@@ -857,43 +857,43 @@ key BRL_DOLLAR {
 	base: '$'
 }
 
-# key BRL_DOTS_173{ base: 'k'}
+# key BRL_DOTS_12467{ base: 'k'}
 
 key BRL_AND	{ 
 	base: '&'
 }
 
-# key BRL_DOTS_175{ base: 'k'}
+# key BRL_DOTS_123467{ base: 'k'}
 
 key BRL_SEMICOLON { 
 	base: ';'
 }
 
-# key BRL_DOTS_177{ base: 'k'}
+# key BRL_DOTS_567{ base: 'k'}
 
 key BRL_0 { 
 	base: '0'
 }
 
-# key BRL_DOTS_179{ base: 'k'}
+# key BRL_DOTS_3567{ base: 'k'}
 
 key BRL_4 { 
 	base: '4'
 }
 
-# key BRL_DOTS_701{ base: 'k'}
+# key BRL_DOTS_2567{ base: 'k'}
 
 key BRL_7 { 
 	base: '7'
 }
 
-# key BRL_DOTS_703{ base: 'k'}
+# key BRL_DOTS_23567{ base: 'k'}
 
 key BRL_COLON { 
 	base: ':'
 }
 
-# key BRL_DOTS_705{ base: 'k'}
+# key BRL_DOTS_1567{ base: 'k'}
 
 key BRL_LOWERZ { 
 	base: 'z'
@@ -915,19 +915,19 @@ key BRL_LEFT_BRACE {
 	base: '('
 }
 
-# key BRL_DOTS_711{ base: 'k'}
+# key BRL_DOTS_123567{ base: 'k'}
 
 key BRL_UNDERSCORE { 
 	base: '_'
 }
 
-# key BRL_DOTS_713{ base: 'k'}
+# key BRL_DOTS_4567{ base: 'k'}
 
 key BRL_POUND { 
 	base: '#'
 }
 
-# key BRL_DOTS_715{ base: 'k'}
+# key BRL_DOTS_34567{ base: 'k'}
 
 key BRL_LOWERW { 
 	base: 'w'
@@ -941,13 +941,13 @@ key BRL_RIGHT_BRACE {
 	base: ')'
 }
 
-# key BRL_DOTS_719{ base: 'k'}
+# key BRL_DOTS_234567{ base: 'k'}
 
 key BRL_QUESTION { 
 	base: '?'
 }
 
-# key BRL_DOTS_721{ base: 'k'}
+# key BRL_DOTS_14567{ base: 'k'}
 
 key BRL_LOWERY { 
 	base: 'y'
@@ -971,135 +971,135 @@ key BRL_EQUALS {
 
 
 
-# key BRL_DOTS_727{ base: 'k'}
-# key BRL_DOTS_728{ base: 'u'}
-# key BRL_DOTS_729{ base: 'k'}
-# key BRL_DOTS_730{ base: 'u'}
-# key BRL_DOTS_731{ base: 'k'}
-# key BRL_DOTS_732{ base: 'u'}
-# key BRL_DOTS_733{ base: 'k'}
-# key BRL_DOTS_734{ base: 'u'}
-# key BRL_DOTS_735{ base: 'k'}
-# key BRL_DOTS_736{ base: 'u'}
-# key BRL_DOTS_737{ base: 'k'}
-# key BRL_DOTS_738{ base: 'u'}
-# key BRL_DOTS_739{ base: 'k'}
-# key BRL_DOTS_740{ base: 'u'}
-# key BRL_DOTS_741{ base: 'k'}
-# key BRL_DOTS_742{ base: 'u'}
-# key BRL_DOTS_743{ base: 'k'}
-# key BRL_DOTS_744{ base: 'u'}
-# key BRL_DOTS_745{ base: 'k'}
-# key BRL_DOTS_746{ base: 'u'}
-# key BRL_DOTS_747{ base: 'k'}
-# key BRL_DOTS_748{ base: 'u'}
-# key BRL_DOTS_749{ base: 'k'}
-# key BRL_DOTS_750{ base: 'u'}
-# key BRL_DOTS_751{ base: 'k'}
-# key BRL_DOTS_752{ base: 'u'}
-# key BRL_DOTS_753{ base: 'k'}
-# key BRL_DOTS_754{ base: 'u'}
-# key BRL_DOTS_755{ base: 'k'}
-# key BRL_DOTS_756{ base: 'u'}
-# key BRL_DOTS_757{ base: 'k'}
-# key BRL_DOTS_758{ base: 'u'}
-# key BRL_DOTS_759{ base: 'k'}
-# key BRL_DOTS_760{ base: 'u'}
-# key BRL_DOTS_761{ base: 'k'}
-# key BRL_DOTS_762{ base: 'u'}
-# key BRL_DOTS_763{ base: 'k'}
-# key BRL_DOTS_764{ base: 'u'}
-# key BRL_DOTS_765{ base: 'k'}
-# key BRL_DOTS_766{ base: 'u'}
-# key BRL_DOTS_767{ base: 'k'}
-# key BRL_DOTS_768{ base: 'u'}
-# key BRL_DOTS_769{ base: 'k'}
-# key BRL_DOTS_770{ base: 'u'}
-# key BRL_DOTS_771{ base: 'k'}
-# key BRL_DOTS_772{ base: 'u'}
-# key BRL_DOTS_773{ base: 'k'}
-# key BRL_DOTS_774{ base: 'u'}
-# key BRL_DOTS_775{ base: 'k'}
-# key BRL_DOTS_776{ base: 'u'}
-# key BRL_DOTS_777{ base: 'k'}
-# key BRL_DOTS_778{ base: 'u'}
-# key BRL_DOTS_779{ base: 'k'}
-# key BRL_DOTS_780{ base: 'u'}
-# key BRL_DOTS_781{ base: 'k'}
-# key BRL_DOTS_782{ base: 'u'}
-# key BRL_DOTS_783{ base: 'k'}
-# key BRL_DOTS_784{ base: 'u'}
-# key BRL_DOTS_785{ base: 'k'}
-# key BRL_DOTS_786{ base: 'u'}
-# key BRL_DOTS_787{ base: 'k'}
-# key BRL_DOTS_788{ base: 'u'}
-# key BRL_DOTS_789{ base: 'k'}
-# key BRL_DOTS_790{ base: 'u'}
-# key BRL_DOTS_791{ base: 'k'}
-# key BRL_DOTS_792{ base: 'u'}
-# key BRL_DOTS_793{ base: 'k'}
-# key BRL_DOTS_794{ base: 'u'}
-# key BRL_DOTS_795{ base: 'k'}
-# key BRL_DOTS_796{ base: 'u'}
-# key BRL_DOTS_797{ base: 'k'}
-# key BRL_DOTS_798{ base: 'u'}
-# key BRL_DOTS_799{ base: 'k'}
-# key BRL_DOTS_300{ base: 'u'}
-# key BRL_DOTS_301{ base: 'k'}
-# key BRL_DOTS_302{ base: 'u'}
-# key BRL_DOTS_303{ base: 'k'}
-# key BRL_DOTS_304{ base: 'u'}
-# key BRL_DOTS_305{ base: 'k'}
-# key BRL_DOTS_306{ base: 'u'}
-# key BRL_DOTS_307{ base: 'k'}
-# key BRL_DOTS_308{ base: 'u'}
-# key BRL_DOTS_309{ base: 'k'}
-# key BRL_DOTS_310{ base: 'u'}
-# key BRL_DOTS_311{ base: 'k'}
-# key BRL_DOTS_312{ base: 'u'}
-# key BRL_DOTS_313{ base: 'k'}
-# key BRL_DOTS_314{ base: 'u'}
-# key BRL_DOTS_315{ base: 'k'}
-# key BRL_DOTS_316{ base: 'u'}
-# key BRL_DOTS_317{ base: 'k'}
-# key BRL_DOTS_318{ base: 'u'}
-# key BRL_DOTS_319{ base: 'k'}
-# key BRL_DOTS_320{ base: 'u'}
-# key BRL_DOTS_321{ base: 'k'}
-# key BRL_DOTS_322{ base: 'u'}
-# key BRL_DOTS_323{ base: 'k'}
-# key BRL_DOTS_324{ base: 'u'}
-# key BRL_DOTS_325{ base: 'k'}
-# key BRL_DOTS_326{ base: 'u'}
-# key BRL_DOTS_327{ base: 'k'}
-# key BRL_DOTS_328{ base: 'u'}
-# key BRL_DOTS_329{ base: 'k'}
-# key BRL_DOTS_330{ base: 'u'}
-# key BRL_DOTS_331{ base: 'k'}
-# key BRL_DOTS_332{ base: 'u'}
-# key BRL_DOTS_333{ base: 'k'}
-# key BRL_DOTS_334{ base: 'u'}
-# key BRL_DOTS_335{ base: 'k'}
-# key BRL_DOTS_336{ base: 'u'}
-# key BRL_DOTS_337{ base: 'k'}
-# key BRL_DOTS_338{ base: 'u'}
-# key BRL_DOTS_339{ base: 'k'}
-# key BRL_DOTS_340{ base: 'u'}
-# key BRL_DOTS_341{ base: 'k'}
-# key BRL_DOTS_342{ base: 'u'}
-# key BRL_DOTS_343{ base: 'k'}
-# key BRL_DOTS_344{ base: 'u'}
-# key BRL_DOTS_345{ base: 'k'}
-# key BRL_DOTS_346{ base: 'u'}
-# key BRL_DOTS_347{ base: 'k'}
+# key BRL_DOTS_1234567{ base: 'k'}
+# key BRL_DOTS_8{ base: 'u'}
+# key BRL_DOTS_78{ base: 'k'}
+# key BRL_DOTS_38{ base: 'u'}
+# key BRL_DOTS_378{ base: 'k'}
+# key BRL_DOTS_28{ base: 'u'}
+# key BRL_DOTS_278{ base: 'k'}
+# key BRL_DOTS_238{ base: 'u'}
+# key BRL_DOTS_2378{ base: 'k'}
+# key BRL_DOTS_18{ base: 'u'}
+# key BRL_DOTS_178{ base: 'k'}
+# key BRL_DOTS_138{ base: 'u'}
+# key BRL_DOTS_1378{ base: 'k'}
+# key BRL_DOTS_128{ base: 'u'}
+# key BRL_DOTS_1278{ base: 'k'}
+# key BRL_DOTS_1238{ base: 'u'}
+# key BRL_DOTS_12378{ base: 'k'}
+# key BRL_DOTS_48{ base: 'u'}
+# key BRL_DOTS_478{ base: 'k'}
 # key BRL_DOTS_348{ base: 'u'}
-# key BRL_DOTS_349{ base: 'k'}
-# key BRL_DOTS_350{ base: 'u'}
-# key BRL_DOTS_351{ base: 'k'}
-# key BRL_DOTS_352{ base: 'u'}
-# key BRL_DOTS_353{ base: 'k'}
-# key BRL_DOTS_354{ base: 'u'}
-# key BRL_DOTS_355{ base: 'k'}
+# key BRL_DOTS_3478{ base: 'k'}
+# key BRL_DOTS_248{ base: 'u'}
+# key BRL_DOTS_2478{ base: 'k'}
+# key BRL_DOTS_2348{ base: 'u'}
+# key BRL_DOTS_23478{ base: 'k'}
+# key BRL_DOTS_148{ base: 'u'}
+# key BRL_DOTS_1478{ base: 'k'}
+# key BRL_DOTS_1348{ base: 'u'}
+# key BRL_DOTS_13478{ base: 'k'}
+# key BRL_DOTS_1248{ base: 'u'}
+# key BRL_DOTS_12478{ base: 'k'}
+# key BRL_DOTS_12348{ base: 'u'}
+# key BRL_DOTS_123478{ base: 'k'}
+# key BRL_DOTS_58{ base: 'u'}
+# key BRL_DOTS_578{ base: 'k'}
+# key BRL_DOTS_358{ base: 'u'}
+# key BRL_DOTS_3578{ base: 'k'}
+# key BRL_DOTS_258{ base: 'u'}
+# key BRL_DOTS_2578{ base: 'k'}
+# key BRL_DOTS_2358{ base: 'u'}
+# key BRL_DOTS_23578{ base: 'k'}
+# key BRL_DOTS_158{ base: 'u'}
+# key BRL_DOTS_1578{ base: 'k'}
+# key BRL_DOTS_1358{ base: 'u'}
+# key BRL_DOTS_13578{ base: 'k'}
+# key BRL_DOTS_1258{ base: 'u'}
+# key BRL_DOTS_12578{ base: 'k'}
+# key BRL_DOTS_12358{ base: 'u'}
+# key BRL_DOTS_123578{ base: 'k'}
+# key BRL_DOTS_458{ base: 'u'}
+# key BRL_DOTS_4578{ base: 'k'}
+# key BRL_DOTS_3458{ base: 'u'}
+# key BRL_DOTS_34578{ base: 'k'}
+# key BRL_DOTS_2458{ base: 'u'}
+# key BRL_DOTS_24578{ base: 'k'}
+# key BRL_DOTS_23458{ base: 'u'}
+# key BRL_DOTS_234578{ base: 'k'}
+# key BRL_DOTS_1458{ base: 'u'}
+# key BRL_DOTS_14578{ base: 'k'}
+# key BRL_DOTS_13458{ base: 'u'}
+# key BRL_DOTS_134578{ base: 'k'}
+# key BRL_DOTS_12458{ base: 'u'}
+# key BRL_DOTS_124578{ base: 'k'}
+# key BRL_DOTS_123458{ base: 'u'}
+# key BRL_DOTS_1234578{ base: 'k'}
+# key BRL_DOTS_68{ base: 'u'}
+# key BRL_DOTS_678{ base: 'k'}
+# key BRL_DOTS_368{ base: 'u'}
+# key BRL_DOTS_3678{ base: 'k'}
+# key BRL_DOTS_268{ base: 'u'}
+# key BRL_DOTS_2678{ base: 'k'}
+# key BRL_DOTS_2368{ base: 'u'}
+# key BRL_DOTS_23678{ base: 'k'}
+# key BRL_DOTS_168{ base: 'u'}
+# key BRL_DOTS_1678{ base: 'k'}
+# key BRL_DOTS_1368{ base: 'u'}
+# key BRL_DOTS_13678{ base: 'k'}
+# key BRL_DOTS_1268{ base: 'u'}
+# key BRL_DOTS_12678{ base: 'k'}
+# key BRL_DOTS_12368{ base: 'u'}
+# key BRL_DOTS_123678{ base: 'k'}
+# key BRL_DOTS_468{ base: 'u'}
+# key BRL_DOTS_4678{ base: 'k'}
+# key BRL_DOTS_3468{ base: 'u'}
+# key BRL_DOTS_34678{ base: 'k'}
+# key BRL_DOTS_2468{ base: 'u'}
+# key BRL_DOTS_24678{ base: 'k'}
+# key BRL_DOTS_23468{ base: 'u'}
+# key BRL_DOTS_234678{ base: 'k'}
+# key BRL_DOTS_1468{ base: 'u'}
+# key BRL_DOTS_14678{ base: 'k'}
+# key BRL_DOTS_13468{ base: 'u'}
+# key BRL_DOTS_134678{ base: 'k'}
+# key BRL_DOTS_12468{ base: 'u'}
+# key BRL_DOTS_124678{ base: 'k'}
+# key BRL_DOTS_123468{ base: 'u'}
+# key BRL_DOTS_1234678{ base: 'k'}
+# key BRL_DOTS_568{ base: 'u'}
+# key BRL_DOTS_5678{ base: 'k'}
+# key BRL_DOTS_3568{ base: 'u'}
+# key BRL_DOTS_35678{ base: 'k'}
+# key BRL_DOTS_2568{ base: 'u'}
+# key BRL_DOTS_25678{ base: 'k'}
+# key BRL_DOTS_23568{ base: 'u'}
+# key BRL_DOTS_235678{ base: 'k'}
+# key BRL_DOTS_1568{ base: 'u'}
+# key BRL_DOTS_15678{ base: 'k'}
+# key BRL_DOTS_13568{ base: 'u'}
+# key BRL_DOTS_135678{ base: 'k'}
+# key BRL_DOTS_12568{ base: 'u'}
+# key BRL_DOTS_125678{ base: 'k'}
+# key BRL_DOTS_123568{ base: 'u'}
+# key BRL_DOTS_1235678{ base: 'k'}
+# key BRL_DOTS_4568{ base: 'u'}
+# key BRL_DOTS_45678{ base: 'k'}
+# key BRL_DOTS_34568{ base: 'u'}
+# key BRL_DOTS_345678{ base: 'k'}
+# key BRL_DOTS_24568{ base: 'u'}
+# key BRL_DOTS_245678{ base: 'k'}
+# key BRL_DOTS_234568{ base: 'u'}
+# key BRL_DOTS_2345678{ base: 'k'}
+# key BRL_DOTS_14568{ base: 'u'}
+# key BRL_DOTS_145678{ base: 'k'}
+# key BRL_DOTS_134568{ base: 'u'}
+# key BRL_DOTS_1345678{ base: 'k'}
+# key BRL_DOTS_124568{ base: 'u'}
+# key BRL_DOTS_1245678{ base: 'k'}
+# key BRL_DOTS_1234568{ base: 'u'}
+# key BRL_DOTS_12345678{ base: 'k'}
 
 ######################################################################
 #  {KW}: 256 Chorded keys                                            #
@@ -1117,247 +1117,247 @@ key BRL_EQUALS {
 # key CHORD_DOTS_237{ base: '%'}
 # key CHORD_DOTS_1{ base: '@'}
 # key CHORD_DOTS_17{ base: '%'}
-# key CHORD_DOTS_70{ base: '@'}
-# key CHORD_DOTS_71{ base: '%'}
-# key CHORD_DOTS_72{ base: '@'}
-# key CHORD_DOTS_73{ base: '%'}
-# key CHORD_DOTS_74{ base: '@'}
-# key CHORD_DOTS_75{ base: '%'}
-# key CHORD_DOTS_76{ base: '@'}
-# key CHORD_DOTS_77{ base: '%'}
-# key CHORD_DOTS_78{ base: '@'}
-# key CHORD_DOTS_79{ base: '%'}
-# key CHORD_DOTS_30{ base: '@'}
-# key CHORD_DOTS_31{ base: '%'}
-# key CHORD_DOTS_32{ base: '@'}
-# key CHORD_DOTS_33{ base: '%'}
-# key CHORD_DOTS_34{ base: '@'}
-# key CHORD_DOTS_35{ base: '%'}
-# key CHORD_DOTS_36{ base: '@'}
-# key CHORD_DOTS_37{ base: '%'}
-# key CHORD_DOTS_38{ base: '@'}
-# key CHORD_DOTS_39{ base: '%'}
-# key CHORD_DOTS_370{ base: '@'}
-# key CHORD_DOTS_371{ base: '%'}
-# key CHORD_DOTS_372{ base: '@'}
-# key CHORD_DOTS_373{ base: '%'}
-# key CHORD_DOTS_374{ base: '@'}
-# key CHORD_DOTS_375{ base: '%'}
-# key CHORD_DOTS_376{ base: '@'}
-# key CHORD_DOTS_377{ base: '%'}
-# key CHORD_DOTS_378{ base: '@'}
-# key CHORD_DOTS_379{ base: '%'}
-# key CHORD_DOTS_20{ base: '@'}
-# key CHORD_DOTS_21{ base: '%'}
-# key CHORD_DOTS_22{ base: '@'}
-# key CHORD_DOTS_23{ base: '%'}
-# key CHORD_DOTS_24{ base: '@'}
-# key CHORD_DOTS_25{ base: '%'}
-# key CHORD_DOTS_26{ base: '@'}
-# key CHORD_DOTS_27{ base: '%'}
-# key CHORD_DOTS_28{ base: '@'}
-# key CHORD_DOTS_29{ base: '%'}
-# key CHORD_DOTS_270{ base: '@'}
-# key CHORD_DOTS_271{ base: '%'}
-# key CHORD_DOTS_272{ base: '@'}
-# key CHORD_DOTS_273{ base: '%'}
-# key CHORD_DOTS_274{ base: '@'}
-# key CHORD_DOTS_275{ base: '%'}
-# key CHORD_DOTS_276{ base: '@'}
-# key CHORD_DOTS_277{ base: '%'}
-# key CHORD_DOTS_278{ base: '@'}
-# key CHORD_DOTS_279{ base: '%'}
-# key CHORD_DOTS_230{ base: '@'}
-# key CHORD_DOTS_231{ base: '%'}
-# key CHORD_DOTS_232{ base: '@'}
-# key CHORD_DOTS_233{ base: '%'}
-# key CHORD_DOTS_234{ base: '@'}
-# key CHORD_DOTS_235{ base: '%'}
-# key CHORD_DOTS_236{ base: '@'}
-# key CHORD_DOTS_237{ base: '%'}
-# key CHORD_DOTS_238{ base: '@'}
-# key CHORD_DOTS_239{ base: '%'}
-# key CHORD_DOTS_2370{ base: '@'}
-# key CHORD_DOTS_2371{ base: '%'}
-# key CHORD_DOTS_2372{ base: '@'}
-# key CHORD_DOTS_2373{ base: '%'}
-# key CHORD_DOTS_2374{ base: '@'}
-# key CHORD_DOTS_2375{ base: '%'}
-# key CHORD_DOTS_2376{ base: '@'}
-# key CHORD_DOTS_2377{ base: '%'}
-# key CHORD_DOTS_2378{ base: '@'}
-# key CHORD_DOTS_2379{ base: '%'}
-# key CHORD_DOTS_10{ base: '@'}
-# key CHORD_DOTS_11{ base: '%'}
+# key CHORD_DOTS_13{ base: '@'}
+# key CHORD_DOTS_137{ base: '%'}
 # key CHORD_DOTS_12{ base: '@'}
-# key CHORD_DOTS_13{ base: '%'}
-# key CHORD_DOTS_14{ base: '@'}
-# key CHORD_DOTS_15{ base: '%'}
-# key CHORD_DOTS_16{ base: '@'}
-# key CHORD_DOTS_17{ base: '%'}
-# key CHORD_DOTS_18{ base: '@'}
-# key CHORD_DOTS_19{ base: '%'}
-# key CHORD_DOTS_170{ base: '@'}
-# key CHORD_DOTS_171{ base: '%'}
-# key CHORD_DOTS_172{ base: '@'}
-# key CHORD_DOTS_173{ base: '%'}
-# key CHORD_DOTS_174{ base: '@'}
-# key CHORD_DOTS_175{ base: '%'}
-# key CHORD_DOTS_176{ base: '@'}
-# key CHORD_DOTS_177{ base: '%'}
-# key CHORD_DOTS_178{ base: '@'}
-# key CHORD_DOTS_179{ base: '%'}
-# key CHORD_DOTS_700{ base: '@'}
-# key CHORD_DOTS_701{ base: '%'}
-# key CHORD_DOTS_702{ base: '@'}
-# key CHORD_DOTS_703{ base: '%'}
-# key CHORD_DOTS_704{ base: '@'}
-# key CHORD_DOTS_705{ base: '%'}
-# key CHORD_DOTS_706{ base: '@'}
-# key CHORD_DOTS_707{ base: '%'}
-# key CHORD_DOTS_708{ base: '@'}
-# key CHORD_DOTS_709{ base: '%'}
-# key CHORD_DOTS_710{ base: '@'}
-# key CHORD_DOTS_711{ base: '%'}
-# key CHORD_DOTS_712{ base: '@'}
-# key CHORD_DOTS_713{ base: '%'}
-# key CHORD_DOTS_714{ base: '@'}
-# key CHORD_DOTS_715{ base: '%'}
-# key CHORD_DOTS_716{ base: '@'}
-# key CHORD_DOTS_717{ base: '%'}
-# key CHORD_DOTS_718{ base: '@'}
-# key CHORD_DOTS_719{ base: '%'}
-# key CHORD_DOTS_720{ base: '@'}
-# key CHORD_DOTS_721{ base: '%'}
-# key CHORD_DOTS_722{ base: '@'}
-# key CHORD_DOTS_723{ base: '%'}
-# key CHORD_DOTS_724{ base: '@'}
-# key CHORD_DOTS_725{ base: '%'}
-# key CHORD_DOTS_726{ base: '@'}
-# key CHORD_DOTS_727{ base: '%'}
-# key CHORD_DOTS_728{ base: '@'}
-# key CHORD_DOTS_729{ base: '%'}
-# key CHORD_DOTS_730{ base: '@'}
-# key CHORD_DOTS_731{ base: '%'}
-# key CHORD_DOTS_732{ base: '@'}
-# key CHORD_DOTS_733{ base: '%'}
-# key CHORD_DOTS_734{ base: '@'}
-# key CHORD_DOTS_735{ base: '%'}
-# key CHORD_DOTS_736{ base: '@'}
-# key CHORD_DOTS_737{ base: '%'}
-# key CHORD_DOTS_738{ base: '@'}
-# key CHORD_DOTS_739{ base: '%'}
-# key CHORD_DOTS_740{ base: '%'}
-# key CHORD_DOTS_742{ base: '@'}
-# key CHORD_DOTS_743{ base: '%'}
-# key CHORD_DOTS_744{ base: '@'}
-# key CHORD_DOTS_745{ base: '%'}
-# key CHORD_DOTS_746{ base: '@'}
-# key CHORD_DOTS_747{ base: '%'}
-# key CHORD_DOTS_748{ base: '@'}
-# key CHORD_DOTS_749{ base: '%'}
-# key CHORD_DOTS_750{ base: '%'}
-# key CHORD_DOTS_752{ base: '@'}
-# key CHORD_DOTS_753{ base: '%'}
-# key CHORD_DOTS_754{ base: '@'}
-# key CHORD_DOTS_755{ base: '%'}
-# key CHORD_DOTS_756{ base: '@'}
-# key CHORD_DOTS_757{ base: '%'}
-# key CHORD_DOTS_758{ base: '@'}
-# key CHORD_DOTS_759{ base: '%'}
-# key CHORD_DOTS_760{ base: '@'}
-# key CHORD_DOTS_761{ base: '%'}
-# key CHORD_DOTS_762{ base: '@'}
-# key CHORD_DOTS_763{ base: '%'}
-# key CHORD_DOTS_764{ base: '@'}
-# key CHORD_DOTS_765{ base: '%'}
-# key CHORD_DOTS_766{ base: '@'}
-# key CHORD_DOTS_767{ base: '%'}
-# key CHORD_DOTS_768{ base: '@'}
-# key CHORD_DOTS_769{ base: '%'}
-# key CHORD_DOTS_770{ base: '@'}
-# key CHORD_DOTS_771{ base: '%'}
-# key CHORD_DOTS_772{ base: '@'}
-# key CHORD_DOTS_773{ base: '%'}
-# key CHORD_DOTS_774{ base: '@'}
-# key CHORD_DOTS_775{ base: '%'}
-# key CHORD_DOTS_776{ base: '@'}
-# key CHORD_DOTS_777{ base: '%'}
-# key CHORD_DOTS_778{ base: '@'}
-# key CHORD_DOTS_779{ base: '%'}
-# key CHORD_DOTS_780{ base: '@'}
-# key CHORD_DOTS_781{ base: '%'}
-# key CHORD_DOTS_782{ base: '@'}
-# key CHORD_DOTS_783{ base: '%'}
-# key CHORD_DOTS_784{ base: '@'}
-# key CHORD_DOTS_785{ base: '%'}
-# key CHORD_DOTS_786{ base: '@'}
-# key CHORD_DOTS_787{ base: '%'}
-# key CHORD_DOTS_788{ base: '@'}
-# key CHORD_DOTS_789{ base: '%'}
-# key CHORD_DOTS_790{ base: '@'}
-# key CHORD_DOTS_791{ base: '%'}
-# key CHORD_DOTS_792{ base: '@'}
-# key CHORD_DOTS_793{ base: '%'}
-# key CHORD_DOTS_794{ base: '@'}
-# key CHORD_DOTS_795{ base: '%'}
-# key CHORD_DOTS_796{ base: '@'}
-# key CHORD_DOTS_797{ base: '%'}
-# key CHORD_DOTS_798{ base: '@'}
-# key CHORD_DOTS_799{ base: '%'}
-# key CHORD_DOTS_300{ base: '@'}
-# key CHORD_DOTS_301{ base: '%'}
-# key CHORD_DOTS_302{ base: '@'}
-# key CHORD_DOTS_303{ base: '%'}
-# key CHORD_DOTS_304{ base: '@'}
-# key CHORD_DOTS_305{ base: '%'}
-# key CHORD_DOTS_306{ base: '@'}
-# key CHORD_DOTS_307{ base: '%'}
-# key CHORD_DOTS_308{ base: '@'}
-# key CHORD_DOTS_309{ base: '%'}
-# key CHORD_DOTS_310{ base: '@'}
-# key CHORD_DOTS_311{ base: '%'}
-# key CHORD_DOTS_312{ base: '@'}
-# key CHORD_DOTS_313{ base: '%'}
-# key CHORD_DOTS_314{ base: '@'}
-# key CHORD_DOTS_315{ base: '%'}
-# key CHORD_DOTS_316{ base: '@'}
-# key CHORD_DOTS_317{ base: '%'}
-# key CHORD_DOTS_318{ base: '@'}
-# key CHORD_DOTS_319{ base: '%'}
-# key CHORD_DOTS_320{ base: '@'}
-# key CHORD_DOTS_321{ base: '%'}
-# key CHORD_DOTS_322{ base: '@'}
-# key CHORD_DOTS_323{ base: '%'}
-# key CHORD_DOTS_324{ base: '@'}
-# key CHORD_DOTS_325{ base: '%'}
-# key CHORD_DOTS_326{ base: '@'}
-# key CHORD_DOTS_327{ base: '%'}
-# key CHORD_DOTS_328{ base: '@'}
-# key CHORD_DOTS_329{ base: '%'}
-# key CHORD_DOTS_330{ base: '@'}
-# key CHORD_DOTS_331{ base: '%'}
-# key CHORD_DOTS_332{ base: '@'}
-# key CHORD_DOTS_333{ base: '%'}
-# key CHORD_DOTS_334{ base: '@'}
-# key CHORD_DOTS_335{ base: '%'}
-# key CHORD_DOTS_336{ base: '@'}
-# key CHORD_DOTS_337{ base: '%'}
-# key CHORD_DOTS_338{ base: '@'}
-# key CHORD_DOTS_339{ base: '%'}
-# key CHORD_DOTS_340{ base: '@'}
-# key CHORD_DOTS_341{ base: '%'}
-# key CHORD_DOTS_342{ base: '@'}
-# key CHORD_DOTS_343{ base: '%'}
-# key CHORD_DOTS_344{ base: '@'}
-# key CHORD_DOTS_345{ base: '%'}
-# key CHORD_DOTS_346{ base: '@'}
+# key CHORD_DOTS_127{ base: '%'}
+# key CHORD_DOTS_123{ base: '@'}
+# key CHORD_DOTS_1237{ base: '%'}
+# key CHORD_DOTS_4{ base: '@'}
+# key CHORD_DOTS_47{ base: '%'}
+# key CHORD_DOTS_34{ base: '@'}
 # key CHORD_DOTS_347{ base: '%'}
+# key CHORD_DOTS_24{ base: '@'}
+# key CHORD_DOTS_247{ base: '%'}
+# key CHORD_DOTS_234{ base: '@'}
+# key CHORD_DOTS_2347{ base: '%'}
+# key CHORD_DOTS_14{ base: '@'}
+# key CHORD_DOTS_147{ base: '%'}
+# key CHORD_DOTS_134{ base: '@'}
+# key CHORD_DOTS_1347{ base: '%'}
+# key CHORD_DOTS_124{ base: '@'}
+# key CHORD_DOTS_1247{ base: '%'}
+# key CHORD_DOTS_1234{ base: '@'}
+# key CHORD_DOTS_12347{ base: '%'}
+# key CHORD_DOTS_5{ base: '@'}
+# key CHORD_DOTS_57{ base: '%'}
+# key CHORD_DOTS_35{ base: '@'}
+# key CHORD_DOTS_357{ base: '%'}
+# key CHORD_DOTS_25{ base: '@'}
+# key CHORD_DOTS_257{ base: '%'}
+# key CHORD_DOTS_235{ base: '@'}
+# key CHORD_DOTS_2357{ base: '%'}
+# key CHORD_DOTS_15{ base: '@'}
+# key CHORD_DOTS_157{ base: '%'}
+# key CHORD_DOTS_135{ base: '@'}
+# key CHORD_DOTS_1357{ base: '%'}
+# key CHORD_DOTS_125{ base: '@'}
+# key CHORD_DOTS_1257{ base: '%'}
+# key CHORD_DOTS_1235{ base: '@'}
+# key CHORD_DOTS_12357{ base: '%'}
+# key CHORD_DOTS_45{ base: '@'}
+# key CHORD_DOTS_457{ base: '%'}
+# key CHORD_DOTS_345{ base: '@'}
+# key CHORD_DOTS_3457{ base: '%'}
+# key CHORD_DOTS_245{ base: '@'}
+# key CHORD_DOTS_2457{ base: '%'}
+# key CHORD_DOTS_2345{ base: '@'}
+# key CHORD_DOTS_23457{ base: '%'}
+# key CHORD_DOTS_145{ base: '@'}
+# key CHORD_DOTS_1457{ base: '%'}
+# key CHORD_DOTS_1345{ base: '@'}
+# key CHORD_DOTS_13457{ base: '%'}
+# key CHORD_DOTS_1245{ base: '@'}
+# key CHORD_DOTS_12457{ base: '%'}
+# key CHORD_DOTS_12345{ base: '@'}
+# key CHORD_DOTS_123457{ base: '%'}
+# key CHORD_DOTS_6{ base: '@'}
+# key CHORD_DOTS_67{ base: '%'}
+# key CHORD_DOTS_36{ base: '@'}
+# key CHORD_DOTS_367{ base: '%'}
+# key CHORD_DOTS_26{ base: '@'}
+# key CHORD_DOTS_267{ base: '%'}
+# key CHORD_DOTS_236{ base: '@'}
+# key CHORD_DOTS_2367{ base: '%'}
+# key CHORD_DOTS_16{ base: '@'}
+# key CHORD_DOTS_167{ base: '%'}
+# key CHORD_DOTS_136{ base: '@'}
+# key CHORD_DOTS_1367{ base: '%'}
+# key CHORD_DOTS_126{ base: '@'}
+# key CHORD_DOTS_1267{ base: '%'}
+# key CHORD_DOTS_1236{ base: '@'}
+# key CHORD_DOTS_12367{ base: '%'}
+# key CHORD_DOTS_46{ base: '@'}
+# key CHORD_DOTS_467{ base: '%'}
+# key CHORD_DOTS_346{ base: '@'}
+# key CHORD_DOTS_3467{ base: '%'}
+# key CHORD_DOTS_246{ base: '@'}
+# key CHORD_DOTS_2467{ base: '%'}
+# key CHORD_DOTS_2346{ base: '@'}
+# key CHORD_DOTS_23467{ base: '%'}
+# key CHORD_DOTS_146{ base: '@'}
+# key CHORD_DOTS_1467{ base: '%'}
+# key CHORD_DOTS_1346{ base: '@'}
+# key CHORD_DOTS_13467{ base: '%'}
+# key CHORD_DOTS_1246{ base: '@'}
+# key CHORD_DOTS_12467{ base: '%'}
+# key CHORD_DOTS_12346{ base: '@'}
+# key CHORD_DOTS_123467{ base: '%'}
+# key CHORD_DOTS_56{ base: '@'}
+# key CHORD_DOTS_567{ base: '%'}
+# key CHORD_DOTS_356{ base: '@'}
+# key CHORD_DOTS_3567{ base: '%'}
+# key CHORD_DOTS_256{ base: '@'}
+# key CHORD_DOTS_2567{ base: '%'}
+# key CHORD_DOTS_2356{ base: '@'}
+# key CHORD_DOTS_23567{ base: '%'}
+# key CHORD_DOTS_156{ base: '@'}
+# key CHORD_DOTS_1567{ base: '%'}
+# key CHORD_DOTS_1356{ base: '@'}
+# key CHORD_DOTS_13567{ base: '%'}
+# key CHORD_DOTS_1256{ base: '@'}
+# key CHORD_DOTS_12567{ base: '%'}
+# key CHORD_DOTS_12356{ base: '@'}
+# key CHORD_DOTS_123567{ base: '%'}
+# key CHORD_DOTS_456{ base: '@'}
+# key CHORD_DOTS_4567{ base: '%'}
+# key CHORD_DOTS_3456{ base: '@'}
+# key CHORD_DOTS_34567{ base: '%'}
+# key CHORD_DOTS_2456{ base: '@'}
+# key CHORD_DOTS_24567{ base: '%'}
+# key CHORD_DOTS_23456{ base: '@'}
+# key CHORD_DOTS_234567{ base: '%'}
+# key CHORD_DOTS_1456{ base: '@'}
+# key CHORD_DOTS_14567{ base: '%'}
+# key CHORD_DOTS_13456{ base: '@'}
+# key CHORD_DOTS_134567{ base: '%'}
+# key CHORD_DOTS_12456{ base: '@'}
+# key CHORD_DOTS_124567{ base: '%'}
+# key CHORD_DOTS_123456{ base: '@'}
+# key CHORD_DOTS_1234567{ base: '%'}
+# key CHORD_DOTS_8{ base: '@'}
+# key CHORD_DOTS_78{ base: '%'}
+# key CHORD_DOTS_38{ base: '@'}
+# key CHORD_DOTS_378{ base: '%'}
+# key CHORD_DOTS_28{ base: '@'}
+# key CHORD_DOTS_278{ base: '%'}
+# key CHORD_DOTS_238{ base: '@'}
+# key CHORD_DOTS_2378{ base: '%'}
+# key CHORD_DOTS_18{ base: '@'}
+# key CHORD_DOTS_178{ base: '%'}
+# key CHORD_DOTS_138{ base: '@'}
+# key CHORD_DOTS_1378{ base: '%'}
+# key CHORD_DOTS_128{ base: '%'}
+# key CHORD_DOTS_1238{ base: '@'}
+# key CHORD_DOTS_12378{ base: '%'}
+# key CHORD_DOTS_48{ base: '@'}
+# key CHORD_DOTS_478{ base: '%'}
 # key CHORD_DOTS_348{ base: '@'}
-# key CHORD_DOTS_349{ base: '%'}
-# key CHORD_DOTS_350{ base: '@'}
-# key CHORD_DOTS_351{ base: '%'}
-# key CHORD_DOTS_352{ base: '@'}
-# key CHORD_DOTS_353{ base: '%'}
-# key CHORD_DOTS_354{ base: '@'}
-# key CHORD_DOTS_355{ base: '%'}
+# key CHORD_DOTS_3478{ base: '%'}
+# key CHORD_DOTS_248{ base: '@'}
+# key CHORD_DOTS_2478{ base: '%'}
+# key CHORD_DOTS_2348{ base: '%'}
+# key CHORD_DOTS_148{ base: '@'}
+# key CHORD_DOTS_1478{ base: '%'}
+# key CHORD_DOTS_1348{ base: '@'}
+# key CHORD_DOTS_13478{ base: '%'}
+# key CHORD_DOTS_1248{ base: '@'}
+# key CHORD_DOTS_12478{ base: '%'}
+# key CHORD_DOTS_12348{ base: '@'}
+# key CHORD_DOTS_123478{ base: '%'}
+# key CHORD_DOTS_58{ base: '@'}
+# key CHORD_DOTS_578{ base: '%'}
+# key CHORD_DOTS_358{ base: '@'}
+# key CHORD_DOTS_3578{ base: '%'}
+# key CHORD_DOTS_258{ base: '@'}
+# key CHORD_DOTS_2578{ base: '%'}
+# key CHORD_DOTS_2358{ base: '@'}
+# key CHORD_DOTS_23578{ base: '%'}
+# key CHORD_DOTS_158{ base: '@'}
+# key CHORD_DOTS_1578{ base: '%'}
+# key CHORD_DOTS_1358{ base: '@'}
+# key CHORD_DOTS_13578{ base: '%'}
+# key CHORD_DOTS_1258{ base: '@'}
+# key CHORD_DOTS_12578{ base: '%'}
+# key CHORD_DOTS_12358{ base: '@'}
+# key CHORD_DOTS_123578{ base: '%'}
+# key CHORD_DOTS_458{ base: '@'}
+# key CHORD_DOTS_4578{ base: '%'}
+# key CHORD_DOTS_3458{ base: '@'}
+# key CHORD_DOTS_34578{ base: '%'}
+# key CHORD_DOTS_2458{ base: '@'}
+# key CHORD_DOTS_24578{ base: '%'}
+# key CHORD_DOTS_23458{ base: '@'}
+# key CHORD_DOTS_234578{ base: '%'}
+# key CHORD_DOTS_1458{ base: '@'}
+# key CHORD_DOTS_14578{ base: '%'}
+# key CHORD_DOTS_13458{ base: '@'}
+# key CHORD_DOTS_134578{ base: '%'}
+# key CHORD_DOTS_12458{ base: '@'}
+# key CHORD_DOTS_124578{ base: '%'}
+# key CHORD_DOTS_123458{ base: '@'}
+# key CHORD_DOTS_1234578{ base: '%'}
+# key CHORD_DOTS_68{ base: '@'}
+# key CHORD_DOTS_678{ base: '%'}
+# key CHORD_DOTS_368{ base: '@'}
+# key CHORD_DOTS_3678{ base: '%'}
+# key CHORD_DOTS_268{ base: '@'}
+# key CHORD_DOTS_2678{ base: '%'}
+# key CHORD_DOTS_2368{ base: '@'}
+# key CHORD_DOTS_23678{ base: '%'}
+# key CHORD_DOTS_168{ base: '@'}
+# key CHORD_DOTS_1678{ base: '%'}
+# key CHORD_DOTS_1368{ base: '@'}
+# key CHORD_DOTS_13678{ base: '%'}
+# key CHORD_DOTS_1268{ base: '@'}
+# key CHORD_DOTS_12678{ base: '%'}
+# key CHORD_DOTS_12368{ base: '@'}
+# key CHORD_DOTS_123678{ base: '%'}
+# key CHORD_DOTS_468{ base: '@'}
+# key CHORD_DOTS_4678{ base: '%'}
+# key CHORD_DOTS_3468{ base: '@'}
+# key CHORD_DOTS_34678{ base: '%'}
+# key CHORD_DOTS_2468{ base: '@'}
+# key CHORD_DOTS_24678{ base: '%'}
+# key CHORD_DOTS_23468{ base: '@'}
+# key CHORD_DOTS_234678{ base: '%'}
+# key CHORD_DOTS_1468{ base: '@'}
+# key CHORD_DOTS_14678{ base: '%'}
+# key CHORD_DOTS_13468{ base: '@'}
+# key CHORD_DOTS_134678{ base: '%'}
+# key CHORD_DOTS_12468{ base: '@'}
+# key CHORD_DOTS_124678{ base: '%'}
+# key CHORD_DOTS_123468{ base: '@'}
+# key CHORD_DOTS_1234678{ base: '%'}
+# key CHORD_DOTS_568{ base: '@'}
+# key CHORD_DOTS_5678{ base: '%'}
+# key CHORD_DOTS_3568{ base: '@'}
+# key CHORD_DOTS_35678{ base: '%'}
+# key CHORD_DOTS_2568{ base: '@'}
+# key CHORD_DOTS_25678{ base: '%'}
+# key CHORD_DOTS_23568{ base: '@'}
+# key CHORD_DOTS_235678{ base: '%'}
+# key CHORD_DOTS_1568{ base: '@'}
+# key CHORD_DOTS_15678{ base: '%'}
+# key CHORD_DOTS_13568{ base: '@'}
+# key CHORD_DOTS_135678{ base: '%'}
+# key CHORD_DOTS_12568{ base: '@'}
+# key CHORD_DOTS_125678{ base: '%'}
+# key CHORD_DOTS_123568{ base: '@'}
+# key CHORD_DOTS_1235678{ base: '%'}
+# key CHORD_DOTS_4568{ base: '@'}
+# key CHORD_DOTS_45678{ base: '%'}
+# key CHORD_DOTS_34568{ base: '@'}
+# key CHORD_DOTS_345678{ base: '%'}
+# key CHORD_DOTS_24568{ base: '@'}
+# key CHORD_DOTS_245678{ base: '%'}
+# key CHORD_DOTS_234568{ base: '@'}
+# key CHORD_DOTS_2345678{ base: '%'}
+# key CHORD_DOTS_14568{ base: '@'}
+# key CHORD_DOTS_145678{ base: '%'}
+# key CHORD_DOTS_134568{ base: '@'}
+# key CHORD_DOTS_1345678{ base: '%'}
+# key CHORD_DOTS_124568{ base: '@'}
+# key CHORD_DOTS_1245678{ base: '%'}
+# key CHORD_DOTS_1234568{ base: '@'}
+# key CHORD_DOTS_12345678{ base: '%'}
