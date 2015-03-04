@@ -531,7 +531,7 @@ key PLUS {
 
 # key BRL_DOTS_7{ base: 'k'}
 
-key  BRL_DOTS_3 { 
+key BRL_DOTS_3 { 
 	base: '\''
 }
 
