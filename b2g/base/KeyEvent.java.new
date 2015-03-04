@@ -625,7 +625,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
     public static final int KEYCODE_ASSIST          = 219;
 
     /*{KW} 256 Braille key combinations*/    
-/*	public static final int KEYCODE_BRL_DOTS_7	=   257; // mapped to DEL  */
+  	public static final int KEYCODE_BRL_DOTS_7	=   257;
 	public static final int KEYCODE_BRL_DOTS_3	=   258;
 	public static final int KEYCODE_BRL_DOTS_37	=   259;
 	public static final int KEYCODE_BRL_DOTS_2	=   260;
@@ -752,7 +752,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
 	public static final int KEYCODE_BRL_DOTS_124567 =   381;
 	public static final int KEYCODE_BRL_DOTS_123456	=   382;
 	public static final int KEYCODE_BRL_DOTS_1234567	=   383;
-/*  public static final int KEYCODE_BRL_DOTS_8	=   384;  Mapped to ENTER */
+        public static final int KEYCODE_BRL_DOTS_8	=   384;
 	public static final int KEYCODE_BRL_DOTS_78	=   385;
 	public static final int KEYCODE_BRL_DOTS_38	=   386;
 	public static final int KEYCODE_BRL_DOTS_378	=   387;
@@ -884,21 +884,21 @@ public class KeyEvent extends InputEvent implements Parcelable {
 	
 	/*{KW} 256 Chorded key combinations*/
 	public static final int KEYCODE_CHORD_DOTS_7	=   513;
-/*	public static final int KEYCODE_CHORD_DOTS_3	=   514; //mapped to DPAD_LEFT */
+  	public static final int KEYCODE_CHORD_DOTS_3	=   514;
 	public static final int KEYCODE_CHORD_DOTS_37	=   515;
 	public static final int KEYCODE_CHORD_DOTS_2	=   516;
 	public static final int KEYCODE_CHORD_DOTS_27	=   517;
 	public static final int KEYCODE_CHORD_DOTS_23	=   518;
 	public static final int KEYCODE_CHORD_DOTS_237	=   519;
-/*	public static final int KEYCODE_CHORD_DOTS_1	=   520; //mapped to DPAD_UP */
+  	public static final int KEYCODE_CHORD_DOTS_1	=   520;
 	public static final int KEYCODE_CHORD_DOTS_17	=   521;
 	public static final int KEYCODE_CHORD_DOTS_13	=   522;
 	public static final int KEYCODE_CHORD_DOTS_137	=   523;
-/*	public static final int KEYCODE_CHORD_DOTS_12	=   524; //mapped to BACK */
+  	public static final int KEYCODE_CHORD_DOTS_12	=   524;
 	public static final int KEYCODE_CHORD_DOTS_127	=   525;
 	public static final int KEYCODE_CHORD_DOTS_123	=   526;
 	public static final int KEYCODE_CHORD_DOTS_1237	=   527;
-/*	public static final int KEYCODE_CHORD_DOTS_4	=   528; //mapped to DPAD_DOWN */
+  	public static final int KEYCODE_CHORD_DOTS_4	=   528;
 	public static final int KEYCODE_CHORD_DOTS_47	=   529;
 	public static final int KEYCODE_CHORD_DOTS_34	=   530;
 	public static final int KEYCODE_CHORD_DOTS_347	=   531;
@@ -908,9 +908,9 @@ public class KeyEvent extends InputEvent implements Parcelable {
 	public static final int KEYCODE_CHORD_DOTS_2347	=   535;
 	public static final int KEYCODE_CHORD_DOTS_14	=   536;
 	public static final int KEYCODE_CHORD_DOTS_147	=   537;
-/*	public static final int KEYCODE_CHORD_DOTS_134	=   538; //mapped to MENU */
+  	public static final int KEYCODE_CHORD_DOTS_134	=   538;
 	public static final int KEYCODE_CHORD_DOTS_1347	=   539;
-/*	public static final int KEYCODE_CHORD_DOTS_124	=   540; //mapped to SEARCH */
+  	public static final int KEYCODE_CHORD_DOTS_124	=   540;
 	public static final int KEYCODE_CHORD_DOTS_1247	=   541;
 	public static final int KEYCODE_CHORD_DOTS_1234	=   542;
 	public static final int KEYCODE_CHORD_DOTS_12347	=   543;
@@ -930,7 +930,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
 	public static final int KEYCODE_CHORD_DOTS_1257	=   557;
 	public static final int KEYCODE_CHORD_DOTS_1235	=   558;
 	public static final int KEYCODE_CHORD_DOTS_12357	=   559;
-/*	public static final int KEYCODE_CHORD_DOTS_45	=   560; // mapped to TAB  */
+  	public static final int KEYCODE_CHORD_DOTS_45	=   560;
 	public static final int KEYCODE_CHORD_DOTS_457	=   561;
 	public static final int KEYCODE_CHORD_DOTS_345	=   562;
 	public static final int KEYCODE_CHORD_DOTS_3457	=   563;
@@ -938,15 +938,15 @@ public class KeyEvent extends InputEvent implements Parcelable {
 	public static final int KEYCODE_CHORD_DOTS_2457	=   565;
 	public static final int KEYCODE_CHORD_DOTS_2345	=   566;
 	public static final int KEYCODE_CHORD_DOTS_23457	=   567;
-/*	public static final int KEYCODE_CHORD_DOTS_145	=   568; //mapped to DEL */
+  	public static final int KEYCODE_CHORD_DOTS_145	=   568;
 	public static final int KEYCODE_CHORD_DOTS_1457	=   569;
-/*	public static final int KEYCODE_CHORD_DOTS_1345	=   570;	// mapped to Notification */
+  	public static final int KEYCODE_CHORD_DOTS_1345	=   570;
 	public static final int KEYCODE_CHORD_DOTS_13457	=   571;
 	public static final int KEYCODE_CHORD_DOTS_1245	=   572;
 	public static final int KEYCODE_CHORD_DOTS_12457	=   573;
 	public static final int KEYCODE_CHORD_DOTS_12345	=   574;
 	public static final int KEYCODE_CHORD_DOTS_123457	=   575;
-/*	public static final int KEYCODE_CHORD_DOTS_6	=   576; //mapped to DPAD_RIGHT */
+  	public static final int KEYCODE_CHORD_DOTS_6	=   576;
 	public static final int KEYCODE_CHORD_DOTS_67	=   577;
 	public static final int KEYCODE_CHORD_DOTS_36	=   578;
 	public static final int KEYCODE_CHORD_DOTS_367	=   579;
@@ -1002,13 +1002,13 @@ public class KeyEvent extends InputEvent implements Parcelable {
 	public static final int KEYCODE_CHORD_DOTS_24567	=   629;
 	public static final int KEYCODE_CHORD_DOTS_23456	=   630;
 	public static final int KEYCODE_CHORD_DOTS_234567	=   631;
-/*	public static final int KEYCODE_CHORD_DOTS_1456	=   632;  //mapped to KEYCODE_ASSIST  ?-chord */
+  	public static final int KEYCODE_CHORD_DOTS_1456	=   632;
 	public static final int KEYCODE_CHORD_DOTS_14567	=   633;
 	public static final int KEYCODE_CHORD_DOTS_13456	=   634;
 	public static final int KEYCODE_CHORD_DOTS_134567	=   635;
 	public static final int KEYCODE_CHORD_DOTS_12456	=   636;
 	public static final int KEYCODE_CHORD_DOTS_124567	=   637;
-/*	public static final int KEYCODE_CHORD_DOTS_123456	=   638; //mapped to HOME */
+  	public static final int KEYCODE_CHORD_DOTS_123456	=   638;
 	public static final int KEYCODE_CHORD_DOTS_1234567	=   639;
 	public static final int KEYCODE_CHORD_DOTS_8	=   640;
 	public static final int KEYCODE_CHORD_DOTS_78	=   641;
@@ -1449,8 +1449,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
         names.append(KEYCODE_RO, "KEYCODE_RO");
         names.append(KEYCODE_KANA, "KEYCODE_KANA");
         names.append(KEYCODE_ASSIST, "KEYCODE_ASSIST");
-		/*{KW}*/
-		//names.append(KEYCODE_BRL_DOTS_7, "KEYCODE_BRL_DOTS_7");  // mapped to DEL
+		names.append(KEYCODE_BRL_DOTS_7, "KEYCODE_BRL_DOTS_7");
 		names.append(KEYCODE_BRL_DOTS_3, "KEYCODE_BRL_DOTS_3");
 		names.append(KEYCODE_BRL_DOTS_37, "KEYCODE_BRL_DOTS_37");
 		names.append(KEYCODE_BRL_DOTS_2, "KEYCODE_BRL_DOTS_2");
@@ -1577,7 +1576,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_BRL_DOTS_124567, "KEYCODE_BRL_DOTS_124567");
 		names.append(KEYCODE_BRL_DOTS_123456, "KEYCODE_BRL_DOTS_123456");
 		names.append(KEYCODE_BRL_DOTS_1234567, "KEYCODE_BRL_DOTS_1234567");
-		//names.append(KEYCODE_BRL_DOTS_8, "KEYCODE_BRL_DOTS_8");  Maped to ENTER
+		names.append(KEYCODE_BRL_DOTS_8, "KEYCODE_BRL_DOTS_8");
 		names.append(KEYCODE_BRL_DOTS_78, "KEYCODE_BRL_DOTS_78");
 		names.append(KEYCODE_BRL_DOTS_38, "KEYCODE_BRL_DOTS_38");
 		names.append(KEYCODE_BRL_DOTS_378, "KEYCODE_BRL_DOTS_378");
@@ -1707,21 +1706,21 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_BRL_DOTS_12345678, "KEYCODE_BRL_DOTS_12345678");
 
 		names.append(KEYCODE_CHORD_DOTS_7, "KEYCODE_CHORD_DOTS_7");
-		//names.append(KEYCODE_CHORD_DOTS_3, "KEYCODE_CHORD_DOTS_3");
+		names.append(KEYCODE_CHORD_DOTS_3, "KEYCODE_CHORD_DOTS_3");
 		names.append(KEYCODE_CHORD_DOTS_37, "KEYCODE_CHORD_DOTS_37");
 		names.append(KEYCODE_CHORD_DOTS_2, "KEYCODE_CHORD_DOTS_2");
 		names.append(KEYCODE_CHORD_DOTS_27, "KEYCODE_CHORD_DOTS_27");
 		names.append(KEYCODE_CHORD_DOTS_23, "KEYCODE_CHORD_DOTS_23");
 		names.append(KEYCODE_CHORD_DOTS_237, "KEYCODE_CHORD_DOTS_237");
-		//names.append(KEYCODE_CHORD_DOTS_1, "KEYCODE_CHORD_DOTS_1");
+		names.append(KEYCODE_CHORD_DOTS_1, "KEYCODE_CHORD_DOTS_1");
 		names.append(KEYCODE_CHORD_DOTS_17, "KEYCODE_CHORD_DOTS_17");
 		names.append(KEYCODE_CHORD_DOTS_13, "KEYCODE_CHORD_DOTS_13");
 		names.append(KEYCODE_CHORD_DOTS_137, "KEYCODE_CHORD_DOTS_137");
-		//names.append(KEYCODE_CHORD_DOTS_12, "KEYCODE_CHORD_DOTS_12");
+		names.append(KEYCODE_CHORD_DOTS_12, "KEYCODE_CHORD_DOTS_12");
 		names.append(KEYCODE_CHORD_DOTS_127, "KEYCODE_CHORD_DOTS_127");
 		names.append(KEYCODE_CHORD_DOTS_123, "KEYCODE_CHORD_DOTS_123");
 		names.append(KEYCODE_CHORD_DOTS_1237, "KEYCODE_CHORD_DOTS_1237");
-		//names.append(KEYCODE_CHORD_DOTS_4, "KEYCODE_CHORD_DOTS_4");
+		names.append(KEYCODE_CHORD_DOTS_4, "KEYCODE_CHORD_DOTS_4");
 		names.append(KEYCODE_CHORD_DOTS_47, "KEYCODE_CHORD_DOTS_47");
 		names.append(KEYCODE_CHORD_DOTS_34, "KEYCODE_CHORD_DOTS_34");
 		names.append(KEYCODE_CHORD_DOTS_347, "KEYCODE_CHORD_DOTS_347");
@@ -1731,9 +1730,9 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_CHORD_DOTS_2347, "KEYCODE_CHORD_DOTS_2347");
 		names.append(KEYCODE_CHORD_DOTS_14, "KEYCODE_CHORD_DOTS_14");
 		names.append(KEYCODE_CHORD_DOTS_147, "KEYCODE_CHORD_DOTS_147");
-		//names.append(KEYCODE_CHORD_DOTS_134, "KEYCODE_CHORD_DOTS_134");
+		names.append(KEYCODE_CHORD_DOTS_134, "KEYCODE_CHORD_DOTS_134");
 		names.append(KEYCODE_CHORD_DOTS_1347, "KEYCODE_CHORD_DOTS_1347");
-		//names.append(KEYCODE_CHORD_DOTS_124, "KEYCODE_CHORD_DOTS_124");
+		names.append(KEYCODE_CHORD_DOTS_124, "KEYCODE_CHORD_DOTS_124");
 		names.append(KEYCODE_CHORD_DOTS_1247, "KEYCODE_CHORD_DOTS_1247");
 		names.append(KEYCODE_CHORD_DOTS_1234, "KEYCODE_CHORD_DOTS_1234");
 		names.append(KEYCODE_CHORD_DOTS_12347, "KEYCODE_CHORD_DOTS_12347");
@@ -1753,7 +1752,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_CHORD_DOTS_1257, "KEYCODE_CHORD_DOTS_1257");
 		names.append(KEYCODE_CHORD_DOTS_1235, "KEYCODE_CHORD_DOTS_1235");
 		names.append(KEYCODE_CHORD_DOTS_12357, "KEYCODE_CHORD_DOTS_12357");
-		//names.append(KEYCODE_CHORD_DOTS_45, "KEYCODE_CHORD_DOTS_45");
+		names.append(KEYCODE_CHORD_DOTS_45, "KEYCODE_CHORD_DOTS_45");
 		names.append(KEYCODE_CHORD_DOTS_457, "KEYCODE_CHORD_DOTS_457");
 		names.append(KEYCODE_CHORD_DOTS_345, "KEYCODE_CHORD_DOTS_345");
 		names.append(KEYCODE_CHORD_DOTS_3457, "KEYCODE_CHORD_DOTS_3457");
@@ -1761,15 +1760,15 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_CHORD_DOTS_2457, "KEYCODE_CHORD_DOTS_2457");
 		names.append(KEYCODE_CHORD_DOTS_2345, "KEYCODE_CHORD_DOTS_2345");
 		names.append(KEYCODE_CHORD_DOTS_23457, "KEYCODE_CHORD_DOTS_23457");
-		//names.append(KEYCODE_CHORD_DOTS_145, "KEYCODE_CHORD_DOTS_145");
+		names.append(KEYCODE_CHORD_DOTS_145, "KEYCODE_CHORD_DOTS_145");
 		names.append(KEYCODE_CHORD_DOTS_1457, "KEYCODE_CHORD_DOTS_1457");
-		//names.append(KEYCODE_CHORD_DOTS_1345, "KEYCODE_CHORD_DOTS_1345");
+		names.append(KEYCODE_CHORD_DOTS_1345, "KEYCODE_CHORD_DOTS_1345");
 		names.append(KEYCODE_CHORD_DOTS_13457, "KEYCODE_CHORD_DOTS_13457");
 		names.append(KEYCODE_CHORD_DOTS_1245, "KEYCODE_CHORD_DOTS_1245");
 		names.append(KEYCODE_CHORD_DOTS_12457, "KEYCODE_CHORD_DOTS_12457");
 		names.append(KEYCODE_CHORD_DOTS_12345, "KEYCODE_CHORD_DOTS_12345");
 		names.append(KEYCODE_CHORD_DOTS_123457, "KEYCODE_CHORD_DOTS_123457");
-		//names.append(KEYCODE_CHORD_DOTS_6, "KEYCODE_CHORD_DOTS_6");
+		names.append(KEYCODE_CHORD_DOTS_6, "KEYCODE_CHORD_DOTS_6");
 		names.append(KEYCODE_CHORD_DOTS_67, "KEYCODE_CHORD_DOTS_67");
 		names.append(KEYCODE_CHORD_DOTS_36, "KEYCODE_CHORD_DOTS_36");
 		names.append(KEYCODE_CHORD_DOTS_367, "KEYCODE_CHORD_DOTS_367");
@@ -1825,13 +1824,13 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_CHORD_DOTS_24567, "KEYCODE_CHORD_DOTS_24567");
 		names.append(KEYCODE_CHORD_DOTS_23456, "KEYCODE_CHORD_DOTS_23456");
 		names.append(KEYCODE_CHORD_DOTS_234567, "KEYCODE_CHORD_DOTS_234567");
-		//names.append(KEYCODE_CHORD_DOTS_1456, "KEYCODE_CHORD_DOTS_1456");  ?-chord KEYCODE_ASSIST
+		names.append(KEYCODE_CHORD_DOTS_1456, "KEYCODE_CHORD_DOTS_1456");
 		names.append(KEYCODE_CHORD_DOTS_14567, "KEYCODE_CHORD_DOTS_14567");
 		names.append(KEYCODE_CHORD_DOTS_13456, "KEYCODE_CHORD_DOTS_13456");
 		names.append(KEYCODE_CHORD_DOTS_134567, "KEYCODE_CHORD_DOTS_134567");
 		names.append(KEYCODE_CHORD_DOTS_12456, "KEYCODE_CHORD_DOTS_12456");
 		names.append(KEYCODE_CHORD_DOTS_124567, "KEYCODE_CHORD_DOTS_124567");
-		//names.append(KEYCODE_CHORD_DOTS_123456, "KEYCODE_CHORD_DOTS_123456");
+		names.append(KEYCODE_CHORD_DOTS_123456, "KEYCODE_CHORD_DOTS_123456");
 		names.append(KEYCODE_CHORD_DOTS_1234567, "KEYCODE_CHORD_DOTS_1234567");
 		names.append(KEYCODE_CHORD_DOTS_8, "KEYCODE_CHORD_DOTS_8");
 		names.append(KEYCODE_CHORD_DOTS_78, "KEYCODE_CHORD_DOTS_78");
