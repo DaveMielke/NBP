@@ -355,7 +355,7 @@ enum ANPKeyCodes {
 	kBrl_Right_Bracket_ANPKeyCode	=	381,	// punctuation ] 
 	kBrl_Equals_ANPKeyCode	=	382,	// math = 
 	kBrl_DOTS_1234567_ANPKeyCode	=	383,	// enter
-/* 	kBrl_DOTS_8_ANPKeyCode	=	384,  Mapped to ENTER  */
+	kBrl_DOTS_8_ANPKeyCode	=	384,
 	kBrl_DOTS_78_ANPKeyCode	=	385,	
 	kBrl_DOTS_38_ANPKeyCode	=	386,	
 	kBrl_DOTS_378_ANPKeyCode	=	387,	
@@ -487,21 +487,21 @@ enum ANPKeyCodes {
 	
 	/*{KW} 256 Chorded key combinations*/
 	kChord_DOTS_7_ANPKeyCode	=	513,	
-/*	kChord_DOTS_3_ANPKeyCode	=	514,	// Dot3-Chord (Cursor Left) */ 
+	kChord_DOTS_3_ANPKeyCode	=	514,
 	kChord_DOTS_37_ANPKeyCode	=	515,	
 	kChord_DOTS_2_ANPKeyCode	=	516,	
 	kChord_DOTS_27_ANPKeyCode	=	517,	
 	kChord_DOTS_23_ANPKeyCode	=	518,	
 	kChord_DOTS_237_ANPKeyCode	=	519,	
-/*	kChord_DOTS_1_ANPKeyCode	=	520,	// a-Chord (Cursor Up) */
+	kChord_DOTS_1_ANPKeyCode	=	520,
 	kChord_DOTS_17_ANPKeyCode	=	521,	
 	kChord_DOTS_13_ANPKeyCode	=	522,	
 	kChord_DOTS_137_ANPKeyCode	=	523,	
-/*	kChord_DOTS_12_ANPKeyCode	=	524,	// b-Chord (BACK) */
+	kChord_DOTS_12_ANPKeyCode	=	524,
 	kChord_DOTS_127_ANPKeyCode	=	525,	
 	kChord_DOTS_123_ANPKeyCode	=	526,	
 	kChord_DOTS_1237_ANPKeyCode	=	527,	
-/*	kChord_DOTS_4_ANPKeyCode	=	528,	// Dot4-Chord (Cursor Down) */
+	kChord_DOTS_4_ANPKeyCode	=	528,
 	kChord_DOTS_47_ANPKeyCode	=	529,	
 	kChord_DOTS_34_ANPKeyCode	=	530,	
 	kChord_DOTS_347_ANPKeyCode	=	531,	
@@ -511,9 +511,9 @@ enum ANPKeyCodes {
 	kChord_DOTS_2347_ANPKeyCode	=	535,	
 	kChord_DOTS_14_ANPKeyCode	=	536,	
 	kChord_DOTS_147_ANPKeyCode	=	537,	
-/*	kChord_DOTS_134_ANPKeyCode	=	538,	// m-Chord (MENU) */
+	kChord_DOTS_134_ANPKeyCode	=	538,
 	kChord_DOTS_1347_ANPKeyCode	=	539,	
-/*	kChord_DOTS_124_ANPKeyCode	=	540,	// F-Chord (SEARCH) */
+	kChord_DOTS_124_ANPKeyCode	=	540,
 	kChord_DOTS_1247_ANPKeyCode	=	541,	
 	kChord_DOTS_1234_ANPKeyCode	=	542,	
 	kChord_DOTS_12347_ANPKeyCode	=	543,	
@@ -541,7 +541,7 @@ enum ANPKeyCodes {
 	kChord_DOTS_2457_ANPKeyCode	=	565,	
 	kChord_DOTS_2345_ANPKeyCode	=	566,	
 	kChord_DOTS_23457_ANPKeyCode	=	567,	
-/*	kChord_DOTS_145_ANPKeyCode	=	568,	// d-Chord (DELETE) */
+	kChord_DOTS_145_ANPKeyCode	=	568,
 	kChord_DOTS_1457_ANPKeyCode	=	569,	
 	kChord_DOTS_1345_ANPKeyCode	=	570,	
 	kChord_DOTS_13457_ANPKeyCode	=	571,	
@@ -549,7 +549,7 @@ enum ANPKeyCodes {
 	kChord_DOTS_12457_ANPKeyCode	=	573,	
 	kChord_DOTS_12345_ANPKeyCode	=	574,	
 	kChord_DOTS_123457_ANPKeyCode	=	575,	
-/*	kChord_DOTS_6_ANPKeyCode	=	576,	// Dot6-Chord (Cursor Right) */
+	kChord_DOTS_6_ANPKeyCode	=	576,
 	kChord_DOTS_67_ANPKeyCode	=	577,	
 	kChord_DOTS_36_ANPKeyCode	=	578,	
 	kChord_DOTS_367_ANPKeyCode	=	579,	
@@ -605,13 +605,13 @@ enum ANPKeyCodes {
 	kChord_DOTS_24567_ANPKeyCode	=	629,	
 	kChord_DOTS_23456_ANPKeyCode	=	630,	
 	kChord_DOTS_234567_ANPKeyCode	=	631,	
-/*	kChord_DOTS_1456_ANPKeyCode	=	632// KEYCODE_ASSIST  ?-chord 1456-chord  */
+	kChord_DOTS_1456_ANPKeyCode	=	632,
 	kChord_DOTS_14567_ANPKeyCode	=	633,	
 	kChord_DOTS_13456_ANPKeyCode	=	634,	
 	kChord_DOTS_134567_ANPKeyCode	=	635,	
 	kChord_DOTS_12456_ANPKeyCode	=	636,	
 	kChord_DOTS_124567_ANPKeyCode	=	637,	
-/*	kChord_DOTS_123456_ANPKeyCode	=	638,	// Dot123456-Chord (HOME) */
+	kChord_DOTS_123456_ANPKeyCode	=	638,
 	kChord_DOTS_1234567_ANPKeyCode	=	639,	
 	kChord_DOTS_8_ANPKeyCode	=	640,	
 	kChord_DOTS_78_ANPKeyCode	=	641,	

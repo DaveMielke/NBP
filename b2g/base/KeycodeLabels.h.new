@@ -249,7 +249,7 @@ static const KeycodeLabel KEYCODES[] = {
     //       Refer to frameworks/base/core/java/android/view/KeyEvent.java for the full list.
     
 	/*{KW} 256 Braille key combinations*/
-/*	{ "BRL_DOTS_7" ,	257}, // mapped to DEL  */
+  	{ "BRL_DOTS_7" ,	257},
 	{ "BRL_DOTS_3" ,	258 },
 	{ "BRL_DOTS_37" ,	259 },
 	{ "BRL_DOTS_2" ,	260 },
@@ -507,21 +507,21 @@ static const KeycodeLabel KEYCODES[] = {
 	/*{KW} end */
 	/*{KW} 256 Chorded key combinations*/
 	{ "CHORD_DOTS_7" ,	513 },
-/*	{ "CHORD_DOTS_3" ,	514 }, //mapped to DPAD_LEFT */
+  	{ "CHORD_DOTS_3" ,	514 },
 	{ "CHORD_DOTS_37" ,	515 },
 	{ "CHORD_DOTS_2" ,	516 },
 	{ "CHORD_DOTS_27" ,	517 },
 	{ "CHORD_DOTS_23" ,	518 },
 	{ "CHORD_DOTS_237" ,	519 },
-/*	{ "CHORD_DOTS_1" ,	520 }, //mapped to DPAD_UP */
+  	{ "CHORD_DOTS_1" ,	520 },
 	{ "CHORD_DOTS_17" ,	521 },
 	{ "CHORD_DOTS_13" ,	522 },
 	{ "CHORD_DOTS_137" ,	523 },
-/*	{ "CHORD_DOTS_12" ,	524 }, //mapped to BACK */
+  	{ "CHORD_DOTS_12" ,	524 },
 	{ "CHORD_DOTS_127" ,	525 },
 	{ "CHORD_DOTS_123" ,	526 },
 	{ "CHORD_DOTS_1237" ,	527 },
-/*	{ "CHORD_DOTS_4" ,	528 }, //mapped to DPAD_DOWN */
+  	{ "CHORD_DOTS_4" ,	528 },
 	{ "CHORD_DOTS_47" ,	529 },
 	{ "CHORD_DOTS_34" ,	530 },
 	{ "CHORD_DOTS_347" ,	531 },
@@ -531,9 +531,9 @@ static const KeycodeLabel KEYCODES[] = {
 	{ "CHORD_DOTS_2347" ,	535 },
 	{ "CHORD_DOTS_14" ,	536 },
 	{ "CHORD_DOTS_147" ,	537 },
-/*	{ "CHORD_DOTS_134" ,	538 }, //mapped to MENU */
+  	{ "CHORD_DOTS_134" ,	538 },
 	{ "CHORD_DOTS_1347" ,	539 },
-/*	{ "CHORD_DOTS_124" ,	540 }, //mapped to SEARCH */
+  	{ "CHORD_DOTS_124" ,	540 },
 	{ "CHORD_DOTS_1247" ,	541 },
 	{ "CHORD_DOTS_1234" ,	542 },
 	{ "CHORD_DOTS_12347" ,	543 },
@@ -553,7 +553,7 @@ static const KeycodeLabel KEYCODES[] = {
 	{ "CHORD_DOTS_1257" ,	557 },
 	{ "CHORD_DOTS_1235" ,	558 },
 	{ "CHORD_DOTS_12357" ,	559 },
-/*	{ "CHORD_DOTS_45" ,	560 }, //mapped to TAB */
+  	{ "CHORD_DOTS_45" ,	560 },
 	{ "CHORD_DOTS_457" ,	561 },
 	{ "CHORD_DOTS_345" ,	562 },
 	{ "CHORD_DOTS_3457" ,	563 },
@@ -561,15 +561,15 @@ static const KeycodeLabel KEYCODES[] = {
 	{ "CHORD_DOTS_2457" ,	565 },
 	{ "CHORD_DOTS_2345" ,	566 },
 	{ "CHORD_DOTS_23457" ,	567 },
-/*	{ "CHORD_DOTS_145" ,	568 }, //mapped to DEL */
+  	{ "CHORD_DOTS_145" ,	568 },
 	{ "CHORD_DOTS_1457" ,	569 },
-/*	{ "CHORD_DOTS_1345" ,	570 }, // mapped to NOTIFICATION  */
+  	{ "CHORD_DOTS_1345" ,	570 },
 	{ "CHORD_DOTS_13457" ,	571 },
 	{ "CHORD_DOTS_1245" ,	572 },
 	{ "CHORD_DOTS_12457" ,	573 },
 	{ "CHORD_DOTS_12345" ,	574 },
 	{ "CHORD_DOTS_123457" ,	575 },
-/*	{ "CHORD_DOTS_6" ,	576 }, //mapped to DPAD_RIGHT */
+  	{ "CHORD_DOTS_6" ,	576 },
 	{ "CHORD_DOTS_67" ,	577 },
 	{ "CHORD_DOTS_36" ,	578 },
 	{ "CHORD_DOTS_367" ,	579 },
@@ -631,7 +631,7 @@ static const KeycodeLabel KEYCODES[] = {
 	{ "CHORD_DOTS_134567" ,	635 },
 	{ "CHORD_DOTS_12456" ,	636 },
 	{ "CHORD_DOTS_124567" ,	637 },
-/*	{ "CHORD_DOTS_123456" ,	638 }, //mapped to HOME */
+  	{ "CHORD_DOTS_123456" ,	638 },
 	{ "CHORD_DOTS_1234567" ,	639 },
 	{ "CHORD_DOTS_8" ,	640 },
 	{ "CHORD_DOTS_78" ,	641 },
