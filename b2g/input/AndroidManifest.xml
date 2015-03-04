@@ -33,5 +33,12 @@
         android:resource="@xml/input_service"
        />
     </service>
+
+    <activity
+        android:name=".ClockActivity"
+        android:label="@string/clock_label"
+        >
+    </activity>
+
   </application>
 </manifest>

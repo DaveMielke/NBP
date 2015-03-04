@@ -35,6 +35,10 @@ public class InputService extends InputMethodService {
     addAction(keyMask, new Action(this));
   }
 
+  private void addActivityAction (int keyMask, Class activityClass) {
+    addAction(keyMask, new ActivityAction(this, activityClass));
+  }
+
   private void addKeyAction (int keyMask, int keyCode) {
     addAction(keyMask, new KeyAction(this, keyCode));
   }
@@ -69,6 +73,7 @@ public class InputService extends InputMethodService {
     addKeyAction((KeyMask.Space | KeyMask.Dots124), KeyEvent.KEYCODE_SEARCH);
     addKeyAction((KeyMask.Space | KeyMask.Dots134), KeyEvent.KEYCODE_MENU);
     addKeyAction((KeyMask.Space | KeyMask.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
+    addActivityAction((KeyMask.Space | KeyMask.Dots2345), ClockActivity.class);
 
     addKeyAction((KeyMask.Space | KeyMask.Dots1456), KeyEvent.KEYCODE_ASSIST);
 

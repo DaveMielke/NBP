@@ -3,4 +3,5 @@
 <resources>
   <string name="app_name">InputService</string>
   <string name="input_service_type">B2G Keyboard</string>
+  <string name="clock_label">Current Date and Time</string>
 </resources>
