@@ -1532,131 +1532,131 @@
         <enum name="KEYCODE_KANA" value="218" />
 <!--KW 256 Braille key combinations-->
 	<enum name="KEYCODE_BRL_DOTS_7" value="257"	/>
-	<enum name="KEYCODE_BRL_APOSTROPHE" value="258"	/>
+	<enum name="KEYCODE_BRL_DOTS_3" value="258"	/>
 	<enum name="KEYCODE_BRL_DOTS_37" value="259"	/>
-	<enum name="KEYCODE_BRL_1" value="260"	/>
+	<enum name="KEYCODE_BRL_DOTS_2" value="260"	/>
 	<enum name="KEYCODE_BRL_DOTS_27" value="261"	/>
-	<enum name="KEYCODE_BRL_2" value="262"	/>
+	<enum name="KEYCODE_BRL_DOTS_23" value="262"	/>
 	<enum name="KEYCODE_BRL_DOTS_237" value="263"	/>
-	<enum name="KEYCODE_BRL_LOWERA" value="264"	/>
-	<enum name="KEYCODE_BRL_UPPERA" value="265"	/>
-	<enum name="KEYCODE_BRL_LOWERK" value="266"	/>
-	<enum name="KEYCODE_BRL_UPPERK" value="267"	/>
-	<enum name="KEYCODE_BRL_LOWERB" value="268"	/>
-	<enum name="KEYCODE_BRL_UPPERB" value="269"	/>
-	<enum name="KEYCODE_BRL_LOWERL" value="270"	/>
-	<enum name="KEYCODE_BRL_UPPERL" value="271"	/>
-	<enum name="KEYCODE_BRL_GRAVE" value="272"	/>
-	<enum name="KEYCODE_BRL_AT" value="273"	/>
-	<enum name="KEYCODE_BRL_SLASH" value="274"	/>
+	<enum name="KEYCODE_BRL_DOTS_1" value="264"	/>
+	<enum name="KEYCODE_BRL_DOTS_17" value="265"	/>
+	<enum name="KEYCODE_BRL_DOTS_13" value="266"	/>
+	<enum name="KEYCODE_BRL_DOTS_137" value="267"	/>
+	<enum name="KEYCODE_BRL_DOTS_12" value="268"	/>
+	<enum name="KEYCODE_BRL_DOTS_127" value="269"	/>
+	<enum name="KEYCODE_BRL_DOTS_123" value="270"	/>
+	<enum name="KEYCODE_BRL_DOTS_1237" value="271"	/>
+	<enum name="KEYCODE_BRL_DOTS_4" value="272"	/>
+	<enum name="KEYCODE_BRL_DOTS_47" value="273"	/>
+	<enum name="KEYCODE_BRL_DOTS_34" value="274"	/>
 	<enum name="KEYCODE_BRL_DOTS_347" value="275"	/>
-	<enum name="KEYCODE_BRL_LOWERI" value="276"	/>
-	<enum name="KEYCODE_BRL_UPPERI" value="277"	/>
-	<enum name="KEYCODE_BRL_LOWERS" value="278"	/>
-	<enum name="KEYCODE_BRL_UPPERS" value="279"	/>
-	<enum name="KEYCODE_BRL_LOWERC" value="280"	/>
-	<enum name="KEYCODE_BRL_UPPERC" value="281"	/>
-	<enum name="KEYCODE_BRL_LOWERM" value="282"	/>
-	<enum name="KEYCODE_BRL_UPPERM" value="283"	/>
-	<enum name="KEYCODE_BRL_LOWERF" value="284"	/>
-	<enum name="KEYCODE_BRL_UPPERF" value="285"	/>
-	<enum name="KEYCODE_BRL_LOWERP" value="286"	/>
-	<enum name="KEYCODE_BRL_UPPERP" value="287"	/>
-	<enum name="KEYCODE_BRL_QUOTE" value="288"	/>
+	<enum name="KEYCODE_BRL_DOTS_24" value="276"	/>
+	<enum name="KEYCODE_BRL_DOTS_247" value="277"	/>
+	<enum name="KEYCODE_BRL_DOTS_234" value="278"	/>
+	<enum name="KEYCODE_BRL_DOTS_2347" value="279"	/>
+	<enum name="KEYCODE_BRL_DOTS_14" value="280"	/>
+	<enum name="KEYCODE_BRL_DOTS_147" value="281"	/>
+	<enum name="KEYCODE_BRL_DOTS_134" value="282"	/>
+	<enum name="KEYCODE_BRL_DOTS_1347" value="283"	/>
+	<enum name="KEYCODE_BRL_DOTS_124" value="284"	/>
+	<enum name="KEYCODE_BRL_DOTS_1247" value="285"	/>
+	<enum name="KEYCODE_BRL_DOTS_1234" value="286"	/>
+	<enum name="KEYCODE_BRL_DOTS_12347" value="287"	/>
+	<enum name="KEYCODE_BRL_DOTS_5" value="288"	/>
 	<enum name="KEYCODE_BRL_DOTS_57" value="289"	/>
-	<enum name="KEYCODE_BRL_9" value="290"	/>
+	<enum name="KEYCODE_BRL_DOTS_35" value="290"	/>
 	<enum name="KEYCODE_BRL_DOTS_357" value="291"	/>
-	<enum name="KEYCODE_BRL_3" value="292"	/>
+	<enum name="KEYCODE_BRL_DOTS_25" value="292"	/>
 	<enum name="KEYCODE_BRL_DOTS_257" value="293"	/>
-	<enum name="KEYCODE_BRL_6" value="294"	/>
+	<enum name="KEYCODE_BRL_DOTS_235" value="294"	/>
 	<enum name="KEYCODE_BRL_DOTS_2357" value="295"	/>
-	<enum name="KEYCODE_BRL_LOWERE" value="296"	/>
-	<enum name="KEYCODE_BRL_UPPERE" value="297"	/>
-	<enum name="KEYCODE_BRL_LOWERO" value="298"	/>
-	<enum name="KEYCODE_BRL_UPPERO" value="299"	/>
-	<enum name="KEYCODE_BRL_LOWERH" value="300"	/>
-	<enum name="KEYCODE_BRL_UPPERH" value="301"	/>
-	<enum name="KEYCODE_BRL_LOWERR" value="302"	/>
-	<enum name="KEYCODE_BRL_UPPERR" value="303"	/>
-	<enum name="KEYCODE_BRL_NOT" value="304"	/>
-	<enum name="KEYCODE_BRL_CARET" value="305"	/>
-	<enum name="KEYCODE_BRL_GREATER_THAN" value="306"	/>
+	<enum name="KEYCODE_BRL_DOTS_15" value="296"	/>
+	<enum name="KEYCODE_BRL_DOTS_157" value="297"	/>
+	<enum name="KEYCODE_BRL_DOTS_135" value="298"	/>
+	<enum name="KEYCODE_BRL_DOTS_1357" value="299"	/>
+	<enum name="KEYCODE_BRL_DOTS_125" value="300"	/>
+	<enum name="KEYCODE_BRL_DOTS_1257" value="301"	/>
+	<enum name="KEYCODE_BRL_DOTS_1235" value="302"	/>
+	<enum name="KEYCODE_BRL_DOTS_12357" value="303"	/>
+	<enum name="KEYCODE_BRL_DOTS_45" value="304"	/>
+	<enum name="KEYCODE_BRL_DOTS_457" value="305"	/>
+	<enum name="KEYCODE_BRL_DOTS_345" value="306"	/>
 	<enum name="KEYCODE_BRL_DOTS_3457" value="307"	/>
-	<enum name="KEYCODE_BRL_LOWERJ" value="308"	/>
-	<enum name="KEYCODE_BRL_UPPERJ" value="309"	/>
-	<enum name="KEYCODE_BRL_LOWERT" value="310"	/>
-	<enum name="KEYCODE_BRL_UPPERT" value="311"	/>
-	<enum name="KEYCODE_BRL_LOWERD" value="312"	/>
-	<enum name="KEYCODE_BRL_UPPERD" value="313"	/>
-	<enum name="KEYCODE_BRL_LOWERN" value="314"	/>
-	<enum name="KEYCODE_BRL_UPPERN" value="315"	/>
-	<enum name="KEYCODE_BRL_LOWERG" value="316"	/>
-	<enum name="KEYCODE_BRL_UPPERG" value="317"	/>
-	<enum name="KEYCODE_BRL_LOWERQ" value="318"	/>
-	<enum name="KEYCODE_BRL_UPPERQ" value="319"	/>
-	<enum name="KEYCODE_BRL_COMMA" value="320"	/>
+	<enum name="KEYCODE_BRL_DOTS_245" value="308"	/>
+	<enum name="KEYCODE_BRL_DOTS_2457" value="309"	/>
+	<enum name="KEYCODE_BRL_DOTS_2345" value="310"	/>
+	<enum name="KEYCODE_BRL_DOTS_23457" value="311"	/>
+	<enum name="KEYCODE_BRL_DOTS_145" value="312"	/>
+	<enum name="KEYCODE_BRL_DOTS_1457" value="313"	/>
+	<enum name="KEYCODE_BRL_DOTS_1345" value="314"	/>
+	<enum name="KEYCODE_BRL_DOTS_13457" value="315"	/>
+	<enum name="KEYCODE_BRL_DOTS_1245" value="316"	/>
+	<enum name="KEYCODE_BRL_DOTS_12457" value="317"	/>
+	<enum name="KEYCODE_BRL_DOTS_12345" value="318"	/>
+	<enum name="KEYCODE_BRL_DOTS_123457" value="319"	/>
+	<enum name="KEYCODE_BRL_DOTS_6" value="320"	/>
 	<enum name="KEYCODE_BRL_DOTS_67" value="321"	/>
-	<enum name="KEYCODE_BRL_MINUS" value="322"	/>
+	<enum name="KEYCODE_BRL_DOTS_36" value="322"	/>
 	<enum name="KEYCODE_BRL_DOTS_367" value="323"	/>
-	<enum name="KEYCODE_BRL_5" value="324"	/>
+	<enum name="KEYCODE_BRL_DOTS_26" value="324"	/>
 	<enum name="KEYCODE_BRL_DOTS_267" value="325"	/>
-	<enum name="KEYCODE_BRL_8" value="326"	/>
+	<enum name="KEYCODE_BRL_DOTS_236" value="326"	/>
 	<enum name="KEYCODE_BRL_DOTS_2367" value="327"	/>
-	<enum name="KEYCODE_BRL_STAR" value="328"	/>
+	<enum name="KEYCODE_BRL_DOTS_16" value="328"	/>
 	<enum name="KEYCODE_BRL_DOTS_167" value="329"	/>
-	<enum name="KEYCODE_BRL_LOWERU" value="330"	/>
-	<enum name="KEYCODE_BRL_UPPERU" value="331"	/>
-	<enum name="KEYCODE_BRL_LESS_THAN" value="332"	/>
+	<enum name="KEYCODE_BRL_DOTS_136" value="330"	/>
+	<enum name="KEYCODE_BRL_DOTS_1367" value="331"	/>
+	<enum name="KEYCODE_BRL_DOTS_126" value="332"	/>
 	<enum name="KEYCODE_BRL_DOTS_1267" value="333"	/>
-	<enum name="KEYCODE_BRL_LOWERV" value="334"	/>
-	<enum name="KEYCODE_BRL_UPPERV" value="335"	/>
-	<enum name="KEYCODE_BRL_PERIOD" value="336"	/>
+	<enum name="KEYCODE_BRL_DOTS_1236" value="334"	/>
+	<enum name="KEYCODE_BRL_DOTS_12367" value="335"	/>
+	<enum name="KEYCODE_BRL_DOTS_46" value="336"	/>
 	<enum name="KEYCODE_BRL_DOTS_467" value="337"	/>
-	<enum name="KEYCODE_BRL_PLS" value="338"	/>
+	<enum name="KEYCODE_BRL_DOTS_346" value="338"	/>
 	<enum name="KEYCODE_BRL_DOTS_3467" value="339"	/>
-	<enum name="KEYCODE_BRL_LEFT_CB" value="340"	/>
-	<enum name="KEYCODE_BRL_LEFT_BRACKET" value="341"	/>
-	<enum name="KEYCODE_BRL_EXCLAMATION" value="342"	/>
+	<enum name="KEYCODE_BRL_DOTS_246" value="340"	/>
+	<enum name="KEYCODE_BRL_DOTS_2467" value="341"	/>
+	<enum name="KEYCODE_BRL_DOTS_2346" value="342"	/>
 	<enum name="KEYCODE_BRL_DOTS_23467" value="343"	/>
-	<enum name="KEYCODE_BRL_PERCENT" value="344"	/>
+	<enum name="KEYCODE_BRL_DOTS_146" value="344"	/>
 	<enum name="KEYCODE_BRL_DOTS_1467" value="345"	/>
-	<enum name="KEYCODE_BRL_LOWERX" value="346"	/>
-	<enum name="KEYCODE_BRL_UPPERX" value="347"	/>
-	<enum name="KEYCODE_BRL_DOLLAR" value="348"	/>
+	<enum name="KEYCODE_BRL_DOTS_1346" value="346"	/>
+	<enum name="KEYCODE_BRL_DOTS_13467" value="347"	/>
+	<enum name="KEYCODE_BRL_DOTS_1246" value="348"	/>
 	<enum name="KEYCODE_BRL_DOTS_12467" value="349"	/>
-	<enum name="KEYCODE_BRL_AND" value="350"	/>
+	<enum name="KEYCODE_BRL_DOTS_12346" value="350"	/>
 	<enum name="KEYCODE_BRL_DOTS_123467" value="351"	/>
-	<enum name="KEYCODE_BRL_SEMICOLON" value="352"	/>
+	<enum name="KEYCODE_BRL_DOTS_56" value="352"	/>
 	<enum name="KEYCODE_BRL_DOTS_567" value="353"	/>
-	<enum name="KEYCODE_BRL_0" value="354"	/>
+	<enum name="KEYCODE_BRL_DOTS_356" value="354"	/>
 	<enum name="KEYCODE_BRL_DOTS_3567" value="355"	/>
-	<enum name="KEYCODE_BRL_4" value="356"	/>
+	<enum name="KEYCODE_BRL_DOTS_256" value="356"	/>
 	<enum name="KEYCODE_BRL_DOTS_2567" value="357"	/>
-	<enum name="KEYCODE_BRL_7" value="358"	/>
+	<enum name="KEYCODE_BRL_DOTS_2356" value="358"	/>
 	<enum name="KEYCODE_BRL_DOTS_23567" value="359"	/>
-	<enum name="KEYCODE_BRL_COLON" value="360"	/>
+	<enum name="KEYCODE_BRL_DOTS_156" value="360"	/>
 	<enum name="KEYCODE_BRL_DOTS_1567" value="361"	/>
-	<enum name="KEYCODE_BRL_LOWERZ" value="362"	/>
-	<enum name="KEYCODE_BRL_UPPERZ" value="363"	/>
-	<enum name="KEYCODE_BRL_OR" value="364"	/>
-	<enum name="KEYCODE_BRL_BACKSLASH" value="365"	/>
-	<enum name="KEYCODE_BRL_LEFT_BRACE" value="366"	/>
+	<enum name="KEYCODE_BRL_DOTS_1356" value="362"	/>
+	<enum name="KEYCODE_BRL_DOTS_13567" value="363"	/>
+	<enum name="KEYCODE_BRL_DOTS_1256" value="364"	/>
+	<enum name="KEYCODE_BRL_DOTS_12567" value="365"	/>
+	<enum name="KEYCODE_BRL_DOTS_12356" value="366"	/>
 	<enum name="KEYCODE_BRL_DOTS_123567" value="367"	/>
-	<enum name="KEYCODE_BRL_UNDERSCORE" value="368"	/>
+	<enum name="KEYCODE_BRL_DOTS_456" value="368"	/>
 	<enum name="KEYCODE_BRL_DOTS_4567" value="369"	/>
-	<enum name="KEYCODE_BRL_POUND" value="370"	/>
+	<enum name="KEYCODE_BRL_DOTS_3456" value="370"	/>
 	<enum name="KEYCODE_BRL_DOTS_34567" value="371"	/>
-	<enum name="KEYCODE_BRL_LOWERW" value="372"	/>
-	<enum name="KEYCODE_BRL_UPPERW" value="373"	/>
-	<enum name="KEYCODE_BRL_RIGHT_BRACE" value="374"	/>
+	<enum name="KEYCODE_BRL_DOTS_2456" value="372"	/>
+	<enum name="KEYCODE_BRL_DOTS_24567" value="373"	/>
+	<enum name="KEYCODE_BRL_DOTS_23456" value="374"	/>
 	<enum name="KEYCODE_BRL_DOTS_234567" value="375"	/>
-	<enum name="KEYCODE_BRL_QUESTION" value="376"	/>
+	<enum name="KEYCODE_BRL_DOTS_1456" value="376"	/>
 	<enum name="KEYCODE_BRL_DOTS_14567" value="377"	/>
-	<enum name="KEYCODE_BRL_LOWERY" value="378"	/>
-	<enum name="KEYCODE_BRL_UPPERY" value="379"	/>
-	<enum name="KEYCODE_BRL_RIGHT_CB" value="380"	/>
-	<enum name="KEYCODE_BRL_RIGHT_BRACKET" value="381"	/>
-	<enum name="KEYCODE_BRL_EQUALS" value="382"	/>
+	<enum name="KEYCODE_BRL_DOTS_13456" value="378"	/>
+	<enum name="KEYCODE_BRL_DOTS_134567" value="379"	/>
+	<enum name="KEYCODE_BRL_DOTS_12456" value="380"	/>
+	<enum name="KEYCODE_BRL_DOTS_124567" value="381"	/>
+	<enum name="KEYCODE_BRL_DOTS_123456" value="382"	/>
 	<enum name="KEYCODE_BRL_DOTS_1234567" value="383"	/>
 	<enum name="KEYCODE_BRL_DOTS_8" value="384"	/>
 	<enum name="KEYCODE_BRL_DOTS_78" value="385"	/>
