@@ -31,9 +31,13 @@ public class ClockActivity extends Activity {
       runOnUiThread(new Runnable() {
         @Override
         public void run () {
-          Date date = new Date();
-          timeView.setText(dateFormatter.format(date));
-          scheduleClockUpdate(1000 - (date.getTime() % 1000));
+          synchronized (ClockActivity.this) {
+            if (isClockUpdateScheduled()) {
+              Date date = new Date();
+              timeView.setText(dateFormatter.format(date));
+              scheduleClockUpdate(1000 - (date.getTime() % 1000));
+            }
+          }
         }
       });
     }
@@ -41,9 +45,13 @@ public class ClockActivity extends Activity {
 
   ClockUpdateTask clockUpdateTask = null;
 
+  private boolean isClockUpdateScheduled () {
+    return clockUpdateTask != null;
+  }
+
   private void cancelClockUpdate () {
     synchronized (this) {
-      if (clockUpdateTask != null) {
+      if (isClockUpdateScheduled()) {
         clockUpdateTask.stop();
         clockUpdateTask = null;
       }
