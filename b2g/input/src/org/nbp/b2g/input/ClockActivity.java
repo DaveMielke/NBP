@@ -31,7 +31,7 @@ public class ClockActivity extends Activity {
       runOnUiThread(new Runnable() {
         @Override
         public void run () {
-          synchronized (ClockActivity.this) {
+          synchronized (getClockUpdateSynchronizationObject()) {
             if (isClockUpdateScheduled()) {
               Date date = new Date();
               timeView.setText(dateFormatter.format(date));
@@ -45,12 +45,16 @@ public class ClockActivity extends Activity {
 
   ClockUpdateTask clockUpdateTask = null;
 
+  private Object getClockUpdateSynchronizationObject () {
+    return this;
+  }
+
   private boolean isClockUpdateScheduled () {
     return clockUpdateTask != null;
   }
 
   private void cancelClockUpdate () {
-    synchronized (this) {
+    synchronized (getClockUpdateSynchronizationObject()) {
       if (isClockUpdateScheduled()) {
         clockUpdateTask.stop();
         clockUpdateTask = null;
@@ -59,7 +63,7 @@ public class ClockActivity extends Activity {
   }
 
   private void scheduleClockUpdate (long delay) {
-    synchronized (this) {
+    synchronized (getClockUpdateSynchronizationObject()) {
       cancelClockUpdate();
       clockUpdateTask = new ClockUpdateTask(delay);
     }
