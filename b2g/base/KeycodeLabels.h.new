@@ -764,15 +764,15 @@ static const KeycodeLabel KEYCODES[] = {
 	/*{KW} end */	
 
 	/* {KW} Individual Braille Dot Keys  */
-	{ "BRL_DOT1"  ,   769 },
-	{ "BRL_DOT2"  ,   770 },
-	{ "BRL_DOT3"  ,   771 },
-	{ "BRL_DOT4"  ,   772 },
-	{ "BRL_DOT5"  ,   773 },
-	{ "BRL_DOT6"  ,   774 },
-	{ "BRL_DOT7"  ,   775 },
-	{ "BRL_DOT8"  ,   776 },
-	{ "BRL_DOT9"  ,   777 },
+	{ "BRL_DOT_7"  ,   769 },
+	{ "BRL_DOT_3"  ,   770 },
+	{ "BRL_DOT_2"  ,   771 },
+	{ "BRL_DOT_1"  ,   772 },
+	{ "BRL_DOT_4"  ,   773 },
+	{ "BRL_DOT_5"  ,   774 },
+	{ "BRL_DOT_6"  ,   775 },
+	{ "BRL_DOT_8"  ,   776 },
+	{ "BRL_SPACE"  ,   777 },
 
 	/* {KW} Cursor Routing Keys Block 1 */
 	{ "BRL_CURSOR0"  ,    778 },

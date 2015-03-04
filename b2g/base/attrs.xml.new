@@ -2046,15 +2046,15 @@
 	<!--KW-->  
 
 	<!--KW individual Braille keys-->
-	<enum name="KEYCODE_BRL_DOT1" value="769" />
-	<enum name="KEYCODE_BRL_DOT2" value="770" />
-	<enum name="KEYCODE_BRL_DOT3" value="771" />
-	<enum name="KEYCODE_BRL_DOT4" value="772" />
-	<enum name="KEYCODE_BRL_DOT5" value="773" />
-	<enum name="KEYCODE_BRL_DOT6" value="774" />
-	<enum name="KEYCODE_BRL_DOT7" value="775" />
-	<enum name="KEYCODE_BRL_DOT8" value="776" />
-	<enum name="KEYCODE_BRL_DOT9" value="777" />
+	<enum name="KEYCODE_BRL_DOT_7" value="769" />
+	<enum name="KEYCODE_BRL_DOT_3" value="770" />
+	<enum name="KEYCODE_BRL_DOT_2" value="771" />
+	<enum name="KEYCODE_BRL_DOT_1" value="772" />
+	<enum name="KEYCODE_BRL_DOT_4" value="773" />
+	<enum name="KEYCODE_BRL_DOT_5" value="774" />
+	<enum name="KEYCODE_BRL_DOT_6" value="775" />
+	<enum name="KEYCODE_BRL_DOT_8" value="776" />
+	<enum name="KEYCODE_BRL_SPACE" value="777" />
 
 	<!--KW Cursor routing keys block 1-->
 	<enum name="KEYCODE_BRL_CURSOR0" value="778" />

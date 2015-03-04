@@ -123,20 +123,20 @@ key 68    MENU              WAKE_DROPPED
 ########          {KW}: cp430_keypad entried follow         ############
 ######################################################################## DOt numbers below are not numbered 
 # left to right 1 thru 8, not the normal Braille Dot numbers.  Yes, unfortunate choice
-key	0x1f1 	BRL_DOT1
-key	0x1f2 	BRL_DOT2
-key	0x1f3 	BRL_DOT3
-key	0x1f4 	BRL_DOT4
-key	0x1f5 	BRL_DOT5
-key	0x1f6 	BRL_DOT6
-key	0x1f7 	BRL_DOT7
-key	0x1f8 	BRL_DOT8
-key	0x1f9 	BRL_DOT9
+key	0x1f1 	BRL_DOT_7
+key	0x1f2 	BRL_DOT_3
+key	0x1f3 	BRL_DOT_2
+key	0x1f4 	BRL_DOT_1
+key	0x1f5 	BRL_DOT_4
+key	0x1f6 	BRL_DOT_5
+key	0x1f7 	BRL_DOT_6
+key	0x1f8 	BRL_DOT_8
+key	0x1f9 	BRL_SPACE
 
 # {KW} Cursor Routing Keys Block 1
 key 	0x2d0	BRL_CURSOR0
 key 	0x2d1 	BRL_CURSOR1
-key		0x2d2	BRL_CURSOR2
+key	0x2d2	BRL_CURSOR2
 key 	0x2d3	BRL_CURSOR3
 key 	0x2d4	BRL_CURSOR4
 key 	0x2d5	BRL_CURSOR5

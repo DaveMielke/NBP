@@ -783,15 +783,15 @@ enum {
 	/*{KW}*/ 
 
 	/*{KW} individual Braille keys */
-	AKEYCODE_BRL_DOT1    =   769,
-	AKEYCODE_BRL_DOT2    =   770,
-	AKEYCODE_BRL_DOT3    =   771,
-	AKEYCODE_BRL_DOT4    =   772,
-	AKEYCODE_BRL_DOT5    =   773,
-	AKEYCODE_BRL_DOT6    =   774,
-	AKEYCODE_BRL_DOT7    =   775,
-	AKEYCODE_BRL_DOT8    =   776,
-	AKEYCODE_BRL_DOT9    =   777,
+	AKEYCODE_BRL_DOT_7    =   769,
+	AKEYCODE_BRL_DOT_3    =   770,
+	AKEYCODE_BRL_DOT_2    =   771,
+	AKEYCODE_BRL_DOT_1    =   772,
+	AKEYCODE_BRL_DOT_4    =   773,
+	AKEYCODE_BRL_DOT_5    =   774,
+	AKEYCODE_BRL_DOT_6    =   775,
+	AKEYCODE_BRL_DOT_8    =   776,
+	AKEYCODE_BRL_SPACE    =   777,
 
 	/*{KW} Cursor Routing keys block 1*/
 	AKEYCODE_BRL_CURSOR0 =   778,

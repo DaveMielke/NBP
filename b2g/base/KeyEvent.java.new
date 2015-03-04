@@ -1142,15 +1142,15 @@ public class KeyEvent extends InputEvent implements Parcelable {
 
 	/*{KW} Individual Braille keys */
 	
-	public static final int KEYCODE_BRL_DOT1    =   769;
-	public static final int KEYCODE_BRL_DOT2    =   770;
-	public static final int KEYCODE_BRL_DOT3    =   771;
-	public static final int KEYCODE_BRL_DOT4    =   772;
-	public static final int KEYCODE_BRL_DOT5    =   773;
-	public static final int KEYCODE_BRL_DOT6    =   774;
-	public static final int KEYCODE_BRL_DOT7    =   775;
-	public static final int KEYCODE_BRL_DOT8    =   776;
-	public static final int KEYCODE_BRL_DOT9    =   777;
+	public static final int KEYCODE_BRL_DOT_7    =   769;
+	public static final int KEYCODE_BRL_DOT_3    =   770;
+	public static final int KEYCODE_BRL_DOT_2    =   771;
+	public static final int KEYCODE_BRL_DOT_1    =   772;
+	public static final int KEYCODE_BRL_DOT_4    =   773;
+	public static final int KEYCODE_BRL_DOT_5    =   774;
+	public static final int KEYCODE_BRL_DOT_6    =   775;
+	public static final int KEYCODE_BRL_DOT_8    =   776;
+	public static final int KEYCODE_BRL_SPACE    =   777;
 		
 		/*{KW} Cursor Routing keys block 1*/
 	public static final int KEYCODE_BRL_CURSOR0    =   778;
@@ -1963,15 +1963,15 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_CHORD_DOTS_355, "KEYCODE_CHORD_DOTS_355");
 		
 		/*{KW} Individual Braille keys */
-		names.append(KEYCODE_BRL_DOT1, "KEYCODE_BRL_DOT1");
-		names.append(KEYCODE_BRL_DOT2, "KEYCODE_BRL_DOT2");
-		names.append(KEYCODE_BRL_DOT3, "KEYCODE_BRL_DOT3");
-		names.append(KEYCODE_BRL_DOT4, "KEYCODE_BRL_DOT4");
-		names.append(KEYCODE_BRL_DOT5, "KEYCODE_BRL_DOT5");
-		names.append(KEYCODE_BRL_DOT6, "KEYCODE_BRL_DOT6");
-		names.append(KEYCODE_BRL_DOT7, "KEYCODE_BRL_DOT7");
-		names.append(KEYCODE_BRL_DOT8, "KEYCODE_BRL_DOT8");
-		names.append(KEYCODE_BRL_DOT9, "KEYCODE_BRL_DOT9");
+		names.append(KEYCODE_BRL_DOT_7, "KEYCODE_BRL_DOT_7");
+		names.append(KEYCODE_BRL_DOT_3, "KEYCODE_BRL_DOT_3");
+		names.append(KEYCODE_BRL_DOT_2, "KEYCODE_BRL_DOT_2");
+		names.append(KEYCODE_BRL_DOT_1, "KEYCODE_BRL_DOT_1");
+		names.append(KEYCODE_BRL_DOT_4, "KEYCODE_BRL_DOT_4");
+		names.append(KEYCODE_BRL_DOT_5, "KEYCODE_BRL_DOT_5");
+		names.append(KEYCODE_BRL_DOT_6, "KEYCODE_BRL_DOT_6");
+		names.append(KEYCODE_BRL_DOT_8, "KEYCODE_BRL_DOT_8");
+		names.append(KEYCODE_BRL_SPACE, "KEYCODE_BRL_SPACE");
 		/*{KW} Cursor Routing keys block 1*/
 		names.append(KEYCODE_BRL_CURSOR0, "KEYCODE_BRL_CURSOR0");
 		names.append(KEYCODE_BRL_CURSOR1, "KEYCODE_BRL_CURSOR1");
