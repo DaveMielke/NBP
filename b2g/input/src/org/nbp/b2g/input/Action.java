@@ -11,9 +11,10 @@ public class Action {
     return true;
   }
 
-  protected final InputService inputService;
+  protected final InputService getInputService () {
+    return InputService.getInputService();
+  }
 
-  public Action (InputService inputService) {
-    this.inputService = inputService;
+  public Action () {
   }
 }

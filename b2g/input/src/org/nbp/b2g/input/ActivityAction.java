@@ -12,21 +12,27 @@ public final class ActivityAction extends Action {
 
   @Override
   public final boolean performAction () {
-    Intent intent = new Intent(inputService, activityClass);
+    InputService inputService = getInputService();
 
-    intent.addFlags(
-      Intent.FLAG_ACTIVITY_NEW_TASK |
-      Intent.FLAG_ACTIVITY_CLEAR_TOP |
-      Intent.FLAG_ACTIVITY_SINGLE_TOP |
-      Intent.FLAG_FROM_BACKGROUND
-    );
+    if (inputService != null) {
+      Intent intent = new Intent(inputService, activityClass);
 
-    inputService.startActivity(intent);
-    return true;
+      intent.addFlags(
+        Intent.FLAG_ACTIVITY_NEW_TASK |
+        Intent.FLAG_ACTIVITY_CLEAR_TOP |
+        Intent.FLAG_ACTIVITY_SINGLE_TOP |
+        Intent.FLAG_FROM_BACKGROUND
+      );
+
+      inputService.startActivity(intent);
+      return true;
+    }
+
+    return false;
   }
 
-  public ActivityAction (InputService inputService, Class activityClass) {
-    super(inputService);
+  public ActivityAction (Class activityClass) {
+    super();
     this.activityClass = activityClass;
   }
 }

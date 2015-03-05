@@ -12,24 +12,28 @@ public final class KeyAction extends Action {
     return KeyEvent.keyCodeToString(keyCode);
   }
 
-  public void logKeyEventSent (int code, boolean press) {
+  public void logKeyEventSent (InputService inputService, int code, boolean press) {
     inputService.logKeyEvent(code, press, "sent");
   }
 
   @Override
   public final boolean performAction () {
-    InputConnection connection = inputService.getCurrentInputConnection();
+    InputService inputService = getInputService();
 
-    if (connection != null) {
-      KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
+    if (inputService != null) {
+      InputConnection connection = inputService.getCurrentInputConnection();
 
-      if (connection.sendKeyEvent(event)) {
-        logKeyEventSent(keyCode, true);
-        event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
+      if (connection != null) {
+        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
 
         if (connection.sendKeyEvent(event)) {
-          logKeyEventSent(keyCode, false);
-          return true;
+          logKeyEventSent(inputService, keyCode, true);
+          event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
+
+          if (connection.sendKeyEvent(event)) {
+            logKeyEventSent(inputService, keyCode, false);
+            return true;
+          }
         }
       }
     }
@@ -37,8 +41,8 @@ public final class KeyAction extends Action {
     return false;
   }
 
-  public KeyAction (InputService inputService, int keyCode) {
-    super(inputService);
+  public KeyAction (int keyCode) {
+    super();
     this.keyCode = keyCode;
   }
 }

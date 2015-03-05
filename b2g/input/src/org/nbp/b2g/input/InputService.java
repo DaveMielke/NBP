@@ -11,6 +11,8 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 
+import android.content.Intent;
+
 public class InputService extends InputMethodService {
   private static final String LOG_TAG = InputService.class.getName();
 
@@ -32,15 +34,15 @@ public class InputService extends InputMethodService {
   }
 
   private void addNullAction (int keyMask) {
-    addAction(keyMask, new Action(this));
+    addAction(keyMask, new Action());
   }
 
   private void addActivityAction (int keyMask, Class activityClass) {
-    addAction(keyMask, new ActivityAction(this, activityClass));
+    addAction(keyMask, new ActivityAction(activityClass));
   }
 
   private void addKeyAction (int keyMask, int keyCode) {
-    addAction(keyMask, new KeyAction(this, keyCode));
+    addAction(keyMask, new KeyAction(keyCode));
   }
 
   private void addActions () {
@@ -77,7 +79,7 @@ public class InputService extends InputMethodService {
 
     addKeyAction((KeyMask.Space | KeyMask.Dots1456), KeyEvent.KEYCODE_ASSIST);
 
-    addAction((KeyMask.Space | KeyMask.Dots1346), new Action(this) {
+    addAction((KeyMask.Space | KeyMask.Dots1346), new Action() {
       @Override
       public final boolean performAction () {
         controlModifier = !controlModifier;
@@ -91,7 +93,6 @@ public class InputService extends InputMethodService {
     super.onCreate();
 
     Log.d(LOG_TAG, "input service started");
-    inputService = this;
     addActions();
   }
 
@@ -100,17 +101,18 @@ public class InputService extends InputMethodService {
     super.onDestroy();
 
     Log.d(LOG_TAG, "input service stopped");
-    inputService = null;
   }
 
   @Override
   public void onBindInput () {
     Log.d(LOG_TAG, "input service bound");
+    inputService = this;
   }
 
   @Override
   public void onUnbindInput () {
     Log.d(LOG_TAG, "input service unbound");
+    inputService = null;
   }
 
   @Override
