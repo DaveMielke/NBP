@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 
 import android.content.Intent;
+import android.accessibilityservice.AccessibilityService;
 
 public class InputService extends InputMethodService {
   private static final String LOG_TAG = InputService.class.getName();
@@ -41,6 +42,10 @@ public class InputService extends InputMethodService {
     addAction(keyMask, new ActivityAction(activityClass));
   }
 
+  private void addKeyAction (int keyMask, int keyCode, int globalAction) {
+    addAction(keyMask, new KeyAction(keyCode, globalAction));
+  }
+
   private void addKeyAction (int keyMask, int keyCode) {
     addAction(keyMask, new KeyAction(keyCode));
   }
@@ -51,7 +56,7 @@ public class InputService extends InputMethodService {
       addNullAction((KeyMask.SPACE | KeyMask.DOTS_12));
     } else {
       addKeyAction((KeyMask.SPACE | KeyMask.DOTS_123456), KeyEvent.KEYCODE_HOME);
-      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK);
+      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK, AccessibilityService.GLOBAL_ACTION_BACK);
     }
 
     addKeyAction(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
@@ -81,7 +86,7 @@ public class InputService extends InputMethodService {
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_DEL);
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION, AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
     addActivityAction((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
 
     addAction((KeyMask.SPACE | KeyMask.DOTS_1346), new Action() {
@@ -118,6 +123,8 @@ public class InputService extends InputMethodService {
   public void onUnbindInput () {
     Log.d(LOG_TAG, "input service unbound");
     inputService = null;
+    pressedKeyMask = 0;
+    activeKeyMask = 0;
   }
 
   @Override
@@ -145,7 +152,7 @@ public class InputService extends InputMethodService {
   private boolean insertCharacter (char character) {
     InputConnection connection = getInputConnection();
 
-    if (ApplicationParameters.LOG_ACTIONS) {
+    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
       Log.d(LOG_TAG, "inserting character: " + character);
     }
 
@@ -155,6 +162,17 @@ public class InputService extends InputMethodService {
       }
     }
 
+    Log.w(LOG_TAG, "character insertion failed: " + character);
+    return false;
+  }
+
+  private boolean performAction (Action action) {
+    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
+      Log.d(LOG_TAG, "performing action: " + action.getActionName());
+    }
+
+    if (action.performAction()) return true;
+    Log.w(LOG_TAG, "action failed: " + action.getActionName());
     return false;
   }
 
@@ -222,11 +240,7 @@ public class InputService extends InputMethodService {
         controlModifier = false;
 
         if (action != null) {
-          if (ApplicationParameters.LOG_ACTIONS) {
-            Log.d(LOG_TAG, "performing action: " + action.getActionName());
-          }
-
-          action.performAction();
+          performAction(action);
         } else if (activeKeyMask <= KeyMask.SPACE) {
           char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.SPACE);
           if (control) character &= 0X1F;
