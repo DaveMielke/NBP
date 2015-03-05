@@ -502,7 +502,7 @@ key 0x435	CHORD_COMB_53
 key 0x436	CHORD_COMB_54
 key 0x437	CHORD_COMB_55
 #{KW} CHORD_COMB_56 is mapped to DEL   D-Chord
-key 0x438	DEL
+key 0x438	FORWARD_DEL
 key 0x439	CHORD_COMB_57
 #key 0x43a	CHORD_COMB_58  N-Chord Notifications
 key 0x43a	NOTIFICATION

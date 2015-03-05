@@ -83,7 +83,7 @@ public class InputService extends InputMethodService {
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
 
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_DEL);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
     addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION, AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
