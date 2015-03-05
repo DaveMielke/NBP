@@ -46,17 +46,17 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
+  //addKeyAction((KeyMask.Space | KeyMask.Dots123456), KeyEvent.KEYCODE_HOME);
+    addNullAction((KeyMask.Space | KeyMask.Dots123456));
+
+  //addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
+    addNullAction((KeyMask.Space | KeyMask.Dots12));
+
     addKeyAction(KeyMask.Center, KeyEvent.KEYCODE_DPAD_CENTER);
     addKeyAction(KeyMask.Left, KeyEvent.KEYCODE_DPAD_LEFT);
     addKeyAction(KeyMask.Right, KeyEvent.KEYCODE_DPAD_RIGHT);
     addKeyAction(KeyMask.Up, KeyEvent.KEYCODE_DPAD_UP);
     addKeyAction(KeyMask.Down, KeyEvent.KEYCODE_DPAD_DOWN);
-
-    addKeyAction(KeyMask.Dots7, KeyEvent.KEYCODE_DEL);
-    addKeyAction(KeyMask.Dots8, KeyEvent.KEYCODE_ENTER);
-
-    addKeyAction((KeyMask.Space | KeyMask.Dots123456), KeyEvent.KEYCODE_HOME);
-    addKeyAction((KeyMask.Space | KeyMask.Dots45), KeyEvent.KEYCODE_TAB);
 
     if (ApplicationParameters.CHORDS_SEND_ARROWS) {
       addNullAction((KeyMask.Space | KeyMask.Dots1));
@@ -70,14 +70,17 @@ public class InputService extends InputMethodService {
       addKeyAction((KeyMask.Space | KeyMask.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
     }
 
-    addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
+    addKeyAction(KeyMask.Dots7, KeyEvent.KEYCODE_DEL);
+    addKeyAction(KeyMask.Dots8, KeyEvent.KEYCODE_ENTER);
+
+    addKeyAction((KeyMask.Space | KeyMask.Dots45), KeyEvent.KEYCODE_TAB);
+    addKeyAction((KeyMask.Space | KeyMask.Dots1456), KeyEvent.KEYCODE_ASSIST);
+
     addKeyAction((KeyMask.Space | KeyMask.Dots145), KeyEvent.KEYCODE_DEL);
     addKeyAction((KeyMask.Space | KeyMask.Dots124), KeyEvent.KEYCODE_SEARCH);
     addKeyAction((KeyMask.Space | KeyMask.Dots134), KeyEvent.KEYCODE_MENU);
     addKeyAction((KeyMask.Space | KeyMask.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
     addActivityAction((KeyMask.Space | KeyMask.Dots2345), ClockActivity.class);
-
-    addKeyAction((KeyMask.Space | KeyMask.Dots1456), KeyEvent.KEYCODE_ASSIST);
 
     addAction((KeyMask.Space | KeyMask.Dots1346), new Action() {
       @Override
