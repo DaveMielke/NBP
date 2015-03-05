@@ -123,6 +123,11 @@ public class InputService extends InputMethodService {
   public void onUnbindInput () {
     Log.d(LOG_TAG, "input service unbound");
     inputService = null;
+
+    if (ApplicationParameters.LOG_KEY_EVENTS) {
+      Log.d(LOG_TAG, "resetting key masks");
+    }
+
     pressedKeyMask = 0;
     activeKeyMask = 0;
   }
@@ -153,7 +158,7 @@ public class InputService extends InputMethodService {
     InputConnection connection = getInputConnection();
 
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-      Log.d(LOG_TAG, "inserting character: " + character);
+      Log.d(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
     }
 
     if (connection != null) {
@@ -162,7 +167,7 @@ public class InputService extends InputMethodService {
       }
     }
 
-    Log.w(LOG_TAG, "character insertion failed: " + character);
+    Log.w(LOG_TAG, String.format("character insertion failed: 0X%02X", (int)character));
     return false;
   }
 
@@ -176,14 +181,14 @@ public class InputService extends InputMethodService {
     return false;
   }
 
-  public static void logKeyEvent (int code, boolean press, String description) {
+  protected void logKeyEvent (int code, boolean press, String action) {
     if (ApplicationParameters.LOG_KEY_EVENTS) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("key ");
       sb.append((press? "press": "release"));
       sb.append(' ');
-      sb.append(description);
+      sb.append(action);
 
       sb.append(": ");
       sb.append(code);
@@ -191,11 +196,14 @@ public class InputService extends InputMethodService {
       sb.append(KeyEvent.keyCodeToString(code));
       sb.append(")");
 
+      sb.append(String.format(": Pkm:0X%04X", pressedKeyMask));
+      sb.append(String.format(": Akm:0X%04X", activeKeyMask));
+
       Log.d(LOG_TAG, sb.toString());
     }
   }
 
-  public static void logKeyEventReceived (int code, boolean press) {
+  protected void logKeyEventReceived (int code, boolean press) {
     logKeyEvent(code, press, "received");
   }
 

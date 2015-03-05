@@ -17,10 +17,6 @@ public final class KeyAction extends Action {
     return KeyEvent.keyCodeToString(keyCode);
   }
 
-  public void logKeyEventSent (InputService inputService, int code, boolean press) {
-    inputService.logKeyEvent(code, press, "sent");
-  }
-
   @Override
   public final boolean performAction () {
     if (globalAction != 0) {
@@ -41,11 +37,9 @@ public final class KeyAction extends Action {
           KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
 
           if (connection.sendKeyEvent(event)) {
-            logKeyEventSent(inputService, keyCode, true);
             event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
 
             if (connection.sendKeyEvent(event)) {
-              logKeyEventSent(inputService, keyCode, false);
               return true;
             }
           }
