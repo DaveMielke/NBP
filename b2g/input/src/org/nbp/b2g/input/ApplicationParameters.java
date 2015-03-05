@@ -9,6 +9,7 @@ public abstract class ApplicationParameters {
 
   public static volatile boolean LOG_KEY_EVENTS = false;
   public static volatile boolean LOG_ACTIONS = false;
+  public static volatile boolean LOG_ACCESSIBILITY_EVENTS = true;
 
   private ApplicationParameters () {
   }
