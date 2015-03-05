@@ -18,10 +18,10 @@ public final class ActivityAction extends Action {
       Intent intent = new Intent(inputService, activityClass);
 
       intent.addFlags(
+        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+        Intent.FLAG_ACTIVITY_NO_HISTORY |
         Intent.FLAG_ACTIVITY_NEW_TASK |
-        Intent.FLAG_ACTIVITY_CLEAR_TOP |
-        Intent.FLAG_ACTIVITY_SINGLE_TOP |
-        Intent.FLAG_FROM_BACKGROUND
+        Intent.FLAG_ACTIVITY_SINGLE_TOP
       );
 
       inputService.startActivity(intent);
