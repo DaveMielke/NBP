@@ -69,6 +69,11 @@ public class InputService extends InputMethodService {
       @Override
       public final boolean performAction () {
         controlModifier = !controlModifier;
+
+        if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
+          Log.d(LOG_TAG, "control modifier " + (controlModifier? "set": "unset"));
+        }
+
         return true;
       }
     });
