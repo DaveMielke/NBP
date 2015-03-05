@@ -46,11 +46,13 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
-  //addKeyAction((KeyMask.SPACE | KeyMask.DOTS_123456), KeyEvent.KEYCODE_HOME);
-    addNullAction((KeyMask.SPACE | KeyMask.DOTS_123456));
-
-  //addKeyAction((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK);
-    addNullAction((KeyMask.SPACE | KeyMask.DOTS_12));
+    if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
+      addNullAction((KeyMask.SPACE | KeyMask.DOTS_123456));
+      addNullAction((KeyMask.SPACE | KeyMask.DOTS_12));
+    } else {
+      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_123456), KeyEvent.KEYCODE_HOME);
+      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK);
+    }
 
     addKeyAction(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
     addKeyAction(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
@@ -58,7 +60,7 @@ public class InputService extends InputMethodService {
     addKeyAction(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
     addKeyAction(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
 
-    if (ApplicationParameters.CHORDS_SEND_ARROWS) {
+    if (ApplicationParameters.CHORDS_SEND_ARROW_KEYS) {
       addNullAction((KeyMask.SPACE | KeyMask.DOTS_1));
       addNullAction((KeyMask.SPACE | KeyMask.DOTS_4));
       addNullAction((KeyMask.SPACE | KeyMask.DOTS_3));
