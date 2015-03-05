@@ -2057,48 +2057,48 @@
 	<enum name="KEYCODE_BRL_SPACE" value="777" />
 
 	<!--KW Cursor routing keys block 1-->
-	<enum name="KEYCODE_BRL_CURSOR0" value="778" />
-	<enum name="KEYCODE_BRL_CURSOR1" value="779" />
-	<enum name="KEYCODE_BRL_CURSOR2" value="780" />
-	<enum name="KEYCODE_BRL_CURSOR3" value="781" />
-	<enum name="KEYCODE_BRL_CURSOR4" value="782" />
-	<enum name="KEYCODE_BRL_CURSOR5" value="783" />
-	<enum name="KEYCODE_BRL_CURSOR6" value="784" />
-	<enum name="KEYCODE_BRL_CURSOR7" value="785" />
-	<enum name="KEYCODE_BRL_CURSOR8" value="786" />
-	<enum name="KEYCODE_BRL_CURSOR9" value="787" />
-	<enum name="KEYCODE_BRL_CURSOR10" value="788" />
-	<enum name="KEYCODE_BRL_CURSOR11" value="789" />
-	<enum name="KEYCODE_BRL_CURSOR12" value="790" />
-	<enum name="KEYCODE_BRL_CURSOR13" value="791" />
-	<enum name="KEYCODE_BRL_CURSOR14" value="792" />
-	<enum name="KEYCODE_BRL_CURSOR15" value="793" />
-	<enum name="KEYCODE_BRL_CURSOR16" value="794" />
-	<enum name="KEYCODE_BRL_CURSOR17" value="795" />
-	<enum name="KEYCODE_BRL_CURSOR18" value="796" />
-	<enum name="KEYCODE_BRL_CURSOR19" value="797" />
+	<enum name="KEYCODE_BRL_CURSOR_0" value="778" />
+	<enum name="KEYCODE_BRL_CURSOR_1" value="779" />
+	<enum name="KEYCODE_BRL_CURSOR_2" value="780" />
+	<enum name="KEYCODE_BRL_CURSOR_3" value="781" />
+	<enum name="KEYCODE_BRL_CURSOR_4" value="782" />
+	<enum name="KEYCODE_BRL_CURSOR_5" value="783" />
+	<enum name="KEYCODE_BRL_CURSOR_6" value="784" />
+	<enum name="KEYCODE_BRL_CURSOR_7" value="785" />
+	<enum name="KEYCODE_BRL_CURSOR_8" value="786" />
+	<enum name="KEYCODE_BRL_CURSOR_9" value="787" />
+	<enum name="KEYCODE_BRL_CURSOR_10" value="788" />
+	<enum name="KEYCODE_BRL_CURSOR_11" value="789" />
+	<enum name="KEYCODE_BRL_CURSOR_12" value="790" />
+	<enum name="KEYCODE_BRL_CURSOR_13" value="791" />
+	<enum name="KEYCODE_BRL_CURSOR_14" value="792" />
+	<enum name="KEYCODE_BRL_CURSOR_15" value="793" />
+	<enum name="KEYCODE_BRL_CURSOR_16" value="794" />
+	<enum name="KEYCODE_BRL_CURSOR_17" value="795" />
+	<enum name="KEYCODE_BRL_CURSOR_18" value="796" />
+	<enum name="KEYCODE_BRL_CURSOR_19" value="797" />
 
 	<!--KW Cursor routing keys block 2-->
-	<enum name="KEYCODE_BRL_CURSOR20" value="798" />
-	<enum name="KEYCODE_BRL_CURSOR21" value="799" />
-	<enum name="KEYCODE_BRL_CURSOR22" value="800" />
-	<enum name="KEYCODE_BRL_CURSOR23" value="801" />
-	<enum name="KEYCODE_BRL_CURSOR24" value="802" />
-	<enum name="KEYCODE_BRL_CURSOR25" value="803" />
-	<enum name="KEYCODE_BRL_CURSOR26" value="804" />
-	<enum name="KEYCODE_BRL_CURSOR27" value="805" />
-	<enum name="KEYCODE_BRL_CURSOR28" value="806" />
-	<enum name="KEYCODE_BRL_CURSOR29" value="807" />
-	<enum name="KEYCODE_BRL_CURSOR30" value="808" />
-	<enum name="KEYCODE_BRL_CURSOR31" value="809" />
-	<enum name="KEYCODE_BRL_CURSOR32" value="810" />
-	<enum name="KEYCODE_BRL_CURSOR33" value="811" />
-	<enum name="KEYCODE_BRL_CURSOR34" value="812" />
-	<enum name="KEYCODE_BRL_CURSOR35" value="813" />
-	<enum name="KEYCODE_BRL_CURSOR36" value="814" />
-	<enum name="KEYCODE_BRL_CURSOR37" value="815" />
-	<enum name="KEYCODE_BRL_CURSOR38" value="816" />
-	<enum name="KEYCODE_BRL_CURSOR39" value="817" />
+	<enum name="KEYCODE_BRL_CURSOR_20" value="798" />
+	<enum name="KEYCODE_BRL_CURSOR_21" value="799" />
+	<enum name="KEYCODE_BRL_CURSOR_22" value="800" />
+	<enum name="KEYCODE_BRL_CURSOR_23" value="801" />
+	<enum name="KEYCODE_BRL_CURSOR_24" value="802" />
+	<enum name="KEYCODE_BRL_CURSOR_25" value="803" />
+	<enum name="KEYCODE_BRL_CURSOR_26" value="804" />
+	<enum name="KEYCODE_BRL_CURSOR_27" value="805" />
+	<enum name="KEYCODE_BRL_CURSOR_28" value="806" />
+	<enum name="KEYCODE_BRL_CURSOR_29" value="807" />
+	<enum name="KEYCODE_BRL_CURSOR_30" value="808" />
+	<enum name="KEYCODE_BRL_CURSOR_31" value="809" />
+	<enum name="KEYCODE_BRL_CURSOR_32" value="810" />
+	<enum name="KEYCODE_BRL_CURSOR_33" value="811" />
+	<enum name="KEYCODE_BRL_CURSOR_34" value="812" />
+	<enum name="KEYCODE_BRL_CURSOR_35" value="813" />
+	<enum name="KEYCODE_BRL_CURSOR_36" value="814" />
+	<enum name="KEYCODE_BRL_CURSOR_37" value="815" />
+	<enum name="KEYCODE_BRL_CURSOR_38" value="816" />
+	<enum name="KEYCODE_BRL_CURSOR_39" value="817" />
 
 	<enum name="KEYCODE_BRL_BACKWARD" value="818" />
 	<enum name="KEYCODE_BRL_FORWARD" value="819" />
