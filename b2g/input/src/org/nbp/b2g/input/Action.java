@@ -12,11 +12,11 @@ public abstract class Action {
     return actionMap.get(new Integer(keyMask));
   }
 
-  public static void add (int keyMask, Action action) {
+  protected static void addAction (int keyMask, Action action) {
     actionMap.put(new Integer(keyMask), action);
   }
 
-  public abstract String getActionName ();
+  public abstract String getName ();
   public abstract boolean performAction ();
 
   protected final InputService getInputService () {

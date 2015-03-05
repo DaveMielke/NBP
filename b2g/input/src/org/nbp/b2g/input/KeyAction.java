@@ -13,7 +13,7 @@ public final class KeyAction extends Action {
   protected final int globalAction;
 
   @Override
-  public String getActionName () {
+  public String getName () {
     return KeyEvent.keyCodeToString(keyCode);
   }
 
@@ -57,7 +57,7 @@ public final class KeyAction extends Action {
   }
 
   public static void add (int keyMask, int keyCode, int globalAction) {
-    add(keyMask, new KeyAction(keyCode, globalAction));
+    addAction(keyMask, new KeyAction(keyCode, globalAction));
   }
 
   public KeyAction (int keyCode) {
@@ -65,6 +65,6 @@ public final class KeyAction extends Action {
   }
 
   public static void add (int keyMask, int keyCode) {
-    add(keyMask, new KeyAction(keyCode));
+    addAction(keyMask, new KeyAction(keyCode));
   }
 }

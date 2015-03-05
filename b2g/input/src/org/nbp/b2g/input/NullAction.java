@@ -2,7 +2,7 @@ package org.nbp.b2g.input;
 
 public final class NullAction extends Action {
   @Override
-  public String getActionName () {
+  public String getName () {
     return "null";
   }
 
@@ -16,6 +16,6 @@ public final class NullAction extends Action {
   }
 
   public static void add (int keyMask) {
-    add(keyMask, new NullAction());
+    addAction(keyMask, new NullAction());
   }
 }

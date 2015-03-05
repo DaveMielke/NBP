@@ -65,12 +65,7 @@ public class InputService extends InputMethodService {
     KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION, AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
     ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
 
-    Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), new Action() {
-      @Override
-      public String getActionName () {
-        return "control";
-      }
-
+    CustomAction.add((KeyMask.SPACE | KeyMask.DOTS_1346), new CustomAction("control") {
       @Override
       public final boolean performAction () {
         controlModifier = !controlModifier;
@@ -154,11 +149,11 @@ public class InputService extends InputMethodService {
 
   private boolean performAction (Action action) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-      Log.d(LOG_TAG, "performing action: " + action.getActionName());
+      Log.d(LOG_TAG, "performing action: " + action.getName());
     }
 
     if (action.performAction()) return true;
-    Log.w(LOG_TAG, "action failed: " + action.getActionName());
+    Log.w(LOG_TAG, "action failed: " + action.getName());
     return false;
   }
 

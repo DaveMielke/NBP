@@ -6,7 +6,7 @@ public final class ActivityAction extends Action {
   protected final Class activityClass;
 
   @Override
-  public String getActionName () {
+  public String getName () {
     return activityClass.getName();
   }
 
@@ -37,6 +37,6 @@ public final class ActivityAction extends Action {
   }
 
   public static void add (int keyMask, Class activityClass) {
-    add(keyMask, new ActivityAction(activityClass));
+    addAction(keyMask, new ActivityAction(activityClass));
   }
 }
