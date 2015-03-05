@@ -1197,7 +1197,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
 	public static final int KEYCODE_BRL_CURSOR39     =   817;
 	
 	/*{KW} Backward, Forward keys*/
-	public static final int KEYCODE_BRL_BACK         =   818;
+	public static final int KEYCODE_BRL_BACKWARD     =   818;
 	public static final int KEYCODE_BRL_FORWARD      =   819;
 	
 	/*{KW}: 256 additional key codes spared (820-1075) */
@@ -2014,7 +2014,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
 		names.append(KEYCODE_BRL_CURSOR38, "KEYCODE_BRL_CURSOR38");
 		names.append(KEYCODE_BRL_CURSOR39, "KEYCODE_BRL_CURSOR39");
 		/*{KW} Backward, Forward keys*/
-		names.append(KEYCODE_BRL_BACK, "KEYCODE_BRL_BACK");
+		names.append(KEYCODE_BRL_BACKWARD, "KEYCODE_BRL_BACKWARD");
 		names.append(KEYCODE_BRL_FORWARD, "KEYCODE_BRL_FORWARD");
 		/*{KW} end*/
 		/*{KW} Unmapped key code for wakeup from suspend*/

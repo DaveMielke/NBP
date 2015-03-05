@@ -2100,7 +2100,7 @@
 	<enum name="KEYCODE_BRL_CURSOR38" value="816" />
 	<enum name="KEYCODE_BRL_CURSOR39" value="817" />
 
-	<enum name="KEYCODE_BRL_BACK" value="818" />
+	<enum name="KEYCODE_BRL_BACKWARD" value="818" />
 	<enum name="KEYCODE_BRL_FORWARD" value="819" />
 	 <!-- {KW}: 256 additional key codes spared (820-1075) -->
 	<enum name="KEYCODE_DUMMY_WAKEUP" value="1076" />

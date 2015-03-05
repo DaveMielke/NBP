@@ -838,7 +838,7 @@ enum {
 	AKEYCODE_BRL_CURSOR39  =   817,
 
 	/*{KW} Forward, backward keys*/
-	AKEYCODE_BRL_BACK      =   818,
+	AKEYCODE_BRL_BACKWARD  =   818,
 	AKEYCODE_BRL_FORWARD   =   819,
 	/*{KW}: 256 additional key codes spared (820-1075) */
 	
