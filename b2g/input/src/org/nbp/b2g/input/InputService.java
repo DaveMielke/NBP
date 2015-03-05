@@ -1,8 +1,5 @@
 package org.nbp.b2g.input;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import android.util.Log;
 import android.os.Bundle;
 
@@ -22,7 +19,6 @@ public class InputService extends InputMethodService {
   private int pressedKeyMask = 0;
   private int activeKeyMask = 0;
 
-  private Map<Integer, Action> actionMap = new HashMap<Integer, Action>();
   private final CharacterMap characterMap = new CharacterMap();
   private boolean controlModifier = false;
 
@@ -30,66 +26,51 @@ public class InputService extends InputMethodService {
     return inputService;
   }
 
-  private void addAction (int keyMask, Action action) {
-    actionMap.put(new Integer(keyMask), action);
-  }
-
-  private void addNullAction (int keyMask) {
-    addAction(keyMask, new Action());
-  }
-
-  private void addActivityAction (int keyMask, Class activityClass) {
-    addAction(keyMask, new ActivityAction(activityClass));
-  }
-
-  private void addKeyAction (int keyMask, int keyCode, int globalAction) {
-    addAction(keyMask, new KeyAction(keyCode, globalAction));
-  }
-
-  private void addKeyAction (int keyMask, int keyCode) {
-    addAction(keyMask, new KeyAction(keyCode));
-  }
-
   private void addActions () {
     if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
-      addNullAction((KeyMask.SPACE | KeyMask.DOTS_123456));
-      addNullAction((KeyMask.SPACE | KeyMask.DOTS_12));
+      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_123456));
+      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_12));
     } else {
-      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_123456), KeyEvent.KEYCODE_HOME);
-      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK, AccessibilityService.GLOBAL_ACTION_BACK);
+      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_123456), KeyEvent.KEYCODE_HOME);
+      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK, AccessibilityService.GLOBAL_ACTION_BACK);
     }
 
-    addKeyAction(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
-    addKeyAction(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
-    addKeyAction(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
-    addKeyAction(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
-    addKeyAction(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
+    KeyAction.add(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
+    KeyAction.add(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
+    KeyAction.add(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
+    KeyAction.add(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
+    KeyAction.add(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
 
     if (ApplicationParameters.CHORDS_SEND_ARROW_KEYS) {
-      addNullAction((KeyMask.SPACE | KeyMask.DOTS_1));
-      addNullAction((KeyMask.SPACE | KeyMask.DOTS_4));
-      addNullAction((KeyMask.SPACE | KeyMask.DOTS_3));
-      addNullAction((KeyMask.SPACE | KeyMask.DOTS_6));
+      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_1));
+      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_4));
+      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_3));
+      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_6));
     } else {
-      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1), KeyEvent.KEYCODE_DPAD_UP);
-      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_4), KeyEvent.KEYCODE_DPAD_DOWN);
-      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_3), KeyEvent.KEYCODE_DPAD_LEFT);
-      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_6), KeyEvent.KEYCODE_DPAD_RIGHT);
+      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_1), KeyEvent.KEYCODE_DPAD_UP);
+      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_4), KeyEvent.KEYCODE_DPAD_DOWN);
+      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_3), KeyEvent.KEYCODE_DPAD_LEFT);
+      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_6), KeyEvent.KEYCODE_DPAD_RIGHT);
     }
 
-    addKeyAction(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
-    addKeyAction(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
+    KeyAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
+    KeyAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
 
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
+    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
+    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
 
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION, AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
-    addActivityAction((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
+    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
+    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
+    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
+    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION, AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
+    ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
 
-    addAction((KeyMask.SPACE | KeyMask.DOTS_1346), new Action() {
+    Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), new Action() {
+      @Override
+      public String getActionName () {
+        return "control";
+      }
+
       @Override
       public final boolean performAction () {
         controlModifier = !controlModifier;
@@ -242,7 +223,7 @@ public class InputService extends InputMethodService {
 
     if (bit != 0) {
       if (activeKeyMask > 0) {
-        Action action = actionMap.get(new Integer(activeKeyMask));
+        Action action = Action.getAction(activeKeyMask);
 
         boolean control = controlModifier;
         controlModifier = false;

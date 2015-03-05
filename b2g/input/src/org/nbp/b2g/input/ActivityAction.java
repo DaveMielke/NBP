@@ -35,4 +35,8 @@ public final class ActivityAction extends Action {
     super();
     this.activityClass = activityClass;
   }
+
+  public static void add (int keyMask, Class activityClass) {
+    add(keyMask, new ActivityAction(activityClass));
+  }
 }

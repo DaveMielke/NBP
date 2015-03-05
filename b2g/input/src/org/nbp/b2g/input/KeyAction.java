@@ -56,7 +56,15 @@ public final class KeyAction extends Action {
     this.globalAction = globalAction;
   }
 
+  public static void add (int keyMask, int keyCode, int globalAction) {
+    add(keyMask, new KeyAction(keyCode, globalAction));
+  }
+
   public KeyAction (int keyCode) {
     this(keyCode, 0);
+  }
+
+  public static void add (int keyMask, int keyCode) {
+    add(keyMask, new KeyAction(keyCode));
   }
 }
