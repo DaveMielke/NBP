@@ -46,43 +46,43 @@ public class InputService extends InputMethodService {
   }
 
   private void addActions () {
-  //addKeyAction((KeyMask.Space | KeyMask.Dots123456), KeyEvent.KEYCODE_HOME);
-    addNullAction((KeyMask.Space | KeyMask.Dots123456));
+  //addKeyAction((KeyMask.SPACE | KeyMask.DOTS_123456), KeyEvent.KEYCODE_HOME);
+    addNullAction((KeyMask.SPACE | KeyMask.DOTS_123456));
 
-  //addKeyAction((KeyMask.Space | KeyMask.Dots12), KeyEvent.KEYCODE_BACK);
-    addNullAction((KeyMask.Space | KeyMask.Dots12));
+  //addKeyAction((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK);
+    addNullAction((KeyMask.SPACE | KeyMask.DOTS_12));
 
-    addKeyAction(KeyMask.Center, KeyEvent.KEYCODE_DPAD_CENTER);
-    addKeyAction(KeyMask.Left, KeyEvent.KEYCODE_DPAD_LEFT);
-    addKeyAction(KeyMask.Right, KeyEvent.KEYCODE_DPAD_RIGHT);
-    addKeyAction(KeyMask.Up, KeyEvent.KEYCODE_DPAD_UP);
-    addKeyAction(KeyMask.Down, KeyEvent.KEYCODE_DPAD_DOWN);
+    addKeyAction(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
+    addKeyAction(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
+    addKeyAction(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
+    addKeyAction(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
+    addKeyAction(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
 
     if (ApplicationParameters.CHORDS_SEND_ARROWS) {
-      addNullAction((KeyMask.Space | KeyMask.Dots1));
-      addNullAction((KeyMask.Space | KeyMask.Dots4));
-      addNullAction((KeyMask.Space | KeyMask.Dots3));
-      addNullAction((KeyMask.Space | KeyMask.Dots6));
+      addNullAction((KeyMask.SPACE | KeyMask.DOTS_1));
+      addNullAction((KeyMask.SPACE | KeyMask.DOTS_4));
+      addNullAction((KeyMask.SPACE | KeyMask.DOTS_3));
+      addNullAction((KeyMask.SPACE | KeyMask.DOTS_6));
     } else {
-      addKeyAction((KeyMask.Space | KeyMask.Dots1), KeyEvent.KEYCODE_DPAD_UP);
-      addKeyAction((KeyMask.Space | KeyMask.Dots4), KeyEvent.KEYCODE_DPAD_DOWN);
-      addKeyAction((KeyMask.Space | KeyMask.Dots3), KeyEvent.KEYCODE_DPAD_LEFT);
-      addKeyAction((KeyMask.Space | KeyMask.Dots6), KeyEvent.KEYCODE_DPAD_RIGHT);
+      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1), KeyEvent.KEYCODE_DPAD_UP);
+      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_4), KeyEvent.KEYCODE_DPAD_DOWN);
+      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_3), KeyEvent.KEYCODE_DPAD_LEFT);
+      addKeyAction((KeyMask.SPACE | KeyMask.DOTS_6), KeyEvent.KEYCODE_DPAD_RIGHT);
     }
 
-    addKeyAction(KeyMask.Dots7, KeyEvent.KEYCODE_DEL);
-    addKeyAction(KeyMask.Dots8, KeyEvent.KEYCODE_ENTER);
+    addKeyAction(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
+    addKeyAction(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
 
-    addKeyAction((KeyMask.Space | KeyMask.Dots45), KeyEvent.KEYCODE_TAB);
-    addKeyAction((KeyMask.Space | KeyMask.Dots1456), KeyEvent.KEYCODE_ASSIST);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
 
-    addKeyAction((KeyMask.Space | KeyMask.Dots145), KeyEvent.KEYCODE_DEL);
-    addKeyAction((KeyMask.Space | KeyMask.Dots124), KeyEvent.KEYCODE_SEARCH);
-    addKeyAction((KeyMask.Space | KeyMask.Dots134), KeyEvent.KEYCODE_MENU);
-    addKeyAction((KeyMask.Space | KeyMask.Dots1345), KeyEvent.KEYCODE_NOTIFICATION);
-    addActivityAction((KeyMask.Space | KeyMask.Dots2345), ClockActivity.class);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_DEL);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION);
+    addActivityAction((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
 
-    addAction((KeyMask.Space | KeyMask.Dots1346), new Action() {
+    addAction((KeyMask.SPACE | KeyMask.DOTS_1346), new Action() {
       @Override
       public final boolean performAction () {
         controlModifier = !controlModifier;
@@ -225,8 +225,8 @@ public class InputService extends InputMethodService {
           }
 
           action.performAction();
-        } else if (activeKeyMask <= KeyMask.Space) {
-          char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.Space);
+        } else if (activeKeyMask <= KeyMask.SPACE) {
+          char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.SPACE);
           if (control) character &= 0X1F;
           insertCharacter(character);
         }
