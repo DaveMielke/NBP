@@ -22,8 +22,12 @@ declare -A settingDescriptors=(
 )
 
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
+
 offValue=0
 onValue=1
+
+offWords="off of no n false fal fa f"
+onWords="on yes ye y true tru tr t"
 
 programName="${0##*/}"
 programMessage() {
@@ -226,19 +230,26 @@ changeSetting_property() {
 }
 
 verifyValue_boolean() {
-   [ "${settingValue}" = "${offValue}" -o "${settingValue}" = "${onValue}" ] || {
-      if [[ "${settingValue}" =~ ^(off|no|false)$ ]]
-      then
-         settingValue="${offValue}"
-      elif [[ "${settingValue}" =~ ^(on|yes|true)$ ]]
-      then
-         settingValue="${onValue}"
-      else
-         return 1
-      fi
-   }
+   [ "${settingValue}" != "${offValue}" -a "${settingValue}" != "${onValue}" ] || return 0
+   local word
 
-   return 0
+   for word in ${offWords}
+   do
+      [ "${settingValue}" != "${word}" ] || {
+         settingValue="${offValue}"
+         return 0
+      }
+   done
+
+   for word in ${onWords}
+   do
+      [ "${settingValue}" != "${word}" ] || {
+         settingValue="${onValue}"
+         return 0
+      }
+   done
+
+   return 1
 }
 
 verifyValue_milliseconds() {
