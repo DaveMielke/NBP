@@ -6,11 +6,6 @@ public final class ActivityAction extends Action {
   protected final Class activityClass;
 
   @Override
-  public String getName () {
-    return activityClass.getName();
-  }
-
-  @Override
   public final boolean performAction () {
     InputService inputService = getInputService();
 
@@ -32,11 +27,11 @@ public final class ActivityAction extends Action {
   }
 
   public ActivityAction (Class activityClass) {
-    super();
+    super(activityClass.getName());
     this.activityClass = activityClass;
   }
 
   public static void add (int keyMask, Class activityClass) {
-    addAction(keyMask, new ActivityAction(activityClass));
+    add(keyMask, new ActivityAction(activityClass));
   }
 }

@@ -20,7 +20,7 @@ public class InputService extends InputMethodService {
   private int activeKeyMask = 0;
 
   private final CharacterMap characterMap = new CharacterMap();
-  private boolean controlModifier = false;
+  private final ToggleAction controlModifier = new ToggleAction("control-modifier");
 
   public static InputService getInputService () {
     return inputService;
@@ -64,19 +64,7 @@ public class InputService extends InputMethodService {
     KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
     KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), KeyEvent.KEYCODE_NOTIFICATION, AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
     ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
-
-    CustomAction.add((KeyMask.SPACE | KeyMask.DOTS_1346), new CustomAction("control") {
-      @Override
-      public final boolean performAction () {
-        controlModifier = !controlModifier;
-
-        if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-          Log.d(LOG_TAG, "control modifier " + (controlModifier? "set": "unset"));
-        }
-
-        return true;
-      }
-    });
+    Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), controlModifier);
   }
 
   @Override
@@ -106,7 +94,7 @@ public class InputService extends InputMethodService {
     inputService = null;
 
     if (ApplicationParameters.LOG_KEY_EVENTS) {
-      Log.d(LOG_TAG, "resetting key masks");
+      Log.d(LOG_TAG, "resetting key state");
     }
 
     pressedKeyMask = 0;
@@ -225,8 +213,7 @@ public class InputService extends InputMethodService {
       if (activeKeyMask > 0) {
         Action action = Action.getAction(activeKeyMask);
 
-        boolean control = controlModifier;
-        controlModifier = false;
+        boolean control = controlModifier.getState();
 
         if (action != null) {
           performAction(action);

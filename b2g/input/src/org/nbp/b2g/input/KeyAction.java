@@ -13,11 +13,6 @@ public final class KeyAction extends Action {
   protected final int globalAction;
 
   @Override
-  public String getName () {
-    return KeyEvent.keyCodeToString(keyCode);
-  }
-
-  @Override
   public final boolean performAction () {
     if (globalAction != 0) {
       ScreenMonitor monitor = ScreenMonitor.getScreenMonitor();
@@ -51,13 +46,13 @@ public final class KeyAction extends Action {
   }
 
   public KeyAction (int keyCode, int globalAction) {
-    super();
+    super(KeyEvent.keyCodeToString(keyCode));
     this.keyCode = keyCode;
     this.globalAction = globalAction;
   }
 
   public static void add (int keyMask, int keyCode, int globalAction) {
-    addAction(keyMask, new KeyAction(keyCode, globalAction));
+    add(keyMask, new KeyAction(keyCode, globalAction));
   }
 
   public KeyAction (int keyCode) {
@@ -65,6 +60,6 @@ public final class KeyAction extends Action {
   }
 
   public static void add (int keyMask, int keyCode) {
-    addAction(keyMask, new KeyAction(keyCode));
+    add(keyMask, new KeyAction(keyCode));
   }
 }

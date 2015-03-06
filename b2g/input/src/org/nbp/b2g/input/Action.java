@@ -8,21 +8,27 @@ import android.inputmethodservice.InputMethodService;
 public abstract class Action {
   private static Map<Integer, Action> actionMap = new HashMap<Integer, Action>();
 
-  public static Action getAction (int keyMask) {
-    return actionMap.get(new Integer(keyMask));
-  }
+  final String actionName;
 
-  protected static void addAction (int keyMask, Action action) {
-    actionMap.put(new Integer(keyMask), action);
-  }
-
-  public abstract String getName ();
   public abstract boolean performAction ();
+
+  public String getName () {
+    return actionName;
+  }
 
   protected final InputService getInputService () {
     return InputService.getInputService();
   }
 
-  public Action () {
+  public Action (String name) {
+    actionName = name;
+  }
+
+  public static void add (int keyMask, Action action) {
+    actionMap.put(new Integer(keyMask), action);
+  }
+
+  public static Action getAction (int keyMask) {
+    return actionMap.get(new Integer(keyMask));
   }
 }
