@@ -6,22 +6,13 @@ import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
-public final class KeyAction extends Action {
+public class KeyAction extends Action {
   private static final String LOG_TAG = KeyAction.class.getName();
 
   protected final int keyCode;
-  protected final int globalAction;
 
   @Override
-  public final boolean performAction () {
-    if (globalAction != 0) {
-      ScreenMonitor monitor = ScreenMonitor.getScreenMonitor();
-
-      if (monitor != null) {
-        return monitor.performGlobalAction(globalAction);
-      }
-    }
-
+  public boolean performAction () {
     if (keyCode != KeyEvent.KEYCODE_UNKNOWN) {
       InputService inputService = getInputService();
 
@@ -45,18 +36,13 @@ public final class KeyAction extends Action {
     return false;
   }
 
-  public KeyAction (int keyCode, int globalAction) {
-    super(KeyEvent.keyCodeToString(keyCode));
+  protected KeyAction (int keyCode, String name) {
+    super(name);
     this.keyCode = keyCode;
-    this.globalAction = globalAction;
-  }
-
-  public static void add (int keyMask, int keyCode, int globalAction) {
-    add(keyMask, new KeyAction(keyCode, globalAction));
   }
 
   public KeyAction (int keyCode) {
-    this(keyCode, 0);
+    this(keyCode, KeyEvent.keyCodeToString(keyCode));
   }
 
   public static void add (int keyMask, int keyCode) {
