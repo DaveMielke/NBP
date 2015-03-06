@@ -2,38 +2,64 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
-import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
+import android.view.ViewConfiguration;
 
 public class KeyAction extends Action {
   private static final String LOG_TAG = KeyAction.class.getName();
 
   protected final int keyCode;
 
-  @Override
-  public boolean performAction () {
-    if (keyCode != KeyEvent.KEYCODE_UNKNOWN) {
-      InputService inputService = getInputService();
+  protected void logKeyEvent (String action) {
+    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
+      Log.d(LOG_TAG, "sending key " + action + ": " + getName());
+    }
+  }
 
-      if (inputService != null) {
-        InputConnection connection = inputService.getCurrentInputConnection();
+  protected boolean sendKey (int delay) {
+    InputService inputService = getInputService();
 
-        if (connection != null) {
-          KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
+    if (inputService != null) {
+      InputConnection connection = inputService.getCurrentInputConnection();
+
+      if (connection != null) {
+        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
+        logKeyEvent("press");
+
+        if (connection.sendKeyEvent(event)) {
+          if (delay > 0) {
+            try {
+              Thread.sleep(delay);
+            } catch (InterruptedException exception) {
+            }
+          }
+
+          event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
+          logKeyEvent("release");
 
           if (connection.sendKeyEvent(event)) {
-            event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
-
-            if (connection.sendKeyEvent(event)) {
-              return true;
-            }
+            return true;
           }
         }
       }
     }
 
     return false;
+  }
+
+  protected boolean sendKey (boolean longPress) {
+    int delay = longPress? (ViewConfiguration.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
+    return sendKey(delay);
+  }
+
+  protected boolean sendKey () {
+    return sendKey(false);
+  }
+
+  @Override
+  public boolean performAction () {
+    return sendKey();
   }
 
   protected KeyAction (int keyCode, String name) {

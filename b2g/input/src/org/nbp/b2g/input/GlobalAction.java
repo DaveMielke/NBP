@@ -7,6 +7,8 @@ import android.view.KeyEvent;
 public final class GlobalAction extends KeyAction {
   private static final String LOG_TAG = GlobalAction.class.getName();
 
+  protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;
+
   protected final int globalAction;
 
   @Override
@@ -19,7 +21,13 @@ public final class GlobalAction extends KeyAction {
       }
     }
 
-    return super.performAction();
+    if (keyCode != NULL_KEY_CODE) {
+      if (sendKey()) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public GlobalAction (int globalAction, String name, int keyCode) {
@@ -32,7 +40,7 @@ public final class GlobalAction extends KeyAction {
   }
 
   public GlobalAction (int globalAction, String name) {
-    this(globalAction, name, KeyEvent.KEYCODE_UNKNOWN);
+    this(globalAction, name, NULL_KEY_CODE);
   }
 
   public static void add (int keyMask, int globalAction, String name) {
