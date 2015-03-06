@@ -2,8 +2,8 @@
 
 declare -A settingDescriptors=(
    ["developer-settings"]="boolean database development_settings_enabled secure"
-   ["ADB-SERVER"]="boolean property persist.service.adb.enable"
-   ["ADB-ENABLED"]="boolean database adb_enabled secure"
+   ["adb-server"]="boolean property persist.service.adb.enable"
+   ["adb-enabled"]="boolean database adb_enabled secure"
 
    ["accessibility-services"]="boolean database accessibility_enabled secure"
    ["brltty-service"]="boolean accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
@@ -18,7 +18,7 @@ declare -A settingDescriptors=(
    ["foreign-sources"]="boolean database install_non_market_apps secure"
 
    ["locale-language"]="ISO_639 property persist.sys.language"
-   ["locale-country"]="ISO_3166 property persist.sys.country"
+   ["locale-territory"]="ISO_3166 property persist.sys.country"
 )
 
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
@@ -241,6 +241,11 @@ verifyValue_boolean() {
    return 0
 }
 
+verifyValue_milliseconds() {
+   [[ "${settingValue}" =~ ^(0|1[0-9]*)$ ]] || return 1
+   return 0
+}
+
 verifyValue_ISO_639() {
    [ "${#settingValue}" -ne 2 ] || {
       [ "${settingValue,,*}" != "${settingValue}" ] || {
@@ -249,11 +254,6 @@ verifyValue_ISO_639() {
    }
 
    return 1
-}
-
-verifyValue_milliseconds() {
-   [[ "${settingValue}" =~ ^(0|1[0-9]*)$ ]] || return 1
-   return 0
 }
 
 verifyValue_ISO_3166() {
