@@ -342,7 +342,7 @@ They are always displayed and set as ${offValue}/${onValue}.
 
 Options:
    -h  Display this command usage summary, and then exit.
-   -H  Display a list of the supported settings, and then exit.
+   -l  Display a list of the supported settings, and then exit.
 END-OF-HELP
 
    exit 0
@@ -403,12 +403,12 @@ listSupportedSettings() {
    exit 0
 }
 
-while getopts ":hH" option
+while getopts ":hl" option
 do
    case "${option}"
    in
       h) showCommandUsage;;
-      H) listSupportedSettings;;
+      l) listSupportedSettings;;
 
       :) syntaxError "missing option value: -${OPTARG}";;
      \?) syntaxError "unknown option: -${OPTARG}";;
