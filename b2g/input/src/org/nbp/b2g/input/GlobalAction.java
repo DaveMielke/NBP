@@ -11,7 +11,7 @@ public final class GlobalAction extends KeyAction {
 
   @Override
   public final boolean performAction () {
-    ScreenMonitor monitor = ScreenMonitor.getScreenMonitor();
+    ScreenMonitor monitor = getScreenMonitor();
 
     if (monitor != null) {
       if (monitor.performGlobalAction(globalAction)) {

@@ -20,6 +20,10 @@ public abstract class Action {
     return InputService.getInputService();
   }
 
+  protected final ScreenMonitor getScreenMonitor () {
+    return ScreenMonitor.getScreenMonitor();
+  }
+
   public Action (String name) {
     actionName = name;
   }
