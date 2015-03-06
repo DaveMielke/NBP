@@ -243,4 +243,8 @@ public class InputService extends InputMethodService {
 
     return true;
   }
+
+  static {
+    System.loadLibrary("InputService");
+  }
 }
