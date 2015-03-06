@@ -1,20 +1,24 @@
 #!/bin/bash
 
 declare -A settingDescriptors=(
-   ["ADB-ENABLED"]="boolean database adb_enabled secure"
-   ["ADB-SERVER"]="boolean property persist.service.adb.enable"
-   ["accessibility-services"]="boolean database accessibility_enabled secure"
-   ["b2g-input-service"]="boolean input .InputService org.nbp.b2g.input"
-   ["b2g-screen-monitor"]="boolean accessibility .ScreenMonitor org.nbp.b2g.input"
-   ["brltty-service"]="boolean accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
    ["developer-settings"]="boolean database development_settings_enabled secure"
-   ["foreign-sources"]="boolean database install_non_market_apps secure"
-   ["locale-country"]="territory property persist.sys.country"
-   ["locale-language"]="language property persist.sys.language"
-   ["no-device-lock"]="boolean database lockscreen.disabled secure"
-   ["screen-timeout"]="milliseconds database screen_off_timeout system"
+   ["ADB-SERVER"]="boolean property persist.service.adb.enable"
+   ["ADB-ENABLED"]="boolean database adb_enabled secure"
+
+   ["accessibility-services"]="boolean database accessibility_enabled secure"
+   ["brltty-service"]="boolean accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
    ["spiel-service"]="boolean accessibility info.spielproject.spiel.SpielService info.spielproject.spiel"
    ["talkback-service"]="boolean accessibility .TalkBackService com.google.android.marvin.talkback"
+
+   ["b2g-input-service"]="boolean input .InputService org.nbp.b2g.input"
+   ["b2g-screen-monitor"]="boolean accessibility .ScreenMonitor org.nbp.b2g.input"
+
+   ["screen-timeout"]="milliseconds database screen_off_timeout system"
+   ["no-device-lock"]="boolean database lockscreen.disabled secure"
+   ["foreign-sources"]="boolean database install_non_market_apps secure"
+
+   ["locale-language"]="language property persist.sys.language"
+   ["locale-country"]="territory property persist.sys.country"
 )
 
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
