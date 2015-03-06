@@ -320,12 +320,14 @@ showAllSettings() {
 }
 
 showCommandUsage() {
-   local booleanValues="${offValue}/${onValue}"
+   local booleanDelimiter="/"
+   local booleanValue="${offValue}${booleanDelimiter}${onValue}"
+   local booleanOperand="${booleanValue}"
    local booleanIndex=0
 
    while [ "${booleanIndex}" -lt "${#offWords[*]}" ]
    do
-      booleanValues+=", ${offWords[booleanIndex]}/${onWords[booleanIndex]}"
+      booleanOperand+=", ${offWords[booleanIndex]}${booleanDelimiter}${onWords[booleanIndex]}"
       let "booleanIndex+=1"
    done
 
@@ -337,8 +339,8 @@ If invoked with no arguments then display all settings, one per line, as:
 
 If invoked with one argument then just display that setting's current value.
 If invoked with both arguments then change the setting (nothing is displayed).
-Boolean values may be specified as any of: ${booleanValues}.
-They are always displayed and set as ${offValue}/${onValue}.
+Boolean operands may be specified as any of: ${booleanOperand}.
+Boolean values are always displayed and set as ${booleanValue}.
 
 Options:
    -h  Display this command usage summary, and then exit.
