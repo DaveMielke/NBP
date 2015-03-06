@@ -340,17 +340,74 @@ If invoked with both arguments then change the setting (nothing is displayed).
 A boolean value may be: ${booleanValues}
 
 Options:
-   -h  (help)  Display this command usage summary, and then exit.
+   -h  Display this command usage summary, and then exit.
+   -H  Display a list of the supported settings, and then exit.
 END-OF-HELP
 
    exit 0
 }
 
-while getopts ":h" option
+padSettingLines() {
+   local width=0
+   local index
+
+   index=0
+   while [ "${index}" -lt "${settingCount}" ]
+   do
+      local length="${#settingLines[index]}"
+      [ "${length}" -le "${width}" ] || width="${length}"
+      let "index+=1"
+   done
+
+   index=0
+   while [ "${index}" -lt "${settingCount}" ]
+   do
+      while [ "${#settingLines[index]}" -lt "${width}" ]
+      do
+         settingLines[index]+=" "
+      done
+
+      let "index+=1"
+   done
+}
+
+showSettings() {
+   settingLines=( "Name" )
+   local settingTypes=( "Type" )
+   local index line
+   getSettingNames
+
+   for settingName in ${settingNames}
+   do
+      getSettingAttributes
+      settingLines+=( "${settingName}" )
+      settingTypes+=( "${settingType}" )
+   done
+
+   settingCount="${#settingLines[*]}"
+   padSettingLines
+   index=0
+
+   while [ "${index}" -lt "${settingCount}" ]
+   do
+      settingLines[index]+="  ${settingTypes[index]}"
+      let "index+=1"
+   done
+
+   for line in "${settingLines[@]}"
+   do
+      echo "${line}"
+   done
+
+   exit 0
+}
+
+while getopts ":hH" option
 do
    case "${option}"
    in
       h) showUsage;;
+      H) showSettings;;
 
       :) syntaxError "missing option value: -${OPTARG}";;
      \?) syntaxError "unknown option: -${OPTARG}";;
