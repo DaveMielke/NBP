@@ -17,8 +17,8 @@ declare -A settingDescriptors=(
    ["no-device-lock"]="boolean database lockscreen.disabled secure"
    ["foreign-sources"]="boolean database install_non_market_apps secure"
 
-   ["locale-language"]="language property persist.sys.language"
-   ["locale-country"]="territory property persist.sys.country"
+   ["locale-language"]="ISO_639 property persist.sys.language"
+   ["locale-country"]="ISO_3166 property persist.sys.country"
 )
 
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
@@ -241,7 +241,7 @@ verifyValue_boolean() {
    return 0
 }
 
-verifyValue_language() {
+verifyValue_ISO_639() {
    [ "${#settingValue}" -ne 2 ] || {
       [ "${settingValue,,*}" != "${settingValue}" ] || {
          return 0
@@ -256,7 +256,7 @@ verifyValue_milliseconds() {
    return 0
 }
 
-verifyValue_territory() {
+verifyValue_ISO_3166() {
    [ "${#settingValue}" -ne 2 ] || {
       [ "${settingValue^^*}" != "${settingValue}" ] || {
          return 0
@@ -300,7 +300,7 @@ showAllSettings() {
    for settingName in ${settingNames}
    do
       getSettingAttributes
-      echo "${settingName}: $(showSetting)"
+      echo "${settingName}: $(showSetting) (${settingType})"
    done
 }
 
