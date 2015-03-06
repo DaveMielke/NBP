@@ -26,32 +26,47 @@ public class InputService extends InputMethodService {
     return inputService;
   }
 
-  private void addActions () {
+  private void addSystemKeyChords () {
+    final int home = KeyMask.SPACE | KeyMask.DOTS_123456;
+    final int back = KeyMask.SPACE | KeyMask.DOTS_12;
+
     if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
-      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_123456));
-      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_12));
+      NullAction.add(home);
+      NullAction.add(back);
     } else {
-      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_123456), KeyEvent.KEYCODE_HOME);
-      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_12), KeyEvent.KEYCODE_BACK, AccessibilityService.GLOBAL_ACTION_BACK);
+      KeyAction.add(home, KeyEvent.KEYCODE_HOME);
+      KeyAction.add(back, KeyEvent.KEYCODE_BACK, AccessibilityService.GLOBAL_ACTION_BACK);
     }
+  }
+
+  private void addArrowKeyChords () {
+    final int up    = KeyMask.SPACE | KeyMask.DOTS_1;
+    final int down  = KeyMask.SPACE | KeyMask.DOTS_4;
+    final int left  = KeyMask.SPACE | KeyMask.DOTS_3;
+    final int right = KeyMask.SPACE | KeyMask.DOTS_6;
+
+    if (ApplicationParameters.CHORDS_SEND_ARROW_KEYS) {
+      NullAction.add(up);
+      NullAction.add(down);
+      NullAction.add(left);
+      NullAction.add(right);
+    } else {
+      KeyAction.add(up   , KeyEvent.KEYCODE_DPAD_UP);
+      KeyAction.add(down , KeyEvent.KEYCODE_DPAD_DOWN);
+      KeyAction.add(left , KeyEvent.KEYCODE_DPAD_LEFT);
+      KeyAction.add(right, KeyEvent.KEYCODE_DPAD_RIGHT);
+    }
+  }
+
+  private void addActions () {
+    addSystemKeyChords();
+    addArrowKeyChords();
 
     KeyAction.add(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
     KeyAction.add(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
     KeyAction.add(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
     KeyAction.add(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
     KeyAction.add(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
-
-    if (ApplicationParameters.CHORDS_SEND_ARROW_KEYS) {
-      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_1));
-      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_4));
-      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_3));
-      NullAction.add((KeyMask.SPACE | KeyMask.DOTS_6));
-    } else {
-      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_1), KeyEvent.KEYCODE_DPAD_UP);
-      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_4), KeyEvent.KEYCODE_DPAD_DOWN);
-      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_3), KeyEvent.KEYCODE_DPAD_LEFT);
-      KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_6), KeyEvent.KEYCODE_DPAD_RIGHT);
-    }
 
     KeyAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
     KeyAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
