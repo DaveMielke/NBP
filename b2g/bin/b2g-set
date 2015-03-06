@@ -26,8 +26,8 @@ databasePath="/data/data/com.android.providers.settings/databases/settings.db"
 offValue=0
 onValue=1
 
-offWords="off of no n false fal fa f"
-onWords="on yes ye y true tru tr t"
+offWords=(off no false)
+onWords=(on yes true)
 
 programName="${0##*/}"
 programMessage() {
@@ -233,7 +233,7 @@ verifyValue_boolean() {
    [ "${settingValue}" != "${offValue}" -a "${settingValue}" != "${onValue}" ] || return 0
    local word
 
-   for word in ${offWords}
+   for word in "${offWords[@]}"
    do
       [ "${settingValue}" != "${word}" ] || {
          settingValue="${offValue}"
@@ -241,7 +241,7 @@ verifyValue_boolean() {
       }
    done
 
-   for word in ${onWords}
+   for word in "${onWords[@]}"
    do
       [ "${settingValue}" != "${word}" ] || {
          settingValue="${onValue}"
@@ -277,6 +277,12 @@ verifyValue_ISO_3166() {
    return 1
 }
 
+getSettingNames() {
+   settingNames=${!settingDescriptors[*]}
+   settingNames="${settingNames// /$'\n'}"
+   settingNames="$(echo "${settingNames}" | sort)"
+}
+
 getSettingAttributes() {
    local descriptor="${settingDescriptors["${settingName}"]}"
    [ -n "${descriptor}" ] || syntaxError "unknown setting name: ${settingName}";
@@ -304,9 +310,7 @@ showSetting() {
 }
 
 showAllSettings() {
-   local settingNames=${!settingDescriptors[*]}
-   settingNames="${settingNames// /$'\n'}"
-   settingNames="$(echo "${settingNames}" | sort)"
+   getSettingNames
 
    for settingName in ${settingNames}
    do
@@ -315,13 +319,39 @@ showAllSettings() {
    done
 }
 
-useEmulator=false
-deviceSerialNumber=""
+showUsage() {
+   local booleanValues="${offValue}/${onValue}"
+   local booleanIndex=0
 
-while getopts ":d:e" option
+   while [ "${booleanIndex}" -lt "${#offWords[*]}" ]
+   do
+      booleanValues+=", ${offWords[booleanIndex]}/${onWords[booleanIndex]}"
+      let "booleanIndex+=1"
+   done
+
+   cat <<END-OF-HELP
+Usage: ${programName} [-option ...] [setting [value]]
+If invoked with no arguments then display all settings, one per line, as:
+
+   name: value (type)
+
+If invoked with one argument then just display that setting's current value.
+If invoked with both arguments then change the setting (nothing is displayed).
+A boolean value may be: ${booleanValues}
+
+Options:
+   -h  (help)  Display this command usage summary, and then exit.
+END-OF-HELP
+
+   exit 0
+}
+
+while getopts ":h" option
 do
    case "${option}"
    in
+      h) showUsage;;
+
       :) syntaxError "missing option value: -${OPTARG}";;
      \?) syntaxError "unknown option: -${OPTARG}";;
       *) internalError "unimplemented option: -${option}";;
