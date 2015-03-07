@@ -2,17 +2,25 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
-import android.view.KeyEvent;
-
-public class PowerDialogAction extends KeyAction {
+public class PowerDialogAction extends Action {
   private static final String LOG_TAG = PowerDialogAction.class.getName();
+
+  private final UInputDevice uinputDevice = new UInputDevice();
 
   @Override
   public boolean performAction () {
-    return sendKey(1000);
+    if (uinputDevice.press()) {
+      delay(1100);
+
+      if (uinputDevice.release()) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public PowerDialogAction () {
-    super(KeyEvent.KEYCODE_POWER, "power-dialog");
+    super("power-dialog");
   }
 }

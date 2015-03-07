@@ -17,7 +17,7 @@ public class KeyAction extends Action {
     }
   }
 
-  protected boolean sendKey (int delay) {
+  protected boolean sendKey (int interval) {
     InputService inputService = getInputService();
 
     if (inputService != null) {
@@ -28,13 +28,7 @@ public class KeyAction extends Action {
         logKeyEvent("press");
 
         if (connection.sendKeyEvent(event)) {
-          if (delay > 0) {
-            try {
-              Thread.sleep(delay);
-            } catch (InterruptedException exception) {
-            }
-          }
-
+          if (interval > 0) delay(interval);
           event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
           logKeyEvent("release");
 
@@ -49,8 +43,8 @@ public class KeyAction extends Action {
   }
 
   protected boolean sendKey (boolean longPress) {
-    int delay = longPress? (ViewConfiguration.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
-    return sendKey(delay);
+    int interval = longPress? (ViewConfiguration.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
+    return sendKey(interval);
   }
 
   protected boolean sendKey () {
