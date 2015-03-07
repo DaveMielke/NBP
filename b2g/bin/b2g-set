@@ -19,8 +19,11 @@ declare -A settingDescriptors=(
 
    ["locale-language"]="ISO_639 property persist.sys.language"
    ["locale-territory"]="ISO_3166 property persist.sys.country"
+
+   ["key-event-injection"]="boolean permissions /dev/uinput"
 )
 
+testPath="/sys/devices/platform/cp430_keypad"
 databasePath="/data/data/com.android.providers.settings/databases/settings.db"
 
 offValue=0
@@ -81,7 +84,8 @@ makeSettingComponent() {
 }
 
 executeShellCommand() {
-   local output="$(adb shell "${@}")"
+   [ -e "${testPath}" ] || set -- adb shell "${@}"
+   local output="$("${@}")"
    output="${output//$'\r'}"
    [ -z "${output}" ] || echo "${output}"
 }
@@ -219,6 +223,38 @@ setPropertyValue() {
    local value="${2}"
 
    executeShellCommand setprop "${property}" "${value}"
+}
+
+getPermissionsValue() {
+   local path="${1}"
+
+   executeShellCommand stat -c %a "${path}"
+}
+
+setPermissionsValue() {
+   local path="${1}"
+   local permissions="${2}"
+
+   executeShellCommand chmod "${permissions}" "${path}"
+}
+
+showSetting_permissions() {
+   local permissions="$(getPermissionsValue "${settingObject}")"
+
+   if [ "${permissions:1:1}" = "${permissions:2:1}" ]
+   then
+      echo "${onValue}"
+   else
+      echo "${offValue}"
+   fi
+}
+
+changeSetting_permissions() {
+   local permissions="$(getPermissionsValue "${settingObject}")"
+   local values="0${permissions:1:1}"
+
+   permissions="${permissions:0:2}${values:settingValue:1}"
+   setPermissionsValue "${settingObject}" "${permissions}"
 }
 
 showSetting_property() {
