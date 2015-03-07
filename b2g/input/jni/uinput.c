@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -16,13 +17,9 @@
 
 #include <android/log.h>
 
-static const char LOG_TAG[] = "B2G_JNI_UINPUT";
+#include "utils.h"
 
-static void
-logSystemError (const char *action) {
-  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                      "system error %d: %s: %s", errno, action, strerror(errno));
-}
+MAKE_FILE_LOG_TAG;
 
 static int
 enableUInputEventType (int device, int type) {
@@ -71,36 +68,39 @@ Java_org_nbp_b2g_input_UInputDevice_openDevice (
   JNIEnv *env, jobject this
 ) {
   const char *path = "/dev/uinput";
-  int device = open(path, O_WRONLY);
 
-  if (device != -1) {
-    struct uinput_user_dev description;
+  if (makeWritable(path)) {
+    int device = open(path, O_WRONLY);
 
-    memset(&description, 0, sizeof(description));
-    snprintf(description.name, sizeof(description.name), "B2G Input Service");
+    if (device != -1) {
+      struct uinput_user_dev description;
 
-    {
-      char topology[0X40];
+      memset(&description, 0, sizeof(description));
+      snprintf(description.name, sizeof(description.name), "B2G Input Service");
 
-      snprintf(topology, sizeof(topology), "%s", "org.nbp.b2g.input");
+      {
+        char topology[0X40];
 
-      if (ioctl(device, UI_SET_PHYS, topology) == -1) {
-        logSystemError("ioctl[UI_SET_PHYS]");
+        snprintf(topology, sizeof(topology), "%s", "org.nbp.b2g.input");
+
+        if (ioctl(device, UI_SET_PHYS, topology) == -1) {
+          logSystemError("ioctl[UI_SET_PHYS]");
+        }
       }
-    }
 
-    if (write(device, &description, sizeof(description)) != -1) {
-      return device;
+      if (write(device, &description, sizeof(description)) != -1) {
+        return device;
+      } else {
+        logSystemError("write[uinput_user_dev]");
+      }
+
+      close(device);
     } else {
-      logSystemError("write[uinput_user_dev]");
+      logSystemError("open[uinput]");
     }
-
-    close(device);
-  } else{
-    logSystemError("open[uinput]");
   }
 
-  return device;
+  return -1;
 }
 
 JNIEXPORT jboolean JNICALL
