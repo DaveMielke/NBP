@@ -17,7 +17,7 @@ public class KeyAction extends Action {
     }
   }
 
-  protected boolean sendKey (int interval) {
+  protected boolean sendKey (long interval) {
     InputService inputService = getInputService();
 
     if (inputService != null) {
@@ -43,7 +43,7 @@ public class KeyAction extends Action {
   }
 
   protected boolean sendKey (boolean longPress) {
-    int interval = longPress? (ViewConfiguration.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
+    long interval = longPress? (ViewConfiguration.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
     return sendKey(interval);
   }
 
