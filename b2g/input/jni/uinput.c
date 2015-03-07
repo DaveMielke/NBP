@@ -1,25 +1,40 @@
 #include <jni.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 
 #include <linux/input.h>
+
+#ifndef ABS_CNT
 #define ABS_CNT			(ABS_MAX+1)
+#endif /* ABS_CNT */
+
 #include "linux/uinput.h"
 
 #include <android/log.h>
 
+static const char LOG_TAG[] = "B2G_JNI_UINPUT";
+
+static void
+logSystemError (const char *action) {
+  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
+                      "system error %d: %s: %s", errno, action, strerror(errno));
+}
+
 static int
 enableUInputEventType (int device, int type) {
   if (ioctl(device, UI_SET_EVBIT, type) != -1) return 1;
+  logSystemError("ioctl[UI_SET_EVBIT]");
   return 0;
 }
 
 static int
 enableUInputKey (int device, int key) {
   if (ioctl(device, UI_SET_KEYBIT, key) != -1) return 1;
+  logSystemError("ioctl[UI_SET_KEYBIT]");
   return 0;
 }
 
@@ -35,6 +50,7 @@ writeInputEvent (int device, int type, int code, int value) {
   event.value = value;
 
   if (write(device, &event, sizeof(event)) != -1) return 1;
+  logSystemError("write[input_event]");
   return 0;
 }
 
@@ -67,25 +83,34 @@ Java_org_nbp_b2g_input_UInputDevice_openDevice (
       char topology[0X40];
 
       snprintf(topology, sizeof(topology), "%s", "org.nbp.b2g.input");
-      ioctl(device, UI_SET_PHYS, topology);
+
+      if (ioctl(device, UI_SET_PHYS, topology) == -1) {
+        logSystemError("ioctl[UI_SET_PHYS]");
+      }
     }
 
     if (write(device, &description, sizeof(description)) != -1) {
-      enableUInputEventType(device, EV_KEY);
-      enableUInputKey(device, KEY_POWER);
-
-      if (ioctl(device, UI_DEV_CREATE) != -1) {
-        return device;
-      } else {
-      }
+      return device;
     } else {
+      logSystemError("write[uinput_user_dev]");
     }
 
     close(device);
   } else{
+    logSystemError("open[uinput]");
   }
 
   return device;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_org_nbp_b2g_input_UInputDevice_createDevice (
+  JNIEnv *env, jobject this,
+  jint device
+) {
+  if (ioctl(device, UI_DEV_CREATE) != -1) return JNI_TRUE;
+  logSystemError("ioctl[UI_DEV_CREATE]");
+  return JNI_FALSE;
 }
 
 JNIEXPORT void JNICALL
@@ -93,21 +118,45 @@ Java_org_nbp_b2g_input_UInputDevice_closeDevice (
   JNIEnv *env, jobject this,
   jint device
 ) {
-  close(device);
+  if (close(device) == -1) logSystemError("close[uinput]");
+}
+
+JNIEXPORT jboolean JNICALL
+Java_org_nbp_b2g_input_UInputDevice_enableKeyEvents (
+  JNIEnv *env, jobject this,
+  jint device
+) {
+  return enableUInputEventType(device, EV_KEY)? JNI_TRUE: JNI_FALSE;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_org_nbp_b2g_input_UInputDevice_enableKey (
+  JNIEnv *env, jobject this,
+  jint device, jint key
+) {
+  return enableUInputKey(device, key)? JNI_TRUE: JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_UInputDevice_pressKey (
   JNIEnv *env, jobject this,
-  jint device
+  jint device, jint key
 ) {
-  return writeKeyEvent(device, KEY_POWER, 1)? JNI_TRUE: JNI_FALSE;
+  return writeKeyEvent(device, key, 1)? JNI_TRUE: JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_UInputDevice_releaseKey (
   JNIEnv *env, jobject this,
+  jint device, jint key
+) {
+  return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;
+}
+
+JNIEXPORT jint JNICALL
+Java_org_nbp_b2g_input_PowerKey_getKey (
+  JNIEnv *env, jobject this,
   jint device
 ) {
-  return writeKeyEvent(device, KEY_POWER, 0)? JNI_TRUE: JNI_FALSE;
+  return KEY_POWER;
 }

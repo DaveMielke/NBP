@@ -1,7 +1,7 @@
 package org.nbp.b2g.input;
 
 public abstract class ApplicationParameters {
-  public static volatile int LONG_PRESS_DELAY = 100;
+  public static volatile long LONG_PRESS_DELAY = 100;
 
   public static volatile String CLOCK_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
   public static volatile long CLOCK_UPDATE_INTERVAL = 1000;

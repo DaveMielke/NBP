@@ -24,7 +24,7 @@ public abstract class Action {
     return ScreenMonitor.getScreenMonitor();
   }
 
-  protected boolean delay (int interval) {
+  protected boolean delay (long interval) {
     try {
       Thread.sleep(interval);
     } catch (InterruptedException exception) {

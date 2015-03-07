@@ -1,28 +1,49 @@
 package org.nbp.b2g.input;
 
-class UInputDevice {
+public abstract class UInputDevice {
+  protected abstract boolean prepareDevice (int device);
+
   private final static int NOT_OPEN = -1;
-  private int device = NOT_OPEN;
+  private int uinputDevice = NOT_OPEN;
 
   private native int openDevice ();
+  private native boolean createDevice (int device);
   private native void closeDevice (int device);
 
-  private native boolean pressKey (int device);
-  private native boolean releaseKey (int device);
+  protected native boolean enableKeyEvents (int device);
+  protected native boolean enableKey (int device, int key);
+  private native boolean pressKey (int device, int key);
+  private native boolean releaseKey (int device, int key);
 
   protected boolean open () {
-    if (device == NOT_OPEN) {
-      if ((device = openDevice()) == NOT_OPEN) {
-        return false;
+    if (uinputDevice != NOT_OPEN) return true;
+
+    int device;
+    if ((device = openDevice()) != NOT_OPEN) {
+      if (prepareDevice(device)) {
+        if (createDevice(device)) {
+          uinputDevice = device;
+          return true;
+        }
       }
+
+      closeDevice(device);
     }
 
-    return true;
+    return false;
   }
 
-  public boolean press () {
+  public void close () {
+    if (uinputDevice != NOT_OPEN) {
+      int device = uinputDevice;
+      uinputDevice = NOT_OPEN;
+      closeDevice(device);
+    }
+  }
+
+  public boolean pressKey (int key) {
     if (open()) {
-      if (pressKey(device)) {
+      if (pressKey(uinputDevice, key)) {
         return true;
       }
     }
@@ -30,9 +51,9 @@ class UInputDevice {
     return false;
   }
 
-  public boolean release () {
+  public boolean releaseKey (int key) {
     if (open()) {
-      if (releaseKey(device)) {
+      if (releaseKey(uinputDevice, key)) {
         return true;
       }
     }

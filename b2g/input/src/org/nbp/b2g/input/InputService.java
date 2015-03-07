@@ -78,7 +78,7 @@ public class InputService extends InputMethodService {
     KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
     KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS, "NOTIFICATIONS", KeyEvent.KEYCODE_NOTIFICATION);
-    GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1478), new PowerDialogAction());
+    GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1478), new PowerAction());
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
     ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
     Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), controlModifier);
