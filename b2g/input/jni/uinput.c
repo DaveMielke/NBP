@@ -24,14 +24,14 @@ MAKE_FILE_LOG_TAG;
 static int
 enableUInputEventType (int device, int type) {
   if (ioctl(device, UI_SET_EVBIT, type) != -1) return 1;
-  logSystemError("ioctl[UI_SET_EVBIT]");
+  logSystemError(LOG_TAG, "ioctl[UI_SET_EVBIT]");
   return 0;
 }
 
 static int
 enableUInputKey (int device, int key) {
   if (ioctl(device, UI_SET_KEYBIT, key) != -1) return 1;
-  logSystemError("ioctl[UI_SET_KEYBIT]");
+  logSystemError(LOG_TAG, "ioctl[UI_SET_KEYBIT]");
   return 0;
 }
 
@@ -47,7 +47,7 @@ writeInputEvent (int device, int type, int code, int value) {
   event.value = value;
 
   if (write(device, &event, sizeof(event)) != -1) return 1;
-  logSystemError("write[input_event]");
+  logSystemError(LOG_TAG, "write[input_event]");
   return 0;
 }
 
@@ -84,19 +84,19 @@ Java_org_nbp_b2g_input_UInputDevice_openDevice (
         snprintf(topology, sizeof(topology), "%s", "org.nbp.b2g.input");
 
         if (ioctl(device, UI_SET_PHYS, topology) == -1) {
-          logSystemError("ioctl[UI_SET_PHYS]");
+          logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
         }
       }
 
       if (write(device, &description, sizeof(description)) != -1) {
         return device;
       } else {
-        logSystemError("write[uinput_user_dev]");
+        logSystemError(LOG_TAG, "write[uinput_user_dev]");
       }
 
       close(device);
     } else {
-      logSystemError("open[uinput]");
+      logSystemError(LOG_TAG, "open[uinput]");
     }
   }
 
@@ -109,7 +109,7 @@ Java_org_nbp_b2g_input_UInputDevice_createDevice (
   jint device
 ) {
   if (ioctl(device, UI_DEV_CREATE) != -1) return JNI_TRUE;
-  logSystemError("ioctl[UI_DEV_CREATE]");
+  logSystemError(LOG_TAG, "ioctl[UI_DEV_CREATE]");
   return JNI_FALSE;
 }
 
@@ -118,7 +118,7 @@ Java_org_nbp_b2g_input_UInputDevice_closeDevice (
   JNIEnv *env, jobject this,
   jint device
 ) {
-  if (close(device) == -1) logSystemError("close[uinput]");
+  if (close(device) == -1) logSystemError(LOG_TAG, "close[uinput]");
 }
 
 JNIEXPORT jboolean JNICALL

@@ -12,8 +12,8 @@
 MAKE_FILE_LOG_TAG;
 
 void
-logSystemError (const char *action) {
-  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
+logSystemError (const char *tag, const char *action) {
+  __android_log_print(ANDROID_LOG_ERROR, tag,
                       "system error %d: %s: %s", errno, action, strerror(errno));
 }
 
@@ -47,7 +47,7 @@ executeHostCommand (const char *command) {
                           "host command failed: %d: %s", status, command);
     }
   } else {
-    logSystemError("popen");
+    logSystemError(LOG_TAG, "popen");
   }
 
   return status;
@@ -56,7 +56,7 @@ executeHostCommand (const char *command) {
 int
 isWritable (const char *path) {
   if (access(path,  W_OK) != -1) return 1;
-  logSystemError("access[writable]");
+  logSystemError(LOG_TAG, "access[writable]");
   return 0;
 }
 
