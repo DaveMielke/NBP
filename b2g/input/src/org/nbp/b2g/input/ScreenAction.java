@@ -7,24 +7,18 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public abstract class ScreenAction extends Action {
   private static final String LOG_TAG = ScreenAction.class.getName();
 
-  protected void logNode (AccessibilityNodeInfo node, String reason) {
-    CharSequence text;
-
-    if ((text = node.getText()) == null) {
-      if ((text = node.getContentDescription()) == null) {
-        text = node.getClassName();
-      }
-    }
-
-    Log.v(LOG_TAG, reason + ": " + text.toString());
-  }
-
   protected CharSequence getNodeText (AccessibilityNodeInfo node) {
     CharSequence text;
 
     if ((text = node.getText()) != null) return text;
     if ((text = node.getContentDescription()) != null) return text;
     return null;
+  }
+
+  protected void logNode (AccessibilityNodeInfo node, String reason) {
+    CharSequence text = getNodeText(node);
+    if (text == null) text = node.getClassName();
+    Log.v(LOG_TAG, reason + ": " + text.toString());
   }
 
   protected AccessibilityNodeInfo getRootNode () {
