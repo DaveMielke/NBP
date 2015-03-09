@@ -82,6 +82,9 @@ public class InputService extends InputMethodService {
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
     ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
     Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), controlModifier);
+
+    Action.add((KeyMask.FORWARD), new ForwardAction());
+    Action.add((KeyMask.BACKWARD), new BackwardAction());
   }
 
   @Override
