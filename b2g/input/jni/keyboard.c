@@ -1,3 +1,5 @@
+#include <jni.h>
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -15,7 +17,8 @@
 MAKE_FILE_LOG_TAG;
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
-static int keyboardDevice = -1;
+#define NO_DEVICE -1
+static int keyboardDevice = NO_DEVICE;
 
 static char *
 findEventDevice (const char *deviceName) {
@@ -59,7 +62,7 @@ openEventDevice (const char *deviceName) {
   if (devicePath) {
     int deviceDescriptor = open(devicePath, O_RDONLY);
 
-    if (deviceDescriptor != -1) {
+    if (deviceDescriptor != NO_DEVICE) {
       if (ioctl(deviceDescriptor, EVIOCGRAB, 1) != -1) {
         __android_log_print(ANDROID_LOG_INFO, LOG_TAG,
                             "Event Device Opened: %s: %s: fd=%d",
@@ -84,23 +87,29 @@ openEventDevice (const char *deviceName) {
   return 0;
 }
 
-int
-openKeyboardDevice (void) {
+JNIEXPORT jboolean JNICALL
+Java_org_nbp_b2g_input_Keyboard_open (
+  JNIEnv *env, jobject this
+) {
   static const char deviceName[] = KEYBOARD_DEVICE_NAME;
-  int deviceDescriptor = openEventDevice(deviceName);
+  int deviceDescriptor;
 
-  if (deviceDescriptor != -1) {
+  if (keyboardDevice != NO_DEVICE) return JNI_TRUE;
+
+  if ((deviceDescriptor = openEventDevice(deviceName)) != NO_DEVICE) {
     keyboardDevice = deviceDescriptor;
-    return 1;
+    return JNI_TRUE;
   }
 
-  return 0;
+  return JNI_FALSE;
 }
 
-void
-closeKeyboardDevice (void) {
-  if (keyboardDevice != -1) {
+JNIEXPORT void JNICALL
+Java_org_nbp_b2g_input_Keyboard_close (
+  JNIEnv *env, jobject this
+) {
+  if (keyboardDevice != NO_DEVICE) {
     close(keyboardDevice);
-    keyboardDevice = -1;
+    keyboardDevice = NO_DEVICE;
   }
 }
