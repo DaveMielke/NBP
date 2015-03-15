@@ -15,11 +15,10 @@
 MAKE_FILE_LOG_TAG;
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
-
 static int keyboardDevice = -1;
 
 static char *
-findKeyboardDevice (const char *deviceName) {
+findEventDevice (const char *deviceName) {
   char *devicePath = NULL;
   char directoryPath[0X80];
   DIR *directory;
@@ -46,17 +45,16 @@ findKeyboardDevice (const char *deviceName) {
     closedir(directory);
   } else {
     __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                        "keyboard directory open error: %s: %s",
+                        "event device input directory open error: %s: %s",
                         directoryPath, strerror(errno));
   }
 
   return devicePath;
 }
 
-int
-openKeyboardDevice (void) {
-  static const char deviceName[] = KEYBOARD_DEVICE_NAME;
-  char *devicePath = findKeyboardDevice(deviceName);
+static int
+openEventDevice (const char *deviceName) {
+  char *devicePath = findEventDevice(deviceName);
 
   if (devicePath) {
     int deviceDescriptor = open(devicePath, O_RDONLY);
@@ -64,11 +62,10 @@ openKeyboardDevice (void) {
     if (deviceDescriptor != -1) {
       if (ioctl(deviceDescriptor, EVIOCGRAB, 1) != -1) {
         __android_log_print(ANDROID_LOG_INFO, LOG_TAG,
-                            "Keyboard Device Opened: %s: %s: fd=%d",
+                            "Event Device Opened: %s: %s: fd=%d",
                             deviceName, devicePath, deviceDescriptor);
 
         free(devicePath);
-        keyboardDevice = deviceDescriptor;
         return 1;
       } else {
         logSystemError(LOG_TAG, "ioctl[EVIOCGRAB]");
@@ -77,11 +74,24 @@ openKeyboardDevice (void) {
       close(deviceDescriptor);
     } else {
       __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                          "keyboard device open error: %s: %s",
+                          "event device open error: %s: %s",
                           devicePath, strerror(errno));
     }
 
     free(devicePath);
+  }
+
+  return 0;
+}
+
+int
+openKeyboardDevice (void) {
+  static const char deviceName[] = KEYBOARD_DEVICE_NAME;
+  int deviceDescriptor = openEventDevice(deviceName);
+
+  if (deviceDescriptor != -1) {
+    keyboardDevice = deviceDescriptor;
+    return 1;
   }
 
   return 0;
