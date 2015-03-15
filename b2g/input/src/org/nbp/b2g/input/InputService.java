@@ -102,30 +102,30 @@ public class InputService extends InputMethodService {
     }
   }
 
-  public static boolean isSystemKey (int code) {
+  public static boolean ignoreKey (int code) {
     switch (code) {
       case KeyEvent.KEYCODE_HOME:
       case KeyEvent.KEYCODE_BACK:
         return true;
 
       default:
-        return false;
+        return ApplicationParameters.INTERCEPT_KEY_EVENTS;
     }
   }
 
   @Override
   public boolean onKeyDown (int code, KeyEvent event) {
     logKeyEvent(code, true);
-    if (isSystemKey(code)) return false;
-    Actions.handleKeyDown(code);
+    if (ignoreKey(code)) return false;
+    Actions.handleKeyDown(KeyCode.toKeyMask(code));
     return true;
   }
 
   @Override
   public boolean onKeyUp (int code, KeyEvent event) {
     logKeyEvent(code, false);
-    if (isSystemKey(code)) return false;
-    Actions.handleKeyUp(code);
+    if (ignoreKey(code)) return false;
+    Actions.handleKeyUp(KeyCode.toKeyMask(code));
     return true;
   }
 

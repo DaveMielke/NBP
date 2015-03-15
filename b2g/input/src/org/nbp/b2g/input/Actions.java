@@ -85,21 +85,17 @@ public class Actions {
     return false;
   }
 
-  public static void handleKeyDown (int code) {
-    int bit = KeyCode.toKeyMask(code);
-
-    if (bit != 0) {
-      if ((pressedKeyMask & bit) == 0) {
-        pressedKeyMask |= bit;
+  public static void handleKeyDown (int keyMask) {
+    if (keyMask != 0) {
+      if ((pressedKeyMask & keyMask) == 0) {
+        pressedKeyMask |= keyMask;
         activeKeyMask = pressedKeyMask;
       }
     }
   }
 
-  public static void handleKeyUp (int code) {
-    int bit = KeyCode.toKeyMask(code);
-
-    if (bit != 0) {
+  public static void handleKeyUp (int keyMask) {
+    if (keyMask != 0) {
       if (activeKeyMask > 0) {
         Action action = Action.getAction(activeKeyMask);
         boolean control = controlModifier.getState();
@@ -119,7 +115,7 @@ public class Actions {
         activeKeyMask = 0;
       }
 
-      pressedKeyMask &= ~bit;
+      pressedKeyMask &= ~keyMask;
     }
   }
 

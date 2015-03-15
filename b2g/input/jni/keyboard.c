@@ -88,7 +88,7 @@ openEventDevice (const char *deviceName) {
 }
 
 JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_Keyboard_open (
+Java_org_nbp_b2g_input_Keyboard_openKeyboard (
   JNIEnv *env, jobject this
 ) {
   static const char deviceName[] = KEYBOARD_DEVICE_NAME;
@@ -105,11 +105,45 @@ Java_org_nbp_b2g_input_Keyboard_open (
 }
 
 JNIEXPORT void JNICALL
-Java_org_nbp_b2g_input_Keyboard_close (
+Java_org_nbp_b2g_input_Keyboard_closeKeyboard (
   JNIEnv *env, jobject this
 ) {
   if (keyboardDevice != NO_DEVICE) {
     close(keyboardDevice);
     keyboardDevice = NO_DEVICE;
+  }
+}
+
+JNIEXPORT void JNICALL
+Java_org_nbp_b2g_input_Keyboard_monitorKeyboard (
+  JNIEnv *env, jobject this
+) {
+  const char *methodName = "onKeyEvent";
+  const char *methodSignature = "(IZ)V";
+  jmethodID method = (*env)->GetMethodID(env, this, methodName, methodSignature);
+
+  if (method) {
+    struct input_event event;
+    size_t size = sizeof(event);
+    ssize_t result;
+
+    while ((result = read(keyboardDevice, &event, size)) == size) {
+      if (event.type == EV_KEY) {
+        jboolean press;
+
+        if (event.value == 0) {
+          press = JNI_FALSE;
+        } else if (event.value == 1) {
+          press = JNI_TRUE;
+        } else {
+          continue;
+        }
+
+        (*env)->CallVoidMethod(env, this, method, event.code, press);
+      }
+    }
+  } else {
+    __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
+                        "method not found: %s %s", methodName, methodSignature);
   }
 }
