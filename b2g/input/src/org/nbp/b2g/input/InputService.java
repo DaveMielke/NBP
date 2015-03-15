@@ -13,11 +13,6 @@ public class InputService extends InputMethodService {
 
   private static volatile InputService inputService = null;
 
-  private int pressedKeyMask = 0;
-  private int activeKeyMask = 0;
-
-  private final CharacterMap characterMap = new CharacterMap();
-
   public static InputService getInputService () {
     return inputService;
   }
@@ -47,13 +42,7 @@ public class InputService extends InputMethodService {
   public void onUnbindInput () {
     Log.d(LOG_TAG, "input service unbound");
     inputService = null;
-
-    if (ApplicationParameters.LOG_KEY_EVENTS) {
-      Log.d(LOG_TAG, "resetting key state");
-    }
-
-    pressedKeyMask = 0;
-    activeKeyMask = 0;
+    Actions.resetKeys();
   }
 
   @Override
@@ -78,7 +67,7 @@ public class InputService extends InputMethodService {
     return null;
   }
 
-  private boolean insertCharacter (char character) {
+  public boolean insertCharacter (char character) {
     InputConnection connection = getInputConnection();
 
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
@@ -95,17 +84,7 @@ public class InputService extends InputMethodService {
     return false;
   }
 
-  private boolean performAction (Action action) {
-    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-      Log.d(LOG_TAG, "performing action: " + action.getName());
-    }
-
-    if (action.performAction()) return true;
-    Log.w(LOG_TAG, "action failed: " + action.getName());
-    return false;
-  }
-
-  protected void logReceivedKeyEvent (int code, boolean press) {
+  private static void logKeyEvent (int code, boolean press) {
     if (ApplicationParameters.LOG_KEY_EVENTS) {
       StringBuilder sb = new StringBuilder();
 
@@ -118,9 +97,6 @@ public class InputService extends InputMethodService {
       sb.append(" (");
       sb.append(KeyEvent.keyCodeToString(code));
       sb.append(")");
-
-      sb.append(String.format(": Pkm:0X%04X", pressedKeyMask));
-      sb.append(String.format(": Akm:0X%04X", activeKeyMask));
 
       Log.d(LOG_TAG, sb.toString());
     }
@@ -139,46 +115,17 @@ public class InputService extends InputMethodService {
 
   @Override
   public boolean onKeyDown (int code, KeyEvent event) {
-    logReceivedKeyEvent(code, true);
+    logKeyEvent(code, true);
     if (isSystemKey(code)) return false;
-    int bit = KeyCode.toKeyMask(code);
-
-    if (bit != 0) {
-      if ((pressedKeyMask & bit) == 0) {
-        pressedKeyMask |= bit;
-        activeKeyMask = pressedKeyMask;
-      }
-    }
-
+    Actions.handleKeyDown(code);
     return true;
   }
 
   @Override
   public boolean onKeyUp (int code, KeyEvent event) {
-    logReceivedKeyEvent(code, false);
+    logKeyEvent(code, false);
     if (isSystemKey(code)) return false;
-    int bit = KeyCode.toKeyMask(code);
-
-    if (bit != 0) {
-      if (activeKeyMask > 0) {
-        Action action = Action.getAction(activeKeyMask);
-
-        boolean control = Actions.controlModifier.getState();
-
-        if (action != null) {
-          performAction(action);
-        } else if (activeKeyMask <= KeyMask.SPACE) {
-          char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.SPACE);
-          if (control) character &= 0X1F;
-          insertCharacter(character);
-        }
-
-        activeKeyMask = 0;
-      }
-
-      pressedKeyMask &= ~bit;
-    }
-
+    Actions.handleKeyUp(code);
     return true;
   }
 

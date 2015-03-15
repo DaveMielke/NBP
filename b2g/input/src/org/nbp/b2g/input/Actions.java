@@ -1,10 +1,18 @@
 package org.nbp.b2g.input;
 
+import android.util.Log;
+
 import android.accessibilityservice.AccessibilityService;
 import android.view.KeyEvent;
 
 public class Actions {
-  public static final ToggleAction controlModifier = new ToggleAction("control-modifier");
+  private static final String LOG_TAG = Actions.class.getName();
+
+  private static int pressedKeyMask = 0;
+  private static int activeKeyMask = 0;
+
+  private static final CharacterMap characterMap = new CharacterMap();
+  private static final ToggleAction controlModifier = new ToggleAction("control-modifier");
 
   private static void addSystemKeyChords () {
     final int home = KeyMask.SPACE | KeyMask.DOTS_123456;
@@ -65,6 +73,63 @@ public class Actions {
 
     Action.add((KeyMask.FORWARD), new ForwardAction());
     Action.add((KeyMask.BACKWARD), new BackwardAction());
+  }
+
+  private static boolean performAction (Action action) {
+    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
+      Log.d(LOG_TAG, "performing action: " + action.getName());
+    }
+
+    if (action.performAction()) return true;
+    Log.w(LOG_TAG, "action failed: " + action.getName());
+    return false;
+  }
+
+  public static void handleKeyDown (int code) {
+    int bit = KeyCode.toKeyMask(code);
+
+    if (bit != 0) {
+      if ((pressedKeyMask & bit) == 0) {
+        pressedKeyMask |= bit;
+        activeKeyMask = pressedKeyMask;
+      }
+    }
+  }
+
+  public static void handleKeyUp (int code) {
+    int bit = KeyCode.toKeyMask(code);
+
+    if (bit != 0) {
+      if (activeKeyMask > 0) {
+        Action action = Action.getAction(activeKeyMask);
+        boolean control = controlModifier.getState();
+
+        if (action != null) {
+          performAction(action);
+        } else if (activeKeyMask <= KeyMask.SPACE) {
+          char character = characterMap.getCharacter(activeKeyMask & ~KeyMask.SPACE);
+          if (control) character &= 0X1F;
+
+          InputService inputService = InputService.getInputService();
+          if (inputService != null) {
+            inputService.insertCharacter(character);
+          }
+        }
+
+        activeKeyMask = 0;
+      }
+
+      pressedKeyMask &= ~bit;
+    }
+  }
+
+  public static void resetKeys () {
+    if (ApplicationParameters.LOG_KEY_EVENTS) {
+      Log.d(LOG_TAG, "resetting key state");
+    }
+
+    pressedKeyMask = 0;
+    activeKeyMask = 0;
   }
 
   private Actions () {
