@@ -3,6 +3,7 @@
 #define MAKE_FILE_LOG_TAG MAKE_LOG_TAG(__FILE__)
 
 extern void logSystemError (const char *tag, const char *action);
+extern void logMallocError (const char *tag);
 
 extern int executeHostCommand (const char *command);
 

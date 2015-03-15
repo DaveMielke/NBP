@@ -17,6 +17,11 @@ logSystemError (const char *tag, const char *action) {
                       "system error %d: %s: %s", errno, action, strerror(errno));
 }
 
+void
+logMallocError (const char *tag) {
+  logSystemError(tag, "malloc");
+}
+
 int
 executeHostCommand (const char *command) {
   int status = 0XFF;
