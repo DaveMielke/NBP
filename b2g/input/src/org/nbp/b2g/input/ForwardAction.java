@@ -32,7 +32,7 @@ public class ForwardAction extends ScreenAction {
     return moveToDescendant(node, 0);
   }
 
-  protected boolean moveToNextNode (AccessibilityNodeInfo node) {
+  protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean force) {
     node = AccessibilityNodeInfo.obtain(node);
 
     if (moveToDescendant(node)) {
@@ -41,6 +41,8 @@ public class ForwardAction extends ScreenAction {
     }
 
     while (true) {
+      if (!force && node.isFocusable()) break;
+
       AccessibilityNodeInfo parent = node.getParent();
       if (parent == null) break;
 
@@ -69,14 +71,16 @@ public class ForwardAction extends ScreenAction {
     node = getCurrentNode();
     if (node == null) return false;
 
-    if (moveToNextNode(node)) {
+    if (moveToNextNode(node, false)) {
       moved = true;
     } else if (performAction(node, AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)) {
       delay(ApplicationParameters.SCROLL_DELAY);
       node.recycle();
       node = getCurrentNode();
       if (node == null) return false;
-      if (moveToNextNode(node)) moved = true;
+      if (moveToNextNode(node, false)) moved = true;
+    } else if (moveToNextNode(node, true)) {
+      moved = true;
     }
 
     node.recycle();

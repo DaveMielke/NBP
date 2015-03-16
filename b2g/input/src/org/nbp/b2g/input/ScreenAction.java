@@ -40,7 +40,9 @@ public abstract class ScreenAction extends Action {
 
   protected boolean setCurrentNode (AccessibilityNodeInfo node) {
     if (getNodeText(node) == null) return false;
-    return node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS);
+    if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) return false;
+    performAction(node, AccessibilityNodeInfo.ACTION_SELECT);
+    return true;
   }
 
   protected boolean performAction (AccessibilityNodeInfo node, int action) {

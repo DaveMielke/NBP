@@ -26,10 +26,12 @@ public class BackwardAction extends ScreenAction {
     return false;
   }
 
-  protected boolean moveToPreviousNode (AccessibilityNodeInfo node) {
+  protected boolean moveToPreviousNode (AccessibilityNodeInfo node, boolean force) {
     node = AccessibilityNodeInfo.obtain(node);
 
     while (true) {
+      if (!force && node.isFocusable()) break;
+
       AccessibilityNodeInfo parent = node.getParent();
       if (parent == null) break;
 
@@ -56,14 +58,16 @@ public class BackwardAction extends ScreenAction {
     node = getCurrentNode();
     if (node == null) return false;
 
-    if (moveToPreviousNode(node)) {
+    if (moveToPreviousNode(node, false)) {
       moved = true;
     } else if (performAction(node, AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)) {
       delay(ApplicationParameters.SCROLL_DELAY);
       node.recycle();
       node = getCurrentNode();
       if (node == null) return false;
-      if (moveToPreviousNode(node)) moved = true;
+      if (moveToPreviousNode(node, false)) moved = true;
+    } else if (moveToPreviousNode(node, true)) {
+      moved = true;
     }
 
     node.recycle();
