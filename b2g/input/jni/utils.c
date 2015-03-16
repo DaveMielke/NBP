@@ -95,3 +95,11 @@ awaitInput (int fileDescriptor) {
 
   return 0;
 }
+
+int
+checkException (JNIEnv *env) {
+  if (!(*env)->ExceptionCheck(env)) return 0;
+  (*env)->ExceptionDescribe(env);
+  (*env)->ExceptionClear(env);
+  return 1;
+}

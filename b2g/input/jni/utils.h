@@ -20,3 +20,5 @@ extern int isWritable (const char *path);
 extern int makeWritable (const char *path);
 
 extern int awaitInput (int fileDescriptor);
+
+extern int checkException (JNIEnv *env);

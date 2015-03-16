@@ -18,7 +18,10 @@ public class Actions {
     final int home = KeyMask.SPACE | KeyMask.DOTS_123456;
     final int back = KeyMask.SPACE | KeyMask.DOTS_12;
 
-    if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
+    if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
+      GlobalAction.add(home, AccessibilityService.GLOBAL_ACTION_HOME, "HOME");
+      GlobalAction.add(back, AccessibilityService.GLOBAL_ACTION_BACK, "BACK");
+    } else if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
       NullAction.add(home);
       NullAction.add(back);
     } else {

@@ -43,6 +43,7 @@ public abstract class Action {
   }
 
   public static Action getAction (int keyMask) {
+    if (actionMap.size() == 0) Actions.add();
     return actionMap.get(new Integer(keyMask));
   }
 }

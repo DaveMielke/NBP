@@ -20,9 +20,7 @@ public class InputService extends InputMethodService {
   @Override
   public void onCreate () {
     super.onCreate();
-
     Log.d(LOG_TAG, "input service started");
-    Actions.add();
   }
 
   @Override
@@ -42,7 +40,10 @@ public class InputService extends InputMethodService {
   public void onUnbindInput () {
     Log.d(LOG_TAG, "input service unbound");
     inputService = null;
-    Actions.resetKeys();
+
+    if (!ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
+      Actions.resetKeys();
+    }
   }
 
   @Override

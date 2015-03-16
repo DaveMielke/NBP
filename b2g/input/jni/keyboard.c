@@ -13,7 +13,7 @@ MAKE_FILE_LOG_TAG;
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
 #define NO_DEVICE -1
-static int keyboardDevice = NO_DEVICE;
+static volatile int keyboardDevice = NO_DEVICE;
 
 static char *
 findEventDevice (const char *deviceName) {
@@ -59,12 +59,11 @@ openEventDevice (const char *deviceName) {
 
     if (deviceDescriptor != NO_DEVICE) {
       if (ioctl(deviceDescriptor, EVIOCGRAB, 1) != -1) {
-        __android_log_print(ANDROID_LOG_INFO, LOG_TAG,
-                            "Event Device Opened: %s: %s: fd=%d",
-                            deviceName, devicePath, deviceDescriptor);
+        LOG(INFO, "Event Device Opened: %s: %s: fd=%d",
+            deviceName, devicePath, deviceDescriptor);
 
         free(devicePath);
-        return 1;
+        return deviceDescriptor;
       } else {
         logSystemError(LOG_TAG, "ioctl[EVIOCGRAB]");
       }
@@ -79,29 +78,27 @@ openEventDevice (const char *deviceName) {
     free(devicePath);
   }
 
-  return 0;
+  return NO_DEVICE;
 }
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_KeyboardMonitor_openKeyboard (
-  JNIEnv *env, jobject this
+  JNIEnv *env, jobject class
 ) {
-  static const char deviceName[] = KEYBOARD_DEVICE_NAME;
-  int deviceDescriptor;
+  static const char keyboardName[] = KEYBOARD_DEVICE_NAME;
 
-  if (keyboardDevice != NO_DEVICE) return JNI_TRUE;
-
-  if ((deviceDescriptor = openEventDevice(deviceName)) != NO_DEVICE) {
-    keyboardDevice = deviceDescriptor;
-    return JNI_TRUE;
+  if (keyboardDevice == NO_DEVICE) {
+    if ((keyboardDevice = openEventDevice(keyboardName)) == NO_DEVICE) {
+      return JNI_FALSE;
+    }
   }
 
-  return JNI_FALSE;
+  return JNI_TRUE;
 }
 
 JNIEXPORT void JNICALL
 Java_org_nbp_b2g_input_KeyboardMonitor_closeKeyboard (
-  JNIEnv *env, jobject this
+  JNIEnv *env, jobject class
 ) {
   if (keyboardDevice != NO_DEVICE) {
     close(keyboardDevice);
@@ -111,11 +108,12 @@ Java_org_nbp_b2g_input_KeyboardMonitor_closeKeyboard (
 
 JNIEXPORT void JNICALL
 Java_org_nbp_b2g_input_KeyboardMonitor_monitorKeyboard (
-  JNIEnv *env, jobject this
+  JNIEnv *env, jobject class,
+  jobject monitor
 ) {
   const char *methodName = "onKeyEvent";
   const char *methodSignature = "(IZ)V";
-  jmethodID method = (*env)->GetMethodID(env, this, methodName, methodSignature);
+  jmethodID method = (*env)->GetMethodID(env, class, methodName, methodSignature);
 
   if (method) {
     while (awaitInput(keyboardDevice)) {
@@ -150,11 +148,13 @@ Java_org_nbp_b2g_input_KeyboardMonitor_monitorKeyboard (
           continue;
         }
 
-        (*env)->CallVoidMethod(env, this, method, event.code, press);
+        (*env)->CallVoidMethod(env, monitor, method, event.code, press);
+        if (checkException(env)) break;
       }
     }
   } else {
-    __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                        "method not found: %s %s", methodName, methodSignature);
+    LOG(ERROR, "method not found: %s %s", methodName, methodSignature);
   }
+
+  checkException(env);
 }
