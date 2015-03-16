@@ -3,6 +3,7 @@ package org.nbp.b2g.input;
 import android.util.Log;
 
 import android.accessibilityservice.AccessibilityService;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.KeyEvent;
 
 public class Actions {
@@ -53,7 +54,12 @@ public class Actions {
     addSystemKeyChords();
     addArrowKeyChords();
 
-    KeyAction.add(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
+    if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
+      NodeAction.add(KeyMask.CENTER, AccessibilityNodeInfo.ACTION_CLICK, "click");
+    } else {
+      KeyAction.add(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
+    }
+
     KeyAction.add(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
     KeyAction.add(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
     KeyAction.add(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);

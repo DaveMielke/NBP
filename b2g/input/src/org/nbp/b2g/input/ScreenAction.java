@@ -43,6 +43,19 @@ public abstract class ScreenAction extends Action {
     return node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS);
   }
 
+  protected boolean performAction (AccessibilityNodeInfo node, int action) {
+    node = AccessibilityNodeInfo.obtain(node);
+
+    while (node != null) {
+      if (node.performAction(action)) return true;
+      AccessibilityNodeInfo parent = node.getParent();
+      node.recycle();
+      node = parent;
+    }
+
+    return false;
+  }
+
   protected int findChildIndex (AccessibilityNodeInfo parent, AccessibilityNodeInfo node) {
     int count = parent.getChildCount();
 

@@ -26,31 +26,48 @@ public class BackwardAction extends ScreenAction {
     return false;
   }
 
-  @Override
-  public final boolean performAction () {
-    AccessibilityNodeInfo node = getCurrentNode();
+  protected boolean moveToPreviousNode (AccessibilityNodeInfo node) {
+    node = AccessibilityNodeInfo.obtain(node);
 
-    if (node != null) {
-      while (true) {
-        AccessibilityNodeInfo parent = node.getParent();
-        if (parent == null) break;
+    while (true) {
+      AccessibilityNodeInfo parent = node.getParent();
+      if (parent == null) break;
 
-        int myChildIndex = findChildIndex(parent, node);
-        node.recycle();
-        node = parent;
-        parent = null;
-
-        if (moveToNode(node, myChildIndex)) {
-          node.recycle();
-          return true;
-        }
-      }
-
+      int myChildIndex = findChildIndex(parent, node);
       node.recycle();
-      node = null;
+      node = parent;
+      parent = null;
+
+      if (moveToNode(node, myChildIndex)) {
+        node.recycle();
+        return true;
+      }
     }
 
+    node.recycle();
     return false;
+  }
+
+  @Override
+  public final boolean performAction () {
+    boolean moved = false;
+    AccessibilityNodeInfo node;
+
+    node = getCurrentNode();
+    if (node == null) return false;
+
+    if (moveToPreviousNode(node)) {
+      moved = true;
+    } else if (performAction(node, AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)) {
+      delay(ApplicationParameters.SCROLL_DELAY);
+      node.recycle();
+      node = getCurrentNode();
+      if (node == null) return false;
+      if (moveToPreviousNode(node)) moved = true;
+    }
+
+    node.recycle();
+    return moved;
   }
 
   public BackwardAction () {

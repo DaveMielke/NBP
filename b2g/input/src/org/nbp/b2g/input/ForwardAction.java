@@ -32,38 +32,55 @@ public class ForwardAction extends ScreenAction {
     return moveToDescendant(node, 0);
   }
 
-  @Override
-  public final boolean performAction () {
-    AccessibilityNodeInfo node = getCurrentNode();
+  protected boolean moveToNextNode (AccessibilityNodeInfo node) {
+    node = AccessibilityNodeInfo.obtain(node);
 
-    if (node != null) {
-      if (moveToDescendant(node)) {
-        node.recycle();
-        return true;
-      }
-
-      while (true) {
-        AccessibilityNodeInfo parent = node.getParent();
-        if (parent == null) break;
-
-        int myChildIndex = findChildIndex(parent, node);
-        node.recycle();
-        node = parent;
-        parent = null;
-
-        if (myChildIndex >= 0) {
-          if (moveToDescendant(node, myChildIndex+1)) {
-            node.recycle();
-            return true;
-          }
-        }
-      }
-
+    if (moveToDescendant(node)) {
       node.recycle();
-      node = null;
+      return true;
     }
 
+    while (true) {
+      AccessibilityNodeInfo parent = node.getParent();
+      if (parent == null) break;
+
+      int myChildIndex = findChildIndex(parent, node);
+      node.recycle();
+      node = parent;
+      parent = null;
+
+      if (myChildIndex >= 0) {
+        if (moveToDescendant(node, myChildIndex+1)) {
+          node.recycle();
+          return true;
+        }
+      }
+    }
+
+    node.recycle();
     return false;
+  }
+
+  @Override
+  public final boolean performAction () {
+    boolean moved = false;
+    AccessibilityNodeInfo node;
+
+    node = getCurrentNode();
+    if (node == null) return false;
+
+    if (moveToNextNode(node)) {
+      moved = true;
+    } else if (performAction(node, AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)) {
+      delay(ApplicationParameters.SCROLL_DELAY);
+      node.recycle();
+      node = getCurrentNode();
+      if (node == null) return false;
+      if (moveToNextNode(node)) moved = true;
+    }
+
+    node.recycle();
+    return moved;
   }
 
   public ForwardAction () {

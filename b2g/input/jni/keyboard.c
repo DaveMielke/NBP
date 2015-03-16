@@ -13,7 +13,7 @@ MAKE_FILE_LOG_TAG;
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
 #define NO_DEVICE -1
-static volatile int keyboardDevice = NO_DEVICE;
+static int keyboardDevice = NO_DEVICE;
 
 static char *
 findEventDevice (const char *deviceName) {

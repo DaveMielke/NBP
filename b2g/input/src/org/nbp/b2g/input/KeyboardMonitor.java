@@ -29,20 +29,23 @@ public class KeyboardMonitor extends Thread {
 
   public void run () {
     Log.d(LOG_TAG, "keyboard monitor starting");
-    Actions.resetKeys();
-    monitorKeyboard(this);
+
+    if (openKeyboard()) {
+      Actions.resetKeys();
+      monitorKeyboard(this);
+      closeKeyboard();
+    } else {
+      Log.w(LOG_TAG, "keyboard device not opened");
+    }
+
     Log.d(LOG_TAG, "keyboard monitor stopping");
   }
 
   public static boolean startMonitor () {
     if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      if (openKeyboard()) {
-        keyboardMonitor = new KeyboardMonitor();
-        keyboardMonitor.start();
-        return true;
-      } else {
-        Log.w(LOG_TAG, "keyboard device not opened");
-      }
+      keyboardMonitor = new KeyboardMonitor();
+      keyboardMonitor.start();
+      return true;
     }
 
     return false;
