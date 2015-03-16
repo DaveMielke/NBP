@@ -63,4 +63,8 @@ public abstract class UInputDevice {
 
   public UInputDevice () {
   }
+
+  static {
+    System.loadLibrary("InputService");
+  }
 }

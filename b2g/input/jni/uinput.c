@@ -1,5 +1,5 @@
-#include <jni.h>
-#include <stdio.h>
+#include "utils.h"
+
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
@@ -14,10 +14,6 @@
 #endif /* ABS_CNT */
 
 #include "linux/uinput.h"
-
-#include <android/log.h>
-
-#include "utils.h"
 
 MAKE_FILE_LOG_TAG;
 

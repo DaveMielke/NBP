@@ -1,6 +1,5 @@
-#include <jni.h>
+#include "utils.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include <dirent.h>
@@ -9,10 +8,6 @@
 #include <sys/ioctl.h>
 
 #include <linux/input.h>
-
-#include <android/log.h>
-
-#include "utils.h"
 
 MAKE_FILE_LOG_TAG;
 
@@ -88,7 +83,7 @@ openEventDevice (const char *deviceName) {
 }
 
 JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_Keyboard_openKeyboard (
+Java_org_nbp_b2g_input_KeyboardMonitor_openKeyboard (
   JNIEnv *env, jobject this
 ) {
   static const char deviceName[] = KEYBOARD_DEVICE_NAME;
@@ -105,7 +100,7 @@ Java_org_nbp_b2g_input_Keyboard_openKeyboard (
 }
 
 JNIEXPORT void JNICALL
-Java_org_nbp_b2g_input_Keyboard_closeKeyboard (
+Java_org_nbp_b2g_input_KeyboardMonitor_closeKeyboard (
   JNIEnv *env, jobject this
 ) {
   if (keyboardDevice != NO_DEVICE) {
@@ -115,7 +110,7 @@ Java_org_nbp_b2g_input_Keyboard_closeKeyboard (
 }
 
 JNIEXPORT void JNICALL
-Java_org_nbp_b2g_input_Keyboard_monitorKeyboard (
+Java_org_nbp_b2g_input_KeyboardMonitor_monitorKeyboard (
   JNIEnv *env, jobject this
 ) {
   const char *methodName = "onKeyEvent";
@@ -123,11 +118,27 @@ Java_org_nbp_b2g_input_Keyboard_monitorKeyboard (
   jmethodID method = (*env)->GetMethodID(env, this, methodName, methodSignature);
 
   if (method) {
-    struct input_event event;
-    size_t size = sizeof(event);
-    ssize_t result;
+    while (awaitInput(keyboardDevice)) {
+      struct input_event event;
+      size_t size = sizeof(event);
+      ssize_t result = read(keyboardDevice, &event, size);
 
-    while ((result = read(keyboardDevice, &event, size)) == size) {
+      if (result == -1) {
+        logSystemError(LOG_TAG, "read[keyboard]");
+        break;
+      }
+
+      if (result == 0) {
+        LOG(ERROR, "keyboard end-of-file");
+        break;
+      }
+
+      if (result != size) {
+        LOG(ERROR, "unexpected keyboard read length: %zu != %zu",
+            (size_t)result, size);
+        break;
+      }
+
       if (event.type == EV_KEY) {
         jboolean press;
 

@@ -109,7 +109,7 @@ public class InputService extends InputMethodService {
         return true;
 
       default:
-        return ApplicationParameters.INTERCEPT_KEY_EVENTS;
+        return ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY;
     }
   }
 
@@ -127,9 +127,5 @@ public class InputService extends InputMethodService {
     if (ignoreKey(code)) return false;
     Actions.handleKeyUp(KeyCode.toKeyMask(code));
     return true;
-  }
-
-  static {
-    System.loadLibrary("InputService");
   }
 }

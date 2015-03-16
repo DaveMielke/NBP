@@ -1,13 +1,9 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
+#include "utils.h"
+
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
-
-#include <android/log.h>
-
-#include "utils.h"
+#include <poll.h>
 
 MAKE_FILE_LOG_TAG;
 
@@ -76,4 +72,26 @@ makeWritable (const char *path) {
   }
 
   return 1;
+}
+
+int
+awaitInput (int fileDescriptor) {
+  struct pollfd pfd;
+  int result;
+
+  memset(&pfd, 0, sizeof(pfd));
+  pfd.events = POLLIN;
+  result = poll(&pfd, 1, -1);
+
+  if (result == -1) {
+    logSystemError(LOG_TAG, "poll");
+  } else if (result != 1) {
+    LOG(ERROR, "unexpected poll result: %d", result);
+  } else if (pfd.revents & POLLIN) {
+    return 1;
+  } else {
+    LOG(ERROR, "unexpected poll event: 0X%02X", pfd.revents);
+  }
+
+  return 0;
 }
