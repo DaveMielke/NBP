@@ -4,7 +4,7 @@ import android.util.Log;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class BackwardAction extends ScreenAction {
+public class BackwardAction extends MoveAction {
   private static final String LOG_TAG = BackwardAction.class.getName();
 
   private boolean moveToNode (AccessibilityNodeInfo node, int childIndex) {
@@ -26,7 +26,8 @@ public class BackwardAction extends ScreenAction {
     return false;
   }
 
-  protected boolean moveToPreviousNode (AccessibilityNodeInfo node, boolean force) {
+  @Override
+  protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean force) {
     node = AccessibilityNodeInfo.obtain(node);
 
     while (true) {
@@ -51,27 +52,8 @@ public class BackwardAction extends ScreenAction {
   }
 
   @Override
-  public final boolean performAction () {
-    boolean moved = false;
-    AccessibilityNodeInfo node;
-
-    node = getCurrentNode();
-    if (node == null) return false;
-
-    if (moveToPreviousNode(node, false)) {
-      moved = true;
-    } else if (performAction(node, AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)) {
-      delay(ApplicationParameters.SCROLL_DELAY);
-      node.recycle();
-      node = getCurrentNode();
-      if (node == null) return false;
-      if (moveToPreviousNode(node, false)) moved = true;
-    } else if (moveToPreviousNode(node, true)) {
-      moved = true;
-    }
-
-    node.recycle();
-    return moved;
+  protected int getScrollAction () {
+    return AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD;
   }
 
   public BackwardAction () {

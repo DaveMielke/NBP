@@ -4,7 +4,7 @@ import android.util.Log;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class ForwardAction extends ScreenAction {
+public class ForwardAction extends MoveAction {
   private static final String LOG_TAG = ForwardAction.class.getName();
 
   private boolean moveToNode (AccessibilityNodeInfo node) {
@@ -32,6 +32,7 @@ public class ForwardAction extends ScreenAction {
     return moveToDescendant(node, 0);
   }
 
+  @Override
   protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean force) {
     node = AccessibilityNodeInfo.obtain(node);
 
@@ -64,27 +65,8 @@ public class ForwardAction extends ScreenAction {
   }
 
   @Override
-  public final boolean performAction () {
-    boolean moved = false;
-    AccessibilityNodeInfo node;
-
-    node = getCurrentNode();
-    if (node == null) return false;
-
-    if (moveToNextNode(node, false)) {
-      moved = true;
-    } else if (performAction(node, AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)) {
-      delay(ApplicationParameters.SCROLL_DELAY);
-      node.recycle();
-      node = getCurrentNode();
-      if (node == null) return false;
-      if (moveToNextNode(node, false)) moved = true;
-    } else if (moveToNextNode(node, true)) {
-      moved = true;
-    }
-
-    node.recycle();
-    return moved;
+  protected int getScrollAction () {
+    return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
   }
 
   public ForwardAction () {
