@@ -24,16 +24,6 @@ public abstract class Action {
     return ScreenMonitor.getScreenMonitor();
   }
 
-  protected boolean delay (long interval) {
-    try {
-      Thread.sleep(interval);
-    } catch (InterruptedException exception) {
-      return false;
-    }
-
-    return true;
-  }
-
   public Action (String name) {
     actionName = name;
   }

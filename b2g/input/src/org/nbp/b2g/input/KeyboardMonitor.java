@@ -11,6 +11,12 @@ public class KeyboardMonitor extends Thread {
     return keyboardMonitor;
   }
 
+  public static boolean isActive () {
+    KeyboardMonitor monitor = getKeyboardMonitor();
+
+    return (monitor != null)? monitor.isAlive(): false;
+  }
+
   private static native boolean openKeyboard ();
   private static native void closeKeyboard ();
   private static native void monitorKeyboard (KeyboardMonitor monitor);
@@ -31,10 +37,8 @@ public class KeyboardMonitor extends Thread {
     Log.d(LOG_TAG, "keyboard monitor starting");
 
     if (openKeyboard()) {
-      Actions.setScanCodesEnabled(true);
       Actions.resetKeys();
       monitorKeyboard(this);
-      Actions.setScanCodesEnabled(false);
 
       closeKeyboard();
     } else {

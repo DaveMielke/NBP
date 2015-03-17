@@ -41,7 +41,7 @@ public class InputService extends InputMethodService {
     Log.d(LOG_TAG, "input service unbound");
     inputService = null;
 
-    if (!Actions.getScanCodesEnabled()) Actions.resetKeys();
+    if (!KeyboardMonitor.isActive()) Actions.resetKeys();
   }
 
   @Override
@@ -108,7 +108,7 @@ public class InputService extends InputMethodService {
         return true;
 
       default:
-        return Actions.getScanCodesEnabled();
+        return KeyboardMonitor.isActive();
     }
   }
 

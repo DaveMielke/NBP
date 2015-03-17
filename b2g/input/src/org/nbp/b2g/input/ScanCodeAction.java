@@ -12,9 +12,10 @@ public class ScanCodeAction extends Action {
 
   @Override
   public boolean performAction () {
-    if (scanCode != KeyboardDevice.NO_SCAN_CODE) {
+    if (scanCode != KeyboardDevice.NULL_SCAN_CODE) {
       if (keyboardDevice.pressKey(scanCode)) {
-        delay(holdTime + ApplicationParameters.LONG_PRESS_DELAY);
+        if (holdTime > 0) ApplicationUtilities.sleep(holdTime + ApplicationParameters.LONG_PRESS_DELAY);
+
         if (keyboardDevice.releaseKey(scanCode)) {
           return true;
         }

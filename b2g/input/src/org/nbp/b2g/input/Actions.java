@@ -15,14 +15,19 @@ public class Actions {
   private static final CharacterMap characterMap = new CharacterMap();
   private static final ToggleAction controlModifier = new ToggleAction("CONTROL_MODIFIER");
 
+  private static void addKeyAction (int keyMask, String scanCode, int keyCode) {
+    ScanCodeAction.add(keyMask, scanCode);
+    KeyCodeAction.add(keyMask, keyCode);
+  }
+
   private static void addSystemKeyChords () {
     final int home = KeyMask.SPACE | KeyMask.DOTS_123456;
     final int back = KeyMask.SPACE | KeyMask.DOTS_12;
 
-    if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      GlobalAction.add(home, AccessibilityService.GLOBAL_ACTION_HOME, "HOME");
-      GlobalAction.add(back, AccessibilityService.GLOBAL_ACTION_BACK, "BACK");
-    } else if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
+    GlobalAction.add((home | KeyMask.SCAN_CODE), AccessibilityService.GLOBAL_ACTION_HOME, "HOME");
+    GlobalAction.add((back | KeyMask.SCAN_CODE), AccessibilityService.GLOBAL_ACTION_BACK, "BACK");
+
+    if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
       NullAction.add(home);
       NullAction.add(back);
     } else {
@@ -59,40 +64,27 @@ public class Actions {
     addSystemKeyChords();
     addArrowKeyChords();
 
-    ScanCodeAction.add(KeyMask.VOLUME_DOWN, "VOLUMEDOWN");
-    ScanCodeAction.add(KeyMask.VOLUME_UP, "VOLUMEUP");
+    addKeyAction(KeyMask.VOLUME_DOWN, "VOLUMEDOWN", KeyEvent.KEYCODE_VOLUME_DOWN);
+    addKeyAction(KeyMask.VOLUME_UP, "VOLUMEUP", KeyEvent.KEYCODE_VOLUME_UP);
 
-    if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      NodeAction.add(KeyMask.DPAD_CENTER, AccessibilityNodeInfo.ACTION_CLICK, "CLICK");
-    } else {
-      KeyCodeAction.add(KeyMask.DPAD_CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
+    {
+      int keyMask = KeyMask.DPAD_CENTER;
+
+      KeyCodeAction.add(keyMask, KeyEvent.KEYCODE_DPAD_CENTER);
+      NodeAction.add((keyMask | KeyMask.SCAN_CODE), AccessibilityNodeInfo.ACTION_CLICK, "CLICK");
     }
 
-    if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      ScanCodeAction.add(KeyMask.DPAD_LEFT, "LEFT");
-      ScanCodeAction.add(KeyMask.DPAD_RIGHT, "RIGHT");
-      ScanCodeAction.add(KeyMask.DPAD_UP, "UP");
-      ScanCodeAction.add(KeyMask.DPAD_DOWN, "DOWN");
+    addKeyAction(KeyMask.DPAD_LEFT, "LEFT", KeyEvent.KEYCODE_DPAD_LEFT);
+    addKeyAction(KeyMask.DPAD_RIGHT, "RIGHT", KeyEvent.KEYCODE_DPAD_RIGHT);
+    addKeyAction(KeyMask.DPAD_UP, "UP", KeyEvent.KEYCODE_DPAD_UP);
+    addKeyAction(KeyMask.DPAD_DOWN, "DOWN", KeyEvent.KEYCODE_DPAD_DOWN);
 
-      ScanCodeAction.add(KeyMask.DOTS_7, "BACKSPACE");
-      ScanCodeAction.add(KeyMask.DOTS_8, "ENTER");
+    addKeyAction(KeyMask.DOTS_7, "BACKSPACE", KeyEvent.KEYCODE_DEL);
+    addKeyAction(KeyMask.DOTS_8, "ENTER", KeyEvent.KEYCODE_ENTER);
 
-      ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_45), "TAB");
-      ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_145), "DELETE");
-      ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_124), "COMPOSE");
-    } else {
-      KeyCodeAction.add(KeyMask.DPAD_LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
-      KeyCodeAction.add(KeyMask.DPAD_RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
-      KeyCodeAction.add(KeyMask.DPAD_UP, KeyEvent.KEYCODE_DPAD_UP);
-      KeyCodeAction.add(KeyMask.DPAD_DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
-
-      KeyCodeAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
-      KeyCodeAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
-
-      KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
-      KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
-      KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
-    }
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_45), "TAB", KeyEvent.KEYCODE_TAB);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_145), "DELETE", KeyEvent.KEYCODE_FORWARD_DEL);
+    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_124), "COMPOSE", KeyEvent.KEYCODE_SEARCH);
 
     KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
     KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
@@ -103,8 +95,8 @@ public class Actions {
     ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
     Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), controlModifier);
 
-    Action.add((KeyMask.FORWARD), new ForwardAction());
-    Action.add((KeyMask.BACKWARD), new BackwardAction());
+    Action.add(KeyMask.FORWARD, new ForwardAction());
+    Action.add(KeyMask.BACKWARD, new BackwardAction());
   }
 
   private static boolean performAction (Action action) {
@@ -117,18 +109,13 @@ public class Actions {
     return false;
   }
 
-  public static void setScanCodesEnabled (boolean yes) {
-    if (yes) {
-      pressedKeyMask |= KeyMask.SCAN_CODE;
-    } else {
-      pressedKeyMask &= ~KeyMask.SCAN_CODE;
+  private static Action getAction (int keyMask) {
+    if (KeyboardMonitor.isActive()) {
+      Action action = Action.getAction(keyMask | KeyMask.SCAN_CODE);
+      if (action != null) return action;
     }
 
-    if (activeKeyMask != 0) activeKeyMask = pressedKeyMask;
-  }
-
-  public static boolean getScanCodesEnabled () {
-    return (pressedKeyMask & KeyMask.SCAN_CODE) != 0;
+    return Action.getAction(keyMask);
   }
 
   public static void handleKeyDown (int keyMask) {
@@ -143,7 +130,7 @@ public class Actions {
   public static void handleKeyUp (int keyMask) {
     if (keyMask != 0) {
       if (activeKeyMask > 0) {
-        Action action = Action.getAction(activeKeyMask);
+        Action action = getAction(activeKeyMask);
         boolean control = controlModifier.getState();
 
         if (action != null) {
@@ -171,7 +158,7 @@ public class Actions {
     }
 
     pressedKeyMask = 0;
-    activeKeyMask = 0;
+    activeKeyMask = pressedKeyMask;
   }
 
   private Actions () {

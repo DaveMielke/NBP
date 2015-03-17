@@ -39,11 +39,7 @@ public final class GlobalAction extends KeyCodeAction {
     add(keyMask, new GlobalAction(globalAction, name, keyCode));
   }
 
-  public GlobalAction (int globalAction, String name) {
-    this(globalAction, name, NULL_KEY_CODE);
-  }
-
   public static void add (int keyMask, int globalAction, String name) {
-    add(keyMask, new GlobalAction(globalAction, name));
+    add(keyMask, new GlobalAction(globalAction, name, NULL_KEY_CODE));
   }
 }

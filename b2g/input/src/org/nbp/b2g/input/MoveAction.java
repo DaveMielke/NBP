@@ -21,8 +21,9 @@ public abstract class MoveAction extends ScreenAction {
     if (moveToNextNode(node, false)) {
       moved = true;
     } else if (performNodeAction(node, getScrollAction())) {
-      delay(ApplicationParameters.SCROLL_DELAY);
       node.recycle();
+      ApplicationUtilities.sleep(ApplicationParameters.SCROLL_DELAY);
+
       node = getCurrentNode();
       if (node == null) return false;
       if (moveToNextNode(node, false)) moved = true;

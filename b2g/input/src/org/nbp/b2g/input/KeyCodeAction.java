@@ -27,7 +27,8 @@ public class KeyCodeAction extends Action {
         logKeyEvent("press");
 
         if (connection.sendKeyEvent(event)) {
-          if (interval > 0) delay(interval);
+          if (interval > 0) ApplicationUtilities.sleep(interval + ApplicationParameters.LONG_PRESS_DELAY);
+
           event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
           logKeyEvent("release");
 
@@ -42,7 +43,7 @@ public class KeyCodeAction extends Action {
   }
 
   protected boolean sendKey (boolean longPress) {
-    long interval = longPress? (ApplicationUtilities.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
+    long interval = longPress? ApplicationUtilities.getLongPressTimeout(): 0;
     return sendKey(interval);
   }
 

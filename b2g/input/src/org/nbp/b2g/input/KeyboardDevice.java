@@ -8,7 +8,7 @@ import android.util.Log;
 public class KeyboardDevice extends UInputDevice {
   private static final String LOG_TAG = KeyboardDevice.class.getName();
 
-  public final static int NO_SCAN_CODE = 0;
+  public final static int NULL_SCAN_CODE = 0;
 
   private static Map<String, Integer> scanCodeMap = new HashMap<String, Integer>();
 
@@ -47,7 +47,7 @@ public class KeyboardDevice extends UInputDevice {
     Integer code = scanCodeMap.get(name);
     if (code != null) return code;
     Log.w(LOG_TAG, "keyboard scan code not defined: " + name);
-    return NO_SCAN_CODE;
+    return NULL_SCAN_CODE;
   }
 
   private static void defineScanCode (String name, int code) {
