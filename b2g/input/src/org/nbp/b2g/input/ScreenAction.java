@@ -2,6 +2,8 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
+import android.graphics.Rect;
+
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public abstract class ScreenAction extends Action {
@@ -38,9 +40,20 @@ public abstract class ScreenAction extends Action {
     return current;
   }
 
+  protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {
+    node = AccessibilityNodeInfo.obtain(node);
+
+    while (node != null) {
+      if (node.performAction(action)) return true;
+      AccessibilityNodeInfo parent = node.getParent();
+      node.recycle();
+      node = parent;
+    }
+
+    return false;
+  }
+
   protected boolean isActionable (AccessibilityNodeInfo node) {
-    if (!node.isEnabled()) return false;
-    if (!node.isVisibleToUser()) return false;
     if (node.isClickable()) return true;
     if (node.isLongClickable()) return true;
     return false;
@@ -86,28 +99,41 @@ public abstract class ScreenAction extends Action {
     return false;
   }
 
+  protected boolean isVisible (AccessibilityNodeInfo node) {
+    if (!node.isVisibleToUser()) return false;
+
+    AccessibilityNodeInfo parent = node.getParent();
+    if (parent == null) return true;
+
+    Rect outer = new Rect();
+    parent.getBoundsInScreen(outer);
+    parent.recycle();
+    parent = null;
+
+    Rect inner = new Rect();
+    node.getBoundsInScreen(inner);
+    return outer.contains(inner);
+  }
+
+  protected boolean canSetAsCurrent (AccessibilityNodeInfo node) {
+    String name = node.getClassName().toString();
+    if (name.equals("android.widget.ListView")) return false;
+    return true;
+  }
+
   protected boolean setCurrentNode (AccessibilityNodeInfo node) {
     if (!isActionable(node)) {
       if (getNodeText(node) == null) return false;
       if (hasOuterAction(node)) return false;
     }
 
+    if (!node.isEnabled()) return false;
+    if (!canSetAsCurrent(node)) return false;
+    if (!isVisible(node)) return false;
+
     if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) return false;
-    performAction(node, AccessibilityNodeInfo.ACTION_SELECT);
+    performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT);
     return true;
-  }
-
-  protected boolean performAction (AccessibilityNodeInfo node, int action) {
-    node = AccessibilityNodeInfo.obtain(node);
-
-    while (node != null) {
-      if (node.performAction(action)) return true;
-      AccessibilityNodeInfo parent = node.getParent();
-      node.recycle();
-      node = parent;
-    }
-
-    return false;
   }
 
   protected int findChildIndex (AccessibilityNodeInfo parent, AccessibilityNodeInfo node) {
