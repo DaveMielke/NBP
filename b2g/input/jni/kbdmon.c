@@ -42,9 +42,8 @@ findEventDevice (const char *deviceName) {
 
     closedir(directory);
   } else {
-    __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                        "event device input directory open error: %s: %s",
-                        directoryPath, strerror(errno));
+    LOG(ERROR, "event device input directory open error: %s: %s",
+        directoryPath, strerror(errno));
   }
 
   return devicePath;
@@ -70,9 +69,8 @@ openEventDevice (const char *deviceName) {
 
       close(deviceDescriptor);
     } else {
-      __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                          "event device open error: %s: %s",
-                          devicePath, strerror(errno));
+      LOG(ERROR, "event device open error: %s: %s",
+          devicePath, strerror(errno));
     }
 
     free(devicePath);

@@ -10,7 +10,8 @@ MAKE_FILE_LOG_TAG;
 void
 logSystemError (const char *tag, const char *action) {
   __android_log_print(ANDROID_LOG_ERROR, tag,
-                      "system error %d: %s: %s", errno, action, strerror(errno));
+                      "system error %d: %s: %s",
+                      errno, action, strerror(errno));
 }
 
 void
@@ -23,8 +24,7 @@ executeHostCommand (const char *command) {
   int status = 0XFF;
   FILE *stream = popen(command, "r");
 
-  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,
-                      "executing host command: %s", command);
+  LOG(DEBUG, "executing host command: %s", command);
 
   if (stream) {
     char buffer[0X1000];
@@ -39,13 +39,11 @@ executeHostCommand (const char *command) {
         buffer[(length = index)] = 0;
       }
 
-      __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG,
-                          "host command output: %s", buffer);
+      LOG(VERBOSE, "host command output: %s", buffer);
     }
 
     if ((status = pclose(stream)) != 0) {
-      __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,
-                          "host command failed: %d: %s", status, command);
+      LOG(DEBUG, "host command failed: %d: %s", status, command);
     }
   } else {
     logSystemError(LOG_TAG, "popen");
