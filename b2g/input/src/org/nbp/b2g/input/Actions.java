@@ -73,22 +73,30 @@ public class Actions {
       ScanCodeAction.add(KeyMask.DPAD_RIGHT, "RIGHT");
       ScanCodeAction.add(KeyMask.DPAD_UP, "UP");
       ScanCodeAction.add(KeyMask.DPAD_DOWN, "DOWN");
+
+      ScanCodeAction.add(KeyMask.DOTS_7, "BACKSPACE");
+      ScanCodeAction.add(KeyMask.DOTS_8, "ENTER");
+
+      ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_45), "TAB");
+      ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_145), "DELETE");
+      ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_124), "COMPOSE");
     } else {
       KeyCodeAction.add(KeyMask.DPAD_LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
       KeyCodeAction.add(KeyMask.DPAD_RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
       KeyCodeAction.add(KeyMask.DPAD_UP, KeyEvent.KEYCODE_DPAD_UP);
       KeyCodeAction.add(KeyMask.DPAD_DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
+
+      KeyCodeAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
+      KeyCodeAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
+
+      KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
+      KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
+      KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
     }
 
-    KeyCodeAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
-    KeyCodeAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
-
-    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
     KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
-
-    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
-    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
     KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
+
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS, "NOTIFICATIONS", KeyEvent.KEYCODE_NOTIFICATION);
     ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1478), "POWER", ApplicationUtilities.getGlobalActionTimeout());
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
