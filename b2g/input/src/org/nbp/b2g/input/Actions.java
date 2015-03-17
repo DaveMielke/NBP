@@ -67,6 +67,9 @@ public class Actions {
     addKeyAction(KeyMask.VOLUME_DOWN, "VOLUMEDOWN", KeyEvent.KEYCODE_VOLUME_DOWN);
     addKeyAction(KeyMask.VOLUME_UP, "VOLUMEUP", KeyEvent.KEYCODE_VOLUME_UP);
 
+    Action.add(KeyMask.FORWARD, new ForwardAction());
+    Action.add(KeyMask.BACKWARD, new BackwardAction());
+
     {
       int keyMask = KeyMask.DPAD_CENTER;
 
@@ -94,9 +97,6 @@ public class Actions {
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
     ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
     Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), controlModifier);
-
-    Action.add(KeyMask.FORWARD, new ForwardAction());
-    Action.add(KeyMask.BACKWARD, new BackwardAction());
   }
 
   private static boolean performAction (Action action) {
@@ -104,8 +104,13 @@ public class Actions {
       Log.d(LOG_TAG, "performing action: " + action.getName());
     }
 
-    if (action.performAction()) return true;
-    Log.w(LOG_TAG, "action failed: " + action.getName());
+    try {
+      if (action.performAction()) return true;
+      Log.w(LOG_TAG, "action failed: " + action.getName());
+    } catch (Exception exception) {
+      Log.w(LOG_TAG, "action crashed: " + action.getName(), exception);
+    }
+
     return false;
   }
 
