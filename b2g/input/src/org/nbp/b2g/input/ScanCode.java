@@ -65,6 +65,9 @@ public class ScanCode {
   public final static int CURSOR_38   = 0X2F6;
   public final static int CURSOR_39   = 0X2F7;
 
+  public final static int DOTS        = 0X300;
+  public final static int CHORD       = 0X400;
+
   private static Map<Integer, Integer> scanCodeMap = new HashMap<Integer, Integer>();
 
   public static int toKeyMask (int code) {
