@@ -13,7 +13,7 @@ public class Actions {
   private static int activeKeyMask = 0;
 
   private static final CharacterMap characterMap = new CharacterMap();
-  private static final ToggleAction controlModifier = new ToggleAction("control-modifier");
+  private static final ToggleAction controlModifier = new ToggleAction("CONTROL_MODIFIER");
 
   private static void addSystemKeyChords () {
     final int home = KeyMask.SPACE | KeyMask.DOTS_123456;
@@ -63,7 +63,7 @@ public class Actions {
     ScanCodeAction.add(KeyMask.VOLUME_UP, "VOLUMEUP");
 
     if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      NodeAction.add(KeyMask.DPAD_CENTER, AccessibilityNodeInfo.ACTION_CLICK, "click");
+      NodeAction.add(KeyMask.DPAD_CENTER, AccessibilityNodeInfo.ACTION_CLICK, "CLICK");
     } else {
       KeyCodeAction.add(KeyMask.DPAD_CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
     }
@@ -115,6 +115,20 @@ public class Actions {
     if (action.performAction()) return true;
     Log.w(LOG_TAG, "action failed: " + action.getName());
     return false;
+  }
+
+  public static void setScanCodesEnabled (boolean yes) {
+    if (yes) {
+      pressedKeyMask |= KeyMask.SCAN_CODE;
+    } else {
+      pressedKeyMask &= ~KeyMask.SCAN_CODE;
+    }
+
+    if (activeKeyMask != 0) activeKeyMask = pressedKeyMask;
+  }
+
+  public static boolean getScanCodesEnabled () {
+    return (pressedKeyMask & KeyMask.SCAN_CODE) != 0;
   }
 
   public static void handleKeyDown (int keyMask) {

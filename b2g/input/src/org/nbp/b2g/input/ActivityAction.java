@@ -27,7 +27,7 @@ public final class ActivityAction extends Action {
   }
 
   public ActivityAction (Class activityClass) {
-    super(activityClass.getName());
+    super("ACTIVITY_" + activityClass.getName());
     this.activityClass = activityClass;
   }
 

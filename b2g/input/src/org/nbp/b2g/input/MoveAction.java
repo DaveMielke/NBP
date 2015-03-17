@@ -20,7 +20,7 @@ public abstract class MoveAction extends ScreenAction {
 
     if (moveToNextNode(node, false)) {
       moved = true;
-    } else if (performAction(node, getScrollAction())) {
+    } else if (performNodeAction(node, getScrollAction())) {
       delay(ApplicationParameters.SCROLL_DELAY);
       node.recycle();
       node = getCurrentNode();
@@ -35,6 +35,6 @@ public abstract class MoveAction extends ScreenAction {
   }
 
   public MoveAction (String name) {
-    super(name);
+    super("MOVE_" + name);
   }
 }

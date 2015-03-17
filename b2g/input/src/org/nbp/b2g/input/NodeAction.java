@@ -13,11 +13,11 @@ public final class NodeAction extends ScreenAction {
   public final boolean performAction () {
     AccessibilityNodeInfo node = getCurrentNode();
     if (node == null) return false;
-    return performAction(node, nodeAction);
+    return performNodeAction(node, nodeAction);
   }
 
   public NodeAction (int nodeAction, String name) {
-    super(name);
+    super("NODE_" + name);
     this.nodeAction = nodeAction;
   }
 

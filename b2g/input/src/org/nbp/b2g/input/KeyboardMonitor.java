@@ -31,8 +31,11 @@ public class KeyboardMonitor extends Thread {
     Log.d(LOG_TAG, "keyboard monitor starting");
 
     if (openKeyboard()) {
+      Actions.setScanCodesEnabled(true);
       Actions.resetKeys();
       monitorKeyboard(this);
+      Actions.setScanCodesEnabled(false);
+
       closeKeyboard();
     } else {
       Log.w(LOG_TAG, "keyboard device not opened");

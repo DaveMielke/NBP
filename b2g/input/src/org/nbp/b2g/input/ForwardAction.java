@@ -70,6 +70,6 @@ public class ForwardAction extends MoveAction {
   }
 
   public ForwardAction () {
-    super("forward");
+    super("FORWARD");
   }
 }

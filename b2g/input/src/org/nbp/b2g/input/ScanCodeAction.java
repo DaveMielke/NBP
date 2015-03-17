@@ -2,8 +2,6 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
-import android.view.ViewConfiguration;
-
 public class ScanCodeAction extends Action {
   private static final String LOG_TAG = ScanCodeAction.class.getName();
 
@@ -33,10 +31,11 @@ public class ScanCodeAction extends Action {
   }
 
   public static void add (int keyMask, String name, long holdTime) {
+    name = "SCANCODE_" + name;
     add(keyMask, new ScanCodeAction(name, holdTime));
   }
 
   public static void add (int keyMask, String name) {
-    add(keyMask, new ScanCodeAction(name, 0));
+    add((keyMask | KeyMask.SCAN_CODE), new ScanCodeAction(name, 0));
   }
 }

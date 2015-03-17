@@ -31,7 +31,7 @@ public final class GlobalAction extends KeyCodeAction {
   }
 
   public GlobalAction (int globalAction, String name, int keyCode) {
-    super(keyCode, name);
+    super(keyCode, ("GLOBAL_" + name));
     this.globalAction = globalAction;
   }
 

@@ -20,8 +20,9 @@ public class KeyMask {
   public final static int DPAD_UP     = 0X4000;
   public final static int DPAD_DOWN   = 0X8000;
 
-  public final static int VOLUME_DOWN = 0X10000;
-  public final static int VOLUME_UP   = 0X20000;
+  public final static int SCAN_CODE   = 0X10000;
+  public final static int VOLUME_DOWN = 0X20000;
+  public final static int VOLUME_UP   = 0X40000;
 
   public final static int DOTS_NONE = (0);
   public final static int DOTS_1 = (DOT_1);

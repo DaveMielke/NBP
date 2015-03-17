@@ -30,6 +30,6 @@ public class ToggleAction extends Action {
   }
 
   public ToggleAction (String name) {
-    super(name);
+    super("TOGGLE_" + name);
   }
 }

@@ -77,11 +77,11 @@ public class KeyCode {
       case KeyCode.FORWARD:  return KeyMask.FORWARD;
       case KeyCode.BACKWARD: return KeyMask.BACKWARD;
 
-      case KeyEvent.KEYCODE_DPAD_CENTER: return KeyMask.CENTER;
-      case KeyEvent.KEYCODE_DPAD_LEFT:   return KeyMask.LEFT;
-      case KeyEvent.KEYCODE_DPAD_RIGHT:  return KeyMask.RIGHT;
-      case KeyEvent.KEYCODE_DPAD_UP:     return KeyMask.UP;
-      case KeyEvent.KEYCODE_DPAD_DOWN:   return KeyMask.DOWN;
+      case KeyEvent.KEYCODE_DPAD_CENTER: return KeyMask.DPAD_CENTER;
+      case KeyEvent.KEYCODE_DPAD_LEFT:   return KeyMask.DPAD_LEFT;
+      case KeyEvent.KEYCODE_DPAD_RIGHT:  return KeyMask.DPAD_RIGHT;
+      case KeyEvent.KEYCODE_DPAD_UP:     return KeyMask.DPAD_UP;
+      case KeyEvent.KEYCODE_DPAD_DOWN:   return KeyMask.DPAD_DOWN;
     }
 
     return 0;
