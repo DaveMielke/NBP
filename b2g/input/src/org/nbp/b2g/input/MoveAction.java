@@ -17,6 +17,7 @@ public abstract class MoveAction extends ScreenAction {
 
     node = getCurrentNode();
     if (node == null) return false;
+    AccessibilityNodeInfo from = AccessibilityNodeInfo.obtain(node);
 
     if (moveToNextNode(node, false)) {
       moved = true;
@@ -26,12 +27,18 @@ public abstract class MoveAction extends ScreenAction {
 
       node = getCurrentNode();
       if (node == null) return false;
-      if (moveToNextNode(node, false)) moved = true;
+
+      if (!node.equals(from)) {
+        moved = true;
+      } else if (moveToNextNode(node, false)) {
+        moved = true;
+      }
     } else if (moveToNextNode(node, true)) {
       moved = true;
     }
 
     node.recycle();
+    from.recycle();
     return moved;
   }
 

@@ -2,8 +2,6 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
-import android.graphics.Rect;
-
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public abstract class ScreenAction extends Action {
@@ -99,22 +97,6 @@ public abstract class ScreenAction extends Action {
     return false;
   }
 
-  protected boolean isVisible (AccessibilityNodeInfo node) {
-    if (!node.isVisibleToUser()) return false;
-
-    AccessibilityNodeInfo parent = node.getParent();
-    if (parent == null) return true;
-
-    Rect outer = new Rect();
-    parent.getBoundsInScreen(outer);
-    parent.recycle();
-    parent = null;
-
-    Rect inner = new Rect();
-    node.getBoundsInScreen(inner);
-    return outer.contains(inner);
-  }
-
   protected boolean canSetAsCurrent (AccessibilityNodeInfo node) {
     String name = node.getClassName().toString();
     if (name.equals("android.widget.ListView")) return false;
@@ -129,7 +111,7 @@ public abstract class ScreenAction extends Action {
 
     if (!node.isEnabled()) return false;
     if (!canSetAsCurrent(node)) return false;
-    if (!isVisible(node)) return false;
+    if (!node.isVisibleToUser()) return false;
 
     if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) return false;
     performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT);
