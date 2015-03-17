@@ -6,8 +6,8 @@ import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 
-public class KeyAction extends Action {
-  private static final String LOG_TAG = KeyAction.class.getName();
+public class KeyCodeAction extends Action {
+  private static final String LOG_TAG = KeyCodeAction.class.getName();
 
   protected final int keyCode;
 
@@ -56,16 +56,16 @@ public class KeyAction extends Action {
     return sendKey();
   }
 
-  protected KeyAction (int keyCode, String name) {
+  protected KeyCodeAction (int keyCode, String name) {
     super(name);
     this.keyCode = keyCode;
   }
 
-  public KeyAction (int keyCode) {
+  public KeyCodeAction (int keyCode) {
     this(keyCode, KeyEvent.keyCodeToString(keyCode));
   }
 
   public static void add (int keyMask, int keyCode) {
-    add(keyMask, new KeyAction(keyCode));
+    add(keyMask, new KeyCodeAction(keyCode));
   }
 }

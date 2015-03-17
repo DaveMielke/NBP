@@ -43,10 +43,10 @@ public class Actions {
       NullAction.add(left);
       NullAction.add(right);
     } else {
-      KeyAction.add(up   , KeyEvent.KEYCODE_DPAD_UP);
-      KeyAction.add(down , KeyEvent.KEYCODE_DPAD_DOWN);
-      KeyAction.add(left , KeyEvent.KEYCODE_DPAD_LEFT);
-      KeyAction.add(right, KeyEvent.KEYCODE_DPAD_RIGHT);
+      KeyCodeAction.add(up   , KeyEvent.KEYCODE_DPAD_UP);
+      KeyCodeAction.add(down , KeyEvent.KEYCODE_DPAD_DOWN);
+      KeyCodeAction.add(left , KeyEvent.KEYCODE_DPAD_LEFT);
+      KeyCodeAction.add(right, KeyEvent.KEYCODE_DPAD_RIGHT);
     }
   }
 
@@ -57,23 +57,23 @@ public class Actions {
     if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
       NodeAction.add(KeyMask.CENTER, AccessibilityNodeInfo.ACTION_CLICK, "click");
     } else {
-      KeyAction.add(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
+      KeyCodeAction.add(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
     }
 
-    KeyAction.add(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
-    KeyAction.add(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
-    KeyAction.add(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
-    KeyAction.add(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
+    KeyCodeAction.add(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
+    KeyCodeAction.add(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
+    KeyCodeAction.add(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
+    KeyCodeAction.add(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
 
-    KeyAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
-    KeyAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
+    KeyCodeAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
+    KeyCodeAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);
 
-    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
-    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
+    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_45), KeyEvent.KEYCODE_TAB);
+    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
 
-    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
-    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
-    KeyAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
+    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_145), KeyEvent.KEYCODE_FORWARD_DEL);
+    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_124), KeyEvent.KEYCODE_SEARCH);
+    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS, "NOTIFICATIONS", KeyEvent.KEYCODE_NOTIFICATION);
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1478), new PowerAction());
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
