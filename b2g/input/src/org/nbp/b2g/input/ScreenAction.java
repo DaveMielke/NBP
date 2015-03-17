@@ -38,8 +38,60 @@ public abstract class ScreenAction extends Action {
     return current;
   }
 
+  protected boolean isActionable (AccessibilityNodeInfo node) {
+    if (!node.isEnabled()) return false;
+    if (!node.isVisibleToUser()) return false;
+    if (node.isClickable()) return true;
+    if (node.isLongClickable()) return true;
+    return false;
+  }
+
+  protected boolean hasOuterAction (AccessibilityNodeInfo node) {
+    node = AccessibilityNodeInfo.obtain(node);
+
+    do {
+      AccessibilityNodeInfo parent = node.getParent();
+      node.recycle();
+
+      if (parent == null) return false;
+      node = parent;
+    } while (!isActionable(node));
+
+    node.recycle();
+    return true;
+  }
+
+  protected boolean hasInnerAction (AccessibilityNodeInfo node) {
+    int childCount = node.getChildCount();
+
+    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+      AccessibilityNodeInfo child = node.getChild(childIndex);
+
+      if (child != null) {
+        boolean contains;
+
+        if (isActionable(child)) {
+          contains = true;
+        } else if (hasInnerAction(child)) {
+          contains = true;
+        } else {
+          contains = false;
+        }
+
+        child.recycle();
+        if (contains) return true;
+      }
+    }
+
+    return false;
+  }
+
   protected boolean setCurrentNode (AccessibilityNodeInfo node) {
-    if (getNodeText(node) == null) return false;
+    if (!isActionable(node)) {
+      if (getNodeText(node) == null) return false;
+      if (hasOuterAction(node)) return false;
+    }
+
     if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) return false;
     performAction(node, AccessibilityNodeInfo.ACTION_SELECT);
     return true;
