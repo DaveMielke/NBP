@@ -59,9 +59,8 @@ writeKeyEvent (int device, int key, int press) {
   return 1;
 }
 
-JNIEXPORT jint JNICALL
-Java_org_nbp_b2g_input_UInputDevice_openDevice (
-  JNIEnv *env, jclass class
+JAVA_METHOD(
+  org_nbp_b2g_input_UInputDevice, openDevice, jint
 ) {
   const char *path = "/dev/uinput";
 
@@ -99,9 +98,8 @@ Java_org_nbp_b2g_input_UInputDevice_openDevice (
   return -1;
 }
 
-JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_UInputDevice_createDevice (
-  JNIEnv *env, jclass class,
+JAVA_METHOD(
+  org_nbp_b2g_input_UInputDevice, createDevice, jboolean,
   jint device
 ) {
   if (ioctl(device, UI_DEV_CREATE) != -1) return JNI_TRUE;
@@ -109,50 +107,37 @@ Java_org_nbp_b2g_input_UInputDevice_createDevice (
   return JNI_FALSE;
 }
 
-JNIEXPORT void JNICALL
-Java_org_nbp_b2g_input_UInputDevice_closeDevice (
-  JNIEnv *env, jclass class,
+JAVA_METHOD(
+  org_nbp_b2g_input_UInputDevice, closeDevice, void,
   jint device
 ) {
   if (close(device) == -1) logSystemError(LOG_TAG, "close[uinput]");
 }
 
-JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_UInputDevice_enableKeyEvents (
-  JNIEnv *env, jclass class,
+JAVA_METHOD(
+  org_nbp_b2g_input_UInputDevice, enableKeyEvents, jboolean,
   jint device
 ) {
   return enableUInputEventType(device, EV_KEY)? JNI_TRUE: JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_UInputDevice_enableKey (
-  JNIEnv *env, jclass class,
+JAVA_METHOD(
+  org_nbp_b2g_input_UInputDevice, enableKey, jboolean,
   jint device, jint key
 ) {
   return enableUInputKey(device, key)? JNI_TRUE: JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_UInputDevice_pressKey (
-  JNIEnv *env, jclass class,
+JAVA_METHOD(
+  org_nbp_b2g_input_UInputDevice, pressKey, jboolean,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 1)? JNI_TRUE: JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_UInputDevice_releaseKey (
-  JNIEnv *env, jclass class,
+JAVA_METHOD(
+  org_nbp_b2g_input_UInputDevice, releaseKey, jboolean,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;
-}
-
-JNIEXPORT jint JNICALL
-Java_org_nbp_b2g_input_PowerKey_getKey (
-  JNIEnv *env, jclass class,
-  jint device
-) {
-  return KEY_POWER;
 }

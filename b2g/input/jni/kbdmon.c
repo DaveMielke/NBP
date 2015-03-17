@@ -81,9 +81,8 @@ openEventDevice (const char *deviceName) {
   return NO_DEVICE;
 }
 
-JNIEXPORT jboolean JNICALL
-Java_org_nbp_b2g_input_KeyboardMonitor_openKeyboard (
-  JNIEnv *env, jclass class
+JAVA_METHOD(
+  org_nbp_b2g_input_KeyboardMonitor, openKeyboard, jboolean
 ) {
   static const char keyboardName[] = KEYBOARD_DEVICE_NAME;
 
@@ -96,9 +95,8 @@ Java_org_nbp_b2g_input_KeyboardMonitor_openKeyboard (
   return JNI_TRUE;
 }
 
-JNIEXPORT void JNICALL
-Java_org_nbp_b2g_input_KeyboardMonitor_closeKeyboard (
-  JNIEnv *env, jclass class
+JAVA_METHOD(
+  org_nbp_b2g_input_KeyboardMonitor, closeKeyboard, void
 ) {
   if (keyboardDevice != NO_DEVICE) {
     close(keyboardDevice);
@@ -106,9 +104,8 @@ Java_org_nbp_b2g_input_KeyboardMonitor_closeKeyboard (
   }
 }
 
-JNIEXPORT void JNICALL
-Java_org_nbp_b2g_input_KeyboardMonitor_monitorKeyboard (
-  JNIEnv *env, jclass class,
+JAVA_METHOD(
+  org_nbp_b2g_input_KeyboardMonitor, monitorKeyboard, void,
   jobject monitor
 ) {
   const char *methodName = "onKeyEvent";

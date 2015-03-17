@@ -18,13 +18,14 @@ static const ScanCodeEntry scanCodeTable[] = {
   SCAN_CODE(RIGHT),
 
   SCAN_CODE(POWER),
+  SCAN_CODE(VOLUMEDOWN),
+  SCAN_CODE(VOLUMEUP),
 
   SCAN_CODE(RESERVED)
 };
 
-JNIEXPORT void JNICALL
-Java_org_nbp_b2g_input_KeyboardDevice_defineScanCodes (
-  JNIEnv *env, jclass class
+JAVA_METHOD(
+  org_nbp_b2g_input_KeyboardDevice, defineScanCodes, void
 ) {
   const char *methodName = "defineScanCode";
   const char *methodSignature = "(Ljava/lang/String;I)V";
