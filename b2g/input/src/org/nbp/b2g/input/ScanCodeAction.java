@@ -26,17 +26,16 @@ public class ScanCodeAction extends Action {
   }
 
   public ScanCodeAction (String name, long holdTime) {
-    super(name);
+    super("SCANCODE_" + name);
     this.scanCode = KeyboardDevice.getScanCode(name);
     this.holdTime = holdTime;
   }
 
   public static void add (int keyMask, String name, long holdTime) {
-    name = "SCANCODE_" + name;
-    add(keyMask, new ScanCodeAction(name, holdTime));
+    add((keyMask | KeyMask.SCAN_CODE), new ScanCodeAction(name, holdTime));
   }
 
   public static void add (int keyMask, String name) {
-    add((keyMask | KeyMask.SCAN_CODE), new ScanCodeAction(name, 0));
+    add(keyMask, name, 0);
   }
 }
