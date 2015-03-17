@@ -39,7 +39,7 @@ public abstract class Action {
   }
 
   public static void add (int keyMask, Action action) {
-    actionMap.put(new Integer(keyMask), action);
+    actionMap.put(keyMask, action);
   }
 
   public static Action getAction (int keyMask) {

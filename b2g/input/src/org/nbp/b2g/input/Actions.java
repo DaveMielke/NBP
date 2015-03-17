@@ -42,6 +42,11 @@ public class Actions {
       NullAction.add(down);
       NullAction.add(left);
       NullAction.add(right);
+    } else if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
+      ScanCodeAction.add(up   , "UP");
+      ScanCodeAction.add(down , "DOWN");
+      ScanCodeAction.add(left , "LEFT");
+      ScanCodeAction.add(right, "RIGHT");
     } else {
       KeyCodeAction.add(up   , KeyEvent.KEYCODE_DPAD_UP);
       KeyCodeAction.add(down , KeyEvent.KEYCODE_DPAD_DOWN);
@@ -54,16 +59,26 @@ public class Actions {
     addSystemKeyChords();
     addArrowKeyChords();
 
+    ScanCodeAction.add(KeyMask.VOLUME_DOWN, "VOLUMEDOWN");
+    ScanCodeAction.add(KeyMask.VOLUME_UP, "VOLUMEUP");
+
     if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      NodeAction.add(KeyMask.CENTER, AccessibilityNodeInfo.ACTION_CLICK, "click");
+      NodeAction.add(KeyMask.DPAD_CENTER, AccessibilityNodeInfo.ACTION_CLICK, "click");
     } else {
-      KeyCodeAction.add(KeyMask.CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
+      KeyCodeAction.add(KeyMask.DPAD_CENTER, KeyEvent.KEYCODE_DPAD_CENTER);
     }
 
-    KeyCodeAction.add(KeyMask.LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
-    KeyCodeAction.add(KeyMask.RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
-    KeyCodeAction.add(KeyMask.UP, KeyEvent.KEYCODE_DPAD_UP);
-    KeyCodeAction.add(KeyMask.DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
+    if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
+      ScanCodeAction.add(KeyMask.DPAD_LEFT, "LEFT");
+      ScanCodeAction.add(KeyMask.DPAD_RIGHT, "RIGHT");
+      ScanCodeAction.add(KeyMask.DPAD_UP, "UP");
+      ScanCodeAction.add(KeyMask.DPAD_DOWN, "DOWN");
+    } else {
+      KeyCodeAction.add(KeyMask.DPAD_LEFT, KeyEvent.KEYCODE_DPAD_LEFT);
+      KeyCodeAction.add(KeyMask.DPAD_RIGHT, KeyEvent.KEYCODE_DPAD_RIGHT);
+      KeyCodeAction.add(KeyMask.DPAD_UP, KeyEvent.KEYCODE_DPAD_UP);
+      KeyCodeAction.add(KeyMask.DPAD_DOWN, KeyEvent.KEYCODE_DPAD_DOWN);
+    }
 
     KeyCodeAction.add(KeyMask.DOTS_7, KeyEvent.KEYCODE_DEL);
     KeyCodeAction.add(KeyMask.DOTS_8, KeyEvent.KEYCODE_ENTER);

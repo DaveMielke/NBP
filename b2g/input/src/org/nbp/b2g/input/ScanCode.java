@@ -1,14 +1,13 @@
 package org.nbp.b2g.input;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.util.Log;
 
 public class ScanCode {
   private static final String LOG_TAG = ScanCode.class.getName();
 
-  public final static int DPAD_UP     = 0X067;
-  public final static int DPAD_LEFT   = 0X069;
-  public final static int DPAD_RIGHT  = 0X06A;
-  public final static int DPAD_DOWN   = 0X06C;
   public final static int DPAD_CENTER = 0X160;
 
   public final static int FORWARD     = 0X197;
@@ -66,6 +65,8 @@ public class ScanCode {
   public final static int CURSOR_38   = 0X2F6;
   public final static int CURSOR_39   = 0X2F7;
 
+  private static Map<Integer, Integer> scanCodeMap = new HashMap<Integer, Integer>();
+
   public static int toKeyMask (int code) {
     switch (code) {
       case ScanCode.DOT_1:    return KeyMask.DOT_1;
@@ -80,14 +81,30 @@ public class ScanCode {
 
       case ScanCode.FORWARD:  return KeyMask.FORWARD;
       case ScanCode.BACKWARD: return KeyMask.BACKWARD;
-
-      case ScanCode.DPAD_CENTER: return KeyMask.CENTER;
-      case ScanCode.DPAD_LEFT:   return KeyMask.LEFT;
-      case ScanCode.DPAD_RIGHT:  return KeyMask.RIGHT;
-      case ScanCode.DPAD_UP:     return KeyMask.UP;
-      case ScanCode.DPAD_DOWN:   return KeyMask.DOWN;
+      case ScanCode.DPAD_CENTER: return KeyMask.DPAD_CENTER;
     }
 
+    Integer mask = scanCodeMap.get(code);
+    if (mask != null) return mask;
+
     return 0;
+  }
+
+  private static void map (String name, int mask) {
+    int code = KeyboardDevice.getScanCode(name);
+
+    if (code != KeyboardDevice.NO_SCAN_CODE) {
+      scanCodeMap.put(code, mask);
+    }
+  }
+
+  static {
+    map("UP", KeyMask.DPAD_UP);
+    map("DOWN", KeyMask.DPAD_DOWN);
+    map("LEFT", KeyMask.DPAD_LEFT);
+    map("RIGHT", KeyMask.DPAD_RIGHT);
+
+    map("VOLUMEDOWN", KeyMask.VOLUME_DOWN);
+    map("VOLUMEUP", KeyMask.VOLUME_UP);
   }
 }

@@ -8,7 +8,7 @@ import android.util.Log;
 public class KeyboardDevice extends UInputDevice {
   private static final String LOG_TAG = KeyboardDevice.class.getName();
 
-  public final static int NO_SCAN_CODE = -1;
+  public final static int NO_SCAN_CODE = 0;
 
   private static Map<String, Integer> scanCodeMap = new HashMap<String, Integer>();
 
@@ -51,7 +51,7 @@ public class KeyboardDevice extends UInputDevice {
   }
 
   private static void defineScanCode (String name, int code) {
-    scanCodeMap.put(name, new Integer(code));
+    scanCodeMap.put(name, code);
   }
 
   private static native void defineScanCodes ();
