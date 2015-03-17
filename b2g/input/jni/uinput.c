@@ -61,7 +61,7 @@ writeKeyEvent (int device, int key, int press) {
 
 JNIEXPORT jint JNICALL
 Java_org_nbp_b2g_input_UInputDevice_openDevice (
-  JNIEnv *env, jobject this
+  JNIEnv *env, jclass class
 ) {
   const char *path = "/dev/uinput";
 
@@ -101,7 +101,7 @@ Java_org_nbp_b2g_input_UInputDevice_openDevice (
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_UInputDevice_createDevice (
-  JNIEnv *env, jobject this,
+  JNIEnv *env, jclass class,
   jint device
 ) {
   if (ioctl(device, UI_DEV_CREATE) != -1) return JNI_TRUE;
@@ -111,7 +111,7 @@ Java_org_nbp_b2g_input_UInputDevice_createDevice (
 
 JNIEXPORT void JNICALL
 Java_org_nbp_b2g_input_UInputDevice_closeDevice (
-  JNIEnv *env, jobject this,
+  JNIEnv *env, jclass class,
   jint device
 ) {
   if (close(device) == -1) logSystemError(LOG_TAG, "close[uinput]");
@@ -119,7 +119,7 @@ Java_org_nbp_b2g_input_UInputDevice_closeDevice (
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_UInputDevice_enableKeyEvents (
-  JNIEnv *env, jobject this,
+  JNIEnv *env, jclass class,
   jint device
 ) {
   return enableUInputEventType(device, EV_KEY)? JNI_TRUE: JNI_FALSE;
@@ -127,7 +127,7 @@ Java_org_nbp_b2g_input_UInputDevice_enableKeyEvents (
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_UInputDevice_enableKey (
-  JNIEnv *env, jobject this,
+  JNIEnv *env, jclass class,
   jint device, jint key
 ) {
   return enableUInputKey(device, key)? JNI_TRUE: JNI_FALSE;
@@ -135,7 +135,7 @@ Java_org_nbp_b2g_input_UInputDevice_enableKey (
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_UInputDevice_pressKey (
-  JNIEnv *env, jobject this,
+  JNIEnv *env, jclass class,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 1)? JNI_TRUE: JNI_FALSE;
@@ -143,7 +143,7 @@ Java_org_nbp_b2g_input_UInputDevice_pressKey (
 
 JNIEXPORT jboolean JNICALL
 Java_org_nbp_b2g_input_UInputDevice_releaseKey (
-  JNIEnv *env, jobject this,
+  JNIEnv *env, jclass class,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;
@@ -151,7 +151,7 @@ Java_org_nbp_b2g_input_UInputDevice_releaseKey (
 
 JNIEXPORT jint JNICALL
 Java_org_nbp_b2g_input_PowerKey_getKey (
-  JNIEnv *env, jobject this,
+  JNIEnv *env, jclass class,
   jint device
 ) {
   return KEY_POWER;

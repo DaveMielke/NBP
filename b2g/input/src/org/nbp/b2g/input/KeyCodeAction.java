@@ -4,7 +4,6 @@ import android.util.Log;
 
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
-import android.view.ViewConfiguration;
 
 public class KeyCodeAction extends Action {
   private static final String LOG_TAG = KeyCodeAction.class.getName();
@@ -43,7 +42,7 @@ public class KeyCodeAction extends Action {
   }
 
   protected boolean sendKey (boolean longPress) {
-    long interval = longPress? (ViewConfiguration.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
+    long interval = longPress? (ApplicationUtilities.getLongPressTimeout() + ApplicationParameters.LONG_PRESS_DELAY): 0;
     return sendKey(interval);
   }
 
