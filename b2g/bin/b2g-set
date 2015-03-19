@@ -17,6 +17,9 @@ declare -A settingDescriptors=(
    ["no-device-lock"]="boolean database lockscreen.disabled secure"
    ["foreign-sources"]="boolean database install_non_market_apps secure"
 
+   ["clock-time"]="time_value clock %Y-%m-%d@%H:%M:%S"
+   ["clock-zone"]="time_zone property persist.sys.timezone"
+
    ["locale-language"]="ISO_639 property persist.sys.language"
    ["locale-territory"]="ISO_3166 property persist.sys.country"
 
@@ -313,6 +316,21 @@ verifyValue_ISO_3166() {
    return 1
 }
 
+verifyValue_time_value() {
+   if [ "${settingValue}" = "now" ]
+   then
+      settingValue="$(date '+%Y%m%d.%H%M%S')"
+   else
+      return 1
+   fi
+
+   return 0
+}
+
+verifyValue_time_zone() {
+   return 0
+}
+
 getSettingNames() {
    settingNames=${!settingDescriptors[*]}
    settingNames="${settingNames// /$'\n'}"
@@ -333,6 +351,14 @@ getSettingAttributes() {
 showMilliseconds() {
    local value="${1}"
    echo "${value}"
+}
+
+showSetting_clock() {
+   executeShellCommand date "+${settingObject}"
+}
+
+changeSetting_clock() {
+   executeShellCommand date -s "${settingValue}" "+${settingObject}"
 }
 
 showSetting() {
