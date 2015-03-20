@@ -15,10 +15,14 @@ public abstract class ScreenAction extends Action {
     return null;
   }
 
-  protected void logNode (AccessibilityNodeInfo node, String reason) {
+  protected void log (String message) {
+    Log.v(LOG_TAG, message);
+  }
+
+  protected void log (AccessibilityNodeInfo node, String reason) {
     CharSequence text = getNodeText(node);
     if (text == null) text = node.getClassName();
-    Log.v(LOG_TAG, reason + ": " + text.toString());
+    log(reason + ": " + text.toString());
   }
 
   protected AccessibilityNodeInfo getRootNode () {
@@ -36,6 +40,29 @@ public abstract class ScreenAction extends Action {
 
     root.recycle();
     return current;
+  }
+
+  public AccessibilityNodeInfo findNode (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
+    if (root != null) {
+      if (root.equals(node)) return AccessibilityNodeInfo.obtain(root);
+      int childCount = root.getChildCount();
+
+      for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+        AccessibilityNodeInfo child = root.getChild(childIndex);
+        AccessibilityNodeInfo found = findNode(node, child);
+        if (child != null) child.recycle();
+        if (found != null) return found;
+      }
+    }
+
+    return null;
+  }
+
+  public AccessibilityNodeInfo findNode (AccessibilityNodeInfo node) {
+    AccessibilityNodeInfo root = getRootNode();
+    AccessibilityNodeInfo found = findNode(node, root);
+    if (root != null) root.recycle();
+    return found;
   }
 
   protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {
@@ -57,40 +84,25 @@ public abstract class ScreenAction extends Action {
     return false;
   }
 
-  protected boolean hasOuterAction (AccessibilityNodeInfo node) {
-    node = AccessibilityNodeInfo.obtain(node);
-
-    do {
-      AccessibilityNodeInfo parent = node.getParent();
-      node.recycle();
-
-      if (parent == null) return false;
-      node = parent;
-    } while (!isActionable(node));
-
-    node.recycle();
-    return true;
-  }
-
-  protected boolean hasInnerAction (AccessibilityNodeInfo node) {
+  protected boolean hasInnerText (AccessibilityNodeInfo node) {
     int childCount = node.getChildCount();
 
     for (int childIndex=0; childIndex<childCount; childIndex+=1) {
       AccessibilityNodeInfo child = node.getChild(childIndex);
 
       if (child != null) {
-        boolean contains;
+        boolean found = false;
 
-        if (isActionable(child)) {
-          contains = true;
-        } else if (hasInnerAction(child)) {
-          contains = true;
-        } else {
-          contains = false;
+        if (child.getText() != null) {
+          if (!isActionable(child)) {
+            found = true;
+          } else if (hasInnerText(child)) {
+            found = true;
+          }
         }
 
         child.recycle();
-        if (contains) return true;
+        if (found) return true;
       }
     }
 
@@ -104,17 +116,68 @@ public abstract class ScreenAction extends Action {
   }
 
   protected boolean setCurrentNode (AccessibilityNodeInfo node) {
-    if (!isActionable(node)) {
-      if (getNodeText(node) == null) return false;
-      if (hasOuterAction(node)) return false;
+    if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(node, "setting node");
+
+    if (node.getText() != null) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has text");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no text");
+
+      if (isActionable(node)) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is actionable");
+
+        if (hasInnerText(node)) {
+          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has inner text");
+          return false;
+        } else {
+          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no inner text");
+        }
+      } else {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is not actionable");
+        return false;
+      }
     }
 
-    if (!node.isEnabled()) return false;
-    if (!canSetAsCurrent(node)) return false;
-    if (!node.isVisibleToUser()) return false;
+    if (node.isEnabled()) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is enabled");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is disabled");
+      return false;
+    }
 
-    if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) return false;
-    performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT);
+    if (canSetAsCurrent(node)) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is eligible");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is ineligible");
+      return false;
+    }
+
+    if (node.isVisibleToUser()) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is visible");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is invisible");
+      return false;
+    }
+
+    if (node.performAction(AccessibilityNodeInfo.ACTION_FOCUS)) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus succeeded");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus failed");
+    }
+
+    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT)) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node succeeded");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node failed");
+    }
+
+    if (node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus succeeded");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus failed");
+      return false;
+    }
+
     return true;
   }
 

@@ -11,6 +11,7 @@
     android:id="@+id/clock_time"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textIsSelectable="true"
+    android:contentDescription="Digital Clock"
+    android:focusable="true"
    />
 </LinearLayout>

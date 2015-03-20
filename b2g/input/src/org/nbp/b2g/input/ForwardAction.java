@@ -33,7 +33,7 @@ public class ForwardAction extends MoveAction {
   }
 
   @Override
-  protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean force) {
+  protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean inner) {
     node = AccessibilityNodeInfo.obtain(node);
 
     if (moveToDescendant(node)) {
@@ -42,7 +42,7 @@ public class ForwardAction extends MoveAction {
     }
 
     while (true) {
-      if (!force && node.isFocusable()) break;
+      if (inner && node.isFocusable()) break;
 
       AccessibilityNodeInfo parent = node.getParent();
       if (parent == null) break;

@@ -27,11 +27,11 @@ public class BackwardAction extends MoveAction {
   }
 
   @Override
-  protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean force) {
+  protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean inner) {
     node = AccessibilityNodeInfo.obtain(node);
 
     while (true) {
-      if (!force && node.isFocusable()) break;
+      if (inner && node.isFocusable()) break;
 
       AccessibilityNodeInfo parent = node.getParent();
       if (parent == null) break;

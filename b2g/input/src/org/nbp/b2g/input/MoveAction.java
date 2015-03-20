@@ -13,32 +13,84 @@ public abstract class MoveAction extends ScreenAction {
   @Override
   public final boolean performAction () {
     boolean moved = false;
-    AccessibilityNodeInfo node;
+    AccessibilityNodeInfo node = getCurrentNode();
 
-    node = getCurrentNode();
-    if (node == null) return false;
-    AccessibilityNodeInfo from = AccessibilityNodeInfo.obtain(node);
+    if (node != null) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(node, "starting node");
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("no starting node");
+      return false;
+    }
 
-    if (moveToNextNode(node, false)) {
+    if (moveToNextNode(node, true)) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("inner move succeeded");
       moved = true;
-    } else if (performNodeAction(node, getScrollAction())) {
-      node.recycle();
-      ApplicationUtilities.sleep(ApplicationParameters.SCROLL_DELAY);
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("inner move failed");
+    }
 
-      node = getCurrentNode();
-      if (node == null) return false;
+    if (!moved) {
+      int attempts = 0;
 
-      if (!node.equals(from)) {
-        moved = true;
-      } else if (moveToNextNode(node, false)) {
-        moved = true;
+      while (true) {
+        if (performNodeAction(node, getScrollAction())) {
+          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll succeeded");
+          ApplicationUtilities.sleep(ApplicationParameters.SCROLL_DELAY);
+
+          {
+            AccessibilityNodeInfo found = findNode(node);
+            node.recycle();
+
+            if (found != null) {
+              if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(found, "node after scroll");
+              node = found;
+            } else {
+              if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node not found after scroll");
+              node = getCurrentNode();
+
+              if (node != null) {
+                if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(node, "current node after scroll");
+              } else {
+                if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("no current node after scroll");
+                return false;
+              }
+
+              if (setCurrentNode(node)) moved = true;
+            }
+          }
+        } else {
+          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll failed");
+          break;
+        }
+
+        if (!moved) {
+          if (moveToNextNode(node, true)) {
+            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("inner move succeeded");
+            moved = true;
+          } else {
+            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("inner move failed");
+          }
+        }
+
+        if (moved) break;
+        if ((attempts += 1) == 2) break;
       }
-    } else if (moveToNextNode(node, true)) {
-      moved = true;
+    }
+
+    if (!moved) {
+      if (moveToNextNode(node, false)) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("outer move succeeded");
+        moved = true;
+      } else {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("outer move failed");
+      }
+    }
+
+    if (!moved) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("move failed");
     }
 
     node.recycle();
-    from.recycle();
     return moved;
   }
 

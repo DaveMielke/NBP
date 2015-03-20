@@ -7,6 +7,7 @@ public abstract class ApplicationParameters {
 
   public static volatile boolean LOG_KEY_EVENTS = false;
   public static volatile boolean LOG_PERFORMED_ACTIONS = false;
+  public static volatile boolean LOG_SCREEN_NAVIGATION = false;
   public static volatile boolean LOG_ACCESSIBILITY_EVENTS = false;
 
   public static volatile long LONG_PRESS_DELAY = 100;
