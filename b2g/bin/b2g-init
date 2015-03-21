@@ -1,0 +1,19 @@
+#!/system/bin/sh
+
+setField() {
+   local table="${1}"
+   local name="${2}"
+   local value="${3}"
+
+   sqlite3 "/data/data/com.android.providers.settings/databases/settings.db" "update ${table} set value="\"${value}\"" where name=\"${name}\""
+}
+
+setProperty() {
+   local name="${1}"
+   local value="${2}"
+
+   setprop "${name}" "${value}"
+}
+
+setField system screen_off_timeout 1800000
+exit 0
