@@ -20,9 +20,10 @@ public class ApplicationUtilities {
     return ViewConfiguration.getGlobalActionKeyTimeout();
   }
 
+  private static final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, ApplicationParameters.BEEP_VOLUME);
+
   public static void beep () {
-    ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
-    tg.startTone(ToneGenerator.TONE_PROP_BEEP, 100);
+    tg.startTone(ToneGenerator.TONE_PROP_BEEP, ApplicationParameters.BEEP_DURATION);
   }
 
   private ApplicationUtilities () {

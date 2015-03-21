@@ -147,7 +147,9 @@ public class Actions {
 
           InputService inputService = InputService.getInputService();
           if (inputService != null) {
-            inputService.insertCharacter(character);
+            if (!inputService.insertCharacter(character)) {
+              ApplicationUtilities.beep();
+            }
           }
         }
 
