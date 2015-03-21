@@ -15,9 +15,37 @@ setProperty() {
    setprop "${name}" "${value}"
 }
 
-setField system screen_off_timeout 1800000
-
+# enable ADB (the Android Debug Bridge)
 setProperty persist.service.adb.enable 1
 setField secure adb_enabled 1
+
+# enable keyboard monitoring
+set -- `ls /sys/devices/platform/cp430_keypad/input*`
+[ "${#}" -eq 1 ] && {
+   name="${1##*/}"
+   event="${name#input}"
+   [ -n "${event}" ] && {
+     device="/dev/input/event${event}"
+     chmod 444 "${device}"
+   }
+}
+
+# enable key event injection
+chmod 666 /dev/uinput
+
+# disable scren locking
+setField secure lockscreen.disabled 1
+
+# set the screen off timeout to 30 minutes (in milliseconds)
+setField system screen_off_timeout 1800000
+
+# enable the installation of packages from foreign sources
+setField secure install_non_market_apps 1
+
+# enable the developer settings screen
+setField secure development_settings_enabled 1
+
+# enable accessibility services
+setField secure accessibility_enabled 1
 
 exit 0
