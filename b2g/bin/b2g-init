@@ -16,4 +16,8 @@ setProperty() {
 }
 
 setField system screen_off_timeout 1800000
+
+setProperty persist.service.adb.enable 1
+setField secure adb_enabled 1
+
 exit 0
