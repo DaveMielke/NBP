@@ -107,6 +107,7 @@ public class Actions {
     try {
       if (action.performAction()) return true;
       Log.w(LOG_TAG, "action failed: " + action.getName());
+      ApplicationUtilities.beep();
     } catch (Exception exception) {
       Log.w(LOG_TAG, "action crashed: " + action.getName(), exception);
     }
