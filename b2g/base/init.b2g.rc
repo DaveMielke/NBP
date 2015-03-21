@@ -1,0 +1,4 @@
+service b2g_init /system/bin/b2g-init
+    class main
+    oneshot
+
