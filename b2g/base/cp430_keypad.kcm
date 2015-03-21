@@ -529,577 +529,577 @@ key PLUS {
 #        -which cantain keycodes/ scancodes.                         #
 ######################################################################
 
-# key BRL_COMB_1{ base: 'k'}
+# key BRL_DOTS_7{ base: 'k'}
 
-key  BRL_APOSTROPHE { 
+key BRL_DOTS_3 { 
 	base: '\''
 }
 
-# key BRL_COMB_3{ base: 'k'}
+# key BRL_DOTS_37{ base: 'k'}
 
-key BRL_1 { 
+key BRL_DOTS_2 { 
 	base: '1'
 }
 
-# key BRL_COMB_5{ base: 'k'}
+# key BRL_DOTS_27{ base: 'k'}
 
-key BRL_2 { 
+key BRL_DOTS_23 { 
 	base: '2'
 }
 
-# key BRL_COMB_7{ base: 'k'}
+# key BRL_DOTS_237{ base: 'k'}
 
-key BRL_LOWERA { 
+key BRL_DOTS_1 { 
 	base: 'a'
 }
 
-key BRL_UPPERA { 
+key BRL_DOTS_17 { 
 	base: 'A'
 }
 
-key BRL_LOWERK { 
+key BRL_DOTS_13 { 
 	base: 'k'
 }
 
-key BRL_UPPERK { 
+key BRL_DOTS_137 { 
 	base: 'K'
 }
 
-key BRL_LOWERB { 
+key BRL_DOTS_12 { 
 	base: 'b'
 }
 
-key BRL_UPPERB {
+key BRL_DOTS_127 {
 	base: 'B'
 }
 
-key BRL_LOWERL { 
+key BRL_DOTS_123 { 
 	base: 'l'
 }
 
-key BRL_UPPERL { 
+key BRL_DOTS_1237 { 
 	base: 'L'
 }
 
-key BRL_GRAVE { 
+key BRL_DOTS_4 { 
 	base: '`'
 }
 
-key BRL_AT { 
+key BRL_DOTS_47 { 
 	base: '@'
 }
 
-key BRL_SLASH { 
+key BRL_DOTS_34 { 
 	base: '/'
 }
 
-# key BRL_COMB_19{ base: 'k'}
+# key BRL_DOTS_347{ base: 'k'}
 
-key BRL_LOWERI { 
+key BRL_DOTS_24 { 
 	base: 'i'
 }
 
-key BRL_UPPERI { 
+key BRL_DOTS_247 { 
 	base: 'I'
 }
 
-key BRL_LOWERS { 
+key BRL_DOTS_234 { 
 	base: 's'
 }
 
-key BRL_UPPERS { 
+key BRL_DOTS_2347 { 
 	base: 'S'
 }
 
-key BRL_LOWERC { 
+key BRL_DOTS_14 { 
 	base: 'c'
 }
 
-key BRL_UPPERC { 
+key BRL_DOTS_147 { 
 	base: 'C'
 }
 
-key BRL_LOWERM { 
+key BRL_DOTS_134 { 
 	base: 'm'
 }
 
-key BRL_UPPERM { 
+key BRL_DOTS_1347 { 
 	base: 'M'
 }
 
-key BRL_LOWERF { 
+key BRL_DOTS_124 { 
 	base: 'f'
 }
 
-key BRL_UPPERF { 
+key BRL_DOTS_1247 { 
 	base: 'F'
 }
 
-key BRL_LOWERP { 
+key BRL_DOTS_1234 { 
 	base: 'p'
 }
 
-key BRL_UPPERP { 
+key BRL_DOTS_12347 { 
 	base: 'P'
 }
 
-key BRL_QUOTE { 
+key BRL_DOTS_5 { 
 	base: '"'
 }
 
-# key BRL_COMB_33{ base: 'k'}
+# key BRL_DOTS_57{ base: 'k'}
 
-key BRL_9 { 
+key BRL_DOTS_35 { 
 	base: '9'
 }
 
-# key BRL_COMB_35{ base: 'k'}
+# key BRL_DOTS_357{ base: 'k'}
 
-key BRL_3 { 
+key BRL_DOTS_25 { 
 	base: '3'
 }
 
-# key BRL_COMB_37{ base: 'k'}
+# key BRL_DOTS_257{ base: 'k'}
 
-key BRL_6 { 
+key BRL_DOTS_235 { 
 	base: '6'
 }
 
-# key BRL_COMB_39{ base: 'k'}
+# key BRL_DOTS_2357{ base: 'k'}
 
-key BRL_LOWERE { 
+key BRL_DOTS_15 { 
 	base: 'e'
 }
 
-key BRL_UPPERE { 
+key BRL_DOTS_157 { 
 	base: 'E'
 }
 
-key BRL_LOWERO { 
+key BRL_DOTS_135 { 
 	base: 'o'
 }
 
-key BRL_UPPERO { 
+key BRL_DOTS_1357 { 
 	base: 'O'
 }
 
-key BRL_LOWERH { 
+key BRL_DOTS_125 { 
 	base: 'h'
 }
 
-key BRL_UPPERH { 
+key BRL_DOTS_1257 { 
 	base: 'H'
 }
 
-key BRL_LOWERR { 
+key BRL_DOTS_1235 { 
 	base: 'r'
 }
 
-key BRL_UPPERR { 
+key BRL_DOTS_12357 { 
 	base: 'R'
 }
 
-key BRL_NOT { 
+key BRL_DOTS_45 { 
 	base: '~'
 }
 
-key BRL_CARET { 
+key BRL_DOTS_457 { 
 	base: '^'
 }
 
-key BRL_GREATER_THAN { 
+key BRL_DOTS_345 { 
 	base: '>'
 }
 
-# key BRL_COMB_51{ base: 'k'}
+# key BRL_DOTS_3457{ base: 'k'}
 
-key BRL_LOWERJ { 
+key BRL_DOTS_245 { 
 	base: 'j'
 }
 
-key BRL_UPPERJ { 
+key BRL_DOTS_2457 { 
 	base: 'J'
 }
 
-key BRL_LOWERT { 
+key BRL_DOTS_2345 { 
 	base: 't'
 }
 
-key BRL_UPPERT { 
+key BRL_DOTS_23457 { 
 base: 'T'
 }
 
-key BRL_LOWERD { 
+key BRL_DOTS_145 { 
 	base: 'd'
 }
 
-key BRL_UPPERD { 
+key BRL_DOTS_1457 { 
 	base: 'D'
 }
 
-key BRL_LOWERN { 
+key BRL_DOTS_1345 { 
 	base: 'n'
 }
 
-key BRL_UPPERN { 
+key BRL_DOTS_13457 { 
 	base: 'N'
 }
 
-key BRL_LOWERG { 
+key BRL_DOTS_1245 { 
 	base: 'g'
 }
 
-key BRL_UPPERG { 
+key BRL_DOTS_12457 { 
 	base: 'G'
 }
 
-key BRL_LOWERQ	{ 
+key BRL_DOTS_12345	{ 
 	base: 'q'
 }
 
-key BRL_UPPERQ { 
+key BRL_DOTS_123457 { 
 	base: 'Q'
 }
 
-key BRL_COMMA { 
+key BRL_DOTS_6 { 
 	base: ','
 }
 
-# key BRL_COMB_65{ base: 'k'}
+# key BRL_DOTS_67{ base: 'k'}
 
-key BRL_MINUS { 
+key BRL_DOTS_36 { 
 	base: '-'
 }
 
-# key BRL_COMB_67{ base: 'k'}
+# key BRL_DOTS_367{ base: 'k'}
 
-key BRL_5 { 
+key BRL_DOTS_26 { 
 	base: '5'
 }
 
-# key BRL_COMB_69{ base: 'k'}
+# key BRL_DOTS_267{ base: 'k'}
 
-key BRL_8 { 
+key BRL_DOTS_236 { 
 	base: '8'
 }
 
-# key BRL_COMB_71{ base: 'k'}
+# key BRL_DOTS_2367{ base: 'k'}
 
-key BRL_STAR { 
+key BRL_DOTS_16 { 
 	base: '*'
 }
 
-# key BRL_COMB_73{ base: 'k'}
+# key BRL_DOTS_167{ base: 'k'}
 
-key BRL_LOWERU { 
+key BRL_DOTS_136 { 
 	base: 'u'
 }
 
-key BRL_UPPERU { 
+key BRL_DOTS_1367 { 
 	base: 'U'
 }
 
-key BRL_LESS_THAN { 
+key BRL_DOTS_126 { 
 	base: '<'
 }
 
-# key BRL_COMB_77{ base: 'k'}
+# key BRL_DOTS_1267{ base: 'k'}
 
-key BRL_LOWERV { 
+key BRL_DOTS_1236 { 
 	base: 'v'
 }
 
-key BRL_UPPERV { 
+key BRL_DOTS_12367 { 
 	base: 'V'
 }
 
-key BRL_PERIOD { 
+key BRL_DOTS_46 { 
 	base: '.'
 }
 
-# key BRL_COMB_81{ base: 'k'}
+# key BRL_DOTS_467{ base: 'k'}
 
-key BRL_PLS { 
+key BRL_DOTS_346 { 
 	base: '+'
 }
 
-# key BRL_COMB_83{ base: 'k'}
+# key BRL_DOTS_3467{ base: 'k'}
 
-key BRL_LEFT_CB { 
+key BRL_DOTS_246 { 
 	base: '{'
 }
 
-key BRL_LEFT_BRACKET { 
+key BRL_DOTS_2467 { 
 	base: '['
 }
 
-key BRL_EXCLAMATION { 
+key BRL_DOTS_2346 { 
 	base: '!'
 }
 
-# key BRL_COMB_87{ base: 'k'}
+# key BRL_DOTS_23467{ base: 'k'}
 
-key BRL_PERCENT { 
+key BRL_DOTS_146 { 
 	base: '%'
 }
 
-# key BRL_COMB_89{ base: 'k'}
+# key BRL_DOTS_1467{ base: 'k'}
 
-key BRL_LOWERX { 
+key BRL_DOTS_1346 { 
 	base: 'x'
 }
 
-key BRL_UPPERX { 
+key BRL_DOTS_13467 { 
 	base: 'X'
 }
 
-key BRL_DOLLAR { 
+key BRL_DOTS_1246 { 
 	base: '$'
 }
 
-# key BRL_COMB_93{ base: 'k'}
+# key BRL_DOTS_12467{ base: 'k'}
 
-key BRL_AND	{ 
+key BRL_DOTS_12346	{ 
 	base: '&'
 }
 
-# key BRL_COMB_95{ base: 'k'}
+# key BRL_DOTS_123467{ base: 'k'}
 
-key BRL_SEMICOLON { 
+key BRL_DOTS_56 { 
 	base: ';'
 }
 
-# key BRL_COMB_97{ base: 'k'}
+# key BRL_DOTS_567{ base: 'k'}
 
-key BRL_0 { 
+key BRL_DOTS_356 { 
 	base: '0'
 }
 
-# key BRL_COMB_99{ base: 'k'}
+# key BRL_DOTS_3567{ base: 'k'}
 
-key BRL_4 { 
+key BRL_DOTS_256 { 
 	base: '4'
 }
 
-# key BRL_COMB_101{ base: 'k'}
+# key BRL_DOTS_2567{ base: 'k'}
 
-key BRL_7 { 
+key BRL_DOTS_2356 { 
 	base: '7'
 }
 
-# key BRL_COMB_103{ base: 'k'}
+# key BRL_DOTS_23567{ base: 'k'}
 
-key BRL_COLON { 
+key BRL_DOTS_156 { 
 	base: ':'
 }
 
-# key BRL_COMB_105{ base: 'k'}
+# key BRL_DOTS_1567{ base: 'k'}
 
-key BRL_LOWERZ { 
+key BRL_DOTS_1356 { 
 	base: 'z'
 }
 
-key BRL_UPPERZ { 
+key BRL_DOTS_13567 { 
 	base: 'Z'
 }
 
-key BRL_OR { 
+key BRL_DOTS_1256 { 
 	base: '|'
 }
 
-key BRL_BACKSLASH { 
+key BRL_DOTS_12567 { 
 	base: '\\'
 }
 
-key BRL_LEFT_BRACE { 
+key BRL_DOTS_12356 { 
 	base: '('
 }
 
-# key BRL_COMB_111{ base: 'k'}
+# key BRL_DOTS_123567{ base: 'k'}
 
-key BRL_UNDERSCORE { 
+key BRL_DOTS_456 { 
 	base: '_'
 }
 
-# key BRL_COMB_113{ base: 'k'}
+# key BRL_DOTS_4567{ base: 'k'}
 
-key BRL_POUND { 
+key BRL_DOTS_3456 { 
 	base: '#'
 }
 
-# key BRL_COMB_115{ base: 'k'}
+# key BRL_DOTS_34567{ base: 'k'}
 
-key BRL_LOWERW { 
+key BRL_DOTS_2456 { 
 	base: 'w'
 }
 
-key BRL_UPPERW { 
+key BRL_DOTS_24567 { 
 	base: 'W'
 }
 
-key BRL_RIGHT_BRACE { 
+key BRL_DOTS_23456 { 
 	base: ')'
 }
 
-# key BRL_COMB_119{ base: 'k'}
+# key BRL_DOTS_234567{ base: 'k'}
 
-key BRL_QUESTION { 
+key BRL_DOTS_1456 { 
 	base: '?'
 }
 
-# key BRL_COMB_121{ base: 'k'}
+# key BRL_DOTS_14567{ base: 'k'}
 
-key BRL_LOWERY { 
+key BRL_DOTS_13456 { 
 	base: 'y'
 }
 
-key BRL_UPPERY { 
+key BRL_DOTS_134567 { 
 	base: 'Y'
 }
 
-key BRL_RIGHT_CB { 
+key BRL_DOTS_12456 { 
 	base: '}'
 }
 
-key BRL_RIGHT_BRACKET { 
+key BRL_DOTS_124567 { 
 	base: ']'
 }
 
-key BRL_EQUALS { 
+key BRL_DOTS_123456 { 
 	base: '='
 }
 
 
 
-# key BRL_COMB_127{ base: 'k'}
-# key BRL_COMB_128{ base: 'u'}
-# key BRL_COMB_129{ base: 'k'}
-# key BRL_COMB_130{ base: 'u'}
-# key BRL_COMB_131{ base: 'k'}
-# key BRL_COMB_132{ base: 'u'}
-# key BRL_COMB_133{ base: 'k'}
-# key BRL_COMB_134{ base: 'u'}
-# key BRL_COMB_135{ base: 'k'}
-# key BRL_COMB_136{ base: 'u'}
-# key BRL_COMB_137{ base: 'k'}
-# key BRL_COMB_138{ base: 'u'}
-# key BRL_COMB_139{ base: 'k'}
-# key BRL_COMB_140{ base: 'u'}
-# key BRL_COMB_141{ base: 'k'}
-# key BRL_COMB_142{ base: 'u'}
-# key BRL_COMB_143{ base: 'k'}
-# key BRL_COMB_144{ base: 'u'}
-# key BRL_COMB_145{ base: 'k'}
-# key BRL_COMB_146{ base: 'u'}
-# key BRL_COMB_147{ base: 'k'}
-# key BRL_COMB_148{ base: 'u'}
-# key BRL_COMB_149{ base: 'k'}
-# key BRL_COMB_150{ base: 'u'}
-# key BRL_COMB_151{ base: 'k'}
-# key BRL_COMB_152{ base: 'u'}
-# key BRL_COMB_153{ base: 'k'}
-# key BRL_COMB_154{ base: 'u'}
-# key BRL_COMB_155{ base: 'k'}
-# key BRL_COMB_156{ base: 'u'}
-# key BRL_COMB_157{ base: 'k'}
-# key BRL_COMB_158{ base: 'u'}
-# key BRL_COMB_159{ base: 'k'}
-# key BRL_COMB_160{ base: 'u'}
-# key BRL_COMB_161{ base: 'k'}
-# key BRL_COMB_162{ base: 'u'}
-# key BRL_COMB_163{ base: 'k'}
-# key BRL_COMB_164{ base: 'u'}
-# key BRL_COMB_165{ base: 'k'}
-# key BRL_COMB_166{ base: 'u'}
-# key BRL_COMB_167{ base: 'k'}
-# key BRL_COMB_168{ base: 'u'}
-# key BRL_COMB_169{ base: 'k'}
-# key BRL_COMB_170{ base: 'u'}
-# key BRL_COMB_171{ base: 'k'}
-# key BRL_COMB_172{ base: 'u'}
-# key BRL_COMB_173{ base: 'k'}
-# key BRL_COMB_174{ base: 'u'}
-# key BRL_COMB_175{ base: 'k'}
-# key BRL_COMB_176{ base: 'u'}
-# key BRL_COMB_177{ base: 'k'}
-# key BRL_COMB_178{ base: 'u'}
-# key BRL_COMB_179{ base: 'k'}
-# key BRL_COMB_180{ base: 'u'}
-# key BRL_COMB_181{ base: 'k'}
-# key BRL_COMB_182{ base: 'u'}
-# key BRL_COMB_183{ base: 'k'}
-# key BRL_COMB_184{ base: 'u'}
-# key BRL_COMB_185{ base: 'k'}
-# key BRL_COMB_186{ base: 'u'}
-# key BRL_COMB_187{ base: 'k'}
-# key BRL_COMB_188{ base: 'u'}
-# key BRL_COMB_189{ base: 'k'}
-# key BRL_COMB_190{ base: 'u'}
-# key BRL_COMB_191{ base: 'k'}
-# key BRL_COMB_192{ base: 'u'}
-# key BRL_COMB_193{ base: 'k'}
-# key BRL_COMB_194{ base: 'u'}
-# key BRL_COMB_195{ base: 'k'}
-# key BRL_COMB_196{ base: 'u'}
-# key BRL_COMB_197{ base: 'k'}
-# key BRL_COMB_198{ base: 'u'}
-# key BRL_COMB_199{ base: 'k'}
-# key BRL_COMB_200{ base: 'u'}
-# key BRL_COMB_201{ base: 'k'}
-# key BRL_COMB_202{ base: 'u'}
-# key BRL_COMB_203{ base: 'k'}
-# key BRL_COMB_204{ base: 'u'}
-# key BRL_COMB_205{ base: 'k'}
-# key BRL_COMB_206{ base: 'u'}
-# key BRL_COMB_207{ base: 'k'}
-# key BRL_COMB_208{ base: 'u'}
-# key BRL_COMB_209{ base: 'k'}
-# key BRL_COMB_210{ base: 'u'}
-# key BRL_COMB_211{ base: 'k'}
-# key BRL_COMB_212{ base: 'u'}
-# key BRL_COMB_213{ base: 'k'}
-# key BRL_COMB_214{ base: 'u'}
-# key BRL_COMB_215{ base: 'k'}
-# key BRL_COMB_216{ base: 'u'}
-# key BRL_COMB_217{ base: 'k'}
-# key BRL_COMB_218{ base: 'u'}
-# key BRL_COMB_219{ base: 'k'}
-# key BRL_COMB_220{ base: 'u'}
-# key BRL_COMB_221{ base: 'k'}
-# key BRL_COMB_222{ base: 'u'}
-# key BRL_COMB_223{ base: 'k'}
-# key BRL_COMB_224{ base: 'u'}
-# key BRL_COMB_225{ base: 'k'}
-# key BRL_COMB_226{ base: 'u'}
-# key BRL_COMB_227{ base: 'k'}
-# key BRL_COMB_228{ base: 'u'}
-# key BRL_COMB_229{ base: 'k'}
-# key BRL_COMB_230{ base: 'u'}
-# key BRL_COMB_231{ base: 'k'}
-# key BRL_COMB_232{ base: 'u'}
-# key BRL_COMB_233{ base: 'k'}
-# key BRL_COMB_234{ base: 'u'}
-# key BRL_COMB_235{ base: 'k'}
-# key BRL_COMB_236{ base: 'u'}
-# key BRL_COMB_237{ base: 'k'}
-# key BRL_COMB_238{ base: 'u'}
-# key BRL_COMB_239{ base: 'k'}
-# key BRL_COMB_240{ base: 'u'}
-# key BRL_COMB_241{ base: 'k'}
-# key BRL_COMB_242{ base: 'u'}
-# key BRL_COMB_243{ base: 'k'}
-# key BRL_COMB_244{ base: 'u'}
-# key BRL_COMB_245{ base: 'k'}
-# key BRL_COMB_246{ base: 'u'}
-# key BRL_COMB_247{ base: 'k'}
-# key BRL_COMB_248{ base: 'u'}
-# key BRL_COMB_249{ base: 'k'}
-# key BRL_COMB_250{ base: 'u'}
-# key BRL_COMB_251{ base: 'k'}
-# key BRL_COMB_252{ base: 'u'}
-# key BRL_COMB_253{ base: 'k'}
-# key BRL_COMB_254{ base: 'u'}
-# key BRL_COMB_255{ base: 'k'}
+# key BRL_DOTS_1234567{ base: 'k'}
+# key BRL_DOTS_8{ base: 'u'}
+# key BRL_DOTS_78{ base: 'k'}
+# key BRL_DOTS_38{ base: 'u'}
+# key BRL_DOTS_378{ base: 'k'}
+# key BRL_DOTS_28{ base: 'u'}
+# key BRL_DOTS_278{ base: 'k'}
+# key BRL_DOTS_238{ base: 'u'}
+# key BRL_DOTS_2378{ base: 'k'}
+# key BRL_DOTS_18{ base: 'u'}
+# key BRL_DOTS_178{ base: 'k'}
+# key BRL_DOTS_138{ base: 'u'}
+# key BRL_DOTS_1378{ base: 'k'}
+# key BRL_DOTS_128{ base: 'u'}
+# key BRL_DOTS_1278{ base: 'k'}
+# key BRL_DOTS_1238{ base: 'u'}
+# key BRL_DOTS_12378{ base: 'k'}
+# key BRL_DOTS_48{ base: 'u'}
+# key BRL_DOTS_478{ base: 'k'}
+# key BRL_DOTS_348{ base: 'u'}
+# key BRL_DOTS_3478{ base: 'k'}
+# key BRL_DOTS_248{ base: 'u'}
+# key BRL_DOTS_2478{ base: 'k'}
+# key BRL_DOTS_2348{ base: 'u'}
+# key BRL_DOTS_23478{ base: 'k'}
+# key BRL_DOTS_148{ base: 'u'}
+# key BRL_DOTS_1478{ base: 'k'}
+# key BRL_DOTS_1348{ base: 'u'}
+# key BRL_DOTS_13478{ base: 'k'}
+# key BRL_DOTS_1248{ base: 'u'}
+# key BRL_DOTS_12478{ base: 'k'}
+# key BRL_DOTS_12348{ base: 'u'}
+# key BRL_DOTS_123478{ base: 'k'}
+# key BRL_DOTS_58{ base: 'u'}
+# key BRL_DOTS_578{ base: 'k'}
+# key BRL_DOTS_358{ base: 'u'}
+# key BRL_DOTS_3578{ base: 'k'}
+# key BRL_DOTS_258{ base: 'u'}
+# key BRL_DOTS_2578{ base: 'k'}
+# key BRL_DOTS_2358{ base: 'u'}
+# key BRL_DOTS_23578{ base: 'k'}
+# key BRL_DOTS_158{ base: 'u'}
+# key BRL_DOTS_1578{ base: 'k'}
+# key BRL_DOTS_1358{ base: 'u'}
+# key BRL_DOTS_13578{ base: 'k'}
+# key BRL_DOTS_1258{ base: 'u'}
+# key BRL_DOTS_12578{ base: 'k'}
+# key BRL_DOTS_12358{ base: 'u'}
+# key BRL_DOTS_123578{ base: 'k'}
+# key BRL_DOTS_458{ base: 'u'}
+# key BRL_DOTS_4578{ base: 'k'}
+# key BRL_DOTS_3458{ base: 'u'}
+# key BRL_DOTS_34578{ base: 'k'}
+# key BRL_DOTS_2458{ base: 'u'}
+# key BRL_DOTS_24578{ base: 'k'}
+# key BRL_DOTS_23458{ base: 'u'}
+# key BRL_DOTS_234578{ base: 'k'}
+# key BRL_DOTS_1458{ base: 'u'}
+# key BRL_DOTS_14578{ base: 'k'}
+# key BRL_DOTS_13458{ base: 'u'}
+# key BRL_DOTS_134578{ base: 'k'}
+# key BRL_DOTS_12458{ base: 'u'}
+# key BRL_DOTS_124578{ base: 'k'}
+# key BRL_DOTS_123458{ base: 'u'}
+# key BRL_DOTS_1234578{ base: 'k'}
+# key BRL_DOTS_68{ base: 'u'}
+# key BRL_DOTS_678{ base: 'k'}
+# key BRL_DOTS_368{ base: 'u'}
+# key BRL_DOTS_3678{ base: 'k'}
+# key BRL_DOTS_268{ base: 'u'}
+# key BRL_DOTS_2678{ base: 'k'}
+# key BRL_DOTS_2368{ base: 'u'}
+# key BRL_DOTS_23678{ base: 'k'}
+# key BRL_DOTS_168{ base: 'u'}
+# key BRL_DOTS_1678{ base: 'k'}
+# key BRL_DOTS_1368{ base: 'u'}
+# key BRL_DOTS_13678{ base: 'k'}
+# key BRL_DOTS_1268{ base: 'u'}
+# key BRL_DOTS_12678{ base: 'k'}
+# key BRL_DOTS_12368{ base: 'u'}
+# key BRL_DOTS_123678{ base: 'k'}
+# key BRL_DOTS_468{ base: 'u'}
+# key BRL_DOTS_4678{ base: 'k'}
+# key BRL_DOTS_3468{ base: 'u'}
+# key BRL_DOTS_34678{ base: 'k'}
+# key BRL_DOTS_2468{ base: 'u'}
+# key BRL_DOTS_24678{ base: 'k'}
+# key BRL_DOTS_23468{ base: 'u'}
+# key BRL_DOTS_234678{ base: 'k'}
+# key BRL_DOTS_1468{ base: 'u'}
+# key BRL_DOTS_14678{ base: 'k'}
+# key BRL_DOTS_13468{ base: 'u'}
+# key BRL_DOTS_134678{ base: 'k'}
+# key BRL_DOTS_12468{ base: 'u'}
+# key BRL_DOTS_124678{ base: 'k'}
+# key BRL_DOTS_123468{ base: 'u'}
+# key BRL_DOTS_1234678{ base: 'k'}
+# key BRL_DOTS_568{ base: 'u'}
+# key BRL_DOTS_5678{ base: 'k'}
+# key BRL_DOTS_3568{ base: 'u'}
+# key BRL_DOTS_35678{ base: 'k'}
+# key BRL_DOTS_2568{ base: 'u'}
+# key BRL_DOTS_25678{ base: 'k'}
+# key BRL_DOTS_23568{ base: 'u'}
+# key BRL_DOTS_235678{ base: 'k'}
+# key BRL_DOTS_1568{ base: 'u'}
+# key BRL_DOTS_15678{ base: 'k'}
+# key BRL_DOTS_13568{ base: 'u'}
+# key BRL_DOTS_135678{ base: 'k'}
+# key BRL_DOTS_12568{ base: 'u'}
+# key BRL_DOTS_125678{ base: 'k'}
+# key BRL_DOTS_123568{ base: 'u'}
+# key BRL_DOTS_1235678{ base: 'k'}
+# key BRL_DOTS_4568{ base: 'u'}
+# key BRL_DOTS_45678{ base: 'k'}
+# key BRL_DOTS_34568{ base: 'u'}
+# key BRL_DOTS_345678{ base: 'k'}
+# key BRL_DOTS_24568{ base: 'u'}
+# key BRL_DOTS_245678{ base: 'k'}
+# key BRL_DOTS_234568{ base: 'u'}
+# key BRL_DOTS_2345678{ base: 'k'}
+# key BRL_DOTS_14568{ base: 'u'}
+# key BRL_DOTS_145678{ base: 'k'}
+# key BRL_DOTS_134568{ base: 'u'}
+# key BRL_DOTS_1345678{ base: 'k'}
+# key BRL_DOTS_124568{ base: 'u'}
+# key BRL_DOTS_1245678{ base: 'k'}
+# key BRL_DOTS_1234568{ base: 'u'}
+# key BRL_DOTS_12345678{ base: 'k'}
 
 ######################################################################
 #  {KW}: 256 Chorded keys                                            #
@@ -1108,256 +1108,256 @@ key BRL_EQUALS {
 #        The name should correspond to that of all the files-        #
 #        -which cantain keycodes/ scancodes.                         #
 ######################################################################
-# key CHORD_COMB_1{ base: '%'}
-# key CHORD_COMB_2{ base: '@'}
-# key CHORD_COMB_3{ base: '%'}
-# key CHORD_COMB_4{ base: '@'}
-# key CHORD_COMB_5{ base: '%'}
-# key CHORD_COMB_6{ base: '@'}
-# key CHORD_COMB_7{ base: '%'}
-# key CHORD_COMB_8{ base: '@'}
-# key CHORD_COMB_9{ base: '%'}
-# key CHORD_COMB_10{ base: '@'}
-# key CHORD_COMB_11{ base: '%'}
-# key CHORD_COMB_12{ base: '@'}
-# key CHORD_COMB_13{ base: '%'}
-# key CHORD_COMB_14{ base: '@'}
-# key CHORD_COMB_15{ base: '%'}
-# key CHORD_COMB_16{ base: '@'}
-# key CHORD_COMB_17{ base: '%'}
-# key CHORD_COMB_18{ base: '@'}
-# key CHORD_COMB_19{ base: '%'}
-# key CHORD_COMB_20{ base: '@'}
-# key CHORD_COMB_21{ base: '%'}
-# key CHORD_COMB_22{ base: '@'}
-# key CHORD_COMB_23{ base: '%'}
-# key CHORD_COMB_24{ base: '@'}
-# key CHORD_COMB_25{ base: '%'}
-# key CHORD_COMB_26{ base: '@'}
-# key CHORD_COMB_27{ base: '%'}
-# key CHORD_COMB_28{ base: '@'}
-# key CHORD_COMB_29{ base: '%'}
-# key CHORD_COMB_30{ base: '@'}
-# key CHORD_COMB_31{ base: '%'}
-# key CHORD_COMB_32{ base: '@'}
-# key CHORD_COMB_33{ base: '%'}
-# key CHORD_COMB_34{ base: '@'}
-# key CHORD_COMB_35{ base: '%'}
-# key CHORD_COMB_36{ base: '@'}
-# key CHORD_COMB_37{ base: '%'}
-# key CHORD_COMB_38{ base: '@'}
-# key CHORD_COMB_39{ base: '%'}
-# key CHORD_COMB_40{ base: '@'}
-# key CHORD_COMB_41{ base: '%'}
-# key CHORD_COMB_42{ base: '@'}
-# key CHORD_COMB_43{ base: '%'}
-# key CHORD_COMB_44{ base: '@'}
-# key CHORD_COMB_45{ base: '%'}
-# key CHORD_COMB_46{ base: '@'}
-# key CHORD_COMB_47{ base: '%'}
-# key CHORD_COMB_48{ base: '@'}
-# key CHORD_COMB_49{ base: '%'}
-# key CHORD_COMB_50{ base: '@'}
-# key CHORD_COMB_51{ base: '%'}
-# key CHORD_COMB_52{ base: '@'}
-# key CHORD_COMB_53{ base: '%'}
-# key CHORD_COMB_54{ base: '@'}
-# key CHORD_COMB_55{ base: '%'}
-# key CHORD_COMB_56{ base: '@'}
-# key CHORD_COMB_57{ base: '%'}
-# key CHORD_COMB_58{ base: '@'}
-# key CHORD_COMB_59{ base: '%'}
-# key CHORD_COMB_60{ base: '@'}
-# key CHORD_COMB_61{ base: '%'}
-# key CHORD_COMB_62{ base: '@'}
-# key CHORD_COMB_63{ base: '%'}
-# key CHORD_COMB_64{ base: '@'}
-# key CHORD_COMB_65{ base: '%'}
-# key CHORD_COMB_66{ base: '@'}
-# key CHORD_COMB_67{ base: '%'}
-# key CHORD_COMB_68{ base: '@'}
-# key CHORD_COMB_69{ base: '%'}
-# key CHORD_COMB_70{ base: '@'}
-# key CHORD_COMB_71{ base: '%'}
-# key CHORD_COMB_72{ base: '@'}
-# key CHORD_COMB_73{ base: '%'}
-# key CHORD_COMB_74{ base: '@'}
-# key CHORD_COMB_75{ base: '%'}
-# key CHORD_COMB_76{ base: '@'}
-# key CHORD_COMB_77{ base: '%'}
-# key CHORD_COMB_78{ base: '@'}
-# key CHORD_COMB_79{ base: '%'}
-# key CHORD_COMB_80{ base: '@'}
-# key CHORD_COMB_81{ base: '%'}
-# key CHORD_COMB_82{ base: '@'}
-# key CHORD_COMB_83{ base: '%'}
-# key CHORD_COMB_84{ base: '@'}
-# key CHORD_COMB_85{ base: '%'}
-# key CHORD_COMB_86{ base: '@'}
-# key CHORD_COMB_87{ base: '%'}
-# key CHORD_COMB_88{ base: '@'}
-# key CHORD_COMB_89{ base: '%'}
-# key CHORD_COMB_90{ base: '@'}
-# key CHORD_COMB_91{ base: '%'}
-# key CHORD_COMB_92{ base: '@'}
-# key CHORD_COMB_93{ base: '%'}
-# key CHORD_COMB_94{ base: '@'}
-# key CHORD_COMB_95{ base: '%'}
-# key CHORD_COMB_96{ base: '@'}
-# key CHORD_COMB_97{ base: '%'}
-# key CHORD_COMB_98{ base: '@'}
-# key CHORD_COMB_99{ base: '%'}
-# key CHORD_COMB_100{ base: '@'}
-# key CHORD_COMB_101{ base: '%'}
-# key CHORD_COMB_102{ base: '@'}
-# key CHORD_COMB_103{ base: '%'}
-# key CHORD_COMB_104{ base: '@'}
-# key CHORD_COMB_105{ base: '%'}
-# key CHORD_COMB_106{ base: '@'}
-# key CHORD_COMB_107{ base: '%'}
-# key CHORD_COMB_108{ base: '@'}
-# key CHORD_COMB_109{ base: '%'}
-# key CHORD_COMB_110{ base: '@'}
-# key CHORD_COMB_111{ base: '%'}
-# key CHORD_COMB_112{ base: '@'}
-# key CHORD_COMB_113{ base: '%'}
-# key CHORD_COMB_114{ base: '@'}
-# key CHORD_COMB_115{ base: '%'}
-# key CHORD_COMB_116{ base: '@'}
-# key CHORD_COMB_117{ base: '%'}
-# key CHORD_COMB_118{ base: '@'}
-# key CHORD_COMB_119{ base: '%'}
-# key CHORD_COMB_120{ base: '@'}
-# key CHORD_COMB_121{ base: '%'}
-# key CHORD_COMB_122{ base: '@'}
-# key CHORD_COMB_123{ base: '%'}
-# key CHORD_COMB_124{ base: '@'}
-# key CHORD_COMB_125{ base: '%'}
-# key CHORD_COMB_126{ base: '@'}
-# key CHORD_COMB_127{ base: '%'}
-# key CHORD_COMB_128{ base: '@'}
-# key CHORD_COMB_129{ base: '%'}
-# key CHORD_COMB_130{ base: '@'}
-# key CHORD_COMB_131{ base: '%'}
-# key CHORD_COMB_132{ base: '@'}
-# key CHORD_COMB_133{ base: '%'}
-# key CHORD_COMB_134{ base: '@'}
-# key CHORD_COMB_135{ base: '%'}
-# key CHORD_COMB_136{ base: '@'}
-# key CHORD_COMB_137{ base: '%'}
-# key CHORD_COMB_138{ base: '@'}
-# key CHORD_COMB_139{ base: '%'}
-# key CHORD_COMB_140{ base: '%'}
-# key CHORD_COMB_142{ base: '@'}
-# key CHORD_COMB_143{ base: '%'}
-# key CHORD_COMB_144{ base: '@'}
-# key CHORD_COMB_145{ base: '%'}
-# key CHORD_COMB_146{ base: '@'}
-# key CHORD_COMB_147{ base: '%'}
-# key CHORD_COMB_148{ base: '@'}
-# key CHORD_COMB_149{ base: '%'}
-# key CHORD_COMB_150{ base: '%'}
-# key CHORD_COMB_152{ base: '@'}
-# key CHORD_COMB_153{ base: '%'}
-# key CHORD_COMB_154{ base: '@'}
-# key CHORD_COMB_155{ base: '%'}
-# key CHORD_COMB_156{ base: '@'}
-# key CHORD_COMB_157{ base: '%'}
-# key CHORD_COMB_158{ base: '@'}
-# key CHORD_COMB_159{ base: '%'}
-# key CHORD_COMB_160{ base: '@'}
-# key CHORD_COMB_161{ base: '%'}
-# key CHORD_COMB_162{ base: '@'}
-# key CHORD_COMB_163{ base: '%'}
-# key CHORD_COMB_164{ base: '@'}
-# key CHORD_COMB_165{ base: '%'}
-# key CHORD_COMB_166{ base: '@'}
-# key CHORD_COMB_167{ base: '%'}
-# key CHORD_COMB_168{ base: '@'}
-# key CHORD_COMB_169{ base: '%'}
-# key CHORD_COMB_170{ base: '@'}
-# key CHORD_COMB_171{ base: '%'}
-# key CHORD_COMB_172{ base: '@'}
-# key CHORD_COMB_173{ base: '%'}
-# key CHORD_COMB_174{ base: '@'}
-# key CHORD_COMB_175{ base: '%'}
-# key CHORD_COMB_176{ base: '@'}
-# key CHORD_COMB_177{ base: '%'}
-# key CHORD_COMB_178{ base: '@'}
-# key CHORD_COMB_179{ base: '%'}
-# key CHORD_COMB_180{ base: '@'}
-# key CHORD_COMB_181{ base: '%'}
-# key CHORD_COMB_182{ base: '@'}
-# key CHORD_COMB_183{ base: '%'}
-# key CHORD_COMB_184{ base: '@'}
-# key CHORD_COMB_185{ base: '%'}
-# key CHORD_COMB_186{ base: '@'}
-# key CHORD_COMB_187{ base: '%'}
-# key CHORD_COMB_188{ base: '@'}
-# key CHORD_COMB_189{ base: '%'}
-# key CHORD_COMB_190{ base: '@'}
-# key CHORD_COMB_191{ base: '%'}
-# key CHORD_COMB_192{ base: '@'}
-# key CHORD_COMB_193{ base: '%'}
-# key CHORD_COMB_194{ base: '@'}
-# key CHORD_COMB_195{ base: '%'}
-# key CHORD_COMB_196{ base: '@'}
-# key CHORD_COMB_197{ base: '%'}
-# key CHORD_COMB_198{ base: '@'}
-# key CHORD_COMB_199{ base: '%'}
-# key CHORD_COMB_200{ base: '@'}
-# key CHORD_COMB_201{ base: '%'}
-# key CHORD_COMB_202{ base: '@'}
-# key CHORD_COMB_203{ base: '%'}
-# key CHORD_COMB_204{ base: '@'}
-# key CHORD_COMB_205{ base: '%'}
-# key CHORD_COMB_206{ base: '@'}
-# key CHORD_COMB_207{ base: '%'}
-# key CHORD_COMB_208{ base: '@'}
-# key CHORD_COMB_209{ base: '%'}
-# key CHORD_COMB_210{ base: '@'}
-# key CHORD_COMB_211{ base: '%'}
-# key CHORD_COMB_212{ base: '@'}
-# key CHORD_COMB_213{ base: '%'}
-# key CHORD_COMB_214{ base: '@'}
-# key CHORD_COMB_215{ base: '%'}
-# key CHORD_COMB_216{ base: '@'}
-# key CHORD_COMB_217{ base: '%'}
-# key CHORD_COMB_218{ base: '@'}
-# key CHORD_COMB_219{ base: '%'}
-# key CHORD_COMB_220{ base: '@'}
-# key CHORD_COMB_221{ base: '%'}
-# key CHORD_COMB_222{ base: '@'}
-# key CHORD_COMB_223{ base: '%'}
-# key CHORD_COMB_224{ base: '@'}
-# key CHORD_COMB_225{ base: '%'}
-# key CHORD_COMB_226{ base: '@'}
-# key CHORD_COMB_227{ base: '%'}
-# key CHORD_COMB_228{ base: '@'}
-# key CHORD_COMB_229{ base: '%'}
-# key CHORD_COMB_230{ base: '@'}
-# key CHORD_COMB_231{ base: '%'}
-# key CHORD_COMB_232{ base: '@'}
-# key CHORD_COMB_233{ base: '%'}
-# key CHORD_COMB_234{ base: '@'}
-# key CHORD_COMB_235{ base: '%'}
-# key CHORD_COMB_236{ base: '@'}
-# key CHORD_COMB_237{ base: '%'}
-# key CHORD_COMB_238{ base: '@'}
-# key CHORD_COMB_239{ base: '%'}
-# key CHORD_COMB_240{ base: '@'}
-# key CHORD_COMB_241{ base: '%'}
-# key CHORD_COMB_242{ base: '@'}
-# key CHORD_COMB_243{ base: '%'}
-# key CHORD_COMB_244{ base: '@'}
-# key CHORD_COMB_245{ base: '%'}
-# key CHORD_COMB_246{ base: '@'}
-# key CHORD_COMB_247{ base: '%'}
-# key CHORD_COMB_248{ base: '@'}
-# key CHORD_COMB_249{ base: '%'}
-# key CHORD_COMB_250{ base: '@'}
-# key CHORD_COMB_251{ base: '%'}
-# key CHORD_COMB_252{ base: '@'}
-# key CHORD_COMB_253{ base: '%'}
-# key CHORD_COMB_254{ base: '@'}
-# key CHORD_COMB_255{ base: '%'}
+# key BRL_CHORD_7{ base: '%'}
+# key BRL_CHORD_3{ base: '@'}
+# key BRL_CHORD_37{ base: '%'}
+# key BRL_CHORD_2{ base: '@'}
+# key BRL_CHORD_27{ base: '%'}
+# key BRL_CHORD_23{ base: '@'}
+# key BRL_CHORD_237{ base: '%'}
+# key BRL_CHORD_1{ base: '@'}
+# key BRL_CHORD_17{ base: '%'}
+# key BRL_CHORD_13{ base: '@'}
+# key BRL_CHORD_137{ base: '%'}
+# key BRL_CHORD_12{ base: '@'}
+# key BRL_CHORD_127{ base: '%'}
+# key BRL_CHORD_123{ base: '@'}
+# key BRL_CHORD_1237{ base: '%'}
+# key BRL_CHORD_4{ base: '@'}
+# key BRL_CHORD_47{ base: '%'}
+# key BRL_CHORD_34{ base: '@'}
+# key BRL_CHORD_347{ base: '%'}
+# key BRL_CHORD_24{ base: '@'}
+# key BRL_CHORD_247{ base: '%'}
+# key BRL_CHORD_234{ base: '@'}
+# key BRL_CHORD_2347{ base: '%'}
+# key BRL_CHORD_14{ base: '@'}
+# key BRL_CHORD_147{ base: '%'}
+# key BRL_CHORD_134{ base: '@'}
+# key BRL_CHORD_1347{ base: '%'}
+# key BRL_CHORD_124{ base: '@'}
+# key BRL_CHORD_1247{ base: '%'}
+# key BRL_CHORD_1234{ base: '@'}
+# key BRL_CHORD_12347{ base: '%'}
+# key BRL_CHORD_5{ base: '@'}
+# key BRL_CHORD_57{ base: '%'}
+# key BRL_CHORD_35{ base: '@'}
+# key BRL_CHORD_357{ base: '%'}
+# key BRL_CHORD_25{ base: '@'}
+# key BRL_CHORD_257{ base: '%'}
+# key BRL_CHORD_235{ base: '@'}
+# key BRL_CHORD_2357{ base: '%'}
+# key BRL_CHORD_15{ base: '@'}
+# key BRL_CHORD_157{ base: '%'}
+# key BRL_CHORD_135{ base: '@'}
+# key BRL_CHORD_1357{ base: '%'}
+# key BRL_CHORD_125{ base: '@'}
+# key BRL_CHORD_1257{ base: '%'}
+# key BRL_CHORD_1235{ base: '@'}
+# key BRL_CHORD_12357{ base: '%'}
+# key BRL_CHORD_45{ base: '@'}
+# key BRL_CHORD_457{ base: '%'}
+# key BRL_CHORD_345{ base: '@'}
+# key BRL_CHORD_3457{ base: '%'}
+# key BRL_CHORD_245{ base: '@'}
+# key BRL_CHORD_2457{ base: '%'}
+# key BRL_CHORD_2345{ base: '@'}
+# key BRL_CHORD_23457{ base: '%'}
+# key BRL_CHORD_145{ base: '@'}
+# key BRL_CHORD_1457{ base: '%'}
+# key BRL_CHORD_1345{ base: '@'}
+# key BRL_CHORD_13457{ base: '%'}
+# key BRL_CHORD_1245{ base: '@'}
+# key BRL_CHORD_12457{ base: '%'}
+# key BRL_CHORD_12345{ base: '@'}
+# key BRL_CHORD_123457{ base: '%'}
+# key BRL_CHORD_6{ base: '@'}
+# key BRL_CHORD_67{ base: '%'}
+# key BRL_CHORD_36{ base: '@'}
+# key BRL_CHORD_367{ base: '%'}
+# key BRL_CHORD_26{ base: '@'}
+# key BRL_CHORD_267{ base: '%'}
+# key BRL_CHORD_236{ base: '@'}
+# key BRL_CHORD_2367{ base: '%'}
+# key BRL_CHORD_16{ base: '@'}
+# key BRL_CHORD_167{ base: '%'}
+# key BRL_CHORD_136{ base: '@'}
+# key BRL_CHORD_1367{ base: '%'}
+# key BRL_CHORD_126{ base: '@'}
+# key BRL_CHORD_1267{ base: '%'}
+# key BRL_CHORD_1236{ base: '@'}
+# key BRL_CHORD_12367{ base: '%'}
+# key BRL_CHORD_46{ base: '@'}
+# key BRL_CHORD_467{ base: '%'}
+# key BRL_CHORD_346{ base: '@'}
+# key BRL_CHORD_3467{ base: '%'}
+# key BRL_CHORD_246{ base: '@'}
+# key BRL_CHORD_2467{ base: '%'}
+# key BRL_CHORD_2346{ base: '@'}
+# key BRL_CHORD_23467{ base: '%'}
+# key BRL_CHORD_146{ base: '@'}
+# key BRL_CHORD_1467{ base: '%'}
+# key BRL_CHORD_1346{ base: '@'}
+# key BRL_CHORD_13467{ base: '%'}
+# key BRL_CHORD_1246{ base: '@'}
+# key BRL_CHORD_12467{ base: '%'}
+# key BRL_CHORD_12346{ base: '@'}
+# key BRL_CHORD_123467{ base: '%'}
+# key BRL_CHORD_56{ base: '@'}
+# key BRL_CHORD_567{ base: '%'}
+# key BRL_CHORD_356{ base: '@'}
+# key BRL_CHORD_3567{ base: '%'}
+# key BRL_CHORD_256{ base: '@'}
+# key BRL_CHORD_2567{ base: '%'}
+# key BRL_CHORD_2356{ base: '@'}
+# key BRL_CHORD_23567{ base: '%'}
+# key BRL_CHORD_156{ base: '@'}
+# key BRL_CHORD_1567{ base: '%'}
+# key BRL_CHORD_1356{ base: '@'}
+# key BRL_CHORD_13567{ base: '%'}
+# key BRL_CHORD_1256{ base: '@'}
+# key BRL_CHORD_12567{ base: '%'}
+# key BRL_CHORD_12356{ base: '@'}
+# key BRL_CHORD_123567{ base: '%'}
+# key BRL_CHORD_456{ base: '@'}
+# key BRL_CHORD_4567{ base: '%'}
+# key BRL_CHORD_3456{ base: '@'}
+# key BRL_CHORD_34567{ base: '%'}
+# key BRL_CHORD_2456{ base: '@'}
+# key BRL_CHORD_24567{ base: '%'}
+# key BRL_CHORD_23456{ base: '@'}
+# key BRL_CHORD_234567{ base: '%'}
+# key BRL_CHORD_1456{ base: '@'}
+# key BRL_CHORD_14567{ base: '%'}
+# key BRL_CHORD_13456{ base: '@'}
+# key BRL_CHORD_134567{ base: '%'}
+# key BRL_CHORD_12456{ base: '@'}
+# key BRL_CHORD_124567{ base: '%'}
+# key BRL_CHORD_123456{ base: '@'}
+# key BRL_CHORD_1234567{ base: '%'}
+# key BRL_CHORD_8{ base: '@'}
+# key BRL_CHORD_78{ base: '%'}
+# key BRL_CHORD_38{ base: '@'}
+# key BRL_CHORD_378{ base: '%'}
+# key BRL_CHORD_28{ base: '@'}
+# key BRL_CHORD_278{ base: '%'}
+# key BRL_CHORD_238{ base: '@'}
+# key BRL_CHORD_2378{ base: '%'}
+# key BRL_CHORD_18{ base: '@'}
+# key BRL_CHORD_178{ base: '%'}
+# key BRL_CHORD_138{ base: '@'}
+# key BRL_CHORD_1378{ base: '%'}
+# key BRL_CHORD_128{ base: '%'}
+# key BRL_CHORD_1238{ base: '@'}
+# key BRL_CHORD_12378{ base: '%'}
+# key BRL_CHORD_48{ base: '@'}
+# key BRL_CHORD_478{ base: '%'}
+# key BRL_CHORD_348{ base: '@'}
+# key BRL_CHORD_3478{ base: '%'}
+# key BRL_CHORD_248{ base: '@'}
+# key BRL_CHORD_2478{ base: '%'}
+# key BRL_CHORD_2348{ base: '%'}
+# key BRL_CHORD_148{ base: '@'}
+# key BRL_CHORD_1478{ base: '%'}
+# key BRL_CHORD_1348{ base: '@'}
+# key BRL_CHORD_13478{ base: '%'}
+# key BRL_CHORD_1248{ base: '@'}
+# key BRL_CHORD_12478{ base: '%'}
+# key BRL_CHORD_12348{ base: '@'}
+# key BRL_CHORD_123478{ base: '%'}
+# key BRL_CHORD_58{ base: '@'}
+# key BRL_CHORD_578{ base: '%'}
+# key BRL_CHORD_358{ base: '@'}
+# key BRL_CHORD_3578{ base: '%'}
+# key BRL_CHORD_258{ base: '@'}
+# key BRL_CHORD_2578{ base: '%'}
+# key BRL_CHORD_2358{ base: '@'}
+# key BRL_CHORD_23578{ base: '%'}
+# key BRL_CHORD_158{ base: '@'}
+# key BRL_CHORD_1578{ base: '%'}
+# key BRL_CHORD_1358{ base: '@'}
+# key BRL_CHORD_13578{ base: '%'}
+# key BRL_CHORD_1258{ base: '@'}
+# key BRL_CHORD_12578{ base: '%'}
+# key BRL_CHORD_12358{ base: '@'}
+# key BRL_CHORD_123578{ base: '%'}
+# key BRL_CHORD_458{ base: '@'}
+# key BRL_CHORD_4578{ base: '%'}
+# key BRL_CHORD_3458{ base: '@'}
+# key BRL_CHORD_34578{ base: '%'}
+# key BRL_CHORD_2458{ base: '@'}
+# key BRL_CHORD_24578{ base: '%'}
+# key BRL_CHORD_23458{ base: '@'}
+# key BRL_CHORD_234578{ base: '%'}
+# key BRL_CHORD_1458{ base: '@'}
+# key BRL_CHORD_14578{ base: '%'}
+# key BRL_CHORD_13458{ base: '@'}
+# key BRL_CHORD_134578{ base: '%'}
+# key BRL_CHORD_12458{ base: '@'}
+# key BRL_CHORD_124578{ base: '%'}
+# key BRL_CHORD_123458{ base: '@'}
+# key BRL_CHORD_1234578{ base: '%'}
+# key BRL_CHORD_68{ base: '@'}
+# key BRL_CHORD_678{ base: '%'}
+# key BRL_CHORD_368{ base: '@'}
+# key BRL_CHORD_3678{ base: '%'}
+# key BRL_CHORD_268{ base: '@'}
+# key BRL_CHORD_2678{ base: '%'}
+# key BRL_CHORD_2368{ base: '@'}
+# key BRL_CHORD_23678{ base: '%'}
+# key BRL_CHORD_168{ base: '@'}
+# key BRL_CHORD_1678{ base: '%'}
+# key BRL_CHORD_1368{ base: '@'}
+# key BRL_CHORD_13678{ base: '%'}
+# key BRL_CHORD_1268{ base: '@'}
+# key BRL_CHORD_12678{ base: '%'}
+# key BRL_CHORD_12368{ base: '@'}
+# key BRL_CHORD_123678{ base: '%'}
+# key BRL_CHORD_468{ base: '@'}
+# key BRL_CHORD_4678{ base: '%'}
+# key BRL_CHORD_3468{ base: '@'}
+# key BRL_CHORD_34678{ base: '%'}
+# key BRL_CHORD_2468{ base: '@'}
+# key BRL_CHORD_24678{ base: '%'}
+# key BRL_CHORD_23468{ base: '@'}
+# key BRL_CHORD_234678{ base: '%'}
+# key BRL_CHORD_1468{ base: '@'}
+# key BRL_CHORD_14678{ base: '%'}
+# key BRL_CHORD_13468{ base: '@'}
+# key BRL_CHORD_134678{ base: '%'}
+# key BRL_CHORD_12468{ base: '@'}
+# key BRL_CHORD_124678{ base: '%'}
+# key BRL_CHORD_123468{ base: '@'}
+# key BRL_CHORD_1234678{ base: '%'}
+# key BRL_CHORD_568{ base: '@'}
+# key BRL_CHORD_5678{ base: '%'}
+# key BRL_CHORD_3568{ base: '@'}
+# key BRL_CHORD_35678{ base: '%'}
+# key BRL_CHORD_2568{ base: '@'}
+# key BRL_CHORD_25678{ base: '%'}
+# key BRL_CHORD_23568{ base: '@'}
+# key BRL_CHORD_235678{ base: '%'}
+# key BRL_CHORD_1568{ base: '@'}
+# key BRL_CHORD_15678{ base: '%'}
+# key BRL_CHORD_13568{ base: '@'}
+# key BRL_CHORD_135678{ base: '%'}
+# key BRL_CHORD_12568{ base: '@'}
+# key BRL_CHORD_125678{ base: '%'}
+# key BRL_CHORD_123568{ base: '@'}
+# key BRL_CHORD_1235678{ base: '%'}
+# key BRL_CHORD_4568{ base: '@'}
+# key BRL_CHORD_45678{ base: '%'}
+# key BRL_CHORD_34568{ base: '@'}
+# key BRL_CHORD_345678{ base: '%'}
+# key BRL_CHORD_24568{ base: '@'}
+# key BRL_CHORD_245678{ base: '%'}
+# key BRL_CHORD_234568{ base: '@'}
+# key BRL_CHORD_2345678{ base: '%'}
+# key BRL_CHORD_14568{ base: '@'}
+# key BRL_CHORD_145678{ base: '%'}
+# key BRL_CHORD_134568{ base: '@'}
+# key BRL_CHORD_1345678{ base: '%'}
+# key BRL_CHORD_124568{ base: '@'}
+# key BRL_CHORD_1245678{ base: '%'}
+# key BRL_CHORD_1234568{ base: '@'}
+# key BRL_CHORD_12345678{ base: '%'}
