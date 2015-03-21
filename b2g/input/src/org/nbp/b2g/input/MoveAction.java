@@ -10,6 +10,19 @@ public abstract class MoveAction extends ScreenAction {
   protected abstract boolean moveToNextNode (AccessibilityNodeInfo node, boolean force);
   protected abstract int getScrollAction ();
 
+  public boolean scrollNode (AccessibilityNodeInfo node) {
+    boolean scrolled = performNodeAction(node, getScrollAction());
+
+    if (scrolled) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll succeeded");
+      ApplicationUtilities.sleep(ApplicationParameters.SCROLL_DELAY);
+    } else {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll failed");
+    }
+
+    return scrolled;
+  }
+
   public boolean innerMoveToNextNode (AccessibilityNodeInfo node) {
     boolean moved = moveToNextNode(node, true);
 
@@ -48,10 +61,7 @@ public abstract class MoveAction extends ScreenAction {
     }
 
     if (!moved) {
-      if (performNodeAction(node, getScrollAction())) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll succeeded");
-        ApplicationUtilities.sleep(ApplicationParameters.SCROLL_DELAY);
-
+      if (scrollNode(node)) {
         {
           AccessibilityNodeInfo found = findNode(node);
           node.recycle();
@@ -77,8 +87,6 @@ public abstract class MoveAction extends ScreenAction {
         if (!moved) {
           if (innerMoveToNextNode(node)) moved = true;
         }
-      } else {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll failed");
       }
     }
 
