@@ -61,7 +61,7 @@ public abstract class UInputDevice {
     return false;
   }
 
-  public UInputDevice () {
+  protected UInputDevice () {
   }
 
   static {

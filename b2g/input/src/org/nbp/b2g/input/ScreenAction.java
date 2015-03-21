@@ -232,7 +232,7 @@ public abstract class ScreenAction extends Action {
     return -1;
   }
 
-  public ScreenAction (String name) {
+  protected ScreenAction (String name) {
     super(name);
   }
 }

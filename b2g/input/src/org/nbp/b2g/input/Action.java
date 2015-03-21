@@ -24,7 +24,7 @@ public abstract class Action {
     return ScreenMonitor.getScreenMonitor();
   }
 
-  public Action (String name) {
+  protected Action (String name) {
     actionName = name;
   }
 

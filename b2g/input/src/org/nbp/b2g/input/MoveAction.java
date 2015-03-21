@@ -10,7 +10,7 @@ public abstract class MoveAction extends ScreenAction {
   protected abstract boolean moveToNextNode (AccessibilityNodeInfo node, boolean force);
   protected abstract int getScrollAction ();
 
-  public boolean scrollNode (AccessibilityNodeInfo node) {
+  protected boolean scroll (AccessibilityNodeInfo node) {
     boolean scrolled = performNodeAction(node, getScrollAction());
 
     if (scrolled) {
@@ -23,7 +23,7 @@ public abstract class MoveAction extends ScreenAction {
     return scrolled;
   }
 
-  public boolean innerMoveToNextNode (AccessibilityNodeInfo node) {
+  protected boolean innerMove (AccessibilityNodeInfo node) {
     boolean moved = moveToNextNode(node, true);
 
     if (moved) {
@@ -35,7 +35,7 @@ public abstract class MoveAction extends ScreenAction {
     return moved;
   }
 
-  public boolean outerMoveToNextNode (AccessibilityNodeInfo node) {
+  protected boolean outerMove (AccessibilityNodeInfo node) {
     boolean moved = moveToNextNode(node, false);
 
     if (moved) {
@@ -54,21 +54,22 @@ public abstract class MoveAction extends ScreenAction {
 
     if (node != null) {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(node, "starting node");
-      if (innerMoveToNextNode(node)) moved = true;
+      if (innerMove(node)) moved = true;
     } else {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("no starting node");
       return false;
     }
 
     if (!moved) {
-      if (scrollNode(node)) {
+      if (scroll(node)) {
         {
           AccessibilityNodeInfo found = findNode(node);
           node.recycle();
 
           if (found != null) {
-            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(found, "node after scroll");
+            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(found, "found node after scroll");
             node = found;
+            found = null;
           } else {
             if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node not found after scroll");
             node = getCurrentNode();
@@ -85,13 +86,13 @@ public abstract class MoveAction extends ScreenAction {
         }
 
         if (!moved) {
-          if (innerMoveToNextNode(node)) moved = true;
+          if (innerMove(node)) moved = true;
         }
       }
     }
 
     if (!moved) {
-      if (outerMoveToNextNode(node)) moved = true;
+      if (outerMove(node)) moved = true;
     }
 
     if (!moved) {
@@ -102,7 +103,7 @@ public abstract class MoveAction extends ScreenAction {
     return moved;
   }
 
-  public MoveAction (String name) {
+  protected MoveAction (String name) {
     super("MOVE_" + name);
   }
 }
