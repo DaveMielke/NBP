@@ -1,6 +1,7 @@
 package org.nbp.b2g.input;
 
 import android.util.Log;
+import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -20,9 +21,43 @@ public abstract class ScreenAction extends Action {
   }
 
   protected void log (AccessibilityNodeInfo node, String reason) {
-    CharSequence text = getNodeText(node);
-    if (text == null) text = node.getClassName();
-    log(reason + ": " + text.toString());
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(reason);
+    sb.append(':');
+
+    {
+      CharSequence text = node.getText();
+
+      if (text != null) {
+        sb.append(" \"");
+        sb.append(text);
+        sb.append('"');
+      }
+    }
+
+    {
+      CharSequence description = node.getContentDescription();
+
+      if (description != null) {
+        sb.append(" (");
+        sb.append(description);
+        sb.append(')');
+      }
+    }
+
+    sb.append(' ');
+    sb.append(node.getClassName());
+
+    {
+      Rect bounds = new Rect();
+      node.getBoundsInScreen(bounds);
+
+      sb.append(' ');
+      sb.append(bounds.toShortString());
+    }
+
+    log(sb.toString());
   }
 
   protected AccessibilityNodeInfo getRootNode () {
