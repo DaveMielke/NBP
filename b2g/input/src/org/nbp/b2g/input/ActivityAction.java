@@ -1,5 +1,6 @@
 package org.nbp.b2g.input;
 
+import android.content.Context;
 import android.content.Intent;
 
 public final class ActivityAction extends Action {
@@ -7,10 +8,10 @@ public final class ActivityAction extends Action {
 
   @Override
   public final boolean performAction () {
-    InputService inputService = getInputService();
+    Context context = ApplicationHooks.getContext();
 
-    if (inputService != null) {
-      Intent intent = new Intent(inputService, activityClass);
+    if (context != null) {
+      Intent intent = new Intent(context, activityClass);
 
       intent.addFlags(
         Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
@@ -19,7 +20,7 @@ public final class ActivityAction extends Action {
         Intent.FLAG_ACTIVITY_SINGLE_TOP
       );
 
-      inputService.startActivity(intent);
+      context.startActivity(intent);
       return true;
     }
 

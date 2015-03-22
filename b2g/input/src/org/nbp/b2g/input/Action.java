@@ -3,9 +3,13 @@ package org.nbp.b2g.input;
 import java.util.Map;
 import java.util.HashMap;
 
+import android.util.Log;
+
 import android.inputmethodservice.InputMethodService;
 
 public abstract class Action {
+  private static final String LOG_TAG = MoveForwardAction.class.getName();
+
   private static Map<Integer, Action> actionMap = new HashMap<Integer, Action>();
 
   final String actionName;
@@ -14,6 +18,11 @@ public abstract class Action {
 
   public String getName () {
     return actionName;
+  }
+
+  public boolean parseOperand (int keyMask, String operand) {
+    Log.w(LOG_TAG, "invalid " + getName() + " operand: " + operand);
+    return false;
   }
 
   protected final InputService getInputService () {
