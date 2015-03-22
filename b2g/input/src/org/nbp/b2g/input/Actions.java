@@ -61,6 +61,13 @@ public class Actions {
   }
 
   public static void add () {
+    {
+      int keyMask = KeyMask.DOTS_12345678;
+
+      NullAction.add(keyMask);
+      NullAction.add((KeyMask.SPACE | keyMask));
+    }
+
     addSystemKeyChords();
     addArrowKeyChords();
 
