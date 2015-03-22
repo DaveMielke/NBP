@@ -4,7 +4,7 @@ import android.util.Log;
 
 import android.view.KeyEvent;
 
-public final class GlobalAction extends KeyCodeAction {
+public class GlobalAction extends KeyCodeAction {
   private static final String LOG_TAG = GlobalAction.class.getName();
 
   protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;
@@ -39,7 +39,11 @@ public final class GlobalAction extends KeyCodeAction {
     add(keyMask, new GlobalAction(globalAction, name, keyCode));
   }
 
+  public GlobalAction (int globalAction, String name) {
+    this(globalAction, name, NULL_KEY_CODE);
+  }
+
   public static void add (int keyMask, int globalAction, String name) {
-    add(keyMask, new GlobalAction(globalAction, name, NULL_KEY_CODE));
+    add(keyMask, new GlobalAction(globalAction, name));
   }
 }

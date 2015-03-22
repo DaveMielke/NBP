@@ -99,6 +99,8 @@ public class Actions {
         case 'l': bit = KeyMask.DPAD_LEFT;   break;
         case 'r': bit = KeyMask.DPAD_RIGHT;  break;
 
+        case 'x': bit = KeyMask.SCAN_CODE;   break;
+
         default:
           Log.w(LOG_TAG, "invalid key: " + character);
           return 0;
@@ -265,10 +267,6 @@ public class Actions {
 
     KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
     KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
-
-    GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS, "NOTIFICATIONS", KeyEvent.KEYCODE_NOTIFICATION);
-    ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1478), "POWER", ApplicationUtilities.getGlobalActionTimeout());
-    GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
 
     add("keys.conf");
     Log.d(LOG_TAG, "end key binding definitions");
