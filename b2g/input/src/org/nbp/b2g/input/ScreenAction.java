@@ -57,6 +57,14 @@ public abstract class ScreenAction extends Action {
       sb.append(bounds.toShortString());
     }
 
+    if (node.isFocusable()) sb.append(" ifb");
+    if (node.isFocused()) sb.append(" ifd");
+    if (node.isAccessibilityFocused()) sb.append(" afd");
+    if (node.isCheckable()) sb.append(" ckb");
+    if (node.isChecked()) sb.append(" ckd");
+    if (node.isSelected()) sb.append(" sld");
+    if (node.isScrollable()) sb.append(" scb");
+
     log(sb.toString());
   }
 
@@ -104,7 +112,29 @@ public abstract class ScreenAction extends Action {
     node = AccessibilityNodeInfo.obtain(node);
 
     while (node != null) {
-      if (node.performAction(action)) return true;
+      switch (action) {
+        case AccessibilityNodeInfo.ACTION_FOCUS:
+          if (node.isFocused()) return true;
+          break;
+
+        case AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS:
+          if (node.isAccessibilityFocused()) return true;
+          break;
+
+        case AccessibilityNodeInfo.ACTION_SELECT:
+          if (node.isSelected()) return true;
+          break;
+
+        default:
+          break;
+      }
+
+      if ((node.getActions() & action) != 0) {
+        if (node.performAction(action)) {
+          return true;
+        }
+      }
+
       AccessibilityNodeInfo parent = node.getParent();
       node.recycle();
       node = parent;
@@ -194,7 +224,7 @@ public abstract class ScreenAction extends Action {
       return false;
     }
 
-    if (node.performAction(AccessibilityNodeInfo.ACTION_FOCUS)) {
+    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus succeeded");
     } else {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus failed");
