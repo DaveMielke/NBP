@@ -74,8 +74,8 @@ public class Actions {
     addKeyAction(KeyMask.VOLUME_DOWN, "VOLUMEDOWN", KeyEvent.KEYCODE_VOLUME_DOWN);
     addKeyAction(KeyMask.VOLUME_UP, "VOLUMEUP", KeyEvent.KEYCODE_VOLUME_UP);
 
-    Action.add(KeyMask.FORWARD, new ForwardAction());
-    Action.add(KeyMask.BACKWARD, new BackwardAction());
+    Action.add(KeyMask.FORWARD, new MoveForwardAction());
+    Action.add(KeyMask.BACKWARD, new MoveBackwardAction());
 
     {
       int keyMask = KeyMask.DPAD_CENTER;

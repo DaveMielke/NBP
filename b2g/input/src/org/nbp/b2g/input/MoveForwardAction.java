@@ -4,8 +4,8 @@ import android.util.Log;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class ForwardAction extends MoveAction {
-  private static final String LOG_TAG = ForwardAction.class.getName();
+public class MoveForwardAction extends MoveAction {
+  private static final String LOG_TAG = MoveForwardAction.class.getName();
 
   private boolean moveToNode (AccessibilityNodeInfo node) {
     if (setCurrentNode(node)) return true;
@@ -69,7 +69,7 @@ public class ForwardAction extends MoveAction {
     return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
   }
 
-  public ForwardAction () {
+  public MoveForwardAction () {
     super("FORWARD");
   }
 }
