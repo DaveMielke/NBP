@@ -2,6 +2,13 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 import android.accessibilityservice.AccessibilityService;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.KeyEvent;
@@ -60,6 +67,37 @@ public class Actions {
     }
   }
 
+  public static void add (Reader reader) {
+  }
+
+  public static void add (InputStream stream) {
+    Reader reader = new InputStreamReader(stream);
+    add(reader);
+  }
+
+  public static void add (String asset) {
+    Context context = ApplicationHooks.getContext();
+
+    if (context != null) {
+      AssetManager assets = context.getAssets();
+
+      if (assets != null) {
+        try {
+          InputStream stream = assets.open(asset);
+          try {
+            add(stream);
+          } finally {
+            stream.close();
+          }
+        } catch (IOException exception) {
+          Log.w(LOG_TAG, "asset not found: " + asset);
+        }
+
+        assets.close();
+      }
+    }
+  }
+
   public static void add () {
     {
       int keyMask = KeyMask.DOTS_12345678;
@@ -104,6 +142,8 @@ public class Actions {
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
     ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
     Action.add((KeyMask.SPACE | KeyMask.DOTS_1346), controlModifier);
+
+    add("keys.conf");
   }
 
   private static boolean performAction (Action action) {
