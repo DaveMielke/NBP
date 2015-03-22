@@ -3,7 +3,7 @@ package org.nbp.b2g.input;
 import android.content.Context;
 import android.content.Intent;
 
-public final class ActivityAction extends Action {
+public class ActivityAction extends Action {
   protected final Class activityClass;
 
   @Override

@@ -200,6 +200,12 @@ public class Actions {
 
       Log.w(LOG_TAG, "too many operands: " + line);
     }
+
+    try {
+      reader.close();
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "keys configuration close error", exception);
+    }
   }
 
   public static void add (InputStream stream) {
@@ -216,6 +222,7 @@ public class Actions {
       if (assets != null) {
         try {
           InputStream stream = assets.open(asset);
+
           try {
             add(stream);
           } finally {
@@ -224,8 +231,6 @@ public class Actions {
         } catch (IOException exception) {
           Log.w(LOG_TAG, "asset not found: " + asset);
         }
-
-        assets.close();
       }
     }
   }
@@ -264,7 +269,6 @@ public class Actions {
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1345), AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS, "NOTIFICATIONS", KeyEvent.KEYCODE_NOTIFICATION);
     ScanCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1478), "POWER", ApplicationUtilities.getGlobalActionTimeout());
     GlobalAction.add((KeyMask.SPACE | KeyMask.DOTS_1235), AccessibilityService.GLOBAL_ACTION_RECENTS, "RECENT_APPS");
-    ActivityAction.add((KeyMask.SPACE | KeyMask.DOTS_2345), ClockActivity.class);
 
     add("keys.conf");
     Log.d(LOG_TAG, "end key binding definitions");
