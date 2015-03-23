@@ -1,12 +1,8 @@
 package org.nbp.b2g.input;
 
-import android.util.Log;
-
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public class MoveForwardAction extends MoveAction {
-  private static final String LOG_TAG = MoveForwardAction.class.getName();
-
   private boolean moveToNode (AccessibilityNodeInfo node) {
     if (setCurrentNode(node)) return true;
     return moveToDescendant(node);

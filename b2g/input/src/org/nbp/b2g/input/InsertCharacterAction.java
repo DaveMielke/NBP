@@ -3,11 +3,7 @@ package org.nbp.b2g.input;
 import java.util.Map;
 import java.util.HashMap;
 
-import android.util.Log;
-
 public class InsertCharacterAction extends ScreenAction {
-  private static final String LOG_TAG = InsertCharacterAction.class.getName();
-
   private static Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
 
   @Override

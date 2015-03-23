@@ -1,13 +1,9 @@
 package org.nbp.b2g.input;
 
-import android.util.Log;
-
 public class ControlModifierAction extends ToggleAction {
-  private static final String LOG_TAG = ControlModifierAction.class.getName();
+  private static ToggleAction controlModifier = null;
 
-  private static ControlModifierAction controlModifier = null;
-
-  public static ControlModifierAction getControlModifier () {
+  public static ToggleAction getControlModifier () {
     return controlModifier;
   }
 
