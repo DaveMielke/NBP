@@ -54,8 +54,6 @@ public class Actions {
         case 'l': bit = KeyMask.DPAD_LEFT;   break;
         case 'r': bit = KeyMask.DPAD_RIGHT;  break;
 
-        case 'x': bit = KeyMask.SCAN_CODE;   break;
-
         default:
           Log.w(LOG_TAG, "invalid key: " + character);
           return 0;
@@ -220,15 +218,6 @@ public class Actions {
     return activeKeyMask;
   }
 
-  private static Action getAction (int keyMask) {
-    if (KeyboardMonitor.isActive()) {
-      Action action = Action.getAction(keyMask | KeyMask.SCAN_CODE);
-      if (action != null) return action;
-    }
-
-    return Action.getAction(keyMask);
-  }
-
   public static void handleKeyDown (int keyMask) {
     if (keyMask != 0) {
       if ((pressedKeyMask & keyMask) == 0) {
@@ -241,7 +230,7 @@ public class Actions {
   public static void handleKeyUp (int keyMask) {
     if (keyMask != 0) {
       if (activeKeyMask > 0) {
-        Action action = getAction(activeKeyMask);
+        Action action = Action.getAction(activeKeyMask);
 
         if (action != null) {
           performAction(action);
