@@ -103,7 +103,7 @@ public abstract class MoveAction extends ScreenAction {
     return moved;
   }
 
-  protected MoveAction (String name) {
-    super("MOVE_" + name);
+  protected MoveAction () {
+    super();
   }
 }

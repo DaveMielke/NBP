@@ -1,5 +1,6 @@
 package org.nbp.b2g.input;
 
+import android.os.Build;
 import android.os.SystemClock;
 
 import android.view.ViewConfiguration;
@@ -8,6 +9,10 @@ import android.media.ToneGenerator;
 import android.media.AudioManager;
 
 public class ApplicationUtilities {
+  public static boolean haveSdkVersion (int version) {
+    return ApplicationParameters.SDK_VERSION >= version;
+  }
+
   public static void sleep (long duration) {
     SystemClock.sleep(duration);
   }

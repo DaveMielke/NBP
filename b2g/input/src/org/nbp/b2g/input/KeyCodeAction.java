@@ -5,10 +5,10 @@ import android.util.Log;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
-public class KeyCodeAction extends Action {
+public class KeyCodeAction extends KeyAction {
   private static final String LOG_TAG = KeyCodeAction.class.getName();
 
-  protected final int keyCode;
+  protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;
 
   protected void logKeyEvent (String action) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
@@ -16,24 +16,33 @@ public class KeyCodeAction extends Action {
     }
   }
 
-  protected boolean sendKey (long interval) {
-    InputService inputService = getInputService();
+  protected int getKeyCode () {
+    return NULL_KEY_CODE;
+  }
 
-    if (inputService != null) {
-      InputConnection connection = inputService.getCurrentInputConnection();
+  @Override
+  public boolean performAction () {
+    int keyCode = getKeyCode();
 
-      if (connection != null) {
-        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
-        logKeyEvent("press");
+    if (keyCode != NULL_KEY_CODE) {
+      InputService inputService = getInputService();
 
-        if (connection.sendKeyEvent(event)) {
-          if (interval > 0) ApplicationUtilities.sleep(interval + ApplicationParameters.LONG_PRESS_DELAY);
+      if (inputService != null) {
+        InputConnection connection = inputService.getCurrentInputConnection();
 
-          event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
-          logKeyEvent("release");
+        if (connection != null) {
+          KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
+          logKeyEvent("press");
 
           if (connection.sendKeyEvent(event)) {
-            return true;
+            waitForHoldTime();
+
+            event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
+            logKeyEvent("release");
+
+            if (connection.sendKeyEvent(event)) {
+              return true;
+            }
           }
         }
       }
@@ -42,30 +51,7 @@ public class KeyCodeAction extends Action {
     return false;
   }
 
-  protected boolean sendKey (boolean longPress) {
-    long interval = longPress? ApplicationUtilities.getLongPressTimeout(): 0;
-    return sendKey(interval);
-  }
-
-  protected boolean sendKey () {
-    return sendKey(false);
-  }
-
-  @Override
-  public boolean performAction () {
-    return sendKey();
-  }
-
-  protected KeyCodeAction (int keyCode, String name) {
-    super(name);
-    this.keyCode = keyCode;
-  }
-
-  public KeyCodeAction (int keyCode) {
-    this(keyCode, KeyEvent.keyCodeToString(keyCode));
-  }
-
-  public static void add (int keyMask, int keyCode) {
-    add(keyMask, new KeyCodeAction(keyCode));
+  protected KeyCodeAction () {
+    super();
   }
 }

@@ -1,27 +1,32 @@
 package org.nbp.b2g.input;
 
-import android.util.Log;
-
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public final class NodeAction extends ScreenAction {
-  private static final String LOG_TAG = NodeAction.class.getName();
+public class NodeAction extends KeyCodeAction {
+  public static final int NULL_NODE_ACTION = 0;
 
-  protected final int nodeAction;
+  protected int getNodeAction () {
+    return NULL_NODE_ACTION;
+  }
 
   @Override
   public final boolean performAction () {
-    AccessibilityNodeInfo node = getCurrentNode();
-    if (node == null) return false;
-    return performNodeAction(node, nodeAction);
+    int nodeAction = getNodeAction();
+
+    if (nodeAction != NULL_NODE_ACTION) {
+      AccessibilityNodeInfo node = getCurrentNode();
+
+      if (node != null) {
+        if (performNodeAction(node, nodeAction)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
-  public NodeAction (int nodeAction, String name) {
-    super("NODE_" + name);
-    this.nodeAction = nodeAction;
-  }
-
-  public static void add (int keyMask, int nodeAction, String name) {
-    add(keyMask, new NodeAction(nodeAction, name));
+  public NodeAction () {
+    super();
   }
 }

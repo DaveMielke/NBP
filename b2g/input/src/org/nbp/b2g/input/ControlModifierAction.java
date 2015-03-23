@@ -12,7 +12,7 @@ public class ControlModifierAction extends ToggleAction {
   }
 
   public ControlModifierAction () {
-    super("CONTROL_MODIFIER");
+    super();
     controlModifier = this;
   }
 }

@@ -57,6 +57,6 @@ public class MoveBackwardAction extends MoveAction {
   }
 
   public MoveBackwardAction () {
-    super("BACKWARD");
+    super();
   }
 }

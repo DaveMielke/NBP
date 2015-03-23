@@ -29,7 +29,7 @@ public class ToggleAction extends Action {
     return true;
   }
 
-  public ToggleAction (String name) {
-    super("TOGGLE_" + name);
+  public ToggleAction () {
+    super();
   }
 }

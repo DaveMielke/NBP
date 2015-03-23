@@ -1,49 +1,32 @@
 package org.nbp.b2g.input;
 
-import android.util.Log;
-
 import android.view.KeyEvent;
 
-public class GlobalAction extends KeyCodeAction {
-  private static final String LOG_TAG = GlobalAction.class.getName();
+public class GlobalAction extends ScanCodeAction {
+  public static final int NULL_GLOBAL_ACTION = 0;
 
-  protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;
-
-  protected final int globalAction;
+  protected int getGlobalAction () {
+    return NULL_GLOBAL_ACTION;
+  }
 
   @Override
   public final boolean performAction () {
-    ScreenMonitor monitor = getScreenMonitor();
+    int globalAction = getGlobalAction();
 
-    if (monitor != null) {
-      if (monitor.performGlobalAction(globalAction)) {
-        return true;
+    if (globalAction != NULL_GLOBAL_ACTION) {
+      ScreenMonitor monitor = getScreenMonitor();
+
+      if (monitor != null) {
+        if (monitor.performGlobalAction(globalAction)) {
+          return true;
+        }
       }
     }
 
-    if (keyCode != NULL_KEY_CODE) {
-      if (sendKey()) {
-        return true;
-      }
-    }
-
-    return false;
+    return super.performAction();
   }
 
-  public GlobalAction (int globalAction, String name, int keyCode) {
-    super(keyCode, ("GLOBAL_" + name));
-    this.globalAction = globalAction;
-  }
-
-  public static void add (int keyMask, int globalAction, String name, int keyCode) {
-    add(keyMask, new GlobalAction(globalAction, name, keyCode));
-  }
-
-  public GlobalAction (int globalAction, String name) {
-    this(globalAction, name, NULL_KEY_CODE);
-  }
-
-  public static void add (int keyMask, int globalAction, String name) {
-    add(keyMask, new GlobalAction(globalAction, name));
+  public GlobalAction () {
+    super();
   }
 }

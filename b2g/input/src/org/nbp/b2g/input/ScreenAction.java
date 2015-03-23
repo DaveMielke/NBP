@@ -68,23 +68,6 @@ public abstract class ScreenAction extends Action {
     log(sb.toString());
   }
 
-  protected AccessibilityNodeInfo getRootNode () {
-    ScreenMonitor monitor = getScreenMonitor();
-    if (monitor == null) return null;
-    return monitor.getRootInActiveWindow();
-  }
-
-  public AccessibilityNodeInfo getCurrentNode () {
-    AccessibilityNodeInfo root = getRootNode();
-    if (root == null) return null;
-
-    AccessibilityNodeInfo current = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY);
-    if (current == null) current = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT);
-
-    root.recycle();
-    return current;
-  }
-
   public AccessibilityNodeInfo findNode (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
     if (root != null) {
       if (root.equals(node)) return AccessibilityNodeInfo.obtain(root);
@@ -106,41 +89,6 @@ public abstract class ScreenAction extends Action {
     AccessibilityNodeInfo found = findNode(node, root);
     if (root != null) root.recycle();
     return found;
-  }
-
-  protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {
-    node = AccessibilityNodeInfo.obtain(node);
-
-    while (node != null) {
-      switch (action) {
-        case AccessibilityNodeInfo.ACTION_FOCUS:
-          if (node.isFocused()) return true;
-          break;
-
-        case AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS:
-          if (node.isAccessibilityFocused()) return true;
-          break;
-
-        case AccessibilityNodeInfo.ACTION_SELECT:
-          if (node.isSelected()) return true;
-          break;
-
-        default:
-          break;
-      }
-
-      if ((node.getActions() & action) != 0) {
-        if (node.performAction(action)) {
-          return true;
-        }
-      }
-
-      AccessibilityNodeInfo parent = node.getParent();
-      node.recycle();
-      node = parent;
-    }
-
-    return false;
   }
 
   protected boolean isActionable (AccessibilityNodeInfo node) {
@@ -262,7 +210,7 @@ public abstract class ScreenAction extends Action {
     return -1;
   }
 
-  protected ScreenAction (String name) {
-    super(name);
+  protected ScreenAction () {
+    super();
   }
 }

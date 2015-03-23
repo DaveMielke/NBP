@@ -28,7 +28,7 @@ public class InsertCharacterAction extends ScreenAction {
 
   @Override
   public boolean performAction () {
-    Character character = characterMap.get(Actions.getKeyMask());
+    Character character = characterMap.get(getKeyMask());
 
     if (character != null) {
       InputService inputService = InputService.getInputService();
@@ -53,6 +53,6 @@ public class InsertCharacterAction extends ScreenAction {
   }
 
   public InsertCharacterAction () {
-    super("INSERT_CHARACTER");
+    super();
   }
 }

@@ -26,51 +26,6 @@ public class Actions {
   private static int pressedKeyMask = 0;
   private static int activeKeyMask = 0;
 
-  private static void addKeyAction (int keyMask, String scanCode, int keyCode) {
-    ScanCodeAction.add(keyMask, scanCode);
-    KeyCodeAction.add(keyMask, keyCode);
-  }
-
-  private static void addSystemKeyChords () {
-    final int home = KeyMask.SPACE | KeyMask.DOTS_123456;
-    final int back = KeyMask.SPACE | KeyMask.DOTS_12;
-
-    GlobalAction.add((home | KeyMask.SCAN_CODE), AccessibilityService.GLOBAL_ACTION_HOME, "HOME");
-    GlobalAction.add((back | KeyMask.SCAN_CODE), AccessibilityService.GLOBAL_ACTION_BACK, "BACK");
-
-    if (ApplicationParameters.CHORDS_SEND_SYSTEM_KEYS) {
-      NullAction.add(home);
-      NullAction.add(back);
-    } else {
-      GlobalAction.add(home, AccessibilityService.GLOBAL_ACTION_HOME, "HOME", KeyEvent.KEYCODE_HOME);
-      GlobalAction.add(back, AccessibilityService.GLOBAL_ACTION_BACK, "BACK", KeyEvent.KEYCODE_BACK);
-    }
-  }
-
-  private static void addArrowKeyChords () {
-    final int up    = KeyMask.SPACE | KeyMask.DOTS_1;
-    final int down  = KeyMask.SPACE | KeyMask.DOTS_4;
-    final int left  = KeyMask.SPACE | KeyMask.DOTS_3;
-    final int right = KeyMask.SPACE | KeyMask.DOTS_6;
-
-    if (ApplicationParameters.CHORDS_SEND_ARROW_KEYS) {
-      NullAction.add(up);
-      NullAction.add(down);
-      NullAction.add(left);
-      NullAction.add(right);
-    } else if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      ScanCodeAction.add(up   , "UP");
-      ScanCodeAction.add(down , "DOWN");
-      ScanCodeAction.add(left , "LEFT");
-      ScanCodeAction.add(right, "RIGHT");
-    } else {
-      KeyCodeAction.add(up   , KeyEvent.KEYCODE_DPAD_UP);
-      KeyCodeAction.add(down , KeyEvent.KEYCODE_DPAD_DOWN);
-      KeyCodeAction.add(left , KeyEvent.KEYCODE_DPAD_LEFT);
-      KeyCodeAction.add(right, KeyEvent.KEYCODE_DPAD_RIGHT);
-    }
-  }
-
   private static int parseKeys (String operand) {
     int mask = 0;
     int length = operand.length();
@@ -239,35 +194,8 @@ public class Actions {
 
   public static void add () {
     Log.d(LOG_TAG, "begin key binding definitions");
-
-    addSystemKeyChords();
-    addArrowKeyChords();
-
-    addKeyAction(KeyMask.VOLUME_DOWN, "VOLUMEDOWN", KeyEvent.KEYCODE_VOLUME_DOWN);
-    addKeyAction(KeyMask.VOLUME_UP, "VOLUMEUP", KeyEvent.KEYCODE_VOLUME_UP);
-
-    {
-      int keyMask = KeyMask.DPAD_CENTER;
-
-      KeyCodeAction.add(keyMask, KeyEvent.KEYCODE_DPAD_CENTER);
-      NodeAction.add((keyMask | KeyMask.SCAN_CODE), AccessibilityNodeInfo.ACTION_CLICK, "CLICK");
-    }
-
-    addKeyAction(KeyMask.DPAD_LEFT, "LEFT", KeyEvent.KEYCODE_DPAD_LEFT);
-    addKeyAction(KeyMask.DPAD_RIGHT, "RIGHT", KeyEvent.KEYCODE_DPAD_RIGHT);
-    addKeyAction(KeyMask.DPAD_UP, "UP", KeyEvent.KEYCODE_DPAD_UP);
-    addKeyAction(KeyMask.DPAD_DOWN, "DOWN", KeyEvent.KEYCODE_DPAD_DOWN);
-
-    addKeyAction(KeyMask.DOTS_7, "BACKSPACE", KeyEvent.KEYCODE_DEL);
-    addKeyAction(KeyMask.DOTS_8, "ENTER", KeyEvent.KEYCODE_ENTER);
-
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_45), "TAB", KeyEvent.KEYCODE_TAB);
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_145), "DELETE", KeyEvent.KEYCODE_FORWARD_DEL);
-    addKeyAction((KeyMask.SPACE | KeyMask.DOTS_124), "COMPOSE", KeyEvent.KEYCODE_SEARCH);
-
-    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_1456), KeyEvent.KEYCODE_ASSIST);
-    KeyCodeAction.add((KeyMask.SPACE | KeyMask.DOTS_134), KeyEvent.KEYCODE_MENU);
-
+    Action.add(KeyMask.VOLUME_DOWN, new VolumeDownAction());
+    Action.add(KeyMask.VOLUME_UP, new VolumeUpAction());
     add("keys.conf");
     Log.d(LOG_TAG, "end key binding definitions");
   }

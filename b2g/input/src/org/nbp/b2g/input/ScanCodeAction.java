@@ -1,41 +1,36 @@
 package org.nbp.b2g.input;
 
-import android.util.Log;
+public class ScanCodeAction extends KeyCodeAction {
+  public static final String NULL_SCAN_CODE = "NULL";
 
-public class ScanCodeAction extends Action {
-  private static final String LOG_TAG = ScanCodeAction.class.getName();
+  private static final KeyboardDevice keyboardDevice = new KeyboardDevice();
 
-  private final int scanCode;
-  private final long holdTime;
-
-  protected static final KeyboardDevice keyboardDevice = new KeyboardDevice();
+  protected String getScanCode () {
+    return NULL_SCAN_CODE;
+  }
 
   @Override
   public boolean performAction () {
-    if (scanCode != KeyboardDevice.NULL_SCAN_CODE) {
-      if (keyboardDevice.pressKey(scanCode)) {
-        if (holdTime > 0) ApplicationUtilities.sleep(holdTime + ApplicationParameters.LONG_PRESS_DELAY);
+    String name = getScanCode();
 
-        if (keyboardDevice.releaseKey(scanCode)) {
-          return true;
+    if (!name.equals(NULL_SCAN_CODE)) {
+      int value = KeyboardDevice.getScanCode(name);
+
+      if (value != KeyboardDevice.NULL_SCAN_CODE) {
+        if (keyboardDevice.pressKey(value)) {
+          waitForHoldTime();
+
+          if (keyboardDevice.releaseKey(value)) {
+            return true;
+          }
         }
       }
     }
 
-    return false;
+    return super.performAction();
   }
 
-  public ScanCodeAction (String name, long holdTime) {
-    super("SCANCODE_" + name);
-    this.scanCode = KeyboardDevice.getScanCode(name);
-    this.holdTime = holdTime;
-  }
-
-  public static void add (int keyMask, String name, long holdTime) {
-    add((keyMask | KeyMask.SCAN_CODE), new ScanCodeAction(name, holdTime));
-  }
-
-  public static void add (int keyMask, String name) {
-    add(keyMask, name, 0);
+  protected ScanCodeAction () {
+    super();
   }
 }
