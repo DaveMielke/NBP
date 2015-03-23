@@ -10,9 +10,9 @@ public class KeyCodeAction extends KeyAction {
 
   protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;
 
-  protected void logKeyEvent (String action) {
+  private void logKeyCodeEvent (int keyCode, boolean press) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-      Log.d(LOG_TAG, "sending key " + action + ": " + getName());
+      logKeyEvent("key", KeyEvent.keyCodeToString(keyCode), keyCode, press);
     }
   }
 
@@ -32,13 +32,13 @@ public class KeyCodeAction extends KeyAction {
 
         if (connection != null) {
           KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
-          logKeyEvent("press");
+          logKeyCodeEvent(keyCode, true);
 
           if (connection.sendKeyEvent(event)) {
             waitForHoldTime();
 
             event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
-            logKeyEvent("release");
+            logKeyCodeEvent(keyCode, false);
 
             if (connection.sendKeyEvent(event)) {
               return true;

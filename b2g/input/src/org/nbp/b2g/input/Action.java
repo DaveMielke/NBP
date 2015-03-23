@@ -10,7 +10,7 @@ import android.inputmethodservice.InputMethodService;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public abstract class Action {
-  private static final String LOG_TAG = MoveForwardAction.class.getName();
+  private static final String LOG_TAG = Action.class.getName();
 
   private static Map<Integer, Action> actionMap = new HashMap<Integer, Action>();
 
