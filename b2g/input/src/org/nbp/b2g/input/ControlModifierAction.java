@@ -1,9 +1,9 @@
 package org.nbp.b2g.input;
 
-public class ControlModifierAction extends ToggleAction {
-  private static ToggleAction controlModifier = null;
+public class ControlModifierAction extends ModifierAction {
+  private static ModifierAction controlModifier = null;
 
-  public static ToggleAction getControlModifier () {
+  public static ModifierAction getControlModifier () {
     return controlModifier;
   }
 

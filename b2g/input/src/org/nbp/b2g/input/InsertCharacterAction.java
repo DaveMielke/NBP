@@ -31,7 +31,7 @@ public class InsertCharacterAction extends ScreenAction {
 
       if (inputService != null) {
         char value = character;
-        ToggleAction control = ControlModifierAction.getControlModifier();
+        ModifierAction control = ControlModifierAction.getControlModifier();
 
         if (control != null) {
           if (control.getState()) {
