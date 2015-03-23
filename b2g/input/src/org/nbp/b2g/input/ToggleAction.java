@@ -2,7 +2,7 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
-public class ToggleAction extends Action {
+public abstract class ToggleAction extends Action {
   private static final String LOG_TAG = ToggleAction.class.getName();
 
   protected boolean toggleState = false;
@@ -29,7 +29,7 @@ public class ToggleAction extends Action {
     return true;
   }
 
-  public ToggleAction () {
+  protected ToggleAction () {
     super();
   }
 }

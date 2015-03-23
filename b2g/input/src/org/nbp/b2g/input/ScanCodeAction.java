@@ -1,6 +1,6 @@
 package org.nbp.b2g.input;
 
-public class ScanCodeAction extends KeyCodeAction {
+public abstract class ScanCodeAction extends KeyCodeAction {
   public static final String NULL_SCAN_CODE = "NULL";
 
   private static final KeyboardDevice keyboardDevice = new KeyboardDevice();

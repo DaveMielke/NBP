@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
-public class KeyCodeAction extends KeyAction {
+public abstract class KeyCodeAction extends KeyAction {
   private static final String LOG_TAG = KeyCodeAction.class.getName();
 
   protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;

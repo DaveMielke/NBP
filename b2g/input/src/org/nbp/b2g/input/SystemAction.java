@@ -1,6 +1,6 @@
 package org.nbp.b2g.input;
 
-public class SystemAction extends GlobalAction {
+public abstract class SystemAction extends GlobalAction {
   protected int getSystemKeyCode () {
     return NULL_KEY_CODE;
   }
@@ -11,7 +11,7 @@ public class SystemAction extends GlobalAction {
     return getSystemKeyCode();
   }
 
-  public SystemAction () {
+  protected SystemAction () {
     super();
   }
 }

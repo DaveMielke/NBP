@@ -1,6 +1,6 @@
 package org.nbp.b2g.input;
 
-public class ArrowAction extends ScanCodeAction {
+public abstract class ArrowAction extends ScanCodeAction {
   protected int getArrowKeyCode () {
     return NULL_KEY_CODE;
   }
@@ -11,7 +11,7 @@ public class ArrowAction extends ScanCodeAction {
     return getArrowKeyCode();
   }
 
-  public ArrowAction () {
+  protected ArrowAction () {
     super();
   }
 }

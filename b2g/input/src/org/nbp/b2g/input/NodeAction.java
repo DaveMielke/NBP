@@ -2,7 +2,7 @@ package org.nbp.b2g.input;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class NodeAction extends KeyCodeAction {
+public abstract class NodeAction extends KeyCodeAction {
   public static final int NULL_NODE_ACTION = 0;
 
   protected int getNodeAction () {
@@ -26,7 +26,7 @@ public class NodeAction extends KeyCodeAction {
     return false;
   }
 
-  public NodeAction () {
+  protected NodeAction () {
     super();
   }
 }

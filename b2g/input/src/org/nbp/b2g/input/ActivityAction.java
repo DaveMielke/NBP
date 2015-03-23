@@ -3,7 +3,7 @@ package org.nbp.b2g.input;
 import android.content.Context;
 import android.content.Intent;
 
-public class ActivityAction extends Action {
+public abstract class ActivityAction extends Action {
   protected Class getActivityClass () {
     return null;
   }
@@ -33,7 +33,7 @@ public class ActivityAction extends Action {
     return false;
   }
 
-  public ActivityAction () {
+  protected ActivityAction () {
     super();
   }
 }
