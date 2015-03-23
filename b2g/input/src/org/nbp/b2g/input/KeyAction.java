@@ -16,7 +16,9 @@ public abstract class KeyAction extends Action {
   }
 
   protected void logKeyEvent (String type, String name, int value, boolean press) {
-    Log.d(LOG_TAG, String.format("sending %s code %s: %d (%s)",
+    name = (name != null)? (" (" + name + ")"): "";
+
+    Log.d(LOG_TAG, String.format("sending %s code %s: %d%s",
       type, (press? "press": "release"), value, name
     ));
   }

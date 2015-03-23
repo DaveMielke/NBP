@@ -10,14 +10,56 @@ public abstract class KeyCodeAction extends KeyAction {
 
   protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;
 
-  private void logKeyCodeEvent (int keyCode, boolean press) {
+  protected static final int KEY_CODE_SHIFT = KeyEvent.KEYCODE_SHIFT_LEFT;
+  protected static final int KEY_CODE_CONTROL = KeyEvent.KEYCODE_CTRL_LEFT;
+  protected static final int KEY_CODE_ALT = KeyEvent.KEYCODE_ALT_LEFT;
+  protected static final int KEY_CODE_ALTGR = KeyEvent.KEYCODE_ALT_RIGHT;
+  protected static final int KEY_CODE_GUI = KeyEvent.KEYCODE_WINDOW;
+
+  protected int[] getKeyCodeModifiers () {
+    return null;
+  }
+
+  protected int getKeyCode () {
+    return NULL_KEY_CODE;
+  }
+
+  private void log (int keyCode, boolean press) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
       logKeyEvent("key", KeyEvent.keyCodeToString(keyCode), keyCode, press);
     }
   }
 
-  protected int getKeyCode () {
-    return NULL_KEY_CODE;
+  private boolean press (InputConnection connection, int keyCode) {
+    log(keyCode, true);
+    KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
+    return connection.sendKeyEvent(event);
+  }
+
+  private boolean press (InputConnection connection, int[] keyCodes) {
+    if (keyCodes != null) {
+      for (int keyCode : keyCodes) {
+        if (!press(connection, keyCode)) return false;
+      }
+    }
+
+    return true;
+  }
+
+  private boolean release (InputConnection connection, int keyCode) {
+    log(keyCode, false);
+    KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, keyCode);
+    return connection.sendKeyEvent(event);
+  }
+
+  private boolean release (InputConnection connection, int[] keyCodes) {
+    if (keyCodes != null) {
+      for (int keyCode : keyCodes) {
+        if (!release(connection, keyCode)) return false;
+      }
+    }
+
+    return true;
   }
 
   @Override
@@ -31,17 +73,17 @@ public abstract class KeyCodeAction extends KeyAction {
         InputConnection connection = inputService.getCurrentInputConnection();
 
         if (connection != null) {
-          KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
-          logKeyCodeEvent(keyCode, true);
+          int[] modifiers = getKeyCodeModifiers();
 
-          if (connection.sendKeyEvent(event)) {
-            waitForHoldTime();
+          if (press(connection, modifiers)) {
+            if (press(connection, keyCode)) {
+              waitForHoldTime();
 
-            event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
-            logKeyCodeEvent(keyCode, false);
-
-            if (connection.sendKeyEvent(event)) {
-              return true;
+              if (release(connection, keyCode)) {
+                if (release(connection, modifiers)) {
+                  return true;
+                }
+              }
             }
           }
         }

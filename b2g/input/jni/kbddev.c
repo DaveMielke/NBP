@@ -28,6 +28,14 @@ static const ScanCodeEntry scanCodeTable[] = {
   SCAN_CODE(INSERT),
   SCAN_CODE(DELETE),
 
+  SCAN_CODE(LEFTSHIFT),
+  SCAN_CODE(RIGHTSHIFT),
+  SCAN_CODE(LEFTCTRL),
+  SCAN_CODE(RIGHTCTRL),
+  SCAN_CODE(LEFTALT),
+  SCAN_CODE(RIGHTALT),
+  SCAN_CODE(LEFTMETA),
+  SCAN_CODE(RIGHTMETA),
   SCAN_CODE(COMPOSE),
 
   SCAN_CODE(POWER),
@@ -47,7 +55,7 @@ JAVA_METHOD(
   if (method) {
     const ScanCodeEntry *sc = scanCodeTable;
 
-    while (sc->value != KEY_RESERVED) {
+    do {
       jstring name = (*env)->NewStringUTF(env, sc->name);
       if (!name) break;
 
@@ -56,7 +64,7 @@ JAVA_METHOD(
       if (checkException(env)) break;
 
       sc += 1;
-    }
+    } while (sc->value != KEY_RESERVED);
   } else {
     LOG(ERROR, "method not found: %s %s", methodName, methodSignature);
   }
