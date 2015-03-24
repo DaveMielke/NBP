@@ -24,12 +24,6 @@ public abstract class KeyCodeAction extends KeyAction {
     return NULL_KEY_CODE;
   }
 
-  private void log (int keyCode, boolean press) {
-    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-      logKeyEvent("key", KeyEvent.keyCodeToString(keyCode), keyCode, press);
-    }
-  }
-
   @Override
   public boolean performAction () {
     int keyCode = getKeyCode();
@@ -44,16 +38,23 @@ public abstract class KeyCodeAction extends KeyAction {
           KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
             @Override
             protected boolean sendKeyPress (int key) {
-              log(key, true);
               KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, key);
               return connection.sendKeyEvent(event);
             }
 
             @Override
             protected boolean sendKeyRelease (int key) {
-              log(key, false);
               KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, key);
               return connection.sendKeyEvent(event);
+            }
+
+            @Override
+            protected String getKeyType () {
+              return "key code";
+            }
+
+            protected String getKeyName (int key) {
+              return KeyEvent.keyCodeToString(key);
             }
           };
 

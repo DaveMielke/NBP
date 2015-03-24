@@ -18,7 +18,8 @@ public abstract class KeyAction extends Action {
   protected void logKeyEvent (String type, String name, int value, boolean press) {
     name = (name != null)? (" (" + name + ")"): "";
 
-    Log.d(LOG_TAG, String.format("sending %s code %s: %d%s",
+    Log.d(LOG_TAG, String.format(
+      "sending %s %s: %d%s",
       type, (press? "press": "release"), value, name
     ));
   }
@@ -26,25 +27,44 @@ public abstract class KeyAction extends Action {
   protected abstract class KeyCombinationSender {
     protected abstract boolean sendKeyPress (int key);
     protected abstract boolean sendKeyRelease (int key);
+    protected abstract String getKeyType ();
 
-    public final boolean sendKeyCombination (int key, int[] modifiers) {
-      if (modifiers != null) {
-        for (int modifier : modifiers) {
-          if (!sendKeyPress(modifier)) return false;
-        }
+    protected String getKeyName (int key) {
+      return null;
+    }
+
+    private boolean sendKeyEvent (int key, boolean press) {
+      if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
+        logKeyEvent(getKeyType(), getKeyName(key), key, press);
       }
 
-      if (!sendKeyPress(key)) return false;
-      waitForHoldTime();
-      if (!sendKeyRelease(key)) return false;
+      return press? sendKeyPress(key): sendKeyRelease(key);
+    }
 
+    private boolean sendModifiers (int[] modifiers, boolean press) {
       if (modifiers != null) {
         for (int modifier : modifiers) {
-          if (!sendKeyRelease(modifier)) return false;
+          if (!sendKeyEvent(modifier, press)) return false;
         }
       }
 
       return true;
+    }
+
+    public final boolean sendKeyCombination (int key, int[] modifiers) {
+      if (sendModifiers(modifiers, true)) {
+        if (sendKeyEvent(key, true)) {
+          waitForHoldTime();
+
+          if (sendKeyEvent(key, false)) {
+            if (sendModifiers(modifiers, false)) {
+              return true;
+            }
+          }
+        }
+      }
+
+      return false;
     }
 
     public final boolean sendKeyCombination (int key) {

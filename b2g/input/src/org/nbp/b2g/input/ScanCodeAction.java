@@ -19,12 +19,6 @@ public abstract class ScanCodeAction extends KeyCodeAction {
     return null;
   }
 
-  private void log (int value, boolean press) {
-    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-      logKeyEvent("scan", null, value, press);
-    }
-  }
-
   @Override
   public boolean performAction () {
     String name = getScanCode();
@@ -36,14 +30,17 @@ public abstract class ScanCodeAction extends KeyCodeAction {
         KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
           @Override
           protected boolean sendKeyPress (int key) {
-            log(key, true);
             return keyboardDevice.pressKey(key);
           }
 
           @Override
           protected boolean sendKeyRelease (int key) {
-            log(key, false);
             return keyboardDevice.releaseKey(key);
+          }
+
+          @Override
+          protected String getKeyType () {
+            return "scan code";
           }
         };
 
