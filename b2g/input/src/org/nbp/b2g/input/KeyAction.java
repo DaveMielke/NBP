@@ -28,16 +28,20 @@ public abstract class KeyAction extends Action {
     protected abstract boolean sendKeyRelease (int key);
 
     public final boolean sendKeyCombination (int key, int[] modifiers) {
-      for (int modifier : modifiers) {
-        if (!sendKeyPress(modifier)) return false;
+      if (modifiers != null) {
+        for (int modifier : modifiers) {
+          if (!sendKeyPress(modifier)) return false;
+        }
       }
 
       if (!sendKeyPress(key)) return false;
       waitForHoldTime();
       if (!sendKeyRelease(key)) return false;
 
-      for (int modifier : modifiers) {
-        if (!sendKeyRelease(modifier)) return false;
+      if (modifiers != null) {
+        for (int modifier : modifiers) {
+          if (!sendKeyRelease(modifier)) return false;
+        }
       }
 
       return true;
