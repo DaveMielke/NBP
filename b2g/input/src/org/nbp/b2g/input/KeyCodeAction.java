@@ -30,38 +30,6 @@ public abstract class KeyCodeAction extends KeyAction {
     }
   }
 
-  private boolean press (InputConnection connection, int keyCode) {
-    log(keyCode, true);
-    KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
-    return connection.sendKeyEvent(event);
-  }
-
-  private boolean press (InputConnection connection, int[] keyCodes) {
-    if (keyCodes != null) {
-      for (int keyCode : keyCodes) {
-        if (!press(connection, keyCode)) return false;
-      }
-    }
-
-    return true;
-  }
-
-  private boolean release (InputConnection connection, int keyCode) {
-    log(keyCode, false);
-    KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, keyCode);
-    return connection.sendKeyEvent(event);
-  }
-
-  private boolean release (InputConnection connection, int[] keyCodes) {
-    if (keyCodes != null) {
-      for (int keyCode : keyCodes) {
-        if (!release(connection, keyCode)) return false;
-      }
-    }
-
-    return true;
-  }
-
   @Override
   public boolean performAction () {
     int keyCode = getKeyCode();
@@ -70,21 +38,27 @@ public abstract class KeyCodeAction extends KeyAction {
       InputService inputService = getInputService();
 
       if (inputService != null) {
-        InputConnection connection = inputService.getCurrentInputConnection();
+        final InputConnection connection = inputService.getCurrentInputConnection();
 
         if (connection != null) {
-          int[] modifiers = getKeyCodeModifiers();
-
-          if (press(connection, modifiers)) {
-            if (press(connection, keyCode)) {
-              waitForHoldTime();
-
-              if (release(connection, keyCode)) {
-                if (release(connection, modifiers)) {
-                  return true;
-                }
-              }
+          KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
+            @Override
+            protected boolean sendKeyPress (int key) {
+              log(key, true);
+              KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, key);
+              return connection.sendKeyEvent(event);
             }
+
+            @Override
+            protected boolean sendKeyRelease (int key) {
+              log(key, false);
+              KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, key);
+              return connection.sendKeyEvent(event);
+            }
+          };
+
+          if (keyCombinationSender.sendKeyCombination(keyCode, getKeyCodeModifiers())) {
+            return true;
           }
         }
       }

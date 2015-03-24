@@ -25,36 +25,6 @@ public abstract class ScanCodeAction extends KeyCodeAction {
     }
   }
 
-  private boolean press (int key) {
-    log(key, true);
-    return keyboardDevice.pressKey(key);
-  }
-
-  private boolean press (int[] keys) {
-    if (keys != null) {
-      for (int key : keys) {
-        if (!press(key)) return false;
-      }
-    }
-
-    return true;
-  }
-
-  private boolean release (int key) {
-    log(key, false);
-    return keyboardDevice.releaseKey(key);
-  }
-
-  private boolean release (int[] keys) {
-    if (keys != null) {
-      for (int key : keys) {
-        if (!release(key)) return false;
-      }
-    }
-
-    return true;
-  }
-
   @Override
   public boolean performAction () {
     String name = getScanCode();
@@ -63,18 +33,22 @@ public abstract class ScanCodeAction extends KeyCodeAction {
       int value = KeyboardDevice.getScanCode(name);
 
       if (value != KeyboardDevice.NULL_SCAN_CODE) {
-        int[] modifiers = getScanCodeModifiers();
-
-        if (press(modifiers)) {
-          if (press(value)) {
-            waitForHoldTime();
-
-            if (release(value)) {
-              if (release(modifiers)) {
-                return true;
-              }
-            }
+        KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
+          @Override
+          protected boolean sendKeyPress (int key) {
+            log(key, true);
+            return keyboardDevice.pressKey(key);
           }
+
+          @Override
+          protected boolean sendKeyRelease (int key) {
+            log(key, false);
+            return keyboardDevice.releaseKey(key);
+          }
+        };
+
+        if (keyCombinationSender.sendKeyCombination(value, getScanCodeModifiers())) {
+          return true;
         }
       }
     }
