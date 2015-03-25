@@ -1,9 +1,10 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import java.util.Map;
 import java.util.HashMap;
 
-public class InsertCharacterAction extends ScreenAction {
+public class InsertCharacter extends ScreenAction {
   private static Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
 
   @Override
@@ -31,7 +32,7 @@ public class InsertCharacterAction extends ScreenAction {
 
       if (inputService != null) {
         char value = character;
-        ModifierAction control = ControlModifierAction.getControlModifier();
+        ModifierAction control = ControlModifier.getControlModifier();
 
         if (control != null) {
           if (control.getState()) {
@@ -48,7 +49,7 @@ public class InsertCharacterAction extends ScreenAction {
     return false;
   }
 
-  public InsertCharacterAction () {
+  public InsertCharacter () {
     super();
   }
 }

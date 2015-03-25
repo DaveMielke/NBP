@@ -1,6 +1,7 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
-public class TabBackwardAction extends TabForwardAction {
+public class TabBackward extends TabForward {
   private static final int[] scanCodeModifiers = new int[] {
     SCAN_CODE_SHIFT
   };
@@ -19,7 +20,7 @@ public class TabBackwardAction extends TabForwardAction {
     return keyCodeModifiers;
   }
 
-  public TabBackwardAction () {
+  public TabBackward () {
     super();
   }
 }

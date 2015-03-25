@@ -1,8 +1,9 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.view.KeyEvent;
 
-public class DeletePreviousAction extends ScanCodeAction {
+public class DeletePrevious extends ScanCodeAction {
   @Override
   protected String getScanCode () {
     return "BACKSPACE";
@@ -13,7 +14,7 @@ public class DeletePreviousAction extends ScanCodeAction {
     return KeyEvent.KEYCODE_DEL;
   }
 
-  public DeletePreviousAction () {
+  public DeletePrevious () {
     super();
   }
 }

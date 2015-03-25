@@ -1,8 +1,9 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class MoveBackwardAction extends MoveAction {
+public class MoveBackward extends MoveAction {
   private boolean moveToNode (AccessibilityNodeInfo node, int childIndex) {
     if (moveToDescendant(node, childIndex)) return true;
     return setCurrentNode(node);
@@ -52,7 +53,7 @@ public class MoveBackwardAction extends MoveAction {
     return AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD;
   }
 
-  public MoveBackwardAction () {
+  public MoveBackward () {
     super();
   }
 }

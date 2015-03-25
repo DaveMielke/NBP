@@ -1,10 +1,11 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.os.Build;
 import android.accessibilityservice.AccessibilityService;
 import android.view.KeyEvent;
 
-public class PowerOffAction extends GlobalAction {
+public class PowerOff extends GlobalAction {
   @Override
   protected int getGlobalAction () {
     if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.LOLLIPOP)) {
@@ -29,7 +30,7 @@ public class PowerOffAction extends GlobalAction {
     return ApplicationUtilities.getGlobalActionTimeout();
   }
 
-  public PowerOffAction () {
+  public PowerOff () {
     super();
   }
 }

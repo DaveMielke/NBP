@@ -1,4 +1,5 @@
 package org.nbp.b2g.input;
+import org.nbp.b2g.input.actions.*;
 
 import java.lang.reflect.*;
 
@@ -71,7 +72,7 @@ public class Actions {
   }
 
   private static Action parseAction (String operand) {
-    String name = Actions.class.getPackage().getName() + "." + operand + "Action";
+    String name = Actions.class.getPackage().getName() + ".actions." + operand;
 
     try {
       Class c = Class.forName(name);
@@ -192,8 +193,8 @@ public class Actions {
 
   public static void add () {
     Log.d(LOG_TAG, "begin key binding definitions");
-    Action.add(KeyMask.VOLUME_DOWN, new VolumeDownAction());
-    Action.add(KeyMask.VOLUME_UP, new VolumeUpAction());
+    Action.add(KeyMask.VOLUME_DOWN, new VolumeDown());
+    Action.add(KeyMask.VOLUME_UP, new VolumeUp());
     add("keys.conf");
     Log.d(LOG_TAG, "end key binding definitions");
   }

@@ -1,8 +1,9 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class MoveForwardAction extends MoveAction {
+public class MoveForward extends MoveAction {
   private boolean moveToNode (AccessibilityNodeInfo node) {
     if (setCurrentNode(node)) return true;
     return moveToDescendant(node);
@@ -65,7 +66,7 @@ public class MoveForwardAction extends MoveAction {
     return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
   }
 
-  public MoveForwardAction () {
+  public MoveForward () {
     super();
   }
 }

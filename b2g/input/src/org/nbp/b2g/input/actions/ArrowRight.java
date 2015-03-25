@@ -1,20 +1,21 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.accessibilityservice.AccessibilityService;
 import android.view.KeyEvent;
 
-public class ArrowUpAction extends ArrowAction {
+public class ArrowRight extends ArrowAction {
   @Override
   protected String getScanCode () {
-    return "UP";
+    return "RIGHT";
   }
 
   @Override
   protected int getArrowKeyCode () {
-    return KeyEvent.KEYCODE_DPAD_UP;
+    return KeyEvent.KEYCODE_DPAD_RIGHT;
   }
 
-  public ArrowUpAction () {
+  public ArrowRight () {
     super();
   }
 }

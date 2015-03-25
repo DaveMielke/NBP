@@ -1,14 +1,15 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.view.KeyEvent;
 
-public class MenuKeyAction extends KeyCodeAction {
+public class MenuKey extends KeyCodeAction {
   @Override
   protected int getKeyCode () {
     return KeyEvent.KEYCODE_MENU;
   }
 
-  public MenuKeyAction () {
+  public MenuKey () {
     super();
   }
 }

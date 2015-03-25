@@ -1,13 +1,14 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
-public class ControlModifierAction extends ModifierAction {
+public class ControlModifier extends ModifierAction {
   private static ModifierAction controlModifier = null;
 
   public static ModifierAction getControlModifier () {
     return controlModifier;
   }
 
-  public ControlModifierAction () {
+  public ControlModifier () {
     super();
     controlModifier = this;
   }

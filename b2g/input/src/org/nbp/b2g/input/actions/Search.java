@@ -1,8 +1,9 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.view.KeyEvent;
 
-public class SearchAction extends ScanCodeAction {
+public class Search extends ScanCodeAction {
   @Override
   protected String getScanCode () {
     return "COMPOSE";
@@ -13,7 +14,7 @@ public class SearchAction extends ScanCodeAction {
     return KeyEvent.KEYCODE_SEARCH;
   }
 
-  public SearchAction () {
+  public Search () {
     super();
   }
 }

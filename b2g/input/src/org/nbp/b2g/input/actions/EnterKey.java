@@ -1,8 +1,9 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.view.KeyEvent;
 
-public class EnterKeyAction extends ScanCodeAction {
+public class EnterKey extends ScanCodeAction {
   @Override
   protected String getScanCode () {
     return "ENTER";
@@ -13,7 +14,7 @@ public class EnterKeyAction extends ScanCodeAction {
     return KeyEvent.KEYCODE_ENTER;
   }
 
-  public EnterKeyAction () {
+  public EnterKey () {
     super();
   }
 }

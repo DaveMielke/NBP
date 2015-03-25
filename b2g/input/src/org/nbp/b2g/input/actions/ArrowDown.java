@@ -1,9 +1,10 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.accessibilityservice.AccessibilityService;
 import android.view.KeyEvent;
 
-public class ArrowDownAction extends ArrowAction {
+public class ArrowDown extends ArrowAction {
   @Override
   protected String getScanCode () {
     return "DOWN";
@@ -14,7 +15,7 @@ public class ArrowDownAction extends ArrowAction {
     return KeyEvent.KEYCODE_DPAD_DOWN;
   }
 
-  public ArrowDownAction () {
+  public ArrowDown () {
     super();
   }
 }

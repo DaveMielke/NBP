@@ -1,8 +1,9 @@
-package org.nbp.b2g.input;
+package org.nbp.b2g.input.actions;
+import org.nbp.b2g.input.*;
 
 import android.view.KeyEvent;
 
-public class VolumeDownAction extends ScanCodeAction {
+public class VolumeDown extends ScanCodeAction {
   @Override
   protected String getScanCode () {
     return "VOLUMEDOWN";
@@ -13,7 +14,7 @@ public class VolumeDownAction extends ScanCodeAction {
     return KeyEvent.KEYCODE_VOLUME_DOWN;
   }
 
-  public VolumeDownAction () {
+  public VolumeDown () {
     super();
   }
 }
