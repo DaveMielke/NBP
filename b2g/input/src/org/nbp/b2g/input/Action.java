@@ -26,7 +26,7 @@ public abstract class Action {
   }
 
   protected static int getKeyMask () {
-    return Actions.getKeyMask();
+    return KeyHandler.getKeyMask();
   }
 
   protected static boolean isChord () {

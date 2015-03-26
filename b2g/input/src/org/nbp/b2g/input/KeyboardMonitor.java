@@ -27,9 +27,9 @@ public class KeyboardMonitor extends Thread {
     }
 
     if (press) {
-      Actions.handleKeyDown(ScanCode.toKeyMask(code));
+      KeyHandler.handleKeyDown(ScanCode.toKeyMask(code));
     } else {
-      Actions.handleKeyUp(ScanCode.toKeyMask(code));
+      KeyHandler.handleKeyUp(ScanCode.toKeyMask(code));
     }
   }
 
@@ -37,7 +37,7 @@ public class KeyboardMonitor extends Thread {
     Log.d(LOG_TAG, "keyboard monitor starting");
 
     if (openKeyboard()) {
-      Actions.resetKeys();
+      KeyHandler.resetKeys();
       monitorKeyboard(this);
 
       closeKeyboard();
