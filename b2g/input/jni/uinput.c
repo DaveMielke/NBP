@@ -63,36 +63,33 @@ JAVA_METHOD(
   org_nbp_b2g_input_UInputDevice, openDevice, jint
 ) {
   const char *path = "/dev/uinput";
+  int device = open(path, O_WRONLY);
 
-  if (makeWritable(path)) {
-    int device = open(path, O_WRONLY);
+  if (device != -1) {
+    struct uinput_user_dev description;
 
-    if (device != -1) {
-      struct uinput_user_dev description;
+    memset(&description, 0, sizeof(description));
+    snprintf(description.name, sizeof(description.name), "B2G Input Service");
 
-      memset(&description, 0, sizeof(description));
-      snprintf(description.name, sizeof(description.name), "B2G Input Service");
+    {
+      char topology[0X40];
 
-      {
-        char topology[0X40];
+      snprintf(topology, sizeof(topology), "%s", "org.nbp.b2g.input");
 
-        snprintf(topology, sizeof(topology), "%s", "org.nbp.b2g.input");
-
-        if (ioctl(device, UI_SET_PHYS, topology) == -1) {
-          logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
-        }
+      if (ioctl(device, UI_SET_PHYS, topology) == -1) {
+        logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
       }
-
-      if (write(device, &description, sizeof(description)) != -1) {
-        return device;
-      } else {
-        logSystemError(LOG_TAG, "write[uinput_user_dev]");
-      }
-
-      close(device);
-    } else {
-      logSystemError(LOG_TAG, "open[uinput]");
     }
+
+    if (write(device, &description, sizeof(description)) != -1) {
+      return device;
+    } else {
+      logSystemError(LOG_TAG, "write[uinput_user_dev]");
+    }
+
+    close(device);
+  } else {
+    logSystemError(LOG_TAG, "open[uinput]");
   }
 
   return -1;
