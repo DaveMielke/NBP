@@ -40,12 +40,16 @@ public class KeyHandler {
   public static void handleKeyUp (int keyMask) {
     if (keyMask != 0) {
       if (activeKeyMask > 0) {
+        boolean performed = false;
         Action action = KeyBindings.getAction(activeKeyMask);
 
         if (action != null) {
-          performAction(action);
+          if (performAction(action)) {
+            performed = true;
+          }
         }
 
+        if (!performed) ApplicationUtilities.beep();
         activeKeyMask = 0;
       }
 
