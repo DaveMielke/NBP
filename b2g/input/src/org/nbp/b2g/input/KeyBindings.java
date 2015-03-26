@@ -19,14 +19,86 @@ import java.io.BufferedReader;
 
 import java.util.regex.Pattern;
 
-public class KeyBindings {
+public class KeyBindings extends Action {
   private static final String LOG_TAG = KeyBindings.class.getName();
 
-  private static Map<Integer, Action> keyBindings = new HashMap<Integer, Action>();
   private final static Map<String, Action> actionObjects = new HashMap<String, Action>();
+  private final static Map<Integer, Action> rootKeyBindings = new HashMap<Integer, Action>();
+  private static Map<Integer, Action> currentKeyBindings = rootKeyBindings;
+  private Map<Integer, Action> keyBindings = new HashMap<Integer, Action>();
+
+  @Override
+  public final boolean performAction () {
+    currentKeyBindings = keyBindings;
+    return true;
+  }
+
+  public static void resetKeyBindings () {
+    currentKeyBindings = rootKeyBindings;
+  }
+
+  private static boolean isKeyBindingsAction (Action action) {
+    return action instanceof KeyBindings;
+  }
 
   public static Action getAction (int keyMask) {
-    return keyBindings.get(keyMask);
+    Action action = currentKeyBindings.get(keyMask);
+    boolean reset = true;
+
+    if (action != null) {
+      if (isKeyBindingsAction(action)) {
+        reset = false;
+      }
+    }
+
+    if (reset) resetKeyBindings();
+    return action;
+  }
+
+  public static boolean addKeyBinding (int[] keyMasks, Action action) {
+    Map<Integer, Action> bindings = rootKeyBindings;
+    int last = keyMasks.length - 1;
+
+    for (int index=0; index<last; index+=1) {
+      int keyMask = keyMasks[index];
+      Action a = bindings.get(keyMask);
+
+      if (a == null) {
+        a = new KeyBindings();
+        bindings.put(keyMask, a);
+      } else if (!isKeyBindingsAction(a)) {
+        Log.w(LOG_TAG, "key combination already defined");
+        return false;
+      }
+
+      bindings = ((KeyBindings)a).keyBindings;
+    }
+
+    {
+      int keyMask = keyMasks[last];
+
+      if (bindings.get(keyMask) != null) {
+        Log.w(LOG_TAG, "key combination already defined");
+        return false;
+      }
+
+      bindings.put(keyMask, action);
+    }
+
+    return true;
+  }
+
+  private static boolean addKeyBinding (int keyMask, String actionName) {
+    Action action = getAction(actionName);
+
+    if (action != null) {
+      int[] keyMasks = new int[] {keyMask};
+      if (addKeyBinding(keyMasks, action)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private static Action newAction (String actionName) {
@@ -64,18 +136,29 @@ public class KeyBindings {
     return action;
   }
 
-  private static void addKeyBinding (int keyMask, Action action) {
-    keyBindings.put(keyMask, action);
+  private static int[] addKeyMask (int[] oldMasks, int mask) {
+    int[] newMasks;
+
+    if (mask == 0) {
+      Log.w(LOG_TAG, "missing key combination");
+      return null;
+    }
+
+    if (oldMasks == null) {
+      newMasks = new int[1];
+    } else {
+      newMasks = new int[oldMasks.length + 1];
+      System.arraycopy(oldMasks, 0, newMasks, 0, oldMasks.length);
+    }
+
+    newMasks[newMasks.length - 1] = mask;
+    return newMasks;
   }
 
-  private static void addKeyBinding (int keyMask, String actionName) {
-    Action action = getAction(actionName);
-    if (action != null) addKeyBinding(keyMask, action);
-  }
-
-  private static int parseKeys (String operand) {
-    int mask = 0;
+  private static int[] parseKeys (String operand) {
     int length = operand.length();
+    int[] masks = null;
+    int mask = 0;
 
     for (int index=0; index<length; index+=1) {
       char character = operand.charAt(index);
@@ -101,9 +184,15 @@ public class KeyBindings {
         case 'l': bit = KeyMask.DPAD_LEFT;   break;
         case 'r': bit = KeyMask.DPAD_RIGHT;  break;
 
+        case '-':
+          masks = addKeyMask(masks, mask);
+          if (masks == null) return null;
+          mask = 0;
+          continue;
+
         default:
           Log.w(LOG_TAG, "invalid key: " + character);
-          return 0;
+          return null;
       }
 
       if ((mask & bit) != 0) {
@@ -114,7 +203,7 @@ public class KeyBindings {
       mask |= bit;
     }
 
-    return mask;
+    return addKeyMask(masks, mask);
   }
 
   private static void addKeyBindings (Reader reader) {
@@ -151,8 +240,9 @@ public class KeyBindings {
       String operand = operands[index++];
       if (operand.charAt(0) == '#') continue;
 
-      int keyMask = parseKeys(operand);
-      if (keyMask == 0) continue;
+      int[] keyMasks = parseKeys(operand);
+      if (keyMasks == null) continue;
+      int keyMask = keyMasks[keyMasks.length - 1];
 
       if (index == operands.length) {
         Log.w(LOG_TAG, "missing keys action: " + line);
@@ -162,7 +252,7 @@ public class KeyBindings {
       operand = operands[index++];
       Action action = getAction(operand);
       if (action == null) continue;
-      addKeyBinding(keyMask, action);
+      addKeyBinding(keyMasks, action);
 
       if (index == operands.length) continue;
       operand = operands[index++];
@@ -215,6 +305,7 @@ public class KeyBindings {
   }
 
   private KeyBindings () {
+    super();
   }
 
   static {
