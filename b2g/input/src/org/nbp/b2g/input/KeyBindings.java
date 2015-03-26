@@ -1,5 +1,4 @@
 package org.nbp.b2g.input;
-import org.nbp.b2g.input.actions.*;
 
 import java.lang.reflect.*;
 
@@ -27,12 +26,7 @@ public class KeyBindings {
   private final static Map<String, Action> actionObjects = new HashMap<String, Action>();
 
   public static Action getAction (int keyMask) {
-    if (keyBindings.size() == 0) addKeyBindings();
     return keyBindings.get(keyMask);
-  }
-
-  private static void addKeyBinding (int keyMask, Action action) {
-    keyBindings.put(keyMask, action);
   }
 
   private static Action newAction (String actionName) {
@@ -68,6 +62,15 @@ public class KeyBindings {
 
     actionObjects.put(actionName, action);
     return action;
+  }
+
+  private static void addKeyBinding (int keyMask, Action action) {
+    keyBindings.put(keyMask, action);
+  }
+
+  private static void addKeyBinding (int keyMask, String actionName) {
+    Action action = getAction(actionName);
+    if (action != null) addKeyBinding(keyMask, action);
   }
 
   private static int parseKeys (String operand) {
@@ -114,7 +117,7 @@ public class KeyBindings {
     return mask;
   }
 
-  public static void addKeyBindings (Reader reader) {
+  private static void addKeyBindings (Reader reader) {
     Pattern pattern = Pattern.compile("\\s+");
     BufferedReader buf;
 
@@ -176,12 +179,12 @@ public class KeyBindings {
     }
   }
 
-  public static void addKeyBindings (InputStream stream) {
+  private static void addKeyBindings (InputStream stream) {
     Reader reader = new InputStreamReader(stream);
     addKeyBindings(reader);
   }
 
-  public static void addKeyBindings (String asset) {
+  private static void addKeyBindings (String asset) {
     Context context = ApplicationHooks.getContext();
 
     if (context != null) {
@@ -203,14 +206,18 @@ public class KeyBindings {
     }
   }
 
-  public static void addKeyBindings () {
+  private static void addKeyBindings () {
     Log.d(LOG_TAG, "begin key binding definitions");
-    addKeyBinding(KeyMask.VOLUME_DOWN, new VolumeDown());
-    addKeyBinding(KeyMask.VOLUME_UP, new VolumeUp());
+    addKeyBinding(KeyMask.VOLUME_DOWN, "VolumeDown");
+    addKeyBinding(KeyMask.VOLUME_UP, "VolumeUp");
     addKeyBindings("keys.conf");
     Log.d(LOG_TAG, "end key binding definitions");
   }
 
   private KeyBindings () {
+  }
+
+  static {
+    addKeyBindings();
   }
 }
