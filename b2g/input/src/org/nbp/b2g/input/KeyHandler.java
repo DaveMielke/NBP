@@ -40,7 +40,7 @@ public class KeyHandler {
   public static void handleKeyUp (int keyMask) {
     if (keyMask != 0) {
       if (activeKeyMask > 0) {
-        Action action = Action.getAction(activeKeyMask);
+        Action action = KeyBindings.getAction(activeKeyMask);
 
         if (action != null) {
           performAction(action);

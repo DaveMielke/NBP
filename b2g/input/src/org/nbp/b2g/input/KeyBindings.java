@@ -20,8 +20,55 @@ import java.io.BufferedReader;
 
 import java.util.regex.Pattern;
 
-public class Actions {
-  private static final String LOG_TAG = Actions.class.getName();
+public class KeyBindings {
+  private static final String LOG_TAG = KeyBindings.class.getName();
+
+  private static Map<Integer, Action> keyBindings = new HashMap<Integer, Action>();
+  private final static Map<String, Action> actionObjects = new HashMap<String, Action>();
+
+  public static Action getAction (int keyMask) {
+    if (keyBindings.size() == 0) addKeyBindings();
+    return keyBindings.get(keyMask);
+  }
+
+  private static void addKeyBinding (int keyMask, Action action) {
+    keyBindings.put(keyMask, action);
+  }
+
+  private static Action newAction (String actionName) {
+    String className = KeyBindings.class.getPackage().getName() + ".actions." + actionName;
+
+    try {
+      Class classObject = Class.forName(className);
+      Class[] argumentTypes = new Class[] {};
+      Constructor constructor = classObject.getConstructor(argumentTypes);
+      return (Action)constructor.newInstance();
+    } catch (ClassNotFoundException exception) {
+      Log.d(LOG_TAG, "class not found: " + className);
+    } catch (NoSuchMethodException exception) {
+      Log.d(LOG_TAG, "constructor not found: " + className);
+    } catch (IllegalAccessException exception) {
+      Log.d(LOG_TAG, "constructor not accessible: " + className);
+    } catch (InstantiationException exception) {
+      Log.d(LOG_TAG, "instantiation error: " + className, exception);
+    } catch (InvocationTargetException exception) {
+      Log.d(LOG_TAG, "construction error: " + className, exception);
+    }
+
+    Log.w(LOG_TAG, "invalid action: " + actionName);
+    return null;
+  }
+
+  private static Action getAction (String actionName) {
+    Action action = actionObjects.get(actionName);
+    if (action != null) return action;
+
+    action = newAction(actionName);
+    if (action == null) return null;
+
+    actionObjects.put(actionName, action);
+    return action;
+  }
 
   private static int parseKeys (String operand) {
     int mask = 0;
@@ -67,34 +114,9 @@ public class Actions {
     return mask;
   }
 
-  private static Action parseAction (String operand) {
-    String name = Actions.class.getPackage().getName() + ".actions." + operand;
-
-    try {
-      Class c = Class.forName(name);
-      Class[] types = new Class[] {};
-      Constructor constructor = c.getConstructor(types);
-      return (Action)constructor.newInstance();
-    } catch (ClassNotFoundException exception) {
-      Log.d(LOG_TAG, "class not found: " + name);
-    } catch (NoSuchMethodException exception) {
-      Log.d(LOG_TAG, "constructor not found: " + name);
-    } catch (IllegalAccessException exception) {
-      Log.d(LOG_TAG, "constructor not accessible: " + name);
-    } catch (InstantiationException exception) {
-      Log.d(LOG_TAG, "instantiation error: " + name, exception);
-    } catch (InvocationTargetException exception) {
-      Log.d(LOG_TAG, "construction error: " + name, exception);
-    }
-
-    Log.w(LOG_TAG, "invalid action: " + operand);
-    return null;
-  }
-
-  public static void add (Reader reader) {
+  public static void addKeyBindings (Reader reader) {
     Pattern pattern = Pattern.compile("\\s+");
     BufferedReader buf;
-    Map<String, Action> actions = new HashMap<String, Action>();
 
     if (reader instanceof BufferedReader) {
       buf = (BufferedReader)reader;
@@ -135,21 +157,15 @@ public class Actions {
       }
 
       operand = operands[index++];
-      Action action = actions.get(operand);
+      Action action = getAction(operand);
+      if (action == null) continue;
+      addKeyBinding(keyMask, action);
 
-      if (action == null) {
-        action = parseAction(operand);
-        if (action == null) continue;
-        actions.put(operand, action);
-      }
-
-      Action.add(keyMask, action);
       if (index == operands.length) continue;
-
       operand = operands[index++];
       if (!action.parseOperand(keyMask, operand)) continue;
-      if (index == operands.length) continue;
 
+      if (index == operands.length) continue;
       Log.w(LOG_TAG, "too many operands: " + line);
     }
 
@@ -160,12 +176,12 @@ public class Actions {
     }
   }
 
-  public static void add (InputStream stream) {
+  public static void addKeyBindings (InputStream stream) {
     Reader reader = new InputStreamReader(stream);
-    add(reader);
+    addKeyBindings(reader);
   }
 
-  public static void add (String asset) {
+  public static void addKeyBindings (String asset) {
     Context context = ApplicationHooks.getContext();
 
     if (context != null) {
@@ -176,7 +192,7 @@ public class Actions {
           InputStream stream = assets.open(asset);
 
           try {
-            add(stream);
+            addKeyBindings(stream);
           } finally {
             stream.close();
           }
@@ -187,14 +203,14 @@ public class Actions {
     }
   }
 
-  public static void add () {
+  public static void addKeyBindings () {
     Log.d(LOG_TAG, "begin key binding definitions");
-    Action.add(KeyMask.VOLUME_DOWN, new VolumeDown());
-    Action.add(KeyMask.VOLUME_UP, new VolumeUp());
-    add("keys.conf");
+    addKeyBinding(KeyMask.VOLUME_DOWN, new VolumeDown());
+    addKeyBinding(KeyMask.VOLUME_UP, new VolumeUp());
+    addKeyBindings("keys.conf");
     Log.d(LOG_TAG, "end key binding definitions");
   }
 
-  private Actions () {
+  private KeyBindings () {
   }
 }
