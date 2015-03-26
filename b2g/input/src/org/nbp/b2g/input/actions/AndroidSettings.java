@@ -4,13 +4,13 @@ import org.nbp.b2g.input.*;
 import android.content.Context;
 import android.content.Intent;
 
-public class Clock extends ActivityAction {
+public class AndroidSettings extends ActivityAction {
   @Override
   protected Intent getIntent (Context context) {
-    return new Intent(context, ClockActivity.class);
+    return new Intent(android.provider.Settings.ACTION_SETTINGS);
   }
 
-  public Clock () {
+  public AndroidSettings () {
     super();
   }
 }

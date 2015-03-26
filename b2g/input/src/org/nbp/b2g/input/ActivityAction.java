@@ -4,33 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class ActivityAction extends Action {
-  protected Class getActivityClass () {
+  protected Intent getIntent (Context context) {
     return null;
   }
 
   @Override
   public final boolean performAction () {
-    Class activityClass = getActivityClass();
+    Context context = ApplicationHooks.getContext();
+    if (context == null) return false;
 
-    if (activityClass != null) {
-      Context context = ApplicationHooks.getContext();
+    Intent intent = getIntent(context);
+    if (intent == null) return false;
 
-      if (context != null) {
-        Intent intent = new Intent(context, activityClass);
+    intent.addFlags(
+      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+      Intent.FLAG_ACTIVITY_NO_HISTORY |
+      Intent.FLAG_ACTIVITY_NEW_TASK |
+      Intent.FLAG_ACTIVITY_SINGLE_TOP
+    );
 
-        intent.addFlags(
-          Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-          Intent.FLAG_ACTIVITY_NO_HISTORY |
-          Intent.FLAG_ACTIVITY_NEW_TASK |
-          Intent.FLAG_ACTIVITY_SINGLE_TOP
-        );
-
-        context.startActivity(intent);
-        return true;
-      }
-    }
-
-    return false;
+    context.startActivity(intent);
+    return true;
   }
 
   protected ActivityAction () {
