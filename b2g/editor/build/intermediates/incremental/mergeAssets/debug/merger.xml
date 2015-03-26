@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/home/deane/b2g-editor/editor/src/main/assets" >
+            <file
+                name="Aspose.Words.lic"
+                path="/home/deane/b2g-editor/editor/src/main/assets/Aspose.Words.lic" />
+            <file
+                name="aspose-words-1.12-libs-android-jdk16.apk"
+                path="/home/deane/b2g-editor/editor/src/main/assets/aspose-words-1.12-libs-android-jdk16.apk" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/deane/b2g-editor/editor/src/debug/assets" />
+    </dataSet>
+
+</merger>

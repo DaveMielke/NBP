@@ -1,0 +1,5 @@
+-dontwarn com.aspose.**
+-dontwarn scala.**
+-ignorewarnings
+-libraryjar libs/aspose-words-1.12-android-jdk16.jar
+-keep class org.nbp.editor.** { *; }

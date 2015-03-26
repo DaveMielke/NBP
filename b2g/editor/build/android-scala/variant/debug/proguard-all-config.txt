@@ -1,0 +1,167 @@
+-injars /home/deane/b2g-editor/editor/build/intermediates/classes/debug
+-injars /home/deane/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.2/4718c022bd5bd84705ddacec18072c351832bc20/scala-library-2.11.2.jar(!META-INF/MANIFEST.MF)
+-injars /home/deane/.gradle/caches/modules-2/files-2.1/ch.acra/acra/4.5.0/44a5eb946e0d83eed4a0128d877ca1fd8168b83a/acra-4.5.0.jar(!META-INF/MANIFEST.MF)
+-injars /home/deane/b2g-editor/editor/libs/aspose-words-1.12-android-jdk16.jar(!META-INF/MANIFEST.MF)
+-outjars /home/deane/b2g-editor/editor/build/intermediates/classes-proguard/debug/classes.jar
+-injars /home/deane/b2g-editor/editor/build/intermediates/classes/test/debug
+
+-libraryjars /home/deane/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.2/4718c022bd5bd84705ddacec18072c351832bc20/scala-library-2.11.2.jar
+-libraryjars /home/deane/.gradle/caches/modules-2/files-2.1/ch.acra/acra/4.5.0/44a5eb946e0d83eed4a0128d877ca1fd8168b83a/acra-4.5.0.jar
+-libraryjars /home/deane/b2g-editor/editor/libs/aspose-words-1.12-android-jdk16.jar
+-libraryjars /home/deane/b2g-editor/editor/build/intermediates/classes/debug
+-libraryjars /home/deane/b2g-editor/editor/build/intermediates/dependency-cache/debug
+-libraryjars /home/deane/Android/Sdk/platforms/android-16/android.jar
+-libraryjars /home/deane/b2g-editor/editor/libs/aspose-words-1.12-android-jdk16.jar
+
+-forceprocessing
+-printusage /home/deane/b2g-editor/editor/build/outputs/proguard/debug/usage.txt
+-dontoptimize
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*,!code/allocation/variable
+-dontobfuscate
+-printmapping /home/deane/b2g-editor/editor/build/outputs/proguard/debug/mapping.txt
+-dontusemixedcaseclassnames
+-flattenpackagehierarchy ''
+-keepattributes SourceFile,LineNumberTable,*Annotation*,*Annotation*
+-renamesourcefileattribute SourceFile
+-dontpreverify
+-verbose
+-dontnote android.annotation.**,com.android.vending.licensing.**,com.google.vending.licensing.**,android.support.**,scala.ScalaObject,org.xml.sax.EntityResolver,scala.concurrent.forkjoin.**,android.**,java.**,javax.microedition.khronos.**,junit.framework.**,scala.**,**.R$*,com.robotium.solo.**,org.mockito.**,junitx.**,com.google.android.apps.common.testing.**,com.google.vending.licensing.ILicensingService,com.android.vending.licensing.ILicensingService
+-dontwarn android.support.**,scala.beans.ScalaBeanInfo,scala.concurrent.**,scala.reflect.**,scala.sys.process.package$,**$$anonfun$*,scala.collection.immutable.RedBlack$Empty,scala.tools.**,plugintemplate.**,com.aspose.**,scala.**,scala.**,android.**,java.**,javax.microedition.khronos.**,junit.framework.**,scala.**,**.R$*,com.robotium.solo.**,org.mockito.**,junitx.**,com.google.android.apps.common.testing.**
+-ignorewarnings
+-printconfiguration /home/deane/b2g-editor/editor/build/android-scala/variant/debug/proguard-all-config.txt
+-dump /home/deane/b2g-editor/editor/build/outputs/proguard/debug/dump.txt
+-printseeds /home/deane/b2g-editor/editor/build/outputs/proguard/debug/seeds.txt
+
+
+-keep public class com.google.vending.licensing.ILicensingService
+
+-keep public class com.android.vending.licensing.ILicensingService
+
+-keepclasseswithmembers,allowshrinking class * {
+    native <methods>;
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * extends android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+    void set*(***);
+    *** get*();
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-keep public class scala.reflect.ScalaSignature
+
+# This is gone in 2.11
+-keep public interface  scala.ScalaObject
+
+-keepclassmembers class * {
+    ** MODULE$;
+}
+
+-keep class scala.collection.SeqLike {
+    public java.lang.String toString();
+}
+
+-keepclassmembers,allowshrinking class scala.concurrent.forkjoin.ForkJoinPool {
+    long eventCount;
+    int workerCounts;
+    int runControl;
+    scala.concurrent.forkjoin.ForkJoinPool$WaitQueueNode syncStack;
+    scala.concurrent.forkjoin.ForkJoinPool$WaitQueueNode spareStack;
+}
+
+-keepclassmembers,allowshrinking class scala.concurrent.forkjoin.ForkJoinWorkerThread {
+    int base;
+    int sp;
+    int runState;
+}
+
+-keepclassmembers,allowshrinking class scala.concurrent.forkjoin.ForkJoinTask {
+    int status;
+}
+
+-keepclassmembers,allowshrinking class scala.concurrent.forkjoin.LinkedTransferQueue {
+    scala.concurrent.forkjoin.LinkedTransferQueue$PaddedAtomicReference head;
+    scala.concurrent.forkjoin.LinkedTransferQueue$PaddedAtomicReference tail;
+    scala.concurrent.forkjoin.LinkedTransferQueue$PaddedAtomicReference cleanMe;
+}
+
+-keep class org.nbp.editor.** {
+    <fields>;
+    <methods>;
+}
+
+# view AndroidManifest.xml #generated:15
+-keep class org.nbp.editor.Application {
+    <init>(...);
+}
+
+# view AndroidManifest.xml #generated:19
+-keep class org.nbp.editor.ui.Editor {
+    <init>(...);
+}
+
+-keep class com.google.dexmaker.mockito.** {
+    <fields>;
+    <methods>;
+}
+
+# for android. see also http://proguard.sourceforge.net/manual/examples.html#androidapplication
+-keep class * extends android.** {
+    <fields>;
+    <methods>;
+}
+
+-keep class * extends junit.** {
+    <fields>;
+    <methods>;
+}
+
+-keep class * extends android.** {
+    <fields>;
+    <methods>;
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context,android.util.AttributeSet);
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context,android.util.AttributeSet,int);
+}
+
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface
+    <methods>;
+}
+
+-keep public class com.google.vending.licensing.ILicensingService
+
+-keep public class com.android.vending.licensing.ILicensingService
+
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keepclasseswithmembers,allowshrinking class * {
+    native <methods>;
+}

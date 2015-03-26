@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/home/deane/b2g-editor/editor/src/main/res" >
+            <file
+                name="main"
+                path="/home/deane/b2g-editor/editor/src/main/res/menu/main.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="icon"
+                path="/home/deane/b2g-editor/editor/src/main/res/drawable/icon.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                path="/home/deane/b2g-editor/editor/src/main/res/values/strings.xml"
+                qualifiers="" >
+                <string name="send" >Send
+                </string>
+                <string name="newDocument" >New
+                </string>
+                <string name="off" >off
+                </string>
+                <string name="confirmOverwrite" >A document with this name already exists. Do you wish to overwrite it?
+                </string>
+                <string name="saved" >Saved
+                </string>
+                <string name="noFileManager" >OI File Manager is needed to open or save documents. Would you like to install it?
+                </string>
+                <string name="loaded" >Loaded
+                </string>
+                <string name="fileNotFound" >File not found.
+                </string>
+                <string name="saveChanges" >Do you wish to save your changes to this document?
+                </string>
+                <string name="loading" >Loading...
+                </string>
+                <string name="open" >Open
+                </string>
+                <string name="openDocument" >Open Document
+                </string>
+                <string name="on" >on
+                </string>
+                <string name="save" >Save
+                </string>
+                <string name="saveDocument" >Save Document
+                </string>
+                <string name="error" >Error
+                </string>
+                <string name="italic" >Italic
+                </string>
+                <string name="bold" >Bold
+                </string>
+                <string name="underline" >Underline
+                </string>
+                <string name="appName" >Editor
+                </string>
+                <string name="saveAs" >Save as
+                </string>
+            </file>
+        </source>
+        <source path="/home/deane/b2g-editor/editor/build/generated/res/rs/debug" />
+        <source path="/home/deane/b2g-editor/editor/build/generated/res/generated/debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/deane/b2g-editor/editor/src/debug/res" />
+    </dataSet>
+
+</merger>
