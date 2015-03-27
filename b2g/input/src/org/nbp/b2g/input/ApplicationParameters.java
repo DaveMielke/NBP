@@ -3,7 +3,7 @@ package org.nbp.b2g.input;
 import android.os.Build;
 
 public abstract class ApplicationParameters {
-  public static volatile boolean MONITOR_KEYBOARD_DIRECTLY = true;
+  public static volatile boolean START_KEYBOARD_MONITOR = true;
   public static volatile boolean CHORDS_SEND_SYSTEM_KEYS = true;
   public static volatile boolean CHORDS_SEND_ARROW_KEYS = true;
 

@@ -2,8 +2,8 @@ package org.nbp.b2g.input;
 
 import android.util.Log;
 
-public class KeyHandler {
-  private static final String LOG_TAG = KeyHandler.class.getName();
+public class KeyEvents {
+  private static final String LOG_TAG = KeyEvents.class.getName();
 
   private static int pressedKeyMask = 0;
   private static int activeKeyMask = 0;
@@ -66,6 +66,6 @@ public class KeyHandler {
     activeKeyMask = pressedKeyMask;
   }
 
-  private KeyHandler () {
+  private KeyEvents () {
   }
 }

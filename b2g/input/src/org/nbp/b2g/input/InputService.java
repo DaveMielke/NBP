@@ -41,7 +41,7 @@ public class InputService extends InputMethodService {
     Log.d(LOG_TAG, "input service unbound");
     inputService = null;
 
-    if (!KeyboardMonitor.isActive()) KeyHandler.resetKeys();
+    if (!KeyboardMonitor.isActive()) KeyEvents.resetKeys();
   }
 
   @Override
@@ -116,7 +116,7 @@ public class InputService extends InputMethodService {
   public boolean onKeyDown (int code, KeyEvent event) {
     logKeyEvent(code, true);
     if (ignoreKey(code)) return false;
-    KeyHandler.handleKeyDown(KeyCode.toKeyMask(code));
+    KeyEvents.handleKeyDown(KeyCode.toKeyMask(code));
     return true;
   }
 
@@ -124,7 +124,7 @@ public class InputService extends InputMethodService {
   public boolean onKeyUp (int code, KeyEvent event) {
     logKeyEvent(code, false);
     if (ignoreKey(code)) return false;
-    KeyHandler.handleKeyUp(KeyCode.toKeyMask(code));
+    KeyEvents.handleKeyUp(KeyCode.toKeyMask(code));
     return true;
   }
 }

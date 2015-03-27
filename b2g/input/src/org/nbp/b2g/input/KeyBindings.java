@@ -88,17 +88,21 @@ public class KeyBindings extends Action {
     return true;
   }
 
-  private static boolean addKeyBinding (int keyMask, String actionName) {
+  private static boolean addKeyBinding (int[] keyMasks, String actionName) {
     Action action = getAction(actionName);
 
     if (action != null) {
-      int[] keyMasks = new int[] {keyMask};
       if (addKeyBinding(keyMasks, action)) {
         return true;
       }
     }
 
     return false;
+  }
+
+  private static boolean addKeyBinding (int keyMask, String actionName) {
+    int[] keyMasks = new int[] {keyMask};
+    return addKeyBinding(keyMasks, actionName);
   }
 
   private static Action newAction (String actionName) {

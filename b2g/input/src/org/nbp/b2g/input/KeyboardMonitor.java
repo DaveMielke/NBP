@@ -6,6 +6,7 @@ public class KeyboardMonitor extends Thread {
   private static final String LOG_TAG = KeyboardMonitor.class.getName();
 
   private static KeyboardMonitor keyboardMonitor = null;
+  private final static Object keyboardMonitorStartLock = new Object();
 
   public static KeyboardMonitor getKeyboardMonitor () {
     return keyboardMonitor;
@@ -27,9 +28,9 @@ public class KeyboardMonitor extends Thread {
     }
 
     if (press) {
-      KeyHandler.handleKeyDown(ScanCode.toKeyMask(code));
+      KeyEvents.handleKeyDown(ScanCode.toKeyMask(code));
     } else {
-      KeyHandler.handleKeyUp(ScanCode.toKeyMask(code));
+      KeyEvents.handleKeyUp(ScanCode.toKeyMask(code));
     }
   }
 
@@ -37,7 +38,7 @@ public class KeyboardMonitor extends Thread {
     Log.d(LOG_TAG, "keyboard monitor starting");
 
     if (openKeyboard()) {
-      KeyHandler.resetKeys();
+      KeyEvents.resetKeys();
       monitorKeyboard(this);
 
       closeKeyboard();
@@ -48,10 +49,15 @@ public class KeyboardMonitor extends Thread {
     Log.d(LOG_TAG, "keyboard monitor stopping");
   }
 
-  public static boolean startMonitor () {
-    if (ApplicationParameters.MONITOR_KEYBOARD_DIRECTLY) {
-      keyboardMonitor = new KeyboardMonitor();
-      keyboardMonitor.start();
+  public static boolean startKeyboardMonitor () {
+    if (ApplicationParameters.START_KEYBOARD_MONITOR) {
+      synchronized (keyboardMonitorStartLock) {
+        if (keyboardMonitor == null) {
+          keyboardMonitor = new KeyboardMonitor();
+          keyboardMonitor.start();
+        }
+      }
+
       return true;
     }
 
