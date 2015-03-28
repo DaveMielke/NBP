@@ -24,6 +24,7 @@ public class InsertCharacter extends ScreenAction {
     }
 
     characterMap.put(keyMask, character);
+    BrailleDevice.setCharacter(character, keyMask);
     return true;
   }
 

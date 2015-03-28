@@ -9,6 +9,8 @@ ANDROID_JNI_SOURCES = \
    $(ANDROID_JNI_DIRECTORY)/uinput.c \
    $(ANDROID_JNI_DIRECTORY)/kbddev.c \
    $(ANDROID_JNI_DIRECTORY)/kbdmon.c \
+   $(ANDROID_JNI_DIRECTORY)/metec_flat20_ioctl.h \
+   $(ANDROID_JNI_DIRECTORY)/braille.c \
    $(ANDROID_JNI_DIRECTORY)/Android.mk
 
 ANDROID_ASSETS_DIRECTORY = assets
