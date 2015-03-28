@@ -9,7 +9,14 @@ public class KeyboardMonitor extends Thread {
   private final static Object keyboardMonitorStartLock = new Object();
 
   public static KeyboardMonitor getKeyboardMonitor () {
-    return keyboardMonitor;
+    KeyboardMonitor monitor;
+
+    synchronized (keyboardMonitorStartLock) {
+      monitor = keyboardMonitor;
+    }
+
+    if (monitor == null) Log.w(LOG_TAG, "keyboard monitor not running");
+    return monitor;
   }
 
   public static boolean isActive () {
@@ -31,18 +38,21 @@ public class KeyboardMonitor extends Thread {
   }
 
   public void run () {
-    Log.d(LOG_TAG, "keyboard monitor starting");
+    Log.d(LOG_TAG, "keyboard monitor started");
 
     if (openKeyboard()) {
       KeyEvents.resetKeys();
       monitorKeyboard(this);
-
       closeKeyboard();
     } else {
       Log.w(LOG_TAG, "keyboard device not opened");
     }
 
-    Log.d(LOG_TAG, "keyboard monitor stopping");
+    Log.d(LOG_TAG, "keyboard monitor stopped");
+
+    synchronized (keyboardMonitorStartLock) {
+      keyboardMonitor = null;
+    }
   }
 
   public static boolean startKeyboardMonitor () {
@@ -51,6 +61,8 @@ public class KeyboardMonitor extends Thread {
         if (keyboardMonitor == null) {
           keyboardMonitor = new KeyboardMonitor();
           keyboardMonitor.start();
+        } else {
+          Log.w(LOG_TAG, "keyboard monitor already running");
         }
       }
 

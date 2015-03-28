@@ -39,18 +39,25 @@ public abstract class Action {
   protected AccessibilityNodeInfo getRootNode () {
     ScreenMonitor monitor = getScreenMonitor();
     if (monitor == null) return null;
-    return monitor.getRootInActiveWindow();
+
+    AccessibilityNodeInfo root = monitor.getRootInActiveWindow();
+    if (root == null) Log.w(LOG_TAG, "no root node");
+    return root;
   }
 
   public AccessibilityNodeInfo getCurrentNode () {
     AccessibilityNodeInfo root = getRootNode();
     if (root == null) return null;
 
-    AccessibilityNodeInfo current = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY);
-    if (current == null) current = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT);
+    AccessibilityNodeInfo node;
+    if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
+      if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
+        Log.w(LOG_TAG, "no current node");
+      }
+    }
 
     root.recycle();
-    return current;
+    return node;
   }
 
   protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {

@@ -4,7 +4,11 @@ import org.nbp.b2g.input.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import android.util.Log;
+
 public class InsertCharacter extends ScreenAction {
+  private static final String LOG_TAG = InsertCharacter.class.getName();
+
   private static Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
 
   @Override
@@ -25,7 +29,8 @@ public class InsertCharacter extends ScreenAction {
 
   @Override
   public boolean performAction () {
-    Character character = characterMap.get(getKeyMask());
+    int keyMask = getKeyMask();
+    Character character = characterMap.get(keyMask);
 
     if (character != null) {
       InputService inputService = InputService.getInputService();
@@ -44,6 +49,8 @@ public class InsertCharacter extends ScreenAction {
           return true;
         }
       }
+    } else {
+      Log.w(LOG_TAG, String.format("not mapped to a character: 0X%02X", keyMask));
     }
 
     return false;
