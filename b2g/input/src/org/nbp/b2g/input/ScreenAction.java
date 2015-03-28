@@ -1,7 +1,6 @@
 package org.nbp.b2g.input;
 
 import android.util.Log;
-import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -14,58 +13,6 @@ public abstract class ScreenAction extends Action {
     if ((text = node.getText()) != null) return text;
     if ((text = node.getContentDescription()) != null) return text;
     return null;
-  }
-
-  protected void log (String message) {
-    Log.v(LOG_TAG, message);
-  }
-
-  protected void log (AccessibilityNodeInfo node, String reason) {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append(reason);
-    sb.append(':');
-
-    {
-      CharSequence text = node.getText();
-
-      if (text != null) {
-        sb.append(" \"");
-        sb.append(text);
-        sb.append('"');
-      }
-    }
-
-    {
-      CharSequence description = node.getContentDescription();
-
-      if (description != null) {
-        sb.append(" (");
-        sb.append(description);
-        sb.append(')');
-      }
-    }
-
-    sb.append(' ');
-    sb.append(node.getClassName());
-
-    {
-      Rect bounds = new Rect();
-      node.getBoundsInScreen(bounds);
-
-      sb.append(' ');
-      sb.append(bounds.toShortString());
-    }
-
-    if (node.isFocusable()) sb.append(" ifb");
-    if (node.isFocused()) sb.append(" ifd");
-    if (node.isAccessibilityFocused()) sb.append(" afd");
-    if (node.isCheckable()) sb.append(" ckb");
-    if (node.isChecked()) sb.append(" ckd");
-    if (node.isSelected()) sb.append(" sld");
-    if (node.isScrollable()) sb.append(" scb");
-
-    log(sb.toString());
   }
 
   public AccessibilityNodeInfo findNode (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
@@ -172,23 +119,23 @@ public abstract class ScreenAction extends Action {
       return false;
     }
 
-    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus succeeded");
+    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus succeeded");
     } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus failed");
+      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus failed");
+
+      if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus succeeded");
+      } else {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus failed");
+        return false;
+      }
     }
 
     if (performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT)) {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node succeeded");
     } else {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node failed");
-    }
-
-    if (node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus succeeded");
-    } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus failed");
-      return false;
     }
 
     return true;

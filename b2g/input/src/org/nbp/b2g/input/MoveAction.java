@@ -28,6 +28,7 @@ public abstract class MoveAction extends ScreenAction {
 
     if (moved) {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("inner move succeeded");
+      performNodeAction(node, AccessibilityNodeInfo.ACTION_CLEAR_SELECTION);
     } else {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("inner move failed");
     }
