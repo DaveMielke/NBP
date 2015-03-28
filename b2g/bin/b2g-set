@@ -292,7 +292,33 @@ verifyValue_boolean() {
 }
 
 verifyValue_milliseconds() {
-   [[ "${settingValue}" =~ ^(0|1[0-9]*)$ ]] || return 1
+   [[ "${settingValue}" =~ ^(0|[1-9][0-9]*)(.*)$ ]] || return 1
+   local value="${BASH_REMATCH[1]}"
+   local suffix="${BASH_REMATCH[2]}"
+
+   [ -z "${suffix}" ] || {
+      let "value *= 1000"
+
+      [ "${suffix}" = "s" ] || {
+         let "value *= 60"
+
+         [ "${suffix}" = "m" ] || {
+            let "value *= 60"
+
+            [ "${suffix}" = "h" ] || {
+               let "value *= 24"
+
+               [ "${suffix}" = "d" ] || {
+                  let "value *= 7"
+                  [ "${suffix}" = "w" ] || return 1
+               }
+            }
+         }
+      }
+
+      settingValue="${value}"
+   }
+
    return 0
 }
 
