@@ -28,7 +28,7 @@ public class KeyEvents {
     return activeKeyMask;
   }
 
-  public static void handleKeyDown (int keyMask) {
+  public static void handleKeyPress (int keyMask) {
     if (keyMask != 0) {
       if ((pressedKeyMask & keyMask) == 0) {
         pressedKeyMask |= keyMask;
@@ -37,7 +37,7 @@ public class KeyEvents {
     }
   }
 
-  public static void handleKeyUp (int keyMask) {
+  public static void handleKeyRelease (int keyMask) {
     if (keyMask != 0) {
       if (activeKeyMask > 0) {
         boolean performed = false;
@@ -54,6 +54,14 @@ public class KeyEvents {
       }
 
       pressedKeyMask &= ~keyMask;
+    }
+  }
+
+  public static void handleKeyEvent (int keyMask, boolean press) {
+    if (press) {
+      handleKeyPress(keyMask);
+    } else {
+      handleKeyRelease(keyMask);
     }
   }
 

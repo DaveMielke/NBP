@@ -27,11 +27,7 @@ public class KeyboardMonitor extends Thread {
       Log.d(LOG_TAG, "key " + (press? "press": "release") + ": " + code);
     }
 
-    if (press) {
-      KeyEvents.handleKeyDown(ScanCode.toKeyMask(code));
-    } else {
-      KeyEvents.handleKeyUp(ScanCode.toKeyMask(code));
-    }
+    KeyEvents.handleKeyEvent(ScanCode.toKeyMask(code), press);
   }
 
   public void run () {

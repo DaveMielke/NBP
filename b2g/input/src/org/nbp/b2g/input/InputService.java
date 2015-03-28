@@ -116,7 +116,7 @@ public class InputService extends InputMethodService {
   public boolean onKeyDown (int code, KeyEvent event) {
     logKeyEvent(code, true);
     if (ignoreKey(code)) return false;
-    KeyEvents.handleKeyDown(KeyCode.toKeyMask(code));
+    KeyEvents.handleKeyPress(KeyCode.toKeyMask(code));
     return true;
   }
 
@@ -124,7 +124,7 @@ public class InputService extends InputMethodService {
   public boolean onKeyUp (int code, KeyEvent event) {
     logKeyEvent(code, false);
     if (ignoreKey(code)) return false;
-    KeyEvents.handleKeyUp(KeyCode.toKeyMask(code));
+    KeyEvents.handleKeyRelease(KeyCode.toKeyMask(code));
     return true;
   }
 }
