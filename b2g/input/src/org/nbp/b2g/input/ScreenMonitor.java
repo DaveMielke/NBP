@@ -56,6 +56,22 @@ public class ScreenMonitor extends AccessibilityService {
     if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
       Log.d(LOG_TAG, "accessibility event: " + event.toString());
     }
+
+    switch (event.getEventType()) {
+      case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
+        AccessibilityNodeInfo node = getCurrentNode();
+
+        if (node != null) {
+          BrailleDevice.write(node);
+          node.recycle();
+        }
+
+        break;
+      }
+
+      default:
+        break;
+    }
   }
 
   @Override
