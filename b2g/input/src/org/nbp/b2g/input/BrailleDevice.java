@@ -11,9 +11,12 @@ public class BrailleDevice {
   private static final String LOG_TAG = BrailleDevice.class.getName();
 
   private static int cellCount = 0;
+
   private static String currentText = "";
   private static int currentIndent = 0;
+
   private static AccessibilityNodeInfo currentNode = null;
+  private static boolean currentDescribe = false;
 
   private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
 
@@ -68,6 +71,7 @@ public class BrailleDevice {
   private static void reset () {
     currentText = null;
     currentIndent = 0;
+    currentDescribe = false;
 
     if (currentNode != null) {
       currentNode.recycle();
@@ -81,38 +85,56 @@ public class BrailleDevice {
     return write();
   }
 
+  private static String getClassName (AccessibilityNodeInfo node) {
+    String name = node.getClassName().toString();
+    int index = name.lastIndexOf('.');
+    return name.substring(index+1);
+  }
+
   public static boolean write (AccessibilityNodeInfo node, boolean describe) {
     StringBuilder sb = new StringBuilder();
     String string;
-    CharSequence cs;
-
-    if (node.isCheckable()) {
-      sb.append('[');
-      sb.append(node.isChecked()? 'X': ' ');
-      sb.append("] ");
-    }
-
-    if ((cs = node.getText()) != null) {
-      sb.append(cs);
-    } else if ((cs = node.getContentDescription()) != null) {
-      sb.append(cs);
-    } else {
-      string = node.getClassName().toString();
-      int index = string.lastIndexOf('.');
-      string = string.substring(index+1);
-
-      sb.append('(');
-      sb.append(string);
-      sb.append(')');
-    }
+    CharSequence characters;
 
     if (describe) {
+      sb.append(getClassName(node));
+
+      if ((characters = node.getText()) != null) {
+        sb.append(" \"");
+        sb.append(characters);
+        sb.append('"');
+      }
+
+      if ((characters = node.getContentDescription()) != null) {
+        sb.append(" (");
+        sb.append(characters);
+        sb.append(')');
+      }
+
       sb.append(' ');
       if (node.isFocusable()) sb.append('i');
+      if (node.isScrollable()) sb.append('s');
+      if (node.isCheckable()) sb.append('c');
       if (node.isFocused()) sb.append('I');
       if (node.isAccessibilityFocused()) sb.append('A');
       if (node.isSelected()) sb.append('X');
-      if (node.isScrollable()) sb.append('s');
+      if (node.isChecked()) sb.append('C');
+    } else {
+      if (node.isCheckable()) {
+        sb.append('[');
+        sb.append(node.isChecked()? 'X': ' ');
+        sb.append("] ");
+      }
+
+      if ((characters = node.getText()) != null) {
+        sb.append(characters);
+      } else if ((characters = node.getContentDescription()) != null) {
+        sb.append(characters);
+      } else {
+        sb.append('(');
+        sb.append(getClassName(node));
+        sb.append(')');
+      }
     }
 
     string = sb.toString();
@@ -122,11 +144,12 @@ public class BrailleDevice {
     }
 
     currentText = string;
+    currentDescribe = describe;
     return write();
   }
 
   public static boolean write (AccessibilityNodeInfo node) {
-    return write(node, false);
+    return write(node, currentDescribe);
   }
 
   public static boolean moveLeft () {
