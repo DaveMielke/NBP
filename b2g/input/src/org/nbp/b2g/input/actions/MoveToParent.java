@@ -3,7 +3,7 @@ import org.nbp.b2g.input.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class MoveUp extends ScreenAction {
+public class MoveToParent extends ScreenAction {
   @Override
   public final boolean performAction () {
     boolean moved = false;
@@ -23,7 +23,7 @@ public class MoveUp extends ScreenAction {
     return true;
   }
 
-  public MoveUp () {
+  public MoveToParent () {
     super();
   }
 }
