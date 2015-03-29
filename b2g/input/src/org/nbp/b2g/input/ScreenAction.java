@@ -67,48 +67,50 @@ public abstract class ScreenAction extends Action {
     return true;
   }
 
-  protected boolean setCurrentNode (AccessibilityNodeInfo node) {
+  protected boolean setCurrentNode (AccessibilityNodeInfo node, boolean force) {
     if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(node, "setting node");
 
-    if (node.getText() != null) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has text");
-    } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no text");
-
-      if (isActionable(node)) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is actionable");
-
-        if (hasInnerText(node)) {
-          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has inner text");
-          return false;
-        } else {
-          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no inner text");
-        }
+    if (!force) {
+      if (node.getText() != null) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has text");
       } else {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is not actionable");
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no text");
+
+        if (isActionable(node)) {
+          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is actionable");
+
+          if (hasInnerText(node)) {
+            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has inner text");
+            return false;
+          } else {
+            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no inner text");
+          }
+        } else {
+          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is not actionable");
+          return false;
+        }
+      }
+
+      if (node.isEnabled()) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is enabled");
+      } else {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is disabled");
         return false;
       }
-    }
 
-    if (node.isEnabled()) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is enabled");
-    } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is disabled");
-      return false;
-    }
+      if (canSetAsCurrent(node)) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is eligible");
+      } else {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is ineligible");
+        return false;
+      }
 
-    if (canSetAsCurrent(node)) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is eligible");
-    } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is ineligible");
-      return false;
-    }
-
-    if (node.isVisibleToUser()) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is visible");
-    } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is invisible");
-      return false;
+      if (node.isVisibleToUser()) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is visible");
+      } else {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is invisible");
+        return false;
+      }
     }
 
     if (performNodeAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
@@ -130,8 +132,12 @@ public abstract class ScreenAction extends Action {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node failed");
     }
 
-    BrailleDevice.write(node);
+    BrailleDevice.write(node, force);
     return true;
+  }
+
+  protected boolean setCurrentNode (AccessibilityNodeInfo node) {
+    return setCurrentNode(node, false);
   }
 
   protected int findChildIndex (AccessibilityNodeInfo parent, AccessibilityNodeInfo node) {

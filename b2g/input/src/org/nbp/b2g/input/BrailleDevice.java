@@ -57,7 +57,7 @@ public class BrailleDevice {
     return write(sb.toString());
   }
 
-  public static boolean write (AccessibilityNodeInfo node) {
+  public static boolean write (AccessibilityNodeInfo node, boolean describe) {
     CharSequence cs;
     StringBuilder sb = new StringBuilder();
 
@@ -81,7 +81,20 @@ public class BrailleDevice {
       sb.append(')');
     }
 
+    if (describe) {
+      sb.append(' ');
+      if (node.isFocusable()) sb.append('i');
+      if (node.isFocused()) sb.append('I');
+      if (node.isAccessibilityFocused()) sb.append('A');
+      if (node.isSelected()) sb.append('X');
+      if (node.isScrollable()) sb.append('s');
+    }
+
     return write(sb);
+  }
+
+  public static boolean write (AccessibilityNodeInfo node) {
+    return write(node, false);
   }
 
   private BrailleDevice () {
