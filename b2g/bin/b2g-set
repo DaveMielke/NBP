@@ -6,7 +6,6 @@ declare -A settingDescriptors=(
    ["adb-enabled"]="boolean database adb_enabled secure"
 
    ["accessibility-services"]="boolean database accessibility_enabled secure"
-   ["brltty-service"]="boolean accessibility org.a11y.brltty.android.BrailleService org.a11y.brltty.android"
    ["spiel-service"]="boolean accessibility info.spielproject.spiel.SpielService info.spielproject.spiel"
    ["talkback-service"]="boolean accessibility .TalkBackService com.google.android.marvin.talkback"
 
@@ -24,6 +23,7 @@ declare -A settingDescriptors=(
    ["locale-territory"]="ISO_3166 property persist.sys.country"
 
    ["key-event-injection"]="boolean permissions /dev/uinput"
+   ["braille-device"]="boolean permissions /dev/braille0"
 )
 
 testPath="/sys/devices/platform/cp430_keypad"
