@@ -38,7 +38,7 @@ public class BrailleDevice {
       for (int index=0; index<length; index+=1) {
         char character = string.charAt(index);
         Byte dots = characterMap.get(character);
-        cells[index] = (dots != null)? dots: KeyMask.DOTS_12345678;
+        cells[index] = (dots != null)? dots: (byte)KeyMask.DOTS_12345678;
       }
 
       if (writeCells(cells)) {

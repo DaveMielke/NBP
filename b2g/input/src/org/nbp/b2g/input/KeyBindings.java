@@ -200,7 +200,7 @@ public class KeyBindings extends Action {
       }
 
       if ((mask & bit) != 0) {
-        Log.w(LOG_TAG, "key specified more than once: " + character);
+        Log.w(LOG_TAG, "key specified more than once: " + operand);
         continue;
       }
 
