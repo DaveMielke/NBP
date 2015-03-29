@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.io.InputStream;
 
 import java.io.Reader;
@@ -274,8 +275,15 @@ public class KeyBindings extends Action {
   }
 
   private static void addKeyBindings (InputStream stream) {
-    Reader reader = new InputStreamReader(stream);
-    addKeyBindings(reader);
+    String encoding = "UTF8";
+    Reader reader;
+
+    try {
+      reader = new InputStreamReader(stream, encoding);
+      addKeyBindings(reader);
+    } catch (UnsupportedEncodingException exception) {
+      Log.e(LOG_TAG, "unsupported input character encoding: " + encoding);
+    }
   }
 
   private static void addKeyBindings (String asset) {
