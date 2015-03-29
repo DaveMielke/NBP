@@ -23,6 +23,24 @@ import java.util.regex.Pattern;
 public class KeyBindings extends Action {
   private static final String LOG_TAG = KeyBindings.class.getName();
 
+  public final static char DELIMITER = '-';
+  public final static char DOT_1     = '1';
+  public final static char DOT_2     = '2';
+  public final static char DOT_3     = '3';
+  public final static char DOT_4     = '4';
+  public final static char DOT_5     = '5';
+  public final static char DOT_6     = '6';
+  public final static char DOT_7     = '7';
+  public final static char DOT_8     = '8';
+  public final static char SPACE     = 's';
+  public final static char FORWARD   = 'f';
+  public final static char BACKWARD  = 'b';
+  public final static char CENTER    = 'c';
+  public final static char UP        = 'u';
+  public final static char DOWN      = 'd';
+  public final static char LEFT      = 'l';
+  public final static char RIGHT     = 'r';
+
   private final static Map<String, Action> actionObjects = new HashMap<String, Action>();
   private final static Map<Integer, Action> rootKeyBindings = new HashMap<Integer, Action>();
   private static Map<Integer, Action> currentKeyBindings = rootKeyBindings;
@@ -170,26 +188,24 @@ public class KeyBindings extends Action {
       int bit;
 
       switch (character) {
-        case '1': bit = KeyMask.DOT_1;       break;
-        case '2': bit = KeyMask.DOT_2;       break;
-        case '3': bit = KeyMask.DOT_3;       break;
-        case '4': bit = KeyMask.DOT_4;       break;
-        case '5': bit = KeyMask.DOT_5;       break;
-        case '6': bit = KeyMask.DOT_6;       break;
-        case '7': bit = KeyMask.DOT_7;       break;
-        case '8': bit = KeyMask.DOT_8;       break;
+        case KeyBindings.DOT_1:    bit = KeyMask.DOT_1;       break;
+        case KeyBindings.DOT_2:    bit = KeyMask.DOT_2;       break;
+        case KeyBindings.DOT_3:    bit = KeyMask.DOT_3;       break;
+        case KeyBindings.DOT_4:    bit = KeyMask.DOT_4;       break;
+        case KeyBindings.DOT_5:    bit = KeyMask.DOT_5;       break;
+        case KeyBindings.DOT_6:    bit = KeyMask.DOT_6;       break;
+        case KeyBindings.DOT_7:    bit = KeyMask.DOT_7;       break;
+        case KeyBindings.DOT_8:    bit = KeyMask.DOT_8;       break;
+        case KeyBindings.SPACE:    bit = KeyMask.SPACE;       break;
+        case KeyBindings.FORWARD:  bit = KeyMask.FORWARD;     break;
+        case KeyBindings.BACKWARD: bit = KeyMask.BACKWARD;    break;
+        case KeyBindings.CENTER:   bit = KeyMask.DPAD_CENTER; break;
+        case KeyBindings.UP:       bit = KeyMask.DPAD_UP;     break;
+        case KeyBindings.DOWN:     bit = KeyMask.DPAD_DOWN;   break;
+        case KeyBindings.LEFT:     bit = KeyMask.DPAD_LEFT;   break;
+        case KeyBindings.RIGHT:    bit = KeyMask.DPAD_RIGHT;  break;
 
-        case 's': bit = KeyMask.SPACE;       break;
-        case 'f': bit = KeyMask.FORWARD;     break;
-        case 'b': bit = KeyMask.BACKWARD;    break;
-
-        case 'c': bit = KeyMask.DPAD_CENTER; break;
-        case 'u': bit = KeyMask.DPAD_UP;     break;
-        case 'd': bit = KeyMask.DPAD_DOWN;   break;
-        case 'l': bit = KeyMask.DPAD_LEFT;   break;
-        case 'r': bit = KeyMask.DPAD_RIGHT;  break;
-
-        case '-':
+        case KeyBindings.DELIMITER:
           masks = addKeyMask(masks, mask);
           if (masks == null) return null;
           mask = 0;
