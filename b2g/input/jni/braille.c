@@ -121,7 +121,7 @@ JAVA_METHOD(
           index += 1;
         }
 
-        while (index < BRAILLE_CELL_COUNT) cCells[index++] = 0;
+        while (index < BRAILLE_CELL_COUNT) cells[index++] = 0;
         (*env)->ReleaseByteArrayElements(env, jCells, cCells, JNI_ABORT);
       }
 

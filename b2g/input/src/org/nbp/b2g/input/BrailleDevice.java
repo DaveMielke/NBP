@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import android.util.Log;
 
+import android.view.accessibility.AccessibilityNodeInfo;
+
 public class BrailleDevice {
   private static final String LOG_TAG = BrailleDevice.class.getName();
 
@@ -28,17 +30,58 @@ public class BrailleDevice {
     return true;
   }
 
-  public static boolean writeCells (String string) {
-    int length = string.length();
-    byte[] cells = new byte[length];
+  public static boolean write (String string) {
+    if (openDevice()) {
+      int length = string.length();
+      byte[] cells = new byte[length];
 
-    for (int index=0; index<length; index+=1) {
-      char character = string.charAt(index);
-      Byte dots = characterMap.get(character);
-      cells[index] = (dots != null)? dots: KeyMask.DOTS_12345678;
+      for (int index=0; index<length; index+=1) {
+        char character = string.charAt(index);
+        Byte dots = characterMap.get(character);
+        cells[index] = (dots != null)? dots: KeyMask.DOTS_12345678;
+      }
+
+      if (writeCells(cells)) {
+        return true;
+      }
     }
 
-    return writeCells(cells);
+    return false;
+  }
+
+  public static boolean write (CharSequence characters) {
+    return write(characters.toString());
+  }
+
+  public static boolean write (StringBuilder sb) {
+    return write(sb.toString());
+  }
+
+  public static boolean write (AccessibilityNodeInfo node) {
+    CharSequence cs;
+    StringBuilder sb = new StringBuilder();
+
+    if (node.isCheckable()) {
+      sb.append('[');
+      sb.append(node.isChecked()? 'X': ' ');
+      sb.append("] ");
+    }
+
+    if ((cs = node.getText()) != null) {
+      sb.append(cs);
+    } else if ((cs = node.getContentDescription()) != null) {
+      sb.append(cs);
+    } else {
+      String string = node.getClassName().toString();
+      int index = string.lastIndexOf('.');
+      string = string.substring(index+1);
+
+      sb.append('(');
+      sb.append(string);
+      sb.append(')');
+    }
+
+    return write(sb);
   }
 
   private BrailleDevice () {
@@ -53,6 +96,9 @@ public class BrailleDevice {
 
       int cellCount = getCellCount();
       Log.d(LOG_TAG, "braille cell count: " + cellCount);
+
+      clearCells();
+      KeyBindings.load();
     }
   }
 }

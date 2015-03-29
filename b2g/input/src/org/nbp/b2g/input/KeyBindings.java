@@ -312,6 +312,9 @@ public class KeyBindings extends Action {
     super();
   }
 
+  public static void load () {
+  }
+
   static {
     addKeyBindings();
   }

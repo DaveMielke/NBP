@@ -7,14 +7,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public abstract class ScreenAction extends Action {
   private static final String LOG_TAG = ScreenAction.class.getName();
 
-  protected CharSequence getNodeText (AccessibilityNodeInfo node) {
-    CharSequence text;
-
-    if ((text = node.getText()) != null) return text;
-    if ((text = node.getContentDescription()) != null) return text;
-    return null;
-  }
-
   public AccessibilityNodeInfo findNode (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
     if (root != null) {
       if (root.equals(node)) return AccessibilityNodeInfo.obtain(root);
@@ -138,6 +130,7 @@ public abstract class ScreenAction extends Action {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node failed");
     }
 
+    BrailleDevice.write(node);
     return true;
   }
 

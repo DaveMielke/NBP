@@ -3,6 +3,7 @@ package org.nbp.b2g.input;
 import android.util.Log;
 
 import android.accessibilityservice.AccessibilityService;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityEvent;
 
 import android.content.Intent;
@@ -35,6 +36,13 @@ public class ScreenMonitor extends AccessibilityService {
   @Override
   protected void onServiceConnected () {
     Log.d(LOG_TAG, "screen monitor connected");
+
+    AccessibilityNodeInfo node = getCurrentNode();
+    if (node != null) {
+      BrailleDevice.write(node);
+    } else {
+      BrailleDevice.write("B2G ready");
+    }
   }
 
   @Override
@@ -52,5 +60,26 @@ public class ScreenMonitor extends AccessibilityService {
 
   @Override
   public void onInterrupt () {
+  }
+
+  public AccessibilityNodeInfo getRootNode () {
+    AccessibilityNodeInfo root = getRootInActiveWindow();
+    if (root == null) Log.w(LOG_TAG, "no root node");
+    return root;
+  }
+
+  public AccessibilityNodeInfo getCurrentNode () {
+    AccessibilityNodeInfo root = getRootNode();
+    if (root == null) return null;
+
+    AccessibilityNodeInfo node;
+    if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
+      if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
+        Log.w(LOG_TAG, "no current node");
+      }
+    }
+
+    root.recycle();
+    return node;
   }
 }
