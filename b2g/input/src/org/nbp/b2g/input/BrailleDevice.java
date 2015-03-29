@@ -57,7 +57,7 @@ public class BrailleDevice {
         int fromIndex = toIndex + currentIndent;
         char character = (fromIndex < length)? currentText.charAt(fromIndex): ' ';
         Byte dots = characterMap.get(character);
-        cells[toIndex] = (dots != null)? dots: (byte)KeyMask.DOTS_12345678;
+        cells[toIndex] = (dots != null)? dots: (byte)ApplicationParameters.UNDEFINED_BRAILLE_CHARACTER;
       }
 
       if (writeCells(cells)) {

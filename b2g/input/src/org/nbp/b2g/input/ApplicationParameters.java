@@ -15,6 +15,8 @@ public abstract class ApplicationParameters {
   public static volatile long LONG_PRESS_DELAY = 100; // milliseconds
   public static volatile long SCROLL_DELAY = 500; // milliseconds
 
+  public static int UNDEFINED_BRAILLE_CHARACTER = KeyMask.DOTS_12345678;
+
   public static volatile int SDK_VERSION = Build.VERSION.SDK_INT;
 
   public static volatile String CLOCK_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
