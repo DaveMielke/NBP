@@ -35,13 +35,13 @@ openDevice (void) {
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_BrailleDevice, openDevice, jboolean
+  org_nbp_b2g_ui_BrailleDevice, openDevice, jboolean
 ) {
   return openDevice()? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_BrailleDevice, closeDevice, void
+  org_nbp_b2g_ui_BrailleDevice, closeDevice, void
 ) {
   if (isOpen()) {
     close(brailleDevice);
@@ -50,7 +50,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_BrailleDevice, getVersion, jstring
+  org_nbp_b2g_ui_BrailleDevice, getVersion, jstring
 ) {
   if (isOpen()) {
     char buffer[10];
@@ -75,7 +75,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_BrailleDevice, getCellCount, jint
+  org_nbp_b2g_ui_BrailleDevice, getCellCount, jint
 ) {
   if (isOpen()) {
     return BRAILLE_CELL_COUNT;
@@ -85,7 +85,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_BrailleDevice, clearCells, jboolean
+  org_nbp_b2g_ui_BrailleDevice, clearCells, jboolean
 ) {
   if (isOpen()) {
     if (ioctl(brailleDevice, METEC_FLAT20_CLEAR_DISPLAY, 0) != -1) {
@@ -99,7 +99,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_BrailleDevice, writeCells, jboolean,
+  org_nbp_b2g_ui_BrailleDevice, writeCells, jboolean,
   jbyteArray jCells
 ) {
   if (isOpen()) {

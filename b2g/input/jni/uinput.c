@@ -60,7 +60,7 @@ writeKeyEvent (int device, int key, int press) {
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_UInputDevice, openDevice, jint
+  org_nbp_b2g_ui_UInputDevice, openDevice, jint
 ) {
   const char *path = "/dev/uinput";
   int device = open(path, O_WRONLY);
@@ -74,7 +74,7 @@ JAVA_METHOD(
     {
       char topology[0X40];
 
-      snprintf(topology, sizeof(topology), "%s", "org.nbp.b2g.input");
+      snprintf(topology, sizeof(topology), "%s", PACKAGE_PATH);
 
       if (ioctl(device, UI_SET_PHYS, topology) == -1) {
         logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
@@ -96,7 +96,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_UInputDevice, createDevice, jboolean,
+  org_nbp_b2g_ui_UInputDevice, createDevice, jboolean,
   jint device
 ) {
   if (ioctl(device, UI_DEV_CREATE) != -1) return JNI_TRUE;
@@ -105,35 +105,35 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_UInputDevice, closeDevice, void,
+  org_nbp_b2g_ui_UInputDevice, closeDevice, void,
   jint device
 ) {
   if (close(device) == -1) logSystemError(LOG_TAG, "close[uinput]");
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_UInputDevice, enableKeyEvents, jboolean,
+  org_nbp_b2g_ui_UInputDevice, enableKeyEvents, jboolean,
   jint device
 ) {
   return enableUInputEventType(device, EV_KEY)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_UInputDevice, enableKey, jboolean,
+  org_nbp_b2g_ui_UInputDevice, enableKey, jboolean,
   jint device, jint key
 ) {
   return enableUInputKey(device, key)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_UInputDevice, pressKey, jboolean,
+  org_nbp_b2g_ui_UInputDevice, pressKey, jboolean,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 1)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_UInputDevice, releaseKey, jboolean,
+  org_nbp_b2g_ui_UInputDevice, releaseKey, jboolean,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;

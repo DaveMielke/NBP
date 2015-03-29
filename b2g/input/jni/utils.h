@@ -6,7 +6,7 @@
 
 #include <android/log.h>
 
-#define PACKAGE_PATH "org.nbp.b2g.input"
+#define PACKAGE_PATH "org.nbp.b2g.ui"
 #define MAKE_LOG_TAG(component) static const char LOG_TAG[] = PACKAGE_PATH ".JNI." component
 #define MAKE_FILE_LOG_TAG MAKE_LOG_TAG(__FILE__)
 

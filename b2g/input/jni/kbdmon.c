@@ -80,7 +80,7 @@ openEventDevice (const char *deviceName) {
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_KeyboardMonitor, openKeyboard, jboolean
+  org_nbp_b2g_ui_KeyboardMonitor, openKeyboard, jboolean
 ) {
   static const char keyboardName[] = KEYBOARD_DEVICE_NAME;
 
@@ -94,7 +94,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_KeyboardMonitor, closeKeyboard, void
+  org_nbp_b2g_ui_KeyboardMonitor, closeKeyboard, void
 ) {
   if (keyboardDevice != NO_DEVICE) {
     close(keyboardDevice);
@@ -103,7 +103,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_input_KeyboardMonitor, monitorKeyboard, void,
+  org_nbp_b2g_ui_KeyboardMonitor, monitorKeyboard, void,
   jobject monitor
 ) {
   const char *methodName = "onKeyEvent";
