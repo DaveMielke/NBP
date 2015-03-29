@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public abstract class ScreenAction extends Action {
-  private static final String LOG_TAG = ScreenAction.class.getName();
+  private final static String LOG_TAG = ScreenAction.class.getName();
 
   public AccessibilityNodeInfo findNode (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
     if (root != null) {

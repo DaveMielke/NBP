@@ -1,19 +1,19 @@
 package org.nbp.b2g.input;
 
 public abstract class ScanCodeAction extends KeyCodeAction {
-  public static final String NULL_SCAN_CODE = "NULL";
+  public final static String NULL_SCAN_CODE = "NULL";
 
-  private static final KeyboardDevice keyboardDevice = new KeyboardDevice();
+  private final static KeyboardDevice keyboardDevice = new KeyboardDevice();
 
   protected String getScanCode () {
     return NULL_SCAN_CODE;
   }
 
-  protected static final int SCAN_CODE_SHIFT = KeyboardDevice.getScanCode("LEFTSHIFT");
-  protected static final int SCAN_CODE_CONTROL = KeyboardDevice.getScanCode("LEFTCTRL");
-  protected static final int SCAN_CODE_ALT = KeyboardDevice.getScanCode("LEFTALT");
-  protected static final int SCAN_CODE_ALTGR = KeyboardDevice.getScanCode("RIGHTALT");
-  protected static final int SCAN_CODE_GUI = KeyboardDevice.getScanCode("LEFTMETA");
+  protected final static int SCAN_CODE_SHIFT = KeyboardDevice.getScanCode("LEFTSHIFT");
+  protected final static int SCAN_CODE_CONTROL = KeyboardDevice.getScanCode("LEFTCTRL");
+  protected final static int SCAN_CODE_ALT = KeyboardDevice.getScanCode("LEFTALT");
+  protected final static int SCAN_CODE_ALTGR = KeyboardDevice.getScanCode("RIGHTALT");
+  protected final static int SCAN_CODE_GUI = KeyboardDevice.getScanCode("LEFTMETA");
 
   protected int[] getScanCodeModifiers () {
     return null;

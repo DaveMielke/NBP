@@ -3,7 +3,7 @@ package org.nbp.b2g.input;
 import android.view.KeyEvent;
 
 public abstract class GlobalAction extends ScanCodeAction {
-  public static final int NULL_GLOBAL_ACTION = 0;
+  public final static int NULL_GLOBAL_ACTION = 0;
 
   protected int getGlobalAction () {
     return NULL_GLOBAL_ACTION;

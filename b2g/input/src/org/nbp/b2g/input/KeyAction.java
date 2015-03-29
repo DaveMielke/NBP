@@ -3,7 +3,7 @@ package org.nbp.b2g.input;
 import android.util.Log;
 
 public abstract class KeyAction extends Action {
-  private static final String LOG_TAG = KeyAction.class.getName();
+  private final static String LOG_TAG = KeyAction.class.getName();
 
   protected long getHoldTime () {
     return 0;

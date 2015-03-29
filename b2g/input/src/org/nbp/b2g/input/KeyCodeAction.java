@@ -6,15 +6,15 @@ import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
 public abstract class KeyCodeAction extends KeyAction {
-  private static final String LOG_TAG = KeyCodeAction.class.getName();
+  private final static String LOG_TAG = KeyCodeAction.class.getName();
 
   protected final static int NULL_KEY_CODE = KeyEvent.KEYCODE_UNKNOWN;
 
-  protected static final int KEY_CODE_SHIFT = KeyEvent.KEYCODE_SHIFT_LEFT;
-  protected static final int KEY_CODE_CONTROL = KeyEvent.KEYCODE_CTRL_LEFT;
-  protected static final int KEY_CODE_ALT = KeyEvent.KEYCODE_ALT_LEFT;
-  protected static final int KEY_CODE_ALTGR = KeyEvent.KEYCODE_ALT_RIGHT;
-  protected static final int KEY_CODE_GUI = KeyEvent.KEYCODE_WINDOW;
+  protected final static int KEY_CODE_SHIFT = KeyEvent.KEYCODE_SHIFT_LEFT;
+  protected final static int KEY_CODE_CONTROL = KeyEvent.KEYCODE_CTRL_LEFT;
+  protected final static int KEY_CODE_ALT = KeyEvent.KEYCODE_ALT_LEFT;
+  protected final static int KEY_CODE_ALTGR = KeyEvent.KEYCODE_ALT_RIGHT;
+  protected final static int KEY_CODE_GUI = KeyEvent.KEYCODE_WINDOW;
 
   protected int[] getKeyCodeModifiers () {
     return null;

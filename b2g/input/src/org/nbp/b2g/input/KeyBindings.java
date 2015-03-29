@@ -21,7 +21,7 @@ import java.io.BufferedReader;
 import java.util.regex.Pattern;
 
 public class KeyBindings extends Action {
-  private static final String LOG_TAG = KeyBindings.class.getName();
+  private final static String LOG_TAG = KeyBindings.class.getName();
 
   public final static char DELIMITER = '-';
   public final static char DOT_1     = '1';

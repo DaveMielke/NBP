@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 
 public class InputService extends InputMethodService {
-  private static final String LOG_TAG = InputService.class.getName();
+  private final static String LOG_TAG = InputService.class.getName();
 
   private static volatile InputService inputService = null;
 

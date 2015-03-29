@@ -7,7 +7,7 @@ import java.util.HashMap;
 import android.util.Log;
 
 public class InsertCharacter extends ScreenAction {
-  private static final String LOG_TAG = InsertCharacter.class.getName();
+  private final static String LOG_TAG = InsertCharacter.class.getName();
 
   private static Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
 

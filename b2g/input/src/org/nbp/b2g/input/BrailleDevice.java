@@ -9,7 +9,7 @@ import android.graphics.Rect;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public class BrailleDevice {
-  private static final String LOG_TAG = BrailleDevice.class.getName();
+  private final static String LOG_TAG = BrailleDevice.class.getName();
 
   private static int cellCount = 0;
 

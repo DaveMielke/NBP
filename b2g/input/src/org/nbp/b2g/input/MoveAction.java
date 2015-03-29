@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public abstract class MoveAction extends ScreenAction {
-  private static final String LOG_TAG = MoveAction.class.getName();
+  private final static String LOG_TAG = MoveAction.class.getName();
 
   protected abstract boolean moveToNextNode (AccessibilityNodeInfo node, boolean force);
   protected abstract int getScrollAction ();

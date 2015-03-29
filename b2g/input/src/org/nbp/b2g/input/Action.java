@@ -8,7 +8,7 @@ import android.inputmethodservice.InputMethodService;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public abstract class Action {
-  private static final String LOG_TAG = Action.class.getName();
+  private final static String LOG_TAG = Action.class.getName();
 
   public abstract boolean performAction ();
 

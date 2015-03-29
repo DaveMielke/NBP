@@ -9,7 +9,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.content.Intent;
 
 public class ScreenMonitor extends AccessibilityService {
-  private static final String LOG_TAG = ScreenMonitor.class.getName();
+  private final static String LOG_TAG = ScreenMonitor.class.getName();
 
   private static ScreenMonitor screenMonitor = null;
 

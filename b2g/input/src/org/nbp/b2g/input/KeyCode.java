@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 public class KeyCode {
-  private static final String LOG_TAG = KeyCode.class.getName();
+  private final static String LOG_TAG = KeyCode.class.getName();
 
   public final static int DOT_7     = 769;
   public final static int DOT_3     = 770;

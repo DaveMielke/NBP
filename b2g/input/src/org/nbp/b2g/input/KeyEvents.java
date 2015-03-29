@@ -3,7 +3,7 @@ package org.nbp.b2g.input;
 import android.util.Log;
 
 public class KeyEvents {
-  private static final String LOG_TAG = KeyEvents.class.getName();
+  private final static String LOG_TAG = KeyEvents.class.getName();
 
   private static int pressedKeyMask = 0;
   private static int activeKeyMask = 0;

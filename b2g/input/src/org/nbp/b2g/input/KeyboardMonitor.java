@@ -3,7 +3,7 @@ package org.nbp.b2g.input;
 import android.util.Log;
 
 public class KeyboardMonitor extends Thread {
-  private static final String LOG_TAG = KeyboardMonitor.class.getName();
+  private final static String LOG_TAG = KeyboardMonitor.class.getName();
 
   private static KeyboardMonitor keyboardMonitor = null;
   private final static Object keyboardMonitorStartLock = new Object();

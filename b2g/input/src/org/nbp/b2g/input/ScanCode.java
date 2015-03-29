@@ -6,7 +6,7 @@ import java.util.HashMap;
 import android.util.Log;
 
 public class ScanCode {
-  private static final String LOG_TAG = ScanCode.class.getName();
+  private final static String LOG_TAG = ScanCode.class.getName();
 
   public final static int DPAD_CENTER = 0X160;
 

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import android.util.Log;
 
 public class KeyboardDevice extends UInputDevice {
-  private static final String LOG_TAG = KeyboardDevice.class.getName();
+  private final static String LOG_TAG = KeyboardDevice.class.getName();
 
   public final static int NULL_SCAN_CODE = 0;
 
