@@ -11,6 +11,24 @@ public class InsertCharacter extends ScreenAction {
 
   private static Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
 
+  private boolean setBrailleCharacter (char character, int keyMask) {
+    if (keyMask == 0) return false;
+    if (keyMask == KeyMask.SPACE) keyMask = 0;
+    if ((keyMask & ~KeyMask.DOTS_12345678) != 0) return false;
+
+    byte dots = 0;
+    if ((keyMask & KeyMask.DOT_1) != 0) dots |= BrailleDevice.DOT_1;
+    if ((keyMask & KeyMask.DOT_2) != 0) dots |= BrailleDevice.DOT_2;
+    if ((keyMask & KeyMask.DOT_3) != 0) dots |= BrailleDevice.DOT_3;
+    if ((keyMask & KeyMask.DOT_4) != 0) dots |= BrailleDevice.DOT_4;
+    if ((keyMask & KeyMask.DOT_5) != 0) dots |= BrailleDevice.DOT_5;
+    if ((keyMask & KeyMask.DOT_6) != 0) dots |= BrailleDevice.DOT_6;
+    if ((keyMask & KeyMask.DOT_7) != 0) dots |= BrailleDevice.DOT_7;
+    if ((keyMask & KeyMask.DOT_8) != 0) dots |= BrailleDevice.DOT_8;
+
+    return BrailleDevice.setCharacter(character, dots);
+  }
+
   @Override
   public boolean parseOperand (int keyMask, String operand) {
     char character;
@@ -24,7 +42,7 @@ public class InsertCharacter extends ScreenAction {
     }
 
     characterMap.put(keyMask, character);
-    BrailleDevice.setCharacter(character, keyMask);
+    setBrailleCharacter(character, keyMask);
     return true;
   }
 

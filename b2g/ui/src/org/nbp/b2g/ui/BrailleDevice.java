@@ -11,6 +11,15 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
+  public final static byte DOT_1 = 0X01;
+  public final static byte DOT_2 = 0X02;
+  public final static byte DOT_3 = 0X04;
+  public final static byte DOT_4 = 0X08;
+  public final static byte DOT_5 = 0X10;
+  public final static byte DOT_6 = 0X20;
+  public final static byte DOT_7 = 0X40;
+  public final static byte DOT_8 = (byte)0X80;
+
   private static int cellCount = 0;
 
   private static String currentText = "";
@@ -30,12 +39,8 @@ public class BrailleDevice {
   public native static boolean clearCells ();
   public native static boolean writeCells (byte[] cells);
 
-  public static boolean setCharacter (char character, int keyMask) {
-    if (keyMask == KeyMask.SPACE) keyMask = 0;
-    int dots = keyMask & KeyMask.DOTS_12345678;
-    if (dots != keyMask) return false;
-
-    characterMap.put(character, (byte)dots);
+  public static boolean setCharacter (char character, byte dots) {
+    characterMap.put(character, dots);
     return true;
   }
 
