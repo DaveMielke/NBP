@@ -6,6 +6,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public class MoveRight extends MoveForward {
   @Override
   public boolean performAction () {
+    if (BrailleDevice.moveRight()) return true;
     return super.performAction();
   }
 

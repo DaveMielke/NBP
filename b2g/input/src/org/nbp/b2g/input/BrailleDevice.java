@@ -10,6 +10,10 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public class BrailleDevice {
   private static final String LOG_TAG = BrailleDevice.class.getName();
 
+  private static int cellCount = 20;
+  private static String currentText = "";
+  private static int currentIndent = 0;
+
   private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
 
   public native static boolean openDevice ();
@@ -30,15 +34,17 @@ public class BrailleDevice {
     return true;
   }
 
-  public static boolean write (String string) {
+  private static boolean write () {
     if (openDevice()) {
-      int length = string.length();
-      byte[] cells = new byte[length];
+      int length = currentText.length();
+      int count = length - currentIndent;
+      byte[] cells = new byte[count];
 
-      for (int index=0; index<length; index+=1) {
-        char character = string.charAt(index);
+      for (int toIndex=0; toIndex<count; toIndex+=1) {
+        int fromIndex = toIndex + currentIndent;
+        char character = (fromIndex < length)? currentText.charAt(fromIndex): ' ';
         Byte dots = characterMap.get(character);
-        cells[index] = (dots != null)? dots: (byte)KeyMask.DOTS_12345678;
+        cells[toIndex] = (dots != null)? dots: (byte)KeyMask.DOTS_12345678;
       }
 
       if (writeCells(cells)) {
@@ -47,6 +53,12 @@ public class BrailleDevice {
     }
 
     return false;
+  }
+
+  public static boolean write (String string) {
+    currentText = string;
+    currentIndent = 0;
+    return write();
   }
 
   public static boolean write (CharSequence characters) {
@@ -95,6 +107,24 @@ public class BrailleDevice {
 
   public static boolean write (AccessibilityNodeInfo node) {
     return write(node, false);
+  }
+
+  public static boolean moveLeft () {
+    if (currentIndent == 0) return false;
+
+    int length = currentText.length();
+    if (currentIndent > length) currentIndent = length;
+
+    if ((currentIndent -= cellCount) < 0) currentIndent = 0;
+    return write();
+  }
+
+  public static boolean moveRight () {
+    int length = currentText.length();
+    if ((currentIndent + cellCount) >= length) return false;
+
+    currentIndent += cellCount;
+    return write();
   }
 
   private BrailleDevice () {
