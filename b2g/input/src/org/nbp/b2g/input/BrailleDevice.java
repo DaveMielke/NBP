@@ -10,9 +10,10 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public class BrailleDevice {
   private static final String LOG_TAG = BrailleDevice.class.getName();
 
-  private static int cellCount = 20;
+  private static int cellCount = 0;
   private static String currentText = "";
   private static int currentIndent = 0;
+  private static AccessibilityNodeInfo currentNode = null;
 
   private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
 
@@ -34,8 +35,17 @@ public class BrailleDevice {
     return true;
   }
 
-  private static boolean write () {
+  private static boolean open () {
     if (openDevice()) {
+      if (cellCount != 0) return true;
+      if ((cellCount = getCellCount()) != 0) return true;
+    }
+
+    return false;
+  }
+
+  private static boolean write () {
+    if (open()) {
       int length = currentText.length();
       int count = length - currentIndent;
       byte[] cells = new byte[count];
@@ -55,23 +65,26 @@ public class BrailleDevice {
     return false;
   }
 
-  public static boolean write (String string) {
-    currentText = string;
+  private static void reset () {
+    currentText = null;
     currentIndent = 0;
+
+    if (currentNode != null) {
+      currentNode.recycle();
+      currentNode = null;
+    }
+  }
+
+  public static boolean write (String text) {
+    reset();
+    currentText = text;
     return write();
   }
 
-  public static boolean write (CharSequence characters) {
-    return write(characters.toString());
-  }
-
-  public static boolean write (StringBuilder sb) {
-    return write(sb.toString());
-  }
-
   public static boolean write (AccessibilityNodeInfo node, boolean describe) {
-    CharSequence cs;
     StringBuilder sb = new StringBuilder();
+    String string;
+    CharSequence cs;
 
     if (node.isCheckable()) {
       sb.append('[');
@@ -84,7 +97,7 @@ public class BrailleDevice {
     } else if ((cs = node.getContentDescription()) != null) {
       sb.append(cs);
     } else {
-      String string = node.getClassName().toString();
+      string = node.getClassName().toString();
       int index = string.lastIndexOf('.');
       string = string.substring(index+1);
 
@@ -102,7 +115,14 @@ public class BrailleDevice {
       if (node.isScrollable()) sb.append('s');
     }
 
-    return write(sb);
+    string = sb.toString();
+    if ((currentNode == null) || !currentNode.equals(node)) {
+      reset();
+      currentNode = AccessibilityNodeInfo.obtain(node);
+    }
+
+    currentText = string;
+    return write();
   }
 
   public static boolean write (AccessibilityNodeInfo node) {
