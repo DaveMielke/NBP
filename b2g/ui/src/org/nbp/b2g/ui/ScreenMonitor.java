@@ -58,6 +58,7 @@ public class ScreenMonitor extends AccessibilityService {
     }
 
     switch (event.getEventType()) {
+      case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
       case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
         AccessibilityNodeInfo node = getCurrentNode();
 
@@ -84,6 +85,32 @@ public class ScreenMonitor extends AccessibilityService {
     return root;
   }
 
+  private AccessibilityNodeInfo establishCurrentNode (AccessibilityNodeInfo root) {
+    root = AccessibilityNodeInfo.obtain(root);
+
+    if (root.getText() != null) {
+      if (root.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
+        return root;
+      }
+    }
+
+    AccessibilityNodeInfo node = null;
+    int childCount = root.getChildCount();
+
+    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+      AccessibilityNodeInfo child = root.getChild(childIndex);
+
+      if (child != null) {
+        node = establishCurrentNode(child);
+        child.recycle();
+        if (node != null) break;
+      }
+    }
+
+    root.recycle();
+    return node;
+  }
+
   public AccessibilityNodeInfo getCurrentNode () {
     AccessibilityNodeInfo root = getRootNode();
     if (root == null) return null;
@@ -91,7 +118,9 @@ public class ScreenMonitor extends AccessibilityService {
     AccessibilityNodeInfo node;
     if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
       if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
-        Log.w(LOG_TAG, "no current node");
+        if ((node = establishCurrentNode(root)) == null) {
+          Log.w(LOG_TAG, "no current node");
+        }
       }
     }
 
