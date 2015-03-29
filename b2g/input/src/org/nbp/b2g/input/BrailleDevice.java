@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import android.util.Log;
+import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -115,10 +116,20 @@ public class BrailleDevice {
       if (node.isFocusable()) sb.append('i');
       if (node.isScrollable()) sb.append('s');
       if (node.isCheckable()) sb.append('c');
+      if (node.isVisibleToUser()) sb.append('V');
+      if (node.isEnabled()) sb.append('E');
       if (node.isFocused()) sb.append('I');
       if (node.isAccessibilityFocused()) sb.append('A');
       if (node.isSelected()) sb.append('X');
       if (node.isChecked()) sb.append('C');
+
+      {
+        Rect bounds = new Rect();
+        node.getBoundsInScreen(bounds);
+
+        sb.append(' ');
+        sb.append(bounds.toShortString());
+      }
     } else {
       if (node.isCheckable()) {
         sb.append('[');
