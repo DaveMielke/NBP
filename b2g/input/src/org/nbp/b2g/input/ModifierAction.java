@@ -10,7 +10,7 @@ public abstract class ModifierAction extends Action {
   }
 
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     modifierState = true;
     return true;
   }

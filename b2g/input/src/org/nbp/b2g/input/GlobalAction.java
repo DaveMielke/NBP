@@ -10,7 +10,7 @@ public abstract class GlobalAction extends ScanCodeAction {
   }
 
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     int globalAction = getGlobalAction();
 
     if (globalAction != NULL_GLOBAL_ACTION) {

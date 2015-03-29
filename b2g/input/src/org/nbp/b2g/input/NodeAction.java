@@ -10,7 +10,7 @@ public abstract class NodeAction extends KeyCodeAction {
   }
 
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     int nodeAction = getNodeAction();
 
     if (nodeAction != NULL_NODE_ACTION) {

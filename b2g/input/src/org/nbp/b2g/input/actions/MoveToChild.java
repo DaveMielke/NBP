@@ -5,7 +5,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 public class MoveToChild extends ScreenAction {
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     Boolean moved = false;
     AccessibilityNodeInfo node = getCurrentNode();
 

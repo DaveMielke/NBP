@@ -28,7 +28,7 @@ public class KeyBindings extends Action {
   private Map<Integer, Action> keyBindings = new HashMap<Integer, Action>();
 
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     currentKeyBindings = keyBindings;
     return true;
   }

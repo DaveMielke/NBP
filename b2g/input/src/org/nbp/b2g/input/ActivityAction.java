@@ -9,7 +9,7 @@ public abstract class ActivityAction extends Action {
   }
 
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     Context context = ApplicationHooks.getContext();
     if (context == null) return false;
 

@@ -3,7 +3,7 @@ import org.nbp.b2g.input.*;
 
 public class Null extends Action {
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     return true;
   }
 

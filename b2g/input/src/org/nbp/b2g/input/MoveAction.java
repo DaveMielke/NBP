@@ -49,7 +49,7 @@ public abstract class MoveAction extends ScreenAction {
   }
 
   @Override
-  public final boolean performAction () {
+  public boolean performAction () {
     boolean moved = false;
     AccessibilityNodeInfo node = getCurrentNode();
 
