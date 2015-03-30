@@ -4,6 +4,7 @@ import android.util.Log;
 import android.graphics.Rect;
 
 import android.inputmethodservice.InputMethodService;
+import android.view.inputmethod.InputConnection;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -31,6 +32,15 @@ public abstract class Action {
 
   protected final InputService getInputService () {
     return InputService.getInputService();
+  }
+
+  protected final InputConnection getInputConnection () {
+    InputService service = getInputService();
+    if (service == null) return null;
+
+    InputConnection connection = service.getCurrentInputConnection();
+    if (connection == null) Log.w(LOG_TAG, "no input connection");
+    return connection;
   }
 
   protected final ScreenMonitor getScreenMonitor () {

@@ -29,38 +29,34 @@ public abstract class KeyCodeAction extends KeyAction {
     int keyCode = getKeyCode();
 
     if (keyCode != NULL_KEY_CODE) {
-      InputService inputService = getInputService();
+      final InputConnection connection = getInputConnection();
 
-      if (inputService != null) {
-        final InputConnection connection = inputService.getCurrentInputConnection();
-
-        if (connection != null) {
-          KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
-            @Override
-            protected boolean sendKeyPress (int key) {
-              KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, key);
-              return connection.sendKeyEvent(event);
-            }
-
-            @Override
-            protected boolean sendKeyRelease (int key) {
-              KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, key);
-              return connection.sendKeyEvent(event);
-            }
-
-            @Override
-            protected String getKeyType () {
-              return "key code";
-            }
-
-            protected String getKeyName (int key) {
-              return KeyEvent.keyCodeToString(key);
-            }
-          };
-
-          if (keyCombinationSender.sendKeyCombination(keyCode, getKeyCodeModifiers())) {
-            return true;
+      if (connection != null) {
+        KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
+          @Override
+          protected boolean sendKeyPress (int key) {
+            KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, key);
+            return connection.sendKeyEvent(event);
           }
+
+          @Override
+          protected boolean sendKeyRelease (int key) {
+            KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, key);
+            return connection.sendKeyEvent(event);
+          }
+
+          @Override
+          protected String getKeyType () {
+            return "key code";
+          }
+
+          protected String getKeyName (int key) {
+            return KeyEvent.keyCodeToString(key);
+          }
+        };
+
+        if (keyCombinationSender.sendKeyCombination(keyCode, getKeyCodeModifiers())) {
+          return true;
         }
       }
     }

@@ -7,15 +7,11 @@ import android.view.KeyEvent;
 public class DeleteNext extends ScanCodeAction {
   @Override
   public boolean performAction () {
-    InputService service = getInputService();
+    InputConnection connection = getInputConnection();
 
-    if (service != null) {
-      InputConnection connection = service.getCurrentInputConnection();
-
-      if (connection != null) {
-        if (connection.deleteSurroundingText(0, 1)) {
-          return true;
-        }
+    if (connection != null) {
+      if (connection.deleteSurroundingText(0, 1)) {
+        return true;
       }
     }
 
