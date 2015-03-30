@@ -30,6 +30,10 @@ public abstract class ScreenAction extends Action {
     return found;
   }
 
+  protected boolean isEditable () {
+    return ScreenUtilities.isEditable(getCurrentNode());
+  }
+
   protected boolean isActionable (AccessibilityNodeInfo node) {
     if (node.isClickable()) return true;
     if (node.isLongClickable()) return true;
