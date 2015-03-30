@@ -8,14 +8,8 @@ public class DeletePrevious extends ScanCodeAction {
   @Override
   public boolean performAction () {
     InputConnection connection = getInputConnection();
-
-    if (connection != null) {
-      if (connection.deleteSurroundingText(1, 0)) {
-        return true;
-      }
-    }
-
-    return super.performAction();
+    if (connection == null) return super.performAction();
+    return connection.deleteSurroundingText(1, 0);
   }
 
   @Override

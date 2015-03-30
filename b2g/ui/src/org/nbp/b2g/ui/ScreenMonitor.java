@@ -58,6 +58,7 @@ public class ScreenMonitor extends AccessibilityService {
     }
 
     switch (event.getEventType()) {
+      case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
       case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
       case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
         AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
