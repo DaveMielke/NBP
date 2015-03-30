@@ -13,9 +13,21 @@ public class InputService extends InputMethodService {
 
   private static volatile InputService inputService = null;
 
+  public final static int NO_SELECTION = -1;
+  private int selectionStart = NO_SELECTION;
+  private int selectionEnd = NO_SELECTION;
+
   public static InputService getInputService () {
     if (inputService == null) Log.w(LOG_TAG, "input service not runnig");
     return inputService;
+  }
+
+  public int getSelectionStart () {
+    return selectionStart;
+  }
+
+  public int getSelectionEnd () {
+    return selectionEnd;
   }
 
   @Override
@@ -48,11 +60,33 @@ public class InputService extends InputMethodService {
   @Override
   public void onStartInput (EditorInfo info, boolean restarting) {
     Log.d(LOG_TAG, "input service " + (restarting? "reconnected": "connected"));
+
+    selectionStart = info.initialSelStart;
+    selectionEnd = info.initialSelEnd;
   }
 
   @Override
   public void onFinishInput () {
     Log.d(LOG_TAG, "input service disconnected");
+
+    selectionStart = NO_SELECTION;
+    selectionEnd = NO_SELECTION;
+  }
+
+  @Override
+  public void onUpdateSelection (
+    int oldSelectionStart, int oldSelectionEnd,
+    int newSelectionStart, int newSelectionEnd,
+    int candidateStart, int candidateEnd
+  ) {
+    selectionStart = newSelectionStart;
+    selectionEnd = newSelectionEnd;
+
+    super.onUpdateSelection(
+      oldSelectionStart, oldSelectionEnd,
+      newSelectionStart, newSelectionEnd,
+      candidateStart, candidateEnd
+    );
   }
 
   private InputConnection getInputConnection () {

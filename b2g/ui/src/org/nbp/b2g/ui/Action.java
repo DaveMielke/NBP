@@ -90,15 +90,11 @@ public abstract class Action {
   }
 
   protected AccessibilityNodeInfo getRootNode () {
-    ScreenMonitor monitor = getScreenMonitor();
-    if (monitor == null) return null;
-    return monitor.getRootNode();
+    return ScreenUtilities.getRootNode();
   }
 
   public AccessibilityNodeInfo getCurrentNode () {
-    ScreenMonitor monitor = getScreenMonitor();
-    if (monitor == null) return null;
-    return monitor.getCurrentNode();
+    return ScreenUtilities.getCurrentNode();
   }
 
   protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {

@@ -66,9 +66,7 @@ public abstract class ScreenAction extends Action {
   }
 
   protected boolean canSetAsCurrent (AccessibilityNodeInfo node) {
-    String name = node.getClassName().toString();
-    if (name.equals("android.widget.ListView")) return false;
-    return true;
+    return !ScreenUtilities.canAssign(android.widget.ListView.class, node);
   }
 
   protected boolean setCurrentNode (AccessibilityNodeInfo node, boolean force) {

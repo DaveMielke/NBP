@@ -20,7 +20,7 @@ public class BrailleDevice {
   public final static byte DOT_7 = 0X40;
   public final static byte DOT_8 = (byte)0X80;
 
-  private static int cellCount = 0;
+  private static byte[] brailleCells = null;
 
   private static String currentText = "";
   private static int currentIndent = 0;
@@ -63,9 +63,17 @@ public class BrailleDevice {
   }
 
   private static boolean open () {
+    if (brailleCells != null) return true;
+
     if (openDevice()) {
-      if (cellCount != 0) return true;
-      if ((cellCount = getCellCount()) != 0) return true;
+      int cellCount = getCellCount();
+
+      if (cellCount > 0) {
+        brailleCells = new byte[cellCount];
+        return true;
+      }
+
+      closeDevice();
     }
 
     return false;
@@ -73,20 +81,47 @@ public class BrailleDevice {
 
   private static boolean write () {
     if (open()) {
-      int length = currentText.length();
-      int count = length - currentIndent;
-      byte[] cells = new byte[count];
+      {
+        int length = currentText.length();
+        int count = length - currentIndent;
+        if (count > brailleCells.length) count = brailleCells.length;
+        int toIndex = 0;
 
-      for (int toIndex=0; toIndex<count; toIndex+=1) {
-        int fromIndex = toIndex + currentIndent;
-        char character = (fromIndex < length)? currentText.charAt(fromIndex): ' ';
-        Byte dots = characterMap.get(character);
-        cells[toIndex] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
+        while (toIndex < count) {
+          int fromIndex = toIndex + currentIndent;
+          char character = (fromIndex < length)? currentText.charAt(fromIndex): ' ';
+          Byte dots = characterMap.get(character);
+          brailleCells[toIndex++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
+        }
+
+        while (toIndex < brailleCells.length) brailleCells[toIndex++] = 0;
       }
 
-      if (writeCells(cells)) {
-        return true;
+      if (currentNode != null) {
+        if (ScreenUtilities.isEditable(currentNode)) {
+          InputService service = InputService.getInputService();
+
+          if (service != null) {
+            int start = service.getSelectionStart();
+            int end = service.getSelectionEnd();
+
+            if ((start != InputService.NO_SELECTION) && (end != InputService.NO_SELECTION)) {
+              if ((start -= currentIndent) < 0) start = 0;
+              if ((end -= currentIndent) > brailleCells.length) end = brailleCells.length;
+
+              while (start < end) {
+                brailleCells[start++] = ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
+              }
+
+              if ((end >= 0) && (end < brailleCells.length)) {
+                brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+              }
+            }
+          }
+        }
       }
+
+      if (writeCells(brailleCells)) return true;
     }
 
     return false;
@@ -192,15 +227,15 @@ public class BrailleDevice {
     int length = currentText.length();
     if (currentIndent > length) currentIndent = length;
 
-    if ((currentIndent -= cellCount) < 0) currentIndent = 0;
+    if ((currentIndent -= brailleCells.length) < 0) currentIndent = 0;
     return write();
   }
 
   public static boolean moveRight () {
     int length = currentText.length();
-    if ((currentIndent + cellCount) >= length) return false;
+    if ((currentIndent + brailleCells.length) >= length) return false;
 
-    currentIndent += cellCount;
+    currentIndent += brailleCells.length;
     return write();
   }
 
@@ -210,12 +245,11 @@ public class BrailleDevice {
   static {
     System.loadLibrary("UserInterface");
 
-    if (openDevice()) {
+    if (open()) {
+      Log.d(LOG_TAG, "braille cell count: " + brailleCells.length);
+
       String version = getVersion();
       Log.d(LOG_TAG, "braille device version: " + version);
-
-      int cellCount = getCellCount();
-      Log.d(LOG_TAG, "braille cell count: " + cellCount);
 
       clearCells();
       KeyBindings.load();
