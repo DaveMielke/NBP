@@ -20,6 +20,7 @@ public class BrailleDevice {
   public final static byte DOT_7 = 0X40;
   public final static byte DOT_8 = (byte)0X80;
 
+  public final static Object LOCK = new Object();
   private static byte[] brailleCells = null;
 
   private static String currentText = "";
@@ -30,14 +31,14 @@ public class BrailleDevice {
 
   private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
 
-  public native static boolean openDevice ();
-  public native static void closeDevice ();
+  private native static boolean openDevice ();
+  private native static void closeDevice ();
 
-  public native static String getVersion ();
-  public native static int getCellCount ();
+  private native static String getVersion ();
+  private native static int getCellCount ();
 
-  public native static boolean clearCells ();
-  public native static boolean writeCells (byte[] cells);
+  private native static boolean clearCells ();
+  private native static boolean writeCells (byte[] cells);
 
   public static boolean setCharacter (char character, byte dots) {
     characterMap.put(character, dots);
@@ -62,7 +63,7 @@ public class BrailleDevice {
     return setCharacter(character, dots);
   }
 
-  private static boolean open () {
+  public static boolean open () {
     if (brailleCells != null) return true;
 
     if (openDevice()) {
@@ -139,9 +140,11 @@ public class BrailleDevice {
   }
 
   public static boolean write (String text) {
-    reset();
-    currentText = text;
-    return write();
+    synchronized (LOCK) {
+      reset();
+      currentText = text;
+      return write();
+    }
   }
 
   private static String getClassName (AccessibilityNodeInfo node) {
@@ -206,15 +209,16 @@ public class BrailleDevice {
       }
     }
 
-    string = sb.toString();
-    if ((currentNode == null) || !currentNode.equals(node)) {
-      reset();
-      currentNode = AccessibilityNodeInfo.obtain(node);
-    }
+    synchronized (LOCK) {
+      if ((currentNode == null) || !currentNode.equals(node)) {
+        reset();
+        currentNode = AccessibilityNodeInfo.obtain(node);
+      }
 
-    currentText = string;
-    currentDescribe = describe;
-    return write();
+      currentText = sb.toString();
+      currentDescribe = describe;
+      return write();
+    }
   }
 
   public static boolean write (AccessibilityNodeInfo node) {
@@ -222,21 +226,25 @@ public class BrailleDevice {
   }
 
   public static boolean moveLeft () {
-    if (currentIndent == 0) return false;
+    synchronized (LOCK) {
+      if (currentIndent == 0) return false;
 
-    int length = currentText.length();
-    if (currentIndent > length) currentIndent = length;
+      int length = currentText.length();
+      if (currentIndent > length) currentIndent = length;
 
-    if ((currentIndent -= brailleCells.length) < 0) currentIndent = 0;
-    return write();
+      if ((currentIndent -= brailleCells.length) < 0) currentIndent = 0;
+      return write();
+    }
   }
 
   public static boolean moveRight () {
-    int length = currentText.length();
-    if ((currentIndent + brailleCells.length) >= length) return false;
+    synchronized (LOCK) {
+      int length = currentText.length();
+      if ((currentIndent + brailleCells.length) >= length) return false;
 
-    currentIndent += brailleCells.length;
-    return write();
+      currentIndent += brailleCells.length;
+      return write();
+    }
   }
 
   private BrailleDevice () {

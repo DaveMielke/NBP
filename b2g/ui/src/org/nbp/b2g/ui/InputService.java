@@ -61,16 +61,20 @@ public class InputService extends InputMethodService {
   public void onStartInput (EditorInfo info, boolean restarting) {
     Log.d(LOG_TAG, "input service " + (restarting? "reconnected": "connected"));
 
-    selectionStart = info.initialSelStart;
-    selectionEnd = info.initialSelEnd;
+    synchronized (BrailleDevice.LOCK) {
+      selectionStart = info.initialSelStart;
+      selectionEnd = info.initialSelEnd;
+    }
   }
 
   @Override
   public void onFinishInput () {
     Log.d(LOG_TAG, "input service disconnected");
 
-    selectionStart = NO_SELECTION;
-    selectionEnd = NO_SELECTION;
+    synchronized (BrailleDevice.LOCK) {
+      selectionStart = NO_SELECTION;
+      selectionEnd = NO_SELECTION;
+    }
   }
 
   @Override
@@ -79,8 +83,10 @@ public class InputService extends InputMethodService {
     int newSelectionStart, int newSelectionEnd,
     int candidateStart, int candidateEnd
   ) {
-    selectionStart = newSelectionStart;
-    selectionEnd = newSelectionEnd;
+    synchronized (BrailleDevice.LOCK) {
+      selectionStart = newSelectionStart;
+      selectionEnd = newSelectionEnd;
+    }
 
     super.onUpdateSelection(
       oldSelectionStart, oldSelectionEnd,
