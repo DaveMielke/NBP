@@ -47,7 +47,7 @@ public class BrailleDevice {
   public static boolean setCharacter (char character, int keyMask) {
     if (keyMask == 0) return false;
     if (keyMask == KeyMask.SPACE) keyMask = 0;
-    if ((keyMask & ~KeyMask.DOTS_12345678) != 0) return false;
+    if ((keyMask & ~KeyMask.DOTS_ALL) != 0) return false;
 
     byte dots = 0;
     if ((keyMask & KeyMask.DOT_1) != 0) dots |= BrailleDevice.DOT_1;
@@ -81,7 +81,7 @@ public class BrailleDevice {
         int fromIndex = toIndex + currentIndent;
         char character = (fromIndex < length)? currentText.charAt(fromIndex): ' ';
         Byte dots = characterMap.get(character);
-        cells[toIndex] = (dots != null)? dots: (byte)ApplicationParameters.UNDEFINED_BRAILLE_CHARACTER;
+        cells[toIndex] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
       }
 
       if (writeCells(cells)) {
