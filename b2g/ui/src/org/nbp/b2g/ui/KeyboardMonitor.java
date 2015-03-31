@@ -35,7 +35,7 @@ public class KeyboardMonitor extends Thread {
     }
 
     if ((code >= ScanCode.CURSOR_0) && (code <= ScanCode.CURSOR_19)) {
-      KeyEvents.handleRoutingKeyEvent((code - ScanCode.CURSOR_0), press);
+      KeyEvents.handleCursorKeyEvent((code - ScanCode.CURSOR_0), press);
     } else {
       KeyEvents.handleNavigationKeyEvent(ScanCode.toKeyMask(code), press);
     }

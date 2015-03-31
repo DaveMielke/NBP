@@ -40,6 +40,7 @@ public class KeyBindings extends Action {
   public final static char DOWN      = 'd';
   public final static char LEFT      = 'l';
   public final static char RIGHT     = 'r';
+  public final static char CURSOR    = 'x';
 
   private final static Map<String, Action> actionObjects = new HashMap<String, Action>();
   private final static Map<Integer, Action> rootKeyBindings = new HashMap<Integer, Action>();
@@ -204,6 +205,7 @@ public class KeyBindings extends Action {
         case KeyBindings.DOWN:     bit = KeyMask.DPAD_DOWN;   break;
         case KeyBindings.LEFT:     bit = KeyMask.DPAD_LEFT;   break;
         case KeyBindings.RIGHT:    bit = KeyMask.DPAD_RIGHT;  break;
+        case KeyBindings.CURSOR:   bit = KeyMask.CURSOR;      break;
 
         case KeyBindings.DELIMITER:
           masks = addKeyMask(masks, mask);

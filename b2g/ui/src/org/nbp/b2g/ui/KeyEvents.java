@@ -10,7 +10,7 @@ public class KeyEvents {
 
   private static int pressedNavigationKeys = 0;
   private static int activeNavigationKeys = 0;
-  private final static SortedSet<Integer> pressedRoutingKeys = new TreeSet<Integer>();
+  private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
   private static boolean performAction (Action action) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
@@ -69,30 +69,35 @@ public class KeyEvents {
     }
   }
 
-  public static int[] getRoutingKeys () {
-    int[] keyNumbers = new int[pressedRoutingKeys.size()];
+  public static int[] getCursorKeys () {
+    int[] keyNumbers = new int[pressedCursorKeys.size()];
     int index = 0;
 
-    for (int keyNumber : pressedRoutingKeys) {
+    for (int keyNumber : pressedCursorKeys) {
       keyNumbers[index++] = keyNumber;
     }
 
     return keyNumbers;
   }
 
-  private static void handleRoutingKeyPress (int keyNumber) {
-    pressedRoutingKeys.add(keyNumber);
+  private static void handleCursorKeyPress (int keyNumber) {
+    pressedCursorKeys.add(keyNumber);
+
+    if (pressedCursorKeys.size() == 1) {
+      handleNavigationKeyPress(KeyMask.CURSOR);
+      handleNavigationKeyRelease(KeyMask.CURSOR);
+    }
   }
 
-  private static void handleRoutingKeyRelease (int keyNumber) {
-    pressedRoutingKeys.remove(keyNumber);
+  private static void handleCursorKeyRelease (int keyNumber) {
+    pressedCursorKeys.remove(keyNumber);
   }
 
-  public static void handleRoutingKeyEvent (int keyNumber, boolean press) {
+  public static void handleCursorKeyEvent (int keyNumber, boolean press) {
     if (press) {
-      handleRoutingKeyPress(keyNumber);
+      handleCursorKeyPress(keyNumber);
     } else {
-      handleRoutingKeyRelease(keyNumber);
+      handleCursorKeyRelease(keyNumber);
     }
   }
 
@@ -104,7 +109,7 @@ public class KeyEvents {
     pressedNavigationKeys = 0;
     activeNavigationKeys = pressedNavigationKeys;
 
-    pressedRoutingKeys.clear();
+    pressedCursorKeys.clear();
   }
 
   private KeyEvents () {

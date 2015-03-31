@@ -158,7 +158,7 @@ public class InputService extends InputMethodService {
     if (ignoreKey(code)) return false;
 
     if ((code >= KeyCode.CURSOR_0) && (code <= KeyCode.CURSOR_19)) {
-      KeyEvents.handleRoutingKeyEvent((code - KeyCode.CURSOR_0), press);
+      KeyEvents.handleCursorKeyEvent((code - KeyCode.CURSOR_0), press);
     } else {
       KeyEvents.handleNavigationKeyEvent(KeyCode.toKeyMask(code), press);
     }

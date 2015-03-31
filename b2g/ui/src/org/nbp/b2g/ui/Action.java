@@ -11,7 +11,16 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public abstract class Action {
   private final static String LOG_TAG = Action.class.getName();
 
-  public abstract boolean performAction ();
+  public boolean performAction (int cursorKey) {
+    return false;
+  }
+
+  public boolean performAction () {
+    int[] cursorKeys = KeyEvents.getCursorKeys();
+    if (cursorKeys == null) return false;
+    if (cursorKeys.length != 1) return false;
+    return performAction(cursorKeys[0]);
+  }
 
   public final String getName () {
     return getClass().getName();

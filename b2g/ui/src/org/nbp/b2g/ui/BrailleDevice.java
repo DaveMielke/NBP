@@ -46,6 +46,18 @@ public class BrailleDevice {
   private native static boolean clearCells ();
   private native static boolean writeCells (byte[] cells);
 
+  public static int getLength () {
+    synchronized (LOCK) {
+      return currentText.length();
+    }
+  }
+
+  public static int getIndent () {
+    synchronized (LOCK) {
+      return currentIndent;
+    }
+  }
+
   public static boolean setCharacter (char character, byte dots) {
     characterMap.put(character, dots);
     return true;
@@ -256,7 +268,18 @@ public class BrailleDevice {
     return write(node, currentDescribe);
   }
 
-  public static boolean moveLeft () {
+  public static boolean shiftRight (int offset) {
+    synchronized (LOCK) {
+      if (offset < 1) return false;
+      if (offset >= brailleCells.length) return false;
+
+      if ((offset += currentIndent) >= currentText.length()) return false;
+      currentIndent = offset;
+      return write();
+    }
+  }
+
+  public static boolean panLeft () {
     synchronized (LOCK) {
       if (currentIndent == 0) return false;
 
@@ -268,7 +291,7 @@ public class BrailleDevice {
     }
   }
 
-  public static boolean moveRight () {
+  public static boolean panRight () {
     synchronized (LOCK) {
       int length = currentText.length();
       if ((currentIndent + brailleCells.length) >= length) return false;

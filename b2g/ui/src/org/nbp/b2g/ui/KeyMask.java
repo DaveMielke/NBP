@@ -19,6 +19,7 @@ public class KeyMask {
   public final static int DPAD_DOWN   = 0X08000;
   public final static int VOLUME_DOWN = 0X10000;
   public final static int VOLUME_UP   = 0X20000;
+  public final static int CURSOR      = 0X40000;
 
   public final static int DOTS_ALL = (DOT_1 | DOT_2 | DOT_3 | DOT_4 | DOT_5 | DOT_6 | DOT_7 | DOT_8);
 }
