@@ -47,15 +47,11 @@ public class BrailleDevice {
   private native static boolean writeCells (byte[] cells);
 
   public static int getLength () {
-    synchronized (LOCK) {
-      return currentText.length();
-    }
+    return currentText.length();
   }
 
   public static int getIndent () {
-    synchronized (LOCK) {
-      return currentIndent;
-    }
+    return currentIndent;
   }
 
   public static boolean setCharacter (char character, byte dots) {
