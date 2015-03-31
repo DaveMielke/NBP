@@ -3,6 +3,9 @@ package org.nbp.b2g.ui;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.util.Log;
 import android.graphics.Rect;
 
@@ -22,6 +25,9 @@ public class BrailleDevice {
 
   public final static Object LOCK = new Object();
   private static byte[] brailleCells = null;
+
+  private static Timer delayTimer = null;
+  private static boolean delayUpdate = false;
 
   private static String currentText = "";
   private static int currentIndent = 0;
@@ -81,6 +87,11 @@ public class BrailleDevice {
   }
 
   private static boolean write () {
+    if (delayTimer != null) {
+      delayUpdate = true;
+      return true;
+    }
+
     if (open()) {
       {
         int length = currentText.length();
@@ -122,7 +133,27 @@ public class BrailleDevice {
         }
       }
 
-      if (writeCells(brailleCells)) return true;
+      if (writeCells(brailleCells)) {
+        TimerTask task = new TimerTask() {
+          @Override
+          public void run () {
+            synchronized (LOCK) {
+              delayTimer.cancel();
+              delayTimer = null;
+
+              if (delayUpdate) {
+                delayUpdate = false;
+                write();
+              }
+            }
+          }
+        };
+
+        delayUpdate = false;
+        delayTimer = new Timer();
+        delayTimer.schedule(task, ApplicationParameters.BRAILLE_UPDATE_DELAY);
+        return true;
+      }
     }
 
     return false;

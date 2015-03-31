@@ -15,7 +15,7 @@ public abstract class MoveAction extends ScreenAction {
 
     if (scrolled) {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll succeeded");
-      ApplicationUtilities.sleep(ApplicationParameters.SCROLL_DELAY);
+      ApplicationUtilities.sleep(ApplicationParameters.SCREEN_SCROLL_DELAY);
     } else {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("scroll failed");
     }
