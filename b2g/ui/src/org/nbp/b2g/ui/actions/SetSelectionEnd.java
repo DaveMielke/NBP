@@ -18,7 +18,7 @@ public class SetSelectionEnd extends SetLeft {
 
             if (isCharacterOffset(end)) {
               int start = service.getSelectionStart();
-              if ((start == InputService.NO_SELECTION) || (start > end)) start = end;
+              if (!isSelected(start) || (start > end)) start = end;
               if (connection.setSelection(start, end+1)) return true;
             }
           }

@@ -9,10 +9,21 @@ public class DeletePrevious extends InputAction {
   public boolean performAction () {
     synchronized (BrailleDevice.LOCK) {
       if (ScreenUtilities.isEditable()) {
-        InputConnection connection = getInputConnection();
+        InputService service = getInputService();
 
-        if (connection != null) {
-          return connection.deleteSurroundingText(1, 0);
+        if (service != null) {
+          InputConnection connection = service.getCurrentInputConnection();
+
+          if (connection != null) {
+            int start = service.getSelectionStart();
+            int end = service.getSelectionEnd();
+
+            if (isSelected(start, end)) {
+              return deleteText(connection, start, end);
+            } else {
+              return connection.deleteSurroundingText(1, 0);
+            }
+          }
         }
       }
     }
