@@ -4,12 +4,20 @@ import org.nbp.b2g.ui.*;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
-public class DeleteNext extends ScanCodeAction {
+public class DeleteNext extends InputAction {
   @Override
   public boolean performAction () {
-    InputConnection connection = getInputConnection();
-    if (connection == null) return super.performAction();
-    return connection.deleteSurroundingText(0, 1);
+    synchronized (BrailleDevice.LOCK) {
+      if (ScreenUtilities.isEditable()) {
+        InputConnection connection = getInputConnection();
+
+        if (connection != null) {
+          return connection.deleteSurroundingText(0, 1);
+        }
+      }
+    }
+
+    return super.performAction();
   }
 
   @Override
