@@ -61,7 +61,7 @@ public abstract class KeyCodeAction extends KeyAction {
       }
     }
 
-    return false;
+    return super.performAction();
   }
 
   protected KeyCodeAction () {

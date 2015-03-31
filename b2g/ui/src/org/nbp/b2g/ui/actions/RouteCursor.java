@@ -7,14 +7,14 @@ public class RouteCursor extends SetLeft {
   @Override
   public boolean performAction (int cursorKey) {
     synchronized (BrailleDevice.LOCK) {
-      if (isEditable()) {
+      if (ScreenUtilities.isEditable()) {
         InputConnection connection = getInputConnection();
 
         if (connection != null) {
-          int position = BrailleDevice.getIndent() + cursorKey;
+          int offset = getOffset(cursorKey);
 
-          if (position <= BrailleDevice.getLength()) {
-            if (connection.setSelection(position, position)) {
+          if (isCursorOffset(offset)) {
+            if (connection.setSelection(offset, offset)) {
               return true;
             }
           }

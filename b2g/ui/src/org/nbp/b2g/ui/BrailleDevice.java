@@ -129,12 +129,12 @@ public class BrailleDevice {
               if ((start -= currentIndent) < 0) start = 0;
               if ((end -= currentIndent) > brailleCells.length) end = brailleCells.length;
 
-              while (start < end) {
-                brailleCells[start++] = ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
-              }
-
-              if ((end >= 0) && (end < brailleCells.length)) {
+              if (start == end) {
                 brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+              } else {
+                while (start < end) {
+                  brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
+                }
               }
             }
           }

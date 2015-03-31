@@ -5,7 +5,7 @@ public class MoveRight extends MoveForward {
   @Override
   public boolean performAction () {
     if (BrailleDevice.panRight()) return true;
-    if (isEditable()) return false;
+    if (ScreenUtilities.isEditable()) return false;
     return super.performAction();
   }
 

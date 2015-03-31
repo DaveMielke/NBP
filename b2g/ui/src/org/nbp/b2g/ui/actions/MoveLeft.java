@@ -5,7 +5,7 @@ public class MoveLeft extends MoveBackward {
   @Override
   public boolean performAction () {
     if (BrailleDevice.panLeft()) return true;
-    if (isEditable()) return false;
+    if (ScreenUtilities.isEditable()) return false;
     return super.performAction();
   }
 

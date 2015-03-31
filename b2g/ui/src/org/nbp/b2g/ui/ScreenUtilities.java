@@ -74,6 +74,10 @@ public class ScreenUtilities {
     return canAssign(android.widget.EditText.class, node);
   }
 
+  public static boolean isEditable () {
+    return isEditable(getCurrentNode());
+  }
+
   private ScreenUtilities () {
   }
 }

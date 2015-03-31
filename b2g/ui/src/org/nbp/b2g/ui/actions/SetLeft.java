@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.inputmethod.InputConnection;
 
-public class SetLeft extends ScreenAction {
+public class SetLeft extends InputAction {
   @Override
   public boolean performAction (int cursorKey) {
     synchronized (BrailleDevice.LOCK) {
