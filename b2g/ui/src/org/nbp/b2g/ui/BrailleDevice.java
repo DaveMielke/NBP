@@ -299,6 +299,17 @@ public class BrailleDevice {
       if ((currentNode == null) || !currentNode.equals(node)) {
         reset();
         currentNode = AccessibilityNodeInfo.obtain(node);
+
+        if (ScreenUtilities.isEditable(node)) {
+          if (isSelected(selectionEnd)) {
+            currentIndent = selectionEnd + ApplicationParameters.BRAILLE_SCROLL_KEEP - brailleCells.length;
+            if (currentIndent < 0) currentIndent = 0;
+          }
+
+          if (isSelected(selectionStart)) {
+            if (currentIndent > selectionStart) currentIndent = selectionStart;
+          }
+        }
       }
 
       currentText = sb.toString();
