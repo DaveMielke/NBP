@@ -9,20 +9,13 @@ public class DeleteNext extends InputAction {
   public boolean performAction () {
     synchronized (BrailleDevice.LOCK) {
       if (ScreenUtilities.isEditable()) {
-        InputService service = getInputService();
+        InputConnection connection = getInputConnection();
 
-        if (service != null) {
-          InputConnection connection = service.getCurrentInputConnection();
-
-          if (connection != null) {
-            int start = service.getSelectionStart();
-            int end = service.getSelectionEnd();
-
-            if (isSelected(start, end)) {
-              return deleteText(connection, start, end);
-            } else {
-              return connection.deleteSurroundingText(0, 1);
-            }
+        if (connection != null) {
+          if (BrailleDevice.isSelected()) {
+            return deleteText(connection);
+          } else {
+            return connection.deleteSurroundingText(0, 1);
           }
         }
       }

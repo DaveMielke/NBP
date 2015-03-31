@@ -13,21 +13,9 @@ public class InputService extends InputMethodService {
 
   private static volatile InputService inputService = null;
 
-  public final static int NO_SELECTION = -1;
-  private int selectionStart = NO_SELECTION;
-  private int selectionEnd = NO_SELECTION;
-
   public static InputService getInputService () {
     if (inputService == null) Log.w(LOG_TAG, "input service not runnig");
     return inputService;
-  }
-
-  public int getSelectionStart () {
-    return selectionStart;
-  }
-
-  public int getSelectionEnd () {
-    return selectionEnd;
   }
 
   @Override
@@ -60,21 +48,13 @@ public class InputService extends InputMethodService {
   @Override
   public void onStartInput (EditorInfo info, boolean restarting) {
     Log.d(LOG_TAG, "input service " + (restarting? "reconnected": "connected"));
-
-    synchronized (BrailleDevice.LOCK) {
-      selectionStart = info.initialSelStart;
-      selectionEnd = info.initialSelEnd;
-    }
+    BrailleDevice.setSelection(info.initialSelStart, info.initialSelEnd);
   }
 
   @Override
   public void onFinishInput () {
     Log.d(LOG_TAG, "input service disconnected");
-
-    synchronized (BrailleDevice.LOCK) {
-      selectionStart = NO_SELECTION;
-      selectionEnd = NO_SELECTION;
-    }
+    BrailleDevice.clearSelection();
   }
 
   @Override
@@ -83,10 +63,7 @@ public class InputService extends InputMethodService {
     int newSelectionStart, int newSelectionEnd,
     int candidateStart, int candidateEnd
   ) {
-    synchronized (BrailleDevice.LOCK) {
-      selectionStart = newSelectionStart;
-      selectionEnd = newSelectionEnd;
-    }
+    BrailleDevice.setSelection(newSelectionStart, newSelectionEnd);
 
     super.onUpdateSelection(
       oldSelectionStart, oldSelectionEnd,

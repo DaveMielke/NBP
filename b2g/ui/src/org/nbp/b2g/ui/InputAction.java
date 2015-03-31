@@ -15,14 +15,6 @@ public abstract class InputAction extends ScanCodeAction {
     return ((offset >= 0) && (offset <= BrailleDevice.getLength()));
   }
 
-  protected boolean isSelected (int offset) {
-    return offset != InputService.NO_SELECTION;
-  }
-
-  protected boolean isSelected (int start, int end) {
-    return (start != end) && isSelected(start) && isSelected(end);
-  }
-
   protected boolean deleteText (InputConnection connection, int start, int end) {
     if (connection.beginBatchEdit()) {
       if (connection.setSelection(end, end)) {
@@ -35,6 +27,10 @@ public abstract class InputAction extends ScanCodeAction {
     }
 
     return false;
+  }
+
+  protected boolean deleteText (InputConnection connection) {
+    return deleteText(connection, BrailleDevice.getSelectionStart(), BrailleDevice.getSelectionEnd());
   }
 
   protected InputAction () {

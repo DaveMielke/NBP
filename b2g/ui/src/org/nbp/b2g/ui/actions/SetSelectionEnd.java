@@ -8,19 +8,15 @@ public class SetSelectionEnd extends SetLeft {
   public boolean performAction (int cursorKey) {
     synchronized (BrailleDevice.LOCK) {
       if (ScreenUtilities.isEditable()) {
-        InputService service = getInputService();
+        InputConnection connection = getInputConnection();
 
-        if (service != null) {
-          InputConnection connection = service.getCurrentInputConnection();
+        if (connection != null) {
+          int end = getOffset(cursorKey);
 
-          if (connection != null) {
-            int end = getOffset(cursorKey);
-
-            if (isCharacterOffset(end)) {
-              int start = service.getSelectionStart();
-              if (!isSelected(start) || (start > end)) start = end;
-              if (connection.setSelection(start, end+1)) return true;
-            }
+          if (isCharacterOffset(end)) {
+            int start = BrailleDevice.getSelectionStart();
+            if (!BrailleDevice.isSelected(start) || (start > end)) start = end;
+            if (connection.setSelection(start, end+1)) return true;
           }
         }
 

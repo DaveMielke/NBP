@@ -14,7 +14,9 @@ public abstract class ApplicationParameters {
 
   public static volatile long LONG_PRESS_DELAY = 100; // milliseconds
   public static volatile long SCREEN_SCROLL_DELAY = 500; // milliseconds
+
   public static volatile long BRAILLE_UPDATE_DELAY = 50; // milliseconds
+  public static volatile int BRAILLE_SCROLL_KEEP = 3; // cells
 
   public static volatile String CLOCK_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
   public static volatile long CLOCK_UPDATE_INTERVAL = 1000; // milliseconds

@@ -35,6 +35,10 @@ public class BrailleDevice {
   private static AccessibilityNodeInfo currentNode = null;
   private static boolean currentDescribe = false;
 
+  public final static int NO_SELECTION = -1;
+  private static int selectionStart = NO_SELECTION;
+  private static int selectionEnd = NO_SELECTION;
+
   private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
 
   private native static boolean openDevice ();
@@ -52,6 +56,53 @@ public class BrailleDevice {
 
   public static int getIndent () {
     return currentIndent;
+  }
+
+  public static boolean isSelected (int offset) {
+    return offset != NO_SELECTION;
+  }
+
+  public static boolean isSelected (int start, int end) {
+    return (start != end) && isSelected(start) && isSelected(end);
+  }
+
+  public static boolean isSelected () {
+    synchronized (LOCK) {
+      return isSelected(selectionStart, selectionEnd);
+    }
+  }
+
+  public static int getSelectionStart () {
+    return selectionStart;
+  }
+
+  public static int getSelectionEnd () {
+    return selectionEnd;
+  }
+
+  public static void setSelection (int start, int end) {
+    synchronized (LOCK) {
+      selectionStart = start;
+      selectionEnd = end;
+
+      if ((start == end) && isSelected(start)) {
+        int oldIndent = currentIndent;
+
+        if (start < currentIndent) {
+          if ((currentIndent = start - ApplicationParameters.BRAILLE_SCROLL_KEEP) < 0) {
+            currentIndent = 0;
+          }
+        } else if (end >= (currentIndent + brailleCells.length)) {
+          currentIndent = end + ApplicationParameters.BRAILLE_SCROLL_KEEP - brailleCells.length;
+        }
+
+        if (currentIndent != oldIndent) write();
+      }
+    }
+  }
+
+  public static void clearSelection () {
+    setSelection(NO_SELECTION, NO_SELECTION);
   }
 
   public static boolean setCharacter (char character, byte dots) {
@@ -119,22 +170,18 @@ public class BrailleDevice {
 
       if (currentNode != null) {
         if (ScreenUtilities.isEditable(currentNode)) {
-          InputService service = InputService.getInputService();
+          int start = selectionStart;
+          int end = selectionEnd;
 
-          if (service != null) {
-            int start = service.getSelectionStart();
-            int end = service.getSelectionEnd();
+          if (isSelected(start) && isSelected(end)) {
+            if ((start -= currentIndent) < 0) start = 0;
+            if ((end -= currentIndent) > brailleCells.length) end = brailleCells.length;
 
-            if ((start != InputService.NO_SELECTION) && (end != InputService.NO_SELECTION)) {
-              if ((start -= currentIndent) < 0) start = 0;
-              if ((end -= currentIndent) > brailleCells.length) end = brailleCells.length;
-
-              if (start == end) {
-                brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
-              } else {
-                while (start < end) {
-                  brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
-                }
+            if (start == end) {
+              brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+            } else {
+              while (start < end) {
+                brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
               }
             }
           }
