@@ -22,12 +22,12 @@ public abstract class Action {
     return false;
   }
 
-  protected static int getKeyMask () {
-    return KeyEvents.getKeyMask();
+  protected static int getNavigationKeys () {
+    return KeyEvents.getNavigationKeys();
   }
 
   protected static boolean isChord () {
-    return (getKeyMask() & KeyMask.SPACE) != 0;
+    return (getNavigationKeys() & KeyMask.SPACE) != 0;
   }
 
   protected final InputService getInputService () {

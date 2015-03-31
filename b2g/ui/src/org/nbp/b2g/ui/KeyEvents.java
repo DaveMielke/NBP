@@ -1,12 +1,16 @@
 package org.nbp.b2g.ui;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import android.util.Log;
 
 public class KeyEvents {
   private final static String LOG_TAG = KeyEvents.class.getName();
 
-  private static int pressedKeyMask = 0;
-  private static int activeKeyMask = 0;
+  private static int pressedNavigationKeys = 0;
+  private static int activeNavigationKeys = 0;
+  private final static SortedSet<Integer> pressedRoutingKeys = new TreeSet<Integer>();
 
   private static boolean performAction (Action action) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
@@ -24,24 +28,24 @@ public class KeyEvents {
     return false;
   }
 
-  public static int getKeyMask () {
-    return activeKeyMask;
+  public static int getNavigationKeys () {
+    return activeNavigationKeys;
   }
 
-  public static void handleKeyPress (int keyMask) {
+  private static void handleNavigationKeyPress (int keyMask) {
     if (keyMask != 0) {
-      if ((pressedKeyMask & keyMask) == 0) {
-        pressedKeyMask |= keyMask;
-        activeKeyMask = pressedKeyMask;
+      if ((pressedNavigationKeys & keyMask) == 0) {
+        pressedNavigationKeys |= keyMask;
+        activeNavigationKeys = pressedNavigationKeys;
       }
     }
   }
 
-  public static void handleKeyRelease (int keyMask) {
+  private static void handleNavigationKeyRelease (int keyMask) {
     if (keyMask != 0) {
-      if (activeKeyMask > 0) {
+      if (activeNavigationKeys > 0) {
         boolean performed = false;
-        Action action = KeyBindings.getAction(activeKeyMask);
+        Action action = KeyBindings.getAction(activeNavigationKeys);
 
         if (action != null) {
           if (performAction(action)) {
@@ -50,18 +54,45 @@ public class KeyEvents {
         }
 
         if (!performed) ApplicationUtilities.beep();
-        activeKeyMask = 0;
+        activeNavigationKeys = 0;
       }
 
-      pressedKeyMask &= ~keyMask;
+      pressedNavigationKeys &= ~keyMask;
     }
   }
 
-  public static void handleKeyEvent (int keyMask, boolean press) {
+  public static void handleNavigationKeyEvent (int keyMask, boolean press) {
     if (press) {
-      handleKeyPress(keyMask);
+      handleNavigationKeyPress(keyMask);
     } else {
-      handleKeyRelease(keyMask);
+      handleNavigationKeyRelease(keyMask);
+    }
+  }
+
+  public static int[] getRoutingKeys () {
+    int[] keyNumbers = new int[pressedRoutingKeys.size()];
+    int index = 0;
+
+    for (int keyNumber : pressedRoutingKeys) {
+      keyNumbers[index++] = keyNumber;
+    }
+
+    return keyNumbers;
+  }
+
+  private static void handleRoutingKeyPress (int keyNumber) {
+    pressedRoutingKeys.add(keyNumber);
+  }
+
+  private static void handleRoutingKeyRelease (int keyNumber) {
+    pressedRoutingKeys.remove(keyNumber);
+  }
+
+  public static void handleRoutingKeyEvent (int keyNumber, boolean press) {
+    if (press) {
+      handleRoutingKeyPress(keyNumber);
+    } else {
+      handleRoutingKeyRelease(keyNumber);
     }
   }
 
@@ -70,8 +101,10 @@ public class KeyEvents {
       Log.d(LOG_TAG, "resetting key state");
     }
 
-    pressedKeyMask = 0;
-    activeKeyMask = pressedKeyMask;
+    pressedNavigationKeys = 0;
+    activeNavigationKeys = pressedNavigationKeys;
+
+    pressedRoutingKeys.clear();
   }
 
   private KeyEvents () {

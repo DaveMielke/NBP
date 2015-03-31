@@ -30,7 +30,7 @@ public class InsertCharacter extends ScreenAction {
 
   @Override
   public boolean performAction () {
-    int keyMask = getKeyMask();
+    int keyMask = getNavigationKeys();
     Character character = characterMap.get(keyMask);
 
     if (character != null) {

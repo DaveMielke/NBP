@@ -34,7 +34,11 @@ public class KeyboardMonitor extends Thread {
       Log.d(LOG_TAG, "key " + (press? "press": "release") + ": " + code);
     }
 
-    KeyEvents.handleKeyEvent(ScanCode.toKeyMask(code), press);
+    if ((code >= ScanCode.CURSOR_0) && (code <= ScanCode.CURSOR_19)) {
+      KeyEvents.handleRoutingKeyEvent((code - ScanCode.CURSOR_0), press);
+    } else {
+      KeyEvents.handleNavigationKeyEvent(ScanCode.toKeyMask(code), press);
+    }
   }
 
   public void run () {

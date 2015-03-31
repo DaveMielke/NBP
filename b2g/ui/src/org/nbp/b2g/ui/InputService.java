@@ -153,19 +153,26 @@ public class InputService extends InputMethodService {
     }
   }
 
-  @Override
-  public boolean onKeyDown (int code, KeyEvent event) {
-    logKeyEvent(code, true);
+  private boolean handleKeyEvent (int code, boolean press) {
+    logKeyEvent(code, press);
     if (ignoreKey(code)) return false;
-    KeyEvents.handleKeyPress(KeyCode.toKeyMask(code));
+
+    if ((code >= KeyCode.CURSOR_0) && (code <= KeyCode.CURSOR_19)) {
+      KeyEvents.handleRoutingKeyEvent((code - KeyCode.CURSOR_0), press);
+    } else {
+      KeyEvents.handleNavigationKeyEvent(KeyCode.toKeyMask(code), press);
+    }
+
     return true;
   }
 
   @Override
+  public boolean onKeyDown (int code, KeyEvent event) {
+    return handleKeyEvent(code, true);
+  }
+
+  @Override
   public boolean onKeyUp (int code, KeyEvent event) {
-    logKeyEvent(code, false);
-    if (ignoreKey(code)) return false;
-    KeyEvents.handleKeyRelease(KeyCode.toKeyMask(code));
-    return true;
+    return handleKeyEvent(code, false);
   }
 }
