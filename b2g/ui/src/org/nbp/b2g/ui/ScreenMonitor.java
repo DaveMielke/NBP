@@ -53,26 +53,26 @@ public class ScreenMonitor extends AccessibilityService {
 
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
+    AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
+
     if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
       Log.d(LOG_TAG, "accessibility event: " + event.toString());
     }
 
-    switch (event.getEventType()) {
-      case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
-      case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-      case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
-        AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
+    if (node != null) {
+      switch (event.getEventType()) {
+        case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+        case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
+        case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+          BrailleDevice.write(node, false);
+          break;
 
-        if (node != null) {
+        default:
           BrailleDevice.write(node);
-          node.recycle();
-        }
-
-        break;
+          break;
       }
 
-      default:
-        break;
+      node.recycle();
     }
   }
 

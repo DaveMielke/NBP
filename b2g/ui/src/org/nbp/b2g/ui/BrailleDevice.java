@@ -14,49 +14,94 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
-  public final static byte DOT_1 = 0X01;
-  public final static byte DOT_2 = 0X02;
-  public final static byte DOT_3 = 0X04;
-  public final static byte DOT_4 = 0X08;
-  public final static byte DOT_5 = 0X10;
-  public final static byte DOT_6 = 0X20;
-  public final static byte DOT_7 = 0X40;
-  public final static byte DOT_8 = (byte)0X80;
-
   public final static Object LOCK = new Object();
   private static byte[] brailleCells = null;
 
-  private static Timer delayTimer = null;
-  private static boolean delayUpdate = false;
+  public final static byte DOT_1 =       0X01;
+  public final static byte DOT_2 =       0X02;
+  public final static byte DOT_3 =       0X04;
+  public final static byte DOT_4 =       0X08;
+  public final static byte DOT_5 =       0X10;
+  public final static byte DOT_6 =       0X20;
+  public final static byte DOT_7 =       0X40;
+  public final static byte DOT_8 = (byte)0X80;
 
-  private static String currentText = "";
-  private static int currentIndent = 0;
+  private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
+
+  public static void unsetCharacters () {
+    characterMap.clear();
+  }
+
+  public static boolean setCharacter (char character, byte dots) {
+    if (characterMap.get(character) != null) return false;
+    characterMap.put(character, dots);
+    return true;
+  }
+
+  public static boolean setCharacter (char character, int keyMask) {
+    if (keyMask == 0) return false;
+    if (keyMask == KeyMask.SPACE) keyMask = 0;
+    if ((keyMask & ~KeyMask.DOTS_ALL) != 0) return false;
+
+    byte dots = 0;
+    if ((keyMask & KeyMask.DOT_1) != 0) dots |= BrailleDevice.DOT_1;
+    if ((keyMask & KeyMask.DOT_2) != 0) dots |= BrailleDevice.DOT_2;
+    if ((keyMask & KeyMask.DOT_3) != 0) dots |= BrailleDevice.DOT_3;
+    if ((keyMask & KeyMask.DOT_4) != 0) dots |= BrailleDevice.DOT_4;
+    if ((keyMask & KeyMask.DOT_5) != 0) dots |= BrailleDevice.DOT_5;
+    if ((keyMask & KeyMask.DOT_6) != 0) dots |= BrailleDevice.DOT_6;
+    if ((keyMask & KeyMask.DOT_7) != 0) dots |= BrailleDevice.DOT_7;
+    if ((keyMask & KeyMask.DOT_8) != 0) dots |= BrailleDevice.DOT_8;
+
+    return setCharacter(character, dots);
+  }
+
+  private static String textString;
+  private static int lineOffset;
+  private static String lineText;
+  private static int lineIndent;
+
+  private static int setLine (int offset) {
+    lineOffset = textString.lastIndexOf('\n', offset) + 1;
+    int length = textString.indexOf('\n', lineOffset);
+    if (length == -1) length = textString.length();
+    lineText = textString.substring(lineOffset, length);
+    return offset - lineOffset;
+  }
+
+  private static void setText (String text, int indent) {
+    textString = text;
+    setLine(0);
+    lineIndent = indent;
+  }
+
+  private static void setText (String text) {
+    setText(text, 0);
+  }
+
+  public static int getLength () {
+    return lineText.length();
+  }
+
+  public static int getIndent () {
+    return lineIndent;
+  }
 
   private static AccessibilityNodeInfo currentNode = null;
   private static boolean currentDescribe = false;
 
+  private static void resetNode () {
+    if (currentNode != null) {
+      currentNode.recycle();
+      currentNode = null;
+    }
+
+    currentDescribe = false;
+  }
+
   public final static int NO_SELECTION = -1;
   private static int selectionStart = NO_SELECTION;
   private static int selectionEnd = NO_SELECTION;
-
-  private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
-
-  private native static boolean openDevice ();
-  private native static void closeDevice ();
-
-  private native static String getVersion ();
-  private native static int getCellCount ();
-
-  private native static boolean clearCells ();
-  private native static boolean writeCells (byte[] cells);
-
-  public static int getLength () {
-    return currentText.length();
-  }
-
-  public static int getIndent () {
-    return currentIndent;
-  }
 
   public static boolean isSelected (int offset) {
     return offset != NO_SELECTION;
@@ -80,24 +125,34 @@ public class BrailleDevice {
     return selectionEnd;
   }
 
+  private static void adjustLeft (int offset, int keep) {
+    if (offset < lineIndent) {
+      int newIndent = offset - keep;
+      if (newIndent < 0) newIndent = 0;
+      lineIndent = newIndent;
+    }
+  }
+
+  private static void adjustRight (int offset, int keep) {
+    if (offset >= (lineIndent + brailleCells.length)) {
+      lineIndent = offset + keep - brailleCells.length;
+    }
+  }
+
   public static void setSelection (int start, int end) {
     synchronized (LOCK) {
       selectionStart = start;
       selectionEnd = end;
 
       if ((start == end) && isSelected(start)) {
-        int oldIndent = currentIndent;
+        int offset = setLine(start);
+        int keep = ApplicationParameters.BRAILLE_SCROLL_KEEP;
 
-        if (start < currentIndent) {
-          if ((currentIndent = start - ApplicationParameters.BRAILLE_SCROLL_KEEP) < 0) {
-            currentIndent = 0;
-          }
-        } else if (end >= (currentIndent + brailleCells.length)) {
-          currentIndent = end + ApplicationParameters.BRAILLE_SCROLL_KEEP - brailleCells.length;
-        }
-
-        if (currentIndent != oldIndent) write();
+        adjustLeft(offset, keep);
+        adjustRight(offset, keep);
       }
+
+      write();
     }
   }
 
@@ -105,28 +160,14 @@ public class BrailleDevice {
     setSelection(NO_SELECTION, NO_SELECTION);
   }
 
-  public static boolean setCharacter (char character, byte dots) {
-    characterMap.put(character, dots);
-    return true;
-  }
+  private native static boolean openDevice ();
+  private native static void closeDevice ();
 
-  public static boolean setCharacter (char character, int keyMask) {
-    if (keyMask == 0) return false;
-    if (keyMask == KeyMask.SPACE) keyMask = 0;
-    if ((keyMask & ~KeyMask.DOTS_ALL) != 0) return false;
+  private native static String getVersion ();
+  private native static int getCellCount ();
 
-    byte dots = 0;
-    if ((keyMask & KeyMask.DOT_1) != 0) dots |= BrailleDevice.DOT_1;
-    if ((keyMask & KeyMask.DOT_2) != 0) dots |= BrailleDevice.DOT_2;
-    if ((keyMask & KeyMask.DOT_3) != 0) dots |= BrailleDevice.DOT_3;
-    if ((keyMask & KeyMask.DOT_4) != 0) dots |= BrailleDevice.DOT_4;
-    if ((keyMask & KeyMask.DOT_5) != 0) dots |= BrailleDevice.DOT_5;
-    if ((keyMask & KeyMask.DOT_6) != 0) dots |= BrailleDevice.DOT_6;
-    if ((keyMask & KeyMask.DOT_7) != 0) dots |= BrailleDevice.DOT_7;
-    if ((keyMask & KeyMask.DOT_8) != 0) dots |= BrailleDevice.DOT_8;
-
-    return setCharacter(character, dots);
-  }
+  private native static boolean clearCells ();
+  private native static boolean writeCells (byte[] cells);
 
   public static boolean open () {
     if (brailleCells != null) return true;
@@ -145,6 +186,9 @@ public class BrailleDevice {
     return false;
   }
 
+  private static Timer delayTimer = null;
+  private static boolean delayUpdate = false;
+
   private static boolean write () {
     if (delayTimer != null) {
       delayUpdate = true;
@@ -153,14 +197,14 @@ public class BrailleDevice {
 
     if (open()) {
       {
-        int length = currentText.length();
-        int count = length - currentIndent;
+        int length = lineText.length();
+        int count = length - lineIndent;
         if (count > brailleCells.length) count = brailleCells.length;
         int toIndex = 0;
 
         while (toIndex < count) {
-          int fromIndex = toIndex + currentIndent;
-          char character = (fromIndex < length)? currentText.charAt(fromIndex): ' ';
+          int fromIndex = toIndex + lineIndent;
+          char character = (fromIndex < length)? lineText.charAt(fromIndex): ' ';
           Byte dots = characterMap.get(character);
           brailleCells[toIndex++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
         }
@@ -174,11 +218,15 @@ public class BrailleDevice {
           int end = selectionEnd;
 
           if (isSelected(start) && isSelected(end)) {
-            if ((start -= currentIndent) < 0) start = 0;
-            if ((end -= currentIndent) > brailleCells.length) end = brailleCells.length;
+            int adjustment = lineOffset + lineIndent;
+
+            if ((start -= adjustment) < 0) start = 0;
+            if ((end -= adjustment) > brailleCells.length) end = brailleCells.length;
 
             if (start == end) {
-              brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+              if (end < brailleCells.length) {
+                brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+              }
             } else {
               while (start < end) {
                 brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
@@ -214,21 +262,10 @@ public class BrailleDevice {
     return false;
   }
 
-  private static void reset () {
-    currentText = null;
-    currentIndent = 0;
-    currentDescribe = false;
-
-    if (currentNode != null) {
-      currentNode.recycle();
-      currentNode = null;
-    }
-  }
-
   public static boolean write (String text) {
     synchronized (LOCK) {
-      reset();
-      currentText = text;
+      setText(text);
+      resetNode();
       return write();
     }
   }
@@ -239,7 +276,7 @@ public class BrailleDevice {
     return name.substring(index+1);
   }
 
-  public static boolean write (AccessibilityNodeInfo node, boolean describe) {
+  private static boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
     StringBuilder sb = new StringBuilder();
     String string;
     CharSequence characters;
@@ -296,30 +333,35 @@ public class BrailleDevice {
     }
 
     synchronized (LOCK) {
-      if ((currentNode == null) || !currentNode.equals(node)) {
-        reset();
-        currentNode = AccessibilityNodeInfo.obtain(node);
+      setText(sb.toString(), indent);
+      resetNode();
+      currentNode = AccessibilityNodeInfo.obtain(node);
+      currentDescribe = describe;
 
-        if (ScreenUtilities.isEditable(node)) {
-          if (isSelected(selectionEnd)) {
-            currentIndent = selectionEnd + ApplicationParameters.BRAILLE_SCROLL_KEEP - brailleCells.length;
-            if (currentIndent < 0) currentIndent = 0;
-          }
+      if (ScreenUtilities.isEditable(node)) {
+        if (isSelected(selectionEnd)) {
+          int end = setLine(selectionEnd);
+          adjustRight(end, 1);
+        }
 
-          if (isSelected(selectionStart)) {
-            if (currentIndent > selectionStart) currentIndent = selectionStart;
-          }
+        if (isSelected(selectionStart)) {
+          int start = setLine(selectionStart);
+          adjustLeft(start, 0);
         }
       }
 
-      currentText = sb.toString();
-      currentDescribe = describe;
       return write();
     }
   }
 
+  public static boolean write (AccessibilityNodeInfo node, boolean describe) {
+    return write(node, describe, 0);
+  }
+
   public static boolean write (AccessibilityNodeInfo node) {
-    return write(node, currentDescribe);
+    if (node == null) return false;
+    if (!node.equals(currentNode)) return false;
+    return write(node, currentDescribe, lineIndent);
   }
 
   public static boolean shiftRight (int offset) {
@@ -327,30 +369,29 @@ public class BrailleDevice {
       if (offset < 1) return false;
       if (offset >= brailleCells.length) return false;
 
-      if ((offset += currentIndent) >= currentText.length()) return false;
-      currentIndent = offset;
+      if ((offset += lineIndent) >= lineText.length()) return false;
+      lineIndent = offset;
       return write();
     }
   }
 
   public static boolean panLeft () {
     synchronized (LOCK) {
-      if (currentIndent == 0) return false;
+      if (lineIndent == 0) return false;
 
-      int length = currentText.length();
-      if (currentIndent > length) currentIndent = length;
+      int length = lineText.length();
+      if (lineIndent > length) lineIndent = length;
 
-      if ((currentIndent -= brailleCells.length) < 0) currentIndent = 0;
+      if ((lineIndent -= brailleCells.length) < 0) lineIndent = 0;
       return write();
     }
   }
 
   public static boolean panRight () {
     synchronized (LOCK) {
-      int length = currentText.length();
-      if ((currentIndent + brailleCells.length) >= length) return false;
-
-      currentIndent += brailleCells.length;
+      int newIndent = lineIndent + brailleCells.length;
+      if (newIndent >= lineText.length()) return false;
+      lineIndent = newIndent;
       return write();
     }
   }
@@ -370,5 +411,8 @@ public class BrailleDevice {
       clearCells();
       KeyBindings.load();
     }
+
+    setText("");
+    resetNode();
   }
 }
