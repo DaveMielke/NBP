@@ -16,7 +16,6 @@ public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
   public final static Object LOCK = new Object();
-  private static byte[] brailleCells = null;
 
   public final static byte DOT_1 =       0X01;
   public final static byte DOT_2 =       0X02;
@@ -26,6 +25,12 @@ public class BrailleDevice {
   public final static byte DOT_6 =       0X20;
   public final static byte DOT_7 =       0X40;
   public final static byte DOT_8 = (byte)0X80;
+
+  private static byte[] brailleCells = null;
+
+  public static int getBrailleLength () {
+    return brailleCells.length;
+  }
 
   private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
 
@@ -58,22 +63,27 @@ public class BrailleDevice {
   }
 
   private static String textString;
+
+  public static int getTextLength () {
+    return textString.length();
+  }
+
   private static int lineStart;
   private static String lineText;
   private static int lineIndent;
 
-  private static int findPreviousNewline (int offset) {
+  public static int findPreviousNewline (int offset) {
     return textString.lastIndexOf('\n', offset-1);
   }
 
-  private static int findNextNewline (int offset) {
+  public static int findNextNewline (int offset) {
     return textString.indexOf('\n', offset);
   }
 
-  private static int setLine (int textOffset) {
+  public static int setLine (int textOffset) {
     lineStart = findPreviousNewline(textOffset) + 1;
     int lineLength = findNextNewline(lineStart);
-    if (lineLength == -1) lineLength = textString.length();
+    if (lineLength == -1) lineLength = getTextLength();
     lineText = textString.substring(lineStart, lineLength);
     return textOffset - lineStart;
   }
@@ -102,6 +112,10 @@ public class BrailleDevice {
 
   public static int getBrailleStart () {
     return lineStart + lineIndent;
+  }
+
+  public static void setLineIndent (int indent) {
+    lineIndent = indent;
   }
 
   private static AccessibilityNodeInfo currentNode = null;
@@ -206,7 +220,7 @@ public class BrailleDevice {
   private static Timer delayTimer = null;
   private static boolean delayUpdate = false;
 
-  private static boolean write () {
+  public static boolean write () {
     if (delayTimer != null) {
       delayUpdate = true;
       return true;
@@ -382,155 +396,6 @@ public class BrailleDevice {
     if (node == null) return false;
     if (!node.equals(currentNode)) return false;
     return write(node, currentDescribe, lineIndent);
-  }
-
-  public static boolean scrollRight (int offset) {
-    synchronized (LOCK) {
-      if (offset < 1) return false;
-      if (offset >= brailleCells.length) return false;
-
-      if ((offset += lineIndent) >= lineText.length()) return false;
-      lineIndent = offset;
-      return write();
-    }
-  }
-
-  public static boolean panLeft () {
-    synchronized (LOCK) {
-      if (lineIndent == 0) {
-        if (lineStart == 0) return false;
-        setLine(lineStart-1);
-        lineIndent = lineText.length() + 1;
-      } else {
-        int lineLength = lineText.length();
-        if (lineIndent > lineLength) lineIndent = lineLength;
-      }
-
-      if ((lineIndent -= brailleCells.length) < 0) lineIndent = 0;
-      return write();
-    }
-  }
-
-  public static boolean panRight () {
-    synchronized (LOCK) {
-      int newIndent = lineIndent + brailleCells.length;
-      int lineLength = lineText.length();
-
-      if (newIndent > lineLength) {
-        int offset = lineStart + lineLength + 1;
-        if (offset > textString.length()) return false;
-        setLine(offset);
-        newIndent = 0;
-      }
-
-      lineIndent = newIndent;
-      return write();
-    }
-  }
-
-  private static boolean setCursor (int offset) {
-    InputService service = InputService.getInputService();
-
-    if (service != null) {
-      InputConnection connection = service.getCurrentInputConnection();
-
-      if (connection != null) {
-        if (connection.setSelection(offset, offset)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  public static boolean moveLeft () {
-    synchronized (LOCK) {
-      int start = selectionStart;
-
-      if (isSelected(start)) {
-        if (start > 0) {
-          if (setCursor(start-1)) {
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
-  }
-
-  public static boolean moveRight () {
-    synchronized (LOCK) {
-      int end = selectionEnd;
-
-      if (isSelected(end)) {
-        if (end < textString.length()) {
-          if (end == selectionStart) end += 1;
-          if (setCursor(end)) {
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
-  }
-
-  public static boolean moveUp () {
-    synchronized (LOCK) {
-      int start = selectionStart;
-
-      if (isSelected(start)) {
-        int after = findPreviousNewline(start);
-
-        if (after != -1) {
-          int offset = start - after - 1;
-
-          int before = findPreviousNewline(after);
-          start = (before == -1)? 0: (before + 1);
-
-          int length = after - start;
-          if (offset > length) offset = length;
-          start += offset;
-
-          if (setCursor(start)) {
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
-  }
-
-  public static boolean moveDown () {
-    synchronized (LOCK) {
-      int end = selectionEnd;
-
-      if (isSelected(end)) {
-        if (end != selectionStart) end -= 1;
-        int start = findNextNewline(end);
-
-        if (start != -1) {
-          start += 1;
-          int length = findNextNewline(start);
-          if (length == -1) length = textString.length();
-          length -= start;
-
-          int before = findPreviousNewline(end);
-          if (before != -1) end -= before + 1;
-          if (end > length) end = length;
-          end += start;
-
-          if (setCursor(end)) {
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
   }
 
   private BrailleDevice () {

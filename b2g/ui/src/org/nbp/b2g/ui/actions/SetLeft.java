@@ -7,7 +7,14 @@ public class SetLeft extends InputAction {
   @Override
   public boolean performAction (int cursorKey) {
     synchronized (BrailleDevice.LOCK) {
-      return BrailleDevice.scrollRight(cursorKey);
+      int offset = cursorKey;
+
+      if (offset < 1) return false;
+      if (offset >= BrailleDevice.getBrailleLength()) return false;
+
+      if ((offset += BrailleDevice.getLineIndent()) >= BrailleDevice.getLineLength()) return false;
+      BrailleDevice.setLineIndent(offset);
+      return BrailleDevice.write();
     }
   }
 

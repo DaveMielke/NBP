@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public abstract class ArrowAction extends ScanCodeAction {
+public abstract class ArrowAction extends InputAction {
   protected boolean performArrowEditAction () {
     return false;
   }

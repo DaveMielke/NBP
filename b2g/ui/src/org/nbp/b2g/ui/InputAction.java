@@ -21,9 +21,25 @@ public abstract class InputAction extends ScanCodeAction {
     return ((lineOffset >= 0) && (lineOffset <= BrailleDevice.getLineLength()));
   }
 
+  protected boolean setCursor (InputConnection connection, int offset) {
+    return connection.setSelection(offset, offset);
+  }
+
+  protected boolean setCursor (int offset) {
+    InputConnection connection = getInputConnection();
+
+    if (connection != null) {
+      if (setCursor(connection, offset)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   protected boolean deleteText (InputConnection connection, int start, int end) {
     if (connection.beginBatchEdit()) {
-      if (connection.setSelection(end, end)) {
+      if (setCursor(connection, end)) {
         if (connection.deleteSurroundingText((end - start), 0)) {
           if (connection.endBatchEdit()) {
             return true;
