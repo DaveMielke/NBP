@@ -222,10 +222,10 @@ public class BrailleDevice {
 
       if (currentNode != null) {
         if (ScreenUtilities.isEditable(currentNode)) {
-          if (isSelected()) {
-            int start = selectionStart;
-            int end = selectionEnd;
+          int start = selectionStart;
+          int end = selectionEnd;
 
+          if (isSelected(start) && isSelected(end)) {
             int brailleStart = getBrailleStart();
             int nextLine = lineText.length() - lineIndent + 1;
 
