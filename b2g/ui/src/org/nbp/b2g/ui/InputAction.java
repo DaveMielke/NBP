@@ -4,17 +4,21 @@ import android.view.inputmethod.InputConnection;
 
 public abstract class InputAction extends ScanCodeAction {
   protected int getSelectionOffset (int cursorKey) {
-    return BrailleDevice.getLineStart() + BrailleDevice.getLineIndent() + cursorKey;
+    return BrailleDevice.getBrailleStart() + cursorKey;
   }
 
-  protected boolean isCharacterOffset (int offset) {
-    offset -= BrailleDevice.getLineStart();
-    return ((offset >= 0) && (offset < BrailleDevice.getLineLength()));
+  private int toLineOffset (int selectionOffset) {
+    return selectionOffset - BrailleDevice.getLineStart();
   }
 
-  protected boolean isCursorOffset (int offset) {
-    offset -= BrailleDevice.getLineStart();
-    return ((offset >= 0) && (offset <= BrailleDevice.getLineLength()));
+  protected boolean isCharacterOffset (int selectionOffset) {
+    int lineOffset = toLineOffset(selectionOffset);
+    return ((lineOffset >= 0) && (lineOffset < BrailleDevice.getLineLength()));
+  }
+
+  protected boolean isCursorOffset (int selectionOffset) {
+    int lineOffset = toLineOffset(selectionOffset);
+    return ((lineOffset >= 0) && (lineOffset <= BrailleDevice.getLineLength()));
   }
 
   protected boolean deleteText (InputConnection connection, int start, int end) {

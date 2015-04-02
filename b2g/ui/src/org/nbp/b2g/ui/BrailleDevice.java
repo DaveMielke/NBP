@@ -91,6 +91,10 @@ public class BrailleDevice {
     return lineIndent;
   }
 
+  public static int getBrailleStart () {
+    return lineStart + lineIndent;
+  }
+
   private static AccessibilityNodeInfo currentNode = null;
   private static boolean currentDescribe = false;
 
@@ -222,10 +226,9 @@ public class BrailleDevice {
           int end = selectionEnd;
 
           if (isSelected(start) && isSelected(end)) {
-            int adjustment = lineStart + lineIndent;
-
-            if ((start -= adjustment) < 0) start = 0;
-            if ((end -= adjustment) > brailleCells.length) end = brailleCells.length;
+            int brailleStart = getBrailleStart();
+            if ((start -= brailleStart) < 0) start = 0;
+            if ((end -= brailleStart) > brailleCells.length) end = brailleCells.length;
 
             if (start == end) {
               if (end < brailleCells.length) {
