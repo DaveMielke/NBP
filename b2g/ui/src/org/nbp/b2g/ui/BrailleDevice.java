@@ -62,7 +62,7 @@ public class BrailleDevice {
   private static int lineIndent;
 
   private static int setLine (int offset) {
-    lineOffset = textString.lastIndexOf('\n', offset) + 1;
+    lineOffset = textString.lastIndexOf('\n', offset-1) + 1;
     int length = textString.indexOf('\n', lineOffset);
     if (length == -1) length = textString.length();
     lineText = textString.substring(lineOffset, length);
