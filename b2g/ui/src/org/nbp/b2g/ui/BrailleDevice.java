@@ -227,10 +227,10 @@ public class BrailleDevice {
 
           if (isSelected(start) && isSelected(end)) {
             int brailleStart = getBrailleStart();
-            int lineEnd = lineText.length() - lineIndent;
+            int nextLine = lineText.length() - lineIndent + 1;
 
             if ((start -= brailleStart) < 0) start = 0;
-            if ((end -= brailleStart) > lineEnd) end = lineEnd;
+            if ((end -= brailleStart) > nextLine) end = nextLine;
 
             if (start == end) {
               if (end < brailleCells.length) {
@@ -389,7 +389,7 @@ public class BrailleDevice {
       if (lineIndent == 0) {
         if (lineStart == 0) return false;
         setLine(lineStart-1);
-        lineIndent = lineText.length();
+        lineIndent = lineText.length() + 1;
       } else {
         int lineLength = lineText.length();
         if (lineIndent > lineLength) lineIndent = lineLength;
@@ -405,10 +405,10 @@ public class BrailleDevice {
       int newIndent = lineIndent + brailleCells.length;
       int lineLength = lineText.length();
 
-      if (newIndent >= lineLength) {
-        int nextLine = lineStart + lineLength + 1;
-        if (nextLine > textString.length()) return false;
-        setLine(nextLine);
+      if (newIndent > lineLength) {
+        int offset = lineStart + lineLength + 1;
+        if (offset > textString.length()) return false;
+        setLine(offset);
         newIndent = 0;
       }
 
