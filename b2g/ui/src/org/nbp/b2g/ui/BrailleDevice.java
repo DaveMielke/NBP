@@ -227,8 +227,10 @@ public class BrailleDevice {
 
           if (isSelected(start) && isSelected(end)) {
             int brailleStart = getBrailleStart();
+            int lineEnd = lineText.length() - lineIndent;
+
             if ((start -= brailleStart) < 0) start = 0;
-            if ((end -= brailleStart) > brailleCells.length) end = brailleCells.length;
+            if ((end -= brailleStart) > lineEnd) end = lineEnd;
 
             if (start == end) {
               if (end < brailleCells.length) {
