@@ -384,10 +384,14 @@ public class BrailleDevice {
 
   public static boolean panLeft () {
     synchronized (LOCK) {
-      if (lineIndent == 0) return false;
-
-      int length = lineText.length();
-      if (lineIndent > length) lineIndent = length;
+      if (lineIndent == 0) {
+        if (lineStart == 0) return false;
+        setLine(lineStart-1);
+        lineIndent = lineText.length();
+      } else {
+        int lineLength = lineText.length();
+        if (lineIndent > lineLength) lineIndent = lineLength;
+      }
 
       if ((lineIndent -= brailleCells.length) < 0) lineIndent = 0;
       return write();
@@ -397,7 +401,15 @@ public class BrailleDevice {
   public static boolean panRight () {
     synchronized (LOCK) {
       int newIndent = lineIndent + brailleCells.length;
-      if (newIndent >= lineText.length()) return false;
+      int lineLength = lineText.length();
+
+      if (newIndent >= lineLength) {
+        int nextLine = lineStart + lineLength + 1;
+        if (nextLine > textString.length()) return false;
+        setLine(nextLine);
+        newIndent = 0;
+      }
+
       lineIndent = newIndent;
       return write();
     }
