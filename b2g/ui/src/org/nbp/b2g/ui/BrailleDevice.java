@@ -351,7 +351,7 @@ public class BrailleDevice {
 
       if (ScreenUtilities.isEditable(node)) {
         if (isSelected(selectionEnd)) {
-          int end = setLine(selectionEnd);
+          int end = setLine(selectionEnd-1);
           adjustRight(end, 1);
         }
 
