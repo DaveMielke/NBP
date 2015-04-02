@@ -237,6 +237,8 @@ public class BrailleDevice {
                 brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
               }
             } else {
+              if (end > brailleCells.length) end = brailleCells.length;
+
               while (start < end) {
                 brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
               }
