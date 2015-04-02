@@ -69,6 +69,7 @@ public class ScreenMonitor extends AccessibilityService {
 
         default:
           BrailleDevice.write(node);
+        case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
           break;
       }
 
