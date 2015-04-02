@@ -3,16 +3,18 @@ package org.nbp.b2g.ui;
 import android.view.inputmethod.InputConnection;
 
 public abstract class InputAction extends ScanCodeAction {
-  protected int getOffset (int cursorKey) {
-    return BrailleDevice.getIndent() + cursorKey;
+  protected int getSelectionOffset (int cursorKey) {
+    return BrailleDevice.getLineStart() + BrailleDevice.getLineIndent() + cursorKey;
   }
 
   protected boolean isCharacterOffset (int offset) {
-    return ((offset >= 0) && (offset < BrailleDevice.getLength()));
+    offset -= BrailleDevice.getLineStart();
+    return ((offset >= 0) && (offset < BrailleDevice.getLineLength()));
   }
 
   protected boolean isCursorOffset (int offset) {
-    return ((offset >= 0) && (offset <= BrailleDevice.getLength()));
+    offset -= BrailleDevice.getLineStart();
+    return ((offset >= 0) && (offset <= BrailleDevice.getLineLength()));
   }
 
   protected boolean deleteText (InputConnection connection, int start, int end) {

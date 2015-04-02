@@ -11,7 +11,7 @@ public class RouteCursor extends SetLeft {
         InputConnection connection = getInputConnection();
 
         if (connection != null) {
-          int offset = getOffset(cursorKey);
+          int offset = getSelectionOffset(cursorKey);
 
           if (isCursorOffset(offset)) {
             if (connection.setSelection(offset, offset)) {

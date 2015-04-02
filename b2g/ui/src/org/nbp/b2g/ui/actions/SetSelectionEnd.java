@@ -11,7 +11,7 @@ public class SetSelectionEnd extends SetLeft {
         InputConnection connection = getInputConnection();
 
         if (connection != null) {
-          int end = getOffset(cursorKey);
+          int end = getSelectionOffset(cursorKey);
 
           if (isCharacterOffset(end)) {
             int start = BrailleDevice.getSelectionStart();

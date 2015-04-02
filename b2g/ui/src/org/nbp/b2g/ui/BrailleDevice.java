@@ -57,16 +57,16 @@ public class BrailleDevice {
   }
 
   private static String textString;
-  private static int lineOffset;
+  private static int lineStart;
   private static String lineText;
   private static int lineIndent;
 
-  private static int setLine (int offset) {
-    lineOffset = textString.lastIndexOf('\n', offset-1) + 1;
-    int length = textString.indexOf('\n', lineOffset);
-    if (length == -1) length = textString.length();
-    lineText = textString.substring(lineOffset, length);
-    return offset - lineOffset;
+  private static int setLine (int textOffset) {
+    lineStart = textString.lastIndexOf('\n', textOffset-1) + 1;
+    int lineLength = textString.indexOf('\n', lineStart);
+    if (lineLength == -1) lineLength = textString.length();
+    lineText = textString.substring(lineStart, lineLength);
+    return textOffset - lineStart;
   }
 
   private static void setText (String text, int indent) {
@@ -79,11 +79,15 @@ public class BrailleDevice {
     setText(text, 0);
   }
 
-  public static int getLength () {
+  public static int getLineStart () {
+    return lineStart;
+  }
+
+  public static int getLineLength () {
     return lineText.length();
   }
 
-  public static int getIndent () {
+  public static int getLineIndent () {
     return lineIndent;
   }
 
@@ -218,7 +222,7 @@ public class BrailleDevice {
           int end = selectionEnd;
 
           if (isSelected(start) && isSelected(end)) {
-            int adjustment = lineOffset + lineIndent;
+            int adjustment = lineStart + lineIndent;
 
             if ((start -= adjustment) < 0) start = 0;
             if ((end -= adjustment) > brailleCells.length) end = brailleCells.length;
