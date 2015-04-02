@@ -10,6 +10,7 @@ import android.util.Log;
 import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.inputmethod.InputConnection;
 
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
@@ -61,9 +62,17 @@ public class BrailleDevice {
   private static String lineText;
   private static int lineIndent;
 
+  private static int findPreviousNewline (int offset) {
+    return textString.lastIndexOf('\n', offset-1);
+  }
+
+  private static int findNextNewline (int offset) {
+    return textString.indexOf('\n', offset);
+  }
+
   private static int setLine (int textOffset) {
-    lineStart = textString.lastIndexOf('\n', textOffset-1) + 1;
-    int lineLength = textString.indexOf('\n', lineStart);
+    lineStart = findPreviousNewline(textOffset) + 1;
+    int lineLength = findNextNewline(lineStart);
     if (lineLength == -1) lineLength = textString.length();
     lineText = textString.substring(lineStart, lineLength);
     return textOffset - lineStart;
@@ -375,7 +384,7 @@ public class BrailleDevice {
     return write(node, currentDescribe, lineIndent);
   }
 
-  public static boolean shiftRight (int offset) {
+  public static boolean scrollRight (int offset) {
     synchronized (LOCK) {
       if (offset < 1) return false;
       if (offset >= brailleCells.length) return false;
@@ -417,6 +426,111 @@ public class BrailleDevice {
       lineIndent = newIndent;
       return write();
     }
+  }
+
+  private static boolean setCursor (int offset) {
+    InputService service = InputService.getInputService();
+
+    if (service != null) {
+      InputConnection connection = service.getCurrentInputConnection();
+
+      if (connection != null) {
+        if (connection.setSelection(offset, offset)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public static boolean moveLeft () {
+    synchronized (LOCK) {
+      int start = selectionStart;
+
+      if (isSelected(start)) {
+        if (start > 0) {
+          if (setCursor(start-1)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public static boolean moveRight () {
+    synchronized (LOCK) {
+      int end = selectionEnd;
+
+      if (isSelected(end)) {
+        if (end < textString.length()) {
+          if (end == selectionStart) end += 1;
+          if (setCursor(end)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public static boolean moveUp () {
+    synchronized (LOCK) {
+      int start = selectionStart;
+
+      if (isSelected(start)) {
+        int after = findPreviousNewline(start);
+
+        if (after != -1) {
+          int offset = start - after - 1;
+
+          int before = findPreviousNewline(after);
+          start = (before == -1)? 0: (before + 1);
+
+          int length = after - start;
+          if (offset > length) offset = length;
+          start += offset;
+
+          if (setCursor(start)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public static boolean moveDown () {
+    synchronized (LOCK) {
+      int end = selectionEnd;
+
+      if (isSelected(end)) {
+        if (end != selectionStart) end -= 1;
+        int start = findNextNewline(end);
+
+        if (start != -1) {
+          start += 1;
+          int length = findNextNewline(start);
+          if (length == -1) length = textString.length();
+          length -= start;
+
+          int before = findPreviousNewline(end);
+          if (before != -1) end -= before + 1;
+          if (end > length) end = length;
+          end += start;
+
+          if (setCursor(end)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 
   private BrailleDevice () {

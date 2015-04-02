@@ -1,6 +1,21 @@
 package org.nbp.b2g.ui;
 
 public abstract class ArrowAction extends ScanCodeAction {
+  protected boolean performArrowEditAction () {
+    return false;
+  }
+
+  @Override
+  public boolean performAction () {
+    synchronized (BrailleDevice.LOCK) {
+      if (ScreenUtilities.isEditable()) {
+        return performArrowEditAction();
+      }
+    }
+
+    return super.performAction();
+  }
+
   protected int getArrowKeyCode () {
     return NULL_KEY_CODE;
   }

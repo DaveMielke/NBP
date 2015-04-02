@@ -7,7 +7,7 @@ public class SetLeft extends InputAction {
   @Override
   public boolean performAction (int cursorKey) {
     synchronized (BrailleDevice.LOCK) {
-      return BrailleDevice.shiftRight(cursorKey);
+      return BrailleDevice.scrollRight(cursorKey);
     }
   }
 

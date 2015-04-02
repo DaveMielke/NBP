@@ -6,6 +6,11 @@ import android.view.KeyEvent;
 
 public class ArrowDown extends ArrowAction {
   @Override
+  protected boolean performArrowEditAction () {
+    return BrailleDevice.moveDown();
+  }
+
+  @Override
   protected String getScanCode () {
     return "DOWN";
   }
