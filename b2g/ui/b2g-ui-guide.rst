@@ -15,10 +15,11 @@ direction then it doesn't get found.
 The best way to navigate the screen is to use the Forward and Backward 
 keys because they move sequentially through the screen elements without 
 missing any of them. The Forward key stops at the end of the screen, and 
-the Backward key stops at the beginning of the screen. While these keys, 
-when used on their own, perform more refined navigation within certain 
-contexts (see below), combining them with the Space key can always be 
-used to force this basic functionality.
+the Backward key stops at the beginning of the screen. While these
+(Forward and Backward) keys, when used on their own, perform more
+refined navigation within certain contexts (see below), combining them
+with the Space key can always be used to force an immediate, direct
+move to the start of the next or previous screen element.
 
 If the text of a screen element is longer than the braille display 
 and/or has more than one line then the Forward key pans to the right, 
@@ -103,33 +104,33 @@ the cursor is moved to just after the last selected character, and the
 character selection is cleared.
 
 The Up key moves the cursor to the same column of the previous line. If 
-the previous line is too short then the cursor is also moved to the left 
-as needed. If characters are selected then the cursor is moved to just 
-above the first selected character, and the character selection is 
-cleared.
+the previous line is too short then the cursor is also moved leftward to 
+just after its last character. If characters are selected then the 
+cursor is moved to just above the first selected character, and the 
+character selection is cleared.
 
 The Down key moves the cursor to the same column of the next line. If 
-the next line is too short then the cursor is also moved to the left as 
-needed. If characters are selected then the cursor is moved to just 
-below the last selected character, and the character selection is 
-cleared.
+the next line is too short then the cursor is also moved leftward to 
+just after its last character. If characters are selected then the 
+cursor is moved to just below the last selected character, and the 
+character selection is cleared.
 
-Pressing a cursor key brings the cursor to that character. If 
+Pressing a cursor routing key brings the cursor to that character. If 
 characters were selected then the character selection is cleared.
 
-Pressing a cursor key in combination with the Backward key sets the 
-first selected character, and pressing a cursor key in combination with 
-the Forward key sets the last selected character. If either of these 
-actions is performed while characters are already selected then the 
-start or end of the selection is readjusted as requested. The sequence
-of selected characters may:
+Pressing a cursor routing key in combination with the Backward key sets 
+the first selected character, and pressing a cursor routing key in 
+combination with the Forward key sets the last selected character. If 
+either of these actions is performed while characters are already 
+selected then the start or end of the selection is readjusted as 
+requested. The sequence of selected characters may:
 
 * Span multiple lines.
 * Begin anywhere on its first line.
 * End anywhere on its last line.
 
-Pressing a cursor key in combination with the Space key scrolls the 
-braille display to the right such that the visible portion of the
+Pressing a cursor routing key in combination with the Space key scrolls 
+the braille display to the right such that the visible portion of the 
 current line begins with that character.
 
 Legacy Key Combinations
