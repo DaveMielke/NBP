@@ -36,11 +36,18 @@ Space + dots 123456
 Space+z (dots 1356)
   The Back button.
 
+Space+m (dots 134)
+  The Menu button. Go to the current app's main choices screen.
+
 Space+n (dots 1345)
   Go to the Notifications screen.
 
 Space+r (dots 1235)
   Go to the Recent Apps screen.
+
+Space+t (dots 2345)
+  Display the current date and time in the ISO 8601 international format
+  (YYYY-MM-DD hh:mm:ss). The displayed time is continually updated.
 
 Space + dots 1478
   Go to the Power Off screen.
@@ -295,5 +302,6 @@ Character  Unicode  Braille  Dots     Mnemonic  Meaning
 \}         U+001D   ⠻        12456    GS        Group Separator
 \~         U+001E   ⠘        45       RS        Record Separator
 \_         U+001F   ⠸        456      US        Unit Separator
+\?         U+007F   ⠹        1456     DEL       Delete
 =========  =======  =======  =======  ========  ========================
 

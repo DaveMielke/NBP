@@ -30,6 +30,7 @@ public class InsertCharacter extends ScreenAction {
 
   @Override
   public boolean performAction () {
+    ModifierAction control = ControlModifier.getControlModifier();
     int keyMask = getNavigationKeys();
     Character character = characterMap.get(keyMask);
 
@@ -38,11 +39,17 @@ public class InsertCharacter extends ScreenAction {
 
       if (inputService != null) {
         char value = character;
-        ModifierAction control = ControlModifier.getControlModifier();
 
         if (control != null) {
           if (control.getState()) {
-            value &= 0X1F;
+            if ((value >= 0X40) && (value <= 0X7E)) {
+              value &= 0X1F;
+            } else if (value == 0X3F) {
+              value |= 0X40;
+            } else {
+              ApplicationUtilities.beep();
+              return false;
+            }
           }
         }
 
