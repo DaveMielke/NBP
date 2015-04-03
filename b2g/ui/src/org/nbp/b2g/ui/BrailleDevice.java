@@ -63,6 +63,10 @@ public class BrailleDevice {
 
   private static String textString;
 
+  public static String getText () {
+    return textString;
+  }
+
   public static int getTextLength () {
     return textString.length();
   }

@@ -7,7 +7,15 @@ import android.content.ClipData;
 public class CopyToClipboard extends InputAction {
   @Override
   public boolean performAction () {
-    String text = BrailleDevice.getSelectedText();
+    String text;
+
+    synchronized (BrailleDevice.LOCK) {
+      if (ScreenUtilities.isEditable() && BrailleDevice.isSelected()) {
+        text = BrailleDevice.getSelectedText();
+      } else {
+        text = BrailleDevice.getText();
+      }
+    }
 
     if (text != null) {
       if (copyToClipboard(text)) {

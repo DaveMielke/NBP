@@ -9,15 +9,19 @@ import android.view.inputmethod.InputConnection;
 public class CutToClipboard extends InputAction {
   @Override
   public boolean performAction () {
-    String text = BrailleDevice.getSelectedText();
+    synchronized (BrailleDevice.LOCK) {
+      if (ScreenUtilities.isEditable()) {
+        String text = BrailleDevice.getSelectedText();
 
-    if (text != null) {
-      InputConnection connection = getInputConnection();
+        if (text != null) {
+          InputConnection connection = getInputConnection();
 
-      if (connection != null) {
-        if (copyToClipboard(text)) {
-          if (deleteSelectedText(connection)) {
-            return true;
+          if (connection != null) {
+            if (copyToClipboard(text)) {
+              if (deleteSelectedText(connection)) {
+                return true;
+              }
+            }
           }
         }
       }
