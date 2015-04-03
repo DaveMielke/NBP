@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.inputmethod.InputConnection;
 
-public class RouteCursor extends SetLeft {
+public class BringCursor extends SetLeft {
   @Override
   public boolean performAction (int cursorKey) {
     synchronized (BrailleDevice.LOCK) {
@@ -27,7 +27,7 @@ public class RouteCursor extends SetLeft {
     return super.performAction(cursorKey);
   }
 
-  public RouteCursor () {
+  public BringCursor () {
     super();
   }
 }

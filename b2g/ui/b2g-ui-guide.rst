@@ -59,11 +59,11 @@ used to show which characters have been selected. Note that the cursor
 isn't shown when at least one character has been selected.
 
 Dots 1 through 6 are used, as defined by the
-`North American Braille Computer Code`_, to type characters, and the Space key is used to type a 
-space. Add dot 7 to a letter to make it uppercase. If no characters have 
-been selected then, when a character is typed, it is inserted where the 
-cursor is. If characters have been selected then the next typed 
-character replaces them.
+`North American Braille Computer Code`_,
+to type characters, and the Space key is used to type a space. Add dot
+7 to a letter to make it uppercase. If no characters have been selected
+then, when a character is typed, it is inserted where the cursor is.
+If characters have been selected then the next typed character replaces them.
 
 Dot 8 is the Enter key. If the field supports more than one line, this 
 key ends the current line and starts a new one.
@@ -114,11 +114,16 @@ Pressing a cursor key in combination with the Backward key sets the
 first selected character, and pressing a cursor key in combination with 
 the Forward key sets the last selected character. If either of these 
 actions is performed while characters are already selected then the 
-start or end of the selection is readjusted as requested.
+start or end of the selection is readjusted as requested. The sequence
+of selected characters may:
+
+* Span multiple lines.
+* Begin anywhere on its first line.
+* End anywhere on its last line.
 
 Pressing a cursor key in combination with the Space key scrolls the 
-braille display such that the visible portion of the current line begins 
-with that character.
+braille display to the right such that the visible portion of the
+current line begins with that character.
 
 North American Braille Computer Code
 ------------------------------------
@@ -222,3 +227,4 @@ space      U+0020   ⠀        no dots
 \}         U+007D   ⠻        12456  
 \~         U+007E   ⠘        45     
 =========  =======  =======  ====
+
