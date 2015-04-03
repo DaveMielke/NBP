@@ -29,13 +29,27 @@ reverse direction, and when it reaches the start of the text it then
 moves to the start of the previous element.
 
 Some key combinations perform basic system actions:
-  * Space + dots 123456 is the Home button (which goes to the app launcher).
-  * Space+z (dots 1356) is the Back button.
-  * Space+n (dots 1345) goes to the Notifications screen.
-  * Space+r (dots 1235) goes to the Recent Apps screen.
-  * Space + dots 1478 goes to the Power Off screen.
-  * The Center key (of the D-Pad) taps (clicks) the current screen element.
-  * Space+Center holds (long clicks) the current screen element.
+
+Space + dots 123456
+  The Home button. Go to the app launcher.
+
+Space+z (dots 1356)
+  The Back button.
+
+Space+n (dots 1345)
+  Go to the Notifications screen.
+
+Space+r (dots 1235)
+  Go to the Recent Apps screen.
+
+Space + dots 1478
+  Go to the Power Off screen.
+
+Center (on the D-Pad)
+  Tap (click) the current screen element.
+
+Space+Center
+  Hold (long click) the current screen element.
 
 Editable Text Fields
 --------------------
