@@ -125,12 +125,41 @@ Pressing a cursor key in combination with the Space key scrolls the
 braille display to the right such that the visible portion of the
 current line begins with that character.
 
+Legacy Key Combinations
+-----------------------
+
+Space + dot 1
+  Arrow up. Equivalent to the Up key (on the D-Pad).
+
+Space + dot 4
+  Arrow down. Equivalent to the Down key (on the D-Pad).
+
+Space + dot 3
+  Arrow left. Equivalent to the Left key (on the D-Pad).
+
+Space + dot 6
+  Arrow right. Equivalent to the Right key (on the D-Pad).
+
+Space + dots 4 and 5
+  Enter a ``tab``. A number of apps use this character for moving
+  forward through their control widgets.
+
+Space + dots 1 and 2
+  Enter a ``shift tab``. A number of apps use this character for moving
+  backward through their control widgets.
+
+Space+x (dots 1346)
+  Enter a control character (see `ASCII Control Characters`_). This
+  key combination is a sticky modifier. The next character typed will
+  be translated into its control variant. For example, another way to
+  enter a ``tab`` character is to type Space+x followed by the letter ``i``.
+
 North American Braille Computer Code
 ------------------------------------
 
-=========  =======  =======  ====
+=========  =======  =======  =======
 Character  Unicode  Braille  Dots
----------  -------  -------  ----
+---------  -------  -------  -------
 space      U+0020   ⠀        no dots
 \!         U+0021   ⠮        2346   
 \"         U+0022   ⠐        5      
@@ -226,5 +255,45 @@ space      U+0020   ⠀        no dots
 \|         U+007C   ⠳        1256   
 \}         U+007D   ⠻        12456  
 \~         U+007E   ⠘        45     
-=========  =======  =======  ====
+=========  =======  =======  =======
+
+ASCII Control Characters
+------------------------
+
+=========  =======  =======  =======  ========  ========================
+Character  Unicode  Braille  Dots     Mnemonic  Meaning
+---------  -------  -------  -------  --------  ------------------------
+\`         U+0000   ⠈        4        NUL       Null Character
+\a         U+0001   ⠁        1        SOH       Start of Header
+\b         U+0002   ⠃        12       STX       Start of Text
+\c         U+0003   ⠉        14       ETX       End of Text
+\d         U+0004   ⠙        145      EOT       End of Transmission
+\e         U+0005   ⠑        15       ENQ       Enquiry
+\f         U+0006   ⠋        124      ACK       Positive Acknowledgement
+\g         U+0007   ⠛        1245     BEL       Ring Bell
+\h         U+0008   ⠓        125      BS        Back Space
+\i         U+0009   ⠊        24       HT        Horizontal Tab
+\j         U+000A   ⠚        245      LF        Line Feed
+\k         U+000B   ⠅        13       VT        Vertical Tab
+\l         U+000C   ⠇        123      FF        Form Feed
+\m         U+000D   ⠍        134      CR        Carriage Return
+\n         U+000E   ⠝        1345     SO        Shift Out
+\o         U+000F   ⠕        135      SI        Shift In
+\p         U+0010   ⠏        1234     DLE       Data Link Escape
+\q         U+0011   ⠟        12345    DC1       Direct Control 1 (X-On)
+\r         U+0012   ⠗        1235     DC2       Direct Control 2
+\s         U+0013   ⠎        234      DC3       Direct Control 3 (X-Off)
+\t         U+0014   ⠞        2345     DC4       Direct Control 4
+\u         U+0015   ⠥        136      NAK       Negative Acknowledgement
+\v         U+0016   ⠧        1236     SYN       Synchronize
+\w         U+0017   ⠺        2456     ETB       End of Text Block
+\x         U+0018   ⠭        1346     CAN       Cancel
+\y         U+0019   ⠽        13456    EM        End of Medium
+\z         U+001A   ⠵        1356     SUB       Substitution Character
+\{         U+001B   ⠪        246      ESC       Escape
+\|         U+001C   ⠳        1256     FS        Field Separator
+\}         U+001D   ⠻        12456    GS        Group Separator
+\~         U+001E   ⠘        45       RS        Record Separator
+\_         U+001F   ⠸        456      US        Unit Separator
+=========  =======  =======  =======  ========  ========================
 
