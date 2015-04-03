@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 public class Search extends ScanCodeAction {
   @Override
   protected String getScanCode () {
-    return "COMPOSE";
+    return "SEARCH";
   }
 
   @Override
