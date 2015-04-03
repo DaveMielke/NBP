@@ -29,9 +29,9 @@ of the next element. The Backward key moves through such text in the
 reverse direction, and when it reaches the start of the text it then 
 moves to the start of the previous element.
 
-Some key combinations perform basic system actions:
+These key combinations perform basic system actions:
 
-Space + dots 123456
+Space+Dots123456
   The Home button. Go to the app launcher.
 
 Space+z (dots 1356)
@@ -50,7 +50,7 @@ Space+t (dots 2345)
   Display the current date and time in the ISO 8601 international format
   (YYYY-MM-DD hh:mm:ss). The displayed time is continually updated.
 
-Space + dots 1478
+Space+Dots1478
   Go to the Power Off screen.
 
 Center (on the D-Pad)
@@ -133,26 +133,37 @@ Pressing a cursor routing key in combination with the Space key scrolls
 the braille display to the right such that the visible portion of the 
 current line begins with that character.
 
+These key combinations perform actions on editable text fields:
+
+Dot8+x (dots 13468)
+  Cut the currently selected text to the clipboard.
+
+Dot8+c (dots 148)
+  Copy the currently selected text to the clipboard.
+
+Dot8+v (dots 12368)
+  Paste the clipboard content into the text.
+
 Legacy Key Combinations
 -----------------------
 
-Space + dot 1
+Space+Dot1
   Arrow up. Equivalent to the Up key (on the D-Pad).
 
-Space + dot 4
+Space+Dot4
   Arrow down. Equivalent to the Down key (on the D-Pad).
 
-Space + dot 3
+Space+Dot3
   Arrow left. Equivalent to the Left key (on the D-Pad).
 
-Space + dot 6
+Space+Dot6
   Arrow right. Equivalent to the Right key (on the D-Pad).
 
-Space + dots 4 and 5
+Space+Dots45
   Enter a ``tab``. A number of apps use this character for moving
   forward through their control widgets.
 
-Space + dots 1 and 2
+Space+Dots12
   Enter a ``shift tab``. A number of apps use this character for moving
   backward through their control widgets.
 
