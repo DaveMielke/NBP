@@ -135,6 +135,9 @@ current line begins with that character.
 
 These key combinations perform actions on editable text fields:
 
+Dot8+a (dot 1)
+  Select all of the text.
+
 Dot8+x (dots 13468)
   Cut the currently selected text to the clipboard.
 
