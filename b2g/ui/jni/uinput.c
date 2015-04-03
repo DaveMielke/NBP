@@ -69,7 +69,7 @@ JAVA_METHOD(
     struct uinput_user_dev description;
 
     memset(&description, 0, sizeof(description));
-    snprintf(description.name, sizeof(description.name), "B2G Input Service");
+    snprintf(description.name, sizeof(description.name), "B2G User Interface");
 
     {
       char topology[0X40];
