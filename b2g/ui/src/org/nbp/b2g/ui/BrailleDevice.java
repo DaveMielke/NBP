@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.util.Log;
-import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.InputConnection;
@@ -314,51 +313,15 @@ public class BrailleDevice {
     }
   }
 
-  private static String getClassName (AccessibilityNodeInfo node) {
-    String name = node.getClassName().toString();
-    int index = name.lastIndexOf('.');
-    return name.substring(index+1);
-  }
-
   private static boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
-    StringBuilder sb = new StringBuilder();
-    String string;
-    CharSequence characters;
+    String text;
 
     if (describe) {
-      sb.append(getClassName(node));
-
-      if ((characters = node.getText()) != null) {
-        sb.append(" \"");
-        sb.append(characters);
-        sb.append('"');
-      }
-
-      if ((characters = node.getContentDescription()) != null) {
-        sb.append(" (");
-        sb.append(characters);
-        sb.append(')');
-      }
-
-      sb.append(' ');
-      if (node.isFocusable()) sb.append('i');
-      if (node.isScrollable()) sb.append('s');
-      if (node.isCheckable()) sb.append('c');
-      if (node.isVisibleToUser()) sb.append('V');
-      if (node.isEnabled()) sb.append('E');
-      if (node.isFocused()) sb.append('I');
-      if (node.isAccessibilityFocused()) sb.append('A');
-      if (node.isSelected()) sb.append('X');
-      if (node.isChecked()) sb.append('C');
-
-      {
-        Rect bounds = new Rect();
-        node.getBoundsInScreen(bounds);
-
-        sb.append(' ');
-        sb.append(bounds.toShortString());
-      }
+      text = ScreenUtilities.toString(node);
     } else {
+      StringBuilder sb = new StringBuilder();
+      CharSequence characters;
+
       if (node.isCheckable()) {
         sb.append('[');
         sb.append(node.isChecked()? 'X': ' ');
@@ -371,13 +334,15 @@ public class BrailleDevice {
         sb.append(characters);
       } else {
         sb.append('(');
-        sb.append(getClassName(node));
+        sb.append(ScreenUtilities.getClassName(node));
         sb.append(')');
       }
+
+      text = sb.toString();
     }
 
     synchronized (LOCK) {
-      setText(sb.toString(), indent);
+      setText(text, indent);
       resetNode();
       currentNode = AccessibilityNodeInfo.obtain(node);
       currentDescribe = describe;

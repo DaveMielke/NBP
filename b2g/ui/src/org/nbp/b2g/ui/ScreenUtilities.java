@@ -3,6 +3,7 @@ package org.nbp.b2g.ui;
 import android.util.Log;
 import android.os.Build;
 
+import android.graphics.Rect;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public class ScreenUtilities {
@@ -76,6 +77,52 @@ public class ScreenUtilities {
 
   public static boolean isEditable () {
     return isEditable(getCurrentNode());
+  }
+
+  public static String getClassName (AccessibilityNodeInfo node) {
+    String name = node.getClassName().toString();
+    int index = name.lastIndexOf('.');
+    return name.substring(index+1);
+  }
+
+  public static String toString (AccessibilityNodeInfo node) {
+    StringBuilder sb = new StringBuilder();
+    CharSequence characters;
+
+    sb.append(getClassName(node));
+
+    if ((characters = node.getText()) != null) {
+      sb.append(" \"");
+      sb.append(characters);
+      sb.append('"');
+    }
+
+    if ((characters = node.getContentDescription()) != null) {
+      sb.append(" (");
+      sb.append(characters);
+      sb.append(')');
+    }
+
+    sb.append(' ');
+    if (node.isFocusable()) sb.append('i');
+    if (node.isScrollable()) sb.append('s');
+    if (node.isCheckable()) sb.append('c');
+    if (node.isVisibleToUser()) sb.append('V');
+    if (node.isEnabled()) sb.append('E');
+    if (node.isFocused()) sb.append('I');
+    if (node.isAccessibilityFocused()) sb.append('A');
+    if (node.isSelected()) sb.append('X');
+    if (node.isChecked()) sb.append('C');
+
+    {
+      Rect bounds = new Rect();
+      node.getBoundsInScreen(bounds);
+
+      sb.append(' ');
+      sb.append(bounds.toShortString());
+    }
+
+    return sb.toString();
   }
 
   private ScreenUtilities () {
