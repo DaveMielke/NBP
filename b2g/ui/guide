@@ -1,0 +1,105 @@
+The B2G User Interface
+======================
+
+Basic Screen Navigation
+-----------------------
+
+While the Left, Right, Up, and Down keys (of the D-Pad) can be used to 
+navigate the screen, they don't actually work very well. The reason they 
+don't is that they try to be too accurate. If the next screen element in 
+the requested direction isn't close enough to being exactly in that 
+direction then it doesn't get found.
+
+The best way to navigate the screen is to use the Forward and Backward 
+keys because they move sequentially through the screen elements without 
+missing any of them. The Forward key stops at the end of the screen, and 
+the Backward key stops at the beginning of the screen. While these keys, 
+when used on their own, perform more refined navigation within certain 
+contexts (see below), combining them with the Space key can always be 
+used to force this basic functionality.
+
+If the text of a screen element is longer than the braille display 
+and/or has more than one line then the Forward key pans to the right, 
+wraps to the start of the next line, etc, as needed, so that all of the 
+text is presented. When it reaches the end, it then moves to the start 
+of the next element. The Backward key moves through such text in the 
+reverse direction, and when it reaches the start of the text it then 
+moves to the start of the previous element.
+
+Some key combinations perform basic system actions:
+  * Space + dots 123456 is the Home button (which goes to the app launcher).
+  * Space+z (dots 1356) is the Back button.
+  * Space+n (dots 1345) goes to the Notifications screen.
+  * Space+r (dots 1235) goes to the Recent Apps screen.
+  * Space + dots 1478 goes to the Power Off screen.
+  * The Center key (of the D-Pad) taps (clicks) the current screen element.
+  * Space+Center holds (long clicks) the current screen element.
+
+Editable Text Fields
+--------------------
+
+Dot 8 is used to show where the cursor is, and dots 7 and 8 together are 
+used to show which characters have been selected. Note that the cursor 
+isn't shown when at least one character has been selected.
+
+Dots 1 through 6 are used, as defined by the North American Braille 
+Computer Code, to type characters, and the Space key is used to type a 
+space. Add dot 7 to a letter to make it uppercase. If no characters have 
+been selected then, when a character is typed, it is inserted where the 
+cursor is. If characters have been selected then the next typed 
+character replaces them.
+
+Dot 8 is the Enter key. If the field supports more than one line, this 
+key ends the current line and starts a new one.
+
+Dot 7 is the Backspace key. It deletes the character to the left of the 
+cursor. If characters have been selected then it deletes all of them.
+
+Space+d (dots 145) is the Delete key. It deletes the character where the 
+cursor is. If characters have been selected then it deletes all of them.
+
+The Forward and Backward keys navigate through the text as defined 
+previously, except that they will not leave the field. They must be used 
+in combination with the Space key to force an immediate move to the 
+start of the next or previous field.
+
+The four directional keys (of the D-Pad) move the cursor through the 
+text, one step at a time. They will not leave the field. The braille 
+display is panned, as needed, such that the cursor is always visible.
+
+The Left key moves the cursor to the previous character of the current 
+line. If the cursor is on the first character of the line then it wraps 
+to the last character of the previous line. If characters are selected 
+then the cursor is moved to just before the first selected character, 
+and the character selection is cleared.
+
+The Right key moves the cursor to the next character of the current 
+line. If the cursor is on the last character of the line then it wraps 
+to the first character of the next line. If characters are selected then 
+the cursor is moved to just after the last selected character, and the 
+character selection is cleared.
+
+The Up key moves the cursor to the same column of the previous line. If 
+the previous line is too short then the cursor is also moved to the left 
+as needed. If characters are selected then the cursor is moved to just 
+above the first selected character, and the character selection is 
+cleared.
+
+The Down key moves the cursor to the same column of the next line. If 
+the next line is too short then the cursor is also moved to the left as 
+needed. If characters are selected then the cursor is moved to just 
+below the last selected character, and the character selection is 
+cleared.
+
+Pressing a cursor key brings the cursor to that character. If 
+characters were selected then the character selection is cleared.
+
+Pressing a cursor key in combination with the Backward key sets the 
+first selected character, and pressing a cursor key in combination with 
+the Forward key sets the last selected character. If either of these 
+actions is performed while characters are already selected then the 
+start or end of the selection is readjusted as requested.
+
+Pressing a cursor key in combination with the Space key scrolls the 
+braille display such that the visible portion of the current line begins 
+with that character.
