@@ -13,7 +13,7 @@ public class DeleteNext extends InputAction {
 
         if (connection != null) {
           if (BrailleDevice.isSelected()) {
-            return deleteText(connection);
+            return deleteSelectedText(connection);
           } else {
             return connection.deleteSurroundingText(0, 1);
           }

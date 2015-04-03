@@ -156,6 +156,16 @@ public class BrailleDevice {
     return selectionEnd;
   }
 
+  public static String getSelectedText () {
+    synchronized (LOCK) {
+      if (isSelected()) {
+        return textString.substring(selectionStart, selectionEnd);
+      }
+    }
+
+    return null;
+  }
+
   private static void adjustLeft (int offset, int keep) {
     if (offset < lineIndent) {
       int newIndent = offset - keep;

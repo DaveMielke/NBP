@@ -53,7 +53,7 @@ public class InsertCharacter extends ScreenAction {
           }
         }
 
-        if (inputService.insertCharacter(value)) {
+        if (inputService.insert(value)) {
           return true;
         }
       }

@@ -8,20 +8,29 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 
+import android.content.ClipboardManager;
+
 public class InputService extends InputMethodService {
   private final static String LOG_TAG = InputService.class.getName();
 
   private static volatile InputService inputService = null;
+  private static ClipboardManager clipboard = null;
 
   public static InputService getInputService () {
     if (inputService == null) Log.w(LOG_TAG, "input service not runnig");
     return inputService;
   }
 
+  public static ClipboardManager getClipboard () {
+    if (clipboard == null) Log.w(LOG_TAG, "no clipboard");
+    return clipboard;
+  }
+
   @Override
   public void onCreate () {
     super.onCreate();
     Log.d(LOG_TAG, "input service started");
+    clipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
   }
 
   @Override
@@ -84,19 +93,24 @@ public class InputService extends InputMethodService {
     return null;
   }
 
-  public boolean insertCharacter (char character) {
+  public boolean insert (String string) {
     InputConnection connection = getInputConnection();
 
-    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
-      Log.d(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
-    }
-
     if (connection != null) {
-      if (connection.commitText(Character.toString(character), 1)) {
+      if (connection.commitText(string, 1)) {
         return true;
       }
     }
 
+    return false;
+  }
+
+  public boolean insert (char character) {
+    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
+      Log.d(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
+    }
+
+    if (insert(Character.toString(character))) return true;
     Log.w(LOG_TAG, String.format("character insertion failed: 0X%02X", (int)character));
     return false;
   }
