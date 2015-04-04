@@ -229,6 +229,56 @@ Space+x (dots 1346)
   be translated into its control variant. For example, another way to
   enter a ``tab`` character is to type Space+x followed by the letter ``i``.
 
+Key Combinations for Developers
+-------------------------------
+
+A number of key combinations have been defined for developer use. They 
+are disabled by default. An always enabled, but intentionally difficult 
+to type by accident, key combination toggles their availability. It is::
+
+  Backward + Forward + g (dots 1245)
+
+The developer key combinations are:
+
+Forward+Dots1237
+  Turn off all the log categories.
+
+Forward+Dot1
+  Toggle the logging of key press and release events from the keyboard.
+
+Forward+Dot2
+  Toggle the logging of actions requested by the user.
+
+Forward+Dot3
+  Toggle the logging of internal screen navigation operations.
+
+Forward+Dot7
+  Toggle the logging of Android accessibility events.
+
+Backward+Dots56
+  Describe the current screen element.
+
+Backward+Dot4
+  Go to and describe the parent of the current screen element.
+
+Backward+Dot5
+  Go to and describe the previous sibling of the current screen element.
+
+Backward+Dot6
+  Go to and describe the next sibling of the current screen element.
+
+Backward+Dot8
+  Go to and describe the first child of the current screen element.
+
+Backward+Dots4568
+  Write descriptions of all of the screen elements to the log.
+
+Space+Up
+  Force the current screen element to be scrolled backward.
+
+Space+Down
+  Force the current screen element to be scrolled forward.
+
 North American Braille Computer Code
 ------------------------------------
 
