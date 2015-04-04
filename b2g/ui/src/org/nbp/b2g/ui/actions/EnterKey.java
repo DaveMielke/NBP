@@ -15,6 +15,6 @@ public class EnterKey extends ScanCodeAction {
   }
 
   public EnterKey () {
-    super();
+    super(false);
   }
 }

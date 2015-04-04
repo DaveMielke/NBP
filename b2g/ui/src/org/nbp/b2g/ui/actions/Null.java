@@ -8,6 +8,6 @@ public class Null extends Action {
   }
 
   public Null () {
-    super();
+    super(false);
   }
 }

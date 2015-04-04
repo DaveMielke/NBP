@@ -93,7 +93,7 @@ public abstract class InputAction extends ScanCodeAction {
     return false;
   }
 
-  protected InputAction () {
-    super();
+  protected InputAction (boolean isForDevelopers) {
+    super(isForDevelopers);
   }
 }

@@ -10,6 +10,6 @@ public class RecentApps extends GlobalAction {
   }
 
   public RecentApps () {
-    super();
+    super(false);
   }
 }

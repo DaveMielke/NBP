@@ -16,6 +16,6 @@ public class BackKey extends SystemAction {
   }
 
   public BackKey () {
-    super();
+    super(false);
   }
 }

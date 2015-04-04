@@ -10,6 +10,6 @@ public class Assist extends KeyCodeAction {
   }
 
   public Assist () {
-    super();
+    super(false);
   }
 }

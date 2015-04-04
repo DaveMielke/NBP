@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.inputmethod.InputConnection;
 
-public class SelectAll extends SetLeft {
+public class SelectAll extends InputAction {
   @Override
   public boolean performAction () {
     synchronized (BrailleDevice.LOCK) {
@@ -27,6 +27,6 @@ public class SelectAll extends SetLeft {
   }
 
   public SelectAll () {
-    super();
+    super(false);
   }
 }

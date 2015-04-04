@@ -9,6 +9,6 @@ public class LogUpdates extends Action {
   }
 
   public LogUpdates () {
-    super();
+    super(true);
   }
 }

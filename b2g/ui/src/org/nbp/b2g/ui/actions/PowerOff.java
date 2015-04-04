@@ -31,6 +31,6 @@ public class PowerOff extends GlobalAction {
   }
 
   public PowerOff () {
-    super();
+    super(false);
   }
 }

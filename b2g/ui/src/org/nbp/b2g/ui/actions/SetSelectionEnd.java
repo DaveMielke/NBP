@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.inputmethod.InputConnection;
 
-public class SetSelectionEnd extends SetLeft {
+public class SetSelectionEnd extends InputAction {
   @Override
   public boolean performAction (int cursorKey) {
     synchronized (BrailleDevice.LOCK) {
@@ -28,6 +28,6 @@ public class SetSelectionEnd extends SetLeft {
   }
 
   public SetSelectionEnd () {
-    super();
+    super(false);
   }
 }

@@ -15,6 +15,6 @@ public class MenuKey extends ScanCodeAction {
   }
 
   public MenuKey () {
-    super();
+    super(false);
   }
 }

@@ -72,7 +72,9 @@ public class KeyBindings extends Action {
     }
 
     if (reset) resetKeyBindings();
-    return action;
+    if (!action.isForDevelopers()) return action;
+    if (ApplicationParameters.ENABLE_DEVELOPER_ACTIONS) return action;
+    return null;
   }
 
   public static boolean addKeyBinding (int[] keyMasks, Action action) {
@@ -335,7 +337,7 @@ public class KeyBindings extends Action {
   }
 
   private KeyBindings () {
-    super();
+    super(false);
   }
 
   public static void load () {

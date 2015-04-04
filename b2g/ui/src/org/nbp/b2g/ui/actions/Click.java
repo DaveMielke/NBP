@@ -16,6 +16,6 @@ public class Click extends NodeAction {
   }
 
   public Click () {
-    super();
+    super(false);
   }
 }

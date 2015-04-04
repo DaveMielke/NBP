@@ -32,6 +32,6 @@ public class ArrowRight extends ArrowAction {
   }
 
   public ArrowRight () {
-    super();
+    super(false);
   }
 }

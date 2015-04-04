@@ -44,6 +44,6 @@ public class ArrowDown extends ArrowAction {
   }
 
   public ArrowDown () {
-    super();
+    super(false);
   }
 }

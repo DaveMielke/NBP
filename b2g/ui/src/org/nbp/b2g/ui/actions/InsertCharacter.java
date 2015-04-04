@@ -133,6 +133,6 @@ public class InsertCharacter extends ScreenAction {
   }
 
   public InsertCharacter () {
-    super();
+    super(false);
   }
 }

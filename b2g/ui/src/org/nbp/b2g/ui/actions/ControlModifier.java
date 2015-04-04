@@ -9,7 +9,7 @@ public class ControlModifier extends ModifierAction {
   }
 
   public ControlModifier () {
-    super();
+    super(false);
     controlModifier = this;
   }
 }

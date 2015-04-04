@@ -11,6 +11,6 @@ public class AndroidAccessibilitySettings extends ActivityAction {
   }
 
   public AndroidAccessibilitySettings () {
-    super();
+    super(false);
   }
 }

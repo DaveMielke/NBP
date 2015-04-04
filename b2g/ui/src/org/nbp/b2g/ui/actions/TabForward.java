@@ -15,6 +15,6 @@ public class TabForward extends ScanCodeAction {
   }
 
   public TabForward () {
-    super();
+    super(false);
   }
 }

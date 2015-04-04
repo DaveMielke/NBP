@@ -11,7 +11,7 @@ public abstract class SystemAction extends GlobalAction {
     return getSystemKeyCode();
   }
 
-  protected SystemAction () {
-    super();
+  protected SystemAction (boolean isForDevelopers) {
+    super(isForDevelopers);
   }
 }

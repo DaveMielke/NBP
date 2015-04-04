@@ -24,6 +24,6 @@ public class MoveToParent extends ScreenAction {
   }
 
   public MoveToParent () {
-    super();
+    super(true);
   }
 }

@@ -35,6 +35,6 @@ public class DeletePrevious extends InputAction {
   }
 
   public DeletePrevious () {
-    super();
+    super(false);
   }
 }

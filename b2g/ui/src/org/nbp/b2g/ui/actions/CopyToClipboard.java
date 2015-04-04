@@ -27,6 +27,6 @@ public class CopyToClipboard extends InputAction {
   }
 
   public CopyToClipboard () {
-    super();
+    super(false);
   }
 }

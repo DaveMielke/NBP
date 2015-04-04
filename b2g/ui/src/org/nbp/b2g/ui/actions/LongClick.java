@@ -10,6 +10,6 @@ public class LongClick extends NodeAction {
   }
 
   public LongClick () {
-    super();
+    super(false);
   }
 }

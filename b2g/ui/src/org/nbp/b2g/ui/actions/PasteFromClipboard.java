@@ -33,6 +33,6 @@ public class PasteFromClipboard extends InputAction {
   }
 
   public PasteFromClipboard () {
-    super();
+    super(false);
   }
 }

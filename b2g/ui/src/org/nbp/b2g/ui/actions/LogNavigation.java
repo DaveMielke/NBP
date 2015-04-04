@@ -9,6 +9,6 @@ public class LogNavigation extends Action {
   }
 
   public LogNavigation () {
-    super();
+    super(true);
   }
 }

@@ -31,6 +31,6 @@ public class CutToClipboard extends InputAction {
   }
 
   public CutToClipboard () {
-    super();
+    super(false);
   }
 }

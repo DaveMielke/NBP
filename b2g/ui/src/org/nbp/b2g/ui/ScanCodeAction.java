@@ -53,7 +53,7 @@ public abstract class ScanCodeAction extends KeyCodeAction {
     return super.performAction();
   }
 
-  protected ScanCodeAction () {
-    super();
+  protected ScanCodeAction (boolean isForDevelopers) {
+    super(isForDevelopers);
   }
 }

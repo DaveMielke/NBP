@@ -43,6 +43,6 @@ public class SaveScreen extends ActivityAction {
   }
 
   public SaveScreen () {
-    super();
+    super(true);
   }
 }

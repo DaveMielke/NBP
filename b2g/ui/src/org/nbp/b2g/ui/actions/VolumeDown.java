@@ -15,6 +15,6 @@ public class VolumeDown extends ScanCodeAction {
   }
 
   public VolumeDown () {
-    super();
+    super(false);
   }
 }

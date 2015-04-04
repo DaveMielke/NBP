@@ -11,6 +11,12 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public abstract class Action {
   private final static String LOG_TAG = Action.class.getName();
 
+  private final boolean isDeveloperAction;
+
+  public boolean isForDevelopers () {
+    return isDeveloperAction;
+  }
+
   public boolean performAction (int cursorKey) {
     return false;
   }
@@ -175,6 +181,7 @@ public abstract class Action {
     return false;
   }
 
-  protected Action () {
+  protected Action (boolean isForDevelopers) {
+    isDeveloperAction = isForDevelopers;
   }
 }

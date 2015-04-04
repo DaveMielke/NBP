@@ -11,6 +11,6 @@ public class AndroidWifiSettings extends ActivityAction {
   }
 
   public AndroidWifiSettings () {
-    super();
+    super(false);
   }
 }

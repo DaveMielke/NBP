@@ -72,7 +72,7 @@ public abstract class KeyAction extends Action {
     }
   }
 
-  protected KeyAction () {
-    super();
+  protected KeyAction (boolean isForDevelopers) {
+    super(isForDevelopers);
   }
 }

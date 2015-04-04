@@ -16,6 +16,6 @@ public class HomeKey extends SystemAction {
   }
 
   public HomeKey () {
-    super();
+    super(false);
   }
 }

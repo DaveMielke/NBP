@@ -15,6 +15,6 @@ public class Search extends ScanCodeAction {
   }
 
   public Search () {
-    super();
+    super(false);
   }
 }

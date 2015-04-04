@@ -11,6 +11,6 @@ public class AndroidSettings extends ActivityAction {
   }
 
   public AndroidSettings () {
-    super();
+    super(false);
   }
 }

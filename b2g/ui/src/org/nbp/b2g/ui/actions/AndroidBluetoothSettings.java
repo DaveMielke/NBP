@@ -11,6 +11,6 @@ public class AndroidBluetoothSettings extends ActivityAction {
   }
 
   public AndroidBluetoothSettings () {
-    super();
+    super(false);
   }
 }

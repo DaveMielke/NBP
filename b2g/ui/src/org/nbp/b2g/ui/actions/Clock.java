@@ -11,6 +11,6 @@ public class Clock extends ActivityAction {
   }
 
   public Clock () {
-    super();
+    super(false);
   }
 }

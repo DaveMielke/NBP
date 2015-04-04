@@ -34,6 +34,6 @@ public class MoveToNextSibling extends ScreenAction {
   }
 
   public MoveToNextSibling () {
-    super();
+    super(true);
   }
 }

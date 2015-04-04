@@ -6,6 +6,7 @@ public abstract class ApplicationParameters {
   public static volatile boolean START_KEYBOARD_MONITOR = true;
   public static volatile boolean CHORDS_SEND_SYSTEM_KEYS = true;
   public static volatile boolean CHORDS_SEND_ARROW_KEYS = true;
+  public static volatile boolean ENABLE_DEVELOPER_ACTIONS = true;
 
   public static volatile boolean LOG_KEY_EVENTS = false;
   public static volatile boolean LOG_PERFORMED_ACTIONS = false;

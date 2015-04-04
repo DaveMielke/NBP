@@ -19,6 +19,6 @@ public class SetLeft extends InputAction {
   }
 
   public SetLeft () {
-    super();
+    super(false);
   }
 }

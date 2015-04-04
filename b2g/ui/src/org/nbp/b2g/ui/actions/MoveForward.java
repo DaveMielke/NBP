@@ -67,6 +67,6 @@ public class MoveForward extends MoveAction {
   }
 
   public MoveForward () {
-    super();
+    super(false);
   }
 }

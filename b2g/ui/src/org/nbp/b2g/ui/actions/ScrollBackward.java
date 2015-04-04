@@ -10,6 +10,6 @@ public class ScrollBackward extends NodeAction {
   }
 
   public ScrollBackward () {
-    super();
+    super(true);
   }
 }

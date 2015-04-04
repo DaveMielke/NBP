@@ -154,7 +154,7 @@ public abstract class ScreenAction extends Action {
     return -1;
   }
 
-  protected ScreenAction () {
-    super();
+  protected ScreenAction (boolean isForDevelopers) {
+    super(isForDevelopers);
   }
 }

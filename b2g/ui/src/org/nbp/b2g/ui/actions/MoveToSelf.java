@@ -18,6 +18,6 @@ public class MoveToSelf extends ScreenAction {
   }
 
   public MoveToSelf () {
-    super();
+    super(true);
   }
 }

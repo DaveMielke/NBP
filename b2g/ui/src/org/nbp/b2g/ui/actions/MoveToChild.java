@@ -26,6 +26,6 @@ public class MoveToChild extends ScreenAction {
   }
 
   public MoveToChild () {
-    super();
+    super(true);
   }
 }
