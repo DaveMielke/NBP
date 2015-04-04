@@ -66,12 +66,13 @@ Dot 8 is used to show where the cursor is, and dots 7 and 8 together are
 used to show which characters have been selected. Note that the cursor 
 isn't shown when at least one character has been selected.
 
-Dots 1 through 6 are used, as defined by the
-`North American Braille Computer Code`_,
-to type characters, and the Space key is used to type a space. Add dot
-7 to a letter to make it uppercase. If no characters have been selected
-then, when a character is typed, it is inserted where the cursor is.
-If characters have been selected then the next typed character replaces them.
+Dots 1 through 6 are used, as defined by the `North American Braille 
+Computer Code`_, to type characters, and the Space key is used to type a 
+space. Add dot 7 to a letter to make it uppercase. Add dots 7 and 8 to a 
+character to type its control variant (see `ASCII Control Characters`_). 
+If no characters have been selected then, when a character is typed, it 
+is inserted where the cursor is. If characters have been selected then 
+the next typed character replaces them.
 
 Dot 8 is the Enter key. If the field supports more than one line, this 
 key ends the current line and starts a new one.
