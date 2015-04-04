@@ -92,6 +92,9 @@ Center (on the D-Pad)
 Space+Center
   Hold (long click) the current screen element.
 
+Dot8+c (dots 148)
+  Copy all of the text to the clipboard.
+
 Editable Text Fields
 --------------------
 
@@ -172,10 +175,14 @@ Dot8+x (dots 13468)
   Cut the currently selected text to the clipboard.
 
 Dot8+c (dots 148)
-  Copy the currently selected text to the clipboard.
+  Copy the currently selected text to the clipboard. If no text is
+  selected then all of the text is copied.
 
 Dot8+v (dots 12368)
-  Paste the clipboard content into the text.
+  Paste the clipboard content into the text being edited. If no
+  characters have been selected then the clipboard content is inserted
+  where the cursor is. If characters have been selected then the
+  clipboard content replaces them.
 
 Legacy Key Combinations
 -----------------------
