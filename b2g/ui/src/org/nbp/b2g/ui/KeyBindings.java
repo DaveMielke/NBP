@@ -72,6 +72,7 @@ public class KeyBindings extends Action {
     }
 
     if (reset) resetKeyBindings();
+    if (action == null) return null;
     if (!action.isForDevelopers()) return action;
     if (ApplicationParameters.ENABLE_DEVELOPER_ACTIONS) return action;
     return null;
