@@ -103,15 +103,61 @@ public class ScreenUtilities {
       sb.append(')');
     }
 
+    {
+      AccessibilityNodeInfo parent = node.getParent();
+
+      if (parent != null) {
+        parent.recycle();
+      } else {
+        sb.append(" root");
+      }
+    }
+
+    {
+      int count = node.getChildCount();
+
+      if (count != 0) {
+        sb.append(" cld=");
+        sb.append(count);
+      }
+    }
+
     if (!node.isEnabled()) sb.append(" dsb");
     if (!node.isVisibleToUser()) sb.append(" inv");
+
+    if (isEditable(node)) sb.append(" edt");
+    if (node.isPassword()) sb.append(" pwd");
+
     if (node.isFocusable()) sb.append(" ifb");
     if (node.isFocused()) sb.append(" ifd");
     if (node.isAccessibilityFocused()) sb.append(" afd");
+
     if (node.isScrollable()) sb.append(" scb");
     if (node.isCheckable()) sb.append(" ckb");
     if (node.isChecked()) sb.append(" ckd");
     if (node.isSelected()) sb.append(" sld");
+
+    {
+      int actions = node.getActions();
+
+      if ((actions & AccessibilityNodeInfo.ACTION_FOCUS) != 0) sb.append(" ifs");
+      if ((actions & AccessibilityNodeInfo.ACTION_CLEAR_FOCUS) != 0) sb.append(" ifc");
+
+      if ((actions & AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS) != 0) sb.append(" afs");
+      if ((actions & AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS) != 0) sb.append(" afc");
+
+      if ((actions & AccessibilityNodeInfo.ACTION_SELECT) != 0) sb.append(" sls");
+      if ((actions & AccessibilityNodeInfo.ACTION_CLEAR_SELECTION) != 0) sb.append(" slc");
+
+      if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) sb.append(" scn");
+      if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) sb.append(" scp");
+
+      if ((actions & AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY) != 0) sb.append(" mvn");
+      if ((actions & AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY) != 0) sb.append(" mvp");
+
+      if ((actions & AccessibilityNodeInfo.ACTION_CLICK) != 0) sb.append(" clk");
+      if ((actions & AccessibilityNodeInfo.ACTION_LONG_CLICK) != 0) sb.append(" lng");
+    }
 
     {
       Rect bounds = new Rect();
