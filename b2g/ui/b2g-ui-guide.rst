@@ -95,6 +95,22 @@ Space+Center
 Dot8+c (dots 148)
   Copy all of the text to the clipboard.
 
+Space+s (dots 234)
+  Go to a Settings screen. Another key combination must be pressed
+  in order to specify which Settings screen to go to:
+
+  Space
+    Go to the main Settings screen.
+
+  a (dot 1)
+    Go to the Accessibility Settings screen.
+
+  b (dots 12)
+    Go to the Bluetooth Settings screen.
+
+  w (dots 2456)
+    Go to the Wi-Fi Settings screen.
+
 Editable Text Fields
 --------------------
 
