@@ -1,12 +1,13 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
+import android.content.Context;
+import android.content.Intent;
 
-public class Assist extends KeyCodeAction {
+public class Assist extends ActivityAction {
   @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_ASSIST;
+  protected Intent getIntent (Context context) {
+    return new Intent(Intent.ACTION_ASSIST);
   }
 
   public Assist () {
