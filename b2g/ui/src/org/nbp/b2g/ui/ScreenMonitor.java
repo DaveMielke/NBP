@@ -39,7 +39,7 @@ public class ScreenMonitor extends AccessibilityService {
 
     AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
     if (node != null) {
-      BrailleDevice.write(node);
+      BrailleDevice.write(node, true);
     } else {
       BrailleDevice.write("B2G ready");
     }
@@ -64,11 +64,11 @@ public class ScreenMonitor extends AccessibilityService {
         case AccessibilityEvent.TYPE_VIEW_FOCUSED:
         case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
         case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-          BrailleDevice.write(node, false);
+          BrailleDevice.write(node, true);
           break;
 
         default:
-          BrailleDevice.write(node);
+          BrailleDevice.write(node, false);
         case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
           break;
       }

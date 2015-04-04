@@ -130,7 +130,7 @@ public abstract class ScreenAction extends Action {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node failed");
     }
 
-    BrailleDevice.write(node, force);
+    BrailleDevice.write(node, force, 0);
     return true;
   }
 

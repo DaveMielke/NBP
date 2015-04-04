@@ -317,7 +317,7 @@ public class BrailleDevice {
     }
   }
 
-  private static boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
+  public static boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
     String text;
 
     if (describe) {
@@ -367,14 +367,19 @@ public class BrailleDevice {
     }
   }
 
-  public static boolean write (AccessibilityNodeInfo node, boolean describe) {
-    return write(node, describe, 0);
-  }
-
-  public static boolean write (AccessibilityNodeInfo node) {
+  public static boolean write (AccessibilityNodeInfo node, boolean force) {
     if (node == null) return false;
-    if (!node.equals(currentNode)) return false;
-    return write(node, currentDescribe, lineIndent);
+
+    synchronized (LOCK) {
+      int indent = lineIndent;
+
+      if (!node.equals(currentNode)) {
+        if (!force) return false;
+        indent = 0;
+      }
+
+      return write(node, currentDescribe, indent);
+    }
   }
 
   private BrailleDevice () {
