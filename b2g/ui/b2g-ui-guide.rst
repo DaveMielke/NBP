@@ -149,7 +149,7 @@ cursor is moved to just below the last selected character, and the
 character selection is cleared.
 
 Pressing a cursor routing key brings the cursor to that character. If 
-characters were selected then the character selection is cleared.
+characters are selected then the character selection is cleared.
 
 Pressing a cursor routing key in combination with the Backward key sets 
 the first selected character, and pressing a cursor routing key in 
