@@ -3,6 +3,39 @@ The B2G User Interface
 
 .. contents::
 
+Braille Indicators
+------------------
+
+The special character rendered as dots 3678 is used to represent a 
+character that doesn't have its own defined representation.
+
+When on an editable text field: Dot 8 is used to show where the cursor 
+is, and dots 78 are used to show which characters have been selected. 
+Note that the cursor isn't shown when at least one character has been 
+selected.
+
+A **checkbox** is rendered as either a space (meaning unchecked) or an 
+``X`` (meaning checked) enclosed within [square] brackets, followed by 
+its label. For example::
+
+  [ ] This box is not checked.
+  [X] This box is checked.
+
+A **switch** is rendered as a **checkbox**. The box is checked if the 
+switch is in the **on** position, and unchecked if the switch is in the 
+**off** position. For example::
+
+  [ ] Off
+  [X] On
+
+If meaningful text for a significant screen element cannot be found then 
+it is rendered as its widget type enclosed within (parentheses). For 
+example::
+
+  (FrameLayout)
+  (ImageView)
+  (ListView)
+
 Basic Screen Navigation
 -----------------------
 
@@ -61,10 +94,6 @@ Space+Center
 
 Editable Text Fields
 --------------------
-
-Dot 8 is used to show where the cursor is, and dots 7 and 8 together are 
-used to show which characters have been selected. Note that the cursor 
-isn't shown when at least one character has been selected.
 
 Dots 1 through 6 are used, as defined by the `North American Braille 
 Computer Code`_, to type characters, and the Space key is used to type a 
