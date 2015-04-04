@@ -103,16 +103,15 @@ public class ScreenUtilities {
       sb.append(')');
     }
 
-    sb.append(' ');
-    if (node.isFocusable()) sb.append('i');
-    if (node.isScrollable()) sb.append('s');
-    if (node.isCheckable()) sb.append('c');
-    if (node.isVisibleToUser()) sb.append('V');
-    if (node.isEnabled()) sb.append('E');
-    if (node.isFocused()) sb.append('I');
-    if (node.isAccessibilityFocused()) sb.append('A');
-    if (node.isSelected()) sb.append('X');
-    if (node.isChecked()) sb.append('C');
+    if (!node.isEnabled()) sb.append(" dsb");
+    if (!node.isVisibleToUser()) sb.append(" inv");
+    if (node.isFocusable()) sb.append(" ifb");
+    if (node.isFocused()) sb.append(" ifd");
+    if (node.isAccessibilityFocused()) sb.append(" afd");
+    if (node.isScrollable()) sb.append(" scb");
+    if (node.isCheckable()) sb.append(" ckb");
+    if (node.isChecked()) sb.append(" ckd");
+    if (node.isSelected()) sb.append(" sld");
 
     {
       Rect bounds = new Rect();

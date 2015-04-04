@@ -61,51 +61,7 @@ public abstract class Action {
   }
 
   protected void log (AccessibilityNodeInfo node, String reason) {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append(reason);
-    sb.append(':');
-
-    {
-      CharSequence text = node.getText();
-
-      if (text != null) {
-        sb.append(" \"");
-        sb.append(text);
-        sb.append('"');
-      }
-    }
-
-    {
-      CharSequence description = node.getContentDescription();
-
-      if (description != null) {
-        sb.append(" (");
-        sb.append(description);
-        sb.append(')');
-      }
-    }
-
-    sb.append(' ');
-    sb.append(node.getClassName());
-
-    {
-      Rect bounds = new Rect();
-      node.getBoundsInScreen(bounds);
-
-      sb.append(' ');
-      sb.append(bounds.toShortString());
-    }
-
-    if (node.isFocusable()) sb.append(" ifb");
-    if (node.isFocused()) sb.append(" ifd");
-    if (node.isAccessibilityFocused()) sb.append(" afd");
-    if (node.isCheckable()) sb.append(" ckb");
-    if (node.isChecked()) sb.append(" ckd");
-    if (node.isSelected()) sb.append(" sld");
-    if (node.isScrollable()) sb.append(" scb");
-
-    log(sb.toString());
+    log((reason + ": " + ScreenUtilities.toString(node)));
   }
 
   protected AccessibilityNodeInfo getRootNode () {
