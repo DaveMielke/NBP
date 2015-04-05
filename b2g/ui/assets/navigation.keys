@@ -1,0 +1,58 @@
+12345678 Null
+s12345678 Null
+
+s1478 PowerOff
+s123456 HomeKey
+
+s1 ArrowUp
+s4 ArrowDown
+s3 ArrowLeft
+s6 ArrowRight
+
+c Click
+u ArrowUp
+d ArrowDown
+l ArrowLeft
+r ArrowRight
+
+sc LongClick
+sl BackKey
+sr RecentApps
+
+f MoveRight
+b MoveLeft
+
+sf MoveForward
+sb MoveBackward
+
+7 DeletePrevious
+8 EnterKey
+
+s12 TabBackward
+s45 TabForward
+
+s145 DeleteNext
+s124 Search
+s134 MenuKey
+s1345 Notifications
+s1235 RecentApps
+s2345 Clock
+s1346 ControlModifier
+s1356 BackKey
+s1456 Assist
+
+s234-s AndroidSettings
+s234-1 AndroidAccessibilitySettings
+s234-12 AndroidBluetoothSettings
+s234-2456 AndroidWifiSettings
+
+x BringCursor
+sx SetLeft
+bx SetSelectionStart
+fx SetSelectionEnd
+
+81 SelectAll
+81346 CutToClipboard
+814 CopyToClipboard
+81236 PasteFromClipboard
+

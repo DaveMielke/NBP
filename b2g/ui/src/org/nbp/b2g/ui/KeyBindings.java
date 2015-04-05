@@ -331,9 +331,14 @@ public class KeyBindings extends Action {
 
   private static void addKeyBindings () {
     Log.d(LOG_TAG, "begin key binding definitions");
+
     addKeyBinding(KeyMask.VOLUME_DOWN, "VolumeDown");
     addKeyBinding(KeyMask.VOLUME_UP, "VolumeUp");
-    addKeyBindings("keys.conf");
+
+    addKeyBindings("nabcc.keys");
+    addKeyBindings("navigation.keys");
+    addKeyBindings("developer.keys");
+
     Log.d(LOG_TAG, "end key binding definitions");
   }
 

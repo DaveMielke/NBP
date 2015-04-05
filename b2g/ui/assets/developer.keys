@@ -1,0 +1,19 @@
+# make this one very hard to type by accident
+fb1245 DeveloperActions
+
+su ScrollBackward
+sd ScrollForward
+
+b4 MoveToParent
+b5 MoveToPreviousSibling
+b6 MoveToNextSibling
+b8 MoveToChild
+b56 MoveToSelf
+b4568 SaveScreen
+
+f1 LogKeys
+f2 LogActions
+f3 LogNavigation
+f7 LogUpdates
+f1237 LogNone
+

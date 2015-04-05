@@ -1,0 +1,80 @@
+# This file must be encoded in UTF-8.
+
+# The following keys may be specified:
+#    1  Dot 1
+#    2  Dot 2
+#    3  Dot 3
+#    4  Dot 4
+#    5  Dot 5
+#    6  Dot 6
+#    7  Dot 7
+#    8  Dot 8
+#    b  Backwarc DPAD Center
+#    c  DPAD Center
+#    d  DPAD Down
+#    f  Forward
+#    l  DPAD Left
+#    r  DPAD Rightd
+#    s  Space
+#    u  DPAD Up
+#    x  any cursor key
+ 
+# The following user actions may be specified:
+#    AndroidAccessibilitySettings
+#    AndroidBluetoothSettings
+#    AndroidSettings
+#    AndroidWifiSettings
+#    ArrowDown
+#    ArrowLeft
+#    ArrowRight
+#    ArrowUp
+#    Assist
+#    BackKey
+#    BringCursor
+#    Click
+#    Clock
+#    ControlModifier
+#    CopyToClipboard
+#    CutToClipboard
+#    DeleteNext
+#    DeletePrevious
+#    EnterKey
+#    HomeKey
+#    InsertCharacter
+#    LongClick
+#    MenuKey
+#    MoveBackward
+#    MoveForward
+#    MoveLeft
+#    MoveRight
+#    Notifications
+#    Null
+#    PasteFromClipboard
+#    PowerOff
+#    RecentApps
+#    Search
+#    SelectAll
+#    SetLeft
+#    SetSelectionEnd
+#    SetSelectionStart
+#    TabBackward
+#    TabForward
+#    VolumeDown
+#    VolumeUp
+
+# The following developer actions may be specified:
+#    DeveloperActions
+#    LogActions
+#    LogKeys
+#    LogNavigation
+#    LogNone
+#    LogUpdates
+#    MoveToChild
+#    MoveToNextSibling
+#    MoveToParent
+#    MoveToPreviousSibling
+#    MoveToSelf
+#    SaveScreen
+#    ScrollBackward
+#    ScrollForward
+
