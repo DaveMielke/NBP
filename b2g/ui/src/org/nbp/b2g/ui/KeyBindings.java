@@ -20,7 +20,7 @@ import java.io.BufferedReader;
 
 import java.util.regex.Pattern;
 
-public class KeyBindings extends Action {
+public class KeyBindings {
   private final static String LOG_TAG = KeyBindings.class.getName();
 
   public final static char DELIMITER = '-';
@@ -43,22 +43,29 @@ public class KeyBindings extends Action {
   public final static char CURSOR    = 'x';
 
   private final static Map<String, Action> actionObjects = new HashMap<String, Action>();
-  private final static Map<Integer, Action> rootKeyBindings = new HashMap<Integer, Action>();
-  private static Map<Integer, Action> currentKeyBindings = rootKeyBindings;
-  private Map<Integer, Action> keyBindings = new HashMap<Integer, Action>();
+  private final static KeyBindingMap rootKeyBindings = new KeyBindingMap();
+  private static KeyBindingMap currentKeyBindings = rootKeyBindings;
 
-  @Override
-  public boolean performAction () {
-    currentKeyBindings = keyBindings;
-    return true;
+  private static class IntermediateAction extends Action {
+    public final KeyBindingMap keyBindings = new KeyBindingMap();
+
+    @Override
+    public boolean performAction () {
+      currentKeyBindings = keyBindings;
+      return true;
+    }
+
+    public IntermediateAction () {
+      super(false);
+    }
   }
 
   public static void resetKeyBindings () {
     currentKeyBindings = rootKeyBindings;
   }
 
-  private static boolean isKeyBindingsAction (Action action) {
-    return action instanceof KeyBindings;
+  private static boolean isIntermediateAction (Action action) {
+    return action instanceof IntermediateAction;
   }
 
   public static Action getAction (int keyMask) {
@@ -66,7 +73,7 @@ public class KeyBindings extends Action {
     boolean reset = true;
 
     if (action != null) {
-      if (isKeyBindingsAction(action)) {
+      if (isIntermediateAction(action)) {
         reset = false;
       }
     }
@@ -79,22 +86,22 @@ public class KeyBindings extends Action {
   }
 
   public static boolean addKeyBinding (int[] keyMasks, Action action) {
-    Map<Integer, Action> bindings = rootKeyBindings;
+    KeyBindingMap bindings = rootKeyBindings;
     int last = keyMasks.length - 1;
 
     for (int index=0; index<last; index+=1) {
       int keyMask = keyMasks[index];
-      Action a = bindings.get(keyMask);
+      Action intermediate = bindings.get(keyMask);
 
-      if (a == null) {
-        a = new KeyBindings();
-        bindings.put(keyMask, a);
-      } else if (!isKeyBindingsAction(a)) {
+      if (intermediate == null) {
+        intermediate = new IntermediateAction();
+        bindings.put(keyMask, intermediate);
+      } else if (!isIntermediateAction(intermediate)) {
         Log.w(LOG_TAG, "key combination already defined");
         return false;
       }
 
-      bindings = ((KeyBindings)a).keyBindings;
+      bindings = ((IntermediateAction)intermediate).keyBindings;
     }
 
     {
@@ -343,7 +350,7 @@ public class KeyBindings extends Action {
   }
 
   private KeyBindings () {
-    super(false);
+    super();
   }
 
   public static void load () {
