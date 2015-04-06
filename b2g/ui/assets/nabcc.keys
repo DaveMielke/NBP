@@ -1,4 +1,36 @@
 s InsertCharacter space
+2346 InsertCharacter !
+5 InsertCharacter "
+3456 InsertCharacter #
+1246 InsertCharacter $
+146 InsertCharacter %
+12346 InsertCharacter &
+3 InsertCharacter '
+12356 InsertCharacter (
+23456 InsertCharacter )
+16 InsertCharacter *
+346 InsertCharacter +
+6 InsertCharacter ,
+36 InsertCharacter -
+46 InsertCharacter .
+34 InsertCharacter /
+
+356 InsertCharacter 0
+2 InsertCharacter 1
+23 InsertCharacter 2
+25 InsertCharacter 3
+256 InsertCharacter 4
+26 InsertCharacter 5
+235 InsertCharacter 6
+2356 InsertCharacter 7
+236 InsertCharacter 8
+35 InsertCharacter 9
+156 InsertCharacter :
+56 InsertCharacter ;
+126 InsertCharacter <
+123456 InsertCharacter =
+345 InsertCharacter >
+1456 InsertCharacter ?
 
 1 InsertCharacter a
 12 InsertCharacter b
@@ -10,7 +42,6 @@ s InsertCharacter space
 125 InsertCharacter h
 24 InsertCharacter i
 245 InsertCharacter j
-
 13 InsertCharacter k
 123 InsertCharacter l
 134 InsertCharacter m
@@ -21,54 +52,12 @@ s InsertCharacter space
 1235 InsertCharacter r
 234 InsertCharacter s
 2345 InsertCharacter t
-
 136 InsertCharacter u
 1236 InsertCharacter v
+2456 InsertCharacter w
 1346 InsertCharacter x
 13456 InsertCharacter y
 1356 InsertCharacter z
-12346 InsertCharacter &
-123456 InsertCharacter =
-12356 InsertCharacter (
-2346 InsertCharacter !
-23456 InsertCharacter )
-
-16 InsertCharacter *
-126 InsertCharacter <
-146 InsertCharacter %
-1456 InsertCharacter ?
-156 InsertCharacter :
-1246 InsertCharacter $
-12456 InsertCharacter }
-1256 InsertCharacter |
-246 InsertCharacter {
-2456 InsertCharacter w
-
-2 InsertCharacter 1
-23 InsertCharacter 2
-25 InsertCharacter 3
-256 InsertCharacter 4
-26 InsertCharacter 5
-235 InsertCharacter 6
-2356 InsertCharacter 7
-236 InsertCharacter 8
-35 InsertCharacter 9
-356 InsertCharacter 0
-
-34 InsertCharacter /
-345 InsertCharacter >
-3456 InsertCharacter #
-346 InsertCharacter +
-3 InsertCharacter '
-36 InsertCharacter -
-
-4 InsertCharacter `
-45 InsertCharacter ~
-456 InsertCharacter _
-5 InsertCharacter "
-46 InsertCharacter .
-56 InsertCharacter ;
-6 InsertCharacter ,
 
 17 InsertCharacter A
 127 InsertCharacter B
@@ -80,7 +69,6 @@ s InsertCharacter space
 1257 InsertCharacter H
 247 InsertCharacter I
 2457 InsertCharacter J
-
 137 InsertCharacter K
 1237 InsertCharacter L
 1347 InsertCharacter M
@@ -91,18 +79,24 @@ s InsertCharacter space
 12357 InsertCharacter R
 2347 InsertCharacter S
 23457 InsertCharacter T
-
 1367 InsertCharacter U
 12367 InsertCharacter V
+24567 InsertCharacter W
 13467 InsertCharacter X
 134567 InsertCharacter Y
 13567 InsertCharacter Z
 
-124567 InsertCharacter ]
-12567 InsertCharacter \
-2467 InsertCharacter [
-24567 InsertCharacter W
+4 InsertCharacter `
+246 InsertCharacter {
+1256 InsertCharacter |
+12456 InsertCharacter }
+45 InsertCharacter ~
+456 InsertCharacter _
+
 47 InsertCharacter @
+2467 InsertCharacter [
+12567 InsertCharacter \
+124567 InsertCharacter ]
 457 InsertCharacter ^
 
 478 InsertCharacter NUL
