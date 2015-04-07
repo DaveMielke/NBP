@@ -11,7 +11,7 @@ public class DeleteNext extends InputAction {
     HostEndpoint endpoint = getHostEndpoint();
 
     synchronized (endpoint) {
-      if (ScreenUtilities.isEditable()) {
+      if (endpoint.isEditable()) {
         InputConnection connection = getInputConnection();
 
         if (connection != null) {

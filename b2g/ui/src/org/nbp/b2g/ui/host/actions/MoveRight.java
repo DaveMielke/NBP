@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 
 public class MoveRight extends MoveForward {
   private boolean panRight (Endpoint endpoint) {
-    int indent = endpoint.getLineIndent() + BrailleDevice.getBrailleLength();
+    int indent = endpoint.getLineIndent() + BrailleDevice.size();
     int length = endpoint.getLineLength();
 
     if (indent > length) {
@@ -25,7 +25,7 @@ public class MoveRight extends MoveForward {
 
     synchronized (endpoint) {
       if (panRight(endpoint)) return true;
-      if (ScreenUtilities.isEditable()) return false;
+      if (endpoint.isEditable()) return false;
     }
 
     return super.performAction();

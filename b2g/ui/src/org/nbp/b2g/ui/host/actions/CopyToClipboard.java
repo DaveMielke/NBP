@@ -14,7 +14,7 @@ public class CopyToClipboard extends InputAction {
       HostEndpoint endpoint = getHostEndpoint();
 
       synchronized (endpoint) {
-        if (ScreenUtilities.isEditable() && endpoint.isSelected()) {
+        if (endpoint.isEditable() && endpoint.isSelected()) {
           text = endpoint.getSelectedText();
         } else {
           text = endpoint.getText();

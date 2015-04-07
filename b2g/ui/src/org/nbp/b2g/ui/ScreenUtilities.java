@@ -75,10 +75,6 @@ public class ScreenUtilities {
     return canAssign(android.widget.EditText.class, node);
   }
 
-  public static boolean isEditable () {
-    return isEditable(getCurrentNode());
-  }
-
   public static String getClassName (AccessibilityNodeInfo node) {
     String name = node.getClassName().toString();
     int index = name.lastIndexOf('.');

@@ -17,7 +17,7 @@ public class MoveLeft extends MoveBackward {
       if (indent > length) indent = length;
     }
 
-    if ((indent -= BrailleDevice.getBrailleLength()) < 0) indent = 0;
+    if ((indent -= BrailleDevice.size()) < 0) indent = 0;
     endpoint.setLineIndent(indent);
     return endpoint.write();
   }
@@ -28,7 +28,7 @@ public class MoveLeft extends MoveBackward {
 
     synchronized (endpoint) {
       if (panLeft(endpoint)) return true;
-      if (ScreenUtilities.isEditable()) return false;
+      if (endpoint.isEditable()) return false;
     }
 
     return super.performAction();

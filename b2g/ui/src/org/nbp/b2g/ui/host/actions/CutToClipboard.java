@@ -13,7 +13,7 @@ public class CutToClipboard extends InputAction {
     HostEndpoint endpoint = getHostEndpoint();
 
     synchronized (endpoint) {
-      if (ScreenUtilities.isEditable()) {
+      if (endpoint.isEditable()) {
         String text = endpoint.getSelectedText();
 
         if (text != null) {

@@ -5,12 +5,8 @@ import java.util.TimerTask;
 
 import android.util.Log;
 
-import android.view.inputmethod.InputConnection;
-
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
-
-  public final static Object LOCK = new Object();
 
   public final static byte DOT_1 =       0X01;
   public final static byte DOT_2 =       0X02;
@@ -21,11 +17,8 @@ public class BrailleDevice {
   public final static byte DOT_7 =       0X40;
   public final static byte DOT_8 = (byte)0X80;
 
+  private final static Object LOCK = new Object();
   private static byte[] brailleCells = null;
-
-  public static int getBrailleLength () {
-    return brailleCells.length;
-  }
 
   private native static boolean openDevice ();
   private native static void closeDevice ();
@@ -37,97 +30,122 @@ public class BrailleDevice {
   private native static boolean writeCells (byte[] cells);
 
   public static boolean open () {
-    if (brailleCells != null) return true;
+    synchronized (LOCK) {
+      if (brailleCells != null) return true;
 
-    if (openDevice()) {
-      int cellCount = getCellCount();
+      if (openDevice()) {
+        int cellCount = getCellCount();
 
-      if (cellCount > 0) {
-        brailleCells = new byte[cellCount];
-        return true;
+        if (cellCount > 0) {
+          brailleCells = new byte[cellCount];
+          Log.d(LOG_TAG, "braille cell count: " + brailleCells.length);
+
+          String version = getVersion();
+          Log.d(LOG_TAG, "braille device version: " + version);
+
+          clearCells();
+          return true;
+        }
+
+        closeDevice();
       }
-
-      closeDevice();
     }
 
     return false;
+  }
+
+  public static void close () {
+    synchronized (LOCK) {
+      if (brailleCells != null) {
+        brailleCells = null;
+        closeDevice();
+      }
+    }
+  }
+
+  public static int size () {
+    synchronized (LOCK) {
+      if (open()) return brailleCells.length;
+      return 0;
+    }
   }
 
   private static Timer delayTimer = null;
   private static boolean delayUpdate = false;
 
   public static boolean write (final Endpoint endpoint) {
-    if (delayTimer != null) {
-      delayUpdate = true;
-      return true;
-    }
-
-    if (open()) {
-      String text = endpoint.getLineText();
-      int length = text.length();
-      int indent = endpoint.getLineIndent();
-
-      {
-        int count = length - indent;
-        if (count > brailleCells.length) count = brailleCells.length;
-
-        int toIndex = 0;
-
-        while (toIndex < count) {
-          int fromIndex = toIndex + indent;
-          char character = (fromIndex < length)? text.charAt(fromIndex): ' ';
-          Byte dots = endpoint.getCharacters().getDots(character);
-          brailleCells[toIndex++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
-        }
-
-        while (toIndex < brailleCells.length) brailleCells[toIndex++] = 0;
+    synchronized (LOCK) {
+      if (delayTimer != null) {
+        delayUpdate = true;
+        return true;
       }
 
-      if (endpoint.isEditable()) {
-        int start = endpoint.getSelectionStart();
-        int end = endpoint.getSelectionEnd();
+      if (open()) {
+        String text = endpoint.getLineText();
+        int length = text.length();
+        int indent = endpoint.getLineIndent();
 
-        if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
-          int brailleStart = endpoint.getBrailleStart();
-          int nextLine = length - indent + 1;
+        {
+          int toIndex = 0;
+          int count = length - indent;
+          if (count > brailleCells.length) count = brailleCells.length;
 
-          if ((start -= brailleStart) < 0) start = 0;
-          if ((end -= brailleStart) > nextLine) end = nextLine;
-
-          if (start == end) {
-            if (end < brailleCells.length) {
-              brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
-            }
-          } else {
-            if (end > brailleCells.length) end = brailleCells.length;
-
-            while (start < end) {
-              brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
-            }
+          while (toIndex < count) {
+            int fromIndex = toIndex + indent;
+            char character = (fromIndex < length)? text.charAt(fromIndex): ' ';
+            Byte dots = endpoint.getCharacters().getDots(character);
+            brailleCells[toIndex++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
           }
+
+          while (toIndex < brailleCells.length) brailleCells[toIndex++] = 0;
         }
-      }
 
-      if (writeCells(brailleCells)) {
-        TimerTask task = new TimerTask() {
-          @Override
-          public void run () {
-            synchronized (LOCK) {
-              delayTimer.cancel();
-              delayTimer = null;
+        if (endpoint.isEditable()) {
+          int start = endpoint.getSelectionStart();
+          int end = endpoint.getSelectionEnd();
 
-              if (delayUpdate) {
-                delayUpdate = false;
-                write(endpoint);
+          if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
+            int brailleStart = endpoint.getBrailleStart();
+            int nextLine = length - indent + 1;
+
+            if ((start -= brailleStart) < 0) start = 0;
+            if ((end -= brailleStart) > nextLine) end = nextLine;
+
+            if (start == end) {
+              if (end < brailleCells.length) {
+                brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+              }
+            } else {
+              if (end > brailleCells.length) end = brailleCells.length;
+
+              while (start < end) {
+                brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
               }
             }
           }
-        };
+        }
 
-        delayUpdate = false;
-        delayTimer = new Timer();
-        delayTimer.schedule(task, ApplicationParameters.BRAILLE_UPDATE_DELAY);
-        return true;
+        if (writeCells(brailleCells)) {
+          TimerTask task = new TimerTask() {
+            @Override
+            public void run () {
+              synchronized (LOCK) {
+                delayTimer.cancel();
+                delayTimer = null;
+
+                if (delayUpdate) {
+                  delayUpdate = false;
+                  write(endpoint);
+                }
+              }
+            }
+          };
+
+          delayUpdate = false;
+          delayTimer = new Timer();
+          delayTimer.schedule(task, ApplicationParameters.BRAILLE_UPDATE_DELAY);
+          return true;
+        }
       }
     }
 
@@ -139,14 +157,5 @@ public class BrailleDevice {
 
   static {
     System.loadLibrary("UserInterface");
-
-    if (open()) {
-      Log.d(LOG_TAG, "braille cell count: " + brailleCells.length);
-
-      String version = getVersion();
-      Log.d(LOG_TAG, "braille device version: " + version);
-
-      clearCells();
-    }
   }
 }

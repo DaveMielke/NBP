@@ -10,7 +10,7 @@ public class SelectAll extends InputAction {
     HostEndpoint endpoint = getHostEndpoint();
 
     synchronized (endpoint) {
-      if (ScreenUtilities.isEditable()) {
+      if (endpoint.isEditable()) {
         int start = 0;
         int end = endpoint.getTextLength();
 
