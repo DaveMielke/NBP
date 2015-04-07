@@ -395,7 +395,6 @@ public class BrailleDevice {
       Log.d(LOG_TAG, "braille device version: " + version);
 
       clearCells();
-      KeyBindings.load();
     }
 
     setText("");

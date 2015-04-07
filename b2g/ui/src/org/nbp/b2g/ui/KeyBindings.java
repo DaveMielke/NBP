@@ -42,11 +42,11 @@ public class KeyBindings {
   public final static char RIGHT     = 'r';
   public final static char CURSOR    = 'x';
 
-  private final static Map<String, Action> actionObjects = new HashMap<String, Action>();
-  private final static KeyBindingMap rootKeyBindings = new KeyBindingMap();
-  private static KeyBindingMap currentKeyBindings = rootKeyBindings;
+  private final Map<String, Action> actionObjects = new HashMap<String, Action>();
+  private final KeyBindingMap rootKeyBindings = new KeyBindingMap();
+  private KeyBindingMap currentKeyBindings = rootKeyBindings;
 
-  private static class IntermediateAction extends Action {
+  private class IntermediateAction extends Action {
     public final KeyBindingMap keyBindings = new KeyBindingMap();
 
     @Override
@@ -60,7 +60,7 @@ public class KeyBindings {
     }
   }
 
-  public static void resetKeyBindings () {
+  public void resetKeyBindings () {
     currentKeyBindings = rootKeyBindings;
   }
 
@@ -68,7 +68,7 @@ public class KeyBindings {
     return action instanceof IntermediateAction;
   }
 
-  public static Action getAction (int keyMask) {
+  public Action getAction (int keyMask) {
     Action action = currentKeyBindings.get(keyMask);
     boolean reset = true;
 
@@ -85,7 +85,7 @@ public class KeyBindings {
     return null;
   }
 
-  public static boolean addKeyBinding (int[] keyMasks, Action action) {
+  public boolean addKeyBinding (int[] keyMasks, Action action) {
     KeyBindingMap bindings = rootKeyBindings;
     int last = keyMasks.length - 1;
 
@@ -118,7 +118,7 @@ public class KeyBindings {
     return true;
   }
 
-  private static boolean addKeyBinding (int[] keyMasks, String actionName) {
+  private boolean addKeyBinding (int[] keyMasks, String actionName) {
     Action action = getAction(actionName);
 
     if (action != null) {
@@ -130,12 +130,12 @@ public class KeyBindings {
     return false;
   }
 
-  private static boolean addKeyBinding (int keyMask, String actionName) {
+  private boolean addKeyBinding (int keyMask, String actionName) {
     int[] keyMasks = new int[] {keyMask};
     return addKeyBinding(keyMasks, actionName);
   }
 
-  private static Action newAction (String actionName) {
+  private Action newAction (String actionName) {
     String className = KeyBindings.class.getPackage().getName() + ".actions." + actionName;
 
     try {
@@ -159,7 +159,7 @@ public class KeyBindings {
     return null;
   }
 
-  private static Action getAction (String actionName) {
+  private Action getAction (String actionName) {
     Action action = actionObjects.get(actionName);
     if (action != null) return action;
 
@@ -239,7 +239,7 @@ public class KeyBindings {
     return addKeyMask(masks, mask);
   }
 
-  private static void addKeyBindings (Reader reader) {
+  private void addKeyBindings (Reader reader) {
     Pattern pattern = Pattern.compile("\\s+");
     BufferedReader buf;
 
@@ -302,7 +302,7 @@ public class KeyBindings {
     }
   }
 
-  private static void addKeyBindings (InputStream stream) {
+  private void addKeyBindings (InputStream stream) {
     String encoding = "UTF8";
     Reader reader;
 
@@ -314,7 +314,7 @@ public class KeyBindings {
     }
   }
 
-  private static void addKeyBindings (String asset) {
+  private void addKeyBindings (String asset) {
     Context context = ApplicationHooks.getContext();
 
     if (context != null) {
@@ -336,27 +336,18 @@ public class KeyBindings {
     }
   }
 
-  private static void addKeyBindings () {
+  public KeyBindings (String[] keysFileNames) {
     Log.d(LOG_TAG, "begin key binding definitions");
 
     addKeyBinding(KeyMask.VOLUME_DOWN, "VolumeDown");
     addKeyBinding(KeyMask.VOLUME_UP, "VolumeUp");
 
-    addKeyBindings("nabcc.keys");
-    addKeyBindings("navigation.keys");
-    addKeyBindings("developer.keys");
+    if (keysFileNames != null) {
+      for (String name : keysFileNames) {
+        addKeyBindings((name + ".keys"));
+      }
+    }
 
     Log.d(LOG_TAG, "end key binding definitions");
-  }
-
-  private KeyBindings () {
-    super();
-  }
-
-  public static void load () {
-  }
-
-  static {
-    addKeyBindings();
   }
 }
