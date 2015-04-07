@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
-public class InsertCharacterAction extends ScreenAction {
+public class InsertCharacterAction extends Action {
   private final static String LOG_TAG = InsertCharacterAction.class.getName();
 
   private Characters getCharacters () {
