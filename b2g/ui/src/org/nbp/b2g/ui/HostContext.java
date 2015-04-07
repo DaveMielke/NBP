@@ -5,7 +5,12 @@ public class HostContext extends Context {
     "nabcc", "navigation", "developer"
   };
 
+  @Override
+  protected String[] getKeysFileNames () {
+    return keysFileNames;
+  }
+
   public HostContext () {
-    super(keysFileNames);
+    super();
   }
 }

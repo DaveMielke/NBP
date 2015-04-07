@@ -336,7 +336,7 @@ public class KeyBindings {
     }
   }
 
-  public KeyBindings (String[] keysFileNames) {
+  public void addKeyBindings (String[] keysFileNames) {
     Log.d(LOG_TAG, "begin key binding definitions");
 
     addKeyBinding(KeyMask.VOLUME_DOWN, "VolumeDown");
@@ -349,5 +349,8 @@ public class KeyBindings {
     }
 
     Log.d(LOG_TAG, "end key binding definitions");
+  }
+
+  public KeyBindings () {
   }
 }

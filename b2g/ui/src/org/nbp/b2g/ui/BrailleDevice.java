@@ -1,8 +1,5 @@
 package org.nbp.b2g.ui;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,36 +26,6 @@ public class BrailleDevice {
 
   public static int getBrailleLength () {
     return brailleCells.length;
-  }
-
-  private static Map<Character, Byte> characterMap = new HashMap<Character, Byte>();
-
-  public static void unsetCharacters () {
-    characterMap.clear();
-  }
-
-  public static boolean setCharacter (char character, byte dots) {
-    if (characterMap.get(character) != null) return false;
-    characterMap.put(character, dots);
-    return true;
-  }
-
-  public static boolean setCharacter (char character, int keyMask) {
-    if (keyMask == 0) return false;
-    if (keyMask == KeyMask.SPACE) keyMask = 0;
-    if ((keyMask & ~KeyMask.DOTS_ALL) != 0) return false;
-
-    byte dots = 0;
-    if ((keyMask & KeyMask.DOT_1) != 0) dots |= BrailleDevice.DOT_1;
-    if ((keyMask & KeyMask.DOT_2) != 0) dots |= BrailleDevice.DOT_2;
-    if ((keyMask & KeyMask.DOT_3) != 0) dots |= BrailleDevice.DOT_3;
-    if ((keyMask & KeyMask.DOT_4) != 0) dots |= BrailleDevice.DOT_4;
-    if ((keyMask & KeyMask.DOT_5) != 0) dots |= BrailleDevice.DOT_5;
-    if ((keyMask & KeyMask.DOT_6) != 0) dots |= BrailleDevice.DOT_6;
-    if ((keyMask & KeyMask.DOT_7) != 0) dots |= BrailleDevice.DOT_7;
-    if ((keyMask & KeyMask.DOT_8) != 0) dots |= BrailleDevice.DOT_8;
-
-    return setCharacter(character, dots);
   }
 
   private static String textString;
@@ -249,7 +216,7 @@ public class BrailleDevice {
         while (toIndex < count) {
           int fromIndex = toIndex + lineIndent;
           char character = (fromIndex < length)? lineText.charAt(fromIndex): ' ';
-          Byte dots = characterMap.get(character);
+          Byte dots = Context.getCurrentContext().getCharacters().getDots(character);
           brailleCells[toIndex++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
         }
 
