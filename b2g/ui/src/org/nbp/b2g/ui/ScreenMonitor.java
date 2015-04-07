@@ -26,8 +26,11 @@ public class ScreenMonitor extends AccessibilityService {
   @Override
   public void onCreate () {
     super.onCreate();
+
     Log.d(LOG_TAG, "screen monitor started");
     screenMonitor = this;
+
+    Clipboard.setClipboard(this);
     KeyboardMonitor.startKeyboardMonitor();
   }
 

@@ -3,10 +3,6 @@ import org.nbp.b2g.ui.*;
 
 import android.view.inputmethod.InputConnection;
 
-import android.content.Context;
-import android.content.ClipboardManager;
-import android.content.ClipData;
-
 public abstract class InputAction extends ScanCodeAction {
   protected int getSelectionOffset (int cursorKey) {
     return getEndpoint().getBrailleStart() + cursorKey;
@@ -59,40 +55,6 @@ public abstract class InputAction extends ScanCodeAction {
   protected boolean deleteSelectedText (InputConnection connection) {
     Endpoint endpoint = getEndpoint();
     return deleteText(connection, endpoint.getSelectionStart(), endpoint.getSelectionEnd());
-  }
-
-  protected ClipboardManager getClipboard () {
-    return InputService.getClipboard();
-  }
-
-  protected ClipData newTextClip (String text) {
-    return ClipData.newPlainText("B2G User Interface", text);
-  }
-
-  protected String getClipText (ClipData clip) {
-    int count = clip.getItemCount();
-
-    for (int index=0; index<count; index+=1) {
-      ClipData.Item item = clip.getItemAt(index);
-
-      if (item != null) {
-        CharSequence text = item.getText();
-        if (text != null) return text.toString();
-      }
-    }
-
-    return null;
-  }
-
-  protected boolean copyToClipboard (String text) {
-    ClipboardManager clipboard = getClipboard();
-
-    if (clipboard != null) {
-      clipboard.setPrimaryClip(newTextClip(text));
-      return true;
-    }
-
-    return false;
   }
 
   protected InputAction (Endpoint endpoint, boolean isForDevelopers) {

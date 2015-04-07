@@ -2,9 +2,6 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-import android.content.ClipboardManager;
-import android.content.ClipData;
-
 public class PasteFromClipboard extends InputAction {
   @Override
   public boolean performAction () {
@@ -12,22 +9,14 @@ public class PasteFromClipboard extends InputAction {
 
     synchronized (endpoint) {
       if (endpoint.isEditable()) {
-        ClipboardManager clipboard = getClipboard();
+        String text = Clipboard.getText();
 
-        if (clipboard != null) {
-          ClipData clip = clipboard.getPrimaryClip();
+        if (text != null) {
+          InputService service = getInputService();
 
-          if (clip != null) {
-            String text = getClipText(clip);
-
-            if (text != null) {
-              InputService service = getInputService();
-
-              if (service != null) {
-                if (service.insert(text)) {
-                  return true;
-                }
-              }
+          if (service != null) {
+            if (service.insert(text)) {
+              return true;
             }
           }
         }

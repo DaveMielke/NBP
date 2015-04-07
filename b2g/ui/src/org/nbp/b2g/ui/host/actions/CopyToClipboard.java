@@ -2,9 +2,6 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-import android.content.ClipboardManager;
-import android.content.ClipData;
-
 public class CopyToClipboard extends InputAction {
   @Override
   public boolean performAction () {
@@ -23,7 +20,7 @@ public class CopyToClipboard extends InputAction {
     }
 
     if (text != null) {
-      if (copyToClipboard(text)) {
+      if (Clipboard.putText(text)) {
         return true;
       }
     }

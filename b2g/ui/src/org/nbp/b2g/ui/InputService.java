@@ -8,13 +8,10 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 
-import android.content.ClipboardManager;
-
 public class InputService extends InputMethodService {
   private final static String LOG_TAG = InputService.class.getName();
 
   private static volatile InputService inputService = null;
-  private static ClipboardManager clipboard = null;
 
   public static InputService getInputService () {
     if (inputService == null) Log.w(LOG_TAG, "input service not runnig");
@@ -25,16 +22,11 @@ public class InputService extends InputMethodService {
     return Endpoint.getHostEndpoint();
   }
 
-  public static ClipboardManager getClipboard () {
-    if (clipboard == null) Log.w(LOG_TAG, "no clipboard");
-    return clipboard;
-  }
-
   @Override
   public void onCreate () {
     super.onCreate();
     Log.d(LOG_TAG, "input service started");
-    clipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+    Clipboard.setClipboard(this);
   }
 
   @Override

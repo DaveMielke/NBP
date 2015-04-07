@@ -2,9 +2,6 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-import android.content.ClipboardManager;
-import android.content.ClipData;
-
 import android.view.inputmethod.InputConnection;
 
 public class CutToClipboard extends InputAction {
@@ -20,7 +17,7 @@ public class CutToClipboard extends InputAction {
           InputConnection connection = getInputConnection();
 
           if (connection != null) {
-            if (copyToClipboard(text)) {
+            if (Clipboard.putText(text)) {
               if (deleteSelectedText(connection)) {
                 return true;
               }
