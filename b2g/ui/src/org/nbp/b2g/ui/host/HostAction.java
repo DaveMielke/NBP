@@ -11,6 +11,10 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public abstract class HostAction extends Action {
   private final static String LOG_TAG = HostAction.class.getName();
 
+  protected final HostEndpoint getHostEndpoint () {
+    return (HostEndpoint)getEndpoint();
+  }
+
   protected final InputService getInputService () {
     return InputService.getInputService();
   }

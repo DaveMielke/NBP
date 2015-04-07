@@ -137,7 +137,7 @@ public class KeyBindings {
   }
 
   private Action newAction (String actionName) {
-    String className = KeyBindings.class.getPackage().getName() + ".host.actions." + actionName;
+    String className = endpoint.getClass().getPackage().getName() + ".actions." + actionName;
 
     try {
       Class classObject = Class.forName(className);
