@@ -3,29 +3,31 @@ import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
 public class MoveLeft extends MoveBackward {
-  private boolean panLeft () {
-    int indent = BrailleDevice.getLineIndent();
+  private boolean panLeft (Endpoint endpoint) {
+    int indent = endpoint.getLineIndent();
 
     if (indent == 0) {
-      int start = BrailleDevice.getLineStart();
+      int start = endpoint.getLineStart();
       if (start == 0) return false;
 
-      BrailleDevice.setLine(start-1);
-      indent = BrailleDevice.getLineLength() + 1;
+      endpoint.setLine(start-1);
+      indent = endpoint.getLineLength() + 1;
     } else {
-      int length = BrailleDevice.getLineLength();
+      int length = endpoint.getLineLength();
       if (indent > length) indent = length;
     }
 
     if ((indent -= BrailleDevice.getBrailleLength()) < 0) indent = 0;
-    BrailleDevice.setLineIndent(indent);
-    return BrailleDevice.write();
+    endpoint.setLineIndent(indent);
+    return endpoint.write();
   }
 
   @Override
   public boolean performAction () {
-    synchronized (BrailleDevice.LOCK) {
-      if (panLeft()) return true;
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
+      if (panLeft(endpoint)) return true;
       if (ScreenUtilities.isEditable()) return false;
     }
 

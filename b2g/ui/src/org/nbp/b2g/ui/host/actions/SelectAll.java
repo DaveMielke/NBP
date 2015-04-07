@@ -7,10 +7,12 @@ import android.view.inputmethod.InputConnection;
 public class SelectAll extends InputAction {
   @Override
   public boolean performAction () {
-    synchronized (BrailleDevice.LOCK) {
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
       if (ScreenUtilities.isEditable()) {
         int start = 0;
-        int end = BrailleDevice.getTextLength();
+        int end = endpoint.getTextLength();
 
         if (end > start) {
           InputConnection connection = getInputConnection();

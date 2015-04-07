@@ -7,20 +7,20 @@ import android.view.KeyEvent;
 
 public class ArrowDown extends ArrowAction {
   @Override
-  protected boolean performArrowEditAction () {
-    int end = BrailleDevice.getSelectionEnd();
+  protected boolean performArrowEditAction (Endpoint endpoint) {
+    int end = endpoint.getSelectionEnd();
 
-    if (BrailleDevice.isSelected(end)) {
-      if (end != BrailleDevice.getSelectionStart()) end -= 1;
-      int start = BrailleDevice.findNextNewline(end);
+    if (endpoint.isSelected(end)) {
+      if (end != endpoint.getSelectionStart()) end -= 1;
+      int start = endpoint.findNextNewline(end);
 
       if (start != -1) {
         start += 1;
-        int length = BrailleDevice.findNextNewline(start);
-        if (length == -1) length = BrailleDevice.getTextLength();
+        int length = endpoint.findNextNewline(start);
+        if (length == -1) length = endpoint.getTextLength();
         length -= start;
 
-        int before = BrailleDevice.findPreviousNewline(end);
+        int before = endpoint.findPreviousNewline(end);
         if (before != -1) end -= before + 1;
         if (end > length) end = length;
         end += start;

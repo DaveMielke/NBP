@@ -7,7 +7,9 @@ import android.view.inputmethod.InputConnection;
 public class SetSelectionEnd extends InputAction {
   @Override
   public boolean performAction (int cursorKey) {
-    synchronized (BrailleDevice.LOCK) {
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
       if (ScreenUtilities.isEditable()) {
         InputConnection connection = getInputConnection();
 
@@ -15,8 +17,8 @@ public class SetSelectionEnd extends InputAction {
           int end = getSelectionOffset(cursorKey);
 
           if (isCharacterOffset(end)) {
-            int start = BrailleDevice.getSelectionStart();
-            if (!BrailleDevice.isSelected(start) || (start > end)) start = end;
+            int start = endpoint.getSelectionStart();
+            if (!endpoint.isSelected(start) || (start > end)) start = end;
             if (connection.setSelection(start, end+1)) return true;
           }
         }

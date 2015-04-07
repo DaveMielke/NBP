@@ -7,16 +7,16 @@ import android.view.KeyEvent;
 
 public class ArrowUp extends ArrowAction {
   @Override
-  protected boolean performArrowEditAction () {
-    int start = BrailleDevice.getSelectionStart();
+  protected boolean performArrowEditAction (Endpoint endpoint) {
+    int start = endpoint.getSelectionStart();
 
-    if (BrailleDevice.isSelected(start)) {
-      int after = BrailleDevice.findPreviousNewline(start);
+    if (endpoint.isSelected(start)) {
+      int after = endpoint.findPreviousNewline(start);
 
       if (after != -1) {
         int offset = start - after - 1;
 
-        int before = BrailleDevice.findPreviousNewline(after);
+        int before = endpoint.findPreviousNewline(after);
         start = (before == -1)? 0: (before + 1);
 
         int length = after - start;

@@ -10,9 +10,11 @@ import android.view.inputmethod.InputConnection;
 public class CutToClipboard extends InputAction {
   @Override
   public boolean performAction () {
-    synchronized (BrailleDevice.LOCK) {
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
       if (ScreenUtilities.isEditable()) {
-        String text = BrailleDevice.getSelectedText();
+        String text = endpoint.getSelectedText();
 
         if (text != null) {
           InputConnection connection = getInputConnection();

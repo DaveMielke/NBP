@@ -10,11 +10,15 @@ public class CopyToClipboard extends InputAction {
   public boolean performAction () {
     String text;
 
-    synchronized (BrailleDevice.LOCK) {
-      if (ScreenUtilities.isEditable() && BrailleDevice.isSelected()) {
-        text = BrailleDevice.getSelectedText();
-      } else {
-        text = BrailleDevice.getText();
+    {
+      HostEndpoint endpoint = getHostEndpoint();
+
+      synchronized (endpoint) {
+        if (ScreenUtilities.isEditable() && endpoint.isSelected()) {
+          text = endpoint.getSelectedText();
+        } else {
+          text = endpoint.getText();
+        }
       }
     }
 

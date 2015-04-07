@@ -7,7 +7,9 @@ import android.view.inputmethod.InputConnection;
 public class BringCursor extends SetLeft {
   @Override
   public boolean performAction (int cursorKey) {
-    synchronized (BrailleDevice.LOCK) {
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
       if (ScreenUtilities.isEditable()) {
         InputConnection connection = getInputConnection();
 

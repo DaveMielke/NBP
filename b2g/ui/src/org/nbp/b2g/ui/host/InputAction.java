@@ -9,21 +9,21 @@ import android.content.ClipData;
 
 public abstract class InputAction extends ScanCodeAction {
   protected int getSelectionOffset (int cursorKey) {
-    return BrailleDevice.getBrailleStart() + cursorKey;
+    return getEndpoint().getBrailleStart() + cursorKey;
   }
 
   private int toLineOffset (int selectionOffset) {
-    return selectionOffset - BrailleDevice.getLineStart();
+    return selectionOffset - getEndpoint().getLineStart();
   }
 
   protected boolean isCharacterOffset (int selectionOffset) {
     int lineOffset = toLineOffset(selectionOffset);
-    return ((lineOffset >= 0) && (lineOffset < BrailleDevice.getLineLength()));
+    return ((lineOffset >= 0) && (lineOffset < getEndpoint().getLineLength()));
   }
 
   protected boolean isCursorOffset (int selectionOffset) {
     int lineOffset = toLineOffset(selectionOffset);
-    return ((lineOffset >= 0) && (lineOffset <= BrailleDevice.getLineLength()));
+    return ((lineOffset >= 0) && (lineOffset <= getEndpoint().getLineLength()));
   }
 
   protected boolean setCursor (InputConnection connection, int offset) {
@@ -57,7 +57,8 @@ public abstract class InputAction extends ScanCodeAction {
   }
 
   protected boolean deleteSelectedText (InputConnection connection) {
-    return deleteText(connection, BrailleDevice.getSelectionStart(), BrailleDevice.getSelectionEnd());
+    Endpoint endpoint = getEndpoint();
+    return deleteText(connection, endpoint.getSelectionStart(), endpoint.getSelectionEnd());
   }
 
   protected ClipboardManager getClipboard () {

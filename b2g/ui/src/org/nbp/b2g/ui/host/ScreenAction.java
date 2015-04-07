@@ -131,7 +131,7 @@ public abstract class ScreenAction extends HostAction {
       if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node failed");
     }
 
-    BrailleDevice.write(node, force, 0);
+    getHostEndpoint().write(node, force, 0);
     return true;
   }
 

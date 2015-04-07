@@ -8,12 +8,14 @@ import android.view.KeyEvent;
 public class DeletePrevious extends InputAction {
   @Override
   public boolean performAction () {
-    synchronized (BrailleDevice.LOCK) {
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
       if (ScreenUtilities.isEditable()) {
         InputConnection connection = getInputConnection();
 
         if (connection != null) {
-          if (BrailleDevice.isSelected()) {
+          if (endpoint.isSelected()) {
             return deleteSelectedText(connection);
           } else {
             return connection.deleteSurroundingText(1, 0);

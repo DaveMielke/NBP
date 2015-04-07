@@ -2,15 +2,17 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
 public abstract class ArrowAction extends InputAction {
-  protected boolean performArrowEditAction () {
+  protected boolean performArrowEditAction (Endpoint endpoint) {
     return false;
   }
 
   @Override
   public boolean performAction () {
-    synchronized (BrailleDevice.LOCK) {
-      if (ScreenUtilities.isEditable()) {
-        return performArrowEditAction();
+    Endpoint endpoint = getEndpoint();
+
+    synchronized (endpoint) {
+      if (endpoint.isEditable()) {
+        return performArrowEditAction(endpoint);
       }
     }
 

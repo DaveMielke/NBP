@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.host.HostEndpoint;
 
 import android.util.Log;
 
@@ -16,6 +17,10 @@ public class ScreenMonitor extends AccessibilityService {
   public static ScreenMonitor getScreenMonitor () {
     if (screenMonitor == null) Log.w(LOG_TAG, "screen monitor not runnig");
     return screenMonitor;
+  }
+
+  private static HostEndpoint getHostEndpoint () {
+    return Endpoint.getHostEndpoint();
   }
 
   @Override
@@ -39,9 +44,9 @@ public class ScreenMonitor extends AccessibilityService {
 
     AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
     if (node != null) {
-      BrailleDevice.write(node, true);
+      getHostEndpoint().write(node, true);
     } else {
-      BrailleDevice.write("B2G ready");
+      getHostEndpoint().write("B2G ready");
     }
   }
 
@@ -64,11 +69,11 @@ public class ScreenMonitor extends AccessibilityService {
         case AccessibilityEvent.TYPE_VIEW_FOCUSED:
         case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
         case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-          BrailleDevice.write(node, true);
+          getHostEndpoint().write(node, true);
           break;
 
         default:
-          BrailleDevice.write(node, false);
+          getHostEndpoint().write(node, false);
         case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
           break;
       }

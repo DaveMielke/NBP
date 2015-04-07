@@ -3,26 +3,28 @@ import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
 public class MoveRight extends MoveForward {
-  private boolean panRight () {
-    int indent = BrailleDevice.getLineIndent() + BrailleDevice.getBrailleLength();
-    int length = BrailleDevice.getLineLength();
+  private boolean panRight (Endpoint endpoint) {
+    int indent = endpoint.getLineIndent() + BrailleDevice.getBrailleLength();
+    int length = endpoint.getLineLength();
 
     if (indent > length) {
-      int offset = BrailleDevice.getLineStart() + length + 1;
-      if (offset > BrailleDevice.getTextLength()) return false;
+      int offset = endpoint.getLineStart() + length + 1;
+      if (offset > endpoint.getTextLength()) return false;
 
-      BrailleDevice.setLine(offset);
+      endpoint.setLine(offset);
       indent = 0;
     }
 
-    BrailleDevice.setLineIndent(indent);
-    return BrailleDevice.write();
+    endpoint.setLineIndent(indent);
+    return endpoint.write();
   }
 
   @Override
   public boolean performAction () {
-    synchronized (BrailleDevice.LOCK) {
-      if (panRight()) return true;
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
+      if (panRight(endpoint)) return true;
       if (ScreenUtilities.isEditable()) return false;
     }
 

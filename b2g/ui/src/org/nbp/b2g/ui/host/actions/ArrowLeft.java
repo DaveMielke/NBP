@@ -7,10 +7,10 @@ import android.view.KeyEvent;
 
 public class ArrowLeft extends ArrowAction {
   @Override
-  protected boolean performArrowEditAction () {
-    int start = BrailleDevice.getSelectionStart();
+  protected boolean performArrowEditAction (Endpoint endpoint) {
+    int start = endpoint.getSelectionStart();
 
-    if (BrailleDevice.isSelected(start)) {
+    if (endpoint.isSelected(start)) {
       if (start > 0) {
         if (setCursor(start-1)) {
           return true;

@@ -21,6 +21,10 @@ public class InputService extends InputMethodService {
     return inputService;
   }
 
+  private static Endpoint getHostEndpoint () {
+    return Endpoint.getHostEndpoint();
+  }
+
   public static ClipboardManager getClipboard () {
     if (clipboard == null) Log.w(LOG_TAG, "no clipboard");
     return clipboard;
@@ -57,13 +61,13 @@ public class InputService extends InputMethodService {
   @Override
   public void onStartInput (EditorInfo info, boolean restarting) {
     Log.d(LOG_TAG, "input service " + (restarting? "reconnected": "connected"));
-    BrailleDevice.setSelection(info.initialSelStart, info.initialSelEnd);
+    getHostEndpoint().setSelection(info.initialSelStart, info.initialSelEnd);
   }
 
   @Override
   public void onFinishInput () {
     Log.d(LOG_TAG, "input service disconnected");
-    BrailleDevice.clearSelection();
+    getHostEndpoint().clearSelection();
   }
 
   @Override
@@ -72,7 +76,7 @@ public class InputService extends InputMethodService {
     int newSelectionStart, int newSelectionEnd,
     int candidateStart, int candidateEnd
   ) {
-    BrailleDevice.setSelection(newSelectionStart, newSelectionEnd);
+    getHostEndpoint().setSelection(newSelectionStart, newSelectionEnd);
 
     super.onUpdateSelection(
       oldSelectionStart, oldSelectionEnd,
