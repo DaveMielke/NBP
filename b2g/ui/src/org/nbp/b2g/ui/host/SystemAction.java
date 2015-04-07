@@ -1,4 +1,5 @@
-package org.nbp.b2g.ui;
+package org.nbp.b2g.ui.host;
+import org.nbp.b2g.ui.*;
 
 public abstract class SystemAction extends GlobalAction {
   protected int getSystemKeyCode () {

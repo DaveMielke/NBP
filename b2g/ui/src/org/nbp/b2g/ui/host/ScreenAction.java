@@ -1,10 +1,11 @@
-package org.nbp.b2g.ui;
+package org.nbp.b2g.ui.host;
+import org.nbp.b2g.ui.*;
 
 import android.util.Log;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public abstract class ScreenAction extends Action {
+public abstract class ScreenAction extends HostAction {
   private final static String LOG_TAG = ScreenAction.class.getName();
 
   public AccessibilityNodeInfo findNode (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
