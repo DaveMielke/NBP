@@ -10,14 +10,7 @@ public class SetLeft extends InputAction {
     HostEndpoint endpoint = getHostEndpoint();
 
     synchronized (endpoint) {
-      int offset = cursorKey;
-
-      if (offset < 1) return false;
-      if (offset >= BrailleDevice.size()) return false;
-
-      if ((offset += endpoint.getLineIndent()) >= endpoint.getLineLength()) return false;
-      endpoint.setLineIndent(offset);
-      return endpoint.write();
+      return endpoint.scrollRight(cursorKey);
     }
   }
 

@@ -2,10 +2,10 @@ package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.host.HostEndpoint;
 
 public class Endpoint {
+  private final static Object LOCK = new Object();
+
   private final static HostEndpoint hostEndpoint = new HostEndpoint();
   private static Endpoint currentEndpoint = hostEndpoint;
-
-  private final static Object LOCK = new Object();
 
   public static Endpoint getCurrentEndpoint () {
     synchronized (LOCK) {
@@ -20,22 +20,13 @@ public class Endpoint {
   }
 
   public boolean write () {
-    synchronized (this) {
+    synchronized (LOCK) {
       if (this != currentEndpoint) return true;
-      return BrailleDevice.write(this);
-    }
-  }
 
-  public boolean write (String text) {
-    synchronized (this) {
-      setText(text);
-      clearSelection();
-      return write();
+      synchronized (this) {
+        return BrailleDevice.write(this);
+      }
     }
-  }
-
-  public boolean isEditable () {
-    return false;
   }
 
   private KeyBindings keyBindings = null;
@@ -89,9 +80,11 @@ public class Endpoint {
 
   public int setLine (int textOffset) {
     lineStart = findPreviousNewline(textOffset) + 1;
-    int lineLength = findNextNewline(lineStart);
-    if (lineLength == -1) lineLength = getTextLength();
-    lineText = textString.substring(lineStart, lineLength);
+
+    int lineEnd = findNextNewline(lineStart);
+    if (lineEnd == -1) lineEnd = getTextLength();
+
+    lineText = textString.substring(lineStart, lineEnd);
     return textOffset - lineStart;
   }
 
@@ -121,17 +114,25 @@ public class Endpoint {
     return lineIndent;
   }
 
-  public int getBrailleStart () {
-    return lineStart + lineIndent;
-  }
-
   public void setLineIndent (int indent) {
     lineIndent = indent;
+  }
+
+  public int getBrailleStart () {
+    return lineStart + lineIndent;
   }
 
   public final static int NO_SELECTION = -1;
   private int selectionStart = NO_SELECTION;
   private int selectionEnd = NO_SELECTION;
+
+  public int getSelectionStart () {
+    return selectionStart;
+  }
+
+  public int getSelectionEnd () {
+    return selectionEnd;
+  }
 
   public static boolean isSelected (int offset) {
     return offset != NO_SELECTION;
@@ -147,16 +148,8 @@ public class Endpoint {
     }
   }
 
-  public int getSelectionStart () {
-    return selectionStart;
-  }
-
-  public int getSelectionEnd () {
-    return selectionEnd;
-  }
-
   public String getSelectedText () {
-    synchronized (LOCK) {
+    synchronized (this) {
       if (isSelected()) {
         return textString.substring(selectionStart, selectionEnd);
       }
@@ -200,6 +193,62 @@ public class Endpoint {
 
   public void clearSelection () {
     setSelection(NO_SELECTION, NO_SELECTION);
+  }
+
+  public boolean write (String text) {
+    synchronized (this) {
+      setText(text);
+      clearSelection();
+      return write();
+    }
+  }
+
+  public boolean isEditable () {
+    return false;
+  }
+
+  public boolean scrollRight (int offset) {
+    if (offset < 1) return false;
+    if (offset >= BrailleDevice.size()) return false;
+
+    if ((offset += getLineIndent()) >= getLineLength()) return false;
+    setLineIndent(offset);
+    return write();
+  }
+
+  public boolean panLeft () {
+    int indent = getLineIndent();
+
+    if (indent == 0) {
+      int start = getLineStart();
+      if (start == 0) return false;
+
+      setLine(start-1);
+      indent = getLineLength() + 1;
+    } else {
+      int length = getLineLength();
+      if (indent > length) indent = length;
+    }
+
+    if ((indent -= BrailleDevice.size()) < 0) indent = 0;
+    setLineIndent(indent);
+    return write();
+  }
+
+  public boolean panRight () {
+    int indent = getLineIndent() + BrailleDevice.size();
+    int length = getLineLength();
+
+    if (indent > length) {
+      int offset = getLineStart() + length + 1;
+      if (offset > getTextLength()) return false;
+
+      setLine(offset);
+      indent = 0;
+    }
+
+    setLineIndent(indent);
+    return write();
   }
 
   public Endpoint () {
