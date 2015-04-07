@@ -54,7 +54,7 @@ public abstract class ScanCodeAction extends KeyCodeAction {
     return super.performAction();
   }
 
-  protected ScanCodeAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected ScanCodeAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

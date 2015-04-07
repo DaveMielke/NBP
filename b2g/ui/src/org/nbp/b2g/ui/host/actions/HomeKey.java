@@ -16,7 +16,7 @@ public class HomeKey extends SystemAction {
     return KeyEvent.KEYCODE_HOME;
   }
 
-  public HomeKey () {
-    super(false);
+  public HomeKey (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

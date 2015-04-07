@@ -11,7 +11,7 @@ public class AndroidWifiSettings extends ActivityAction {
     return new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS);
   }
 
-  public AndroidWifiSettings () {
-    super(false);
+  public AndroidWifiSettings (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

@@ -94,7 +94,7 @@ public abstract class InputAction extends ScanCodeAction {
     return false;
   }
 
-  protected InputAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected InputAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

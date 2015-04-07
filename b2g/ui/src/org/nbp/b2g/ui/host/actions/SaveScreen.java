@@ -43,7 +43,7 @@ public class SaveScreen extends ActivityAction {
     return true;
   }
 
-  public SaveScreen () {
-    super(true);
+  public SaveScreen (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

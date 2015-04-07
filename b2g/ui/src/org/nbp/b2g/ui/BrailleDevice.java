@@ -216,7 +216,7 @@ public class BrailleDevice {
         while (toIndex < count) {
           int fromIndex = toIndex + lineIndent;
           char character = (fromIndex < length)? lineText.charAt(fromIndex): ' ';
-          Byte dots = Context.getCurrentContext().getCharacters().getDots(character);
+          Byte dots = Endpoint.getCurrentEndpoint().getCharacters().getDots(character);
           brailleCells[toIndex++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
         }
 

@@ -28,7 +28,7 @@ public class SetSelectionStart extends SetLeft {
     return super.performAction(cursorKey);
   }
 
-  public SetSelectionStart () {
-    super();
+  public SetSelectionStart (Endpoint endpoint) {
+    super(endpoint);
   }
 }

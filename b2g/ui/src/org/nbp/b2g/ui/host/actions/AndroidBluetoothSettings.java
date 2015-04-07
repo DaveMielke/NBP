@@ -11,7 +11,7 @@ public class AndroidBluetoothSettings extends ActivityAction {
     return new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
   }
 
-  public AndroidBluetoothSettings () {
-    super(false);
+  public AndroidBluetoothSettings (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

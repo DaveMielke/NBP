@@ -9,7 +9,7 @@ public class LogNavigation extends Action {
     return true;
   }
 
-  public LogNavigation () {
-    super(true);
+  public LogNavigation (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

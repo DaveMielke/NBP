@@ -42,7 +42,8 @@ public class KeyBindings {
   public final static char RIGHT     = 'r';
   public final static char CURSOR    = 'x';
 
-  private final Map<String, Action> actionObjects = new HashMap<String, Action>();
+  private final Endpoint endpoint;
+  private final Map<String, Action> actionCache = new HashMap<String, Action>();
   private final KeyBindingMap rootKeyBindings = new KeyBindingMap();
   private KeyBindingMap currentKeyBindings = rootKeyBindings;
 
@@ -55,8 +56,8 @@ public class KeyBindings {
       return true;
     }
 
-    public IntermediateAction () {
-      super(false);
+    public IntermediateAction (Endpoint endpoint) {
+      super(endpoint, false);
     }
   }
 
@@ -94,7 +95,7 @@ public class KeyBindings {
       Action intermediate = bindings.get(keyMask);
 
       if (intermediate == null) {
-        intermediate = new IntermediateAction();
+        intermediate = new IntermediateAction(endpoint);
         bindings.put(keyMask, intermediate);
       } else if (!isIntermediateAction(intermediate)) {
         Log.w(LOG_TAG, "key combination already defined");
@@ -140,9 +141,9 @@ public class KeyBindings {
 
     try {
       Class classObject = Class.forName(className);
-      Class[] argumentTypes = new Class[] {};
+      Class[] argumentTypes = new Class[] {Endpoint.class};
       Constructor constructor = classObject.getConstructor(argumentTypes);
-      return (Action)constructor.newInstance();
+      return (Action)constructor.newInstance(endpoint);
     } catch (ClassNotFoundException exception) {
       Log.d(LOG_TAG, "class not found: " + className);
     } catch (NoSuchMethodException exception) {
@@ -160,13 +161,13 @@ public class KeyBindings {
   }
 
   private Action getAction (String actionName) {
-    Action action = actionObjects.get(actionName);
+    Action action = actionCache.get(actionName);
     if (action != null) return action;
 
     action = newAction(actionName);
     if (action == null) return null;
 
-    actionObjects.put(actionName, action);
+    actionCache.put(actionName, action);
     return action;
   }
 
@@ -351,6 +352,7 @@ public class KeyBindings {
     Log.d(LOG_TAG, "end key binding definitions");
   }
 
-  public KeyBindings () {
+  public KeyBindings (Endpoint endpoint) {
+    this.endpoint = endpoint;
   }
 }

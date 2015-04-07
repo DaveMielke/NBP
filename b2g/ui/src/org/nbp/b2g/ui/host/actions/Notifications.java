@@ -16,7 +16,7 @@ public class Notifications extends GlobalAction {
     return KeyEvent.KEYCODE_NOTIFICATION;
   }
 
-  public Notifications () {
-    super(false);
+  public Notifications (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

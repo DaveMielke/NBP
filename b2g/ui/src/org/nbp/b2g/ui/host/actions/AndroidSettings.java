@@ -11,7 +11,7 @@ public class AndroidSettings extends ActivityAction {
     return new Intent(android.provider.Settings.ACTION_SETTINGS);
   }
 
-  public AndroidSettings () {
-    super(false);
+  public AndroidSettings (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

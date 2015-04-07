@@ -44,7 +44,7 @@ public class ArrowDown extends ArrowAction {
     return KeyEvent.KEYCODE_DPAD_DOWN;
   }
 
-  public ArrowDown () {
-    super(false);
+  public ArrowDown (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

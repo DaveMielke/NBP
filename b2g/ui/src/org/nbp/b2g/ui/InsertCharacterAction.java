@@ -2,11 +2,11 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
-public class InsertCharacterAction extends Action {
+public abstract class InsertCharacterAction extends Action {
   private final static String LOG_TAG = InsertCharacterAction.class.getName();
 
   private Characters getCharacters () {
-    return Context.getCurrentContext().getCharacters();
+    return getEndpoint().getCharacters();
   }
 
   @Override
@@ -32,7 +32,7 @@ public class InsertCharacterAction extends Action {
     return false;
   }
 
-  public InsertCharacterAction () {
-    super(false);
+  public InsertCharacterAction (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

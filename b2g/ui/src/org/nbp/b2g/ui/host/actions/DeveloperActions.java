@@ -9,7 +9,7 @@ public class DeveloperActions extends Action {
     return true;
   }
 
-  public DeveloperActions () {
-    super(false);
+  public DeveloperActions (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

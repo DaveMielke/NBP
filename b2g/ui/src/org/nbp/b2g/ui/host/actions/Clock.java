@@ -11,7 +11,7 @@ public class Clock extends ActivityAction {
     return new Intent(context, ClockActivity.class);
   }
 
-  public Clock () {
-    super(false);
+  public Clock (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

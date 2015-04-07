@@ -19,7 +19,7 @@ public class SetLeft extends InputAction {
     }
   }
 
-  public SetLeft () {
-    super(false);
+  public SetLeft (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

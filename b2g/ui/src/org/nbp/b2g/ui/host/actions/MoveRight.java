@@ -29,7 +29,7 @@ public class MoveRight extends MoveForward {
     return super.performAction();
   }
 
-  public MoveRight () {
-    super();
+  public MoveRight (Endpoint endpoint) {
+    super(endpoint);
   }
 }

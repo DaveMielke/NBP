@@ -67,7 +67,7 @@ public class MoveForward extends MoveAction {
     return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
   }
 
-  public MoveForward () {
-    super(false);
+  public MoveForward (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

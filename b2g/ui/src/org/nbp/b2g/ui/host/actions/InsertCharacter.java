@@ -32,7 +32,7 @@ public class InsertCharacter extends InsertCharacterAction {
     return false;
   }
 
-  public InsertCharacter () {
-    super();
+  public InsertCharacter (Endpoint endpoint) {
+    super(endpoint);
   }
 }

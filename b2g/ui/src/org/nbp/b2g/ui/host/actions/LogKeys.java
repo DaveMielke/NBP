@@ -9,7 +9,7 @@ public class LogKeys extends Action {
     return true;
   }
 
-  public LogKeys () {
-    super(true);
+  public LogKeys (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

@@ -27,7 +27,7 @@ public abstract class NodeAction extends KeyCodeAction {
     return false;
   }
 
-  protected NodeAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected NodeAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

@@ -27,7 +27,7 @@ public abstract class GlobalAction extends ScanCodeAction {
     return super.performAction();
   }
 
-  protected GlobalAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected GlobalAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

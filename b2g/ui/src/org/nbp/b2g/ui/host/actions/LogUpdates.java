@@ -9,7 +9,7 @@ public class LogUpdates extends Action {
     return true;
   }
 
-  public LogUpdates () {
-    super(true);
+  public LogUpdates (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

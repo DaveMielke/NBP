@@ -42,7 +42,7 @@ public class ArrowUp extends ArrowAction {
     return KeyEvent.KEYCODE_DPAD_UP;
   }
 
-  public ArrowUp () {
-    super(false);
+  public ArrowUp (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

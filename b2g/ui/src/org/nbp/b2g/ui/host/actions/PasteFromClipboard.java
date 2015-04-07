@@ -33,7 +33,7 @@ public class PasteFromClipboard extends InputAction {
     return false;
   }
 
-  public PasteFromClipboard () {
-    super(false);
+  public PasteFromClipboard (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

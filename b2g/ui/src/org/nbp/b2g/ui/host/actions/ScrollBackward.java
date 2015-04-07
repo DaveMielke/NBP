@@ -10,7 +10,7 @@ public class ScrollBackward extends NodeAction {
     return AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD;
   }
 
-  public ScrollBackward () {
-    super(true);
+  public ScrollBackward (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

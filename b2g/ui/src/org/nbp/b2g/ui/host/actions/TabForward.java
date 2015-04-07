@@ -15,7 +15,7 @@ public class TabForward extends ScanCodeAction {
     return KeyEvent.KEYCODE_TAB;
   }
 
-  public TabForward () {
-    super(false);
+  public TabForward (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

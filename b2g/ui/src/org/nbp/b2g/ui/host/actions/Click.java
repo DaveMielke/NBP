@@ -16,7 +16,7 @@ public class Click extends NodeAction {
     return KeyEvent.KEYCODE_DPAD_CENTER;
   }
 
-  public Click () {
-    super(false);
+  public Click (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

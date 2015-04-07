@@ -15,7 +15,7 @@ public class MenuKey extends ScanCodeAction {
     return KeyEvent.KEYCODE_MENU;
   }
 
-  public MenuKey () {
-    super(false);
+  public MenuKey (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

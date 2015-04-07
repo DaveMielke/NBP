@@ -27,7 +27,7 @@ public class CopyToClipboard extends InputAction {
     return false;
   }
 
-  public CopyToClipboard () {
-    super(false);
+  public CopyToClipboard (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

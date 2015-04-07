@@ -155,7 +155,7 @@ public abstract class ScreenAction extends HostAction {
     return -1;
   }
 
-  protected ScreenAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected ScreenAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

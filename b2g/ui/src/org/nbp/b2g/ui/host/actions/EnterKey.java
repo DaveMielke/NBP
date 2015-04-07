@@ -15,7 +15,7 @@ public class EnterKey extends ScanCodeAction {
     return KeyEvent.KEYCODE_ENTER;
   }
 
-  public EnterKey () {
-    super(false);
+  public EnterKey (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

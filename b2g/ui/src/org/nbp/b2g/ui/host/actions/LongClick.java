@@ -10,7 +10,7 @@ public class LongClick extends NodeAction {
     return AccessibilityNodeInfo.ACTION_LONG_CLICK;
   }
 
-  public LongClick () {
-    super(false);
+  public LongClick (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

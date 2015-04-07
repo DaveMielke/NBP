@@ -10,7 +10,7 @@ public class RecentApps extends GlobalAction {
     return AccessibilityService.GLOBAL_ACTION_RECENTS;
   }
 
-  public RecentApps () {
-    super(false);
+  public RecentApps (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

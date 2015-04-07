@@ -27,7 +27,7 @@ public abstract class ActivityAction extends Action {
     return true;
   }
 
-  protected ActivityAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected ActivityAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

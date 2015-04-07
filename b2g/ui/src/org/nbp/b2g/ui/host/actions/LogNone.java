@@ -12,7 +12,7 @@ public class LogNone extends Action {
     return true;
   }
 
-  public LogNone () {
-    super(true);
+  public LogNone (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

@@ -35,7 +35,7 @@ public class DeleteNext extends InputAction {
     return KeyEvent.KEYCODE_FORWARD_DEL;
   }
 
-  public DeleteNext () {
-    super(false);
+  public DeleteNext (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

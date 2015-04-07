@@ -5,10 +5,19 @@ import android.util.Log;
 public abstract class Action {
   private final static String LOG_TAG = Action.class.getName();
 
+  private final Endpoint endpoint;
   private final boolean isDeveloperAction;
+
+  public Endpoint getEndpoint () {
+    return endpoint;
+  }
 
   public boolean isForDevelopers () {
     return isDeveloperAction;
+  }
+
+  public final String getName () {
+    return getClass().getName();
   }
 
   public boolean performAction (int cursorKey) {
@@ -20,10 +29,6 @@ public abstract class Action {
     if (cursorKeys == null) return false;
     if (cursorKeys.length != 1) return false;
     return performAction(cursorKeys[0]);
-  }
-
-  public final String getName () {
-    return getClass().getName();
   }
 
   public boolean parseOperand (int keyMask, String operand) {
@@ -43,7 +48,8 @@ public abstract class Action {
     return (getNavigationKeys() & KeyMask.SPACE) != 0;
   }
 
-  protected Action (boolean isForDevelopers) {
+  protected Action (Endpoint endpoint, boolean isForDevelopers) {
     isDeveloperAction = isForDevelopers;
+    this.endpoint = endpoint;
   }
 }

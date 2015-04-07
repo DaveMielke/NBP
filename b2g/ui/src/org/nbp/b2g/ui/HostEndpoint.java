@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public class HostContext extends Context {
+public class HostEndpoint extends Endpoint {
   private final static String[] keysFileNames = new String[] {
     "nabcc", "navigation", "developer"
   };
@@ -10,7 +10,7 @@ public class HostContext extends Context {
     return keysFileNames;
   }
 
-  public HostContext () {
+  public HostEndpoint () {
     super();
   }
 }

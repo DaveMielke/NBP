@@ -32,7 +32,7 @@ public class MoveLeft extends MoveBackward {
     return super.performAction();
   }
 
-  public MoveLeft () {
-    super();
+  public MoveLeft (Endpoint endpoint) {
+    super(endpoint);
   }
 }

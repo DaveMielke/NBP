@@ -15,7 +15,7 @@ public class VolumeUp extends ScanCodeAction {
     return KeyEvent.KEYCODE_VOLUME_UP;
   }
 
-  public VolumeUp () {
-    super(false);
+  public VolumeUp (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

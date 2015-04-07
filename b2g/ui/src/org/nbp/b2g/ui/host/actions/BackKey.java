@@ -16,7 +16,7 @@ public class BackKey extends SystemAction {
     return KeyEvent.KEYCODE_BACK;
   }
 
-  public BackKey () {
-    super(false);
+  public BackKey (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

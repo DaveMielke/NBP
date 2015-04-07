@@ -18,7 +18,7 @@ public class MoveToSelf extends ScreenAction {
     return moved;
   }
 
-  public MoveToSelf () {
-    super(true);
+  public MoveToSelf (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

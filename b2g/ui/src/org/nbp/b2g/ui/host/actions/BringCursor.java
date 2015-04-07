@@ -28,7 +28,7 @@ public class BringCursor extends SetLeft {
     return super.performAction(cursorKey);
   }
 
-  public BringCursor () {
-    super();
+  public BringCursor (Endpoint endpoint) {
+    super(endpoint);
   }
 }

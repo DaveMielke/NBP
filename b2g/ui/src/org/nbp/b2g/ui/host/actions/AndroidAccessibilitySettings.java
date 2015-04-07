@@ -11,7 +11,7 @@ public class AndroidAccessibilitySettings extends ActivityAction {
     return new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
   }
 
-  public AndroidAccessibilitySettings () {
-    super(false);
+  public AndroidAccessibilitySettings (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

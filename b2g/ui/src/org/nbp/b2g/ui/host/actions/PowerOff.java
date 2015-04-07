@@ -31,7 +31,7 @@ public class PowerOff extends GlobalAction {
     return ApplicationUtilities.getGlobalActionTimeout();
   }
 
-  public PowerOff () {
-    super(false);
+  public PowerOff (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

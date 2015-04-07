@@ -28,7 +28,7 @@ public class SetSelectionEnd extends InputAction {
     return super.performAction(cursorKey);
   }
 
-  public SetSelectionEnd () {
-    super(false);
+  public SetSelectionEnd (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

@@ -9,8 +9,8 @@ public class ControlModifier extends ModifierAction {
     return controlModifier;
   }
 
-  public ControlModifier () {
-    super(false);
+  public ControlModifier (Endpoint endpoint) {
+    super(endpoint, false);
     controlModifier = this;
   }
 }

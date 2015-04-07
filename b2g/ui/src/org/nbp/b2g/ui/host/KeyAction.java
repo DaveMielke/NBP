@@ -73,7 +73,7 @@ public abstract class KeyAction extends HostAction {
     }
   }
 
-  protected KeyAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected KeyAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

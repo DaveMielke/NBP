@@ -27,7 +27,7 @@ public class SelectAll extends InputAction {
     return false;
   }
 
-  public SelectAll () {
-    super(false);
+  public SelectAll (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

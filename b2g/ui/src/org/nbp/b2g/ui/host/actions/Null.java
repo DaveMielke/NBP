@@ -8,7 +8,7 @@ public class Null extends Action {
     return true;
   }
 
-  public Null () {
-    super(false);
+  public Null (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

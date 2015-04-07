@@ -24,7 +24,7 @@ public class MoveToParent extends ScreenAction {
     return moved;
   }
 
-  public MoveToParent () {
-    super(true);
+  public MoveToParent (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

@@ -21,7 +21,7 @@ public class TabBackward extends TabForward {
     return keyCodeModifiers;
   }
 
-  public TabBackward () {
-    super();
+  public TabBackward (Endpoint endpoint) {
+    super(endpoint);
   }
 }

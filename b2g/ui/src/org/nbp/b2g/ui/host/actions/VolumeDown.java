@@ -15,7 +15,7 @@ public class VolumeDown extends ScanCodeAction {
     return KeyEvent.KEYCODE_VOLUME_DOWN;
   }
 
-  public VolumeDown () {
-    super(false);
+  public VolumeDown (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

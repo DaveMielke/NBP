@@ -32,7 +32,7 @@ public class ArrowRight extends ArrowAction {
     return KeyEvent.KEYCODE_DPAD_RIGHT;
   }
 
-  public ArrowRight () {
-    super(false);
+  public ArrowRight (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

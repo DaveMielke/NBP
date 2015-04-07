@@ -1,12 +1,12 @@
 package org.nbp.b2g.ui;
 
-public class Context {
-  private static Context currentContext = new HostContext();
+public class Endpoint {
+  private static Endpoint currentEndpoint = new HostEndpoint();
   private final static Object LOCK = new Object();
 
-  public static Context getCurrentContext () {
+  public static Endpoint getCurrentEndpoint () {
     synchronized (LOCK) {
-      return currentContext;
+      return currentEndpoint;
     }
   }
 
@@ -20,7 +20,7 @@ public class Context {
   private void ensureKeyBindings () {
     synchronized (this) {
       if (keyBindings == null) {
-        keyBindings = new KeyBindings();
+        keyBindings = new KeyBindings(this);
         keyBindings.addKeyBindings(getKeysFileNames());
       }
     }
@@ -36,6 +36,6 @@ public class Context {
     return characters;
   }
 
-  public Context () {
+  public Endpoint () {
   }
 }

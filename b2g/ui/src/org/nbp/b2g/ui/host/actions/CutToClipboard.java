@@ -31,7 +31,7 @@ public class CutToClipboard extends InputAction {
     return false;
   }
 
-  public CutToClipboard () {
-    super(false);
+  public CutToClipboard (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

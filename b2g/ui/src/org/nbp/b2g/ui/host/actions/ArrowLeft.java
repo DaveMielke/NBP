@@ -31,7 +31,7 @@ public class ArrowLeft extends ArrowAction {
     return KeyEvent.KEYCODE_DPAD_LEFT;
   }
 
-  public ArrowLeft () {
-    super(false);
+  public ArrowLeft (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

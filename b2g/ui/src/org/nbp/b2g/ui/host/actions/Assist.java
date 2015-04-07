@@ -11,7 +11,7 @@ public class Assist extends ActivityAction {
     return new Intent(Intent.ACTION_ASSIST);
   }
 
-  public Assist () {
-    super(false);
+  public Assist (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

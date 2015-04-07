@@ -15,7 +15,7 @@ public class Search extends ScanCodeAction {
     return KeyEvent.KEYCODE_SEARCH;
   }
 
-  public Search () {
-    super(false);
+  public Search (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

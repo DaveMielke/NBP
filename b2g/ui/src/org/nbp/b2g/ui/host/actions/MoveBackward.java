@@ -54,7 +54,7 @@ public class MoveBackward extends MoveAction {
     return AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD;
   }
 
-  public MoveBackward () {
-    super(false);
+  public MoveBackward (Endpoint endpoint) {
+    super(endpoint, false);
   }
 }

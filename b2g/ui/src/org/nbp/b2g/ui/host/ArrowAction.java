@@ -27,7 +27,7 @@ public abstract class ArrowAction extends InputAction {
     return getArrowKeyCode();
   }
 
-  protected ArrowAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected ArrowAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

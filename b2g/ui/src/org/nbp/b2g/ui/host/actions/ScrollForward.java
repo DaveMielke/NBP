@@ -10,7 +10,7 @@ public class ScrollForward extends NodeAction {
     return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
   }
 
-  public ScrollForward () {
-    super(true);
+  public ScrollForward (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

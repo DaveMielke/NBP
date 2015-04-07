@@ -9,7 +9,7 @@ public class LogActions extends Action {
     return true;
   }
 
-  public LogActions () {
-    super(true);
+  public LogActions (Endpoint endpoint) {
+    super(endpoint, true);
   }
 }

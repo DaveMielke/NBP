@@ -143,7 +143,7 @@ public abstract class HostAction extends Action {
     return false;
   }
 
-  protected HostAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected HostAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }

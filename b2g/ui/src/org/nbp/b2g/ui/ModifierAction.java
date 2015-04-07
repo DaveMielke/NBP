@@ -15,7 +15,7 @@ public abstract class ModifierAction extends Action {
     return true;
   }
 
-  protected ModifierAction (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected ModifierAction (Endpoint endpoint, boolean isForDevelopers) {
+    super(endpoint, isForDevelopers);
   }
 }
