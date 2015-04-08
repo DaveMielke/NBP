@@ -65,29 +65,51 @@ public class ScreenMonitor extends AccessibilityService {
 
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
-    AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
+    AccessibilityNodeInfo source = event.getSource();
 
     if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
       Log.d(LOG_TAG, "accessibility event: " + event.toString());
     }
 
-    if (node != null) {
-      HostEndpoint endpoint = getHostEndpoint();
+    if (source != null) {
+      AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode(source);
 
-      switch (event.getEventType()) {
-        case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-        case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
-        case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-          endpoint.write(node, true);
-          break;
-
-        default:
-          endpoint.write(node, false);
-        case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
-          break;
+      if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
+        Log.d(LOG_TAG, "accessibility event source: " + ScreenUtilities.toString(source));
       }
 
-      node.recycle();
+      if (node != null) {
+        HostEndpoint endpoint = getHostEndpoint();
+
+        if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
+          Log.d(LOG_TAG, "accessibility event node: " + ScreenUtilities.toString(node));
+        }
+
+        switch (event.getEventType()) {
+          case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+          case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
+          case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+            endpoint.write(node, true);
+            break;
+
+          default:
+            endpoint.write(node, false);
+          case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
+            break;
+        }
+
+        node.recycle();
+      } else {
+        if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
+          Log.d(LOG_TAG, "no accessibility event node");
+        }
+      }
+
+      source.recycle();
+    } else {
+      if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
+        Log.d(LOG_TAG, "no accessibility event source");
+      }
     }
   }
 

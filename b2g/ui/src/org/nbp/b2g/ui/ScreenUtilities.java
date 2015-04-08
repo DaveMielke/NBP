@@ -13,6 +13,19 @@ public class ScreenUtilities {
     return LanguageUtilities.canAssign(to, from.getClassName());
   }
 
+  public static AccessibilityNodeInfo getRootNode (AccessibilityNodeInfo node) {
+    if (node == null) return null;
+    node = AccessibilityNodeInfo.obtain(node);
+
+    while (true) {
+      AccessibilityNodeInfo parent = node.getParent();
+      if (parent == null) return node;
+
+      node.recycle();
+      node = parent;
+    }
+  }
+
   public static AccessibilityNodeInfo getRootNode () {
     ScreenMonitor monitor = ScreenMonitor.getScreenMonitor();
     if (monitor == null) return null;
@@ -48,11 +61,9 @@ public class ScreenUtilities {
     return node;
   }
 
-  public static AccessibilityNodeInfo getCurrentNode () {
-    AccessibilityNodeInfo root = getRootNode();
-    if (root == null) return null;
-
+  private static AccessibilityNodeInfo findCurrentNode (AccessibilityNodeInfo root) {
     AccessibilityNodeInfo node;
+
     if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
       if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
         if ((node = establishCurrentNode(root)) == null) {
@@ -61,8 +72,25 @@ public class ScreenUtilities {
       }
     }
 
-    root.recycle();
     return node;
+  }
+
+  public static AccessibilityNodeInfo getCurrentNode () {
+    AccessibilityNodeInfo root = getRootNode();
+    if (root == null) return null;
+
+    AccessibilityNodeInfo current = findCurrentNode(root);
+    root.recycle();
+    return current;
+  }
+
+  public static AccessibilityNodeInfo getCurrentNode (AccessibilityNodeInfo node) {
+    AccessibilityNodeInfo root = getRootNode(node);
+    if (root == null) return null;
+
+    AccessibilityNodeInfo current = findCurrentNode(root);
+    root.recycle();
+    return current;
   }
 
   public static boolean isEditable (AccessibilityNodeInfo node) {
