@@ -27,11 +27,11 @@ public class Clipboard {
     }
   }
 
-  public static ClipData newTextClip (String text) {
+  public static ClipData newClip (String text) {
     return ClipData.newPlainText("B2G User Interface", text);
   }
 
-  public static String getClipText (ClipData clip) {
+  public static String getText (ClipData clip) {
     int count = clip.getItemCount();
 
     for (int index=0; index<count; index+=1) {
@@ -49,7 +49,7 @@ public class Clipboard {
   public static boolean putText (String text) {
     synchronized (LOCK) {
       if (clipboard != null) {
-        clipboard.setPrimaryClip(newTextClip(text));
+        clipboard.setPrimaryClip(newClip(text));
         return true;
       }
     }
@@ -63,7 +63,7 @@ public class Clipboard {
         ClipData clip = clipboard.getPrimaryClip();
 
         if (clip != null) {
-          return getClipText(clip);
+          return getText(clip);
         }
       }
     }
