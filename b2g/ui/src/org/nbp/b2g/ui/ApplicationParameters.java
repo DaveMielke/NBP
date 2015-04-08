@@ -24,7 +24,7 @@ public abstract class ApplicationParameters {
 
   public static volatile boolean BLUETOOTH_SECURE_CONNECTION = true;
   public static volatile long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
-  public static volatile String BLUETOOTH_SERVICE_NAME = "B2G Serial Port";
+  public static volatile String BLUETOOTH_SERVICE_NAME = "Braille Display";
 
   public static volatile long BRAILLE_UPDATE_DELAY = 50; // milliseconds
   public static volatile int BRAILLE_SCROLL_KEEP = 3; // cells
