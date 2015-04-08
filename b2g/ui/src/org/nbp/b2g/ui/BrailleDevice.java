@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import java.util.Arrays;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,6 +10,7 @@ import android.util.Log;
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
+  public final static byte DOTS_NONE = 0;
   public final static byte DOT_1 =       0X01;
   public final static byte DOT_2 =       0X02;
   public final static byte DOT_3 =       0X04;
@@ -44,6 +47,7 @@ public class BrailleDevice {
           Log.d(LOG_TAG, "braille device version: " + version);
 
           clearCells();
+          Arrays.fill(brailleCells, DOTS_NONE);
           return true;
         }
 
@@ -81,6 +85,8 @@ public class BrailleDevice {
       }
 
       if (open()) {
+        byte[] oldCells = Arrays.copyOf(brailleCells, brailleCells.length);
+
         String text = endpoint.getLineText();
         int length = text.length();
         int indent = endpoint.getLineIndent();
@@ -123,6 +129,10 @@ public class BrailleDevice {
               }
             }
           }
+        }
+
+        if (Arrays.equals(brailleCells, oldCells)) {
+          return true;
         }
 
         if (writeCells(brailleCells)) {
