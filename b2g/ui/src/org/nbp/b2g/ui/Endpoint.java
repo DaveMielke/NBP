@@ -5,6 +5,7 @@ public class Endpoint {
   private final static Object LOCK = new Object();
 
   private final static HostEndpoint hostEndpoint = new HostEndpoint();
+  private final static BluetoothEndpoint bluetoothEndpoint = new BluetoothEndpoint();
   private static Endpoint currentEndpoint = hostEndpoint;
 
   public static Endpoint getCurrentEndpoint () {
