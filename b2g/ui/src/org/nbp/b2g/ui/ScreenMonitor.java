@@ -20,7 +20,7 @@ public class ScreenMonitor extends AccessibilityService {
   }
 
   private static HostEndpoint getHostEndpoint () {
-    return Endpoint.getHostEndpoint();
+    return Endpoints.getHostEndpoint();
   }
 
   @Override

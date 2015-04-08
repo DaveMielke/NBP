@@ -19,7 +19,7 @@ public class InputService extends InputMethodService {
   }
 
   private static Endpoint getHostEndpoint () {
-    return Endpoint.getHostEndpoint();
+    return Endpoints.getHostEndpoint();
   }
 
   @Override

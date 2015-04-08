@@ -1,28 +1,9 @@
 package org.nbp.b2g.ui;
-import org.nbp.b2g.ui.host.HostEndpoint;
 
 public class Endpoint {
-  private final static Object LOCK = new Object();
-
-  private final static HostEndpoint hostEndpoint = new HostEndpoint();
-  private final static BluetoothEndpoint bluetoothEndpoint = new BluetoothEndpoint();
-  private static Endpoint currentEndpoint = hostEndpoint;
-
-  public static Endpoint getCurrentEndpoint () {
-    synchronized (LOCK) {
-      return currentEndpoint;
-    }
-  }
-
-  public static HostEndpoint getHostEndpoint () {
-    synchronized (LOCK) {
-      return hostEndpoint;
-    }
-  }
-
   public boolean write () {
-    synchronized (LOCK) {
-      if (this != currentEndpoint) return true;
+    synchronized (Endpoints.LOCK) {
+      if (this != Endpoints.getCurrentEndpoint()) return true;
 
       synchronized (this) {
         return BrailleDevice.write(this);
@@ -30,30 +11,19 @@ public class Endpoint {
     }
   }
 
-  private KeyBindings keyBindings = null;
+  private final KeyBindings keyBindings;
 
   protected String[] getKeysFileNames () {
     return null;
   }
 
-  private void ensureKeyBindings () {
-    synchronized (this) {
-      if (keyBindings == null) {
-        keyBindings = new KeyBindings(this);
-        keyBindings.addKeyBindings(getKeysFileNames());
-      }
-    }
-  }
-
   public KeyBindings getKeyBindings () {
-    ensureKeyBindings();
     return keyBindings;
   }
 
-  private final Characters characters = new Characters();
+  private final Characters characters;
 
   public Characters getCharacters () {
-    ensureKeyBindings();
     return characters;
   }
 
@@ -176,7 +146,7 @@ public class Endpoint {
   }
 
   public void setSelection (int start, int end) {
-    synchronized (LOCK) {
+    synchronized (this) {
       selectionStart = start;
       selectionEnd = end;
 
@@ -253,6 +223,8 @@ public class Endpoint {
   }
 
   public Endpoint () {
+    characters = new Characters();
+    keyBindings = new KeyBindings(this, getKeysFileNames());
     setText("");
   }
 }

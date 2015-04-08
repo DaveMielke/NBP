@@ -45,7 +45,7 @@ public class KeyEvents {
     if (keyMask != 0) {
       if (activeNavigationKeys > 0) {
         boolean performed = false;
-        Action action = Endpoint.getCurrentEndpoint().getKeyBindings().getAction(activeNavigationKeys);
+        Action action = Endpoints.getCurrentEndpoint().getKeyBindings().getAction(activeNavigationKeys);
 
         if (action != null) {
           if (performAction(action)) {
