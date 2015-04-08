@@ -33,11 +33,11 @@ public class HostEndpoint extends Endpoint {
 
       if ((characters = node.getText()) != null) {
         sb.append(characters);
-      } else if (ScreenUtilities.isEditable(node)) {
-        text = "";
       } else if ((characters = node.getContentDescription()) != null) {
+        sb.append('[');
         sb.append(characters);
-      } else {
+        sb.append(']');
+      } else if (!ScreenUtilities.isEditable(node)) {
         sb.append('(');
         sb.append(ScreenUtilities.getClassName(node));
         sb.append(')');
