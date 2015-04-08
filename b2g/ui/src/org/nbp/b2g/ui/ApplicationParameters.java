@@ -22,6 +22,7 @@ public abstract class ApplicationParameters {
   public static volatile String CLOCK_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
   public static volatile long CLOCK_UPDATE_INTERVAL = 1000; // milliseconds
 
+  public static volatile boolean BLUETOOTH_SECURE_CONNECTION = true;
   public static volatile long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
   public static volatile String BLUETOOTH_SERVICE_NAME = "B2G Serial Port";
 

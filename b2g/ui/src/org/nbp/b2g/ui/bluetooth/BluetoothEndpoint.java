@@ -29,10 +29,14 @@ public class BluetoothEndpoint extends Endpoint {
           BluetoothSocket socket = null;
 
           try {
-            server = adapter.listenUsingRfcommWithServiceRecord(
-              ApplicationParameters.BLUETOOTH_SERVICE_NAME,
-              SERIAL_PROFILE_UUID
-            );
+            String name = ApplicationParameters.BLUETOOTH_SERVICE_NAME;
+            UUID uuid = SERIAL_PROFILE_UUID;
+
+            if (ApplicationParameters.BLUETOOTH_SECURE_CONNECTION) {
+              server = adapter.listenUsingRfcommWithServiceRecord(name, uuid);
+            } else {
+              server = adapter.listenUsingInsecureRfcommWithServiceRecord(name, uuid);
+            }
           } catch (IOException exception) {
             Log.w(LOG_TAG, "bluetooth server socket not created: " + exception.getMessage());
             ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
