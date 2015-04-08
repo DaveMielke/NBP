@@ -45,11 +45,9 @@ public class ScreenMonitor extends AccessibilityService {
   protected void onServiceConnected () {
     Log.d(LOG_TAG, "screen monitor connected");
 
-    AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
-    if (node != null) {
-      getHostEndpoint().write(node, true);
-    } else {
-      getHostEndpoint().write("B2G ready");
+    {
+      AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
+      if (node != null) getHostEndpoint().write(node, true);
     }
   }
 

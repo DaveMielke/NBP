@@ -1,6 +1,10 @@
 package org.nbp.b2g.ui;
 
 public class Endpoint {
+  public boolean isEditable () {
+    return false;
+  }
+
   public boolean write () {
     synchronized (Endpoints.LOCK) {
       if (this != Endpoints.getCurrentEndpoint()) return true;
@@ -9,6 +13,13 @@ public class Endpoint {
         return BrailleDevice.write(this);
       }
     }
+  }
+
+  public void onForeground () {
+    write();
+  }
+
+  public void onBackground () {
   }
 
   private final KeyBindings keyBindings;
@@ -172,10 +183,6 @@ public class Endpoint {
       clearSelection();
       return write();
     }
-  }
-
-  public boolean isEditable () {
-    return false;
   }
 
   public boolean scrollRight (int offset) {
