@@ -46,8 +46,14 @@ public class ScreenMonitor extends AccessibilityService {
     Log.d(LOG_TAG, "screen monitor connected");
 
     {
+      HostEndpoint endpoint = getHostEndpoint();
       AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
-      if (node != null) getHostEndpoint().write(node, true);
+
+      if (node != null) {
+        endpoint.write(node, true);
+      } else {
+        endpoint.write("no screen content");
+      }
     }
   }
 
@@ -66,15 +72,17 @@ public class ScreenMonitor extends AccessibilityService {
     }
 
     if (node != null) {
+      HostEndpoint endpoint = getHostEndpoint();
+
       switch (event.getEventType()) {
         case AccessibilityEvent.TYPE_VIEW_FOCUSED:
         case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
         case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-          getHostEndpoint().write(node, true);
+          endpoint.write(node, true);
           break;
 
         default:
-          getHostEndpoint().write(node, false);
+          endpoint.write(node, false);
         case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
           break;
       }
