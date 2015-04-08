@@ -136,8 +136,8 @@ public class KeyBindings {
     return addKeyBinding(keyMasks, actionName);
   }
 
-  private Action newAction (String actionName) {
-    String className = endpoint.getClass().getPackage().getName() + ".actions." + actionName;
+  private Action newAction (String actionName, Object actionOwner) {
+    String className = actionOwner.getClass().getPackage().getName() + ".actions." + actionName;
 
     try {
       Class classObject = Class.forName(className);
@@ -145,16 +145,24 @@ public class KeyBindings {
       Constructor constructor = classObject.getConstructor(argumentTypes);
       return (Action)constructor.newInstance(endpoint);
     } catch (ClassNotFoundException exception) {
-      Log.d(LOG_TAG, "class not found: " + className);
     } catch (NoSuchMethodException exception) {
-      Log.d(LOG_TAG, "constructor not found: " + className);
+      Log.w(LOG_TAG, "constructor not found: " + className);
     } catch (IllegalAccessException exception) {
-      Log.d(LOG_TAG, "constructor not accessible: " + className);
+      Log.w(LOG_TAG, "constructor not accessible: " + className);
     } catch (InstantiationException exception) {
-      Log.d(LOG_TAG, "instantiation error: " + className, exception);
+      Log.w(LOG_TAG, "instantiation error: " + className, exception);
     } catch (InvocationTargetException exception) {
-      Log.d(LOG_TAG, "construction error: " + className, exception);
+      Log.w(LOG_TAG, "construction error: " + className, exception);
     }
+
+    return null;
+  }
+
+  private Action newAction (String actionName) {
+    Action action;
+
+    if ((action = newAction(actionName, endpoint)) != null) return action;
+    if ((action = newAction(actionName, this)) != null) return action;
 
     Log.w(LOG_TAG, "invalid action: " + actionName);
     return null;
@@ -338,18 +346,19 @@ public class KeyBindings {
   }
 
   private void addKeyBindings (String[] keysFileNames) {
-    Log.d(LOG_TAG, "begin key binding definitions");
+    String endpointName = endpoint.getClass().getName();
+    Log.d(LOG_TAG, "begin key binding definitions: " + endpointName);
 
     addKeyBinding(KeyMask.VOLUME_DOWN, "VolumeDown");
     addKeyBinding(KeyMask.VOLUME_UP, "VolumeUp");
 
     if (keysFileNames != null) {
-      for (String name : keysFileNames) {
-        addKeyBindings((name + ".keys"));
+      for (String keysFileName : keysFileNames) {
+        addKeyBindings((keysFileName + ".keys"));
       }
     }
 
-    Log.d(LOG_TAG, "end key binding definitions");
+    Log.d(LOG_TAG, "end key binding definitions: " + endpointName);
   }
 
   public KeyBindings (Endpoint endpoint, String[] keysFileNames) {

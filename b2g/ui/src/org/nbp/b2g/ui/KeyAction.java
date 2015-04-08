@@ -1,9 +1,8 @@
-package org.nbp.b2g.ui.host;
-import org.nbp.b2g.ui.*;
+package org.nbp.b2g.ui;
 
 import android.util.Log;
 
-public abstract class KeyAction extends HostAction {
+public abstract class KeyAction extends Action {
   private final static String LOG_TAG = KeyAction.class.getName();
 
   protected long getHoldTime () {

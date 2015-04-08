@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.KeyEvent;
 
-public abstract class GlobalAction extends ScanCodeAction {
+public abstract class GlobalAction extends HostAction {
   public final static int NULL_GLOBAL_ACTION = 0;
 
   protected int getGlobalAction () {

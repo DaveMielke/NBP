@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public abstract class NodeAction extends KeyCodeAction {
+public abstract class NodeAction extends HostAction {
   public final static int NULL_NODE_ACTION = 0;
 
   protected int getNodeAction () {

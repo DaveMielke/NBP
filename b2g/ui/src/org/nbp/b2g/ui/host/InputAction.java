@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.inputmethod.InputConnection;
 
-public abstract class InputAction extends ScanCodeAction {
+public abstract class InputAction extends HostAction {
   protected int getSelectionOffset (int cursorKey) {
     return getEndpoint().getBrailleStart() + cursorKey;
   }

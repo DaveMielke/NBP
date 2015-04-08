@@ -3,29 +3,13 @@ import org.nbp.b2g.ui.*;
 
 import android.util.Log;
 
-import android.inputmethodservice.InputMethodService;
-import android.view.inputmethod.InputConnection;
-
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public abstract class HostAction extends Action {
+public abstract class HostAction extends ScanCodeAction {
   private final static String LOG_TAG = HostAction.class.getName();
 
   protected final HostEndpoint getHostEndpoint () {
     return (HostEndpoint)getEndpoint();
-  }
-
-  protected final InputService getInputService () {
-    return InputService.getInputService();
-  }
-
-  protected final InputConnection getInputConnection () {
-    InputService service = getInputService();
-    if (service == null) return null;
-
-    InputConnection connection = service.getCurrentInputConnection();
-    if (connection == null) Log.w(LOG_TAG, "no input connection");
-    return connection;
   }
 
   protected final ScreenMonitor getScreenMonitor () {

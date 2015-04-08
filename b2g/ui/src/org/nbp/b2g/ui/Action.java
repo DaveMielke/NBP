@@ -2,6 +2,8 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
+import android.view.inputmethod.InputConnection;
+
 public abstract class Action {
   private final static String LOG_TAG = Action.class.getName();
 
@@ -46,6 +48,20 @@ public abstract class Action {
 
   protected static boolean isChord () {
     return (getNavigationKeys() & KeyMask.SPACE) != 0;
+  }
+
+  protected final InputService getInputService () {
+    return InputService.getInputService();
+  }
+
+  protected final InputConnection getInputConnection () {
+    InputService service = getInputService();
+    if (service == null) return null;
+
+    InputConnection connection = service.getCurrentInputConnection();
+    if (connection == null) Log.w(LOG_TAG, "no input connection");
+
+    return connection;
   }
 
   protected Action (Endpoint endpoint, boolean isForDevelopers) {

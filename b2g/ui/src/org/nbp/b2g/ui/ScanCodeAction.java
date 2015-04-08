@@ -1,5 +1,4 @@
-package org.nbp.b2g.ui.host;
-import org.nbp.b2g.ui.*;
+package org.nbp.b2g.ui;
 
 public abstract class ScanCodeAction extends KeyCodeAction {
   public final static String NULL_SCAN_CODE = "NULL";
