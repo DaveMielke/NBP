@@ -10,6 +10,9 @@ import java.io.OutputStream;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import java.util.UUID;
 
 import android.util.Log;
@@ -45,7 +48,7 @@ public abstract class BrailleDisplay extends Thread {
     return false;
   }
 
-  protected abstract void resetInput ();
+  protected abstract void resetInput (boolean readTimedOut);
   protected abstract boolean handleInput (int b);
 
   protected static void logIgnoredByte (int b) {
@@ -111,8 +114,39 @@ public abstract class BrailleDisplay extends Thread {
     return null;
   }
 
+  private final Object readTimerLock = new Object();
+  private Timer readTimer = null;
+
+  private boolean cancelReadTimer () {
+    synchronized (readTimerLock) {
+      if (readTimer == null) return false;
+      readTimer.cancel();
+      readTimer = null;
+      return true;
+    }
+  }
+
+  private void setReadTimer () {
+    cancelReadTimer();
+
+    synchronized (readTimerLock) {
+      TimerTask task = new TimerTask() {
+        @Override
+        public void run () {
+          if (cancelReadTimer()) {
+            Log.w(LOG_TAG, "bluetooth read timeout");
+            resetInput(true);
+          }
+        }
+      };
+
+      readTimer = new Timer();
+      readTimer.schedule(task, ApplicationParameters.BLUETOOTH_READ_TIMEOUT);
+    }
+  }
+
   private void handleInput (InputStream stream) {
-    resetInput();
+    resetInput(false);
 
     while (true) {
       int b;
@@ -125,9 +159,16 @@ public abstract class BrailleDisplay extends Thread {
       }
 
       if (b == -1) break;
-      if (!handleInput(b)) break;
-      if (!flush()) break;
+      cancelReadTimer();
+
+      if (!handleInput(b)) {
+        setReadTimer();
+      } else if (!flush()) {
+        break;
+      }
     }
+
+    cancelReadTimer();
   }
 
   @Override

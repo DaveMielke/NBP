@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class BaumBrailleDisplay extends BrailleDisplay {
   @Override
-  protected void resetInput () {
+  protected void resetInput (boolean readTimedOut) {
   }
 
   @Override
