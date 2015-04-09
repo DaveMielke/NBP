@@ -125,7 +125,8 @@ public abstract class BrailleDisplay extends Thread {
       }
 
       if (b == -1) break;
-      handleInput(b);
+      if (!handleInput(b)) break;
+      if (!flush()) break;
     }
   }
 
