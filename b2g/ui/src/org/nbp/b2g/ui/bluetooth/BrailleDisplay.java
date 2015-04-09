@@ -153,13 +153,16 @@ public abstract class BrailleDisplay extends Thread {
 
       try {
         b = stream.read();
+        cancelReadTimer();
       } catch (IOException exception) {
         Log.w(LOG_TAG, "bluetooth input error: " + exception.getMessage());
         break;
       }
 
-      if (b == -1) break;
-      cancelReadTimer();
+      if (b == -1) {
+        Log.w(LOG_TAG, "end of bluetooth input");
+        break;
+      }
 
       if (!handleInput(b)) {
         setReadTimer();
