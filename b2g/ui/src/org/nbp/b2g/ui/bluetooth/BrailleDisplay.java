@@ -3,8 +3,12 @@ import org.nbp.b2g.ui.*;
 
 import java.io.IOException;
 import java.io.Closeable;
+
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 
 import java.util.UUID;
 
@@ -14,16 +18,37 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 
-public class BrailleDisplay extends Thread {
+public abstract class BrailleDisplay extends Thread {
   private final static String LOG_TAG = BrailleDisplay.class.getName();
 
   private OutputStream outputStream = null;
 
-  private final static UUID SERIAL_PROFILE_UUID = UUID.fromString(
-    "00001101-0000-1000-8000-00805F9B34FB"
-  );
+  protected boolean write (int b) {
+    try {
+      outputStream.write(b);
+      return true;
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "bluetooth write error: " + exception.getMessage());
+    }
 
-  protected static void logIgnoredByte (byte b) {
+    return false;
+  }
+
+  protected boolean flush () {
+    try {
+      outputStream.flush();
+      return true;
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "bluetooth flush error: " + exception.getMessage());
+    }
+
+    return false;
+  }
+
+  protected abstract void resetInput ();
+  protected abstract boolean handleInput (int b);
+
+  protected static void logIgnoredByte (int b) {
     Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
   }
 
@@ -34,6 +59,10 @@ public class BrailleDisplay extends Thread {
       Log.w(LOG_TAG, String.format("%s close error: %s", description, exception.getMessage()), exception);
     }
   }
+
+  private final static UUID SERIAL_PROFILE_UUID = UUID.fromString(
+    "00001101-0000-1000-8000-00805F9B34FB"
+  );
 
   private static BluetoothServerSocket getServerSocket (BluetoothAdapter adapter) {
     try {
@@ -82,13 +111,6 @@ public class BrailleDisplay extends Thread {
     return null;
   }
 
-  protected void resetInput () {
-  }
-
-  protected void handleInput (byte b) {
-    logIgnoredByte(b);
-  }
-
   private void handleInput (InputStream stream) {
     resetInput();
 
@@ -97,29 +119,18 @@ public class BrailleDisplay extends Thread {
 
       try {
         b = stream.read();
-        if (b == -1) break;
       } catch (IOException exception) {
         Log.w(LOG_TAG, "bluetooth input error: " + exception.getMessage());
         break;
       }
 
-      handleInput((byte)b);
+      if (b == -1) break;
+      handleInput(b);
     }
-  }
-
-  protected boolean sendOutput (byte b) {
-    try {
-      outputStream.write(b);
-      return true;
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, "bluetooth output error: " + exception.getMessage());
-    }
-
-    return false;
   }
 
   @Override
-  public void run () {
+  public final void run () {
     Log.d(LOG_TAG, "bluetooth server started");
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -139,17 +150,12 @@ public class BrailleDisplay extends Thread {
             InputStream inputStream = getInputStream(sessionSocket);
 
             if (inputStream != null) {
-              synchronized (this) {
-                outputStream = getOutputStream(sessionSocket);
-              }
+              if ((outputStream = getOutputStream(sessionSocket)) != null) {
+                outputStream = new BufferedOutputStream(outputStream);
+                handleInput(new BufferedInputStream(inputStream));
 
-              if (outputStream != null) {
-                handleInput(inputStream);
-
-                synchronized (this) {
-                  closeObject(outputStream, "bluetooth output stream");
-                  outputStream = null;
-                }
+                closeObject(outputStream, "bluetooth output stream");
+                outputStream = null;
               }
 
               closeObject(inputStream, "bluetooth input stream");
