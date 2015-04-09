@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.host.HostEndpoint;
 
+import java.util.List;
+
 import android.util.Log;
 
 import android.accessibilityservice.AccessibilityService;
@@ -65,6 +67,9 @@ public class ScreenMonitor extends AccessibilityService {
 
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
+    HostEndpoint endpoint = getHostEndpoint();
+    int type = event.getEventType();
+    List<CharSequence> text = event.getText();
     AccessibilityNodeInfo source = event.getSource();
 
     if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
@@ -79,22 +84,22 @@ public class ScreenMonitor extends AccessibilityService {
       }
 
       if (node != null) {
-        HostEndpoint endpoint = getHostEndpoint();
-
         if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
           Log.d(LOG_TAG, "accessibility event node: " + ScreenUtilities.toString(node));
         }
 
-        switch (event.getEventType()) {
+        switch (type) {
           case AccessibilityEvent.TYPE_VIEW_FOCUSED:
           case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
           case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
             endpoint.write(node, true);
+            text = null;
             break;
 
           default:
             endpoint.write(node, false);
           case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
+            text = null;
             break;
         }
 
@@ -109,6 +114,24 @@ public class ScreenMonitor extends AccessibilityService {
     } else {
       if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
         Log.d(LOG_TAG, "no accessibility event source");
+      }
+    }
+
+    if (text != null) {
+      switch (type) {
+        default:
+          break;
+      }
+
+      if (text != null) {
+        StringBuilder sb = new StringBuilder();
+
+        for (CharSequence line : text) {
+          if (sb.length() > 0) sb.append('\n');
+          sb.append(line);
+        }
+
+        endpoint.write(sb.toString());
       }
     }
   }
