@@ -23,6 +23,10 @@ public class BrailleDisplay extends Thread {
     "00001101-0000-1000-8000-00805F9B34FB"
   );
 
+  protected static void logIgnoredByte (byte b) {
+    Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
+  }
+
   private static void closeObject (Closeable object, String description) {
     try {
       object.close();
@@ -78,15 +82,16 @@ public class BrailleDisplay extends Thread {
     return null;
   }
 
-  protected static void logIgnoredByte (byte b) {
-    Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
+  protected void resetInput () {
   }
 
-  protected void onByteReceived (byte b) {
+  protected void handleInput (byte b) {
     logIgnoredByte(b);
   }
 
-  private void processInput (InputStream stream) {
+  private void handleInput (InputStream stream) {
+    resetInput();
+
     while (true) {
       int b;
 
@@ -98,8 +103,19 @@ public class BrailleDisplay extends Thread {
         break;
       }
 
-      onByteReceived((byte)b);
+      handleInput((byte)b);
     }
+  }
+
+  protected boolean sendOutput (byte b) {
+    try {
+      outputStream.write(b);
+      return true;
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "bluetooth output error: " + exception.getMessage());
+    }
+
+    return false;
   }
 
   @Override
@@ -128,12 +144,15 @@ public class BrailleDisplay extends Thread {
               }
 
               if (outputStream != null) {
-                processInput(inputStream);
+                handleInput(inputStream);
 
                 synchronized (this) {
+                  closeObject(outputStream, "bluetooth output stream");
                   outputStream = null;
                 }
               }
+
+              closeObject(inputStream, "bluetooth input stream");
             }
 
             closeObject(sessionSocket, "bluetooth session socket");
