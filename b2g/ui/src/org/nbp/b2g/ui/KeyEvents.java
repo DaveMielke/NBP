@@ -28,36 +28,61 @@ public class KeyEvents {
     return false;
   }
 
+  private static void performAction (boolean isLongPress) {
+    if (activeNavigationKeys != 0) {
+      boolean performed = false;
+      KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
+      Action action = null;
+
+      if (isLongPress) {
+        action = keyBindings.getAction(activeNavigationKeys | KeyMask.LONG_PRESS);
+      }
+
+      if (action == null) {
+        action = keyBindings.getAction(activeNavigationKeys);
+      }
+
+      if (action != null) {
+        if (performAction(action)) {
+          performed = true;
+        }
+      }
+
+      if (!performed) ApplicationUtilities.beep();
+      activeNavigationKeys = 0;
+    }
+  }
+
+  private static Timeout keyPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME) {
+    @Override
+    public void run () {
+      performAction(true);
+    }
+  };
+
   public static int getNavigationKeys () {
     return activeNavigationKeys;
   }
 
   private static void handleNavigationKeyPress (int keyMask) {
     if (keyMask != 0) {
-      if ((pressedNavigationKeys & keyMask) == 0) {
-        pressedNavigationKeys |= keyMask;
-        activeNavigationKeys = pressedNavigationKeys;
+      synchronized (keyPressTimeout) {
+        if ((pressedNavigationKeys & keyMask) == 0) {
+          pressedNavigationKeys |= keyMask;
+          activeNavigationKeys = pressedNavigationKeys;
+          keyPressTimeout.start();
+        }
       }
     }
   }
 
   private static void handleNavigationKeyRelease (int keyMask) {
     if (keyMask != 0) {
-      if (activeNavigationKeys > 0) {
-        boolean performed = false;
-        Action action = Endpoints.getCurrentEndpoint().getKeyBindings().getAction(activeNavigationKeys);
-
-        if (action != null) {
-          if (performAction(action)) {
-            performed = true;
-          }
-        }
-
-        if (!performed) ApplicationUtilities.beep();
-        activeNavigationKeys = 0;
+      synchronized (keyPressTimeout) {
+        keyPressTimeout.cancel();
+        performAction(false);
+        pressedNavigationKeys &= ~keyMask;
       }
-
-      pressedNavigationKeys &= ~keyMask;
     }
   }
 

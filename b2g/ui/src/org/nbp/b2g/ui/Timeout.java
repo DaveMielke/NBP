@@ -27,23 +27,25 @@ public abstract class Timeout implements Runnable {
   }
 
   public void start () {
-    synchronized (this) {
-      cancel();
+    if (delay > 0) {
+      synchronized (this) {
+        cancel();
 
-      TimerTask task = new TimerTask() {
-        @Override
-        public void run () {
-          Timeout timeout = Timeout.this;
+        TimerTask task = new TimerTask() {
+          @Override
+          public void run () {
+            Timeout timeout = Timeout.this;
 
-          synchronized (timeout) {
-            timeout.cancel();
-            timeout.run();
+            synchronized (timeout) {
+              timeout.cancel();
+              timeout.run();
+            }
           }
-        }
-      };
+        };
 
-      timer = new Timer();
-      timer.schedule(task, delay);
+        timer = new Timer();
+        timer.schedule(task, delay);
+      }
     }
   }
 }
