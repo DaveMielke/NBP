@@ -72,21 +72,21 @@ public class BrailleDevice {
   }
 
   private static boolean writePending = false;
-  private static Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_UPDATE_DELAY) {
+  private static Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY) {
     @Override
-    public void run (Object argument) {
-      Endpoint endpoint = (Endpoint)argument;
-
+    public void run () {
       synchronized (LOCK) {
         if (writePending) {
           writePending = false;
-          write(endpoint);
+          write();
         }
       }
     }
   };
 
-  public static boolean write (final Endpoint endpoint) {
+  public static boolean write () {
+    Endpoint endpoint = Endpoints.getCurrentEndpoint();
+
     synchronized (LOCK) {
       if (writeDelay.isActive()) {
         writePending = true;
@@ -146,7 +146,7 @@ public class BrailleDevice {
 
         if (writeCells(brailleCells)) {
           writePending = false;
-          writeDelay.start(endpoint);
+          writeDelay.start();
           return true;
         }
       }

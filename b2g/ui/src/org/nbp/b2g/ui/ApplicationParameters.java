@@ -27,7 +27,7 @@ public abstract class ApplicationParameters {
   public static volatile long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
   public static volatile long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
-  public static volatile long BRAILLE_UPDATE_DELAY = 50; // milliseconds
+  public static volatile long BRAILLE_REWRITE_DELAY = 50; // milliseconds
   public static volatile int BRAILLE_SCROLL_KEEP = 3; // cells
 
   public static byte BRAILLE_CHARACTER_UNDEFINED =

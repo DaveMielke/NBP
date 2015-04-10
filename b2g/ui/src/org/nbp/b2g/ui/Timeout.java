@@ -3,11 +3,9 @@ package org.nbp.b2g.ui;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class Timeout {
+public abstract class Timeout implements Runnable {
   private final long delay;
   private Timer timer = null;
-
-  protected abstract void run (Object argument);
 
   public Timeout (long delay) {
     this.delay = delay;
@@ -28,7 +26,7 @@ public abstract class Timeout {
     }
   }
 
-  public void start (final Object argument) {
+  public void start () {
     synchronized (this) {
       cancel();
 
@@ -39,7 +37,7 @@ public abstract class Timeout {
 
           synchronized (timeout) {
             timeout.cancel();
-            timeout.run(argument);
+            timeout.run();
           }
         }
       };
@@ -47,9 +45,5 @@ public abstract class Timeout {
       timer = new Timer();
       timer.schedule(task, delay);
     }
-  }
-
-  public void start () {
-    start(null);
   }
 }

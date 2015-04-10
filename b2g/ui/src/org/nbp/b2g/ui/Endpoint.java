@@ -10,7 +10,7 @@ public class Endpoint {
       if (this != Endpoints.getCurrentEndpoint()) return true;
 
       synchronized (this) {
-        return BrailleDevice.write(this);
+        return BrailleDevice.write();
       }
     }
   }

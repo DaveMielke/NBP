@@ -113,7 +113,7 @@ public abstract class BrailleDisplay extends Thread {
 
   private Timeout readTimeout = new Timeout(ApplicationParameters.BLUETOOTH_READ_TIMEOUT) {
     @Override
-    public void run (Object argument) {
+    public void run () {
       synchronized (this) {
         Log.w(LOG_TAG, "bluetooth read timeout");
         resetInput(true);
