@@ -1,13 +1,10 @@
-package org.nbp.b2g.ui.host.actions;
-import org.nbp.b2g.ui.host.*;
+package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.inputmethod.InputConnection;
-
-public class SetLeft extends InputAction {
+public class SetLeft extends Action {
   @Override
   public boolean performAction (int cursorKey) {
-    HostEndpoint endpoint = getHostEndpoint();
+    Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
       return endpoint.scrollRight(cursorKey);

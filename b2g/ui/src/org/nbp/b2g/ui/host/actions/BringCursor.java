@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.inputmethod.InputConnection;
 
-public class BringCursor extends SetLeft {
+public class BringCursor extends InputAction {
   @Override
   public boolean performAction (int cursorKey) {
     HostEndpoint endpoint = getHostEndpoint();
@@ -31,6 +31,6 @@ public class BringCursor extends SetLeft {
   }
 
   public BringCursor (Endpoint endpoint) {
-    super(endpoint);
+    super(endpoint, false);
   }
 }

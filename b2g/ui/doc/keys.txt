@@ -45,10 +45,10 @@
 #    MenuKey
 #    MoveBackward
 #    MoveForward
-#    MoveLeft
-#    MoveRight
 #    Notifications
 #    Null
+#    PanLeft
+#    PanRight
 #    PasteFromClipboard
 #    PowerOff
 #    RecentApps

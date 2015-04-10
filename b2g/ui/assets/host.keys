@@ -1,6 +1,3 @@
-12345678 Null
-s12345678 Null
-
 s1478 PowerOff
 s123456 HomeKey
 
@@ -18,9 +15,6 @@ r ArrowRight
 sc LongClick
 sl BackKey
 sr RecentApps
-
-f MoveRight
-b MoveLeft
 
 sf MoveForward
 sb MoveBackward
@@ -47,7 +41,6 @@ s234-12 AndroidBluetoothSettings
 s234-2456 AndroidWifiSettings
 
 x BringCursor
-sx SetLeft
 bx SetSelectionStart
 fx SetSelectionEnd
 

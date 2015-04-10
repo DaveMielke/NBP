@@ -39,6 +39,7 @@ public class Endpoint {
   }
 
   private String textString;
+  private boolean softEdges;
 
   public String getText () {
     return textString;
@@ -72,12 +73,18 @@ public class Endpoint {
 
   protected void setText (String text, int indent) {
     textString = text;
+    softEdges = false;
+
     setLine(0);
     lineIndent = indent;
   }
 
   protected void setText (String text) {
     setText(text, 0);
+  }
+
+  public boolean hasSoftEdges () {
+    return softEdges || isEditable();
   }
 
   public String getLineText () {
@@ -181,6 +188,7 @@ public class Endpoint {
     synchronized (this) {
       setText(text);
       clearSelection();
+      softEdges = true;
       return write();
     }
   }
