@@ -23,6 +23,12 @@ without any of the keys being released, the secondary action is
 immediately executed - if a secondary action hasn't been assigned then 
 the primary action is executed.
 
+The way to cancel a key (or keys) that has been accidentally pressed is 
+to press enough additional keys such that an unassigned key combination 
+is being attempted. Two key combinations have been formally defined for 
+this purpose. One is all eight dots, and the other is all eight dots 
+plus Space.
+
 Braille
 ~~~~~~~
 
@@ -105,6 +111,10 @@ Space+r (dots 1235)
 Space+t (dots 2345)
   Display the current date and time in the ISO 8601 international format
   (YYYY-MM-DD hh:mm:ss). The displayed time is continually updated.
+
+Space+? (dots 1456)
+  Go to the currently registered **assist** app. The default is
+  ``Google Now``.
 
 Space+Dots1478
   Go to the Power Off screen.
