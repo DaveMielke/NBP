@@ -1,19 +1,19 @@
 # make this one very hard to type by accident
-fb1245 DeveloperActions
+FB1245 DeveloperActions
 
-su ScrollBackward
-sd ScrollForward
+SU ScrollBackward
+SD ScrollForward
 
-b4 MoveToParent
-b5 MoveToPreviousSibling
-b6 MoveToNextSibling
-b8 MoveToChild
-b56 MoveToSelf
-b4568 SaveScreen
+B4 MoveToParent
+B5 MoveToPreviousSibling
+B6 MoveToNextSibling
+B8 MoveToChild
+B56 MoveToSelf
+B4568 SaveScreen
 
-f1 LogKeys
-f2 LogActions
-f3 LogNavigation
-f7 LogUpdates
-f1237 LogNone
+F1 LogKeys
+F2 LogActions
+F3 LogNavigation
+F7 LogUpdates
+F1237 LogNone
 

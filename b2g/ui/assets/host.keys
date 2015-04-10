@@ -1,48 +1,48 @@
-s1478 PowerOff
-s123456 HomeKey
-
-s1 ArrowUp
-s4 ArrowDown
-s3 ArrowLeft
-s6 ArrowRight
-
-c Click
-u ArrowUp
-d ArrowDown
-l ArrowLeft
-r ArrowRight
-
-sc LongClick
-sl BackKey
-sr RecentApps
-
-sf MoveForward
-sb MoveBackward
-
 7 DeletePrevious
 8 EnterKey
 
-s12 TabBackward
-s45 TabForward
+S1478 PowerOff
+S123456 HomeKey
 
-s145 DeleteNext
-s124 Search
-s134 MenuKey
-s1345 Notifications
-s1235 RecentApps
-s2345 Clock
-s1346 ControlModifier
-s1356 BackKey
-s1456 Assist
+S1 ArrowUp
+S4 ArrowDown
+S3 ArrowLeft
+S6 ArrowRight
 
-s234-s AndroidSettings
-s234-1 AndroidAccessibilitySettings
-s234-12 AndroidBluetoothSettings
-s234-2456 AndroidWifiSettings
+C Click
+U ArrowUp
+D ArrowDown
+L ArrowLeft
+R ArrowRight
 
-x BringCursor
-bx SetSelectionStart
-fx SetSelectionEnd
+SC LongClick
+SL BackKey
+SR RecentApps
+
+SF MoveForward
+SB MoveBackward
+
+S12 TabBackward
+S45 TabForward
+
+S145 DeleteNext
+S124 Search
+S134 MenuKey
+S1345 Notifications
+S1235 RecentApps
+S2345 Clock
+S1346 ControlModifier
+S1356 BackKey
+S1456 Assist
+
+S234-S AndroidSettings
+S234-1 AndroidAccessibilitySettings
+S234-12 AndroidBluetoothSettings
+S234-2456 AndroidWifiSettings
+
+X BringCursor
+BX SetSelectionStart
+FX SetSelectionEnd
 
 81 SelectAll
 81346 CutToClipboard
