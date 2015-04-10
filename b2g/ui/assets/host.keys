@@ -1,26 +1,27 @@
 7 DeletePrevious
 8 EnterKey
 
-S1478 PowerOff
-S123456 HomeKey
+BH MoveBackward
+FH MoveForward
+
+C Click
+SC LongClick
+
+U ArrowUp
+D ArrowDown
+L ArrowLeft
+R ArrowRight
 
 S1 ArrowUp
 S4 ArrowDown
 S3 ArrowLeft
 S6 ArrowRight
 
-C Click
-U ArrowUp
-D ArrowDown
-L ArrowLeft
-R ArrowRight
-
-SC LongClick
 SL BackKey
 SR RecentApps
 
-SF MoveForward
-SB MoveBackward
+S1478 PowerOff
+S123456 HomeKey
 
 S12 TabBackward
 S45 TabForward

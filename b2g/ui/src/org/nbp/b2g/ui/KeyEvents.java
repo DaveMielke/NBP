@@ -53,7 +53,7 @@ public class KeyEvents {
     }
   }
 
-  private static Timeout keyPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME) {
+  private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME) {
     @Override
     public void run () {
       performAction(true);
@@ -66,11 +66,11 @@ public class KeyEvents {
 
   private static void handleNavigationKeyPress (int keyMask) {
     if (keyMask != 0) {
-      synchronized (keyPressTimeout) {
+      synchronized (longPressTimeout) {
         if ((pressedNavigationKeys & keyMask) == 0) {
           pressedNavigationKeys |= keyMask;
           activeNavigationKeys = pressedNavigationKeys;
-          keyPressTimeout.start();
+          longPressTimeout.start();
         }
       }
     }
@@ -78,8 +78,8 @@ public class KeyEvents {
 
   private static void handleNavigationKeyRelease (int keyMask) {
     if (keyMask != 0) {
-      synchronized (keyPressTimeout) {
-        keyPressTimeout.cancel();
+      synchronized (longPressTimeout) {
+        longPressTimeout.cancel();
         performAction(false);
         pressedNavigationKeys &= ~keyMask;
       }
