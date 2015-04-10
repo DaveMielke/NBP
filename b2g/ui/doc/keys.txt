@@ -9,15 +9,16 @@
 #    6  Dot 6
 #    7  Dot 7
 #    8  Dot 8
-#    b  Backwarc DPAD Center
-#    c  DPAD Center
-#    d  DPAD Down
-#    f  Forward
-#    l  DPAD Left
-#    r  DPAD Rightd
-#    s  Space
-#    u  DPAD Up
-#    x  any cursor key
+#    B  Backward
+#    C  DPAD Center
+#    D  DPAD Down
+#    F  Forward
+#    H  hold (long press)
+#    L  DPAD Left
+#    R  DPAD Right
+#    S  Space
+#    U  DPAD Up
+#    X  any cursor routing key
  
 # The following user actions may be specified:
 #    AndroidAccessibilitySettings
