@@ -10,9 +10,6 @@ import java.io.OutputStream;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import java.util.UUID;
 
 import android.util.Log;
@@ -114,36 +111,15 @@ public abstract class BrailleDisplay extends Thread {
     return null;
   }
 
-  private final Object readTimerLock = new Object();
-  private Timer readTimer = null;
-
-  private boolean cancelReadTimer () {
-    synchronized (readTimerLock) {
-      if (readTimer == null) return false;
-      readTimer.cancel();
-      readTimer = null;
-      return true;
+  private Timeout readTimeout = new Timeout(ApplicationParameters.BLUETOOTH_READ_TIMEOUT) {
+    @Override
+    public void run (Object argument) {
+      synchronized (this) {
+        Log.w(LOG_TAG, "bluetooth read timeout");
+        resetInput(true);
+      }
     }
-  }
-
-  private void setReadTimer () {
-    cancelReadTimer();
-
-    synchronized (readTimerLock) {
-      TimerTask task = new TimerTask() {
-        @Override
-        public void run () {
-          if (cancelReadTimer()) {
-            Log.w(LOG_TAG, "bluetooth read timeout");
-            resetInput(true);
-          }
-        }
-      };
-
-      readTimer = new Timer();
-      readTimer.schedule(task, ApplicationParameters.BLUETOOTH_READ_TIMEOUT);
-    }
-  }
+  };
 
   private void handleInput (InputStream stream) {
     resetInput(false);
@@ -153,7 +129,7 @@ public abstract class BrailleDisplay extends Thread {
 
       try {
         b = stream.read();
-        cancelReadTimer();
+        readTimeout.cancel();
       } catch (IOException exception) {
         Log.w(LOG_TAG, "bluetooth input error: " + exception.getMessage());
         break;
@@ -165,13 +141,13 @@ public abstract class BrailleDisplay extends Thread {
       }
 
       if (!handleInput(b)) {
-        setReadTimer();
+        readTimeout.start();
       } else if (!flush()) {
         break;
       }
     }
 
-    cancelReadTimer();
+    readTimeout.cancel();
   }
 
   @Override

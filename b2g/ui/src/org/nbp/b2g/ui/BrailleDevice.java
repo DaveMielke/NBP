@@ -2,9 +2,6 @@ package org.nbp.b2g.ui;
 
 import java.util.Arrays;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.util.Log;
 
 public class BrailleDevice {
@@ -74,13 +71,25 @@ public class BrailleDevice {
     }
   }
 
-  private static Timer delayTimer = null;
-  private static boolean delayUpdate = false;
+  private static boolean writePending = false;
+  private static Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_UPDATE_DELAY) {
+    @Override
+    public void run (Object argument) {
+      Endpoint endpoint = (Endpoint)argument;
+
+      synchronized (LOCK) {
+        if (writePending) {
+          writePending = false;
+          write(endpoint);
+        }
+      }
+    }
+  };
 
   public static boolean write (final Endpoint endpoint) {
     synchronized (LOCK) {
-      if (delayTimer != null) {
-        delayUpdate = true;
+      if (writeDelay.isActive()) {
+        writePending = true;
         return true;
       }
 
@@ -136,24 +145,8 @@ public class BrailleDevice {
         }
 
         if (writeCells(brailleCells)) {
-          TimerTask task = new TimerTask() {
-            @Override
-            public void run () {
-              synchronized (LOCK) {
-                delayTimer.cancel();
-                delayTimer = null;
-
-                if (delayUpdate) {
-                  delayUpdate = false;
-                  write(endpoint);
-                }
-              }
-            }
-          };
-
-          delayUpdate = false;
-          delayTimer = new Timer();
-          delayTimer.schedule(task, ApplicationParameters.BRAILLE_UPDATE_DELAY);
+          writePending = false;
+          writeDelay.start(endpoint);
           return true;
         }
       }
