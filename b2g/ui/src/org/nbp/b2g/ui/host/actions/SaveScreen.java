@@ -6,7 +6,7 @@ import android.util.Log;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class SaveScreen extends ActivityAction {
+public class SaveScreen extends Action {
   private final static String LOG_TAG = SaveScreen.class.getName();
 
   private void write (String string) {

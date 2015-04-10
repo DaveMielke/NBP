@@ -32,15 +32,15 @@ public class KeyBindings {
   public final static char DOT_6     = '6';
   public final static char DOT_7     = '7';
   public final static char DOT_8     = '8';
-  public final static char SPACE     = 's';
-  public final static char FORWARD   = 'f';
-  public final static char BACKWARD  = 'b';
-  public final static char CENTER    = 'c';
-  public final static char UP        = 'u';
-  public final static char DOWN      = 'd';
-  public final static char LEFT      = 'l';
-  public final static char RIGHT     = 'r';
-  public final static char CURSOR    = 'x';
+  public final static char SPACE     = 'S';
+  public final static char FORWARD   = 'F';
+  public final static char BACKWARD  = 'B';
+  public final static char CENTER    = 'C';
+  public final static char UP        = 'U';
+  public final static char DOWN      = 'D';
+  public final static char LEFT      = 'L';
+  public final static char RIGHT     = 'R';
+  public final static char CURSOR    = 'X';
 
   private final Endpoint endpoint;
   private final Map<String, Action> actionCache = new HashMap<String, Action>();
@@ -207,7 +207,7 @@ public class KeyBindings {
       char character = operand.charAt(index);
       int bit;
 
-      switch (character) {
+      switch (Character.toUpperCase(character)) {
         case KeyBindings.DOT_1:    bit = KeyMask.DOT_1;       break;
         case KeyBindings.DOT_2:    bit = KeyMask.DOT_2;       break;
         case KeyBindings.DOT_3:    bit = KeyMask.DOT_3;       break;

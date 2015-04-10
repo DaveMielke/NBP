@@ -5,7 +5,7 @@ import org.nbp.b2g.ui.*;
 public class PanRight extends MoveForward {
   @Override
   public boolean performAction () {
-    HostEndpoint endpoint = getHostEndpoint();
+    Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
       if (endpoint.panRight()) return true;
