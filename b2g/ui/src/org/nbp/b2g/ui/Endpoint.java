@@ -163,17 +163,19 @@ public class Endpoint {
     }
   }
 
+  protected void adjustScroll (int offset) {
+    int keep = ApplicationParameters.BRAILLE_SCROLL_KEEP;
+    adjustLeft(offset, keep);
+    adjustRight(offset, keep);
+  }
+
   public void setSelection (int start, int end) {
     synchronized (this) {
       selectionStart = start;
       selectionEnd = end;
 
       if ((start == end) && isSelected(start)) {
-        int offset = setLine(start);
-        int keep = ApplicationParameters.BRAILLE_SCROLL_KEEP;
-
-        adjustLeft(offset, keep);
-        adjustRight(offset, keep);
+        adjustScroll(setLine(start));
       }
 
       write();
@@ -182,6 +184,10 @@ public class Endpoint {
 
   public void clearSelection () {
     setSelection(NO_SELECTION, NO_SELECTION);
+  }
+
+  public void setCursor (int offset) {
+    setSelection(offset, offset);
   }
 
   public boolean write (String text) {

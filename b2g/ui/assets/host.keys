@@ -27,7 +27,7 @@ S12 TabBackward
 S45 TabForward
 
 S145 DeleteNext
-S124 Search
+S124 FindNext
 S134 MenuKey
 S1345 Notifications
 S1235 RecentApps

@@ -40,6 +40,7 @@
 #    DeleteNext
 #    DeletePrevious
 #    EnterKey
+#    FindNext
 #    HomeKey
 #    InsertCharacter
 #    LongClick
@@ -53,7 +54,6 @@
 #    PasteFromClipboard
 #    PowerOff
 #    RecentApps
-#    Search
 #    SelectAll
 #    SetLeft
 #    SetSelectionEnd
