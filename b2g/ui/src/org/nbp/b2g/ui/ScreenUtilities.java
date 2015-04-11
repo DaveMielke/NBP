@@ -104,9 +104,7 @@ public class ScreenUtilities {
   }
 
   public static String getClassName (AccessibilityNodeInfo node) {
-    String name = node.getClassName().toString();
-    int index = name.lastIndexOf('.');
-    return name.substring(index+1);
+    return LanguageUtilities.getClassName(node.getClassName());
   }
 
   public static String toString (AccessibilityNodeInfo node) {

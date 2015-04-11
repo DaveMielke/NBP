@@ -19,7 +19,7 @@ public abstract class Action {
   }
 
   public final String getName () {
-    return getClass().getName();
+    return LanguageUtilities.getClassName(getClass());
   }
 
   public boolean performAction (int cursorKey) {

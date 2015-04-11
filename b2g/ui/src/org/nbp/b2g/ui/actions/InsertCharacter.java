@@ -16,7 +16,8 @@ public class InsertCharacter extends Action {
   }
 
   private boolean insertCharacter (char character) {
-    ModifierAction control = ControlModifier.getControlModifier();
+    Endpoint endpoint = getEndpoint();
+    ModifierAction control = (ControlModifier)endpoint.getKeyBindings().getAction(ControlModifier.class);
 
     if (control != null) {
       if (control.getState()) {
@@ -31,7 +32,7 @@ public class InsertCharacter extends Action {
       }
     }
 
-    return getEndpoint().insertCharacter(character);
+    return endpoint.insertCharacter(character);
   }
 
   @Override

@@ -169,6 +169,10 @@ public class KeyBindings {
     return null;
   }
 
+  public Action getAction (Class type) {
+    return actionCache.get(LanguageUtilities.getClassName(type));
+  }
+
   private Action getAction (String actionName) {
     Action action = actionCache.get(actionName);
     if (action != null) return action;
@@ -348,7 +352,7 @@ public class KeyBindings {
   }
 
   private void addKeyBindings (String[] keysFileNames) {
-    String endpointName = endpoint.getClass().getName();
+    String endpointName = LanguageUtilities.getClassName(endpoint.getClass());
     Log.d(LOG_TAG, "begin key binding definitions: " + endpointName);
 
     addKeyBinding(KeyMask.VOLUME_DOWN, "VolumeDown");
