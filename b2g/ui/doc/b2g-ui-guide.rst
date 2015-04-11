@@ -99,6 +99,9 @@ Space+Dots123456
 Space+z (dots 1356)
   The Back button.
 
+Space+f (dots 124)
+  Find text within the current screen element (see `Find Mode`_).
+
 Space+m (dots 134)
   The Menu button. Go to the current app's main choices screen.
 
@@ -143,6 +146,28 @@ Space+s (dots 234)
 
   w (dots 2456)
     Go to the Wi-Fi Settings screen.
+
+Find Mode
+~~~~~~~~~
+
+Dot 8 is the Enter key. It returns to the system screen, searches 
+forward through the current screen element for the text, and, if found, 
+aligns the start of the braille display with the start of the text.
+
+Dot 7 is the Backspace key. It deletes the character to the left of the 
+cursor.
+
+Space+d (dots 145) is the Delete key. It deletes the character where the 
+cursor is.
+
+Pressing a cursor routing key brings the cursor to that character.
+
+Pressing a cursor routing key in combination with the Space key scrolls 
+the braille display to the right such that the visible portion of the 
+current line begins with that character.
+
+The forward key pans the braille display to the right, and the Backward 
+key pans it to the left.
 
 Editable Text Fields
 ~~~~~~~~~~~~~~~~~~~~

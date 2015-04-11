@@ -103,7 +103,7 @@ public class Endpoint {
     return lineIndent;
   }
 
-  protected void setLineIndent (int indent) {
+  public void setLineIndent (int indent) {
     lineIndent = indent;
   }
 
