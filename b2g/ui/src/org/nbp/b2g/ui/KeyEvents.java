@@ -67,10 +67,15 @@ public class KeyEvents {
   private static void handleNavigationKeyPress (int keyMask) {
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
-        if ((pressedNavigationKeys & keyMask) == 0) {
-          pressedNavigationKeys |= keyMask;
+        pressedNavigationKeys |= keyMask;
+
+        if (!ApplicationParameters.ONE_HAND_MODE) {
           activeNavigationKeys = pressedNavigationKeys;
           longPressTimeout.start();
+        } else if ((keyMask == KeyMask.SPACE) && (activeNavigationKeys != 0)) {
+          performAction(false);
+        } else {
+          activeNavigationKeys |= keyMask;
         }
       }
     }
@@ -80,8 +85,11 @@ public class KeyEvents {
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
         longPressTimeout.cancel();
-        performAction(false);
         pressedNavigationKeys &= ~keyMask;
+
+        if (!ApplicationParameters.ONE_HAND_MODE) {
+          performAction(false);
+        }
       }
     }
   }
