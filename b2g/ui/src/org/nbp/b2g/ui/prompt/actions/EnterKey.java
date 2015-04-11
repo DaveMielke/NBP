@@ -7,16 +7,18 @@ import android.view.inputmethod.InputConnection;
 public class EnterKey extends PromptAction {
   @Override
   public boolean performAction () {
-    boolean done = false;
-    PromptEndpoint promptEndpoint = getPromptEndpoint();
-    String response = promptEndpoint.getResponse();
+    boolean success = false;
+    PromptEndpoint endpoint = getPromptEndpoint();
+    String response = endpoint.getResponse();
 
     if (response.length() > 0) {
-      if (promptEndpoint.done(response)) done = true;
+      if (endpoint.handleResponse(response)) {
+        success = true;
+      }
     }
 
     Endpoints.setHostEndpoint();
-    return done;
+    return success;
   }
 
   public EnterKey (Endpoint endpoint) {

@@ -3,19 +3,19 @@ import org.nbp.b2g.ui.*;
 
 public class FindEndpoint extends PromptEndpoint {
   @Override
-  public boolean done (String response) {
+  public boolean handleResponse (String response) {
     boolean found = false;
-    Endpoint hostEndpoint = Endpoints.getHostEndpoint();
+    Endpoint endpoint = Endpoints.getHostEndpoint();
 
-    synchronized (hostEndpoint) {
-      int start = hostEndpoint.getBrailleStart();
+    synchronized (endpoint) {
+      int start = endpoint.getBrailleStart();
 
-      if (start < hostEndpoint.getTextLength()) {
-        String text = hostEndpoint.getText();
+      if (start < endpoint.getTextLength()) {
+        String text = endpoint.getText();
         int offset = text.indexOf(response, start+1);
 
         if (offset >= 0) {
-          hostEndpoint.setLineIndent(hostEndpoint.setLine(offset));
+          endpoint.setLineIndent(endpoint.setLine(offset));
           found = true;
         }
       }

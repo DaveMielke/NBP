@@ -2,7 +2,7 @@ package org.nbp.b2g.ui.prompt;
 import org.nbp.b2g.ui.*;
 
 public abstract class PromptEndpoint extends Endpoint {
-  public abstract boolean done (String response);
+  public abstract boolean handleResponse (String response);
 
   private final StringBuilder buffer = new StringBuilder();
   private final int start;
