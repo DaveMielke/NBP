@@ -150,6 +150,11 @@ Space+s (dots 234)
 Find Mode
 ~~~~~~~~~
 
+Find mode is a prompt that allows a search string to be entered. When a 
+character is typed, it is entered where the cursor is. In addition to 
+typing characters, the search string can also be edited as described 
+below.
+
 Dot 8 is the Enter key. It returns to the system screen, searches 
 forward through the current screen element for the text, and, if found, 
 aligns the start of the braille display with the start of the text.
@@ -164,7 +169,7 @@ Pressing a cursor routing key brings the cursor to that character.
 
 Pressing a cursor routing key in combination with the Space key scrolls 
 the braille display to the right such that the visible portion of the 
-current line begins with that character.
+prompt begins with that character.
 
 The forward key pans the braille display to the right, and the Backward 
 key pans it to the left.
