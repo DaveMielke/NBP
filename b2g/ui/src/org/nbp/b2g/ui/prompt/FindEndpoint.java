@@ -5,18 +5,21 @@ public class FindEndpoint extends PromptEndpoint {
   @Override
   public boolean handleResponse (String response) {
     boolean found = false;
-    Endpoint endpoint = Endpoints.getHostEndpoint();
 
-    synchronized (endpoint) {
-      int start = endpoint.getBrailleStart();
+    if (response.length() > 0) {
+      Endpoint endpoint = Endpoints.getHostEndpoint();
 
-      if (start < endpoint.getTextLength()) {
-        String text = endpoint.getText();
-        int offset = text.indexOf(response, start+1);
+      synchronized (endpoint) {
+        int start = endpoint.getBrailleStart();
 
-        if (offset >= 0) {
-          endpoint.setLineIndent(endpoint.setLine(offset));
-          found = true;
+        if (start < endpoint.getTextLength()) {
+          String text = endpoint.getText();
+          int offset = text.indexOf(response, start+1);
+
+          if (offset >= 0) {
+            endpoint.setLineIndent(endpoint.setLine(offset));
+            found = true;
+          }
         }
       }
     }
