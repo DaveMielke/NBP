@@ -1,6 +1,9 @@
-package org.nbp.b2g.ui;
+package org.nbp.b2g.ui.prompt;
+import org.nbp.b2g.ui.*;
 
-public class PromptEndpoint extends Endpoint {
+public abstract class PromptEndpoint extends Endpoint {
+  public abstract boolean done (String response);
+
   private final StringBuilder buffer = new StringBuilder();
   private final int start;
   private int cursor;
@@ -63,6 +66,15 @@ public class PromptEndpoint extends Endpoint {
   @Override
   public boolean isEditable () {
     return true;
+  }
+
+  private final static String[] keysFileNames = new String[] {
+    "nabcc", "all", "prompt"
+  };
+
+  @Override
+  protected String[] getKeysFileNames () {
+    return keysFileNames;
   }
 
   public PromptEndpoint (String prompt) {

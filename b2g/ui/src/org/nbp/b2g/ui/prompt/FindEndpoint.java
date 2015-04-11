@@ -1,17 +1,11 @@
-package org.nbp.b2g.ui.find.actions;
-import org.nbp.b2g.ui.find.*;
+package org.nbp.b2g.ui.prompt;
 import org.nbp.b2g.ui.*;
 
-import android.view.inputmethod.InputConnection;
-
-public class EnterKey extends FindAction {
+public class FindEndpoint extends PromptEndpoint {
   @Override
-  public boolean performAction () {
+  public boolean done (String response) {
     boolean found = false;
     Endpoint hostEndpoint = Endpoints.getHostEndpoint();
-
-    FindEndpoint findEndpoint = getFindEndpoint();
-    String response = findEndpoint.getResponse();
 
     synchronized (hostEndpoint) {
       int start = hostEndpoint.getBrailleStart();
@@ -27,11 +21,10 @@ public class EnterKey extends FindAction {
       }
     }
 
-    Endpoints.setHostEndpoint();
     return found;
   }
 
-  public EnterKey (Endpoint endpoint) {
-    super(endpoint);
+  public FindEndpoint () {
+    super("find");
   }
 }

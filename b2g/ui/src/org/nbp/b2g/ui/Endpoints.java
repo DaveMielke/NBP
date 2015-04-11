@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
 import org.nbp.b2g.ui.host.HostEndpoint;
-import org.nbp.b2g.ui.find.FindEndpoint;
+import org.nbp.b2g.ui.prompt.FindEndpoint;
 import org.nbp.b2g.ui.bluetooth.BluetoothEndpoint;
 
 public class Endpoints {

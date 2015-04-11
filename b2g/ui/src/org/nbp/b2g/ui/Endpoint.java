@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public class Endpoint {
+public abstract class Endpoint {
   public boolean isEditable () {
     return false;
   }

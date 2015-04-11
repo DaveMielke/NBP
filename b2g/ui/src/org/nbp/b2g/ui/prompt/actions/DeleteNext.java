@@ -1,11 +1,11 @@
-package org.nbp.b2g.ui.find.actions;
-import org.nbp.b2g.ui.find.*;
+package org.nbp.b2g.ui.prompt.actions;
+import org.nbp.b2g.ui.prompt.*;
 import org.nbp.b2g.ui.*;
 
-public class DeleteNext extends FindAction {
+public class DeleteNext extends PromptAction {
   @Override
   public boolean performAction (boolean isLongPress) {
-    FindEndpoint endpoint = getFindEndpoint();
+    PromptEndpoint endpoint = getPromptEndpoint();
     return endpoint.deleteNext(isLongPress);
   }
 

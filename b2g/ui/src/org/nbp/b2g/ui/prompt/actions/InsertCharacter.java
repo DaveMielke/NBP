@@ -1,11 +1,11 @@
-package org.nbp.b2g.ui.find.actions;
-import org.nbp.b2g.ui.find.*;
+package org.nbp.b2g.ui.prompt.actions;
+import org.nbp.b2g.ui.prompt.*;
 import org.nbp.b2g.ui.*;
 
 public class InsertCharacter extends InsertCharacterAction {
   @Override
   public boolean insertCharacter (char character) {
-    FindEndpoint endpoint = (FindEndpoint)getEndpoint();
+    PromptEndpoint endpoint = (PromptEndpoint)getEndpoint();
     return endpoint.insertCharacter(character);
   }
 
