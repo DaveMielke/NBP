@@ -74,6 +74,7 @@ public class KeyEvents {
           longPressTimeout.start();
         } else if ((keyMask == KeyMask.SPACE) && (activeNavigationKeys != 0)) {
           performAction(false);
+          pressedCursorKeys.clear();
         } else {
           activeNavigationKeys |= keyMask;
         }
@@ -114,6 +115,10 @@ public class KeyEvents {
   }
 
   private static void handleCursorKeyPress (int keyNumber) {
+    if (ApplicationParameters.ONE_HAND_MODE) {
+      pressedCursorKeys.clear();
+    }
+
     pressedCursorKeys.add(keyNumber);
 
     if (pressedCursorKeys.size() == 1) {
@@ -123,7 +128,9 @@ public class KeyEvents {
   }
 
   private static void handleCursorKeyRelease (int keyNumber) {
-    pressedCursorKeys.remove(keyNumber);
+    if (!ApplicationParameters.ONE_HAND_MODE) {
+      pressedCursorKeys.remove(keyNumber);
+    }
   }
 
   public static void handleCursorKeyEvent (int keyNumber, boolean press) {
