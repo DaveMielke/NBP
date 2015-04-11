@@ -299,26 +299,27 @@ Key Combinations for Developers
 
 A number of key combinations have been defined for developer use. They 
 are disabled by default. An always enabled, but intentionally difficult 
-to type by accident, key combination toggles their availability. It is::
+to type by accident, key combination determines their availability. It is::
 
   Backward + Forward + g (dots 1245)
 
-The developer key combinations are:
+A long press of this key combination enables them, and a short press 
+disables them. The developer key combinations are:
 
 Forward+Dots1237
-  Turn off all the log categories.
+  Turn off all of the log categories.
 
 Forward+Dot1
-  Toggle the logging of key press and release events from the keyboard.
+  Turn on the logging of key press and release events from the keyboard.
 
 Forward+Dot2
-  Toggle the logging of actions requested by the user.
+  Turn on the logging of actions requested by the user.
 
 Forward+Dot3
-  Toggle the logging of internal screen navigation operations.
+  Turn on the logging of internal screen navigation operations.
 
 Forward+Dot7
-  Toggle the logging of Android accessibility events.
+  Turn on the logging of Android accessibility events.
 
 Backward+Dots56
   Describe the current screen element.
