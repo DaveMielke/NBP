@@ -4,9 +4,9 @@ import org.nbp.b2g.ui.*;
 
 public class DeleteNext extends FindAction {
   @Override
-  public boolean performAction () {
+  public boolean performAction (boolean isLongPress) {
     FindEndpoint endpoint = getFindEndpoint();
-    return endpoint.deleteNext();
+    return endpoint.deleteNext(isLongPress);
   }
 
   public DeleteNext (Endpoint endpoint) {

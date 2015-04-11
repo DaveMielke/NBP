@@ -12,13 +12,13 @@ public class KeyEvents {
   private static int activeNavigationKeys = 0;
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
-  private static boolean performAction (Action action) {
+  private static boolean performAction (Action action, boolean isLongPress) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
       Log.d(LOG_TAG, "performing action: " + action.getName());
     }
 
     try {
-      if (action.performAction()) return true;
+      if (action.performAction(isLongPress)) return true;
       Log.w(LOG_TAG, "action failed: " + action.getName());
       ApplicationUtilities.beep();
     } catch (Exception exception) {
@@ -43,7 +43,7 @@ public class KeyEvents {
       }
 
       if (action != null) {
-        if (performAction(action)) {
+        if (performAction(action, isLongPress)) {
           performed = true;
         }
       }

@@ -33,6 +33,10 @@ public abstract class Action {
     return performAction(cursorKeys[0]);
   }
 
+  public boolean performAction (boolean isLongPress) {
+    return performAction();
+  }
+
   public boolean parseOperand (int keyMask, String operand) {
     Log.w(LOG_TAG, "invalid " + getName() + " operand: " + operand);
     return false;

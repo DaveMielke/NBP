@@ -22,15 +22,29 @@ public class PromptEndpoint extends Endpoint {
     return flush();
   }
 
-  public boolean deletePrevious () {
+  public boolean deletePrevious (boolean all) {
     if (cursor == start) return false;
-    buffer.deleteCharAt(--cursor);
+
+    if (all) {
+      buffer.delete(start, cursor);
+      cursor = start;
+    } else {
+      buffer.deleteCharAt(--cursor);
+    }
+
     return flush();
   }
 
-  public boolean deleteNext () {
-    if (cursor == buffer.length()) return false;
-    buffer.deleteCharAt(cursor);
+  public boolean deleteNext (boolean all) {
+    int length = buffer.length();
+    if (cursor == length) return false;
+
+    if (all) {
+      buffer.delete(cursor, length);
+    } else {
+      buffer.deleteCharAt(cursor);
+    }
+
     return flush();
   }
 

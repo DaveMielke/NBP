@@ -160,10 +160,12 @@ forward through the current screen element for the text, and, if found,
 aligns the start of the braille display with the start of the text.
 
 Dot 7 is the Backspace key. It deletes the character to the left of the 
+cursor. A long press deletes all of the characters to the left of the
 cursor.
 
 Space+d (dots 145) is the Delete key. It deletes the character where the 
-cursor is.
+cursor is. A long press also deletes all of the characters to the right
+of the cursor.
 
 Pressing a cursor routing key brings the cursor to that character.
 
