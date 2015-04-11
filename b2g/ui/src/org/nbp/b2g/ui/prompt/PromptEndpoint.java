@@ -20,6 +20,7 @@ public abstract class PromptEndpoint extends Endpoint {
     flush();
   }
 
+  @Override
   public boolean insertCharacter (char character) {
     buffer.insert(cursor++, character);
     return flush();

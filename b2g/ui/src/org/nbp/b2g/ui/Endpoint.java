@@ -5,6 +5,10 @@ public abstract class Endpoint {
     return false;
   }
 
+  public boolean insertCharacter (char character) {
+    return false;
+  }
+
   public boolean write () {
     synchronized (Endpoints.LOCK) {
       if (this != Endpoints.getCurrentEndpoint()) return true;

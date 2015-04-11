@@ -89,6 +89,19 @@ public class HostEndpoint extends Endpoint {
     return ScreenUtilities.isEditable(currentNode);
   }
 
+  @Override
+  public boolean insertCharacter (char character) {
+    InputService service = InputService.getInputService();
+
+    if (service != null) {
+      if (service.insert(character)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   private final static String[] keysFileNames = new String[] {
     "nabcc", "all", "host", "developer"
   };
