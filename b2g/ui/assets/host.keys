@@ -1,5 +1,7 @@
-7 DeletePrevious
 8 EnterKey
+7 DeletePrevious
+S145 DeleteNext
+X BringCursor
 
 BH MoveBackward
 FH MoveForward
@@ -29,7 +31,6 @@ S123456 HomeKey
 S12 TabBackward
 S45 TabForward
 
-S145 DeleteNext
 S124 FindNext
 S134 MenuKey
 S1345 Notifications
@@ -43,7 +44,6 @@ S234-1 AndroidAccessibilitySettings
 S234-12 AndroidBluetoothSettings
 S234-2456 AndroidWifiSettings
 
-X BringCursor
 BX SetSelectionStart
 FX SetSelectionEnd
 

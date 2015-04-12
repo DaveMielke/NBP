@@ -420,6 +420,35 @@ Space+Up
 Space+Down
   Force the current screen element to be scrolled forward.
 
+Cheat Sheets
+------------
+
+.. include:: keys-substitutions.rst
+
+The key combinations within these cheat sheets are represented as follows:
+
+.. include:: keys-legend.rst
+
+Common Operations
+~~~~~~~~~~~~~~~~~
+
+.. include:: keys-common.rst
+
+Editable Text Fields and Prompts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. include:: keys-edit.rst
+
+Screen Navigation
+~~~~~~~~~~~~~~~~~
+
+.. include:: keys-screen.rst
+
+Developer Actions
+~~~~~~~~~~~~~~~~~
+
+.. include:: keys-developer.rst
+
 Tables
 ------
 
