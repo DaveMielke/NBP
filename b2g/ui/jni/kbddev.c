@@ -51,6 +51,7 @@ static const ScanCodeEntry scanCodeTable[] = {
 JAVA_METHOD(
   org_nbp_b2g_ui_KeyboardDevice, defineScanCodes, void
 ) {
+  jclass class = this;
   const char *methodName = "defineScanCode";
   const char *methodSignature = "(Ljava/lang/String;I)V";
   jmethodID method = (*env)->GetStaticMethodID(env, class, methodName, methodSignature);

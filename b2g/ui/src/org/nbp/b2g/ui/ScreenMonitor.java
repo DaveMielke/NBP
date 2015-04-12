@@ -33,7 +33,7 @@ public class ScreenMonitor extends AccessibilityService {
     screenMonitor = this;
 
     Clipboard.setClipboard(this);
-    KeyboardMonitor.startKeyboardMonitor();
+    EventMonitor.startMonitors();
   }
 
   @Override

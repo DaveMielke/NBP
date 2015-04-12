@@ -23,7 +23,7 @@ extern int awaitInput (int fileDescriptor);
 
 #define JAVA_METHOD(object, name, type, ...) \
   JNIEXPORT type JNICALL Java_ ## object ## _ ## name ( \
-    JNIEnv *env, jclass class, ## __VA_ARGS__ \
+    JNIEnv *env, jobject this, ## __VA_ARGS__ \
   )
 
 extern int checkException (JNIEnv *env);

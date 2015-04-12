@@ -12,8 +12,8 @@
 MAKE_FILE_LOG_TAG;
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
+#define POWER_BUTTON_DEVICE_NAME "TWL4030_pwrbutton"
 #define NO_DEVICE -1
-static int keyboardDevice = NO_DEVICE;
 
 static char *
 findEventDevice (const char *deviceName) {
@@ -22,7 +22,7 @@ findEventDevice (const char *deviceName) {
   DIR *directory;
 
   snprintf(directoryPath, sizeof(directoryPath),
-           "/sys/devices/platform/%s/input", deviceName);
+           "/sys/bus/platform/devices/%s/input", deviceName);
 
   if ((directory = opendir(directoryPath))) {
     struct dirent *entry;
@@ -80,54 +80,51 @@ openEventDevice (const char *deviceName) {
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardMonitor, openKeyboard, jboolean
+  org_nbp_b2g_ui_KeyboardMonitor, openDevice, jint
 ) {
-  static const char keyboardName[] = KEYBOARD_DEVICE_NAME;
-
-  if (keyboardDevice == NO_DEVICE) {
-    if ((keyboardDevice = openEventDevice(keyboardName)) == NO_DEVICE) {
-      return JNI_FALSE;
-    }
-  }
-
-  return JNI_TRUE;
+  return openEventDevice(KEYBOARD_DEVICE_NAME);
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardMonitor, closeKeyboard, void
+  org_nbp_b2g_ui_PowerButtonMonitor, openDevice, jint
 ) {
-  if (keyboardDevice != NO_DEVICE) {
-    close(keyboardDevice);
-    keyboardDevice = NO_DEVICE;
-  }
+  return openEventDevice(POWER_BUTTON_DEVICE_NAME);
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardMonitor, monitorKeyboard, void,
-  jobject monitor
+  org_nbp_b2g_ui_EventMonitor, closeDevice, void,
+  jint device
 ) {
+  close(device);
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_EventMonitor, monitorDevice, void,
+  jint device
+) {
+  jclass class = (*env)->GetObjectClass(env, this);
   const char *methodName = "onKeyEvent";
   const char *methodSignature = "(IZ)V";
   jmethodID method = (*env)->GetMethodID(env, class, methodName, methodSignature);
 
   if (method) {
-    while (awaitInput(keyboardDevice)) {
+    while (awaitInput(device)) {
       struct input_event event;
       size_t size = sizeof(event);
-      ssize_t result = read(keyboardDevice, &event, size);
+      ssize_t result = read(device, &event, size);
 
       if (result == -1) {
-        logSystemError(LOG_TAG, "read[keyboard]");
+        logSystemError(LOG_TAG, "read[event]");
         break;
       }
 
       if (result == 0) {
-        LOG(ERROR, "keyboard end-of-file");
+        LOG(ERROR, "event end-of-file");
         break;
       }
 
       if (result != size) {
-        LOG(ERROR, "unexpected keyboard read length: %zu != %zu",
+        LOG(ERROR, "unexpected event read length: %zu != %zu",
             (size_t)result, size);
         break;
       }
@@ -143,7 +140,7 @@ JAVA_METHOD(
           continue;
         }
 
-        (*env)->CallVoidMethod(env, monitor, method, event.code, press);
+        (*env)->CallVoidMethod(env, this, method, event.code, press);
         if (checkException(env)) break;
       }
     }
