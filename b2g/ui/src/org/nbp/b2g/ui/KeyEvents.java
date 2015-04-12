@@ -29,12 +29,16 @@ public class KeyEvents {
   }
 
   private static void performAction (boolean isLongPress) {
+    if (!ApplicationParameters.LONG_PRESS_ACTIONS) {
+      isLongPress = false;
+    }
+
     if (activeNavigationKeys != 0) {
       boolean performed = false;
       KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
       Action action = null;
 
-      if (isLongPress && ApplicationParameters.LONG_PRESS_ACTIONS) {
+      if (isLongPress) {
         action = keyBindings.getAction(activeNavigationKeys | KeyMask.LONG_PRESS);
       }
 

@@ -16,8 +16,8 @@
 .. |CutToClipboard| replace:: cut the selected text to the clipboard
 .. |DeleteNext| replace:: delete the next character
 .. |DeletePrevious| replace:: delete the previous character
-.. |DeveloperActions| replace:: enable (long) or disable (short) developer actions
-.. |EnterKey| replace:: the enter key
+.. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
+.. |EnterKey| replace:: the Enter key
 .. |FindNext| replace:: forward search for text
 .. |HomeKey| replace:: the Home key
 .. |LogActions| replace:: turn on logging of user-requested actions
