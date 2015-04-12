@@ -84,6 +84,35 @@ can be easily **selected**. This is how to do it:
 4) Hold the Forward key while pressing the cursor routing key on the 
    character that is to end the selection.
 
+Using steps 1 and 2, the start of the selection can be changed at any 
+time. Likewise, using steps 3 and 4, the end of the selection can be 
+changed at any time. In fact, the end of the selection can be set before 
+the start of the selection is set, i.e. steps 3 and 4 can be performed 
+before steps 1 and 2 have been performed.
+
+Selecting text is useful in at least the following ways:
+
+* Typing a character deletes the selected text, puts the cursor where
+  the selected text was, and then inserts the character at that point 
+  within the text. This, in other words, is an efficient way to replace 
+  old text with new text. Just select the old text and then start typing 
+  the new text.
+
+* Pressing either delete key (previous or next) deletes the selected 
+  text. This, in other words, is an efficient way to delete a block of 
+  text. Just select it and then delete it.
+
+If the start of the selection is set first, and if the cursor is after 
+that character, then the selection is implicitly extended forward to 
+(but not including) the character where the cursor is. This, for 
+example, provides an easy way to delete or replace several characters 
+that have just been typed.
+
+If the end of the selection is set first, and if the cursor is before 
+that character, then the selection is implicitly extended back to (and 
+including) the character where the cursor is. This, for example, 
+provides an easy way to replace a word, line, paragraph, etc.
+
 Navigation
 ----------
 
