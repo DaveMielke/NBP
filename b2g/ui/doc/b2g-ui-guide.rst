@@ -1,9 +1,9 @@
 The B2G User Interface
 ======================
 
-.. |the undefined character| replace:: dots 3, 6, 7, and 8
-.. |the cursor indicator| replace:: dot 8
-.. |the selection indicator| replace:: dots 7 and 8
+.. |the undefined character| replace:: dots 3, 6, 7, and 8 (⣤)
+.. |the cursor indicator| replace:: dot 8 (⢀)
+.. |the selection indicator| replace:: dots 7 and 8 (⣀)
 
 .. contents::
 
@@ -76,17 +76,13 @@ When on an editable text field, any sequence of text within that field
 can be easily **selected**. This is how to do it:
 
 1) If necessary, use the Forward and Backward keys to pan to a place 
-   where the first character to be selected can be seen. In a multi-line 
-   field with long lines, the Up and Down keys (on the DPAD) can also be 
-   used in order to quickly switch lines.
+   where the first character to be selected can be seen.
 
 2) Hold the Backward key while pressing the cursor routing key on the 
    character that is to start the selection.
 
 3) If necessary, use the Forward and Backward keys to pan to a place 
-   where the last character to be selected can be seen. In a multi-line 
-   field with long lines, the Up and Down keys (on the DPAD) can also be 
-   used in order to quickly switch lines.
+   where the last character to be selected can be seen.
 
 4) Hold the Forward key while pressing the cursor routing key on the 
    character that is to end the selection.
