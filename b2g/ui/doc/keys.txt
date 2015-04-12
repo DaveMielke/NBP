@@ -52,6 +52,7 @@
 #    PanLeft
 #    PanRight
 #    PasteFromClipboard
+#    PowerButton
 #    PowerOff
 #    RecentApps
 #    SelectAll

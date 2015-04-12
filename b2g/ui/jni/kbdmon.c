@@ -12,7 +12,7 @@
 MAKE_FILE_LOG_TAG;
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
-#define POWER_BUTTON_DEVICE_NAME "TWL4030_pwrbutton"
+#define POWER_BUTTON_DEVICE_NAME "twl4030_pwrbutton"
 #define NO_DEVICE -1
 
 static char *

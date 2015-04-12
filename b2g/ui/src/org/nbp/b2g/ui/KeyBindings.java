@@ -357,6 +357,7 @@ public class KeyBindings {
 
     addKeyBinding(KeyMask.VOLUME_DOWN, "VolumeDown");
     addKeyBinding(KeyMask.VOLUME_UP, "VolumeUp");
+    addKeyBinding(KeyMask.POWER, "PowerButton");
 
     if (keysFileNames != null) {
       for (String keysFileName : keysFileNames) {

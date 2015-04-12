@@ -29,7 +29,6 @@ public abstract class EventMonitor extends Thread {
     int device = openDevice();
 
     if (device != NO_DEVICE) {
-      KeyEvents.resetKeys();
       monitorDevice(device);
       closeDevice(device);
     } else {
@@ -41,8 +40,11 @@ public abstract class EventMonitor extends Thread {
 
   public static void startMonitors () {
     if (ApplicationParameters.START_KEYBOARD_MONITOR) {
+      KeyEvents.resetKeys();
+
       EventMonitor[] monitors = new EventMonitor[] {
-        KeyboardMonitor.getKeyboardMonitor()
+        KeyboardMonitor.getKeyboardMonitor(),
+        PowerButtonMonitor.getPowerButtonMonitor()
       };
 
       for (EventMonitor monitor : monitors) {
