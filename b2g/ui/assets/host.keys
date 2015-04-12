@@ -4,6 +4,9 @@
 BH MoveBackward
 FH MoveForward
 
+SB MoveBackward
+SF MoveForward
+
 C Click
 SC LongClick
 
