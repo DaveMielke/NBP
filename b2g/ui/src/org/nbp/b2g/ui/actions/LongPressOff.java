@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class LongPressOff extends Action {
   @Override
   public boolean performAction () {
-    ApplicationParameters.LONG_PRESS_ENABLED = false;
+    ApplicationParameters.LONG_PRESS_ACTIONS = false;
     return true;
   }
 

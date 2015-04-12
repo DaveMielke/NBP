@@ -439,10 +439,10 @@ Editable Text Fields and Prompts
 
 .. include:: keys-edit.rst
 
-Screen Navigation
-~~~~~~~~~~~~~~~~~
+Navigating the Host Screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. include:: keys-screen.rst
+.. include:: keys-host.rst
 
 Developer Actions
 ~~~~~~~~~~~~~~~~~

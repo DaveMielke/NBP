@@ -34,7 +34,7 @@ public class KeyEvents {
       KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
       Action action = null;
 
-      if (isLongPress && ApplicationParameters.LONG_PRESS_ENABLED) {
+      if (isLongPress && ApplicationParameters.LONG_PRESS_ACTIONS) {
         action = keyBindings.getAction(activeNavigationKeys | KeyMask.LONG_PRESS);
       }
 

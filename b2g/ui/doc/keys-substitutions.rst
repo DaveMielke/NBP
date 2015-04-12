@@ -1,60 +1,56 @@
-.. |Null| replace:: cancel an acidentally-started key combination
-.. |PanLeft| replace:: pan to the left
-.. |PanRight| replace:: pan to the right
-.. |SetLeft| replace:: position the left end of the braille display
-.. |ControlModifier| replace:: sticky control modifier
-.. |OneHandOff| replace:: turn off one hand mode
-.. |OneHandOn| replace:: turn on one hand mode
-.. |LongPressOff| replace:: disable long key presses
-.. |LongPressOn| replace:: enable long key presses
-
-.. |EnterKey| replace:: the enter key
-.. |DeletePrevious| replace:: delete the previous character
-.. |DeleteNext| replace:: delete the next character
-.. |BringCursor| replace:: bring the cursor to a specific character
-
-.. |MoveBackward| replace:: move to start of previous screen element
-.. |MoveForward| replace:: move to start of next screen element
-.. |Click| replace:: tap (click) current screen element
-.. |LongClick| replace:: hold (long click) current screen element
-.. |ArrowUp| replace:: the Up Arrow key
+.. |AndroidAccessibilitySettings| replace:: go to the Accessibility Settings screen
+.. |AndroidBluetoothSettings| replace:: go to the Bluetooth Settings screen
+.. |AndroidSettings| replace:: go to the main Settings screen
+.. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
 .. |ArrowDown| replace:: the Down Arrow key
 .. |ArrowLeft| replace:: the Left Arrow key
 .. |ArrowRight| replace:: the Right Arrow key
-.. |BackKey| replace:: the Back key
-.. |PowerOff| replace:: go to the Power Off dialog
-.. |HomeKey| replace:: the Home key
-.. |TabBackward| replace:: the Shift and Tab keys
-.. |TabForward| replace:: the Tab key
-.. |FindNext| replace:: forward search for text
-.. |MenuKey| replace:: the Menu key
-.. |Notifications| replace:: go to the Notifications screen
-.. |RecentApps| replace:: go to the Recent Apps screen
-.. |Clock| replace:: go to the clock
+.. |ArrowUp| replace:: the Up Arrow key
 .. |Assist| replace:: go to the current Google Assist app
-.. |AndroidSettings| replace:: go to the main Settings screen
-.. |AndroidAccessibilitySettings| replace:: go to the Accessibility Settings screen
-.. |AndroidBluetoothSettings| replace:: go to the Bluetooth Settings screen
-.. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
-.. |SetSelectionStart| replace:: set the start of a text selection
-.. |SetSelectionEnd| replace:: set the end of a text selection
-.. |SelectAll| replace:: select all of the text
-.. |CutToClipboard| replace:: cut the selected text to the clipboard
+.. |BackKey| replace:: the Back key
+.. |BringCursor| replace:: bring the cursor to a specific character
+.. |Click| replace:: tap (click) current screen element
+.. |Clock| replace:: go to the clock
+.. |ControlModifier| replace:: sticky control modifier
 .. |CopyToClipboard| replace:: copy the selected text to the clipboard
-.. |PasteFromClipboard| replace:: paste the clipboard content into the text
-
+.. |CutToClipboard| replace:: cut the selected text to the clipboard
+.. |DeleteNext| replace:: delete the next character
+.. |DeletePrevious| replace:: delete the previous character
 .. |DeveloperActions| replace:: enable (long) or disable (short) developer actions
-.. |ScrollBackward| replace:: force screen to scroll up or left
-.. |ScrollForward| replace:: force screen to scroll down or right
+.. |EnterKey| replace:: the enter key
+.. |FindNext| replace:: forward search for text
+.. |HomeKey| replace:: the Home key
+.. |LogActions| replace:: turn on logging of user-requested actions
+.. |LogKeys| replace:: turn on logging of keyboard key events
+.. |LogNavigation| replace:: turn on logging of internal screen navigation operations
+.. |LogNone| replace:: turn off all log categories
+.. |LogUpdates| replace:: turn on logging of Android accessibility events
+.. |LongClick| replace:: hold (long click) current screen element
+.. |LongPressOff| replace:: disable long key press actions
+.. |LongPressOn| replace:: enable long key press actions
+.. |MenuKey| replace:: the Menu key
+.. |MoveBackward| replace:: move to start of previous screen element
+.. |MoveForward| replace:: move to start of next screen element
+.. |MoveToChild| replace:: go to and describe first child node
+.. |MoveToNextSibling| replace:: go to and describe next sibling node
 .. |MoveToParent| replace:: go to and describe parent node
 .. |MoveToPreviousSibling| replace:: go to and describe previous sibling node
-.. |MoveToNextSibling| replace:: go to and describe next sibling node
-.. |MoveToChild| replace:: go to and describe first child node
 .. |MoveToSelf| replace:: describe current node
+.. |Notifications| replace:: go to the Notifications screen
+.. |Null| replace:: cancel an acidentally-started key combination
+.. |OneHandOff| replace:: turn off one hand mode
+.. |OneHandOn| replace:: turn on one hand mode
+.. |PanLeft| replace:: pan to the left
+.. |PanRight| replace:: pan to the right
+.. |PasteFromClipboard| replace:: paste the clipboard content into the text
+.. |PowerOff| replace:: go to the Power Off dialog
+.. |RecentApps| replace:: go to the Recent Apps screen
 .. |SaveScreen| replace:: write screen element structure to log
-.. |LogKeys| replace:: turn on logging of keyboard key events
-.. |LogActions| replace:: turn on logging of user-requested actions
-.. |LogNavigation| replace:: turn on logging of internal screen navigation operations
-.. |LogUpdates| replace:: turn on logging of Android accessibility events
-.. |LogNone| replace:: turn off all log categories
-
+.. |ScrollBackward| replace:: force screen to scroll up or left
+.. |ScrollForward| replace:: force screen to scroll down or right
+.. |SelectAll| replace:: select all of the text
+.. |SetLeft| replace:: position the left end of the braille display
+.. |SetSelectionEnd| replace:: set the end of a text selection
+.. |SetSelectionStart| replace:: set the start of a text selection
+.. |TabBackward| replace:: the Shift and Tab keys
+.. |TabForward| replace:: the Tab key

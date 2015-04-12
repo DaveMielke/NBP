@@ -5,7 +5,7 @@ import org.nbp.b2g.ui.*;
 public class DeveloperActions extends Action {
   @Override
   public boolean performAction (boolean isLongPress) {
-    ApplicationParameters.ENABLE_DEVELOPER_ACTIONS = isLongPress;
+    ApplicationParameters.DEVELOPER_ACTIONS = isLongPress;
     return true;
   }
 
