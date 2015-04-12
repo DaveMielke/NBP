@@ -62,6 +62,28 @@ example::
   (ImageView)
   (ListView)
 
+Text Selection
+~~~~~~~~~~~~~~
+
+When on an editable text field, any sequence of text within that field 
+can be easily **selected**. This is how to do it:
+
+1) If necessary, use the Forward and Backward keys to pan to a place 
+   where the first character to be selected can be seen. In a multi-line 
+   field with long lines, the Up and Down keys (on the DPAD) can also be 
+   used in order to quickly switch lines.
+
+2) Hold the Backward key while pressing the cursor routing key on the 
+   character that is to start the selection.
+
+3) If necessary, use the Forward and Backward keys to pan to a place 
+   where the last character to be selected can be seen. In a multi-line 
+   field with long lines, the Up and Down keys (on the DPAD) can also be 
+   used in order to quickly switch lines.
+
+4) Hold the Forward key while pressing the cursor routing key on the 
+   character that is to end the selection.
+
 Navigation
 ----------
 
