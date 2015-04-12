@@ -102,9 +102,9 @@ Selecting text is useful in at least the following ways:
   old text with new text. Just select the old text and then start typing 
   the new text.
 
-* Pressing either delete key (previous or next) deletes the selected 
-  text. This, in other words, is an efficient way to delete a block of 
-  text. Just select it and then delete it.
+* Pressing any of the delete keys (see `Editable Text Fields`_)
+  deletes the selected text. This, in other words, is an efficient way 
+  to delete a block of text. Just select it and then delete it.
 
 If the start of the selection is set first, and if the cursor is after 
 that character, then the selection is implicitly extended forward to 
@@ -116,6 +116,26 @@ If the end of the selection is set first, and if the cursor is before
 that character, then the selection is implicitly extended back to (and 
 including) the character where the cursor is. This, for example, 
 provides an easy way to replace a word, line, paragraph, etc.
+
+One Hand Mode
+~~~~~~~~~~~~~
+
+One Hand Mode is primarily for those users who only have the use of one 
+hand. It's off by default. Pressing Forward+Dot8 enables it, and 
+pressing Backward+Dot7 disables it. Both of these key combinations have 
+been chosen so that they can be reasonably easily pressed with a single 
+hand.
+
+When One Hand Mode is on, each key of a key combination may be pressed 
+separately. Pressing Space indicates that all of the keys of the 
+combination have been pressed. If Space itself is part of the 
+combination then it must be pressed first.
+
+For those whose operable hand is sufficiently functional, pressing more 
+than one key at a time is supported. The only exception to this is that 
+Space, whether pressed at the start (to include it in the combination) 
+or at the end (to indicate that the combination is complete), should 
+always be pressed separately.
 
 Navigation
 ----------
