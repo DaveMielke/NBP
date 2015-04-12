@@ -1,6 +1,10 @@
 The B2G User Interface
 ======================
 
+.. |the undefined character| replace:: dots 3, 6, 7, and 8
+.. |the cursor indicator| replace:: dot 8
+.. |the selection indicator| replace:: dots 7 and 8
+
 .. contents::
 
 Usage Notes
@@ -32,11 +36,14 @@ plus Space.
 Braille
 ~~~~~~~
 
-The special character rendered as dots 3678 is used to represent a 
-character that doesn't have its own defined representation.
+The special character rendered as |the undefined character| is used to
+represent a character that doesn't have its own defined representation.
 
-When on an editable text field: Dot 8 is used to show where the cursor 
-is, and dots 78 are used to show which characters have been selected. 
+When on an editable text field:
+
+* The location of the cursor is shown by |the cursor indicator|.
+* The current text selection is highlighted via |the selection indicator|. 
+
 Note that the cursor isn't shown when at least one character has been 
 selected.
 
@@ -90,6 +97,7 @@ changed at any time. In fact, the end of the selection can be set before
 the start of the selection is set, i.e. steps 3 and 4 can be performed 
 before steps 1 and 2 have been performed.
 
+The current text selection is highlighted via |the selection indicator|.
 Selecting text is useful in at least the following ways:
 
 * Typing a character deletes the selected text, puts the cursor where
