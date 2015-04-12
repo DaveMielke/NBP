@@ -5,6 +5,7 @@ import android.util.Log;
 public abstract class EventMonitor extends Thread {
   private final static String LOG_TAG = EventMonitor.class.getName();
 
+  protected abstract boolean isEnabled ();
   protected abstract int openDevice ();
   private native void closeDevice (int device);
   private native void monitorDevice (int device);
@@ -39,17 +40,15 @@ public abstract class EventMonitor extends Thread {
   }
 
   public static void startMonitors () {
-    if (ApplicationParameters.START_KEYBOARD_MONITOR) {
-      KeyEvents.resetKeys();
+    KeyEvents.resetKeys();
 
-      EventMonitor[] monitors = new EventMonitor[] {
-        KeyboardMonitor.getKeyboardMonitor(),
-        PowerButtonMonitor.getPowerButtonMonitor()
-      };
+    EventMonitor[] monitors = new EventMonitor[] {
+      KeyboardMonitor.getKeyboardMonitor(),
+      PowerButtonMonitor.getPowerButtonMonitor()
+    };
 
-      for (EventMonitor monitor : monitors) {
-        monitor.start();
-      }
+    for (EventMonitor monitor : monitors) {
+      if (monitor.isEnabled()) monitor.start();
     }
   }
 

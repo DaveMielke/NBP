@@ -4,9 +4,6 @@ public class KeyboardMonitor extends EventMonitor {
   private final static Object LOCK = new Object();
   private static KeyboardMonitor keyboardMonitor = null;
 
-  @Override
-  protected native int openDevice ();
-
   public static KeyboardMonitor getKeyboardMonitor () {
     synchronized (LOCK) {
       if (keyboardMonitor == null) keyboardMonitor = new KeyboardMonitor();
@@ -17,6 +14,14 @@ public class KeyboardMonitor extends EventMonitor {
   public static boolean isActive () {
     return getKeyboardMonitor().isAlive();
   }
+
+  @Override
+  protected boolean isEnabled () {
+    return ApplicationParameters.START_KEYBOARD_MONITOR;
+  }
+
+  @Override
+  protected native int openDevice ();
 
   public KeyboardMonitor () {
     super("keyboard-monitor");
