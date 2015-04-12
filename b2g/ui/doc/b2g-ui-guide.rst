@@ -420,34 +420,35 @@ Space+Up
 Space+Down
   Force the current screen element to be scrolled forward.
 
-Cheat Sheets
-------------
+Quick Reference
+---------------
 
-.. include:: keys-substitutions.rst
+.. include:: ref-actions.rst
 
-The key combinations within these cheat sheets are represented as follows:
+The key combinations within these quick reference tables are represented
+as follows:
 
-.. include:: keys-legend.rst
+.. include:: ref-keys.rst
 
 Common Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: keys-common.rst
+.. include:: ref-common.rst
 
 Editable Text Fields and Prompts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. include:: keys-edit.rst
+.. include:: ref-edit.rst
 
 Navigating the Host Screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. include:: keys-host.rst
+.. include:: ref-host.rst
 
 Developer Actions
 ~~~~~~~~~~~~~~~~~
 
-.. include:: keys-developer.rst
+.. include:: ref-developer.rst
 
 Tables
 ------
