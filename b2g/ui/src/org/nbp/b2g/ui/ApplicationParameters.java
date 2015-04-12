@@ -4,6 +4,7 @@ import android.os.Build;
 
 public abstract class ApplicationParameters {
   public static volatile boolean ONE_HAND_MODE = false;
+  public static volatile boolean LONG_PRESS_ENABLED = true;
   public static volatile boolean ENABLE_DEVELOPER_ACTIONS = false;
 
   public static volatile boolean START_KEYBOARD_MONITOR = true;

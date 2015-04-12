@@ -44,11 +44,15 @@
 #    HomeKey
 #    InsertCharacter
 #    LongClick
+#    LongPressOff
+#    LongPressOn
 #    MenuKey
 #    MoveBackward
 #    MoveForward
 #    Notifications
 #    Null
+#    OneHandOff
+#    OneHandOn
 #    PanLeft
 #    PanRight
 #    PasteFromClipboard
