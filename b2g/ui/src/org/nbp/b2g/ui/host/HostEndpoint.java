@@ -135,7 +135,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   private final static String[] keysFileNames = new String[] {
-    "nabcc", "all", "host", "developer"
+    "nabcc", "common", "edit", "host", "developer"
   };
 
   @Override
