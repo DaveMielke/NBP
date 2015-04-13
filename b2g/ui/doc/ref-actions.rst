@@ -12,10 +12,10 @@
 .. |Click| replace:: tap (click) current screen element
 .. |Clock| replace:: go to the clock
 .. |ControlModifier| replace:: sticky control modifier
-.. |CopyToClipboard| replace:: copy the selected text to the clipboard
-.. |CutToClipboard| replace:: cut the selected text to the clipboard
-.. |DeleteNext| replace:: delete the next character
-.. |DeletePrevious| replace:: delete the previous character
+.. |CopyToClipboard| replace:: copy text to clipboard
+.. |CutToClipboard| replace:: cut selected text to clipboard
+.. |DeleteNext| replace:: delete next character
+.. |DeletePrevious| replace:: delete previous character
 .. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
 .. |EnterKey| replace:: the Enter key
 .. |FindNext| replace:: forward search for text
@@ -42,7 +42,7 @@
 .. |OneHandOn| replace:: turn on one hand mode
 .. |PanLeft| replace:: pan to the left
 .. |PanRight| replace:: pan to the right
-.. |PasteFromClipboard| replace:: paste the clipboard content into the text
+.. |PasteFromClipboard| replace:: paste clipboard content into text at cursor
 .. |PowerOff| replace:: go to the Power Off dialog
 .. |RecentApps| replace:: go to the Recent Apps screen
 .. |SaveScreen| replace:: write screen element structure to log

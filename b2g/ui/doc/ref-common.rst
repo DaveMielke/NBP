@@ -5,6 +5,7 @@ B          |PanLeft|
 F          |PanRight|
 SX         |SetLeft|
 S1346      |ControlModifier|
+814        |CopyToClipboard|
 B7         |OneHandOff|
 F8         |OneHandOn|
 B3         |LongPressOff|

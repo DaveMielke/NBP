@@ -1,14 +1,13 @@
-package org.nbp.b2g.ui.host.actions;
-import org.nbp.b2g.ui.host.*;
+package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class CopyToClipboard extends InputAction {
+public class CopyToClipboard extends Action {
   @Override
   public boolean performAction () {
     String text;
 
     {
-      HostEndpoint endpoint = getHostEndpoint();
+      Endpoint endpoint = getEndpoint();
 
       synchronized (endpoint) {
         if (endpoint.isEditable() && endpoint.isSelected()) {

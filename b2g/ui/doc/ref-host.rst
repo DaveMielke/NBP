@@ -28,6 +28,5 @@ BX         |SetSelectionStart|
 FX         |SetSelectionEnd|
 81         |SelectAll|
 81346      |CutToClipboard|
-814        |CopyToClipboard|
 81236      |PasteFromClipboard|
 =========  ==============================
