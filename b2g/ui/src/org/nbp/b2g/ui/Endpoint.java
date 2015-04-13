@@ -5,8 +5,21 @@ public abstract class Endpoint {
     return false;
   }
 
-  public boolean insertCharacter (char character) {
+  public boolean insertText (String string) {
     return false;
+  }
+
+  public boolean insertText (char character) {
+    return insertText(Character.toString(character));
+  }
+
+  public boolean deleteText (int start, int end) {
+    return false;
+  }
+
+  public boolean deleteSelectedText () {
+    if (!isSelected()) return false;
+    return deleteText(getSelectionStart(), getSelectionEnd());
   }
 
   public boolean write () {

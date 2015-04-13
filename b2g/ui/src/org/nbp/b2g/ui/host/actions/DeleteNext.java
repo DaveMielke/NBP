@@ -5,7 +5,7 @@ import org.nbp.b2g.ui.*;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
-public class DeleteNext extends InputAction {
+public class DeleteNext extends HostAction {
   @Override
   public boolean performAction () {
     HostEndpoint endpoint = getHostEndpoint();
@@ -16,7 +16,7 @@ public class DeleteNext extends InputAction {
 
         if (connection != null) {
           if (endpoint.isSelected()) {
-            return deleteSelectedText(connection);
+            return endpoint.deleteSelectedText();
           } else {
             return connection.deleteSurroundingText(0, 1);
           }

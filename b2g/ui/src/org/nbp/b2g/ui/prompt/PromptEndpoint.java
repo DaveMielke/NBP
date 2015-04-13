@@ -19,10 +19,17 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean insertCharacter (char character) {
+  public boolean insertText (String string) {
     int cursor = getSelectionEnd();
-    buffer.insert(cursor++, character);
-    setCursor(cursor);
+    buffer.insert(cursor, string);
+    if (!setCursor(cursor + string.length())) return false;
+    return flush();
+  }
+
+  @Override
+  public boolean deleteText (int start, int end) {
+    buffer.delete(start, end);
+    if (!setCursor(start)) return false;
     return flush();
   }
 

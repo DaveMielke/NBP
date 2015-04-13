@@ -32,7 +32,7 @@ public class InsertCharacter extends Action {
       }
     }
 
-    return endpoint.insertCharacter(character);
+    return endpoint.insertText(character);
   }
 
   @Override

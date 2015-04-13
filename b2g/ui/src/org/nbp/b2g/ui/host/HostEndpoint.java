@@ -109,12 +109,31 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean insertCharacter (char character) {
+  public boolean insertText (String string) {
     InputService service = getInputService();
 
     if (service != null) {
-      if (service.insert(character)) {
+      if (service.insertText(string)) {
         return true;
+      }
+    }
+
+    return false;
+  }
+
+  @Override
+  public boolean deleteText (int start, int end) {
+    InputConnection connection = getInputConnection();
+
+    if (connection != null) {
+      if (connection.beginBatchEdit()) {
+        if (setCursor(end)) {
+          if (connection.deleteSurroundingText((end - start), 0)) {
+            if (connection.endBatchEdit()) {
+              return true;
+            }
+          }
+        }
       }
     }
 

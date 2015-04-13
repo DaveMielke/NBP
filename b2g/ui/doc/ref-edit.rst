@@ -16,4 +16,6 @@ S6         |ArrowRight|
 BX         |SetSelectionStart|
 FX         |SetSelectionEnd|
 81         |SelectAll|
+81346      |CutToClipboard|
+81236      |PasteFromClipboard|
 =========  =================

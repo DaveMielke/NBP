@@ -89,7 +89,7 @@ public class InputService extends InputMethodService {
     return null;
   }
 
-  public boolean insert (String string) {
+  public boolean insertText (String string) {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {
@@ -101,12 +101,12 @@ public class InputService extends InputMethodService {
     return false;
   }
 
-  public boolean insert (char character) {
+  public boolean insertText (char character) {
     if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
       Log.d(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
     }
 
-    if (insert(Character.toString(character))) return true;
+    if (insertText(Character.toString(character))) return true;
     Log.w(LOG_TAG, String.format("character insertion failed: 0X%02X", (int)character));
     return false;
   }
