@@ -3,15 +3,6 @@
 S145 DeleteNext
 X BringCursor
 
-BH MoveBackward
-FH MoveForward
-
-SB MoveBackward
-SF MoveForward
-
-C Click
-SC LongClick
-
 U ArrowUp
 D ArrowDown
 L ArrowLeft
@@ -21,6 +12,15 @@ S1 ArrowUp
 S4 ArrowDown
 S3 ArrowLeft
 S6 ArrowRight
+
+BH MoveBackward
+FH MoveForward
+
+SB MoveBackward
+SF MoveForward
+
+C Click
+SC LongClick
 
 SL BackKey
 SR RecentApps

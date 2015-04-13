@@ -1,9 +1,14 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import android.util.Log;
+
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.inputmethod.InputConnection;
 
 public class HostEndpoint extends Endpoint {
+  private final static String LOG_TAG = HostEndpoint.class.getName();
+
   private AccessibilityNodeInfo currentNode = null;
   private boolean currentDescribe = false;
 
@@ -89,12 +94,39 @@ public class HostEndpoint extends Endpoint {
     return ScreenUtilities.isEditable(currentNode);
   }
 
+  protected final InputService getInputService () {
+    return InputService.getInputService();
+  }
+
+  protected final InputConnection getInputConnection () {
+    InputService service = getInputService();
+    if (service == null) return null;
+
+    InputConnection connection = service.getCurrentInputConnection();
+    if (connection == null) Log.w(LOG_TAG, "no input connection");
+
+    return connection;
+  }
+
   @Override
   public boolean insertCharacter (char character) {
-    InputService service = InputService.getInputService();
+    InputService service = getInputService();
 
     if (service != null) {
       if (service.insert(character)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @Override
+  public boolean setCursor (int offset) {
+    InputConnection connection = getInputConnection();
+
+    if (connection != null) {
+      if (connection.setSelection(offset, offset)) {
         return true;
       }
     }

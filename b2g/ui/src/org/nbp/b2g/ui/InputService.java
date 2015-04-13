@@ -115,7 +115,7 @@ public class InputService extends InputMethodService {
     if (ApplicationParameters.LOG_KEY_EVENTS) {
       StringBuilder sb = new StringBuilder();
 
-      sb.append("key ");
+      sb.append("key code ");
       sb.append((press? "press": "release"));
       sb.append(" received");
 

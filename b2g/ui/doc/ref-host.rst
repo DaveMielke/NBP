@@ -7,14 +7,6 @@ SB         |MoveBackward|
 SF         |MoveForward|
 C          |Click|
 SC         |LongClick|
-U          |ArrowUp|
-D          |ArrowDown|
-L          |ArrowLeft|
-R          |ArrowRight|
-S1         |ArrowUp|
-S4         |ArrowDown|
-S3         |ArrowLeft|
-S6         |ArrowRight|
 SL         |BackKey|
 SR         |RecentApps|
 S1478      |PowerOff|

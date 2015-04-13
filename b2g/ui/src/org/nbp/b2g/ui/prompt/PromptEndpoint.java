@@ -6,27 +6,28 @@ public abstract class PromptEndpoint extends Endpoint {
 
   private final StringBuilder buffer = new StringBuilder();
   private final int start;
-  private int cursor;
 
   public boolean flush () {
     setText(buffer.toString(), getLineIndent());
-    setCursor(cursor);
     return write();
   }
 
   @Override
   public void onForeground () {
-    cursor = buffer.length();
+    setCursor(buffer.length());
     flush();
   }
 
   @Override
   public boolean insertCharacter (char character) {
+    int cursor = getSelectionEnd();
     buffer.insert(cursor++, character);
+    setCursor(cursor);
     return flush();
   }
 
   public boolean deletePrevious (boolean all) {
+    int cursor = getSelectionEnd();
     if (cursor == start) return false;
 
     if (all) {
@@ -36,10 +37,12 @@ public abstract class PromptEndpoint extends Endpoint {
       buffer.deleteCharAt(--cursor);
     }
 
+    setCursor(cursor);
     return flush();
   }
 
   public boolean deleteNext (boolean all) {
+    int cursor = getSelectionEnd();
     int length = buffer.length();
     if (cursor == length) return false;
 
@@ -56,7 +59,7 @@ public abstract class PromptEndpoint extends Endpoint {
     int offset = getBrailleStart() + cursorKey;
     if (offset < start) return false;
     if (offset > getTextLength()) return false;
-    cursor = offset;
+    setCursor(offset);
     return flush();
   }
 

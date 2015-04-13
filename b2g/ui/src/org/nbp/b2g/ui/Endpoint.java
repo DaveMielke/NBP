@@ -173,7 +173,7 @@ public abstract class Endpoint {
     adjustRight(offset, keep);
   }
 
-  public void setSelection (int start, int end) {
+  public boolean setSelection (int start, int end) {
     synchronized (this) {
       selectionStart = start;
       selectionEnd = end;
@@ -182,16 +182,16 @@ public abstract class Endpoint {
         adjustScroll(setLine(start));
       }
 
-      write();
+      return write();
     }
   }
 
-  public void clearSelection () {
-    setSelection(NO_SELECTION, NO_SELECTION);
+  public boolean clearSelection () {
+    return setSelection(NO_SELECTION, NO_SELECTION);
   }
 
-  public void setCursor (int offset) {
-    setSelection(offset, offset);
+  public boolean setCursor (int offset) {
+    return setSelection(offset, offset);
   }
 
   public boolean write (String text) {

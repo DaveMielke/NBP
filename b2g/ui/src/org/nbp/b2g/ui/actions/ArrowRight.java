@@ -1,5 +1,4 @@
-package org.nbp.b2g.ui.host.actions;
-import org.nbp.b2g.ui.host.*;
+package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 import android.accessibilityservice.AccessibilityService;
@@ -13,7 +12,7 @@ public class ArrowRight extends ArrowAction {
     if (endpoint.isSelected(end)) {
       if (end < endpoint.getTextLength()) {
         if (end == endpoint.getSelectionStart()) end += 1;
-        if (setCursor(end)) {
+        if (endpoint.setCursor(end)) {
           return true;
         }
       }

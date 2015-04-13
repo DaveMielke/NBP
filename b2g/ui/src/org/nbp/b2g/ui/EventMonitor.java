@@ -12,7 +12,7 @@ public abstract class EventMonitor extends Thread {
 
   public void onKeyEvent (int code, boolean press) {
     if (ApplicationParameters.LOG_KEY_EVENTS) {
-      Log.d(LOG_TAG, "key " + (press? "press": "release") + ": " + code);
+      Log.d(LOG_TAG, "scan code " + (press? "press": "release") + " received: " + code);
     }
 
     if ((code >= ScanCode.CURSOR_0) && (code <= ScanCode.CURSOR_19)) {

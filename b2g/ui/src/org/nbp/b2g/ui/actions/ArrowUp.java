@@ -1,5 +1,4 @@
-package org.nbp.b2g.ui.host.actions;
-import org.nbp.b2g.ui.host.*;
+package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 import android.accessibilityservice.AccessibilityService;
@@ -23,7 +22,7 @@ public class ArrowUp extends ArrowAction {
         if (offset > length) offset = length;
         start += offset;
 
-        if (setCursor(start)) {
+        if (endpoint.setCursor(start)) {
           return true;
         }
       }

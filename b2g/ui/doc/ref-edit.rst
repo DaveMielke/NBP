@@ -5,4 +5,12 @@ Keys       Action
 7          |DeletePrevious|
 S145       |DeleteNext|
 X          |BringCursor|
+U          |ArrowUp|
+D          |ArrowDown|
+L          |ArrowLeft|
+R          |ArrowRight|
+S1         |ArrowUp|
+S4         |ArrowDown|
+S3         |ArrowLeft|
+S6         |ArrowRight|
 =========  =================

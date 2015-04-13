@@ -1,5 +1,4 @@
-package org.nbp.b2g.ui.host.actions;
-import org.nbp.b2g.ui.host.*;
+package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 import android.accessibilityservice.AccessibilityService;
@@ -25,7 +24,7 @@ public class ArrowDown extends ArrowAction {
         if (end > length) end = length;
         end += start;
 
-        if (setCursor(end)) {
+        if (endpoint.setCursor(end)) {
           return true;
         }
       }

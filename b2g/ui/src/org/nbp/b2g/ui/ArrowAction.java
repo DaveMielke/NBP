@@ -1,7 +1,6 @@
-package org.nbp.b2g.ui.host;
-import org.nbp.b2g.ui.*;
+package org.nbp.b2g.ui;
 
-public abstract class ArrowAction extends InputAction {
+public abstract class ArrowAction extends ScanCodeAction {
   protected boolean performArrowEditAction (Endpoint endpoint) {
     return false;
   }
