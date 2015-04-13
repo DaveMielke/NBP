@@ -122,16 +122,21 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean setCursor (int offset) {
+  public boolean setSelection (int start, int end) {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {
-      if (connection.setSelection(offset, offset)) {
+      if (connection.setSelection(start, end)) {
         return true;
       }
     }
 
     return false;
+  }
+
+  @Override
+  public boolean setCursor (int offset) {
+    return setSelection(offset, offset);
   }
 
   private final static String[] keysFileNames = new String[] {

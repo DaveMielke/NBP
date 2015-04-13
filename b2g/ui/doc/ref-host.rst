@@ -24,9 +24,6 @@ S234-S     |AndroidSettings|
 S234-1     |AndroidAccessibilitySettings|
 S234-12    |AndroidBluetoothSettings|
 S234-2456  |AndroidWifiSettings|
-BX         |SetSelectionStart|
-FX         |SetSelectionEnd|
-81         |SelectAll|
 81346      |CutToClipboard|
 81236      |PasteFromClipboard|
 =========  ==============================
