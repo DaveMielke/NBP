@@ -4,19 +4,9 @@ import org.nbp.b2g.ui.*;
 public class CopyToClipboard extends Action {
   @Override
   public boolean performAction () {
-    String text;
-
-    {
-      Endpoint endpoint = getEndpoint();
-
-      synchronized (endpoint) {
-        if (endpoint.isEditable() && endpoint.isSelected()) {
-          text = endpoint.getSelectedText();
-        } else {
-          text = endpoint.getText();
-        }
-      }
-    }
+    Endpoint endpoint = getEndpoint();
+    String text = endpoint.getSelectedText();
+    if (text == null) text = endpoint.getText();
 
     if (text != null) {
       if (Clipboard.putText(text)) {

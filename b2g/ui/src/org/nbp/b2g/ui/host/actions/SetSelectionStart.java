@@ -14,9 +14,9 @@ public class SetSelectionStart extends InputAction {
         InputConnection connection = getInputConnection();
 
         if (connection != null) {
-          int start = getSelectionOffset(cursorKey);
+          int start = endpoint.getTextOffset(cursorKey);
 
-          if (isCharacterOffset(start)) {
+          if (endpoint.isCharacterOffset(start)) {
             int end = endpoint.getSelectionEnd();
             if (!endpoint.isSelected(end) || (end <= start)) end = start + 1;
             if (connection.setSelection(start, end)) return true;

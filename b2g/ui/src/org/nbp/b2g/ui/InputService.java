@@ -53,7 +53,7 @@ public class InputService extends InputMethodService {
   @Override
   public void onStartInput (EditorInfo info, boolean restarting) {
     Log.d(LOG_TAG, "input service " + (restarting? "reconnected": "connected"));
-    getHostEndpoint().setSelection(info.initialSelStart, info.initialSelEnd);
+    getHostEndpoint().onSelectionChange(info.initialSelStart, info.initialSelEnd);
   }
 
   @Override
@@ -68,7 +68,7 @@ public class InputService extends InputMethodService {
     int newSelectionStart, int newSelectionEnd,
     int candidateStart, int candidateEnd
   ) {
-    getHostEndpoint().setSelection(newSelectionStart, newSelectionEnd);
+    getHostEndpoint().onSelectionChange(newSelectionStart, newSelectionEnd);
 
     super.onUpdateSelection(
       oldSelectionStart, oldSelectionEnd,

@@ -4,24 +4,6 @@ import org.nbp.b2g.ui.*;
 import android.view.inputmethod.InputConnection;
 
 public abstract class InputAction extends HostAction {
-  protected int getSelectionOffset (int cursorKey) {
-    return getEndpoint().getBrailleStart() + cursorKey;
-  }
-
-  private int toLineOffset (int selectionOffset) {
-    return selectionOffset - getEndpoint().getLineStart();
-  }
-
-  protected boolean isCharacterOffset (int selectionOffset) {
-    int lineOffset = toLineOffset(selectionOffset);
-    return ((lineOffset >= 0) && (lineOffset < getEndpoint().getLineLength()));
-  }
-
-  protected boolean isCursorOffset (int selectionOffset) {
-    int lineOffset = toLineOffset(selectionOffset);
-    return ((lineOffset >= 0) && (lineOffset <= getEndpoint().getLineLength()));
-  }
-
   protected boolean deleteText (InputConnection connection, int start, int end) {
     if (connection.beginBatchEdit()) {
       if (getEndpoint().setCursor(end)) {

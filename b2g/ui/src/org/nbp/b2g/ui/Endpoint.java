@@ -143,12 +143,30 @@ public abstract class Endpoint {
 
   public String getSelectedText () {
     synchronized (this) {
-      if (isSelected()) {
+      if (isEditable() && isSelected()) {
         return textString.substring(selectionStart, selectionEnd);
       }
     }
 
     return null;
+  }
+
+  public int getTextOffset (int cursorKey) {
+    return getBrailleStart() + cursorKey;
+  }
+
+  public int toLineOffset (int textOffset) {
+    return textOffset - getLineStart();
+  }
+
+  public boolean isCharacterOffset (int textOffset) {
+    int lineOffset = toLineOffset(textOffset);
+    return ((lineOffset >= 0) && (lineOffset < getLineLength()));
+  }
+
+  public boolean isCursorOffset (int textOffset) {
+    int lineOffset = toLineOffset(textOffset);
+    return ((lineOffset >= 0) && (lineOffset <= getLineLength()));
   }
 
   protected void adjustLeft (int offset, int keep) {
@@ -173,7 +191,7 @@ public abstract class Endpoint {
     adjustRight(offset, keep);
   }
 
-  public boolean setSelection (int start, int end) {
+  public boolean onSelectionChange (int start, int end) {
     synchronized (this) {
       selectionStart = start;
       selectionEnd = end;
@@ -187,7 +205,21 @@ public abstract class Endpoint {
   }
 
   public boolean clearSelection () {
-    return setSelection(NO_SELECTION, NO_SELECTION);
+    return onSelectionChange(NO_SELECTION, NO_SELECTION);
+  }
+
+  protected boolean isSelectable (int offset) {
+    return true;
+  }
+
+  public boolean setSelection (int start, int end) {
+    boolean startSelected = isSelected(start);
+    boolean endSelected = isSelected(end);
+    if (startSelected != endSelected) return false;
+
+    if (startSelected && !isSelectable(start)) return false;
+    if (endSelected && !isSelectable(end)) return false;
+    return onSelectionChange(start, end);
   }
 
   public boolean setCursor (int offset) {

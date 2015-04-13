@@ -72,6 +72,11 @@ public abstract class PromptEndpoint extends Endpoint {
     return true;
   }
 
+  @Override
+  protected boolean isSelectable (int offset) {
+    return offset >= start;
+  }
+
   private final static String[] keysFileNames = new String[] {
     "nabcc", "common", "edit"
   };
