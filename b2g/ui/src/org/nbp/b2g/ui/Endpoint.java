@@ -22,6 +22,23 @@ public abstract class Endpoint {
     return deleteText(getSelectionStart(), getSelectionEnd());
   }
 
+  public boolean deleteText (int position) {
+    int start = getSelectionStart();
+    int end = getSelectionEnd();
+
+    if (!isSelected(start, end)) {
+      if (!isSelected(end)) return false;
+      start = end + position;
+      end = start + 1;
+
+      if (start < 0) return false;
+      if (end > getTextLength()) return false;
+      if (!isSelectable(start)) return false;
+    }
+
+    return deleteText(start, end);
+  }
+
   public boolean write () {
     synchronized (Endpoints.LOCK) {
       if (this != Endpoints.getCurrentEndpoint()) return true;
@@ -221,7 +238,7 @@ public abstract class Endpoint {
     return onSelectionChange(NO_SELECTION, NO_SELECTION);
   }
 
-  protected boolean isSelectable (int offset) {
+  public boolean isSelectable (int offset) {
     return true;
   }
 

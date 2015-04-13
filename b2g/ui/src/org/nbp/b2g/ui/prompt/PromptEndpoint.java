@@ -80,7 +80,7 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   @Override
-  protected boolean isSelectable (int offset) {
+  public boolean isSelectable (int offset) {
     return offset >= start;
   }
 
