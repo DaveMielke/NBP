@@ -59,6 +59,9 @@ a computer's USB port.
 The internal microphone is just behind a very small slit in the middle of 
 the front.
 
+Two internal speakers (left and right channel) are at the left and
+right of the front.
+
 The reset button is hidden within a very small, round hole on the 
 bottom. If the device is turned over, front to back, the hole is at 
 about the eight o'clock position, very close to the foot nearest the 
