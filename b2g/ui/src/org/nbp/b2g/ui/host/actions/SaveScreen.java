@@ -40,6 +40,7 @@ public class SaveScreen extends Action {
     }
 
     write("end screen elements");
+    message("screen saved");
     return true;
   }
 

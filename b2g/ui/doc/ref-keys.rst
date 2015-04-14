@@ -10,15 +10,15 @@ Symbol  Name
 7       Dot 7
 8       Dot 8
 B       Backward
-C       DPAD Center
-D       DPAD Down
+C       D-Pad Center
+D       D-Pad Down
 F       Forward
 H       hold (long press)
-L       DPAD Left
+L       D-Pad Left
 P       Power Switch
-R       DPAD Right
+R       D-Pad Right
 S       Space
-U       DPAD Up
+U       D-Pad Up
 X       any cursor routing key
 <       Volume Down
 >       Volume Up
