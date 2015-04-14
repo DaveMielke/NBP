@@ -3,8 +3,6 @@ package org.nbp.b2g.ui;
 public abstract class ScanCodeAction extends KeyCodeAction {
   public final static String NULL_SCAN_CODE = "NULL";
 
-  public final static KeyboardDevice keyboardDevice = new KeyboardDevice();
-
   protected String getScanCode () {
     return NULL_SCAN_CODE;
   }
@@ -30,12 +28,12 @@ public abstract class ScanCodeAction extends KeyCodeAction {
         KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
           @Override
           protected boolean sendKeyPress (int key) {
-            return keyboardDevice.pressKey(key);
+            return EventMonitor.keyboardDevice.sendKeyPress(key);
           }
 
           @Override
           protected boolean sendKeyRelease (int key) {
-            return keyboardDevice.releaseKey(key);
+            return EventMonitor.keyboardDevice.sendKeyRelease(key);
           }
 
           @Override

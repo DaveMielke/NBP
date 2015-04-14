@@ -13,7 +13,7 @@ public class PowerButtonMonitor extends EventMonitor {
 
   @Override
   public void onKeyEvent (int code, boolean press) {
-    ScanCodeAction.keyboardDevice.sendKey(code, press);
+    keyboardDevice.sendKeyEvent(code, press);
     ApplicationParameters.ONE_HAND_MODE = false;
     super.onKeyEvent(code, press);
   }

@@ -31,14 +31,6 @@ public class KeyboardDevice extends UInputDevice {
     return false;
   }
 
-  public boolean press () {
-    return pressKey(0);
-  }
-
-  public boolean release () {
-    return releaseKey(0);
-  }
-
   public KeyboardDevice () {
     super();
   }

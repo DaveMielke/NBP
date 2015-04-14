@@ -41,7 +41,7 @@ public abstract class UInputDevice {
     }
   }
 
-  public boolean pressKey (int key) {
+  public boolean sendKeyPress (int key) {
     if (open()) {
       if (pressKey(uinputDevice, key)) {
         return true;
@@ -51,7 +51,7 @@ public abstract class UInputDevice {
     return false;
   }
 
-  public boolean releaseKey (int key) {
+  public boolean sendKeyRelease (int key) {
     if (open()) {
       if (releaseKey(uinputDevice, key)) {
         return true;
@@ -61,8 +61,8 @@ public abstract class UInputDevice {
     return false;
   }
 
-  public boolean sendKey (int key, boolean press) {
-    return press? pressKey(key): releaseKey(key);
+  public boolean sendKeyEvent (int key, boolean press) {
+    return press? sendKeyPress(key): sendKeyRelease(key);
   }
 
   protected UInputDevice () {
