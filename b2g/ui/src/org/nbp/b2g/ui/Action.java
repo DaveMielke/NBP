@@ -42,6 +42,14 @@ public abstract class Action {
     return false;
   }
 
+  protected void message (String text) {
+    ApplicationUtilities.message(getEndpoint(), text);
+  }
+
+  protected void message (String label, boolean isOn) {
+    message(label + " " + (isOn? "on": "off"));
+  }
+
   protected void log (String message) {
     Log.v(LOG_TAG, message);
   }

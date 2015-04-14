@@ -5,6 +5,7 @@ public class OneHandOff extends Action {
   @Override
   public boolean performAction () {
     ApplicationParameters.ONE_HAND_MODE = false;
+    message("one hand", ApplicationParameters.ONE_HAND_MODE);
     return true;
   }
 

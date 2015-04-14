@@ -6,6 +6,7 @@ public class LogNavigation extends Action {
   @Override
   public boolean performAction () {
     ApplicationParameters.LOG_SCREEN_NAVIGATION = true;
+    message("log navigation");
     return true;
   }
 

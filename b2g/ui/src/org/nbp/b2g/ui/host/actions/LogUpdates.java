@@ -6,6 +6,7 @@ public class LogUpdates extends Action {
   @Override
   public boolean performAction () {
     ApplicationParameters.LOG_ACCESSIBILITY_EVENTS = true;
+    message("log updates");
     return true;
   }
 

@@ -6,6 +6,7 @@ public class DeveloperActions extends Action {
   @Override
   public boolean performAction (boolean isLongPress) {
     ApplicationParameters.DEVELOPER_ACTIONS = isLongPress;
+    message("developer", ApplicationParameters.DEVELOPER_ACTIONS);
     return true;
   }
 

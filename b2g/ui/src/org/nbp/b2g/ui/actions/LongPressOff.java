@@ -5,6 +5,7 @@ public class LongPressOff extends Action {
   @Override
   public boolean performAction () {
     ApplicationParameters.LONG_PRESS_ACTIONS = false;
+    message("long press", ApplicationParameters.LONG_PRESS_ACTIONS);
     return true;
   }
 

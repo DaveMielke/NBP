@@ -31,6 +31,16 @@ public class ApplicationUtilities {
     tg.startTone(ToneGenerator.TONE_PROP_BEEP, ApplicationParameters.BEEP_DURATION);
   }
 
+  public static void message (Endpoint endpoint, String text) {
+    synchronized (endpoint) {
+      BrailleDevice.write(endpoint, text);
+    }
+  }
+
+  public static void message (String text) {
+    message(Endpoints.getCurrentEndpoint(), text);
+  }
+
   private ApplicationUtilities () {
   }
 }

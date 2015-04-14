@@ -6,6 +6,7 @@ public class LogActions extends Action {
   @Override
   public boolean performAction () {
     ApplicationParameters.LOG_PERFORMED_ACTIONS = true;
+    message("log actions");
     return true;
   }
 
