@@ -71,6 +71,24 @@ public class BrailleDevice {
     }
   }
 
+  private static boolean writeCells () {
+    return writeCells(brailleCells);
+  }
+
+  private static void setText (Characters characters, String text) {
+    int count = text.length();
+    if (count > brailleCells.length) count = brailleCells.length;
+    int index = 0;
+
+    while (index < count) {
+      char character = text.charAt(index);
+      Byte dots = characters.getDots(character);
+      brailleCells[index++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
+    }
+
+    while (index < brailleCells.length) brailleCells[index++] = 0;
+  }
+
   private static boolean writePending = false;
   private static Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY) {
     @Override
@@ -98,22 +116,9 @@ public class BrailleDevice {
 
         String text = endpoint.getLineText();
         int length = text.length();
+
         int indent = endpoint.getLineIndent();
-
-        {
-          int toIndex = 0;
-          int count = length - indent;
-          if (count > brailleCells.length) count = brailleCells.length;
-
-          while (toIndex < count) {
-            int fromIndex = toIndex + indent;
-            char character = (fromIndex < length)? text.charAt(fromIndex): ' ';
-            Byte dots = endpoint.getCharacters().getDots(character);
-            brailleCells[toIndex++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
-          }
-
-          while (toIndex < brailleCells.length) brailleCells[toIndex++] = 0;
-        }
+        setText(endpoint.getCharacters(), text.substring(indent));
 
         if (endpoint.isEditable()) {
           int start = endpoint.getSelectionStart();
@@ -144,9 +149,26 @@ public class BrailleDevice {
           return true;
         }
 
-        if (writeCells(brailleCells)) {
+        if (writeCells()) {
           writePending = false;
           writeDelay.start();
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public static boolean write (Endpoint endpoint, String message) {
+    synchronized (LOCK) {
+      if (open()) {
+        writeDelay.cancel();
+        setText(endpoint.getCharacters(), message);
+
+        if (writeCells()) {
+          writePending = true;
+          writeDelay.start(ApplicationParameters.BRAILLE_MESSAGE_TIME);
           return true;
         }
       }

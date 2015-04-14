@@ -4,11 +4,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Timeout implements Runnable {
-  private final long delay;
+  private final long defaultDelay;
   private Timer timer = null;
 
   public Timeout (long delay) {
-    this.delay = delay;
+    defaultDelay = delay;
   }
 
   public boolean isActive () {
@@ -26,7 +26,7 @@ public abstract class Timeout implements Runnable {
     }
   }
 
-  public void start () {
+  public void start (long delay) {
     if (delay > 0) {
       synchronized (this) {
         cancel();
@@ -47,5 +47,9 @@ public abstract class Timeout implements Runnable {
         timer.schedule(task, delay);
       }
     }
+  }
+
+  public void start () {
+    start(defaultDelay);
   }
 }
