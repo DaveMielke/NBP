@@ -127,11 +127,14 @@ public class ScreenMonitor extends AccessibilityService {
         StringBuilder sb = new StringBuilder();
 
         for (CharSequence line : text) {
+          if (line.length() == 0) continue;
           if (sb.length() > 0) sb.append('\n');
           sb.append(line);
         }
 
-        endpoint.write(sb.toString());
+        if (sb.length() > 0) {
+          endpoint.write(sb.toString());
+        }
       }
     }
   }
