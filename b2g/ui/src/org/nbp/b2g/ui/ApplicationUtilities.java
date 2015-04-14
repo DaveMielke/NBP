@@ -35,6 +35,10 @@ public class ApplicationUtilities {
     synchronized (endpoint) {
       BrailleDevice.write(endpoint, text);
     }
+
+    SpeechDevice speech = Devices.getSpeechDevice();
+    speech.stop();
+    speech.say(text);
   }
 
   public static void message (String text) {
