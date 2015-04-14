@@ -1,6 +1,7 @@
 The B2G User Interface
 ======================
 
+.. |message hold time| replace:: two seconds
 .. |clock standard| replace:: ISO 8601 international format
 .. |clock format| replace:: YYYY-MM-DD hh:mm:ss
 .. |long press timeout| replace:: half a second
@@ -65,10 +66,24 @@ the front.
 Two internal speakers (left and right channel) are at the left and
 right of the front.
 
-The reset button is hidden within a very small, round hole on the 
+The Reset button is hidden within a very small, round hole on the 
 bottom. If the device is turned over, front to back, the hole is at 
 about the eight o'clock position, very close to the foot nearest the 
 Power switch. Something thin, like a paperclip, is needed.
+
+.. topic:: Technical Information
+
+  * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
+  * Wi-Fi: Wireless B/G
+  * Bluetooth
+  * GPS Receiver
+  * Accelerometer: 4 axis 
+  * Compass
+  * Internal Flash Memory: 1.5GB (for system)
+  * Micro SD Card Slot: internal, user accessible (beneath cover on bottom)
+  * SD Card Slot: external (on back)
+  * SIM Card Slot: internal, user accessible (beneath cover on bottom)
+  * Wireless Module: CDMA, GSM (voice), 3G (data)
 
 Key Combinations
 ~~~~~~~~~~~~~~~~
@@ -81,11 +96,11 @@ the first one that was pressed is used.
 
 Two actions (a **primary** and a **secondary**) may be assigned to each 
 key combination. If any of the keys is released before the long press 
-timeout (which is |long press timeout|) then the primary action is
-executed. If the key combination is held for the long press timeout,
-then, even without any of the keys being released, the secondary action
-is immediately executed - if a secondary action hasn't been assigned
-then the primary action is executed instead.
+timeout (|long press timeout|) then the primary action is executed. If
+the key combination is held for the long press timeout, then, even
+without any of the keys being released, the secondary action is
+immediately executed - if a secondary action hasn't been assigned then
+the primary action is executed instead.
 
 Secondary actions are enabled by default. They can be disabled with 
 Backward+Dot3, and they can be enabled with Forward+Dot6.
@@ -124,6 +139,12 @@ switch is in the **on** position, and unchecked if the switch is in the
   [ ] Off
   [X] On
 
+If a screen element has no text of its own but its developer has 
+attached a textual description to it, then that description, enclosed 
+within [square] brackets, is displayed. For example::
+
+  [Digital Clock]
+
 If meaningful text for a significant screen element cannot be found then 
 it is rendered as its widget type enclosed within (parentheses). For 
 example::
@@ -131,6 +152,14 @@ example::
   (FrameLayout)
   (ImageView)
   (ListView)
+
+When an action is performed that is neither implicitly confirmed (by an 
+expected change on the braille display) nor explicitly confirmed (by a 
+sound) then it is confirmed by a short message that is displayed for a
+brief period of time (|message hold time|). For example::
+
+  one hand on
+  long press off
 
 Text Selection
 ~~~~~~~~~~~~~~
