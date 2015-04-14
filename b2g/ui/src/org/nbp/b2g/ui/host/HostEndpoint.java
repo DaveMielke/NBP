@@ -99,13 +99,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   protected final InputConnection getInputConnection () {
-    InputService service = getInputService();
-    if (service == null) return null;
-
-    InputConnection connection = service.getCurrentInputConnection();
-    if (connection == null) Log.w(LOG_TAG, "no input connection");
-
-    return connection;
+    return InputService.getInputConnection();
   }
 
   @Override

@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class PowerButtonMonitor extends EventMonitor {
   @Override
   protected boolean isEnabled () {
-    return ApplicationParameters.START_POWER_BUTTON_MONITOR;
+    return ApplicationParameters.ENABLE_POWER_BUTTON_MONITOR;
   }
 
   @Override
