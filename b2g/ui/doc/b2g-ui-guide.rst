@@ -1,6 +1,9 @@
 The B2G User Interface
 ======================
 
+.. |clock standard| replace:: ISO 8601 international format
+.. |clock format| replace:: YYYY-MM-DD hh:mm:ss
+.. |long press timeout| replace:: half a second
 .. |the undefined character| replace:: dots 3, 6, 7, and 8 (⣤)
 .. |the cursor indicator| replace:: dot 8 (⢀)
 .. |the selection indicator| replace:: dots 7 and 8 (⣀)
@@ -78,11 +81,14 @@ the first one that was pressed is used.
 
 Two actions (a **primary** and a **secondary**) may be assigned to each 
 key combination. If any of the keys is released before the long press 
-timeout (which is half a second) then the primary action is executed. If 
-the key combination is held for the long press timeout, then, even 
-without any of the keys being released, the secondary action is 
-immediately executed - if a secondary action hasn't been assigned then 
-the primary action is executed.
+timeout (which is |long press timeout|) then the primary action is
+executed. If the key combination is held for the long press timeout,
+then, even without any of the keys being released, the secondary action
+is immediately executed - if a secondary action hasn't been assigned
+then the primary action is executed instead.
+
+Secondary actions are enabled by default. They can be disabled with 
+Backward+Dot3, and they can be enabled with Forward+Dot6.
 
 The way to cancel a key (or keys) that has been accidentally pressed is 
 to press enough additional keys such that an unassigned key combination 
@@ -218,10 +224,13 @@ The best way to navigate the screen is to use the Forward and Backward
 keys because they move sequentially through the screen elements without 
 missing any of them. The Forward key stops at the end of the screen, and 
 the Backward key stops at the beginning of the screen. While these 
-(Forward and Backward) keys, when used on their own, perform more 
+(Forward and Backward) keys, when used on their own, may perform more 
 refined navigation within certain contexts (see below), long pressing 
 them can always be used to force an immediate, direct move to the start 
-of the next or previous screen element.
+of the next or previous screen element. Another way to force a move, 
+which is especially applicable when secondary actions have been 
+disabled, is to press the Space key together with the Forard or Backward 
+key.
 
 If the text of a screen element is longer than the braille display 
 and/or has more than one line then the Forward key pans to the right, 
@@ -252,8 +261,8 @@ Space+r (dots 1235)
   Go to the Recent Apps screen.
 
 Space+t (dots 2345)
-  Display the current date and time in the ISO 8601 international format
-  (YYYY-MM-DD hh:mm:ss). The displayed time is continually updated.
+  Display the current date and time in the |clock standard|
+  (|clock format|). The displayed time is continually updated.
 
 Space+? (dots 1456)
   Go to the currently registered **assist** app. The default is
@@ -339,7 +348,9 @@ cursor is. If characters have been selected then it deletes all of them.
 The Forward and Backward keys navigate through the text as defined 
 previously, except that they will not leave the field. They must be long 
 pressed in order to force an immediate move to the start of the next or 
-previous field.
+previous field. Another way to force a move, which is especially 
+applicable when secondary actions have been disabled, is to press the 
+Space key together with the Forward or Backward key.
 
 The four directional keys (of the D-Pad) move the cursor through the 
 text, one step at a time. They will not leave the field. The braille 
