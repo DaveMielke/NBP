@@ -10,6 +10,8 @@ B7         |OneHandOff|
 F8         |OneHandOn|
 B3         |LongPressOff|
 F6         |LongPressOn|
+<          |VolumeDown|
+>          |VolumeUp|
 12345678   |Null|
 S12345678  |Null|
 =========  =================

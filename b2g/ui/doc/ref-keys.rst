@@ -19,4 +19,6 @@ R       DPAD Right
 S       Space
 U       DPAD Up
 X       any cursor routing key
+<       Volume Down
+>       Volume Up
 ======  ======================

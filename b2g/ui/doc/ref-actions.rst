@@ -54,3 +54,5 @@
 .. |SetSelectionStart| replace:: set the start of a text selection
 .. |TabBackward| replace:: the Shift and Tab keys
 .. |TabForward| replace:: the Tab key
+.. |VolumeDown| replace:: the Volume Down key
+.. |VolumeUp| replace:: the Volume Up key
