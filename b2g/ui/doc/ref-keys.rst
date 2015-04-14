@@ -15,6 +15,7 @@ D       DPAD Down
 F       Forward
 H       hold (long press)
 L       DPAD Left
+P       Power Switch
 R       DPAD Right
 S       Space
 U       DPAD Up

@@ -137,6 +137,14 @@ Space, whether pressed at the start (to include it in the combination)
 or at the end (to indicate that the combination is complete), should 
 always be pressed separately.
 
+Turning the power switch off and then back on automatically turns off 
+One Hand Mode. This provides an intuitive way for a user who has 
+accidentally enabled this mode and doesn't know how to disable it to 
+easily revert the keyboard to normal operation.
+
+Another (legacy) way to enable One Hand Mode is to hold dot 8 while 
+turning the power switch on.
+
 Navigation
 ----------
 

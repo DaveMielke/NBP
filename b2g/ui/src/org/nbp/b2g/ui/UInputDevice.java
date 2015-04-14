@@ -61,6 +61,10 @@ public abstract class UInputDevice {
     return false;
   }
 
+  public boolean sendKey (int key, boolean press) {
+    return press? pressKey(key): releaseKey(key);
+  }
+
   protected UInputDevice () {
   }
 

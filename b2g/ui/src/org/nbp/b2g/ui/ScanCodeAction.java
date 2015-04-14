@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public abstract class ScanCodeAction extends KeyCodeAction {
   public final static String NULL_SCAN_CODE = "NULL";
 
-  private final static KeyboardDevice keyboardDevice = new KeyboardDevice();
+  public final static KeyboardDevice keyboardDevice = new KeyboardDevice();
 
   protected String getScanCode () {
     return NULL_SCAN_CODE;

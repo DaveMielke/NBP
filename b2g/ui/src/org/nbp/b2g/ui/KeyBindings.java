@@ -44,6 +44,7 @@ public class KeyBindings {
   public final static char VOLUME_UP   = '>';
   public final static char CURSOR      = 'X';
   public final static char LONG_PRESS  = 'H';
+  public final static char POWER       = 'P';
 
   private final Endpoint endpoint;
   private final Map<String, Action> actionCache = new HashMap<String, Action>();
@@ -235,6 +236,7 @@ public class KeyBindings {
         case KeyBindings.VOLUME_UP:   bit = KeyMask.VOLUME_UP;   break;
         case KeyBindings.CURSOR:      bit = KeyMask.CURSOR;      break;
         case KeyBindings.LONG_PRESS:  bit = KeyMask.LONG_PRESS;  break;
+        case KeyBindings.POWER:       bit = KeyMask.POWER;       break;
 
         case KeyBindings.DELIMITER:
           masks = addKeyMask(masks, mask);
@@ -358,8 +360,6 @@ public class KeyBindings {
   private void addKeyBindings (String[] keysFileNames) {
     String endpointName = LanguageUtilities.getClassName(endpoint.getClass());
     Log.d(LOG_TAG, "begin key binding definitions: " + endpointName);
-
-    addKeyBinding(KeyMask.POWER, "PowerButton");
 
     if (keysFileNames != null) {
       for (String keysFileName : keysFileNames) {

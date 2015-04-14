@@ -14,4 +14,5 @@ F6         |LongPressOn|
 >          |VolumeUp|
 12345678   |Null|
 S12345678  |Null|
+8P         |OneHandOn|
 =========  =================
