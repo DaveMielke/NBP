@@ -14,15 +14,18 @@ public abstract class PromptEndpoint extends Endpoint {
 
   @Override
   public void onForeground () {
-    setCursor(buffer.length());
+    setSelection(start, buffer.length());
     flush();
   }
 
   @Override
   public boolean insertText (String string) {
-    int cursor = getSelectionEnd();
-    buffer.insert(cursor, string);
-    if (!setCursor(cursor + string.length())) return false;
+    int start = getSelectionStart();
+    int end = getSelectionEnd();
+
+    buffer.delete(start, end);
+    buffer.insert(start, string);
+    if (!setCursor(start + string.length())) return false;
     return flush();
   }
 
