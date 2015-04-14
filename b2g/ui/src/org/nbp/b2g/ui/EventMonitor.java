@@ -5,8 +5,6 @@ import android.util.Log;
 public abstract class EventMonitor extends Thread {
   private final static String LOG_TAG = EventMonitor.class.getName();
 
-  public final static KeyboardDevice keyboardDevice = new KeyboardDevice();
-
   protected abstract boolean isEnabled ();
   protected abstract int openDevice ();
   private native void closeDevice (int device);

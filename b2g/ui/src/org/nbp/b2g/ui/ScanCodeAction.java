@@ -25,15 +25,17 @@ public abstract class ScanCodeAction extends KeyCodeAction {
       int value = KeyboardDevice.getScanCode(name);
 
       if (value != KeyboardDevice.NULL_SCAN_CODE) {
+        final KeyboardDevice keyboardDevice = Devices.getKeyboardDevice();
+
         KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
           @Override
           protected boolean sendKeyPress (int key) {
-            return EventMonitor.keyboardDevice.sendKeyPress(key);
+            return keyboardDevice.sendKeyPress(key);
           }
 
           @Override
           protected boolean sendKeyRelease (int key) {
-            return EventMonitor.keyboardDevice.sendKeyRelease(key);
+            return keyboardDevice.sendKeyRelease(key);
           }
 
           @Override
