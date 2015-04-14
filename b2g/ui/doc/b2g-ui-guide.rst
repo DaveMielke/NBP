@@ -10,6 +10,60 @@ The B2G User Interface
 Usage Notes
 -----------
 
+Physical Description
+~~~~~~~~~~~~~~~~~~~~
+
+The eight, rectangular, concave keys (in two groups of four) near the 
+back of the top comprise a standard, eight-dot, braille keyboard. The 
+four on the left, from left to right, are dots 7, 3, 2, and 1. The four 
+on the right, from left to right, are dots 4, 5, 6, and 8.
+
+The square with a small, round button in the middle, in between dots 1 
+and 4, is the five-key D-Pad. Its four edges are the Up, Down, Left, and 
+Right keys. The button in the middle is the Center key.
+
+The long, rectangular key in front of dot 1, the D-Pad, and dot 4 is the 
+Space key (or bar).
+
+The braille display (20 eight-dot cells) is at the front of the top. 
+There's a small, round button just behind each cell - these are the 
+cursor routing keys. The convex, square button to the left of the cursor 
+routing keys is the Backward key, and the convex, square button to their 
+right is the Forward key.
+
+The earphone/microphone jack is near the front of the left side.
+Standard cell phone earphones can be used.
+
+The video jack is in the middle of the left side. It's for an external 
+monitor.
+
+A standard USB-A (or host) port is near the back of the left side. USB 
+devices (memory stick, external keyboard, mouse, hub, etc) can be 
+connected to it.
+
+The volume controls are the two, small, round buttons near the front of 
+the right side. The one toward the front is the Volume Down key, and the 
+one toward the back is the Volume Up key.
+
+The Power switch is the slide switch near the back of the right side. 
+It's **off** position is toward the front, and its **on** position is 
+toward the back.
+
+The SD card port is the long slot in the middle of the back.
+
+
+A micro USB-B (or device) port is near the left of the back. It's 
+primary use is for charging the battery. The battery can be charged from 
+a computer's USB port.
+
+The internal microphone is just behind a very small slit in the middle of 
+the front.
+
+The reset button is hidden within a very small, round hole on the 
+bottom. If the device is turned over, front to back, the hole is at 
+about the eight o'clock position, very close to the foot nearest the 
+Power switch. Something thin, like a paperclip, is needed.
+
 Key Combinations
 ~~~~~~~~~~~~~~~~
 
