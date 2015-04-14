@@ -2,8 +2,11 @@ package org.nbp.b2g.ui;
 
 import android.speech.tts.TextToSpeech;
 import java.util.HashMap;
+import android.util.Log;
 
 public class SpeechDevice {
+  private final static String LOG_TAG = SpeechDevice.class.getName();
+
   private final HashMap<String, String> ttsParameters = new HashMap<String, String>();
   private TextToSpeech ttsObject;
   private int ttsStatus;
@@ -13,9 +16,11 @@ public class SpeechDevice {
   }
 
   public void say (String text) {
-    synchronized (this) {
-      if (isStarted()) {
-        ttsObject.speak(text, TextToSpeech.QUEUE_ADD, ttsParameters);
+    if (text != null) {
+      synchronized (this) {
+        if (isStarted()) {
+          ttsObject.speak(text, TextToSpeech.QUEUE_ADD, ttsParameters);
+        }
       }
     }
   }
@@ -38,6 +43,8 @@ public class SpeechDevice {
   };
 
   private void ttsStart () {
+    Log.d(LOG_TAG, "speech device starting");
+
     synchronized (this) {
       TextToSpeech.OnInitListener onInitListener = new TextToSpeech.OnInitListener() {
         @Override
@@ -45,9 +52,14 @@ public class SpeechDevice {
           synchronized (SpeechDevice.this) {
             ttsStatus = status;
 
-            if (!isStarted()) {
+            if (isStarted()) {
+              Log.d(LOG_TAG, "speech device started");
+            } else {
+              Log.d(LOG_TAG, "speech device failed with status " + ttsStatus);
+
               ttsObject.shutdown();
               ttsObject = null;
+
               ttsRetry.start();
             }
           }
