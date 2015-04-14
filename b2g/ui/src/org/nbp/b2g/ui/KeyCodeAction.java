@@ -29,7 +29,7 @@ public abstract class KeyCodeAction extends KeyAction {
     int keyCode = getKeyCode();
 
     if (keyCode != NULL_KEY_CODE) {
-      final InputConnection connection = getInputConnection();
+      final InputConnection connection = InputService.getInputConnection();
 
       if (connection != null) {
         KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {

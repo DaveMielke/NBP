@@ -39,19 +39,6 @@ public abstract class EventMonitor extends Thread {
     Log.d(LOG_TAG, name + " stopped");
   }
 
-  public static void startMonitors () {
-    KeyEvents.resetKeys();
-
-    EventMonitor[] monitors = new EventMonitor[] {
-      KeyboardMonitor.getKeyboardMonitor(),
-      PowerButtonMonitor.getPowerButtonMonitor()
-    };
-
-    for (EventMonitor monitor : monitors) {
-      if (monitor.isEnabled()) monitor.start();
-    }
-  }
-
   public EventMonitor (String threadName) {
     super(threadName);
   }

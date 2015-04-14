@@ -33,43 +33,6 @@ public abstract class PromptEndpoint extends Endpoint {
     return flush();
   }
 
-  public boolean deletePrevious (boolean all) {
-    int cursor = getSelectionEnd();
-    if (cursor == start) return false;
-
-    if (all) {
-      buffer.delete(start, cursor);
-      cursor = start;
-    } else {
-      buffer.deleteCharAt(--cursor);
-    }
-
-    setCursor(cursor);
-    return flush();
-  }
-
-  public boolean deleteNext (boolean all) {
-    int cursor = getSelectionEnd();
-    int length = buffer.length();
-    if (cursor == length) return false;
-
-    if (all) {
-      buffer.delete(cursor, length);
-    } else {
-      buffer.deleteCharAt(cursor);
-    }
-
-    return flush();
-  }
-
-  public boolean bringCursor (int cursorKey) {
-    int offset = getBrailleStart() + cursorKey;
-    if (offset < start) return false;
-    if (offset > getTextLength()) return false;
-    setCursor(offset);
-    return flush();
-  }
-
   public String getResponse () {
     return buffer.toString().substring(start);
   }

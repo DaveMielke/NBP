@@ -18,8 +18,30 @@ public class InputService extends InputMethodService {
     return inputService;
   }
 
+  public static InputConnection getInputConnection () {
+    InputService service = getInputService();
+    if (service == null) return null;
+
+    InputConnection connection = service.getCurrentInputConnection();
+    if (connection == null) Log.w(LOG_TAG, "no input connection");
+
+    return connection;
+  }
+
   private static Endpoint getHostEndpoint () {
     return Endpoints.getHostEndpoint();
+  }
+
+  private static KeyboardMonitor getKeyboardMonitor () {
+    return EventMonitors.getKeyboardMonitor();
+  }
+
+  private static boolean isKeyboardMonitorRunning () {
+    return getKeyboardMonitor().isAlive();
+  }
+
+  private static void resetKeys () {
+    if (!isKeyboardMonitorRunning()) KeyEvents.resetKeys();
   }
 
   @Override
@@ -47,7 +69,7 @@ public class InputService extends InputMethodService {
     Log.d(LOG_TAG, "input service unbound");
     inputService = null;
 
-    if (!KeyboardMonitor.isActive()) KeyEvents.resetKeys();
+    resetKeys();
   }
 
   @Override
@@ -75,18 +97,6 @@ public class InputService extends InputMethodService {
       newSelectionStart, newSelectionEnd,
       candidateStart, candidateEnd
     );
-  }
-
-  private InputConnection getInputConnection () {
-    InputConnection connection = getCurrentInputConnection();
-
-    if (connection != null) {
-      return connection;
-    } else {
-      Log.w(LOG_TAG, "input service not connected");
-    }
-
-    return null;
   }
 
   public boolean insertText (String string) {
@@ -136,7 +146,7 @@ public class InputService extends InputMethodService {
         return true;
 
       default:
-        return KeyboardMonitor.isActive();
+        return isKeyboardMonitorRunning();
     }
   }
 
