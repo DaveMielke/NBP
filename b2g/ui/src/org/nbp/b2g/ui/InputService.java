@@ -48,7 +48,7 @@ public class InputService extends InputMethodService {
   public void onCreate () {
     super.onCreate();
     Log.d(LOG_TAG, "input service started");
-    Clipboard.setClipboard(this);
+    ApplicationContext.set(this);
   }
 
   @Override

@@ -32,9 +32,7 @@ public class ScreenMonitor extends AccessibilityService {
     Log.d(LOG_TAG, "screen monitor started");
     screenMonitor = this;
 
-    Devices.getSpeechDevice().say(null);
-    Clipboard.setClipboard(this);
-    EventMonitors.startEventMonitors();
+    ApplicationContext.set(this);
   }
 
   @Override
@@ -135,6 +133,10 @@ public class ScreenMonitor extends AccessibilityService {
 
         if (sb.length() > 0) {
           endpoint.write(sb.toString());
+        } else {
+          if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
+            Log.d(LOG_TAG, "no accessibility event text");
+          }
         }
       }
     }

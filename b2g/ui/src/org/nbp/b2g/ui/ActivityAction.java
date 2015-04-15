@@ -10,7 +10,7 @@ public abstract class ActivityAction extends Action {
 
   @Override
   public boolean performAction () {
-    Context context = ApplicationHooks.getContext();
+    Context context = ApplicationContext.get();
     if (context == null) return false;
 
     Intent intent = getIntent(context);

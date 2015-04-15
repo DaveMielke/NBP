@@ -171,7 +171,8 @@ If a screen element has no text of its own but its developer has
 attached a textual description to it, then that description, enclosed 
 within [brackets], is displayed. For example::
 
-  [Digital Clock]
+  [More options]
+  [Navigate up]
 
 If meaningful text for a significant screen element cannot be found then 
 it is rendered as its widget type enclosed within (parentheses). For 

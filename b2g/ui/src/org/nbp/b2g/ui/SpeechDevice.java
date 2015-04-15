@@ -33,6 +33,38 @@ public class SpeechDevice {
     }
   }
 
+  public void setVolume (float volume) {
+    synchronized (this) {
+      if (isStarted()) {
+        ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
+      }
+    }
+  }
+
+  public void setBalance (float balance) {
+    synchronized (this) {
+      if (isStarted()) {
+        ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
+      }
+    }
+  }
+
+  public void setRate (float rate) {
+    synchronized (this) {
+      if (isStarted()) {
+        ttsObject.setSpeechRate(rate);
+      }
+    }
+  }
+
+  public void setPitch (float pitch) {
+    synchronized (this) {
+      if (isStarted()) {
+        ttsObject.setPitch(pitch);
+      }
+    }
+  }
+
   private Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY) {
     @Override
     public void run () {
@@ -43,9 +75,9 @@ public class SpeechDevice {
   };
 
   private void ttsStart () {
-    Log.d(LOG_TAG, "speech device starting");
-
     synchronized (this) {
+      Log.d(LOG_TAG, "speech device starting");
+
       TextToSpeech.OnInitListener onInitListener = new TextToSpeech.OnInitListener() {
         @Override
         public void onInit (int status) {
@@ -66,7 +98,7 @@ public class SpeechDevice {
         }
       };
 
-      ttsObject = new TextToSpeech(ApplicationHooks.getContext(), onInitListener);
+      ttsObject = new TextToSpeech(ApplicationContext.get(), onInitListener);
     }
   }
 

@@ -12,9 +12,10 @@ public class Clipboard {
   private final static Object LOCK = new Object();
   private static ClipboardManager clipboard = null;
 
-  public static void setClipboard (Context context) {
+  public static void setClipboard () {
     synchronized (LOCK) {
       if (clipboard == null) {
+        Context context = ApplicationContext.get();
         clipboard = (ClipboardManager)context.getSystemService(context.CLIPBOARD_SERVICE);
       }
     }
