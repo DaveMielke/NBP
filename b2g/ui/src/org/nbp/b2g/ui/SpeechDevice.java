@@ -8,8 +8,8 @@ public class SpeechDevice {
   private final static String LOG_TAG = SpeechDevice.class.getName();
 
   private final HashMap<String, String> ttsParameters = new HashMap<String, String>();
-  private TextToSpeech ttsObject;
-  private int ttsStatus;
+  private TextToSpeech ttsObject = null;
+  private int ttsStatus = TextToSpeech.ERROR;
 
   private boolean isStarted () {
     return ttsStatus == TextToSpeech.SUCCESS;
@@ -71,8 +71,6 @@ public class SpeechDevice {
   }
 
   public SpeechDevice () {
-    ttsObject = null;
-    ttsStatus = TextToSpeech.ERROR;
-    ttsStart();
+    if (ApplicationParameters.ENABLE_SPEECH_DEVICE) ttsStart();
   }
 }

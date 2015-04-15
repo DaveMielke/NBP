@@ -7,6 +7,7 @@ public abstract class ApplicationParameters {
   public static volatile boolean LONG_PRESS_ACTIONS = true;
   public static volatile boolean DEVELOPER_ACTIONS = false;
 
+  public static volatile boolean ENABLE_SPEECH_DEVICE = true;
   public static volatile boolean ENABLE_KEYBOARD_MONITOR = true;
   public static volatile boolean ENABLE_POWER_BUTTON_MONITOR = true;
 
