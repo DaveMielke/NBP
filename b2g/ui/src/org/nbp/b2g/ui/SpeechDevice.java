@@ -9,15 +9,24 @@ public class SpeechDevice {
 
   public final static float MINIMUM_VOLUME = 0.0f;
   public final static float MAXIMUM_VOLUME = 1.0f;
+  public final static float DEFAULT_VOLUME = 1.0f;
 
   public final static float MINIMUM_BALANCE = -1.0f;
   public final static float MAXIMUM_BALANCE = 1.0f;
+  public final static float DEFAULT_BALANCE = 0.0f;
 
   public final static float MINIMUM_RATE = 0.5f;
   public final static float MAXIMUM_RATE = 2.0f;
+  public final static float DEFAULT_RATE = 1.0f;
 
   public final static float MINIMUM_PITCH = 0.5f;
   public final static float MAXIMUM_PITCH = 2.0f;
+  public final static float DEFAULT_PITCH = 1.0f;
+
+  private float currentVolume = DEFAULT_VOLUME;
+  private float currentBalance = DEFAULT_BALANCE;
+  private float currentRate = DEFAULT_RATE;
+  private float currentPitch = DEFAULT_PITCH;
 
   private final static int OK = TextToSpeech.SUCCESS;
 
@@ -64,11 +73,16 @@ public class SpeechDevice {
     return false;
   }
 
+  public float getVolume () {
+    return currentVolume;
+  }
+
   public boolean setVolume (float volume) {
     if (verifyRange("volume", volume, MINIMUM_VOLUME, MAXIMUM_VOLUME)) {
       synchronized (this) {
         if (isStarted()) {
           ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
+          currentVolume = volume;
           return true;
         }
       }
@@ -81,11 +95,16 @@ public class SpeechDevice {
     return setVolume(ApplicationParameters.SPEECH_VOLUME);
   }
 
+  public float getBalance () {
+    return currentBalance;
+  }
+
   public boolean setBalance (float balance) {
     if (verifyRange("balance", balance, MINIMUM_BALANCE, MAXIMUM_BALANCE)) {
       synchronized (this) {
         if (isStarted()) {
           ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
+          currentBalance = balance;
           return true;
         }
       }
@@ -98,11 +117,16 @@ public class SpeechDevice {
     return setBalance(ApplicationParameters.SPEECH_BALANCE);
   }
 
+  public float getRate () {
+    return currentRate;
+  }
+
   public boolean setRate (float rate) {
     if (verifyRange("rate", rate, MINIMUM_RATE, MAXIMUM_RATE)) {
       synchronized (this) {
         if (isStarted()) {
           if (ttsObject.setSpeechRate(rate) == OK) {
+            currentRate = rate;
             return true;
           }
         }
@@ -116,11 +140,16 @@ public class SpeechDevice {
     return setRate(ApplicationParameters.SPEECH_RATE);
   }
 
+  public float getPitch () {
+    return currentPitch;
+  }
+
   public boolean setPitch (float pitch) {
     if (verifyRange("pitch", pitch, MINIMUM_PITCH, MAXIMUM_PITCH)) {
       synchronized (this) {
         if (isStarted()) {
           if (ttsObject.setPitch(pitch) == OK) {
+            currentPitch = pitch;
             return true;
           }
         }

@@ -7,6 +7,9 @@ public class SpeakSofter extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
+      if (adjustVolume(speech, -1)) {
+        return true;
+      }
     }
 
     return false;

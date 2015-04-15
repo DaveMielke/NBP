@@ -7,6 +7,10 @@ public class StopSpeaking extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
+      if (speech.stopSpeaking()) {
+        message("speech stopped");
+        return true;
+      }
     }
 
     return false;

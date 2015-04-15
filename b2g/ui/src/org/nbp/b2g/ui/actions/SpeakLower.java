@@ -7,6 +7,9 @@ public class SpeakLower extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
+      if (adjustPitch(speech, -1)) {
+        return true;
+      }
     }
 
     return false;

@@ -7,9 +7,11 @@ public class SpeechOff extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
+      ApplicationParameters.SPEECH_ON = false;
+      message("speech", ApplicationParameters.SPEECH_ON);
     }
 
-    return false;
+    return true;
   }
 
   public SpeechOff (Endpoint endpoint) {
