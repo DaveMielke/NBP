@@ -8,11 +8,11 @@ S1346      |ControlModifier|
 814        |CopyToClipboard|
 B7         |OneHandOff|
 F8         |OneHandOn|
+8P         |OneHandOn|
 B3         |LongPressOff|
 F6         |LongPressOn|
 <          |VolumeDown|
 >          |VolumeUp|
 12345678   |Null|
 S12345678  |Null|
-8P         |OneHandOn|
 =========  =================

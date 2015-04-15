@@ -52,7 +52,7 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   private final static String[] keysFileNames = new String[] {
-    "nabcc", "common", "edit"
+    "nabcc", "common", "speech", "edit"
   };
 
   @Override

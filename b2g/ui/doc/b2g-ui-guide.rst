@@ -579,6 +579,11 @@ Navigating the Host Screen
 
 .. include:: ref-host.rst
 
+Speech Operations
+~~~~~~~~~~~~~~~~~
+
+.. include:: ref-speech.rst
+
 Developer Actions
 ~~~~~~~~~~~~~~~~~
 

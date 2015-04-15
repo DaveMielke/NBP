@@ -52,6 +52,17 @@
 .. |SetLeft| replace:: position the left end of the braille display
 .. |SetSelectionEnd| replace:: set the end of a text selection
 .. |SetSelectionStart| replace:: set the start of a text selection
+.. |SpeakFaster| replace:: increase speech rate
+.. |SpeakHigher| replace:: increase speech pitch
+.. |SpeakLeft| replace:: pan speech to the left
+.. |SpeakLouder| replace:: increase speech volume
+.. |SpeakLower| replace:: decrease speech pitch
+.. |SpeakRight| replace:: pan speech to the right
+.. |SpeakSlower| replace:: decrease speech rate
+.. |SpeakSofter| replace:: decrease speech volume
+.. |SpeechOff| replace:: turn speech off
+.. |SpeechOn| replace:: turn speech on
+.. |StopSpeaking| replace:: stop speaking
 .. |TabBackward| replace:: the Shift and Tab keys
 .. |TabForward| replace:: the Tab key
 .. |VolumeDown| replace:: the Volume Down key
