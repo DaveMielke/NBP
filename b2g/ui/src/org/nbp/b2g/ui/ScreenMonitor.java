@@ -141,6 +141,21 @@ public class ScreenMonitor extends AccessibilityService {
           endpoint.write(sb.toString());
         } else {
           logMissingEventComponent("text");
+
+          if (type == AccessibilityEvent.TYPE_VIEW_SELECTED) {
+            int count = event.getItemCount();
+
+            if (count != -1) {
+              int index = event.getCurrentItemIndex();
+
+              sb.append((index * 100) / count);
+              sb.append('%');
+            }
+          }
+
+          if (sb.length() > 0) {
+            ApplicationUtilities.message(sb.toString());
+          }
         }
       }
     }
