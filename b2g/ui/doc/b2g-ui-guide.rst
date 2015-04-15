@@ -96,8 +96,8 @@ following:
 * The SIM card slot.
   It's in the corner that's toward the front and toward the side where the 
   Power switch is. To gain access to the actual slot, lift the end of its 
-  cover that's toward the back. As with most SIM card slot covers, it's 
-  fairly flimsy so be gentle.
+  cover that's toward the back. As with most SIM card slot covers, its 
+  hinge is fairly flimsy so be gentle.
 
 .. topic:: Technical Information
 
