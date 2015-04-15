@@ -64,6 +64,21 @@ public class ScreenMonitor extends AccessibilityService {
     return false;
   }
 
+  private void logMissingEventComponent (String component) {
+    if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
+      Log.d(LOG_TAG, "no accessibility event " + component);
+    }
+  }
+
+  private void logEventComponent (AccessibilityNodeInfo node, String description) {
+    if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
+      Log.d(LOG_TAG,  String.format(
+        "accessibility event %s: %s",
+        description, ScreenUtilities.toString(node)
+      ));
+    }
+  }
+
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
     HostEndpoint endpoint = getHostEndpoint();
@@ -76,16 +91,11 @@ public class ScreenMonitor extends AccessibilityService {
     }
 
     if (source != null) {
+      logEventComponent(source, "source");
       AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode(source);
 
-      if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
-        Log.d(LOG_TAG, "accessibility event source: " + ScreenUtilities.toString(source));
-      }
-
       if (node != null) {
-        if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
-          Log.d(LOG_TAG, "accessibility event node: " + ScreenUtilities.toString(node));
-        }
+        logEventComponent(node, "node");
 
         switch (type) {
           case AccessibilityEvent.TYPE_VIEW_FOCUSED:
@@ -104,16 +114,12 @@ public class ScreenMonitor extends AccessibilityService {
 
         node.recycle();
       } else {
-        if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
-          Log.d(LOG_TAG, "no accessibility event node");
-        }
+        logMissingEventComponent("node");
       }
 
       source.recycle();
     } else {
-      if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
-        Log.d(LOG_TAG, "no accessibility event source");
-      }
+      logMissingEventComponent("source");
     }
 
     if (text != null) {
@@ -134,9 +140,7 @@ public class ScreenMonitor extends AccessibilityService {
         if (sb.length() > 0) {
           endpoint.write(sb.toString());
         } else {
-          if (ApplicationParameters.LOG_ACCESSIBILITY_EVENTS) {
-            Log.d(LOG_TAG, "no accessibility event text");
-          }
+          logMissingEventComponent("text");
         }
       }
     }
