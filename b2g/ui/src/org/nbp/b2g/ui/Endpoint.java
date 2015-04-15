@@ -129,6 +129,7 @@ public abstract class Endpoint {
   }
 
   public void onForeground () {
+    resetSpeech();
     write();
   }
 

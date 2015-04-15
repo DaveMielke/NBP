@@ -7,15 +7,16 @@ public abstract class PromptEndpoint extends Endpoint {
   private final StringBuilder buffer = new StringBuilder();
   private final int start;
 
-  public boolean flush () {
+  @Override
+  public boolean write () {
     setText(buffer.toString(), getLineIndent());
-    return write();
+    return super.write();
   }
 
   @Override
   public void onForeground () {
     setSelection(start, buffer.length());
-    flush();
+    super.onForeground();
   }
 
   @Override
@@ -26,14 +27,14 @@ public abstract class PromptEndpoint extends Endpoint {
     buffer.delete(start, end);
     buffer.insert(start, string);
     if (!setCursor(start + string.length())) return false;
-    return flush();
+    return write();
   }
 
   @Override
   public boolean deleteText (int start, int end) {
     buffer.delete(start, end);
     if (!setCursor(start)) return false;
-    return flush();
+    return write();
   }
 
   public String getResponse () {
