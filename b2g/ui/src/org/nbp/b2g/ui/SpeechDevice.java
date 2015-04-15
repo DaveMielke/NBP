@@ -15,20 +15,20 @@ public class SpeechDevice {
     return ttsStatus == TextToSpeech.SUCCESS;
   }
 
+  public void stop () {
+    synchronized (this) {
+      if (isStarted()) {
+        ttsObject.stop();
+      }
+    }
+  }
+
   public void say (String text) {
     if (text != null) {
       synchronized (this) {
         if (isStarted()) {
           ttsObject.speak(text, TextToSpeech.QUEUE_ADD, ttsParameters);
         }
-      }
-    }
-  }
-
-  public void stop () {
-    synchronized (this) {
-      if (isStarted()) {
-        ttsObject.stop();
       }
     }
   }
