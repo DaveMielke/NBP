@@ -71,6 +71,34 @@ bottom. If the device is turned over, front to back, the hole is at
 about the eight o'clock position, very close to the foot nearest the 
 Power switch. Something thin, like a paperclip, is needed.
 
+There's a removable, rectangular, plastic cover in the middle of the 
+bottom. To remove it:
+
+1) Turn the device over so that its bottom is on top.
+
+2) Press gently down on the cover and slide it toward the side where
+   the Power switch is.
+
+3) Lift the end of the cover that's toward the side where the earphone
+   jack is.
+
+Be careful if you remove the cover because the underside of a circuit 
+board will be exposed. Removing the cover is how to gain access to the 
+following:
+
+* The Micro-SD card slot.
+  It's in the corner that's toward the back and toward the side where the 
+  earphone jack is. The open end of the slot is toward the side where the 
+  Power switch is. To insert a card, gently press it in until you hear a 
+  click. To remove a card, gently press it until you hear a click, and 
+  then allow the slot's internal spring to push it out.
+
+* The SIM card slot.
+  It's in the corner that's toward the front and toward the side where the 
+  Power switch is. To gain access to the actual slot, lift the end of its 
+  cover that's toward the back. As with most SIM card slot covers, it's 
+  fairly flimsy so be gentle.
+
 .. topic:: Technical Information
 
   * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
@@ -83,7 +111,7 @@ Power switch. Something thin, like a paperclip, is needed.
   * Micro SD Card Slot: internal, user accessible (beneath cover on bottom)
   * SD Card Slot: external (on back)
   * SIM Card Slot: internal, user accessible (beneath cover on bottom)
-  * Wireless Module: CDMA, GSM (voice), 3G (data)
+  * Cellular Wireless Module: CDMA, GSM (voice), 3G (data)
 
 Key Combinations
 ~~~~~~~~~~~~~~~~
@@ -126,8 +154,8 @@ Note that the cursor isn't shown when at least one character has been
 selected.
 
 A **checkbox** is rendered as either a space (meaning unchecked) or an 
-``X`` (meaning checked) enclosed within [square] brackets, followed by 
-its label. For example::
+``X`` (meaning checked) enclosed within [brackets], followed by its
+label. For example::
 
   [ ] This box is not checked.
   [X] This box is checked.
@@ -141,7 +169,7 @@ switch is in the **on** position, and unchecked if the switch is in the
 
 If a screen element has no text of its own but its developer has 
 attached a textual description to it, then that description, enclosed 
-within [square] brackets, is displayed. For example::
+within [brackets], is displayed. For example::
 
   [Digital Clock]
 
@@ -258,7 +286,7 @@ refined navigation within certain contexts (see below), long pressing
 them can always be used to force an immediate, direct move to the start 
 of the next or previous screen element. Another way to force a move, 
 which is especially applicable when secondary actions have been 
-disabled, is to press the Space key together with the Forard or Backward 
+disabled, is to press the Space key together with the Forward or Backward 
 key.
 
 If the text of a screen element is longer than the braille display 
