@@ -70,7 +70,7 @@ public abstract class Endpoint {
 
     if (text != null) {
       SpeechDevice speech = Devices.getSpeechDevice();
-      speech.stop();
+      speech.stopSpeaking();
       speech.say(text);
     }
 

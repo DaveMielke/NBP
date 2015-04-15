@@ -37,7 +37,7 @@ public class ApplicationUtilities {
     }
 
     SpeechDevice speech = Devices.getSpeechDevice();
-    speech.stop();
+    speech.stopSpeaking();
     speech.say(text);
   }
 

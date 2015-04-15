@@ -35,6 +35,11 @@ public abstract class ApplicationParameters {
   public static volatile long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
   public static volatile long SPEECH_RETRY_DELAY = 5000; // milliseconds
+  public static volatile boolean SPEECH_ON = true;
+  public static volatile float SPEECH_VOLUME = 1.0f;
+  public static volatile float SPEECH_RATE = 1.0f;
+  public static volatile float SPEECH_PITCH = 1.0f;
+  public static volatile float SPEECH_BALANCE = 0.0f;
 
   public static volatile long BRAILLE_MESSAGE_TIME = 2000; // milliseconds
   public static volatile long BRAILLE_REWRITE_DELAY = 50; // milliseconds
