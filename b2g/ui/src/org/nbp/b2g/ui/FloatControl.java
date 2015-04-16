@@ -36,13 +36,13 @@ public abstract class FloatControl extends IntegerControl {
   }
 
   @Override
-  protected boolean restoreValue (SharedPreferences prefs, String key) {
-    return setFloatValue(prefs.getFloat(key, getFloatDefault()));
+  protected void saveValue (SharedPreferences.Editor editor, String key) {
+    editor.putFloat(key, getFloatValue());
   }
 
   @Override
-  protected void saveValue (SharedPreferences.Editor editor, String key) {
-    editor.putFloat(key, getFloatValue());
+  protected boolean restoreValue (SharedPreferences prefs, String key) {
+    return setFloatValue(prefs.getFloat(key, getFloatDefault()));
   }
 
   protected FloatControl () {

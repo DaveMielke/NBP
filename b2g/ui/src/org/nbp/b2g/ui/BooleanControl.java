@@ -31,13 +31,13 @@ public abstract class BooleanControl extends Control {
   }
 
   @Override
-  protected boolean restoreValue (SharedPreferences prefs, String key) {
-    return setBooleanValue(prefs.getBoolean(key, getBooleanDefault()));
+  protected void saveValue (SharedPreferences.Editor editor, String key) {
+    editor.putBoolean(key, getBooleanValue());
   }
 
   @Override
-  protected void saveValue (SharedPreferences.Editor editor, String key) {
-    editor.putBoolean(key, getBooleanValue());
+  protected boolean restoreValue (SharedPreferences prefs, String key) {
+    return setBooleanValue(prefs.getBoolean(key, getBooleanDefault()));
   }
 
   protected BooleanControl () {

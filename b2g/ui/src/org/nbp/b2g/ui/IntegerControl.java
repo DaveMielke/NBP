@@ -36,13 +36,13 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
-  protected boolean restoreValue (SharedPreferences prefs, String key) {
-    return setIntegerValue(prefs.getInt(key, getIntegerDefault()));
+  protected void saveValue (SharedPreferences.Editor editor, String key) {
+    editor.putInt(key, getIntegerValue());
   }
 
   @Override
-  protected void saveValue (SharedPreferences.Editor editor, String key) {
-    editor.putInt(key, getIntegerValue());
+  protected boolean restoreValue (SharedPreferences prefs, String key) {
+    return setIntegerValue(prefs.getInt(key, getIntegerDefault()));
   }
 
   protected IntegerControl () {

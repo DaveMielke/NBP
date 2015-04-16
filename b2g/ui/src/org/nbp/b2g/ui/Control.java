@@ -11,8 +11,8 @@ public abstract class Control {
   public abstract String getValue ();
   protected abstract String getLabel ();
 
-  protected abstract boolean restoreValue (SharedPreferences prefs, String key);
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
+  protected abstract boolean restoreValue (SharedPreferences prefs, String key);
 
   protected String getPreferenceKey () {
     return null;
@@ -26,12 +26,6 @@ public abstract class Control {
     return ApplicationContext.get().getSharedPreferences("controls", Context.MODE_PRIVATE);
   }
 
-  public boolean restoreValue () {
-    String key = getPreferenceKey();
-    if (key == null) return setDefaultValue();
-    return restoreValue(getSharedPreferences(), key);
-  }
-
   public boolean saveValue () {
     String key = getPreferenceKey();
     if (key == null) return true;
@@ -39,6 +33,16 @@ public abstract class Control {
     SharedPreferences.Editor editor = getSharedPreferences().edit();
     saveValue(editor, key);
     return editor.commit();
+  }
+
+  public boolean restoreValue () {
+    String key = getPreferenceKey();
+    if (key == null) return setDefaultValue();
+    return restoreValue(getSharedPreferences(), key);
+  }
+
+  public boolean resetValue () {
+    return setDefaultValue();
   }
 
   public Control () {

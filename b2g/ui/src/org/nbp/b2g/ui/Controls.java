@@ -29,6 +29,16 @@ public class Controls {
     return pitchControl;
   }
 
+  public static void saveControls (Control[] controls) {
+    for (Control control : controls) {
+      control.saveValue();
+    }
+  }
+
+  public static void saveControls () {
+    saveControls(allControls);
+  }
+
   public static void restoreControls (Control[] controls) {
     for (Control control : controls) {
       control.restoreValue();
@@ -39,14 +49,14 @@ public class Controls {
     restoreControls(allControls);
   }
 
-  public static void saveControls (Control[] controls) {
+  public static void resetControls (Control[] controls) {
     for (Control control : controls) {
-      control.saveValue();
+      control.resetValue();
     }
   }
 
-  public static void saveControls () {
-    saveControls(allControls);
+  public static void resetControls () {
+    resetControls(allControls);
   }
 
   private Controls () {
