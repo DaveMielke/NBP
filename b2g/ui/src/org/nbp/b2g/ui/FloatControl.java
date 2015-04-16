@@ -3,21 +3,21 @@ package org.nbp.b2g.ui;
 import android.content.SharedPreferences;
 
 public abstract class FloatControl extends IntegerControl {
-  protected abstract float getFloatScale ();
+  protected abstract float getLinearScale ();
   protected abstract float getFloatDefault ();
   protected abstract float getFloatValue ();
   protected abstract boolean setFloatValue (float value);
 
-  protected float toFloatValue (float normalizedValue) {
-    return normalizedValue;
+  protected float toFloatValue (float linearValue) {
+    return linearValue;
   }
 
-  protected float toNormalizedValue (float floatValue) {
+  protected float toLinearValue (float floatValue) {
     return floatValue;
   }
 
   protected int toIntegerValue (float floatValue) {
-    return Math.round(toNormalizedValue(floatValue) * getFloatScale());
+    return Math.round(toLinearValue(floatValue) * getLinearScale());
   }
 
   @Override
@@ -32,7 +32,7 @@ public abstract class FloatControl extends IntegerControl {
 
   @Override
   protected boolean setIntegerValue (int value) {
-    return setFloatValue(toFloatValue((float)value / getFloatScale()));
+    return setFloatValue(toFloatValue((float)value / getLinearScale()));
   }
 
   @Override

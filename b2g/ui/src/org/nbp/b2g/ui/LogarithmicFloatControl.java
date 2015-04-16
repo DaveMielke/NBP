@@ -2,17 +2,17 @@ package org.nbp.b2g.ui;
 
 public abstract class LogarithmicFloatControl extends FloatControl {
   @Override
-  protected float toNormalizedValue (float value) {
-    return (float)Math.log10(value);
+  protected float toLinearValue (float floatValue) {
+    return (float)Math.log10(floatValue);
   }
 
   @Override
-  protected float toFloatValue (float value) {
-    return (float)Math.pow(10.0, value);
+  protected float toFloatValue (float linearValue) {
+    return (float)Math.pow(10.0, linearValue);
   }
 
   @Override
-  protected float getFloatScale () {
+  protected float getLinearScale () {
     return 30.0f;
   }
 

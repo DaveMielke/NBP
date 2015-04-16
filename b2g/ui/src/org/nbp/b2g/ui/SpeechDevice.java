@@ -191,7 +191,7 @@ public class SpeechDevice {
     return Controls.getPitchControl().restoreValue();
   }
 
-  public void restoreSettings () {
+  public void restoreControls () {
     restoreVolume();
     restoreBalance();
     restoreRate();
@@ -219,7 +219,7 @@ public class SpeechDevice {
 
             if (isStarted()) {
               Log.d(LOG_TAG, "speech device started");
-              restoreSettings();
+              restoreControls();
 
               if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
                 maximumLength = ttsObject.getMaxSpeechInputLength();
