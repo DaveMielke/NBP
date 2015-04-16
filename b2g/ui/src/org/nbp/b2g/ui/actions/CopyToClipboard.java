@@ -10,6 +10,7 @@ public class CopyToClipboard extends Action {
 
     if (text != null) {
       if (Clipboard.putText(text)) {
+        message("copied to clipboard");
         return true;
       }
     }
