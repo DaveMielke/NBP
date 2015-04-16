@@ -29,3 +29,23 @@ S234-1 AndroidAccessibilitySettings
 S234-12 AndroidBluetoothSettings
 S234-2456 AndroidWifiSettings
 
+#####################
+# Developer Actions #
+#####################
+
+SU ScrollBackward
+SD ScrollForward
+
+B4 MoveToParent
+B5 MoveToPreviousSibling
+B6 MoveToNextSibling
+B8 MoveToChild
+B56 MoveToSelf
+B4568 SaveScreen
+
+F1 LogKeys
+F2 LogActions
+F3 LogNavigation
+F7 LogUpdates
+F1237 LogNone
+

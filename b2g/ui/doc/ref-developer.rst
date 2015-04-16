@@ -2,6 +2,9 @@
 Keys    Action
 ------  -----------------------
 FB1245  |DeveloperActions|
+F12     |SaveControls|
+F23     |RestoreControls|
+F37     |ResetControls|
 SU      |ScrollBackward|
 SD      |ScrollForward|
 B4      |MoveToParent|

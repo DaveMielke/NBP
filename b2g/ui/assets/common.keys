@@ -19,3 +19,15 @@ F6 LongPressOn
 S12345678 Null
 
 P Null
+
+#####################
+# Developer Actions #
+#####################
+
+# make this one very hard to type by accident
+FB1245 DeveloperActions
+
+F12 SaveControls
+F23 RestoreControls
+F37 ResetControls
+
