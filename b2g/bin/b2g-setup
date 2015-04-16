@@ -12,9 +12,6 @@ b2g-set accessibility-services on
 b2g-set b2g-input-service on
 b2g-set b2g-screen-monitor on
 
-b2g-set talkback-service on
-b2g-set spiel-service off
-
 b2g-set key-event-injection on
 b2g-set braille-device on
 
