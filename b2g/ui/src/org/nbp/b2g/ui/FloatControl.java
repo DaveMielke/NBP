@@ -1,37 +1,26 @@
 package org.nbp.b2g.ui;
 
-public abstract class FloatControl extends Control {
+public abstract class FloatControl extends IntegerControl {
   protected abstract float getScale ();
-  protected abstract float getExternalValue ();
-  protected abstract boolean setExternalValue (float value);
+  protected abstract float getFloatValue ();
+  protected abstract boolean setFloatValue (float value);
 
-  protected float toInternalValue (float value) {
+  protected float toNormalizedValue (float value) {
     return value;
   }
 
-  protected float toExternalValue (float value) {
+  protected float toFloatValue (float value) {
     return value;
   }
 
-  private boolean adjustControl (int steps) {
-    float scale = getScale();
-    int oldValue = Math.round(toInternalValue(getExternalValue()) * scale);
-
-    int newValue = oldValue + steps;
-    if (!setExternalValue(toExternalValue(newValue / scale))) return false;
-
-    message(getLabel(), newValue);
-    return true;
+  @Override
+  protected int getIntegerValue () {
+    return Math.round(toNormalizedValue(getFloatValue()) * getScale());
   }
 
   @Override
-  public boolean next () {
-    return adjustControl(1);
-  }
-
-  @Override
-  public boolean previous () {
-    return adjustControl(-1);
+  protected boolean setIntegerValue (int value) {
+    return setFloatValue(toFloatValue((float)value / getScale()));
   }
 
   protected FloatControl () {

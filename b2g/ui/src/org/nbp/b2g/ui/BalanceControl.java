@@ -7,12 +7,12 @@ public class BalanceControl extends LinearFloatControl {
   }
 
   @Override
-  protected float getExternalValue () {
+  protected float getFloatValue () {
     return Devices.getSpeechDevice().getBalance();
   }
 
   @Override
-  protected boolean setExternalValue (float value) {
+  protected boolean setFloatValue (float value) {
     return Devices.getSpeechDevice().setBalance(value);
   }
 

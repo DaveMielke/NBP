@@ -7,12 +7,12 @@ public class RateControl extends LogarithmicFloatControl {
   }
 
   @Override
-  protected float getExternalValue () {
+  protected float getFloatValue () {
     return Devices.getSpeechDevice().getRate();
   }
 
   @Override
-  protected boolean setExternalValue (float value) {
+  protected boolean setFloatValue (float value) {
     return Devices.getSpeechDevice().setRate(value);
   }
 

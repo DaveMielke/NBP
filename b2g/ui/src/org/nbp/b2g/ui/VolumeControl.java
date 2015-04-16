@@ -7,12 +7,12 @@ public class VolumeControl extends LinearFloatControl {
   }
 
   @Override
-  protected float getExternalValue () {
+  protected float getFloatValue () {
     return Devices.getSpeechDevice().getVolume();
   }
 
   @Override
-  protected boolean setExternalValue (float value) {
+  protected boolean setFloatValue (float value) {
     return Devices.getSpeechDevice().setVolume(value);
   }
 

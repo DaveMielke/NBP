@@ -5,8 +5,12 @@ public abstract class Control {
   public abstract boolean previous ();
   protected abstract String getLabel ();
 
-  protected void message (String label, int value) {
-    ApplicationUtilities.message(label + " " + value);
+  protected void report (String value) {
+    ApplicationUtilities.message(getLabel() + " " + value);
+  }
+
+  protected void report (int value) {
+    report(Integer.toString(value));
   }
 
   public Control () {
