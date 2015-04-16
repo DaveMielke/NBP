@@ -24,11 +24,13 @@ public abstract class FloatControl extends Control {
     return true;
   }
 
-  public boolean up () {
+  @Override
+  public boolean next () {
     return adjustControl(1);
   }
 
-  public boolean down () {
+  @Override
+  public boolean previous () {
     return adjustControl(-1);
   }
 

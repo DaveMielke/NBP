@@ -7,7 +7,7 @@ public class SpeakLeft extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
-      if (Controls.getBalanceControl().down()) {
+      if (Controls.getBalanceControl().previous()) {
         return true;
       }
     }

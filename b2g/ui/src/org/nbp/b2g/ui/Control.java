@@ -1,8 +1,8 @@
 package org.nbp.b2g.ui;
 
 public abstract class Control {
-  public abstract boolean up ();
-  public abstract boolean down ();
+  public abstract boolean next ();
+  public abstract boolean previous ();
   protected abstract String getLabel ();
 
   protected void message (String label, int value) {
