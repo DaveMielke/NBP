@@ -119,8 +119,8 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setVolume () {
-    return setVolume(ApplicationParameters.DEFAULT_SPEECH_VOLUME);
+  public boolean restoreVolume () {
+    return Controls.getVolumeControl().restoreValue();
   }
 
   public float getBalance () {
@@ -141,8 +141,8 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setBalance () {
-    return setBalance(ApplicationParameters.DEFAULT_SPEECH_BALANCE);
+  public boolean restoreBalance () {
+    return Controls.getBalanceControl().restoreValue();
   }
 
   public float getRate () {
@@ -164,8 +164,8 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setRate () {
-    return setRate(ApplicationParameters.DEFAULT_SPEECH_RATE);
+  public boolean restoreRate () {
+    return Controls.getRateControl().restoreValue();
   }
 
   public float getPitch () {
@@ -187,15 +187,15 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setPitch () {
-    return setPitch(ApplicationParameters.DEFAULT_SPEECH_PITCH);
+  public boolean restorePitch () {
+    return Controls.getPitchControl().restoreValue();
   }
 
-  public void revertSettings () {
-    setVolume();
-    setBalance();
-    setRate();
-    setPitch();
+  public void restoreSettings () {
+    restoreVolume();
+    restoreBalance();
+    restoreRate();
+    restorePitch();
   }
 
   private Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY) {
@@ -219,7 +219,7 @@ public class SpeechDevice {
 
             if (isStarted()) {
               Log.d(LOG_TAG, "speech device started");
-              revertSettings();
+              restoreSettings();
 
               if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
                 maximumLength = ttsObject.getMaxSpeechInputLength();
