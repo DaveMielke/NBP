@@ -1,8 +1,10 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
+import android.os.Build;
+
 import android.speech.tts.TextToSpeech;
 import java.util.HashMap;
-import android.util.Log;
 
 public class SpeechDevice {
   private final static String LOG_TAG = SpeechDevice.class.getName();
@@ -33,6 +35,7 @@ public class SpeechDevice {
   private final HashMap<String, String> ttsParameters = new HashMap<String, String>();
   private TextToSpeech ttsObject = null;
   private int ttsStatus = TextToSpeech.ERROR;
+  private int maximumLength;
 
   private boolean isStarted () {
     return ttsStatus == OK;
@@ -57,8 +60,37 @@ public class SpeechDevice {
     if (text != null) {
       synchronized (this) {
         if (isActive()) {
-          if (ttsObject.speak(text, TextToSpeech.QUEUE_ADD, ttsParameters) == OK) {
-            return true;
+          while (true) {
+            if (text.length() == 0) return true;
+
+            int nl = text.indexOf('\n');
+            String line;
+
+            if (nl == -1) {
+              line = text;
+              text = "";
+            } else {
+              line = text.substring(0, nl);
+              text = text.substring(nl+1);
+            }
+
+            while (true) {
+              int length = line.length();
+              if (length == 0) break;
+              String segment;
+
+              if (length > maximumLength) {
+                int end = line.lastIndexOf(' ', maximumLength);
+                if (end == -1) end = maximumLength;
+                segment = line.substring(0, end);
+                line = line.substring(end+1);
+              } else {
+                segment = line;
+                line = "";
+              }
+
+              if (ttsObject.speak(segment, TextToSpeech.QUEUE_ADD, ttsParameters) != OK) return false;
+            }
           }
         }
       }
@@ -192,6 +224,12 @@ public class SpeechDevice {
             if (isStarted()) {
               Log.d(LOG_TAG, "speech device started");
               revertSettings();
+
+              if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+                maximumLength = ttsObject.getMaxSpeechInputLength();
+              } else {
+                maximumLength = 0X40;
+              }
             } else {
               Log.d(LOG_TAG, "speech device failed with status " + ttsStatus);
 
