@@ -50,6 +50,10 @@ public abstract class Action {
     message(label + " " + (isOn? "on": "off"));
   }
 
+  protected void message (String label, int value) {
+    message(label + " " + value);
+  }
+
   protected void log (String message) {
     Log.v(LOG_TAG, message);
   }
