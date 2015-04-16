@@ -65,5 +65,5 @@
 .. |StopSpeaking| replace:: stop speaking
 .. |TabBackward| replace:: the Shift and Tab keys
 .. |TabForward| replace:: the Tab key
-.. |VolumeDown| replace:: the Volume Down key
-.. |VolumeUp| replace:: the Volume Up key
+.. |VolumeDown| replace:: Volume Down (decrease volume of current audio stream)
+.. |VolumeUp| replace:: Volume Up (increase volume of current audio stream)

@@ -10,6 +10,6 @@ S>    |SpeechOn|
 2>    |SpeakFaster|
 3<    |SpeakLower|
 3>    |SpeakHigher|
-7<    |SpeakLeft|
-7>    |SpeakRight|
+4<    |SpeakLeft|
+4>    |SpeakRight|
 ====  ==============
