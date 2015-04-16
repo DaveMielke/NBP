@@ -7,7 +7,7 @@ public class SpeakLouder extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
-      if (adjustVolume(speech, 1)) {
+      if (Controls.getVolumeControl().up()) {
         return true;
       }
     }

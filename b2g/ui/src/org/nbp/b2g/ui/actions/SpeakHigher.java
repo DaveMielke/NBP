@@ -7,7 +7,7 @@ public class SpeakHigher extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
-      if (adjustPitch(speech, 1)) {
+      if (Controls.getPitchControl().up()) {
         return true;
       }
     }

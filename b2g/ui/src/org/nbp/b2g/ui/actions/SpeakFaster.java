@@ -7,7 +7,7 @@ public class SpeakFaster extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
-      if (adjustRate(speech, 1)) {
+      if (Controls.getRateControl().up()) {
         return true;
       }
     }
