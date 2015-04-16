@@ -4,22 +4,27 @@ public abstract class IntegerControl extends Control {
   protected abstract int getIntegerValue ();
   protected abstract boolean setIntegerValue (int value);
 
-  private boolean adjustControl (int steps) {
+  private boolean adjustValue (int steps) {
     int oldValue = getIntegerValue();
     int newValue = oldValue + steps;
     if (!setIntegerValue(newValue)) return false;
-    report(newValue);
+    reportValue();
     return true;
   }
 
   @Override
   public boolean next () {
-    return adjustControl(1);
+    return adjustValue(1);
   }
 
   @Override
   public boolean previous () {
-    return adjustControl(-1);
+    return adjustValue(-1);
+  }
+
+  @Override
+  public String getValue () {
+    return Integer.toString(getIntegerValue());
   }
 
   protected IntegerControl () {

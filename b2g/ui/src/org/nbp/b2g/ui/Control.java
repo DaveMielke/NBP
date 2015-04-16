@@ -3,14 +3,12 @@ package org.nbp.b2g.ui;
 public abstract class Control {
   public abstract boolean next ();
   public abstract boolean previous ();
+  public abstract String getValue ();
   protected abstract String getLabel ();
+  protected abstract String getPreferenceKey ();
 
-  protected void report (String value) {
-    ApplicationUtilities.message(getLabel() + " " + value);
-  }
-
-  protected void report (int value) {
-    report(Integer.toString(value));
+  protected void reportValue () {
+    ApplicationUtilities.message(getLabel() + " " + getValue());
   }
 
   public Control () {

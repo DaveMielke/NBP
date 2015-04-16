@@ -7,6 +7,11 @@ public class BalanceControl extends LinearFloatControl {
   }
 
   @Override
+  protected String getPreferenceKey () {
+    return "speech-balance";
+  }
+
+  @Override
   protected float getFloatValue () {
     return Devices.getSpeechDevice().getBalance();
   }

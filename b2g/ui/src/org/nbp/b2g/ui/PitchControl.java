@@ -7,6 +7,11 @@ public class PitchControl extends LogarithmicFloatControl {
   }
 
   @Override
+  protected String getPreferenceKey () {
+    return "speech-pitch";
+  }
+
+  @Override
   protected float getFloatValue () {
     return Devices.getSpeechDevice().getPitch();
   }

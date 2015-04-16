@@ -11,24 +11,20 @@ public class SpeechDevice {
 
   public final static float MINIMUM_VOLUME = 0.0f;
   public final static float MAXIMUM_VOLUME = 1.0f;
-  public final static float DEFAULT_VOLUME = 1.0f;
 
   public final static float MINIMUM_BALANCE = -1.0f;
   public final static float MAXIMUM_BALANCE = 1.0f;
-  public final static float DEFAULT_BALANCE = 0.0f;
 
   public final static float MINIMUM_RATE = 0.5f;
   public final static float MAXIMUM_RATE = 2.0f;
-  public final static float DEFAULT_RATE = 1.0f;
 
   public final static float MINIMUM_PITCH = 0.5f;
   public final static float MAXIMUM_PITCH = 2.0f;
-  public final static float DEFAULT_PITCH = 1.0f;
 
-  private float currentVolume = DEFAULT_VOLUME;
-  private float currentBalance = DEFAULT_BALANCE;
-  private float currentRate = DEFAULT_RATE;
-  private float currentPitch = DEFAULT_PITCH;
+  private float currentVolume = ApplicationParameters.DEFAULT_SPEECH_VOLUME;
+  private float currentBalance = ApplicationParameters.DEFAULT_SPEECH_BALANCE;
+  private float currentRate = ApplicationParameters.DEFAULT_SPEECH_RATE;
+  private float currentPitch = ApplicationParameters.DEFAULT_SPEECH_PITCH;
 
   private final static int OK = TextToSpeech.SUCCESS;
 
@@ -124,7 +120,7 @@ public class SpeechDevice {
   }
 
   public boolean setVolume () {
-    return setVolume(ApplicationParameters.SPEECH_VOLUME);
+    return setVolume(ApplicationParameters.DEFAULT_SPEECH_VOLUME);
   }
 
   public float getBalance () {
@@ -146,7 +142,7 @@ public class SpeechDevice {
   }
 
   public boolean setBalance () {
-    return setBalance(ApplicationParameters.SPEECH_BALANCE);
+    return setBalance(ApplicationParameters.DEFAULT_SPEECH_BALANCE);
   }
 
   public float getRate () {
@@ -169,7 +165,7 @@ public class SpeechDevice {
   }
 
   public boolean setRate () {
-    return setRate(ApplicationParameters.SPEECH_RATE);
+    return setRate(ApplicationParameters.DEFAULT_SPEECH_RATE);
   }
 
   public float getPitch () {
@@ -192,7 +188,7 @@ public class SpeechDevice {
   }
 
   public boolean setPitch () {
-    return setPitch(ApplicationParameters.SPEECH_PITCH);
+    return setPitch(ApplicationParameters.DEFAULT_SPEECH_PITCH);
   }
 
   public void revertSettings () {

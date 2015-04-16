@@ -7,6 +7,11 @@ public class VolumeControl extends LinearFloatControl {
   }
 
   @Override
+  protected String getPreferenceKey () {
+    return "speech-volume";
+  }
+
+  @Override
   protected float getFloatValue () {
     return Devices.getSpeechDevice().getVolume();
   }

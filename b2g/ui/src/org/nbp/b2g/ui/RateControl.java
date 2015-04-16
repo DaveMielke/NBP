@@ -7,6 +7,11 @@ public class RateControl extends LogarithmicFloatControl {
   }
 
   @Override
+  protected String getPreferenceKey () {
+    return "speech-rate";
+  }
+
+  @Override
   protected float getFloatValue () {
     return Devices.getSpeechDevice().getRate();
   }
