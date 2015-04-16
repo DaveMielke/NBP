@@ -9,17 +9,17 @@ import java.util.HashMap;
 public class SpeechDevice {
   private final static String LOG_TAG = SpeechDevice.class.getName();
 
-  public final static float MINIMUM_VOLUME = 0.0f;
   public final static float MAXIMUM_VOLUME = 1.0f;
+  public final static float MINIMUM_VOLUME = 0.0f;
 
-  public final static float MINIMUM_BALANCE = -1.0f;
   public final static float MAXIMUM_BALANCE = 1.0f;
+  public final static float MINIMUM_BALANCE = -MAXIMUM_BALANCE;
 
-  public final static float MINIMUM_RATE = 0.5f;
   public final static float MAXIMUM_RATE = 2.0f;
+  public final static float MINIMUM_RATE = 0.5f;
 
-  public final static float MINIMUM_PITCH = 0.5f;
   public final static float MAXIMUM_PITCH = 2.0f;
+  public final static float MINIMUM_PITCH = 0.5f;
 
   private float currentVolume = ApplicationParameters.DEFAULT_SPEECH_VOLUME;
   private float currentBalance = ApplicationParameters.DEFAULT_SPEECH_BALANCE;
@@ -192,10 +192,14 @@ public class SpeechDevice {
   }
 
   public void restoreControls () {
-    restoreVolume();
-    restoreBalance();
-    restoreRate();
-    restorePitch();
+    Control[] controls = new Control[] {
+      Controls.getVolumeControl(),
+      Controls.getBalanceControl(),
+      Controls.getRateControl(),
+      Controls.getPitchControl()
+    };
+
+    Controls.restoreControls(controls);
   }
 
   private Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY) {

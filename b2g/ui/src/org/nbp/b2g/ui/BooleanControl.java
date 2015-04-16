@@ -11,13 +11,18 @@ public abstract class BooleanControl extends Control {
   }
 
   @Override
-  public boolean next () {
+  public boolean setNextValue () {
     return setBooleanValue(true);
   }
 
   @Override
-  public boolean previous () {
+  public boolean setPreviousValue () {
     return setBooleanValue(false);
+  }
+
+  @Override
+  public boolean setDefaultValue () {
+    return setBooleanValue(getBooleanDefault());
   }
 
   @Override
@@ -26,13 +31,13 @@ public abstract class BooleanControl extends Control {
   }
 
   @Override
-  protected boolean restoreValue (SharedPreferences prefs) {
-    return setBooleanValue(prefs.getBoolean(getPreferenceKey(), getBooleanDefault()));
+  protected boolean restoreValue (SharedPreferences prefs, String key) {
+    return setBooleanValue(prefs.getBoolean(key, getBooleanDefault()));
   }
 
   @Override
-  protected void saveValue (SharedPreferences.Editor editor) {
-    editor.putBoolean(getPreferenceKey(), getBooleanValue());
+  protected void saveValue (SharedPreferences.Editor editor, String key) {
+    editor.putBoolean(key, getBooleanValue());
   }
 
   protected BooleanControl () {

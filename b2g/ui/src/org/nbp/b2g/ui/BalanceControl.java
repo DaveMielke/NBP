@@ -7,6 +7,28 @@ public class BalanceControl extends LinearFloatControl {
   }
 
   @Override
+  public String getValue () {
+    float value = getFloatValue();
+    if (value == 0.0f) return "center";
+
+    StringBuilder sb = new StringBuilder();
+    float maximum = SpeechDevice.MAXIMUM_BALANCE;
+
+    if (value < 0.0f) {
+      sb.append("left");
+      value = -value;
+    } else {
+      sb.append("right");
+    }
+
+    sb.append(' ');
+    sb.append(Math.round((value * 100.0) / maximum));
+    sb.append('%');
+
+    return sb.toString();
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "speech-balance";
   }

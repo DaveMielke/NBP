@@ -6,7 +6,7 @@ public class Controls {
   private final static Control rateControl = new RateControl();
   private final static Control pitchControl = new PitchControl();
 
-  private final static Control[] controls = new Control[] {
+  private final static Control[] allControls = new Control[] {
     volumeControl,
     balanceControl,
     rateControl,
@@ -29,16 +29,24 @@ public class Controls {
     return pitchControl;
   }
 
-  public static void restoreControls () {
+  public static void restoreControls (Control[] controls) {
     for (Control control : controls) {
       control.restoreValue();
     }
   }
 
-  public static void saveControls () {
+  public static void restoreControls () {
+    restoreControls(allControls);
+  }
+
+  public static void saveControls (Control[] controls) {
     for (Control control : controls) {
       control.saveValue();
     }
+  }
+
+  public static void saveControls () {
+    saveControls(allControls);
   }
 
   private Controls () {

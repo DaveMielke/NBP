@@ -16,13 +16,18 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
-  public boolean next () {
+  public boolean setNextValue () {
     return adjustValue(1);
   }
 
   @Override
-  public boolean previous () {
+  public boolean setPreviousValue () {
     return adjustValue(-1);
+  }
+
+  @Override
+  public boolean setDefaultValue () {
+    return setIntegerValue(getIntegerDefault());
   }
 
   @Override
@@ -31,13 +36,13 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
-  protected boolean restoreValue (SharedPreferences prefs) {
-    return setIntegerValue(prefs.getInt(getPreferenceKey(), getIntegerDefault()));
+  protected boolean restoreValue (SharedPreferences prefs, String key) {
+    return setIntegerValue(prefs.getInt(key, getIntegerDefault()));
   }
 
   @Override
-  protected void saveValue (SharedPreferences.Editor editor) {
-    editor.putInt(getPreferenceKey(), getIntegerValue());
+  protected void saveValue (SharedPreferences.Editor editor, String key) {
+    editor.putInt(key, getIntegerValue());
   }
 
   protected IntegerControl () {

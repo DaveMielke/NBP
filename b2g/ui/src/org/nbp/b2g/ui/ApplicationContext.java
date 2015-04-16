@@ -23,9 +23,10 @@ public abstract class ApplicationContext {
       applicationContext = context;
     }
 
-    Devices.getSpeechDevice().say(null);
     Clipboard.setClipboard();
+    Devices.getSpeechDevice().say(null);
     EventMonitors.startEventMonitors();
+    Controls.restoreControls();
     return true;
   }
 
