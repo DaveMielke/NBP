@@ -23,8 +23,9 @@ four on the left, from left to right, are dots 7, 3, 2, and 1. The four
 on the right, from left to right, are dots 4, 5, 6, and 8.
 
 The square with a small, round button in the middle, in between dots 1 
-and 4, is the five-key D-Pad. Its four edges are the Up, Down, Left, and 
-Right keys. The button in the middle is the Center key.
+and 4, is the five-key D-Pad (directional pad). Its four edges are the
+Up, Down, Left, and Right keys. The button in the middle is the Center
+key.
 
 The long, rectangular key in front of dot 1, the D-Pad, and dot 4 is the 
 Space key (or bar).
@@ -39,7 +40,8 @@ The earphone/microphone jack (3.5mm) is near the front of the left side.
 Standard cell phone earphones can be used.
 
 The video jack (RCA) is in the middle of the left side. It's for an
-external monitor.
+external video monitor. This provides an easy way for a sighted person,
+e.g. a teacher, to offer direct assistance.
 
 A standard USB-A (or host) port is near the back of the left side. USB 
 devices (memory stick, external keyboard, mouse, hub, etc) can be 
