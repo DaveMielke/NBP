@@ -35,11 +35,11 @@ cursor routing keys. The convex, square button to the left of the cursor
 routing keys is the Backward key, and the convex, square button to their 
 right is the Forward key.
 
-The earphone/microphone jack is near the front of the left side.
+The earphone/microphone jack (3.5mm) is near the front of the left side.
 Standard cell phone earphones can be used.
 
-The video jack is in the middle of the left side. It's for an external 
-monitor.
+The video jack (RCA) is in the middle of the left side. It's for an
+external monitor.
 
 A standard USB-A (or host) port is near the back of the left side. USB 
 devices (memory stick, external keyboard, mouse, hub, etc) can be 
@@ -97,7 +97,7 @@ following:
   It's in the corner that's toward the front and toward the side where the 
   Power switch is. To gain access to the actual slot, lift the end of its 
   cover that's toward the back. As with most SIM card slot covers, its 
-  hinge is fairly flimsy so be gentle.
+  hinge is fragile so be gentle.
 
 .. topic:: Technical Information
 
