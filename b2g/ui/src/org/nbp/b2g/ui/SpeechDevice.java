@@ -15,11 +15,11 @@ public class SpeechDevice {
   public final static float MAXIMUM_BALANCE = 1.0f;
   public final static float MINIMUM_BALANCE = -MAXIMUM_BALANCE;
 
-  public final static float MAXIMUM_RATE = 2.0f;
-  public final static float MINIMUM_RATE = 0.5f;
+  public final static float MAXIMUM_RATE = 4.0f;
+  public final static float MINIMUM_RATE = 1.0f / 3.0f;
 
   public final static float MAXIMUM_PITCH = 2.0f;
-  public final static float MINIMUM_PITCH = 0.5f;
+  public final static float MINIMUM_PITCH = 1.0f / 2.0f;
 
   private float currentVolume = ApplicationParameters.DEFAULT_SPEECH_VOLUME;
   private float currentBalance = ApplicationParameters.DEFAULT_SPEECH_BALANCE;
@@ -96,8 +96,17 @@ public class SpeechDevice {
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
-    if ((value >= minimum) && (value <= maximum)) return true;
-    Log.w(LOG_TAG, ("invalid " + label + ": " + value));
+    String reason;
+
+    if (value < minimum) {
+      reason = value + " less than " + minimum;
+    } else if (value > maximum) {
+      reason = value + " greater than " + maximum;
+    } else {
+      return true;
+    }
+
+    Log.w(LOG_TAG, ("invalid " + label + ": " + reason));
     return false;
   }
 

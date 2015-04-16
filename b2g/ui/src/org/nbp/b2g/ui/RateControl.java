@@ -12,6 +12,11 @@ public class RateControl extends LogarithmicFloatControl {
   }
 
   @Override
+  protected float getLinearScale () {
+    return super.getLinearScale() / 2.0f;
+  }
+
+  @Override
   protected float getFloatDefault () {
     return ApplicationParameters.DEFAULT_SPEECH_RATE;
   }
