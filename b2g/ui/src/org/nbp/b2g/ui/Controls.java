@@ -29,6 +29,18 @@ public class Controls {
     return pitchControl;
   }
 
+  public static void restoreControls () {
+    for (Control control : controls) {
+      control.restoreValue();
+    }
+  }
+
+  public static void saveControls () {
+    for (Control control : controls) {
+      control.saveValue();
+    }
+  }
+
   private Controls () {
   }
 }

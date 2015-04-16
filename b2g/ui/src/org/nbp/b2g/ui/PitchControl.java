@@ -12,6 +12,11 @@ public class PitchControl extends LogarithmicFloatControl {
   }
 
   @Override
+  protected float getFloatDefault () {
+    return ApplicationParameters.DEFAULT_SPEECH_PITCH;
+  }
+
+  @Override
   protected float getFloatValue () {
     return Devices.getSpeechDevice().getPitch();
   }

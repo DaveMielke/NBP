@@ -12,6 +12,11 @@ public class VolumeControl extends LinearFloatControl {
   }
 
   @Override
+  protected float getFloatDefault () {
+    return ApplicationParameters.DEFAULT_SPEECH_VOLUME;
+  }
+
+  @Override
   protected float getFloatValue () {
     return Devices.getSpeechDevice().getVolume();
   }

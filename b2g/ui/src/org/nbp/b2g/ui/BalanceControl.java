@@ -12,6 +12,11 @@ public class BalanceControl extends LinearFloatControl {
   }
 
   @Override
+  protected float getFloatDefault () {
+    return ApplicationParameters.DEFAULT_SPEECH_BALANCE;
+  }
+
+  @Override
   protected float getFloatValue () {
     return Devices.getSpeechDevice().getBalance();
   }

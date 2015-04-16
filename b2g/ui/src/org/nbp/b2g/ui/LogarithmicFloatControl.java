@@ -12,7 +12,7 @@ public abstract class LogarithmicFloatControl extends FloatControl {
   }
 
   @Override
-  protected float getScale () {
+  protected float getFloatScale () {
     return 30.0f;
   }
 

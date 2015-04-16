@@ -1,6 +1,9 @@
 package org.nbp.b2g.ui;
 
+import android.content.SharedPreferences;
+
 public abstract class IntegerControl extends Control {
+  protected abstract int getIntegerDefault ();
   protected abstract int getIntegerValue ();
   protected abstract boolean setIntegerValue (int value);
 
@@ -25,6 +28,16 @@ public abstract class IntegerControl extends Control {
   @Override
   public String getValue () {
     return Integer.toString(getIntegerValue());
+  }
+
+  @Override
+  protected boolean restoreValue (SharedPreferences prefs) {
+    return setIntegerValue(prefs.getInt(getPreferenceKey(), getIntegerDefault()));
+  }
+
+  @Override
+  protected void saveValue (SharedPreferences.Editor editor) {
+    editor.putInt(getPreferenceKey(), getIntegerValue());
   }
 
   protected IntegerControl () {
