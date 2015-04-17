@@ -95,6 +95,25 @@ public class HostEndpoint extends Endpoint {
     return ScreenUtilities.isEditable(currentNode);
   }
 
+  @Override
+  public boolean isSeekable () {
+    return ScreenUtilities.isSeekable(currentNode);
+  }
+
+  protected boolean hasNodeAction (int action) {
+    return ScreenUtilities.hasAction(currentNode, action);
+  }
+
+  @Override
+  public boolean canScrollForward () {
+    return hasNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+  }
+
+  @Override
+  public boolean canScrollBackward () {
+    return hasNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
+  }
+
   protected final InputService getInputService () {
     return InputService.getInputService();
   }

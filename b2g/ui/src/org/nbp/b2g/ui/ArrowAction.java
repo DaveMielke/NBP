@@ -5,6 +5,10 @@ public abstract class ArrowAction extends ScanCodeAction {
     return false;
   }
 
+  protected boolean canScroll (Endpoint endpoint) {
+    return false;
+  }
+
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
@@ -12,6 +16,12 @@ public abstract class ArrowAction extends ScanCodeAction {
     synchronized (endpoint) {
       if (endpoint.isEditable()) {
         return performArrowEditAction(endpoint);
+      }
+
+      if (endpoint.isSeekable()) {
+        if (!canScroll(endpoint)) {
+          ApplicationUtilities.beep();
+        }
       }
     }
 

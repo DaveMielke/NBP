@@ -104,11 +104,18 @@ public class ScreenUtilities {
   }
 
   public static boolean isSeekable (AccessibilityNodeInfo node) {
+    if (node == null) return false;
     if (node.getChildCount() > 0) return false;
+
     int actions = node.getActions();
     if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
     if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
     return false;
+  }
+
+  public static boolean hasAction (AccessibilityNodeInfo node, int action) {
+    if (node == null) return false;
+    return (node.getActions() & action) != 0;
   }
 
   public static String getClassName (AccessibilityNodeInfo node) {

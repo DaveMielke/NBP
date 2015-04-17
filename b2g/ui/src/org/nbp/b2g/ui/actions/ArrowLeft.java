@@ -21,6 +21,11 @@ public class ArrowLeft extends ArrowAction {
   }
 
   @Override
+  protected boolean canScroll (Endpoint endpoint) {
+    return endpoint.canScrollBackward();
+  }
+
+  @Override
   protected String getScanCode () {
     return "LEFT";
   }

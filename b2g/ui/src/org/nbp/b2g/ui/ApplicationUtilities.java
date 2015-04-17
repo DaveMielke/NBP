@@ -45,6 +45,21 @@ public class ApplicationUtilities {
     message(Endpoints.getCurrentEndpoint(), text);
   }
 
+  public static void message (StringBuilder sb) {
+    message(sb.toString());
+  }
+
+  public static void message (double index, double count) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(Math.round((index / count) * 100.0));
+    sb.append('%');
+    message(sb);
+  }
+
+  public static void message (int index, int count) {
+    message((double)index, (double)count);
+  }
+
   private ApplicationUtilities () {
   }
 }

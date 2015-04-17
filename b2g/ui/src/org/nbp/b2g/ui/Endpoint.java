@@ -83,6 +83,18 @@ public abstract class Endpoint {
     return false;
   }
 
+  public boolean isSeekable () {
+    return false;
+  }
+
+  public boolean canScrollForward () {
+    return false;
+  }
+
+  public boolean canScrollBackward () {
+    return false;
+  }
+
   public boolean insertText (String string) {
     return false;
   }
