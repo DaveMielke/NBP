@@ -31,7 +31,8 @@ public abstract class ScreenAction extends HostAction {
     return found;
   }
 
-  protected boolean canScroll (AccessibilityNodeInfo node) {
+  protected boolean isSeekable (AccessibilityNodeInfo node) {
+    if (node.getChildCount() > 0) return false;
     int actions = node.getActions();
     if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
     if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
@@ -41,7 +42,7 @@ public abstract class ScreenAction extends HostAction {
   protected boolean isActionable (AccessibilityNodeInfo node) {
     if (node.isClickable()) return true;
     if (node.isLongClickable()) return true;
-    if (canScroll(node)) return true;
+    if (isSeekable(node)) return true;
     return false;
   }
 

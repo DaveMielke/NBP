@@ -12,6 +12,7 @@ public abstract class MoveAction extends ScreenAction {
   protected abstract int getScrollAction ();
 
   protected boolean scroll (AccessibilityNodeInfo node) {
+    if (isSeekable(node)) return false;
     boolean scrolled = performNodeAction(node, getScrollAction());
 
     if (scrolled) {
