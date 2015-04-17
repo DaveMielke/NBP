@@ -31,9 +31,17 @@ public abstract class ScreenAction extends HostAction {
     return found;
   }
 
+  protected boolean canScroll (AccessibilityNodeInfo node) {
+    int actions = node.getActions();
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
+    return false;
+  }
+
   protected boolean isActionable (AccessibilityNodeInfo node) {
     if (node.isClickable()) return true;
     if (node.isLongClickable()) return true;
+    if (canScroll(node)) return true;
     return false;
   }
 
@@ -72,6 +80,8 @@ public abstract class ScreenAction extends HostAction {
     if (!force) {
       if (node.getText() != null) {
         if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has text");
+      } else if (node.getContentDescription() != null) {
+        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has description");
       } else {
         if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no text");
 

@@ -90,6 +90,19 @@ public class ScreenMonitor extends AccessibilityService {
       Log.d(LOG_TAG, "accessibility event: " + event.toString());
     }
 
+    if (type == AccessibilityEvent.TYPE_VIEW_SELECTED) {
+      int count = event.getItemCount();
+
+      if (count != -1) {
+        int index = event.getCurrentItemIndex();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append((index * 100) / count);
+        sb.append('%');
+        ApplicationUtilities.message(sb.toString());
+      }
+    }
+
     if (source != null) {
       logEventComponent(source, "source");
       AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode(source);
@@ -141,21 +154,6 @@ public class ScreenMonitor extends AccessibilityService {
           endpoint.write(sb.toString());
         } else {
           logMissingEventComponent("text");
-
-          if (type == AccessibilityEvent.TYPE_VIEW_SELECTED) {
-            int count = event.getItemCount();
-
-            if (count != -1) {
-              int index = event.getCurrentItemIndex();
-
-              sb.append((index * 100) / count);
-              sb.append('%');
-            }
-          }
-
-          if (sb.length() > 0) {
-            ApplicationUtilities.message(sb.toString());
-          }
         }
       }
     }
