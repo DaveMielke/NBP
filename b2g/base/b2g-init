@@ -15,7 +15,7 @@ setProperty() {
    setprop "${name}" "${value}"
 }
 
-enableEventMonitor() {
+permitEventDevice() {
    set -- `ls /sys/bus/platform/devices/${1}/input*`
 
    [ "${#}" -eq 1 ] && {
@@ -34,10 +34,10 @@ setProperty persist.service.adb.enable 1
 setField secure adb_enabled 1
 
 # enable power switch monitoring
-enableEventMonitor twl4030_pwrbutton
+permitEventDevice twl4030_pwrbutton
 
 # enable keyboard monitoring
-enableEventMonitor cp430_keypad
+permitEventDevice cp430_keypad
 
 # enable key event injection
 chmod 666 /dev/uinput
