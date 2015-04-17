@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 
 public class ArrowUp extends ArrowAction {
   @Override
-  protected boolean performArrowEditAction (Endpoint endpoint) {
+  protected boolean performEditAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
 
     if (endpoint.isSelected(start)) {

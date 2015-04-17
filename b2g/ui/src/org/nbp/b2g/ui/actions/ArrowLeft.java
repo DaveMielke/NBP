@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 
 public class ArrowLeft extends ArrowAction {
   @Override
-  protected boolean performArrowEditAction (Endpoint endpoint) {
+  protected boolean performEditAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
 
     if (endpoint.isSelected(start)) {
@@ -21,8 +21,8 @@ public class ArrowLeft extends ArrowAction {
   }
 
   @Override
-  protected boolean canScroll (Endpoint endpoint) {
-    return endpoint.canScrollBackward();
+  protected boolean performSeekAction (Endpoint endpoint) {
+    return endpoint.seekPrevious();
   }
 
   @Override

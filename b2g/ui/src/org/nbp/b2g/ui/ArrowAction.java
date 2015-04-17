@@ -1,11 +1,11 @@
 package org.nbp.b2g.ui;
 
 public abstract class ArrowAction extends ScanCodeAction {
-  protected boolean performArrowEditAction (Endpoint endpoint) {
+  protected boolean performEditAction (Endpoint endpoint) {
     return false;
   }
 
-  protected boolean canScroll (Endpoint endpoint) {
+  protected boolean performSeekAction (Endpoint endpoint) {
     return false;
   }
 
@@ -15,13 +15,11 @@ public abstract class ArrowAction extends ScanCodeAction {
 
     synchronized (endpoint) {
       if (endpoint.isEditable()) {
-        return performArrowEditAction(endpoint);
+        return performEditAction(endpoint);
       }
 
       if (endpoint.isSeekable()) {
-        if (!canScroll(endpoint)) {
-          ApplicationUtilities.beep();
-        }
+        return performSeekAction(endpoint);
       }
     }
 

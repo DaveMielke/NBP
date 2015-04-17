@@ -3,6 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.util.Log;
 
+import android.os.Bundle;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.InputConnection;
 
@@ -100,18 +101,23 @@ public class HostEndpoint extends Endpoint {
     return ScreenUtilities.isSeekable(currentNode);
   }
 
-  protected boolean hasNodeAction (int action) {
-    return ScreenUtilities.hasAction(currentNode, action);
+  protected boolean performNodeAction (int action, Bundle parameters) {
+    if (currentNode == null) return false;
+    return currentNode.performAction(action, parameters);
+  }
+
+  protected boolean performNodeAction (int action) {
+    return performNodeAction(action, null);
   }
 
   @Override
-  public boolean canScrollForward () {
-    return hasNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+  public boolean seekNext () {
+    return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
   }
 
   @Override
-  public boolean canScrollBackward () {
-    return hasNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
+  public boolean seekPrevious () {
+    return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
   }
 
   protected final InputService getInputService () {

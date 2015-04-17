@@ -87,11 +87,11 @@ public abstract class Endpoint {
     return false;
   }
 
-  public boolean canScrollForward () {
+  public boolean seekNext () {
     return false;
   }
 
-  public boolean canScrollBackward () {
+  public boolean seekPrevious () {
     return false;
   }
 
