@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 
 public class BalanceControl extends LinearFloatControl {
   @Override
-  protected String getLabel () {
+  public String getLabel () {
     return "balance";
   }
 

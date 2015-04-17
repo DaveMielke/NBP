@@ -8,8 +8,8 @@ public abstract class Control {
   public abstract boolean setPreviousValue ();
   public abstract boolean setDefaultValue ();
 
+  public abstract String getLabel ();
   public abstract String getValue ();
-  protected abstract String getLabel ();
 
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
