@@ -103,6 +103,14 @@ public class ScreenUtilities {
     return canAssign(android.widget.EditText.class, node);
   }
 
+  public static boolean isSeekable (AccessibilityNodeInfo node) {
+    if (node.getChildCount() > 0) return false;
+    int actions = node.getActions();
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
+    return false;
+  }
+
   public static String getClassName (AccessibilityNodeInfo node) {
     return LanguageUtilities.getClassName(node.getClassName());
   }

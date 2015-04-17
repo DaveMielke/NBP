@@ -91,15 +91,17 @@ public class ScreenMonitor extends AccessibilityService {
     }
 
     if (type == AccessibilityEvent.TYPE_VIEW_SELECTED) {
-      int count = event.getItemCount();
+      if ((source == null) || ScreenUtilities.isSeekable(source)) {
+        int count = event.getItemCount();
 
-      if (count != -1) {
-        int index = event.getCurrentItemIndex();
+        if (count != -1) {
+          int index = event.getCurrentItemIndex();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append((index * 100) / count);
-        sb.append('%');
-        ApplicationUtilities.message(sb.toString());
+          StringBuilder sb = new StringBuilder();
+          sb.append((index * 100) / count);
+          sb.append('%');
+          ApplicationUtilities.message(sb.toString());
+        }
       }
     }
 
