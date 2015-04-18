@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class RateControl extends LogarithmicFloatControl {
   @Override
   public String getLabel () {
-    return "rate";
+    return ApplicationContext.getString(R.string.rate_control_label);
   }
 
   @Override

@@ -32,7 +32,7 @@ public class ScreenMonitor extends AccessibilityService {
     Log.d(LOG_TAG, "screen monitor started");
     screenMonitor = this;
 
-    ApplicationContext.set(this);
+    ApplicationContext.setContext(this);
   }
 
   @Override

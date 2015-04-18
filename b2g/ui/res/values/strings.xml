@@ -9,6 +9,18 @@
   <string name="screen_monitor_label">B2G Screen Monitor</string>
   <string name="screen_monitor_description">B2G Screen Monitor</string>
 
-  <string name="clock_label">Current Date and Time</string>
-  <string name="options_label">Internal Options</string>
+  <string name="clock_activity_label">Current Date and Time</string>
+
+  <string name="options_activity_label">Option Settings</string>
+
+  <string name="volume_control_label">Volume</string>
+
+  <string name="balance_control_label">Balance</string>
+  <string name="balance_control_center">center</string>
+  <string name="balance_control_left">left</string>
+  <string name="balance_control_right">right</string>
+
+  <string name="rate_control_label">Rate</string>
+
+  <string name="pitch_control_label">Pitch</string>
 </resources>

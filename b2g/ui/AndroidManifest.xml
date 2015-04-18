@@ -55,13 +55,13 @@
 
     <activity
         android:name=".ClockActivity"
-        android:label="@string/clock_label"
+        android:label="@string/clock_activity_label"
         >
     </activity>
 
     <activity
         android:name=".OptionsActivity"
-        android:label="@string/options_label"
+        android:label="@string/options_activity_label"
         >
     </activity>
   </application>

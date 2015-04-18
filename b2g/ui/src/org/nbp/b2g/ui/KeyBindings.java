@@ -336,7 +336,7 @@ public class KeyBindings {
   }
 
   private void addKeyBindings (String asset) {
-    Context context = ApplicationContext.get();
+    Context context = ApplicationContext.getContext();
 
     if (context != null) {
       AssetManager assets = context.getAssets();

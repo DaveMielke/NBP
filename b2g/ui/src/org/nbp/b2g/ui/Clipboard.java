@@ -15,7 +15,7 @@ public class Clipboard {
   public static void setClipboard () {
     synchronized (LOCK) {
       if (clipboard == null) {
-        Context context = ApplicationContext.get();
+        Context context = ApplicationContext.getContext();
         clipboard = (ClipboardManager)context.getSystemService(context.CLIPBOARD_SERVICE);
       }
     }

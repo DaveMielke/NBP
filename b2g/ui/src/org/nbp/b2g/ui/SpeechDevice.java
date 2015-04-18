@@ -128,10 +128,6 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean restoreVolume () {
-    return Controls.getVolumeControl().restoreValue();
-  }
-
   public float getBalance () {
     return currentBalance;
   }
@@ -148,10 +144,6 @@ public class SpeechDevice {
     }
 
     return false;
-  }
-
-  public boolean restoreBalance () {
-    return Controls.getBalanceControl().restoreValue();
   }
 
   public float getRate () {
@@ -173,10 +165,6 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean restoreRate () {
-    return Controls.getRateControl().restoreValue();
-  }
-
   public float getPitch () {
     return currentPitch;
   }
@@ -196,10 +184,6 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean restorePitch () {
-    return Controls.getPitchControl().restoreValue();
-  }
-
   public void restoreControls () {
     Control[] controls = new Control[] {
       Controls.getVolumeControl(),
@@ -208,7 +192,7 @@ public class SpeechDevice {
       Controls.getPitchControl()
     };
 
-    Controls.restoreControls(controls);
+    Controls.forEachControl(controls, Controls.restoreControl);
   }
 
   private Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY) {
@@ -251,7 +235,7 @@ public class SpeechDevice {
         }
       };
 
-      ttsObject = new TextToSpeech(ApplicationContext.get(), onInitListener);
+      ttsObject = new TextToSpeech(ApplicationContext.getContext(), onInitListener);
     }
   }
 

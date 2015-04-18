@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class VolumeControl extends LinearFloatControl {
   @Override
   public String getLabel () {
-    return "volume";
+    return ApplicationContext.getString(R.string.volume_control_label);
   }
 
   @Override

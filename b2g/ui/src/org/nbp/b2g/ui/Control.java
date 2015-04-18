@@ -23,7 +23,7 @@ public abstract class Control {
   }
 
   private static SharedPreferences getSharedPreferences () {
-    return ApplicationContext.get().getSharedPreferences("controls", Context.MODE_PRIVATE);
+    return ApplicationContext.getContext().getSharedPreferences("controls", Context.MODE_PRIVATE);
   }
 
   public boolean saveValue () {

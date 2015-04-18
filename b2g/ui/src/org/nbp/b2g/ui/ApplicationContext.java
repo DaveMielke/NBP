@@ -9,7 +9,7 @@ public abstract class ApplicationContext {
   private final static Object LOCK = new Object();
   private static Context applicationContext = null;
 
-  public static Context get () {
+  public static Context getContext () {
     synchronized (LOCK) {
       Context context = applicationContext;
       if (context == null) Log.w(LOG_TAG, "no application context");
@@ -17,7 +17,7 @@ public abstract class ApplicationContext {
     }
   }
 
-  public static boolean set (Context context) {
+  public static boolean setContext (Context context) {
     synchronized (LOCK) {
       if (applicationContext != null) return false;
       applicationContext = context;
@@ -28,6 +28,12 @@ public abstract class ApplicationContext {
     EventMonitors.startEventMonitors();
     Controls.restoreControls();
     return true;
+  }
+
+  public static String getString (int resource) {
+    Context context = getContext();
+    if (context == null) return null;
+    return context.getResources().getString(resource);
   }
 
   private ApplicationContext () {

@@ -13,14 +13,24 @@ import android.widget.TextView;
 public class OptionsActivity extends Activity {
   private final static String LOG_TAG = OptionsActivity.class.getName();
 
-  private final static LinearLayout.LayoutParams rootParameters = new LinearLayout.LayoutParams(
+  private final static LinearLayout.LayoutParams rootViewParameters = new LinearLayout.LayoutParams(
     LinearLayout.LayoutParams.MATCH_PARENT,
     LinearLayout.LayoutParams.MATCH_PARENT
   );
 
+  private final static LinearLayout.LayoutParams controlViewParameters = new LinearLayout.LayoutParams(
+    LinearLayout.LayoutParams.MATCH_PARENT,
+    LinearLayout.LayoutParams.WRAP_CONTENT
+  );
+
   private final static ViewGroup.LayoutParams controlLabelParameters = new ViewGroup.LayoutParams(
-    ViewGroup.LayoutParams.FILL_PARENT,
-    ViewGroup.LayoutParams.WRAP_CONTENT
+    ViewGroup.LayoutParams.WRAP_CONTENT,
+    ViewGroup.LayoutParams.MATCH_PARENT
+  );
+
+  private final static ViewGroup.LayoutParams controlValueParameters = new ViewGroup.LayoutParams(
+    ViewGroup.LayoutParams.WRAP_CONTENT,
+    ViewGroup.LayoutParams.MATCH_PARENT
   );
 
   private View createControlLabel (Control control) {
@@ -30,8 +40,22 @@ public class OptionsActivity extends Activity {
     return label;
   }
 
+  private View createControlValue (Control control) {
+    TextView value = new TextView(this);
+    value.setText(control.getValue());
+    value.setLayoutParams(controlValueParameters);
+    return value;
+  }
+
   private View createControlView (Control control) {
-    return createControlLabel(control);
+    LinearLayout controlView = new LinearLayout(this);
+    controlView.setOrientation(controlView.HORIZONTAL);
+
+    controlView.addView(createControlLabel(control));
+    controlView.addView(createControlValue(control));
+
+    controlView.setLayoutParams(controlViewParameters);
+    return controlView;
   }
 
   private View createRootView () {
@@ -46,7 +70,7 @@ public class OptionsActivity extends Activity {
       }
     });
 
-    rootView.setLayoutParams(rootParameters);
+    rootView.setLayoutParams(rootViewParameters);
     return rootView;
   }
 

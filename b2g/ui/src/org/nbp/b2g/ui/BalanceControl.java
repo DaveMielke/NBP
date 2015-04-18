@@ -3,22 +3,22 @@ package org.nbp.b2g.ui;
 public class BalanceControl extends LinearFloatControl {
   @Override
   public String getLabel () {
-    return "balance";
+    return ApplicationContext.getString(R.string.balance_control_label);
   }
 
   @Override
   public String getValue () {
     float value = getFloatValue();
-    if (value == 0.0f) return "center";
+    if (value == 0.0f) return ApplicationContext.getString(R.string.balance_control_center);
 
     StringBuilder sb = new StringBuilder();
     float maximum = SpeechDevice.MAXIMUM_BALANCE;
 
     if (value < 0.0f) {
-      sb.append("left");
+      sb.append(ApplicationContext.getString(R.string.balance_control_left));
       value = -value;
     } else {
-      sb.append("right");
+      sb.append(ApplicationContext.getString(R.string.balance_control_right));
     }
 
     sb.append(' ');

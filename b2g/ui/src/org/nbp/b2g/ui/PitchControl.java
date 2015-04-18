@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class PitchControl extends LogarithmicFloatControl {
   @Override
   public String getLabel () {
-    return "pitch";
+    return ApplicationContext.getString(R.string.pitch_control_label);
   }
 
   @Override

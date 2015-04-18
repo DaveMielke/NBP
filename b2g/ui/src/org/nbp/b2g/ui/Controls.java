@@ -39,34 +39,40 @@ public class Controls {
     forEachControl(allControls, processor);
   }
 
-  public static void saveControls (Control[] controls) {
-    for (Control control : controls) {
+  public final static ControlProcessor saveControl = new ControlProcessor() {
+    @Override
+    public boolean processControl (Control control) {
       control.saveValue();
+      return true;
     }
-  }
+  };
 
   public static void saveControls () {
-    saveControls(allControls);
+    forEachControl(saveControl);
   }
 
-  public static void restoreControls (Control[] controls) {
-    for (Control control : controls) {
+  public final static ControlProcessor restoreControl = new ControlProcessor() {
+    @Override
+    public boolean processControl (Control control) {
       control.restoreValue();
+      return true;
     }
-  }
+  };
 
   public static void restoreControls () {
-    restoreControls(allControls);
+    forEachControl(restoreControl);
   }
 
-  public static void resetControls (Control[] controls) {
-    for (Control control : controls) {
+  public final static ControlProcessor resetControl = new ControlProcessor() {
+    @Override
+    public boolean processControl (Control control) {
       control.resetValue();
+      return true;
     }
-  }
+  };
 
   public static void resetControls () {
-    resetControls(allControls);
+    forEachControl(resetControl);
   }
 
   private Controls () {
