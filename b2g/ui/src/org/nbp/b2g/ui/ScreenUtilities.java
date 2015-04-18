@@ -200,8 +200,8 @@ public class ScreenUtilities {
       int granularities = node.getMovementGranularities();
       if ((granularities & AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER) != 0) sb.append(" mgc");
       if ((granularities & AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD) != 0) sb.append(" mgw");
-      if ((granularities & AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE) != 0) sb.append(" mgl");
       if ((granularities & AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH) != 0) sb.append(" mgp");
+      if ((granularities & AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE) != 0) sb.append(" mgl");
       if ((granularities & AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE) != 0) sb.append(" mgs");
     }
 

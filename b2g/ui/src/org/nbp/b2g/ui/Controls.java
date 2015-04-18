@@ -29,6 +29,16 @@ public class Controls {
     return pitchControl;
   }
 
+  public static void forEachControl (Control[] controls, ControlProcessor processor) {
+    for (Control control : controls) {
+      if (!processor.processControl(control)) break;
+    }
+  }
+
+  public static void forEachControl (ControlProcessor processor) {
+    forEachControl(allControls, processor);
+  }
+
   public static void saveControls (Control[] controls) {
     for (Control control : controls) {
       control.saveValue();

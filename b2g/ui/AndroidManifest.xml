@@ -59,5 +59,10 @@
         >
     </activity>
 
+    <activity
+        android:name=".OptionsActivity"
+        android:label="@string/options_label"
+        >
+    </activity>
   </application>
 </manifest>

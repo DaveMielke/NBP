@@ -101,9 +101,9 @@ public class HostEndpoint extends Endpoint {
     return ScreenUtilities.isSeekable(currentNode);
   }
 
-  protected boolean performNodeAction (int action, Bundle parameters) {
+  protected boolean performNodeAction (int action, Bundle arguments) {
     if (currentNode == null) return false;
-    return currentNode.performAction(action, parameters);
+    return currentNode.performAction(action, arguments);
   }
 
   protected boolean performNodeAction (int action) {
