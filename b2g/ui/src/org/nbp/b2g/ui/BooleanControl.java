@@ -25,9 +25,13 @@ public abstract class BooleanControl extends Control {
     return setBooleanValue(getBooleanDefault());
   }
 
+  public static String getValue (boolean value) {
+    return ApplicationContext.getString(value? R.string.boolean_control_true: R.string.boolean_control_false);
+  }
+
   @Override
   public String getValue () {
-    return Boolean.toString(getBooleanValue());
+    return getValue(getBooleanValue());
   }
 
   @Override

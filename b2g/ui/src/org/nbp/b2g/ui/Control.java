@@ -18,10 +18,6 @@ public abstract class Control {
     return null;
   }
 
-  protected void reportValue () {
-    ApplicationUtilities.message(getLabel() + " " + getValue());
-  }
-
   private static SharedPreferences getSharedPreferences () {
     return ApplicationContext.getContext().getSharedPreferences("controls", Context.MODE_PRIVATE);
   }
@@ -37,12 +33,16 @@ public abstract class Control {
 
   public boolean restoreValue () {
     String key = getPreferenceKey();
-    if (key == null) return setDefaultValue();
+    if (key == null) return resetValue();
     return restoreValue(getSharedPreferences(), key);
   }
 
   public boolean resetValue () {
     return setDefaultValue();
+  }
+
+  protected void reportValue () {
+    ApplicationUtilities.message(getLabel() + " " + getValue());
   }
 
   public Control () {

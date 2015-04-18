@@ -13,12 +13,15 @@
 
   <string name="options_activity_label">Option Settings</string>
 
+  <string name="boolean_control_false">off</string>
+  <string name="boolean_control_true">on</string>
+
   <string name="volume_control_label">Volume</string>
 
   <string name="balance_control_label">Balance</string>
-  <string name="balance_control_center">center</string>
-  <string name="balance_control_left">left</string>
-  <string name="balance_control_right">right</string>
+  <string name="balance_control_center">Center</string>
+  <string name="balance_control_left">Left</string>
+  <string name="balance_control_right">Right</string>
 
   <string name="rate_control_label">Rate</string>
 

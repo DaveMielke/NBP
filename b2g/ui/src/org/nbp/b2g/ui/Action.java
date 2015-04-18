@@ -47,7 +47,7 @@ public abstract class Action {
   }
 
   protected void message (String label, boolean isOn) {
-    message(label + " " + (isOn? "on": "off"));
+    message(label + " " + BooleanControl.getValue(isOn));
   }
 
   protected void log (String message) {

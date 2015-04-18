@@ -1,5 +1,8 @@
 package org.nbp.b2g.ui;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 public class Controls {
   private final static Control volumeControl = new VolumeControl();
   private final static Control balanceControl = new BalanceControl();
@@ -29,10 +32,14 @@ public class Controls {
     return pitchControl;
   }
 
-  public static void forEachControl (Control[] controls, ControlProcessor processor) {
+  public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {
     for (Control control : controls) {
       if (!processor.processControl(control)) break;
     }
+  }
+
+  public static void forEachControl (Control[] controls, ControlProcessor processor) {
+    forEachControl(Arrays.asList(controls), processor);
   }
 
   public static void forEachControl (ControlProcessor processor) {
