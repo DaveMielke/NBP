@@ -8,70 +8,123 @@ import android.view.ViewGroup;
 import android.view.View;
 
 import android.widget.LinearLayout;
+import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Button;
 
 public class OptionsActivity extends Activity {
   private final static String LOG_TAG = OptionsActivity.class.getName();
 
-  private final static LinearLayout.LayoutParams rootViewParameters = new LinearLayout.LayoutParams(
-    LinearLayout.LayoutParams.MATCH_PARENT,
-    LinearLayout.LayoutParams.MATCH_PARENT
-  );
+  private void monitorControlValue (Control control, final View view) {
+    Control.OnValueChangeListener listener = new Control.OnValueChangeListener() {
+      @Override
+      public void onValueChange (final Control control) {
+        OptionsActivity.this.runOnUiThread(new Runnable() {
+          @Override
+          public void run () {
+            if (view instanceof TextView) {
+              TextView textView = (TextView)view;
+              textView.setText(control.getValue());
+            }
+          }
+        });
+      }
+    };
 
-  private final static LinearLayout.LayoutParams controlViewParameters = new LinearLayout.LayoutParams(
-    LinearLayout.LayoutParams.MATCH_PARENT,
-    LinearLayout.LayoutParams.WRAP_CONTENT
-  );
-
-  private final static ViewGroup.LayoutParams controlLabelParameters = new ViewGroup.LayoutParams(
-    ViewGroup.LayoutParams.WRAP_CONTENT,
-    ViewGroup.LayoutParams.MATCH_PARENT
-  );
-
-  private final static ViewGroup.LayoutParams controlValueParameters = new ViewGroup.LayoutParams(
-    ViewGroup.LayoutParams.WRAP_CONTENT,
-    ViewGroup.LayoutParams.MATCH_PARENT
-  );
-
-  private View createControlLabel (Control control) {
-    TextView label = new TextView(this);
-    label.setText(control.getLabel());
-    label.setLayoutParams(controlLabelParameters);
-    return label;
+    control.addOnValueChangeListener(listener);
   }
 
-  private View createControlValue (Control control) {
-    TextView value = new TextView(this);
-    value.setText(control.getValue());
-    value.setLayoutParams(controlValueParameters);
-    return value;
+  private Button createIncreaseValueButton (final Control control) {
+    Button button = new Button(this);
+    button.setText("Increase");
+
+    button.setOnClickListener(new Button.OnClickListener() {
+      @Override
+      public void onClick (View view) {
+        if (!control.setNextValue()) {
+          ApplicationUtilities.beep();
+        }
+      }
+    });
+
+    return button;
   }
 
-  private View createControlView (Control control) {
-    LinearLayout controlView = new LinearLayout(this);
-    controlView.setOrientation(controlView.HORIZONTAL);
+  private Button createDecreaseValueButton (final Control control) {
+    Button button = new Button(this);
+    button.setText("Decrease");
 
-    controlView.addView(createControlLabel(control));
-    controlView.addView(createControlValue(control));
+    button.setOnClickListener(new Button.OnClickListener() {
+      @Override
+      public void onClick (View view) {
+        if (!control.setPreviousValue()) {
+          ApplicationUtilities.beep();
+        }
+      }
+    });
 
-    controlView.setLayoutParams(controlViewParameters);
-    return controlView;
+    return button;
   }
 
-  private View createRootView () {
-    final LinearLayout rootView = new LinearLayout(this);
-    rootView.setOrientation(rootView.VERTICAL);
+  private View createControlLabelView (Control control) {
+    TextView view = new TextView(this);
+    view.setText(control.getLabel());
+    return view;
+  }
+
+  private View createControlValueView (Control control) {
+    TextView view = new TextView(this);
+    view.setText(control.getValue());
+    monitorControlValue(control, view);
+    return view;
+  }
+
+  private View createControlsView () {
+    final GridLayout view = new GridLayout(this);
+    view.setOrientation(view.VERTICAL);
 
     Controls.forEachControl(new ControlProcessor() {
+      private void setColumn (int row, int column, View content) {
+        view.addView(content, new GridLayout.LayoutParams(view.spec(row), view.spec(column)));
+      }
+
       @Override
       public boolean processControl (Control control) {
-        rootView.addView(createControlView(control));
+        View label = createControlLabelView(control);
+        View value = createControlValueView(control);
+        View decrease = createDecreaseValueButton(control);
+        View increase = createIncreaseValueButton(control);
+
+        int row = view.getRowCount();
+        setColumn(row, 0, label);
+        setColumn(row, 1, decrease);
+        setColumn(row, 2, value);
+        setColumn(row, 3, increase);
+
         return true;
       }
     });
 
-    rootView.setLayoutParams(rootViewParameters);
-    return rootView;
+    return view;
+  }
+
+  private View createRootView () {
+    LinearLayout view = new LinearLayout(this);
+    view.setOrientation(view.VERTICAL);
+
+     LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
+      LinearLayout.LayoutParams.MATCH_PARENT,
+      LinearLayout.LayoutParams.WRAP_CONTENT
+    );
+
+    view.addView(createControlsView(), parameters);
+
+    view.setLayoutParams(new ViewGroup.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT
+    ));
+
+    return view;
   }
 
   @Override

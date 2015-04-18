@@ -3,6 +3,9 @@ package org.nbp.b2g.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Set;
+import java.util.HashSet;
+
 public abstract class Control {
   public abstract boolean setNextValue ();
   public abstract boolean setPreviousValue ();
@@ -41,8 +44,26 @@ public abstract class Control {
     return setDefaultValue();
   }
 
+  public abstract static class OnValueChangeListener {
+    public abstract void onValueChange (Control control);
+  }
+
+  private Set<OnValueChangeListener> onValueChangeListeners = new HashSet<OnValueChangeListener>();
+
+  public boolean addOnValueChangeListener (OnValueChangeListener listener) {
+    return onValueChangeListeners.add(listener);
+  }
+
+  public boolean removeOnValueChangeListener (OnValueChangeListener listener) {
+    return onValueChangeListeners.remove(listener);
+  }
+
   protected void reportValue () {
     ApplicationUtilities.message(getLabel() + " " + getValue());
+
+    for (OnValueChangeListener listener : onValueChangeListeners) {
+      listener.onValueChange(this);
+    }
   }
 
   public Control () {
