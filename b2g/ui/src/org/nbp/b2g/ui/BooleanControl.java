@@ -28,7 +28,7 @@ public abstract class BooleanControl extends Control {
 
   @Override
   public boolean setDefaultValue () {
-    return setValue(getBooleanDefault());
+    return setBooleanValue(getBooleanDefault());
   }
 
   public static String getValue (boolean value) {
