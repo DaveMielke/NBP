@@ -1,0 +1,47 @@
+<resources>
+
+  <string name="app_name">B2G Launcher</string>
+
+  <string name="new_screen">Create New Screen</string>
+
+  <string name="move_left">Move left</string>
+  <string name="move_right">Move right</string>
+  <string name="edit">Edit</string>
+  <string name="delete">Delete</string>
+
+  <string name="screen_delete_confirmation">Are you sure you wish to delete the %1$s screen?</string>
+
+  <string name="include_on_screens">Include on screens</string>
+  <string name="move_up">Move up</string>
+  <string name="move_down">Move down</string>
+
+
+  <!-- Phone statistics -->
+  <string name="data_3g">3G data network.</string>
+  <string name="data_edge">EDGE data network.</string>
+  <string name="data_mobile">Mobile data network.</string>
+  <string name="data_wifi">Wifi</string>
+  <string name="bar">bar</string>
+  <string name="bars">bars</string>
+  <string name="charging">charging</string>
+  <string name="bluetooth">Bluetooth.</string>
+  <string name="gps">GPS.</string>
+
+  <string name="all">All</string>
+
+  <string name="screen_title">Title</string>
+  <string name="title_missing">No title was given. Please correct this error and try again.</string>
+
+  <string name="screen_items">Items to include</string>
+  <string name="custom">Custom</string>
+
+  <string name="screen_sort_order">Sort order</string>
+  <string name="alphabetically">Alphabetically</string>
+  <string name="recently_used">Recently used</string>
+
+  <string name="ok">OK</string>
+  <string name="cancel">Cancel</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+
+</resources>

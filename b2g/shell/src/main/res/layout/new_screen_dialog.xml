@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:orientation="vertical"
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent">
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent">
+    <TextView
+      android:text="@string/screen_title"
+      android:layout_height="fill_parent"
+      android:layout_width="wrap_content"/>
+    <EditText
+      android:id="@+id/screen_title"
+      android:layout_height="fill_parent"
+      android:layout_width="wrap_content"
+      android:contentDescription="@string/screen_title"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent">
+    <TextView
+      android:text="@string/screen_items"
+      android:layout_height="fill_parent"
+      android:layout_width="wrap_content"/>
+    <Spinner
+      android:id="@+id/screen_launchable_type"
+      android:prompt="@string/screen_items"
+      android:layout_height="fill_parent"
+      android:layout_width="fill_parent"
+      android:contentDescription="@string/screen_items"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent">
+    <TextView
+      android:text="@string/screen_sort_order"
+      android:layout_height="fill_parent"
+      android:layout_width="wrap_content"/>
+    <Spinner
+      android:id="@+id/screen_sort_order"
+      android:prompt="@string/screen_sort_order"
+      android:layout_height="fill_parent"
+      android:layout_width="fill_parent"
+      android:contentDescription="@string/screen_sort_order"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent">
+    <Button
+      android:id="@+id/screen_ok"
+      android:text="@string/ok"
+      android:layout_height="fill_parent"
+      android:layout_width="wrap_content"/>
+    <Button
+      android:id="@+id/screen_cancel"
+      android:text="@string/cancel"
+      android:layout_height="fill_parent"
+      android:layout_width="wrap_content"/>
+  </LinearLayout>
+
+</LinearLayout>

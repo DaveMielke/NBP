@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="org.nbp"
+		module="shell_2.10"
+		revision="1.0.0"
+		conf="test"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom"
+		date="20130109161224"/>
+	<dependencies>
+		<module organisation="com.j256.ormlite" name="ormlite-android">
+			<revision name="4.42" status="release" pubdate="20120927153703" resolver="public" artresolver="public" homepage="http://ormlite.sourceforge.net/" downloaded="true" searched="true" default="false" conf="default(compile), default, compile, runtime, master" position="1">
+				<license name="ISC License" url="http://ormlite.com/docs/license"/>
+				<metadata-artifact status="successful" details="" size="8989" time="163" location="/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-android/ivy-4.42.xml" searched="true" original-local-location="/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-android/ivy-4.42.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/j256/ormlite/ormlite-android/4.42/ormlite-android-4.42.pom"/>
+				<caller organisation="org.nbp" name="shell_2.10" conf="test, compile, runtime" rev="4.42" rev-constraint-default="4.42" rev-constraint-dynamic="4.42" callerrev="1.0.0"/>
+				<artifacts>
+					<artifact name="ormlite-android" type="jar" ext="jar" status="successful" details="" size="51130" time="154" location="/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-android/jars/ormlite-android-4.42.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/j256/ormlite/ormlite-android/4.42/ormlite-android-4.42.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.j256.ormlite" name="ormlite-core">
+			<revision name="4.42" status="release" pubdate="20120927152730" resolver="public" artresolver="public" homepage="http://ormlite.sourceforge.net/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="2">
+				<license name="ISC License" url="http://ormlite.com/docs/license"/>
+				<metadata-artifact status="successful" details="" size="8217" time="125" location="/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-core/ivy-4.42.xml" searched="true" original-local-location="/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-core/ivy-4.42.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/j256/ormlite/ormlite-core/4.42/ormlite-core-4.42.pom"/>
+				<caller organisation="com.j256.ormlite" name="ormlite-android" conf="default, compile, runtime, master" rev="4.42" rev-constraint-default="4.42" rev-constraint-dynamic="4.42" callerrev="4.42"/>
+				<artifacts>
+					<artifact name="ormlite-core" type="jar" ext="jar" status="successful" details="" size="281255" time="282" location="/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-core/jars/ormlite-core-4.42.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/j256/ormlite/ormlite-core/4.42/ormlite-core-4.42.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-library">
+			<revision name="2.10.0-RC1" status="release" pubdate="20121012065753" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, runtime, master" position="0">
+				<license name="BSD-like" url="http://www.scala-lang.org/downloads/license.html          "/>
+				<metadata-artifact status="no" details="" size="2396" time="0" location="/home/deane/.ivy2/cache/org.scala-lang/scala-library/ivy-2.10.0-RC1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.0-RC1/scala-library-2.10.0-RC1.pom"/>
+				<caller organisation="org.nbp" name="shell_2.10" conf="test, compile, runtime" rev="2.10.0-RC1" rev-constraint-default="2.10.0-RC1" rev-constraint-dynamic="2.10.0-RC1" callerrev="1.0.0"/>
+				<artifacts>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

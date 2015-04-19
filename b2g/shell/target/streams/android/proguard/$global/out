@@ -1,0 +1,30 @@
+[0m[[0mdebug[0m] [0mexecuting proguard: -injars[0m
+[0m[[0mdebug[0m] [0m"/home/deane/workspace/shell/target/scala-2.10/classes":"/home/deane/.sbt/boot/scala-2.10.0-RC1/lib/scala-library.jar"(!META-INF/MANIFEST.MF,!**/R.class,!**/R$*.class,!**/TR.class,!**/TR$.class,!**/library.properties):"/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-android/jars/ormlite-android-4.42.jar"(!META-INF/MANIFEST.MF,!**/R.class,!**/R$*.class,!**/TR.class,!**/TR$.class,!**/library.properties):"/home/deane/.ivy2/cache/com.j256.ormlite/ormlite-core/jars/ormlite-core-4.42.jar"(!META-INF/MANIFEST.MF,!**/R.class,!**/R$*.class,!**/TR.class,!**/TR$.class,!**/library.properties)[0m
+[0m[[0mdebug[0m] [0m-outjars[0m
+[0m[[0mdebug[0m] [0m"/home/deane/workspace/shell/target/classes.min.jar"[0m
+[0m[[0mdebug[0m] [0m-libraryjars[0m
+[0m[[0mdebug[0m] [0m"/home/deane/AndroidDev/adt-bundle-linux-x86/sdk/platforms/android-15/android.jar"[0m
+[0m[[0mdebug[0m] [0m-dontoptimize[0m
+[0m[[0mdebug[0m] [0m-dontwarn[0m
+[0m[[0mdebug[0m] [0m-dontobfuscate[0m
+[0m[[0mdebug[0m] [0m-dontnote scala.Enumeration[0m
+[0m[[0mdebug[0m] [0m-dontnote org.xml.sax.EntityResolver[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.app.Activity[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.app.Service[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.app.backup.BackupAgent[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.appwidget.AppWidgetProvider[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.content.BroadcastReceiver[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.content.ContentProvider[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.view.View[0m
+[0m[[0mdebug[0m] [0m-keep public class * extends android.app.Application[0m
+[0m[[0mdebug[0m] [0m-keep public class org.nbp.shell.** { public protected *; }[0m
+[0m[[0mdebug[0m] [0m-keep public class * implements junit.framework.Test { public void test*(); }[0m
+[0m[[0mdebug[0m] [0m[0m
+[0m[[0mdebug[0m] [0m                  -keepclassmembers class * implements java.io.Serializable {[0m
+[0m[[0mdebug[0m] [0m                    private static final java.io.ObjectStreamField[] serialPersistentFields;[0m
+[0m[[0mdebug[0m] [0m                    private void writeObject(java.io.ObjectOutputStream);[0m
+[0m[[0mdebug[0m] [0m                    private void readObject(java.io.ObjectInputStream);[0m
+[0m[[0mdebug[0m] [0m                    java.lang.Object writeReplace();[0m
+[0m[[0mdebug[0m] [0m                    java.lang.Object readResolve();[0m
+[0m[[0mdebug[0m] [0m                   }[0m
+[0m[[0mdebug[0m] [0m                   [0m

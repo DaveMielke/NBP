@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="default"
+		module="default-92a351"
+		revision="0.1-SNAPSHOT"
+		extra-sbtVersion="0.12"
+		extra-scalaVersion="2.9.2"
+		conf="compile"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom"
+		date="20130109160953"/>
+	<dependencies>
+		<module organisation="org.scala-sbt" name="sbt-android-plugin">
+			<revision name="0.6.3-SNAPSHOT" status="integration" pubdate="20120904230549" resolver="scalasbt snapshots" artresolver="scalasbt snapshots" extra-sbtVersion="0.12" extra-scalaVersion="2.9.2" downloaded="true" searched="true" default="false" conf="default(compile), compile" position="0">
+				<metadata-artifact status="successful" details="" size="2051" time="228" location="/home/deane/.ivy2/cache/scala_2.9.2/sbt_0.12/org.scala-sbt/sbt-android-plugin/ivy-0.6.3-SNAPSHOT.xml" searched="true" original-local-location="/home/deane/.ivy2/cache/scala_2.9.2/sbt_0.12/org.scala-sbt/sbt-android-plugin/ivy-0.6.3-SNAPSHOT.xml.original" origin-is-local="false" origin-location="http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-snapshots/org.scala-sbt/sbt-android-plugin/scala_2.9.2/sbt_0.12/0.6.3-SNAPSHOT/ivys/ivy.xml"/>
+				<caller organisation="default" name="default-92a351" conf="compile" rev="0.6.3-SNAPSHOT" rev-constraint-default="0.6.3-SNAPSHOT" rev-constraint-dynamic="0.6.3-SNAPSHOT" callerrev="0.1-SNAPSHOT" extra-sbtVersion="0.12" extra-scalaVersion="2.9.2"/>
+				<artifacts>
+					<artifact name="sbt-android-plugin" type="jar" ext="jar" status="successful" details="" size="532399" time="1099" location="/home/deane/.ivy2/cache/scala_2.9.2/sbt_0.12/org.scala-sbt/sbt-android-plugin/jars/sbt-android-plugin-0.6.3-SNAPSHOT.jar">
+						<origin-location is-local="false" location="http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-snapshots/org.scala-sbt/sbt-android-plugin/scala_2.9.2/sbt_0.12/0.6.3-SNAPSHOT/jars/sbt-android-plugin.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="net.sf.proguard" name="proguard-base">
+			<revision name="4.6" status="release" pubdate="20110913083402" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="default(compile), default, compile, runtime, master" position="2">
+				<metadata-artifact status="successful" details="" size="824" time="140" location="/home/deane/.ivy2/cache/net.sf.proguard/proguard-base/ivy-4.6.xml" searched="true" original-local-location="/home/deane/.ivy2/cache/net.sf.proguard/proguard-base/ivy-4.6.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/net/sf/proguard/proguard-base/4.6/proguard-base-4.6.pom"/>
+				<caller organisation="org.scala-sbt" name="sbt-android-plugin" conf="compile" rev="4.6" rev-constraint-default="4.6" rev-constraint-dynamic="4.6" callerrev="0.6.3-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="proguard-base" type="jar" ext="jar" status="successful" details="" size="786254" time="442" location="/home/deane/.ivy2/cache/net.sf.proguard/proguard-base/jars/proguard-base-4.6.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/net/sf/proguard/proguard-base/4.6/proguard-base-4.6.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.google.android.tools" name="ddmlib">
+			<revision name="r10" status="release" pubdate="20110307145905" resolver="public" artresolver="public" homepage="http://tools.android.com/" downloaded="true" searched="true" default="false" conf="default(compile), default, compile, runtime, master" position="1">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="successful" details="" size="2453" time="279" location="/home/deane/.ivy2/cache/com.google.android.tools/ddmlib/ivy-r10.xml" searched="true" original-local-location="/home/deane/.ivy2/cache/com.google.android.tools/ddmlib/ivy-r10.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/google/android/tools/ddmlib/r10/ddmlib-r10.pom"/>
+				<caller organisation="org.scala-sbt" name="sbt-android-plugin" conf="compile" rev="r10" rev-constraint-default="r10" rev-constraint-dynamic="r10" callerrev="0.6.3-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="ddmlib" type="jar" ext="jar" status="successful" details="" size="205757" time="383" location="/home/deane/.ivy2/cache/com.google.android.tools/ddmlib/jars/ddmlib-r10.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/google/android/tools/ddmlib/r10/ddmlib-r10.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

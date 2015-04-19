@@ -1,0 +1,22 @@
+Braille Wizard Shell
+====================
+
+To build
+--------
+
+1. Download and set up an [Android SDK](http://developer.android.com/sdk/index.html).
+2. Create an Android Virtual Device running Android 2.2 or greater.
+3. Set up the Simple Build Tool as per [these instructions](http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html).
+4. With the emulator running, type the following from the source directory:
+
+sbt update android:install-emulator
+
+Replace "install-emulator" with "install-device" if installing onto actual hardware.
+to compile use:
+sbt android:package-debug
+
+To run the shell, press the _Home_ key, then select "Shell," optionally making it your default (though this isn't recommended until more functionality is developed.)
+
+also, 
+sbt update       ; fixed some problems
+

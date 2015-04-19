@@ -1,0 +1,21 @@
+[0m[[0minfo[0m] [0mPackaging /home/deane/workspace/shell/target/shell-0.1.apk[0m
+[0m[[0mdebug[0m] [0mUsing keystore: /home/deane/AndroidDev/adt-bundle-linux-x86/sdk/.android/debug.keystore[0m
+[0m[[0mdebug[0m] [0mPackaging shell-0.1.apk[0m
+[0m[[0mdebug[0m] [0m/home/deane/workspace/shell/target/resources.apk:[0m
+[0m[[0mdebug[0m] [0m=> res/drawable/app_icon.png[0m
+[0m[[0mdebug[0m] [0m=> res/layout/main.xml[0m
+[0m[[0mdebug[0m] [0m=> res/layout/new_screen_dialog.xml[0m
+[0m[[0mdebug[0m] [0m=> res/menu/launchable_context.xml[0m
+[0m[[0mdebug[0m] [0m=> res/menu/main.xml[0m
+[0m[[0mdebug[0m] [0m=> res/menu/screen_context.xml[0m
+[0m[[0mdebug[0m] [0m=> AndroidManifest.xml[0m
+[0m[[0mdebug[0m] [0m=> resources.arsc[0m
+[0m[[0mdebug[0m] [0m/home/deane/workspace/shell/target/classes.dex => classes.dex[0m
+[0m[[0mdebug[0m] [0m/home/deane/workspace/shell/target/classes.min.jar:[0m
+[0m[[0mdebug[0m] [0m=> library.properties[0m
+[0m[[0mdebug[0m] [0m=> com/j256/ormlite/android/LICENSE.txt[0m
+[0m[[0mdebug[0m] [0m=> com/j256/ormlite/android/README.txt[0m
+[0m[[0mdebug[0m] [0m=> com/j256/ormlite/android/VERSION.txt[0m
+[0m[[0mdebug[0m] [0m=> com/j256/ormlite/core/LICENSE.txt[0m
+[0m[[0mdebug[0m] [0m=> com/j256/ormlite/core/README.txt[0m
+[0m[[0mdebug[0m] [0m=> com/j256/ormlite/core/VERSION.txt[0m
