@@ -4,9 +4,7 @@ import org.nbp.b2g.ui.*;
 public class OneHandOff extends Action {
   @Override
   public boolean performAction () {
-    ApplicationParameters.ONE_HAND_MODE = false;
-    message("one hand", ApplicationParameters.ONE_HAND_MODE);
-    return true;
+    return Controls.getOneHandControl().setPreviousValue();
   }
 
   public OneHandOff (Endpoint endpoint) {

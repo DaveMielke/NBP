@@ -12,7 +12,7 @@
   <string name="clock_activity_label">Current Date and Time</string>
   <string name="clock_activity_description">Digital Clock</string>
 
-  <string name="controls_activity_label">Control Settings</string>
+  <string name="controls_activity_label">User Interface Settings</string>
 
   <string name="save_action_label">Save</string>
   <string name="save_action_confirmation">Controls Saved</string>

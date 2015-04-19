@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 
 public class ControlsActivity extends Activity {
@@ -115,23 +116,39 @@ public class ControlsActivity extends Activity {
     return view;
   }
 
-  private View createBooleanValueView (Control control) {
-    final Switch view = new Switch(this);
-    view.setChecked(((BooleanControl)control).getBooleanValue());
+  private static void setChecked (CompoundButton button, Control control) {
+    button.setChecked(((BooleanControl)control).getBooleanValue());
+  }
 
-    Control.OnValueChangeListener listener = new Control.OnValueChangeListener() {
+  private View createBooleanValueView (final Control control) {
+    final Switch view = new Switch(this);
+    setChecked(view, control);
+
+    Switch.OnCheckedChangeListener switchListener = new Switch.OnCheckedChangeListener() {
       @Override
-      public void onValueChange (final Control control) {
+      public void onCheckedChanged (CompoundButton button, boolean isChecked) {
+        if (isChecked) {
+          control.setNextValue();
+        } else {
+          control.setPreviousValue();
+        }
+      }
+    };
+
+    Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
+      @Override
+      public void onValueChanged (final Control control) {
         ControlsActivity.this.runOnUiThread(new Runnable() {
           @Override
           public void run () {
-            Switch s = (Switch)view;
+            setChecked((Switch)view, control);
           }
         });
       }
     };
 
-    control.addOnValueChangeListener(listener);
+    view.setOnCheckedChangeListener(switchListener);
+    control.addOnValueChangedListener(controlListener);
     return view;
   }
 
@@ -139,9 +156,9 @@ public class ControlsActivity extends Activity {
     final TextView view = new TextView(this);
     view.setText(control.getValue());
 
-    Control.OnValueChangeListener listener = new Control.OnValueChangeListener() {
+    Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
       @Override
-      public void onValueChange (final Control control) {
+      public void onValueChanged (final Control control) {
         ControlsActivity.this.runOnUiThread(new Runnable() {
           @Override
           public void run () {
@@ -152,7 +169,7 @@ public class ControlsActivity extends Activity {
       }
     };
 
-    control.addOnValueChangeListener(listener);
+    control.addOnValueChangedListener(controlListener);
     return view;
   }
 

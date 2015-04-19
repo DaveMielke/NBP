@@ -23,7 +23,8 @@ public class SpeechOnControl extends BooleanControl {
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    return ApplicationParameters.SPEECH_ON = value;
+    ApplicationParameters.SPEECH_ON = value;
+    return true;
   }
 
   public SpeechOnControl () {

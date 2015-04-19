@@ -10,19 +10,25 @@ public abstract class BooleanControl extends Control {
     return false;
   }
 
+  private boolean setValue (boolean value) {
+    boolean result = setBooleanValue(value);
+    if (result) reportValue();
+    return result;
+  }
+
   @Override
   public boolean setNextValue () {
-    return setBooleanValue(true);
+    return setValue(true);
   }
 
   @Override
   public boolean setPreviousValue () {
-    return setBooleanValue(false);
+    return setValue(false);
   }
 
   @Override
   public boolean setDefaultValue () {
-    return setBooleanValue(getBooleanDefault());
+    return setValue(getBooleanDefault());
   }
 
   public static String getValue (boolean value) {

@@ -23,7 +23,8 @@ public class OneHandControl extends BooleanControl {
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    return ApplicationParameters.ONE_HAND_MODE = value;
+    ApplicationParameters.ONE_HAND_MODE = value;
+    return true;
   }
 
   public OneHandControl () {

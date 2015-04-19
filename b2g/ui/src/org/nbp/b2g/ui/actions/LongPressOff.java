@@ -4,9 +4,7 @@ import org.nbp.b2g.ui.*;
 public class LongPressOff extends Action {
   @Override
   public boolean performAction () {
-    ApplicationParameters.LONG_PRESS_ACTIONS = false;
-    message("long press", ApplicationParameters.LONG_PRESS_ACTIONS);
-    return true;
+    return Controls.getLongPressControl().setPreviousValue();
   }
 
   public LongPressOff (Endpoint endpoint) {

@@ -23,7 +23,8 @@ public class LongPressControl extends BooleanControl {
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    return ApplicationParameters.LONG_PRESS_ACTIONS = value;
+    ApplicationParameters.LONG_PRESS_ACTIONS = value;
+    return true;
   }
 
   public LongPressControl () {

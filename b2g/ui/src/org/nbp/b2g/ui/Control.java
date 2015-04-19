@@ -44,25 +44,25 @@ public abstract class Control {
     return setDefaultValue();
   }
 
-  public abstract static class OnValueChangeListener {
-    public abstract void onValueChange (Control control);
+  public abstract static class OnValueChangedListener {
+    public abstract void onValueChanged (Control control);
   }
 
-  private Set<OnValueChangeListener> onValueChangeListeners = new HashSet<OnValueChangeListener>();
+  private Set<OnValueChangedListener> onValueChangedListeners = new HashSet<OnValueChangedListener>();
 
-  public boolean addOnValueChangeListener (OnValueChangeListener listener) {
-    return onValueChangeListeners.add(listener);
+  public boolean addOnValueChangedListener (OnValueChangedListener listener) {
+    return onValueChangedListeners.add(listener);
   }
 
-  public boolean removeOnValueChangeListener (OnValueChangeListener listener) {
-    return onValueChangeListeners.remove(listener);
+  public boolean removeOnValueChangedListener (OnValueChangedListener listener) {
+    return onValueChangedListeners.remove(listener);
   }
 
   protected void reportValue () {
     ApplicationUtilities.message(getLabel() + " " + getValue());
 
-    for (OnValueChangeListener listener : onValueChangeListeners) {
-      listener.onValueChange(this);
+    for (OnValueChangedListener listener : onValueChangedListeners) {
+      listener.onValueChanged(this);
     }
   }
 
