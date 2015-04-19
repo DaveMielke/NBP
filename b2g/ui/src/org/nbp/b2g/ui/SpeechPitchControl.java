@@ -7,6 +7,16 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
   }
 
   @Override
+  public String getNextLabel () {
+    return ApplicationContext.getString(R.string.speechPitch_control_next);
+  }
+
+  @Override
+  public String getPreviousLabel () {
+    return ApplicationContext.getString(R.string.speechPitch_control_previous);
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "speech-pitch";
   }

@@ -36,6 +36,16 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
+  public String getNextLabel () {
+    return ApplicationContext.getString(R.string.numeric_control_next);
+  }
+
+  @Override
+  public String getPreviousLabel () {
+    return ApplicationContext.getString(R.string.numeric_control_previous);
+  }
+
+  @Override
   protected void saveValue (SharedPreferences.Editor editor, String key) {
     editor.putInt(key, getIntegerValue());
   }

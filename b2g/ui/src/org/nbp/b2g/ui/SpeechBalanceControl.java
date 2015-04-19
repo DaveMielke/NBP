@@ -7,6 +7,16 @@ public class SpeechBalanceControl extends LinearFloatControl {
   }
 
   @Override
+  public String getNextLabel () {
+    return ApplicationContext.getString(R.string.speechBalance_control_next);
+  }
+
+  @Override
+  public String getPreviousLabel () {
+    return ApplicationContext.getString(R.string.speechBalance_control_previous);
+  }
+
+  @Override
   public String getValue () {
     float value = getFloatValue();
     if (value == 0.0f) return ApplicationContext.getString(R.string.speechBalance_control_center);

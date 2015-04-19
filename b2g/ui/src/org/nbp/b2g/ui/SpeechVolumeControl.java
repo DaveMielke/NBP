@@ -7,6 +7,16 @@ public class SpeechVolumeControl extends LinearFloatControl {
   }
 
   @Override
+  public String getNextLabel () {
+    return ApplicationContext.getString(R.string.speechVolume_control_next);
+  }
+
+  @Override
+  public String getPreviousLabel () {
+    return ApplicationContext.getString(R.string.speechVolume_control_previous);
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "speech-volume";
   }

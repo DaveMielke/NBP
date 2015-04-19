@@ -32,12 +32,24 @@ public abstract class BooleanControl extends Control {
   }
 
   public static String getValue (boolean value) {
-    return ApplicationContext.getString(value? R.string.boolean_control_true: R.string.boolean_control_false);
+    return ApplicationContext.getString(value?
+           R.string.boolean_control_next:
+           R.string.boolean_control_previous);
   }
 
   @Override
   public String getValue () {
     return getValue(getBooleanValue());
+  }
+
+  @Override
+  public String getNextLabel () {
+    return getValue(true);
+  }
+
+  @Override
+  public String getPreviousLabel () {
+    return getValue(false);
   }
 
   @Override

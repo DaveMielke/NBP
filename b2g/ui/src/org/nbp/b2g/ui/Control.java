@@ -14,6 +14,14 @@ public abstract class Control {
   public abstract String getLabel ();
   public abstract String getValue ();
 
+  public String getNextLabel () {
+    return ApplicationContext.getString(R.string.default_control_next);
+  }
+
+  public String getPreviousLabel () {
+    return ApplicationContext.getString(R.string.default_control_previous);
+  }
+
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
 

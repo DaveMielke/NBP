@@ -78,9 +78,9 @@ public class ControlsActivity extends Activity {
     return view;
   }
 
-  private View createIncreaseValueButton (final Control control) {
+  private View createNextValueButton (final Control control) {
     Button button = new Button(this);
-    button.setText(R.string.numeric_control_increase);
+    button.setText(control.getNextLabel());
 
     button.setOnClickListener(new Button.OnClickListener() {
       @Override
@@ -94,9 +94,9 @@ public class ControlsActivity extends Activity {
     return button;
   }
 
-  private View createDecreaseValueButton (final Control control) {
+  private View createPreviousValueButton (final Control control) {
     Button button = new Button(this);
-    button.setText(R.string.numeric_control_decrease);
+    button.setText(control.getPreviousLabel());
 
     button.setOnClickListener(new Button.OnClickListener() {
       @Override
@@ -191,8 +191,8 @@ public class ControlsActivity extends Activity {
           setColumn(row, 1, createBooleanValueView(control));
         } else {
           setColumn(row, 1, createIntegerValueView(control));
-          setColumn(row, 2, createDecreaseValueButton(control));
-          setColumn(row, 3, createIncreaseValueButton(control));
+          setColumn(row, 2, createPreviousValueButton(control));
+          setColumn(row, 3, createNextValueButton(control));
         }
 
         return true;

@@ -23,11 +23,14 @@
   <string name="reset_action_label">Reset</string>
   <string name="reset_action_confirmation">Controls Reset</string>
 
-  <string name="boolean_control_false">off</string>
-  <string name="boolean_control_true">on</string>
+  <string name="default_control_previous">Previous</string>
+  <string name="default_control_next">Next</string>
 
-  <string name="numeric_control_decrease">Decrease</string>
-  <string name="numeric_control_increase">Increase</string>
+  <string name="boolean_control_previous">Off</string>
+  <string name="boolean_control_next">On</string>
+
+  <string name="numeric_control_previous">Decrease</string>
+  <string name="numeric_control_next">Increase</string>
 
   <string name="oneHand_control_label">One Hand</string>
 
@@ -36,13 +39,21 @@
   <string name="speechOn_control_label">Speech</string>
 
   <string name="speechVolume_control_label">Volume</string>
+  <string name="speechVolume_control_previous">Softer</string>
+  <string name="speechVolume_control_next">Louder</string>
 
   <string name="speechBalance_control_label">Balance</string>
+  <string name="speechBalance_control_previous">More Left</string>
+  <string name="speechBalance_control_next">More Right</string>
   <string name="speechBalance_control_center">Center</string>
   <string name="speechBalance_control_left">Left</string>
   <string name="speechBalance_control_right">Right</string>
 
   <string name="speechRate_control_label">Rate</string>
+  <string name="speechRate_control_previous">Slower</string>
+  <string name="speechRate_control_next">Faster</string>
 
   <string name="speechPitch_control_label">Pitch</string>
+  <string name="speechPitch_control_previous">Lower</string>
+  <string name="speechPitch_control_next">Higher</string>
 </resources>
