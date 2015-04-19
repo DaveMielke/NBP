@@ -17,6 +17,14 @@ import android.widget.Switch;
 public class ControlsActivity extends Activity {
   private final static String LOG_TAG = ControlsActivity.class.getName();
 
+  private void updateWidget (Runnable runnable) {
+    runOnUiThread(runnable);
+  }
+
+  private static void setChecked (CompoundButton button, Control control) {
+    button.setChecked(((BooleanControl)control).getBooleanValue());
+  }
+
   private View createSaveControlsButton () {
     Button button = new Button(this);
     button.setText(R.string.save_action_label);
@@ -116,10 +124,6 @@ public class ControlsActivity extends Activity {
     return view;
   }
 
-  private static void setChecked (CompoundButton button, Control control) {
-    button.setChecked(((BooleanControl)control).getBooleanValue());
-  }
-
   private View createBooleanValueView (final Control control) {
     final Switch view = new Switch(this);
     setChecked(view, control);
@@ -138,7 +142,7 @@ public class ControlsActivity extends Activity {
     Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
       @Override
       public void onValueChanged (final Control control) {
-        ControlsActivity.this.runOnUiThread(new Runnable() {
+        updateWidget(new Runnable() {
           @Override
           public void run () {
             setChecked((Switch)view, control);
@@ -159,7 +163,7 @@ public class ControlsActivity extends Activity {
     Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
       @Override
       public void onValueChanged (final Control control) {
-        ControlsActivity.this.runOnUiThread(new Runnable() {
+        updateWidget(new Runnable() {
           @Override
           public void run () {
             TextView t = (TextView)view;
