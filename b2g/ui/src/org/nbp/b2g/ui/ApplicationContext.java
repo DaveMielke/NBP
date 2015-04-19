@@ -14,18 +14,10 @@ public abstract class ApplicationContext {
   private final static Object LOCK = new Object();
   private static Context applicationContext = null;
 
-  public static Context getContext () {
-    synchronized (LOCK) {
-      Context context = applicationContext;
-      if (context == null) Log.w(LOG_TAG, "no application context");
-      return context;
-    }
-  }
-
   public static boolean setContext (Context context) {
     synchronized (LOCK) {
       if (applicationContext != null) return false;
-      applicationContext = context;
+      applicationContext = context.getApplicationContext();
     }
 
     Clipboard.setClipboard();
@@ -33,6 +25,14 @@ public abstract class ApplicationContext {
     EventMonitors.startEventMonitors();
     Controls.restoreControls();
     return true;
+  }
+
+  public static Context getContext () {
+    synchronized (LOCK) {
+      Context context = applicationContext;
+      if (context == null) Log.w(LOG_TAG, "no application context");
+      return context;
+    }
   }
 
   public static Resources getResources () {
