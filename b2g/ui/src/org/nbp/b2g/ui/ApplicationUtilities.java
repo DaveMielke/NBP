@@ -49,6 +49,10 @@ public class ApplicationUtilities {
     message(sb.toString());
   }
 
+  public static void message (int resource) {
+    message(ApplicationContext.getString(resource));
+  }
+
   public static void message (double index, double count) {
     StringBuilder sb = new StringBuilder();
     sb.append(Math.round((index / count) * 100.0));

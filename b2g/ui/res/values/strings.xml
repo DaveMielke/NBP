@@ -10,11 +10,24 @@
   <string name="screen_monitor_description">B2G Screen Monitor</string>
 
   <string name="clock_activity_label">Current Date and Time</string>
+  <string name="clock_activity_description">Digital Clock</string>
 
   <string name="options_activity_label">Option Settings</string>
 
+  <string name="save_action_label">Save</string>
+  <string name="save_action_confirmation">Controls Saved</string>
+
+  <string name="restore_action_label">Restore</string>
+  <string name="restore_action_confirmation">Controls Restored</string>
+
+  <string name="reset_action_label">Reset</string>
+  <string name="reset_action_confirmation">Controls Reset</string>
+
   <string name="boolean_control_false">off</string>
   <string name="boolean_control_true">on</string>
+
+  <string name="numeric_control_decrease">Decrease</string>
+  <string name="numeric_control_increase">Increase</string>
 
   <string name="volume_control_label">Volume</string>
 

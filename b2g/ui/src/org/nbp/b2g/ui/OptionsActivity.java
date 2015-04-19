@@ -4,8 +4,8 @@ import android.util.Log;
 import android.os.Bundle;
 import android.app.Activity;
 
-import android.view.ViewGroup;
 import android.view.View;
+import android.view.ViewGroup;
 
 import android.widget.LinearLayout;
 import android.widget.GridLayout;
@@ -34,9 +34,70 @@ public class OptionsActivity extends Activity {
     control.addOnValueChangeListener(listener);
   }
 
-  private Button createIncreaseValueButton (final Control control) {
+  private View createSaveControlsButton () {
     Button button = new Button(this);
-    button.setText("Increase");
+    button.setText(R.string.save_action_label);
+
+    button.setOnClickListener(new Button.OnClickListener() {
+      @Override
+      public void onClick (View view) {
+        Controls.saveControls();
+        ApplicationUtilities.message(R.string.save_action_confirmation);
+      }
+    });
+
+    return button;
+  }
+
+  private View createRestoreControlsButton () {
+    Button button = new Button(this);
+    button.setText(R.string.restore_action_label);
+
+    button.setOnClickListener(new Button.OnClickListener() {
+      @Override
+      public void onClick (View view) {
+        Controls.restoreControls();
+        ApplicationUtilities.message(R.string.restore_action_confirmation);
+      }
+    });
+
+    return button;
+  }
+
+  private View createResetControlsButton () {
+    Button button = new Button(this);
+    button.setText(R.string.reset_action_label);
+
+    button.setOnClickListener(new Button.OnClickListener() {
+      @Override
+      public void onClick (View view) {
+        Controls.resetControls();
+        ApplicationUtilities.message(R.string.reset_action_confirmation);
+      }
+    });
+
+    return button;
+  }
+
+  private View createActionsView () {
+    LinearLayout view = new LinearLayout(this);
+    view.setOrientation(view.HORIZONTAL);
+
+    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
+      LinearLayout.LayoutParams.WRAP_CONTENT,
+      LinearLayout.LayoutParams.MATCH_PARENT
+    );
+
+    view.addView(createSaveControlsButton(), parameters);
+    view.addView(createRestoreControlsButton(), parameters);
+    view.addView(createResetControlsButton(), parameters);
+
+    return view;
+  }
+
+  private View createIncreaseValueButton (final Control control) {
+    Button button = new Button(this);
+    button.setText(R.string.numeric_control_increase);
 
     button.setOnClickListener(new Button.OnClickListener() {
       @Override
@@ -50,9 +111,9 @@ public class OptionsActivity extends Activity {
     return button;
   }
 
-  private Button createDecreaseValueButton (final Control control) {
+  private View createDecreaseValueButton (final Control control) {
     Button button = new Button(this);
-    button.setText("Decrease");
+    button.setText(R.string.numeric_control_decrease);
 
     button.setOnClickListener(new Button.OnClickListener() {
       @Override
@@ -117,6 +178,7 @@ public class OptionsActivity extends Activity {
       LinearLayout.LayoutParams.WRAP_CONTENT
     );
 
+    view.addView(createActionsView(), parameters);
     view.addView(createControlsView(), parameters);
 
     view.setLayoutParams(new ViewGroup.LayoutParams(
