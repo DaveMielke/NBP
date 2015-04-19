@@ -62,11 +62,15 @@ A micro USB-B (or device) port is near the left of the back. It's
 primary use is for charging the battery. The battery can be charged from 
 a computer's USB port.
 
+Two internal speakers (left and right channel) are at the left and
+right ends of the front.
+
 The internal microphone is just behind a very small slit in the middle of 
 the front.
 
-Two internal speakers (left and right channel) are at the left and
-right of the front.
+The camera's lens is the small circle on the bottom that's about 2cm 
+(3/4 of an inch) in from the middle of the right side. The rectangular 
+window that's just a little further in is where the flash LEDs are.
 
 The Reset button is hidden within a very small, round hole on the 
 bottom. If the device is turned over, front to back, the hole is at 
@@ -104,7 +108,8 @@ following:
 .. topic:: Technical Information
 
   * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
-  * Wi-Fi: Wireless B/G
+  * Camera: 5MP, builtin flash
+  * Wi-Fi: IEEE 802.11 B/G
   * Bluetooth
   * GPS Receiver
   * Accelerometer: 4 axis 
