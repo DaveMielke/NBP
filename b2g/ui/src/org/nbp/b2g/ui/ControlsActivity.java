@@ -25,47 +25,58 @@ public class ControlsActivity extends Activity {
     button.setChecked(((BooleanControl)control).getBooleanValue());
   }
 
-  private View createSaveControlsButton () {
+  private Button createButton (String label, Button.OnClickListener listener) {
     Button button = new Button(this);
-    button.setText(R.string.save_action_label);
+    button.setText(label);
+    button.setOnClickListener(listener);
+    return button;
+  }
 
-    button.setOnClickListener(new Button.OnClickListener() {
-      @Override
-      public void onClick (View view) {
-        Controls.saveControls();
-        ApplicationUtilities.message(R.string.save_action_confirmation);
+  private Button createButton (int label, Button.OnClickListener listener) {
+    return createButton(ApplicationContext.getString(label), listener);
+  }
+
+  private View createSaveControlsButton () {
+    Button button = createButton(
+      R.string.save_action_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          Controls.saveControls();
+          ApplicationUtilities.message(R.string.save_action_confirmation);
+        }
       }
-    });
+    );
 
     return button;
   }
 
   private View createRestoreControlsButton () {
-    Button button = new Button(this);
-    button.setText(R.string.restore_action_label);
-
-    button.setOnClickListener(new Button.OnClickListener() {
-      @Override
-      public void onClick (View view) {
-        Controls.restoreControls();
-        ApplicationUtilities.message(R.string.restore_action_confirmation);
+    Button button = createButton(
+      R.string.restore_action_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          Controls.restoreControls();
+          ApplicationUtilities.message(R.string.restore_action_confirmation);
+        }
       }
-    });
+    );
 
     return button;
   }
 
   private View createResetControlsButton () {
-    Button button = new Button(this);
-    button.setText(R.string.reset_action_label);
-
-    button.setOnClickListener(new Button.OnClickListener() {
-      @Override
-      public void onClick (View view) {
-        Controls.resetControls();
-        ApplicationUtilities.message(R.string.reset_action_confirmation);
+    Button button = createButton(
+      R.string.reset_action_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          Controls.resetControls();
+          ApplicationUtilities.message(R.string.reset_action_confirmation);
+        }
       }
-    });
+    );
 
     return button;
   }
@@ -87,33 +98,33 @@ public class ControlsActivity extends Activity {
   }
 
   private View createNextValueButton (final Control control) {
-    Button button = new Button(this);
-    button.setText(control.getNextLabel());
-
-    button.setOnClickListener(new Button.OnClickListener() {
-      @Override
-      public void onClick (View view) {
-        if (!control.setNextValue()) {
-          ApplicationUtilities.beep();
+    Button button = createButton(
+      control.getNextLabel(),
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          if (!control.setNextValue()) {
+            ApplicationUtilities.beep();
+          }
         }
       }
-    });
+    );
 
     return button;
   }
 
   private View createPreviousValueButton (final Control control) {
-    Button button = new Button(this);
-    button.setText(control.getPreviousLabel());
-
-    button.setOnClickListener(new Button.OnClickListener() {
-      @Override
-      public void onClick (View view) {
-        if (!control.setPreviousValue()) {
-          ApplicationUtilities.beep();
+    Button button = createButton(
+      control.getPreviousLabel(),
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          if (!control.setPreviousValue()) {
+            ApplicationUtilities.beep();
+          }
         }
       }
-    });
+    );
 
     return button;
   }
