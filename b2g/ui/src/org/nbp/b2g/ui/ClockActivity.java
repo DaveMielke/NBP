@@ -74,6 +74,7 @@ public class ClockActivity extends Activity {
   @Override
   public void onCreate (Bundle state) {
     super.onCreate(state);
+    ApplicationContext.setContext(this);
     setContentView(R.layout.clock);
     timeView = (TextView)findViewById(R.id.clock_time);
   }
