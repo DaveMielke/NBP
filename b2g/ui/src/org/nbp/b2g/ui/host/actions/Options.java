@@ -8,7 +8,7 @@ import android.content.Intent;
 public class Options extends ActivityAction {
   @Override
   protected Intent getIntent (Context context) {
-    return new Intent(context, OptionsActivity.class);
+    return new Intent(context, ControlsActivity.class);
   }
 
   public Options (Endpoint endpoint) {

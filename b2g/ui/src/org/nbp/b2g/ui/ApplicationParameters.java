@@ -3,8 +3,17 @@ package org.nbp.b2g.ui;
 import android.os.Build;
 
 public abstract class ApplicationParameters {
-  public static volatile boolean ONE_HAND_MODE = false;
-  public static volatile boolean LONG_PRESS_ACTIONS = true;
+  public final static boolean DEFAULT_ONE_HAND = false;
+  public final static boolean DEFAULT_LONG_PRESS = true;
+  public final static boolean DEFAULT_SPEECH_ON = true;
+
+  public final static float DEFAULT_SPEECH_VOLUME = 1.0f;
+  public final static float DEFAULT_SPEECH_BALANCE = 0.0f;
+  public final static float DEFAULT_SPEECH_RATE = 1.0f;
+  public final static float DEFAULT_SPEECH_PITCH = 1.0f;
+
+  public static volatile boolean ONE_HAND_MODE = DEFAULT_ONE_HAND;
+  public static volatile boolean LONG_PRESS_ACTIONS = DEFAULT_LONG_PRESS;
   public static volatile boolean DEVELOPER_ACTIONS = false;
 
   public static volatile boolean ENABLE_SPEECH_DEVICE = true;
@@ -35,11 +44,7 @@ public abstract class ApplicationParameters {
   public static volatile long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
   public static volatile long SPEECH_RETRY_DELAY = 5000; // milliseconds
-  public static volatile boolean SPEECH_ON = true;
-  public final static float DEFAULT_SPEECH_VOLUME = 1.0f;
-  public final static float DEFAULT_SPEECH_BALANCE = 0.0f;
-  public final static float DEFAULT_SPEECH_RATE = 1.0f;
-  public final static float DEFAULT_SPEECH_PITCH = 1.0f;
+  public static volatile boolean SPEECH_ON = DEFAULT_SPEECH_ON;
 
   public static volatile long BRAILLE_MESSAGE_TIME = 2000; // milliseconds
   public static volatile long BRAILLE_REWRITE_DELAY = 50; // milliseconds

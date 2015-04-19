@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui;
 
-public class VolumeControl extends LinearFloatControl {
+public class SpeechVolumeControl extends LinearFloatControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.volume_control_label);
+    return ApplicationContext.getString(R.string.speechVolume_control_label);
   }
 
   @Override
@@ -26,7 +26,7 @@ public class VolumeControl extends LinearFloatControl {
     return Devices.getSpeechDevice().setVolume(value);
   }
 
-  public VolumeControl () {
+  public SpeechVolumeControl () {
     super();
   }
 }

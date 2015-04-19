@@ -7,7 +7,7 @@ public class SpeakLower extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
-      if (Controls.getPitchControl().setPreviousValue()) {
+      if (Controls.getSpeechPitchControl().setPreviousValue()) {
         return true;
       }
     }

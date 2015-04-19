@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui;
 
-public class PitchControl extends LogarithmicFloatControl {
+public class SpeechPitchControl extends LogarithmicFloatControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.pitch_control_label);
+    return ApplicationContext.getString(R.string.speechPitch_control_label);
   }
 
   @Override
@@ -26,7 +26,7 @@ public class PitchControl extends LogarithmicFloatControl {
     return Devices.getSpeechDevice().setPitch(value);
   }
 
-  public PitchControl () {
+  public SpeechPitchControl () {
     super();
   }
 }

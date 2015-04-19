@@ -11,28 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.Switch;
 
-public class OptionsActivity extends Activity {
-  private final static String LOG_TAG = OptionsActivity.class.getName();
-
-  private void monitorControlValue (Control control, final View view) {
-    Control.OnValueChangeListener listener = new Control.OnValueChangeListener() {
-      @Override
-      public void onValueChange (final Control control) {
-        OptionsActivity.this.runOnUiThread(new Runnable() {
-          @Override
-          public void run () {
-            if (view instanceof TextView) {
-              TextView textView = (TextView)view;
-              textView.setText(control.getValue());
-            }
-          }
-        });
-      }
-    };
-
-    control.addOnValueChangeListener(listener);
-  }
+public class ControlsActivity extends Activity {
+  private final static String LOG_TAG = ControlsActivity.class.getName();
 
   private View createSaveControlsButton () {
     Button button = new Button(this);
@@ -133,10 +115,44 @@ public class OptionsActivity extends Activity {
     return view;
   }
 
-  private View createControlValueView (Control control) {
-    TextView view = new TextView(this);
+  private View createBooleanValueView (Control control) {
+    final Switch view = new Switch(this);
+    view.setChecked(((BooleanControl)control).getBooleanValue());
+
+    Control.OnValueChangeListener listener = new Control.OnValueChangeListener() {
+      @Override
+      public void onValueChange (final Control control) {
+        ControlsActivity.this.runOnUiThread(new Runnable() {
+          @Override
+          public void run () {
+            Switch s = (Switch)view;
+          }
+        });
+      }
+    };
+
+    control.addOnValueChangeListener(listener);
+    return view;
+  }
+
+  private View createIntegerValueView (Control control) {
+    final TextView view = new TextView(this);
     view.setText(control.getValue());
-    monitorControlValue(control, view);
+
+    Control.OnValueChangeListener listener = new Control.OnValueChangeListener() {
+      @Override
+      public void onValueChange (final Control control) {
+        ControlsActivity.this.runOnUiThread(new Runnable() {
+          @Override
+          public void run () {
+            TextView t = (TextView)view;
+            t.setText(control.getValue());
+          }
+        });
+      }
+    };
+
+    control.addOnValueChangeListener(listener);
     return view;
   }
 
@@ -151,16 +167,16 @@ public class OptionsActivity extends Activity {
 
       @Override
       public boolean processControl (Control control) {
-        View label = createControlLabelView(control);
-        View value = createControlValueView(control);
-        View decrease = createDecreaseValueButton(control);
-        View increase = createIncreaseValueButton(control);
-
         int row = view.getRowCount();
-        setColumn(row, 0, label);
-        setColumn(row, 1, decrease);
-        setColumn(row, 2, value);
-        setColumn(row, 3, increase);
+        setColumn(row, 0, createControlLabelView(control));
+
+        if (control instanceof BooleanControl) {
+          setColumn(row, 1, createBooleanValueView(control));
+        } else {
+          setColumn(row, 1, createIntegerValueView(control));
+          setColumn(row, 2, createDecreaseValueButton(control));
+          setColumn(row, 3, createIncreaseValueButton(control));
+        }
 
         return true;
       }

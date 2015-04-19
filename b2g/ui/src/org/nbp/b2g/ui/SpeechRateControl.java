@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui;
 
-public class RateControl extends LogarithmicFloatControl {
+public class SpeechRateControl extends LogarithmicFloatControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.rate_control_label);
+    return ApplicationContext.getString(R.string.speechRate_control_label);
   }
 
   @Override
@@ -31,7 +31,7 @@ public class RateControl extends LogarithmicFloatControl {
     return Devices.getSpeechDevice().setRate(value);
   }
 
-  public RateControl () {
+  public SpeechRateControl () {
     super();
   }
 }

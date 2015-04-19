@@ -1,24 +1,24 @@
 package org.nbp.b2g.ui;
 
-public class BalanceControl extends LinearFloatControl {
+public class SpeechBalanceControl extends LinearFloatControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.balance_control_label);
+    return ApplicationContext.getString(R.string.speechBalance_control_label);
   }
 
   @Override
   public String getValue () {
     float value = getFloatValue();
-    if (value == 0.0f) return ApplicationContext.getString(R.string.balance_control_center);
+    if (value == 0.0f) return ApplicationContext.getString(R.string.speechBalance_control_center);
 
     StringBuilder sb = new StringBuilder();
     float maximum = SpeechDevice.MAXIMUM_BALANCE;
 
     if (value < 0.0f) {
-      sb.append(ApplicationContext.getString(R.string.balance_control_left));
+      sb.append(ApplicationContext.getString(R.string.speechBalance_control_left));
       value = -value;
     } else {
-      sb.append(ApplicationContext.getString(R.string.balance_control_right));
+      sb.append(ApplicationContext.getString(R.string.speechBalance_control_right));
     }
 
     sb.append(' ');
@@ -48,7 +48,7 @@ public class BalanceControl extends LinearFloatControl {
     return Devices.getSpeechDevice().setBalance(value);
   }
 
-  public BalanceControl () {
+  public SpeechBalanceControl () {
     super();
   }
 }

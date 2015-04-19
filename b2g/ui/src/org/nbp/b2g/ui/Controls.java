@@ -4,32 +4,52 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class Controls {
-  private final static Control volumeControl = new VolumeControl();
-  private final static Control balanceControl = new BalanceControl();
-  private final static Control rateControl = new RateControl();
-  private final static Control pitchControl = new PitchControl();
+  private final static BooleanControl oneHandControl = new OneHandControl();
+  private final static BooleanControl longPressControl = new LongPressControl();
+
+  private final static BooleanControl speechOnControl = new SpeechOnControl();
+  private final static IntegerControl speechVolumeControl = new SpeechVolumeControl();
+  private final static IntegerControl speechBalanceControl = new SpeechBalanceControl();
+  private final static IntegerControl speechRateControl = new SpeechRateControl();
+  private final static IntegerControl speechPitchControl = new SpeechPitchControl();
 
   private final static Control[] allControls = new Control[] {
-    volumeControl,
-    balanceControl,
-    rateControl,
-    pitchControl
+    oneHandControl,
+    longPressControl,
+
+    speechOnControl,
+    speechVolumeControl,
+    speechBalanceControl,
+    speechRateControl,
+    speechPitchControl
   };
 
-  public static Control getVolumeControl () {
-    return volumeControl;
+  public static BooleanControl getOneHandControl () {
+    return oneHandControl;
   }
 
-  public static Control getBalanceControl () {
-    return balanceControl;
+  public static BooleanControl getLongPressControl () {
+    return longPressControl;
   }
 
-  public static Control getRateControl () {
-    return rateControl;
+  public static BooleanControl getSpeechOnControl () {
+    return speechOnControl;
   }
 
-  public static Control getPitchControl () {
-    return pitchControl;
+  public static IntegerControl getSpeechVolumeControl () {
+    return speechVolumeControl;
+  }
+
+  public static IntegerControl getSpeechBalanceControl () {
+    return speechBalanceControl;
+  }
+
+  public static IntegerControl getSpeechRateControl () {
+    return speechRateControl;
+  }
+
+  public static IntegerControl getSpeechPitchControl () {
+    return speechPitchControl;
   }
 
   public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {
