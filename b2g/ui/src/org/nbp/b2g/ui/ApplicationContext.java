@@ -1,8 +1,12 @@
 package org.nbp.b2g.ui;
 
 import android.util.Log;
+
 import android.util.TypedValue;
+import android.util.DisplayMetrics;
+
 import android.content.Context;
+import android.content.res.Resources;
 
 public abstract class ApplicationContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
@@ -31,14 +35,28 @@ public abstract class ApplicationContext {
     return true;
   }
 
-  public static String getString (int resource) {
+  public static Resources getResources () {
     Context context = getContext();
     if (context == null) return null;
-    return context.getResources().getString(resource);
+    return context.getResources();
+  }
+
+  public static String getString (int resource) {
+    Resources resources = getResources();
+    if (resources == null) return null;
+    return resources.getString(resource);
+  }
+
+  public static DisplayMetrics getDisplayMetrics () {
+    Resources resources = getResources();
+    if (resources == null) return null;
+    return resources.getDisplayMetrics();
   }
 
   public static int dipsToPixels (int dips) {
-    return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, getContext().getResources().getDisplayMetrics()));
+    DisplayMetrics metrics = getDisplayMetrics();
+    if (metrics == null) return dips;
+    return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, metrics));
   }
 
   private ApplicationContext () {
