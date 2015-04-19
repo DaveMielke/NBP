@@ -5,8 +5,8 @@ import android.os.Build;
 public abstract class ApplicationParameters {
   public final static boolean DEFAULT_ONE_HAND = false;
   public final static boolean DEFAULT_LONG_PRESS = true;
-  public final static boolean DEFAULT_SPEECH_ON = true;
 
+  public final static boolean DEFAULT_SPEECH_ON = true;
   public final static float DEFAULT_SPEECH_VOLUME = 1.0f;
   public final static float DEFAULT_SPEECH_BALANCE = 0.0f;
   public final static float DEFAULT_SPEECH_RATE = 1.0f;
@@ -20,6 +20,7 @@ public abstract class ApplicationParameters {
   public static volatile boolean ENABLE_KEYBOARD_MONITOR = true;
   public static volatile boolean ENABLE_POWER_BUTTON_MONITOR = true;
 
+  public static volatile int SCREEN_LEFT_OFFSET = 60; // DIPs
   public static volatile boolean CHORDS_SEND_SYSTEM_KEYS = true;
   public static volatile boolean CHORDS_SEND_ARROW_KEYS = true;
 
