@@ -1,6 +1,7 @@
 package org.nbp.b2g.ui;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.content.Context;
 
 public abstract class ApplicationContext {
@@ -34,6 +35,10 @@ public abstract class ApplicationContext {
     Context context = getContext();
     if (context == null) return null;
     return context.getResources().getString(resource);
+  }
+
+  public static int dipsToPixels (int dips) {
+    return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, getContext().getResources().getDisplayMetrics()));
   }
 
   private ApplicationContext () {

@@ -211,6 +211,8 @@ public class ControlsActivity extends Activity {
       LinearLayout.LayoutParams.WRAP_CONTENT
     );
 
+    parameters.leftMargin = ApplicationContext.dipsToPixels(30);
+
     view.addView(createActionsView(), parameters);
     view.addView(createControlsView(), parameters);
 
