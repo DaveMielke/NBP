@@ -16,6 +16,7 @@ S45        |TabForward|
 S124       |FindNext|
 S134       |MenuKey|
 S1345      |Notifications|
+S135       |Options|
 S1235      |RecentApps|
 S2345      |Clock|
 S1356      |BackKey|

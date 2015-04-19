@@ -10,7 +10,7 @@
 .. |BackKey| replace:: the Back key
 .. |BringCursor| replace:: bring the cursor to a specific character
 .. |Click| replace:: tap (click) current screen element
-.. |Clock| replace:: go to the clock
+.. |Clock| replace:: go to the Clock
 .. |ControlModifier| replace:: sticky control modifier
 .. |CopyToClipboard| replace:: copy text to clipboard
 .. |CutToClipboard| replace:: cut selected text to clipboard
@@ -18,7 +18,7 @@
 .. |DeletePrevious| replace:: delete previous character
 .. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
 .. |EnterKey| replace:: the Enter key
-.. |FindNext| replace:: forward search for text
+.. |FindNext| replace:: find (forward search for) text
 .. |HomeKey| replace:: the Home key
 .. |LogActions| replace:: turn on logging of user-requested actions
 .. |LogKeys| replace:: turn on logging of keyboard key events
@@ -40,6 +40,7 @@
 .. |Null| replace:: cancel an acidentally-started key combination
 .. |OneHandOff| replace:: turn off one hand mode
 .. |OneHandOn| replace:: turn on one hand mode
+.. |Options| replace:: go to the Options (User Interface Settings) screen
 .. |PanLeft| replace:: pan to the left
 .. |PanRight| replace:: pan to the right
 .. |PasteFromClipboard| replace:: paste clipboard content into text at cursor
