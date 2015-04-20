@@ -14,13 +14,13 @@
 
   <string name="controls_activity_label">User Interface Settings</string>
 
-  <string name="save_action_label">Save</string>
+  <string name="save_action_label">Save Settings</string>
   <string name="save_action_confirmation">Settings Saved</string>
 
-  <string name="restore_action_label">Restore</string>
+  <string name="restore_action_label">Restore Saved Settings</string>
   <string name="restore_action_confirmation">Settings Restored</string>
 
-  <string name="reset_action_label">Reset</string>
+  <string name="reset_action_label">Restore Default Settings</string>
   <string name="reset_action_confirmation">Settings Reset</string>
 
   <string name="default_control_previous">Previous</string>
