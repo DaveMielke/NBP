@@ -19,6 +19,7 @@ public abstract class ApplicationParameters {
   public static volatile boolean ENABLE_SPEECH_DEVICE = true;
   public static volatile boolean ENABLE_KEYBOARD_MONITOR = true;
   public static volatile boolean ENABLE_POWER_BUTTON_MONITOR = true;
+  public static volatile boolean ENABLE_BLUETOOTH_SERVER = false;
 
   public static volatile int SCREEN_LEFT_OFFSET = 60; // DIPs
   public static volatile boolean CHORDS_SEND_SYSTEM_KEYS = true;
@@ -44,8 +45,8 @@ public abstract class ApplicationParameters {
   public static volatile long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
   public static volatile long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
-  public static volatile long SPEECH_RETRY_DELAY = 5000; // milliseconds
   public static volatile boolean SPEECH_ON = DEFAULT_SPEECH_ON;
+  public static volatile long SPEECH_RETRY_DELAY = 5000; // milliseconds
 
   public static volatile long BRAILLE_MESSAGE_TIME = 2000; // milliseconds
   public static volatile long BRAILLE_REWRITE_DELAY = 50; // milliseconds

@@ -4,6 +4,9 @@ import org.nbp.b2g.ui.*;
 public class BluetoothEndpoint extends Endpoint {
   public BluetoothEndpoint () {
     super();
-    new BaumBrailleDisplay().start();
+
+    if (ApplicationParameters.ENABLE_BLUETOOTH_SERVER) {
+      new BaumBrailleDisplay().start();
+    }
   }
 }
