@@ -45,11 +45,16 @@ public abstract class Control {
   public boolean restoreValue () {
     String key = getPreferenceKey();
     if (key == null) return resetValue();
-    return restoreValue(getSharedPreferences(), key);
+
+    if (!restoreValue(getSharedPreferences(), key)) return false;
+    reportValue();
+    return true;
   }
 
   public boolean resetValue () {
-    return setDefaultValue();
+    if (!setDefaultValue()) return false;
+    reportValue();
+    return true;
   }
 
   public abstract static class OnValueChangedListener {
@@ -67,11 +72,14 @@ public abstract class Control {
   }
 
   protected void reportValue () {
-    ApplicationUtilities.message(getLabel() + " " + getValue());
-
     for (OnValueChangedListener listener : onValueChangedListeners) {
       listener.onValueChanged(this);
     }
+  }
+
+  protected void confirmValue () {
+    ApplicationUtilities.message(getLabel() + " " + getValue());
+    reportValue();
   }
 
   public Control () {

@@ -12,7 +12,7 @@ public abstract class BooleanControl extends Control {
 
   private boolean setValue (boolean value) {
     boolean result = setBooleanValue(value);
-    if (result) reportValue();
+    if (result) confirmValue();
     return result;
   }
 

@@ -11,7 +11,7 @@ public abstract class IntegerControl extends Control {
     int oldValue = getIntegerValue();
     int newValue = oldValue + steps;
     if (!setIntegerValue(newValue)) return false;
-    reportValue();
+    confirmValue();
     return true;
   }
 
