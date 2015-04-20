@@ -75,7 +75,7 @@ public class BrailleDevice {
     return writeCells(brailleCells);
   }
 
-  private static void setText (Characters characters, String text) {
+  private static void setCells (Characters characters, String text) {
     int count = text.length();
     if (count > brailleCells.length) count = brailleCells.length;
     int index = 0;
@@ -87,6 +87,41 @@ public class BrailleDevice {
     }
 
     while (index < brailleCells.length) brailleCells[index++] = 0;
+  }
+
+  private static void setCells (Endpoint endpoint) {
+    synchronized (endpoint) {
+      String text = endpoint.getLineText();
+      int length = text.length();
+
+      int indent = endpoint.getLineIndent();
+      setCells(endpoint.getCharacters(), text.substring(indent));
+
+      if (endpoint.isEditable()) {
+        int start = endpoint.getSelectionStart();
+        int end = endpoint.getSelectionEnd();
+
+        if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
+          int brailleStart = endpoint.getBrailleStart();
+          int nextLine = length - indent + 1;
+
+          if ((start -= brailleStart) < 0) start = 0;
+          if ((end -= brailleStart) > nextLine) end = nextLine;
+
+          if (start == end) {
+            if (end < brailleCells.length) {
+              brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+            }
+          } else {
+            if (end > brailleCells.length) end = brailleCells.length;
+
+            while (start < end) {
+              brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
+            }
+          }
+        }
+      }
+    }
   }
 
   private static boolean writePending = false;
@@ -103,8 +138,6 @@ public class BrailleDevice {
   };
 
   public static boolean write () {
-    Endpoint endpoint = Endpoints.getCurrentEndpoint();
-
     synchronized (LOCK) {
       if (writeDelay.isActive()) {
         writePending = true;
@@ -113,41 +146,8 @@ public class BrailleDevice {
 
       if (open()) {
         byte[] oldCells = Arrays.copyOf(brailleCells, brailleCells.length);
-
-        String text = endpoint.getLineText();
-        int length = text.length();
-
-        int indent = endpoint.getLineIndent();
-        setText(endpoint.getCharacters(), text.substring(indent));
-
-        if (endpoint.isEditable()) {
-          int start = endpoint.getSelectionStart();
-          int end = endpoint.getSelectionEnd();
-
-          if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
-            int brailleStart = endpoint.getBrailleStart();
-            int nextLine = length - indent + 1;
-
-            if ((start -= brailleStart) < 0) start = 0;
-            if ((end -= brailleStart) > nextLine) end = nextLine;
-
-            if (start == end) {
-              if (end < brailleCells.length) {
-                brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
-              }
-            } else {
-              if (end > brailleCells.length) end = brailleCells.length;
-
-              while (start < end) {
-                brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
-              }
-            }
-          }
-        }
-
-        if (Arrays.equals(brailleCells, oldCells)) {
-          return true;
-        }
+        setCells(Endpoints.getCurrentEndpoint());
+        if (Arrays.equals(brailleCells, oldCells)) return true;
 
         if (writeCells()) {
           writePending = false;
@@ -164,7 +164,7 @@ public class BrailleDevice {
     synchronized (LOCK) {
       if (open()) {
         writeDelay.cancel();
-        setText(endpoint.getCharacters(), message);
+        setCells(endpoint.getCharacters(), message);
 
         if (writeCells()) {
           writePending = true;

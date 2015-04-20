@@ -71,24 +71,28 @@ public class HostEndpoint extends Endpoint {
           adjustLeft(setLine(start), 0);
         }
       }
-
-      return write();
     }
+
+    return write();
   }
 
   public boolean write (AccessibilityNodeInfo node, boolean force) {
     if (node == null) return false;
 
+    boolean describe;
+    int indent;
+
     synchronized (this) {
-      int indent = getLineIndent();
+      describe = currentDescribe;
+      indent = getLineIndent();
 
       if (!node.equals(currentNode)) {
         if (!force) return false;
         indent = 0;
       }
-
-      return write(node, currentDescribe, indent);
     }
+
+    return write(node, describe, indent);
   }
 
   @Override

@@ -12,71 +12,73 @@ public abstract class Endpoint {
   }
 
   private void say () {
-    String text = null;
+    synchronized (this) {
+      String text = null;
 
-    String newText = textString;
-    int newSelectionStart = selectionStart;
-    int newSelectionEnd = selectionEnd;
+      String newText = textString;
+      int newSelectionStart = selectionStart;
+      int newSelectionEnd = selectionEnd;
 
-    int start = 0;
-    int oldEnd = oldText.length();
-    int newLength = newText.length();
-    int newEnd = newLength;
+      int start = 0;
+      int oldEnd = oldText.length();
+      int newLength = newText.length();
+      int newEnd = newLength;
 
-    while ((start < oldEnd) && (start < newEnd)) {
-      if (oldText.charAt(start) != newText.charAt(start)) break;
-      start += 1;
-    }
-
-    while ((oldEnd > start) && (newEnd > start)) {
-      if (oldText.charAt(--oldEnd) != newText.charAt(--newEnd)) {
-        oldEnd += 1;
-        newEnd += 1;
-        break;
-      }
-    }
-
-    if (newEnd > start) {
-      text = newText.substring(start, newEnd);
-    } else if (oldEnd > start) {
-      text = "deleted: " + oldText.substring(start, oldEnd);
-    } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
-      int offset = NO_SELECTION;
-
-      if (newSelectionStart != oldSelectionStart) {
-        offset = newSelectionStart;
-      } else if (newSelectionEnd != oldSelectionEnd) {
-        offset = newSelectionEnd - 1;
+      while ((start < oldEnd) && (start < newEnd)) {
+        if (oldText.charAt(start) != newText.charAt(start)) break;
+        start += 1;
       }
 
-      if (offset != NO_SELECTION) {
-        if (offset == newLength) {
-          text = "end";
-        } else if (offset < newLength) {
-          char character = newText.charAt(offset);
+      while ((oldEnd > start) && (newEnd > start)) {
+        if (oldText.charAt(--oldEnd) != newText.charAt(--newEnd)) {
+          oldEnd += 1;
+          newEnd += 1;
+          break;
+        }
+      }
 
-          switch (character) {
-            case '\n':
-              text = "new line";
-              break;
+      if (newEnd > start) {
+        text = newText.substring(start, newEnd);
+      } else if (oldEnd > start) {
+        text = "deleted: " + oldText.substring(start, oldEnd);
+      } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
+        int offset = NO_SELECTION;
 
-            default:
-              text = Character.toString(character);
-              break;
+        if (newSelectionStart != oldSelectionStart) {
+          offset = newSelectionStart;
+        } else if (newSelectionEnd != oldSelectionEnd) {
+          offset = newSelectionEnd - 1;
+        }
+
+        if (offset != NO_SELECTION) {
+          if (offset == newLength) {
+            text = "end";
+          } else if (offset < newLength) {
+            char character = newText.charAt(offset);
+
+            switch (character) {
+              case '\n':
+                text = "new line";
+                break;
+
+              default:
+                text = Character.toString(character);
+                break;
+            }
           }
         }
       }
-    }
 
-    if (text != null) {
-      SpeechDevice speech = Devices.getSpeechDevice();
-      speech.stopSpeaking();
-      speech.say(text);
-    }
+      if (text != null) {
+        SpeechDevice speech = Devices.getSpeechDevice();
+        speech.stopSpeaking();
+        speech.say(text);
+      }
 
-    oldText = newText;
-    oldSelectionStart = newSelectionStart;
-    oldSelectionEnd = newSelectionEnd;
+      oldText = newText;
+      oldSelectionStart = newSelectionStart;
+      oldSelectionEnd = newSelectionEnd;
+    }
   }
 
   public boolean isEditable () {
@@ -133,11 +135,8 @@ public abstract class Endpoint {
     Endpoints.READ_LOCK.lock();
     try {
       if (this != Endpoints.getCurrentEndpoint()) return true;
-
-      synchronized (this) {
-        say();
-        return BrailleDevice.write();
-      }
+      say();
+      return BrailleDevice.write();
     } finally {
       Endpoints.READ_LOCK.unlock();
     }
@@ -324,9 +323,9 @@ public abstract class Endpoint {
       if ((start == end) && isSelected(start)) {
         adjustScroll(setLine(start));
       }
-
-      return write();
     }
+
+    return write();
   }
 
   public boolean clearSelection () {
@@ -356,8 +355,9 @@ public abstract class Endpoint {
       setText(text);
       clearSelection();
       softEdges = true;
-      return write();
     }
+
+    return write();
   }
 
   public boolean scrollRight (int offset) {
