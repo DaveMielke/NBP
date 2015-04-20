@@ -66,7 +66,7 @@ public class Controls {
     forEachControl(allControls, processor);
   }
 
-  public final static ControlProcessor saveControl = new ControlProcessor() {
+  public final static ControlProcessor saveValue = new ControlProcessor() {
     @Override
     public boolean processControl (Control control) {
       control.saveValue();
@@ -74,32 +74,44 @@ public class Controls {
     }
   };
 
-  public static void saveControls () {
-    forEachControl(saveControl);
+  public static void saveValues () {
+    forEachControl(saveValue);
   }
 
-  public final static ControlProcessor restoreControl = new ControlProcessor() {
+  public final static ControlProcessor restoreDefaultValue = new ControlProcessor() {
     @Override
     public boolean processControl (Control control) {
-      control.restoreValue();
+      control.restoreDefaultValue();
       return true;
     }
   };
 
-  public static void restoreControls () {
-    forEachControl(restoreControl);
+  public static void restoreDefaultValues () {
+    forEachControl(restoreDefaultValue);
   }
 
-  public final static ControlProcessor resetControl = new ControlProcessor() {
+  public final static ControlProcessor restoreSavedValue = new ControlProcessor() {
     @Override
     public boolean processControl (Control control) {
-      control.resetValue();
+      control.restoreSavedValue();
       return true;
     }
   };
 
-  public static void resetControls () {
-    forEachControl(resetControl);
+  public static void restoreSavedValues () {
+    forEachControl(restoreSavedValue);
+  }
+
+  public final static ControlProcessor restoreCurrentValue = new ControlProcessor() {
+    @Override
+    public boolean processControl (Control control) {
+      control.restoreCurrentValue();
+      return true;
+    }
+  };
+
+  public static void restoreCurrentValues () {
+    forEachControl(restoreCurrentValue);
   }
 
   private Controls () {

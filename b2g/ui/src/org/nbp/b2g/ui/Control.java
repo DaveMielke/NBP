@@ -14,6 +14,9 @@ public abstract class Control {
   public abstract String getLabel ();
   public abstract String getValue ();
 
+  protected abstract void saveValue (SharedPreferences.Editor editor, String key);
+  protected abstract boolean restoreValue (SharedPreferences prefs, String key);
+
   public String getNextLabel () {
     return ApplicationContext.getString(R.string.default_control_next);
   }
@@ -22,62 +25,81 @@ public abstract class Control {
     return ApplicationContext.getString(R.string.default_control_previous);
   }
 
-  protected abstract void saveValue (SharedPreferences.Editor editor, String key);
-  protected abstract boolean restoreValue (SharedPreferences prefs, String key);
-
   protected String getPreferenceKey () {
     return null;
   }
 
-  private static SharedPreferences getSharedPreferences () {
-    return ApplicationContext.getContext().getSharedPreferences("controls", Context.MODE_PRIVATE);
+  private final static SharedPreferences getSettings (String name) {
+    return ApplicationContext.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
   }
 
-  public boolean saveValue () {
+  private final boolean saveValue (SharedPreferences prefs) {
     String key = getPreferenceKey();
     if (key == null) return true;
 
-    SharedPreferences.Editor editor = getSharedPreferences().edit();
+    SharedPreferences.Editor editor = prefs.edit();
     saveValue(editor, key);
     return editor.commit();
-  }
-
-  public boolean restoreValue () {
-    String key = getPreferenceKey();
-    if (key == null) return resetValue();
-
-    if (!restoreValue(getSharedPreferences(), key)) return false;
-    reportValue();
-    return true;
-  }
-
-  public boolean resetValue () {
-    if (!setDefaultValue()) return false;
-    reportValue();
-    return true;
   }
 
   public abstract static class OnValueChangedListener {
     public abstract void onValueChanged (Control control);
   }
 
-  private Set<OnValueChangedListener> onValueChangedListeners = new HashSet<OnValueChangedListener>();
+  private final Set<OnValueChangedListener> onValueChangedListeners = new HashSet<OnValueChangedListener>();
 
-  public boolean addOnValueChangedListener (OnValueChangedListener listener) {
+  public final boolean addOnValueChangedListener (OnValueChangedListener listener) {
     return onValueChangedListeners.add(listener);
   }
 
-  public boolean removeOnValueChangedListener (OnValueChangedListener listener) {
+  public final boolean removeOnValueChangedListener (OnValueChangedListener listener) {
     return onValueChangedListeners.remove(listener);
   }
 
-  protected void reportValue () {
+  private final static SharedPreferences getCurrentSettings () {
+    return getSettings("current-settings");
+  }
+
+  protected final void reportValue () {
+    saveValue(getCurrentSettings());
+
     for (OnValueChangedListener listener : onValueChangedListeners) {
       listener.onValueChanged(this);
     }
   }
 
-  protected void confirmValue () {
+  public final boolean restoreDefaultValue () {
+    if (!setDefaultValue()) return false;
+    reportValue();
+    return true;
+  }
+
+  private final boolean restoreValue (SharedPreferences prefs) {
+    String key = getPreferenceKey();
+    if (key == null) return restoreDefaultValue();
+
+    if (!restoreValue(prefs, key)) return false;
+    reportValue();
+    return true;
+  }
+
+  public final boolean restoreCurrentValue () {
+    return restoreValue(getCurrentSettings());
+  }
+
+  private final static SharedPreferences getSavedSettings () {
+    return getSettings("saved-settings");
+  }
+
+  public final boolean saveValue () {
+    return saveValue(getSavedSettings());
+  }
+
+  public final boolean restoreSavedValue () {
+    return restoreValue(getSavedSettings());
+  }
+
+  protected final void confirmValue () {
     ApplicationUtilities.message(getLabel() + " " + getValue());
     reportValue();
   }

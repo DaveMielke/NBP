@@ -23,7 +23,7 @@ public abstract class ApplicationContext {
     Clipboard.setClipboard();
     Devices.getSpeechDevice().say(null);
     EventMonitors.startEventMonitors();
-    Controls.restoreControls();
+    Controls.restoreCurrentValues();
     return true;
   }
 

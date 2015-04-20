@@ -42,7 +42,7 @@ public class ControlsActivity extends Activity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Controls.saveControls();
+          Controls.saveValues();
           ApplicationUtilities.message(R.string.save_action_confirmation);
         }
       }
@@ -57,7 +57,7 @@ public class ControlsActivity extends Activity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Controls.restoreControls();
+          Controls.restoreSavedValues();
           ApplicationUtilities.message(R.string.restore_action_confirmation);
         }
       }
@@ -72,7 +72,7 @@ public class ControlsActivity extends Activity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Controls.resetControls();
+          Controls.restoreDefaultValues();
           ApplicationUtilities.message(R.string.reset_action_confirmation);
         }
       }

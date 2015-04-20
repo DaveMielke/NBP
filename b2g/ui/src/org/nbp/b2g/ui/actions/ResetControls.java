@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class ResetControls extends Action {
   @Override
   public boolean performAction () {
-    Controls.resetControls();
+    Controls.restoreDefaultValues();
     ApplicationUtilities.message(R.string.reset_action_confirmation);
     return true;
   }
