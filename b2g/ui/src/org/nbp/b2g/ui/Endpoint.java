@@ -130,13 +130,16 @@ public abstract class Endpoint {
   }
 
   public boolean write () {
-    synchronized (Endpoints.LOCK) {
+    Endpoints.READ_LOCK.lock();
+    try {
       if (this != Endpoints.getCurrentEndpoint()) return true;
 
       synchronized (this) {
         say();
         return BrailleDevice.write();
       }
+    } finally {
+      Endpoints.READ_LOCK.unlock();
     }
   }
 
