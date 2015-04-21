@@ -72,13 +72,9 @@ public abstract class Control {
     }
   }
 
-  private final void reportValue () {
-    reportValue(false);
-  }
-
   public final boolean restoreDefaultValue () {
     if (!setDefaultValue()) return false;
-    reportValue();
+    reportValue(false);
     return true;
   }
 
@@ -87,7 +83,7 @@ public abstract class Control {
     if (key == null) return restoreDefaultValue();
 
     if (!restoreValue(prefs, key)) return false;
-    reportValue();
+    reportValue(false);
     return true;
   }
 
