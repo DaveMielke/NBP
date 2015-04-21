@@ -7,10 +7,8 @@ public abstract class IntegerControl extends Control {
   protected abstract int getIntegerValue ();
   protected abstract boolean setIntegerValue (int value);
 
-  private final boolean adjustValue (int steps) {
-    int oldValue = getIntegerValue();
-    int newValue = oldValue + steps;
-    return setIntegerValue(newValue);
+  private final boolean adjustValue (int adjustment) {
+    return setIntegerValue(getIntegerValue() + adjustment);
   }
 
   @Override
