@@ -60,12 +60,20 @@ public abstract class Control {
     return getSettings("current-settings");
   }
 
-  private final void reportValue () {
+  private final void reportValue (boolean confirm) {
     saveValue(getCurrentSettings());
+
+    if (confirm) {
+      ApplicationUtilities.message(getLabel() + " " + getValue());
+    }
 
     for (OnValueChangedListener listener : onValueChangedListeners) {
       listener.onValueChanged(this);
     }
+  }
+
+  private final void reportValue () {
+    reportValue(false);
   }
 
   public final boolean restoreDefaultValue () {
@@ -99,21 +107,24 @@ public abstract class Control {
     return restoreValue(getSavedSettings());
   }
 
-  private final void confirmValue () {
-    ApplicationUtilities.message(getLabel() + " " + getValue());
-    reportValue();
+  public final boolean nextValue (boolean confirm) {
+    if (!setNextValue()) return false;
+    reportValue(confirm);
+    return true;
   }
 
   public final boolean nextValue () {
-    if (!setNextValue()) return false;
-    confirmValue();
+    return nextValue(true);
+  }
+
+  public final boolean previousValue (boolean confirm) {
+    if (!setPreviousValue()) return false;
+    reportValue(confirm);
     return true;
   }
 
   public final boolean previousValue () {
-    if (!setPreviousValue()) return false;
-    confirmValue();
-    return true;
+    return previousValue(true);
   }
 
   public Control () {

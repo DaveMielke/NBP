@@ -68,70 +68,70 @@ public abstract class ScreenAction extends HostAction {
   }
 
   protected boolean setCurrentNode (AccessibilityNodeInfo node, boolean force) {
-    if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log(node, "setting node");
+    if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log(node, "setting node");
 
     if (!force) {
       if (node.getText() != null) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has text");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has text");
       } else if (node.getContentDescription() != null) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has description");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has description");
       } else {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no text");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has no text");
 
         if (isActionable(node)) {
-          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is actionable");
+          if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is actionable");
 
           if (hasInnerText(node)) {
-            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has inner text");
+            if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has inner text");
             return false;
           } else {
-            if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node has no inner text");
+            if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has no inner text");
           }
         } else {
-          if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is not actionable");
+          if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is not actionable");
           return false;
         }
       }
 
       if (node.isEnabled()) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is enabled");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is enabled");
       } else {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is disabled");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is disabled");
         return false;
       }
 
       if (canSetAsCurrent(node)) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is eligible");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is eligible");
       } else {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is ineligible");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is ineligible");
         return false;
       }
 
       if (node.isVisibleToUser()) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is visible");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is visible");
       } else {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("node is invisible");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is invisible");
         return false;
       }
     }
 
     if (performNodeAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus succeeded");
+      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set accessibility focus succeeded");
     } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set accessibility focus failed");
+      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set accessibility focus failed");
 
       if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus succeeded");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set input focus succeeded");
       } else {
-        if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("set input focus failed");
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set input focus failed");
         return false;
       }
     }
 
     if (performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT)) {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node succeeded");
+      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("select node succeeded");
     } else {
-      if (ApplicationParameters.LOG_SCREEN_NAVIGATION) log("select node failed");
+      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("select node failed");
     }
 
     getHostEndpoint().write(node, force, 0);

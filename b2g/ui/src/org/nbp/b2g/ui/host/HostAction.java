@@ -85,7 +85,7 @@ public abstract class HostAction extends ScanCodeAction {
         break;
     }
 
-    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) log(node, description);
+    if (ApplicationParameters.CURRENT_LOG_ACTIONS) log(node, description);
 
     while (node != null) {
       if ((node.getActions() & actions) != 0) {
@@ -117,7 +117,7 @@ public abstract class HostAction extends ScanCodeAction {
           description += " failed";
         }
 
-        if (ApplicationParameters.LOG_PERFORMED_ACTIONS) log(node, description);
+        if (ApplicationParameters.CURRENT_LOG_ACTIONS) log(node, description);
         return done;
       }
 
@@ -127,7 +127,7 @@ public abstract class HostAction extends ScanCodeAction {
     }
 
     description += " failed";
-    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) log(description);
+    if (ApplicationParameters.CURRENT_LOG_ACTIONS) log(description);
     return false;
   }
 

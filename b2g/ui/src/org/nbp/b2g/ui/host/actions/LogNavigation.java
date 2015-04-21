@@ -5,9 +5,7 @@ import org.nbp.b2g.ui.*;
 public class LogNavigation extends Action {
   @Override
   public boolean performAction () {
-    ApplicationParameters.LOG_SCREEN_NAVIGATION = true;
-    message("log navigation");
-    return true;
+    return Controls.getLogNavigationControl().nextValue();
   }
 
   public LogNavigation (Endpoint endpoint) {

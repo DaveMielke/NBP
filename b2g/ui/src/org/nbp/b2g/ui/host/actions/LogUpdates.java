@@ -5,9 +5,7 @@ import org.nbp.b2g.ui.*;
 public class LogUpdates extends Action {
   @Override
   public boolean performAction () {
-    ApplicationParameters.LOG_ACCESSIBILITY_EVENTS = true;
-    message("log updates");
-    return true;
+    return Controls.getLogUpdatesControl().nextValue();
   }
 
   public LogUpdates (Endpoint endpoint) {

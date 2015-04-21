@@ -1,33 +1,33 @@
 package org.nbp.b2g.ui;
 
-public class LongPressControl extends BooleanControl {
+public class LogActionsControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.longPress_control_label);
+    return ApplicationContext.getString(R.string.logActions_control_label);
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "long-press";
+    return "log-actions";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LONG_PRESS;
+    return ApplicationParameters.DEFAULT_LOG_ACTIONS;
   }
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_LONG_PRESS;
+    return ApplicationParameters.CURRENT_LOG_ACTIONS;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_LONG_PRESS = value;
+    ApplicationParameters.CURRENT_LOG_ACTIONS = value;
     return true;
   }
 
-  public LongPressControl () {
+  public LogActionsControl () {
     super();
   }
 }

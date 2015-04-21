@@ -13,6 +13,12 @@ public class Controls {
   private final static IntegerControl speechRateControl = new SpeechRateControl();
   private final static IntegerControl speechPitchControl = new SpeechPitchControl();
 
+  private final static BooleanControl developerActionsControl = new DeveloperActionsControl();
+  private final static BooleanControl logKeysControl = new LogKeysControl();
+  private final static BooleanControl logActionsControl = new LogActionsControl();
+  private final static BooleanControl logNavigationControl = new LogNavigationControl();
+  private final static BooleanControl logUpdatesControl = new LogUpdatesControl();
+
   private final static Control[] allControls = new Control[] {
     oneHandControl,
     longPressControl,
@@ -21,7 +27,13 @@ public class Controls {
     speechVolumeControl,
     speechBalanceControl,
     speechRateControl,
-    speechPitchControl
+    speechPitchControl,
+
+    developerActionsControl,
+    logKeysControl,
+    logActionsControl,
+    logNavigationControl,
+    logUpdatesControl
   };
 
   public static BooleanControl getOneHandControl () {
@@ -50,6 +62,26 @@ public class Controls {
 
   public static IntegerControl getSpeechPitchControl () {
     return speechPitchControl;
+  }
+
+  public static BooleanControl getDeveloperActionsControl () {
+    return developerActionsControl;
+  }
+
+  public static BooleanControl getLogKeysControl () {
+    return logKeysControl;
+  }
+
+  public static BooleanControl getLogActionsControl () {
+    return logActionsControl;
+  }
+
+  public static BooleanControl getLogNavigationControl () {
+    return logNavigationControl;
+  }
+
+  public static BooleanControl getLogUpdatesControl () {
+    return logUpdatesControl;
   }
 
   public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {

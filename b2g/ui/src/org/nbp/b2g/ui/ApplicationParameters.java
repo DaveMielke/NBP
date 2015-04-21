@@ -12,9 +12,20 @@ public abstract class ApplicationParameters {
   public final static float DEFAULT_SPEECH_RATE = 1.0f;
   public final static float DEFAULT_SPEECH_PITCH = 1.0f;
 
-  public static volatile boolean ONE_HAND_MODE = DEFAULT_ONE_HAND;
-  public static volatile boolean LONG_PRESS_ACTIONS = DEFAULT_LONG_PRESS;
-  public static volatile boolean DEVELOPER_ACTIONS = false;
+  public final static boolean DEFAULT_DEVELOPER_ACTIONS = false;
+  public final static boolean DEFAULT_LOG_KEYS = false;
+  public final static boolean DEFAULT_LOG_ACTIONS = false;
+  public final static boolean DEFAULT_LOG_NAVIGATION = false;
+  public final static boolean DEFAULT_LOG_UPDATES = false;
+
+  public static volatile boolean CURRENT_ONE_HAND = DEFAULT_ONE_HAND;
+  public static volatile boolean CURRENT_LONG_PRESS = DEFAULT_LONG_PRESS;
+
+  public static boolean CURRENT_DEVELOPER_ACTIONS = DEFAULT_DEVELOPER_ACTIONS;
+  public static boolean CURRENT_LOG_KEYS = DEFAULT_LOG_KEYS;
+  public static boolean CURRENT_LOG_ACTIONS = DEFAULT_LOG_ACTIONS;
+  public static boolean CURRENT_LOG_NAVIGATION = DEFAULT_LOG_NAVIGATION;
+  public static boolean CURRENT_LOG_UPDATES = DEFAULT_LOG_UPDATES;
 
   public static volatile boolean ENABLE_SPEECH_DEVICE = true;
   public static volatile boolean ENABLE_KEYBOARD_MONITOR = true;
@@ -24,11 +35,6 @@ public abstract class ApplicationParameters {
   public static volatile int SCREEN_LEFT_OFFSET = 60; // DIPs
   public static volatile boolean CHORDS_SEND_SYSTEM_KEYS = true;
   public static volatile boolean CHORDS_SEND_ARROW_KEYS = true;
-
-  public static volatile boolean LOG_KEY_EVENTS = false;
-  public static volatile boolean LOG_PERFORMED_ACTIONS = false;
-  public static volatile boolean LOG_SCREEN_NAVIGATION = false;
-  public static volatile boolean LOG_ACCESSIBILITY_EVENTS = false;
 
   public static volatile long LONG_PRESS_TIME = 500; // milliseconds
   public static volatile long LONG_PRESS_DELAY = 100; // milliseconds
@@ -45,7 +51,7 @@ public abstract class ApplicationParameters {
   public static volatile long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
   public static volatile long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
-  public static volatile boolean SPEECH_ON = DEFAULT_SPEECH_ON;
+  public static volatile boolean CURRENT_SPEECH_ON = DEFAULT_SPEECH_ON;
   public static volatile long SPEECH_RETRY_DELAY = 5000; // milliseconds
 
   public static volatile long BRAILLE_MESSAGE_TIME = 2000; // milliseconds

@@ -3,13 +3,25 @@ import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
 public class LogNone extends Action {
+  private final static BooleanControl[] controls = new BooleanControl[] {
+    Controls.getLogKeysControl(),
+    Controls.getLogActionsControl(),
+    Controls.getLogNavigationControl(),
+    Controls.getLogUpdatesControl(),
+  };
+
+  private final static ControlProcessor disableControl = new ControlProcessor() {
+    @Override
+    public boolean processControl (Control control) {
+      control.previousValue(false);
+      return true;
+    }
+  };
+
   @Override
   public boolean performAction () {
-    ApplicationParameters.LOG_KEY_EVENTS = false;
-    message("logs off");
-    ApplicationParameters.LOG_PERFORMED_ACTIONS = false;
-    ApplicationParameters.LOG_SCREEN_NAVIGATION = false;
-    ApplicationParameters.LOG_ACCESSIBILITY_EVENTS = false;
+    Controls.forEachControl(controls, disableControl);
+    message("Logs Off");
     return true;
   }
 

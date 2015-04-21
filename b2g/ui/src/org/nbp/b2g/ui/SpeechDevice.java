@@ -38,7 +38,7 @@ public class SpeechDevice {
   }
 
   private boolean isActive () {
-    return isStarted() && ApplicationParameters.SPEECH_ON;
+    return isStarted() && ApplicationParameters.CURRENT_SPEECH_ON;
   }
 
   public boolean stopSpeaking () {

@@ -32,9 +32,7 @@
   <string name="numeric_control_next">Increase</string>
 
   <string name="oneHand_control_label">One Hand</string>
-
   <string name="longPress_control_label">Long Press</string>
-
   <string name="speechOn_control_label">Speech</string>
 
   <string name="speechVolume_control_label">Volume</string>
@@ -55,4 +53,10 @@
   <string name="speechPitch_control_label">Pitch</string>
   <string name="speechPitch_control_previous">Lower</string>
   <string name="speechPitch_control_next">Higher</string>
+
+  <string name="developerActions_control_label">Developer</string>
+  <string name="logKeys_control_label">Log Keys</string>
+  <string name="logActions_control_label">Log Actions</string>
+  <string name="logNavigation_control_label">Log Navigation</string>
+  <string name="logUpdates_control_label">Log Updates</string>
 </resources>

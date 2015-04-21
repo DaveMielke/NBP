@@ -4,9 +4,8 @@ import org.nbp.b2g.ui.*;
 public class DeveloperActions extends Action {
   @Override
   public boolean performAction (boolean isLongPress) {
-    ApplicationParameters.DEVELOPER_ACTIONS = isLongPress;
-    message("developer", ApplicationParameters.DEVELOPER_ACTIONS);
-    return true;
+    Control control = Controls.getDeveloperActionsControl();
+    return isLongPress? control.nextValue(): control.previousValue();
   }
 
   public DeveloperActions (Endpoint endpoint) {

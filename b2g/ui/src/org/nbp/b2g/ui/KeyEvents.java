@@ -13,7 +13,7 @@ public class KeyEvents {
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
   private static boolean performAction (Action action, boolean isLongPress) {
-    if (ApplicationParameters.LOG_PERFORMED_ACTIONS) {
+    if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
       Log.d(LOG_TAG, "performing action: " + action.getName());
     }
 
@@ -29,7 +29,7 @@ public class KeyEvents {
   }
 
   private static void performAction (boolean isLongPress) {
-    if (!ApplicationParameters.LONG_PRESS_ACTIONS) {
+    if (!ApplicationParameters.CURRENT_LONG_PRESS) {
       isLongPress = false;
     }
 
@@ -73,7 +73,7 @@ public class KeyEvents {
       synchronized (longPressTimeout) {
         pressedNavigationKeys |= keyMask;
 
-        if (!ApplicationParameters.ONE_HAND_MODE) {
+        if (!ApplicationParameters.CURRENT_ONE_HAND) {
           activeNavigationKeys = pressedNavigationKeys;
           longPressTimeout.start();
         } else if ((keyMask == KeyMask.SPACE) && (activeNavigationKeys != 0)) {
@@ -92,7 +92,7 @@ public class KeyEvents {
         longPressTimeout.cancel();
         pressedNavigationKeys &= ~keyMask;
 
-        if (!ApplicationParameters.ONE_HAND_MODE) {
+        if (!ApplicationParameters.CURRENT_ONE_HAND) {
           performAction(false);
         }
       }
@@ -119,7 +119,7 @@ public class KeyEvents {
   }
 
   private static void handleCursorKeyPress (int keyNumber) {
-    if (ApplicationParameters.ONE_HAND_MODE) {
+    if (ApplicationParameters.CURRENT_ONE_HAND) {
       pressedCursorKeys.clear();
     }
 
@@ -132,7 +132,7 @@ public class KeyEvents {
   }
 
   private static void handleCursorKeyRelease (int keyNumber) {
-    if (!ApplicationParameters.ONE_HAND_MODE) {
+    if (!ApplicationParameters.CURRENT_ONE_HAND) {
       pressedCursorKeys.remove(keyNumber);
     }
   }
@@ -146,7 +146,7 @@ public class KeyEvents {
   }
 
   public static void resetKeys () {
-    if (ApplicationParameters.LOG_KEY_EVENTS) {
+    if (ApplicationParameters.CURRENT_LOG_KEYS) {
       Log.d(LOG_TAG, "resetting key state");
     }
 
