@@ -38,12 +38,12 @@ public class ControlsActivity extends Activity {
 
   private View createSaveControlsButton () {
     Button button = createButton(
-      R.string.save_action_label,
+      R.string.saveControls_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.saveValues();
-          ApplicationUtilities.message(R.string.save_action_confirmation);
+          ApplicationUtilities.message(R.string.saveControls_action_confirmation);
         }
       }
     );
@@ -53,12 +53,12 @@ public class ControlsActivity extends Activity {
 
   private View createRestoreControlsButton () {
     Button button = createButton(
-      R.string.restore_action_label,
+      R.string.restoreControls_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.restoreSavedValues();
-          ApplicationUtilities.message(R.string.restore_action_confirmation);
+          ApplicationUtilities.message(R.string.restoreControls_action_confirmation);
         }
       }
     );
@@ -68,12 +68,12 @@ public class ControlsActivity extends Activity {
 
   private View createResetControlsButton () {
     Button button = createButton(
-      R.string.reset_action_label,
+      R.string.resetControls_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.restoreDefaultValues();
-          ApplicationUtilities.message(R.string.reset_action_confirmation);
+          ApplicationUtilities.message(R.string.resetControls_action_confirmation);
         }
       }
     );

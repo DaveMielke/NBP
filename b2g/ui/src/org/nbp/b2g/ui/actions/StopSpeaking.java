@@ -8,7 +8,7 @@ public class StopSpeaking extends SpeechAction {
 
     synchronized (speech) {
       if (speech.stopSpeaking()) {
-        message("speech stopped");
+        ApplicationUtilities.message(R.string.stopSpeaking_action_confirmation);
         return true;
       }
     }

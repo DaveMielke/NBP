@@ -5,7 +5,7 @@ public class RestoreControls extends Action {
   @Override
   public boolean performAction () {
     Controls.restoreSavedValues();
-    ApplicationUtilities.message(R.string.restore_action_confirmation);
+    ApplicationUtilities.message(R.string.restoreControls_action_confirmation);
     return true;
   }
 

@@ -10,7 +10,7 @@ public class CopyToClipboard extends Action {
 
     if (text != null) {
       if (Clipboard.putText(text)) {
-        message("copied to clipboard");
+        ApplicationUtilities.message(R.string.copyToClipboard_action_confirmation);
         return true;
       }
     }

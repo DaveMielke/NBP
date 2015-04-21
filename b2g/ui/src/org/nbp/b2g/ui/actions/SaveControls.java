@@ -5,7 +5,7 @@ public class SaveControls extends Action {
   @Override
   public boolean performAction () {
     Controls.saveValues();
-    ApplicationUtilities.message(R.string.save_action_confirmation);
+    ApplicationUtilities.message(R.string.saveControls_action_confirmation);
     return true;
   }
 

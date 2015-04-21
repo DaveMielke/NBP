@@ -40,7 +40,7 @@ public class SaveScreen extends Action {
     }
 
     write("end screen elements");
-    message("screen saved");
+    ApplicationUtilities.message(R.string.saveScreen_action_confirmation);
     return true;
   }
 

@@ -13,7 +13,7 @@ public class CutToClipboard extends Action {
         if (text != null) {
           if (Clipboard.putText(text)) {
             if (endpoint.deleteSelectedText()) {
-              message("cut to clipboard");
+              ApplicationUtilities.message(R.string.cutToClipboard_action_confirmation);
               return true;
             }
           }

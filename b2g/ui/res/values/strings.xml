@@ -13,14 +13,24 @@
 
   <string name="controls_activity_label">User Interface Settings</string>
 
-  <string name="save_action_label">Save Settings</string>
-  <string name="save_action_confirmation">Settings Saved</string>
+  <string name="saveControls_action_label">Save Settings</string>
+  <string name="saveControls_action_confirmation">Settings Saved</string>
 
-  <string name="restore_action_label">Restore Settings</string>
-  <string name="restore_action_confirmation">Settings Restored</string>
+  <string name="restoreControls_action_label">Restore Settings</string>
+  <string name="restoreControls_action_confirmation">Settings Restored</string>
 
-  <string name="reset_action_label">Reset to Defaults</string>
-  <string name="reset_action_confirmation">Settings Reset</string>
+  <string name="resetControls_action_label">Reset to Defaults</string>
+  <string name="resetControls_action_confirmation">Settings Reset</string>
+
+  <string name="logNone_action_confirmation">Logs Off</string>
+
+  <string name="saveScreen_action_confirmation">Screen Saved</string>
+
+  <string name="copyToClipboard_action_confirmation">Copied to Clipboard</string>
+
+  <string name="cutToClipboard_action_confirmation">Cut to Clipboard</string>
+
+  <string name="stopSpeaking_action_confirmation">Speech Stopped</string>
 
   <string name="default_control_previous">Previous</string>
   <string name="default_control_next">Next</string>

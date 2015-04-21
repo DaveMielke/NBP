@@ -20,8 +20,8 @@ public class LogNone extends Action {
 
   @Override
   public boolean performAction () {
+    ApplicationUtilities.message(R.string.logNone_action_confirmation);
     Controls.forEachControl(controls, disableControl);
-    message("Logs Off");
     return true;
   }
 
