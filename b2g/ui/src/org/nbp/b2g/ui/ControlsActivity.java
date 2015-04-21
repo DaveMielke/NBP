@@ -1,5 +1,8 @@
 package org.nbp.b2g.ui;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import android.util.Log;
 import android.os.Bundle;
 import android.app.Activity;
@@ -9,8 +12,10 @@ import android.view.ViewGroup;
 
 import android.widget.LinearLayout;
 import android.widget.GridLayout;
+
 import android.widget.TextView;
 import android.widget.Button;
+
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -19,6 +24,37 @@ public class ControlsActivity extends Activity {
 
   private void updateWidget (Runnable runnable) {
     runOnUiThread(runnable);
+  }
+
+  private final List<View> developerViews = new ArrayList<View>();
+
+  private void setDeveloperViewVisibility (boolean visible) {
+    int visibility = visible? View.VISIBLE: View.INVISIBLE;
+
+    for (View view : developerViews) {
+      view.setVisibility(visibility);
+    }
+  }
+
+  private void setDeveloperViewVisibility (Control control) {
+    setDeveloperViewVisibility(((BooleanControl)control).getBooleanValue());
+  }
+
+  private void addDeveloperActionsControlListener () {
+    Control control = Controls.getDeveloperActionsControl();
+    setDeveloperViewVisibility(control);
+
+    control.addOnValueChangedListener(new Control.OnValueChangedListener() {
+      @Override
+      public void onValueChanged (final Control control) {
+        updateWidget(new Runnable() {
+          @Override
+          public void run () {
+            setDeveloperViewVisibility(control);
+          }
+        });
+      }
+    });
   }
 
   private static void setChecked (CompoundButton button, Control control) {
@@ -193,11 +229,15 @@ public class ControlsActivity extends Activity {
     view.setOrientation(view.VERTICAL);
 
     Controls.forEachControl(new ControlProcessor() {
+      private boolean isForDevelopers;
+
       private void setColumn (int row, int column, View content) {
         view.addView(content, new GridLayout.LayoutParams(view.spec(row), view.spec(column)));
+        if (isForDevelopers) developerViews.add(content);
       }
 
       private void setRow (int row, Control control) {
+        isForDevelopers = control.isForDevelopers();
         setColumn(row, 0, createControlLabelView(control));
 
         if (control instanceof BooleanControl) {
@@ -217,6 +257,7 @@ public class ControlsActivity extends Activity {
       }
     });
 
+    addDeveloperActionsControlListener();
     return view;
   }
 
