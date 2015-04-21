@@ -7,7 +7,7 @@ public class SpeakSofter extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
-      if (Controls.getSpeechVolumeControl().setPreviousValue()) {
+      if (Controls.getSpeechVolumeControl().previousValue()) {
         return true;
       }
     }

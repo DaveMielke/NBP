@@ -7,26 +7,24 @@ public abstract class IntegerControl extends Control {
   protected abstract int getIntegerValue ();
   protected abstract boolean setIntegerValue (int value);
 
-  private boolean adjustValue (int steps) {
+  private final boolean adjustValue (int steps) {
     int oldValue = getIntegerValue();
     int newValue = oldValue + steps;
-    if (!setIntegerValue(newValue)) return false;
-    confirmValue();
-    return true;
+    return setIntegerValue(newValue);
   }
 
   @Override
-  public boolean setNextValue () {
+  protected final boolean setNextValue () {
     return adjustValue(1);
   }
 
   @Override
-  public boolean setPreviousValue () {
+  protected final boolean setPreviousValue () {
     return adjustValue(-1);
   }
 
   @Override
-  public boolean setDefaultValue () {
+  protected final boolean setDefaultValue () {
     return setIntegerValue(getIntegerDefault());
   }
 

@@ -103,7 +103,7 @@ public class ControlsActivity extends Activity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (!control.setNextValue()) {
+          if (!control.nextValue()) {
             ApplicationUtilities.beep();
           }
         }
@@ -119,7 +119,7 @@ public class ControlsActivity extends Activity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (!control.setPreviousValue()) {
+          if (!control.previousValue()) {
             ApplicationUtilities.beep();
           }
         }
@@ -143,9 +143,9 @@ public class ControlsActivity extends Activity {
       @Override
       public void onCheckedChanged (CompoundButton button, boolean isChecked) {
         if (isChecked) {
-          control.setNextValue();
+          control.nextValue();
         } else {
-          control.setPreviousValue();
+          control.previousValue();
         }
       }
     };

@@ -21,17 +21,17 @@ public abstract class FloatControl extends IntegerControl {
   }
 
   @Override
-  protected int getIntegerDefault () {
+  protected final int getIntegerDefault () {
     return toIntegerValue(getFloatDefault());
   }
 
   @Override
-  protected int getIntegerValue () {
+  protected final int getIntegerValue () {
     return toIntegerValue(getFloatValue());
   }
 
   @Override
-  protected boolean setIntegerValue (int value) {
+  protected final boolean setIntegerValue (int value) {
     return setFloatValue(toFloatValue((float)value / getLinearScale()));
   }
 

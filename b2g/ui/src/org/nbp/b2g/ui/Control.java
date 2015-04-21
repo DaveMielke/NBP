@@ -7,9 +7,9 @@ import java.util.Set;
 import java.util.HashSet;
 
 public abstract class Control {
-  public abstract boolean setNextValue ();
-  public abstract boolean setPreviousValue ();
-  public abstract boolean setDefaultValue ();
+  protected abstract boolean setNextValue ();
+  protected abstract boolean setPreviousValue ();
+  protected abstract boolean setDefaultValue ();
 
   public abstract String getLabel ();
   public abstract String getValue ();
@@ -60,7 +60,7 @@ public abstract class Control {
     return getSettings("current-settings");
   }
 
-  protected final void reportValue () {
+  private final void reportValue () {
     saveValue(getCurrentSettings());
 
     for (OnValueChangedListener listener : onValueChangedListeners) {
@@ -99,9 +99,21 @@ public abstract class Control {
     return restoreValue(getSavedSettings());
   }
 
-  protected final void confirmValue () {
+  private final void confirmValue () {
     ApplicationUtilities.message(getLabel() + " " + getValue());
     reportValue();
+  }
+
+  public final boolean nextValue () {
+    if (!setNextValue()) return false;
+    confirmValue();
+    return true;
+  }
+
+  public final boolean previousValue () {
+    if (!setPreviousValue()) return false;
+    confirmValue();
+    return true;
   }
 
   public Control () {

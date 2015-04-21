@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class LongPressOn extends Action {
   @Override
   public boolean performAction () {
-    return Controls.getLongPressControl().setNextValue();
+    return Controls.getLongPressControl().nextValue();
   }
 
   public LongPressOn (Endpoint endpoint) {
