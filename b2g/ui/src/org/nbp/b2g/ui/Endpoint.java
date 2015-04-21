@@ -15,9 +15,9 @@ public abstract class Endpoint {
     synchronized (this) {
       String text = null;
 
-      String newText = textString;
-      int newSelectionStart = selectionStart;
-      int newSelectionEnd = selectionEnd;
+      String newText = getLineText();
+      int newSelectionStart = getSelectionStart();
+      int newSelectionEnd = getSelectionEnd();
 
       int start = 0;
       int oldEnd = oldText.length();
@@ -51,19 +51,25 @@ public abstract class Endpoint {
         }
 
         if (offset != NO_SELECTION) {
-          if (offset == newLength) {
-            text = "end";
-          } else if (offset < newLength) {
-            char character = newText.charAt(offset);
+          int index = offset - getLineStart();
 
-            switch (character) {
-              case '\n':
-                text = "new line";
-                break;
+          if ((index >= 0) && (index <= newLength)) {
+            text = getText();
 
-              default:
-                text = Character.toString(character);
-                break;
+            if (offset == text.length()) {
+              text = "end";
+            } else {
+              char character = text.charAt(offset);
+
+              switch (character) {
+                case '\n':
+                  text = "new line";
+                  break;
+
+                default:
+                  text = Character.toString(character);
+                  break;
+              }
             }
           }
         }
