@@ -28,6 +28,6 @@ public class OneHandControl extends BooleanControl {
   }
 
   public OneHandControl () {
-    super();
+    super(false);
   }
 }

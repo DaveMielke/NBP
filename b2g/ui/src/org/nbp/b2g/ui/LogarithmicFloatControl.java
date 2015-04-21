@@ -16,7 +16,7 @@ public abstract class LogarithmicFloatControl extends FloatControl {
     return 10.0f / (float)Math.log10(2.0f);
   }
 
-  protected LogarithmicFloatControl () {
-    super();
+  protected LogarithmicFloatControl (boolean isForDevelopers) {
+    super(isForDevelopers);
   }
 }

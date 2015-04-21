@@ -28,6 +28,6 @@ public class SpeechOnControl extends BooleanControl {
   }
 
   public SpeechOnControl () {
-    super();
+    super(false);
   }
 }

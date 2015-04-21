@@ -28,6 +28,6 @@ public class LongPressControl extends BooleanControl {
   }
 
   public LongPressControl () {
-    super();
+    super(false);
   }
 }

@@ -28,6 +28,6 @@ public class LogActionsControl extends BooleanControl {
   }
 
   public LogActionsControl () {
-    super();
+    super(true);
   }
 }

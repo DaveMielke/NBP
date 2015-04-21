@@ -45,7 +45,7 @@ public abstract class FloatControl extends IntegerControl {
     return setFloatValue(prefs.getFloat(key, getFloatDefault()));
   }
 
-  protected FloatControl () {
-    super();
+  protected FloatControl (boolean isForDevelopers) {
+    super(isForDevelopers);
   }
 }

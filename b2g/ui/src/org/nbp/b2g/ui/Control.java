@@ -123,6 +123,13 @@ public abstract class Control {
     return previousValue(true);
   }
 
-  public Control () {
+  private final boolean isDeveloperControl;
+
+  public final boolean isForDevelopers () {
+    return isDeveloperControl;
+  }
+
+  public Control (boolean isForDevelopers) {
+    isDeveloperControl = isForDevelopers;
   }
 }

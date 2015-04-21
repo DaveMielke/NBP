@@ -7,7 +7,7 @@ public class LogNone extends Action {
     Controls.getLogKeysControl(),
     Controls.getLogActionsControl(),
     Controls.getLogNavigationControl(),
-    Controls.getLogUpdatesControl(),
+    Controls.getLogUpdatesControl()
   };
 
   private final static ControlProcessor disableControl = new ControlProcessor() {

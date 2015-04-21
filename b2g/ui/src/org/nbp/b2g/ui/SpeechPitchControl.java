@@ -37,6 +37,6 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
   }
 
   public SpeechPitchControl () {
-    super();
+    super(false);
   }
 }

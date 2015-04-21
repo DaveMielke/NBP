@@ -197,9 +197,7 @@ public class ControlsActivity extends Activity {
         view.addView(content, new GridLayout.LayoutParams(view.spec(row), view.spec(column)));
       }
 
-      @Override
-      public boolean processControl (Control control) {
-        int row = view.getRowCount();
+      private void setRow (int row, Control control) {
         setColumn(row, 0, createControlLabelView(control));
 
         if (control instanceof BooleanControl) {
@@ -209,7 +207,12 @@ public class ControlsActivity extends Activity {
           setColumn(row, 2, createPreviousValueButton(control));
           setColumn(row, 3, createNextValueButton(control));
         }
+      }
 
+      @Override
+      public boolean processControl (Control control) {
+        int row = view.getRowCount();
+        setRow(row, control);
         return true;
       }
     });

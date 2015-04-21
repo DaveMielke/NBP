@@ -28,6 +28,6 @@ public class DeveloperActionsControl extends BooleanControl {
   }
 
   public DeveloperActionsControl () {
-    super();
+    super(false);
   }
 }

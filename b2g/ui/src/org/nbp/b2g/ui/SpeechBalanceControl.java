@@ -59,6 +59,6 @@ public class SpeechBalanceControl extends LinearFloatControl {
   }
 
   public SpeechBalanceControl () {
-    super();
+    super(false);
   }
 }
