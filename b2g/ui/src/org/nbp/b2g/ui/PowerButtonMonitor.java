@@ -14,7 +14,7 @@ public class PowerButtonMonitor extends EventMonitor {
   @Override
   public void onKeyEvent (int code, boolean press) {
     Devices.getKeyboardDevice().sendKeyEvent(code, press);
-    ApplicationParameters.CURRENT_ONE_HAND = false;
+    Controls.getOneHandControl().previousValue();
     super.onKeyEvent(code, press);
   }
 

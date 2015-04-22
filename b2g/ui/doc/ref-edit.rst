@@ -9,10 +9,6 @@ U          |ArrowUp|
 D          |ArrowDown|
 L          |ArrowLeft|
 R          |ArrowRight|
-S1         |ArrowUp|
-S4         |ArrowDown|
-S3         |ArrowLeft|
-S6         |ArrowRight|
 BX         |SetSelectionStart|
 FX         |SetSelectionEnd|
 81         |SelectAll|
