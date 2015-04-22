@@ -57,13 +57,13 @@ public abstract class Endpoint {
             text = getText();
 
             if (offset == text.length()) {
-              text = ApplicationContext.getString(R.string.character_name_end);
+              text = ApplicationContext.getString(R.string.character_end);
             } else {
               char character = text.charAt(offset);
 
               switch (character) {
                 case '\n':
-                  text = ApplicationContext.getString(R.string.character_name_newline);
+                  text = ApplicationContext.getString(R.string.character_newline);
                   break;
 
                 default:
@@ -364,6 +364,10 @@ public abstract class Endpoint {
     }
 
     return write();
+  }
+
+  public boolean write (int resource) {
+    return write(ApplicationContext.getString(resource));
   }
 
   public boolean scrollRight (int offset) {

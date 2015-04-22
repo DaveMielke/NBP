@@ -70,6 +70,9 @@
   <string name="logNavigation_control_label">Log Navigation</string>
   <string name="logUpdates_control_label">Log Updates</string>
 
-  <string name="character_name_end">end</string>
-  <string name="character_name_newline">new line</string>
+  <string name="character_end">end</string>
+  <string name="character_newline">new line</string>
+
+  <string name="message_no_screen_monitor">no screen monitor</string>
+  <string name="message_no_screen_content">no screen content</string>
 </resources>

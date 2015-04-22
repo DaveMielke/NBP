@@ -194,6 +194,6 @@ public class HostEndpoint extends Endpoint {
   public HostEndpoint () {
     super();
     resetNode();
-    write("no screen monitor");
+    write(R.string.message_no_screen_monitor);
   }
 }
