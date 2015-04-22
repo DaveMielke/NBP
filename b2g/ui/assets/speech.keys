@@ -16,3 +16,6 @@ B> SayLine
 4< SpeakLeft
 4> SpeakRight
 
+S14 SayLine
+<> SpeechOff
+

@@ -13,4 +13,6 @@ B>    |SayLine|
 3>    |SpeakHigher|
 4<    |SpeakLeft|
 4>    |SpeakRight|
+S14   |SayLine|
+<>    |SpeechOff|
 ====  ==============
