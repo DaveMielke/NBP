@@ -29,7 +29,7 @@ public class ControlsActivity extends Activity {
   private final List<View> developerViews = new ArrayList<View>();
 
   private void setDeveloperViewVisibility (boolean visible) {
-    int visibility = visible? View.VISIBLE: View.INVISIBLE;
+    int visibility = visible? View.VISIBLE: View.GONE;
 
     for (View view : developerViews) {
       view.setVisibility(visibility);
