@@ -17,7 +17,7 @@ public class InsertCharacter extends Action {
 
   private boolean insertCharacter (char character) {
     Endpoint endpoint = getEndpoint();
-    ModifierAction control = (ControlModifier)endpoint.getKeyBindings().getAction(ControlModifier.class);
+    ModifierAction control = (ControlModifier)getAction(ControlModifier.class);
 
     if (control != null) {
       if (control.getState()) {

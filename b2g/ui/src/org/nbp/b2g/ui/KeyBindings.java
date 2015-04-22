@@ -173,10 +173,10 @@ public class KeyBindings {
   }
 
   public Action getAction (Class type) {
-    return actionCache.get(LanguageUtilities.getClassName(type));
+    return actionCache.get(type.getSimpleName());
   }
 
-  private Action getAction (String actionName) {
+  public Action getAction (String actionName) {
     Action action = actionCache.get(actionName);
     if (action != null) return action;
 

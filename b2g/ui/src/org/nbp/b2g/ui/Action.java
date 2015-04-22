@@ -46,6 +46,10 @@ public abstract class Action {
     Log.v(LOG_TAG, message);
   }
 
+  protected Action getAction (Class type) {
+    return getEndpoint().getKeyBindings().getAction(type);
+  }
+
   protected static int getNavigationKeys () {
     return KeyEvents.getNavigationKeys();
   }

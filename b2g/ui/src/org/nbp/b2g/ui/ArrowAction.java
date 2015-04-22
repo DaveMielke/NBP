@@ -9,6 +9,10 @@ public abstract class ArrowAction extends ScanCodeAction {
     return false;
   }
 
+  protected String getNavigationAction () {
+    return null;
+  }
+
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
@@ -20,6 +24,16 @@ public abstract class ArrowAction extends ScanCodeAction {
 
       if (endpoint.isSeekable()) {
         return performSeekAction(endpoint);
+      }
+    }
+
+    {
+      String name = getNavigationAction();
+
+      if (name != null) {
+        Action action = endpoint.getKeyBindings().getAction(name);
+        if (action == null) return false;
+        return KeyEvents.performAction(action, false);
       }
     }
 

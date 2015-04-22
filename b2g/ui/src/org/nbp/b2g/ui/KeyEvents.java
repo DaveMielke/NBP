@@ -12,7 +12,7 @@ public class KeyEvents {
   private static int activeNavigationKeys = 0;
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
-  private static boolean performAction (Action action, boolean isLongPress) {
+  public static boolean performAction (Action action, boolean isLongPress) {
     if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
       Log.d(LOG_TAG, "performing action: " + action.getName());
     }

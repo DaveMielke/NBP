@@ -26,6 +26,11 @@ public class ArrowLeft extends ArrowAction {
   }
 
   @Override
+  protected String getNavigationAction () {
+    return "PanLeft";
+  }
+
+  @Override
   protected String getScanCode () {
     return "LEFT";
   }

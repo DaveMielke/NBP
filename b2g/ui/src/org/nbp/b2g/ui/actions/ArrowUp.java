@@ -1,7 +1,6 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.accessibilityservice.AccessibilityService;
 import android.view.KeyEvent;
 
 public class ArrowUp extends ArrowAction {
@@ -29,6 +28,11 @@ public class ArrowUp extends ArrowAction {
     }
 
     return false;
+  }
+
+  @Override
+  protected String getNavigationAction () {
+    return "MoveBackward";
   }
 
   @Override
