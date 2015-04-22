@@ -57,13 +57,13 @@ public abstract class Endpoint {
             text = getText();
 
             if (offset == text.length()) {
-              text = "end";
+              text = ApplicationContext.getString(R.string.character_name_end);
             } else {
               char character = text.charAt(offset);
 
               switch (character) {
                 case '\n':
-                  text = "new line";
+                  text = ApplicationContext.getString(R.string.character_name_newline);
                   break;
 
                 default:
