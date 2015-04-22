@@ -50,6 +50,7 @@
 .. |RestoreControls| replace:: restore most recently saved control settings
 .. |SaveControls| replace:: save current control settings
 .. |SaveScreen| replace:: write screen element structure to log
+.. |SayLine| replace:: say the current line
 .. |ScrollBackward| replace:: force screen to scroll up or left
 .. |ScrollForward| replace:: force screen to scroll down or right
 .. |SelectAll| replace:: select all of the text

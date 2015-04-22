@@ -3,7 +3,8 @@ Keys  Action
 ----  --------------
 S<    |SpeechOff|
 S>    |SpeechOn|
-<>    |StopSpeaking|
+B<    |StopSpeaking|
+B>    |SayLine|
 1<    |SpeakSofter|
 1>    |SpeakLouder|
 2<    |SpeakSlower|

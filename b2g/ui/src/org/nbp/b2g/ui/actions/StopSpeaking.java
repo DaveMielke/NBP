@@ -6,11 +6,9 @@ public class StopSpeaking extends SpeechAction {
   public boolean performAction () {
     SpeechDevice speech = getSpeechDevice();
 
-    synchronized (speech) {
-      if (speech.stopSpeaking()) {
-        ApplicationUtilities.message(R.string.stopSpeaking_action_confirmation);
-        return true;
-      }
+    if (speech.stopSpeaking()) {
+      ApplicationUtilities.message(R.string.stopSpeaking_action_confirmation);
+      return true;
     }
 
     return false;
