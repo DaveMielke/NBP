@@ -22,6 +22,12 @@ public class HostEndpoint extends Endpoint {
     currentDescribe = false;
   }
 
+  public AccessibilityNodeInfo getCurrentNode () {
+    synchronized (this) {
+      return AccessibilityNodeInfo.obtain(currentNode);
+    }
+  }
+
   public boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
     String text;
 

@@ -75,7 +75,7 @@ public abstract class MoveAction extends ScreenAction {
             found = null;
           } else {
             if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node not found after scroll");
-            node = getCurrentNode();
+            node = ScreenUtilities.getCurrentNode();
 
             if (node != null) {
               if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log(node, "current node after scroll");
