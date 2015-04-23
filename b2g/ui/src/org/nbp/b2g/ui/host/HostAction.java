@@ -25,7 +25,9 @@ public abstract class HostAction extends ScanCodeAction {
   }
 
   public AccessibilityNodeInfo getCurrentNode () {
-    return getHostEndpoint().getCurrentNode();
+    AccessibilityNodeInfo node = getHostEndpoint().getCurrentNode();
+    if (node == null) node = ScreenUtilities.getCurrentNode();
+    return node;
   }
 
   protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {

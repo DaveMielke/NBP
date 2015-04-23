@@ -24,6 +24,7 @@ public class HostEndpoint extends Endpoint {
 
   public AccessibilityNodeInfo getCurrentNode () {
     synchronized (this) {
+      if (currentNode == null) return null;
       return AccessibilityNodeInfo.obtain(currentNode);
     }
   }
