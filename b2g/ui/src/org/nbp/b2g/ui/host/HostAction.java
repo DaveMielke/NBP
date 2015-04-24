@@ -16,10 +16,6 @@ public abstract class HostAction extends ScanCodeAction {
     return ScreenMonitor.getScreenMonitor();
   }
 
-  protected void log (AccessibilityNodeInfo node, String reason) {
-    log((reason + ": " + ScreenUtilities.toString(node)));
-  }
-
   protected AccessibilityNodeInfo getRootNode () {
     return ScreenUtilities.getRootNode();
   }
@@ -30,80 +26,89 @@ public abstract class HostAction extends ScanCodeAction {
     return node;
   }
 
+  private static void logNodeAction (AccessibilityNodeInfo node, String action, String status) {
+    if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
+      Log.v(LOG_TAG, String.format(
+        "node action %s: %s: %s",
+        status, action, ScreenUtilities.toString(node)
+      ));
+    }
+  }
+
   protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {
-    node = AccessibilityNodeInfo.obtain(node);
     int actions = action;
-    String description;
+    String name;
 
     switch (action) {
       case AccessibilityNodeInfo.ACTION_FOCUS:
-        description = "set input focus";
+        name = "set input focus";
         actions |= AccessibilityNodeInfo.ACTION_CLEAR_FOCUS;
         break;
 
       case AccessibilityNodeInfo.ACTION_CLEAR_FOCUS:
-        description = "clear input focus";
+        name = "clear input focus";
         actions |= AccessibilityNodeInfo.ACTION_FOCUS;
         break;
 
       case AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS:
-        description = "set accessibility focus";
+        name = "set accessibility focus";
         actions |= AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS;
         break;
 
       case AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS:
-        description = "clear accessibility focus";
+        name = "clear accessibility focus";
         actions |= AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS;
         break;
 
       case AccessibilityNodeInfo.ACTION_SELECT:
-        description = "select node";
+        name = "select node";
         actions |= AccessibilityNodeInfo.ACTION_CLEAR_SELECTION;
         break;
 
       case AccessibilityNodeInfo.ACTION_CLEAR_SELECTION:
-        description = "deselect node";
+        name = "deselect node";
         actions |= AccessibilityNodeInfo.ACTION_SELECT;
         break;
 
       case AccessibilityNodeInfo.ACTION_SCROLL_FORWARD:
-        description = "scroll forward";
+        name = "scroll forward";
         break;
 
       case AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD:
-        description = "scroll backward";
+        name = "scroll backward";
         break;
 
       case AccessibilityNodeInfo.ACTION_CLICK:
-        description = "click node";
+        name = "click node";
         break;
 
       case AccessibilityNodeInfo.ACTION_LONG_CLICK:
-        description = "long click node";
+        name = "long click node";
         break;
 
       default:
-        description = "node action" + action;
+        name = "node action " + action;
         break;
     }
 
-    if (ApplicationParameters.CURRENT_LOG_ACTIONS) log(node, description);
+    logNodeAction(node, name, "starting");
+    AccessibilityNodeInfo current = AccessibilityNodeInfo.obtain(node);
 
-    while (node != null) {
-      if ((node.getActions() & actions) != 0) {
+    while (current != null) {
+      if ((current.getActions() & actions) != 0) {
         boolean done = false;
 
         switch (action) {
           case AccessibilityNodeInfo.ACTION_FOCUS:
-            if (node.isFocused()) done = true;
+            if (current.isFocused()) done = true;
             break;
 
           case AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS:
-            if (node.isAccessibilityFocused()) done = true;
+            if (current.isAccessibilityFocused()) done = true;
             break;
 
           case AccessibilityNodeInfo.ACTION_SELECT:
-            if (node.isSelected()) done = true;
+            if (current.isSelected()) done = true;
             break;
 
           default:
@@ -111,25 +116,23 @@ public abstract class HostAction extends ScanCodeAction {
         }
 
         if (done) {
-          description += " already";
-        } else if (node.performAction(action)) {
+          logNodeAction(current, name, "unnecessary");
+        } else if (current.performAction(action)) {
+          logNodeAction(current, name, "succeeded");
           done = true;
-          description += " succeeded";
         } else {
-          description += " failed";
+          logNodeAction(current, name, "failed");
         }
 
-        if (ApplicationParameters.CURRENT_LOG_ACTIONS) log(node, description);
         return done;
       }
 
-      AccessibilityNodeInfo parent = node.getParent();
-      node.recycle();
-      node = parent;
+      AccessibilityNodeInfo parent = current.getParent();
+      current.recycle();
+      current = parent;
     }
 
-    description += " failed";
-    if (ApplicationParameters.CURRENT_LOG_ACTIONS) log(description);
+    logNodeAction(node, name, "unsupported");
     return false;
   }
 

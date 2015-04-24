@@ -68,70 +68,70 @@ public abstract class ScreenAction extends HostAction {
   }
 
   protected boolean setCurrentNode (AccessibilityNodeInfo node, boolean force) {
-    if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log(node, "setting node");
+    ScreenUtilities.logNavigation(node, "setting node");
 
     if (!force) {
       if (node.getText() != null) {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has text");
+        ScreenUtilities.logNavigation("node has text");
       } else if (node.getContentDescription() != null) {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has description");
+        ScreenUtilities.logNavigation("node has description");
       } else {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has no text");
+        ScreenUtilities.logNavigation("node has no text");
 
         if (isActionable(node)) {
-          if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is actionable");
+          ScreenUtilities.logNavigation("node is actionable");
 
           if (hasInnerText(node)) {
-            if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has inner text");
+            ScreenUtilities.logNavigation("node has inner text");
             return false;
           } else {
-            if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node has no inner text");
+            ScreenUtilities.logNavigation("node has no inner text");
           }
         } else {
-          if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is not actionable");
+          ScreenUtilities.logNavigation("node is not actionable");
           return false;
         }
       }
 
       if (node.isEnabled()) {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is enabled");
+        ScreenUtilities.logNavigation("node is enabled");
       } else {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is disabled");
+        ScreenUtilities.logNavigation("node is disabled");
         return false;
       }
 
       if (canSetAsCurrent(node)) {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is eligible");
+        ScreenUtilities.logNavigation("node is eligible");
       } else {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is ineligible");
+        ScreenUtilities.logNavigation("node is ineligible");
         return false;
       }
 
       if (node.isVisibleToUser()) {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is visible");
+        ScreenUtilities.logNavigation("node is visible");
       } else {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("node is invisible");
+        ScreenUtilities.logNavigation("node is invisible");
         return false;
       }
     }
 
     if (performNodeAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set accessibility focus succeeded");
+      ScreenUtilities.logNavigation("set accessibility focus succeeded");
     } else {
-      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set accessibility focus failed");
+      ScreenUtilities.logNavigation("set accessibility focus failed");
 
       if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set input focus succeeded");
+        ScreenUtilities.logNavigation("set input focus succeeded");
       } else {
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("set input focus failed");
+        ScreenUtilities.logNavigation("set input focus failed");
         return false;
       }
     }
 
     if (performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT)) {
-      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("select node succeeded");
+      ScreenUtilities.logNavigation("select node succeeded");
     } else {
-      if (ApplicationParameters.CURRENT_LOG_NAVIGATION) log("select node failed");
+      ScreenUtilities.logNavigation("select node failed");
     }
 
     getHostEndpoint().write(node, force, 0);

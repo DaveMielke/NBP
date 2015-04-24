@@ -103,8 +103,15 @@ public class ScreenUtilities {
     return sb.toString();
   }
 
-  public static void log (AccessibilityNodeInfo node, String reason) {
-    Log.w(LOG_TAG, (reason + ": " + toString(node)));
+  public static void logNavigation (AccessibilityNodeInfo node, String reason) {
+    if (ApplicationParameters.CURRENT_LOG_NAVIGATION) {
+      if (node != null) reason += ": " + toString(node);
+      Log.v(LOG_TAG, reason);
+    }
+  }
+
+  public static void logNavigation (String reason) {
+    logNavigation(null, reason);
   }
 
   public static boolean canAssign (Class to, AccessibilityNodeInfo from) {
@@ -177,17 +184,17 @@ public class ScreenUtilities {
 
   private static AccessibilityNodeInfo findCurrentNode (AccessibilityNodeInfo root) {
     AccessibilityNodeInfo node;
-    log(root, "finding current node");
+    logNavigation(root, "finding current node");
 
     if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
       if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
         node = AccessibilityNodeInfo.obtain(root);
-        log(node, "using root node");
+        logNavigation(node, "using root node");
       } else {
-        log(node, "found input focus");
+        logNavigation(node, "found input focus");
       }
     } else {
-      log(node, "found accessibility focus");
+      logNavigation(node, "found accessibility focus");
     }
 
     {
@@ -196,7 +203,7 @@ public class ScreenUtilities {
       if (selected != null) {
         node.recycle();
         node = selected;
-        log(node, "found selected node");
+        logNavigation(node, "found selected node");
       }
     }
 
@@ -206,16 +213,17 @@ public class ScreenUtilities {
       if (text != null) {
         node.recycle();
         node = text;
-        log(node, "found text node");
+        logNavigation(node, "found text node");
       }
     }
 
     if (!node.isAccessibilityFocused()) {
       if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-        log(node, "accessibility focus not set");
+        logNavigation(node, "accessibility focus not set");
       }
     }
 
+    logNavigation(node, "found current node");
     return node;
   }
 
