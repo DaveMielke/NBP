@@ -9,119 +9,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public class ScreenUtilities {
   private final static String LOG_TAG = ScreenUtilities.class.getName();
 
-  public static boolean canAssign (Class to, AccessibilityNodeInfo from) {
-    return LanguageUtilities.canAssign(to, from.getClassName());
-  }
-
-  public static AccessibilityNodeInfo getRootNode (AccessibilityNodeInfo node) {
-    if (node == null) return null;
-    node = AccessibilityNodeInfo.obtain(node);
-
-    while (true) {
-      AccessibilityNodeInfo parent = node.getParent();
-      if (parent == null) return node;
-
-      node.recycle();
-      node = parent;
-    }
-  }
-
-  public static AccessibilityNodeInfo getRootNode () {
-    ScreenMonitor monitor = ScreenMonitor.getScreenMonitor();
-    if (monitor == null) return null;
-
-    AccessibilityNodeInfo root = monitor.getRootInActiveWindow();
-    if (root == null) Log.w(LOG_TAG, "no root node");
-    return root;
-  }
-
-  private static AccessibilityNodeInfo establishCurrentNode (AccessibilityNodeInfo root) {
-    root = AccessibilityNodeInfo.obtain(root);
-
-    if (root.getText() != null) {
-      if (root.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-        return root;
-      }
-    }
-
-    AccessibilityNodeInfo node = null;
-    int childCount = root.getChildCount();
-
-    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
-      AccessibilityNodeInfo child = root.getChild(childIndex);
-
-      if (child != null) {
-        node = establishCurrentNode(child);
-        child.recycle();
-        if (node != null) break;
-      }
-    }
-
-    root.recycle();
-    return node;
-  }
-
-  private static AccessibilityNodeInfo findCurrentNode (AccessibilityNodeInfo root) {
-    AccessibilityNodeInfo node;
-
-    if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
-      if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
-        if ((node = establishCurrentNode(root)) == null) {
-          Log.w(LOG_TAG, "no current node");
-        }
-      }
-    }
-
-    return node;
-  }
-
-  public static AccessibilityNodeInfo getCurrentNode () {
-    AccessibilityNodeInfo root = getRootNode();
-    if (root == null) return null;
-
-    AccessibilityNodeInfo current = findCurrentNode(root);
-    root.recycle();
-    return current;
-  }
-
-  public static AccessibilityNodeInfo getCurrentNode (AccessibilityNodeInfo node) {
-    AccessibilityNodeInfo root = getRootNode(node);
-    if (root == null) return null;
-
-    AccessibilityNodeInfo current = findCurrentNode(root);
-    root.recycle();
-    return current;
-  }
-
-  public static boolean isEditable (AccessibilityNodeInfo node) {
-    if (node == null) return false;
-
-    if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-      return node.isEditable();
-    }
-
-    return canAssign(android.widget.EditText.class, node);
-  }
-
-  public static boolean isSeekable (AccessibilityNodeInfo node) {
-    if (node == null) return false;
-    if (node.getChildCount() > 0) return false;
-
-    int actions = node.getActions();
-    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
-    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
-    return false;
-  }
-
-  public static boolean hasAction (AccessibilityNodeInfo node, int action) {
-    if (node == null) return false;
-    return (node.getActions() & action) != 0;
-  }
-
-  public static String getClassName (AccessibilityNodeInfo node) {
-    return LanguageUtilities.getClassName(node.getClassName());
-  }
-
   public static String toString (AccessibilityNodeInfo node) {
     StringBuilder sb = new StringBuilder();
     CharSequence characters;
@@ -214,6 +101,169 @@ public class ScreenUtilities {
     }
 
     return sb.toString();
+  }
+
+  public static void log (AccessibilityNodeInfo node, String reason) {
+    Log.w(LOG_TAG, (reason + ": " + toString(node)));
+  }
+
+  public static boolean canAssign (Class to, AccessibilityNodeInfo from) {
+    return LanguageUtilities.canAssign(to, from.getClassName());
+  }
+
+  public static AccessibilityNodeInfo getRootNode (AccessibilityNodeInfo node) {
+    if (node == null) return null;
+    node = AccessibilityNodeInfo.obtain(node);
+
+    while (true) {
+      AccessibilityNodeInfo parent = node.getParent();
+      if (parent == null) return node;
+
+      node.recycle();
+      node = parent;
+    }
+  }
+
+  public static AccessibilityNodeInfo getRootNode () {
+    ScreenMonitor monitor = ScreenMonitor.getScreenMonitor();
+    if (monitor == null) return null;
+
+    AccessibilityNodeInfo root = monitor.getRootInActiveWindow();
+    if (root == null) Log.w(LOG_TAG, "no root node");
+    return root;
+  }
+
+  private static AccessibilityNodeInfo findSelectedNode (AccessibilityNodeInfo root) {
+    root = AccessibilityNodeInfo.obtain(root);
+    if (root.isSelected()) return root;
+
+    AccessibilityNodeInfo node = null;
+    int childCount = root.getChildCount();
+
+    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+      AccessibilityNodeInfo child = root.getChild(childIndex);
+
+      if (child != null) {
+        node = findSelectedNode(child);
+        child.recycle();
+        if (node != null) break;
+      }
+    }
+
+    root.recycle();
+    return node;
+  }
+
+  private static AccessibilityNodeInfo findTextNode (AccessibilityNodeInfo root) {
+    root = AccessibilityNodeInfo.obtain(root);
+    if (root.getText() != null) return root;
+
+    AccessibilityNodeInfo node = null;
+    int childCount = root.getChildCount();
+
+    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+      AccessibilityNodeInfo child = root.getChild(childIndex);
+
+      if (child != null) {
+        node = findTextNode(child);
+        child.recycle();
+        if (node != null) break;
+      }
+    }
+
+    root.recycle();
+    return node;
+  }
+
+  private static AccessibilityNodeInfo findCurrentNode (AccessibilityNodeInfo root) {
+    AccessibilityNodeInfo node;
+    log(root, "finding current node");
+
+    if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
+      if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
+        node = AccessibilityNodeInfo.obtain(root);
+        log(node, "using root node");
+      } else {
+        log(node, "found input focus");
+      }
+    } else {
+      log(node, "found accessibility focus");
+    }
+
+    {
+      AccessibilityNodeInfo selected = findSelectedNode(node);
+
+      if (selected != null) {
+        node.recycle();
+        node = selected;
+        log(node, "found selected node");
+      }
+    }
+
+    {
+      AccessibilityNodeInfo text = findTextNode(node);
+
+      if (text != null) {
+        node.recycle();
+        node = text;
+        log(node, "found text node");
+      }
+    }
+
+    if (!node.isAccessibilityFocused()) {
+      if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
+        log(node, "accessibility focus not set");
+      }
+    }
+
+    return node;
+  }
+
+  public static AccessibilityNodeInfo getCurrentNode () {
+    AccessibilityNodeInfo root = getRootNode();
+    if (root == null) return null;
+
+    AccessibilityNodeInfo current = findCurrentNode(root);
+    root.recycle();
+    return current;
+  }
+
+  public static AccessibilityNodeInfo getCurrentNode (AccessibilityNodeInfo node) {
+    AccessibilityNodeInfo root = getRootNode(node);
+    if (root == null) return null;
+
+    AccessibilityNodeInfo current = findCurrentNode(root);
+    root.recycle();
+    return current;
+  }
+
+  public static boolean isEditable (AccessibilityNodeInfo node) {
+    if (node == null) return false;
+
+    if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+      return node.isEditable();
+    }
+
+    return canAssign(android.widget.EditText.class, node);
+  }
+
+  public static boolean isSeekable (AccessibilityNodeInfo node) {
+    if (node == null) return false;
+    if (node.getChildCount() > 0) return false;
+
+    int actions = node.getActions();
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
+    return false;
+  }
+
+  public static boolean hasAction (AccessibilityNodeInfo node, int action) {
+    if (node == null) return false;
+    return (node.getActions() & action) != 0;
+  }
+
+  public static String getClassName (AccessibilityNodeInfo node) {
+    return LanguageUtilities.getClassName(node.getClassName());
   }
 
   private ScreenUtilities () {

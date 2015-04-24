@@ -12,7 +12,12 @@ public class EnterKey extends HostAction {
 
     synchronized (endpoint) {
       if (!endpoint.isEditable()) {
-        return performNodeAction(endpoint.getCurrentNode(), AccessibilityNodeInfo.ACTION_CLICK);
+        AccessibilityNodeInfo node = endpoint.getCurrentNode();
+        if (node == null) return false;
+
+        boolean performed = performNodeAction(node, AccessibilityNodeInfo.ACTION_CLICK);
+        node.recycle();
+        return performed;
       }
     }
 

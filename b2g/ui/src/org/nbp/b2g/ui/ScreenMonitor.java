@@ -52,6 +52,7 @@ public class ScreenMonitor extends AccessibilityService {
 
       if (node != null) {
         endpoint.write(node, true);
+        node.recycle();
       } else {
         endpoint.write(R.string.message_no_screen_content);
       }
