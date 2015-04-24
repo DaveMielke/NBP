@@ -1,6 +1,8 @@
 B PanLeft
 F PanRight
+
 SX SetLeft
+7X DescribeCharacter
 
 814 CopyToClipboard
 

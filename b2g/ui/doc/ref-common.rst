@@ -4,6 +4,7 @@ Keys       Action
 B          |PanLeft|
 F          |PanRight|
 SX         |SetLeft|
+7X         |DescribeCharacter|
 814        |CopyToClipboard|
 B7         |OneHandOff|
 F8         |OneHandOn|

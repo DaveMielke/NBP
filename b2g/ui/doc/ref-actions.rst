@@ -16,6 +16,7 @@
 .. |CutToClipboard| replace:: cut selected text to clipboard
 .. |DeleteNext| replace:: delete next character
 .. |DeletePrevious| replace:: delete previous character
+.. |DescribeCharacter| replace:: describe character
 .. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
 .. |EnterKey| replace:: the Enter key
 .. |FindNext| replace:: find (forward search for) text

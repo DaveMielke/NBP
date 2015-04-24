@@ -2,11 +2,13 @@ package org.nbp.b2g.ui;
 
 public abstract class Endpoint {
   private String oldText;
+  private int oldLineStart;
   private int oldSelectionStart;
   private int oldSelectionEnd;
 
   protected void resetSpeech () {
     oldText = "";
+    oldLineStart = -1;
     oldSelectionStart = NO_SELECTION;
     oldSelectionEnd = NO_SELECTION;
   }
@@ -15,13 +17,15 @@ public abstract class Endpoint {
     synchronized (this) {
       String text = null;
 
-      String newText = getLineText();
-      int newSelectionStart = getSelectionStart();
-      int newSelectionEnd = getSelectionEnd();
+      final String newText = getText();
+      final int newLength = newText.length();
+
+      final int newLineStart = getLineStart();
+      final int newSelectionStart = getSelectionStart();
+      final int newSelectionEnd = getSelectionEnd();
 
       int start = 0;
       int oldEnd = oldText.length();
-      int newLength = newText.length();
       int newEnd = newLength;
 
       while ((start < oldEnd) && (start < newEnd)) {
@@ -40,7 +44,7 @@ public abstract class Endpoint {
       if (newEnd > start) {
         text = newText.substring(start, newEnd);
       } else if (oldEnd > start) {
-        text = "deleted: " + oldText.substring(start, oldEnd);
+        text = oldText.substring(start, oldEnd);
       } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
         int offset = NO_SELECTION;
 
@@ -51,37 +55,36 @@ public abstract class Endpoint {
         }
 
         if (offset != NO_SELECTION) {
-          int index = offset - getLineStart();
-
-          if ((index >= 0) && (index <= newLength)) {
-            text = getText();
-
-            if (offset == text.length()) {
-              text = ApplicationContext.getString(R.string.character_end);
-            } else {
-              char character = text.charAt(offset);
-
-              switch (character) {
-                case '\n':
-                  text = ApplicationContext.getString(R.string.character_newline);
-                  break;
-
-                default:
-                  text = Character.toString(character);
-                  break;
-              }
-            }
+          if (offset < newLength) {
+            text = newText.substring(offset, offset+1);
+          } else if (offset == newLength) {
+            text = ApplicationContext.getString(R.string.character_end);
           }
         }
       }
 
+      if (text == null) {
+        if (newLineStart != oldLineStart) {
+          text = getLineText();
+        }
+      }
+
       if (text != null) {
+        if (text.length() == 1) {
+          switch (text.charAt(0)) {
+            case '\n':
+              text = ApplicationContext.getString(R.string.character_newline);
+              break;
+          }
+        }
+
         SpeechDevice speech = Devices.getSpeechDevice();
         speech.stopSpeaking();
         speech.say(text);
       }
 
       oldText = newText;
+      oldLineStart = newLineStart;
       oldSelectionStart = newSelectionStart;
       oldSelectionEnd = newSelectionEnd;
     }
@@ -215,6 +218,7 @@ public abstract class Endpoint {
 
   protected void setText (String text) {
     setText(text, 0);
+    resetSpeech();
   }
 
   public boolean hasSoftEdges () {
@@ -418,6 +422,5 @@ public abstract class Endpoint {
     characters = new Characters();
     keyBindings = new KeyBindings(this, getKeysFileNames());
     setText("");
-    resetSpeech();
   }
 }
