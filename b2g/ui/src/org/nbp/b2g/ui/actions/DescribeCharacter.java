@@ -18,7 +18,7 @@ public class DescribeCharacter extends SpeechAction {
       }
     }
 
-    if (name == null) name = "no character name";
+    if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
     ApplicationUtilities.message(name);
     return true;
   }
