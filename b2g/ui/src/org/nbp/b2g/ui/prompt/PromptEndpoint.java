@@ -9,7 +9,7 @@ public abstract class PromptEndpoint extends Endpoint {
 
   @Override
   public boolean write () {
-    setText(buffer.toString(), getLineIndent());
+    setText(buffer.toString(), true);
     return super.write();
   }
 

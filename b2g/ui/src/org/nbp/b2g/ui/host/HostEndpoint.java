@@ -60,8 +60,10 @@ public class HostEndpoint extends Endpoint {
     }
 
     synchronized (this) {
-      if (!node.equals(currentNode)) resetSpeech();
-      setText(text, indent);
+      boolean sameNode = node.equals(currentNode);
+      if (!sameNode) resetSpeech();
+      setText(text, sameNode);
+
       resetNode();
       currentNode = AccessibilityNodeInfo.obtain(node);
       currentDescribe = describe;

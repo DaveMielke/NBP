@@ -208,16 +208,39 @@ public abstract class Endpoint {
     return textOffset - lineStart;
   }
 
-  protected void setText (String text, int indent) {
+  protected void setText (String text, boolean stay) {
     textString = text;
     softEdges = false;
 
-    setLine(0);
-    lineIndent = indent;
+    {
+      int start = 0;
+
+      if (stay) {
+        if ((lineStart > 0) && (lineStart <= text.length())) {
+          if (text.charAt(lineStart-1) == '\n') {
+            start = lineStart;
+          }
+        }
+      }
+
+      setLine(start);
+    }
+
+    {
+      int indent = 0;
+
+      if (stay) {
+        if (lineIndent < lineText.length()) {
+          indent = lineIndent;
+        }
+      }
+
+      lineIndent = indent;
+    }
   }
 
   protected void setText (String text) {
-    setText(text, 0);
+    setText(text, false);
     resetSpeech();
   }
 
