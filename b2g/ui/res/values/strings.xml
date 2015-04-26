@@ -7,7 +7,7 @@
   <string name="input_service_type">B2G Keyboard</string>
 
   <string name="screen_monitor_label">B2G Screen Monitor</string>
-  <string name="screen_monitor_description">B2G Screen Monitor</string>
+  <string name="screen_monitor_description">This service watches for changes to the host screen, and notifies the undrlying software whenever they occur.</string>
 
   <string name="clock_activity_label">Digital Clock</string>
 
