@@ -43,7 +43,7 @@ public abstract class ApplicationParameters {
   public static volatile int BEEP_VOLUME = 100; // percentage
   public static volatile int BEEP_DURATION = 100; // milliseconds
 
-  public static volatile String CLOCK_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+  public static volatile String CLOCK_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss\nccc, MMM d\nzzz (ZZZZ)";
   public static volatile long CLOCK_UPDATE_INTERVAL = 1000; // milliseconds
 
   public static volatile String BLUETOOTH_SERVICE_NAME = "Braille Display";
