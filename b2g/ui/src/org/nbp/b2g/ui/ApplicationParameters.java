@@ -40,8 +40,9 @@ public abstract class ApplicationParameters {
   public static volatile long LONG_PRESS_DELAY = 100; // milliseconds
   public static volatile long SCREEN_SCROLL_DELAY = 500; // milliseconds
 
-  public static volatile int BEEP_VOLUME = 100; // percentage
+  public static volatile int TONE_VOLUME = 100; // percentage
   public static volatile int BEEP_DURATION = 100; // milliseconds
+  public static volatile int ALERT_DURATION = 300; // milliseconds
 
   public static volatile String CLOCK_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss\nccc, MMM d\nzzz (ZZZZ)";
   public static volatile long CLOCK_UPDATE_INTERVAL = 1000; // milliseconds

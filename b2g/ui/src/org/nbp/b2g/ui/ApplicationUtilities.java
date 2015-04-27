@@ -25,10 +25,17 @@ public class ApplicationUtilities {
     return ViewConfiguration.getGlobalActionKeyTimeout();
   }
 
-  private final static ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, ApplicationParameters.BEEP_VOLUME);
+  private final static ToneGenerator toneGenerator = new ToneGenerator(
+    AudioManager.STREAM_NOTIFICATION,
+    ApplicationParameters.TONE_VOLUME
+  );
 
   public static void beep () {
-    tg.startTone(ToneGenerator.TONE_PROP_BEEP, ApplicationParameters.BEEP_DURATION);
+    toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, ApplicationParameters.BEEP_DURATION);
+  }
+
+  public static void alert () {
+    toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, ApplicationParameters.ALERT_DURATION);
   }
 
   public static void message (Endpoint endpoint, String text) {

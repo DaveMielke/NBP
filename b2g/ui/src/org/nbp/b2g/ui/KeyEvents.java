@@ -23,18 +23,20 @@ public class KeyEvents {
       ApplicationUtilities.beep();
     } catch (Exception exception) {
       Log.w(LOG_TAG, "action crashed: " + action.getName(), exception);
+      ApplicationUtilities.alert();
     }
 
     return false;
   }
 
-  private static void performAction (boolean isLongPress) {
+  private static boolean performAction (boolean isLongPress) {
+    boolean performed = false;
+
     if (!ApplicationParameters.CURRENT_LONG_PRESS) {
       isLongPress = false;
     }
 
     if (activeNavigationKeys != 0) {
-      boolean performed = false;
       KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
       Action action = null;
 
@@ -52,9 +54,10 @@ public class KeyEvents {
         }
       }
 
-      if (!performed) ApplicationUtilities.beep();
       activeNavigationKeys = 0;
     }
+
+    return performed;
   }
 
   private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME) {
