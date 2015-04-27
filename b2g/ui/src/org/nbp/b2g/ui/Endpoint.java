@@ -42,9 +42,21 @@ public abstract class Endpoint {
       }
 
       if (newEnd > start) {
-        text = newText.substring(start, newEnd);
+        int from = Math.max(start, (newLineStart - 1));
+        int to = Math.min(newEnd, (newLineStart + getLineLength()));
+
+        from = Math.min(from, to);
+        to = Math.max(to, from);
+
+        text = newText.substring(from, to);
       } else if (oldEnd > start) {
-        text = oldText.substring(start, oldEnd);
+        int from = Math.max(start, newLineStart);
+        int to = Math.max(oldEnd, start);
+
+        from = Math.min(from, to);
+        to = Math.max(to, from);
+
+        text = oldText.substring(from, to);
       } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
         int offset = NO_SELECTION;
 
@@ -78,9 +90,11 @@ public abstract class Endpoint {
           }
         }
 
-        SpeechDevice speech = Devices.getSpeechDevice();
-        speech.stopSpeaking();
-        speech.say(text);
+        if (text.length() > 0) {
+          SpeechDevice speech = Devices.getSpeechDevice();
+          speech.stopSpeaking();
+          speech.say(text);
+        }
       }
 
       oldText = newText;
