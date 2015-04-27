@@ -118,6 +118,73 @@ public class ScreenUtilities {
     return LanguageUtilities.canAssign(to, from.getClassName());
   }
 
+  public static AccessibilityNodeInfo getRefreshedNode (AccessibilityNodeInfo node) {
+    if (node != null) {
+      if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+        node = AccessibilityNodeInfo.obtain(node);
+
+        if (!node.refresh()) {
+          node.recycle();
+          node = null;
+        }
+
+        return node;
+      }
+
+      {
+        int childCount = node.getChildCount();
+
+        for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+          AccessibilityNodeInfo child = node.getChild(childIndex);
+
+          if (child != null) {
+            AccessibilityNodeInfo parent = child.getParent();
+
+            child.recycle();
+            child = null;
+
+            if (node.equals(parent)) {
+              return parent;
+            }
+
+            if (parent != null) {
+              parent.recycle();
+              parent = null;
+            }
+          }
+        }
+      }
+
+      {
+        AccessibilityNodeInfo parent = node.getParent();
+
+        if (parent != null) {
+          int childCount = parent.getChildCount();
+
+          for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+            AccessibilityNodeInfo child = parent.getChild(childIndex);
+
+            if (node.equals(child)) {
+              parent.recycle();
+              parent = null;
+              return child;
+            }
+
+            if (child != null) {
+              child.recycle();
+              child = null;
+            }
+          }
+
+          parent.recycle();
+          parent = null;
+        }
+      }
+    }
+
+    return null;
+  }
+
   public static AccessibilityNodeInfo getRootNode (AccessibilityNodeInfo node) {
     if (node == null) return null;
     node = AccessibilityNodeInfo.obtain(node);
