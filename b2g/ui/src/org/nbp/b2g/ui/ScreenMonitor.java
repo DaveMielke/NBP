@@ -82,83 +82,87 @@ public class ScreenMonitor extends AccessibilityService {
 
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
-    HostEndpoint endpoint = getHostEndpoint();
-    int type = event.getEventType();
-    List<CharSequence> text = event.getText();
-    AccessibilityNodeInfo source = event.getSource();
-
     if (ApplicationParameters.CURRENT_LOG_UPDATES) {
       Log.d(LOG_TAG, "accessibility event: " + event.toString());
     }
 
-    if (type == AccessibilityEvent.TYPE_VIEW_SELECTED) {
-      if ((source == null) || ScreenUtilities.isSeekable(source)) {
-        int count = event.getItemCount();
+    try {
+      HostEndpoint endpoint = getHostEndpoint();
+      int type = event.getEventType();
+      List<CharSequence> text = event.getText();
+      AccessibilityNodeInfo source = event.getSource();
 
-        if (count != -1) {
-          int index = event.getCurrentItemIndex();
+      if (type == AccessibilityEvent.TYPE_VIEW_SELECTED) {
+        if ((source == null) || ScreenUtilities.isSeekable(source)) {
+          int count = event.getItemCount();
 
-          StringBuilder sb = new StringBuilder();
-          sb.append((index * 100) / count);
-          sb.append('%');
-          ApplicationUtilities.message(sb.toString());
+          if (count != -1) {
+            int index = event.getCurrentItemIndex();
+
+            StringBuilder sb = new StringBuilder();
+            sb.append((index * 100) / count);
+            sb.append('%');
+            ApplicationUtilities.message(sb.toString());
+          }
         }
       }
-    }
 
-    if (source != null) {
-      logEventComponent(source, "source");
-      AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode(source);
+      if (source != null) {
+        logEventComponent(source, "source");
+        AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode(source);
 
-      if (node != null) {
-        logEventComponent(node, "node");
+        if (node != null) {
+          logEventComponent(node, "node");
 
-        switch (type) {
-          case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-          case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
-          case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-            endpoint.write(node, true);
-            text = null;
-            break;
+          switch (type) {
+            case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
+            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+              endpoint.write(node, true);
+              text = null;
+              break;
 
-          default:
-            endpoint.write(node, false);
-          case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
-            text = null;
-            break;
+            default:
+              endpoint.write(node, false);
+            case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
+              text = null;
+              break;
+          }
+
+          node.recycle();
+        } else {
+          logMissingEventComponent("node");
         }
 
-        node.recycle();
+        source.recycle();
       } else {
-        logMissingEventComponent("node");
-      }
-
-      source.recycle();
-    } else {
-      logMissingEventComponent("source");
-    }
-
-    if (text != null) {
-      switch (type) {
-        default:
-          break;
+        logMissingEventComponent("source");
       }
 
       if (text != null) {
-        StringBuilder sb = new StringBuilder();
-
-        for (CharSequence line : text) {
-          if (line.length() == 0) continue;
-          if (sb.length() > 0) sb.append('\n');
-          sb.append(line);
+        switch (type) {
+          default:
+            break;
         }
 
-        if (sb.length() > 0) {
-          endpoint.write(sb.toString());
-        } else {
-          logMissingEventComponent("text");
+        if (text != null) {
+          StringBuilder sb = new StringBuilder();
+
+          for (CharSequence line : text) {
+            if (line.length() == 0) continue;
+            if (sb.length() > 0) sb.append('\n');
+            sb.append(line);
+          }
+
+          if (sb.length() > 0) {
+            endpoint.write(sb.toString());
+          } else {
+            logMissingEventComponent("text");
+          }
         }
       }
+    } catch (Exception exception) {
+      Log.w(LOG_TAG, "accessibility event crashed: " + exception.getMessage(), exception);
     }
   }
 
