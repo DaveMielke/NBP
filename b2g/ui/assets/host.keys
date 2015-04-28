@@ -13,6 +13,12 @@ SR RecentApps
 S1478 PowerOff
 S123456 HomeKey
 
+S123 MoveFirst
+S456 MoveLast
+
+S23 MoveUp
+S56 MoveDown
+
 S12 TabBackward
 S45 TabForward
 
