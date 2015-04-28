@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import android.os.Bundle;
+
 import android.util.Log;
 
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -35,7 +37,7 @@ public abstract class HostAction extends ScanCodeAction {
     }
   }
 
-  protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {
+  protected boolean performNodeAction (AccessibilityNodeInfo node, int action, Bundle arguments) {
     int actions = action;
     String name;
 
@@ -117,7 +119,7 @@ public abstract class HostAction extends ScanCodeAction {
 
         if (done) {
           logNodeAction(current, name, "unnecessary");
-        } else if (current.performAction(action)) {
+        } else if (current.performAction(action, arguments)) {
           logNodeAction(current, name, "succeeded");
           done = true;
         } else {
@@ -134,6 +136,10 @@ public abstract class HostAction extends ScanCodeAction {
 
     logNodeAction(node, name, "unsupported");
     return false;
+  }
+
+  protected boolean performNodeAction (AccessibilityNodeInfo node, int action) {
+    return performNodeAction(node, action, null);
   }
 
   protected HostAction (Endpoint endpoint, boolean isForDevelopers) {
