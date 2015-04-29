@@ -39,13 +39,13 @@ public class ApplicationUtilities {
   }
 
   public static void message (Endpoint endpoint, String text) {
-    synchronized (endpoint) {
-      BrailleDevice.write(endpoint, text);
-    }
+    BrailleDevice.write(endpoint, text);
 
     SpeechDevice speech = Devices.getSpeechDevice();
-    speech.stopSpeaking();
-    speech.say(text);
+    synchronized (speech) {
+      speech.stopSpeaking();
+      speech.say(text);
+    }
   }
 
   public static void message (String text) {

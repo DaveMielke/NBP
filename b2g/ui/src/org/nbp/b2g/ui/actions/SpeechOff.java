@@ -4,7 +4,12 @@ import org.nbp.b2g.ui.*;
 public class SpeechOff extends SpeechAction {
   @Override
   public boolean performAction () {
-    getSpeechDevice().stopSpeaking();
+    SpeechDevice speech = getSpeechDevice();
+
+    synchronized (speech) {
+      speech.stopSpeaking();
+    }
+
     return Controls.getSpeechOnControl().previousValue();
   }
 

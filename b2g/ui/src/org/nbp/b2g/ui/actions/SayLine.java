@@ -14,7 +14,11 @@ public class SayLine extends SpeechAction {
       }
     }
 
-    return getSpeechDevice().say(line);
+    SpeechDevice speech = getSpeechDevice();
+    synchronized (speech) {
+      speech.stopSpeaking();
+      return speech.say(line);
+    }
   }
 
   public SayLine (Endpoint endpoint) {
