@@ -22,8 +22,7 @@ public class KeyEvents {
       Log.w(LOG_TAG, "action failed: " + action.getName());
       ApplicationUtilities.beep();
     } catch (Exception exception) {
-      Log.w(LOG_TAG, "action crashed: " + action.getName(), exception);
-      ApplicationUtilities.alert();
+      Crash.handleCrash(exception, "action");
     }
 
     return false;
