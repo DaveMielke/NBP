@@ -52,6 +52,10 @@ public class ApplicationUtilities {
     message(Endpoints.getCurrentEndpoint(), text);
   }
 
+  public static void message (String format, Object... arguments) {
+    message(String.format(format, arguments));
+  }
+
   public static void message (StringBuilder sb) {
     message(sb.toString());
   }

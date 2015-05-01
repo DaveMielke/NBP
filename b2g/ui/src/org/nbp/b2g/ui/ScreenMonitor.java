@@ -80,6 +80,74 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  public static void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
+    if ((view == null) || ScreenUtilities.isSeekable(view)) {
+      int count = event.getItemCount();
+
+      if (count != -1) {
+        int index = event.getCurrentItemIndex();
+
+        ApplicationUtilities.message("%d%%", ((index * 100) / count));
+      }
+    }
+  }
+
+  public static void handleViewScrolled (
+    AccessibilityEvent event,
+    AccessibilityNodeInfo view,
+    AccessibilityNodeInfo node
+  ) {
+    HostEndpoint endpoint = Endpoints.getHostEndpoint();
+    node = AccessibilityNodeInfo.obtain(node);
+
+    {
+      AccessibilityNodeInfo oldNode = endpoint.getCurrentNode();
+
+      if (oldNode != null) {
+        boolean sameNode = oldNode.equals(node);
+        oldNode.recycle();
+        if (sameNode) return;
+      }
+    }
+
+    int count = event.getItemCount();
+    int first = event.getFromIndex();
+    int last = event.getToIndex();
+
+    final int NO_INDEX = -1;
+    int index = NO_INDEX;
+
+    while (node != null) {
+      AccessibilityNodeInfo parent = node.getParent();
+
+      if (view.equals(parent)) {
+        int childCount = parent.getChildCount();
+
+        for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+          AccessibilityNodeInfo child = parent.getChild(childIndex);
+
+          if (child != null) {
+            if (child.equals(node)) index = first + childIndex;
+            child.recycle();
+            if (index != NO_INDEX) break;
+          }
+        }
+      }
+
+      node.recycle();
+      node = parent;
+
+      if (index != NO_INDEX) {
+        node.recycle();
+        break;
+      }
+    }
+
+    if (index != NO_INDEX) {
+      ApplicationUtilities.message("%d of %d", (index + 1), count);
+    }
+  }
+
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
     if (ApplicationParameters.CURRENT_LOG_UPDATES) {
@@ -92,24 +160,21 @@ public class ScreenMonitor extends AccessibilityService {
       List<CharSequence> text = event.getText();
       AccessibilityNodeInfo source = event.getSource();
 
-      if (type == AccessibilityEvent.TYPE_VIEW_SELECTED) {
-        if ((source == null) || ScreenUtilities.isSeekable(source)) {
-          int count = event.getItemCount();
-
-          if (count != -1) {
-            int index = event.getCurrentItemIndex();
-
-            StringBuilder sb = new StringBuilder();
-            sb.append((index * 100) / count);
-            sb.append('%');
-            ApplicationUtilities.message(sb.toString());
-          }
-        }
+      switch (type) {
+        case AccessibilityEvent.TYPE_VIEW_SELECTED:
+          handleViewSelected(event, source);
+          break;
       }
 
       if (source != null) {
         logEventComponent(source, "source");
         AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode(source);
+
+        switch (type) {
+          case AccessibilityEvent.TYPE_VIEW_SCROLLED:
+            handleViewScrolled(event, source, node);
+            break;
+        }
 
         if (node != null) {
           logEventComponent(node, "node");
