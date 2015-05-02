@@ -93,7 +93,8 @@ public class ScreenMonitor extends AccessibilityService {
   }
 
   private final static Object scrollLock = new Object();
-  private static AccessibilityNodeInfo scrollView = null;
+  private static AccessibilityNodeInfo scrollNode = null;
+  private static boolean scrollTimeout = false;
 
   private static void handleViewScrolled (
     AccessibilityEvent event,
@@ -104,7 +105,8 @@ public class ScreenMonitor extends AccessibilityService {
     node = AccessibilityNodeInfo.obtain(node);
 
     synchronized (scrollLock) {
-      if (view.equals(scrollView)) {
+      if (view.equals(scrollNode)) {
+        scrollTimeout = false;
         scrollLock.notify();
       }
     }
@@ -157,45 +159,39 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  public static boolean scrollView (AccessibilityNodeInfo node, int action) {
-    if (!ScreenUtilities.isSeekable(node)) {
-      AccessibilityNodeInfo view = AccessibilityNodeInfo.obtain(node);
+  public static boolean scrollView (AccessibilityNodeInfo node, ScrollDirection direction) {
+    boolean scrolled = false;
 
-      while (view != null) {
-        if (view.isScrollable()) {
-          synchronized (scrollLock) {
-            boolean scrolled = false;
+    if (node != null) {
+      synchronized (scrollLock) {
+        scrollNode = AccessibilityNodeInfo.obtain(node);
+        scrollTimeout = true;
 
-            if (view.performAction(action)) {
-              ScreenUtilities.logNavigation(node, "scroll started");
-              scrollView = view;
+        if (node.performAction(direction.getNodeAction())) {
+          ScreenUtilities.logNavigation(node, "scroll started");
 
-              try {
-                scrollLock.wait(ApplicationParameters.VIEW_SCROLL_DELAY);
-                ScreenUtilities.logNavigation(node, "scroll finished");
-                scrolled = true;
-              } catch (InterruptedException exception) {
-                ScreenUtilities.logNavigation(node, "scroll interrupted");
-              }
+          try {
+            scrollLock.wait(ApplicationParameters.VIEW_SCROLL_DELAY);
+            scrolled = true;
 
-              scrollView = null;
+            if (scrollTimeout) {
+              ScreenUtilities.logNavigation(node, "scroll timeout");
             } else {
-              ScreenUtilities.logNavigation(node, "scroll failed");
+              ScreenUtilities.logNavigation(node, "scroll finished");
             }
-
-            view.recycle();
-            return scrolled;
+          } catch (InterruptedException exception) {
+            ScreenUtilities.logNavigation(node, "scroll interrupted");
           }
+        } else {
+          ScreenUtilities.logNavigation(node, "scroll failed");
         }
 
-        AccessibilityNodeInfo parent = view.getParent();
-        view.recycle();
-        view = parent;
+        scrollNode.recycle();
+        scrollNode = null;
       }
     }
 
-    ScreenUtilities.logNavigation(node, "not scrollable");
-    return false;
+    return scrolled;
   }
 
   @Override

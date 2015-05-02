@@ -50,8 +50,8 @@ public class MoveBackward extends MoveAction {
   }
 
   @Override
-  protected int getScrollAction () {
-    return AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD;
+  protected ScrollDirection getScrollDirection () {
+    return ScrollDirection.BACKWARD;
   }
 
   public MoveBackward (Endpoint endpoint) {

@@ -312,6 +312,11 @@ public class ScreenUtilities {
     return current;
   }
 
+  public static boolean hasAction (AccessibilityNodeInfo node, int action) {
+    if (node == null) return false;
+    return (node.getActions() & action) != 0;
+  }
+
   public static boolean isEditable (AccessibilityNodeInfo node) {
     if (node == null) return false;
 
@@ -332,9 +337,22 @@ public class ScreenUtilities {
     return false;
   }
 
-  public static boolean hasAction (AccessibilityNodeInfo node, int action) {
-    if (node == null) return false;
-    return (node.getActions() & action) != 0;
+  public static AccessibilityNodeInfo findScrollable (AccessibilityNodeInfo node) {
+    if (node == null) return null;
+
+    if (!isSeekable(node)) {
+      AccessibilityNodeInfo view = AccessibilityNodeInfo.obtain(node);
+
+      do {
+        if (view.isScrollable()) return view;
+        AccessibilityNodeInfo parent = view.getParent();
+        view.recycle();
+        view = parent;
+      } while (view != null);
+    }
+
+    logNavigation(node, "not scrollable");
+    return null;
   }
 
   public static String getClassName (AccessibilityNodeInfo node) {

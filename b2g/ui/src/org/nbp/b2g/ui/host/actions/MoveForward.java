@@ -63,8 +63,8 @@ public class MoveForward extends MoveAction {
   }
 
   @Override
-  protected int getScrollAction () {
-    return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
+  protected ScrollDirection getScrollDirection () {
+    return ScrollDirection.FORWARD;
   }
 
   public MoveForward (Endpoint endpoint) {

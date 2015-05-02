@@ -9,15 +9,21 @@ public abstract class MoveAction extends ScreenAction {
   private final static String LOG_TAG = MoveAction.class.getName();
 
   protected abstract boolean moveToNextNode (AccessibilityNodeInfo node, boolean force);
-  protected abstract int getScrollAction ();
+  protected abstract ScrollDirection getScrollDirection ();
 
   protected boolean scroll (AccessibilityNodeInfo node) {
-    boolean scrolled = ScreenMonitor.scrollView(node, getScrollAction());
+    boolean scrolled = false;
+    AccessibilityNodeInfo view = ScreenUtilities.findScrollable(node);
 
-    if (scrolled) {
-      ScreenUtilities.logNavigation("scroll succeeded");
-    } else {
-      ScreenUtilities.logNavigation("scroll failed");
+    if (view != null) {
+      if (ScreenMonitor.scrollView(view, getScrollDirection())) {
+        ScreenUtilities.logNavigation("scroll succeeded");
+        scrolled = true;
+      } else {
+        ScreenUtilities.logNavigation("scroll failed");
+      }
+
+      view.recycle();
     }
 
     return scrolled;
