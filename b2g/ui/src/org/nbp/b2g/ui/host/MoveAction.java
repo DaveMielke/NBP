@@ -12,12 +12,10 @@ public abstract class MoveAction extends ScreenAction {
   protected abstract int getScrollAction ();
 
   protected boolean scroll (AccessibilityNodeInfo node) {
-    if (ScreenUtilities.isSeekable(node)) return false;
-    boolean scrolled = performNodeAction(node, getScrollAction());
+    boolean scrolled = ScreenMonitor.scrollView(node, getScrollAction());
 
     if (scrolled) {
       ScreenUtilities.logNavigation("scroll succeeded");
-      ApplicationUtilities.sleep(ApplicationParameters.SCREEN_SCROLL_DELAY);
     } else {
       ScreenUtilities.logNavigation("scroll failed");
     }

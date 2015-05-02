@@ -80,7 +80,7 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  public static void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
+  private static void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if ((view == null) || ScreenUtilities.isSeekable(view)) {
       int count = event.getItemCount();
 
@@ -92,13 +92,22 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  public static void handleViewScrolled (
+  private final static Object scrollLock = new Object();
+  private static AccessibilityNodeInfo scrollView = null;
+
+  private static void handleViewScrolled (
     AccessibilityEvent event,
     AccessibilityNodeInfo view,
     AccessibilityNodeInfo node
   ) {
     HostEndpoint endpoint = Endpoints.getHostEndpoint();
     node = AccessibilityNodeInfo.obtain(node);
+
+    synchronized (scrollLock) {
+      if (view.equals(scrollView)) {
+        scrollLock.notify();
+      }
+    }
 
     {
       AccessibilityNodeInfo oldNode = endpoint.getCurrentNode();
@@ -146,6 +155,47 @@ public class ScreenMonitor extends AccessibilityService {
     if (index != NO_INDEX) {
       ApplicationUtilities.message("%d of %d", (index + 1), count);
     }
+  }
+
+  public static boolean scrollView (AccessibilityNodeInfo node, int action) {
+    if (!ScreenUtilities.isSeekable(node)) {
+      AccessibilityNodeInfo view = AccessibilityNodeInfo.obtain(node);
+
+      while (view != null) {
+        if (view.isScrollable()) {
+          synchronized (scrollLock) {
+            boolean scrolled = false;
+
+            if (view.performAction(action)) {
+              ScreenUtilities.logNavigation(node, "scroll started");
+              scrollView = view;
+
+              try {
+                scrollLock.wait(ApplicationParameters.VIEW_SCROLL_DELAY);
+                ScreenUtilities.logNavigation(node, "scroll finished");
+                scrolled = true;
+              } catch (InterruptedException exception) {
+                ScreenUtilities.logNavigation(node, "scroll interrupted");
+              }
+
+              scrollView = null;
+            } else {
+              ScreenUtilities.logNavigation(node, "scroll failed");
+            }
+
+            view.recycle();
+            return scrolled;
+          }
+        }
+
+        AccessibilityNodeInfo parent = view.getParent();
+        view.recycle();
+        view = parent;
+      }
+    }
+
+    ScreenUtilities.logNavigation(node, "not scrollable");
+    return false;
   }
 
   @Override
