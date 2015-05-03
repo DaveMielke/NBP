@@ -72,9 +72,15 @@ public abstract class ScrollAction extends ScreenAction {
         }
 
         if (hasScrolled) {
-          AccessibilityNodeInfo oldView = view;
-          view = ScreenUtilities.getRefreshedNode(view);
-          oldView.recycle();
+          {
+            AccessibilityNodeInfo newView = ScreenUtilities.getRefreshedNode(view);
+
+            if (newView != null) {
+              view.recycle();
+              view = newView;
+            }
+          }
+
           deselectChildren(view);
         }
 
