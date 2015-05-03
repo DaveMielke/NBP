@@ -92,7 +92,11 @@ public abstract class ScrollAction extends ScreenAction {
               break;
           }
 
-          if (newChildIndex == oldChildIndex) newChildIndex = NULL_CHILD_INDEX;
+          if (!hasScrolled) {
+            if (newChildIndex == oldChildIndex) {
+              newChildIndex = NULL_CHILD_INDEX;
+            }
+          }
         }
 
         if (newChildIndex != NULL_CHILD_INDEX) {
