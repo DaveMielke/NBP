@@ -207,7 +207,7 @@ public class ScreenUtilities {
     return root;
   }
 
-  private static AccessibilityNodeInfo findSelectedNode (AccessibilityNodeInfo root) {
+  public static AccessibilityNodeInfo findSelectedNode (AccessibilityNodeInfo root) {
     root = AccessibilityNodeInfo.obtain(root);
     if (root.isSelected()) return root;
 
@@ -228,7 +228,7 @@ public class ScreenUtilities {
     return node;
   }
 
-  private static AccessibilityNodeInfo findTextNode (AccessibilityNodeInfo root) {
+  public static AccessibilityNodeInfo findTextNode (AccessibilityNodeInfo root) {
     root = AccessibilityNodeInfo.obtain(root);
     if (root.getText() != null) return root;
 
@@ -339,12 +339,17 @@ public class ScreenUtilities {
 
   public static AccessibilityNodeInfo findScrollable (AccessibilityNodeInfo node) {
     if (node == null) return null;
+    logNavigation(node, "finding scrollable");
 
     if (!isSeekable(node)) {
       AccessibilityNodeInfo view = AccessibilityNodeInfo.obtain(node);
 
       do {
-        if (view.isScrollable()) return view;
+        if (view.isScrollable()) {
+          logNavigation(view, "found scrollable");
+          return view;
+        }
+
         AccessibilityNodeInfo parent = view.getParent();
         view.recycle();
         view = parent;

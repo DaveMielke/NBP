@@ -10,7 +10,9 @@ public enum ScrollDirection {
     switch (direction) {
       case FORWARD:  return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
       case BACKWARD: return AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD;
-      default: throw new IllegalArgumentException(direction.name());
+
+      default:
+        throw new IllegalArgumentException("no node action for scroll direction " + direction.name());
     }
   }
 

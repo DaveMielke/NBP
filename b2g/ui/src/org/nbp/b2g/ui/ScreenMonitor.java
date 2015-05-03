@@ -110,53 +110,6 @@ public class ScreenMonitor extends AccessibilityService {
         scrollLock.notify();
       }
     }
-
-    {
-      AccessibilityNodeInfo oldNode = endpoint.getCurrentNode();
-
-      if (oldNode != null) {
-        boolean sameNode = oldNode.equals(node);
-        oldNode.recycle();
-        if (sameNode) return;
-      }
-    }
-
-    int count = event.getItemCount();
-    int first = event.getFromIndex();
-    int last = event.getToIndex();
-
-    final int NO_INDEX = -1;
-    int index = NO_INDEX;
-
-    while (node != null) {
-      AccessibilityNodeInfo parent = node.getParent();
-
-      if (view.equals(parent)) {
-        int childCount = parent.getChildCount();
-
-        for (int childIndex=0; childIndex<childCount; childIndex+=1) {
-          AccessibilityNodeInfo child = parent.getChild(childIndex);
-
-          if (child != null) {
-            if (child.equals(node)) index = first + childIndex;
-            child.recycle();
-            if (index != NO_INDEX) break;
-          }
-        }
-      }
-
-      node.recycle();
-      node = parent;
-
-      if (index != NO_INDEX) {
-        node.recycle();
-        break;
-      }
-    }
-
-    if (index != NO_INDEX) {
-      ApplicationUtilities.message("%d of %d", (index + 1), count);
-    }
   }
 
   public static boolean scrollView (AccessibilityNodeInfo node, ScrollDirection direction) {
@@ -197,7 +150,7 @@ public class ScreenMonitor extends AccessibilityService {
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
     if (ApplicationParameters.CURRENT_LOG_UPDATES) {
-      Log.d(LOG_TAG, "accessibility event: " + event.toString());
+      Log.d(LOG_TAG, "accessibility event starting: " + event.toString());
     }
 
     try {
@@ -274,6 +227,10 @@ public class ScreenMonitor extends AccessibilityService {
       }
     } catch (Exception exception) {
       Crash.handleCrash(exception, "accessibility event");
+    }
+
+    if (ApplicationParameters.CURRENT_LOG_UPDATES) {
+      Log.d(LOG_TAG, "accessibility event finished");
     }
   }
 
