@@ -32,17 +32,18 @@ public abstract class ScrollAction extends ScreenAction {
     return NULL_CHILD_INDEX;
   }
 
-  private static void deselectChildren (AccessibilityNodeInfo node) {
-    int childCount = node.getChildCount();
+  private static void deselectDescendants (AccessibilityNodeInfo root) {
+    int childCount = root.getChildCount();
 
     for (int childIndex=0; childIndex<childCount; childIndex+=1) {
-      AccessibilityNodeInfo child = node.getChild(childIndex);
+      AccessibilityNodeInfo child = root.getChild(childIndex);
 
       if (child != null) {
         if (child.isSelected()) {
           child.performAction(AccessibilityNodeInfo.ACTION_CLEAR_SELECTION);
         }
 
+        deselectDescendants(child);
         child.recycle();
       }
     }
@@ -50,17 +51,18 @@ public abstract class ScrollAction extends ScreenAction {
 
   @Override
   public boolean performAction () {
-    AccessibilityNodeInfo node = getCurrentNode();
+    AccessibilityNodeInfo oldCurrentNode = getCurrentNode();
 
-    if (node != null) {
-      AccessibilityNodeInfo view = ScreenUtilities.findScrollable(node);
+    if (oldCurrentNode != null) {
+      AccessibilityNodeInfo view = ScreenUtilities.findScrollable(oldCurrentNode);
 
       if (view != null) {
-        int oldChildIndex = findContainingChild(view, node);
+        int oldChildIndex = findContainingChild(view, oldCurrentNode);
         int newChildIndex = NULL_CHILD_INDEX;
 
         ScrollDirection direction = getScrollDirection();
         boolean hasScrolled = false;
+        deselectDescendants(view);
 
         if (getContinueScrolling()) {
           while (ScreenMonitor.scrollView(view, direction)) {
@@ -81,7 +83,7 @@ public abstract class ScrollAction extends ScreenAction {
             }
           }
 
-          deselectChildren(view);
+          deselectDescendants(view);
         }
 
         if (newChildIndex == NULL_CHILD_INDEX) {
@@ -112,9 +114,16 @@ public abstract class ScrollAction extends ScreenAction {
             AccessibilityNodeInfo child = view.getChild(newChildIndex);
 
             if (child != null) {
-              boolean selected = setCurrentNode(child);
+              AccessibilityNodeInfo newCurrentNode = ScreenUtilities.findCurrentNode(child);
+
               child.recycle();
-              if (selected) return true;
+              child = null;
+
+              if (newCurrentNode != null) {
+                boolean selected = setCurrentNode(newCurrentNode);
+                newCurrentNode.recycle();
+                if (selected) return true;
+              }
             }
           }
         }

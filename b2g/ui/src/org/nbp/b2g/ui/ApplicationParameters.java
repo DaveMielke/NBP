@@ -38,7 +38,7 @@ public abstract class ApplicationParameters {
 
   public static volatile long LONG_PRESS_TIME = 500; // milliseconds
   public static volatile long LONG_PRESS_DELAY = 100; // milliseconds
-  public static volatile long VIEW_SCROLL_DELAY = 500; // milliseconds
+  public static volatile long VIEW_SCROLL_DELAY = 5000; // milliseconds
 
   public static volatile int TONE_VOLUME = 100; // percentage
   public static volatile int BEEP_DURATION = 100; // milliseconds

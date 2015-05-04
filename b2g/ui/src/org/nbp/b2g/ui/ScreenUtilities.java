@@ -249,7 +249,7 @@ public class ScreenUtilities {
     return node;
   }
 
-  private static AccessibilityNodeInfo findCurrentNode (AccessibilityNodeInfo root) {
+  public static AccessibilityNodeInfo findCurrentNode (AccessibilityNodeInfo root) {
     AccessibilityNodeInfo node;
     logNavigation(root, "finding current node");
 
