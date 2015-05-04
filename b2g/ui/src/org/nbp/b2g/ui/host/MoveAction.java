@@ -13,17 +13,15 @@ public abstract class MoveAction extends ScreenAction {
 
   protected boolean scroll (AccessibilityNodeInfo node) {
     boolean scrolled = false;
-    AccessibilityNodeInfo view = ScreenUtilities.findScrollable(node);
+    ScrollContainer container = ScrollContainer.findContainer(node);
 
-    if (view != null) {
-      if (ScreenMonitor.scrollView(view, getScrollDirection())) {
+    if (container != null) {
+      if (container.scroll(getScrollDirection())) {
         ScreenUtilities.logNavigation("scroll succeeded");
         scrolled = true;
       } else {
         ScreenUtilities.logNavigation("scroll failed");
       }
-
-      view.recycle();
     }
 
     return scrolled;

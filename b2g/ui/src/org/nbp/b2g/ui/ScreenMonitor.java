@@ -92,59 +92,17 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private final static Object scrollLock = new Object();
-  private static AccessibilityNodeInfo scrollNode = null;
-  private static boolean scrollTimeout = false;
+  private static void handleViewScrolled (AccessibilityEvent event, AccessibilityNodeInfo source) {
+    ScrollContainer container = ScrollContainer.getContainer(source);
 
-  private static void handleViewScrolled (
-    AccessibilityEvent event,
-    AccessibilityNodeInfo view,
-    AccessibilityNodeInfo node
-  ) {
-    HostEndpoint endpoint = Endpoints.getHostEndpoint();
-    node = AccessibilityNodeInfo.obtain(node);
-
-    synchronized (scrollLock) {
-      if (view.equals(scrollNode)) {
-        scrollTimeout = false;
-        scrollLock.notify();
+    if (container != null) {
+      synchronized (container) {
+        container.setItemCount(event.getItemCount());
+        container.setFirstItemIndex(event.getFromIndex());
+        container.setLastItemIndex(event.getToIndex());
+        container.onScroll();
       }
     }
-  }
-
-  public static boolean scrollView (AccessibilityNodeInfo node, ScrollDirection direction) {
-    boolean scrolled = false;
-
-    if (node != null) {
-      synchronized (scrollLock) {
-        scrollNode = AccessibilityNodeInfo.obtain(node);
-        scrollTimeout = true;
-
-        if (node.performAction(direction.getNodeAction())) {
-          ScreenUtilities.logNavigation(node, "scroll started");
-
-          try {
-            scrollLock.wait(ApplicationParameters.VIEW_SCROLL_DELAY);
-            scrolled = true;
-
-            if (scrollTimeout) {
-              ScreenUtilities.logNavigation(node, "scroll timeout");
-            } else {
-              ScreenUtilities.logNavigation(node, "scroll finished");
-            }
-          } catch (InterruptedException exception) {
-            ScreenUtilities.logNavigation(node, "scroll interrupted");
-          }
-        } else {
-          ScreenUtilities.logNavigation(node, "scroll failed");
-        }
-
-        scrollNode.recycle();
-        scrollNode = null;
-      }
-    }
-
-    return scrolled;
   }
 
   @Override
@@ -171,7 +129,7 @@ public class ScreenMonitor extends AccessibilityService {
 
         switch (type) {
           case AccessibilityEvent.TYPE_VIEW_SCROLLED:
-            handleViewScrolled(event, source, node);
+            handleViewScrolled(event, source);
             break;
         }
 

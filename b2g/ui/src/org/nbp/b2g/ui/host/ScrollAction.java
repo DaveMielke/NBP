@@ -7,89 +7,37 @@ public abstract class ScrollAction extends ScreenAction {
   protected abstract ScrollDirection getScrollDirection ();
   protected abstract boolean getContinueScrolling ();
 
-  private final static int NULL_CHILD_INDEX = -1;
-
-  private static int findContainingChild (AccessibilityNodeInfo root, AccessibilityNodeInfo node) {
-    int childCount = root.getChildCount();
-
-    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
-      AccessibilityNodeInfo child = root.getChild(childIndex);
-
-      if (child != null) {
-        boolean found = false;
-
-        if (child.equals(node)) {
-          found = true;
-        } else if (findContainingChild(child, node) != NULL_CHILD_INDEX) {
-          found = true;
-        }
-
-        child.recycle();
-        if (found) return childIndex;
-      }
-    }
-
-    return NULL_CHILD_INDEX;
-  }
-
-  private static void deselectDescendants (AccessibilityNodeInfo root) {
-    int childCount = root.getChildCount();
-
-    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
-      AccessibilityNodeInfo child = root.getChild(childIndex);
-
-      if (child != null) {
-        if (child.isSelected()) {
-          child.performAction(AccessibilityNodeInfo.ACTION_CLEAR_SELECTION);
-        }
-
-        deselectDescendants(child);
-        child.recycle();
-      }
-    }
-  }
-
   @Override
   public boolean performAction () {
     AccessibilityNodeInfo oldCurrentNode = getCurrentNode();
 
     if (oldCurrentNode != null) {
-      AccessibilityNodeInfo view = ScreenUtilities.findScrollable(oldCurrentNode);
+      ScrollContainer container = ScrollContainer.findContainer(oldCurrentNode);
 
-      if (view != null) {
-        int oldChildIndex = findContainingChild(view, oldCurrentNode);
-        int newChildIndex = NULL_CHILD_INDEX;
+      if (container != null) {
+        int oldChildIndex = container.findContainingChild(oldCurrentNode);
+        int newChildIndex = -1;
 
         ScrollDirection direction = getScrollDirection();
         boolean hasScrolled = false;
-        deselectDescendants(view);
 
         if (getContinueScrolling()) {
-          while (ScreenMonitor.scrollView(view, direction)) {
+          while (container.scroll(direction)) {
             hasScrolled = true;
           }
-        } else if (ScreenMonitor.scrollView(view, direction)) {
+        } else if (container.scroll(direction)) {
           hasScrolled = true;
           newChildIndex = oldChildIndex;
         }
 
         if (hasScrolled) {
-          {
-            AccessibilityNodeInfo newView = ScreenUtilities.getRefreshedNode(view);
-
-            if (newView != null) {
-              view.recycle();
-              view = newView;
-            }
-          }
-
-          deselectDescendants(view);
+          container.deselectDescendants();
         }
 
-        if (newChildIndex == NULL_CHILD_INDEX) {
+        if (newChildIndex == -1) {
           switch (direction) {
             case FORWARD:
-              newChildIndex = view.getChildCount() - 1;
+              newChildIndex = container.getChildCount() - 1;
               break;
 
             case BACKWARD:
@@ -102,16 +50,16 @@ public abstract class ScrollAction extends ScreenAction {
 
           if (!hasScrolled) {
             if (newChildIndex == oldChildIndex) {
-              newChildIndex = NULL_CHILD_INDEX;
+              newChildIndex = -1;
             }
           }
         }
 
-        if (newChildIndex != NULL_CHILD_INDEX) {
-          newChildIndex = Math.min(newChildIndex, (view.getChildCount() - 1));
+        if (newChildIndex != -1) {
+          newChildIndex = Math.min(newChildIndex, (container.getChildCount() - 1));
 
           if (newChildIndex >= 0) {
-            AccessibilityNodeInfo child = view.getChild(newChildIndex);
+            AccessibilityNodeInfo child = container.getChild(newChildIndex);
 
             if (child != null) {
               AccessibilityNodeInfo newCurrentNode = ScreenUtilities.findCurrentNode(child);
