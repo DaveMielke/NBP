@@ -30,18 +30,18 @@ public class ScrollContainer {
     ScreenUtilities.logNavigation(node, "finding scrollable node");
 
     if (!ScreenUtilities.isSeekable(node)) {
-      AccessibilityNodeInfo view = AccessibilityNodeInfo.obtain(node);
+      AccessibilityNodeInfo container = AccessibilityNodeInfo.obtain(node);
 
       do {
-        if (view.isScrollable()) {
-          ScreenUtilities.logNavigation(view, "found scrollable node");
-          return getContainer(view);
+        if (container.isScrollable()) {
+          ScreenUtilities.logNavigation(container, "found scrollable node");
+          return getContainer(container);
         }
 
-        AccessibilityNodeInfo parent = view.getParent();
-        view.recycle();
-        view = parent;
-      } while (view != null);
+        AccessibilityNodeInfo parent = container.getParent();
+        container.recycle();
+        container = parent;
+      } while (container != null);
     }
 
     ScreenUtilities.logNavigation(node, "not scrollable");
@@ -49,11 +49,6 @@ public class ScrollContainer {
   }
 
   private AccessibilityNodeInfo scrollNode = null;
-  private boolean scrollTimeout = false;
-
-  private int itemCount = 0;
-  private int firstItemIndex = -1;
-  private int lastItemIndex = -1;
 
   public AccessibilityNodeInfo getNode () {
     return AccessibilityNodeInfo.obtain(scrollNode);
@@ -67,24 +62,30 @@ public class ScrollContainer {
     return scrollNode.getChild(index);
   }
 
+  private int itemCount = 0;
+
   public int getItemCount () {
     return itemCount;
-  }
-
-  public int getFirstItemIndex () {
-    return firstItemIndex;
-  }
-
-  public int getLastItemIndex () {
-    return lastItemIndex;
   }
 
   public void setItemCount (int count) {
     itemCount = count;
   }
 
+  private int firstItemIndex = -1;
+
+  public int getFirstItemIndex () {
+    return firstItemIndex;
+  }
+
   public void setFirstItemIndex (int index) {
     firstItemIndex = index;
+  }
+
+  private int lastItemIndex = -1;
+
+  public int getLastItemIndex () {
+    return lastItemIndex;
   }
 
   public void setLastItemIndex (int index) {
@@ -112,7 +113,7 @@ public class ScrollContainer {
     deselectDescendants(scrollNode);
   }
 
-  private static int findContainingChild (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
+  private static int findChildIndex (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
     int childCount = root.getChildCount();
 
     for (int childIndex=0; childIndex<childCount; childIndex+=1) {
@@ -123,7 +124,7 @@ public class ScrollContainer {
 
         if (child.equals(node)) {
           found = true;
-        } else if (findContainingChild(node, child) != -1) {
+        } else if (findChildIndex(node, child) != -1) {
           found = true;
         }
 
@@ -135,25 +136,28 @@ public class ScrollContainer {
     return -1;
   }
 
-  public int findContainingChild (AccessibilityNodeInfo node) {
-    return findContainingChild(node, scrollNode);
+  public int findChildIndex (AccessibilityNodeInfo node) {
+    return findChildIndex(node, scrollNode);
   }
 
-  private boolean refreshScrollNode () {
+  private boolean refreshNode () {
     synchronized (this) {
       AccessibilityNodeInfo node = ScreenUtilities.getRefreshedNode(scrollNode);
       if (node == null) return false;
 
-      scrollNode.recycle();
-      scrollNode = node;
-
       synchronized (scrollContainers) {
+        scrollContainers.remove(scrollNode);
+        scrollNode.recycle();
+
+        scrollNode = node;
         scrollContainers.put(node, this);
       }
     }
 
     return true;
   }
+
+  private boolean scrollTimeout = false;
 
   public boolean scroll (ScrollDirection direction) {
     boolean scrolled = false;
@@ -166,7 +170,7 @@ public class ScrollContainer {
         ScreenUtilities.logNavigation(scrollNode, "scroll started");
 
         try {
-          wait(ApplicationParameters.VIEW_SCROLL_DELAY);
+          wait(ApplicationParameters.VIEW_SCROLL_TIMEOUT);
           scrolled = true;
 
           if (scrollTimeout) {
@@ -175,7 +179,7 @@ public class ScrollContainer {
             ScreenUtilities.logNavigation(scrollNode, "scroll finished");
           }
 
-          refreshScrollNode();
+          refreshNode();
         } catch (InterruptedException exception) {
           ScreenUtilities.logNavigation(scrollNode, "scroll interrupted");
         }

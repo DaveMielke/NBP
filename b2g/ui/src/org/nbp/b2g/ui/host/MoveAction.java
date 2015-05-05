@@ -11,22 +11,6 @@ public abstract class MoveAction extends ScreenAction {
   protected abstract boolean moveToNextNode (AccessibilityNodeInfo node, boolean force);
   protected abstract ScrollDirection getScrollDirection ();
 
-  protected boolean scroll (AccessibilityNodeInfo node) {
-    boolean scrolled = false;
-    ScrollContainer container = ScrollContainer.findContainer(node);
-
-    if (container != null) {
-      if (container.scroll(getScrollDirection())) {
-        ScreenUtilities.logNavigation("scroll succeeded");
-        scrolled = true;
-      } else {
-        ScreenUtilities.logNavigation("scroll failed");
-      }
-    }
-
-    return scrolled;
-  }
-
   protected boolean innerMove (AccessibilityNodeInfo node) {
     boolean moved = moveToNextNode(node, true);
 
@@ -66,33 +50,64 @@ public abstract class MoveAction extends ScreenAction {
     }
 
     if (!moved) {
-      if (scroll(node)) {
-        {
-          AccessibilityNodeInfo found = findNode(node);
-          node.recycle();
+      ScrollContainer container = ScrollContainer.findContainer(node);
 
-          if (found != null) {
-            ScreenUtilities.logNavigation(found, "found node after scroll");
-            node = found;
-            found = null;
-          } else {
-            ScreenUtilities.logNavigation("node not found after scroll");
-            node = ScreenUtilities.getCurrentNode();
+      if (container != null) {
+        ScrollDirection direction = getScrollDirection();
 
-            if (node != null) {
-              ScreenUtilities.logNavigation(node, "current node after scroll");
+        if (container.scroll(direction)) {
+          ScreenUtilities.logNavigation("scroll succeeded");
+
+          {
+            AccessibilityNodeInfo found = findNode(node);
+
+            node.recycle();
+            node = null;
+
+            if (found != null) {
+              ScreenUtilities.logNavigation(found, "found node after scroll");
+              node = found;
+              found = null;
             } else {
-              ScreenUtilities.logNavigation("no current node after scroll");
-              return false;
+              ScreenUtilities.logNavigation("node not found after scroll");
+              int childIndex;
+
+              switch (direction) {
+                case FORWARD:
+                  childIndex = 0;
+                  break;
+
+                case BACKWARD:
+                  childIndex = container.getChildCount() - 1;
+                  break;
+
+                default:
+                  childIndex = -1;
+                  break;
+              }
+
+              if (childIndex >= 0) {
+                node = container.getChild(childIndex);
+              }
+
+              if (node != null) {
+                ScreenUtilities.logNavigation(node, "new node after scroll");
+                if (setCurrentNode(node)) moved = true;
+              } else {
+                ScreenUtilities.logNavigation("no node after scroll");
+                return false;
+              }
             }
-
-            if (setCurrentNode(node)) moved = true;
           }
-        }
 
-        if (!moved) {
-          if (innerMove(node)) moved = true;
+          if (!moved) {
+            if (innerMove(node)) moved = true;
+          }
+        } else {
+          ScreenUtilities.logNavigation("scroll failed");
         }
+      } else {
+        ScreenUtilities.logNavigation("not scrollable");
       }
     }
 

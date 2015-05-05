@@ -15,7 +15,7 @@ public abstract class ScrollAction extends ScreenAction {
       ScrollContainer container = ScrollContainer.findContainer(oldCurrentNode);
 
       if (container != null) {
-        int oldChildIndex = container.findContainingChild(oldCurrentNode);
+        int oldChildIndex = container.findChildIndex(oldCurrentNode);
         int newChildIndex = -1;
 
         ScrollDirection direction = getScrollDirection();
