@@ -31,53 +31,11 @@ public abstract class ScreenAction extends HostAction {
     return found;
   }
 
-  protected boolean isActionable (AccessibilityNodeInfo node) {
-    if (node.isCheckable()) return true;
-    if (ScreenUtilities.isSeekable(node)) return true;
-    return false;
-  }
-
-  protected boolean canSetAsCurrent (AccessibilityNodeInfo node) {
-    return !ScreenUtilities.canAssign(android.widget.ListView.class, node);
-  }
-
   protected boolean setCurrentNode (AccessibilityNodeInfo node, boolean force) {
     ScreenUtilities.logNavigation(node, "setting node");
 
     if (!force) {
-      if (node.getText() != null) {
-        ScreenUtilities.logNavigation("node has text");
-      } else if (node.getContentDescription() != null) {
-        ScreenUtilities.logNavigation("node has description");
-      } else {
-        ScreenUtilities.logNavigation("node has no text");
-
-        if (isActionable(node)) {
-          ScreenUtilities.logNavigation("node is actionable");
-        } else {
-          ScreenUtilities.logNavigation("node is not actionable");
-          return false;
-        }
-      }
-
-      if (node.isEnabled()) {
-        ScreenUtilities.logNavigation("node is enabled");
-      } else {
-        ScreenUtilities.logNavigation("node is disabled");
-        return false;
-      }
-
-      if (canSetAsCurrent(node)) {
-        ScreenUtilities.logNavigation("node is eligible");
-      } else {
-        ScreenUtilities.logNavigation("node is ineligible");
-        return false;
-      }
-
-      if (node.isVisibleToUser()) {
-        ScreenUtilities.logNavigation("node is visible");
-      } else {
-        ScreenUtilities.logNavigation("node is invisible");
+      if (!ScreenUtilities.isSignificant(node)) {
         return false;
       }
     }

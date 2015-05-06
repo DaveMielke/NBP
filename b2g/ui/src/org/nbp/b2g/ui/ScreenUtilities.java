@@ -118,6 +118,31 @@ public class ScreenUtilities {
     return LanguageUtilities.canAssign(to, from.getClassName());
   }
 
+  public static boolean hasAction (AccessibilityNodeInfo node, int action) {
+    if (node == null) return false;
+    return (node.getActions() & action) != 0;
+  }
+
+  public static boolean isEditable (AccessibilityNodeInfo node) {
+    if (node == null) return false;
+
+    if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+      return node.isEditable();
+    }
+
+    return canAssign(android.widget.EditText.class, node);
+  }
+
+  public static boolean isSeekable (AccessibilityNodeInfo node) {
+    if (node == null) return false;
+    if (node.getChildCount() > 0) return false;
+
+    int actions = node.getActions();
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
+    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
+    return false;
+  }
+
   public static AccessibilityNodeInfo getRefreshedNode (AccessibilityNodeInfo node) {
     if (node != null) {
       if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
@@ -228,9 +253,47 @@ public class ScreenUtilities {
     return node;
   }
 
-  public static AccessibilityNodeInfo findTextNode (AccessibilityNodeInfo root) {
+  private static boolean canSetAsCurrent (AccessibilityNodeInfo node) {
+    return !ScreenUtilities.canAssign(android.widget.ListView.class, node);
+  }
+
+  public static boolean isSignificant (AccessibilityNodeInfo node) {
+    if (node.getText() != null) {
+      logNavigation(node, "node has text");
+    } else if (isEditable(node)) {
+      logNavigation(node, "node is editable");
+    } else if (node.getContentDescription() != null) {
+      logNavigation(node, "node has description");
+    } else if (node.isCheckable()) {
+      logNavigation(node, "node is checkable");
+    } else if (isSeekable(node)) {
+      logNavigation(node, "node is seekable");
+    } else {
+      logNavigation(node, "node is not significant");
+      return false;
+    }
+
+    if (!node.isEnabled()) {
+      logNavigation(node, "node is disabled");
+      return false;
+    }
+
+    if (!node.isVisibleToUser()) {
+      logNavigation(node, "node is invisible");
+      return false;
+    }
+
+    if (!canSetAsCurrent(node)) {
+      logNavigation(node, "node is ineligible");
+      return false;
+    }
+
+    return true;
+  }
+
+  public static AccessibilityNodeInfo findSignificantNode (AccessibilityNodeInfo root) {
     root = AccessibilityNodeInfo.obtain(root);
-    if (root.getText() != null) return root;
+    if (isSignificant(root)) return root;
 
     AccessibilityNodeInfo node = null;
     int childCount = root.getChildCount();
@@ -239,7 +302,7 @@ public class ScreenUtilities {
       AccessibilityNodeInfo child = root.getChild(childIndex);
 
       if (child != null) {
-        node = findTextNode(child);
+        node = findSignificantNode(child);
         child.recycle();
         if (node != null) break;
       }
@@ -275,12 +338,12 @@ public class ScreenUtilities {
     }
 
     {
-      AccessibilityNodeInfo text = findTextNode(node);
+      AccessibilityNodeInfo significant = findSignificantNode(node);
 
-      if (text != null) {
+      if (significant != null) {
         node.recycle();
-        node = text;
-        logNavigation(node, "found text node");
+        node = significant;
+        logNavigation(node, "found significant node");
       }
     }
 
@@ -310,31 +373,6 @@ public class ScreenUtilities {
     AccessibilityNodeInfo current = findCurrentNode(root);
     root.recycle();
     return current;
-  }
-
-  public static boolean hasAction (AccessibilityNodeInfo node, int action) {
-    if (node == null) return false;
-    return (node.getActions() & action) != 0;
-  }
-
-  public static boolean isEditable (AccessibilityNodeInfo node) {
-    if (node == null) return false;
-
-    if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-      return node.isEditable();
-    }
-
-    return canAssign(android.widget.EditText.class, node);
-  }
-
-  public static boolean isSeekable (AccessibilityNodeInfo node) {
-    if (node == null) return false;
-    if (node.getChildCount() > 0) return false;
-
-    int actions = node.getActions();
-    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) != 0) return true;
-    if ((actions & AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) != 0) return true;
-    return false;
   }
 
   public static AccessibilityNodeInfo findScrollable (AccessibilityNodeInfo node) {
