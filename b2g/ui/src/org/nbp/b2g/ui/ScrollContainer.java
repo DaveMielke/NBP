@@ -182,12 +182,12 @@ public class ScrollContainer {
 
         try {
           wait(ApplicationParameters.VIEW_SCROLL_TIMEOUT);
-          scrolled = true;
 
           if (scrollTimeout) {
             ScreenUtilities.logNavigation(scrollNode, "scroll timeout");
           } else {
             ScreenUtilities.logNavigation(scrollNode, "scroll finished");
+            scrolled = true;
           }
 
           refreshNode();
