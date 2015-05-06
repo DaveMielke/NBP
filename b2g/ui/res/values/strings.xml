@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="app_name">UserInterface</string>
+  <string name="app_name">B2G User Interface</string>
 
   <string name="input_service_label">B2G Input Service</string>
   <string name="input_service_type">B2G Keyboard</string>
