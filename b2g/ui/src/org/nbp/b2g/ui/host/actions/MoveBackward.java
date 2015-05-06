@@ -29,7 +29,7 @@ public class MoveBackward extends MoveAction {
     node = AccessibilityNodeInfo.obtain(node);
 
     while (true) {
-      if (inner && node.isFocusable()) break;
+      if (inner && node.isScrollable()) break;
 
       AccessibilityNodeInfo parent = node.getParent();
       if (parent == null) break;

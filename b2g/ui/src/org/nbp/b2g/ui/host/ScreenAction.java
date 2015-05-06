@@ -32,34 +32,8 @@ public abstract class ScreenAction extends HostAction {
   }
 
   protected boolean isActionable (AccessibilityNodeInfo node) {
-    if (node.isClickable()) return true;
-    if (node.isLongClickable()) return true;
+    if (node.isCheckable()) return true;
     if (ScreenUtilities.isSeekable(node)) return true;
-    return false;
-  }
-
-  protected boolean hasInnerText (AccessibilityNodeInfo node) {
-    int childCount = node.getChildCount();
-
-    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
-      AccessibilityNodeInfo child = node.getChild(childIndex);
-
-      if (child != null) {
-        boolean found = false;
-
-        if (child.getText() != null) {
-          if (!isActionable(child)) {
-            found = true;
-          } else if (hasInnerText(child)) {
-            found = true;
-          }
-        }
-
-        child.recycle();
-        if (found) return true;
-      }
-    }
-
     return false;
   }
 
@@ -80,13 +54,6 @@ public abstract class ScreenAction extends HostAction {
 
         if (isActionable(node)) {
           ScreenUtilities.logNavigation("node is actionable");
-
-          if (hasInnerText(node)) {
-            ScreenUtilities.logNavigation("node has inner text");
-            return false;
-          } else {
-            ScreenUtilities.logNavigation("node has no inner text");
-          }
         } else {
           ScreenUtilities.logNavigation("node is not actionable");
           return false;

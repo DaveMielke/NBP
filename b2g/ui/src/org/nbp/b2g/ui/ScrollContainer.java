@@ -100,7 +100,11 @@ public class ScrollContainer {
 
       if (child != null) {
         if (child.isSelected()) {
-          child.performAction(AccessibilityNodeInfo.ACTION_CLEAR_SELECTION);
+          if (child.performAction(AccessibilityNodeInfo.ACTION_CLEAR_SELECTION)) {
+            ScreenUtilities.logNavigation(child, "deselect succeeded");
+          } else {
+            ScreenUtilities.logNavigation(child, "deselect failed");
+          }
         }
 
         deselectDescendants(child);
@@ -143,18 +147,24 @@ public class ScrollContainer {
   private boolean refreshNode () {
     synchronized (this) {
       AccessibilityNodeInfo node = ScreenUtilities.getRefreshedNode(scrollNode);
-      if (node == null) return false;
 
-      synchronized (scrollContainers) {
-        scrollContainers.remove(scrollNode);
-        scrollNode.recycle();
+      if (node != null) {
+        synchronized (scrollContainers) {
+          scrollContainers.remove(scrollNode);
+          scrollNode.recycle();
 
-        scrollNode = node;
-        scrollContainers.put(node, this);
+          scrollNode = node;
+          scrollContainers.put(node, this);
+        }
+
+        ScreenUtilities.logNavigation(node, "refresh succeeded");
+        return true;
+      } else {
+        ScreenUtilities.logNavigation(node, "refresh failed");
       }
     }
 
-    return true;
+    return false;
   }
 
   private boolean scrollTimeout = false;
@@ -163,6 +173,7 @@ public class ScrollContainer {
     boolean scrolled = false;
 
     synchronized (this) {
+      refreshNode();
       deselectDescendants();
       scrollTimeout = true;
 

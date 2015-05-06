@@ -57,6 +57,7 @@ public abstract class MoveAction extends ScreenAction {
 
         if (container.scroll(direction)) {
           ScreenUtilities.logNavigation("scroll succeeded");
+          container.deselectDescendants();
 
           {
             AccessibilityNodeInfo found = findNode(node);
