@@ -24,7 +24,7 @@ permitEventDevice() {
 
       [ -n "${event}" ] && {
          local device="/dev/input/event${event}"
-         chmod 444 "${device}"
+         chmod 666 "${device}"
       }
    }
 }
