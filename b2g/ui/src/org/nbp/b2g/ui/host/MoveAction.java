@@ -88,7 +88,12 @@ public abstract class MoveAction extends ScreenAction {
               }
 
               if (childIndex >= 0) {
-                node = container.getChild(childIndex);
+                AccessibilityNodeInfo child = container.getChild(childIndex);
+
+                if (child != null) {
+                  node = ScreenUtilities.findSignificantNode(child);
+                  child.recycle();
+                }
               }
 
               if (node != null) {
@@ -106,6 +111,7 @@ public abstract class MoveAction extends ScreenAction {
           }
         } else {
           ScreenUtilities.logNavigation("scroll failed");
+          setCurrentNode(node);
         }
       } else {
         ScreenUtilities.logNavigation("not scrollable");
