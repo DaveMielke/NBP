@@ -44,19 +44,19 @@ public abstract class ScreenAction extends HostAction {
       ScreenUtilities.logNavigation("set accessibility focus succeeded");
     } else {
       ScreenUtilities.logNavigation("set accessibility focus failed");
-
-      if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
-        ScreenUtilities.logNavigation("set input focus succeeded");
-      } else {
-        ScreenUtilities.logNavigation("set input focus failed");
-        return false;
-      }
+      return false;
     }
 
     if (performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT)) {
       ScreenUtilities.logNavigation("select node succeeded");
     } else {
       ScreenUtilities.logNavigation("select node failed");
+    }
+
+    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
+      ScreenUtilities.logNavigation("set input focus succeeded");
+    } else {
+      ScreenUtilities.logNavigation("set input focus failed");
     }
 
     getHostEndpoint().write(node, force, 0);
