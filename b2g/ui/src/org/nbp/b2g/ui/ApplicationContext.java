@@ -7,6 +7,8 @@ import android.util.DisplayMetrics;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.PowerManager;
+import android.app.KeyguardManager;
 
 public abstract class ApplicationContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
@@ -57,6 +59,36 @@ public abstract class ApplicationContext {
     DisplayMetrics metrics = getDisplayMetrics();
     if (metrics == null) return dips;
     return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, metrics));
+  }
+
+  public static Object getSystemService (String name) {
+    Context context = getContext();
+    if (context == null) return null;
+    return context.getSystemService(name);
+  }
+
+  public static PowerManager getPowerManager () {
+    Object systemService = getSystemService(Context.POWER_SERVICE);
+    if (systemService == null) return null;
+    return (PowerManager)systemService;
+  }
+
+  public static boolean isScreenOn () {
+    PowerManager powerManager = getPowerManager();
+    if (powerManager == null) return true;
+    return powerManager.isScreenOn();
+  }
+
+  public static KeyguardManager getKeyguardManager () {
+    Object systemService = getSystemService(Context.KEYGUARD_SERVICE);
+    if (systemService == null) return null;
+    return (KeyguardManager)systemService;
+  }
+
+  public static boolean isKeyguardActive () {
+    KeyguardManager keyguardManager = getKeyguardManager();
+    if (keyguardManager == null) return false;
+    return keyguardManager.inKeyguardRestrictedInputMode();
   }
 
   private ApplicationContext () {
