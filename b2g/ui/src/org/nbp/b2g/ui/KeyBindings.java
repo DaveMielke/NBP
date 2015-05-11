@@ -24,27 +24,6 @@ public class KeyBindings {
   private final static String LOG_TAG = KeyBindings.class.getName();
 
   public final static char DELIMITER   = '-';
-  public final static char DOT_1       = '1';
-  public final static char DOT_2       = '2';
-  public final static char DOT_3       = '3';
-  public final static char DOT_4       = '4';
-  public final static char DOT_5       = '5';
-  public final static char DOT_6       = '6';
-  public final static char DOT_7       = '7';
-  public final static char DOT_8       = '8';
-  public final static char SPACE       = 'S';
-  public final static char FORWARD     = 'F';
-  public final static char BACKWARD    = 'B';
-  public final static char CENTER      = 'C';
-  public final static char UP          = 'U';
-  public final static char DOWN        = 'D';
-  public final static char LEFT        = 'L';
-  public final static char RIGHT       = 'R';
-  public final static char VOLUME_DOWN = '<';
-  public final static char VOLUME_UP   = '>';
-  public final static char CURSOR      = 'X';
-  public final static char LONG_PRESS  = 'H';
-  public final static char POWER_ON    = 'P';
 
   private final Endpoint endpoint;
   private final Map<String, Action> actionCache = new HashMap<String, Action>();
@@ -213,48 +192,26 @@ public class KeyBindings {
 
     for (int index=0; index<length; index+=1) {
       char character = operand.charAt(index);
-      int bit;
 
-      switch (Character.toUpperCase(character)) {
-        case KeyBindings.DOT_1:       bit = KeyMask.DOT_1;       break;
-        case KeyBindings.DOT_2:       bit = KeyMask.DOT_2;       break;
-        case KeyBindings.DOT_3:       bit = KeyMask.DOT_3;       break;
-        case KeyBindings.DOT_4:       bit = KeyMask.DOT_4;       break;
-        case KeyBindings.DOT_5:       bit = KeyMask.DOT_5;       break;
-        case KeyBindings.DOT_6:       bit = KeyMask.DOT_6;       break;
-        case KeyBindings.DOT_7:       bit = KeyMask.DOT_7;       break;
-        case KeyBindings.DOT_8:       bit = KeyMask.DOT_8;       break;
-        case KeyBindings.SPACE:       bit = KeyMask.SPACE;       break;
-        case KeyBindings.FORWARD:     bit = KeyMask.FORWARD;     break;
-        case KeyBindings.BACKWARD:    bit = KeyMask.BACKWARD;    break;
-        case KeyBindings.CENTER:      bit = KeyMask.DPAD_CENTER; break;
-        case KeyBindings.UP:          bit = KeyMask.DPAD_UP;     break;
-        case KeyBindings.DOWN:        bit = KeyMask.DPAD_DOWN;   break;
-        case KeyBindings.LEFT:        bit = KeyMask.DPAD_LEFT;   break;
-        case KeyBindings.RIGHT:       bit = KeyMask.DPAD_RIGHT;  break;
-        case KeyBindings.VOLUME_DOWN: bit = KeyMask.VOLUME_DOWN; break;
-        case KeyBindings.VOLUME_UP:   bit = KeyMask.VOLUME_UP;   break;
-        case KeyBindings.CURSOR:      bit = KeyMask.CURSOR;      break;
-        case KeyBindings.LONG_PRESS:  bit = KeyMask.LONG_PRESS;  break;
-        case KeyBindings.POWER_ON:    bit = KeyMask.POWER_ON;    break;
+      if (character == DELIMITER) {
+        masks = addKeyMask(masks, mask);
+        if (masks == null) return null;
+        mask = 0;
+      } else {
+        Integer bit = KeyMask.charToBit(Character.toUpperCase(character));
 
-        case KeyBindings.DELIMITER:
-          masks = addKeyMask(masks, mask);
-          if (masks == null) return null;
-          mask = 0;
-          continue;
-
-        default:
+        if (bit == null) {
           Log.w(LOG_TAG, "invalid key: " + character);
           return null;
-      }
+        }
 
-      if ((mask & bit) != 0) {
-        Log.w(LOG_TAG, "key specified more than once: " + operand);
-        continue;
-      }
+        if ((mask & bit) != 0) {
+          Log.w(LOG_TAG, "key specified more than once: " + operand);
+          return null;
+        }
 
-      mask |= bit;
+        mask |= bit;
+      }
     }
 
     return addKeyMask(masks, mask);
