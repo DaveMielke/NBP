@@ -17,9 +17,10 @@ public class PowerButtonMonitor extends EventMonitor {
   public void onKeyEvent (int code, boolean press) {
     if (press) wasOff = !ApplicationContext.isScreenOn();
     Devices.getKeyboardDevice().sendKeyEvent(code, press);
-
     Controls.getOneHandControl().previousValue();
-    if (wasOff) super.onKeyEvent(code, press);
+
+    int keyMask = wasOff? KeyMask.POWER_ON: KeyMask.POWER_OFF;
+    KeyEvents.handleNavigationKeyEvent(keyMask, press);
   }
 
   public PowerButtonMonitor () {

@@ -44,7 +44,7 @@ public class KeyBindings {
   public final static char VOLUME_UP   = '>';
   public final static char CURSOR      = 'X';
   public final static char LONG_PRESS  = 'H';
-  public final static char POWER       = 'P';
+  public final static char POWER_ON    = 'P';
 
   private final Endpoint endpoint;
   private final Map<String, Action> actionCache = new HashMap<String, Action>();
@@ -236,7 +236,7 @@ public class KeyBindings {
         case KeyBindings.VOLUME_UP:   bit = KeyMask.VOLUME_UP;   break;
         case KeyBindings.CURSOR:      bit = KeyMask.CURSOR;      break;
         case KeyBindings.LONG_PRESS:  bit = KeyMask.LONG_PRESS;  break;
-        case KeyBindings.POWER:       bit = KeyMask.POWER;       break;
+        case KeyBindings.POWER_ON:    bit = KeyMask.POWER_ON;    break;
 
         case KeyBindings.DELIMITER:
           masks = addKeyMask(masks, mask);

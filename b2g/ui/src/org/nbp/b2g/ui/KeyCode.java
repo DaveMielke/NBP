@@ -85,7 +85,6 @@ public class KeyCode {
 
       case KeyEvent.KEYCODE_VOLUME_DOWN: return KeyMask.VOLUME_DOWN;
       case KeyEvent.KEYCODE_VOLUME_UP:   return KeyMask.VOLUME_UP;
-      case KeyEvent.KEYCODE_POWER:       return KeyMask.POWER;
     }
 
     return 0;

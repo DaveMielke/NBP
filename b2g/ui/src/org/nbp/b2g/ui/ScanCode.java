@@ -109,6 +109,5 @@ public class ScanCode {
 
     map("VOLUMEDOWN", KeyMask.VOLUME_DOWN);
     map("VOLUMEUP", KeyMask.VOLUME_UP);
-    map("POWER", KeyMask.POWER);
   }
 }
