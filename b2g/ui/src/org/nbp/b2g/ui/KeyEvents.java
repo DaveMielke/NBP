@@ -20,7 +20,6 @@ public class KeyEvents {
     try {
       if (action.performAction(isLongPress)) return true;
       Log.w(LOG_TAG, "action failed: " + action.getName());
-      ApplicationUtilities.beep();
     } catch (Exception exception) {
       Crash.handleCrash(exception, "action");
     }
@@ -29,34 +28,35 @@ public class KeyEvents {
   }
 
   private static boolean performAction (boolean isLongPress) {
+    if (activeNavigationKeys == 0) return true;
+
     boolean performed = false;
+    KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
+    Action action = null;
 
     if (!ApplicationParameters.CURRENT_LONG_PRESS) {
       isLongPress = false;
     }
 
-    if (activeNavigationKeys != 0) {
-      KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
-      Action action = null;
-
-      if (isLongPress) {
-        action = keyBindings.getAction(activeNavigationKeys | KeyMask.LONG_PRESS);
-      }
-
-      if (action == null) {
-        action = keyBindings.getAction(activeNavigationKeys);
-      }
-
-      if (action != null) {
-        if (performAction(action, isLongPress)) {
-          performed = true;
-        }
-      }
-
-      activeNavigationKeys = 0;
+    if (isLongPress) {
+      action = keyBindings.getAction(activeNavigationKeys | KeyMask.LONG_PRESS);
     }
 
-    return performed;
+    if (action == null) {
+      action = keyBindings.getAction(activeNavigationKeys);
+    }
+
+    if (action != null) {
+      if (performAction(action, isLongPress)) {
+        performed = true;
+      }
+    }
+
+    activeNavigationKeys = 0;
+    if (performed) return true;
+
+    ApplicationUtilities.beep();
+    return false;
   }
 
   private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME) {
@@ -70,10 +70,20 @@ public class KeyEvents {
     return activeNavigationKeys;
   }
 
+  private static void logNavigationKeysChange (int keyMask, String action) {
+    if (ApplicationParameters.CURRENT_LOG_KEYS) {
+      Log.d(LOG_TAG, String.format(
+        "navigation key %s: 0X%02X -> 0X%02X",
+        action, keyMask, pressedNavigationKeys
+      ));
+    }
+  }
+
   private static void handleNavigationKeyPress (int keyMask) {
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
         pressedNavigationKeys |= keyMask;
+        logNavigationKeysChange(keyMask, "press");
 
         if (!ApplicationParameters.CURRENT_ONE_HAND) {
           activeNavigationKeys = pressedNavigationKeys;
@@ -93,6 +103,7 @@ public class KeyEvents {
       synchronized (longPressTimeout) {
         longPressTimeout.cancel();
         pressedNavigationKeys &= ~keyMask;
+        logNavigationKeysChange(keyMask, "release");
 
         if (!ApplicationParameters.CURRENT_ONE_HAND) {
           performAction(false);
@@ -120,12 +131,36 @@ public class KeyEvents {
     return keyNumbers;
   }
 
+  private static void logCursorKeyAction (int keyNumber, String action) {
+    if (ApplicationParameters.CURRENT_LOG_KEYS) {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append("cursor key ");
+      sb.append(action);
+
+      sb.append(": ");
+      sb.append(keyNumber);
+
+      sb.append(" (");
+      String delimiter = "";
+      for (Integer key : pressedCursorKeys) {
+        sb.append(delimiter);
+        delimiter = ", ";
+        sb.append(key);
+      }
+      sb.append(')');
+
+      Log.d(LOG_TAG, sb.toString());
+    }
+  }
+
   private static void handleCursorKeyPress (int keyNumber) {
     if (ApplicationParameters.CURRENT_ONE_HAND) {
       pressedCursorKeys.clear();
     }
 
     pressedCursorKeys.add(keyNumber);
+    logCursorKeyAction(keyNumber, "press");
 
     if (pressedCursorKeys.size() == 1) {
       handleNavigationKeyPress(KeyMask.CURSOR);
@@ -137,6 +172,8 @@ public class KeyEvents {
     if (!ApplicationParameters.CURRENT_ONE_HAND) {
       pressedCursorKeys.remove(keyNumber);
     }
+
+    logCursorKeyAction(keyNumber, "release");
   }
 
   public static void handleCursorKeyEvent (int keyNumber, boolean press) {
