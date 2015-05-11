@@ -95,6 +95,7 @@ public class BrailleDevice {
       int length = text.length();
 
       int indent = endpoint.getLineIndent();
+      if (indent > length) indent = length;
       setCells(endpoint.getCharacters(), text.substring(indent));
 
       if (endpoint.isEditable()) {
