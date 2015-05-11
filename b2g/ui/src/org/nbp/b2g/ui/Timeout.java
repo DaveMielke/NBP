@@ -38,7 +38,12 @@ public abstract class Timeout implements Runnable {
 
             synchronized (timeout) {
               timeout.cancel();
-              timeout.run();
+
+              try {
+                timeout.run();
+              } catch (Exception exception) {
+                Crash.handleCrash(exception, "timeout handler");
+              }
             }
           }
         };
