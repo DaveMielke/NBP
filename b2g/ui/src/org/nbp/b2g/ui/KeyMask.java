@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import android.util.Log;
 
@@ -33,7 +33,7 @@ public class KeyMask {
 
   public final static int DOTS_ALL = (DOT_1 | DOT_2 | DOT_3 | DOT_4 | DOT_5 | DOT_6 | DOT_7 | DOT_8);
 
-  private static Map<Character, Integer> charToBit = new HashMap<Character, Integer>();
+  private static Map<Character, Integer> charToBit = new LinkedHashMap<Character, Integer>();
 
   public static Integer charToBit (char character) {
     Integer bit = charToBit.get(character);
@@ -43,6 +43,26 @@ public class KeyMask {
     }
 
     return bit;
+  }
+
+  public static String maskToString (int mask) {
+    StringBuilder sb = new StringBuilder();
+
+    for (Character character : charToBit.keySet()) {
+      int bit = charToBit.get(character);
+
+      if ((mask & bit) != 0) {
+        sb.append(character);
+        mask &= ~bit;
+      }
+    }
+
+    if (mask != 0) {
+      if (sb.length() > 0) sb.append('+');
+      sb.append(String.format("0X%X", mask));
+    }
+
+    return sb.toString();
   }
 
   private static void map (char character, int bit) {

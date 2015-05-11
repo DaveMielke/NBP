@@ -72,10 +72,25 @@ public class KeyEvents {
 
   private static void logNavigationKeysChange (int keyMask, String action) {
     if (ApplicationParameters.CURRENT_LOG_KEYS) {
-      Log.d(LOG_TAG, String.format(
-        "navigation key %s: 0X%02X -> 0X%02X",
-        action, keyMask, pressedNavigationKeys
-      ));
+      StringBuilder sb = new StringBuilder();
+
+      sb.append("navigation key ");
+      sb.append(action);
+
+      int[] masks = new int[] {keyMask, pressedNavigationKeys};
+      String delimiter = ": ";
+
+      for (int mask : masks) {
+        sb.append(delimiter);
+        delimiter = " -> ";
+
+        sb.append(String.format("0X%02X", mask));
+        sb.append(" (");
+        sb.append(KeyMask.maskToString(mask));
+        sb.append(')');
+      }
+
+      Log.d(LOG_TAG, sb.toString());
     }
   }
 
