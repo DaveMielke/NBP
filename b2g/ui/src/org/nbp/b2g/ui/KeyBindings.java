@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public class KeyBindings {
   private final static String LOG_TAG = KeyBindings.class.getName();
 
-  public final static char DELIMITER   = '-';
+  public final static char KEY_COMBINATION_DELIMITER = '-';
 
   private final Endpoint endpoint;
   private final Map<String, Action> actionCache = new HashMap<String, Action>();
@@ -193,7 +193,7 @@ public class KeyBindings {
     for (int index=0; index<length; index+=1) {
       char character = operand.charAt(index);
 
-      if (character == DELIMITER) {
+      if (character == KEY_COMBINATION_DELIMITER) {
         masks = addKeyMask(masks, mask);
         if (masks == null) return null;
         mask = 0;

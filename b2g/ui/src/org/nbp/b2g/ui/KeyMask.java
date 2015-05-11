@@ -70,6 +70,18 @@ public class KeyMask {
   }
 
   private static void map () {
+    map('P', POWER_ON);
+
+    map('S', SPACE);
+    map('F', FORWARD);
+    map('B', BACKWARD);
+
+    map('U', DPAD_UP);
+    map('D', DPAD_DOWN);
+    map('L', DPAD_LEFT);
+    map('R', DPAD_RIGHT);
+    map('C', DPAD_CENTER);
+
     map('1', DOT_1);
     map('2', DOT_2);
     map('3', DOT_3);
@@ -79,23 +91,11 @@ public class KeyMask {
     map('7', DOT_7);
     map('8', DOT_8);
 
-    map('S', SPACE);
-    map('F', FORWARD);
-    map('B', BACKWARD);
-
-    map('C', DPAD_CENTER);
-    map('U', DPAD_UP);
-    map('D', DPAD_DOWN);
-    map('L', DPAD_LEFT);
-    map('R', DPAD_RIGHT);
-
     map('<', VOLUME_DOWN);
     map('>', VOLUME_UP);
 
     map('X', CURSOR);
     map('H', LONG_PRESS);
-
-    map('P', POWER_ON);
   }
 
   static {
