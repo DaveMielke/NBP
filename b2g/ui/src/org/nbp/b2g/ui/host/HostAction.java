@@ -29,7 +29,7 @@ public abstract class HostAction extends ScanCodeAction {
   }
 
   private static void logNodeAction (AccessibilityNodeInfo node, String action, String status) {
-    if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
+    if (ApplicationParameters.CURRENT_LOG_NAVIGATION) {
       Log.v(LOG_TAG, String.format(
         "node action %s: %s: %s",
         status, action, ScreenUtilities.toString(node)
