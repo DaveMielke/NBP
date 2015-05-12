@@ -40,24 +40,12 @@ public abstract class ScreenAction extends HostAction {
       }
     }
 
-    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-      ScreenUtilities.logNavigation("set accessibility focus succeeded");
-    } else {
-      ScreenUtilities.logNavigation("set accessibility focus failed");
+    if (!performNodeAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
       return false;
     }
 
-    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT)) {
-      ScreenUtilities.logNavigation("select node succeeded");
-    } else {
-      ScreenUtilities.logNavigation("select node failed");
-    }
-
-    if (performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS)) {
-      ScreenUtilities.logNavigation("set input focus succeeded");
-    } else {
-      ScreenUtilities.logNavigation("set input focus failed");
-    }
+    performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT);
+    performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS);
 
     getHostEndpoint().write(node, force, 0);
     return true;
