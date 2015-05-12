@@ -100,6 +100,9 @@ public class ScreenUtilities {
       sb.append(bounds.toShortString());
     }
 
+    sb.append(" #");
+    sb.append(node.hashCode());
+
     return sb.toString();
   }
 
