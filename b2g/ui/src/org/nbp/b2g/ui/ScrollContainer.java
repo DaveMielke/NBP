@@ -184,6 +184,14 @@ public class ScrollContainer {
     return -1;
   }
 
+  public int findFirstChildIndex () {
+    return findChildIndex(ScrollDirection.BACKWARD);
+  }
+
+  public int findLastChildIndex () {
+    return findChildIndex(ScrollDirection.FORWARD);
+  }
+
   private boolean refreshNode () {
     synchronized (this) {
       AccessibilityNodeInfo node = ScreenUtilities.getRefreshedNode(scrollNode);
