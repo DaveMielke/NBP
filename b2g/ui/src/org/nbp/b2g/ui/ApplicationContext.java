@@ -4,11 +4,13 @@ import android.util.Log;
 
 import android.util.TypedValue;
 import android.util.DisplayMetrics;
+import android.graphics.Point;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.PowerManager;
 import android.app.KeyguardManager;
+import android.view.WindowManager;
 
 public abstract class ApplicationContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
@@ -89,6 +91,21 @@ public abstract class ApplicationContext {
     KeyguardManager keyguardManager = getKeyguardManager();
     if (keyguardManager == null) return false;
     return keyguardManager.inKeyguardRestrictedInputMode();
+  }
+
+  public static WindowManager getWindowManager () {
+    Object systemService = getSystemService(Context.WINDOW_SERVICE);
+    if (systemService == null) return null;
+    return (WindowManager)systemService;
+  }
+
+  public static Point getScreenSize () {
+    WindowManager windowManager = getWindowManager();
+    if (windowManager == null) return null;
+
+    Point size = new Point();
+    windowManager.getDefaultDisplay().getSize(size);
+    return size;
   }
 
   private ApplicationContext () {
