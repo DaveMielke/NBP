@@ -42,6 +42,14 @@ public abstract class ScrollAction extends ScreenAction {
               newChildIndex = -1;
             }
           }
+        } else {
+          int childIndex = container.findChildIndex(ScrollDirection.BACKWARD);
+
+          if (childIndex > newChildIndex) {
+            newChildIndex = childIndex;
+          } else if ((childIndex = container.findChildIndex(ScrollDirection.FORWARD)) != -1) {
+            newChildIndex = Math.min(newChildIndex, childIndex);
+          }
         }
 
         if (ApplicationParameters.CURRENT_LOG_NAVIGATION) {
