@@ -258,7 +258,7 @@ public class ScreenUtilities {
 
   private final static Class[] ineligibleViews = new Class[] {
     android.widget.ImageView.class,
-    android.widget.ListView.class
+    android.view.ViewGroup.class
   };
 
   private static boolean isEligible (AccessibilityNodeInfo node) {
@@ -299,7 +299,9 @@ public class ScreenUtilities {
       return false;
     }
 
-    if (!isEligible(node)) {
+    if (node.isFocusable()) {
+      logNavigation(node, "node is input focusable");
+    } else if (!isEligible(node)) {
       logNavigation(node, "node is ineligible");
       return false;
     }
