@@ -9,9 +9,9 @@
   <string name="screen_monitor_label">B2G Screen Monitor</string>
   <string name="screen_monitor_description">This service watches for changes to the host screen, and notifies the undrlying software whenever they occur.</string>
 
-  <string name="clock_activity_label">Digital Clock</string>
+  <string name="clock_activity_label">B2G Digital Clock</string>
 
-  <string name="controls_activity_label">User Interface Settings</string>
+  <string name="controls_activity_label">B2G User Interface Settings</string>
 
   <string name="saveControls_action_label">Save Settings</string>
   <string name="saveControls_action_confirmation">Settings Saved</string>
