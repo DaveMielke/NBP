@@ -16,7 +16,6 @@ public abstract class MoveAction extends ScreenAction {
 
     if (moved) {
       ScreenUtilities.logNavigation("inner move succeeded");
-      performNodeAction(node, AccessibilityNodeInfo.ACTION_CLEAR_SELECTION);
     } else {
       ScreenUtilities.logNavigation("inner move failed");
     }
@@ -57,7 +56,6 @@ public abstract class MoveAction extends ScreenAction {
 
         if (container.scroll(direction)) {
           ScreenUtilities.logNavigation("scroll succeeded");
-          container.deselectDescendants();
 
           {
             AccessibilityNodeInfo found = findNode(node);

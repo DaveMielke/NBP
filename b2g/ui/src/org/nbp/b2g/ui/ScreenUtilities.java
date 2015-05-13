@@ -256,8 +256,21 @@ public class ScreenUtilities {
     return node;
   }
 
-  private static boolean canSetAsCurrent (AccessibilityNodeInfo node) {
-    return !ScreenUtilities.canAssign(android.widget.ListView.class, node);
+  private final static Class[] ineligibleViews = new Class[] {
+    android.widget.ImageView.class,
+    android.widget.ListView.class
+  };
+
+  private static boolean isEligible (AccessibilityNodeInfo node) {
+    CharSequence className = node.getClassName();
+
+    for (Class view : ineligibleViews) {
+      if (LanguageUtilities.canAssign(view, className)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   public static boolean isSignificant (AccessibilityNodeInfo node) {
@@ -286,7 +299,7 @@ public class ScreenUtilities {
       return false;
     }
 
-    if (!canSetAsCurrent(node)) {
+    if (!isEligible(node)) {
       logNavigation(node, "node is ineligible");
       return false;
     }
@@ -319,40 +332,34 @@ public class ScreenUtilities {
     AccessibilityNodeInfo node;
     logNavigation(root, "finding current node");
 
-    if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) == null) {
-      if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) == null) {
+    if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY)) != null) {
+      logNavigation(node, "found accessibility focus");
+    } else {
+      if ((node = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) != null) {
+        logNavigation(node, "found input focus");
+      } else {
         node = AccessibilityNodeInfo.obtain(root);
         logNavigation(node, "using root node");
-      } else {
-        logNavigation(node, "found input focus");
       }
-    } else {
-      logNavigation(node, "found accessibility focus");
-    }
 
-    {
-      AccessibilityNodeInfo selected = findSelectedNode(node);
+      {
+        AccessibilityNodeInfo selected = findSelectedNode(node);
 
-      if (selected != null) {
-        node.recycle();
-        node = selected;
-        logNavigation(node, "found selected node");
+        if (selected != null) {
+          node.recycle();
+          node = selected;
+          logNavigation(node, "found selected node");
+        }
       }
-    }
 
-    {
-      AccessibilityNodeInfo significant = findSignificantNode(node);
+      {
+        AccessibilityNodeInfo significant = findSignificantNode(node);
 
-      if (significant != null) {
-        node.recycle();
-        node = significant;
-        logNavigation(node, "found significant node");
-      }
-    }
-
-    if (!node.isAccessibilityFocused()) {
-      if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-        logNavigation(node, "accessibility focus not set");
+        if (significant != null) {
+          node.recycle();
+          node = significant;
+          logNavigation(node, "found significant node");
+        }
       }
     }
 
@@ -378,27 +385,92 @@ public class ScreenUtilities {
     return current;
   }
 
-  public static AccessibilityNodeInfo findScrollable (AccessibilityNodeInfo node) {
-    if (node == null) return null;
-    logNavigation(node, "finding scrollable");
+  public static void deselectAll (AccessibilityNodeInfo root) {
+    int childCount = root.getChildCount();
 
-    if (!isSeekable(node)) {
-      AccessibilityNodeInfo view = AccessibilityNodeInfo.obtain(node);
+    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+      AccessibilityNodeInfo child = root.getChild(childIndex);
 
-      do {
-        if (view.isScrollable()) {
-          logNavigation(view, "found scrollable");
-          return view;
-        }
-
-        AccessibilityNodeInfo parent = view.getParent();
-        view.recycle();
-        view = parent;
-      } while (view != null);
+      if (child != null) {
+        deselectAll(child);
+        child.recycle();
+      }
     }
 
-    logNavigation(node, "not scrollable");
-    return null;
+    if (root.isSelected()) {
+      if (root.performAction(AccessibilityNodeInfo.ACTION_CLEAR_SELECTION)) {
+        logNavigation(root, "deselect succeeded");
+      } else {
+        logNavigation(root, "deselect failed");
+      }
+    }
+  }
+
+  public static void isolateSelection (AccessibilityNodeInfo node) {
+    node = AccessibilityNodeInfo.obtain(node);
+
+    while (!node.isFocused()) {
+      if (node.isSelected()) {
+        logNavigation(node, "select unnecessary");
+      } else if (node.performAction(AccessibilityNodeInfo.ACTION_SELECT)) {
+        logNavigation(node, "select succeeded");
+      } else {
+        logNavigation(node, "select failed");
+      }
+
+      AccessibilityNodeInfo parent = node.getParent();
+      if (parent == null) break;
+
+      int childCount = parent.getChildCount();
+      for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+        AccessibilityNodeInfo child = parent.getChild(childIndex);
+
+        if (child != null) {
+          if (!child.equals(node)) deselectAll(child);
+          child.recycle();
+        }
+      }
+
+      node.recycle();
+      node = parent;
+    }
+
+    node.recycle();
+  }
+
+  public static boolean setCurrentNode (AccessibilityNodeInfo node) {
+    if (node.isAccessibilityFocused()) {
+      logNavigation(node, "set accessibility focus unnecessary");
+    } else {
+      if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
+        logNavigation(node, "set accessibility focus failed");
+        return false;
+      }
+
+      logNavigation(node, "set accessibility focus succeeded");
+    }
+
+    isolateSelection(node);
+    return true;
+  }
+
+  public static void selectChild (AccessibilityNodeInfo root, int childIndex) {
+    int childCount = root.getChildCount();
+
+    if ((childIndex >= 0) && (childIndex < childCount)) {
+      AccessibilityNodeInfo child = root.getChild(childIndex);
+
+      if (child != null) {
+        AccessibilityNodeInfo node = findCurrentNode(child);
+
+        if (node != null) {
+          setCurrentNode(node);
+          node.recycle();
+        }
+
+        child.recycle();
+      }
+    }
   }
 
   public static String getClassName (AccessibilityNodeInfo node) {

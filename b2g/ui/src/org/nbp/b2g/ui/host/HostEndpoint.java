@@ -98,6 +98,7 @@ public class HostEndpoint extends Endpoint {
       if (!node.equals(currentNode)) {
         if (!force) return false;
         indent = 0;
+        ScreenUtilities.setCurrentNode(node);
       }
     }
 

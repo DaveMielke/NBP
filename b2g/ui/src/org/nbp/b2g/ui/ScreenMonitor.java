@@ -146,6 +146,7 @@ public class ScreenMonitor extends AccessibilityService {
 
             default:
               endpoint.write(node, false);
+            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
             case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
               text = null;
               break;

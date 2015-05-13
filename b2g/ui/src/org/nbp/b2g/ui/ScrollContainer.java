@@ -3,9 +3,13 @@ package org.nbp.b2g.ui;
 import java.util.Map;
 import java.util.HashMap;
 
+import android.util.Log;
+
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public class ScrollContainer {
+  private final static String LOG_TAG = ScrollContainer.class.getName();
+
   private static class ScrollContainers extends HashMap<AccessibilityNodeInfo, ScrollContainer> {
   }
 
@@ -92,29 +96,25 @@ public class ScrollContainer {
     lastItemIndex = index;
   }
 
-  private static void deselectDescendants (AccessibilityNodeInfo root) {
+  private static boolean isVisible (AccessibilityNodeInfo root) {
+    if (!root.isVisibleToUser()) return false;
     int childCount = root.getChildCount();
 
     for (int childIndex=0; childIndex<childCount; childIndex+=1) {
       AccessibilityNodeInfo child = root.getChild(childIndex);
 
       if (child != null) {
-        if (child.isSelected()) {
-          if (child.performAction(AccessibilityNodeInfo.ACTION_CLEAR_SELECTION)) {
-            ScreenUtilities.logNavigation(child, "deselect succeeded");
-          } else {
-            ScreenUtilities.logNavigation(child, "deselect failed");
-          }
-        }
-
-        deselectDescendants(child);
+        boolean visible = isVisible(child);
         child.recycle();
+        if (!visible) return false;
       }
     }
+
+    return true;
   }
 
-  public void deselectDescendants () {
-    deselectDescendants(scrollNode);
+  public void selectChild (int childIndex) {
+    ScreenUtilities.selectChild(scrollNode, childIndex);
   }
 
   private static int findChildIndex (AccessibilityNodeInfo node, AccessibilityNodeInfo root) {
@@ -142,6 +142,46 @@ public class ScrollContainer {
 
   public int findChildIndex (AccessibilityNodeInfo node) {
     return findChildIndex(node, scrollNode);
+  }
+
+  public int findChildIndex (ScrollDirection direction) {
+    synchronized (this) {
+      int from;
+      int to;
+      int increment;
+
+      switch (direction) {
+        case FORWARD:
+          from = scrollNode.getChildCount() - 1;
+          to = -1;
+          increment = -1;
+          break;
+
+        case BACKWARD:
+          from =  0;
+          to = scrollNode.getChildCount();
+          increment = 1;
+          break;
+
+        default:
+          Log.w(LOG_TAG, "unimplemented scroll direction: " + direction.name());
+          return -1;
+      }
+
+      while (from != to) {
+        AccessibilityNodeInfo child = scrollNode.getChild(from);
+
+        if (child != null) {
+          boolean visible = isVisible(child);
+          child.recycle();
+          if (visible) return from;
+        }
+
+        from += increment;
+      }
+    }
+
+    return -1;
   }
 
   private boolean refreshNode () {
@@ -174,7 +214,7 @@ public class ScrollContainer {
 
     synchronized (this) {
       refreshNode();
-      deselectDescendants();
+      selectChild(findChildIndex(direction));
       scrollTimeout = true;
 
       if (scrollNode.performAction(direction.getNodeAction())) {

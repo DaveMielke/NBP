@@ -40,11 +40,7 @@ public abstract class ScreenAction extends HostAction {
       }
     }
 
-    if (!performNodeAction(node, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-      return false;
-    }
-
-    performNodeAction(node, AccessibilityNodeInfo.ACTION_SELECT);
+    if (!ScreenUtilities.setCurrentNode(node)) return false;
     performNodeAction(node, AccessibilityNodeInfo.ACTION_FOCUS);
 
     getHostEndpoint().write(node, force, 0);

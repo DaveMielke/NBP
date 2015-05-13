@@ -1,9 +1,13 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import android.util.Log;
+
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public abstract class ScrollAction extends ScreenAction {
+  private final static String LOG_TAG = ScrollAction.class.getName();
+
   protected abstract ScrollDirection getScrollDirection ();
   protected abstract boolean getContinueScrolling ();
 
@@ -30,23 +34,8 @@ public abstract class ScrollAction extends ScreenAction {
           newChildIndex = oldChildIndex;
         }
 
-        if (hasScrolled) {
-          container.deselectDescendants();
-        }
-
         if (newChildIndex == -1) {
-          switch (direction) {
-            case FORWARD:
-              newChildIndex = container.getChildCount() - 1;
-              break;
-
-            case BACKWARD:
-              newChildIndex = 0;
-              break;
-
-            default:
-              break;
-          }
+          newChildIndex = container.findChildIndex(direction);
 
           if (!hasScrolled) {
             if (newChildIndex == oldChildIndex) {
@@ -55,25 +44,15 @@ public abstract class ScrollAction extends ScreenAction {
           }
         }
 
+        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) {
+          Log.d(LOG_TAG, String.format(
+            "child index: %d -> %d", oldChildIndex, newChildIndex
+          ));
+        }
+
         if (newChildIndex != -1) {
-          newChildIndex = Math.min(newChildIndex, (container.getChildCount() - 1));
-
-          if (newChildIndex >= 0) {
-            AccessibilityNodeInfo child = container.getChild(newChildIndex);
-
-            if (child != null) {
-              AccessibilityNodeInfo newCurrentNode = ScreenUtilities.findCurrentNode(child);
-
-              child.recycle();
-              child = null;
-
-              if (newCurrentNode != null) {
-                boolean selected = setCurrentNode(newCurrentNode);
-                newCurrentNode.recycle();
-                if (selected) return true;
-              }
-            }
-          }
+          container.selectChild(newChildIndex);
+          return true;
         }
       }
     }
