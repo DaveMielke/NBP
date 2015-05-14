@@ -1,3 +1,5 @@
+#define USE_MULTI_TOUCH_INTERFACE 0
+
 #include "utils.h"
 
 #include <string.h>
@@ -8,6 +10,10 @@
 #include <sys/ioctl.h>
 
 #include <linux/input.h>
+
+#ifndef KEY_CNT
+#define KEY_CNT	(KEY_MAX + 1)
+#endif /* KEY_CNT */
 
 #ifndef ABS_CNT
 #define ABS_CNT	(ABS_MAX + 1)
@@ -45,10 +51,22 @@ enableUInputEventType (int device, InputEventType type) {
 }
 
 static int
-enableUInputKey (int device, InputEventCode key) {
-  if (ioctl(device, UI_SET_KEYBIT, key) != -1) return 1;
-  logSystemError(LOG_TAG, "ioctl[UI_SET_KEYBIT]");
-  return 0;
+enableUInputEventCodes (
+  int device, const InputEventCode *codes, InputEventCode end,
+  int (*enableType) (int device),
+  int (*enableCode) (int device, InputEventCode code)
+) {
+  if (*codes != end) {
+    const InputEventCode *code = codes;
+
+    if (!enableType(device)) return 0;
+
+    do {
+      if (!enableCode(device, *code)) return 0;
+    } while (*(code += 1) != end);
+  }
+
+  return 1;
 }
 
 static int
@@ -78,6 +96,44 @@ writeSynReport (int device) {
 }
 
 static int
+enableUInputKeyEvents (int device) {
+  return enableUInputEventType(device, EV_KEY);
+}
+
+static int
+enableUInputKeyCode (int device, InputEventCode code) {
+  if (ioctl(device, UI_SET_KEYBIT, code) != -1) return 1;
+  logSystemError(LOG_TAG, "ioctl[UI_SET_KEYBIT]");
+  LOG(DEBUG, "failing key code: %d", code);
+  return 0;
+}
+
+static int
+enableUInputKeyCodes (int device, const InputEventCode *codes) {
+  return enableUInputEventCodes(device, codes, KEY_CNT,
+                                enableUInputKeyEvents, enableUInputKeyCode);
+}
+
+static int
+enableUInputAbsEvents (int device) {
+  return enableUInputEventType(device, EV_ABS);
+}
+
+static int
+enableUInputAbsCode (int device, InputEventCode code) {
+  if (ioctl(device, UI_SET_ABSBIT, code) != -1) return 1;
+  logSystemError(LOG_TAG, "ioctl[UI_SET_ABSBIT]");
+  LOG(DEBUG, "failing abs code: %d", code);
+  return 0;
+}
+
+static int
+enableUInputAbsCodes (int device, const InputEventCode *codes) {
+  return enableUInputEventCodes(device, codes, ABS_CNT,
+                                enableUInputAbsEvents, enableUInputAbsCode);
+}
+
+static int
 writeKeyEvent (int device, InputEventCode key, InputEventValue press) {
   if (!writeInputEvent(device, EV_KEY, key, (press? 1: 0))) return 0;
   if (!writeSynReport(device)) return 0;
@@ -85,32 +141,49 @@ writeKeyEvent (int device, InputEventCode key, InputEventValue press) {
 }
 
 static int
-writeTouchEvent (int device, InputEventCode action, InputEventValue value) {
+writeAbsEvent (int device, InputEventCode action, InputEventValue value) {
   return writeInputEvent(device, EV_ABS, action, value);
 }
 
 static int
 writeFingerDown (int device) {
+#if USE_MULTI_TOUCH_INTERFACE
   static InputEventValue identifier = 0;
+  if (!writeAbsEvent(device, ABS_MT_SLOT, 0)) return 0;
+  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, ++identifier)) return 0;
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  if (!writeKeyEvent(device, BTN_TOUCH, 1)) return 0;
+#endif /* USE_MULTI_TOUCH_INTERFACE */
 
-  if (!writeTouchEvent(device, ABS_MT_SLOT, 0)) return 0;
-  if (!writeTouchEvent(device, ABS_MT_TRACKING_ID, ++identifier)) return 0;
   return 1;
 }
 
 static int
 writeFingerUp (int device) {
-  return writeTouchEvent(device, ABS_MT_TRACKING_ID, -1);
+#if USE_MULTI_TOUCH_INTERFACE
+  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, -1)) return 0;
+  return writeSynReport(device);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return writeKeyEvent(device, BTN_TOUCH, 0);
+#endif /* USE_MULTI_TOUCH_INTERFACE */
 }
 
 static int
 writeFingerX (int device, InputEventValue x) {
-  return writeTouchEvent(device, ABS_MT_POSITION_X, x);
+#if USE_MULTI_TOUCH_INTERFACE
+  return writeAbsEvent(device, ABS_MT_POSITION_X, x);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return writeAbsEvent(device, ABS_X, x);
+#endif /* USE_MULTI_TOUCH_INTERFACE */
 }
 
 static int
 writeFingerY (int device, InputEventValue y) {
-  return writeTouchEvent(device, ABS_MT_POSITION_Y, y);
+#if USE_MULTI_TOUCH_INTERFACE
+  return writeAbsEvent(device, ABS_MT_POSITION_Y, y);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return writeAbsEvent(device, ABS_Y, y);
+#endif /* USE_MULTI_TOUCH_INTERFACE */
 }
 
 static int
@@ -143,6 +216,7 @@ JAVA_METHOD(
       }
     }
 
+#if USE_MULTI_TOUCH_INTERFACE
     description.absmin[ABS_MT_SLOT] = 0;
     description.absmax[ABS_MT_SLOT] = 1;
 
@@ -154,6 +228,13 @@ JAVA_METHOD(
 
     description.absmin[ABS_MT_POSITION_Y] = 0;
     description.absmax[ABS_MT_POSITION_Y] = height - 1;
+#else /* USE_MULTI_TOUCH_INTERFACE 1 */
+    description.absmin[ABS_X] = 0;
+    description.absmax[ABS_X] = width - 1;
+
+    description.absmin[ABS_Y] = 0;
+    description.absmax[ABS_Y] = height - 1;
+#endif /* USE_MULTI_TOUCH_INTERFACE 1 */
 
     if (write(device, &description, sizeof(description)) != -1) {
       if (enableUInputEventType(device, EV_SYN)) {
@@ -198,7 +279,7 @@ JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, enableKey, jboolean,
   jint device, jint key
 ) {
-  return enableUInputKey(device, key)? JNI_TRUE: JNI_FALSE;
+  return enableUInputKeyCode(device, key)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
@@ -219,26 +300,29 @@ JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, enableTouchEvents, jboolean,
   jint device
 ) {
-  static const InputEventCode codes[] = {
+  static const InputEventCode keyCodes[] = {
+#if USE_MULTI_TOUCH_INTERFACE
+#else /* USE_MULTI_TOUCH_INTERFACE */
+    BTN_TOUCH,
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+    KEY_CNT
+  };
+
+  static const InputEventCode absCodes[] = {
+#if USE_MULTI_TOUCH_INTERFACE
     ABS_MT_SLOT,
     ABS_MT_TRACKING_ID,
     ABS_MT_POSITION_X,
     ABS_MT_POSITION_Y,
-    0
+#else /* USE_MULTI_TOUCH_INTERFACE */
+    ABS_X,
+    ABS_Y,
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+    ABS_CNT
   };
-  const InputEventCode *code = codes;
 
-  if (!enableUInputEventType(device, EV_ABS)) return JNI_FALSE;
-
-  while (*code) {
-    if (ioctl(device, UI_SET_ABSBIT, *code) == -1) {
-      logSystemError(LOG_TAG, "ioctl[UI_SET_ABSBIT]");
-      return JNI_FALSE;
-    }
-
-    code += 1;
-  }
-
+  if (!enableUInputKeyCodes(device, keyCodes)) return JNI_FALSE;
+  if (!enableUInputAbsCodes(device, absCodes)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
@@ -246,8 +330,14 @@ JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, touchBegin, jboolean,
   jint device, int x, int y
 ) {
+#if USE_MULTI_TOUCH_INTERFACE
   if (!writeFingerDown(device)) return JNI_FALSE;
   if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
+  if (!writeFingerDown(device)) return JNI_FALSE;
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+
   return JNI_TRUE;
 }
 
@@ -256,7 +346,6 @@ JAVA_METHOD(
   jint device
 ) {
   if (!writeFingerUp(device)) return JNI_FALSE;
-  if (!writeSynReport(device)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
