@@ -148,9 +148,9 @@ writeAbsEvent (int device, InputEventCode action, InputEventValue value) {
 static int
 writeFingerDown (int device) {
 #if USE_MULTI_TOUCH_INTERFACE
-  static InputEventValue identifier = 0;
+  static uint16_t identifier = 0;
   if (!writeAbsEvent(device, ABS_MT_SLOT, 0)) return 0;
-  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, ++identifier)) return 0;
+  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, identifier++)) return 0;
 #else /* USE_MULTI_TOUCH_INTERFACE */
   if (!writeKeyEvent(device, BTN_TOUCH, 1)) return 0;
 #endif /* USE_MULTI_TOUCH_INTERFACE */
@@ -190,7 +190,12 @@ static int
 writeFingerLocation (int device, InputEventValue x, InputEventValue y) {
   if (!writeFingerX(device, x)) return 0;
   if (!writeFingerY(device, y)) return 0;
+
+#if USE_MULTI_TOUCH_INTERFACE
   return writeSynReport(device);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return 1;
+#endif /* USE_MULTI_TOUCH_INTERFACE */
 }
 
 JAVA_METHOD(
@@ -218,10 +223,10 @@ JAVA_METHOD(
 
 #if USE_MULTI_TOUCH_INTERFACE
     description.absmin[ABS_MT_SLOT] = 0;
-    description.absmax[ABS_MT_SLOT] = 1;
+    description.absmax[ABS_MT_SLOT] = 9;
 
     description.absmin[ABS_MT_TRACKING_ID] = 0;
-    description.absmax[ABS_MT_TRACKING_ID] = 1000000;
+    description.absmax[ABS_MT_TRACKING_ID] = UINT16_MAX;
 
     description.absmin[ABS_MT_POSITION_X] = 0;
     description.absmax[ABS_MT_POSITION_X] = width - 1;

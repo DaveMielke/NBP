@@ -1,8 +1,12 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
+
 import android.graphics.Point;
 
 public abstract class UInputDevice {
+  private final static String LOG_TAG = UInputDevice.class.getName();
+
   protected abstract boolean prepareDevice (int device);
 
   private final static int NOT_OPEN = -1;
@@ -91,6 +95,9 @@ public abstract class UInputDevice {
   public boolean tapScreen (int x, int y) {
     if (open()) {
       if (touchBegin(uinputDevice, x, y)) {
+        long duration = ApplicationUtilities.getTapTimeout();
+        ApplicationUtilities.sleep(duration + ApplicationParameters.LONG_PRESS_DELAY);
+
         if (touchEnd(uinputDevice)) {
           return true;
         }

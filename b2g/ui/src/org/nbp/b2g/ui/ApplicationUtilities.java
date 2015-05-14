@@ -17,6 +17,10 @@ public class ApplicationUtilities {
     SystemClock.sleep(duration);
   }
 
+  public static long getTapTimeout () {
+    return ViewConfiguration.getTapTimeout();
+  }
+
   public static long getLongPressTimeout () {
     return ViewConfiguration.getLongPressTimeout();
   }
