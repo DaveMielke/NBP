@@ -3,6 +3,9 @@ package org.nbp.b2g.ui;
 import java.util.Map;
 import java.util.HashMap;
 
+import android.graphics.Point;
+import android.graphics.Rect;
+
 import android.util.Log;
 
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -215,6 +218,47 @@ public class ScrollContainer {
     return false;
   }
 
+  private static Rect getNodeRegion (AccessibilityNodeInfo node) {
+    if (node == null) return null;
+
+    Rect region = new Rect();
+    node.getBoundsInScreen(region);
+    return region;
+  }
+
+  private static Point getNodeLocation (AccessibilityNodeInfo node) {
+    Rect region = getNodeRegion(node);
+    if (region == null) return null;
+
+    Point location = new Point(
+      ((region.left + region.right) / 2),
+      ((region.top + region.bottom) / 2)
+    );
+
+    return location;
+  }
+
+  private Point getChildLocation (int childIndex) {
+    if (childIndex < 0) return null;
+    if (childIndex >= scrollNode.getChildCount()) return null;
+
+    AccessibilityNodeInfo child = scrollNode.getChild(childIndex);
+    if (child == null) return null;
+
+    Point location = getNodeLocation(child);
+    child.recycle();
+
+    return location;
+  }
+
+  private Point getFirstChildLocation () {
+    return getChildLocation(findFirstChildIndex());
+  }
+
+  private Point getLastChildLocation () {
+    return getChildLocation(findLastChildIndex());
+  }
+
   private boolean scrollTimeout = false;
 
   public boolean scroll (ScrollDirection direction) {
@@ -224,8 +268,33 @@ public class ScrollContainer {
       refreshNode();
       selectChild(findChildIndex(direction));
       scrollTimeout = true;
+      boolean scrollStarted = false;
 
-      if (scrollNode.performAction(direction.getNodeAction())) {
+      if (false) {
+        Point first = getFirstChildLocation();
+        if (first == null) return false;
+
+        Point last = getLastChildLocation();
+        if (last == null) return false;
+
+        int x = (first.x + last.x) / 2;
+        int y1 = last.y;
+        int y2 = first.y;
+
+        if (direction == ScrollDirection.BACKWARD) {
+          int y = y1;
+          y1 = y2;
+          y2 = y1;
+        }
+
+        if (Devices.getKeyboardDevice().sendSwipe(x, y1, x, y2)) {
+          scrollStarted = true;
+        }
+      } else if (scrollNode.performAction(direction.getNodeAction())) {
+        scrollStarted = true;
+      }
+
+      if (scrollStarted) {
         ScreenUtilities.logNavigation(scrollNode, "scroll started");
 
         try {
