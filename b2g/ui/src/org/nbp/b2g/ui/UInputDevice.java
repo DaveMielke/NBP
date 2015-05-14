@@ -87,6 +87,26 @@ public abstract class UInputDevice {
     return press? sendKeyPress(key): sendKeyRelease(key);
   }
 
+  public boolean sendTap (int x, int y) {
+    if (open()) {
+      if (tap(uinputDevice, x, y)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean sendSwipe (int x1, int y1, int x2, int y2) {
+    if (open()) {
+      if (swipe(uinputDevice, x1, y1, x2, y2)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   protected UInputDevice () {
   }
 

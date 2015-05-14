@@ -24,7 +24,9 @@ public class KeyboardDevice extends UInputDevice {
   protected boolean prepareDevice (int device) {
     if (enableKeyEvents(device)) {
       if (enableKeys(device)) {
-        return true;
+        if (enableTouchEvents(device)) {
+          return true;
+        }
       }
     }
 

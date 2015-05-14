@@ -13,6 +13,10 @@
 #define ABS_CNT	(ABS_MAX + 1)
 #endif /* ABS_CNT */
 
+#ifndef ABS_MT_SLOT
+#define ABS_MT_SLOT 0X2F
+#endif /* ABS_MT_SLOT */
+
 #ifndef ABS_MT_TRACKING_ID
 #define ABS_MT_TRACKING_ID 0X39
 #endif /* ABS_MT_TRACKING_ID */
@@ -27,24 +31,28 @@
 
 #include "linux/uinput.h"
 
+typedef uint16_t InputEventType;
+typedef uint16_t InputEventCode;
+typedef int32_t InputEventValue;
+
 MAKE_FILE_LOG_TAG;
 
 static int
-enableUInputEventType (int device, int type) {
+enableUInputEventType (int device, InputEventType type) {
   if (ioctl(device, UI_SET_EVBIT, type) != -1) return 1;
   logSystemError(LOG_TAG, "ioctl[UI_SET_EVBIT]");
   return 0;
 }
 
 static int
-enableUInputKey (int device, int key) {
+enableUInputKey (int device, InputEventCode key) {
   if (ioctl(device, UI_SET_KEYBIT, key) != -1) return 1;
   logSystemError(LOG_TAG, "ioctl[UI_SET_KEYBIT]");
   return 0;
 }
 
 static int
-writeInputEvent (int device, int type, int code, int value) {
+writeInputEvent (int device, InputEventType type, InputEventCode code, InputEventValue value) {
   struct input_event event;
 
   memset(&event, 0, sizeof(event));
@@ -54,6 +62,7 @@ writeInputEvent (int device, int type, int code, int value) {
   event.code = code;
   event.value = value;
 
+LOG(DEBUG, "t=%d c=%d v=%d", type, code, value);
   if (write(device, &event, sizeof(event)) != -1) return 1;
   logSystemError(LOG_TAG, "write[input_event]");
   return 0;
@@ -65,22 +74,24 @@ writeSynReport (int device) {
 }
 
 static int
-writeKeyEvent (int device, int key, int press) {
+writeKeyEvent (int device, InputEventCode key, InputEventValue press) {
   if (!writeInputEvent(device, EV_KEY, key, (press? 1: 0))) return 0;
   if (!writeSynReport(device)) return 0;
   return 1;
 }
 
 static int
-writeTouchEvent (int device, int action, int value) {
+writeTouchEvent (int device, InputEventCode action, InputEventValue value) {
   return writeInputEvent(device, EV_ABS, action, value);
 }
 
 static int
 writeTouchBegin (int device) {
-  static int identifier = 0;
+  static InputEventValue identifier = 0;
 
-  return writeTouchEvent(device, ABS_MT_TRACKING_ID, ++identifier);
+  if (!writeTouchEvent(device, ABS_MT_SLOT, 0)) return 0;
+  if (!writeTouchEvent(device, ABS_MT_TRACKING_ID, ++identifier)) return 0;
+  return 1;
 }
 
 static int
@@ -89,12 +100,12 @@ writeTouchEnd (int device) {
 }
 
 static int
-writeTouchX (int device, int x) {
+writeTouchX (int device, InputEventValue x) {
   return writeTouchEvent(device, ABS_MT_POSITION_X, x);
 }
 
 static int
-writeTouchY (int device, int y) {
+writeTouchY (int device, InputEventValue y) {
   return writeTouchEvent(device, ABS_MT_POSITION_Y, y);
 }
 
@@ -121,14 +132,22 @@ JAVA_METHOD(
       }
     }
 
-    description.absmin[ABS_X] = 0;
-    description.absmax[ABS_X] = width - 1;
+    description.absmin[ABS_MT_SLOT] = 0;
+    description.absmax[ABS_MT_SLOT] = 1;
 
-    description.absmin[ABS_Y] = 0;
-    description.absmax[ABS_Y] = height - 1;
+    description.absmin[ABS_MT_TRACKING_ID] = 0;
+    description.absmax[ABS_MT_TRACKING_ID] = 1000000;
+
+    description.absmin[ABS_MT_POSITION_X] = 0;
+    description.absmax[ABS_MT_POSITION_X] = width - 1;
+
+    description.absmin[ABS_MT_POSITION_Y] = 0;
+    description.absmax[ABS_MT_POSITION_Y] = height - 1;
 
     if (write(device, &description, sizeof(description)) != -1) {
-      return device;
+      if (enableUInputEventType(device, EV_SYN)) {
+        return device;
+      }
     } else {
       logSystemError(LOG_TAG, "write[uinput_user_dev]");
     }
@@ -189,13 +208,14 @@ JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, enableTouchEvents, jboolean,
   jint device
 ) {
-  static const uint16_t codes[] = {
+  static const InputEventCode codes[] = {
+    ABS_MT_SLOT,
     ABS_MT_TRACKING_ID,
     ABS_MT_POSITION_X,
     ABS_MT_POSITION_Y,
     0
   };
-  const uint16_t *code = codes;
+  const InputEventCode *code = codes;
 
   if (!enableUInputEventType(device, EV_ABS)) return JNI_FALSE;
 
@@ -216,13 +236,14 @@ JAVA_METHOD(
   jint device,
   jint x, jint y
 ) {
-  if (!writeTouchBegin(device)) return 0;
-  if (!writeTouchX(device, x)) return 0;
-  if (!writeTouchY(device, y)) return 0;
-  if (!writeSynReport(device)) return 0;
+  if (!writeTouchBegin(device)) return JNI_FALSE;
 
-  if (!writeTouchEnd(device)) return 0;
-  if (!writeSynReport(device)) return 0;
+  if (!writeTouchX(device, x)) return JNI_FALSE;
+  if (!writeTouchY(device, y)) return JNI_FALSE;
+  if (!writeSynReport(device)) return JNI_FALSE;
+
+  if (!writeTouchEnd(device)) return JNI_FALSE;
+  if (!writeSynReport(device)) return JNI_FALSE;
 
   return JNI_TRUE;
 }
@@ -233,17 +254,18 @@ JAVA_METHOD(
   jint x1, jint y1,
   jint x2, jint y2
 ) {
-  if (!writeTouchBegin(device)) return 0;
-  if (!writeTouchX(device, x1)) return 0;
-  if (!writeTouchY(device, y1)) return 0;
-  if (!writeSynReport(device)) return 0;
+  if (!writeTouchBegin(device)) return JNI_FALSE;
 
-  if (!writeTouchX(device, x2)) return 0;
-  if (!writeTouchY(device, y2)) return 0;
-  if (!writeSynReport(device)) return 0;
+  if (!writeTouchX(device, x1)) return JNI_FALSE;
+  if (!writeTouchY(device, y1)) return JNI_FALSE;
+  if (!writeSynReport(device)) return JNI_FALSE;
 
-  if (!writeTouchEnd(device)) return 0;
-  if (!writeSynReport(device)) return 0;
+  if (!writeTouchX(device, x2)) return JNI_FALSE;
+  if (!writeTouchY(device, y2)) return JNI_FALSE;
+  if (!writeSynReport(device)) return JNI_FALSE;
+
+  if (!writeTouchEnd(device)) return JNI_FALSE;
+  if (!writeSynReport(device)) return JNI_FALSE;
 
   return JNI_TRUE;
 }
