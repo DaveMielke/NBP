@@ -485,7 +485,7 @@ public class ScreenUtilities {
     return region;
   }
 
-  public static Point getNodeLocation (AccessibilityNodeInfo node) {
+  public static Point getNodeCenter (AccessibilityNodeInfo node) {
     Rect region = getNodeRegion(node);
     if (region == null) return null;
 

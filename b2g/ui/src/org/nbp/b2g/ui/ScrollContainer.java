@@ -217,25 +217,25 @@ public class ScrollContainer {
     return false;
   }
 
-  private Point getChildLocation (int childIndex) {
+  private Point getChildCenter (int childIndex) {
     if (childIndex < 0) return null;
     if (childIndex >= scrollNode.getChildCount()) return null;
 
     AccessibilityNodeInfo child = scrollNode.getChild(childIndex);
     if (child == null) return null;
 
-    Point location = ScreenUtilities.getNodeLocation(child);
+    Point location = ScreenUtilities.getNodeCenter(child);
     child.recycle();
 
     return location;
   }
 
-  private Point getFirstChildLocation () {
-    return getChildLocation(findFirstChildIndex());
+  private Point getFirstChildCenter () {
+    return getChildCenter(findFirstChildIndex());
   }
 
-  private Point getLastChildLocation () {
-    return getChildLocation(findLastChildIndex());
+  private Point getLastChildCenter () {
+    return getChildCenter(findLastChildIndex());
   }
 
   private boolean scrollTimeout = false;
@@ -250,10 +250,10 @@ public class ScrollContainer {
       boolean scrollStarted = false;
 
       if (false) {
-        Point first = getFirstChildLocation();
+        Point first = getFirstChildCenter();
         if (first == null) return false;
 
-        Point last = getLastChildLocation();
+        Point last = getLastChildCenter();
         if (last == null) return false;
 
         int x = (first.x + last.x) / 2;
