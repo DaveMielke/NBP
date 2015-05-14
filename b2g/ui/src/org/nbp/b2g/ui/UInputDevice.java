@@ -1,12 +1,14 @@
 package org.nbp.b2g.ui;
 
+import android.graphics.Point;
+
 public abstract class UInputDevice {
   protected abstract boolean prepareDevice (int device);
 
   private final static int NOT_OPEN = -1;
   private int uinputDevice = NOT_OPEN;
 
-  private native int openDevice ();
+  private native int openDevice (int width, int height);
   private native boolean createDevice (int device);
   private native void closeDevice (int device);
 
@@ -15,11 +17,31 @@ public abstract class UInputDevice {
   private native boolean pressKey (int device, int key);
   private native boolean releaseKey (int device, int key);
 
+  protected native boolean enableTouchEvents (int device);
+  protected native boolean tap (int device, int x, int y);
+  protected native boolean swipe (int device, int x1, int y1, int x2, int y2);
+
   protected boolean open () {
     if (uinputDevice != NOT_OPEN) return true;
 
     int device;
-    if ((device = openDevice()) != NOT_OPEN) {
+    {
+      Point size = ApplicationContext.getScreenSize();
+      int width;
+      int height;
+
+      if (size != null) {
+        width = size.x;
+        height = size.y;
+      } else {
+        width = 0;
+        height = 0;
+      }
+
+      device = openDevice(width, height);
+    }
+
+    if (device != NOT_OPEN) {
       if (prepareDevice(device)) {
         if (createDevice(device)) {
           uinputDevice = device;

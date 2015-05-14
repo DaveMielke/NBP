@@ -10,8 +10,20 @@
 #include <linux/input.h>
 
 #ifndef ABS_CNT
-#define ABS_CNT			(ABS_MAX+1)
+#define ABS_CNT	(ABS_MAX + 1)
 #endif /* ABS_CNT */
+
+#ifndef ABS_MT_TRACKING_ID
+#define ABS_MT_TRACKING_ID 0X39
+#endif /* ABS_MT_TRACKING_ID */
+
+#ifndef ABS_MT_POSITION_X
+#define ABS_MT_POSITION_X 0X35
+#endif /* ABS_MT_POSITION_X */
+
+#ifndef ABS_MT_POSITION_Y
+#define ABS_MT_POSITION_Y 0X36
+#endif /* ABS_MT_POSITION_Y */
 
 #include "linux/uinput.h"
 
@@ -59,8 +71,36 @@ writeKeyEvent (int device, int key, int press) {
   return 1;
 }
 
+static int
+writeTouchEvent (int device, int action, int value) {
+  return writeInputEvent(device, EV_ABS, action, value);
+}
+
+static int
+writeTouchBegin (int device) {
+  static int identifier = 0;
+
+  return writeTouchEvent(device, ABS_MT_TRACKING_ID, ++identifier);
+}
+
+static int
+writeTouchEnd (int device) {
+  return writeTouchEvent(device, ABS_MT_TRACKING_ID, -1);
+}
+
+static int
+writeTouchX (int device, int x) {
+  return writeTouchEvent(device, ABS_MT_POSITION_X, x);
+}
+
+static int
+writeTouchY (int device, int y) {
+  return writeTouchEvent(device, ABS_MT_POSITION_Y, y);
+}
+
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, openDevice, jint
+  org_nbp_b2g_ui_UInputDevice, openDevice, jint,
+  jint width, jint height
 ) {
   const char *path = "/dev/uinput";
   int device = open(path, O_WRONLY);
@@ -80,6 +120,12 @@ JAVA_METHOD(
         logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
       }
     }
+
+    description.absmin[ABS_X] = 0;
+    description.absmax[ABS_X] = width - 1;
+
+    description.absmin[ABS_Y] = 0;
+    description.absmax[ABS_Y] = height - 1;
 
     if (write(device, &description, sizeof(description)) != -1) {
       return device;
@@ -137,4 +183,67 @@ JAVA_METHOD(
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_UInputDevice, enableTouchEvents, jboolean,
+  jint device
+) {
+  static const uint16_t codes[] = {
+    ABS_MT_TRACKING_ID,
+    ABS_MT_POSITION_X,
+    ABS_MT_POSITION_Y,
+    0
+  };
+  const uint16_t *code = codes;
+
+  if (!enableUInputEventType(device, EV_ABS)) return JNI_FALSE;
+
+  while (*code) {
+    if (ioctl(device, UI_SET_ABSBIT, *code) == -1) {
+      logSystemError(LOG_TAG, "ioctl[UI_SET_ABSBIT]");
+      return JNI_FALSE;
+    }
+
+    code += 1;
+  }
+
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_UInputDevice, tap, jboolean,
+  jint device,
+  jint x, jint y
+) {
+  if (!writeTouchBegin(device)) return 0;
+  if (!writeTouchX(device, x)) return 0;
+  if (!writeTouchY(device, y)) return 0;
+  if (!writeSynReport(device)) return 0;
+
+  if (!writeTouchEnd(device)) return 0;
+  if (!writeSynReport(device)) return 0;
+
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_UInputDevice, swipe, jboolean,
+  jint device,
+  jint x1, jint y1,
+  jint x2, jint y2
+) {
+  if (!writeTouchBegin(device)) return 0;
+  if (!writeTouchX(device, x1)) return 0;
+  if (!writeTouchY(device, y1)) return 0;
+  if (!writeSynReport(device)) return 0;
+
+  if (!writeTouchX(device, x2)) return 0;
+  if (!writeTouchY(device, y2)) return 0;
+  if (!writeSynReport(device)) return 0;
+
+  if (!writeTouchEnd(device)) return 0;
+  if (!writeSynReport(device)) return 0;
+
+  return JNI_TRUE;
 }
