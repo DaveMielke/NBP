@@ -3,10 +3,9 @@ package org.nbp.b2g.ui;
 import java.util.Map;
 import java.util.HashMap;
 
-import android.graphics.Point;
-import android.graphics.Rect;
-
 import android.util.Log;
+
+import android.graphics.Point;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -218,26 +217,6 @@ public class ScrollContainer {
     return false;
   }
 
-  private static Rect getNodeRegion (AccessibilityNodeInfo node) {
-    if (node == null) return null;
-
-    Rect region = new Rect();
-    node.getBoundsInScreen(region);
-    return region;
-  }
-
-  private static Point getNodeLocation (AccessibilityNodeInfo node) {
-    Rect region = getNodeRegion(node);
-    if (region == null) return null;
-
-    Point location = new Point(
-      ((region.left + region.right) / 2),
-      ((region.top + region.bottom) / 2)
-    );
-
-    return location;
-  }
-
   private Point getChildLocation (int childIndex) {
     if (childIndex < 0) return null;
     if (childIndex >= scrollNode.getChildCount()) return null;
@@ -245,7 +224,7 @@ public class ScrollContainer {
     AccessibilityNodeInfo child = scrollNode.getChild(childIndex);
     if (child == null) return null;
 
-    Point location = getNodeLocation(child);
+    Point location = ScreenUtilities.getNodeLocation(child);
     child.recycle();
 
     return location;
@@ -287,7 +266,7 @@ public class ScrollContainer {
           y2 = y1;
         }
 
-        if (Devices.getKeyboardDevice().sendSwipe(x, y1, x, y2)) {
+        if (Devices.getKeyboardDevice().tapScreen(x, y1)) {
           scrollStarted = true;
         }
       } else if (scrollNode.performAction(direction.getNodeAction())) {

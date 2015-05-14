@@ -62,7 +62,11 @@ writeInputEvent (int device, InputEventType type, InputEventCode code, InputEven
   event.code = code;
   event.value = value;
 
-LOG(DEBUG, "t=%d c=%d v=%d", type, code, value);
+  LOG(VERBOSE,
+    "sending input event: Type:%d Code:%d Value:%d",
+    type, code, value
+  );
+
   if (write(device, &event, sizeof(event)) != -1) return 1;
   logSystemError(LOG_TAG, "write[input_event]");
   return 0;
@@ -232,40 +236,28 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, tap, jboolean,
-  jint device,
-  jint x, jint y
+  org_nbp_b2g_ui_UInputDevice, touchBegin, jboolean,
+  jint device
 ) {
   if (!writeTouchBegin(device)) return JNI_FALSE;
-
-  if (!writeTouchX(device, x)) return JNI_FALSE;
-  if (!writeTouchY(device, y)) return JNI_FALSE;
-  if (!writeSynReport(device)) return JNI_FALSE;
-
-  if (!writeTouchEnd(device)) return JNI_FALSE;
-  if (!writeSynReport(device)) return JNI_FALSE;
-
   return JNI_TRUE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, swipe, jboolean,
-  jint device,
-  jint x1, jint y1,
-  jint x2, jint y2
+  org_nbp_b2g_ui_UInputDevice, touchEnd, jboolean,
+  jint device
 ) {
-  if (!writeTouchBegin(device)) return JNI_FALSE;
-
-  if (!writeTouchX(device, x1)) return JNI_FALSE;
-  if (!writeTouchY(device, y1)) return JNI_FALSE;
-  if (!writeSynReport(device)) return JNI_FALSE;
-
-  if (!writeTouchX(device, x2)) return JNI_FALSE;
-  if (!writeTouchY(device, y2)) return JNI_FALSE;
-  if (!writeSynReport(device)) return JNI_FALSE;
-
   if (!writeTouchEnd(device)) return JNI_FALSE;
   if (!writeSynReport(device)) return JNI_FALSE;
+  return JNI_TRUE;
+}
 
+JAVA_METHOD(
+  org_nbp_b2g_ui_UInputDevice, touchLocation, jboolean,
+  jint device, jint x, jint y
+) {
+  if (!writeTouchX(device, x)) return JNI_FALSE;
+  if (!writeTouchY(device, y)) return JNI_FALSE;
+  if (!writeSynReport(device)) return JNI_FALSE;
   return JNI_TRUE;
 }
