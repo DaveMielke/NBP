@@ -104,7 +104,7 @@ public abstract class ApplicationContext {
     if (windowManager == null) return null;
 
     Point size = new Point();
-    windowManager.getDefaultDisplay().getSize(size);
+    windowManager.getDefaultDisplay().getRealSize(size);
     return size;
   }
 
