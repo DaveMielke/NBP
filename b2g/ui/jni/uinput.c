@@ -90,7 +90,7 @@ writeTouchEvent (int device, InputEventCode action, InputEventValue value) {
 }
 
 static int
-writeTouchBegin (int device) {
+writeFingerDown (int device) {
   static InputEventValue identifier = 0;
 
   if (!writeTouchEvent(device, ABS_MT_SLOT, 0)) return 0;
@@ -99,18 +99,25 @@ writeTouchBegin (int device) {
 }
 
 static int
-writeTouchEnd (int device) {
+writeFingerUp (int device) {
   return writeTouchEvent(device, ABS_MT_TRACKING_ID, -1);
 }
 
 static int
-writeTouchX (int device, InputEventValue x) {
+writeFingerX (int device, InputEventValue x) {
   return writeTouchEvent(device, ABS_MT_POSITION_X, x);
 }
 
 static int
-writeTouchY (int device, InputEventValue y) {
+writeFingerY (int device, InputEventValue y) {
   return writeTouchEvent(device, ABS_MT_POSITION_Y, y);
+}
+
+static int
+writeFingerLocation (int device, InputEventValue x, InputEventValue y) {
+  if (!writeFingerX(device, x)) return 0;
+  if (!writeFingerY(device, y)) return 0;
+  return writeSynReport(device);
 }
 
 JAVA_METHOD(
@@ -237,9 +244,10 @@ JAVA_METHOD(
 
 JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, touchBegin, jboolean,
-  jint device
+  jint device, int x, int y
 ) {
-  if (!writeTouchBegin(device)) return JNI_FALSE;
+  if (!writeFingerDown(device)) return JNI_FALSE;
+  if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
@@ -247,7 +255,7 @@ JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, touchEnd, jboolean,
   jint device
 ) {
-  if (!writeTouchEnd(device)) return JNI_FALSE;
+  if (!writeFingerUp(device)) return JNI_FALSE;
   if (!writeSynReport(device)) return JNI_FALSE;
   return JNI_TRUE;
 }
@@ -256,8 +264,7 @@ JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, touchLocation, jboolean,
   jint device, jint x, jint y
 ) {
-  if (!writeTouchX(device, x)) return JNI_FALSE;
-  if (!writeTouchY(device, y)) return JNI_FALSE;
+  if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
   if (!writeSynReport(device)) return JNI_FALSE;
   return JNI_TRUE;
 }
