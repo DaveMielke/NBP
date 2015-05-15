@@ -146,115 +146,121 @@ writeAbsEvent (int device, InputEventCode action, InputEventValue value) {
   return writeInputEvent(device, EV_ABS, action, value);
 }
 
+typedef struct {
+  const char *path;
+  int device;
+  struct uinput_user_dev properties;
+} UinputDescriptor;
+
+#define UINPUT_DESCRIPTOR UinputDescriptor *ui = (*env)->GetDirectBufferAddress(env, uinput)
+
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, openDevice, jint,
-  jstring jName, jint width, jint height
+  org_nbp_b2g_ui_UInputDevice, openDevice, jobject,
+  jstring jName
 ) {
-  const char *path = "/dev/uinput";
-  int device = open(path, O_WRONLY);
+  UinputDescriptor *ui;
 
-  if (device != -1) {
-    struct uinput_user_dev description;
-    memset(&description, 0, sizeof(description));
+  if ((ui = malloc(sizeof(*ui)))) {
+    memset(ui, 0, sizeof(*ui));
+    ui->path = "/dev/uinput";
 
-    {
-      jboolean isCopy;
-      const char *cName = (*env)->GetStringUTFChars(env, jName, &isCopy);
+    if ((ui->device = open(ui->path, O_WRONLY)) != -1) {
+      {
+        jboolean isCopy;
+        const char *cName = (*env)->GetStringUTFChars(env, jName, &isCopy);
 
-      snprintf(description.name, sizeof(description.name), "%s", cName);
-      (*env)->ReleaseStringUTFChars(env, jName, cName);
-    }
-
-    {
-      char topology[0X40];
-
-      snprintf(topology, sizeof(topology), "pid-%d", getpid());
-
-      if (ioctl(device, UI_SET_PHYS, topology) == -1) {
-        logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
+        snprintf(ui->properties.name, sizeof(ui->properties.name), "%s", cName);
+        (*env)->ReleaseStringUTFChars(env, jName, cName);
       }
-    }
 
-#if USE_MULTI_TOUCH_INTERFACE
-    description.absmin[ABS_MT_SLOT] = 0;
-    description.absmax[ABS_MT_SLOT] = 9;
+      {
+        char topology[0X40];
+        snprintf(topology, sizeof(topology), "pid-%d", getpid());
 
-    description.absmin[ABS_MT_TRACKING_ID] = 0;
-    description.absmax[ABS_MT_TRACKING_ID] = UINT16_MAX;
-
-    description.absmin[ABS_MT_POSITION_X] = 0;
-    description.absmax[ABS_MT_POSITION_X] = width - 1;
-
-    description.absmin[ABS_MT_POSITION_Y] = 0;
-    description.absmax[ABS_MT_POSITION_Y] = height - 1;
-#else /* USE_MULTI_TOUCH_INTERFACE 1 */
-    description.id.bustype = BUS_USB;
-
-    description.absmin[ABS_X] = 0;
-    description.absmax[ABS_X] = width - 1;
-
-    description.absmin[ABS_Y] = 0;
-    description.absmax[ABS_Y] = height - 1;
-#endif /* USE_MULTI_TOUCH_INTERFACE 1 */
-
-    if (write(device, &description, sizeof(description)) != -1) {
-      if (enableUInputEventType(device, EV_SYN)) {
-        return device;
+        if (ioctl(ui->device, UI_SET_PHYS, topology) == -1) {
+          logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
+        }
       }
+
+      if (enableUInputEventType(ui->device, EV_SYN)) {
+        return (*env)->NewDirectByteBuffer(env, ui, sizeof(*ui));
+      }
+
+      close(ui->device);
     } else {
-      logSystemError(LOG_TAG, "write[uinput_user_dev]");
+      logSystemError(LOG_TAG, "open[uinput]");
     }
 
-    close(device);
+    free(ui);
   } else {
-    logSystemError(LOG_TAG, "open[uinput]");
+    logMallocError(LOG_TAG);
   }
 
-  return -1;
+  return NULL;
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, createDevice, jboolean,
-  jint device
+  jobject uinput
 ) {
-  if (ioctl(device, UI_DEV_CREATE) != -1) return JNI_TRUE;
-  logSystemError(LOG_TAG, "ioctl[UI_DEV_CREATE]");
+  UINPUT_DESCRIPTOR;
+
+  if (write(ui->device, &ui->properties, sizeof(ui->properties)) != -1) {
+    if (ioctl(ui->device, UI_DEV_CREATE) != -1) {
+      return JNI_TRUE;
+    } else {
+      logSystemError(LOG_TAG, "ioctl[UI_DEV_CREATE]");
+    }
+  } else {
+    logSystemError(LOG_TAG, "write[uinput_user_dev]");
+  }
+
   return JNI_FALSE;
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, closeDevice, void,
-  jint device
+  jobject uinput
 ) {
-  if (close(device) == -1) logSystemError(LOG_TAG, "close[uinput]");
+  UINPUT_DESCRIPTOR;
+
+  if (close(ui->device) == -1) logSystemError(LOG_TAG, "close[uinput]");
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_KeyboardDevice, enableKeyEvents, jboolean,
-  jint device
+  jobject uinput
 ) {
-  return enableUInputEventType(device, EV_KEY)? JNI_TRUE: JNI_FALSE;
+  UINPUT_DESCRIPTOR;
+
+  return enableUInputKeyEvents(ui->device)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_KeyboardDevice, enableKey, jboolean,
-  jint device, jint key
+  jobject uinput, jint key
 ) {
-  return enableUInputKeyCode(device, key)? JNI_TRUE: JNI_FALSE;
+  UINPUT_DESCRIPTOR;
+
+  return enableUInputKeyCode(ui->device, key)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_KeyboardDevice, pressKey, jboolean,
-  jint device, jint key
+  jobject uinput, jint key
 ) {
-  return writeKeyEvent(device, key, 1)? JNI_TRUE: JNI_FALSE;
+  UINPUT_DESCRIPTOR;
+
+  return writeKeyEvent(ui->device, key, 1)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_KeyboardDevice, releaseKey, jboolean,
-  jint device, jint key
+  jobject uinput, jint key
 ) {
-  return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;
+  UINPUT_DESCRIPTOR;
+
+  return writeKeyEvent(ui->device, key, 0)? JNI_TRUE: JNI_FALSE;
 }
 
 static int
@@ -312,8 +318,10 @@ writeTouchLocation (int device, InputEventValue x, InputEventValue y) {
 
 JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, enableTouchEvents, jboolean,
-  jint device
+  jobject uinput, jint width, jint height
 ) {
+  UINPUT_DESCRIPTOR;
+
   static const InputEventCode keyCodes[] = {
 #if USE_MULTI_TOUCH_INTERFACE
 #else /* USE_MULTI_TOUCH_INTERFACE */
@@ -335,21 +343,46 @@ JAVA_METHOD(
     ABS_CNT
   };
 
-  if (!enableUInputKeyCodes(device, keyCodes)) return JNI_FALSE;
-  if (!enableUInputAbsCodes(device, absCodes)) return JNI_FALSE;
+  if (!enableUInputKeyCodes(ui->device, keyCodes)) return JNI_FALSE;
+  if (!enableUInputAbsCodes(ui->device, absCodes)) return JNI_FALSE;
+
+#if USE_MULTI_TOUCH_INTERFACE
+  ui->properties.absmin[ABS_MT_SLOT] = 0;
+  ui->properties.absmax[ABS_MT_SLOT] = 9;
+
+  ui->properties.absmin[ABS_MT_TRACKING_ID] = 0;
+  ui->properties.absmax[ABS_MT_TRACKING_ID] = UINT16_MAX;
+
+  ui->properties.absmin[ABS_MT_POSITION_X] = 0;
+  ui->properties.absmax[ABS_MT_POSITION_X] = width - 1;
+
+  ui->properties.absmin[ABS_MT_POSITION_Y] = 0;
+  ui->properties.absmax[ABS_MT_POSITION_Y] = height - 1;
+#else /* USE_MULTI_TOUCH_INTERFACE 1 */
+  ui->properties.id.bustype = BUS_USB;
+
+  ui->properties.absmin[ABS_X] = 0;
+  ui->properties.absmax[ABS_X] = width - 1;
+
+  ui->properties.absmin[ABS_Y] = 0;
+  ui->properties.absmax[ABS_Y] = height - 1;
+#endif /* USE_MULTI_TOUCH_INTERFACE 1 */
+
   return JNI_TRUE;
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, touchBegin, jboolean,
-  jint device, int x, int y
+  jobject uinput, int x, int y
 ) {
+  UINPUT_DESCRIPTOR;
+
 #if USE_MULTI_TOUCH_INTERFACE
-  if (!writeTouchDown(device)) return JNI_FALSE;
-  if (!writeTouchLocation(device, x, y)) return JNI_FALSE;
+  if (!writeTouchDown(ui->device)) return JNI_FALSE;
+  if (!writeTouchLocation(ui->device, x, y)) return JNI_FALSE;
 #else /* USE_MULTI_TOUCH_INTERFACE */
-  if (!writeTouchLocation(device, x, y)) return JNI_FALSE;
-  if (!writeTouchDown(device)) return JNI_FALSE;
+  if (!writeTouchLocation(ui->device, x, y)) return JNI_FALSE;
+  if (!writeTouchDown(ui->device)) return JNI_FALSE;
 #endif /* USE_MULTI_TOUCH_INTERFACE */
 
   return JNI_TRUE;
@@ -357,17 +390,21 @@ JAVA_METHOD(
 
 JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, touchEnd, jboolean,
-  jint device
+  jobject uinput
 ) {
-  if (!writeTouchUp(device)) return JNI_FALSE;
+  UINPUT_DESCRIPTOR;
+
+  if (!writeTouchUp(ui->device)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
 JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, touchLocation, jboolean,
-  jint device, jint x, jint y
+  jobject uinput, jint x, jint y
 ) {
-  if (!writeTouchLocation(device, x, y)) return JNI_FALSE;
-  if (!writeSynReport(device)) return JNI_FALSE;
+  UINPUT_DESCRIPTOR;
+
+  if (!writeTouchLocation(ui->device, x, y)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
   return JNI_TRUE;
 }

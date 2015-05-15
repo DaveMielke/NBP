@@ -1,42 +1,25 @@
 package org.nbp.b2g.ui;
 
-import android.util.Log;
+import java.nio.ByteBuffer;
 
-import android.graphics.Point;
+import android.util.Log;
 
 public abstract class UInputDevice {
   private final static String LOG_TAG = UInputDevice.class.getName();
 
-  protected abstract boolean prepareDevice (int device);
+  protected abstract boolean prepareDevice (ByteBuffer device);
 
-  private final static int NOT_OPEN = -1;
-  private int uinputDevice = NOT_OPEN;
+  private ByteBuffer uinputDevice = null;
 
-  private native int openDevice (String name, int width, int height);
-  private native boolean createDevice (int device);
-  private native void closeDevice (int device);
+  private native ByteBuffer openDevice (String name);
+  private native boolean createDevice (ByteBuffer device);
+  private native void closeDevice (ByteBuffer device);
 
   protected boolean open () {
-    if (uinputDevice != NOT_OPEN) return true;
+    if (uinputDevice != null) return true;
 
-    int device;
-    {
-      Point size = ApplicationContext.getScreenSize();
-      int width;
-      int height;
-
-      if (size != null) {
-        width = size.x;
-        height = size.y;
-      } else {
-        width = 0;
-        height = 0;
-      }
-
-      device = openDevice(getClass().getName(), width, height);
-    }
-
-    if (device != NOT_OPEN) {
+    ByteBuffer device = openDevice(getClass().getName());
+    if (device != null) {
       if (prepareDevice(device)) {
         if (createDevice(device)) {
           uinputDevice = device;
@@ -51,14 +34,14 @@ public abstract class UInputDevice {
   }
 
   public void close () {
-    if (uinputDevice != NOT_OPEN) {
-      int device = uinputDevice;
-      uinputDevice = NOT_OPEN;
+    if (uinputDevice != null) {
+      ByteBuffer device = uinputDevice;
+      uinputDevice = null;
       closeDevice(device);
     }
   }
 
-  protected int getDevice () {
+  protected ByteBuffer getDevice () {
     return uinputDevice;
   }
 

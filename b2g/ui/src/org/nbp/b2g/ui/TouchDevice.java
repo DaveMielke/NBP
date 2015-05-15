@@ -1,18 +1,22 @@
 package org.nbp.b2g.ui;
 
+import java.nio.ByteBuffer;
+
+import android.graphics.Point;
+
 import android.util.Log;
 
 public class TouchDevice extends UInputDevice {
   private final static String LOG_TAG = TouchDevice.class.getName();
 
-  protected native boolean enableTouchEvents (int device);
-  protected native boolean touchBegin (int device, int x, int y);
-  protected native boolean touchEnd (int device);
-  protected native boolean touchLocation (int device, int x, int y);
+  protected native boolean enableTouchEvents (ByteBuffer device, int width, int height);
+  protected native boolean touchBegin (ByteBuffer device, int x, int y);
+  protected native boolean touchEnd (ByteBuffer device);
+  protected native boolean touchLocation (ByteBuffer device, int x, int y);
 
   public boolean tapScreen (int x, int y) {
     if (open()) {
-      int device = getDevice();
+      ByteBuffer device = getDevice();
 
       if (touchBegin(device, x, y)) {
         long duration = ApplicationUtilities.getTapTimeout();
@@ -29,7 +33,7 @@ public class TouchDevice extends UInputDevice {
 
   public boolean swipeScreen (int x1, int y1, int x2, int y2) {
     if (open()) {
-      int device = getDevice();
+      ByteBuffer device = getDevice();
 
       if (touchBegin(device, x1, y1)) {
         if (touchLocation(device, x2, y2)) {
@@ -44,12 +48,20 @@ public class TouchDevice extends UInputDevice {
   }
 
   @Override
-  protected boolean prepareDevice (int device) {
-    if (enableTouchEvents(device)) {
-      return true;
+  protected boolean prepareDevice (ByteBuffer device) {
+    Point size = ApplicationContext.getScreenSize();
+    int width;
+    int height;
+
+    if (size != null) {
+      width = size.x;
+      height = size.y;
+    } else {
+      width = 0;
+      height = 0;
     }
 
-    return false;
+    return enableTouchEvents(device, width, height);
   }
 
   public TouchDevice () {
