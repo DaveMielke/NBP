@@ -9,20 +9,20 @@ import android.util.Log;
 public class TouchDevice extends UInputDevice {
   private final static String LOG_TAG = TouchDevice.class.getName();
 
-  protected native boolean enableTouchEvents (ByteBuffer device, int width, int height);
-  protected native boolean touchBegin (ByteBuffer device, int x, int y);
-  protected native boolean touchEnd (ByteBuffer device);
-  protected native boolean touchLocation (ByteBuffer device, int x, int y);
+  protected native boolean enableTouchEvents (ByteBuffer uinput, int width, int height);
+  protected native boolean touchBegin (ByteBuffer uinput, int x, int y);
+  protected native boolean touchEnd (ByteBuffer uinput);
+  protected native boolean touchLocation (ByteBuffer uinput, int x, int y);
 
   public boolean tapScreen (int x, int y) {
     if (open()) {
-      ByteBuffer device = getDevice();
+      ByteBuffer uinput = getUInputDescriptor();
 
-      if (touchBegin(device, x, y)) {
+      if (touchBegin(uinput, x, y)) {
         long duration = ApplicationUtilities.getTapTimeout();
         ApplicationUtilities.sleep(duration + ApplicationParameters.LONG_PRESS_DELAY);
 
-        if (touchEnd(device)) {
+        if (touchEnd(uinput)) {
           return true;
         }
       }
@@ -33,11 +33,11 @@ public class TouchDevice extends UInputDevice {
 
   public boolean swipeScreen (int x1, int y1, int x2, int y2) {
     if (open()) {
-      ByteBuffer device = getDevice();
+      ByteBuffer uinput = getUInputDescriptor();
 
-      if (touchBegin(device, x1, y1)) {
-        if (touchLocation(device, x2, y2)) {
-          if (touchEnd(device)) {
+      if (touchBegin(uinput, x1, y1)) {
+        if (touchLocation(uinput, x2, y2)) {
+          if (touchEnd(uinput)) {
             return true;
           }
         }
@@ -48,7 +48,7 @@ public class TouchDevice extends UInputDevice {
   }
 
   @Override
-  protected boolean prepareDevice (ByteBuffer device) {
+  protected boolean prepareDevice (ByteBuffer uinput) {
     Point size = ApplicationContext.getScreenSize();
     int width;
     int height;
@@ -61,7 +61,7 @@ public class TouchDevice extends UInputDevice {
       height = 0;
     }
 
-    return enableTouchEvents(device, width, height);
+    return enableTouchEvents(uinput, width, height);
   }
 
   public TouchDevice () {

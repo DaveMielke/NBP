@@ -10,14 +10,14 @@ import android.util.Log;
 public class KeyboardDevice extends UInputDevice {
   private final static String LOG_TAG = KeyboardDevice.class.getName();
 
-  protected native boolean enableKeyEvents (ByteBuffer device);
-  protected native boolean enableKey (ByteBuffer device, int key);
-  protected native boolean pressKey (ByteBuffer device, int key);
-  protected native boolean releaseKey (ByteBuffer device, int key);
+  protected native boolean enableKeyEvents (ByteBuffer uinput);
+  protected native boolean enableKey (ByteBuffer uinput, int key);
+  protected native boolean pressKey (ByteBuffer uinput, int key);
+  protected native boolean releaseKey (ByteBuffer uinput, int key);
 
   public boolean sendKeyPress (int key) {
     if (open()) {
-      if (pressKey(getDevice(), key)) {
+      if (pressKey(getUInputDescriptor(), key)) {
         return true;
       }
     }
@@ -27,7 +27,7 @@ public class KeyboardDevice extends UInputDevice {
 
   public boolean sendKeyRelease (int key) {
     if (open()) {
-      if (releaseKey(getDevice(), key)) {
+      if (releaseKey(getUInputDescriptor(), key)) {
         return true;
       }
     }
@@ -42,18 +42,18 @@ public class KeyboardDevice extends UInputDevice {
   public final static int NULL_SCAN_CODE = 0;
   private static Map<String, Integer> scanCodeMap = new HashMap<String, Integer>();
 
-  private boolean enableKeys (ByteBuffer device) {
+  private boolean enableKeys (ByteBuffer uinput) {
     for (int key : scanCodeMap.values()) {
-      if (!enableKey(device, key)) return false;
+      if (!enableKey(uinput, key)) return false;
     }
 
     return true;
   }
 
   @Override
-  protected boolean prepareDevice (ByteBuffer device) {
-    if (enableKeyEvents(device)) {
-      if (enableKeys(device)) {
+  protected boolean prepareDevice (ByteBuffer uinput) {
+    if (enableKeyEvents(uinput)) {
+      if (enableKeys(uinput)) {
         return true;
       }
     }
