@@ -12,7 +12,7 @@ public abstract class UInputDevice {
   private final static int NOT_OPEN = -1;
   private int uinputDevice = NOT_OPEN;
 
-  private native int openDevice (int width, int height);
+  private native int openDevice (String name, int width, int height);
   private native boolean createDevice (int device);
   private native void closeDevice (int device);
 
@@ -33,7 +33,7 @@ public abstract class UInputDevice {
         height = 0;
       }
 
-      device = openDevice(width, height);
+      device = openDevice(getClass().getName(), width, height);
     }
 
     if (device != NOT_OPEN) {

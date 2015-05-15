@@ -201,21 +201,27 @@ writeFingerLocation (int device, InputEventValue x, InputEventValue y) {
 
 JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, openDevice, jint,
-  jint width, jint height
+  jstring jName, jint width, jint height
 ) {
   const char *path = "/dev/uinput";
   int device = open(path, O_WRONLY);
 
   if (device != -1) {
     struct uinput_user_dev description;
-
     memset(&description, 0, sizeof(description));
-    snprintf(description.name, sizeof(description.name), "B2G User Interface");
+
+    {
+      jboolean isCopy;
+      const char *cName = (*env)->GetStringUTFChars(env, jName, &isCopy);
+
+      snprintf(description.name, sizeof(description.name), "%s", cName);
+      (*env)->ReleaseStringUTFChars(env, jName, cName);
+    }
 
     {
       char topology[0X40];
 
-      snprintf(topology, sizeof(topology), "%s", PACKAGE_PATH);
+      snprintf(topology, sizeof(topology), "pid-%d", getpid());
 
       if (ioctl(device, UI_SET_PHYS, topology) == -1) {
         logSystemError(LOG_TAG, "ioctl[UI_SET_PHYS]");
