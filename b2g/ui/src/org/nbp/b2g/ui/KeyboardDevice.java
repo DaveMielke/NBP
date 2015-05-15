@@ -8,8 +8,36 @@ import android.util.Log;
 public class KeyboardDevice extends UInputDevice {
   private final static String LOG_TAG = KeyboardDevice.class.getName();
 
-  public final static int NULL_SCAN_CODE = 0;
+  protected native boolean enableKeyEvents (int device);
+  protected native boolean enableKey (int device, int key);
+  protected native boolean pressKey (int device, int key);
+  protected native boolean releaseKey (int device, int key);
 
+  public boolean sendKeyPress (int key) {
+    if (open()) {
+      if (pressKey(getDevice(), key)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean sendKeyRelease (int key) {
+    if (open()) {
+      if (releaseKey(getDevice(), key)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean sendKeyEvent (int key, boolean press) {
+    return press? sendKeyPress(key): sendKeyRelease(key);
+  }
+
+  public final static int NULL_SCAN_CODE = 0;
   private static Map<String, Integer> scanCodeMap = new HashMap<String, Integer>();
 
   private boolean enableKeys (int device) {
@@ -24,9 +52,7 @@ public class KeyboardDevice extends UInputDevice {
   protected boolean prepareDevice (int device) {
     if (enableKeyEvents(device)) {
       if (enableKeys(device)) {
-        if (enableTouchEvents(device)) {
-          return true;
-        }
+        return true;
       }
     }
 

@@ -16,16 +16,6 @@ public abstract class UInputDevice {
   private native boolean createDevice (int device);
   private native void closeDevice (int device);
 
-  protected native boolean enableKeyEvents (int device);
-  protected native boolean enableKey (int device, int key);
-  private native boolean pressKey (int device, int key);
-  private native boolean releaseKey (int device, int key);
-
-  protected native boolean enableTouchEvents (int device);
-  protected native boolean touchBegin (int device, int x, int y);
-  protected native boolean touchEnd (int device);
-  protected native boolean touchLocation (int device, int x, int y);
-
   protected boolean open () {
     if (uinputDevice != NOT_OPEN) return true;
 
@@ -68,57 +58,8 @@ public abstract class UInputDevice {
     }
   }
 
-  public boolean sendKeyPress (int key) {
-    if (open()) {
-      if (pressKey(uinputDevice, key)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  public boolean sendKeyRelease (int key) {
-    if (open()) {
-      if (releaseKey(uinputDevice, key)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  public boolean sendKeyEvent (int key, boolean press) {
-    return press? sendKeyPress(key): sendKeyRelease(key);
-  }
-
-  public boolean tapScreen (int x, int y) {
-    if (open()) {
-      if (touchBegin(uinputDevice, x, y)) {
-        long duration = ApplicationUtilities.getTapTimeout();
-        ApplicationUtilities.sleep(duration + ApplicationParameters.LONG_PRESS_DELAY);
-
-        if (touchEnd(uinputDevice)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  public boolean swipeScreen (int x1, int y1, int x2, int y2) {
-    if (open()) {
-      if (touchBegin(uinputDevice, x1, y1)) {
-        if (touchLocation(uinputDevice, x2, y2)) {
-          if (touchEnd(uinputDevice)) {
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
+  protected int getDevice () {
+    return uinputDevice;
   }
 
   protected UInputDevice () {

@@ -1,4 +1,5 @@
 #define USE_MULTI_TOUCH_INTERFACE 0
+#define UINPUT_TOUCH_KEY BTN_LEFT
 
 #include "utils.h"
 
@@ -152,7 +153,7 @@ writeFingerDown (int device) {
   if (!writeAbsEvent(device, ABS_MT_SLOT, 0)) return 0;
   if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, identifier++)) return 0;
 #else /* USE_MULTI_TOUCH_INTERFACE */
-  if (!writeKeyEvent(device, BTN_TOUCH, 1)) return 0;
+  if (!writeKeyEvent(device, UINPUT_TOUCH_KEY, 1)) return 0;
 #endif /* USE_MULTI_TOUCH_INTERFACE */
 
   return 1;
@@ -164,7 +165,7 @@ writeFingerUp (int device) {
   if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, -1)) return 0;
   return writeSynReport(device);
 #else /* USE_MULTI_TOUCH_INTERFACE */
-  return writeKeyEvent(device, BTN_TOUCH, 0);
+  return writeKeyEvent(device, UINPUT_TOUCH_KEY, 0);
 #endif /* USE_MULTI_TOUCH_INTERFACE */
 }
 
@@ -234,6 +235,8 @@ JAVA_METHOD(
     description.absmin[ABS_MT_POSITION_Y] = 0;
     description.absmax[ABS_MT_POSITION_Y] = height - 1;
 #else /* USE_MULTI_TOUCH_INTERFACE 1 */
+    description.id.bustype = BUS_USB;
+
     description.absmin[ABS_X] = 0;
     description.absmax[ABS_X] = width - 1;
 
@@ -274,41 +277,41 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, enableKeyEvents, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, enableKeyEvents, jboolean,
   jint device
 ) {
   return enableUInputEventType(device, EV_KEY)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, enableKey, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, enableKey, jboolean,
   jint device, jint key
 ) {
   return enableUInputKeyCode(device, key)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, pressKey, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, pressKey, jboolean,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 1)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, releaseKey, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, releaseKey, jboolean,
   jint device, jint key
 ) {
   return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, enableTouchEvents, jboolean,
+  org_nbp_b2g_ui_TouchDevice, enableTouchEvents, jboolean,
   jint device
 ) {
   static const InputEventCode keyCodes[] = {
 #if USE_MULTI_TOUCH_INTERFACE
 #else /* USE_MULTI_TOUCH_INTERFACE */
-    BTN_TOUCH,
+    UINPUT_TOUCH_KEY,
 #endif /* USE_MULTI_TOUCH_INTERFACE */
     KEY_CNT
   };
@@ -332,7 +335,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, touchBegin, jboolean,
+  org_nbp_b2g_ui_TouchDevice, touchBegin, jboolean,
   jint device, int x, int y
 ) {
 #if USE_MULTI_TOUCH_INTERFACE
@@ -347,7 +350,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, touchEnd, jboolean,
+  org_nbp_b2g_ui_TouchDevice, touchEnd, jboolean,
   jint device
 ) {
   if (!writeFingerUp(device)) return JNI_FALSE;
@@ -355,7 +358,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_UInputDevice, touchLocation, jboolean,
+  org_nbp_b2g_ui_TouchDevice, touchLocation, jboolean,
   jint device, jint x, jint y
 ) {
   if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
