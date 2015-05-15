@@ -146,59 +146,6 @@ writeAbsEvent (int device, InputEventCode action, InputEventValue value) {
   return writeInputEvent(device, EV_ABS, action, value);
 }
 
-static int
-writeFingerDown (int device) {
-#if USE_MULTI_TOUCH_INTERFACE
-  static uint16_t identifier = 0;
-  if (!writeAbsEvent(device, ABS_MT_SLOT, 0)) return 0;
-  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, identifier++)) return 0;
-#else /* USE_MULTI_TOUCH_INTERFACE */
-  if (!writeKeyEvent(device, UINPUT_TOUCH_KEY, 1)) return 0;
-#endif /* USE_MULTI_TOUCH_INTERFACE */
-
-  return 1;
-}
-
-static int
-writeFingerUp (int device) {
-#if USE_MULTI_TOUCH_INTERFACE
-  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, -1)) return 0;
-  return writeSynReport(device);
-#else /* USE_MULTI_TOUCH_INTERFACE */
-  return writeKeyEvent(device, UINPUT_TOUCH_KEY, 0);
-#endif /* USE_MULTI_TOUCH_INTERFACE */
-}
-
-static int
-writeFingerX (int device, InputEventValue x) {
-#if USE_MULTI_TOUCH_INTERFACE
-  return writeAbsEvent(device, ABS_MT_POSITION_X, x);
-#else /* USE_MULTI_TOUCH_INTERFACE */
-  return writeAbsEvent(device, ABS_X, x);
-#endif /* USE_MULTI_TOUCH_INTERFACE */
-}
-
-static int
-writeFingerY (int device, InputEventValue y) {
-#if USE_MULTI_TOUCH_INTERFACE
-  return writeAbsEvent(device, ABS_MT_POSITION_Y, y);
-#else /* USE_MULTI_TOUCH_INTERFACE */
-  return writeAbsEvent(device, ABS_Y, y);
-#endif /* USE_MULTI_TOUCH_INTERFACE */
-}
-
-static int
-writeFingerLocation (int device, InputEventValue x, InputEventValue y) {
-  if (!writeFingerX(device, x)) return 0;
-  if (!writeFingerY(device, y)) return 0;
-
-#if USE_MULTI_TOUCH_INTERFACE
-  return writeSynReport(device);
-#else /* USE_MULTI_TOUCH_INTERFACE */
-  return 1;
-#endif /* USE_MULTI_TOUCH_INTERFACE */
-}
-
 JAVA_METHOD(
   org_nbp_b2g_ui_UInputDevice, openDevice, jint,
   jstring jName, jint width, jint height
@@ -310,6 +257,59 @@ JAVA_METHOD(
   return writeKeyEvent(device, key, 0)? JNI_TRUE: JNI_FALSE;
 }
 
+static int
+writeTouchDown (int device) {
+#if USE_MULTI_TOUCH_INTERFACE
+  static uint16_t identifier = 0;
+  if (!writeAbsEvent(device, ABS_MT_SLOT, 0)) return 0;
+  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, identifier++)) return 0;
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  if (!writeKeyEvent(device, UINPUT_TOUCH_KEY, 1)) return 0;
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+
+  return 1;
+}
+
+static int
+writeTouchUp (int device) {
+#if USE_MULTI_TOUCH_INTERFACE
+  if (!writeAbsEvent(device, ABS_MT_TRACKING_ID, -1)) return 0;
+  return writeSynReport(device);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return writeKeyEvent(device, UINPUT_TOUCH_KEY, 0);
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+}
+
+static int
+writeTouchX (int device, InputEventValue x) {
+#if USE_MULTI_TOUCH_INTERFACE
+  return writeAbsEvent(device, ABS_MT_POSITION_X, x);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return writeAbsEvent(device, ABS_X, x);
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+}
+
+static int
+writeTouchY (int device, InputEventValue y) {
+#if USE_MULTI_TOUCH_INTERFACE
+  return writeAbsEvent(device, ABS_MT_POSITION_Y, y);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return writeAbsEvent(device, ABS_Y, y);
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+}
+
+static int
+writeTouchLocation (int device, InputEventValue x, InputEventValue y) {
+  if (!writeTouchX(device, x)) return 0;
+  if (!writeTouchY(device, y)) return 0;
+
+#if USE_MULTI_TOUCH_INTERFACE
+  return writeSynReport(device);
+#else /* USE_MULTI_TOUCH_INTERFACE */
+  return 1;
+#endif /* USE_MULTI_TOUCH_INTERFACE */
+}
+
 JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, enableTouchEvents, jboolean,
   jint device
@@ -345,11 +345,11 @@ JAVA_METHOD(
   jint device, int x, int y
 ) {
 #if USE_MULTI_TOUCH_INTERFACE
-  if (!writeFingerDown(device)) return JNI_FALSE;
-  if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
+  if (!writeTouchDown(device)) return JNI_FALSE;
+  if (!writeTouchLocation(device, x, y)) return JNI_FALSE;
 #else /* USE_MULTI_TOUCH_INTERFACE */
-  if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
-  if (!writeFingerDown(device)) return JNI_FALSE;
+  if (!writeTouchLocation(device, x, y)) return JNI_FALSE;
+  if (!writeTouchDown(device)) return JNI_FALSE;
 #endif /* USE_MULTI_TOUCH_INTERFACE */
 
   return JNI_TRUE;
@@ -359,7 +359,7 @@ JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, touchEnd, jboolean,
   jint device
 ) {
-  if (!writeFingerUp(device)) return JNI_FALSE;
+  if (!writeTouchUp(device)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
@@ -367,7 +367,7 @@ JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, touchLocation, jboolean,
   jint device, jint x, jint y
 ) {
-  if (!writeFingerLocation(device, x, y)) return JNI_FALSE;
+  if (!writeTouchLocation(device, x, y)) return JNI_FALSE;
   if (!writeSynReport(device)) return JNI_FALSE;
   return JNI_TRUE;
 }
