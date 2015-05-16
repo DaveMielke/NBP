@@ -251,23 +251,25 @@ public class ScrollContainer {
 
       if (false) {
         Point first = getFirstChildCenter();
-        if (first == null) return false;
 
-        Point last = getLastChildCenter();
-        if (last == null) return false;
+        if (first != null) {
+          Point last = getLastChildCenter();
 
-        int x = (first.x + last.x) / 2;
-        int y1 = last.y;
-        int y2 = first.y;
+          if (last != null) {
+            int x = (first.x + last.x) / 2;
+            int y1 = last.y;
+            int y2 = first.y;
 
-        if (direction == ScrollDirection.BACKWARD) {
-          int y = y1;
-          y1 = y2;
-          y2 = y1;
-        }
+            if (direction == ScrollDirection.BACKWARD) {
+              int y = y1;
+              y1 = y2;
+              y2 = y1;
+            }
 
-        if (Devices.getKeyboardDevice().tapScreen(x, y1)) {
-          scrollStarted = true;
+            if (Devices.getTouchDevice().tapScreen(300, 200, 2)) {
+              scrollStarted = true;
+            }
+          }
         }
       } else if (scrollNode.performAction(direction.getNodeAction())) {
         scrollStarted = true;

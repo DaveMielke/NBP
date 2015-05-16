@@ -19,8 +19,7 @@ public class TouchDevice extends UInputDevice {
       ByteBuffer uinput = getUInputDescriptor();
 
       if (touchBegin(uinput, x, y)) {
-        long duration = ApplicationUtilities.getTapTimeout();
-        ApplicationUtilities.sleep(duration + ApplicationParameters.LONG_PRESS_DELAY);
+        ApplicationUtilities.sleep(100);
 
         if (touchEnd(uinput)) {
           return true;
@@ -29,6 +28,16 @@ public class TouchDevice extends UInputDevice {
     }
 
     return false;
+  }
+
+  public boolean tapScreen (int x, int y, int count) {
+    if (count < 1) return false;
+
+    while (true) {
+      if (!tapScreen(x, y)) return false;
+      if (--count < 1) return true;
+      ApplicationUtilities.sleep(200);
+    }
   }
 
   public boolean swipeScreen (int x1, int y1, int x2, int y2) {
