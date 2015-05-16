@@ -1,6 +1,5 @@
-#define UINPUT_TOUCH_KEY BTN_TOUCH
-
 #include "utils.h"
+MAKE_FILE_LOG_TAG;
 
 #include <string.h>
 #include <ctype.h>
@@ -52,12 +51,11 @@
 #endif /* INPUT_PROP_DIRECT */
 
 #include "linux/uinput.h"
+#define UINPUT_TOUCH_KEY BTN_TOUCH
 
 typedef uint16_t InputEventType;
 typedef uint16_t InputEventCode;
 typedef int32_t InputEventValue;
-
-MAKE_FILE_LOG_TAG;
 
 static int
 enableUInputEventType (int device, InputEventType type) {

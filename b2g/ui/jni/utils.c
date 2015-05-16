@@ -1,11 +1,10 @@
 #include "utils.h"
+MAKE_FILE_LOG_TAG;
 
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
 #include <poll.h>
-
-MAKE_FILE_LOG_TAG;
 
 void
 logSystemError (const char *tag, const char *action) {

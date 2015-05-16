@@ -1,4 +1,5 @@
 #include "utils.h"
+MAKE_FILE_LOG_TAG;
 
 #include <string.h>
 #include <fcntl.h>
@@ -6,8 +7,6 @@
 #include <sys/ioctl.h>
 
 #include "metec_flat20_ioctl.h"
-
-MAKE_FILE_LOG_TAG;
 
 #define BRAILLE_DEVICE_PATH "/dev/braille0"
 #define BRAILLE_CELL_COUNT 20

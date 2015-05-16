@@ -1,8 +1,7 @@
 #include "utils.h"
+MAKE_FILE_LOG_TAG;
 
 #include <linux/input.h>
-
-MAKE_FILE_LOG_TAG;
 
 typedef struct {
   const char *name;

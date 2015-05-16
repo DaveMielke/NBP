@@ -1,4 +1,5 @@
 #include "utils.h"
+MAKE_FILE_LOG_TAG;
 
 #include <string.h>
 #include <errno.h>
@@ -8,8 +9,6 @@
 #include <sys/ioctl.h>
 
 #include <linux/input.h>
-
-MAKE_FILE_LOG_TAG;
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
 #define POWER_BUTTON_DEVICE_NAME "twl4030_pwrbutton"
