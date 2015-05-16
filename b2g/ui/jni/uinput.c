@@ -51,7 +51,6 @@ MAKE_FILE_LOG_TAG;
 #endif /* INPUT_PROP_DIRECT */
 
 #include "linux/uinput.h"
-#define UINPUT_TOUCH_KEY BTN_TOUCH
 
 typedef uint16_t InputEventType;
 typedef uint16_t InputEventCode;
@@ -72,14 +71,17 @@ enableUInputEventCodes (
   int (*enableCode) (int device, InputEventCode code)
 ) {
   if (codes) {
-    if (*codes != end) {
-      const InputEventCode *code = codes;
+    const InputEventCode *code = codes;
 
-      if (!enableType(device)) return 0;
+    while (*code != end) {
+      if (code == codes) {
+        if (!enableType(device)) {
+          return 0;
+        }
+      }
 
-      do {
-        if (!enableCode(device, *code)) return 0;
-      } while (*(code += 1) != end);
+      if (!enableCode(device, *code)) return 0;
+      code += 1;
     }
   }
 
@@ -151,10 +153,8 @@ enableUInputAbsCodes (int device, const InputEventCode *codes) {
 }
 
 static int
-writeKeyEvent (int device, InputEventCode key, InputEventValue press) {
-  if (!writeInputEvent(device, EV_KEY, key, (press? 1: 0))) return 0;
-  if (!writeSynReport(device)) return 0;
-  return 1;
+writeKeyEvent (int device, InputEventCode key, int press) {
+  return writeInputEvent(device, EV_KEY, key, (press? 1: 0));
 }
 
 static int
@@ -273,7 +273,9 @@ JAVA_METHOD(
 ) {
   UINPUT_DESCRIPTOR;
 
-  return writeKeyEvent(ui->device, key, 1)? JNI_TRUE: JNI_FALSE;
+  if (!writeKeyEvent(ui->device, key, 1)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
+  return JNI_TRUE;
 }
 
 JAVA_METHOD(
@@ -282,7 +284,9 @@ JAVA_METHOD(
 ) {
   UINPUT_DESCRIPTOR;
 
-  return writeKeyEvent(ui->device, key, 0)? JNI_TRUE: JNI_FALSE;
+  if (!writeKeyEvent(ui->device, key, 0)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
+  return JNI_TRUE;
 }
 
 static int
@@ -305,12 +309,16 @@ writeSingleTouchLocation (int device, InputEventValue x, InputEventValue y) {
 static int
 writeSingleTouchDown (int device, InputEventValue x, InputEventValue y) {
   if (!writeSingleTouchLocation(device, x, y)) return 0;
-  return writeKeyEvent(device, UINPUT_TOUCH_KEY, 1);
+  if (!writeKeyEvent(device, BTN_TOUCH, 1)) return 0;
+  if (!writeKeyEvent(device, BTN_TOOL_FINGER, 1)) return 0;
+  return writeSynReport(device);
 }
 
 static int
 writeSingleTouchUp (int device) {
-  return writeKeyEvent(device, UINPUT_TOUCH_KEY, 0);
+  if (!writeKeyEvent(device, BTN_TOOL_FINGER, 0)) return 0;
+  if (!writeKeyEvent(device, BTN_TOUCH, 0)) return 0;
+  return writeSynReport(device);
 }
 
 static int
@@ -403,7 +411,10 @@ JAVA_METHOD(
 
     {
       static const InputEventCode codes[] = {
-        UINPUT_TOUCH_KEY,
+        BTN_TOUCH,
+        BTN_TOOL_FINGER,
+        BTN_TOOL_DOUBLETAP,
+        BTN_TOOL_TRIPLETAP,
         KEY_CNT
       };
 
