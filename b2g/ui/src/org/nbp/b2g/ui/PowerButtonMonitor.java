@@ -11,15 +11,15 @@ public class PowerButtonMonitor extends EventMonitor {
 
   private final static int POWER_BUTTON_SCAN_CODE = KeyboardDevice.getScanCode("POWER");
 
-  private static boolean wasOff = false;
+  private static boolean wasAwake = true;
 
   @Override
   public void onKeyEvent (int code, boolean press) {
-    if (press) wasOff = !ApplicationContext.isScreenOn();
+    if (press) wasAwake = ApplicationContext.isAwake();
     Devices.getKeyboardDevice().sendKeyEvent(code, press);
     Controls.getOneHandControl().previousValue();
 
-    int keyMask = wasOff? KeyMask.POWER_ON: KeyMask.POWER_OFF;
+    int keyMask = wasAwake? KeyMask.POWER_OFF: KeyMask.POWER_ON;
     KeyEvents.handleNavigationKeyEvent(keyMask, press);
   }
 

@@ -76,7 +76,7 @@ public abstract class ApplicationContext {
     return (PowerManager)systemService;
   }
 
-  public static boolean isScreenOn () {
+  public static boolean isAwake () {
     PowerManager powerManager = getPowerManager();
     if (powerManager == null) return true;
     return powerManager.isScreenOn();
