@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.os.PowerManager;
 import android.app.KeyguardManager;
 import android.view.WindowManager;
+import android.view.accessibility.AccessibilityManager;
 
 public abstract class ApplicationContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
@@ -106,6 +107,18 @@ public abstract class ApplicationContext {
     Point size = new Point();
     windowManager.getDefaultDisplay().getRealSize(size);
     return size;
+  }
+
+  public static AccessibilityManager getAccessibilityManager () {
+    Object systemService = getSystemService(Context.ACCESSIBILITY_SERVICE);
+    if (systemService == null) return null;
+    return (AccessibilityManager)systemService;
+  }
+
+  public static boolean isTouchExplorationActive () {
+    AccessibilityManager accessibilityManager = getAccessibilityManager();
+    if (accessibilityManager == null) return false;
+    return accessibilityManager.isTouchExplorationEnabled();
   }
 
   private ApplicationContext () {
