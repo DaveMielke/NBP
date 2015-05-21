@@ -15,7 +15,7 @@ public class KeyboardDevice extends UInputDevice {
   protected native boolean pressKey (ByteBuffer uinput, int key);
   protected native boolean releaseKey (ByteBuffer uinput, int key);
 
-  public boolean sendKeyPress (int key) {
+  public boolean injectKeyPress (int key) {
     if (open()) {
       if (pressKey(getUInputDescriptor(), key)) {
         return true;
@@ -25,7 +25,7 @@ public class KeyboardDevice extends UInputDevice {
     return false;
   }
 
-  public boolean sendKeyRelease (int key) {
+  public boolean injectKeyRelease (int key) {
     if (open()) {
       if (releaseKey(getUInputDescriptor(), key)) {
         return true;
@@ -35,8 +35,24 @@ public class KeyboardDevice extends UInputDevice {
     return false;
   }
 
-  public boolean sendKeyEvent (int key, boolean press) {
-    return press? sendKeyPress(key): sendKeyRelease(key);
+  public boolean injectKey (int key, boolean press) {
+    return press? injectKeyPress(key): injectKeyRelease(key);
+  }
+
+  public boolean injectKey (int key, long duration) {
+    if (injectKey(key, true)) {
+      ApplicationUtilities.sleep(duration);
+
+      if (injectKey(key, false)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean injectKey (int key) {
+    return injectKey(key, 0);
   }
 
   public final static int NULL_SCAN_CODE = 0;

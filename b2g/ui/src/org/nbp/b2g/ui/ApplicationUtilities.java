@@ -14,7 +14,7 @@ public class ApplicationUtilities {
   }
 
   public static void sleep (long duration) {
-    SystemClock.sleep(duration);
+    if (duration > 0) SystemClock.sleep(duration);
   }
 
   public static long getTapTimeout () {
