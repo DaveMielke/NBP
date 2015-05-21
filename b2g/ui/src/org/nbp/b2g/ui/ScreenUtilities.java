@@ -422,6 +422,15 @@ public class ScreenUtilities {
         logNavigation(node, "select failed");
       }
 
+      if (node.isFocusable()) {
+        if (node.performAction(AccessibilityNodeInfo.ACTION_FOCUS)) {
+          logNavigation(node, "set input focus succeeded");
+          break;
+        }
+
+        logNavigation(node, "set input focus failed");
+      }
+
       AccessibilityNodeInfo parent = node.getParent();
       if (parent == null) break;
 
@@ -445,13 +454,10 @@ public class ScreenUtilities {
   public static boolean setCurrentNode (AccessibilityNodeInfo node) {
     if (node.isAccessibilityFocused()) {
       logNavigation(node, "set accessibility focus unnecessary");
-    } else {
-      if (!node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
-        logNavigation(node, "set accessibility focus failed");
-        return false;
-      }
-
+    } else if (node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
       logNavigation(node, "set accessibility focus succeeded");
+    } else {
+      logNavigation(node, "set accessibility focus failed");
     }
 
     isolateSelection(node);
