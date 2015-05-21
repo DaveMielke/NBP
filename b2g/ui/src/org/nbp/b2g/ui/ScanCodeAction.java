@@ -27,14 +27,14 @@ public abstract class ScanCodeAction extends KeyCodeAction {
       if (value != KeyboardDevice.NULL_SCAN_CODE) {
         final KeyboardDevice keyboardDevice = Devices.getKeyboardDevice();
 
-        KeyCombinationSender keyCombinationSender = new KeyCombinationSender() {
+        KeyCombinationInjecter keyCombinationInjecter = new KeyCombinationInjecter() {
           @Override
-          protected boolean sendKeyPress (int key) {
+          protected boolean injectKeyPress (int key) {
             return keyboardDevice.injectKeyPress(key);
           }
 
           @Override
-          protected boolean sendKeyRelease (int key) {
+          protected boolean injectKeyRelease (int key) {
             return keyboardDevice.injectKeyRelease(key);
           }
 
@@ -44,7 +44,7 @@ public abstract class ScanCodeAction extends KeyCodeAction {
           }
         };
 
-        if (keyCombinationSender.sendKeyCombination(value, getScanCodeModifiers())) {
+        if (keyCombinationInjecter.injectKeyCombination(value, getScanCodeModifiers())) {
           return true;
         }
       }

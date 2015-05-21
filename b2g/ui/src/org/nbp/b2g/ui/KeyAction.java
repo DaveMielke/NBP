@@ -19,45 +19,45 @@ public abstract class KeyAction extends Action {
     name = (name != null)? (" (" + name + ")"): "";
 
     Log.d(LOG_TAG, String.format(
-      "sending %s %s: %d%s",
+      "injecting %s %s: %d%s",
       type, (press? "press": "release"), value, name
     ));
   }
 
-  protected abstract class KeyCombinationSender {
-    protected abstract boolean sendKeyPress (int key);
-    protected abstract boolean sendKeyRelease (int key);
+  protected abstract class KeyCombinationInjecter {
+    protected abstract boolean injectKeyPress (int key);
+    protected abstract boolean injectKeyRelease (int key);
     protected abstract String getKeyType ();
 
     protected String getKeyName (int key) {
       return null;
     }
 
-    private boolean sendKeyEvent (int key, boolean press) {
+    private boolean injectKeyEvent (int key, boolean press) {
       if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
         logKeyEvent(getKeyType(), getKeyName(key), key, press);
       }
 
-      return press? sendKeyPress(key): sendKeyRelease(key);
+      return press? injectKeyPress(key): injectKeyRelease(key);
     }
 
-    private boolean sendModifiers (int[] modifiers, boolean press) {
+    private boolean injectModifiers (int[] modifiers, boolean press) {
       if (modifiers != null) {
         for (int modifier : modifiers) {
-          if (!sendKeyEvent(modifier, press)) return false;
+          if (!injectKeyEvent(modifier, press)) return false;
         }
       }
 
       return true;
     }
 
-    public final boolean sendKeyCombination (int key, int[] modifiers) {
-      if (sendModifiers(modifiers, true)) {
-        if (sendKeyEvent(key, true)) {
+    public final boolean injectKeyCombination (int key, int[] modifiers) {
+      if (injectModifiers(modifiers, true)) {
+        if (injectKeyEvent(key, true)) {
           waitForHoldTime();
 
-          if (sendKeyEvent(key, false)) {
-            if (sendModifiers(modifiers, false)) {
+          if (injectKeyEvent(key, false)) {
+            if (injectModifiers(modifiers, false)) {
               return true;
             }
           }
@@ -67,8 +67,8 @@ public abstract class KeyAction extends Action {
       return false;
     }
 
-    public final boolean sendKeyCombination (int key) {
-      return sendKeyCombination(key, null);
+    public final boolean injectKeyCombination (int key) {
+      return injectKeyCombination(key, null);
     }
   }
 
