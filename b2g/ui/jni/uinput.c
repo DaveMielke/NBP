@@ -362,13 +362,14 @@ JAVA_METHOD(
   const InputEventCode *absCodes = NULL;
 
   if (ioctl(ui->device, UI_SET_PROPBIT, INPUT_PROP_DIRECT) != -1) {
-    LOG(DEBUG, "using multi-touch paradigm");
+    LOG(DEBUG, "using multi-touch protocol");
 
     ui->touch.writeDown = writeMultiTouchDown;
     ui->touch.writeUp = writeMultiTouchUp;
     ui->touch.writeLocation = writeMultiTouchLocation;
 
     ui->properties.id.bustype = BUS_USB;
+    ui->properties.id.version = 0X0200;
 
     ui->properties.absmin[ABS_MT_SLOT] = 0;
     ui->properties.absmax[ABS_MT_SLOT] = 9;
@@ -395,13 +396,14 @@ JAVA_METHOD(
     }
   } else {
     logSystemError(LOG_TAG, "ioctl[UI_SET_PROPBIT,INPUT_PROP_DIRECT]");
-    LOG(DEBUG, "using single-touch paradigm");
+    LOG(DEBUG, "using single-touch protocol");
 
     ui->touch.writeDown = writeSingleTouchDown;
     ui->touch.writeUp = writeSingleTouchUp;
     ui->touch.writeLocation = writeSingleTouchLocation;
 
     ui->properties.id.bustype = BUS_USB;
+    ui->properties.id.version = 0X0100;
 
     ui->properties.absmin[ABS_X] = 0;
     ui->properties.absmax[ABS_X] = width - 1;

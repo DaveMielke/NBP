@@ -14,30 +14,24 @@ public class TouchDevice extends UInputDevice {
   protected native boolean touchEnd (ByteBuffer uinput);
   protected native boolean touchLocation (ByteBuffer uinput, int x, int y);
 
-  public boolean tapScreen (int x, int y) {
-    if (open()) {
-      ByteBuffer uinput = getUInputDescriptor();
-
-      if (touchBegin(uinput, x, y)) {
-        ApplicationUtilities.sleep(100);
-
-        if (touchEnd(uinput)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
   public boolean tapScreen (int x, int y, int count) {
     if (count < 1) return false;
+    if (ApplicationContext.isTouchExplorationActive()) count += 1;
+
+    if (!open()) return false;
+    ByteBuffer uinput = getUInputDescriptor();
 
     while (true) {
-      if (!tapScreen(x, y)) return false;
-      if (--count < 1) return true;
-      ApplicationUtilities.sleep(200);
+      if (!touchBegin(uinput, x, y)) return false;
+      ApplicationUtilities.sleep(45);
+      if (!touchEnd(uinput)) return false;
+      if ((count -= 1) == 0) return true;
+      ApplicationUtilities.sleep(100);
     }
+  }
+
+  public boolean tapScreen (int x, int y) {
+    return tapScreen(x, y, 1);
   }
 
   public boolean swipeScreen (int x1, int y1, int x2, int y2) {
@@ -65,6 +59,7 @@ public class TouchDevice extends UInputDevice {
     if (size != null) {
       width = size.x;
       height = size.y;
+      Log.d(LOG_TAG, String.format("screen size: %dx%d", width, height));
     } else {
       width = 0;
       height = 0;

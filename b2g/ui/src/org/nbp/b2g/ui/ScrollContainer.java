@@ -266,7 +266,7 @@ public class ScrollContainer {
               y2 = y1;
             }
 
-            if (Devices.getTouchDevice().tapScreen(300, 200, 2)) {
+            if (Devices.getTouchDevice().tapScreen(300, 200)) {
               scrollStarted = true;
             }
           }
