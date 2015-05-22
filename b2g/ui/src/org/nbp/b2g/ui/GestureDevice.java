@@ -2,14 +2,11 @@ package org.nbp.b2g.ui;
 
 import java.nio.ByteBuffer;
 
-import android.graphics.Point;
-
 import android.util.Log;
 
 public abstract class GestureDevice extends UInputDevice {
   private final static String LOG_TAG = GestureDevice.class.getName();
 
-  protected abstract boolean gestureEnable (ByteBuffer uinput, int width, int height);
   protected abstract boolean gestureBegin (ByteBuffer uinput, int x, int y);
   protected abstract boolean gestureEnd (ByteBuffer uinput);
   protected abstract boolean gestureLocation (ByteBuffer uinput, int x, int y);
@@ -48,24 +45,6 @@ public abstract class GestureDevice extends UInputDevice {
     }
 
     return false;
-  }
-
-  @Override
-  protected boolean prepareDevice (ByteBuffer uinput) {
-    Point size = ApplicationContext.getScreenSize();
-    int width;
-    int height;
-
-    if (size != null) {
-      width = size.x;
-      height = size.y;
-      Log.d(LOG_TAG, String.format("screen size: %dx%d", width, height));
-    } else {
-      width = 0;
-      height = 0;
-    }
-
-    return gestureEnable(uinput, width, height);
   }
 
   public GestureDevice () {
