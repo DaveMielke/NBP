@@ -353,7 +353,7 @@ writeMultiTouchUp (int device) {
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_TouchDevice, enableTouchEvents, jboolean,
+  org_nbp_b2g_ui_TouchDevice, gestureEnable, jboolean,
   jobject uinput, jint width, jint height
 ) {
   UINPUT_DESCRIPTOR;
