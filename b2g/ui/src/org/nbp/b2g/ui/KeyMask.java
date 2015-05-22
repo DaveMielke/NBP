@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 
 import android.util.Log;
 
-public class KeyMask {
+public abstract class KeyMask {
   private final static String LOG_TAG = KeyMask.class.getName();
 
   public final static int DOT_1       = 0X000001;
@@ -63,6 +63,9 @@ public class KeyMask {
     }
 
     return sb.toString();
+  }
+
+  private KeyMask () {
   }
 
   private static void map (char character, int bit) {

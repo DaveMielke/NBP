@@ -8,7 +8,7 @@ import org.nbp.b2g.ui.host.HostEndpoint;
 import org.nbp.b2g.ui.prompt.FindEndpoint;
 import org.nbp.b2g.ui.bluetooth.BluetoothEndpoint;
 
-public class Endpoints {
+public abstract class Endpoints {
   private final static ReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
   public final static Lock READ_LOCK = READ_WRITE_LOCK.readLock();
   private final static Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();

@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public class EventMonitors {
+public abstract class EventMonitors {
   private final static KeyboardMonitor keyboardMonitor = new KeyboardMonitor();
   private final static PowerButtonMonitor powerButtonMonitor = new PowerButtonMonitor();
 

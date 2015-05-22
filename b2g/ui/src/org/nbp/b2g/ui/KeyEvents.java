@@ -5,7 +5,7 @@ import java.util.TreeSet;
 
 import android.util.Log;
 
-public class KeyEvents {
+public abstract class KeyEvents {
   private final static String LOG_TAG = KeyEvents.class.getName();
 
   private static int pressedNavigationKeys = 0;

@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-public class ScanCode {
+public abstract class ScanCode {
   private final static String LOG_TAG = ScanCode.class.getName();
 
   public final static int DPAD_CENTER = 0X160;
@@ -91,6 +91,9 @@ public class ScanCode {
     if (mask != null) return mask;
 
     return 0;
+  }
+
+  private ScanCode () {
   }
 
   private static void map (String name, int mask) {

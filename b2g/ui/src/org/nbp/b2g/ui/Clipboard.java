@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.ClipboardManager;
 import android.content.ClipData;
 
-public class Clipboard {
+public abstract class Clipboard {
   private final static String LOG_TAG = Clipboard.class.getName();
 
   private final static Object LOCK = new Object();

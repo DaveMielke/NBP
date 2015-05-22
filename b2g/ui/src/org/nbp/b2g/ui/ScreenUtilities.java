@@ -8,7 +8,7 @@ import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class ScreenUtilities {
+public abstract class ScreenUtilities {
   private final static String LOG_TAG = ScreenUtilities.class.getName();
 
   public static String toString (AccessibilityNodeInfo node) {

@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
-public class Crash {
+public abstract class Crash {
   private final static String LOG_TAG = Crash.class.getName();
 
   public static void handleCrash (Throwable problem, String component) {

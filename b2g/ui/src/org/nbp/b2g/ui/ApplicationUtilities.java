@@ -8,7 +8,7 @@ import android.view.ViewConfiguration;
 import android.media.ToneGenerator;
 import android.media.AudioManager;
 
-public class ApplicationUtilities {
+public abstract class ApplicationUtilities {
   public static boolean haveSdkVersion (int version) {
     return ApplicationParameters.SDK_VERSION >= version;
   }

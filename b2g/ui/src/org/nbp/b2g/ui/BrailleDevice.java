@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import android.util.Log;
 
-public class BrailleDevice {
+public abstract class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
   public final static byte DOTS_NONE = 0;

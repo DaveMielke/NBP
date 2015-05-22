@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class Controls {
+public abstract class Controls {
   private final static BooleanControl oneHandControl = new OneHandControl();
   private final static BooleanControl longPressControl = new LongPressControl();
 
