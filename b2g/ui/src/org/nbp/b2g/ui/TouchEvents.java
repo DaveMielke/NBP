@@ -26,7 +26,7 @@ public abstract class TouchEvents {
     InputManager input = getInputManager();
     if (input == null) return false;
 
-    Integer mode = LanguageUtilities.getInstanceIntField(input, "INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH");
+    Integer mode = (Integer)LanguageUtilities.getInstanceField(input, "INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH");
     if (mode == null) return false;
 
     Boolean injected = (Boolean)LanguageUtilities.invokeInstanceMethod(

@@ -81,7 +81,7 @@ public abstract class LanguageUtilities {
     } catch (IllegalAccessException exception) {
       Log.w(LOG_TAG, "cannot access method: " + makeReference(method));
     } catch (InvocationTargetException exception) {
-      Log.w(LOG_TAG, makeReference(method) + " failed", exception.getCause());
+      Log.w(LOG_TAG, "method failed: " + makeReference(method), exception.getCause());
     }
 
     return null;
@@ -123,18 +123,30 @@ public abstract class LanguageUtilities {
     return null;
   }
 
-  public static Integer getInstanceIntField (Object instance, String name) {
-    Field field = getField(instance.getClass(), name);
-
-    if (field != null) {
-      try {
-        return field.getInt(instance);
-      } catch (IllegalAccessException exception) {
-        Log.w(LOG_TAG, "cannot access field: " + makeReference(field));
-      }
+  public static Object getField (Field field, Object instance) {
+    try {
+      return field.get(instance);
+    } catch (IllegalAccessException exception) {
+      Log.w(LOG_TAG, "cannot access field: " + makeReference(field));
     }
 
     return null;
+  }
+
+  public static Object getField (Field field) {
+    return getField(field, null);
+  }
+
+  public static Object getInstanceField (Object instance, String name) {
+    Field field = getField(instance.getClass(), name);
+    if (field == null) return null;
+    return getField(field, instance);
+  }
+
+  public static Object getStaticField (Class container, String name) {
+    Field field = getField(container, name);
+    if (field == null) return null;
+    return getField(field);
   }
 
   private LanguageUtilities () {
