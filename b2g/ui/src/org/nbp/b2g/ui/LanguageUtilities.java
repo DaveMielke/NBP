@@ -38,49 +38,99 @@ public abstract class LanguageUtilities {
     return getClassName(type.getName());
   }
 
-  public static Object invokeInstanceMethod (
-    Object instanceObject, String methodName,
-    Class[] argumentTypes, Object... argumentObjects
-  ) {
-    Class instanceClass = instanceObject.getClass();
-    String className = instanceClass.getName();
-    String methodReference = className + "." + methodName;
+  private static String makeReference (Class container, String name, Class[] arguments) {
+    StringBuilder sb = new StringBuilder();
 
+    sb.append(container.getName());
+    sb.append('.');
+    sb.append(name);
+
+    if (arguments != null) {
+      sb.append('(');
+      String delimiter = "";
+
+      for (Class argument : arguments) {
+        sb.append(delimiter);
+        delimiter = ",";
+        sb.append(argument.getName());
+      }
+
+      sb.append(')');
+    }
+
+    return sb.toString();
+  }
+
+  private static String makeReference (Method method) {
+    return makeReference(method.getDeclaringClass(), method.getName(), method.getParameterTypes());
+  }
+
+  public static Method getMethod (Class container, String name, Class[] types) {
     try {
-      Method method = instanceClass.getMethod(methodName, argumentTypes);
-      return method.invoke(instanceObject, argumentObjects);
+      return container.getMethod(name, types);
     } catch (NoSuchMethodException exception) {
-      Log.w(LOG_TAG, "cannot find method: " + methodReference);
-    } catch (IllegalAccessException exception) {
-      Log.w(LOG_TAG, "cannot access method: " + methodReference);
-    } catch (InvocationTargetException exception) {
-      Log.w(LOG_TAG, methodReference + " failed", exception.getCause());
+      Log.w(LOG_TAG, "cannot find method: " + makeReference(container, name, types));
     }
 
     return null;
   }
 
-  public static Field getField (Class fieldClass, String fieldName) {
+  public static Object invokeMethod (Method method, Object instance, Object... arguments) {
     try {
-      return fieldClass.getField(fieldName);
-    } catch (NoSuchFieldException exception) {
-      String fieldReference = fieldClass.getName() + "." + fieldName;
-      Log.w(LOG_TAG, "cannot find field: " + fieldReference);
+      return method.invoke(instance, arguments);
+    } catch (IllegalAccessException exception) {
+      Log.w(LOG_TAG, "cannot access method: " + makeReference(method));
+    } catch (InvocationTargetException exception) {
+      Log.w(LOG_TAG, makeReference(method) + " failed", exception.getCause());
     }
 
     return null;
   }
 
-  public static Integer getInstanceIntField (Object instanceObject, String fieldName) {
-    Class fieldClass = instanceObject.getClass();
-    Field field = getField(fieldClass, fieldName);
+  public static Object invokeInstanceMethod (
+    Object instance, String name,
+    Class[] types, Object... arguments
+  ) {
+    Method method = getMethod(instance.getClass(), name, types);
+    if (method == null) return null;
+    return invokeMethod(method, instance, arguments);
+  }
+
+  public static Object invokeStaticMethod (
+    Class container, String name,
+    Class[] types, Object... arguments
+  ) {
+    Method method = getMethod(container, name, types);
+    if (method == null) return null;
+    return invokeMethod(method, null, arguments);
+  }
+
+  private static String makeReference (Class container, String name) {
+    return makeReference(container, name, null);
+  }
+
+  private static String makeReference (Field field) {
+    return makeReference(field.getDeclaringClass(), field.getName());
+  }
+
+  public static Field getField (Class container, String name) {
+    try {
+      return container.getField(name);
+    } catch (NoSuchFieldException exception) {
+      Log.w(LOG_TAG, "cannot find field: " + makeReference(container, name));
+    }
+
+    return null;
+  }
+
+  public static Integer getInstanceIntField (Object instance, String name) {
+    Field field = getField(instance.getClass(), name);
 
     if (field != null) {
       try {
-        return field.getInt(instanceObject);
+        return field.getInt(instance);
       } catch (IllegalAccessException exception) {
-        String fieldReference = fieldClass.getName() + "." + fieldName;
-        Log.w(LOG_TAG, "cannot access field: " + fieldReference);
+        Log.w(LOG_TAG, "cannot access field: " + makeReference(field));
       }
     }
 
