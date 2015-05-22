@@ -16,7 +16,7 @@ public class PowerButtonMonitor extends EventMonitor {
   @Override
   public void onKeyEvent (int code, boolean press) {
     if (press) wasAwake = ApplicationContext.isAwake();
-    Devices.getKeyboardDevice().injectKey(code, press);
+    Keyboard.injectKey(code, press);
     Controls.getOneHandControl().previousValue();
 
     int keyMask = wasAwake? KeyMask.POWER_OFF: KeyMask.POWER_ON;

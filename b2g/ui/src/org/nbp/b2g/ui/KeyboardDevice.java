@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-public class KeyboardDevice extends UInputDevice implements KeyboardInterface {
+public class KeyboardDevice extends UInputDevice implements KeyboardInjecter {
   private final static String LOG_TAG = KeyboardDevice.class.getName();
 
   protected native boolean keyboardEnable (ByteBuffer uinput);
@@ -28,26 +28,6 @@ public class KeyboardDevice extends UInputDevice implements KeyboardInterface {
     ByteBuffer uinput = getUInputDescriptor();
     if (uinput == null) return false;
     return keyboardRelease(uinput, key);
-  }
-
-  public boolean injectKey (int key, boolean press) {
-    return press? keyboardPress(key): keyboardRelease(key);
-  }
-
-  public boolean injectKey (int key, long duration) {
-    if (keyboardPress(key)) {
-      ApplicationUtilities.sleep(duration);
-
-      if (keyboardRelease(key)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  public boolean injectKey (int key) {
-    return injectKey(key, 0);
   }
 
   public final static int NULL_SCAN_CODE = 0;
