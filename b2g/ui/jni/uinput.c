@@ -441,7 +441,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_TouchDevice, touchBegin, jboolean,
+  org_nbp_b2g_ui_TouchDevice, gestureBegin, jboolean,
   jobject uinput, jint x, jint y
 ) {
   UINPUT_DESCRIPTOR;
@@ -451,7 +451,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_TouchDevice, touchEnd, jboolean,
+  org_nbp_b2g_ui_TouchDevice, gestureEnd, jboolean,
   jobject uinput
 ) {
   UINPUT_DESCRIPTOR;
@@ -461,7 +461,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_TouchDevice, touchLocation, jboolean,
+  org_nbp_b2g_ui_TouchDevice, gestureLocation, jboolean,
   jobject uinput, jint x, jint y
 ) {
   UINPUT_DESCRIPTOR;

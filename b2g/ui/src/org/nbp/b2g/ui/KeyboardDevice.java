@@ -95,7 +95,6 @@ public class KeyboardDevice extends UInputDevice {
   private static native void defineScanCodes ();
 
   static {
-    System.loadLibrary("UserInterface");
     defineScanCodes();
   }
 }
