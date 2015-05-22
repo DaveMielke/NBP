@@ -30,12 +30,12 @@ public abstract class ScanCodeAction extends KeyCodeAction {
         KeyCombinationInjecter keyCombinationInjecter = new KeyCombinationInjecter() {
           @Override
           protected boolean injectKeyPress (int key) {
-            return keyboardDevice.injectKeyPress(key);
+            return keyboardDevice.keyboardPress(key);
           }
 
           @Override
           protected boolean injectKeyRelease (int key) {
-            return keyboardDevice.injectKeyRelease(key);
+            return keyboardDevice.keyboardRelease(key);
           }
 
           @Override

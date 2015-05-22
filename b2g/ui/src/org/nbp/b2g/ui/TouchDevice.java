@@ -18,7 +18,7 @@ public class TouchDevice extends GestureDevice {
   protected native boolean gestureEnd (ByteBuffer uinput);
 
   @Override
-  protected native boolean gestureLocation (ByteBuffer uinput, int x, int y);
+  protected native boolean gestureMove (ByteBuffer uinput, int x, int y);
 
   @Override
   protected boolean prepareDevice (ByteBuffer uinput) {

@@ -7,43 +7,38 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-public class KeyboardDevice extends UInputDevice {
+public class KeyboardDevice extends UInputDevice implements KeyboardInterface {
   private final static String LOG_TAG = KeyboardDevice.class.getName();
 
-  protected native boolean enableKeyEvents (ByteBuffer uinput);
-  protected native boolean enableKey (ByteBuffer uinput, int key);
-  protected native boolean pressKey (ByteBuffer uinput, int key);
-  protected native boolean releaseKey (ByteBuffer uinput, int key);
+  protected native boolean keyboardEnable (ByteBuffer uinput);
+  protected native boolean keyEnable (ByteBuffer uinput, int key);
 
-  public boolean injectKeyPress (int key) {
-    if (open()) {
-      if (pressKey(getUInputDescriptor(), key)) {
-        return true;
-      }
-    }
+  protected native boolean keyboardPress (ByteBuffer uinput, int key);
+  protected native boolean keyboardRelease (ByteBuffer uinput, int key);
 
-    return false;
+  @Override
+  public boolean keyboardPress (int key) {
+    ByteBuffer uinput = getUInputDescriptor();
+    if (uinput == null) return false;
+    return keyboardPress(uinput, key);
   }
 
-  public boolean injectKeyRelease (int key) {
-    if (open()) {
-      if (releaseKey(getUInputDescriptor(), key)) {
-        return true;
-      }
-    }
-
-    return false;
+  @Override
+  public boolean keyboardRelease (int key) {
+    ByteBuffer uinput = getUInputDescriptor();
+    if (uinput == null) return false;
+    return keyboardRelease(uinput, key);
   }
 
   public boolean injectKey (int key, boolean press) {
-    return press? injectKeyPress(key): injectKeyRelease(key);
+    return press? keyboardPress(key): keyboardRelease(key);
   }
 
   public boolean injectKey (int key, long duration) {
-    if (injectKey(key, true)) {
+    if (keyboardPress(key)) {
       ApplicationUtilities.sleep(duration);
 
-      if (injectKey(key, false)) {
+      if (keyboardRelease(key)) {
         return true;
       }
     }
@@ -60,7 +55,7 @@ public class KeyboardDevice extends UInputDevice {
 
   private boolean enableKeys (ByteBuffer uinput) {
     for (int key : scanCodeMap.values()) {
-      if (!enableKey(uinput, key)) return false;
+      if (!keyEnable(uinput, key)) return false;
     }
 
     return true;
@@ -68,7 +63,7 @@ public class KeyboardDevice extends UInputDevice {
 
   @Override
   protected boolean prepareDevice (ByteBuffer uinput) {
-    if (enableKeyEvents(uinput)) {
+    if (keyboardEnable(uinput)) {
       if (enableKeys(uinput)) {
         return true;
       }

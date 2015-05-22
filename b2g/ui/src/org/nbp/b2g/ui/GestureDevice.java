@@ -4,19 +4,40 @@ import java.nio.ByteBuffer;
 
 import android.util.Log;
 
-public abstract class GestureDevice extends UInputDevice {
+public abstract class GestureDevice extends UInputDevice implements GestureInterface {
   private final static String LOG_TAG = GestureDevice.class.getName();
 
   protected abstract boolean gestureBegin (ByteBuffer uinput, int x, int y);
   protected abstract boolean gestureEnd (ByteBuffer uinput);
-  protected abstract boolean gestureLocation (ByteBuffer uinput, int x, int y);
+  protected abstract boolean gestureMove (ByteBuffer uinput, int x, int y);
+
+  @Override
+  public boolean gestureBegin (int x, int y) {
+    ByteBuffer uinput = getUInputDescriptor();
+    if (uinput == null) return false;
+    return gestureBegin(uinput, x, y);
+  }
+
+  @Override
+  public boolean gestureEnd () {
+    ByteBuffer uinput = getUInputDescriptor();
+    if (uinput == null) return false;
+    return gestureEnd(uinput);
+  }
+
+  @Override
+  public boolean gestureMove (int x, int y) {
+    ByteBuffer uinput = getUInputDescriptor();
+    if (uinput == null) return false;
+    return gestureMove(uinput, x, y);
+  }
 
   public boolean tap (int x, int y, int count) {
     if (count < 1) return false;
     if (ApplicationContext.isTouchExplorationActive()) count += 1;
 
-    if (!open()) return false;
     ByteBuffer uinput = getUInputDescriptor();
+    if (uinput == null) return false;
 
     while (true) {
       if (!gestureBegin(uinput, x, y)) return false;
@@ -32,11 +53,11 @@ public abstract class GestureDevice extends UInputDevice {
   }
 
   public boolean swipe (int x1, int y1, int x2, int y2) {
-    if (open()) {
-      ByteBuffer uinput = getUInputDescriptor();
+    ByteBuffer uinput = getUInputDescriptor();
 
+    if (uinput != null) {
       if (gestureBegin(uinput, x1, y1)) {
-        if (gestureLocation(uinput, x2, y2)) {
+        if (gestureMove(uinput, x2, y2)) {
           if (gestureEnd(uinput)) {
             return true;
           }

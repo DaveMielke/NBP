@@ -250,7 +250,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardDevice, enableKeyEvents, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, keyboardEnable, jboolean,
   jobject uinput
 ) {
   UINPUT_DESCRIPTOR;
@@ -259,7 +259,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardDevice, enableKey, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, keyEnable, jboolean,
   jobject uinput, jint key
 ) {
   UINPUT_DESCRIPTOR;
@@ -268,7 +268,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardDevice, pressKey, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, keyboardPress, jboolean,
   jobject uinput, jint key
 ) {
   UINPUT_DESCRIPTOR;
@@ -279,7 +279,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardDevice, releaseKey, jboolean,
+  org_nbp_b2g_ui_KeyboardDevice, keyboardRelease, jboolean,
   jobject uinput, jint key
 ) {
   UINPUT_DESCRIPTOR;
@@ -461,7 +461,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_TouchDevice, gestureLocation, jboolean,
+  org_nbp_b2g_ui_TouchDevice, gestureMove, jboolean,
   jobject uinput, jint x, jint y
 ) {
   UINPUT_DESCRIPTOR;

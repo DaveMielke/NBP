@@ -42,7 +42,7 @@ public abstract class UInputDevice {
   }
 
   protected ByteBuffer getUInputDescriptor () {
-    return uinputDescriptor;
+    return open()? uinputDescriptor: null;
   }
 
   protected UInputDevice () {
