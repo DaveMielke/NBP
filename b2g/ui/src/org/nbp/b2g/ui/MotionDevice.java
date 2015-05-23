@@ -11,8 +11,8 @@ import android.view.MotionEvent;
 
 import android.os.SystemClock;
 
-public abstract class TouchEvents {
-  private final static String LOG_TAG = TouchEvents.class.getName();
+public class MotionDevice implements GestureInjecter {
+  private final static String LOG_TAG = MotionDevice.class.getName();
 
   private static InputManager getInputManager () {
     Object service = ApplicationContext.getSystemService(Context.INPUT_SERVICE);
@@ -47,16 +47,23 @@ public abstract class TouchEvents {
     boolean injected = injectEvent(event);
     event.recycle();
     return injected;
-  //InputManager.getInstance().injectInputEvent(event, InputManager.INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH);
-  //getInputManager().injectInputEvent(event, true);
   }
 
-  public static boolean tapScreen (int x, int y) {
-    if (!injectEvent(MotionEvent.ACTION_DOWN, x, y)) return false;
-    if (!injectEvent(MotionEvent.ACTION_UP, x, y)) return false;
-    return true;
+  @Override
+  public boolean gestureBegin (int x, int y) {
+    return injectEvent(MotionEvent.ACTION_DOWN, x, y);
   }
 
-  private TouchEvents () {
+  @Override
+  public boolean gestureEnd () {
+    return injectEvent(MotionEvent.ACTION_UP, 0, 0);
+  }
+
+  @Override
+  public boolean gestureMove (int x, int y) {
+    return injectEvent(MotionEvent.ACTION_MOVE, x, y);
+  }
+
+  public MotionDevice () {
   }
 }
