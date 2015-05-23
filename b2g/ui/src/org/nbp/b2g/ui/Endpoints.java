@@ -36,24 +36,20 @@ public abstract class Endpoints {
     }
   }
 
-  private final static HostEndpoint hostEndpoint = new HostEndpoint();
-  private final static FindEndpoint findEndpoint = new FindEndpoint();
-  private final static BluetoothEndpoint bluetoothEndpoint = new BluetoothEndpoint();
-
-  public static HostEndpoint getHostEndpoint () {
-    return hostEndpoint;
-  }
+  public final static LazyInstantiator<HostEndpoint> host = new LazyInstantiator<HostEndpoint>(HostEndpoint.class);
+  private final static LazyInstantiator<FindEndpoint> find = new LazyInstantiator<FindEndpoint>(FindEndpoint.class);
+  private final static LazyInstantiator<BluetoothEndpoint> bluetooth = new LazyInstantiator<BluetoothEndpoint>(BluetoothEndpoint.class);
 
   public static void setHostEndpoint () {
-    setCurrentEndpoint(hostEndpoint);
+    setCurrentEndpoint(host.get());
   }
 
   public static void setFindEndpoint () {
-    setCurrentEndpoint(findEndpoint);
+    setCurrentEndpoint(find.get());
   }
 
   public static void setBluetoothEndpoint () {
-    setCurrentEndpoint(bluetoothEndpoint);
+    setCurrentEndpoint(bluetooth.get());
   }
 
   private Endpoints () {

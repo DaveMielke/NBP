@@ -29,7 +29,7 @@ public class InputService extends InputMethodService {
   }
 
   private static Endpoint getHostEndpoint () {
-    return Endpoints.getHostEndpoint();
+    return Endpoints.host.get();
   }
 
   private static KeyboardMonitor getKeyboardMonitor () {

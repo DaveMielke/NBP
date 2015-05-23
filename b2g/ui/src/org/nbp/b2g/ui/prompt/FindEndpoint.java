@@ -7,7 +7,7 @@ public class FindEndpoint extends PromptEndpoint {
     boolean found = false;
 
     if (response.length() > 0) {
-      Endpoint endpoint = Endpoints.getHostEndpoint();
+      Endpoint endpoint = Endpoints.host.get();
 
       synchronized (endpoint) {
         int start = endpoint.getBrailleStart();
