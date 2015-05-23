@@ -45,7 +45,7 @@ public abstract class ApplicationUtilities {
   public static void message (Endpoint endpoint, String text) {
     BrailleDevice.write(endpoint, text);
 
-    SpeechDevice speech = Devices.getSpeechDevice();
+    SpeechDevice speech = Devices.speech.get();
     synchronized (speech) {
       speech.stopSpeaking();
       speech.say(text);

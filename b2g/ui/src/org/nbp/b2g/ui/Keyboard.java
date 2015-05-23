@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
 public abstract class Keyboard {
-  private final static KeyboardInjecter injecter = Devices.getKeyboardDevice();
+  private final static KeyboardInjecter injecter = Devices.keyboard.get();
 
   public static boolean pressKey (int key) {
     return injecter.keyboardPress(key);

@@ -28,12 +28,12 @@ public class SpeechVolumeControl extends LinearFloatControl {
 
   @Override
   protected float getFloatValue () {
-    return Devices.getSpeechDevice().getVolume();
+    return Devices.speech.get().getVolume();
   }
 
   @Override
   protected boolean setFloatValue (float value) {
-    return Devices.getSpeechDevice().setVolume(value);
+    return Devices.speech.get().setVolume(value);
   }
 
   public SpeechVolumeControl () {

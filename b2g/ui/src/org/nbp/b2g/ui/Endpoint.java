@@ -91,7 +91,7 @@ public abstract class Endpoint {
         }
 
         if (text.length() > 0) {
-          SpeechDevice speech = Devices.getSpeechDevice();
+          SpeechDevice speech = Devices.speech.get();
 
           synchronized (speech) {
             speech.stopSpeaking();

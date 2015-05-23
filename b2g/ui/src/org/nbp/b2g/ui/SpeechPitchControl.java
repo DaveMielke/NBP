@@ -28,12 +28,12 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
 
   @Override
   protected float getFloatValue () {
-    return Devices.getSpeechDevice().getPitch();
+    return Devices.speech.get().getPitch();
   }
 
   @Override
   protected boolean setFloatValue (float value) {
-    return Devices.getSpeechDevice().setPitch(value);
+    return Devices.speech.get().setPitch(value);
   }
 
   public SpeechPitchControl () {

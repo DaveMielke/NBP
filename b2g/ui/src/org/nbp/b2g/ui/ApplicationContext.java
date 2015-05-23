@@ -26,7 +26,7 @@ public abstract class ApplicationContext {
     }
 
     Clipboard.setClipboard();
-    Devices.getSpeechDevice().say(null);
+    Devices.speech.get().say(null);
     EventMonitors.startEventMonitors();
     Controls.restoreCurrentValues();
     return true;
