@@ -1,20 +1,44 @@
 package org.nbp.b2g.ui;
 
 public abstract class Devices {
-  private final static KeyboardDevice keyboardDevice = new KeyboardDevice();
-  private final static TouchDevice touchDevice = new TouchDevice();
-  private final static SpeechDevice speechDevice = new SpeechDevice();
+  private final static Object keyboardLock = new Object();
+  private static KeyboardDevice keyboardDevice = null;
 
   public static KeyboardDevice getKeyboardDevice () {
-    return keyboardDevice;
+    synchronized (keyboardLock) {
+      if (keyboardDevice == null) keyboardDevice = new KeyboardDevice();
+      return keyboardDevice;
+    }
   }
+
+  private final static Object touchLock = new Object();
+  private static TouchDevice touchDevice = null;
 
   public static TouchDevice getTouchDevice () {
-    return touchDevice;
+    synchronized (touchLock) {
+      if (touchDevice == null) touchDevice = new TouchDevice();
+      return touchDevice;
+    }
   }
 
+  private final static Object motionLock = new Object();
+  private static MotionDevice motionDevice = null;
+
+  public static MotionDevice getMotionDevice () {
+    synchronized (motionLock) {
+      if (motionDevice == null) motionDevice = new MotionDevice();
+      return motionDevice;
+    }
+  }
+
+  private final static Object speechLock = new Object();
+  private static SpeechDevice speechDevice = null;
+
   public static SpeechDevice getSpeechDevice () {
-    return speechDevice;
+    synchronized (speechLock) {
+      if (speechDevice == null) speechDevice = new SpeechDevice();
+      return speechDevice;
+    }
   }
 
   private Devices () {

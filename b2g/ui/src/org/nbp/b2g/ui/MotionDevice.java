@@ -14,6 +14,9 @@ import android.os.SystemClock;
 public class MotionDevice implements GestureInjecter {
   private final static String LOG_TAG = MotionDevice.class.getName();
 
+  private int lastX = 0;
+  private int lastY = 0;
+
   private static InputManager getInputManager () {
     Object service = ApplicationContext.getSystemService(Context.INPUT_SERVICE);
     if (service != null) return (InputManager)service;
@@ -39,13 +42,19 @@ public class MotionDevice implements GestureInjecter {
     return injected;
   }
 
-  private static boolean injectEvent (int action, int x, int y) {
+  private boolean injectEvent (int action, int x, int y) {
     long now = SystemClock.uptimeMillis();
     MotionEvent event = MotionEvent.obtain(now, now, action, x, y, 0);
     event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
 
     boolean injected = injectEvent(event);
     event.recycle();
+
+    if (injected) {
+      lastX = x;
+      lastY = y;
+    }
+
     return injected;
   }
 
@@ -56,7 +65,7 @@ public class MotionDevice implements GestureInjecter {
 
   @Override
   public boolean gestureEnd () {
-    return injectEvent(MotionEvent.ACTION_UP, 0, 0);
+    return injectEvent(MotionEvent.ACTION_UP, lastX, lastY);
   }
 
   @Override
