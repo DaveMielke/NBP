@@ -162,7 +162,7 @@ public abstract class Endpoint {
     try {
       if (this != Endpoints.getCurrentEndpoint()) return true;
       say();
-      return BrailleDevice.write();
+      return Devices.braille.get().write();
     } finally {
       Endpoints.READ_LOCK.unlock();
     }
@@ -352,7 +352,7 @@ public abstract class Endpoint {
   }
 
   protected void adjustRight (int offset, int keep) {
-    int brailleLength = BrailleDevice.size();
+    int brailleLength = Devices.braille.get().size();
 
     if (offset >= (lineIndent + brailleLength)) {
       lineIndent = offset + keep - brailleLength;
@@ -416,7 +416,7 @@ public abstract class Endpoint {
 
   public boolean scrollRight (int offset) {
     if (offset < 1) return false;
-    if (offset >= BrailleDevice.size()) return false;
+    if (offset >= Devices.braille.get().size()) return false;
 
     if ((offset += getLineIndent()) >= getLineLength()) return false;
     setLineIndent(offset);
@@ -437,13 +437,13 @@ public abstract class Endpoint {
       if (indent > length) indent = length;
     }
 
-    if ((indent -= BrailleDevice.size()) < 0) indent = 0;
+    if ((indent -= Devices.braille.get().size()) < 0) indent = 0;
     setLineIndent(indent);
     return write();
   }
 
   public boolean panRight () {
-    int indent = getLineIndent() + BrailleDevice.size();
+    int indent = getLineIndent() + Devices.braille.get().size();
     int length = getLineLength();
 
     if (indent > length) {

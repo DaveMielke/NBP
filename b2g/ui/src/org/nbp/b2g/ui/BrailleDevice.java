@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import android.util.Log;
 
-public abstract class BrailleDevice {
+public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
   public final static byte DOTS_NONE = 0;
@@ -17,19 +17,19 @@ public abstract class BrailleDevice {
   public final static byte DOT_7 =       0X40;
   public final static byte DOT_8 = (byte)0X80;
 
-  private final static Object LOCK = new Object();
-  private static byte[] brailleCells = null;
+  private final Object LOCK = new Object();
+  private byte[] brailleCells = null;
 
-  private native static boolean openDevice ();
-  private native static void closeDevice ();
+  private native boolean openDevice ();
+  private native void closeDevice ();
 
-  private native static String getVersion ();
-  private native static int getCellCount ();
+  private native String getVersion ();
+  private native int getCellCount ();
 
-  private native static boolean clearCells ();
-  private native static boolean writeCells (byte[] cells);
+  private native boolean clearCells ();
+  private native boolean writeCells (byte[] cells);
 
-  public static boolean open () {
+  public boolean open () {
     synchronized (LOCK) {
       if (brailleCells != null) return true;
 
@@ -55,7 +55,7 @@ public abstract class BrailleDevice {
     return false;
   }
 
-  public static void close () {
+  public void close () {
     synchronized (LOCK) {
       if (brailleCells != null) {
         brailleCells = null;
@@ -64,18 +64,18 @@ public abstract class BrailleDevice {
     }
   }
 
-  public static int size () {
+  public int size () {
     synchronized (LOCK) {
       if (open()) return brailleCells.length;
       return 0;
     }
   }
 
-  private static boolean writeCells () {
+  private boolean writeCells () {
     return writeCells(brailleCells);
   }
 
-  private static void setCells (Characters characters, String text) {
+  private void setCells (Characters characters, String text) {
     int count = text.length();
     if (count > brailleCells.length) count = brailleCells.length;
     int index = 0;
@@ -89,7 +89,7 @@ public abstract class BrailleDevice {
     while (index < brailleCells.length) brailleCells[index++] = 0;
   }
 
-  private static void setCells (Endpoint endpoint) {
+  private void setCells (Endpoint endpoint) {
     synchronized (endpoint) {
       String text = endpoint.getLineText();
       int length = text.length();
@@ -125,8 +125,8 @@ public abstract class BrailleDevice {
     }
   }
 
-  private static boolean writePending = false;
-  private static Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY) {
+  private boolean writePending = false;
+  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY) {
     @Override
     public void run () {
       synchronized (LOCK) {
@@ -138,7 +138,7 @@ public abstract class BrailleDevice {
     }
   };
 
-  public static boolean write () {
+  public boolean write () {
     synchronized (LOCK) {
       if (writeDelay.isActive()) {
         writePending = true;
@@ -161,7 +161,7 @@ public abstract class BrailleDevice {
     return false;
   }
 
-  public static boolean write (Endpoint endpoint, String message) {
+  public boolean write (Endpoint endpoint, String message) {
     synchronized (LOCK) {
       if (open()) {
         writeDelay.cancel();
@@ -178,7 +178,7 @@ public abstract class BrailleDevice {
     return false;
   }
 
-  private BrailleDevice () {
+  public BrailleDevice () {
   }
 
   static {

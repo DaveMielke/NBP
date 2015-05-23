@@ -6,7 +6,7 @@ public class LazyInstantiator<T> {
   private final static String LOG_TAG = LazyInstantiator.class.getName();
 
   private final Class<T> objectType;
-  private Object objectReference = null;
+  private T objectReference = null;
   private final static Object objectLock = new Object();
 
   public T get () {
@@ -22,7 +22,7 @@ public class LazyInstantiator<T> {
       }
     }
 
-    return (T)objectReference;
+    return objectReference;
   }
 
   public LazyInstantiator (Class<T> type) {

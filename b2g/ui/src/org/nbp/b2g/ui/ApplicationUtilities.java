@@ -43,7 +43,7 @@ public abstract class ApplicationUtilities {
   }
 
   public static void message (Endpoint endpoint, String text) {
-    BrailleDevice.write(endpoint, text);
+    Devices.braille.get().write(endpoint, text);
 
     SpeechDevice speech = Devices.speech.get();
     synchronized (speech) {
