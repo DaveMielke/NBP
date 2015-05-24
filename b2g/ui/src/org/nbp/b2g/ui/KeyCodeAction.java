@@ -32,7 +32,7 @@ public abstract class KeyCodeAction extends KeyAction {
       final InputConnection connection = InputService.getInputConnection();
 
       if (connection != null) {
-        KeyCombinationInjecter keyCombinationInjecter = new KeyCombinationInjecter() {
+        KeyCombinationInjector keyCombinationInjector = new KeyCombinationInjector() {
           @Override
           protected boolean injectKeyPress (int key) {
             KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, key);
@@ -55,7 +55,7 @@ public abstract class KeyCodeAction extends KeyAction {
           }
         };
 
-        if (keyCombinationInjecter.injectKeyCombination(keyCode, getKeyCodeModifiers())) {
+        if (keyCombinationInjector.injectKeyCombination(keyCode, getKeyCodeModifiers())) {
           return true;
         }
       }

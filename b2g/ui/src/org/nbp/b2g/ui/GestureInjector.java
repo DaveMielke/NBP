@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public interface GestureInjecter {
+public interface GestureInjector {
   public boolean gestureBegin (int x, int y);
   public boolean gestureEnd ();
   public boolean gestureMove (int x, int y);

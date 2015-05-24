@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.util.Log;
 
-public abstract class GestureDevice extends UInputDevice implements GestureInjecter {
+public abstract class GestureDevice extends UInputDevice implements GestureInjector {
   private final static String LOG_TAG = GestureDevice.class.getName();
 
   protected abstract boolean gestureBegin (ByteBuffer uinput, int x, int y);

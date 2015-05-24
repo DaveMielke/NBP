@@ -25,7 +25,7 @@ public abstract class ScanCodeAction extends KeyCodeAction {
       int value = KeyboardDevice.getScanCode(name);
 
       if (value != KeyboardDevice.NULL_SCAN_CODE) {
-        KeyCombinationInjecter keyCombinationInjecter = new KeyCombinationInjecter() {
+        KeyCombinationInjector keyCombinationInjector = new KeyCombinationInjector() {
           @Override
           protected boolean injectKeyPress (int key) {
             return Keyboard.pressKey(key);
@@ -42,7 +42,7 @@ public abstract class ScanCodeAction extends KeyCodeAction {
           }
         };
 
-        if (keyCombinationInjecter.injectKeyCombination(value, getScanCodeModifiers())) {
+        if (keyCombinationInjector.injectKeyCombination(value, getScanCodeModifiers())) {
           return true;
         }
       }

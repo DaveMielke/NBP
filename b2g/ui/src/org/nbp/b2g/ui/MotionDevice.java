@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 
 import android.os.SystemClock;
 
-public class MotionDevice implements GestureInjecter {
+public class MotionDevice implements GestureInjector {
   private final static String LOG_TAG = MotionDevice.class.getName();
 
   private int lastX = 0;

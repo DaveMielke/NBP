@@ -24,7 +24,7 @@ public abstract class KeyAction extends Action {
     ));
   }
 
-  protected abstract class KeyCombinationInjecter {
+  protected abstract class KeyCombinationInjector {
     protected abstract boolean injectKeyPress (int key);
     protected abstract boolean injectKeyRelease (int key);
     protected abstract String getKeyType ();

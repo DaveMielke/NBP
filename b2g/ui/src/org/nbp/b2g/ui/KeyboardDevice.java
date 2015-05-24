@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-public class KeyboardDevice extends UInputDevice implements KeyboardInjecter {
+public class KeyboardDevice extends UInputDevice implements KeyboardInjector {
   private final static String LOG_TAG = KeyboardDevice.class.getName();
 
   protected native boolean keyboardEnable (ByteBuffer uinput);

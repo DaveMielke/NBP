@@ -1,16 +1,16 @@
 package org.nbp.b2g.ui;
 
 public abstract class Gesture {
-  private final static GestureInjecter injecter = Devices.touch.get();
+  private final static GestureInjector injector = Devices.touch.get();
 
   public static boolean tap (int x, int y, int count) {
     if (count < 1) return false;
     if (ApplicationContext.isTouchExplorationActive()) count += 1;
 
     while (true) {
-      if (!injecter.gestureBegin(x, y)) return false;
+      if (!injector.gestureBegin(x, y)) return false;
       ApplicationUtilities.sleep(45);
-      if (!injecter.gestureEnd()) return false;
+      if (!injector.gestureEnd()) return false;
       if ((count -= 1) == 0) return true;
       ApplicationUtilities.sleep(100);
     }
@@ -21,9 +21,9 @@ public abstract class Gesture {
   }
 
   public static boolean swipe (int x1, int y1, int x2, int y2) {
-    if (injecter.gestureBegin(x1, y1)) {
-      if (injecter.gestureMove(x2, y2)) {
-        if (injecter.gestureEnd()) {
+    if (injector.gestureBegin(x1, y1)) {
+      if (injector.gestureMove(x2, y2)) {
+        if (injector.gestureEnd()) {
           return true;
         }
       }
