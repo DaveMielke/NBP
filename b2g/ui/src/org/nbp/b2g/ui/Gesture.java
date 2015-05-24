@@ -30,8 +30,15 @@ public abstract class Gesture {
 
 
   public static boolean tap (int x, int y, int count) {
-    if (count < 1) return false;
-    if (ApplicationContext.isTouchExplorationActive()) count += 1;
+    if (count < 1) {
+      throw new IllegalArgumentException(String.format(
+        "count must be greater than 0: %d", count
+      ));
+    }
+
+    if (ApplicationContext.isTouchExplorationActive()) {
+      count += 1;
+    }
 
     while (true) {
       if (!begin(x, y, 1)) return false;
@@ -47,7 +54,15 @@ public abstract class Gesture {
   }
 
   public static boolean swipe (int x1, int y1, int x2, int y2, int fingers) {
-    if (ApplicationContext.isTouchExplorationActive()) fingers += 1;
+    if (fingers < 1) {
+      throw new IllegalArgumentException(String.format(
+        "fingers must be greater than 0: %d", fingers
+      ));
+    }
+
+    if (ApplicationContext.isTouchExplorationActive()) {
+      fingers += 1;
+    }
 
     double horizontalPosition = (double)x1;
     double verticalPosition = (double)y1;
