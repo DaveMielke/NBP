@@ -14,6 +14,10 @@ MAKE_FILE_LOG_TAG;
 #define KEY_CNT	(KEY_MAX + 1)
 #endif /* KEY_CNT */
 
+#ifndef REL_CNT
+#define REL_CNT	(REL_MAX + 1)
+#endif /* REL_CNT */
+
 #ifndef ABS_CNT
 #define ABS_CNT	(ABS_MAX + 1)
 #endif /* ABS_CNT */
@@ -131,6 +135,25 @@ static int
 enableUInputKeyCodes (int device, const InputEventCode *codes) {
   return enableUInputEventCodes(device, codes, KEY_CNT,
                                 enableUInputKeyEvents, enableUInputKeyCode);
+}
+
+static int
+enableUInputRelEvents (int device) {
+  return enableUInputEventType(device, EV_REL);
+}
+
+static int
+enableUInputRelCode (int device, InputEventCode code) {
+  if (ioctl(device, UI_SET_RELBIT, code) != -1) return 1;
+  logSystemError(LOG_TAG, "ioctl[UI_SET_RELBIT]");
+  LOG(DEBUG, "failing rel code: %d", code);
+  return 0;
+}
+
+static int
+enableUInputRelCodes (int device, const InputEventCode *codes) {
+  return enableUInputEventCodes(device, codes, REL_CNT,
+                                enableUInputRelEvents, enableUInputRelCode);
 }
 
 static int
@@ -286,6 +309,59 @@ JAVA_METHOD(
 
   if (!writeKeyEvent(ui->device, key, 0)) return JNI_FALSE;
   if (!writeSynReport(ui->device)) return JNI_FALSE;
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_PointerDevice, pointerEnable, jboolean,
+  jobject uinput
+) {
+  UINPUT_DESCRIPTOR;
+
+  static const InputEventCode keyCodes[] = {
+    BTN_LEFT,
+    BTN_RIGHT,
+    BTN_MIDDLE,
+    KEY_CNT
+  };
+
+  static const InputEventCode relCodes[] = {
+    REL_X,
+    REL_Y,
+    REL_WHEEL,
+    REL_HWHEEL,
+    REL_CNT
+  };
+
+  if (!enableUInputKeyCodes(ui->device, keyCodes)) return JNI_FALSE;
+  if (!enableUInputRelCodes(ui->device, relCodes)) return JNI_FALSE;
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_PointerDevice, gestureBegin, jboolean,
+  jobject uinput, jint x, jint y
+) {
+//UINPUT_DESCRIPTOR;
+
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_PointerDevice, gestureEnd, jboolean,
+  jobject uinput
+) {
+//UINPUT_DESCRIPTOR;
+
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_PointerDevice, gestureMove, jboolean,
+  jobject uinput, jint x, jint y
+) {
+//UINPUT_DESCRIPTOR;
+
   return JNI_TRUE;
 }
 

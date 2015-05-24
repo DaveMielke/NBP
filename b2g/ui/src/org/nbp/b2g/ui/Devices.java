@@ -10,6 +10,9 @@ public abstract class Devices {
   public final static LazyInstantiator<TouchDevice> touch = new
     LazyInstantiator<TouchDevice>(TouchDevice.class);
 
+  public final static LazyInstantiator<PointerDevice> pointer = new
+    LazyInstantiator<PointerDevice>(PointerDevice.class);
+
   public final static LazyInstantiator<MotionDevice> motion = new
     LazyInstantiator<MotionDevice>(MotionDevice.class);
 
