@@ -17,7 +17,6 @@ public class BrailleDevice {
   public final static byte DOT_7 =       0X40;
   public final static byte DOT_8 = (byte)0X80;
 
-  private final Object LOCK = new Object();
   private byte[] brailleCells = null;
 
   private native boolean openDevice ();
@@ -30,7 +29,7 @@ public class BrailleDevice {
   private native boolean writeCells (byte[] cells);
 
   public boolean open () {
-    synchronized (LOCK) {
+    synchronized (this) {
       if (brailleCells != null) return true;
 
       if (openDevice()) {
@@ -56,7 +55,7 @@ public class BrailleDevice {
   }
 
   public void close () {
-    synchronized (LOCK) {
+    synchronized (this) {
       if (brailleCells != null) {
         brailleCells = null;
         closeDevice();
@@ -65,7 +64,7 @@ public class BrailleDevice {
   }
 
   public int size () {
-    synchronized (LOCK) {
+    synchronized (this) {
       if (open()) return brailleCells.length;
       return 0;
     }
@@ -129,7 +128,7 @@ public class BrailleDevice {
   private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY) {
     @Override
     public void run () {
-      synchronized (LOCK) {
+      synchronized (this) {
         if (writePending) {
           writePending = false;
           write();
@@ -139,7 +138,7 @@ public class BrailleDevice {
   };
 
   public boolean write () {
-    synchronized (LOCK) {
+    synchronized (this) {
       if (writeDelay.isActive()) {
         writePending = true;
         return true;
@@ -162,7 +161,7 @@ public class BrailleDevice {
   }
 
   public boolean write (Endpoint endpoint, String message) {
-    synchronized (LOCK) {
+    synchronized (this) {
       if (open()) {
         writeDelay.cancel();
         setCells(endpoint.getCharacters(), message);
