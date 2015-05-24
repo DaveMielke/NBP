@@ -12,7 +12,7 @@ public class PointerDevice extends GestureDevice {
   protected native boolean pointerEnable (ByteBuffer uinput, int width, int height);
 
   @Override
-  protected native boolean gestureBegin (ByteBuffer uinput, int x, int y);
+  protected native boolean gestureBegin (ByteBuffer uinput, int x, int y, int fingers);
 
   @Override
   protected native boolean gestureEnd (ByteBuffer uinput);

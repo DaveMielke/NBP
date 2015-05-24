@@ -57,7 +57,7 @@ public class MotionDevice implements GestureInjector {
   }
 
   @Override
-  public boolean gestureBegin (int x, int y) {
+  public boolean gestureBegin (int x, int y, int fingers) {
     return injectEvent(MotionEvent.ACTION_DOWN, x, y);
   }
 

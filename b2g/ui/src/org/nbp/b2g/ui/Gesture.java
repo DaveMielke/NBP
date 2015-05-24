@@ -7,11 +7,11 @@ public abstract class Gesture {
 
   private final static GestureInjector injector = Devices.pointer.get();
 
-  private static boolean begin (int x, int y) {
+  private static boolean begin (int x, int y, int fingers) {
     Log.v(LOG_TAG, String.format("gesture begin: %dx%d", x, y));
 
     if (injector == null) return true;
-    return injector.gestureBegin(x, y);
+    return injector.gestureBegin(x, y, fingers);
   }
 
   private static boolean end () {
@@ -34,7 +34,7 @@ public abstract class Gesture {
     if (ApplicationContext.isTouchExplorationActive()) count += 1;
 
     while (true) {
-      if (!begin(x, y)) return false;
+      if (!begin(x, y, 1)) return false;
       ApplicationUtilities.sleep(45);
       if (!end()) return false;
       if ((count -= 1) == 0) return true;
@@ -46,7 +46,9 @@ public abstract class Gesture {
     return tap(x, y, 1);
   }
 
-  public static boolean swipe (int x1, int y1, int x2, int y2) {
+  public static boolean swipe (int x1, int y1, int x2, int y2, int fingers) {
+    if (ApplicationContext.isTouchExplorationActive()) fingers += 1;
+
     double horizontalPosition = (double)x1;
     double verticalPosition = (double)y1;
 
@@ -60,7 +62,7 @@ public abstract class Gesture {
     double horizontalStep = horizontalDistance / stepCount;
     double verticalStep = verticalDistance / stepCount;
 
-    if (!begin(x1, y1)) return false;
+    if (!begin(x1, y1, fingers)) return false;
     int stepInterval = 10;
 
     while (true) {
@@ -78,6 +80,10 @@ public abstract class Gesture {
 
     if (!move(x2, y2)) return false;
     return end();
+  }
+
+  public static boolean swipe (int x1, int y1, int x2, int y2) {
+    return swipe(x1, y1, x2, y2, 1);
   }
 
   private Gesture () {

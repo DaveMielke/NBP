@@ -9,15 +9,15 @@ import android.util.Log;
 public abstract class GestureDevice extends UInputDevice implements GestureInjector {
   private final static String LOG_TAG = GestureDevice.class.getName();
 
-  protected abstract boolean gestureBegin (ByteBuffer uinput, int x, int y);
+  protected abstract boolean gestureBegin (ByteBuffer uinput, int x, int y, int fingers);
   protected abstract boolean gestureEnd (ByteBuffer uinput);
   protected abstract boolean gestureMove (ByteBuffer uinput, int x, int y);
 
   @Override
-  public boolean gestureBegin (int x, int y) {
+  public boolean gestureBegin (int x, int y, int fingers) {
     ByteBuffer uinput = getUInputDescriptor();
     if (uinput == null) return false;
-    return gestureBegin(uinput, x, y);
+    return gestureBegin(uinput, x, y, fingers);
   }
 
   @Override

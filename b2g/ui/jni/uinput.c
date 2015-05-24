@@ -361,7 +361,7 @@ JAVA_METHOD(
 
 JAVA_METHOD(
   org_nbp_b2g_ui_PointerDevice, gestureBegin, jboolean,
-  jobject uinput, jint x, jint y
+  jobject uinput, jint x, jint y, jint fingers
 ) {
   UINPUT_DESCRIPTOR;
 
@@ -546,7 +546,7 @@ JAVA_METHOD(
 
 JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, gestureBegin, jboolean,
-  jobject uinput, jint x, jint y
+  jobject uinput, jint x, jint y, jint fingers
 ) {
   UINPUT_DESCRIPTOR;
 
