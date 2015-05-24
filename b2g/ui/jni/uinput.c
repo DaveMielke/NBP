@@ -312,9 +312,16 @@ JAVA_METHOD(
   return JNI_TRUE;
 }
 
+static int
+writePointerLocation (int device, InputEventValue x, InputEventValue y) {
+  if (!writeAbsEvent(device, ABS_X, x)) return 0;
+  if (!writeAbsEvent(device, ABS_Y, y)) return 0;
+  return 1;
+}
+
 JAVA_METHOD(
   org_nbp_b2g_ui_PointerDevice, pointerEnable, jboolean,
-  jobject uinput
+  jobject uinput, jint width, jint height
 ) {
   UINPUT_DESCRIPTOR;
 
@@ -333,8 +340,22 @@ JAVA_METHOD(
     REL_CNT
   };
 
+  static const InputEventCode absCodes[] = {
+    ABS_X,
+    ABS_Y,
+    ABS_CNT
+  };
+
+  ui->properties.absmin[ABS_X] = 0;
+  ui->properties.absmax[ABS_X] = width - 1;
+
+  ui->properties.absmin[ABS_Y] = 0;
+  ui->properties.absmax[ABS_Y] = height - 1;
+
   if (!enableUInputKeyCodes(ui->device, keyCodes)) return JNI_FALSE;
   if (!enableUInputRelCodes(ui->device, relCodes)) return JNI_FALSE;
+  if (!enableUInputAbsCodes(ui->device, absCodes)) return JNI_FALSE;
+
   return JNI_TRUE;
 }
 
@@ -342,8 +363,11 @@ JAVA_METHOD(
   org_nbp_b2g_ui_PointerDevice, gestureBegin, jboolean,
   jobject uinput, jint x, jint y
 ) {
-//UINPUT_DESCRIPTOR;
+  UINPUT_DESCRIPTOR;
 
+  if (!writePointerLocation(ui->device, x, y)) return JNI_FALSE;
+  if (!writeKeyEvent(ui->device, BTN_LEFT, 1)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
@@ -351,8 +375,10 @@ JAVA_METHOD(
   org_nbp_b2g_ui_PointerDevice, gestureEnd, jboolean,
   jobject uinput
 ) {
-//UINPUT_DESCRIPTOR;
+  UINPUT_DESCRIPTOR;
 
+  if (!writeKeyEvent(ui->device, BTN_LEFT, 0)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
@@ -360,8 +386,9 @@ JAVA_METHOD(
   org_nbp_b2g_ui_PointerDevice, gestureMove, jboolean,
   jobject uinput, jint x, jint y
 ) {
-//UINPUT_DESCRIPTOR;
+  UINPUT_DESCRIPTOR;
 
+  if (!writePointerLocation(ui->device, x, y)) return JNI_FALSE;
   return JNI_TRUE;
 }
 

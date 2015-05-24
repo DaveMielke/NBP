@@ -2,12 +2,14 @@ package org.nbp.b2g.ui;
 
 import java.nio.ByteBuffer;
 
+import android.graphics.Point;
+
 import android.util.Log;
 
 public class PointerDevice extends GestureDevice {
   private final static String LOG_TAG = PointerDevice.class.getName();
 
-  protected native boolean pointerEnable (ByteBuffer uinput);
+  protected native boolean pointerEnable (ByteBuffer uinput, int width, int height);
 
   @Override
   protected native boolean gestureBegin (ByteBuffer uinput, int x, int y);
@@ -20,7 +22,8 @@ public class PointerDevice extends GestureDevice {
 
   @Override
   protected boolean prepareDevice (ByteBuffer uinput) {
-    return pointerEnable(uinput);
+    Point size = getScreenSize();
+    return pointerEnable(uinput, size.x, size.y);
   }
 
   public PointerDevice () {

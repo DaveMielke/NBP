@@ -2,6 +2,8 @@ package org.nbp.b2g.ui;
 
 import java.nio.ByteBuffer;
 
+import android.graphics.Point;
+
 import android.util.Log;
 
 public abstract class GestureDevice extends UInputDevice implements GestureInjector {
@@ -30,6 +32,13 @@ public abstract class GestureDevice extends UInputDevice implements GestureInjec
     ByteBuffer uinput = getUInputDescriptor();
     if (uinput == null) return false;
     return gestureMove(uinput, x, y);
+  }
+
+  protected Point getScreenSize () {
+    Point size = ApplicationContext.getScreenSize();
+    if (size == null) size = new Point(0, 0);
+    Log.d(LOG_TAG, String.format("screen size: %dx%d", size.x, size.y));
+    return size;
   }
 
   public GestureDevice () {

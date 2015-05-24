@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
 public abstract class Gesture {
-  private final static GestureInjector injector = Devices.touch.get();
+  private final static GestureInjector injector = Devices.pointer.get();
 
   public static boolean tap (int x, int y, int count) {
     if (count < 1) return false;

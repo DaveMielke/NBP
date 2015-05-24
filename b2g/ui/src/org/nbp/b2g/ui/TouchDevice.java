@@ -22,20 +22,8 @@ public class TouchDevice extends GestureDevice {
 
   @Override
   protected boolean prepareDevice (ByteBuffer uinput) {
-    Point size = ApplicationContext.getScreenSize();
-    int width;
-    int height;
-
-    if (size != null) {
-      width = size.x;
-      height = size.y;
-      Log.d(LOG_TAG, String.format("screen size: %dx%d", width, height));
-    } else {
-      width = 0;
-      height = 0;
-    }
-
-    return touchEnable(uinput, width, height);
+    Point size = getScreenSize();
+    return touchEnable(uinput, size.x, size.y);
   }
 
   public TouchDevice () {
