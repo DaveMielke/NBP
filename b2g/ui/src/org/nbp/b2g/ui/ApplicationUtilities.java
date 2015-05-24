@@ -13,6 +13,10 @@ public abstract class ApplicationUtilities {
     return ApplicationParameters.SDK_VERSION >= version;
   }
 
+  public static long getSystemClock () {
+    return SystemClock.uptimeMillis();
+  }
+
   public static void sleep (long duration) {
     if (duration > 0) SystemClock.sleep(duration);
   }

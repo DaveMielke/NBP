@@ -21,15 +21,36 @@ public abstract class Gesture {
   }
 
   public static boolean swipe (int x1, int y1, int x2, int y2) {
-    if (injector.gestureBegin(x1, y1)) {
-      if (injector.gestureMove(x2, y2)) {
-        if (injector.gestureEnd()) {
-          return true;
-        }
-      }
+    double horizontalPosition = (double)x1;
+    double verticalPosition = (double)y1;
+
+    double horizontalDistance = (double)x2 - horizontalPosition;
+    double verticalDistance = (double)y2 - verticalPosition;
+
+    double totalDistance = Math.hypot(horizontalDistance, verticalDistance);
+    double stepDistance = 10.0;
+    double stepCount = totalDistance / stepDistance;
+
+    double horizontalStep = horizontalDistance / stepCount;
+    double verticalStep = verticalDistance / stepCount;
+
+    if (!injector.gestureBegin(x1, y1)) return false;
+    int stepInterval = 10;
+
+    while (stepCount > 1.0) {
+      stepCount -= 1.0;
+      ApplicationUtilities.sleep(stepInterval);
+
+      horizontalPosition += horizontalStep;
+      verticalPosition += verticalStep;
+
+      int x = (int)Math.round(horizontalPosition);
+      int y = (int)Math.round(verticalPosition);
+      if (!injector.gestureMove(x, y)) return false;
     }
 
-    return false;
+    if (!injector.gestureMove(x2, y2)) return false;
+    return injector.gestureEnd();
   }
 
   private Gesture () {

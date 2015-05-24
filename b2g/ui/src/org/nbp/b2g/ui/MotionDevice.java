@@ -9,8 +9,6 @@ import android.view.InputDevice;
 import android.view.InputEvent;
 import android.view.MotionEvent;
 
-import android.os.SystemClock;
-
 public class MotionDevice implements GestureInjector {
   private final static String LOG_TAG = MotionDevice.class.getName();
 
@@ -43,7 +41,7 @@ public class MotionDevice implements GestureInjector {
   }
 
   private boolean injectEvent (int action, int x, int y) {
-    long now = SystemClock.uptimeMillis();
+    long now = ApplicationUtilities.getSystemClock();
     MotionEvent event = MotionEvent.obtain(now, now, action, x, y, 0);
     event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
 

@@ -389,6 +389,7 @@ JAVA_METHOD(
   UINPUT_DESCRIPTOR;
 
   if (!writePointerLocation(ui->device, x, y)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
   return JNI_TRUE;
 }
 
