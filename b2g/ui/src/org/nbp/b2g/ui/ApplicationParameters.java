@@ -40,6 +40,12 @@ public abstract class ApplicationParameters {
   public static volatile long LONG_PRESS_DELAY = 100; // milliseconds
   public static volatile long VIEW_SCROLL_TIMEOUT = 5000; // milliseconds
 
+  public static volatile long TAP_HOLD_TIME = 45; // milliseconds
+  public static volatile long TAP_WAIT_TIME = 100; // milliseconds
+
+  public static volatile long SWIPE_STEP_INTERVAL = 10; // milliseconds
+  public static volatile double SWIPE_STEP_DISTANCE = 10.0; // pixels
+
   public static volatile int TONE_VOLUME = 100; // percentage
   public static volatile int BEEP_DURATION = 100; // milliseconds
   public static volatile int ALERT_DURATION = 300; // milliseconds

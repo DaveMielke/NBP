@@ -44,10 +44,10 @@ public abstract class Gesture {
 
     while (true) {
       if (!begin(x, y, 1)) return false;
-      ApplicationUtilities.sleep(45);
+      ApplicationUtilities.sleep(ApplicationParameters.TAP_HOLD_TIME);
       if (!end()) return false;
       if ((count -= 1) == 0) return true;
-      ApplicationUtilities.sleep(100);
+      ApplicationUtilities.sleep(ApplicationParameters.TAP_WAIT_TIME);
     }
   }
 
@@ -73,14 +73,14 @@ public abstract class Gesture {
     double verticalDistance = (double)y2 - verticalPosition;
 
     double totalDistance = Math.hypot(horizontalDistance, verticalDistance);
-    double stepDistance = 10.0;
+    double stepDistance = ApplicationParameters.SWIPE_STEP_DISTANCE;
     double stepCount = Math.rint(totalDistance / stepDistance);
 
     double horizontalStep = horizontalDistance / stepCount;
     double verticalStep = verticalDistance / stepCount;
 
     if (!begin(x1, y1, fingers)) return false;
-    int stepInterval = 10;
+    long stepInterval = ApplicationParameters.SWIPE_STEP_INTERVAL;
 
     while (true) {
       ApplicationUtilities.sleep(stepInterval);
