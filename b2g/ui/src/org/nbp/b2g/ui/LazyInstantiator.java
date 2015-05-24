@@ -7,17 +7,16 @@ public class LazyInstantiator<T> {
 
   private final Class<T> objectType;
   private T objectReference = null;
-  private final static Object objectLock = new Object();
 
   public T get () {
-    synchronized (objectLock) {
+    synchronized (this) {
       if (objectReference == null) {
         try {
           objectReference = objectType.newInstance();
         } catch (InstantiationException exception) {
-          Log.w(LOG_TAG, "object not instantiated: " + exception.getMessage());
+          throw new RuntimeException(exception);
         } catch (IllegalAccessException exception) {
-          Log.w(LOG_TAG, "object not accessible: " + exception.getMessage());
+          throw new RuntimeException(exception);
         }
       }
     }
