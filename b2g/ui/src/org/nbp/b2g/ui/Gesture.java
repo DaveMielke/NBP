@@ -8,7 +8,9 @@ public abstract class Gesture {
   private final static GestureInjector injector = Devices.pointer.get();
 
   private static boolean begin (int x, int y, int fingers) {
-    Log.v(LOG_TAG, String.format("gesture begin: %dx%d", x, y));
+    Log.v(LOG_TAG, String.format(
+      "gesture begin: [%d,%d] Fingers:%d", x, y, fingers
+    ));
 
     if (injector == null) return true;
     return injector.gestureBegin(x, y, fingers);
@@ -22,7 +24,7 @@ public abstract class Gesture {
   }
 
   private static boolean move (int x, int y) {
-    Log.v(LOG_TAG, String.format("gesture move: %dx%d", x, y));
+    Log.v(LOG_TAG, String.format("gesture move: [%d,%d]", x, y));
 
     if (injector == null) return true;
     return injector.gestureMove(x, y);
