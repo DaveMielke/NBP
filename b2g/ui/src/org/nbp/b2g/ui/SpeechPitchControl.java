@@ -33,7 +33,9 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    return Devices.speech.get().setPitch(value);
+    if (!Devices.speech.get().setPitch(value)) return false;
+    ApplicationSettings.SPEECH_PITCH = value;
+    return true;
   }
 
   public SpeechPitchControl () {

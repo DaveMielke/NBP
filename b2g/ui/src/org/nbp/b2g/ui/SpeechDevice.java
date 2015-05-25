@@ -110,7 +110,6 @@ public class SpeechDevice {
       synchronized (this) {
         if (isStarted()) {
           ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
-          ApplicationSettings.SPEECH_VOLUME = volume;
           return true;
         }
       }
@@ -124,7 +123,6 @@ public class SpeechDevice {
       synchronized (this) {
         if (isStarted()) {
           ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
-          ApplicationSettings.SPEECH_BALANCE = balance;
           return true;
         }
       }
@@ -138,7 +136,6 @@ public class SpeechDevice {
       synchronized (this) {
         if (isStarted()) {
           if (ttsObject.setSpeechRate(rate) == OK) {
-            ApplicationSettings.SPEECH_RATE = rate;
             return true;
           }
         }
@@ -153,7 +150,6 @@ public class SpeechDevice {
       synchronized (this) {
         if (isStarted()) {
           if (ttsObject.setPitch(pitch) == OK) {
-            ApplicationSettings.SPEECH_PITCH = pitch;
             return true;
           }
         }

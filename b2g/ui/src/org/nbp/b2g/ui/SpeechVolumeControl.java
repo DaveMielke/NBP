@@ -33,7 +33,9 @@ public class SpeechVolumeControl extends LinearFloatControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    return Devices.speech.get().setVolume(value);
+    if (!Devices.speech.get().setVolume(value)) return false;
+    ApplicationSettings.SPEECH_VOLUME = value;
+    return true;
   }
 
   public SpeechVolumeControl () {
