@@ -7,6 +7,8 @@ SB         |MoveBackward|
 SF         |MoveForward|
 C          |Click|
 SC         |LongClick|
+SU         |Notifications|
+SD         |HomeKey|
 SL         |BackKey|
 SR         |RecentApps|
 S1478      |PowerOff|

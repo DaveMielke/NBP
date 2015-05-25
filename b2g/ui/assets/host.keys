@@ -7,6 +7,9 @@ SF MoveForward
 C Click
 SC LongClick
 
+SU Notifications
+SD HomeKey
+
 SL BackKey
 SR RecentApps
 
@@ -40,15 +43,16 @@ S234-2456 AndroidWifiSettings
 # Developer Actions #
 #####################
 
-SU ScrollBackward
-SD ScrollForward
+B4568 SaveScreen
 
 B4 MoveToParent
 B5 MoveToPreviousSibling
 B6 MoveToNextSibling
 B8 MoveToChild
 B56 MoveToSelf
-B4568 SaveScreen
+
+B456 ScrollBackward
+B568 ScrollForward
 
 F1 LogKeys
 F2 LogActions

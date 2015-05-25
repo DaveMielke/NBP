@@ -5,14 +5,14 @@ FB1245  |DeveloperActions|
 F12     |SaveControls|
 F23     |RestoreControls|
 F37     |ResetControls|
-SU      |ScrollBackward|
-SD      |ScrollForward|
+B4568   |SaveScreen|
 B4      |MoveToParent|
 B5      |MoveToPreviousSibling|
 B6      |MoveToNextSibling|
 B8      |MoveToChild|
 B56     |MoveToSelf|
-B4568   |SaveScreen|
+B456    |ScrollBackward|
+B568    |ScrollForward|
 F1      |LogKeys|
 F2      |LogActions|
 F3      |LogNavigation|
