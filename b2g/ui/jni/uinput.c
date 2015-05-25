@@ -181,6 +181,11 @@ writeKeyEvent (int device, InputEventCode key, int press) {
 }
 
 static int
+writeRelEvent (int device, InputEventCode action, InputEventValue value) {
+  return writeInputEvent(device, EV_REL, action, value);
+}
+
+static int
 writeAbsEvent (int device, InputEventCode action, InputEventValue value) {
   return writeInputEvent(device, EV_ABS, action, value);
 }
