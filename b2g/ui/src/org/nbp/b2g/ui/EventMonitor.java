@@ -11,7 +11,7 @@ public abstract class EventMonitor extends Thread {
   private native void monitorDevice (int device);
 
   public void onKeyEvent (int code, boolean press) {
-    if (ApplicationParameters.CURRENT_LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYS) {
       Log.d(LOG_TAG, "scan code " + (press? "press": "release") + " received: " + code);
     }
 

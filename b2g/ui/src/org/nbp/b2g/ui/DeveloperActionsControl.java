@@ -18,12 +18,12 @@ public class DeveloperActionsControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_DEVELOPER_ACTIONS;
+    return ApplicationSettings.DEVELOPER_ACTIONS;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_DEVELOPER_ACTIONS = value;
+    ApplicationSettings.DEVELOPER_ACTIONS = value;
     return true;
   }
 

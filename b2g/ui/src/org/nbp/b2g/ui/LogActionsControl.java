@@ -18,12 +18,12 @@ public class LogActionsControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_LOG_ACTIONS;
+    return ApplicationSettings.LOG_ACTIONS;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_LOG_ACTIONS = value;
+    ApplicationSettings.LOG_ACTIONS = value;
     return true;
   }
 

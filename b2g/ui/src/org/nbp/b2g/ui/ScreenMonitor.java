@@ -66,13 +66,13 @@ public class ScreenMonitor extends AccessibilityService {
   }
 
   private void logMissingEventComponent (String component) {
-    if (ApplicationParameters.CURRENT_LOG_UPDATES) {
+    if (ApplicationSettings.LOG_UPDATES) {
       Log.d(LOG_TAG, "no accessibility event " + component);
     }
   }
 
   private void logEventComponent (AccessibilityNodeInfo node, String description) {
-    if (ApplicationParameters.CURRENT_LOG_UPDATES) {
+    if (ApplicationSettings.LOG_UPDATES) {
       Log.d(LOG_TAG,  String.format(
         "accessibility event %s: %s",
         description, ScreenUtilities.toString(node)
@@ -107,7 +107,7 @@ public class ScreenMonitor extends AccessibilityService {
 
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
-    if (ApplicationParameters.CURRENT_LOG_UPDATES) {
+    if (ApplicationSettings.LOG_UPDATES) {
       Log.d(LOG_TAG, "accessibility event starting: " + event.toString());
     }
 
@@ -188,7 +188,7 @@ public class ScreenMonitor extends AccessibilityService {
       Crash.handleCrash(exception, "accessibility event");
     }
 
-    if (ApplicationParameters.CURRENT_LOG_UPDATES) {
+    if (ApplicationSettings.LOG_UPDATES) {
       Log.d(LOG_TAG, "accessibility event finished");
     }
   }

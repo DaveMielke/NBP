@@ -65,7 +65,7 @@ public class KeyBindings {
     if (reset) resetKeyBindings();
     if (action == null) return null;
     if (!action.isForDevelopers()) return action;
-    if (ApplicationParameters.CURRENT_DEVELOPER_ACTIONS) return action;
+    if (ApplicationSettings.DEVELOPER_ACTIONS) return action;
     return null;
   }
 

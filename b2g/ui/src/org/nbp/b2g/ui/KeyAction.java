@@ -34,7 +34,7 @@ public abstract class KeyAction extends Action {
     }
 
     private boolean injectKeyEvent (int key, boolean press) {
-      if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
+      if (ApplicationSettings.LOG_ACTIONS) {
         logKeyEvent(getKeyType(), getKeyName(key), key, press);
       }
 

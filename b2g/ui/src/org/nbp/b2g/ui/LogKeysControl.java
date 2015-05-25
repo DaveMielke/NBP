@@ -18,12 +18,12 @@ public class LogKeysControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_LOG_KEYS;
+    return ApplicationSettings.LOG_KEYS;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_LOG_KEYS = value;
+    ApplicationSettings.LOG_KEYS = value;
     return true;
   }
 

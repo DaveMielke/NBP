@@ -18,12 +18,12 @@ public class OneHandControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_ONE_HAND;
+    return ApplicationSettings.ONE_HAND;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_ONE_HAND = value;
+    ApplicationSettings.ONE_HAND = value;
     return true;
   }
 

@@ -5,8 +5,8 @@ import android.os.Build;
 public abstract class ApplicationParameters {
   public final static boolean DEFAULT_ONE_HAND = false;
   public final static boolean DEFAULT_LONG_PRESS = true;
-  public final static boolean DEFAULT_SPEECH_ON = true;
 
+  public final static boolean DEFAULT_SPEECH_ON = true;
   public final static float DEFAULT_SPEECH_VOLUME = 1.0f;
   public final static float DEFAULT_SPEECH_BALANCE = 0.0f;
   public final static float DEFAULT_SPEECH_RATE = 1.0f;
@@ -17,16 +17,6 @@ public abstract class ApplicationParameters {
   public final static boolean DEFAULT_LOG_ACTIONS = false;
   public final static boolean DEFAULT_LOG_NAVIGATION = false;
   public final static boolean DEFAULT_LOG_UPDATES = false;
-
-  public static volatile boolean CURRENT_ONE_HAND = DEFAULT_ONE_HAND;
-  public static volatile boolean CURRENT_LONG_PRESS = DEFAULT_LONG_PRESS;
-  public static volatile boolean CURRENT_SPEECH_ON = DEFAULT_SPEECH_ON;
-
-  public static volatile boolean CURRENT_DEVELOPER_ACTIONS = DEFAULT_DEVELOPER_ACTIONS;
-  public static volatile boolean CURRENT_LOG_KEYS = DEFAULT_LOG_KEYS;
-  public static volatile boolean CURRENT_LOG_ACTIONS = DEFAULT_LOG_ACTIONS;
-  public static volatile boolean CURRENT_LOG_NAVIGATION = DEFAULT_LOG_NAVIGATION;
-  public static volatile boolean CURRENT_LOG_UPDATES = DEFAULT_LOG_UPDATES;
 
   public final static boolean ENABLE_SPEECH_DEVICE = true;
   public final static boolean ENABLE_KEYBOARD_MONITOR = true;

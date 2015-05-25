@@ -50,7 +50,7 @@ public class SpeechBalanceControl extends LinearFloatControl {
 
   @Override
   protected float getFloatValue () {
-    return Devices.speech.get().getBalance();
+    return ApplicationSettings.SPEECH_BALANCE;
   }
 
   @Override

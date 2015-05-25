@@ -112,7 +112,7 @@ public class InputService extends InputMethodService {
   }
 
   public boolean insertText (char character) {
-    if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
+    if (ApplicationSettings.LOG_ACTIONS) {
       Log.d(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
     }
 
@@ -122,7 +122,7 @@ public class InputService extends InputMethodService {
   }
 
   private static void logKeyEvent (int code, boolean press) {
-    if (ApplicationParameters.CURRENT_LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYS) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("key code ");

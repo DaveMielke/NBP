@@ -52,7 +52,7 @@ public abstract class ScrollAction extends ScreenAction {
           }
         }
 
-        if (ApplicationParameters.CURRENT_LOG_NAVIGATION) {
+        if (ApplicationSettings.LOG_NAVIGATION) {
           Log.d(LOG_TAG, String.format(
             "child index: %d -> %d", oldChildIndex, newChildIndex
           ));

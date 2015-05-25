@@ -18,12 +18,12 @@ public class SpeechOnControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_SPEECH_ON;
+    return ApplicationSettings.SPEECH_ON;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_SPEECH_ON = value;
+    ApplicationSettings.SPEECH_ON = value;
     return true;
   }
 

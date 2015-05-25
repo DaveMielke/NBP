@@ -13,7 +13,7 @@ public abstract class KeyEvents {
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
   public static boolean performAction (Action action, boolean isLongPress) {
-    if (ApplicationParameters.CURRENT_LOG_ACTIONS) {
+    if (ApplicationSettings.LOG_ACTIONS) {
       Log.d(LOG_TAG, "performing action: " + action.getName());
     }
 
@@ -34,7 +34,7 @@ public abstract class KeyEvents {
     KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
     Action action = null;
 
-    if (!ApplicationParameters.CURRENT_LONG_PRESS) {
+    if (!ApplicationSettings.LONG_PRESS) {
       isLongPress = false;
     }
 
@@ -71,7 +71,7 @@ public abstract class KeyEvents {
   }
 
   private static void logNavigationKeysChange (int keyMask, String action) {
-    if (ApplicationParameters.CURRENT_LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYS) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("navigation key ");
@@ -100,7 +100,7 @@ public abstract class KeyEvents {
         pressedNavigationKeys |= keyMask;
         logNavigationKeysChange(keyMask, "press");
 
-        if (!ApplicationParameters.CURRENT_ONE_HAND) {
+        if (!ApplicationSettings.ONE_HAND) {
           activeNavigationKeys = pressedNavigationKeys;
           longPressTimeout.start();
         } else if ((keyMask == KeyMask.SPACE) && (activeNavigationKeys != 0)) {
@@ -120,7 +120,7 @@ public abstract class KeyEvents {
         pressedNavigationKeys &= ~keyMask;
         logNavigationKeysChange(keyMask, "release");
 
-        if (!ApplicationParameters.CURRENT_ONE_HAND) {
+        if (!ApplicationSettings.ONE_HAND) {
           performAction(false);
         }
       }
@@ -147,7 +147,7 @@ public abstract class KeyEvents {
   }
 
   private static void logCursorKeyAction (int keyNumber, String action) {
-    if (ApplicationParameters.CURRENT_LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYS) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("cursor key ");
@@ -170,7 +170,7 @@ public abstract class KeyEvents {
   }
 
   private static void handleCursorKeyPress (int keyNumber) {
-    if (ApplicationParameters.CURRENT_ONE_HAND) {
+    if (ApplicationSettings.ONE_HAND) {
       pressedCursorKeys.clear();
     }
 
@@ -184,7 +184,7 @@ public abstract class KeyEvents {
   }
 
   private static void handleCursorKeyRelease (int keyNumber) {
-    if (!ApplicationParameters.CURRENT_ONE_HAND) {
+    if (!ApplicationSettings.ONE_HAND) {
       pressedCursorKeys.remove(keyNumber);
     }
 
@@ -200,7 +200,7 @@ public abstract class KeyEvents {
   }
 
   public static void resetKeys () {
-    if (ApplicationParameters.CURRENT_LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYS) {
       Log.d(LOG_TAG, "resetting key state");
     }
 

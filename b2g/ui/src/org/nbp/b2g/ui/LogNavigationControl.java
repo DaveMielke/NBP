@@ -18,12 +18,12 @@ public class LogNavigationControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_LOG_NAVIGATION;
+    return ApplicationSettings.LOG_NAVIGATION;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_LOG_NAVIGATION = value;
+    ApplicationSettings.LOG_NAVIGATION = value;
     return true;
   }
 

@@ -21,11 +21,6 @@ public class SpeechDevice {
   public final static float MAXIMUM_PITCH = 2.0f;
   public final static float MINIMUM_PITCH = 1.0f / 2.0f;
 
-  private float currentVolume = ApplicationParameters.DEFAULT_SPEECH_VOLUME;
-  private float currentBalance = ApplicationParameters.DEFAULT_SPEECH_BALANCE;
-  private float currentRate = ApplicationParameters.DEFAULT_SPEECH_RATE;
-  private float currentPitch = ApplicationParameters.DEFAULT_SPEECH_PITCH;
-
   private final static int OK = TextToSpeech.SUCCESS;
 
   private final HashMap<String, String> ttsParameters = new HashMap<String, String>();
@@ -38,7 +33,7 @@ public class SpeechDevice {
   }
 
   private boolean isActive () {
-    return isStarted() && ApplicationParameters.CURRENT_SPEECH_ON;
+    return isStarted() && ApplicationSettings.SPEECH_ON;
   }
 
   public boolean stopSpeaking () {
@@ -110,26 +105,18 @@ public class SpeechDevice {
     return false;
   }
 
-  public float getVolume () {
-    return currentVolume;
-  }
-
   public boolean setVolume (float volume) {
     if (verifyRange("volume", volume, MINIMUM_VOLUME, MAXIMUM_VOLUME)) {
       synchronized (this) {
         if (isStarted()) {
           ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
-          currentVolume = volume;
+          ApplicationSettings.SPEECH_VOLUME = volume;
           return true;
         }
       }
     }
 
     return false;
-  }
-
-  public float getBalance () {
-    return currentBalance;
   }
 
   public boolean setBalance (float balance) {
@@ -137,7 +124,7 @@ public class SpeechDevice {
       synchronized (this) {
         if (isStarted()) {
           ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
-          currentBalance = balance;
+          ApplicationSettings.SPEECH_BALANCE = balance;
           return true;
         }
       }
@@ -146,16 +133,12 @@ public class SpeechDevice {
     return false;
   }
 
-  public float getRate () {
-    return currentRate;
-  }
-
   public boolean setRate (float rate) {
     if (verifyRange("rate", rate, MINIMUM_RATE, MAXIMUM_RATE)) {
       synchronized (this) {
         if (isStarted()) {
           if (ttsObject.setSpeechRate(rate) == OK) {
-            currentRate = rate;
+            ApplicationSettings.SPEECH_RATE = rate;
             return true;
           }
         }
@@ -165,16 +148,12 @@ public class SpeechDevice {
     return false;
   }
 
-  public float getPitch () {
-    return currentPitch;
-  }
-
   public boolean setPitch (float pitch) {
     if (verifyRange("pitch", pitch, MINIMUM_PITCH, MAXIMUM_PITCH)) {
       synchronized (this) {
         if (isStarted()) {
           if (ttsObject.setPitch(pitch) == OK) {
-            currentPitch = pitch;
+            ApplicationSettings.SPEECH_PITCH = pitch;
             return true;
           }
         }

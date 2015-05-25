@@ -18,12 +18,12 @@ public class LogUpdatesControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationParameters.CURRENT_LOG_UPDATES;
+    return ApplicationSettings.LOG_UPDATES;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationParameters.CURRENT_LOG_UPDATES = value;
+    ApplicationSettings.LOG_UPDATES = value;
     return true;
   }
 
