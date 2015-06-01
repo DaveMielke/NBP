@@ -58,16 +58,25 @@ public class MotionDevice implements GestureInjector {
 
   @Override
   public boolean gestureBegin (int x, int y, int fingers) {
+    Log.v(LOG_TAG, String.format(
+      "motion event: begin [%d,%d] Fingers:%d", x, y, fingers
+    ));
+
     return injectEvent(MotionEvent.ACTION_DOWN, x, y);
   }
 
   @Override
   public boolean gestureEnd () {
+    Log.v(LOG_TAG, "motion event: end");
     return injectEvent(MotionEvent.ACTION_UP, lastX, lastY);
   }
 
   @Override
   public boolean gestureMove (int x, int y) {
+    Log.v(LOG_TAG, String.format(
+      "motion event: move [%d,%d]", x, y
+    ));
+
     return injectEvent(MotionEvent.ACTION_MOVE, x, y);
   }
 
