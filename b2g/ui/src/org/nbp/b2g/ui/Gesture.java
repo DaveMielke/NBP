@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class Gesture {
   private final static String LOG_TAG = Gesture.class.getName();
 
-  private final static GestureInjector injector = Devices.pointer.get();
+  private final static GestureInjector injector = Devices.motion.get();
 
   private static boolean begin (int x, int y, int fingers) {
     Log.v(LOG_TAG, String.format(
