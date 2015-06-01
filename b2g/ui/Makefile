@@ -93,12 +93,12 @@ ${key.archive}: ${key.encoded}
 ${key.store}: ${key.archive}
 	keytool -importkeystore \
 	-destkeystore "${key.store}" \
+	-deststoretype "JKS" \
 	-deststorepass "${key.store.password}" \
-	-destkeypass "${key.alias.password}" \
 	-srckeystore "${key.archive}" \
+	-srcstoretype "PKCS12" \
 	-srcstorepass "${key.alias.password}" \
 	-srckeypass "${key.alias.password}" \
-	-srcstoretype "PKCS12" \
 	-alias "${key.alias}"
 
 else
