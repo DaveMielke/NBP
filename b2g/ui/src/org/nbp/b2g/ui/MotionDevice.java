@@ -10,8 +10,16 @@ public class MotionDevice implements GestureInjector {
   private final static String LOG_TAG = MotionDevice.class.getName();
 
   private final Instrumentation instrumentation = new Instrumentation();
-  private int lastX = 0;
-  private int lastY = 0;
+
+  private long startTime;
+  private int lastX;
+  private int lastY;
+
+  private void resetFields () {
+    startTime = 0;
+    lastX = 0;
+    lastY = 0;
+  }
 
   private boolean injectEvent (MotionEvent event) {
     instrumentation.sendPointerSync(event);
@@ -20,7 +28,7 @@ public class MotionDevice implements GestureInjector {
 
   private boolean injectEvent (int action, int x, int y) {
     long now = ApplicationUtilities.getSystemClock();
-    MotionEvent event = MotionEvent.obtain(now, now, action, x, y, 0);
+    MotionEvent event = MotionEvent.obtain(startTime, now, action, x, y, 0);
     event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
 
     boolean injected = injectEvent(event);
@@ -40,13 +48,17 @@ public class MotionDevice implements GestureInjector {
       "motion event: begin [%d,%d] Fingers:%d", x, y, fingers
     ));
 
+    startTime = ApplicationUtilities.getSystemClock();
     return injectEvent(MotionEvent.ACTION_DOWN, x, y);
   }
 
   @Override
   public boolean gestureEnd () {
     Log.v(LOG_TAG, "motion event: end");
-    return injectEvent(MotionEvent.ACTION_UP, lastX, lastY);
+    boolean injected = injectEvent(MotionEvent.ACTION_UP, lastX, lastY);
+
+    resetFields();
+    return injected;
   }
 
   @Override
@@ -59,5 +71,6 @@ public class MotionDevice implements GestureInjector {
   }
 
   public MotionDevice () {
+    resetFields();
   }
 }
