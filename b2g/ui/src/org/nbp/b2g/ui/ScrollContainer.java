@@ -6,6 +6,7 @@ import java.util.HashMap;
 import android.util.Log;
 
 import android.graphics.Point;
+import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -170,11 +171,20 @@ public class ScrollContainer {
           return -1;
       }
 
+      Rect outer = ScreenUtilities.getNodeRegion(scrollNode);
+
       while (from != to) {
         AccessibilityNodeInfo child = scrollNode.getChild(from);
 
         if (child != null) {
-          boolean visible = isVisible(child);
+          boolean visible = false;
+
+          if (isVisible(child)) {
+            if (outer.contains(ScreenUtilities.getNodeRegion(child))) {
+              visible = true;
+            }
+          }
+
           child.recycle();
           if (visible) return from;
         }
@@ -266,7 +276,7 @@ public class ScrollContainer {
               y2 = y1;
             }
 
-            if (Gesture.tap(300, 200)) {
+            if (Gesture.swipe(x, y1, x, y2)) {
               scrollStarted = true;
             }
           }
