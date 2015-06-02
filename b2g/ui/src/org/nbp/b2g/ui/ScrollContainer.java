@@ -266,14 +266,26 @@ public class ScrollContainer {
           Point last = getLastChildCenter();
 
           if (last != null) {
-            int x = (first.x + last.x) / 2;
-            int y1 = last.y;
-            int y2 = first.y;
+            if (!ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) return false;
 
-            if (direction == ScrollDirection.BACKWARD) {
-              int y = y1;
-              y1 = y2;
-              y2 = y1;
+            int x = (first.x + last.x) / 2;
+            int y1;
+            int y2;
+
+            switch (direction) {
+              case FORWARD:
+                y1 = last.y;
+                y2 = first.y;
+                break;
+
+              case BACKWARD:
+                y1 = first.y;
+                y2 = last.y;
+                break;
+
+              default:
+                Log.w(LOG_TAG, "unimplemented scroll direction: " + direction.name());
+                return false;
             }
 
             if (Gesture.swipe(x, y1, x, y2)) {
