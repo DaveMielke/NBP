@@ -2,42 +2,20 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
-import android.content.Context;
-import android.hardware.input.InputManager;
-
-import android.view.InputDevice;
-import android.view.InputEvent;
 import android.view.MotionEvent;
+import android.view.InputDevice;
+import android.app.Instrumentation;
 
 public class MotionDevice implements GestureInjector {
   private final static String LOG_TAG = MotionDevice.class.getName();
 
+  private final Instrumentation instrumentation = new Instrumentation();
   private int lastX = 0;
   private int lastY = 0;
 
-  private static InputManager getInputManager () {
-    Object service = ApplicationContext.getSystemService(Context.INPUT_SERVICE);
-    if (service != null) return (InputManager)service;
-
-    Log.w(LOG_TAG, "no input manager");
-    return null;
-  }
-
-  private static boolean injectEvent (InputEvent event) {
-    InputManager input = getInputManager();
-    if (input == null) return false;
-
-    Integer mode = (Integer)LanguageUtilities.getInstanceField(input, "INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH");
-    if (mode == null) return false;
-
-    Boolean injected = (Boolean)LanguageUtilities.invokeInstanceMethod(
-      input, "injectInputEvent",
-      new Class[] {InputEvent.class, int.class},
-      event, mode
-    );
-
-    if (injected == null) return false;
-    return injected;
+  private boolean injectEvent (MotionEvent event) {
+    instrumentation.sendPointerSync(event);
+    return true;
   }
 
   private boolean injectEvent (int action, int x, int y) {
