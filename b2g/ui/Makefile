@@ -11,7 +11,8 @@ JNI_SOURCES += kbdmon.c
 JNI_SOURCES += metec_flat20_ioctl.h
 JNI_SOURCES += braille.c
 
-ANDROID_BUILD_MODE := $(strip $(if $(wildcard signing.properties), release, debug))
+SIGNING_PROPERTIES_FILE = signing.properties
+ANDROID_BUILD_MODE := $(strip $(if $(wildcard $(SIGNING_PROPERTIES_FILE)), release, debug))
 
 ANDROID_JNI_DIRECTORY = jni
 ANDROID_ASSETS_DIRECTORY = assets
@@ -60,7 +61,7 @@ uninstall:
 FORCE:
 
 ifeq "$(ANDROID_BUILD_MODE)" "release"
-include signing.properties
+include $(SIGNING_PROPERTIES_FILE)
 
 key.directory := ${dir ${key.store}}
 key.archive = ${key.directory}${key.alias}.p12
