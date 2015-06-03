@@ -30,6 +30,9 @@ public abstract class Gesture {
     return injector.gestureMove(x, y);
   }
 
+  public static boolean isEnabled () {
+    return injector.gestureEnabled();
+  }
 
   public static boolean tap (int x, int y, int count) {
     if (count < 1) {

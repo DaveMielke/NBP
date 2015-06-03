@@ -259,7 +259,7 @@ public class ScrollContainer {
       scrollTimeout = true;
       boolean scrollStarted = false;
 
-      if (false) {
+      if (Gesture.isEnabled()) {
         Point first = getFirstChildCenter();
 
         if (first != null) {

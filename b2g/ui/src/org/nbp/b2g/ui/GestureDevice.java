@@ -14,6 +14,11 @@ public abstract class GestureDevice extends UInputDevice implements GestureInjec
   protected abstract boolean gestureMove (ByteBuffer uinput, int x, int y);
 
   @Override
+  public boolean gestureEnabled () {
+    return getUInputDescriptor() != null;
+  }
+
+  @Override
   public boolean gestureBegin (int x, int y, int fingers) {
     ByteBuffer uinput = getUInputDescriptor();
     if (uinput == null) return false;

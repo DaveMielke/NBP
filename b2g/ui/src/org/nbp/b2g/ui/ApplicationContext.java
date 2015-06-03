@@ -8,6 +8,8 @@ import android.graphics.Point;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.pm.PackageManager;
+
 import android.os.PowerManager;
 import android.app.KeyguardManager;
 import android.view.WindowManager;
@@ -62,6 +64,15 @@ public abstract class ApplicationContext {
     DisplayMetrics metrics = getDisplayMetrics();
     if (metrics == null) return dips;
     return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, metrics));
+  }
+
+  public static boolean havePermission (String permission) {
+    Context context = getContext();
+    if (context == null) return false;
+
+    PackageManager pm = context.getPackageManager();
+    int result = pm.checkPermission(permission, context.getPackageName());
+    return result == PackageManager.PERMISSION_GRANTED;
   }
 
   public static Object getSystemService (String name) {
