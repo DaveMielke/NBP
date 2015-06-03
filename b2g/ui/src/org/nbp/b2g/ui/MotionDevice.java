@@ -22,7 +22,8 @@ public class MotionDevice implements GestureInjector {
   private float yPrecision;
   private int edgeFlags;
   private int eventFlags;
-  private long startTime;
+
+  private long downTime;
 
   private void clearFields () {
     pointerCount = 0;
@@ -36,7 +37,8 @@ public class MotionDevice implements GestureInjector {
     yPrecision = 1.0f;
     edgeFlags = 0;
     eventFlags = 0;
-    startTime = 0;
+
+    downTime = 0;
   }
 
   private void setFields (int fingers, int x, int y) {
@@ -63,8 +65,6 @@ public class MotionDevice implements GestureInjector {
       if ((index % 2) == 1) increment = -increment;
       coordinates.x += (float)increment;
     }
-
-    startTime = ApplicationUtilities.getSystemClock();
   }
 
   private boolean injectEvent (MotionEvent event) {
@@ -74,9 +74,10 @@ public class MotionDevice implements GestureInjector {
 
   private boolean injectEvent (int action) {
     long now = ApplicationUtilities.getSystemClock();
+    if (action == MotionEvent.ACTION_DOWN) downTime = now;
 
     MotionEvent event = MotionEvent.obtain(
-      startTime, now, action,
+      downTime, now, action,
       pointerCount, pointerProperties, pointerCoordinates,
       metaState, buttonState, xPrecision, yPrecision, deviceIdentifier,
       edgeFlags, InputDevice.SOURCE_TOUCHSCREEN, eventFlags
