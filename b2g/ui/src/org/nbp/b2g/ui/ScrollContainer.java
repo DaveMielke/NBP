@@ -171,20 +171,11 @@ public class ScrollContainer {
           return -1;
       }
 
-      Rect outer = ScreenUtilities.getNodeRegion(scrollNode);
-
       while (from != to) {
         AccessibilityNodeInfo child = scrollNode.getChild(from);
 
         if (child != null) {
-          boolean visible = false;
-
-          if (isVisible(child)) {
-            if (outer.contains(ScreenUtilities.getNodeRegion(child))) {
-              visible = true;
-            }
-          }
-
+          boolean visible = isVisible(child);
           child.recycle();
           if (visible) return from;
         }
@@ -260,13 +251,15 @@ public class ScrollContainer {
       boolean scrollStarted = false;
 
       if (Gesture.isEnabled()) {
-        Point first = getFirstChildCenter();
+        if (!ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) return false;
+        Rect region = ScreenUtilities.getNodeRegion(scrollNode);
 
+        Point first = getFirstChildCenter();
         if (first != null) {
           Point last = getLastChildCenter();
-
           if (last != null) {
-            if (!ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) return false;
+            first.y = Math.max(first.y, region.top);
+            last.y = Math.min(last.y, region.bottom-1);
 
             int x = (first.x + last.x) / 2;
             int y1;
