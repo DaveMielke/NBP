@@ -251,38 +251,40 @@ public class ScrollContainer {
       boolean scrollStarted = false;
 
       if (Gesture.isEnabled()) {
-        if (!ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) return false;
-        Rect region = ScreenUtilities.getNodeRegion(scrollNode);
+        if (ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) {
+          Point first = getFirstChildCenter();
 
-        Point first = getFirstChildCenter();
-        if (first != null) {
-          Point last = getLastChildCenter();
-          if (last != null) {
-            first.y = Math.max(first.y, region.top);
-            last.y = Math.min(last.y, region.bottom-1);
+          if (first != null) {
+            Point last = getLastChildCenter();
 
-            int x = (first.x + last.x) / 2;
-            int y1;
-            int y2;
+            if (last != null) {
+              Rect region = ScreenUtilities.getNodeRegion(scrollNode);
+              first.y = Math.max(first.y, region.top);
+              last.y = Math.min(last.y, region.bottom-1);
 
-            switch (direction) {
-              case FORWARD:
-                y1 = last.y;
-                y2 = first.y;
-                break;
+              int x = (first.x + last.x) / 2;
+              int y1;
+              int y2;
 
-              case BACKWARD:
-                y1 = first.y;
-                y2 = last.y;
-                break;
+              switch (direction) {
+                case FORWARD:
+                  y1 = last.y;
+                  y2 = first.y;
+                  break;
 
-              default:
-                Log.w(LOG_TAG, "unimplemented scroll direction: " + direction.name());
-                return false;
-            }
+                case BACKWARD:
+                  y1 = first.y;
+                  y2 = last.y;
+                  break;
 
-            if (Gesture.swipe(x, y1, x, y2)) {
-              scrollStarted = true;
+                default:
+                  Log.w(LOG_TAG, "unimplemented scroll direction: " + direction.name());
+                  return false;
+              }
+
+              if (Gesture.swipe(x, y1, x, y2)) {
+                scrollStarted = true;
+              }
             }
           }
         }
