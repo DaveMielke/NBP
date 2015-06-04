@@ -5,7 +5,7 @@ setField() {
    local name="${2}"
    local value="${3}"
 
-   sqlite3 "/data/data/com.android.providers.settings/databases/settings.db" "update ${table} set value="\"${value}\"" where name=\"${name}\""
+   sqlite3 "/data/data/com.android.providers.settings/databases/settings.db" "insert into ${table} (name, value) values (\"${name}\", \"${value}\")"
 }
 
 setProperty() {
@@ -59,5 +59,10 @@ setField secure development_settings_enabled 1
 
 # enable accessibility services
 setField secure accessibility_enabled 1
+
+# enable the B2G input service
+package="org.nbp.b2g.ui"
+component="${package}/.InputService"
+ime enable "${component}" && ime set "${component}"
 
 exit 0
