@@ -88,30 +88,33 @@ public abstract class ApplicationContext {
 
     Intent intent = new Intent(context, serviceClass);
     ComponentName component = intent.getComponent();
-    String className = component.getShortClassName();
     String packageName = component.getPackageName();
+    String longClassName = component.getClassName();
+    String shortClassName = component.getShortClassName();
+
     String packagePrefix = packageName + '/';
+    String longServiceName = packagePrefix + longClassName;
+    String shortServiceName = packagePrefix + shortClassName;
 
     ContentResolver resolver = context.getContentResolver();
-    String name = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
-    String services = Settings.Secure.getString(resolver, name);
+    String serviceNamesKey = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
+    String serviceNames = Settings.Secure.getString(resolver, serviceNamesKey);
 
-    for (String service : services.split(":")) {
-      if (service.startsWith(packagePrefix)) {
+    for (String serviceName : serviceNames.split(":")) {
+      if (serviceName.equals(longServiceName) || serviceName.equals(shortServiceName)) {
         Log.d(LOG_TAG, "accessibility service already enabled: " + serviceClass.getName());
         return true;
       }
     }
 
-    String serviceString = packagePrefix + className;
-    if (services.length() == 0) {
-      services = serviceString;
+    if (serviceNames.length() == 0) {
+      serviceNames = shortServiceName;
     } else {
-      services += ":" + serviceString;
+      serviceNames += ":" + shortServiceName;
     }
 
     try {
-      Settings.Secure.putString(resolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, services);
+      Settings.Secure.putString(resolver, serviceNamesKey, serviceNames);
       Settings.Secure.putString(resolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1");
 
       Log.i(LOG_TAG, "accessibility service enabled: " + serviceClass.getName());
