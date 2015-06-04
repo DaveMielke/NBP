@@ -1,6 +1,10 @@
-key.store = /path/to/keystore
-key.store.password = password-for-keystore
+#key.store = /path/to/keystore
+key.store = ../ks/B2G-RevC.jks
 
-key.alias = name-of-key
-key.alias.password = password-for-key
+#key.store.password = password-for-keystore
+
+#key.alias = name-of-key
+key.alias = platform
+
+#key.alias.password = password-for-key
 
