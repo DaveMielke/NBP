@@ -108,7 +108,7 @@ setDatabaseValue() {
    local property="${2}"
    local value="${3}"
 
-   executeDatabaseCommand "update ${table} set value="\"${value}\"" where name=\"${property}\""
+   executeDatabaseCommand "insert into ${table} (name, value) values (\"${property}\", \"${value}\")"
 }
 
 verifyPackageInstalled() {
