@@ -1,12 +1,18 @@
 #!/system/bin/sh
 exec >"/data/local/tmp/${0##*/}.log" 2>&1
 
+log() {
+   local message="${1}"
+
+   echo "`date +%Y-%m-%d@%H:%M:%S` ${message}"
+}
+
 setField() {
    local table="${1}"
    local name="${2}"
    local value="${3}"
 
-   echo "set field: ${table}.${name} = ${value}"
+   log "setting field: ${table}.${name} = ${value}"
    sqlite3 "/data/data/com.android.providers.settings/databases/settings.db" "insert into ${table} (name, value) values (\"${name}\", \"${value}\")"
 }
 
@@ -14,7 +20,7 @@ setProperty() {
    local name="${1}"
    local value="${2}"
 
-   echo "set property: ${name} = ${value}"
+   log "setting property: ${name} = ${value}"
    setprop "${name}" "${value}"
 }
 
@@ -28,7 +34,7 @@ permitEventDevice() {
 
       [ -n "${event}" ] && {
          local device="/dev/input/event${event}"
-         echo "permit event device: ${device} (${identifier})"
+         log "permitting event device: ${device} (${identifier})"
          chmod 666 "${device}"
       }
    }
@@ -64,6 +70,14 @@ setField secure development_settings_enabled 1
 
 # enable accessibility services
 setField secure accessibility_enabled 1
+
+# wait for booting to finish
+log "waiting for boot to complete"
+while [ "`getprop sys.boot_completed`" != "1" ]
+do
+   sleep 5
+done
+log "boot completed"
 
 # enable the B2G input service
 package="org.nbp.b2g.ui"
