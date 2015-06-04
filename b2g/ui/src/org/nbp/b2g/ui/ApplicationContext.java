@@ -7,6 +7,9 @@ import android.util.DisplayMetrics;
 import android.graphics.Point;
 
 import android.content.Context;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.ComponentName;
 import android.content.res.Resources;
 import android.content.pm.PackageManager;
 
@@ -14,6 +17,9 @@ import android.os.PowerManager;
 import android.app.KeyguardManager;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
+
+import android.provider.Settings;
+import android.accessibilityservice.AccessibilityService;
 
 public abstract class ApplicationContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
@@ -31,6 +37,7 @@ public abstract class ApplicationContext {
     Devices.speech.get().say(null);
     EventMonitors.startEventMonitors();
     Controls.restoreCurrentValues();
+    enableService(ScreenMonitor.class);
     return true;
   }
 
@@ -73,6 +80,40 @@ public abstract class ApplicationContext {
     PackageManager pm = context.getPackageManager();
     int result = pm.checkPermission(permission, context.getPackageName());
     return result == PackageManager.PERMISSION_GRANTED;
+  }
+
+  public static void enableService (Class<? extends AccessibilityService> serviceClass) {
+    Context context = getContext();
+    if (context == null) return;
+
+    Intent intent = new Intent(context, serviceClass);
+    ComponentName component = intent.getComponent();
+    String className = component.getShortClassName();
+    String packageName = component.getPackageName();
+    String packagePrefix = packageName + '/';
+
+    ContentResolver resolver = context.getContentResolver();
+    String name = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
+    String services = Settings.Secure.getString(resolver, name);
+
+    for (String service : services.split(":")) {
+      if (service.startsWith(packagePrefix)) {
+        Log.d(LOG_TAG, "accessibility service already enabled: " + serviceClass.getName());
+        return;
+      }
+    }
+
+    Log.i(LOG_TAG, "enabling accessibility service: " + serviceClass.getName());
+    String serviceString = packagePrefix + className;
+
+    if (services.length() == 0) {
+      services = serviceString;
+    } else {
+      services += ":" + serviceString;
+    }
+
+    Settings.Secure.putString(resolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, services);
+    Settings.Secure.putString(resolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1");
   }
 
   public static Object getSystemService (String name) {
