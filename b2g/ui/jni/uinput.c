@@ -384,23 +384,23 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_PointerDevice, gestureEnd, jboolean,
-  jobject uinput
-) {
-  UINPUT_DESCRIPTOR;
-
-  if (!writeKeyEvent(ui->device, BTN_LEFT, 0)) return JNI_FALSE;
-  if (!writeSynReport(ui->device)) return JNI_FALSE;
-  return JNI_TRUE;
-}
-
-JAVA_METHOD(
   org_nbp_b2g_ui_PointerDevice, gestureMove, jboolean,
   jobject uinput, jint x, jint y
 ) {
   UINPUT_DESCRIPTOR;
 
   if (!writePointerLocation(ui->device, x, y)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_PointerDevice, gestureEnd, jboolean,
+  jobject uinput
+) {
+  UINPUT_DESCRIPTOR;
+
+  if (!writeKeyEvent(ui->device, BTN_LEFT, 0)) return JNI_FALSE;
   if (!writeSynReport(ui->device)) return JNI_FALSE;
   return JNI_TRUE;
 }
@@ -482,23 +482,23 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_TouchDevice, gestureEnd, jboolean,
-  jobject uinput
-) {
-  UINPUT_DESCRIPTOR;
-
-  if (!writeTouchUp(ui->device)) return JNI_FALSE;
-  if (!writeSynReport(ui->device)) return JNI_FALSE;
-  return JNI_TRUE;
-}
-
-JAVA_METHOD(
   org_nbp_b2g_ui_TouchDevice, gestureMove, jboolean,
   jobject uinput, jint x, jint y
 ) {
   UINPUT_DESCRIPTOR;
 
   if (!writeTouchLocation(ui->device, x, y)) return JNI_FALSE;
+  if (!writeSynReport(ui->device)) return JNI_FALSE;
+  return JNI_TRUE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_TouchDevice, gestureEnd, jboolean,
+  jobject uinput
+) {
+  UINPUT_DESCRIPTOR;
+
+  if (!writeTouchUp(ui->device)) return JNI_FALSE;
   if (!writeSynReport(ui->device)) return JNI_FALSE;
   return JNI_TRUE;
 }

@@ -2,6 +2,10 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
+import android.content.Context;
+import android.hardware.input.InputManager;
+import android.view.InputEvent;
+
 import android.view.MotionEvent;
 import android.view.InputDevice;
 import android.app.Instrumentation;
@@ -9,7 +13,7 @@ import android.app.Instrumentation;
 public class MotionDevice implements GestureInjector {
   private final static String LOG_TAG = MotionDevice.class.getName();
 
-  private final Instrumentation instrumentation = new Instrumentation();
+  private final Instrumentation instrumentation = null;
 
   private int pointerCount;
   private MotionEvent.PointerProperties[] pointerProperties;
@@ -67,9 +71,34 @@ public class MotionDevice implements GestureInjector {
     }
   }
 
+  private static InputManager getInputManager () {
+    Object service = ApplicationContext.getSystemService(Context.INPUT_SERVICE);
+    if (service != null) return (InputManager)service;
+
+    Log.w(LOG_TAG, "no input manager");
+    return null;
+  }
+
   private boolean injectEvent (MotionEvent event) {
-    instrumentation.sendPointerSync(event);
-    return true;
+    if (instrumentation != null) {
+      instrumentation.sendPointerSync(event);
+      return true;
+    }
+
+    InputManager input = getInputManager();
+    if (input == null) return false;
+
+    Integer mode = (Integer)LanguageUtilities.getInstanceField(input, "INJECT_INPUT_EVENT_MODE_ASYNC");
+    if (mode == null) return false;
+
+    Boolean injected = (Boolean)LanguageUtilities.invokeInstanceMethod(
+      input, "injectInputEvent",
+      new Class[] {InputEvent.class, int.class},
+      event, mode
+    );
+
+    if (injected == null) return false;
+    return injected;
   }
 
   private boolean injectEvent (int action) {
@@ -82,6 +111,24 @@ public class MotionDevice implements GestureInjector {
       metaState, buttonState, xPrecision, yPrecision, deviceIdentifier,
       edgeFlags, InputDevice.SOURCE_TOUCHSCREEN, eventFlags
     );
+
+    {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append("motion event:");
+      sb.append(String.format(" Action:0X%04X", action));
+
+      for (int index=0; index<pointerCount; index+=1) {
+        MotionEvent.PointerCoords coordinates = pointerCoordinates[index];
+        sb.append(" [");
+        sb.append(Math.round(coordinates.x));
+        sb.append(',');
+        sb.append(Math.round(coordinates.y));
+        sb.append(']');
+      }
+
+      Log.v(LOG_TAG, sb.toString());
+    }
 
     boolean injected = injectEvent(event);
     event.recycle();
@@ -99,10 +146,6 @@ public class MotionDevice implements GestureInjector {
 
   @Override
   public boolean gestureBegin (int x, int y, int fingers) {
-    Log.v(LOG_TAG, String.format(
-      "motion event: begin [%d,%d] Fingers:%d", x, y, fingers
-    ));
-
     setFields(fingers, x, y);
 
     pointerCount += 1;
@@ -116,10 +159,30 @@ public class MotionDevice implements GestureInjector {
     return true;
   }
 
+  public void updatePointers (int x, int y) {
+    float xIncrement;
+    float yIncrement;
+
+    {
+      MotionEvent.PointerCoords coordinates = pointerCoordinates[0];
+      xIncrement = (float)x - coordinates.x;
+      yIncrement = (float)y - coordinates.y;
+    }
+
+    for (MotionEvent.PointerCoords coordinates : pointerCoordinates) {
+      coordinates.x += xIncrement;
+      coordinates.y += yIncrement;
+    }
+  }
+
+  @Override
+  public boolean gestureMove (int x, int y) {
+    updatePointers(x, y);
+    return injectEvent(MotionEvent.ACTION_MOVE);
+  }
+
   @Override
   public boolean gestureEnd () {
-    Log.v(LOG_TAG, "motion event: end");
-
     while (pointerCount > 1) {
       if (!injectEvent(makePointerAction(MotionEvent.ACTION_POINTER_UP))) break;
       pointerCount -= 1;
@@ -137,26 +200,9 @@ public class MotionDevice implements GestureInjector {
   }
 
   @Override
-  public boolean gestureMove (int x, int y) {
-    Log.v(LOG_TAG, String.format(
-      "motion event: move [%d,%d]", x, y
-    ));
-
-    float xIncrement;
-    float yIncrement;
-
-    {
-      MotionEvent.PointerCoords coordinates = pointerCoordinates[0];
-      xIncrement = (float)x - coordinates.x;
-      yIncrement = (float)y - coordinates.y;
-    }
-
-    for (MotionEvent.PointerCoords coordinates : pointerCoordinates) {
-      coordinates.x += xIncrement;
-      coordinates.y += yIncrement;
-    }
-
-    return injectEvent(MotionEvent.ACTION_MOVE);
+  public boolean gestureEnd (int x, int y) {
+    updatePointers(x, y);
+    return gestureEnd();
   }
 
   public MotionDevice () {

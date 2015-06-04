@@ -6,28 +6,44 @@ public abstract class Gesture {
   private final static String LOG_TAG = Gesture.class.getName();
 
   private final static GestureInjector injector = Devices.motion.get();
+  private static long startTime = 0;
+
+  private static void setStartTime () {
+    startTime = ApplicationUtilities.getSystemClock();
+  }
+
+  private static void sleep (long duration) {
+    duration -= ApplicationUtilities.getSystemClock() - startTime;
+    ApplicationUtilities.sleep(duration);
+    setStartTime();
+  }
 
   private static boolean begin (int x, int y, int fingers) {
     Log.v(LOG_TAG, String.format(
       "gesture begin: [%d,%d] Fingers:%d", x, y, fingers
     ));
 
+    setStartTime();
     if (injector == null) return true;
     return injector.gestureBegin(x, y, fingers);
   }
 
+  private static boolean move (int x, int y) {
+    Log.v(LOG_TAG, String.format("gesture move: [%d,%d]", x, y));
+    if (injector == null) return true;
+    return injector.gestureMove(x, y);
+  }
+
   private static boolean end () {
     Log.v(LOG_TAG, "gesture end");
-
     if (injector == null) return true;
     return injector.gestureEnd();
   }
 
-  private static boolean move (int x, int y) {
-    Log.v(LOG_TAG, String.format("gesture move: [%d,%d]", x, y));
-
+  private static boolean end (int x, int y) {
+    Log.v(LOG_TAG, String.format("gesture end: [%d,%d]", x, y));
     if (injector == null) return true;
-    return injector.gestureMove(x, y);
+    return injector.gestureEnd(x, y);
   }
 
   public static boolean isEnabled () {
@@ -47,10 +63,10 @@ public abstract class Gesture {
 
     while (true) {
       if (!begin(x, y, 1)) return false;
-      ApplicationUtilities.sleep(ApplicationParameters.TAP_HOLD_TIME);
+      sleep(ApplicationParameters.TAP_HOLD_TIME);
       if (!end()) return false;
       if ((count -= 1) == 0) return true;
-      ApplicationUtilities.sleep(ApplicationParameters.TAP_WAIT_TIME);
+      sleep(ApplicationParameters.TAP_WAIT_TIME);
     }
   }
 
@@ -86,7 +102,7 @@ public abstract class Gesture {
     long stepInterval = ApplicationParameters.SWIPE_STEP_INTERVAL;
 
     while (true) {
-      ApplicationUtilities.sleep(stepInterval);
+      sleep(stepInterval);
       if (stepCount < 1.5) break;
       stepCount -= 1.0;
 
@@ -98,8 +114,7 @@ public abstract class Gesture {
       if (!move(x, y)) return false;
     }
 
-    if (!move(x2, y2)) return false;
-    return end();
+    return end(x2, y2);
   }
 
   public static boolean swipe (int x1, int y1, int x2, int y2) {

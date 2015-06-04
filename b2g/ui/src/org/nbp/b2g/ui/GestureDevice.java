@@ -10,8 +10,8 @@ public abstract class GestureDevice extends UInputDevice implements GestureInjec
   private final static String LOG_TAG = GestureDevice.class.getName();
 
   protected abstract boolean gestureBegin (ByteBuffer uinput, int x, int y, int fingers);
-  protected abstract boolean gestureEnd (ByteBuffer uinput);
   protected abstract boolean gestureMove (ByteBuffer uinput, int x, int y);
+  protected abstract boolean gestureEnd (ByteBuffer uinput);
 
   @Override
   public boolean gestureEnabled () {
@@ -26,6 +26,13 @@ public abstract class GestureDevice extends UInputDevice implements GestureInjec
   }
 
   @Override
+  public boolean gestureMove (int x, int y) {
+    ByteBuffer uinput = getUInputDescriptor();
+    if (uinput == null) return false;
+    return gestureMove(uinput, x, y);
+  }
+
+  @Override
   public boolean gestureEnd () {
     ByteBuffer uinput = getUInputDescriptor();
     if (uinput == null) return false;
@@ -33,10 +40,12 @@ public abstract class GestureDevice extends UInputDevice implements GestureInjec
   }
 
   @Override
-  public boolean gestureMove (int x, int y) {
+  public boolean gestureEnd (int x, int y) {
     ByteBuffer uinput = getUInputDescriptor();
     if (uinput == null) return false;
-    return gestureMove(uinput, x, y);
+
+    if (!gestureMove(uinput, x, y)) return false;
+    return gestureEnd(uinput);
   }
 
   protected Point getScreenSize () {
