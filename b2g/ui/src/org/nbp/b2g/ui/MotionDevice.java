@@ -2,13 +2,14 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
+import android.app.Instrumentation;
+
 import android.content.Context;
 import android.hardware.input.InputManager;
 import android.view.InputEvent;
 
 import android.view.MotionEvent;
 import android.view.InputDevice;
-import android.app.Instrumentation;
 
 public class MotionDevice implements GestureInjector {
   private final static String LOG_TAG = MotionDevice.class.getName();
@@ -139,6 +140,22 @@ public class MotionDevice implements GestureInjector {
     return action | ((pointerCount - 1) << MotionEvent.ACTION_POINTER_INDEX_SHIFT);
   }
 
+  private void updatePointers (int x, int y) {
+    float xIncrement;
+    float yIncrement;
+
+    {
+      MotionEvent.PointerCoords coordinates = pointerCoordinates[0];
+      xIncrement = (float)x - coordinates.x;
+      yIncrement = (float)y - coordinates.y;
+    }
+
+    for (MotionEvent.PointerCoords coordinates : pointerCoordinates) {
+      coordinates.x += xIncrement;
+      coordinates.y += yIncrement;
+    }
+  }
+
   @Override
   public boolean gestureEnabled () {
     return ApplicationContext.havePermission(android.Manifest.permission.INJECT_EVENTS);
@@ -157,22 +174,6 @@ public class MotionDevice implements GestureInjector {
     }
 
     return true;
-  }
-
-  public void updatePointers (int x, int y) {
-    float xIncrement;
-    float yIncrement;
-
-    {
-      MotionEvent.PointerCoords coordinates = pointerCoordinates[0];
-      xIncrement = (float)x - coordinates.x;
-      yIncrement = (float)y - coordinates.y;
-    }
-
-    for (MotionEvent.PointerCoords coordinates : pointerCoordinates) {
-      coordinates.x += xIncrement;
-      coordinates.y += yIncrement;
-    }
   }
 
   @Override
