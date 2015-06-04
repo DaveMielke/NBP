@@ -48,7 +48,7 @@ list:
 	-noprompt
 
 clean:
-	-rm -- *.$(KEY_RAW_EXTENSION)
-	-rm -- *.$(KEY_ENCODED_EXTENSION)
-	-rm -- *.$(KEY_ARCHIVE_EXTENSION)
+	-rm -f -- *.$(KEY_RAW_EXTENSION)
+	-rm -f -- *.$(KEY_ENCODED_EXTENSION)
+	-rm -f -- *.$(KEY_ARCHIVE_EXTENSION)
 
