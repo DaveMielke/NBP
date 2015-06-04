@@ -1,0 +1,4 @@
+SOURCE_DIRECTORY = /path/to/directory/containing/pk8-and-x509.pem-files
+STORE_NAME = name-of-java-keystore-file-without-jks-extension
+STORE_PASSWORD = password-for-keystore
+KEY_PASSWORD = password-for-keys
