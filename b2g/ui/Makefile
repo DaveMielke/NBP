@@ -31,7 +31,7 @@ all: apk
 apk: $(ANDROID_PROJECT_PACKAGE)
 jni: $(ANDROID_NATIVE_LIBRARY)
 
-$(ANDROID_PROJECT_PACKAGE): jni $(ANDROID_LOCAL_FILES) AndroidManifest.xml key-store
+$(ANDROID_PROJECT_PACKAGE): jni $(ANDROID_LOCAL_FILES) AndroidManifest.xml
 	ant $(ANDROID_BUILD_MODE)
 
 $(ANDROID_NATIVE_LIBRARY): $(ANDROID_JNI_SOURCES)
@@ -60,49 +60,3 @@ uninstall:
 
 FORCE:
 
-ifeq "$(ANDROID_BUILD_MODE)" "release"
-include $(SIGNING_PROPERTIES_FILE)
-
-key.directory := ${dir ${key.store}}
-key.archive = ${key.directory}${key.alias}.p12
-key.certificate = ${key.directory}${key.alias}.x509.pem
-key.encoded = ${key.directory}${key.alias}.pem
-key.raw = ${key.directory}${key.alias}.pk8
-
-key-encoded: ${key.encoded}
-key-archive: ${key.archive}
-key-store: ${key.store}
-
-${key.encoded}: ${key.raw}
-	openssl pkcs8 \
-	-in "${key.raw}" \
-	-passin "pass:${key.alias.password}" \
-	-inform "DER" \
-	-out "${key.encoded}" \
-	-passout "pass:${key.alias.password}" \
-	-outform "PEM"
-
-${key.archive}: ${key.encoded}
-	openssl pkcs12 -export \
-	-in "${key.certificate}" \
-	-inkey "${key.encoded}" \
-	-passin "pass:${key.alias.password}" \
-	-name "${key.alias}" \
-	-out "${key.archive}" \
-	-passout "pass:${key.alias.password}"
-
-${key.store}: ${key.archive}
-	keytool -importkeystore \
-	-destkeystore "${key.store}" \
-	-deststoretype "JKS" \
-	-deststorepass "${key.store.password}" \
-	-srckeystore "${key.archive}" \
-	-srcstoretype "PKCS12" \
-	-srcstorepass "${key.alias.password}" \
-	-srckeypass "${key.alias.password}" \
-	-alias "${key.alias}"
-
-else
-key-store:
-	true
-endif
