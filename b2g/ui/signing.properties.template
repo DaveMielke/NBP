@@ -1,0 +1,6 @@
+key.store = /path/to/keystore
+key.store.password = password-for-keystore
+
+key.alias = name-of-key
+key.alias.password = password-for-key
+
