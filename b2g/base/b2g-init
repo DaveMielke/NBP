@@ -1,10 +1,12 @@
 #!/system/bin/sh
+exec >"/data/local/tmp/${0##*/}.log" 2>&1
 
 setField() {
    local table="${1}"
    local name="${2}"
    local value="${3}"
 
+   echo "set field: ${table}.${name} = ${value}"
    sqlite3 "/data/data/com.android.providers.settings/databases/settings.db" "insert into ${table} (name, value) values (\"${name}\", \"${value}\")"
 }
 
@@ -12,11 +14,13 @@ setProperty() {
    local name="${1}"
    local value="${2}"
 
+   echo "set property: ${name} = ${value}"
    setprop "${name}" "${value}"
 }
 
 permitEventDevice() {
-   set -- `ls /sys/bus/platform/devices/${1}/input*`
+   local identifier="${1}"
+   set -- `ls /sys/bus/platform/devices/${identifier}/input*`
 
    [ "${#}" -eq 1 ] && {
       local name="${1##*/}"
@@ -24,6 +28,7 @@ permitEventDevice() {
 
       [ -n "${event}" ] && {
          local device="/dev/input/event${event}"
+         echo "permit event device: ${device} (${identifier})"
          chmod 666 "${device}"
       }
    }
