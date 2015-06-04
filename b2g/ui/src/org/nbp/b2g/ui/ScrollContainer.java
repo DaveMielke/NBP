@@ -259,22 +259,21 @@ public class ScrollContainer {
 
             if (last != null) {
               Rect region = ScreenUtilities.getNodeRegion(scrollNode);
-              first.y = Math.max(first.y, region.top);
-              last.y = Math.min(last.y, region.bottom-1);
-
+              int y1 = Math.max(first.y, region.top);
+              int y2 = Math.min(last.y, region.bottom-1);
               int x = (first.x + last.x) / 2;
-              int y1;
-              int y2;
+
+              y2 -= Math.round((float)(y2 - y1) / 1.6f);
 
               switch (direction) {
-                case FORWARD:
-                  y1 = last.y;
-                  y2 = first.y;
+                case FORWARD: {
+                  int y = y1;
+                  y1 = y2;
+                  y2 = y;
                   break;
+                }
 
                 case BACKWARD:
-                  y1 = first.y;
-                  y2 = last.y;
                   break;
 
                 default:
