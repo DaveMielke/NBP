@@ -36,7 +36,7 @@ public class ArrowLeft extends ArrowAction {
   }
 
   @Override
-  protected int getArrowKeyCode () {
+  protected int getKeyCode () {
     return KeyEvent.KEYCODE_DPAD_LEFT;
   }
 

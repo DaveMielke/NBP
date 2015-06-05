@@ -41,7 +41,7 @@ public class ArrowUp extends ArrowAction {
   }
 
   @Override
-  protected int getArrowKeyCode () {
+  protected int getKeyCode () {
     return KeyEvent.KEYCODE_DPAD_UP;
   }
 
