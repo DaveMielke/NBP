@@ -2,12 +2,11 @@
 
 * Camera: 5MP, builtin flash
 
-* Wi-Fi: IEEE 802.11 B/G
+* Wi-Fi: IEEE 802.11 b/g, Hotspot, Wi-Fi Direct
 
-* Bluetooth: 2.1 + EDR, power class 1.5
+* Bluetooth: 2.1+EDR, Power Class 1.5
 
-  + Supported Profiles: OPP, A2DP, AVRCP, HID
-  + Unsupported Profiles: HSP, HFP
+  + Profiles: OPP, A2DP, AVRCP, HID
 
 * GPS Receiver: NAVSTAR L1C/A Band, 48 channels
 
