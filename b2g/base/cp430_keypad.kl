@@ -120,9 +120,12 @@ key 1     BACK              WAKE_DROPPED
 key 68    MENU              WAKE_DROPPED
 
 ########################################################################
-########          {KW}: cp430_keypad entried follow         ############
+########          {KW}: cp430_keypad entries follow         ############
 ######################################################################## DOt numbers below are not numbered 
-# left to right 1 thru 8, not the normal Braille Dot numbers.  Yes, unfortunate choice
+
+key	0x197	BRL_FORWARD
+key	0x19c	BRL_BACKWARD
+
 key	0x1f1 	BRL_DOT_7
 key	0x1f2 	BRL_DOT_3
 key	0x1f3 	BRL_DOT_2
@@ -132,6 +135,7 @@ key	0x1f6 	BRL_DOT_5
 key	0x1f7 	BRL_DOT_6
 key	0x1f8 	BRL_DOT_8
 key	0x1f9 	BRL_SPACE
+key	0x1fb	DUMMY_WAKEUP	WAKE
 
 # {KW} Cursor Routing Keys Block 1
 key 	0x2d0	BRL_CURSOR_0
@@ -176,11 +180,6 @@ key 	0x2f4	BRL_CURSOR_36
 key 	0x2f5	BRL_CURSOR_37
 key 	0x2f6	BRL_CURSOR_38
 key 	0x2f7	BRL_CURSOR_39
-
- key 0x197 BRL_FORWARD
-#key 0x197 DPAD_DOWN         WAKE_DROPPED
-key 0x19c BRL_BACKWARD
-#key 0x19c  DPAD_UP	    WAKE_DROPPED
 
 key 0x301	DEL
 key 0x302	BRL_DOTS_3
@@ -439,25 +438,21 @@ key 0x3fe	BRL_DOTS_1234568
 key 0x3ff	BRL_DOTS_12345678
 
 key 0x401	BRL_CHORD_7
-#{KW} BRL_CHORD_3 is mapped to DPAD_LEFT   Dot 3-Chord
-key 0x402	DPAD_LEFT
+key 0x402	BRL_CHORD_3
 key 0x403	BRL_CHORD_37
 key 0x404	BRL_CHORD_2
 key 0x405	BRL_CHORD_27
 key 0x406	BRL_CHORD_23
 key 0x407	BRL_CHORD_237
-#{KW} BRL_CHORD_1 is mapped to DPAD_UP  Dot 1-Chord a-chord
-key 0x408	DPAD_UP
+key 0x408	BRL_CHORD_1
 key 0x409	BRL_CHORD_17
 key 0x40a	BRL_CHORD_13
 key 0x40b	BRL_CHORD_137
-#{KW} BRL_CHORD_12 is mapped to BACK  B-Chord
 key 0x40c	BACK WAKE_DROPPED
 key 0x40d	BRL_CHORD_127
 key 0x40e	BRL_CHORD_123
 key 0x40f	BRL_CHORD_1237
-#{KW} BRL_CHORD_4 is mapped to DPAD_DOWN  Dot 4 Chord
-key 0x410	DPAD_DOWN
+key 0x410	BRL_CHORD_4
 key 0x411	BRL_CHORD_47
 key 0x412	BRL_CHORD_34
 key 0x413	BRL_CHORD_347
@@ -467,10 +462,8 @@ key 0x416	BRL_CHORD_234
 key 0x417	BRL_CHORD_2347
 key 0x418	BRL_CHORD_14
 key 0x419	BRL_CHORD_147
-#{KW} BRL_CHORD_134 is mapped to MENU   m-Chord Dots 134-Chord  
 key 0x41a	MENU
 key 0x41b	BRL_CHORD_1347
-#{KW} BRL_CHORD_124 is mapped to SEARCH  F-Chord
 key 0x41c	SEARCH
 key 0x41d	BRL_CHORD_1247
 key 0x41e	BRL_CHORD_1234
@@ -491,7 +484,6 @@ key 0x42c	BRL_CHORD_125
 key 0x42d	BRL_CHORD_1257
 key 0x42e	BRL_CHORD_1235
 key 0x42f	BRL_CHORD_12357
-#  Chord_cOMB_48    MAPPED TO TAB  dots 45-Chord 
 key 0x430	TAB
 key 0x431	BRL_CHORD_457
 key 0x432	BRL_CHORD_345
@@ -500,18 +492,15 @@ key 0x434	BRL_CHORD_245
 key 0x435	BRL_CHORD_2457
 key 0x436	BRL_CHORD_2345
 key 0x437	BRL_CHORD_23457
-#{KW} BRL_CHORD_145 is mapped to DEL   D-Chord
 key 0x438	FORWARD_DEL
 key 0x439	BRL_CHORD_1457
-#key 0x43a	BRL_CHORD_1345  N-Chord Notifications
 key 0x43a	NOTIFICATION
 key 0x43b	BRL_CHORD_13457
 key 0x43c	BRL_CHORD_1245
 key 0x43d	BRL_CHORD_12457
 key 0x43e	BRL_CHORD_12345
 key 0x43f	BRL_CHORD_123457
-#{KW} BRL_CHORD_6 is mapped to DPAD_RIGHT  Dot 6 Chord
-key 0x440	DPAD_RIGHT
+key 0x440	BRL_CHORD_6
 key 0x441	BRL_CHORD_67
 key 0x442	BRL_CHORD_36
 key 0x443	BRL_CHORD_367
@@ -567,14 +556,12 @@ key 0x474	BRL_CHORD_2456
 key 0x475	BRL_CHORD_24567
 key 0x476	BRL_CHORD_23456
 key 0x477	BRL_CHORD_234567
-# dbb key 0x478	BRL_CHORD_1456  mapped to KEYCODE_ASSIST   this is ?-chord 1456-chord
 key 0x478   ASSIST
 key 0x479	BRL_CHORD_14567
 key 0x47a	BRL_CHORD_13456
 key 0x47b	BRL_CHORD_134567
 key 0x47c	BRL_CHORD_12456
 key 0x47d	BRL_CHORD_124567
-#{KW} BRL_CHORD_123456 is mapped to HOME  FOR-Chord  Dots 123456-Chord
 key 0x47e	HOME WAKE_DROPPED
 key 0x47f	BRL_CHORD_1234567
 key 0x480	BRL_CHORD_8
