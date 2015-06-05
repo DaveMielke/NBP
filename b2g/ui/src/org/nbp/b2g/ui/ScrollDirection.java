@@ -3,20 +3,16 @@ package org.nbp.b2g.ui;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public enum ScrollDirection {
-  FORWARD,
-  BACKWARD;
+  FORWARD  (AccessibilityNodeInfo.ACTION_SCROLL_FORWARD),
+  BACKWARD (AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
 
-  public static int getNodeAction (ScrollDirection direction) {
-    switch (direction) {
-      case FORWARD:  return AccessibilityNodeInfo.ACTION_SCROLL_FORWARD;
-      case BACKWARD: return AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD;
-
-      default:
-        throw new IllegalArgumentException("no node action for scroll direction " + direction.name());
-    }
-  }
+  private final int nodeAction;
 
   public final int getNodeAction () {
-    return getNodeAction(this);
+    return nodeAction;
+  }
+
+  private ScrollDirection (int nodeAction) {
+    this.nodeAction = nodeAction;
   }
 }
