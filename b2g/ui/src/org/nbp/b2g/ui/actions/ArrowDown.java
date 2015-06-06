@@ -1,8 +1,6 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
 public class ArrowDown extends ArrowAction {
   @Override
   protected boolean performEditAction (Endpoint endpoint) {
@@ -35,16 +33,6 @@ public class ArrowDown extends ArrowAction {
   @Override
   protected String getNavigationAction () {
     return "MoveForward";
-  }
-
-  @Override
-  protected String getScanCode () {
-    return "DOWN";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_DPAD_DOWN;
   }
 
   public ArrowDown (Endpoint endpoint) {

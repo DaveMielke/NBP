@@ -15,6 +15,4 @@ F6         |LongPressOn|
 S12345678  |Null|
 <          |VolumeDown|
 >          |VolumeUp|
-S14        |SayLine|
-<>         |SpeechOff|
 =========  =================

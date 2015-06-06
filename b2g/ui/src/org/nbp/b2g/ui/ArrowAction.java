@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public abstract class ArrowAction extends ScanCodeAction {
+public abstract class ArrowAction extends Action {
   protected boolean performEditAction (Endpoint endpoint) {
     return false;
   }
@@ -9,9 +9,7 @@ public abstract class ArrowAction extends ScanCodeAction {
     return false;
   }
 
-  protected String getNavigationAction () {
-    return null;
-  }
+  protected abstract String getNavigationAction ();
 
   @Override
   public boolean performAction () {
@@ -37,7 +35,7 @@ public abstract class ArrowAction extends ScanCodeAction {
       }
     }
 
-    return super.performAction();
+    return false;
   }
 
   protected ArrowAction (Endpoint endpoint, boolean isForDevelopers) {

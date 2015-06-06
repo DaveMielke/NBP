@@ -13,6 +13,10 @@
 .. |Clock| replace:: go to the Clock
 .. |ControlModifier| replace:: sticky control modifier
 .. |CopyToClipboard| replace:: copy text to clipboard
+.. |CursorDown| replace:: the Cursor Down key
+.. |CursorLeft| replace:: the Cursor Left key
+.. |CursorRight| replace:: the Cursor Right key
+.. |CursorUp| replace:: the Cursor Up key
 .. |CutToClipboard| replace:: cut selected text to clipboard
 .. |DeleteNext| replace:: delete next character
 .. |DeletePrevious| replace:: delete previous character

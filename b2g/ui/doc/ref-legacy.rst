@@ -1,10 +1,10 @@
 =========  ==============================
 Keys       Action
 ---------  ------------------------------
-S3         |ArrowLeft|
-S6         |ArrowRight|
-S1         |ArrowUp|
-S4         |ArrowDown|
+S3         |CursorLeft|
+S6         |CursorRight|
+S1         |CursorUp|
+S4         |CursorDown|
 S23        |PageUp|
 S56        |PageDown|
 S123       |Home|
@@ -12,4 +12,6 @@ S456       |End|
 S12        |TabBackward|
 S45        |TabForward|
 S1346      |ControlModifier|
+S14        |SayLine|
+<>         |SpeechOff|
 =========  ==============================

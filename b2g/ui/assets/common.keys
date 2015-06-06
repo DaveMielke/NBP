@@ -25,19 +25,15 @@ P Null
 < VolumeDown
 > VolumeUp
 
-S14 SayLine
-
-<> SpeechOff
-
 ##################
 # Legacy Actions #
 ##################
 
-S3 ArrowLeft
-S6 ArrowRight
+S3 CursorLeft
+S6 CursorRight
 
-S1 ArrowUp
-S4 ArrowDown
+S1 CursorUp
+S4 CursorDown
 
 S23 PageUp
 S56 PageDown
@@ -49,6 +45,9 @@ S12 TabBackward
 S45 TabForward
 
 S1346 ControlModifier
+
+S14 SayLine
+<> SpeechOff
 
 #####################
 # Developer Actions #
