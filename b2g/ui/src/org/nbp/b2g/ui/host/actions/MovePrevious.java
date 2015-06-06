@@ -2,9 +2,7 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
-public class MoveUp extends ScrollAction {
+public class MovePrevious extends ScrollAction {
   @Override
   protected ScrollDirection getScrollDirection () {
     return ScrollDirection.BACKWARD;
@@ -15,17 +13,7 @@ public class MoveUp extends ScrollAction {
     return false;
   }
 
-  @Override
-  protected String getScanCode () {
-    return "PAGEUP";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_PAGE_UP;
-  }
-
-  public MoveUp (Endpoint endpoint) {
+  public MovePrevious (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

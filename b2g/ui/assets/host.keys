@@ -19,8 +19,8 @@ S123456 HomeKey
 S123 MoveFirst
 S456 MoveLast
 
-S23 MoveUp
-S56 MoveDown
+S23 MovePrevious
+S56 MoveNext
 
 S12 TabBackward
 S45 TabForward
