@@ -1,4 +1,4 @@
-/config.mk
+*.mk
 *.pem
 *.pk8
 *.p12
