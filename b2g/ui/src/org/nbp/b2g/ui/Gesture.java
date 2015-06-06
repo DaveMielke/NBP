@@ -50,97 +50,75 @@ public abstract class Gesture {
     return injector.gestureEnabled();
   }
 
-  public static void tap (final int x, final int y, final int count) {
+  public static boolean tap (int x, int y, int count) {
     if (count < 1) {
       throw new IllegalArgumentException(String.format(
         "count must be greater than 0: %d", count
       ));
     }
 
-    Runnable runnable = new Runnable() {
-      @Override
-      public void run () {
-        int tapsLeft = count;
+    if (ApplicationContext.isTouchExplorationActive()) {
+      count += 1;
+    }
 
-        if (ApplicationContext.isTouchExplorationActive()) {
-          tapsLeft += 1;
-        }
-
-        while (true) {
-          if (!begin(x, y, 1)) return;
-          sleep(ApplicationParameters.TAP_HOLD_TIME);
-          if (!end()) return;
-          if ((tapsLeft -= 1) == 0) break;
-          sleep(ApplicationParameters.TAP_WAIT_TIME);
-        }
-      }
-    };
-
-    ApplicationUtilities.run(runnable);
+    while (true) {
+      if (!begin(x, y, 1)) return false;
+      sleep(ApplicationParameters.TAP_HOLD_TIME);
+      if (!end()) return false;
+      if ((count -= 1) == 0) return true;
+      sleep(ApplicationParameters.TAP_WAIT_TIME);
+    }
   }
 
-  public static void tap (int x, int y) {
-    tap(x, y, 1);
+  public static boolean tap (int x, int y) {
+    return tap(x, y, 1);
   }
 
-  public static void swipe (
-    final int x1, final int y1,
-    final int x2, final int y2,
-    final int fingers
-  ) {
+  public static boolean swipe (int x1, int y1, int x2, int y2, int fingers) {
     if (fingers < 1) {
       throw new IllegalArgumentException(String.format(
         "fingers must be greater than 0: %d", fingers
       ));
     }
 
-    Runnable runnable = new Runnable() {
-      @Override
-      public void run () {
-        int fingerCount = fingers;
+    if (ApplicationContext.isTouchExplorationActive()) {
+      fingers += 1;
+    }
 
-        if (ApplicationContext.isTouchExplorationActive()) {
-          fingerCount += 1;
-        }
+    double horizontalPosition = (double)x1;
+    double verticalPosition = (double)y1;
 
-        double horizontalPosition = (double)x1;
-        double verticalPosition = (double)y1;
+    double horizontalDistance = (double)x2 - horizontalPosition;
+    double verticalDistance = (double)y2 - verticalPosition;
 
-        double horizontalDistance = (double)x2 - horizontalPosition;
-        double verticalDistance = (double)y2 - verticalPosition;
+    double totalDistance = Math.hypot(horizontalDistance, verticalDistance);
+    double stepDistance = ApplicationParameters.SWIPE_STEP_DISTANCE;
+    double stepCount = Math.rint(totalDistance / stepDistance);
 
-        double totalDistance = Math.hypot(horizontalDistance, verticalDistance);
-        double stepDistance = ApplicationParameters.SWIPE_STEP_DISTANCE;
-        double stepCount = Math.rint(totalDistance / stepDistance);
+    double horizontalStep = horizontalDistance / stepCount;
+    double verticalStep = verticalDistance / stepCount;
 
-        double horizontalStep = horizontalDistance / stepCount;
-        double verticalStep = verticalDistance / stepCount;
+    if (!begin(x1, y1, fingers)) return false;
+    long stepInterval = ApplicationParameters.SWIPE_STEP_INTERVAL;
 
-        if (!begin(x1, y1, fingerCount)) return;
-        long stepInterval = ApplicationParameters.SWIPE_STEP_INTERVAL;
+    while (true) {
+      sleep(stepInterval);
+      if (stepCount < 1.5) break;
+      stepCount -= 1.0;
 
-        while (true) {
-          sleep(stepInterval);
-          if (stepCount < 1.5) break;
-          stepCount -= 1.0;
+      horizontalPosition += horizontalStep;
+      verticalPosition += verticalStep;
 
-          horizontalPosition += horizontalStep;
-          verticalPosition += verticalStep;
+      int x = (int)Math.rint(horizontalPosition);
+      int y = (int)Math.rint(verticalPosition);
+      if (!move(x, y)) return false;
+    }
 
-          int x = (int)Math.rint(horizontalPosition);
-          int y = (int)Math.rint(verticalPosition);
-          if (!move(x, y)) return;
-        }
-
-        end(x2, y2);
-      }
-    };
-
-    ApplicationUtilities.run(runnable);
+    return end(x2, y2);
   }
 
-  public static void swipe (int x1, int y1, int x2, int y2) {
-    swipe(x1, y1, x2, y2, 1);
+  public static boolean swipe (int x1, int y1, int x2, int y2) {
+    return swipe(x1, y1, x2, y2, 1);
   }
 
   private Gesture () {
