@@ -19,10 +19,10 @@ S12345678 Null
 # required actions #
 ####################
 
-P Null
-
 < VolumeDown
 > VolumeUp
+
+P Null
 
 ##################
 # Legacy Actions #

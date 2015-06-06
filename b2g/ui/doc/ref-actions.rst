@@ -37,7 +37,11 @@
 .. |LongPressOn| replace:: enable long key press actions
 .. |MenuKey| replace:: the Android Menu key
 .. |MoveBackward| replace:: move to start of previous screen element
+.. |MoveFirst| replace:: move to start of list or line
 .. |MoveForward| replace:: move to start of next screen element
+.. |MoveLast| replace:: move to end of list or line
+.. |MoveNext| replace:: move to next page of list or text field
+.. |MovePrevious| replace:: move to previous page of list or text field
 .. |MoveToChild| replace:: go to and describe first child node
 .. |MoveToNextSibling| replace:: go to and describe next sibling node
 .. |MoveToParent| replace:: go to and describe parent node

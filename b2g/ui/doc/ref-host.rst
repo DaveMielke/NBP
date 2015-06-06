@@ -13,6 +13,10 @@ SC         |LongClick|
 1R         |RecentApps|
 S1478      |PowerOff|
 S123456    |HomeKey|
+SL         |MoveFirst|
+SR         |MoveLast|
+SU         |MovePrevious|
+SD         |MoveNext|
 S124       |FindNext|
 S134       |MenuKey|
 S1345      |Notifications|
