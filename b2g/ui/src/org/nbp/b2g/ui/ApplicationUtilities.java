@@ -20,6 +20,9 @@ public abstract class ApplicationUtilities {
   public static void sleep (long duration) {
     if (duration > 0) SystemClock.sleep(duration);
   }
+  public static void run (Runnable runnable) {
+    new Thread(runnable).start();
+  }
 
   public static long getTapTimeout () {
     return ViewConfiguration.getTapTimeout();

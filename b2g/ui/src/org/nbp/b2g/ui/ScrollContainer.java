@@ -281,9 +281,8 @@ public class ScrollContainer {
                   return false;
               }
 
-              if (Gesture.swipe(x, y1, x, y2)) {
-                scrollStarted = true;
-              }
+              Gesture.swipe(x, y1, x, y2);
+              scrollStarted = true;
             }
           }
         }
