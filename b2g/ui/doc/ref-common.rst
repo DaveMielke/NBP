@@ -8,7 +8,6 @@ SX         |SetLeft|
 814        |CopyToClipboard|
 B7         |OneHandOff|
 F8         |OneHandOn|
-8P         |OneHandOn|
 B3         |LongPressOff|
 F6         |LongPressOn|
 12345678   |Null|

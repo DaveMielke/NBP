@@ -14,4 +14,5 @@ S45        |TabForward|
 S1346      |ControlModifier|
 S14        |SayLine|
 <>         |SpeechOff|
+8P         |OneHandOn|
 =========  ==============================

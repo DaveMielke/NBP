@@ -8,7 +8,6 @@ SX SetLeft
 
 B7 OneHandOff
 F8 OneHandOn
-8P OneHandOn
 
 B3 LongPressOff
 F6 LongPressOn
@@ -48,6 +47,8 @@ S1346 ControlModifier
 
 S14 SayLine
 <> SpeechOff
+
+8P OneHandOn
 
 #####################
 # Developer Actions #
