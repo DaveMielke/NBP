@@ -598,6 +598,11 @@ Speech Operations
 
 .. include:: ref-speech.rst
 
+Legacy Actions
+~~~~~~~~~~~~~~
+
+.. include:: ref-legacy.rst
+
 Developer Actions
 ~~~~~~~~~~~~~~~~~
 

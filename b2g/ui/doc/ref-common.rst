@@ -15,11 +15,6 @@ F6         |LongPressOn|
 S12345678  |Null|
 <          |VolumeDown|
 >          |VolumeUp|
-S1         |ArrowUp|
-S4         |ArrowDown|
-S3         |ArrowLeft|
-S6         |ArrowRight|
 S14        |SayLine|
-S1346      |ControlModifier|
 <>         |SpeechOff|
 =========  =================

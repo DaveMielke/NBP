@@ -7,7 +7,7 @@
 .. |ArrowRight| replace:: the Right Arrow key
 .. |ArrowUp| replace:: the Up Arrow key
 .. |Assist| replace:: go to the current Google Assist app
-.. |BackKey| replace:: the Back key
+.. |BackKey| replace:: the Android Back key
 .. |BringCursor| replace:: bring the cursor to a specific character
 .. |Click| replace:: tap (click) current screen element
 .. |Clock| replace:: go to the Clock
@@ -18,9 +18,11 @@
 .. |DeletePrevious| replace:: delete previous character
 .. |DescribeCharacter| replace:: describe character
 .. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
+.. |End| replace:: the End key
 .. |EnterKey| replace:: the Enter key
 .. |FindNext| replace:: find (forward search for) text
-.. |HomeKey| replace:: the Home key
+.. |Home| replace:: the Home key
+.. |HomeKey| replace:: the Android Home key
 .. |LogActions| replace:: turn on logging of user-requested actions
 .. |LogKeys| replace:: turn on logging of keyboard key events
 .. |LogNavigation| replace:: turn on logging of internal screen navigation operations
@@ -29,7 +31,7 @@
 .. |LongClick| replace:: hold (long click) current screen element
 .. |LongPressOff| replace:: disable long key press actions
 .. |LongPressOn| replace:: enable long key press actions
-.. |MenuKey| replace:: the Menu key
+.. |MenuKey| replace:: the Android Menu key
 .. |MoveBackward| replace:: move to start of previous screen element
 .. |MoveForward| replace:: move to start of next screen element
 .. |MoveToChild| replace:: go to and describe first child node
@@ -42,6 +44,8 @@
 .. |OneHandOff| replace:: turn off one hand mode
 .. |OneHandOn| replace:: turn on one hand mode
 .. |Options| replace:: go to the Options (User Interface Settings) screen
+.. |PageDown| replace:: the Page Down key
+.. |PageUp| replace:: the Page Up key
 .. |PanLeft| replace:: pan to the left
 .. |PanRight| replace:: pan to the right
 .. |PasteFromClipboard| replace:: paste clipboard content into text at cursor

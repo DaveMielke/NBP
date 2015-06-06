@@ -7,23 +7,20 @@ SF MoveForward
 C Click
 SC LongClick
 
-SU Notifications
-SD HomeKey
+1U Notifications
+1D HomeKey
 
-SL BackKey
-SR RecentApps
+1L BackKey
+1R RecentApps
 
 S1478 PowerOff
 S123456 HomeKey
 
-S123 MoveFirst
-S456 MoveLast
+SL MoveFirst
+SR MoveLast
 
-S23 MovePrevious
-S56 MoveNext
-
-S12 TabBackward
-S45 TabForward
+SU MovePrevious
+SD MoveNext
 
 S124 FindNext
 S134 MenuKey

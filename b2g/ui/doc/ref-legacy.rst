@@ -1,0 +1,15 @@
+=========  ==============================
+Keys       Action
+---------  ------------------------------
+S3         |ArrowLeft|
+S6         |ArrowRight|
+S1         |ArrowUp|
+S4         |ArrowDown|
+S23        |PageUp|
+S56        |PageDown|
+S123       |Home|
+S456       |End|
+S12        |TabBackward|
+S45        |TabForward|
+S1346      |ControlModifier|
+=========  ==============================
