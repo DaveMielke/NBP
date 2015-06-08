@@ -389,14 +389,14 @@ public abstract class ScreenUtilities {
     return current;
   }
 
-  public static void deselectAll (AccessibilityNodeInfo root) {
+  public static void deselectTree (AccessibilityNodeInfo root) {
     int childCount = root.getChildCount();
 
     for (int childIndex=0; childIndex<childCount; childIndex+=1) {
       AccessibilityNodeInfo child = root.getChild(childIndex);
 
       if (child != null) {
-        deselectAll(child);
+        deselectTree(child);
         child.recycle();
       }
     }
@@ -408,6 +408,23 @@ public abstract class ScreenUtilities {
         logNavigation(root, "deselect failed");
       }
     }
+  }
+
+  public static void deselectSiblings (AccessibilityNodeInfo parent, AccessibilityNodeInfo node) {
+    int childCount = parent.getChildCount();
+
+    for (int childIndex=0; childIndex<childCount; childIndex+=1) {
+      AccessibilityNodeInfo child = parent.getChild(childIndex);
+
+      if (child != null) {
+        if (!child.equals(node)) deselectTree(child);
+        child.recycle();
+      }
+    }
+  }
+
+  public static void deselectChildren (AccessibilityNodeInfo parent) {
+    deselectSiblings(parent, null);
   }
 
   public static void isolateSelection (AccessibilityNodeInfo node) {
@@ -434,16 +451,7 @@ public abstract class ScreenUtilities {
       AccessibilityNodeInfo parent = node.getParent();
       if (parent == null) break;
 
-      int childCount = parent.getChildCount();
-      for (int childIndex=0; childIndex<childCount; childIndex+=1) {
-        AccessibilityNodeInfo child = parent.getChild(childIndex);
-
-        if (child != null) {
-          if (!child.equals(node)) deselectAll(child);
-          child.recycle();
-        }
-      }
-
+      deselectSiblings(parent, node);
       node.recycle();
       node = parent;
     }

@@ -42,6 +42,13 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   @Override
+  public boolean handleEnterKey () {
+    boolean success = handleResponse(getResponse());
+    Endpoints.setHostEndpoint();
+    return success;
+  }
+
+  @Override
   public boolean isEditable () {
     return true;
   }

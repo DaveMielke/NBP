@@ -6,6 +6,7 @@ import android.util.Log;
 import android.os.Bundle;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.InputConnection;
+import android.view.KeyEvent;
 
 public class HostEndpoint extends Endpoint {
   private final static String LOG_TAG = HostEndpoint.class.getName();
@@ -103,6 +104,22 @@ public class HostEndpoint extends Endpoint {
     }
 
     return write(node, describe, indent);
+  }
+
+  @Override
+  public boolean handleEnterKey () {
+    synchronized (this) {
+      if (!isEditable()) {
+        AccessibilityNodeInfo node = getCurrentNode();
+        if (node == null) return false;
+
+        boolean performed = node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        node.recycle();
+        return performed;
+      }
+    }
+
+    return InputService.sendKey(KeyEvent.KEYCODE_ENTER);
   }
 
   @Override

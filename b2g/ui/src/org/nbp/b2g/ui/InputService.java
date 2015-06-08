@@ -121,6 +121,20 @@ public class InputService extends InputMethodService {
     return false;
   }
 
+  public static boolean sendKey (int key) {
+    InputConnection connection = getInputConnection();
+
+    if (connection != null) {
+      if (connection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, key))) {
+        if (connection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, key))) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   private static void logKeyEvent (int code, boolean press) {
     if (ApplicationSettings.LOG_KEYS) {
       StringBuilder sb = new StringBuilder();

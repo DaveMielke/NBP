@@ -157,6 +157,10 @@ public abstract class Endpoint {
     return deleteText(start, end);
   }
 
+  public boolean handleEnterKey () {
+    return false;
+  }
+
   public boolean write () {
     Endpoints.READ_LOCK.lock();
     try {
