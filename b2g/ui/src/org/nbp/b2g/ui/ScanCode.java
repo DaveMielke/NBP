@@ -22,6 +22,7 @@ public abstract class ScanCode {
   public final static int DOT_6       = 0X1F7;
   public final static int DOT_8       = 0X1F8;
   public final static int SPACE       = 0X1F9;
+  public final static int WAKEUP      = 0X1FB;
 
   public final static int CURSOR_0    = 0X2D0;
   public final static int CURSOR_1    = 0X2D1;
