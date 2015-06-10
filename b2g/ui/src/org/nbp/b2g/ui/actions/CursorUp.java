@@ -1,17 +1,10 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
-public class CursorUp extends ScanCodeAction {
+public class CursorUp extends Action {
   @Override
-  protected String getScanCode () {
-    return "UP";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_DPAD_UP;
+  public boolean performAction () {
+    return getEndpoint().handleKeyboardKey_cursorUp();
   }
 
   public CursorUp (Endpoint endpoint) {

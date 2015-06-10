@@ -27,6 +27,16 @@ public abstract class KeyEvents {
     return false;
   }
 
+  public static boolean performAction (Action action) {
+    return performAction(action, false);
+  }
+
+  public static boolean performAction (String name) {
+    Action action = Endpoints.getCurrentEndpoint().getKeyBindings().getAction(name);
+    if (action == null) return false;
+    return performAction(action);
+  }
+
   private static boolean performAction (boolean isLongPress) {
     if (activeNavigationKeys == 0) return true;
 

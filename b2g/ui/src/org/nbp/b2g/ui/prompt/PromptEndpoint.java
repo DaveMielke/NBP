@@ -42,7 +42,7 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean handleEnterKey () {
+  public boolean handleKeyboardKey_enter () {
     boolean success = handleResponse(getResponse());
     Endpoints.setHostEndpoint();
     return success;

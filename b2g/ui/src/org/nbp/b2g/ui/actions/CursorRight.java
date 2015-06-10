@@ -1,17 +1,10 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
-public class CursorRight extends ScanCodeAction {
+public class CursorRight extends Action {
   @Override
-  protected String getScanCode () {
-    return "RIGHT";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_DPAD_RIGHT;
+  public boolean performAction () {
+    return getEndpoint().handleKeyboardKey_cursorRight();
   }
 
   public CursorRight (Endpoint endpoint) {

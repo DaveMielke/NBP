@@ -107,8 +107,48 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean handleEnterKey () {
-    return InputService.sendKey(KeyEvent.KEYCODE_ENTER);
+  public boolean handleKeyboardKey_enter () {
+    return InputService.injectKey(KeyEvent.KEYCODE_ENTER);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_cursorLeft () {
+    return InputService.injectKey(KeyEvent.KEYCODE_DPAD_LEFT);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_cursorRight () {
+    return InputService.injectKey(KeyEvent.KEYCODE_DPAD_RIGHT);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_cursorUp () {
+    return InputService.injectKey(KeyEvent.KEYCODE_DPAD_UP);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_cursorDown () {
+    return InputService.injectKey(KeyEvent.KEYCODE_DPAD_DOWN);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_pageUp () {
+    return InputService.injectKey(KeyEvent.KEYCODE_PAGE_UP);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_pageDown () {
+    return InputService.injectKey(KeyEvent.KEYCODE_PAGE_DOWN);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_home () {
+    return InputService.injectKey(KeyEvent.KEYCODE_MOVE_HOME);
+  }
+
+  @Override
+  public boolean handleKeyboardKey_end () {
+    return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
   @Override

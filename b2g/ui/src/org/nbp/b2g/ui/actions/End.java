@@ -1,17 +1,10 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
-public class End extends ScanCodeAction {
+public class End extends Action {
   @Override
-  protected String getScanCode () {
-    return "END";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_MOVE_END;
+  public boolean performAction () {
+    return getEndpoint().handleKeyboardKey_end();
   }
 
   public End (Endpoint endpoint) {

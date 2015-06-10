@@ -1,17 +1,10 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
-public class Home extends ScanCodeAction {
+public class Home extends Action {
   @Override
-  protected String getScanCode () {
-    return "HOME";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_MOVE_HOME;
+  public boolean performAction () {
+    return getEndpoint().handleKeyboardKey_home();
   }
 
   public Home (Endpoint endpoint) {

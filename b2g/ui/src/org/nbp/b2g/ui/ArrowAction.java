@@ -28,11 +28,7 @@ public abstract class ArrowAction extends Action {
     {
       String name = getNavigationAction();
 
-      if (name != null) {
-        Action action = endpoint.getKeyBindings().getAction(name);
-        if (action == null) return false;
-        return KeyEvents.performAction(action, false);
-      }
+      if (name != null) return KeyEvents.performAction(name);
     }
 
     return false;

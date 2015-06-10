@@ -1,17 +1,10 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
-public class PageDown extends ScanCodeAction {
+public class PageDown extends Action {
   @Override
-  protected String getScanCode () {
-    return "PAGEDOWN";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_PAGE_DOWN;
+  public boolean performAction () {
+    return getEndpoint().handleKeyboardKey_pageDown();
   }
 
   public PageDown (Endpoint endpoint) {

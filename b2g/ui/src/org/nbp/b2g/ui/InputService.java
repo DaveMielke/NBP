@@ -121,7 +121,7 @@ public class InputService extends InputMethodService {
     return false;
   }
 
-  public static boolean sendKey (int key) {
+  public static boolean injectKey (int key) {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {

@@ -157,7 +157,39 @@ public abstract class Endpoint {
     return deleteText(start, end);
   }
 
-  public boolean handleEnterKey () {
+  public boolean handleKeyboardKey_enter () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_cursorLeft () {
+    return KeyEvents.performAction("ArrowLeft");
+  }
+
+  public boolean handleKeyboardKey_cursorRight () {
+    return KeyEvents.performAction("ArrowRight");
+  }
+
+  public boolean handleKeyboardKey_cursorUp () {
+    return KeyEvents.performAction("ArrowUp");
+  }
+
+  public boolean handleKeyboardKey_cursorDown () {
+    return KeyEvents.performAction("ArrowDown");
+  }
+
+  public boolean handleKeyboardKey_pageUp () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_pageDown () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_home () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_end () {
     return false;
   }
 
