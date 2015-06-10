@@ -23,7 +23,7 @@
 .. |DescribeCharacter| replace:: describe character
 .. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
 .. |End| replace:: the End key
-.. |EnterKey| replace:: the Enter key
+.. |Enter| replace:: the Enter key
 .. |FindNext| replace:: find (forward search for) text
 .. |Home| replace:: the Home key
 .. |HomeKey| replace:: the Android Home key

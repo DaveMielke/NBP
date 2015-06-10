@@ -14,7 +14,7 @@ public class InputService extends InputMethodService {
   private static volatile InputService inputService = null;
 
   public static InputService getInputService () {
-    if (inputService == null) Log.w(LOG_TAG, "input service not runnig");
+    if (inputService == null) Log.w(LOG_TAG, "input service not running");
     return inputService;
   }
 

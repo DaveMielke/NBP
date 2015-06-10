@@ -108,17 +108,6 @@ public class HostEndpoint extends Endpoint {
 
   @Override
   public boolean handleEnterKey () {
-    synchronized (this) {
-      if (!isEditable()) {
-        AccessibilityNodeInfo node = getCurrentNode();
-        if (node == null) return false;
-
-        boolean performed = node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-        node.recycle();
-        return performed;
-      }
-    }
-
     return InputService.sendKey(KeyEvent.KEYCODE_ENTER);
   }
 

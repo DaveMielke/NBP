@@ -1,7 +1,7 @@
 =========  =================
 Keys       Action
 ---------  -----------------
-8          |EnterKey|
+8          |Enter|
 7          |DeletePrevious|
 S145       |DeleteNext|
 X          |BringCursor|
