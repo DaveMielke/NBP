@@ -1,6 +1,6 @@
-======  ======================
+======  ===============================
 Symbol  Name
-------  ----------------------
+------  -------------------------------
 1       Dot 1
 2       Dot 2
 3       Dot 3
@@ -15,11 +15,12 @@ D       D-Pad Down
 F       Forward
 H       hold (long press)
 L       D-Pad Left
-P       Power Switch
+Q       Quiesce (turn power switch off)
 R       D-Pad Right
 S       Space
 U       D-Pad Up
+W       Wake (turn power switch on)
 X       any cursor routing key
 <       Volume Down
 >       Volume Up
-======  ======================
+======  ===============================

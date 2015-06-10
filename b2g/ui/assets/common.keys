@@ -22,7 +22,8 @@ S12345678 Null
 < VolumeDown
 > VolumeUp
 
-P Null
+W Null
+Q Null
 
 ##################
 # Legacy Actions #
@@ -48,7 +49,7 @@ S1346 ControlModifier
 S14 SayLine
 <> SpeechOff
 
-8P OneHandOn
+8W OneHandOn
 
 #####################
 # Developer Actions #

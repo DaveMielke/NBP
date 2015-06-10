@@ -73,7 +73,8 @@ public abstract class KeyMask {
   }
 
   private static void map () {
-    map('P', POWER_ON);
+    map('W', POWER_ON);
+    map('Q', POWER_OFF);
 
     map('S', SPACE);
     map('F', FORWARD);
