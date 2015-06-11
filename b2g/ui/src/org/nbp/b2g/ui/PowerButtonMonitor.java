@@ -14,13 +14,15 @@ public class PowerButtonMonitor extends EventMonitor {
   private static boolean wasAwake = true;
 
   @Override
-  public void onKeyEvent (int code, boolean press) {
+  protected boolean handleKeyEvent (int code, boolean press) {
     if (press) wasAwake = ApplicationContext.isAwake();
     Keyboard.injectKey(code, press);
     Controls.getOneHandControl().previousValue();
 
     int keyMask = wasAwake? KeyMask.POWER_OFF: KeyMask.POWER_ON;
     KeyEvents.handleNavigationKeyEvent(keyMask, press);
+
+    return true;
   }
 
   public PowerButtonMonitor () {

@@ -10,15 +10,21 @@ public abstract class EventMonitor extends Thread {
   private native void closeDevice (int device);
   private native void monitorDevice (int device);
 
+  protected boolean handleKeyEvent (int code, boolean press) {
+    return false;
+  }
+
   public void onKeyEvent (int code, boolean press) {
     if (ApplicationSettings.LOG_KEYS) {
       Log.d(LOG_TAG, "scan code " + (press? "press": "release") + " received: " + code);
     }
 
-    if ((code >= ScanCode.CURSOR_0) && (code <= ScanCode.CURSOR_19)) {
-      KeyEvents.handleCursorKeyEvent((code - ScanCode.CURSOR_0), press);
-    } else {
-      KeyEvents.handleNavigationKeyEvent(ScanCode.toKeyMask(code), press);
+    if (!handleKeyEvent(code, press)) {
+      if ((code >= ScanCode.CURSOR_0) && (code <= ScanCode.CURSOR_19)) {
+        KeyEvents.handleCursorKeyEvent((code - ScanCode.CURSOR_0), press);
+      } else {
+        KeyEvents.handleNavigationKeyEvent(ScanCode.toKeyMask(code), press);
+      }
     }
   }
 
