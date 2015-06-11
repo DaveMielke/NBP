@@ -2,9 +2,6 @@ package org.nbp.b2g.ui;
 
 import java.nio.ByteBuffer;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import android.util.Log;
 
 public class KeyboardDevice extends UInputDevice implements KeyboardInjector {
@@ -30,11 +27,8 @@ public class KeyboardDevice extends UInputDevice implements KeyboardInjector {
     return keyboardRelease(uinput, key);
   }
 
-  public final static int NULL_SCAN_CODE = 0;
-  private static Map<String, Integer> scanCodeMap = new HashMap<String, Integer>();
-
   private boolean enableKeys (ByteBuffer uinput) {
-    for (int key : scanCodeMap.values()) {
+    for (int key : Keyboard.getScanCodeValues()) {
       if (!keyEnable(uinput, key)) return false;
     }
 
@@ -54,22 +48,5 @@ public class KeyboardDevice extends UInputDevice implements KeyboardInjector {
 
   public KeyboardDevice () {
     super();
-  }
-
-  public static int getScanCode (String name) {
-    Integer code = scanCodeMap.get(name);
-    if (code != null) return code;
-    Log.w(LOG_TAG, "keyboard scan code not defined: " + name);
-    return NULL_SCAN_CODE;
-  }
-
-  private static void defineScanCode (String name, int code) {
-    scanCodeMap.put(name, code);
-  }
-
-  private static native void defineScanCodes ();
-
-  static {
-    defineScanCodes();
   }
 }

@@ -48,7 +48,7 @@ static const ScanCodeEntry scanCodeTable[] = {
 };
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_KeyboardDevice, defineScanCodes, void
+  org_nbp_b2g_ui_Keyboard, defineScanCodes, void
 ) {
   jclass class = this;
   const char *methodName = "defineScanCode";

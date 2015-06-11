@@ -1,5 +1,9 @@
 package org.nbp.b2g.ui;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
+
 import android.util.Log;
 
 public abstract class Keyboard {
@@ -43,6 +47,42 @@ public abstract class Keyboard {
     return injectKey(key, 0);
   }
 
+  public final static int NULL_SCAN_CODE = 0;
+  private static Map<String, Integer> scanCodeMap_nameToValue = new HashMap<String, Integer>();
+  private static Map<Integer, String> scanCodeMap_valueToName = new HashMap<Integer, String>();
+
+  public static Collection<Integer> getScanCodeValues () {
+    return scanCodeMap_nameToValue.values();
+  }
+
+  public static int getScanCodeValue (String name) {
+    Integer value = scanCodeMap_nameToValue.get(name);
+    if (value != null) return value;
+
+    Log.w(LOG_TAG, "keyboard scan code not defined: " + name);
+    return NULL_SCAN_CODE;
+  }
+
+  public static String getScanCodeName (int value) {
+    String name = scanCodeMap_valueToName.get(value);
+    if (name != null) return name;
+
+    Log.w(LOG_TAG, "keyboard scan code not defined: " + value);
+    return null;
+  }
+
   private Keyboard () {
+  }
+
+  private static void defineScanCode (String name, int code) {
+    Integer value = code;
+    scanCodeMap_nameToValue.put(name, value);
+    scanCodeMap_valueToName.put(value, name);
+  }
+
+  private static native void defineScanCodes ();
+
+  static {
+    defineScanCodes();
   }
 }

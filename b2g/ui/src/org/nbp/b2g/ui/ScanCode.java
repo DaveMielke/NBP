@@ -98,9 +98,9 @@ public abstract class ScanCode {
   }
 
   private static void map (String name, int mask) {
-    int code = KeyboardDevice.getScanCode(name);
+    int code = Keyboard.getScanCodeValue(name);
 
-    if (code != KeyboardDevice.NULL_SCAN_CODE) {
+    if (code != Keyboard.NULL_SCAN_CODE) {
       scanCodeMap.put(code, mask);
     }
   }

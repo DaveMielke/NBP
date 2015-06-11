@@ -7,11 +7,11 @@ public abstract class ScanCodeAction extends KeyCodeAction {
     return NULL_SCAN_CODE;
   }
 
-  protected final static int SCAN_CODE_SHIFT = KeyboardDevice.getScanCode("LEFTSHIFT");
-  protected final static int SCAN_CODE_CONTROL = KeyboardDevice.getScanCode("LEFTCTRL");
-  protected final static int SCAN_CODE_ALT = KeyboardDevice.getScanCode("LEFTALT");
-  protected final static int SCAN_CODE_ALTGR = KeyboardDevice.getScanCode("RIGHTALT");
-  protected final static int SCAN_CODE_GUI = KeyboardDevice.getScanCode("LEFTMETA");
+  protected final static int SCAN_CODE_SHIFT = Keyboard.getScanCodeValue("LEFTSHIFT");
+  protected final static int SCAN_CODE_CONTROL = Keyboard.getScanCodeValue("LEFTCTRL");
+  protected final static int SCAN_CODE_ALT = Keyboard.getScanCodeValue("LEFTALT");
+  protected final static int SCAN_CODE_ALTGR = Keyboard.getScanCodeValue("RIGHTALT");
+  protected final static int SCAN_CODE_GUI = Keyboard.getScanCodeValue("LEFTMETA");
 
   protected int[] getScanCodeModifiers () {
     return null;
@@ -22,9 +22,9 @@ public abstract class ScanCodeAction extends KeyCodeAction {
     String name = getScanCode();
 
     if (!name.equals(NULL_SCAN_CODE)) {
-      int value = KeyboardDevice.getScanCode(name);
+      int value = Keyboard.getScanCodeValue(name);
 
-      if (value != KeyboardDevice.NULL_SCAN_CODE) {
+      if (value != Keyboard.NULL_SCAN_CODE) {
         KeyCombinationInjector keyCombinationInjector = new KeyCombinationInjector() {
           @Override
           protected boolean injectKeyPress (int key) {
