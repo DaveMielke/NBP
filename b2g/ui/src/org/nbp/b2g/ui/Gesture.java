@@ -19,9 +19,11 @@ public abstract class Gesture {
   }
 
   private static boolean begin (int x, int y, int fingers) {
-    Log.v(LOG_TAG, String.format(
-      "gesture begin: [%d,%d] Fingers:%d", x, y, fingers
-    ));
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG, String.format(
+        "gesture begin: [%d,%d] Fingers:%d", x, y, fingers
+      ));
+    }
 
     setStartTime();
     if (injector == null) return true;
@@ -29,19 +31,28 @@ public abstract class Gesture {
   }
 
   private static boolean move (int x, int y) {
-    Log.v(LOG_TAG, String.format("gesture move: [%d,%d]", x, y));
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG, String.format("gesture move: [%d,%d]", x, y));
+    }
+
     if (injector == null) return true;
     return injector.gestureMove(x, y);
   }
 
   private static boolean end () {
-    Log.v(LOG_TAG, "gesture end");
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG, "gesture end");
+    }
+
     if (injector == null) return true;
     return injector.gestureEnd();
   }
 
   private static boolean end (int x, int y) {
-    Log.v(LOG_TAG, String.format("gesture end: [%d,%d]", x, y));
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG, String.format("gesture end: [%d,%d]", x, y));
+    }
+
     if (injector == null) return true;
     return injector.gestureEnd(x, y);
   }

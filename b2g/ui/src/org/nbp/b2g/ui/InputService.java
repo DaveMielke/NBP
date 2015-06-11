@@ -121,14 +121,34 @@ public class InputService extends InputMethodService {
     return false;
   }
 
-  public static boolean injectKey (int key) {
+  private static boolean injectKeyEvent (int key, boolean press) {
     InputConnection connection = getInputConnection();
+    if (connection == null) return false;
 
-    if (connection != null) {
-      if (connection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, key))) {
-        if (connection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, key))) {
-          return true;
-        }
+    if (ApplicationSettings.LOG_ACTIONS) {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append("injecting key code ");
+      sb.append(press? "press": "release");
+
+      sb.append(": ");
+      sb.append(key);
+
+      sb.append(" (");
+      sb.append(KeyEvent.keyCodeToString(key));
+      sb.append(")");
+
+      Log.v(LOG_TAG, sb.toString());
+    }
+
+    int action = press? KeyEvent.ACTION_DOWN: KeyEvent.ACTION_UP;
+    return connection.sendKeyEvent(new KeyEvent(action, key));
+  }
+
+  public static boolean injectKey (int key) {
+    if (injectKeyEvent(key, true)) {
+      if (injectKeyEvent(key, false)) {
+        return true;
       }
     }
 
@@ -145,6 +165,7 @@ public class InputService extends InputMethodService {
 
       sb.append(": ");
       sb.append(code);
+
       sb.append(" (");
       sb.append(KeyEvent.keyCodeToString(code));
       sb.append(")");
