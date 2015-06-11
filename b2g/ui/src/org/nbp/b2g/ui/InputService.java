@@ -132,7 +132,7 @@ public class InputService extends InputMethodService {
     }
   }
 
-  private static boolean injectKeyEvent (int key, boolean press) {
+  public static boolean injectKeyEvent (int key, boolean press) {
     if (ApplicationSettings.LOG_ACTIONS) {
       StringBuilder sb = new StringBuilder();
 

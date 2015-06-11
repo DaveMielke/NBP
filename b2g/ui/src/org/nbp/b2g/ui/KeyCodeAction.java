@@ -2,7 +2,6 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
-import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
 public abstract class KeyCodeAction extends KeyAction {
@@ -29,26 +28,20 @@ public abstract class KeyCodeAction extends KeyAction {
     int keyCode = getKeyCode();
 
     if (keyCode != NULL_KEY_CODE) {
-      final InputConnection connection = InputService.getInputConnection();
-
-      if (connection != null) {
-        KeyCombinationInjector keyCombinationInjector = new KeyCombinationInjector() {
-          @Override
-          protected boolean injectKeyPress (int key) {
-            KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, key);
-            return connection.sendKeyEvent(event);
-          }
-
-          @Override
-          protected boolean injectKeyRelease (int key) {
-            KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, key);
-            return connection.sendKeyEvent(event);
-          }
-        };
-
-        if (keyCombinationInjector.injectKeyCombination(keyCode, getKeyCodeModifiers())) {
-          return true;
+      KeyCombinationInjector keyCombinationInjector = new KeyCombinationInjector() {
+        @Override
+        protected boolean injectKeyPress (int key) {
+          return InputService.injectKeyEvent(key, true);
         }
+
+        @Override
+        protected boolean injectKeyRelease (int key) {
+          return InputService.injectKeyEvent(key, false);
+        }
+      };
+
+      if (keyCombinationInjector.injectKeyCombination(keyCode, getKeyCodeModifiers())) {
+        return true;
       }
     }
 
