@@ -16,7 +16,21 @@ public abstract class EventMonitor extends Thread {
 
   public void onKeyEvent (int code, boolean press) {
     if (ApplicationSettings.LOG_KEYS) {
-      Log.d(LOG_TAG, "scan code " + (press? "press": "release") + " received: " + code);
+      StringBuilder sb = new StringBuilder();
+      String name = Keyboard.getScanCodeName(code);
+
+      sb.append("scan code ");
+      sb.append(press? "press": "release");
+      sb.append(" received: ");
+      sb.append(code);
+
+      if (name != null) {
+        sb.append(" (");
+        sb.append(name);
+        sb.append(')');
+      }
+
+      Log.v(LOG_TAG, sb.toString());
     }
 
     if (!handleKeyEvent(code, press)) {

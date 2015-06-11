@@ -13,7 +13,21 @@ public abstract class Keyboard {
 
   private static void logKeyboardEvent (int key, String action) {
     if (ApplicationSettings.LOG_ACTIONS) {
-      Log.v(LOG_TAG, String.format("injecting scan code %s: %d", action, key));
+      StringBuilder sb = new StringBuilder();
+      String name = getScanCodeName(key);
+
+      sb.append("injecting scan code ");
+      sb.append(action);
+      sb.append(": ");
+      sb.append(key);
+
+      if (name != null) {
+        sb.append(" (");
+        sb.append(name);
+        sb.append(')');
+      }
+
+      Log.v(LOG_TAG, sb.toString());
     }
   }
 

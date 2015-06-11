@@ -121,25 +121,31 @@ public class InputService extends InputMethodService {
     return false;
   }
 
-  private static boolean injectKeyEvent (int key, boolean press) {
-    InputConnection connection = getInputConnection();
-    if (connection == null) return false;
+  private static void appendKeyCode (StringBuilder sb, int code) {
+    sb.append(code);
+    String name = KeyEvent.keyCodeToString(code);
 
+    if (name != null) {
+      sb.append(" (");
+      sb.append(name);
+      sb.append(')');
+    }
+  }
+
+  private static boolean injectKeyEvent (int key, boolean press) {
     if (ApplicationSettings.LOG_ACTIONS) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("injecting key code ");
       sb.append(press? "press": "release");
-
       sb.append(": ");
-      sb.append(key);
-
-      sb.append(" (");
-      sb.append(KeyEvent.keyCodeToString(key));
-      sb.append(")");
+      appendKeyCode(sb, key);
 
       Log.v(LOG_TAG, sb.toString());
     }
+
+    InputConnection connection = getInputConnection();
+    if (connection == null) return false;
 
     int action = press? KeyEvent.ACTION_DOWN: KeyEvent.ACTION_UP;
     return connection.sendKeyEvent(new KeyEvent(action, key));
@@ -161,16 +167,10 @@ public class InputService extends InputMethodService {
 
       sb.append("key code ");
       sb.append((press? "press": "release"));
-      sb.append(" received");
+      sb.append(" received: ");
+      appendKeyCode(sb, code);
 
-      sb.append(": ");
-      sb.append(code);
-
-      sb.append(" (");
-      sb.append(KeyEvent.keyCodeToString(code));
-      sb.append(")");
-
-      Log.d(LOG_TAG, sb.toString());
+      Log.v(LOG_TAG, sb.toString());
     }
   }
 

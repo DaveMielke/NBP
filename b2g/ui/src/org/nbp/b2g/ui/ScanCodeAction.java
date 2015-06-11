@@ -35,11 +35,6 @@ public abstract class ScanCodeAction extends KeyCodeAction {
           protected boolean injectKeyRelease (int key) {
             return Keyboard.releaseKey(key);
           }
-
-          @Override
-          protected String getKeyType () {
-            return "scan code";
-          }
         };
 
         if (keyCombinationInjector.injectKeyCombination(value, getScanCodeModifiers())) {

@@ -15,29 +15,11 @@ public abstract class KeyAction extends Action {
     if (holdTime > 0) ApplicationUtilities.sleep(holdTime + ApplicationParameters.LONG_PRESS_DELAY);
   }
 
-  protected void logKeyEvent (String type, String name, int value, boolean press) {
-    name = (name != null)? (" (" + name + ")"): "";
-
-    Log.d(LOG_TAG, String.format(
-      "injecting %s %s: %d%s",
-      type, (press? "press": "release"), value, name
-    ));
-  }
-
   protected abstract class KeyCombinationInjector {
     protected abstract boolean injectKeyPress (int key);
     protected abstract boolean injectKeyRelease (int key);
-    protected abstract String getKeyType ();
-
-    protected String getKeyName (int key) {
-      return null;
-    }
 
     private boolean injectKeyEvent (int key, boolean press) {
-      if (ApplicationSettings.LOG_ACTIONS) {
-        logKeyEvent(getKeyType(), getKeyName(key), key, press);
-      }
-
       return press? injectKeyPress(key): injectKeyRelease(key);
     }
 

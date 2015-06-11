@@ -44,15 +44,6 @@ public abstract class KeyCodeAction extends KeyAction {
             KeyEvent event = new KeyEvent(KeyEvent.ACTION_UP, key);
             return connection.sendKeyEvent(event);
           }
-
-          @Override
-          protected String getKeyType () {
-            return "key code";
-          }
-
-          protected String getKeyName (int key) {
-            return KeyEvent.keyCodeToString(key);
-          }
         };
 
         if (keyCombinationInjector.injectKeyCombination(keyCode, getKeyCodeModifiers())) {
