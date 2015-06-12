@@ -194,6 +194,16 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
+  protected String getPanLeftEndAction () {
+    return "MoveBackward";
+  }
+
+  @Override
+  protected String getPanRightEndAction () {
+    return "MoveForward";
+  }
+
+  @Override
   public boolean handleKeyboardKey_enter () {
     return InputService.injectKey(KeyEvent.KEYCODE_ENTER);
   }

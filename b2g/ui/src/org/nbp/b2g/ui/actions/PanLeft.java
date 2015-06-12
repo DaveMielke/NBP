@@ -4,14 +4,7 @@ import org.nbp.b2g.ui.*;
 public class PanLeft extends Action {
   @Override
   public boolean performAction () {
-    Endpoint endpoint = getEndpoint();
-
-    synchronized (endpoint) {
-      if (endpoint.panLeft()) return true;
-      if (endpoint.hasSoftEdges()) return false;
-    }
-
-    return super.performAction();
+    return getEndpoint().panLeft();
   }
 
   public PanLeft (Endpoint endpoint) {

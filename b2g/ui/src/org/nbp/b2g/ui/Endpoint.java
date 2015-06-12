@@ -404,39 +404,85 @@ public abstract class Endpoint {
     return write(ApplicationContext.getString(resource));
   }
 
-  public boolean panLeft () {
-    int indent = getLineIndent();
+  private abstract class Panner {
+    protected abstract boolean moveDisplay ();
+    protected abstract String getEndAction ();
 
-    if (indent == 0) {
-      int start = getLineStart();
-      if (start == 0) return false;
+    public final boolean pan () {
+      synchronized (Endpoint.this) {
+        if (moveDisplay()) return write();
+        if (hasSoftEdges()) return false;
+      }
 
-      setLine(start-1);
-      indent = getLineLength() + 1;
-    } else {
-      int length = getLineLength();
-      if (indent > length) indent = length;
+      return KeyEvents.performAction(getEndAction());
     }
+  }
 
-    if ((indent -= Devices.braille.get().size()) < 0) indent = 0;
-    setLineIndent(indent);
-    return write();
+  protected String getPanLeftEndAction () {
+    return null;
+  }
+
+  public boolean panLeft () {
+    Panner panner = new Panner() {
+      @Override
+      protected boolean moveDisplay () {
+        int indent = getLineIndent();
+
+        if (indent == 0) {
+          int start = getLineStart();
+          if (start == 0) return false;
+
+          setLine(start-1);
+          indent = getLineLength() + 1;
+        } else {
+          int length = getLineLength();
+          if (indent > length) indent = length;
+        }
+
+        if ((indent -= Devices.braille.get().size()) < 0) indent = 0;
+        setLineIndent(indent);
+        return true;
+      }
+
+      @Override
+      protected String getEndAction () {
+        return getPanLeftEndAction();
+      }
+    };
+
+    return panner.pan();
+  }
+
+  protected String getPanRightEndAction () {
+    return null;
   }
 
   public boolean panRight () {
-    int indent = getLineIndent() + Devices.braille.get().size();
-    int length = getLineLength();
+    Panner panner = new Panner() {
+      @Override
+      protected boolean moveDisplay () {
+        int indent = getLineIndent() + Devices.braille.get().size();
+        int length = getLineLength();
 
-    if (indent > length) {
-      int offset = getLineStart() + length + 1;
-      if (offset > getTextLength()) return false;
+        if (indent > length) {
+          int offset = getLineStart() + length + 1;
+          if (offset > getTextLength()) return false;
 
-      setLine(offset);
-      indent = 0;
-    }
+          setLine(offset);
+          indent = 0;
+        }
 
-    setLineIndent(indent);
-    return write();
+        setLineIndent(indent);
+        return true;
+      }
+
+      @Override
+      protected String getEndAction () {
+        return getPanRightEndAction();
+      }
+    };
+
+    return panner.pan();
   }
 
   public boolean scrollRight (int offset) {
