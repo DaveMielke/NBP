@@ -18,6 +18,10 @@ import android.app.KeyguardManager;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
 
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodInfo;
+import android.inputmethodservice.InputMethodService;
+
 import android.provider.Settings;
 import android.accessibilityservice.AccessibilityService;
 
@@ -181,6 +185,40 @@ public abstract class ApplicationContext {
     AccessibilityManager accessibilityManager = getAccessibilityManager();
     if (accessibilityManager == null) return false;
     return accessibilityManager.isTouchExplorationEnabled();
+  }
+
+  public static InputMethodManager getInputMethodManager () {
+    Object systemService = getSystemService(Context.INPUT_METHOD_SERVICE);
+    if (systemService == null) return null;
+    return (InputMethodManager)systemService;
+  }
+
+  public static InputMethodInfo getInputMethodInfo (Class<? extends InputMethodService> inputMethodClass) {
+    String packageName = inputMethodClass.getPackage().getName();
+    String className = inputMethodClass.getName();
+
+    InputMethodManager manager = ApplicationContext.getInputMethodManager();
+    if (manager == null) return null;
+
+    for (InputMethodInfo info : manager.getEnabledInputMethodList()) {
+      ComponentName component = info.getComponent();
+
+      if (packageName.equals(component.getPackageName())) {
+        if (className.equals(component.getClassName())) {
+          return info;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  public static String getDefaultInputMethod () {
+    Context context = getContext();
+    if (context == null) return null;
+
+    ContentResolver resolver = context.getContentResolver();
+    return Settings.Secure.getString(resolver, Settings.Secure.DEFAULT_INPUT_METHOD);
   }
 
   private ApplicationContext () {

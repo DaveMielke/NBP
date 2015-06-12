@@ -3,18 +3,39 @@ package org.nbp.b2g.ui;
 import android.util.Log;
 import android.os.Bundle;
 
+import android.view.inputmethod.InputMethodInfo;
 import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.EditorInfo;
+
 import android.view.KeyEvent;
 
 public class InputService extends InputMethodService {
   private final static String LOG_TAG = InputService.class.getName();
 
+  public static InputMethodInfo getInputMethodInfo () {
+    return ApplicationContext.getInputMethodInfo(InputService.class);
+  }
+
   private static volatile InputService inputService = null;
 
   public static InputService getInputService () {
-    if (inputService == null) Log.w(LOG_TAG, "input service not running");
+    if (inputService == null) {
+      InputMethodInfo info = getInputMethodInfo();
+
+      if (info == null) {
+        Log.w(LOG_TAG, "input service not enabled");
+        return null;
+      }
+
+      if (!info.getId().equals(ApplicationContext.getDefaultInputMethod())) {
+        Log.w(LOG_TAG, "input service not selected");
+        return null;
+      }
+
+      Log.w(LOG_TAG, "input service not running");
+    }
+
     return inputService;
   }
 
