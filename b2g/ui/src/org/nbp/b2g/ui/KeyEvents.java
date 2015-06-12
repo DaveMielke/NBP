@@ -32,7 +32,9 @@ public abstract class KeyEvents {
   }
 
   public static boolean performAction (String name) {
+    if (name == null) return false;
     Action action = Endpoints.getCurrentEndpoint().getKeyBindings().getAction(name);
+
     if (action == null) return false;
     return performAction(action);
   }
