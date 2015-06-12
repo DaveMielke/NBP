@@ -157,42 +157,6 @@ public abstract class Endpoint {
     return deleteText(start, end);
   }
 
-  public boolean handleKeyboardKey_enter () {
-    return false;
-  }
-
-  public boolean handleKeyboardKey_cursorLeft () {
-    return KeyEvents.performAction("ArrowLeft");
-  }
-
-  public boolean handleKeyboardKey_cursorRight () {
-    return KeyEvents.performAction("ArrowRight");
-  }
-
-  public boolean handleKeyboardKey_cursorUp () {
-    return KeyEvents.performAction("ArrowUp");
-  }
-
-  public boolean handleKeyboardKey_cursorDown () {
-    return KeyEvents.performAction("ArrowDown");
-  }
-
-  public boolean handleKeyboardKey_pageUp () {
-    return false;
-  }
-
-  public boolean handleKeyboardKey_pageDown () {
-    return false;
-  }
-
-  public boolean handleKeyboardKey_home () {
-    return false;
-  }
-
-  public boolean handleKeyboardKey_end () {
-    return false;
-  }
-
   public boolean write () {
     Endpoints.READ_LOCK.lock();
     try {
@@ -210,16 +174,6 @@ public abstract class Endpoint {
   }
 
   public void onBackground () {
-  }
-
-  private final KeyBindings keyBindings;
-
-  protected String[] getKeysFileNames () {
-    return null;
-  }
-
-  public KeyBindings getKeyBindings () {
-    return keyBindings;
   }
 
   private final Characters characters;
@@ -450,15 +404,6 @@ public abstract class Endpoint {
     return write(ApplicationContext.getString(resource));
   }
 
-  public boolean scrollRight (int offset) {
-    if (offset < 1) return false;
-    if (offset >= Devices.braille.get().size()) return false;
-
-    if ((offset += getLineIndent()) >= getLineLength()) return false;
-    setLineIndent(offset);
-    return write();
-  }
-
   public boolean panLeft () {
     int indent = getLineIndent();
 
@@ -492,6 +437,61 @@ public abstract class Endpoint {
 
     setLineIndent(indent);
     return write();
+  }
+
+  public boolean scrollRight (int offset) {
+    if (offset < 1) return false;
+    if (offset >= Devices.braille.get().size()) return false;
+
+    if ((offset += getLineIndent()) >= getLineLength()) return false;
+    setLineIndent(offset);
+    return write();
+  }
+
+  public boolean handleKeyboardKey_enter () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_cursorLeft () {
+    return KeyEvents.performAction("ArrowLeft");
+  }
+
+  public boolean handleKeyboardKey_cursorRight () {
+    return KeyEvents.performAction("ArrowRight");
+  }
+
+  public boolean handleKeyboardKey_cursorUp () {
+    return KeyEvents.performAction("ArrowUp");
+  }
+
+  public boolean handleKeyboardKey_cursorDown () {
+    return KeyEvents.performAction("ArrowDown");
+  }
+
+  public boolean handleKeyboardKey_pageUp () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_pageDown () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_home () {
+    return false;
+  }
+
+  public boolean handleKeyboardKey_end () {
+    return false;
+  }
+
+  private final KeyBindings keyBindings;
+
+  public KeyBindings getKeyBindings () {
+    return keyBindings;
+  }
+
+  protected String[] getKeysFileNames () {
+    return null;
   }
 
   public Endpoint () {

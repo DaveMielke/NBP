@@ -42,13 +42,6 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean handleKeyboardKey_enter () {
-    boolean success = handleResponse(getResponse());
-    Endpoints.setHostEndpoint();
-    return success;
-  }
-
-  @Override
   public boolean isEditable () {
     return true;
   }
@@ -56,6 +49,13 @@ public abstract class PromptEndpoint extends Endpoint {
   @Override
   public boolean isSelectable (int offset) {
     return offset >= start;
+  }
+
+  @Override
+  public boolean handleKeyboardKey_enter () {
+    boolean success = handleResponse(getResponse());
+    Endpoints.setHostEndpoint();
+    return success;
   }
 
   private final static String[] keysFileNames = new String[] {
