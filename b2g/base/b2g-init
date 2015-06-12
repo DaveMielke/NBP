@@ -28,12 +28,14 @@ getField() {
 setField() {
   local table="${1}"
   local name="${2}"
-  local value="${3}"
+  local newValue="${3}"
 
-  log "checking field: ${table}.${name} = ${value}"
-  [ "$(getField "${table}" "${name}")" = "${value}" ] || {
-    log "setting field: ${table}.${name} = ${value}"
-    sqlCommand "insert into ${table} (name, value) values (\"${name}\", \"${value}\")"
+  oldValue="$(getField "${table}" "${name}")"
+  log "checking field: ${table}.${name}: ${oldValue}"
+
+  [ "${oldValue}" = "${newValue}" ] || {
+    log "setting field: ${table}.${name} = ${newValue}"
+    sqlCommand "insert into ${table} (name, value) values (\"${name}\", \"${newValue}\")"
   }
 }
 
@@ -45,12 +47,33 @@ getProperty() {
 
 setProperty() {
   local name="${1}"
-  local value="${2}"
+  local newValue="${2}"
 
-  log "checking property: ${name} = ${value}"
-  [ "$(getProperty "${name}")" = "${value}" ] || {
-    log "setting property: ${name} = ${value}"
-    hostCommand setprop "${name}" "${value}"
+  oldValue="$(getProperty "${name}")"
+  log "checking property: ${name}: ${oldValue}"
+
+  [ "${oldValue}" = "${newValue}" ] || {
+    log "setting property: ${name} = ${newValue}"
+    hostCommand setprop "${name}" "${newValue}"
+  }
+}
+
+getPermission() {
+  local path="${1}"
+
+  hostCommand stat -c "%a" "${path}"
+}
+
+setPermission() {
+  local path="${1}"
+  local newValue="${2}"
+
+  oldValue="$(getPermission "${path}")"
+  log "checking permission: ${path}: ${oldValue}"
+
+  [ "${oldValue}" = "${newValue}" ] || {
+    log "setting permission: ${path} = ${newValue}"
+    hostCommand chmod "${newValue}" "${path}"
   }
 }
 
@@ -64,8 +87,8 @@ permitEventDevice() {
 
     [ -n "${event}" ] && {
       local device="/dev/input/event${event}"
-      log "permitting event device: ${device} (${identifier})"
-      hostCommand chmod 666 "${device}"
+      log "permitting event device: ${identifier}"
+      setPermission "${device}" 666
     }
   }
 }
