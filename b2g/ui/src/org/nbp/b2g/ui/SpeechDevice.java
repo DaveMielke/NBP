@@ -170,7 +170,7 @@ public class SpeechDevice {
     Controls.forEachControl(controls, Controls.restoreCurrentValue);
   }
 
-  private Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY) {
+  private Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY, "speech-device-retry-delay") {
     @Override
     public void run () {
       synchronized (SpeechDevice.this) {

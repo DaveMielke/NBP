@@ -5,10 +5,17 @@ import java.util.TimerTask;
 
 public abstract class Timeout implements Runnable {
   private final long defaultDelay;
+  private final String timeoutName;
+
   private Timer timer = null;
 
-  public Timeout (long delay) {
+  public String getName () {
+    return timeoutName;
+  }
+
+  public Timeout (long delay, String name) {
     defaultDelay = delay;
+    timeoutName = name;
   }
 
   public boolean isActive () {
@@ -31,6 +38,7 @@ public abstract class Timeout implements Runnable {
       synchronized (this) {
         cancel();
 
+        final Timeout timeout = this;
         TimerTask task = new TimerTask() {
           @Override
           public void run () {
@@ -42,7 +50,7 @@ public abstract class Timeout implements Runnable {
               try {
                 timeout.run();
               } catch (Exception exception) {
-                Crash.handleCrash(exception, "timeout handler");
+                Crash.handleCrash(exception, "timeout handler", timeout.getName());
               }
             }
           }

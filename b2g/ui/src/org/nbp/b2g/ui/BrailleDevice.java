@@ -125,7 +125,7 @@ public class BrailleDevice {
   }
 
   private boolean writePending = false;
-  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY) {
+  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY, "braille-device-rewrite-delay") {
     @Override
     public void run () {
       synchronized (this) {

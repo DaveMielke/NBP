@@ -21,7 +21,7 @@ public abstract class KeyEvents {
       if (action.performAction(isLongPress)) return true;
       Log.w(LOG_TAG, "action failed: " + action.getName());
     } catch (Exception exception) {
-      Crash.handleCrash(exception, "action");
+      Crash.handleCrash(exception, "action", action.getName());
     }
 
     return false;
@@ -75,7 +75,7 @@ public abstract class KeyEvents {
     return false;
   }
 
-  private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME) {
+  private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME, "long-key-press-timeout") {
     @Override
     public void run () {
       performAction(true);

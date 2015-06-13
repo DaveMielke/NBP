@@ -111,7 +111,7 @@ public abstract class BrailleDisplay extends Thread {
     return null;
   }
 
-  private Timeout readTimeout = new Timeout(ApplicationParameters.BLUETOOTH_READ_TIMEOUT) {
+  private Timeout readTimeout = new Timeout(ApplicationParameters.BLUETOOTH_READ_TIMEOUT, "braille-display-read-timeout") {
     @Override
     public void run () {
       synchronized (this) {

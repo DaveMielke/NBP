@@ -66,6 +66,12 @@ public abstract class ApplicationContext {
     return resources.getString(resource);
   }
 
+  public static String[] getStringArray (int resource) {
+    Resources resources = getResources();
+    if (resources == null) return null;
+    return resources.getStringArray(resource);
+  }
+
   public static DisplayMetrics getDisplayMetrics () {
     Resources resources = getResources();
     if (resources == null) return null;

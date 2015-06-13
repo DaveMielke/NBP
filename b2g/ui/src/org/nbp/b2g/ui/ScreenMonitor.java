@@ -185,7 +185,7 @@ public class ScreenMonitor extends AccessibilityService {
         }
       }
     } catch (Exception exception) {
-      Crash.handleCrash(exception, "accessibility event");
+      Crash.handleCrash(exception, "accessibility event", event.toString());
     }
 
     if (ApplicationSettings.LOG_UPDATES) {
