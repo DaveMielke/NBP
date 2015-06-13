@@ -31,12 +31,16 @@ public abstract class KeyEvents {
     return performAction(action, false);
   }
 
-  public static boolean performAction (String name) {
+  public static boolean performAction (String name, Endpoint endpoint) {
     if (name == null) return false;
-    Action action = Endpoints.getCurrentEndpoint().getKeyBindings().getAction(name);
+    Action action = endpoint.getKeyBindings().getAction(name);
 
     if (action == null) return false;
     return performAction(action);
+  }
+
+  public static boolean performAction (String name) {
+    return performAction(name, Endpoints.getCurrentEndpoint());
   }
 
   private static boolean performAction (boolean isLongPress) {

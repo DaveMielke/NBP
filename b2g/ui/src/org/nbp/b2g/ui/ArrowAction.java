@@ -25,7 +25,7 @@ public abstract class ArrowAction extends Action {
       }
     }
 
-    return KeyEvents.performAction(getNavigationAction());
+    return KeyEvents.performAction(getNavigationAction(), getEndpoint());
   }
 
   protected ArrowAction (Endpoint endpoint, boolean isForDevelopers) {

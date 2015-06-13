@@ -414,7 +414,7 @@ public abstract class Endpoint {
         if (hasSoftEdges()) return false;
       }
 
-      return KeyEvents.performAction(getEndAction());
+      return KeyEvents.performAction(getEndAction(), Endpoint.this);
     }
   }
 
