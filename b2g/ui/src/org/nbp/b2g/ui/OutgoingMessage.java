@@ -1,0 +1,84 @@
+package org.nbp.b2g.ui;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import android.util.Log;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
+public class OutgoingMessage {
+  private final static String LOG_TAG = OutgoingMessage.class.getName();
+
+  private List<String> directRecipients = new ArrayList<String>();
+  private List<String> indirectRecipients = new ArrayList<String>();
+  private List<String> hiddenRecipients = new ArrayList<String>();
+  private String subjectText = null;
+  private StringBuilder bodyText = new StringBuilder();
+
+  public void addDirectRecipient (String recipient) {
+    directRecipients.add(recipient);
+  }
+
+  public void addIndirectRecipient (String recipient) {
+    indirectRecipients.add(recipient);
+  }
+
+  public void addHiddenRecipient (String recipient) {
+    hiddenRecipients.add(recipient);
+  }
+
+  public void setSubject (String subject) {
+    subjectText = subject;
+  }
+
+  public void addBodyLine (String line) {
+    if (bodyText.length() > 0) bodyText.append('\n');
+    bodyText.append(line);
+  }
+
+  private String[] toArray (List<String> list) {
+    String[] array = new String[list.size()];
+    return list.toArray(array);
+  }
+
+  public boolean sendMessage () {
+    Context context = ApplicationContext.getContext();
+
+    if (context != null) {
+      Intent sender = new Intent(Intent.ACTION_SENDTO);
+      sender.setType("message/rfc822");
+
+      sender.putExtra(Intent.EXTRA_EMAIL, toArray(directRecipients));
+      sender.putExtra(Intent.EXTRA_CC, toArray(indirectRecipients));
+      sender.putExtra(Intent.EXTRA_BCC, toArray(hiddenRecipients));
+
+      sender.putExtra(Intent.EXTRA_SUBJECT, subjectText);
+      sender.putExtra(Intent.EXTRA_TEXT, bodyText.toString());
+
+      sender.addFlags(
+        Intent.FLAG_ACTIVITY_NEW_TASK
+      );
+
+      try {
+        Intent chooser = Intent.createChooser(sender, "Select outgoing email app ...");
+
+        chooser.addFlags(
+          Intent.FLAG_ACTIVITY_NEW_TASK
+        );
+
+        context.startActivity(chooser);
+        return true;
+      } catch (android.content.ActivityNotFoundException ex) {
+        Log.w(LOG_TAG, "outgoing message sender not found");
+      }
+    }
+
+    return false;
+  }
+
+  public OutgoingMessage () {
+  }
+}
