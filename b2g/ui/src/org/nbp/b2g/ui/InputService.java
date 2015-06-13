@@ -3,8 +3,8 @@ package org.nbp.b2g.ui;
 import android.util.Log;
 import android.os.Bundle;
 
-import android.view.inputmethod.InputMethodInfo;
 import android.inputmethodservice.InputMethodService;
+import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.EditorInfo;
 
@@ -17,22 +17,36 @@ public class InputService extends InputMethodService {
     return ApplicationContext.getInputMethodInfo(InputService.class);
   }
 
+  private static boolean restartInputService () {
+    return false;
+  }
+
+  private final static Object inputServiceLock = new Object();
   private static volatile InputService inputService = null;
 
   public static InputService getInputService () {
-    if (inputService == null) {
-      InputMethodInfo info = getInputMethodInfo();
+    synchronized (inputServiceLock) {
+      if (inputService == null) {
+        InputMethodInfo info = getInputMethodInfo();
 
-      if (info == null) {
-        Log.w(LOG_TAG, "input service not enabled");
-      } else if (!info.getId().equals(ApplicationContext.getSelectedInputMethod())) {
-        Log.w(LOG_TAG, "input service not selected");
-      } else {
-        Log.w(LOG_TAG, "input service not running");
+        if (info == null) {
+          Log.w(LOG_TAG, "input service not enabled");
+        } else if (!info.getId().equals(ApplicationContext.getSelectedInputMethod())) {
+          Log.w(LOG_TAG, "input service not selected");
+        } else {
+          Log.w(LOG_TAG, "input service not running");
+
+          if (restartInputService()) {
+            try {
+              inputServiceLock.wait(1000);
+            } catch (InterruptedException exception) {
+            }
+          }
+        }
       }
-    }
 
-    return inputService;
+      return inputService;
+    }
   }
 
   public static InputConnection getInputConnection () {
@@ -71,20 +85,26 @@ public class InputService extends InputMethodService {
   @Override
   public void onDestroy () {
     super.onDestroy();
-
     Log.d(LOG_TAG, "input service stopped");
   }
 
   @Override
   public void onBindInput () {
     Log.d(LOG_TAG, "input service bound");
-    inputService = this;
+
+    synchronized (inputServiceLock) {
+      inputService = this;
+      inputServiceLock.notify();
+    }
   }
 
   @Override
   public void onUnbindInput () {
     Log.d(LOG_TAG, "input service unbound");
-    inputService = null;
+
+    synchronized (inputServiceLock) {
+      inputService = null;
+    }
 
     resetKeys();
   }
