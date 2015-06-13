@@ -47,28 +47,41 @@ public class OutgoingMessage {
   public boolean sendMessage () {
     Context context = ApplicationContext.getContext();
 
-    if (context != null) {
-      Intent sender = new Intent(Intent.ACTION_SENDTO);
-      sender.setType("message/rfc822");
+    Intent sender = new Intent(Intent.ACTION_SENDTO);
+    sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    sender.setType("message/rfc822");
 
+    if (directRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_EMAIL, toArray(directRecipients));
+    } else {
+      Log.w(LOG_TAG, "no direct recipient");
+    }
+
+    if (indirectRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_CC, toArray(indirectRecipients));
+    }
+
+    if (hiddenRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_BCC, toArray(hiddenRecipients));
+    }
 
+    if (subjectText != null) {
       sender.putExtra(Intent.EXTRA_SUBJECT, subjectText);
-      sender.putExtra(Intent.EXTRA_TEXT, bodyText.toString());
+    } else {
+      Log.w(LOG_TAG, "no subject");
+    }
 
-      sender.addFlags(
-        Intent.FLAG_ACTIVITY_NEW_TASK
-      );
+    if (bodyText.length() > 0) {
+      sender.putExtra(Intent.EXTRA_TEXT, bodyText.toString());
+    } else {
+      Log.w(LOG_TAG, "no body");
+    }
+
+    if (context != null) {
+      Intent chooser = Intent.createChooser(sender, "Select outgoing email app ...");
+      chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
       try {
-        Intent chooser = Intent.createChooser(sender, "Select outgoing email app ...");
-
-        chooser.addFlags(
-          Intent.FLAG_ACTIVITY_NEW_TASK
-        );
-
         context.startActivity(chooser);
         return true;
       } catch (android.content.ActivityNotFoundException ex) {
