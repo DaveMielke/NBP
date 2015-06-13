@@ -78,7 +78,8 @@ public class OutgoingMessage {
     }
 
     if (context != null) {
-      Intent chooser = Intent.createChooser(sender, "Select outgoing email app ...");
+      String title = ApplicationContext.getString(R.string.message_select_outgoing_email_app);
+      Intent chooser = Intent.createChooser(sender, title);
       chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
       try {
