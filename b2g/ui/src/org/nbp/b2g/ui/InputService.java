@@ -25,15 +25,11 @@ public class InputService extends InputMethodService {
 
       if (info == null) {
         Log.w(LOG_TAG, "input service not enabled");
-        return null;
-      }
-
-      if (!info.getId().equals(ApplicationContext.getDefaultInputMethod())) {
+      } else if (!info.getId().equals(ApplicationContext.getSelectedInputMethod())) {
         Log.w(LOG_TAG, "input service not selected");
-        return null;
+      } else {
+        Log.w(LOG_TAG, "input service not running");
       }
-
-      Log.w(LOG_TAG, "input service not running");
     }
 
     return inputService;

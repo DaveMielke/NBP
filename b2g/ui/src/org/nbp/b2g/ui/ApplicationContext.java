@@ -37,6 +37,7 @@ public abstract class ApplicationContext {
       applicationContext = context.getApplicationContext();
     }
 
+    acquireWakeLock();
     Clipboard.setClipboard();
     Devices.speech.get().say(null);
     EventMonitors.startEventMonitors();
@@ -148,6 +149,17 @@ public abstract class ApplicationContext {
     return powerManager.isScreenOn();
   }
 
+  private static PowerManager.WakeLock wakeLock = null;
+
+  private static void acquireWakeLock () {
+    wakeLock = getPowerManager().newWakeLock(
+      PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
+      getString(R.string.app_name)
+    );
+
+    wakeLock.acquire();
+  }
+
   public static KeyguardManager getKeyguardManager () {
     Object systemService = getSystemService(Context.KEYGUARD_SERVICE);
     if (systemService == null) return null;
@@ -213,7 +225,7 @@ public abstract class ApplicationContext {
     return null;
   }
 
-  public static String getDefaultInputMethod () {
+  public static String getSelectedInputMethod () {
     Context context = getContext();
     if (context == null) return null;
 
