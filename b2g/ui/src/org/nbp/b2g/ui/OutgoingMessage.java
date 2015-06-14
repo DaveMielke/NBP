@@ -59,21 +59,33 @@ public class OutgoingMessage {
     attachments.add(Uri.fromFile(file));
   }
 
+  public void reset () {
+    primaryRecipients.clear();
+    secondaryRecipients.clear();
+    hiddenRecipients.clear();
+    subjectText = null;
+    bodyText.setLength(0);
+    attachments.clear();
+  }
+
   private String[] toArray (Set<String> set) {
     String[] array = new String[set.size()];
     return set.toArray(array);
   }
 
-  public boolean sendMessage () {
+  public boolean send () {
     Context context = ApplicationContext.getContext();
-    boolean multipleAttachments = attachments.size() > 1;
 
-    Intent sender = new Intent(
-      multipleAttachments? Intent.ACTION_SEND_MULTIPLE: Intent.ACTION_SENDTO
-    );
+    int attachmentCount = attachments.size();
+    boolean hasAttachment = attachmentCount > 0;
+    boolean hasMultipleAttachments = attachmentCount > 1;
 
+    String action = hasMultipleAttachments? Intent.ACTION_SEND_MULTIPLE:
+                    hasAttachment? Intent.ACTION_SEND:
+                    Intent.ACTION_SENDTO;
+
+    Intent sender = new Intent(action);
     sender.setData(Uri.parse("mailto:"));
-  //sender.setType("message/rfc822");
     sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
     secondaryRecipients.removeAll(primaryRecipients);
@@ -82,43 +94,40 @@ public class OutgoingMessage {
 
     if (primaryRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_EMAIL, toArray(primaryRecipients));
-      primaryRecipients.clear();
     } else {
       Log.w(LOG_TAG, "no primary recipient");
     }
 
     if (secondaryRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_CC, toArray(secondaryRecipients));
-      secondaryRecipients.clear();
     }
 
     if (hiddenRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_BCC, toArray(hiddenRecipients));
-      hiddenRecipients.clear();
     }
 
     if (subjectText != null) {
       sender.putExtra(Intent.EXTRA_SUBJECT, subjectText);
-      subjectText = null;
     } else {
       Log.w(LOG_TAG, "no subject");
     }
 
     if (bodyText.length() > 0) {
       sender.putExtra(Intent.EXTRA_TEXT, bodyText.toString());
-      bodyText.setLength(0);
     } else {
       Log.w(LOG_TAG, "no body");
     }
 
-    if (attachments.size() > 0) {
-      if (multipleAttachments) {
+    if (hasAttachment) {
+      sender.setType("*/*");
+
+      if (hasMultipleAttachments) {
         sender.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments);
       } else {
         sender.putExtra(Intent.EXTRA_STREAM, attachments.get(0));
       }
-
-      attachments.clear();
+    } else {
+    //sender.setType("message/rfc822");
     }
 
     if (context != null) {
@@ -128,6 +137,7 @@ public class OutgoingMessage {
 
       try {
         context.startActivity(chooser);
+        reset();
         return true;
       } catch (android.content.ActivityNotFoundException ex) {
         Log.w(LOG_TAG, "outgoing message sender not found");

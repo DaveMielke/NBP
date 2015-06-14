@@ -82,7 +82,7 @@ Log.w(LOG_TAG, "subject: " + sb.toString());
         }
       }
 
-      report.sendMessage();
+      report.send();
     }
   }
 
