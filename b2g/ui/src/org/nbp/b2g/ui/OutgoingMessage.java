@@ -55,8 +55,16 @@ public class OutgoingMessage {
     bodyText.append(line);
   }
 
-  public void addAttachment (File file) {
-    attachments.add(Uri.fromFile(file));
+  public boolean addAttachment (File file) {
+    boolean found = file.exists();
+
+    if (found) {
+      attachments.add(Uri.fromFile(file));
+    } else {
+      Log.w(LOG_TAG, "file not found: " + file.toString());
+    }
+
+    return found;
   }
 
   public void reset () {

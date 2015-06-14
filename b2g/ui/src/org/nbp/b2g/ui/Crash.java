@@ -41,7 +41,6 @@ public abstract class Crash {
         sb.append(" crash: ");
         sb.append(Crash.class.getPackage().getName());
         report.setSubject(sb.toString());
-Log.w(LOG_TAG, "subject: " + sb.toString());
       }
 
       {
