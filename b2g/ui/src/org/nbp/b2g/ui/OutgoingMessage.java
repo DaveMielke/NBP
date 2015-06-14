@@ -56,15 +56,21 @@ public class OutgoingMessage {
   }
 
   public boolean addAttachment (File file) {
-    boolean found = file.exists();
+    String problem = null;
 
-    if (found) {
-      attachments.add(Uri.fromFile(file));
+    if (!file.exists()) {
+      problem = "file not found";
+    } else if (!file.isFile()) {
+      problem = "not a file";
+    } else if (!file.canRead()) {
+      problem = "file not readable";
     } else {
-      Log.w(LOG_TAG, "file not found: " + file.toString());
+      attachments.add(Uri.fromFile(file));
+      return true;
     }
 
-    return found;
+    Log.w(LOG_TAG, problem + ": " + file.toString());
+    return false;
   }
 
   public void reset () {
