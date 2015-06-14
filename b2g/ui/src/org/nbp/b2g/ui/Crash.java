@@ -26,13 +26,13 @@ public abstract class Crash {
   }
 
   private static void reportCrash (Throwable problem, String component, String data) {
-    String[] recipients = ApplicationContext.getStringArray(R.array.crash_recipients);
+    String[] recipients = ApplicationContext.getStringArray(R.array.recipients_crash);
 
     if (recipients.length > 0) {
       OutgoingMessage report = new OutgoingMessage();
 
       for (String recipient : recipients) {
-        report.addDirectRecipient(recipient);
+        report.addPrimaryRecipient(recipient);
       }
 
       {

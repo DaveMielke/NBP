@@ -2,6 +2,7 @@ package org.nbp.b2g.ui;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.io.File;
 
 import android.util.Log;
 
@@ -12,18 +13,19 @@ import android.net.Uri;
 public class OutgoingMessage {
   private final static String LOG_TAG = OutgoingMessage.class.getName();
 
-  private List<String> directRecipients = new ArrayList<String>();
-  private List<String> indirectRecipients = new ArrayList<String>();
+  private List<String> primaryRecipients = new ArrayList<String>();
+  private List<String> secondaryRecipients = new ArrayList<String>();
   private List<String> hiddenRecipients = new ArrayList<String>();
   private String subjectText = null;
   private StringBuilder bodyText = new StringBuilder();
+  private ArrayList<Uri> attachments = new ArrayList<Uri>();
 
-  public void addDirectRecipient (String recipient) {
-    directRecipients.add(recipient);
+  public void addPrimaryRecipient (String recipient) {
+    primaryRecipients.add(recipient);
   }
 
-  public void addIndirectRecipient (String recipient) {
-    indirectRecipients.add(recipient);
+  public void addSecondaryRecipient (String recipient) {
+    secondaryRecipients.add(recipient);
   }
 
   public void addHiddenRecipient (String recipient) {
@@ -39,6 +41,10 @@ public class OutgoingMessage {
     bodyText.append(line);
   }
 
+  public void addAttachment (File file) {
+    attachments.add(Uri.fromFile(file));
+  }
+
   private String[] toArray (List<String> list) {
     String[] array = new String[list.size()];
     return list.toArray(array);
@@ -46,19 +52,24 @@ public class OutgoingMessage {
 
   public boolean sendMessage () {
     Context context = ApplicationContext.getContext();
+    boolean multipleAttachments = attachments.size() > 1;
 
-    Intent sender = new Intent(Intent.ACTION_SENDTO);
+    Intent sender = new Intent(
+      multipleAttachments? Intent.ACTION_SEND_MULTIPLE: Intent.ACTION_SENDTO
+    );
+
+    sender.setData(Uri.parse("mailto:"));
+  //sender.setType("message/rfc822");
     sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    sender.setType("message/rfc822");
 
-    if (directRecipients.size() > 0) {
-      sender.putExtra(Intent.EXTRA_EMAIL, toArray(directRecipients));
+    if (primaryRecipients.size() > 0) {
+      sender.putExtra(Intent.EXTRA_EMAIL, toArray(primaryRecipients));
     } else {
-      Log.w(LOG_TAG, "no direct recipient");
+      Log.w(LOG_TAG, "no primary recipient");
     }
 
-    if (indirectRecipients.size() > 0) {
-      sender.putExtra(Intent.EXTRA_CC, toArray(indirectRecipients));
+    if (secondaryRecipients.size() > 0) {
+      sender.putExtra(Intent.EXTRA_CC, toArray(secondaryRecipients));
     }
 
     if (hiddenRecipients.size() > 0) {
@@ -75,6 +86,14 @@ public class OutgoingMessage {
       sender.putExtra(Intent.EXTRA_TEXT, bodyText.toString());
     } else {
       Log.w(LOG_TAG, "no body");
+    }
+
+    if (attachments.size() > 0) {
+      if (multipleAttachments) {
+        sender.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments);
+      } else {
+        sender.putExtra(Intent.EXTRA_STREAM, attachments.get(0));
+      }
     }
 
     if (context != null) {

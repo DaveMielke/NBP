@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string-array name="crash_recipients">
-    <item>dave@mielke.cc</item>
+  <string name="recipient_dm">dave@mielke.cc</string>
+
+  <string-array name="recipients_crash">
+    <item>@string/recipient_dm</item>
   </string-array>
 </resources>
