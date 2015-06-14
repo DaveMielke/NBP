@@ -1,8 +1,7 @@
 package org.nbp.b2g.ui;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 
@@ -15,14 +14,27 @@ import android.net.Uri;
 public class OutgoingMessage {
   private final static String LOG_TAG = OutgoingMessage.class.getName();
 
-  private Set<String> primaryRecipients = new LinkedHashSet<String>();
-  private Set<String> secondaryRecipients = new LinkedHashSet<String>();
-  private Set<String> hiddenRecipients = new LinkedHashSet<String>();
-  private String subjectText = null;
+  private final static String EMPTY_STRING = "";
+
+  private Collection<String> primaryRecipients = new LinkedHashSet<String>();
+  private Collection<String> secondaryRecipients = new LinkedHashSet<String>();
+  private Collection<String> hiddenRecipients = new LinkedHashSet<String>();
+  private String subjectText = EMPTY_STRING;
   private StringBuilder bodyText = new StringBuilder();
-  private ArrayList<Uri> attachments = new ArrayList<Uri>();
+  private Collection<Uri> attachments = new LinkedHashSet<Uri>();
+
+  private String[] toStringArray (Collection<String> set) {
+    String[] array = new String[set.size()];
+    return set.toArray(array);
+  }
+
+  public String[] getPrimaryRecipients () {
+    return toStringArray(primaryRecipients);
+  }
 
   public boolean addPrimaryRecipient (String recipient) {
+    secondaryRecipients.remove(recipient);
+    hiddenRecipients.remove(recipient);
     return primaryRecipients.add(recipient);
   }
 
@@ -30,7 +42,13 @@ public class OutgoingMessage {
     return primaryRecipients.remove(recipient);
   }
 
+  public String[] getSecondaryRecipients () {
+    return toStringArray(secondaryRecipients);
+  }
+
   public boolean addSecondaryRecipient (String recipient) {
+    if (primaryRecipients.contains(recipient)) return false;
+    hiddenRecipients.remove(recipient);
     return secondaryRecipients.add(recipient);
   }
 
@@ -38,7 +56,13 @@ public class OutgoingMessage {
     return secondaryRecipients.remove(recipient);
   }
 
+  public String[] getHiddenRecipients () {
+    return toStringArray(hiddenRecipients);
+  }
+
   public boolean addHiddenRecipient (String recipient) {
+    if (primaryRecipients.contains(recipient)) return false;
+    if (secondaryRecipients.contains(recipient)) return false;
     return hiddenRecipients.add(recipient);
   }
 
@@ -46,13 +70,30 @@ public class OutgoingMessage {
     return hiddenRecipients.remove(recipient);
   }
 
+  public String getSubject () {
+    return subjectText;
+  }
+
   public void setSubject (String subject) {
+    if (subject == null) subject = EMPTY_STRING;
     subjectText = subject;
+  }
+
+  public String getBody () {
+    return bodyText.toString();
   }
 
   public void addBodyLine (String line) {
     if (bodyText.length() > 0) bodyText.append('\n');
     bodyText.append(line);
+  }
+
+  public boolean addAttachment (Uri attachment) {
+    return attachments.add(attachment);
+  }
+
+  public boolean removeAttachment (Uri attachment) {
+    return attachments.remove(attachment);
   }
 
   public boolean addAttachment (File file) {
@@ -65,26 +106,24 @@ public class OutgoingMessage {
     } else if (!file.canRead()) {
       problem = "file not readable";
     } else {
-      attachments.add(Uri.fromFile(file));
-      return true;
+      return addAttachment(Uri.fromFile(file));
     }
 
     Log.w(LOG_TAG, problem + ": " + file.toString());
     return false;
   }
 
+  public boolean removeAttachment (File file) {
+    return removeAttachment(Uri.fromFile(file));
+  }
+
   public void reset () {
     primaryRecipients.clear();
     secondaryRecipients.clear();
     hiddenRecipients.clear();
-    subjectText = null;
+    subjectText = EMPTY_STRING;
     bodyText.setLength(0);
     attachments.clear();
-  }
-
-  private String[] toArray (Set<String> set) {
-    String[] array = new String[set.size()];
-    return set.toArray(array);
   }
 
   public boolean send () {
@@ -102,43 +141,40 @@ public class OutgoingMessage {
     sender.setData(Uri.parse("mailto:"));
     sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-    secondaryRecipients.removeAll(primaryRecipients);
-    hiddenRecipients.removeAll(primaryRecipients);
-    hiddenRecipients.removeAll(secondaryRecipients);
-
-    if (primaryRecipients.size() > 0) {
-      sender.putExtra(Intent.EXTRA_EMAIL, toArray(primaryRecipients));
+    if (!primaryRecipients.isEmpty()) {
+      sender.putExtra(Intent.EXTRA_EMAIL, getPrimaryRecipients());
     } else {
       Log.w(LOG_TAG, "no primary recipient");
     }
 
-    if (secondaryRecipients.size() > 0) {
-      sender.putExtra(Intent.EXTRA_CC, toArray(secondaryRecipients));
+    if (!secondaryRecipients.isEmpty()) {
+      sender.putExtra(Intent.EXTRA_CC, getSecondaryRecipients());
     }
 
-    if (hiddenRecipients.size() > 0) {
-      sender.putExtra(Intent.EXTRA_BCC, toArray(hiddenRecipients));
+    if (!hiddenRecipients.isEmpty()) {
+      sender.putExtra(Intent.EXTRA_BCC, getHiddenRecipients());
     }
 
-    if (subjectText != null) {
-      sender.putExtra(Intent.EXTRA_SUBJECT, subjectText);
+    if (subjectText.length() > 0) {
+      sender.putExtra(Intent.EXTRA_SUBJECT, getSubject());
     } else {
       Log.w(LOG_TAG, "no subject");
     }
 
     if (bodyText.length() > 0) {
-      sender.putExtra(Intent.EXTRA_TEXT, bodyText.toString());
+      sender.putExtra(Intent.EXTRA_TEXT, getBody());
     } else {
       Log.w(LOG_TAG, "no body");
     }
 
     if (hasAttachment) {
       sender.setType("*/*");
+      ArrayList<Uri> array = new ArrayList<Uri>(attachments);
 
       if (hasMultipleAttachments) {
-        sender.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments);
+        sender.putParcelableArrayListExtra(Intent.EXTRA_STREAM, array);
       } else {
-        sender.putExtra(Intent.EXTRA_STREAM, attachments.get(0));
+        sender.putExtra(Intent.EXTRA_STREAM, array.get(0));
       }
     } else {
     //sender.setType("message/rfc822");
