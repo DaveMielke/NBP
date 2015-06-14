@@ -16,12 +16,21 @@ public class OutgoingMessage {
 
   private final static String EMPTY_STRING = "";
 
-  private Collection<String> primaryRecipients = new LinkedHashSet<String>();
-  private Collection<String> secondaryRecipients = new LinkedHashSet<String>();
-  private Collection<String> hiddenRecipients = new LinkedHashSet<String>();
+  private final Collection<String> primaryRecipients = new LinkedHashSet<String>();
+  private final Collection<String> secondaryRecipients = new LinkedHashSet<String>();
+  private final Collection<String> hiddenRecipients = new LinkedHashSet<String>();
   private String subjectText = EMPTY_STRING;
-  private StringBuilder bodyText = new StringBuilder();
-  private Collection<Uri> attachments = new LinkedHashSet<Uri>();
+  private final StringBuilder bodyText = new StringBuilder();
+  private final Collection<Uri> attachments = new LinkedHashSet<Uri>();
+
+  public void reset () {
+    primaryRecipients.clear();
+    secondaryRecipients.clear();
+    hiddenRecipients.clear();
+    subjectText = EMPTY_STRING;
+    bodyText.setLength(0);
+    attachments.clear();
+  }
 
   private String[] toStringArray (Collection<String> set) {
     String[] array = new String[set.size()];
@@ -117,27 +126,10 @@ public class OutgoingMessage {
     return removeAttachment(Uri.fromFile(file));
   }
 
-  public void reset () {
-    primaryRecipients.clear();
-    secondaryRecipients.clear();
-    hiddenRecipients.clear();
-    subjectText = EMPTY_STRING;
-    bodyText.setLength(0);
-    attachments.clear();
-  }
-
   public boolean send () {
     Context context = ApplicationContext.getContext();
+    Intent sender = new Intent();
 
-    int attachmentCount = attachments.size();
-    boolean hasAttachment = attachmentCount > 0;
-    boolean hasMultipleAttachments = attachmentCount > 1;
-
-    String action = hasMultipleAttachments? Intent.ACTION_SEND_MULTIPLE:
-                    hasAttachment? Intent.ACTION_SEND:
-                    Intent.ACTION_SENDTO;
-
-    Intent sender = new Intent(action);
     sender.setData(Uri.parse("mailto:"));
     sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -167,17 +159,20 @@ public class OutgoingMessage {
       Log.w(LOG_TAG, "no body");
     }
 
-    if (hasAttachment) {
+    if (attachments.isEmpty()) {
+    //sender.setType("message/rfc822");
+      sender.setAction(Intent.ACTION_SENDTO);
+    } else {
       sender.setType("*/*");
       ArrayList<Uri> array = new ArrayList<Uri>(attachments);
 
-      if (hasMultipleAttachments) {
-        sender.putParcelableArrayListExtra(Intent.EXTRA_STREAM, array);
-      } else {
+      if (array.size() == 1) {
         sender.putExtra(Intent.EXTRA_STREAM, array.get(0));
+        sender.setAction(Intent.ACTION_SEND);
+      } else {
+        sender.putParcelableArrayListExtra(Intent.EXTRA_STREAM, array);
+        sender.setAction(Intent.ACTION_SEND_MULTIPLE);
       }
-    } else {
-    //sender.setType("message/rfc822");
     }
 
     if (context != null) {
