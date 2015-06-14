@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import java.util.Set;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
@@ -13,23 +15,35 @@ import android.net.Uri;
 public class OutgoingMessage {
   private final static String LOG_TAG = OutgoingMessage.class.getName();
 
-  private List<String> primaryRecipients = new ArrayList<String>();
-  private List<String> secondaryRecipients = new ArrayList<String>();
-  private List<String> hiddenRecipients = new ArrayList<String>();
+  private Set<String> primaryRecipients = new LinkedHashSet<String>();
+  private Set<String> secondaryRecipients = new LinkedHashSet<String>();
+  private Set<String> hiddenRecipients = new LinkedHashSet<String>();
   private String subjectText = null;
   private StringBuilder bodyText = new StringBuilder();
   private ArrayList<Uri> attachments = new ArrayList<Uri>();
 
-  public void addPrimaryRecipient (String recipient) {
-    primaryRecipients.add(recipient);
+  public boolean addPrimaryRecipient (String recipient) {
+    return primaryRecipients.add(recipient);
   }
 
-  public void addSecondaryRecipient (String recipient) {
-    secondaryRecipients.add(recipient);
+  public boolean removePrimaryRecipient (String recipient) {
+    return primaryRecipients.remove(recipient);
   }
 
-  public void addHiddenRecipient (String recipient) {
-    hiddenRecipients.add(recipient);
+  public boolean addSecondaryRecipient (String recipient) {
+    return secondaryRecipients.add(recipient);
+  }
+
+  public boolean removeSecondaryRecipient (String recipient) {
+    return secondaryRecipients.remove(recipient);
+  }
+
+  public boolean addHiddenRecipient (String recipient) {
+    return hiddenRecipients.add(recipient);
+  }
+
+  public boolean removeHiddenRecipient (String recipient) {
+    return hiddenRecipients.remove(recipient);
   }
 
   public void setSubject (String subject) {
@@ -45,9 +59,9 @@ public class OutgoingMessage {
     attachments.add(Uri.fromFile(file));
   }
 
-  private String[] toArray (List<String> list) {
-    String[] array = new String[list.size()];
-    return list.toArray(array);
+  private String[] toArray (Set<String> set) {
+    String[] array = new String[set.size()];
+    return set.toArray(array);
   }
 
   public boolean sendMessage () {
@@ -62,28 +76,37 @@ public class OutgoingMessage {
   //sender.setType("message/rfc822");
     sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+    secondaryRecipients.removeAll(primaryRecipients);
+    hiddenRecipients.removeAll(primaryRecipients);
+    hiddenRecipients.removeAll(secondaryRecipients);
+
     if (primaryRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_EMAIL, toArray(primaryRecipients));
+      primaryRecipients.clear();
     } else {
       Log.w(LOG_TAG, "no primary recipient");
     }
 
     if (secondaryRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_CC, toArray(secondaryRecipients));
+      secondaryRecipients.clear();
     }
 
     if (hiddenRecipients.size() > 0) {
       sender.putExtra(Intent.EXTRA_BCC, toArray(hiddenRecipients));
+      hiddenRecipients.clear();
     }
 
     if (subjectText != null) {
       sender.putExtra(Intent.EXTRA_SUBJECT, subjectText);
+      subjectText = null;
     } else {
       Log.w(LOG_TAG, "no subject");
     }
 
     if (bodyText.length() > 0) {
       sender.putExtra(Intent.EXTRA_TEXT, bodyText.toString());
+      bodyText.setLength(0);
     } else {
       Log.w(LOG_TAG, "no body");
     }
@@ -94,6 +117,8 @@ public class OutgoingMessage {
       } else {
         sender.putExtra(Intent.EXTRA_STREAM, attachments.get(0));
       }
+
+      attachments.clear();
     }
 
     if (context != null) {
