@@ -32,9 +32,14 @@ public class OutgoingMessage {
     attachments.clear();
   }
 
-  private String[] toStringArray (Collection<String> set) {
-    String[] array = new String[set.size()];
-    return set.toArray(array);
+  private String[] toStringArray (Collection<String> collection) {
+    String[] array = new String[collection.size()];
+    return collection.toArray(array);
+  }
+
+  private Uri[] toUriArray (Collection<Uri> collection) {
+    Uri[] array = new Uri[collection.size()];
+    return collection.toArray(array);
   }
 
   public String[] getPrimaryRecipients () {
@@ -97,6 +102,10 @@ public class OutgoingMessage {
     bodyText.append(line);
   }
 
+  public Uri[] getAttachments () {
+    return toUriArray(attachments);
+  }
+
   public boolean addAttachment (Uri attachment) {
     return attachments.add(attachment);
   }
@@ -147,7 +156,7 @@ public class OutgoingMessage {
       sender.putExtra(Intent.EXTRA_BCC, getHiddenRecipients());
     }
 
-    if (subjectText.length() > 0) {
+    if (!subjectText.isEmpty()) {
       sender.putExtra(Intent.EXTRA_SUBJECT, getSubject());
     } else {
       Log.w(LOG_TAG, "no subject");
@@ -182,7 +191,6 @@ public class OutgoingMessage {
 
       try {
         context.startActivity(chooser);
-        reset();
         return true;
       } catch (android.content.ActivityNotFoundException ex) {
         Log.w(LOG_TAG, "outgoing message sender not found");
@@ -193,5 +201,6 @@ public class OutgoingMessage {
   }
 
   public OutgoingMessage () {
+    reset();
   }
 }
