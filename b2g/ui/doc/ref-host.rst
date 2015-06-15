@@ -24,6 +24,7 @@ S135       |Options|
 S1235      |RecentApps|
 S2345      |Clock|
 S1356      |BackKey|
+S1246      |Editor|
 S1456      |Assist|
 S234-S     |AndroidSettings|
 S234-1     |AndroidAccessibilitySettings|

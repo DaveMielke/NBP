@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class ActivityAction extends Action {
-  protected Intent getIntent (Context context) {
-    return null;
-  }
+  protected abstract Intent getIntent (Context context);
 
   @Override
   public boolean performAction () {
