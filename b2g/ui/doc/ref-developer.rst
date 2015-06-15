@@ -5,6 +5,7 @@ FB1245  |DeveloperActions|
 F12     |SaveControls|
 F23     |RestoreControls|
 F37     |ResetControls|
+F17     |ForceCrash|
 B4568   |SaveScreen|
 B4      |MoveToParent|
 B5      |MoveToPreviousSibling|

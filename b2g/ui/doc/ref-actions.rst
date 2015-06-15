@@ -25,6 +25,7 @@
 .. |End| replace:: the End key
 .. |Enter| replace:: the Enter key
 .. |FindNext| replace:: find (forward search for) text
+.. |ForceCrash| replace:: force a component crash
 .. |Home| replace:: the Home key
 .. |HomeKey| replace:: the Android Home key
 .. |LogActions| replace:: turn on logging of user-requested actions
