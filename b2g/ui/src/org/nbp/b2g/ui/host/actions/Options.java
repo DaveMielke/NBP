@@ -2,13 +2,10 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-import android.content.Context;
-import android.content.Intent;
-
-public class Options extends ActivityAction {
+public class Options extends InternalActivityAction {
   @Override
-  protected Intent getIntent (Context context) {
-    return new Intent(context, ControlsActivity.class);
+  protected Class getActivityClass () {
+    return ControlsActivity.class;
   }
 
   public Options (Endpoint endpoint) {

@@ -2,13 +2,10 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-import android.content.Context;
-import android.content.Intent;
-
-public class Assist extends ActivityAction {
+public class Assist extends SystemActivityAction {
   @Override
-  protected Intent getIntent (Context context) {
-    return new Intent(Intent.ACTION_ASSIST);
+  protected String getIntentAction () {
+    return android.content.Intent.ACTION_ASSIST;
   }
 
   public Assist (Endpoint endpoint) {

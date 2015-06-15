@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
-public abstract class LaunchAction extends ActivityAction {
+public abstract class ExternalActivityAction extends ActivityAction {
   protected abstract String getPackageName ();
 
   @Override
@@ -12,7 +12,7 @@ public abstract class LaunchAction extends ActivityAction {
     return context.getPackageManager().getLaunchIntentForPackage(getPackageName());
   }
 
-  protected LaunchAction (Endpoint endpoint, boolean isForDevelopers) {
+  protected ExternalActivityAction (Endpoint endpoint, boolean isForDevelopers) {
     super(endpoint, isForDevelopers);
   }
 }

@@ -14,13 +14,6 @@ public abstract class ActivityAction extends Action {
     Intent intent = getIntent(context);
     if (intent == null) return false;
 
-    intent.addFlags(
-      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-      Intent.FLAG_ACTIVITY_NO_HISTORY |
-      Intent.FLAG_ACTIVITY_NEW_TASK |
-      Intent.FLAG_ACTIVITY_SINGLE_TOP
-    );
-
     context.startActivity(intent);
     return true;
   }
