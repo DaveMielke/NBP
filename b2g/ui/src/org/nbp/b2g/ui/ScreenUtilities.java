@@ -291,11 +291,6 @@ public abstract class ScreenUtilities {
       return false;
     }
 
-    if (!node.isEnabled()) {
-      logNavigation(node, "node is disabled");
-      return false;
-    }
-
     if (!node.isVisibleToUser()) {
       logNavigation(node, "node is invisible");
       return false;
@@ -306,6 +301,10 @@ public abstract class ScreenUtilities {
     } else if (!isEligible(node)) {
       logNavigation(node, "node is ineligible");
       return false;
+    }
+
+    if (!node.isEnabled()) {
+      logNavigation(node, "node is disabled");
     }
 
     return true;
