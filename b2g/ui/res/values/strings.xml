@@ -41,10 +41,11 @@
   <string name="numeric_control_previous">Decrease</string>
   <string name="numeric_control_next">Increase</string>
 
-  <string name="oneHand_control_label">One Hand</string>
   <string name="longPress_control_label">Long Press</string>
-  <string name="speechOn_control_label">Speech</string>
+  <string name="reversePanning_control_label">Reverse Panning</string>
+  <string name="oneHand_control_label">One Hand</string>
 
+  <string name="speechOn_control_label">Speech</string>
   <string name="speechVolume_control_label">Volume</string>
   <string name="speechVolume_control_previous">Softer</string>
   <string name="speechVolume_control_next">Louder</string>

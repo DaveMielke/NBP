@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
-  private final static BooleanControl oneHandControl = new OneHandControl();
   private final static BooleanControl longPressControl = new LongPressControl();
+  private final static BooleanControl reversePanningControl = new ReversePanningControl();
+  private final static BooleanControl oneHandControl = new OneHandCOntrol();
 
   private final static BooleanControl speechOnControl = new SpeechOnControl();
   private final static IntegerControl speechVolumeControl = new SpeechVolumeControl();
@@ -20,8 +21,9 @@ public abstract class Controls {
   private final static BooleanControl logUpdatesControl = new LogUpdatesControl();
 
   private final static Control[] allControls = new Control[] {
-    oneHandControl,
     longPressControl,
+    reversePanningControl,
+    oneHandControl,
 
     speechOnControl,
     speechVolumeControl,
@@ -36,12 +38,16 @@ public abstract class Controls {
     logUpdatesControl
   };
 
-  public static BooleanControl getOneHandControl () {
-    return oneHandControl;
-  }
-
   public static BooleanControl getLongPressControl () {
     return longPressControl;
+  }
+
+  public static BooleanControl getReversePanningControl () {
+    return reversePanningControl;
+  }
+
+  public static BooleanControl getOneHandControl () {
+    return oneHandControl;
   }
 
   public static BooleanControl getSpeechOnControl () {

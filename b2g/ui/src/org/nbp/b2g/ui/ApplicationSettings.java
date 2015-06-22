@@ -1,8 +1,9 @@
 package org.nbp.b2g.ui;
 
 public abstract class ApplicationSettings {
-  public static volatile boolean ONE_HAND = ApplicationParameters.DEFAULT_ONE_HAND;
   public static volatile boolean LONG_PRESS = ApplicationParameters.DEFAULT_LONG_PRESS;
+  public static volatile boolean REVERSE_PANNING = ApplicationParameters.DEFAULT_REVERSE_PANNING;
+  public static volatile boolean ONE_HAND = ApplicationParameters.DEFAULT_ONE_HAND;
 
   public static volatile boolean SPEECH_ON = ApplicationParameters.DEFAULT_SPEECH_ON;
   public static volatile float SPEECH_VOLUME = ApplicationParameters.DEFAULT_SPEECH_VOLUME;
