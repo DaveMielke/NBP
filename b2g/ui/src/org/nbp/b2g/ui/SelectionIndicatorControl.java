@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public class SelectionIndicatorControl extends EnumeratedControl<IndicatorOverlay> {
+public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
   public String getLabel () {
     return ApplicationContext.getString(R.string.selectionIndicator_control_label);

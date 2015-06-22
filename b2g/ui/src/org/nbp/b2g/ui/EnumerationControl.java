@@ -2,19 +2,23 @@ package org.nbp.b2g.ui;
 
 import android.content.SharedPreferences;
 
-public abstract class EnumeratedControl<E extends Enum> extends IntegerControl {
+public abstract class EnumerationControl<E extends Enum> extends IntegerControl {
   protected abstract E getEnumerationDefault ();
   protected abstract E getEnumerationValue ();
   protected abstract boolean setEnumerationValue (E value);
 
-  private E[] getValues () {
-    E value = getEnumerationDefault();
+  private E[] enumerationValues = null;
 
-    E[] values = (E[])LanguageUtilities.invokeStaticMethod(
-      value.getClass(), "values"
-    );
+  private E[] getEnumerationValues () {
+    synchronized (this) {
+      if (enumerationValues == null) {
+        enumerationValues = (E[])LanguageUtilities.invokeStaticMethod(
+          getEnumerationDefault().getClass(), "values"
+        );
+      }
 
-    return values;
+      return enumerationValues;
+    }
   }
 
   @Override
@@ -30,8 +34,9 @@ public abstract class EnumeratedControl<E extends Enum> extends IntegerControl {
   @Override
   protected final boolean setIntegerValue (int value) {
     if (value < 0) return false;
-    if (value >= getValues().length) return false;
-    return setEnumerationValue(getValues()[value]);
+    E[] values = getEnumerationValues();
+    if (value >= values.length) return false;
+    return setEnumerationValue(values[value]);
   }
 
   @Override
@@ -56,10 +61,16 @@ public abstract class EnumeratedControl<E extends Enum> extends IntegerControl {
 
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
-    return setEnumerationValue((E)(Enum.valueOf(getValues()[0].getClass(), prefs.getString(key, getEnumerationDefault().name()))));
+    String name = prefs.getString(key, "");
+    E value = (name.length() > 0)?
+              (E)(Enum.valueOf(getEnumerationValues()[0].getClass(), name)):
+              null;
+
+    if (value == null) value = getEnumerationDefault();
+    return setEnumerationValue(value);
   }
 
-  protected EnumeratedControl (boolean isForDevelopers) {
+  protected EnumerationControl (boolean isForDevelopers) {
     super(isForDevelopers);
   }
 }
