@@ -110,13 +110,13 @@ public class BrailleDevice {
 
           if (start == end) {
             if (end < brailleCells.length) {
-              brailleCells[end] |= ApplicationParameters.BRAILLE_OVERLAY_CURSOR;
+              brailleCells[end] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
             }
           } else {
             if (end > brailleCells.length) end = brailleCells.length;
 
             while (start < end) {
-              brailleCells[start++] |= ApplicationParameters.BRAILLE_OVERLAY_SELECTED;
+              brailleCells[start++] |= ApplicationSettings.SELECTION_INDICATOR.getDots();
             }
           }
         }

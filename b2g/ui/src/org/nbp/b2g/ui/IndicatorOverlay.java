@@ -15,6 +15,10 @@ public enum IndicatorOverlay {
 
   private final byte dots;
 
+  public byte getDots () {
+    return dots;
+  }
+
   private IndicatorOverlay (int dots) {
     this.dots = (byte)dots;
   }

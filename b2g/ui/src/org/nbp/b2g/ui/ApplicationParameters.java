@@ -64,13 +64,6 @@ public abstract class ApplicationParameters {
     BrailleDevice.DOT_7|
     BrailleDevice.DOT_8;
 
-  public final static byte BRAILLE_OVERLAY_CURSOR =
-    BrailleDevice.DOT_8;
-
-  public final static byte BRAILLE_OVERLAY_SELECTED =
-    BrailleDevice.DOT_7|
-    BrailleDevice.DOT_8;
-
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
 
   private ApplicationParameters () {
