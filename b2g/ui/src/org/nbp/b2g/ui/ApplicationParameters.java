@@ -8,7 +8,7 @@ public abstract class ApplicationParameters {
   public final static boolean DEFAULT_ONE_HAND = false;
 
   public final static IndicatorOverlay DEFAULT_CURSOR_INDICATOR = IndicatorOverlay.DOTS_78;
-  public final static IndicatorOverlay DEFAULT_SELECTION_INDICATOR = IndicatorOverlay.DOTS_78;
+  public final static IndicatorOverlay DEFAULT_SELECTION_INDICATOR = IndicatorOverlay.DOT_8;
 
   public final static boolean DEFAULT_SPEECH_ON = true;
   public final static float DEFAULT_SPEECH_VOLUME = 1.0f;
