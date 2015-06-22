@@ -6,7 +6,10 @@ import java.util.Collection;
 public abstract class Controls {
   private final static BooleanControl longPressControl = new LongPressControl();
   private final static BooleanControl reversePanningControl = new ReversePanningControl();
-  private final static BooleanControl oneHandControl = new OneHandCOntrol();
+  private final static BooleanControl oneHandControl = new OneHandControl();
+
+  private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
+  private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
 
   private final static BooleanControl speechOnControl = new SpeechOnControl();
   private final static IntegerControl speechVolumeControl = new SpeechVolumeControl();
@@ -24,6 +27,9 @@ public abstract class Controls {
     longPressControl,
     reversePanningControl,
     oneHandControl,
+
+    cursorIndicatorControl,
+    selectionIndicatorControl,
 
     speechOnControl,
     speechVolumeControl,
@@ -48,6 +54,14 @@ public abstract class Controls {
 
   public static BooleanControl getOneHandControl () {
     return oneHandControl;
+  }
+
+  public static CursorIndicatorControl getCursorIndicatorControl () {
+    return cursorIndicatorControl;
+  }
+
+  public static SelectionIndicatorControl getCSelectionndicatorControl () {
+    return selectionIndicatorControl;
   }
 
   public static BooleanControl getSpeechOnControl () {

@@ -100,9 +100,14 @@ public abstract class LanguageUtilities {
     Class container, String name,
     Class[] types, Object... arguments
   ) {
+    if (types == null) types = new Class[0];
     Method method = getMethod(container, name, types);
     if (method == null) return null;
     return invokeMethod(method, null, arguments);
+  }
+
+  public static Object invokeStaticMethod (Class container, String name) {
+    return invokeStaticMethod(container, name, null);
   }
 
   private static String makeReference (Class container, String name) {
