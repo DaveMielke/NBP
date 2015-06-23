@@ -7,13 +7,17 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   protected abstract E getEnumerationValue ();
   protected abstract boolean setEnumerationValue (E value);
 
+  private Class getEnumerationClass () {
+    return getEnumerationDefault().getClass();
+  }
+
   private E[] enumerationValues = null;
 
   private E[] getEnumerationValues () {
     synchronized (this) {
       if (enumerationValues == null) {
         enumerationValues = (E[])LanguageUtilities.invokeStaticMethod(
-          getEnumerationDefault().getClass(), "values"
+          getEnumerationClass(), "values"
         );
       }
 
@@ -63,7 +67,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   protected boolean restoreValue (SharedPreferences prefs, String key) {
     String name = prefs.getString(key, "");
     E value = (name.length() > 0)?
-              (E)(Enum.valueOf(getEnumerationValues()[0].getClass(), name)):
+              (E)(Enum.valueOf(getEnumerationClass(), name)):
               null;
 
     if (value == null) value = getEnumerationDefault();
