@@ -7,10 +7,10 @@ SB         |MoveBackward|
 SF         |MoveForward|
 C          |Click|
 SC         |LongClick|
-1U         |Notifications|
-1D         |HomeKey|
-1L         |BackKey|
-1R         |RecentApps|
+4U         |Notifications|
+4D         |HomeKey|
+4L         |BackKey|
+4R         |RecentApps|
 S1478      |PowerOff|
 S123456    |HomeKey|
 SL         |MoveFirst|
