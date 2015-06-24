@@ -10,7 +10,7 @@ public class SpeechOff extends SpeechAction {
       speech.stopSpeaking();
     }
 
-    return Controls.getSpeechOnControl().previousValue();
+    return Controls.getSpeechEnabledControl().previousValue();
   }
 
   public SpeechOff (Endpoint endpoint) {

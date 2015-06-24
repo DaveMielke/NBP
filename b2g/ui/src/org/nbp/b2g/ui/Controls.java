@@ -11,7 +11,9 @@ public abstract class Controls {
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
 
-  private final static BooleanControl speechOnControl = new SpeechOnControl();
+  private final static BooleanControl speechEnabledControl = new SpeechEnabledControl();
+  private final static BooleanControl sleepTalkControl = new SleepTalkControl();
+
   private final static IntegerControl speechVolumeControl = new SpeechVolumeControl();
   private final static IntegerControl speechBalanceControl = new SpeechBalanceControl();
   private final static IntegerControl speechRateControl = new SpeechRateControl();
@@ -31,7 +33,9 @@ public abstract class Controls {
     cursorIndicatorControl,
     selectionIndicatorControl,
 
-    speechOnControl,
+    speechEnabledControl,
+    sleepTalkControl,
+
     speechVolumeControl,
     speechBalanceControl,
     speechRateControl,
@@ -64,8 +68,12 @@ public abstract class Controls {
     return selectionIndicatorControl;
   }
 
-  public static BooleanControl getSpeechOnControl () {
-    return speechOnControl;
+  public static BooleanControl getSpeechEnabledControl () {
+    return speechEnabledControl;
+  }
+
+  public static BooleanControl getSleepTalkControl () {
+    return sleepTalkControl;
   }
 
   public static IntegerControl getSpeechVolumeControl () {

@@ -33,7 +33,10 @@ public class SpeechDevice {
   }
 
   private boolean isActive () {
-    return isStarted() && ApplicationSettings.SPEECH_ON;
+    if (!isStarted()) return false;
+    if (!ApplicationSettings.SPEECH_ENABLED) return false;
+    if (ApplicationSettings.SLEEP_TALK) return true;
+    return ApplicationContext.isAwake();
   }
 
   public boolean stopSpeaking () {

@@ -1,33 +1,33 @@
 package org.nbp.b2g.ui;
 
-public class SpeechOnControl extends BooleanControl {
+public class SpeechEnabledControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.speechOn_control_label);
+    return ApplicationContext.getString(R.string.speechEnabled_control_label);
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "speech-on";
+    return "speech-enabled";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_SPEECH_ON;
+    return ApplicationParameters.DEFAULT_SPEECH_ENABLED;
   }
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationSettings.SPEECH_ON;
+    return ApplicationSettings.SPEECH_ENABLED;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.SPEECH_ON = value;
+    ApplicationSettings.SPEECH_ENABLED = value;
     return true;
   }
 
-  public SpeechOnControl () {
+  public SpeechEnabledControl () {
     super(false);
   }
 }
