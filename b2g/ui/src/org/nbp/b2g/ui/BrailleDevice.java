@@ -18,6 +18,7 @@ public class BrailleDevice {
   public final static byte DOT_8 = (byte)0X80;
 
   private byte[] brailleCells = null;
+  private boolean writePending = false;
 
   private native boolean openDevice ();
   private native void closeDevice ();
@@ -44,6 +45,8 @@ public class BrailleDevice {
 
           clearCells();
           Arrays.fill(brailleCells, DOTS_NONE);
+          writePending = false;
+
           return true;
         }
 
@@ -71,7 +74,13 @@ public class BrailleDevice {
   }
 
   private boolean writeCells () {
-    return writeCells(brailleCells);
+    synchronized (this) {
+      if (!writePending) return true;
+      if (!writeCells(brailleCells)) return false;
+      writePending = false;
+    }
+
+    return true;
   }
 
   private void setCells (Characters characters, String text) {
@@ -124,40 +133,38 @@ public class BrailleDevice {
     }
   }
 
-  private boolean writePending = false;
-  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_REWRITE_DELAY, "braille-device-rewrite-delay") {
+  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
     @Override
     public void run () {
       synchronized (this) {
-        if (writePending) {
-          writePending = false;
-          write();
-        }
+        writeCells();
+        start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
       }
     }
   };
 
   public boolean write () {
     synchronized (this) {
-      if (writeDelay.isActive()) {
-        writePending = true;
-        return true;
-      }
+      if (!open()) return false;
 
-      if (open()) {
+      if (brailleCells != null) {
         byte[] oldCells = Arrays.copyOf(brailleCells, brailleCells.length);
         setCells(Endpoints.getCurrentEndpoint());
         if (Arrays.equals(brailleCells, oldCells)) return true;
+      }
 
-        if (writeCells()) {
-          writePending = false;
-          writeDelay.start();
-          return true;
-        }
+      writePending = true;
+    }
+
+    if (!ApplicationContext.isAwake()) return true;
+
+    synchronized (writeDelay) {
+      if (!writeDelay.isActive()) {
+        writeDelay.start();
       }
     }
 
-    return false;
+    return true;
   }
 
   public boolean write (Endpoint endpoint, String message) {
