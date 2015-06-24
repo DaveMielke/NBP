@@ -17,14 +17,40 @@ public class BrailleDevice {
   public final static byte DOT_7 =       0X40;
   public final static byte DOT_8 = (byte)0X80;
 
-  private byte[] brailleCells = null;
-  private boolean writePending = false;
-
   private native boolean openDevice ();
   private native void closeDevice ();
 
   private native String getVersion ();
   private native int getCellCount ();
+
+  private byte[] brailleCells = null;
+  private boolean writePending = false;
+
+  private static char toBrailleCharacter (byte cell) {
+    return (char)((cell & 0XFF) | 0X2800);
+  }
+
+  private static char[] toBrailleCharacters (byte[] cells) {
+    if (cells == null) return null;
+
+    int count = cells.length;
+    char[] characters = new char[count];
+
+    for (int index=0; index<count; index+=1) {
+      characters[index] = toBrailleCharacter(cells[index]);
+    }
+
+    return characters;
+  }
+
+  private void logBrailleCells (String action) {
+    if (ApplicationSettings.LOG_UPDATES) {
+      Log.v(LOG_TAG, String.format(
+        "braille cells: %s: %s",
+        action, new String(toBrailleCharacters(brailleCells))
+      ));
+    }
+  }
 
   private native boolean clearCells ();
   private native boolean writeCells (byte[] cells);
@@ -74,6 +100,7 @@ public class BrailleDevice {
   }
 
   private boolean writeCells () {
+    logBrailleCells("writing");
     return writeCells(brailleCells);
   }
 
@@ -143,13 +170,14 @@ public class BrailleDevice {
     synchronized (this) {
       if (!open()) return false;
 
-      if (brailleCells != null) {
+      {
         byte[] oldCells = Arrays.copyOf(brailleCells, brailleCells.length);
         setCells(Endpoints.getCurrentEndpoint());
         if (Arrays.equals(brailleCells, oldCells)) return true;
       }
 
       writePending = true;
+      logBrailleCells("updated");
     }
 
     synchronized (writeDelay) {

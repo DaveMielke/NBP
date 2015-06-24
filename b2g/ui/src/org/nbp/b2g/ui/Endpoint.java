@@ -1,6 +1,10 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
+
 public abstract class Endpoint {
+  private final static String LOG_TAG = Endpoint.class.getName();
+
   private String oldText;
   private int oldLineStart;
   private int oldSelectionStart;
@@ -357,6 +361,13 @@ public abstract class Endpoint {
 
   public boolean onSelectionChange (int start, int end) {
     synchronized (this) {
+      if (ApplicationSettings.LOG_UPDATES) {
+        Log.d(LOG_TAG, String.format(
+          "selection changed: Start:%d->%d End:%d->%d",
+          selectionStart, start, selectionEnd, end
+        ));
+      }
+
       selectionStart = start;
       selectionEnd = end;
 
