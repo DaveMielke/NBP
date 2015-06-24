@@ -109,7 +109,7 @@ public class BrailleDevice {
 
       {
         byte[] oldCells = getCells();
-        Braille.setCells(brailleCells, Endpoints.getCurrentEndpoint());
+        Braille.setCells(brailleCells);
         if (Arrays.equals(brailleCells, oldCells)) return true;
       }
 
