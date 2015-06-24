@@ -175,6 +175,9 @@ public class ControlsActivity extends Activity {
     final Switch view = new Switch(this);
     setChecked(view, control);
 
+    view.setTextOff(control.getPreviousLabel());
+    view.setTextOn(control.getNextLabel());
+
     Switch.OnCheckedChangeListener switchListener = new Switch.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged (CompoundButton button, boolean isChecked) {

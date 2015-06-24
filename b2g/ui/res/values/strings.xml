@@ -49,7 +49,10 @@
   <string name="selectionIndicator_control_label">Selection Indicator</string>
 
   <string name="speechEnabled_control_label">Speech</string>
+
   <string name="sleepTalk_control_label">Speak When Asleep</string>
+  <string name="sleepTalk_control_previous">Only When Awake</string>
+  <string name="sleepTalk_control_next">Even When Asleep</string>
 
   <string name="speechVolume_control_label">Volume</string>
   <string name="speechVolume_control_previous">Softer</string>

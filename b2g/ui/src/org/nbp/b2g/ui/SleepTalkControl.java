@@ -7,6 +7,16 @@ public class SleepTalkControl extends BooleanControl {
   }
 
   @Override
+  public String getNextLabel () {
+    return ApplicationContext.getString(R.string.sleepTalk_control_next);
+  }
+
+  @Override
+  public String getPreviousLabel () {
+    return ApplicationContext.getString(R.string.sleepTalk_control_previous);
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "sleep-talk";
   }
