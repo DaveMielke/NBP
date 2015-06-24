@@ -74,13 +74,7 @@ public class BrailleDevice {
   }
 
   private boolean writeCells () {
-    synchronized (this) {
-      if (!writePending) return true;
-      if (!writeCells(brailleCells)) return false;
-      writePending = false;
-    }
-
-    return true;
+    return writeCells(brailleCells);
   }
 
   private void setCells (Characters characters, String text) {
@@ -136,9 +130,11 @@ public class BrailleDevice {
   private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
     @Override
     public void run () {
-      synchronized (this) {
-        writeCells();
-        start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
+      synchronized (BrailleDevice.this) {
+        if (writePending) {
+          if (writeCells()) writePending = false;
+          start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
+        }
       }
     }
   };
@@ -155,8 +151,6 @@ public class BrailleDevice {
 
       writePending = true;
     }
-
-    if (!ApplicationContext.isAwake()) return true;
 
     synchronized (writeDelay) {
       if (!writeDelay.isActive()) {
