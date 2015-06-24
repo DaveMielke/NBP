@@ -56,6 +56,42 @@ public abstract class Braille {
     while (index < cells.length) cells[index++] = 0;
   }
 
+  public static void setCells (byte[] cells, Endpoint endpoint) {
+    synchronized (endpoint) {
+      String text = endpoint.getLineText();
+      int length = text.length();
+
+      int indent = endpoint.getLineIndent();
+      if (indent > length) indent = length;
+      setCells(cells, text.substring(indent), endpoint.getCharacters());
+
+      if (endpoint.isEditable()) {
+        int start = endpoint.getSelectionStart();
+        int end = endpoint.getSelectionEnd();
+
+        if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
+          int brailleStart = endpoint.getBrailleStart();
+          int nextLine = length - indent + 1;
+
+          if ((start -= brailleStart) < 0) start = 0;
+          if ((end -= brailleStart) > nextLine) end = nextLine;
+
+          if (start == end) {
+            if (end < cells.length) {
+              cells[end] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
+            }
+          } else {
+            if (end > cells.length) end = cells.length;
+
+            while (start < end) {
+              cells[start++] |= ApplicationSettings.SELECTION_INDICATOR.getDots();
+            }
+          }
+        }
+      }
+    }
+  }
+
   private Braille () {
   }
 }

@@ -103,53 +103,13 @@ public class BrailleDevice {
     }
   };
 
-  private void setCells (String text, Characters characters) {
-    Braille.setCells(brailleCells, text, characters);
-  }
-
-  private void setCells (Endpoint endpoint) {
-    synchronized (endpoint) {
-      String text = endpoint.getLineText();
-      int length = text.length();
-
-      int indent = endpoint.getLineIndent();
-      if (indent > length) indent = length;
-      setCells(text.substring(indent), endpoint.getCharacters());
-
-      if (endpoint.isEditable()) {
-        int start = endpoint.getSelectionStart();
-        int end = endpoint.getSelectionEnd();
-
-        if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
-          int brailleStart = endpoint.getBrailleStart();
-          int nextLine = length - indent + 1;
-
-          if ((start -= brailleStart) < 0) start = 0;
-          if ((end -= brailleStart) > nextLine) end = nextLine;
-
-          if (start == end) {
-            if (end < brailleCells.length) {
-              brailleCells[end] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
-            }
-          } else {
-            if (end > brailleCells.length) end = brailleCells.length;
-
-            while (start < end) {
-              brailleCells[start++] |= ApplicationSettings.SELECTION_INDICATOR.getDots();
-            }
-          }
-        }
-      }
-    }
-  }
-
   public boolean write () {
     synchronized (this) {
       if (!open()) return false;
 
       {
         byte[] oldCells = getCells();
-        setCells(Endpoints.getCurrentEndpoint());
+        Braille.setCells(brailleCells, Endpoints.getCurrentEndpoint());
         if (Arrays.equals(brailleCells, oldCells)) return true;
       }
 
