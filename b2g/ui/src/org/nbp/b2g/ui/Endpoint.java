@@ -368,7 +368,7 @@ public abstract class Endpoint {
         ));
       }
 
-      if ((start == selectionStart) && (end == selectionEnd)) return true;
+      if ((start == selectionStart) && (end == selectionEnd)) return false;
 
       selectionStart = start;
       selectionEnd = end;
@@ -378,11 +378,16 @@ public abstract class Endpoint {
       }
     }
 
+    return true;
+  }
+
+  public boolean updateSelection (int start, int end) {
+    if (!onSelectionChange(start, end)) return true;
     return write();
   }
 
   public boolean clearSelection () {
-    return onSelectionChange(NO_SELECTION, NO_SELECTION);
+    return updateSelection(NO_SELECTION, NO_SELECTION);
   }
 
   public boolean isSelectable (int offset) {
@@ -396,7 +401,7 @@ public abstract class Endpoint {
 
     if (startSelected && !isSelectable(start)) return false;
     if (endSelected && !isSelectable(end)) return false;
-    return onSelectionChange(start, end);
+    return updateSelection(start, end);
   }
 
   public boolean setCursor (int offset) {
