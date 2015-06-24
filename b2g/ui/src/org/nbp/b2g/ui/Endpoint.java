@@ -368,6 +368,8 @@ public abstract class Endpoint {
         ));
       }
 
+      if ((start == selectionStart) && (end == selectionEnd)) return true;
+
       selectionStart = start;
       selectionEnd = end;
 
