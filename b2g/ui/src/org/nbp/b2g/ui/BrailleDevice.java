@@ -23,45 +23,24 @@ public class BrailleDevice {
   private native String getVersion ();
   private native int getCellCount ();
 
+  private native boolean clearCells ();
+  private native boolean writeCells (byte[] cells);
+
   private byte[] brailleCells = null;
   private boolean writePending = false;
 
-  public static char toBrailleCharacter (byte cell) {
-    return (char)((cell & 0XFF) | 0X2800);
-  }
-
-  public static char[] toBrailleCharacters (byte[] cells) {
-    if (cells == null) return null;
-
-    int count = cells.length;
-    char[] characters = new char[count];
-
-    for (int index=0; index<count; index+=1) {
-      characters[index] = toBrailleCharacter(cells[index]);
-    }
-
-    return characters;
-  }
-
-  public static String toBrailleString (byte[] cells) {
-    return new String(toBrailleCharacters(cells));
-  }
-
-  public byte[] getBrailleCells () {
-    return Arrays.copyOf(brailleCells, brailleCells.length);
-  }
-
-  private void logBrailleCells (String action) {
+  private void logCells (String action) {
     if (ApplicationSettings.LOG_UPDATES) {
       Log.v(LOG_TAG, String.format(
         "braille cells: %s: %s",
-        action, toBrailleString(brailleCells)
+        action, Braille.toString(brailleCells)
       ));
     }
   }
 
-  private native boolean clearCells ();
-  private native boolean writeCells (byte[] cells);
+  public byte[] getCells () {
+    return Arrays.copyOf(brailleCells, brailleCells.length);
+  }
 
   public boolean open () {
     synchronized (this) {
@@ -108,25 +87,24 @@ public class BrailleDevice {
   }
 
   private boolean writeCells () {
-    logBrailleCells("writing");
+    logCells("writing");
     return writeCells(brailleCells);
   }
 
-  private void setCells (Characters characters, String text, byte[] cells) {
-    int count = Math.min(text.length(), cells.length);
-    int index = 0;
-
-    while (index < count) {
-      char character = text.charAt(index);
-      Byte dots = characters.getDots(character);
-      cells[index++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
+  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
+    @Override
+    public void run () {
+      synchronized (BrailleDevice.this) {
+        if (writePending) {
+          if (writeCells()) writePending = false;
+          start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
+        }
+      }
     }
+  };
 
-    while (index < cells.length) cells[index++] = 0;
-  }
-
-  private void setCells (Characters characters, String text) {
-    setCells(characters, text, brailleCells);
+  private void setCells (String text, Characters characters) {
+    Braille.setCells(brailleCells, text, characters);
   }
 
   private void setCells (Endpoint endpoint) {
@@ -136,7 +114,7 @@ public class BrailleDevice {
 
       int indent = endpoint.getLineIndent();
       if (indent > length) indent = length;
-      setCells(endpoint.getCharacters(), text.substring(indent));
+      setCells(text.substring(indent), endpoint.getCharacters());
 
       if (endpoint.isEditable()) {
         int start = endpoint.getSelectionStart();
@@ -165,30 +143,18 @@ public class BrailleDevice {
     }
   }
 
-  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
-    @Override
-    public void run () {
-      synchronized (BrailleDevice.this) {
-        if (writePending) {
-          if (writeCells()) writePending = false;
-          start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
-        }
-      }
-    }
-  };
-
   public boolean write () {
     synchronized (this) {
       if (!open()) return false;
 
       {
-        byte[] oldCells = getBrailleCells();
+        byte[] oldCells = getCells();
         setCells(Endpoints.getCurrentEndpoint());
         if (Arrays.equals(brailleCells, oldCells)) return true;
       }
 
       writePending = true;
-      logBrailleCells("updated");
+      logCells("updated");
     }
 
     synchronized (writeDelay) {
@@ -206,7 +172,7 @@ public class BrailleDevice {
         writeDelay.cancel();
 
         byte[] cells = new byte[brailleCells.length];
-        setCells(endpoint.getCharacters(), message, cells);
+        Braille.setCells(cells, message, endpoint.getCharacters());
 
         if (writeCells(cells)) {
           writePending = true;
