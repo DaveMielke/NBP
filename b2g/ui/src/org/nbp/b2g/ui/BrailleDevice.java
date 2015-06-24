@@ -26,11 +26,11 @@ public class BrailleDevice {
   private byte[] brailleCells = null;
   private boolean writePending = false;
 
-  private static char toBrailleCharacter (byte cell) {
+  public static char toBrailleCharacter (byte cell) {
     return (char)((cell & 0XFF) | 0X2800);
   }
 
-  private static char[] toBrailleCharacters (byte[] cells) {
+  public static char[] toBrailleCharacters (byte[] cells) {
     if (cells == null) return null;
 
     int count = cells.length;
@@ -43,11 +43,19 @@ public class BrailleDevice {
     return characters;
   }
 
+  public static String toBrailleString (byte[] cells) {
+    return new String(toBrailleCharacters(cells));
+  }
+
+  public byte[] getBrailleCells () {
+    return Arrays.copyOf(brailleCells, brailleCells.length);
+  }
+
   private void logBrailleCells (String action) {
     if (ApplicationSettings.LOG_UPDATES) {
       Log.v(LOG_TAG, String.format(
         "braille cells: %s: %s",
-        action, new String(toBrailleCharacters(brailleCells))
+        action, toBrailleString(brailleCells)
       ));
     }
   }
@@ -171,7 +179,7 @@ public class BrailleDevice {
       if (!open()) return false;
 
       {
-        byte[] oldCells = Arrays.copyOf(brailleCells, brailleCells.length);
+        byte[] oldCells = getBrailleCells();
         setCells(Endpoints.getCurrentEndpoint());
         if (Arrays.equals(brailleCells, oldCells)) return true;
       }
