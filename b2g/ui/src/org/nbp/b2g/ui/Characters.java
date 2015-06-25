@@ -122,7 +122,32 @@ public class Characters {
   }
 
   public Byte getDots (char character) {
-    return dotsMap.get(character);
+    {
+      Byte dots = dotsMap.get(character);
+      if (dots != null) return dots;
+    }
+
+    switch (character & 0XFF00) {
+      case Braille.UNICODE_ROW: {
+        byte dots = 0;
+
+        if ((character & Braille.UNICODE_DOT_1) != 0) dots |= BrailleDevice.DOT_1;
+        if ((character & Braille.UNICODE_DOT_2) != 0) dots |= BrailleDevice.DOT_2;
+        if ((character & Braille.UNICODE_DOT_3) != 0) dots |= BrailleDevice.DOT_3;
+        if ((character & Braille.UNICODE_DOT_4) != 0) dots |= BrailleDevice.DOT_4;
+        if ((character & Braille.UNICODE_DOT_5) != 0) dots |= BrailleDevice.DOT_5;
+        if ((character & Braille.UNICODE_DOT_6) != 0) dots |= BrailleDevice.DOT_6;
+        if ((character & Braille.UNICODE_DOT_7) != 0) dots |= BrailleDevice.DOT_7;
+        if ((character & Braille.UNICODE_DOT_8) != 0) dots |= BrailleDevice.DOT_8;
+
+        return dots;
+      }
+
+      default:
+        break;
+    }
+
+    return null;
   }
 
   public Characters () {
