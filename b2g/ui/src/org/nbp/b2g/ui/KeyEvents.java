@@ -44,22 +44,31 @@ public abstract class KeyEvents {
   }
 
   private static boolean performAction (boolean isLongPress) {
-    if (activeNavigationKeys == 0) return true;
-
-    boolean performed = false;
-    KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
-    Action action = null;
+    int keys = activeNavigationKeys;
+    if (keys == 0) return true;
 
     if (!ApplicationSettings.LONG_PRESS) {
       isLongPress = false;
     }
 
-    if (isLongPress) {
-      action = keyBindings.getAction(activeNavigationKeys | KeyMask.LONG_PRESS);
+    KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
+    Action action = null;
+    boolean performed = false;
+
+    if (ApplicationSettings.BRAILLE_INPUT) {
+      if (KeyMask.getDots(keys) != null) {
+        action = keyBindings.getAction("InsertBraille");
+      }
     }
 
     if (action == null) {
-      action = keyBindings.getAction(activeNavigationKeys);
+      if (isLongPress) {
+        action = keyBindings.getAction(keys | KeyMask.LONG_PRESS);
+      }
+
+      if (action == null) {
+        action = keyBindings.getAction(keys);
+      }
     }
 
     if (action != null) {
