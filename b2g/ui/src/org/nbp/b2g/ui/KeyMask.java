@@ -33,6 +33,23 @@ public abstract class KeyMask {
 
   public final static int DOTS_ALL = (DOT_1 | DOT_2 | DOT_3 | DOT_4 | DOT_5 | DOT_6 | DOT_7 | DOT_8);
 
+  public static Byte getDots (int mask) {
+    if (mask == 0) return null;
+    if (mask == SPACE) return 0;
+    if ((mask & ~DOTS_ALL) != 0) return null;
+
+    byte dots = 0;
+    if ((mask & DOT_1) != 0) dots |= BrailleDevice.DOT_1;
+    if ((mask & DOT_2) != 0) dots |= BrailleDevice.DOT_2;
+    if ((mask & DOT_3) != 0) dots |= BrailleDevice.DOT_3;
+    if ((mask & DOT_4) != 0) dots |= BrailleDevice.DOT_4;
+    if ((mask & DOT_5) != 0) dots |= BrailleDevice.DOT_5;
+    if ((mask & DOT_6) != 0) dots |= BrailleDevice.DOT_6;
+    if ((mask & DOT_7) != 0) dots |= BrailleDevice.DOT_7;
+    if ((mask & DOT_8) != 0) dots |= BrailleDevice.DOT_8;
+    return dots;
+  }
+
   private static Map<Character, Integer> charToBit = new LinkedHashMap<Character, Integer>();
 
   public static Integer charToBit (char character) {
@@ -48,18 +65,20 @@ public abstract class KeyMask {
   public static String maskToString (int mask) {
     StringBuilder sb = new StringBuilder();
 
-    for (Character character : charToBit.keySet()) {
-      int bit = charToBit.get(character);
-
-      if ((mask & bit) != 0) {
-        sb.append(character);
-        mask &= ~bit;
-      }
-    }
-
     if (mask != 0) {
-      if (sb.length() > 0) sb.append('+');
-      sb.append(String.format("0X%X", mask));
+      for (Character character : charToBit.keySet()) {
+        int bit = charToBit.get(character);
+
+        if ((mask & bit) != 0) {
+          sb.append(character);
+          if ((mask &= ~bit) == 0) break;
+        }
+      }
+
+      if (mask != 0) {
+        if (sb.length() > 0) sb.append('+');
+        sb.append(String.format("0X%X", mask));
+      }
     }
 
     return sb.toString();
@@ -73,10 +92,8 @@ public abstract class KeyMask {
   }
 
   private static void map () {
-    map('W', POWER_ON);
-    map('Q', POWER_OFF);
-
     map('S', SPACE);
+
     map('F', FORWARD);
     map('B', BACKWARD);
 
@@ -100,6 +117,9 @@ public abstract class KeyMask {
 
     map('X', CURSOR);
     map('H', LONG_PRESS);
+
+    map('W', POWER_ON);
+    map('Q', POWER_OFF);
   }
 
   static {
