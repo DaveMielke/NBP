@@ -6,10 +6,12 @@ F          |PanRight|
 SX         |SetLeft|
 7X         |DescribeCharacter|
 814        |CopyToClipboard|
-B7         |OneHandOff|
-F8         |OneHandOn|
+B1         |BrailleInputOff|
+F4         |BrailleInputOn|
 B3         |LongPressOff|
 F6         |LongPressOn|
+B7         |OneHandOff|
+F8         |OneHandOn|
 12345678   |Null|
 S12345678  |Null|
 <          |VolumeDown|

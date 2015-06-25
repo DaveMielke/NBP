@@ -6,6 +6,7 @@ public abstract class ApplicationParameters {
   public final static boolean DEFAULT_LONG_PRESS = true;
   public final static boolean DEFAULT_REVERSE_PANNING = false;
   public final static boolean DEFAULT_ONE_HAND = false;
+  public final static boolean DEFAULT_BRAILLE_INPUT = false;
 
   public final static IndicatorOverlay DEFAULT_CURSOR_INDICATOR = IndicatorOverlay.DOTS_78;
   public final static IndicatorOverlay DEFAULT_SELECTION_INDICATOR = IndicatorOverlay.DOT_8;

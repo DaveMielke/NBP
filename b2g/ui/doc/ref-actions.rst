@@ -8,6 +8,8 @@
 .. |ArrowUp| replace:: the Up Arrow key
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
+.. |BrailleInputOff| replace:: disable Unicode braille input
+.. |BrailleInputOn| replace:: enable Unicode braille input
 .. |BringCursor| replace:: bring the cursor to a specific character
 .. |Click| replace:: tap (click) current screen element
 .. |Clock| replace:: go to the Clock
