@@ -7,15 +7,15 @@ import android.util.Log;
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
-  public final static byte DOTS_NONE = 0;
-  public final static byte DOT_1 =       0X01;
-  public final static byte DOT_2 =       0X02;
-  public final static byte DOT_3 =       0X04;
-  public final static byte DOT_4 =       0X08;
-  public final static byte DOT_5 =       0X10;
-  public final static byte DOT_6 =       0X20;
-  public final static byte DOT_7 =       0X40;
-  public final static byte DOT_8 = (byte)0X80;
+  public final static byte DOTS_NONE =       0X00;
+  public final static byte DOT_1     =       0X01;
+  public final static byte DOT_2     =       0X02;
+  public final static byte DOT_3     =       0X04;
+  public final static byte DOT_4     =       0X08;
+  public final static byte DOT_5     =       0X10;
+  public final static byte DOT_6     =       0X20;
+  public final static byte DOT_7     =       0X40;
+  public final static byte DOT_8     = (byte)0X80;
 
   private native boolean openDevice ();
   private native void closeDevice ();
@@ -39,7 +39,10 @@ public class BrailleDevice {
   }
 
   public byte[] getCells () {
-    return Arrays.copyOf(brailleCells, brailleCells.length);
+    synchronized (this) {
+      if (!open()) return null;
+      return Arrays.copyOf(brailleCells, brailleCells.length);
+    }
   }
 
   public boolean open () {
