@@ -33,7 +33,7 @@ public abstract class KeyMask {
 
   public final static int DOTS_ALL = (DOT_1 | DOT_2 | DOT_3 | DOT_4 | DOT_5 | DOT_6 | DOT_7 | DOT_8);
 
-  public static Byte getDots (int mask) {
+  public static Byte toDots (int mask) {
     if (mask == 0) return null;
     if (mask == SPACE) return 0;
     if ((mask & ~DOTS_ALL) != 0) return null;
@@ -52,7 +52,7 @@ public abstract class KeyMask {
 
   private static Map<Character, Integer> charToBit = new LinkedHashMap<Character, Integer>();
 
-  public static Integer charToBit (char character) {
+  public static Integer toBit (char character) {
     Integer bit = charToBit.get(character);
 
     if (bit == null) {
@@ -62,7 +62,7 @@ public abstract class KeyMask {
     return bit;
   }
 
-  public static String maskToString (int mask) {
+  public static String toString (int mask) {
     StringBuilder sb = new StringBuilder();
 
     if (mask != 0) {
@@ -84,14 +84,11 @@ public abstract class KeyMask {
     return sb.toString();
   }
 
-  private KeyMask () {
-  }
-
   private static void map (char character, int bit) {
     charToBit.put(character, bit);
   }
 
-  private static void map () {
+  static {
     map('S', SPACE);
 
     map('F', FORWARD);
@@ -122,7 +119,6 @@ public abstract class KeyMask {
     map('Q', POWER_OFF);
   }
 
-  static {
-    map();
+  private KeyMask () {
   }
 }

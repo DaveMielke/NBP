@@ -198,7 +198,7 @@ public class KeyBindings {
         if (masks == null) return null;
         mask = 0;
       } else {
-        Integer bit = KeyMask.charToBit(Character.toUpperCase(character));
+        Integer bit = KeyMask.toBit(Character.toUpperCase(character));
 
         if (bit == null) {
           Log.w(LOG_TAG, "invalid key: " + character);

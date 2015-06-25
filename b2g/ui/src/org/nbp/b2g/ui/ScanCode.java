@@ -102,9 +102,6 @@ public abstract class ScanCode {
     return 0;
   }
 
-  private ScanCode () {
-  }
-
   private static void map (String name, int mask) {
     int code = Keyboard.getScanCodeValue(name);
 
@@ -121,5 +118,8 @@ public abstract class ScanCode {
 
     map("VOLUMEDOWN", KeyMask.VOLUME_DOWN);
     map("VOLUMEUP", KeyMask.VOLUME_UP);
+  }
+
+  private ScanCode () {
   }
 }

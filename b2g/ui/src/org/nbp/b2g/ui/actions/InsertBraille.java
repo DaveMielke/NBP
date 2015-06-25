@@ -8,7 +8,7 @@ public class InsertBraille extends Action {
 
   @Override
   public boolean performAction () {
-    Byte dots = KeyMask.getDots(getNavigationKeys());
+    Byte dots = KeyMask.toDots(getNavigationKeys());
     if (dots == null) return false;
     return getEndpoint().insertText(Braille.toCharacter(dots));
   }

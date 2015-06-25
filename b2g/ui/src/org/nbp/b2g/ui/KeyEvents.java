@@ -56,7 +56,7 @@ public abstract class KeyEvents {
     boolean performed = false;
 
     if (ApplicationSettings.BRAILLE_INPUT) {
-      if (KeyMask.getDots(keys) != null) {
+      if (KeyMask.toDots(keys) != null) {
         action = keyBindings.getAction("InsertBraille");
       }
     }
@@ -111,7 +111,7 @@ public abstract class KeyEvents {
 
         sb.append(String.format("0X%02X", mask));
         sb.append(" (");
-        sb.append(KeyMask.maskToString(mask));
+        sb.append(KeyMask.toString(mask));
         sb.append(')');
       }
 

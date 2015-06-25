@@ -79,7 +79,7 @@ public class Characters {
   }
 
   private boolean setDots (char character, int keyMask) {
-    Byte dots = KeyMask.getDots(keyMask);
+    Byte dots = KeyMask.toDots(keyMask);
     if (dots == null) return false;
 
     dotsMap.put(character, dots);
