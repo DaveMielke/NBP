@@ -43,6 +43,14 @@ public abstract class Braille {
     return new String(toCharacters(cells));
   }
 
+  public static void clearCells (byte[] cells, int from) {
+    while (from < cells.length) cells[from++] = 0;
+  }
+
+  public static void clearCells (byte[] cells) {
+    clearCells(cells, 0);
+  }
+
   public static void setCells (byte[] cells, String text, Characters characters) {
     int count = Math.min(text.length(), cells.length);
     int index = 0;
@@ -53,7 +61,7 @@ public abstract class Braille {
       cells[index++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
     }
 
-    while (index < cells.length) cells[index++] = 0;
+    clearCells(cells, index);
   }
 
   public static void setCells (byte[] cells, Endpoint endpoint) {
