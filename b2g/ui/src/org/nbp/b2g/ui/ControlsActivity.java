@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.GridLayout;
 
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -21,6 +22,12 @@ import android.widget.Switch;
 
 public class ControlsActivity extends Activity {
   private final static String LOG_TAG = ControlsActivity.class.getName();
+
+  private View createVerticalScrollView (View content) {
+    ScrollView view = new ScrollView(this);
+    view.addView(content);
+    return view;
+  }
 
   private void updateWidget (Runnable runnable) {
     runOnUiThread(runnable);
@@ -261,7 +268,7 @@ public class ControlsActivity extends Activity {
     });
 
     addDeveloperActionsControlListener();
-    return view;
+    return createVerticalScrollView(view);
   }
 
   private View createRootView () {
