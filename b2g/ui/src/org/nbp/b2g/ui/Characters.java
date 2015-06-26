@@ -116,8 +116,10 @@ public class Characters {
       if (dots != null) return dots;
     }
 
-    switch (character & 0XFF00) {
-      case Braille.UNICODE_ROW: {
+    {
+      Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
+
+      if (block.equals(Character.UnicodeBlock.BRAILLE_PATTERNS)) {
         byte dots = 0;
 
         if ((character & Braille.UNICODE_DOT_1) != 0) dots |= BrailleDevice.DOT_1;
@@ -131,9 +133,6 @@ public class Characters {
 
         return dots;
       }
-
-      default:
-        break;
     }
 
     return null;
