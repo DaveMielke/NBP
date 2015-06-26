@@ -11,18 +11,34 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getEnumerationDefault().getClass();
   }
 
-  private E[] enumerationValues = null;
+  private E[] valueArray = null;
 
-  private E[] getEnumerationValues () {
+  private E[] getValueArray () {
     synchronized (this) {
-      if (enumerationValues == null) {
-        enumerationValues = (E[])LanguageUtilities.invokeStaticMethod(
+      if (valueArray == null) {
+        valueArray = (E[])LanguageUtilities.invokeStaticMethod(
           getEnumerationClass(), "values"
         );
       }
 
-      return enumerationValues;
+      return valueArray;
     }
+  }
+
+  private int getValueCount () {
+    return getValueArray().length;
+  }
+
+  private E getValue (int ordinal) {
+    return getValueArray()[ordinal];
+  }
+
+  private String getValueLabel (E value) {
+    return value.name().replace('_', ' ').toLowerCase();
+  }
+
+  private String getValueLabel (int ordinal) {
+    return getValueLabel(getValue(ordinal));
   }
 
   @Override
@@ -38,24 +54,31 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   @Override
   protected final boolean setIntegerValue (int value) {
     if (value < 0) return false;
-    E[] values = getEnumerationValues();
+    E[] values = getValueArray();
     if (value >= values.length) return false;
     return setEnumerationValue(values[value]);
   }
 
   @Override
   public String getValue () {
-    return getEnumerationValue().name().toLowerCase().replace('_', ' ');
+    return getValueLabel(getEnumerationValue());
+  }
+
+  private String getLabel (int ordinal, int resource) {
+    E[] values = getValueArray();
+    if (values.length < 2) return null;
+    if (values.length == 2) return getValueLabel(ordinal);
+    return ApplicationContext.getString(resource);
   }
 
   @Override
   public String getNextLabel () {
-    return ApplicationContext.getString(R.string.default_control_next);
+    return getLabel(1, R.string.default_control_next);
   }
 
   @Override
   public String getPreviousLabel () {
-    return ApplicationContext.getString(R.string.default_control_previous);
+    return getLabel(0, R.string.default_control_previous);
   }
 
   @Override
