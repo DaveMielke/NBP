@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import android.util.Log;
 import android.os.Bundle;
-import android.app.Activity;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +12,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.GridLayout;
 
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Button;
 
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class ControlsActivity extends Activity {
+public class ControlsActivity extends InternalActivity {
   private final static String LOG_TAG = ControlsActivity.class.getName();
-
-  private View createVerticalScrollView (View content) {
-    ScrollView view = new ScrollView(this);
-    view.addView(content);
-    return view;
-  }
 
   private void updateWidget (Runnable runnable) {
     runOnUiThread(runnable);
