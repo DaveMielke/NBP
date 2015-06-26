@@ -427,11 +427,17 @@ public abstract class Endpoint {
     protected abstract String getEndAction ();
 
     public final boolean pan () {
+      boolean hasMoved;
+
       synchronized (Endpoint.this) {
-        if (moveDisplay()) return write();
-        if (hasSoftEdges()) return false;
+        if (!(hasMoved = moveDisplay())) {
+          if (hasSoftEdges()) {
+            return false;
+          }
+        }
       }
 
+      if (hasMoved) return write();
       return KeyEvents.performAction(getEndAction(), Endpoint.this);
     }
   }
