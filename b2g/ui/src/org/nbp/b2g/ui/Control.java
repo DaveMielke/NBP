@@ -42,7 +42,7 @@ public abstract class Control {
     return editor.commit();
   }
 
-  public abstract static class OnValueChangedListener {
+  public interface OnValueChangedListener {
     public abstract void onValueChanged (Control control);
   }
 
