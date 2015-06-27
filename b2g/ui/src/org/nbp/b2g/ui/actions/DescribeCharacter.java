@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class DescribeCharacter extends SpeechAction {
   @Override
   public boolean performAction (int cursorKey) {
-    String name = "";
+    Character character;
 
     {
       Endpoint endpoint = getEndpoint();
@@ -14,14 +14,31 @@ public class DescribeCharacter extends SpeechAction {
         int offset = endpoint.getLineIndent() + cursorKey;
 
         if (offset >= line.length()) return false;
-        char character = line.charAt(offset);
-
-        name = Character.getName(character).toLowerCase();
+        character = line.charAt(offset);
       }
     }
 
-    if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
-    Endpoints.setPopupEndpoint(name);
+    StringBuilder sb = new StringBuilder();
+    sb.append(String.format("U+%04X", (int)character));
+
+    {
+      Character.UnicodeBlock ucb = Character.UnicodeBlock.of(character);
+
+      if (ucb != null) {
+        sb.append(": ");
+        sb.append(ucb.toString().replace('_', ' ').toLowerCase());
+      }
+    }
+
+    {
+      String name = Character.getName(character).toLowerCase();
+      if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
+
+      sb.append('\n');
+      sb.append(name);
+    }
+
+    Endpoints.setPopupEndpoint(sb.toString());
     return true;
   }
 
