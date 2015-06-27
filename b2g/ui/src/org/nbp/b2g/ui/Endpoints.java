@@ -5,6 +5,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.nbp.b2g.ui.host.HostEndpoint;
+import org.nbp.b2g.ui.popup.PopupEndpoint;
 import org.nbp.b2g.ui.prompt.FindEndpoint;
 import org.nbp.b2g.ui.bluetooth.BluetoothEndpoint;
 
@@ -39,6 +40,9 @@ public abstract class Endpoints {
   public final static LazyInstantiator<HostEndpoint> host = new
     LazyInstantiator<HostEndpoint>(HostEndpoint.class);
 
+  private final static LazyInstantiator<PopupEndpoint> popup = new
+    LazyInstantiator<PopupEndpoint>(PopupEndpoint.class);
+
   private final static LazyInstantiator<FindEndpoint> find = new
     LazyInstantiator<FindEndpoint>(FindEndpoint.class);
 
@@ -47,6 +51,12 @@ public abstract class Endpoints {
 
   public static void setHostEndpoint () {
     setCurrentEndpoint(host.get());
+  }
+
+  public static void setPopupEndpoint (String text) {
+    Endpoint endpoint = popup.get();
+    endpoint.write(text);
+    setCurrentEndpoint(endpoint);
   }
 
   public static void setFindEndpoint () {

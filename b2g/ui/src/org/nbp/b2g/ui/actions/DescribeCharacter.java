@@ -14,12 +14,14 @@ public class DescribeCharacter extends SpeechAction {
         int offset = endpoint.getLineIndent() + cursorKey;
 
         if (offset >= line.length()) return false;
-        name = Character.getName(line.charAt(offset)).toLowerCase();
+        char character = line.charAt(offset);
+
+        name = Character.getName(character).toLowerCase();
       }
     }
 
     if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
-    ApplicationUtilities.message(name);
+    Endpoints.setPopupEndpoint(name);
     return true;
   }
 

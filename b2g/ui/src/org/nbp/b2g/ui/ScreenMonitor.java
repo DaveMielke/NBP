@@ -177,7 +177,7 @@ public class ScreenMonitor extends AccessibilityService {
           }
 
           if (sb.length() > 0) {
-            endpoint.write(sb.toString());
+            Endpoints.setPopupEndpoint(sb.toString());
           } else {
             logMissingEventComponent("text");
           }

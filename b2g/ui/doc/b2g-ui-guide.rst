@@ -583,6 +583,11 @@ Common Operations
 
 .. include:: ref-common.rst
 
+Popups
+~~~~~~
+
+.. include:: ref-popup.rst
+
 Editable Text Fields and Prompts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
