@@ -164,21 +164,32 @@ public abstract class LanguageUtilities {
       if (unicodeCategoryMap.isEmpty()) {
         for (Field field : Character.class.getFields()) {
           if (!field.getType().equals(byte.class)) continue;
+          Byte value;
 
           int modifiers = field.getModifiers();
           if (!Modifier.isStatic(modifiers)) continue;
           if (!Modifier.isPublic(modifiers)) continue;
           if (!Modifier.isFinal(modifiers)) continue;
 
-          Byte value;
+          String name = field.getName();
+          if (name.startsWith("DIRECTIONALITY_")) continue;
+          name = name.replace('_', ' ').toLowerCase();
+
           try {
             value = field.getByte(null);
           } catch (IllegalAccessException exception) {
             continue;
           }
 
-          String name = field.getName().replace('_', ' ').toLowerCase();
-          unicodeCategoryMap.put(value, name);
+          String oldName = unicodeCategoryMap.get(value);
+          if (oldName == null) {
+            unicodeCategoryMap.put(value, name);
+          } else {
+            Log.w(LOG_TAG, String.format(
+              "multiple names for Unicode category #%d: %s & %s",
+              value, oldName, name
+            ));
+          }
         }
       }
     }
