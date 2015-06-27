@@ -37,15 +37,32 @@ public class DescribeCharacter extends SpeechAction {
     }
 
     {
-      sb.append("\nCategory: ");
+      int value = Character.getType(character);
 
-      int category = Character.getType(character);
-      String name = LanguageUtilities.getUnicodeCategoryName(category);
+      if (value != Character.UNASSIGNED) {
+        sb.append("\nCategory: ");
+        String name = UnicodeUtilities.getCategoryName(value);
 
-      if (name != null) {
-        sb.append(name);
-      } else {
-        sb.append(category);
+        if (name != null) {
+          sb.append(name);
+        } else {
+          sb.append(value);
+        }
+      }
+    }
+
+    {
+      int value = Character.getDirectionality(character);
+
+      if (value != Character.DIRECTIONALITY_UNDEFINED) {
+        sb.append("\nDirectionality: ");
+        String name = UnicodeUtilities.getDirectionalityName(value);
+
+        if (name != null) {
+          sb.append(name);
+        } else {
+          sb.append(value);
+        }
       }
     }
 

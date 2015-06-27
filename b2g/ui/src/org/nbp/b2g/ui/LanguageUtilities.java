@@ -2,9 +2,6 @@ package org.nbp.b2g.ui;
 
 import java.lang.reflect.*;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import android.util.Log;
 
 public abstract class LanguageUtilities {
@@ -155,52 +152,6 @@ public abstract class LanguageUtilities {
     Field field = getField(container, name);
     if (field == null) return null;
     return getField(field);
-  }
-
-  private final static Map<Byte, String> unicodeCategoryMap = new HashMap<Byte, String>();
-
-  private static void makeUnicodeCategoryMap () {
-    synchronized (unicodeCategoryMap) {
-      if (unicodeCategoryMap.isEmpty()) {
-        for (Field field : Character.class.getFields()) {
-          if (!field.getType().equals(byte.class)) continue;
-          Byte value;
-
-          int modifiers = field.getModifiers();
-          if (!Modifier.isStatic(modifiers)) continue;
-          if (!Modifier.isPublic(modifiers)) continue;
-          if (!Modifier.isFinal(modifiers)) continue;
-
-          String name = field.getName();
-          if (name.startsWith("DIRECTIONALITY_")) continue;
-          name = name.replace('_', ' ').toLowerCase();
-
-          try {
-            value = field.getByte(null);
-          } catch (IllegalAccessException exception) {
-            continue;
-          }
-
-          String oldName = unicodeCategoryMap.get(value);
-          if (oldName == null) {
-            unicodeCategoryMap.put(value, name);
-          } else {
-            Log.w(LOG_TAG, String.format(
-              "multiple names for Unicode category #%d: %s & %s",
-              value, oldName, name
-            ));
-          }
-        }
-      }
-    }
-  }
-
-  public static String getUnicodeCategoryName (int category) {
-    if (category < 0) return null;
-    if (category > Byte.MAX_VALUE) return null;
-
-    makeUnicodeCategoryMap();
-    return unicodeCategoryMap.get((byte)category);
   }
 
   private LanguageUtilities () {
