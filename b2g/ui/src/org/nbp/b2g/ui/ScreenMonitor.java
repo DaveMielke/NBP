@@ -1,6 +1,7 @@
 package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.host.HostEndpoint;
 
+import java.util.Collection;
 import java.util.List;
 
 import android.util.Log;
@@ -105,6 +106,22 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  private static void showText (Collection<CharSequence> text) {
+    if (text != null) {
+      StringBuilder sb = new StringBuilder();
+
+      for (CharSequence line : text) {
+        if (line.length() == 0) continue;
+        if (sb.length() > 0) sb.append('\n');
+        sb.append(line);
+      }
+
+      if (sb.length() > 0) {
+        Endpoints.setPopupEndpoint(sb.toString());
+      }
+    }
+  }
+
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
     if (ApplicationSettings.LOG_UPDATES) {
@@ -114,7 +131,6 @@ public class ScreenMonitor extends AccessibilityService {
     try {
       HostEndpoint endpoint = getHostEndpoint();
       int type = event.getEventType();
-      List<CharSequence> text = event.getText();
       AccessibilityNodeInfo source = event.getSource();
 
       switch (type) {
@@ -141,13 +157,11 @@ public class ScreenMonitor extends AccessibilityService {
             case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
               endpoint.write(node, true);
-              text = null;
               break;
 
             default:
               endpoint.write(node, false);
             case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
-              text = null;
               break;
           }
 
@@ -159,32 +173,14 @@ public class ScreenMonitor extends AccessibilityService {
         source.recycle();
       } else {
         logMissingEventComponent("source");
-      }
 
-      if (text != null) {
         switch (type) {
-          case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-          case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-            text = null;
-          default:
           case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
+            showText(event.getText());
             break;
-        }
 
-        if (text != null) {
-          StringBuilder sb = new StringBuilder();
-
-          for (CharSequence line : text) {
-            if (line.length() == 0) continue;
-            if (sb.length() > 0) sb.append('\n');
-            sb.append(line);
-          }
-
-          if (sb.length() > 0) {
-            Endpoints.setPopupEndpoint(sb.toString());
-          } else {
-            logMissingEventComponent("text");
-          }
+          default:
+            break;
         }
       }
     } catch (Exception exception) {
