@@ -163,7 +163,11 @@ public class ScreenMonitor extends AccessibilityService {
 
       if (text != null) {
         switch (type) {
+          case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+          case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+            text = null;
           default:
+          case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
             break;
         }
 
