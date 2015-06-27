@@ -19,23 +19,34 @@ public class DescribeCharacter extends SpeechAction {
     }
 
     StringBuilder sb = new StringBuilder();
-    sb.append(String.format("U+%04X", (int)character));
+    {
+      String name = Character.getName(character).toLowerCase();
+      if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
+      sb.append(name);
+    }
+
+    sb.append(String.format("\nValue: U+%04X", (int)character));
 
     {
-      Character.UnicodeBlock ucb = Character.UnicodeBlock.of(character);
+      Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
 
-      if (ucb != null) {
-        sb.append(": ");
-        sb.append(ucb.toString().replace('_', ' ').toLowerCase());
+      if (block != null) {
+        sb.append("\nBlock: ");
+        sb.append(block.toString().replace('_', ' ').toLowerCase());
       }
     }
 
     {
-      String name = Character.getName(character).toLowerCase();
-      if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
+      sb.append("\nCategory: ");
 
-      sb.append('\n');
-      sb.append(name);
+      int category = Character.getType(character);
+      String name = LanguageUtilities.getUnicodeCategoryName(category);
+
+      if (name != null) {
+        sb.append(name);
+      } else {
+        sb.append(category);
+      }
     }
 
     Endpoints.setPopupEndpoint(sb.toString());
