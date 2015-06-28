@@ -11,24 +11,24 @@ import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 public abstract class InternalActivity extends Activity {
-  protected ViewGroup createVerticalScrollView () {
+  protected ViewGroup createVerticalScroller () {
     ScrollView view = new ScrollView(this);
     return view;
   }
 
-  protected ViewGroup createVerticalScrollView (View content) {
-    ViewGroup view = createVerticalScrollView();
+  protected ViewGroup createVerticalScroller (View content) {
+    ViewGroup view = createVerticalScroller();
     view.addView(content);
     return view;
   }
 
-  protected ViewGroup createHorizontalScrollView () {
+  protected ViewGroup createHorizontalScroller () {
     HorizontalScrollView view = new HorizontalScrollView(this);
     return view;
   }
 
-  protected ViewGroup createHorizontalScrollView (View content) {
-    ViewGroup view = createHorizontalScrollView();
+  protected ViewGroup createHorizontalScroller (View content) {
+    ViewGroup view = createHorizontalScroller();
     view.addView(content);
     return view;
   }

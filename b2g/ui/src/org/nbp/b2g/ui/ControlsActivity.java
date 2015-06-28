@@ -258,7 +258,7 @@ public class ControlsActivity extends InternalActivity {
     });
 
     addDeveloperActionsControlListener();
-    return createVerticalScrollView(view);
+    return createVerticalScroller(view);
   }
 
   private View createRootView () {
