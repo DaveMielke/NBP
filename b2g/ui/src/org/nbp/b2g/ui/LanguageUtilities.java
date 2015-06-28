@@ -7,6 +7,10 @@ import android.util.Log;
 public abstract class LanguageUtilities {
   private final static String LOG_TAG = LanguageUtilities.class.getName();
 
+  public static void logBacktrace () {
+    Log.v(LOG_TAG, "backtrace", new Throwable());
+  }
+
   public static boolean canAssign (Class to, Class from) {
     return to.isAssignableFrom(from);
   }
