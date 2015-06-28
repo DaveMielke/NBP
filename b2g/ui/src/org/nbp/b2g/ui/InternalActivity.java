@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.HorizontalScrollView;
 
+import android.widget.TextView;
+
 public abstract class InternalActivity extends Activity {
   protected ViewGroup createVerticalScrollView () {
     ScrollView view = new ScrollView(this);
@@ -28,6 +30,13 @@ public abstract class InternalActivity extends Activity {
   protected ViewGroup createHorizontalScrollView (View content) {
     ViewGroup view = createHorizontalScrollView();
     view.addView(content);
+    return view;
+  }
+
+  protected TextView createTextView (String text) {
+    TextView view = new TextView(this);
+    view.setText(text);
+    view.setFocusable(true);
     return view;
   }
 }

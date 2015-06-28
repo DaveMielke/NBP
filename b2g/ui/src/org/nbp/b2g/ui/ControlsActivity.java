@@ -165,8 +165,7 @@ public class ControlsActivity extends InternalActivity {
   }
 
   private View createControlLabelView (Control control) {
-    TextView view = new TextView(this);
-    view.setText(control.getLabel());
+    TextView view = createTextView(control.getLabel());
     return view;
   }
 
@@ -206,8 +205,7 @@ public class ControlsActivity extends InternalActivity {
   }
 
   private View createIntegerValueView (Control control) {
-    final TextView view = new TextView(this);
-    view.setText(control.getValue());
+    final TextView view = createTextView(control.getValue());
 
     Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
       @Override
