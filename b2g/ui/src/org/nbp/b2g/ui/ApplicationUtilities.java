@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
+
 import android.os.Build;
 import android.os.SystemClock;
 
@@ -9,8 +11,14 @@ import android.media.ToneGenerator;
 import android.media.AudioManager;
 
 public abstract class ApplicationUtilities {
+  private final static String LOG_TAG = ApplicationUtilities.class.getName();
+
   public static boolean haveSdkVersion (int version) {
     return ApplicationParameters.SDK_VERSION >= version;
+  }
+
+  public static void trace () {
+    Log.v(LOG_TAG, "backtrace", new Throwable());
   }
 
   public static long getSystemClock () {

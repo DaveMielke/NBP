@@ -418,8 +418,8 @@ public abstract class Endpoint {
     return write();
   }
 
-  public boolean write (int resource) {
-    return write(ApplicationContext.getString(resource));
+  public boolean write (int string) {
+    return write(ApplicationContext.getString(string));
   }
 
   private abstract class Panner {

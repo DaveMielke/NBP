@@ -26,6 +26,14 @@ public class ScreenMonitor extends AccessibilityService {
     return Endpoints.host.get();
   }
 
+  private static boolean write (AccessibilityNodeInfo node, boolean force) {
+    return getHostEndpoint().write(node, force);
+  }
+
+  private static boolean write (int string) {
+    return getHostEndpoint().write(string);
+  }
+
   @Override
   public void onCreate () {
     super.onCreate();
@@ -48,14 +56,13 @@ public class ScreenMonitor extends AccessibilityService {
     Log.d(LOG_TAG, "screen monitor connected");
 
     {
-      HostEndpoint endpoint = getHostEndpoint();
       AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode();
 
       if (node != null) {
-        endpoint.write(node, true);
+        write(node, true);
         node.recycle();
       } else {
-        endpoint.write(R.string.message_no_screen_content);
+        write(R.string.message_no_screen_content);
       }
     }
   }
@@ -177,8 +184,7 @@ public class ScreenMonitor extends AccessibilityService {
         AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(root);
 
         if (node != null) {
-          ScreenUtilities.logNavigation(node, "set event node");
-          ScreenUtilities.setCurrentNode(node);
+          write(node, true);
           node.recycle();
         }
       }
@@ -218,81 +224,84 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  private final static Object ACCESSIBILITY_EVENT_LOCK = new Object();
+
   @Override
   public void onAccessibilityEvent (AccessibilityEvent event) {
-    if (ApplicationSettings.LOG_UPDATES) {
-      Log.d(LOG_TAG, "accessibility event starting: " + event.toString());
-    //say(event);
-    }
-
-    try {
-      HostEndpoint endpoint = getHostEndpoint();
-      int type = event.getEventType();
-      AccessibilityNodeInfo source = event.getSource();
-
-      switch (type) {
-        case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-          setCurrentNode(event);
-          break;
-
-        case AccessibilityEvent.TYPE_VIEW_SELECTED:
-          handleViewSelected(event, source);
-          break;
+    synchronized (ACCESSIBILITY_EVENT_LOCK) {
+      if (ApplicationSettings.LOG_UPDATES) {
+        Log.d(LOG_TAG, "accessibility event starting: " + event.toString());
+      //say(event);
       }
 
-      if (source != null) {
-        logEventComponent(source, "source");
-        AccessibilityNodeInfo node = ScreenUtilities.getCurrentNode(source);
+      try {
+        int type = event.getEventType();
+        AccessibilityNodeInfo source = event.getSource();
 
         switch (type) {
-          case AccessibilityEvent.TYPE_VIEW_SCROLLED:
-            handleViewScrolled(event, source);
+          case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
+          case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
             break;
-        }
 
-        if (node != null) {
-          logEventComponent(node, "node");
+          case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+            setCurrentNode(event);
+            break;
 
-          switch (type) {
-            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
-            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
-              break;
-
-            case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-            case AccessibilityEvent.TYPE_VIEW_SELECTED:
-            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-              endpoint.write(node, true);
-              break;
-
-            default:
-              endpoint.write(node, false);
-              break;
-          }
-
-          node.recycle();
-        } else {
-          logMissingEventComponent("node");
-        }
-
-        source.recycle();
-      } else {
-        logMissingEventComponent("source");
-
-        switch (type) {
-          case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
-            showText(event.getText());
+          case AccessibilityEvent.TYPE_VIEW_SELECTED:
+            handleViewSelected(event, source);
             break;
 
           default:
+            if (source != null) {
+              logEventComponent(source, "source");
+              AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(source);
+
+              switch (type) {
+                case AccessibilityEvent.TYPE_VIEW_SCROLLED:
+                  handleViewScrolled(event, source);
+                  break;
+              }
+
+              if (node != null) {
+                logEventComponent(node, "node");
+
+                switch (type) {
+                  case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                    write(node, true);
+                    break;
+
+                  default:
+                    write(node, false);
+                    break;
+                }
+
+                node.recycle();
+              } else {
+                logMissingEventComponent("node");
+              }
+
+              source.recycle();
+            } else {
+              logMissingEventComponent("source");
+
+              switch (type) {
+                case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
+                  showText(event.getText());
+                  break;
+
+                default:
+                  break;
+              }
+            }
             break;
         }
+      } catch (Exception exception) {
+        Crash.handleCrash(exception, "accessibility event", event.toString());
       }
-    } catch (Exception exception) {
-      Crash.handleCrash(exception, "accessibility event", event.toString());
-    }
 
-    if (ApplicationSettings.LOG_UPDATES) {
-      Log.d(LOG_TAG, "accessibility event finished");
+      if (ApplicationSettings.LOG_UPDATES) {
+        Log.d(LOG_TAG, "accessibility event finished");
+      }
     }
   }
 

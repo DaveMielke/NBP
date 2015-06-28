@@ -463,6 +463,8 @@ public abstract class ScreenUtilities {
   }
 
   public static boolean setCurrentNode (AccessibilityNodeInfo node) {
+    logNavigation(node, "setting current node");
+
     if (node.isAccessibilityFocused()) {
       logNavigation(node, "set accessibility focus unnecessary");
     } else if (node.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
