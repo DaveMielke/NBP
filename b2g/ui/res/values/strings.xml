@@ -11,16 +11,16 @@
 
   <string name="clock_activity_label">B2G Digital Clock</string>
 
-  <string name="controls_activity_label">B2G User Interface Settings</string>
+  <string name="settings_activity_label">B2G User Interface Settings</string>
 
-  <string name="saveControls_action_label">Save Settings</string>
-  <string name="saveControls_action_confirmation">Settings Saved</string>
+  <string name="saveSettings_action_label">Save Settings</string>
+  <string name="saveSettings_action_confirmation">Settings Saved</string>
 
-  <string name="restoreControls_action_label">Restore Settings</string>
-  <string name="restoreControls_action_confirmation">Settings Restored</string>
+  <string name="restoreSettings_action_label">Restore Settings</string>
+  <string name="restoreSettings_action_confirmation">Settings Restored</string>
 
-  <string name="resetControls_action_label">Reset to Defaults</string>
-  <string name="resetControls_action_confirmation">Settings Reset</string>
+  <string name="resetSettings_action_label">Reset to Defaults</string>
+  <string name="resetSettings_action_confirmation">Settings Reset</string>
 
   <string name="logNone_action_confirmation">Logs Off</string>
 

@@ -62,8 +62,8 @@
     </activity>
 
     <activity
-        android:name=".ControlsActivity"
-        android:label="@string/controls_activity_label"
+        android:name=".SettingsActivity"
+        android:label="@string/settings_activity_label"
         >
     </activity>
   </application>

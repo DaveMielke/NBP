@@ -61,9 +61,9 @@ S14 SayLine
 # make this one very hard to type by accident
 FB1245 DeveloperActions
 
-F12 SaveControls
-F23 RestoreControls
-F37 ResetControls
+F12 SaveSettings
+F23 RestoreSettings
+F37 ResetSettings
 
 F17 ForceCrash
 

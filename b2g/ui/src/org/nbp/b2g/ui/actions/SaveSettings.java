@@ -1,15 +1,15 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class SaveControls extends Action {
+public class SaveSettings extends Action {
   @Override
   public boolean performAction () {
     Controls.saveValues();
-    ApplicationUtilities.message(R.string.saveControls_action_confirmation);
+    ApplicationUtilities.message(R.string.saveSettings_action_confirmation);
     return true;
   }
 
-  public SaveControls (Endpoint endpoint) {
+  public SaveSettings (Endpoint endpoint) {
     super(endpoint, true);
   }
 }

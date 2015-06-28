@@ -18,8 +18,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class ControlsActivity extends InternalActivity {
-  private final static String LOG_TAG = ControlsActivity.class.getName();
+public class SettingsActivity extends InternalActivity {
+  private final static String LOG_TAG = SettingsActivity.class.getName();
 
   private void updateWidget (Runnable runnable) {
     runOnUiThread(runnable);
@@ -73,12 +73,12 @@ public class ControlsActivity extends InternalActivity {
 
   private View createSaveControlsButton () {
     Button button = createButton(
-      R.string.saveControls_action_label,
+      R.string.saveSettings_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.saveValues();
-          ApplicationUtilities.message(R.string.saveControls_action_confirmation);
+          ApplicationUtilities.message(R.string.saveSettings_action_confirmation);
         }
       }
     );
@@ -88,12 +88,12 @@ public class ControlsActivity extends InternalActivity {
 
   private View createRestoreControlsButton () {
     Button button = createButton(
-      R.string.restoreControls_action_label,
+      R.string.restoreSettings_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.restoreSavedValues();
-          ApplicationUtilities.message(R.string.restoreControls_action_confirmation);
+          ApplicationUtilities.message(R.string.restoreSettings_action_confirmation);
         }
       }
     );
@@ -103,12 +103,12 @@ public class ControlsActivity extends InternalActivity {
 
   private View createResetControlsButton () {
     Button button = createButton(
-      R.string.resetControls_action_label,
+      R.string.resetSettings_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.restoreDefaultValues();
-          ApplicationUtilities.message(R.string.resetControls_action_confirmation);
+          ApplicationUtilities.message(R.string.resetSettings_action_confirmation);
         }
       }
     );

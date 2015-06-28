@@ -1,15 +1,15 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class ResetControls extends Action {
+public class ResetSettings extends Action {
   @Override
   public boolean performAction () {
     Controls.restoreDefaultValues();
-    ApplicationUtilities.message(R.string.resetControls_action_confirmation);
+    ApplicationUtilities.message(R.string.resetSettings_action_confirmation);
     return true;
   }
 
-  public ResetControls (Endpoint endpoint) {
+  public ResetSettings (Endpoint endpoint) {
     super(endpoint, true);
   }
 }

@@ -13,5 +13,5 @@
     android:accessibilityFeedbackType="feedbackGeneric"
 
     android:notificationTimeout="75"
-    android:settingsActivity=".ControlsActivity"
+    android:settingsActivity=".SettingsActivity"
  />

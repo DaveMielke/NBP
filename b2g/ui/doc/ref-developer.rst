@@ -2,9 +2,9 @@
 Keys    Action
 ------  -----------------------
 FB1245  |DeveloperActions|
-F12     |SaveControls|
-F23     |RestoreControls|
-F37     |ResetControls|
+F12     |SaveSettings|
+F23     |RestoreSettings|
+F37     |ResetSettings|
 F17     |ForceCrash|
 B4568   |SaveScreen|
 B4      |MoveToParent|

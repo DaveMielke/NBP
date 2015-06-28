@@ -64,9 +64,9 @@
 .. |PasteFromClipboard| replace:: paste clipboard content into text at cursor
 .. |PowerOff| replace:: go to the Power Off dialog
 .. |RecentApps| replace:: go to the Recent Apps screen
-.. |ResetControls| replace:: reset controls to default values
-.. |RestoreControls| replace:: restore most recently saved control settings
-.. |SaveControls| replace:: save current control settings
+.. |ResetSettings| replace:: reset settings to default values
+.. |RestoreSettings| replace:: restore most recently saved settings
+.. |SaveSettings| replace:: save current settings
 .. |SaveScreen| replace:: write screen element structure to log
 .. |SayLine| replace:: say the current line
 .. |ScrollBackward| replace:: force screen to scroll up or left
