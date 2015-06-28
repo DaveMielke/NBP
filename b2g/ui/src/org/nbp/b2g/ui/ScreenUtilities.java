@@ -239,8 +239,6 @@ public abstract class ScreenUtilities {
 
   public static AccessibilityNodeInfo findSelectedNode (AccessibilityNodeInfo root) {
     root = AccessibilityNodeInfo.obtain(root);
-    if (root.isSelected()) return root;
-
     AccessibilityNodeInfo node = null;
     int childCount = root.getChildCount();
 
@@ -251,6 +249,12 @@ public abstract class ScreenUtilities {
         node = findSelectedNode(child);
         child.recycle();
         if (node != null) break;
+      }
+    }
+
+    if (node == null) {
+      if (root.isSelected()) {
+        return root;
       }
     }
 
