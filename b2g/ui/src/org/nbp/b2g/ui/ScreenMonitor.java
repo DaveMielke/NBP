@@ -42,6 +42,7 @@ public class ScreenMonitor extends AccessibilityService {
     screenMonitor = this;
 
     ApplicationContext.setContext(this);
+    write(R.string.message_no_screen_content);
   }
 
   @Override
@@ -61,8 +62,6 @@ public class ScreenMonitor extends AccessibilityService {
       if (node != null) {
         write(node, true);
         node.recycle();
-      } else {
-        write(R.string.message_no_screen_content);
       }
     }
   }
@@ -206,7 +205,7 @@ public class ScreenMonitor extends AccessibilityService {
 
         ApplicationUtilities.message("%d%%", percentage);
       }
-    } else {
+    } else if (view.isFocused()) {
       setCurrentNode(event);
     }
   }
