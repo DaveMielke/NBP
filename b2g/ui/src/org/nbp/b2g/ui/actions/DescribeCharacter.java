@@ -25,7 +25,7 @@ public class DescribeCharacter extends SpeechAction {
       sb.append(name);
     }
 
-    sb.append(String.format("\nValue: U+%04X", (int)character));
+    sb.append(String.format("\nCodepoint: U+%04X", (int)character));
 
     {
       Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
