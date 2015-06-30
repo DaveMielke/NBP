@@ -128,7 +128,9 @@ public class BrailleDevice {
     return true;
   }
 
-  public boolean write (Endpoint endpoint, String message) {
+  public boolean write (String message, long duration) {
+    Endpoint endpoint = Endpoints.getCurrentEndpoint();
+
     synchronized (this) {
       if (open()) {
         writeDelay.cancel();
@@ -137,14 +139,21 @@ public class BrailleDevice {
         Braille.setCells(cells, message, endpoint.getCharacters());
 
         if (writeCells(cells)) {
-          writePending = true;
-          writeDelay.start(ApplicationParameters.BRAILLE_MESSAGE_TIME);
+          if (duration > 0) {
+            writePending = true;
+            writeDelay.start(duration);
+          }
+
           return true;
         }
       }
     }
 
     return false;
+  }
+
+  public boolean write (String message) {
+    return write(message, 0);
   }
 
   public BrailleDevice () {

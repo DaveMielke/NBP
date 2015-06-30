@@ -46,18 +46,14 @@ public abstract class ApplicationUtilities {
     toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, ApplicationParameters.ALERT_DURATION);
   }
 
-  public static void message (Endpoint endpoint, String text) {
-    Devices.braille.get().write(endpoint, text);
+  public static void message (String text) {
+    Devices.braille.get().write(text, ApplicationParameters.BRAILLE_MESSAGE_DURATION);
 
     SpeechDevice speech = Devices.speech.get();
     synchronized (speech) {
       speech.stopSpeaking();
       speech.say(text);
     }
-  }
-
-  public static void message (String text) {
-    message(Endpoints.getCurrentEndpoint(), text);
   }
 
   public static void message (String format, Object... arguments) {
