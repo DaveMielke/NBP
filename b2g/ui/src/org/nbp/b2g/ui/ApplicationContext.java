@@ -137,33 +137,6 @@ public abstract class ApplicationContext {
     return false;
   }
 
-  public static boolean switchLauncher () {
-    Context context = getContext();
-    if (context == null) return false;
-
-    ComponentName fakeLauncher = new ComponentName(context, FakeLauncher.class);
-    PackageManager packageManager = context.getPackageManager();
-
-    packageManager.setComponentEnabledSetting(
-      fakeLauncher,
-      PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-      PackageManager.DONT_KILL_APP
-    );
-
-    Intent chooser = new Intent(Intent.ACTION_MAIN);
-    chooser.addCategory(Intent.CATEGORY_HOME);
-    chooser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    context.startActivity(chooser);
-
-    packageManager.setComponentEnabledSetting(
-      fakeLauncher,
-      PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
-      PackageManager.DONT_KILL_APP
-    );
-
-    return true;
-  }
-
   public static Object getSystemService (String name) {
     Context context = getContext();
     if (context == null) return null;

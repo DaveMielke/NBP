@@ -52,9 +52,5 @@ B56 MoveToSelf
 B456 ScrollBackward
 B568 ScrollForward
 
-F1 LogKeys
-F2 LogActions
-F3 LogNavigation
-F7 LogUpdates
-F1237 LogNone
+B48 SwitchLauncher
 

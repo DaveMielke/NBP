@@ -2,10 +2,14 @@
 Keys    Action
 ------  -----------------------
 FB1245  |DeveloperActions|
+F1237   |LogNone|
+F1      |LogKeys|
+F2      |LogActions|
+F3      |LogNavigation|
+F7      |LogUpdates|
 F12     |SaveSettings|
 F23     |RestoreSettings|
 F37     |ResetSettings|
-F13     |SwitchLauncher|
 F17     |ForceCrash|
 B4568   |SaveScreen|
 B4      |MoveToParent|
@@ -15,9 +19,5 @@ B8      |MoveToChild|
 B56     |MoveToSelf|
 B456    |ScrollBackward|
 B568    |ScrollForward|
-F1      |LogKeys|
-F2      |LogActions|
-F3      |LogNavigation|
-F7      |LogUpdates|
-F1237   |LogNone|
+B48     |SwitchLauncher|
 ======  =======================

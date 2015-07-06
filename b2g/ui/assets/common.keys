@@ -61,10 +61,15 @@ S14 SayLine
 # make this one very hard to type by accident
 FB1245 DeveloperActions
 
+F1237 LogNone
+F1 LogKeys
+F2 LogActions
+F3 LogNavigation
+F7 LogUpdates
+
 F12 SaveSettings
 F23 RestoreSettings
 F37 ResetSettings
 
-F13 SwitchLauncher
 F17 ForceCrash
 

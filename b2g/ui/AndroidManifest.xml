@@ -68,7 +68,7 @@
     </activity>
 
     <activity
-        android:name=".FakeLauncher"
+        android:name=".host.FakeLauncher"
         android:enabled="false"
         >
 
