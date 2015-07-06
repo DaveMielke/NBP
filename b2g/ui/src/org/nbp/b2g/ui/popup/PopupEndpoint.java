@@ -10,9 +10,9 @@ public class PopupEndpoint extends Endpoint {
   };
 
   @Override
-  public boolean write () {
+  protected boolean braille () {
     timeout.start();
-    return super.write();
+    return super.braille();
   }
 
   @Override

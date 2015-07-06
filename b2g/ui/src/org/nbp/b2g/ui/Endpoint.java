@@ -111,6 +111,10 @@ public abstract class Endpoint {
     }
   }
 
+  protected boolean braille () {
+    return Devices.braille.get().write();
+  }
+
   public boolean isEditable () {
     return false;
   }
@@ -166,7 +170,7 @@ public abstract class Endpoint {
     try {
       if (this != Endpoints.getCurrentEndpoint()) return true;
       say();
-      return Devices.braille.get().write();
+      return braille();
     } finally {
       Endpoints.READ_LOCK.unlock();
     }
