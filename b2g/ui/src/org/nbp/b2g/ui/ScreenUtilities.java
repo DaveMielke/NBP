@@ -280,7 +280,9 @@ public abstract class ScreenUtilities {
   }
 
   public static boolean isSignificant (AccessibilityNodeInfo node) {
-    if (node.getText() != null) {
+    if (node.isFocusable()) {
+      logNavigation(node, "node is focusable");
+    } else if (node.getText() != null) {
       logNavigation(node, "node has text");
     } else if (isEditable(node)) {
       logNavigation(node, "node is editable");

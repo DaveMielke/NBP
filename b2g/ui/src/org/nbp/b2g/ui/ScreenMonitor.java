@@ -192,21 +192,30 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  private static void showProgress (AccessibilityEvent event) {
+    int count = event.getItemCount();
+
+    if (count != -1) {
+      int index = event.getCurrentItemIndex();
+      int percentage =
+        (count == 0)? 0:
+        (count == 1)? 100:
+        ((index * 100) / (count - 1));
+
+      ApplicationUtilities.message("%d%%", percentage);
+    }
+  }
+
   private static void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
-    if ((view == null) || ScreenUtilities.isSeekable(view)) {
-      int count = event.getItemCount();
-
-      if (count != -1) {
-        int index = event.getCurrentItemIndex();
-        int percentage =
-          (count == 0)? 0:
-          (count == 1)? 100:
-          ((index * 100) / (count - 1));
-
-        ApplicationUtilities.message("%d%%", percentage);
+    if (view == null) {
+      showProgress(event);
+    } else if (view.isAccessibilityFocused()) {
+      if (ScreenUtilities.isSeekable(view)) {
+        ScreenUtilities.logNavigation(view, "show progress");
+        showProgress(event);
+      } else {
+        setCurrentNode(event);
       }
-    } else if (view.isFocused()) {
-      setCurrentNode(event);
     }
   }
 
