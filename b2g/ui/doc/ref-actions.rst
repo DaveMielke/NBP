@@ -86,6 +86,7 @@
 .. |SpeechOff| replace:: turn speech off
 .. |SpeechOn| replace:: turn speech on
 .. |StopSpeaking| replace:: stop speaking
+.. |SwitchLauncher| replace:: go to the Launcher chooser
 .. |TabBackward| replace:: the Shift and Tab keys
 .. |TabForward| replace:: the Tab key
 .. |VolumeDown| replace:: Volume Down (decrease volume of current audio stream)

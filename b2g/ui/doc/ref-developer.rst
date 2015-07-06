@@ -5,6 +5,7 @@ FB1245  |DeveloperActions|
 F12     |SaveSettings|
 F23     |RestoreSettings|
 F37     |ResetSettings|
+F13     |SwitchLauncher|
 F17     |ForceCrash|
 B4568   |SaveScreen|
 B4      |MoveToParent|

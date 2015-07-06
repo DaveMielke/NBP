@@ -66,5 +66,18 @@
         android:label="@string/settings_activity_label"
         >
     </activity>
+
+    <activity
+        android:name=".FakeLauncher"
+        android:enabled="false"
+        >
+
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.HOME" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
   </application>
 </manifest>

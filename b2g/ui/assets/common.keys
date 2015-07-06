@@ -65,5 +65,6 @@ F12 SaveSettings
 F23 RestoreSettings
 F37 ResetSettings
 
+F13 SwitchLauncher
 F17 ForceCrash
 
