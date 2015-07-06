@@ -423,14 +423,17 @@ public abstract class Endpoint {
   }
 
   private abstract class Panner {
-    protected abstract boolean moveDisplay ();
+    protected abstract boolean moveDisplay (int size);
     protected abstract String getEndAction ();
 
     public final boolean pan () {
       boolean hasMoved;
 
+      int size = Devices.braille.get().size();
+      if (size == 0) return false;
+
       synchronized (Endpoint.this) {
-        if (!(hasMoved = moveDisplay())) {
+        if (!(hasMoved = moveDisplay(size))) {
           if (hasSoftEdges()) {
             return false;
           }
@@ -449,7 +452,7 @@ public abstract class Endpoint {
   public boolean panLeft () {
     Panner panner = new Panner() {
       @Override
-      protected boolean moveDisplay () {
+      protected boolean moveDisplay (int size) {
         int indent = getLineIndent();
 
         if (indent == 0) {
@@ -463,7 +466,7 @@ public abstract class Endpoint {
           if (indent > length) indent = length;
         }
 
-        if ((indent -= Devices.braille.get().size()) < 0) indent = 0;
+        if ((indent -= size) < 0) indent = 0;
         setLineIndent(indent);
         return true;
       }
@@ -484,8 +487,8 @@ public abstract class Endpoint {
   public boolean panRight () {
     Panner panner = new Panner() {
       @Override
-      protected boolean moveDisplay () {
-        int indent = getLineIndent() + Devices.braille.get().size();
+      protected boolean moveDisplay (int size) {
+        int indent = getLineIndent() + size;
         int length = getLineLength();
 
         if (indent > length) {
