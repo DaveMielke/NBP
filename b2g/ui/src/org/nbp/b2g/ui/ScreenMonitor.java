@@ -199,8 +199,7 @@ public class ScreenMonitor extends AccessibilityService {
       int index = event.getCurrentItemIndex();
       int percentage =
         (count == 0)? 0:
-        (count == 1)? 100:
-        ((index * 100) / (count - 1));
+        ((index * 100) / count);
 
       ApplicationUtilities.message("%d%%", percentage);
     }
