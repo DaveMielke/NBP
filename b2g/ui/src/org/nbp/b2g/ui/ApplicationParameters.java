@@ -55,9 +55,6 @@ public abstract class ApplicationParameters {
   public final static long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
   public final static long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
-  public final static long PROGRESS_WRITE_DELAY = 10; // milliseconds
-  public final static long PROGRESS_REWRITE_DELAY = 2000; // milliseconds
-
   public final static int BRAILLE_SCROLL_KEEP = 3; // cells
   public final static long BRAILLE_MESSAGE_DURATION = 2000; // milliseconds
   public final static long BRAILLE_POPUP_TIMEOUT = 30000; // milliseconds
