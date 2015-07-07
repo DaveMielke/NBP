@@ -219,13 +219,16 @@ public class ScreenMonitor extends AccessibilityService {
 
       showSeekBar(event, stringHandler);
     } else if (ScreenUtilities.isSeekable(view)) {
+      ScreenUtilities.logNavigation(view, String.format(
+        "seek bar %d/%d", event.getCurrentItemIndex(), event.getItemCount()
+      ));
+
       if (view.isAccessibilityFocused()) {
         final AccessibilityNodeInfo node = view;
 
         StringHandler stringHandler = new StringHandler() {
           @Override
           public boolean handleString (String string) {
-            ScreenUtilities.logNavigation(node, "show seek bar");
             return getHostEndpoint().write(node, string);
           }
         };
