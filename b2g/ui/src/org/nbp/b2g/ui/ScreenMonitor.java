@@ -192,6 +192,23 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  private final static Object progressLock = new Object();
+  private static boolean progressUpdated = false;
+  private static int progressPercentage = 0;
+
+  private final static Timeout progressDelay = new Timeout(ApplicationParameters.PROGRESS_WRITE_DELAY, "progress-delay") {
+    @Override
+    public void run () {
+      synchronized (progressLock) {
+        if (progressUpdated) {
+          ApplicationUtilities.message("%d%%", progressPercentage);
+          progressUpdated = false;
+          start(ApplicationParameters.PROGRESS_REWRITE_DELAY);
+        }
+      }
+    }
+  };
+
   private static void showProgress (AccessibilityEvent event) {
     int count = event.getItemCount();
 
@@ -201,7 +218,17 @@ public class ScreenMonitor extends AccessibilityService {
         (count == 0)? 0:
         ((index * 100) / count);
 
-      ApplicationUtilities.message("%d%%", percentage);
+      synchronized (progressLock) {
+        if (percentage == progressPercentage) return;
+        progressPercentage = percentage;
+        progressUpdated = true;
+      }
+
+      synchronized (progressDelay) {
+        if (!progressDelay.isActive()) {
+          progressDelay.start();
+        }
+      }
     }
   }
 

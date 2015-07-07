@@ -263,7 +263,6 @@ public abstract class ScreenUtilities {
   }
 
   private final static Class[] ineligibleViews = new Class[] {
-    android.widget.ImageView.class,
     android.view.ViewGroup.class
   };
 
@@ -290,8 +289,8 @@ public abstract class ScreenUtilities {
       logNavigation(node, "node is checkable");
     } else if (isSeekable(node)) {
       logNavigation(node, "node is seekable");
-    } else if (node.isFocusable() && (node.getChildCount() == 0)) {
-      logNavigation(node, "node is focusable leaf");
+    } else if (node.isFocusable() && isEligible(node)) {
+      logNavigation(node, "node is input focusable");
     } else {
       logNavigation(node, "node is not significant");
       return false;
@@ -299,13 +298,6 @@ public abstract class ScreenUtilities {
 
     if (!node.isVisibleToUser()) {
       logNavigation(node, "node is invisible");
-      return false;
-    }
-
-    if (node.isFocusable()) {
-      logNavigation(node, "node is input focusable");
-    } else if (!isEligible(node)) {
-      logNavigation(node, "node is ineligible");
       return false;
     }
 

@@ -55,19 +55,22 @@ public abstract class ApplicationParameters {
   public final static long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
   public final static long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
-  public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
+  public final static long PROGRESS_WRITE_DELAY = 10; // milliseconds
+  public final static long PROGRESS_REWRITE_DELAY = 2000; // milliseconds
 
+  public final static int BRAILLE_SCROLL_KEEP = 3; // cells
   public final static long BRAILLE_MESSAGE_DURATION = 2000; // milliseconds
   public final static long BRAILLE_POPUP_TIMEOUT = 30000; // milliseconds
   public final static long BRAILLE_WRITE_DELAY = 10; // milliseconds
   public final static long BRAILLE_REWRITE_DELAY = 50; // milliseconds
-  public final static int BRAILLE_SCROLL_KEEP = 3; // cells
 
   public final static byte BRAILLE_CHARACTER_UNDEFINED =
     BrailleDevice.DOT_3|
     BrailleDevice.DOT_6|
     BrailleDevice.DOT_7|
     BrailleDevice.DOT_8;
+
+  public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
 
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
 

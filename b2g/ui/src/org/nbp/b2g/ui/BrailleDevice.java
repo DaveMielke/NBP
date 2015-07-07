@@ -93,7 +93,7 @@ public class BrailleDevice {
     return writeCells(brailleCells);
   }
 
-  private Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
+  private final Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
     @Override
     public void run () {
       synchronized (BrailleDevice.this) {
