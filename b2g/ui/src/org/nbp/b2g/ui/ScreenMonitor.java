@@ -192,24 +192,7 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private final static Object progressLock = new Object();
-  private static boolean progressUpdated = false;
-  private static int progressPercentage = 0;
-
-  private final static Timeout progressDelay = new Timeout(ApplicationParameters.PROGRESS_WRITE_DELAY, "progress-delay") {
-    @Override
-    public void run () {
-      synchronized (progressLock) {
-        if (progressUpdated) {
-          ApplicationUtilities.message("%d%%", progressPercentage);
-          progressUpdated = false;
-          start(ApplicationParameters.PROGRESS_REWRITE_DELAY);
-        }
-      }
-    }
-  };
-
-  private static void showProgress (AccessibilityEvent event) {
+  private static void showSeekBar (AccessibilityEvent event, StringHandler stringHandler) {
     int count = event.getItemCount();
 
     if (count != -1) {
@@ -218,27 +201,36 @@ public class ScreenMonitor extends AccessibilityService {
         (count == 0)? 0:
         ((index * 100) / count);
 
-      synchronized (progressLock) {
-        if (percentage == progressPercentage) return;
-        progressPercentage = percentage;
-        progressUpdated = true;
-      }
-
-      synchronized (progressDelay) {
-        if (!progressDelay.isActive()) {
-          progressDelay.start();
-        }
+      if (stringHandler != null) {
+        stringHandler.handleString(String.format("%d%%", percentage));
       }
     }
   }
 
   private static void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view == null) {
-      showProgress(event);
+      StringHandler stringHandler = new StringHandler() {
+        @Override
+        public boolean handleString (String string) {
+          ApplicationUtilities.message(string);
+          return true;
+        }
+      };
+
+      showSeekBar(event, stringHandler);
     } else if (ScreenUtilities.isSeekable(view)) {
       if (view.isAccessibilityFocused()) {
-        ScreenUtilities.logNavigation(view, "show progress");
-        showProgress(event);
+        final AccessibilityNodeInfo node = view;
+
+        StringHandler stringHandler = new StringHandler() {
+          @Override
+          public boolean handleString (String string) {
+            ScreenUtilities.logNavigation(node, "show seek bar");
+            return getHostEndpoint().write(node, string);
+          }
+        };
+
+        showSeekBar(event, stringHandler);
       }
     } else if (view.isFocused()) {
       setCurrentNode(event);

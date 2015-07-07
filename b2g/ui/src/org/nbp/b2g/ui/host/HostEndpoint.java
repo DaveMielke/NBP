@@ -113,6 +113,16 @@ public class HostEndpoint extends Endpoint {
     return write(node, describe, indent);
   }
 
+  public boolean write (AccessibilityNodeInfo node, String text) {
+    synchronized (this) {
+      if (!node.equals(currentNode)) return true;
+      if (text.equals(getText())) return true;
+      setText(text, true);
+    }
+
+    return write();
+  }
+
   @Override
   public boolean isEditable () {
     return ScreenUtilities.isEditable(currentNode);
