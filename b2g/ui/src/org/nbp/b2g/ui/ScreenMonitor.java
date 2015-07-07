@@ -208,13 +208,13 @@ public class ScreenMonitor extends AccessibilityService {
   private static void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view == null) {
       showProgress(event);
-    } else if (view.isAccessibilityFocused()) {
-      if (ScreenUtilities.isSeekable(view)) {
+    } else if (ScreenUtilities.isSeekable(view)) {
+      if (view.isAccessibilityFocused()) {
         ScreenUtilities.logNavigation(view, "show progress");
         showProgress(event);
-      } else {
-        setCurrentNode(event);
       }
+    } else if (view.isFocused()) {
+      setCurrentNode(event);
     }
   }
 

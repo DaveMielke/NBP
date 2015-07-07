@@ -280,9 +280,7 @@ public abstract class ScreenUtilities {
   }
 
   public static boolean isSignificant (AccessibilityNodeInfo node) {
-    if (node.isFocusable()) {
-      logNavigation(node, "node is focusable");
-    } else if (node.getText() != null) {
+    if (node.getText() != null) {
       logNavigation(node, "node has text");
     } else if (isEditable(node)) {
       logNavigation(node, "node is editable");
@@ -292,6 +290,8 @@ public abstract class ScreenUtilities {
       logNavigation(node, "node is checkable");
     } else if (isSeekable(node)) {
       logNavigation(node, "node is seekable");
+    } else if (node.isFocusable() && (node.getChildCount() == 0)) {
+      logNavigation(node, "node is focusable leaf");
     } else {
       logNavigation(node, "node is not significant");
       return false;
