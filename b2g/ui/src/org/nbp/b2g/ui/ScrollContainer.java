@@ -241,6 +241,10 @@ public class ScrollContainer {
 
   private boolean scrollTimeout = false;
 
+  private static boolean writeBrailleSymbol (ScrollDirection direction) {
+    return Devices.braille.get().write(direction.getBrailleSymbol());
+  }
+
   public boolean scroll (ScrollDirection direction) {
     boolean scrolled = false;
 
@@ -281,14 +285,17 @@ public class ScrollContainer {
                   return false;
               }
 
+              writeBrailleSymbol(direction);
+
               if (Gesture.swipe(x, y1, x, y2)) {
                 scrollStarted = true;
               }
             }
           }
         }
-      } else if (scrollNode.performAction(direction.getNodeAction())) {
-        scrollStarted = true;
+      } else {
+        writeBrailleSymbol(direction);
+        if (scrollNode.performAction(direction.getNodeAction())) scrollStarted = true;
       }
 
       if (scrollStarted) {
