@@ -89,6 +89,19 @@ public class BrailleDevice {
   }
 
   private boolean writeCells (byte[] cells, String reason) {
+    final int suppliedLength = cells.length;
+    final int requiredLength = brailleCells.length;
+
+    if (suppliedLength != requiredLength) {
+      byte[] newCells = new byte[requiredLength];
+      final int count = Math.min(suppliedLength, requiredLength);
+
+      System.arraycopy(cells, 0, newCells, 0, count);
+      Braille.clearCells(newCells, count);
+
+      cells = newCells;
+    }
+
     logCells(cells, reason);
     return writeCells(cells);
   }
@@ -128,15 +141,10 @@ public class BrailleDevice {
     return true;
   }
 
-  public boolean write (String message, long duration) {
-    Endpoint endpoint = Endpoints.getCurrentEndpoint();
-
+  public boolean write (byte[] cells, long duration) {
     synchronized (this) {
       if (open()) {
         writeDelay.cancel();
-
-        byte[] cells = new byte[brailleCells.length];
-        Braille.setCells(cells, message, endpoint.getCharacters());
 
         if (writeCells(cells, "message")) {
           if (duration > 0) {
@@ -152,8 +160,18 @@ public class BrailleDevice {
     return false;
   }
 
-  public boolean write (String message) {
-    return write(message, 0);
+  public boolean write (byte[] cells) {
+    return write(cells, 0);
+  }
+
+  public boolean write (String text, long duration) {
+    byte[] cells = new byte[text.length()];
+    Braille.setCells(cells, text);
+    return write(cells, duration);
+  }
+
+  public boolean write (String text) {
+    return write(text, 0);
   }
 
   public BrailleDevice () {

@@ -64,6 +64,10 @@ public abstract class Braille {
     clearCells(cells, index);
   }
 
+  public static void setCells (byte[] cells, String text) {
+    setCells(cells, text, Endpoints.getCurrentEndpoint().getCharacters());
+  }
+
   public static void setCells (byte[] cells, Endpoint endpoint) {
     synchronized (endpoint) {
       String text = endpoint.getLineText();
