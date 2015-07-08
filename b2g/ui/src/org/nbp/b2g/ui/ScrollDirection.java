@@ -34,6 +34,10 @@ public enum ScrollDirection {
     return brailleSymbol;
   }
 
+  public boolean writeBrailleSymbol () {
+    return Devices.braille.get().write(getBrailleSymbol());
+  }
+
   private ScrollDirection (int nodeAction, byte[] brailleSymbol) {
     this.nodeAction = nodeAction;
     this.brailleSymbol = brailleSymbol;
