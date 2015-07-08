@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class SettingsActivity extends InternalActivity {
+public class SettingsActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = SettingsActivity.class.getName();
 
   private void updateWidget (Runnable runnable) {
@@ -58,17 +58,6 @@ public class SettingsActivity extends InternalActivity {
 
   private static void setChecked (CompoundButton button, Control control) {
     button.setChecked(((BooleanControl)control).getBooleanValue());
-  }
-
-  private Button createButton (String label, Button.OnClickListener listener) {
-    Button button = new Button(this);
-    button.setText(label);
-    button.setOnClickListener(listener);
-    return button;
-  }
-
-  private Button createButton (int label, Button.OnClickListener listener) {
-    return createButton(ApplicationContext.getString(label), listener);
   }
 
   private View createSaveControlsButton () {
@@ -258,7 +247,7 @@ public class SettingsActivity extends InternalActivity {
     });
 
     addDeveloperActionsControlListener();
-    return createVerticalScroller(view);
+    return createVerticalScrollContainer(view);
   }
 
   private View createRootView () {
