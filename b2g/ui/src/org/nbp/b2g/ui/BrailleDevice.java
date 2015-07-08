@@ -73,10 +73,16 @@ public class BrailleDevice {
   }
 
   public void close () {
-    synchronized (this) {
-      if (brailleCells != null) {
-        brailleCells = null;
-        closeDevice();
+    synchronized (writeDelay) {
+      writeDelay.cancel();
+
+      synchronized (this) {
+        writePending = false;
+
+        if (brailleCells != null) {
+          brailleCells = null;
+          closeDevice();
+        }
       }
     }
   }
@@ -106,12 +112,16 @@ public class BrailleDevice {
     return writeCells(cells);
   }
 
+  private boolean writeCells () {
+    return writeCells(brailleCells, "writing");
+  }
+
   private final Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
     @Override
     public void run () {
       synchronized (BrailleDevice.this) {
         if (writePending) {
-          if (writeCells(brailleCells, "writing")) writePending = false;
+          if (writeCells()) writePending = false;
           start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
         }
       }
