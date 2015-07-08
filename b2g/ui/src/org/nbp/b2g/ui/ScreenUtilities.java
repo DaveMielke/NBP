@@ -262,20 +262,8 @@ public abstract class ScreenUtilities {
     return node;
   }
 
-  private final static Class[] ineligibleViews = new Class[] {
-    android.view.ViewGroup.class
-  };
-
-  private static boolean isEligible (AccessibilityNodeInfo node) {
-    CharSequence className = node.getClassName();
-
-    for (Class view : ineligibleViews) {
-      if (LanguageUtilities.canAssign(view, className)) {
-        return false;
-      }
-    }
-
-    return true;
+  public static boolean isContainer (AccessibilityNodeInfo node) {
+    return LanguageUtilities.canAssign(android.view.ViewGroup.class, node.getClassName());
   }
 
   public static boolean isSignificant (AccessibilityNodeInfo node) {
@@ -289,7 +277,7 @@ public abstract class ScreenUtilities {
       logNavigation(node, "node is checkable");
     } else if (isSeekable(node)) {
       logNavigation(node, "node is seekable");
-    } else if (node.isFocusable() && isEligible(node)) {
+    } else if (node.isFocusable() && !isContainer(node)) {
       logNavigation(node, "node is input focusable");
     } else {
       logNavigation(node, "node is not significant");
