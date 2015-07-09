@@ -218,27 +218,6 @@ public class ScrollContainer {
     return false;
   }
 
-  private Point getChildCenter (int childIndex) {
-    if (childIndex < 0) return null;
-    if (childIndex >= scrollNode.getChildCount()) return null;
-
-    AccessibilityNodeInfo child = scrollNode.getChild(childIndex);
-    if (child == null) return null;
-
-    Point location = ScreenUtilities.getNodeCenter(child);
-    child.recycle();
-
-    return location;
-  }
-
-  private Point getFirstChildCenter () {
-    return getChildCenter(findFirstChildIndex());
-  }
-
-  private Point getLastChildCenter () {
-    return getChildCenter(findLastChildIndex());
-  }
-
   private boolean scrollTimeout = false;
 
   public boolean scroll (ScrollDirection direction) {
@@ -252,41 +231,34 @@ public class ScrollContainer {
 
       if (Gesture.isEnabled()) {
         if (ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) {
-          Point first = getFirstChildCenter();
+          direction.writeBrailleSymbol();
 
-          if (first != null) {
-            Point last = getLastChildCenter();
+          Rect region = ScreenUtilities.getNodeRegion(scrollNode);
+          int x = (region.left + region.right) / 2;
+          int y1 = region.top;
 
-            if (last != null) {
-              Rect region = ScreenUtilities.getNodeRegion(scrollNode);
-              int y1 = Math.max(first.y, region.top);
-              int y2 = Math.min(last.y, region.bottom-1);
-              int x = (first.x + last.x) / 2;
+          int dy = region.bottom - region.top - 1;
+          dy = Math.min(dy, Math.max(dy/2, 50));
+          int y2 = y1 + dy;
 
-              y2 -= Math.round((float)(y2 - y1) / 1.6f);
-
-              switch (direction) {
-                case FORWARD: {
-                  int y = y1;
-                  y1 = y2;
-                  y2 = y;
-                  break;
-                }
-
-                case BACKWARD:
-                  break;
-
-                default:
-                  Log.w(LOG_TAG, "unimplemented scroll direction: " + direction.name());
-                  return false;
-              }
-
-              direction.writeBrailleSymbol();
-
-              if (Gesture.swipe(x, y1, x, y2)) {
-                scrollStarted = true;
-              }
+          switch (direction) {
+            case FORWARD: {
+              int y = y1;
+              y1 = y2;
+              y2 = y;
+              break;
             }
+
+            case BACKWARD:
+              break;
+
+            default:
+              Log.w(LOG_TAG, "unimplemented scroll direction: " + direction.name());
+              return false;
+          }
+
+          if (Gesture.swipe(x, y1, x, y2)) {
+            scrollStarted = true;
           }
         }
       } else {
