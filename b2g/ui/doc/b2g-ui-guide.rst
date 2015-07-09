@@ -1,3 +1,4 @@
+======================
 The B2G User Interface
 ======================
 
@@ -12,10 +13,10 @@ The B2G User Interface
 .. contents::
 
 Usage Notes
------------
+===========
 
 Physical Description
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 The eight, rectangular, concave keys (in two groups of four) near the 
 back of the top comprise a standard, eight-dot, braille keyboard. The 
@@ -108,7 +109,7 @@ following:
 See `Technical Information`_ for details.
 
 Key Combinations
-~~~~~~~~~~~~~~~~
+----------------
 
 A key combination may include any number of keys (including just one). 
 There is only one restriction on which keys may be used to form a key 
@@ -134,7 +135,7 @@ this purpose. One is all eight dots, and the other is all eight dots
 plus Space.
 
 Braille
-~~~~~~~
+-------
 
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have its own defined representation.
@@ -185,7 +186,7 @@ brief period of time (|message hold time|). For example::
   long press off
 
 Text Selection
-~~~~~~~~~~~~~~
+--------------
 
 When on an editable text field, any sequence of text within that field 
 can be easily **selected**. This is how to do it:
@@ -233,7 +234,7 @@ including) the character where the cursor is. This, for example,
 provides an easy way to replace a word, line, paragraph, etc.
 
 Seek Bars
-~~~~~~~~~
+---------
 
 A ``SeekBar`` is a slider-type control that intuitively (from a visual 
 perspective) represents an amount (distance, magnitude, etc). It's often 
@@ -253,7 +254,7 @@ when it's already at its minimum, neither displays a position message
 nor indicates an error.
 
 One Hand Mode
-~~~~~~~~~~~~~
+-------------
 
 One Hand Mode is primarily for those users who only have the use of one 
 hand. It's off by default. Pressing Forward+Dot8 enables it, and 
@@ -281,10 +282,10 @@ Another (legacy) way to turn One Hand Mode on is to hold dot 8 while
 switching the power on.
 
 Navigation
-----------
+==========
 
 Basic Screen Navigation
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 While the Left, Right, Up, and Down keys (of the D-Pad) can be used to 
 navigate the screen, they don't actually work very well. The reason they 
@@ -369,7 +370,7 @@ Space+s (dots 234)
     Go to the Wi-Fi Settings screen.
 
 Find Mode
-~~~~~~~~~
+---------
 
 Find mode is a prompt that allows a search string to be entered. When a 
 character is typed, it is entered where the cursor is. In addition to 
@@ -398,7 +399,7 @@ The forward key pans the braille display to the right, and the Backward
 key pans it to the left.
 
 Editable Text Fields
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Dots 1 through 6 are used, as defined by the `North American Braille 
 Computer Code`_, to type characters, and the Space key is used to type a 
@@ -489,7 +490,7 @@ Dot8+v (dots 12368)
   clipboard content replaces them.
 
 Legacy Key Combinations
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Space+Dot1
   Arrow up. Equivalent to the Up key (on the D-Pad).
@@ -518,7 +519,7 @@ Space+x (dots 1346)
   enter a ``tab`` character is to type Space+x followed by the letter ``i``.
 
 Key Combinations for Developers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 A number of key combinations have been defined for developer use. They 
 are disabled by default. An always enabled, but intentionally difficult 
@@ -569,7 +570,18 @@ Space+Down
   Force the current screen element to be scrolled forward.
 
 Quick Reference
----------------
+===============
+
+Braille
+-------
+
+Special Symbols
+~~~~~~~~~~~~~~~
+
+.. include:: ref-symbols.rst
+
+Keys
+----
 
 .. include:: ref-actions.rst
 
@@ -614,20 +626,20 @@ Developer Actions
 .. include:: ref-developer.rst
 
 Tables
-------
+======
 
 North American Braille Computer Code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. include:: nabcc.rst
 
 ASCII Control Characters
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. include:: ascii.rst
 
 Technical Information
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. include:: technical.rst
 
