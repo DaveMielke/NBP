@@ -46,6 +46,14 @@ public class BrailleDevice {
     }
   }
 
+  public void restoreControls () {
+    Control[] controls = new Control[] {
+      Controls.getBrailleFirmnessControl()
+    };
+
+    Controls.forEachControl(controls, Controls.restoreCurrentValue);
+  }
+
   public boolean open () {
     synchronized (this) {
       if (brailleCells != null) return true;
@@ -58,12 +66,13 @@ public class BrailleDevice {
           Log.d(LOG_TAG, "braille cell count: " + brailleCells.length);
 
           String version = getDriverVersion();
-          Log.d(LOG_TAG, "braille device version: " + version);
+          Log.d(LOG_TAG, "braille driver version: " + version);
 
           clearCells();
           Braille.clearCells(brailleCells);
           writePending = false;
 
+          restoreControls();
           return true;
         }
 

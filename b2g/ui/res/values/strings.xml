@@ -44,7 +44,9 @@
   <string name="longPress_control_label">Long Press</string>
   <string name="reversePanning_control_label">Reverse Panning</string>
   <string name="oneHand_control_label">One Hand</string>
+
   <string name="brailleInput_control_label">Braille Input</string>
+  <string name="brailleFirmness_control_label">Braille Firmness</string>
 
   <string name="cursorIndicator_control_label">Cursor Indicator</string>
   <string name="selectionIndicator_control_label">Selection Indicator</string>
