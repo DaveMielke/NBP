@@ -89,7 +89,7 @@ public class BrailleDevice {
     }
   }
 
-  public int size () {
+  public int getLength () {
     synchronized (this) {
       if (open()) return brailleCells.length;
       return 0;

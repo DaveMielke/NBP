@@ -350,7 +350,7 @@ public abstract class Endpoint {
   }
 
   protected void adjustRight (int offset, int keep) {
-    int brailleLength = Devices.braille.get().size();
+    int brailleLength = Devices.braille.get().getLength();
 
     if (offset >= (lineIndent + brailleLength)) {
       lineIndent = offset + keep - brailleLength;
@@ -433,7 +433,7 @@ public abstract class Endpoint {
     public final boolean pan () {
       boolean hasMoved;
 
-      int size = Devices.braille.get().size();
+      int size = Devices.braille.get().getLength();
       if (size == 0) return false;
 
       synchronized (Endpoint.this) {
@@ -518,7 +518,7 @@ public abstract class Endpoint {
 
   public boolean scrollRight (int offset) {
     if (offset < 1) return false;
-    if (offset >= Devices.braille.get().size()) return false;
+    if (offset >= Devices.braille.get().getLength()) return false;
 
     if ((offset += getLineIndent()) >= getLineLength()) return false;
     setLineIndent(offset);
