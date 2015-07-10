@@ -9,7 +9,7 @@ JNI_SOURCES += uinput.c
 JNI_SOURCES += keyboard.c
 JNI_SOURCES += kbdmon.c
 JNI_SOURCES += metec_flat20_ioctl.h
-JNI_SOURCES += braille.c
+JNI_SOURCES += brldev.c
 
 SIGNING_PROPERTIES_FILE = signing.properties
 ANDROID_BUILD_MODE := $(strip $(if $(wildcard $(SIGNING_PROPERTIES_FILE)), release, debug))
