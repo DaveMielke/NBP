@@ -98,6 +98,8 @@ JAVA_METHOD(
   org_nbp_b2g_ui_BrailleDevice, setCellFirmness, jboolean,
   jint firmness
 ) {
+  LOG(DEBUG, "setting firmness: %d", firmness);
+
   if ((firmness >= 0) && (firmness < ARRAY_COUNT(firmnessSettings))) {
     if (isOpen()) {
       if (ioctl(brailleDevice, METEC_FLAT20_SET_DOT_STRENGTH, firmnessSettings[firmness]) != -1) {
@@ -106,6 +108,8 @@ JAVA_METHOD(
         logSystemError(LOG_TAG, "ioctl[METEC_FLAT20_SET_DOT_STRENGTH]");
       }
     }
+  } else {
+    LOG(WARN, "invalid firmness: %d", firmness);
   }
 
   return JNI_FALSE;
