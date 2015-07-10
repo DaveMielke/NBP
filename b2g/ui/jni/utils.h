@@ -21,6 +21,8 @@ extern int makeWritable (const char *path);
 
 extern int awaitInput (int fileDescriptor);
 
+#define ARRAY_COUNT(array) (sizeof((array)) / sizeof((array)[0]))
+
 #define JAVA_METHOD(object, name, type, ...) \
   JNIEXPORT type JNICALL Java_ ## object ## _ ## name ( \
     JNIEnv *env, jobject this, ## __VA_ARGS__ \

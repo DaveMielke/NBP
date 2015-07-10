@@ -19,8 +19,10 @@ public class BrailleDevice {
   private native boolean openDevice ();
   private native void closeDevice ();
 
-  private native String getVersion ();
+  private native String getDriverVersion ();
   private native int getCellCount ();
+
+  private native boolean setCellFirmness (int firmness);
 
   private native boolean clearCells ();
   private native boolean writeCells (byte[] cells);
@@ -55,7 +57,7 @@ public class BrailleDevice {
           brailleCells = new byte[cellCount];
           Log.d(LOG_TAG, "braille cell count: " + brailleCells.length);
 
-          String version = getVersion();
+          String version = getDriverVersion();
           Log.d(LOG_TAG, "braille device version: " + version);
 
           clearCells();
@@ -92,6 +94,18 @@ public class BrailleDevice {
       if (open()) return brailleCells.length;
       return 0;
     }
+  }
+
+  public boolean setFirmness (int firmness) {
+    synchronized (this) {
+      if (open()) {
+        if (setCellFirmness(firmness)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   private boolean writeCells (byte[] cells, String reason) {

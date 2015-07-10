@@ -49,7 +49,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, getVersion, jstring
+  org_nbp_b2g_ui_BrailleDevice, getDriverVersion, jstring
 ) {
   if (isOpen()) {
     char buffer[10];
@@ -81,6 +81,34 @@ JAVA_METHOD(
   }
 
   return 0;
+}
+
+static const unsigned char firmnessSettings[] = {
+  UOUT_155V_CONFIG_VALUE,
+  UOUT_162V_CONFIG_VALUE,
+  UOUT_168V_CONFIG_VALUE,
+  UOUT_174V_CONFIG_VALUE,
+  UOUT_177V_CONFIG_VALUE,
+  UOUT_184V_CONFIG_VALUE,
+  UOUT_191V_CONFIG_VALUE,
+  UOUT_199V_CONFIG_VALUE
+};
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_BrailleDevice, setCellFirmness, jboolean,
+  jint firmness
+) {
+  if ((firmness >= 0) && (firmness < ARRAY_COUNT(firmnessSettings))) {
+    if (isOpen()) {
+      if (ioctl(brailleDevice, METEC_FLAT20_SET_DOT_STRENGTH, firmnessSettings[firmness]) != -1) {
+        return JNI_TRUE;
+      } else {
+        logSystemError(LOG_TAG, "ioctl[METEC_FLAT20_SET_DOT_STRENGTH]");
+      }
+    }
+  }
+
+  return JNI_FALSE;
 }
 
 JAVA_METHOD(
