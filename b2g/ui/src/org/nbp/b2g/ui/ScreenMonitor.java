@@ -273,7 +273,11 @@ public class ScreenMonitor extends AccessibilityService {
             break;
 
           case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-            setCurrentNode(event);
+            if (source != null) {
+              if (!source.isFocused()) {
+                setCurrentNode(event);
+              }
+            }
             break;
 
           case AccessibilityEvent.TYPE_VIEW_SELECTED:
