@@ -240,6 +240,14 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  private static void handleViewFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
+    if (view != null) {
+      if (!view.isFocused()) {
+        setCurrentNode(event);
+      }
+    }
+  }
+
   private static void handleViewScrolled (AccessibilityEvent event, AccessibilityNodeInfo source) {
     ScrollContainer container = ScrollContainer.getContainer(source);
 
@@ -273,11 +281,7 @@ public class ScreenMonitor extends AccessibilityService {
             break;
 
           case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-            if (source != null) {
-              if (!source.isFocused()) {
-                setCurrentNode(event);
-              }
-            }
+            handleViewFocused(event, source);
             break;
 
           case AccessibilityEvent.TYPE_VIEW_SELECTED:
