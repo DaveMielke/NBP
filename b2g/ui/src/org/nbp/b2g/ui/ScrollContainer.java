@@ -56,7 +56,7 @@ public class ScrollContainer {
   }
 
   private AccessibilityNodeInfo scrollNode = null;
-  private ScrollOrientation scrollOrientation = null;
+  private final ScrollOrientation scrollOrientation;
 
   public AccessibilityNodeInfo getNode () {
     return AccessibilityNodeInfo.obtain(scrollNode);
@@ -232,59 +232,63 @@ public class ScrollContainer {
 
       if (Gesture.isEnabled()) {
         if (ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) {
-          Rect region = ScreenUtilities.getNodeRegion(scrollNode);
-          direction.writeBrailleSymbol();
+          if (scrollOrientation != null) {
+            direction.writeBrailleSymbol();
+            Rect region = ScreenUtilities.getNodeRegion(scrollNode);
 
-          switch (scrollOrientation) {
-            case VERTICAL: {
-              int x = (region.left + region.right) / 2;
-              int y1 = region.top;
+            switch (scrollOrientation) {
+              case VERTICAL: {
+                int x = (region.left + region.right) / 2;
+                int y1 = region.top;
 
-              int dy = region.bottom - region.top - 1;
-              dy = Math.min(dy, Math.max(dy/2, 50));
-              int y2 = y1 + dy;
+                int dy = region.bottom - region.top - 1;
+                dy = Math.min(dy, Math.max(dy/2, 50));
+                int y2 = y1 + dy;
 
-              switch (direction) {
-                case FORWARD: {
-                  int y = y1;
-                  y1 = y2;
-                  y2 = y;
-                  break;
+                switch (direction) {
+                  case FORWARD: {
+                    int y = y1;
+                    y1 = y2;
+                    y2 = y;
+                    break;
+                  }
+
+                  case BACKWARD:
+                    break;
                 }
 
-                case BACKWARD:
-                  break;
+                if (Gesture.swipe(x, y1, x, y2)) {
+                  scrollStarted = true;
+                }
               }
 
-              if (Gesture.swipe(x, y1, x, y2)) {
-                scrollStarted = true;
-              }
-            }
+              case HORIZONTAL: {
+                int y = (region.top + region.bottom) / 2;
+                int x1 = region.left;
 
-            case HORIZONTAL: {
-              int y = (region.top + region.bottom) / 2;
-              int x1 = region.left;
+                int dx = region.right - region.left - 1;
+                dx = Math.min(dx, Math.max(dx/2, 50));
+                int x2 = x1 + dx;
 
-              int dx = region.right - region.left - 1;
-              dx = Math.min(dx, Math.max(dx/2, 50));
-              int x2 = x1 + dx;
+                switch (direction) {
+                  case FORWARD: {
+                    int x = x1;
+                    x1 = x2;
+                    x2 = x;
+                    break;
+                  }
 
-              switch (direction) {
-                case FORWARD: {
-                  int x = x1;
-                  x1 = x2;
-                  x2 = x;
-                  break;
+                  case BACKWARD:
+                    break;
                 }
 
-                case BACKWARD:
-                  break;
-              }
-
-              if (Gesture.swipe(x1, y, x2, y)) {
-                scrollStarted = true;
+                if (Gesture.swipe(x1, y, x2, y)) {
+                  scrollStarted = true;
+                }
               }
             }
+          } else {
+            Log.w(LOG_TAG, "unknown scroll orientation: " + scrollNode.getClassName());
           }
         }
       } else {
