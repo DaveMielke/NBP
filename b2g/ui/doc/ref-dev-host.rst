@@ -1,16 +1,6 @@
 ======  =======================
 Keys    Action
 ------  -----------------------
-FB1245  |DeveloperActions|
-F1237   |LogNone|
-F1      |LogKeys|
-F2      |LogActions|
-F3      |LogNavigation|
-F7      |LogUpdates|
-F12     |SaveSettings|
-F23     |RestoreSettings|
-F37     |ResetSettings|
-F17     |ForceCrash|
 B4568   |SaveScreen|
 B4      |MoveToParent|
 B5      |MoveToPreviousSibling|

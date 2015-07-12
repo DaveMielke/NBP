@@ -623,7 +623,15 @@ Legacy Actions
 Developer Actions
 ~~~~~~~~~~~~~~~~~
 
-.. include:: ref-developer.rst
+Common Actions
+``````````````
+
+.. include:: ref-dev-common.rst
+
+Host Screen Actions
+```````````````````
+
+.. include:: ref-dev-host.rst
 
 Tables
 ======
