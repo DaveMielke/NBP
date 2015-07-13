@@ -240,25 +240,27 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private static void handleViewFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
-    if (view != null) {
-      ScreenUtilities.logNavigation(view, "reported view");
-      AccessibilityNodeInfo node = null;
+  private static void handleViewAccessibilityFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
+    if (view.isAccessibilityFocused()) {
+      write(view, true);
+    }
+  }
 
-      if (view.isFocused())  {
-        node = AccessibilityNodeInfo.obtain(view);
-      } else if ((node = view.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) != null) {
-        ScreenUtilities.logNavigation(node, "actual view");
-      } else {
-        ScreenUtilities.logNavigation(view, "view not focused");
-      }
+  private static void handleViewInputFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
+    ScreenUtilities.logNavigation(view, "reported view");
+    AccessibilityNodeInfo node = null;
 
-      if (node != null) {
-        setCurrentNode(event);
-        node.recycle();
-      }
+    if (view.isFocused())  {
+      node = AccessibilityNodeInfo.obtain(view);
+    } else if ((node = view.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) != null) {
+      ScreenUtilities.logNavigation(node, "actual view");
     } else {
-      logMissingEventComponent("source");
+      ScreenUtilities.logNavigation(view, "view not focused");
+    }
+
+    if (node != null) {
+      setCurrentNode(event);
+      node.recycle();
     }
   }
 
@@ -290,12 +292,7 @@ public class ScreenMonitor extends AccessibilityService {
         AccessibilityNodeInfo source = event.getSource();
 
         switch (type) {
-          case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
           case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
-            break;
-
-          case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-            handleViewFocused(event, source);
             break;
 
           case AccessibilityEvent.TYPE_VIEW_SELECTED:
@@ -305,30 +302,45 @@ public class ScreenMonitor extends AccessibilityService {
           default:
             if (source != null) {
               logEventComponent(source, "source");
-              AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(source);
 
               switch (type) {
-                case AccessibilityEvent.TYPE_VIEW_SCROLLED:
-                  handleViewScrolled(event, source);
+                case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+                  handleViewInputFocused(event, source);
                   break;
-              }
 
-              if (node != null) {
-                logEventComponent(node, "node");
+                case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
+                  handleViewAccessibilityFocused(event, source);
+                  break;
 
-                switch (type) {
-                  case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                    write(node, true);
-                    break;
+                default: {
+                  AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(source);
 
-                  default:
-                    write(node, false);
-                    break;
+                  switch (type) {
+                    case AccessibilityEvent.TYPE_VIEW_SCROLLED:
+                      handleViewScrolled(event, source);
+                      break;
+                  }
+
+                  if (node != null) {
+                    logEventComponent(node, "node");
+
+                    switch (type) {
+                      case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                        write(node, true);
+                        break;
+
+                      default:
+                        write(node, false);
+                        break;
+                    }
+
+                    node.recycle();
+                  } else {
+                    logMissingEventComponent("node");
+                  }
+
+                  break;
                 }
-
-                node.recycle();
-              } else {
-                logMissingEventComponent("node");
               }
 
               source.recycle();
