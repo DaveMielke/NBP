@@ -242,7 +242,7 @@ public class ScreenMonitor extends AccessibilityService {
 
   private static void handleViewFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view != null) {
-      if (!view.isFocused()) {
+      if (view.isFocused()) {
         setCurrentNode(event);
       }
     }
