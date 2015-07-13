@@ -139,7 +139,7 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private void logMissingEventComponent (String component) {
+  private static void logMissingEventComponent (String component) {
     if (ApplicationSettings.LOG_UPDATES) {
       Log.d(LOG_TAG, "no accessibility event " + component);
     }
@@ -242,9 +242,24 @@ public class ScreenMonitor extends AccessibilityService {
 
   private static void handleViewFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view != null) {
-      if (view.isFocused()) {
-        setCurrentNode(event);
+      ScreenUtilities.logNavigation(view, "event source");
+      AccessibilityNodeInfo node = null;
+
+      if (view.isFocused())  {
+        node = AccessibilityNodeInfo.obtain(view);
+      } else {
+        node = view.findFocus(AccessibilityNodeInfo.FOCUS_INPUT);
       }
+
+      if (node != null) {
+        ScreenUtilities.logNavigation(node, "focused node");
+        setCurrentNode(event);
+        node.recycle();
+      } else {
+        ScreenUtilities.logNavigation(view, "view not focused");
+      }
+    } else {
+      logMissingEventComponent("source");
     }
   }
 
