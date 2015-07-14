@@ -119,7 +119,7 @@ public abstract class Endpoint {
     return false;
   }
 
-  public boolean isSeekable () {
+  public boolean isSlider () {
     return false;
   }
 

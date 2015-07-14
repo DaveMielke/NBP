@@ -36,7 +36,7 @@ public class ScrollContainer {
     if (node == null) return null;
     ScreenUtilities.logNavigation(node, "finding scrollable node");
 
-    if (!ScreenUtilities.isSeekable(node)) {
+    if (!ScreenUtilities.isSlider(node)) {
       AccessibilityNodeInfo container = AccessibilityNodeInfo.obtain(node);
 
       do {

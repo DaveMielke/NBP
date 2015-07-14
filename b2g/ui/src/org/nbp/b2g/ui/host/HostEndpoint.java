@@ -130,8 +130,8 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean isSeekable () {
-    return ScreenUtilities.isSeekable(currentNode);
+  public boolean isSlider () {
+    return ScreenUtilities.isSlider(currentNode);
   }
 
   protected boolean performNodeAction (int action, Bundle arguments) {

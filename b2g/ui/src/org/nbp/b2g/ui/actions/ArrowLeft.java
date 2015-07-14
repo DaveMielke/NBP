@@ -20,7 +20,7 @@ public class ArrowLeft extends ArrowAction {
   }
 
   @Override
-  protected boolean performSeekAction (Endpoint endpoint) {
+  protected boolean performSliderAction (Endpoint endpoint) {
     return endpoint.seekPrevious();
   }
 

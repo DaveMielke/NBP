@@ -5,7 +5,7 @@ public abstract class ArrowAction extends Action {
     return false;
   }
 
-  protected boolean performSeekAction (Endpoint endpoint) {
+  protected boolean performSliderAction (Endpoint endpoint) {
     return false;
   }
 
@@ -20,8 +20,8 @@ public abstract class ArrowAction extends Action {
         return performEditAction(endpoint);
       }
 
-      if (endpoint.isSeekable()) {
-        return performSeekAction(endpoint);
+      if (endpoint.isSlider()) {
+        return performSliderAction(endpoint);
       }
     }
 

@@ -192,7 +192,7 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private static void showSeekBar (AccessibilityEvent event, StringHandler stringHandler) {
+  private static void showSlider (AccessibilityEvent event, StringHandler stringHandler) {
     int count = event.getItemCount();
 
     if (count != -1) {
@@ -217,10 +217,10 @@ public class ScreenMonitor extends AccessibilityService {
         }
       };
 
-      showSeekBar(event, stringHandler);
-    } else if (ScreenUtilities.isSeekable(view)) {
+      showSlider(event, stringHandler);
+    } else if (ScreenUtilities.isSlider(view)) {
       ScreenUtilities.logNavigation(view, String.format(
-        "seek bar %d/%d", event.getCurrentItemIndex(), event.getItemCount()
+        "slider %d/%d", event.getCurrentItemIndex(), event.getItemCount()
       ));
 
       if (view.isAccessibilityFocused()) {
@@ -233,7 +233,7 @@ public class ScreenMonitor extends AccessibilityService {
           }
         };
 
-        showSeekBar(event, stringHandler);
+        showSlider(event, stringHandler);
       }
     } else if (view.isFocused()) {
       setCurrentNode(event);
@@ -304,12 +304,12 @@ public class ScreenMonitor extends AccessibilityService {
               logEventComponent(source, "source");
 
               switch (type) {
-                case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-                  handleViewInputFocused(event, source);
-                  break;
-
                 case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
                   handleViewAccessibilityFocused(event, source);
+                  break;
+
+                case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+                  handleViewInputFocused(event, source);
                   break;
 
                 default: {
