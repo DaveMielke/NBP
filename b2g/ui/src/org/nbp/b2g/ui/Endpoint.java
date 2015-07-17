@@ -450,7 +450,7 @@ public abstract class Endpoint {
     }
   }
 
-  protected Class<? extends Action> getPanLeftEndAction () {
+  public Class<? extends Action> getMoveBackwardAction () {
     return null;
   }
 
@@ -478,14 +478,14 @@ public abstract class Endpoint {
 
       @Override
       protected Class<? extends Action> getEndAction () {
-        return getPanLeftEndAction();
+        return getMoveBackwardAction();
       }
     };
 
     return panner.pan();
   }
 
-  protected Class<? extends Action> getPanRightEndAction () {
+  public Class<? extends Action> getMoveForwardAction () {
     return null;
   }
 
@@ -510,7 +510,7 @@ public abstract class Endpoint {
 
       @Override
       protected Class<? extends Action> getEndAction () {
-        return getPanRightEndAction();
+        return getMoveForwardAction();
       }
     };
 

@@ -246,12 +246,12 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  protected Class<? extends Action> getPanLeftEndAction () {
+  public Class<? extends Action> getMoveBackwardAction () {
     return MoveBackward.class;
   }
 
   @Override
-  protected Class<? extends Action> getPanRightEndAction () {
+  public Class<? extends Action> getMoveForwardAction () {
     return MoveForward.class;
   }
 

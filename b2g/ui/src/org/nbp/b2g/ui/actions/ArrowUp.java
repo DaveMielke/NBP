@@ -1,6 +1,5 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
-import org.nbp.b2g.ui.host.actions.*;
 
 public class ArrowUp extends ArrowAction {
   @Override
@@ -31,7 +30,7 @@ public class ArrowUp extends ArrowAction {
 
   @Override
   protected Class<? extends Action> getNavigationAction () {
-    return MoveBackward.class;
+    return getEndpoint().getMoveBackwardAction();
   }
 
   public ArrowUp (Endpoint endpoint) {
