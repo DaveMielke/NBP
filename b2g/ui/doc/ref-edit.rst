@@ -5,10 +5,6 @@ Keys       Action
 7          |DeletePrevious|
 S145       |DeleteNext|
 X          |BringCursor|
-U          |ArrowUp|
-D          |ArrowDown|
-L          |ArrowLeft|
-R          |ArrowRight|
 BX         |SetSelectionStart|
 FX         |SetSelectionEnd|
 81         |SelectAll|

@@ -3,6 +3,10 @@ Keys       Action
 ---------  -----------------
 B          |PanLeft|
 F          |PanRight|
+U          |ArrowUp|
+D          |ArrowDown|
+L          |ArrowLeft|
+R          |ArrowRight|
 SX         |SetLeft|
 7X         |DescribeCharacter|
 814        |CopyToClipboard|

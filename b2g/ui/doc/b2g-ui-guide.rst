@@ -173,9 +173,9 @@ If meaningful text for a significant screen element cannot be found then
 it is rendered as its widget type enclosed within {braces}. For 
 example::
 
-  {ImageView}
-  {ListView}
+  {ImageButton}
   {SeekBar}
+  {ViewPager}
 
 When an action is performed that is neither implicitly confirmed (by an 
 expected change on the braille display) nor explicitly confirmed (by a 
