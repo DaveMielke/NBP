@@ -265,7 +265,9 @@ public abstract class ScreenUtilities {
   }
 
   public static boolean isContainer (AccessibilityNodeInfo node) {
-    return canAssign(android.view.ViewGroup.class, node);
+    if (canAssign(android.view.ViewGroup.class, node)) return true;
+    if (node.getChildCount() > 0) return true;
+    return false;
   }
 
   public static boolean isSignificant (AccessibilityNodeInfo node) {

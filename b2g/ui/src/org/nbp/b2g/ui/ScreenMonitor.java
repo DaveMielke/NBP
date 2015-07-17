@@ -247,20 +247,27 @@ public class ScreenMonitor extends AccessibilityService {
   }
 
   private static void handleViewInputFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
-    ScreenUtilities.logNavigation(view, "reported view");
-    AccessibilityNodeInfo node = null;
+    AccessibilityNodeInfo inputFocus = null;
 
     if (view.isFocused())  {
-      node = AccessibilityNodeInfo.obtain(view);
-    } else if ((node = view.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) != null) {
-      ScreenUtilities.logNavigation(node, "actual view");
+      inputFocus = AccessibilityNodeInfo.obtain(view);
+    } else if ((inputFocus = view.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)) != null) {
+      ScreenUtilities.logNavigation(inputFocus, "view with input focus");
     } else {
-      ScreenUtilities.logNavigation(view, "view not focused");
+      ScreenUtilities.logNavigation(view, "view not input focused");
     }
 
-    if (node != null) {
-      setCurrentNode(event);
-      node.recycle();
+    if (inputFocus != null) {
+      AccessibilityNodeInfo accessibilityFocus = inputFocus.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY);
+
+      if (accessibilityFocus != null) {
+        ScreenUtilities.logNavigation(accessibilityFocus, "view with accessibility focus");
+        accessibilityFocus.recycle();
+      } else {
+        setCurrentNode(event);
+      }
+
+      inputFocus.recycle();
     }
   }
 
