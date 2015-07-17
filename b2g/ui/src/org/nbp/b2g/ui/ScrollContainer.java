@@ -222,6 +222,11 @@ public class ScrollContainer {
   private boolean scrollTimeout = false;
 
   public boolean scroll (ScrollDirection direction) {
+    ScreenUtilities.logNavigation(
+      scrollNode,
+      ("scrolling " + direction.name().toLowerCase())
+    );
+
     boolean scrolled = false;
 
     synchronized (this) {
@@ -260,6 +265,8 @@ public class ScrollContainer {
                 if (Gesture.swipe(x, y1, x, y2)) {
                   scrollStarted = true;
                 }
+
+                break;
               }
 
               case HORIZONTAL: {
@@ -285,6 +292,8 @@ public class ScrollContainer {
                 if (Gesture.swipe(x1, y, x2, y)) {
                   scrollStarted = true;
                 }
+
+                break;
               }
             }
           } else {
