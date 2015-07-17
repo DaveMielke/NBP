@@ -427,9 +427,13 @@ public abstract class Endpoint {
     return write(ApplicationContext.getString(string));
   }
 
+  public final boolean performAction (Class<? extends Action> type) {
+    return KeyEvents.performAction(type, this);
+  }
+
   private abstract class Panner {
     protected abstract boolean moveDisplay (int size);
-    protected abstract Class<? extends Action> getEndAction ();
+    protected abstract Class<? extends Action> getLeaveAction ();
 
     public final boolean pan () {
       boolean hasMoved;
@@ -446,7 +450,7 @@ public abstract class Endpoint {
       }
 
       if (hasMoved) return write();
-      return KeyEvents.performAction(getEndAction(), Endpoint.this);
+      return performAction(getLeaveAction());
     }
   }
 
@@ -477,7 +481,7 @@ public abstract class Endpoint {
       }
 
       @Override
-      protected Class<? extends Action> getEndAction () {
+      protected Class<? extends Action> getLeaveAction () {
         return getMoveBackwardAction();
       }
     };
@@ -509,7 +513,7 @@ public abstract class Endpoint {
       }
 
       @Override
-      protected Class<? extends Action> getEndAction () {
+      protected Class<? extends Action> getLeaveAction () {
         return getMoveForwardAction();
       }
     };
@@ -531,19 +535,19 @@ public abstract class Endpoint {
   }
 
   public boolean handleKeyboardKey_cursorLeft () {
-    return KeyEvents.performAction(ArrowLeft.class, this);
+    return performAction(ArrowLeft.class);
   }
 
   public boolean handleKeyboardKey_cursorRight () {
-    return KeyEvents.performAction(ArrowRight.class, this);
+    return performAction(ArrowRight.class);
   }
 
   public boolean handleKeyboardKey_cursorUp () {
-    return KeyEvents.performAction(ArrowUp.class, this);
+    return performAction(ArrowUp.class);
   }
 
   public boolean handleKeyboardKey_cursorDown () {
-    return KeyEvents.performAction(ArrowDown.class, this);
+    return performAction(ArrowDown.class);
   }
 
   public boolean handleKeyboardKey_pageUp () {
