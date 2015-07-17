@@ -72,6 +72,13 @@ public abstract class Gesture {
       count += 1;
     }
 
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG, String.format(
+        "tap: [%d,%d]] Count:%d",
+        x, y, count
+      ));
+    }
+
     while (true) {
       if (!begin(x, y, 1)) return false;
       sleep(ApplicationParameters.TAP_HOLD_TIME);
@@ -94,6 +101,13 @@ public abstract class Gesture {
 
     if (ApplicationContext.isTouchExplorationActive()) {
       fingers += 1;
+    }
+
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG, String.format(
+        "swipe: [%d,%d] -> [%d,%d] Fingers:%d",
+        x1, y1, x2, y2, fingers
+      ));
     }
 
     double horizontalPosition = (double)x1;
