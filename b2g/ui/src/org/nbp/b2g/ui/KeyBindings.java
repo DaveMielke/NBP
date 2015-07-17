@@ -26,7 +26,10 @@ public class KeyBindings {
   public final static char KEY_COMBINATION_DELIMITER = '-';
 
   private final Endpoint endpoint;
-  private final Map<String, Action> actionCache = new HashMap<String, Action>();
+
+  private final Map<String, Class<? extends Action>> actionNameCache = new HashMap<String, Class<? extends Action>>();
+  private final Map<Class<? extends Action>, Action> actionClassCache = new HashMap<Class<? extends Action>, Action>();
+
   private final KeyBindingMap rootKeyBindings = new KeyBindingMap();
   private KeyBindingMap currentKeyBindings = rootKeyBindings;
 
@@ -119,51 +122,64 @@ public class KeyBindings {
     return addKeyBinding(keyMasks, actionName);
   }
 
-  private Action newAction (String actionName, Object actionOwner) {
-    String className = actionOwner.getClass().getPackage().getName() + ".actions." + actionName;
-
+  private Action newAction (Class<? extends Action> type) {
     try {
-      Class classObject = Class.forName(className);
-      Class[] argumentTypes = new Class[] {Endpoint.class};
-      Constructor constructor = classObject.getConstructor(argumentTypes);
+      Class[] arguments = new Class[] {Endpoint.class};
+      Constructor constructor = type.getConstructor(arguments);
       return (Action)constructor.newInstance(endpoint);
-    } catch (ClassNotFoundException exception) {
     } catch (NoSuchMethodException exception) {
-      Log.w(LOG_TAG, "constructor not found: " + className);
+      Log.w(LOG_TAG, "constructor not found: " + type.getName());
     } catch (IllegalAccessException exception) {
-      Log.w(LOG_TAG, "constructor not accessible: " + className);
+      Log.w(LOG_TAG, "constructor not accessible: " + type.getName());
     } catch (InstantiationException exception) {
-      Log.w(LOG_TAG, "instantiation error: " + className, exception);
+      Log.w(LOG_TAG, "instantiation error: " + type.getName(), exception);
     } catch (InvocationTargetException exception) {
-      Log.w(LOG_TAG, "construction error: " + className, exception);
+      Log.w(LOG_TAG, "construction error: " + type.getName(), exception);
     }
 
     return null;
   }
 
-  private Action newAction (String actionName) {
+  public Action getAction (Class<? extends Action> type) {
     Action action;
+    if ((action = actionClassCache.get(type)) != null) return action;
 
-    if ((action = newAction(actionName, endpoint)) != null) return action;
-    if ((action = newAction(actionName, this)) != null) return action;
+    if ((action = newAction(type)) != null) actionClassCache.put(type, action);
+    return action;
+  }
 
-    Log.w(LOG_TAG, "invalid action: " + actionName);
+  private Class<? extends Action> getActionClass (String name, Object owner) {
+    try {
+      Class type = Class.forName(
+        (owner.getClass().getPackage().getName() + ".actions." + name)
+      );
+
+      return type;
+    } catch (ClassNotFoundException exception) {
+    }
+
     return null;
   }
 
-  public Action getAction (Class type) {
-    return actionCache.get(type.getSimpleName());
+  private Class<? extends Action> getActionClass (String name) {
+    Class<? extends Action> type;
+
+    if ((type = getActionClass(name, endpoint)) != null) return type;
+    if ((type = getActionClass(name, this)) != null) return type;
+
+    Log.w(LOG_TAG, "invalid action: " + name);
+    return null;
   }
 
-  public Action getAction (String actionName) {
-    Action action = actionCache.get(actionName);
-    if (action != null) return action;
+  public Action getAction (String name) {
+    Class<? extends Action> type = actionNameCache.get(name);
 
-    action = newAction(actionName);
-    if (action == null) return null;
+    if (type == null) {
+      if ((type = getActionClass(name)) == null) return null;
+      actionNameCache.put(name, type);
+    }
 
-    actionCache.put(actionName, action);
-    return action;
+    return getAction(type);
   }
 
   private static int[] addKeyMask (int[] oldMasks, int mask) {

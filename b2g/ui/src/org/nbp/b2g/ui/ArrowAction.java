@@ -9,7 +9,7 @@ public abstract class ArrowAction extends Action {
     return false;
   }
 
-  protected abstract String getNavigationAction ();
+  protected abstract Class<? extends Action> getNavigationAction ();
 
   @Override
   public boolean performAction () {

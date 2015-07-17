@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.actions.*;
 
 import android.util.Log;
 
@@ -428,7 +429,7 @@ public abstract class Endpoint {
 
   private abstract class Panner {
     protected abstract boolean moveDisplay (int size);
-    protected abstract String getEndAction ();
+    protected abstract Class<? extends Action> getEndAction ();
 
     public final boolean pan () {
       boolean hasMoved;
@@ -449,7 +450,7 @@ public abstract class Endpoint {
     }
   }
 
-  protected String getPanLeftEndAction () {
+  protected Class<? extends Action> getPanLeftEndAction () {
     return null;
   }
 
@@ -476,7 +477,7 @@ public abstract class Endpoint {
       }
 
       @Override
-      protected String getEndAction () {
+      protected Class<? extends Action> getEndAction () {
         return getPanLeftEndAction();
       }
     };
@@ -484,7 +485,7 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
-  protected String getPanRightEndAction () {
+  protected Class<? extends Action> getPanRightEndAction () {
     return null;
   }
 
@@ -508,7 +509,7 @@ public abstract class Endpoint {
       }
 
       @Override
-      protected String getEndAction () {
+      protected Class<? extends Action> getEndAction () {
         return getPanRightEndAction();
       }
     };
@@ -530,19 +531,19 @@ public abstract class Endpoint {
   }
 
   public boolean handleKeyboardKey_cursorLeft () {
-    return KeyEvents.performAction("ArrowLeft");
+    return KeyEvents.performAction(ArrowLeft.class, this);
   }
 
   public boolean handleKeyboardKey_cursorRight () {
-    return KeyEvents.performAction("ArrowRight");
+    return KeyEvents.performAction(ArrowRight.class, this);
   }
 
   public boolean handleKeyboardKey_cursorUp () {
-    return KeyEvents.performAction("ArrowUp");
+    return KeyEvents.performAction(ArrowUp.class, this);
   }
 
   public boolean handleKeyboardKey_cursorDown () {
-    return KeyEvents.performAction("ArrowDown");
+    return KeyEvents.performAction(ArrowDown.class, this);
   }
 
   public boolean handleKeyboardKey_pageUp () {

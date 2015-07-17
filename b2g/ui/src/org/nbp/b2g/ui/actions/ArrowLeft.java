@@ -25,8 +25,8 @@ public class ArrowLeft extends ArrowAction {
   }
 
   @Override
-  protected String getNavigationAction () {
-    return "PanLeft";
+  protected Class<? extends Action> getNavigationAction () {
+    return PanLeft.class;
   }
 
   public ArrowLeft (Endpoint endpoint) {

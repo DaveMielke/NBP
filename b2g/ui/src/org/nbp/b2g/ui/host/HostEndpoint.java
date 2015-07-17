@@ -1,12 +1,16 @@
 package org.nbp.b2g.ui.host;
+import org.nbp.b2g.ui.host.actions.*;
 import org.nbp.b2g.ui.*;
 
 import android.util.Log;
 
 import android.os.Bundle;
+
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
+
+import android.text.Spanned;
 
 public class HostEndpoint extends Endpoint {
   private final static String LOG_TAG = HostEndpoint.class.getName();
@@ -30,38 +34,68 @@ public class HostEndpoint extends Endpoint {
     }
   }
 
+  private static String toText (CharSequence text) {
+    if (text instanceof Spanned) {
+      Spanned spanned = (Spanned)text;
+      Object[] spans = spanned.getSpans(0, text.length(), Object.class);
+
+      if (spans != null) {
+        if (spans.length > 0) {
+          StringBuilder sb = new StringBuilder(text);
+
+          /*
+          for (Object span : spans) {
+            Log.d(LOG_TAG, "span object: " + span.getClass().getName());
+          }
+
+          sb.append('|');
+          sb.append(spans.length);
+          */
+
+          return sb.toString();
+        }
+      }
+    }
+
+    return text.toString();
+  }
+
+  private static String toText (AccessibilityNodeInfo node) {
+    StringBuilder sb = new StringBuilder();
+    CharSequence characters;
+
+    if (node.isCheckable()) {
+      sb.append('[');
+      sb.append(node.isChecked()? 'X': ' ');
+      sb.append("] ");
+    }
+
+    if ((characters = node.getText()) != null) {
+      sb.append(toText(characters));
+    } else if ((characters = node.getContentDescription()) != null) {
+      sb.append('[');
+      sb.append(toText(characters));
+      sb.append(']');
+    } else if (!ScreenUtilities.isEditable(node)) {
+      sb.append('{');
+      sb.append(ScreenUtilities.getClassName(node));
+      sb.append('}');
+    }
+
+    if (!node.isEnabled()) {
+      sb.append(" (disabled)");
+    }
+
+    return sb.toString();
+  }
+
   public boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
     String text;
 
     if (describe) {
       text = ScreenUtilities.toString(node);
     } else {
-      StringBuilder sb = new StringBuilder();
-      CharSequence characters;
-
-      if (node.isCheckable()) {
-        sb.append('[');
-        sb.append(node.isChecked()? 'X': ' ');
-        sb.append("] ");
-      }
-
-      if ((characters = node.getText()) != null) {
-        sb.append(characters);
-      } else if ((characters = node.getContentDescription()) != null) {
-        sb.append('[');
-        sb.append(characters);
-        sb.append(']');
-      } else if (!ScreenUtilities.isEditable(node)) {
-        sb.append('{');
-        sb.append(ScreenUtilities.getClassName(node));
-        sb.append('}');
-      }
-
-      if (!node.isEnabled()) {
-        sb.append(" (disabled)");
-      }
-
-      text = sb.toString();
+      text = toText(node);
     }
 
     synchronized (this) {
@@ -212,13 +246,13 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  protected String getPanLeftEndAction () {
-    return "MoveBackward";
+  protected Class<? extends Action> getPanLeftEndAction () {
+    return MoveBackward.class;
   }
 
   @Override
-  protected String getPanRightEndAction () {
-    return "MoveForward";
+  protected Class<? extends Action> getPanRightEndAction () {
+    return MoveForward.class;
   }
 
   @Override
