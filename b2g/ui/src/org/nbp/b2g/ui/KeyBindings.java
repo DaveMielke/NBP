@@ -72,7 +72,7 @@ public class KeyBindings {
     return null;
   }
 
-  public boolean addKeyBinding (int[] keyMasks, Action action) {
+  public boolean addKeyBinding (Action action, int... keyMasks) {
     KeyBindingMap bindings = rootKeyBindings;
     int last = keyMasks.length - 1;
 
@@ -103,23 +103,6 @@ public class KeyBindings {
     }
 
     return true;
-  }
-
-  private boolean addKeyBinding (int[] keyMasks, String actionName) {
-    Action action = getAction(actionName);
-
-    if (action != null) {
-      if (addKeyBinding(keyMasks, action)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private boolean addKeyBinding (int keyMask, String actionName) {
-    int[] keyMasks = new int[] {keyMask};
-    return addKeyBinding(keyMasks, actionName);
   }
 
   private Action newAction (Class<? extends Action> type) {
@@ -174,7 +157,7 @@ public class KeyBindings {
     return null;
   }
 
-  public Action getAction (String name) {
+  private Action getAction (String name) {
     Class<? extends Action> type = actionNameCache.get(name);
 
     if (type == null) {
@@ -282,7 +265,7 @@ public class KeyBindings {
       operand = operands[index++];
       Action action = getAction(operand);
       if (action == null) continue;
-      addKeyBinding(keyMasks, action);
+      addKeyBinding(action, keyMasks);
 
       if (index == operands.length) continue;
       operand = operands[index++];

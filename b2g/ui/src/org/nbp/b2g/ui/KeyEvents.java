@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.actions.*;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -54,7 +55,7 @@ public abstract class KeyEvents {
 
     if (ApplicationSettings.BRAILLE_INPUT) {
       if (KeyMask.toDots(keys) != null) {
-        action = keyBindings.getAction("InsertBraille");
+        action = keyBindings.getAction(InsertBraille.class);
       }
     }
 
