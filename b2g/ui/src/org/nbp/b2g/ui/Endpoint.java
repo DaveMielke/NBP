@@ -469,7 +469,8 @@ public abstract class Endpoint {
           if (start == 0) return false;
 
           setLine(start-1);
-          indent = getLineLength() + 1;
+          indent = getLineLength();
+          if (isEditable()) indent += 1;
         } else {
           int length = getLineLength();
           if (indent > length) indent = length;
@@ -500,7 +501,10 @@ public abstract class Endpoint {
         int indent = getLineIndent() + size;
         int length = getLineLength();
 
-        if (indent > length) {
+        int last = length;
+        if (!isEditable()) last -= 1;
+
+        if (indent > last) {
           int offset = getLineStart() + length + 1;
           if (offset > getTextLength()) return false;
 
