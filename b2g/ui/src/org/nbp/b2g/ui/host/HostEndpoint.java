@@ -300,13 +300,11 @@ public class HostEndpoint extends Endpoint {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
-  private final static String[] keysFileNames = new String[] {
-    "nabcc", "common", "speech", "edit", "host"
-  };
-
   @Override
   protected String[] getKeysFileNames () {
-    return keysFileNames;
+    return new String[] {
+      "nabcc", "common", "speech", "edit", "host"
+    };
   }
 
   public HostEndpoint () {

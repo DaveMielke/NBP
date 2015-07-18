@@ -32,13 +32,11 @@ public class PopupEndpoint extends Endpoint {
     return LineNext.class;
   }
 
-  private final static String[] keysFileNames = new String[] {
-    "nabcc", "common", "speech"
-  };
-
   @Override
   protected String[] getKeysFileNames () {
-    return keysFileNames;
+    return new String[] {
+      "nabcc", "common", "speech"
+    };
   }
 
   public PopupEndpoint () {
