@@ -6,7 +6,7 @@ import android.util.Log;
 public class DescribeBuild extends Action {
   private final static String LOG_TAG = DescribeBuild.class.getName();
 
-  private static void append (StringBuilder sb, int string) {
+  private static void appendString (StringBuilder sb, int string) {
     sb.append(ApplicationContext.getString(string));
   }
 
@@ -21,7 +21,7 @@ public class DescribeBuild extends Action {
 
         if (!text.isEmpty()) {
           if (sb.length() > 0) sb.append('\n');
-          append(sb, label);
+          appendString(sb, label);
           sb.append(": ");
           sb.append(text);
         } else {
@@ -38,7 +38,7 @@ public class DescribeBuild extends Action {
   @Override
   public boolean performAction () {
     StringBuilder sb = new StringBuilder();
-    append(sb, R.string.describeBuild_title);
+    appendString(sb, R.string.describeBuild_title);
 
     addBuildProperty(sb, "time", R.string.describeBuild_label_time);
     addBuildProperty(sb, "revision", R.string.describeBuild_label_revision);
