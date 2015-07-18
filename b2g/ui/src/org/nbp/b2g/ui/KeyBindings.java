@@ -123,18 +123,20 @@ public class KeyBindings {
   }
 
   private Action newAction (Class<? extends Action> type) {
+    String name = type.getName();
+
     try {
       Class[] arguments = new Class[] {Endpoint.class};
       Constructor constructor = type.getConstructor(arguments);
       return (Action)constructor.newInstance(endpoint);
     } catch (NoSuchMethodException exception) {
-      Log.w(LOG_TAG, "constructor not found: " + type.getName());
+      Log.w(LOG_TAG, "constructor not found: " + name);
     } catch (IllegalAccessException exception) {
-      Log.w(LOG_TAG, "constructor not accessible: " + type.getName());
+      Log.w(LOG_TAG, "constructor not accessible: " + name);
     } catch (InstantiationException exception) {
-      Log.w(LOG_TAG, "instantiation error: " + type.getName(), exception);
+      Log.w(LOG_TAG, "instantiation error: " + name, exception);
     } catch (InvocationTargetException exception) {
-      Log.w(LOG_TAG, "construction error: " + type.getName(), exception);
+      Log.w(LOG_TAG, "construction error: " + name, exception);
     }
 
     return null;
@@ -155,6 +157,7 @@ public class KeyBindings {
       );
 
       if (LanguageUtilities.canAssign(Action.class, type)) return type;
+      Log.w(LOG_TAG, "not an action: " + type.getName());
     } catch (ClassNotFoundException exception) {
     }
 
@@ -167,7 +170,7 @@ public class KeyBindings {
     if ((type = getActionClass(name, endpoint)) != null) return type;
     if ((type = getActionClass(name, this)) != null) return type;
 
-    Log.w(LOG_TAG, "invalid action: " + name);
+    Log.w(LOG_TAG, "unknown action: " + name);
     return null;
   }
 
