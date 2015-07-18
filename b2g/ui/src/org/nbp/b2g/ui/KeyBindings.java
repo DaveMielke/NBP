@@ -235,8 +235,8 @@ public class KeyBindings {
       try {
         line = buf.readLine();
       } catch (IOException exception) {
-       Log.d(LOG_TAG, "keys configuration input error", exception);
-       break;
+        Log.d(LOG_TAG, "keys configuration input error", exception);
+        break;
       }
 
       if (line == null) break;
