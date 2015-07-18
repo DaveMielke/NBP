@@ -5,20 +5,9 @@ import java.lang.reflect.*;
 import java.util.Map;
 import java.util.HashMap;
 
-import android.util.Log;
-
-import android.content.Context;
-import android.content.res.AssetManager;
-
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 import java.util.regex.Pattern;
+
+import android.util.Log;
 
 public class KeyBindings {
   private final static String LOG_TAG = KeyBindings.class.getName();
@@ -219,100 +208,52 @@ public class KeyBindings {
     return addKeyMask(masks, mask);
   }
 
-  private void addKeyBindings (Reader reader) {
-    Pattern pattern = Pattern.compile("\\s+");
-    BufferedReader buf;
-
-    if (reader instanceof BufferedReader) {
-      buf = (BufferedReader)reader;
-    } else {
-      buf = new BufferedReader(reader);
-    }
-
-    while (true) {
-      String line;
-
-      try {
-        line = buf.readLine();
-      } catch (IOException exception) {
-        Log.d(LOG_TAG, "keys configuration input error", exception);
-        break;
-      }
-
-      if (line == null) break;
-      String[] operands = pattern.split(line);
-      int index = 0;
-
-      if (index < operands.length) {
-        if (operands[index].isEmpty()) {
-          index += 1;
-        }
-      }
-
-      if (index == operands.length) continue;
-      String operand = operands[index++];
-      if (operand.charAt(0) == '#') continue;
-
-      int[] keyMasks = parseKeys(operand);
-      if (keyMasks == null) continue;
-      int keyMask = keyMasks[keyMasks.length - 1];
-
-      if (index == operands.length) {
-        Log.w(LOG_TAG, "missing keys action: " + line);
-        continue;
-      }
-
-      operand = operands[index++];
-      Action action = getAction(operand);
-      if (action == null) continue;
-      addKeyBinding(action, keyMasks);
-
-      if (index == operands.length) continue;
-      operand = operands[index++];
-      if (!action.parseOperand(keyMask, operand)) continue;
-
-      if (index == operands.length) continue;
-      Log.w(LOG_TAG, "too many operands: " + line);
-    }
-
-    try {
-      reader.close();
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, "keys configuration close error", exception);
-    }
-  }
-
-  private void addKeyBindings (InputStream stream) {
-    String encoding = "UTF8";
-
-    try {
-      Reader reader = new InputStreamReader(stream, encoding);
-      addKeyBindings(reader);
-    } catch (UnsupportedEncodingException exception) {
-      Log.e(LOG_TAG, "unsupported input character encoding: " + encoding);
-    }
-  }
-
   private void addKeyBindings (String asset) {
-    Context context = ApplicationContext.getContext();
+    final Pattern pattern = Pattern.compile("\\s+");
 
-    if (context != null) {
-      AssetManager assets = context.getAssets();
+    InputProcessor inputProcessor = new InputProcessor() {
+      @Override
+      protected boolean processLine (String text, int number) {
+        String[] operands = pattern.split(text);
+        int index = 0;
 
-      if (assets != null) {
-        try {
-          InputStream stream = assets.open(asset);
-
-          try {
-            addKeyBindings(stream);
-          } finally {
-            stream.close();
+        if (index < operands.length) {
+          if (operands[index].isEmpty()) {
+            index += 1;
           }
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, "asset not found: " + asset);
         }
+
+        if (index == operands.length) return true;
+        String operand = operands[index++];
+        if (operand.charAt(0) == '#') return true;
+
+        int[] keyMasks = parseKeys(operand);
+        if (keyMasks == null) return true;
+        int keyMask = keyMasks[keyMasks.length - 1];
+
+        if (index == operands.length) {
+          Log.w(LOG_TAG, "missing keys action: " + text);
+          return true;
+        }
+
+        operand = operands[index++];
+        Action action = getAction(operand);
+        if (action == null) return true;
+        addKeyBinding(action, keyMasks);
+
+        if (index == operands.length) return true;
+        operand = operands[index++];
+        if (!action.parseOperand(keyMask, operand)) return true;
+
+        if (index < operands.length) {
+          Log.w(LOG_TAG, "too many operands: " + text);
+        }
+
+        return true;
       }
-    }
+    };
+
+    inputProcessor.processInput(asset);
   }
 
   private void addKeyBindings (String[] keysFileNames) {
