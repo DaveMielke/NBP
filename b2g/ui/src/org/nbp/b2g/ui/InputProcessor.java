@@ -52,7 +52,16 @@ public abstract class InputProcessor {
 
     try {
       Reader reader = new InputStreamReader(stream, encoding);
-      return processInput(reader);
+
+      try {
+        return processInput(reader);
+      } finally {
+        try {
+          reader.close();
+        } catch (IOException exceptiion) {
+          Log.w(LOG_TAG, "reader close error", exception);
+        }
+      }
     } catch (UnsupportedEncodingException exception) {
       Log.w(LOG_TAG, "unsupported input encoding: " + encoding);
     }
@@ -63,7 +72,16 @@ public abstract class InputProcessor {
   public boolean processInput (File file) {
     try {
       InputStream stream = new FileInputStream(file);
-      return processInput(stream);
+
+      try {
+        return processInput(stream);
+      } finally {
+        try {
+          stream.close();
+        } catch (IOException exception) {
+          Log.w(LOG_TAG, "input file close error", exception);
+        }
+      }
     } catch (FileNotFoundException exception) {
       Log.w(LOG_TAG, "file not found: " + file.toString());
     }
