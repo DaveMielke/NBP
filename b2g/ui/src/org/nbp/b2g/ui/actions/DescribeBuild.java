@@ -38,10 +38,10 @@ public class DescribeBuild extends Action {
   @Override
   public boolean performAction () {
     StringBuilder sb = new StringBuilder();
-    append(sb, R.string.build_properties_title);
+    append(sb, R.string.describeBuild_title);
 
-    addBuildProperty(sb, "time", R.string.build_properties_label_time);
-    addBuildProperty(sb, "revision", R.string.build_properties_label_revision);
+    addBuildProperty(sb, "time", R.string.describeBuild_label_time);
+    addBuildProperty(sb, "revision", R.string.describeBuild_label_revision);
 
     if (sb.length() == 0) return false;
     Endpoints.setPopupEndpoint(sb.toString());
