@@ -54,7 +54,7 @@ public abstract class PromptEndpoint extends Endpoint {
   @Override
   public boolean handleKeyboardKey_enter () {
     boolean success = handleResponse(getResponse());
-    super.handleKeyboardKey_enter();
+    if (!super.handleKeyboardKey_enter()) return false;
     return success;
   }
 
