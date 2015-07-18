@@ -32,6 +32,8 @@
 .. |ForceCrash| replace:: force a component crash
 .. |Home| replace:: the Home key
 .. |HomeKey| replace:: the Android Home key
+.. |LineNext| replace:: go to the start of the next line
+.. |LinePrevious| replace:: go to the start of the previous line
 .. |LogActions| replace:: turn on logging of user-requested actions
 .. |LogKeys| replace:: turn on logging of keyboard key events
 .. |LogNavigation| replace:: turn on logging of internal screen navigation operations

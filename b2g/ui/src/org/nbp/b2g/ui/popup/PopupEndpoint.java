@@ -1,5 +1,6 @@
 package org.nbp.b2g.ui.popup;
 import org.nbp.b2g.ui.*;
+import org.nbp.b2g.ui.actions.*;
 
 public class PopupEndpoint extends Endpoint {
   private Timeout timeout = new Timeout(ApplicationParameters.BRAILLE_POPUP_TIMEOUT, "popup-timeout") {
@@ -19,6 +20,16 @@ public class PopupEndpoint extends Endpoint {
   public void onBackground () {
     timeout.cancel();
     super.onBackground();
+  }
+
+  @Override
+  public Class<? extends Action> getMoveBackwardAction () {
+    return LinePrevious.class;
+  }
+
+  @Override
+  public Class<? extends Action> getMoveForwardAction () {
+    return LineNext.class;
   }
 
   private final static String[] keysFileNames = new String[] {
