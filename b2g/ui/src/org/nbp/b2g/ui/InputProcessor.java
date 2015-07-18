@@ -33,14 +33,24 @@ public abstract class InputProcessor {
       buffer = new BufferedReader(reader);
     }
 
-    for (int number=0; true; number+=1) {
-      try {
-        String text = buffer.readLine();
-        if (text == null) break;
-        if (!processLine(text, number)) break;
-      } catch (IOException exception) {
-        Log.w(LOG_TAG, "line read error", exception);
-        return false;
+    try {
+      for (int number=0; true; number+=1) {
+        try {
+          String text = buffer.readLine();
+          if (text == null) break;
+          if (!processLine(text, number)) break;
+        } catch (IOException exception) {
+          Log.w(LOG_TAG, "line read error", exception);
+          return false;
+        }
+      }
+    } finally {
+      if (buffer != reader) {
+        try {
+          buffer.close();
+        } catch (IOException exception) {
+          Log.w(LOG_TAG, "input buffer close error", exception);
+        }
       }
     }
 
@@ -58,7 +68,7 @@ public abstract class InputProcessor {
       } finally {
         try {
           reader.close();
-        } catch (IOException exceptiion) {
+        } catch (IOException exception) {
           Log.w(LOG_TAG, "reader close error", exception);
         }
       }
