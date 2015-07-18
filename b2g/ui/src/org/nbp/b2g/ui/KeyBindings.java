@@ -154,7 +154,7 @@ public class KeyBindings {
         (owner.getClass().getPackage().getName() + ".actions." + name)
       );
 
-      return type;
+      if (LanguageUtilities.canAssign(Action.class, type)) return type;
     } catch (ClassNotFoundException exception) {
     }
 
