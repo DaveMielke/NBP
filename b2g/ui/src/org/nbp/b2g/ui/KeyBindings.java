@@ -10,13 +10,13 @@ import android.util.Log;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.InputStream;
-
 import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import java.util.regex.Pattern;
 
@@ -284,10 +284,9 @@ public class KeyBindings {
 
   private void addKeyBindings (InputStream stream) {
     String encoding = "UTF8";
-    Reader reader;
 
     try {
-      reader = new InputStreamReader(stream, encoding);
+      Reader reader = new InputStreamReader(stream, encoding);
       addKeyBindings(reader);
     } catch (UnsupportedEncodingException exception) {
       Log.e(LOG_TAG, "unsupported input character encoding: " + encoding);

@@ -22,7 +22,8 @@
 .. |CutToClipboard| replace:: cut selected text to clipboard
 .. |DeleteNext| replace:: delete next character
 .. |DeletePrevious| replace:: delete previous character
-.. |DescribeCharacter| replace:: describe character
+.. |DescribeBuild| replace:: popup a description of the build
+.. |DescribeCharacter| replace:: popup a description of a character
 .. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
 .. |Editor| replace:: go to the Editor
 .. |End| replace:: the End key

@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class DescribeCharacter extends SpeechAction {
+public class DescribeCharacter extends Action {
   @Override
   public boolean performAction (int cursorKey) {
     Character character;
@@ -71,6 +71,6 @@ public class DescribeCharacter extends SpeechAction {
   }
 
   public DescribeCharacter (Endpoint endpoint) {
-    super(endpoint);
+    super(endpoint, false);
   }
 }
