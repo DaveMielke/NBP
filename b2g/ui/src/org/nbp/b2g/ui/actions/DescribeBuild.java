@@ -6,18 +6,22 @@ import android.util.Log;
 public class DescribeBuild extends Action {
   private final static String LOG_TAG = DescribeBuild.class.getName();
 
+  private static void append (StringBuilder sb, int string) {
+    sb.append(ApplicationContext.getString(string));
+  }
+
   private static boolean addBuildProperty (
     final StringBuilder sb, String property, final int... labels
   ) {
     InputProcessor inputProcessor = new InputProcessor() {
       @Override
       protected final boolean processLine (String text, int number) {
-        String label = ApplicationContext.getString(labels[number]);
+        int label = labels[number];
         text = text.trim();
 
         if (!text.isEmpty()) {
           if (sb.length() > 0) sb.append('\n');
-          sb.append(label);
+          append(sb, label);
           sb.append(": ");
           sb.append(text);
         } else {
@@ -34,8 +38,10 @@ public class DescribeBuild extends Action {
   @Override
   public boolean performAction () {
     StringBuilder sb = new StringBuilder();
-    addBuildProperty(sb, "time", R.string.build_property_time);
-    addBuildProperty(sb, "revision", R.string.build_property_revision);
+    append(sb, R.string.build_properties_title);
+
+    addBuildProperty(sb, "time", R.string.build_properties_label_time);
+    addBuildProperty(sb, "revision", R.string.build_properties_label_revision);
 
     if (sb.length() == 0) return false;
     Endpoints.setPopupEndpoint(sb.toString());
