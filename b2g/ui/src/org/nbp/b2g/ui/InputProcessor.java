@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.FileNotFoundException;
@@ -23,6 +24,14 @@ public abstract class InputProcessor {
   public final String INPUT_ENCODING = "UTF8";
 
   protected abstract boolean processLine (String text, int number);
+
+  public static void close (Closeable closeable) {
+    try {
+      closeable.close();
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "close error", exception);
+    }
+  }
 
   public boolean processInput (Reader reader) {
     BufferedReader buffer;
@@ -45,13 +54,7 @@ public abstract class InputProcessor {
         }
       }
     } finally {
-      if (buffer != reader) {
-        try {
-          buffer.close();
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, "input buffer close error", exception);
-        }
-      }
+      if (buffer != reader) close(buffer);
     }
 
     return true;
@@ -66,11 +69,7 @@ public abstract class InputProcessor {
       try {
         return processInput(reader);
       } finally {
-        try {
-          reader.close();
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, "reader close error", exception);
-        }
+        close(reader);
       }
     } catch (UnsupportedEncodingException exception) {
       Log.w(LOG_TAG, "unsupported input encoding: " + encoding);
@@ -86,11 +85,7 @@ public abstract class InputProcessor {
       try {
         return processInput(stream);
       } finally {
-        try {
-          stream.close();
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, "input file close error", exception);
-        }
+        close(stream);
       }
     } catch (FileNotFoundException exception) {
       Log.w(LOG_TAG, "file not found: " + file.toString());
@@ -112,7 +107,7 @@ public abstract class InputProcessor {
       try {
         return processInput(stream);
       } finally {
-        stream.close();
+        close(stream);
       }
     } catch (IOException exception) {
       Log.w(LOG_TAG, "asset not found: " + asset);
