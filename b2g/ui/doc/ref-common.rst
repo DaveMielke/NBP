@@ -1,6 +1,7 @@
 =========  =================
 Keys       Action
 ---------  -----------------
+8          |Enter|
 B          |PanLeft|
 F          |PanRight|
 U          |ArrowUp|

@@ -1,10 +1,9 @@
 =========  =================
 Keys       Action
 ---------  -----------------
-8          |Enter|
+X          |BringCursor|
 7          |DeletePrevious|
 S145       |DeleteNext|
-X          |BringCursor|
 BX         |SetSelectionStart|
 FX         |SetSelectionEnd|
 81         |SelectAll|

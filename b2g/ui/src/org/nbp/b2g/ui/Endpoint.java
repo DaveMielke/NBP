@@ -531,7 +531,8 @@ public abstract class Endpoint {
   }
 
   public boolean handleKeyboardKey_enter () {
-    return false;
+    Endpoints.setHostEndpoint();
+    return true;
   }
 
   public boolean handleKeyboardKey_cursorLeft () {

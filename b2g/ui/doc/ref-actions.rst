@@ -24,7 +24,6 @@
 .. |DeletePrevious| replace:: delete previous character
 .. |DescribeCharacter| replace:: describe character
 .. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
-.. |DismissPopup| replace:: dismiss the popup
 .. |Editor| replace:: go to the Editor
 .. |End| replace:: the End key
 .. |Enter| replace:: the Enter key

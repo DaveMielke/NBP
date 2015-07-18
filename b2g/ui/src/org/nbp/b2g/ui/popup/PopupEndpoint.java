@@ -33,7 +33,7 @@ public class PopupEndpoint extends Endpoint {
   }
 
   private final static String[] keysFileNames = new String[] {
-    "nabcc", "common", "speech", "popup"
+    "nabcc", "common", "speech"
   };
 
   @Override
