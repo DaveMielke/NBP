@@ -18,6 +18,11 @@ Usage Notes
 Physical Description
 --------------------
 
+See `Technical Information`_ for details.
+
+The Top
+~~~~~~~
+
 The eight, rectangular, concave keys (in two groups of four) near the 
 back of the top comprise a standard, eight-dot, braille keyboard. The 
 four on the left, from left to right, are dots 7, 3, 2, and 1. The four 
@@ -37,6 +42,9 @@ cursor routing keys. The convex, square button to the left of the cursor
 routing keys is the Backward key, and the convex, square button to their 
 right is the Forward key.
 
+The left Side
+~~~~~~~~~~~~~
+
 The earphone/microphone jack (3.5mm) is near the front of the left side.
 Standard cell phone earphones can be used.
 
@@ -48,6 +56,9 @@ A standard USB-A (or host) port is near the back of the left side. USB
 devices (memory stick, external keyboard, mouse, hub, etc) can be 
 connected to it.
 
+The Right Side
+~~~~~~~~~~~~~~
+
 The volume controls are the two, small, round buttons near the front of 
 the right side. The one toward the front is the Volume Down key, and the 
 one toward the back is the Volume Up key.
@@ -56,18 +67,26 @@ The Power switch is the slide switch near the back of the right side.
 It's **off** position is toward the front, and its **on** position is 
 toward the back.
 
-The SD card port is the long slot in the middle of the back.
+The Back
+~~~~~~~~
 
+The SD card port is the long slot in the middle of the back.
 
 A micro USB-B (or device) port is near the left of the back. It's 
 primary use is for charging the battery. The battery can be charged from 
 a computer's USB port.
+
+The Front
+~~~~~~~~~
 
 Two internal speakers (left and right channel) are at the left and
 right ends of the front.
 
 The internal microphone is just behind a very small slit in the middle of 
 the front.
+
+The Bottom
+~~~~~~~~~~
 
 The camera's lens is the small circle on the bottom that's about 2cm 
 (3/4 of an inch) in from the middle of the right side. The rectangular 
@@ -105,8 +124,6 @@ following:
   Power switch is. To gain access to the actual slot, lift the end of its 
   cover that's toward the back. As with most SIM card slot covers, its 
   hinge is fragile so be gentle.
-
-See `Technical Information`_ for details.
 
 Key Combinations
 ----------------

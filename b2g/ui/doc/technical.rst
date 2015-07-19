@@ -27,6 +27,5 @@
   + Quad-band GSM / GPRS / EDGE: 850MHz, 900MHz, 1800MHz, 1900MHz
   + Quad-band UMTS WCDMA FDD: 800MHz, 850MHz, 1900MHz, 2100MHz
   + Dual-band CDMA EVDO Rev A: 800MHz, 1900MHz
-  + Dual-band CDMA EVDO Rev A: 800MHz, 1900MHz
   + GPS: 1575.42MHz
 
