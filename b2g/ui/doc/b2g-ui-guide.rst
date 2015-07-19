@@ -42,6 +42,15 @@ cursor routing keys. The convex, square button to the left of the cursor
 routing keys is the Backward key, and the convex, square button to their 
 right is the Forward key.
 
+The Front
+~~~~~~~~~
+
+Two internal speakers (left and right channel) are at the left and
+right ends of the front.
+
+The internal microphone is just behind a very small slit in the middle of 
+the front.
+
 The left Side
 ~~~~~~~~~~~~~
 
@@ -75,15 +84,6 @@ The SD card port is the long slot in the middle of the back.
 A micro USB-B (or device) port is near the left of the back. It's 
 primary use is for charging the battery. The battery can be charged from 
 a computer's USB port.
-
-The Front
-~~~~~~~~~
-
-Two internal speakers (left and right channel) are at the left and
-right ends of the front.
-
-The internal microphone is just behind a very small slit in the middle of 
-the front.
 
 The Bottom
 ~~~~~~~~~~
@@ -151,8 +151,36 @@ is being attempted. Two key combinations have been formally defined for
 this purpose. One is all eight dots, and the other is all eight dots 
 plus Space.
 
-Braille
--------
+One Hand Mode
+~~~~~~~~~~~~~
+
+One Hand Mode is primarily for those users who only have the use of one 
+hand. It's off by default. Pressing Forward+Dot8 enables it, and 
+pressing Backward+Dot7 disables it. Both of these key combinations have 
+been chosen so that they can be reasonably easily pressed with a single 
+hand.
+
+When One Hand Mode is on, each key of a key combination may be pressed 
+separately. Pressing Space indicates that all of the keys of the 
+combination have been pressed. If Space itself is part of the 
+combination then it must be pressed first.
+
+For those whose operable hand is sufficiently functional, pressing more 
+than one key at a time is supported. The only exception to this is that 
+Space, whether pressed at the start (to include it in the combination) 
+or at the end (to indicate that the combination is complete), should 
+always be pressed separately.
+
+Switching the power off and then back on automatically turns off One 
+Hand Mode. This provides an intuitive way for a user who has 
+accidentally turned this mode on and doesn't know how to turn it off to 
+easily revert the keyboard to normal operation.
+
+Another (legacy) way to turn One Hand Mode on is to hold dot 8 while 
+switching the power on.
+
+Braille Rendering
+-----------------
 
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have its own defined representation.
@@ -269,34 +297,6 @@ order to figure out what it is. Attempting to increase the bar's value
 when it's already at its maximum, or attempting to decrease its value 
 when it's already at its minimum, neither displays a position message 
 nor indicates an error.
-
-One Hand Mode
--------------
-
-One Hand Mode is primarily for those users who only have the use of one 
-hand. It's off by default. Pressing Forward+Dot8 enables it, and 
-pressing Backward+Dot7 disables it. Both of these key combinations have 
-been chosen so that they can be reasonably easily pressed with a single 
-hand.
-
-When One Hand Mode is on, each key of a key combination may be pressed 
-separately. Pressing Space indicates that all of the keys of the 
-combination have been pressed. If Space itself is part of the 
-combination then it must be pressed first.
-
-For those whose operable hand is sufficiently functional, pressing more 
-than one key at a time is supported. The only exception to this is that 
-Space, whether pressed at the start (to include it in the combination) 
-or at the end (to indicate that the combination is complete), should 
-always be pressed separately.
-
-Switching the power off and then back on automatically turns off One 
-Hand Mode. This provides an intuitive way for a user who has 
-accidentally turned this mode on and doesn't know how to turn it off to 
-easily revert the keyboard to normal operation.
-
-Another (legacy) way to turn One Hand Mode on is to hold dot 8 while 
-switching the power on.
 
 Navigation
 ==========
