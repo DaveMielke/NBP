@@ -8,8 +8,8 @@ D ArrowDown
 L ArrowLeft
 R ArrowRight
 
-SX SetLeft
 7X DescribeCharacter
+8X SetLeft
 
 814 CopyToClipboard
 

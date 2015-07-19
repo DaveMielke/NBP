@@ -8,8 +8,8 @@ U          |ArrowUp|
 D          |ArrowDown|
 L          |ArrowLeft|
 R          |ArrowRight|
-SX         |SetLeft|
 7X         |DescribeCharacter|
+8X         |SetLeft|
 814        |CopyToClipboard|
 B1         |BrailleInputOff|
 F4         |BrailleInputOn|
