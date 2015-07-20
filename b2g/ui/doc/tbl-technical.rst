@@ -1,3 +1,9 @@
+* Dimensions:
+
+  + Width: 8" [20cm]
+  + Depth: 4-1/4" [11cm]
+  + Height: 1-1/8" [2.9cm] (including feet and keys)
+
 * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
 
 * Camera: 5MP, builtin flash
