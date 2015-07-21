@@ -24,4 +24,24 @@
   \≠     U+2260  ⡿     1234567  Not-Equal-To Sign
   \≤     U+2264  ⡜     3457     Less-Than-Or-Equal-To Sign
   \≥     U+2265  ⡣     1267     Greater-Than-Or-Equal-To Sign
+  \⁰     U+2070  ⡴     3567     Superscript Zero
+  \¹     U+00B9  ⡂     27       Superscript One
+  \²     U+00B2  ⡆     237      Superscript Two
+  \³     U+00B3  ⡒     257      Superscript Three
+  \⁴     U+2074  ⡲     2567     Superscript Four
+  \⁵     U+2075  ⡢     267      Superscript Five
+  \⁶     U+2076  ⡖     2357     Superscript Six
+  \⁷     U+2077  ⡶     23567    Superscript Seven
+  \⁸     U+2078  ⡦     2367     Superscript Eight
+  \⁹     U+2079  ⡔     357      Superscript Nine
+  \₀     U+2080  ⢴     3568     Subscript Zero
+  \₁     U+2081  ⢂     28       Subscript One
+  \₂     U+2082  ⢆     238      Subscript Two
+  \₃     U+2083  ⢒     258      Subscript Three
+  \₄     U+2084  ⢲     2568     Subscript Four
+  \₅     U+2085  ⢢     268      Subscript Five
+  \₆     U+2086  ⢖     2358     Subscript Six
+  \₇     U+2087  ⢶     23568    Subscript Seven
+  \₈     U+2088  ⢦     2368     Subscript Eight
+  \₉     U+2089  ⢔     358      Subscript Nine
   =====  ======  ====  =======  ======================================

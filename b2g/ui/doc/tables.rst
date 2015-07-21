@@ -21,6 +21,12 @@ they can be relatively easily rememberdd. The following methods have been used:
 * Adding dot 7 to a related punctuation symbol, e.g. adding dot 7 to the dollar
   sign for the cent sign.
 
+* The superscript digits are represented by adding dot 7 to their coresponding
+  regular digits.
+
+* The subscript digits are represented by adding dot 8 to their coresponding
+  regular digits.
+
 .. include:: tbl-braille-symbols.rst
 
 Additional Characters for Spanish

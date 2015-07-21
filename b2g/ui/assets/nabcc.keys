@@ -157,6 +157,28 @@ S InsertCharacter space
 3457 InsertCharacter ≤
 1267 InsertCharacter ≥
 
+3567 InsertCharacter ⁰
+27 InsertCharacter ¹
+237 InsertCharacter ²
+257 InsertCharacter ³
+2567 InsertCharacter ⁴
+267 InsertCharacter ⁵
+2357 InsertCharacter ⁶
+23567 InsertCharacter ⁷
+2367 InsertCharacter ⁸
+357 InsertCharacter ⁹
+
+3568 InsertCharacter ₀
+28 InsertCharacter ₁
+238 InsertCharacter ₂
+258 InsertCharacter ₃
+2568 InsertCharacter ₄
+268 InsertCharacter ₅
+2358 InsertCharacter ₆
+23568 InsertCharacter ₇
+2368 InsertCharacter ₈
+358 InsertCharacter ₉
+
 23467 InsertCharacter ¡
 14567 InsertCharacter ¿
 
