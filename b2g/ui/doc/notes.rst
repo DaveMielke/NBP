@@ -4,8 +4,6 @@ Usage Notes
 Physical Description
 --------------------
 
-See `Technical Information`_ for details.
-
 The Top
 ~~~~~~~
 
@@ -25,19 +23,19 @@ Space key (or bar).
 The braille display (20 eight-dot cells) is at the front of the top. 
 There's a small, round button just behind each cell - these are the 
 cursor routing keys. The convex, square button to the left of the cursor 
-routing keys is the Backward key, and the convex, square button to their 
-right is the Forward key.
+routing keys is the Backward key, and the one to their right is the Forward
+key.
 
 The Front
 ~~~~~~~~~
 
-Two internal speakers (left and right channel) are at the left and
-right ends of the front.
+Two internal speakers (for the left and right stereo channels) are,
+corespondingly, at the left and right ends of the front.
 
 The internal microphone is just behind a very small slit in the middle of 
 the front.
 
-The left Side
+The Left Side
 ~~~~~~~~~~~~~
 
 The earphone/microphone jack (3.5mm) is near the front of the left side.
@@ -48,8 +46,9 @@ external video monitor. This provides an easy way for a sighted person,
 e.g. a teacher, to offer direct assistance.
 
 A standard USB-A (or host) port is near the back of the left side. USB 
-devices (memory stick, external keyboard, mouse, hub, etc) can be 
-connected to it.
+devices (memory stick, external keyboard, mouse, ethernet adapter, hub, etc)
+can be connected to it. Devices that draw power from the port will drain the
+battery so using a powered hub, when possible, should be considered.
 
 The Right Side
 ~~~~~~~~~~~~~~
@@ -80,8 +79,11 @@ window that's just a little further in is where the flash LEDs are.
 
 The Reset button is hidden within a very small, round hole on the 
 bottom. If the device is turned over, front to back, the hole is at 
-about the eight o'clock position, very close to the foot nearest the 
-Power switch. Something thin, like a paperclip, is needed.
+about the eight o'clock position, very close to the foot nearest to the 
+Power switch. A thin, round object, like a pin or paperclip, is needed.
+
+The Bottom Cover
+~~~~~~~~~~~~~~~~
 
 There's a removable, rectangular, plastic cover in the middle of the 
 bottom. To remove it:
@@ -89,25 +91,25 @@ bottom. To remove it:
 1) Turn the device over so that its bottom is on top.
 
 2) Press gently down on the cover and slide it toward the side where
-   the Power switch is.
+   the power switch is.
 
 3) Lift the end of the cover that's toward the side where the earphone
    jack is.
 
-Be careful if you remove the cover because the underside of a circuit 
+Be careful after you've removed the cover because the underside of a circuit 
 board will be exposed. Removing the cover is how to gain access to the 
 following:
 
 * The Micro-SD card slot.
   It's in the corner that's toward the back and toward the side where the 
   earphone jack is. The open end of the slot is toward the side where the 
-  Power switch is. To insert a card, gently press it in until you hear a 
-  click. To remove a card, gently press it until you hear a click, and 
+  power switch is. To insert a card, gently press it in until you hear a 
+  click. To remove the card, gently press it until you hear a click, and 
   then allow the slot's internal spring to push it out.
 
 * The SIM card slot.
   It's in the corner that's toward the front and toward the side where the 
-  Power switch is. To gain access to the actual slot, lift the end of its 
+  power switch is. To gain access to the actual slot, lift the end of its 
   cover that's toward the back. As with most SIM card slot covers, its 
   hinge is fragile so be gentle.
 
@@ -120,16 +122,23 @@ combination, namely that only one cursor routing key may be used at a
 time. If more than one cursor routing key is pressed at the same time, 
 the first one that was pressed is used.
 
-Two actions (a **primary** and a **secondary**) may be assigned to each 
-key combination. If any of the keys is released before the long press 
-timeout (|long press timeout|) then the primary action is executed. If
-the key combination is held for the long press timeout, then, even
-without any of the keys being released, the secondary action is
-immediately executed - if a secondary action hasn't been assigned then
-the primary action is executed instead.
+If any of the keys of a combination is released before the long press timeout
+(|long press timeout|) expires then the action bound to that combination is
+executed. If the timeout expires then the action is immediately executed
+even though none of the keys has been released.
 
-Secondary actions are enabled by default. They can be disabled with 
-Backward+Dot3, and they can be enabled with Forward+Dot6.
+Long Press Mode
+~~~~~~~~~~~~~~~
+
+A secondary action may be bound to each key combination. If Long Press Mode is
+enabled then, if a key combination that has a secondary action is held until
+the long press timeout expires then its secondary action is executed.
+
+This mode is enabled by default. Pressing Forward+Dot6 enables it,
+and pressing Backward+Dot3 disables it.
+
+Cancelling a Key Combination
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The way to cancel a key (or keys) that has been accidentally pressed is 
 to press enough additional keys such that an unassigned key combination 
@@ -157,13 +166,13 @@ Space, whether pressed at the start (to include it in the combination)
 or at the end (to indicate that the combination is complete), should 
 always be pressed separately.
 
-Switching the power off and then back on automatically turns off One 
-Hand Mode. This provides an intuitive way for a user who has 
-accidentally turned this mode on and doesn't know how to turn it off to 
-easily revert the keyboard to normal operation.
+Switching the power switch **off** and then back **on** automatically disables
+One Hand Mode. This provides an intuitive way for a user who has accidentally
+enabled this mode, and who may not know how to disable it, to easily revert the
+keyboard to normal operation.
 
-Another (legacy) way to turn One Hand Mode on is to hold dot 8 while 
-switching the power on.
+Another (legacy) way to enable One Hand Mode is to hold dot 8 while switching
+the power on.
 
 Braille Rendering
 -----------------
@@ -173,11 +182,23 @@ represent a character that doesn't have its own defined representation.
 
 When on an editable text field:
 
-* The location of the cursor is shown by |the cursor indicator|.
-* The current text selection is highlighted via |the selection indicator|. 
+* The character immediately to the right of the cursor is highlighted by
+  |the cursor indicator|.
+
+* Each of the currently selected characters is highlighted by
+  |the selection indicator|. 
 
 Note that the cursor isn't shown when at least one character has been 
-selected.
+selected. This is because edit actions are then performed on all of the
+selected characters as a single entity rather than at the cursor's location.
+
+If a screen element (list, group of pages, etc) needs to be scrolled, then:
+
+* Scrolling forward (down or to the right) is indicated via
+  |the scrolling forward symbol|.
+
+* Scrolling backward (up or to the left) is indicated via
+  |the scrolling backward symbol|.
 
 A **checkbox** is rendered as either a space (meaning unchecked) or an 
 ``X`` (meaning checked) enclosed within [brackets], followed by its
@@ -186,9 +207,9 @@ label. For example::
   [ ] This box is not checked.
   [X] This box is checked.
 
-A **switch** is rendered as a **checkbox**. The box is checked if the 
-switch is in the **on** position, and unchecked if the switch is in the 
-**off** position. For example::
+A **switch** is rendered as though it were a **checkbox**. The box is checked
+if the switch is in its **on** position, and unchecked if it's in its **off**
+position. For example::
 
   [ ] Off
   [X] On
@@ -200,13 +221,17 @@ within [brackets], is displayed. For example::
   [More options]
   [Navigate up]
 
-If meaningful text for a significant screen element cannot be found then 
-it is rendered as its widget type enclosed within {braces}. For 
-example::
+If meaningful text for a significant screen element can't be found then it is
+rendered as its widget type enclosed within {braces}. For example::
 
   {ImageButton}
   {SeekBar}
   {ViewPager}
+
+If a control isn't enabled then the word ``disabled``, enclosed within
+(parentheses), is appended to its descriptive text. For example::
+
+  OK (disabled)
 
 When an action is performed that is neither implicitly confirmed (by an 
 expected change on the braille display) nor explicitly confirmed (by a 

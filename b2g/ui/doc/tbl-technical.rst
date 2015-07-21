@@ -1,10 +1,10 @@
-* Weight: 20.3oz [575g]
+* Weight: 575g [20.3oz]
 
 * Dimensions:
 
-  + Width: 8in [20cm]
-  + Depth: 4.3in [11cm]
-  + Height: 1.2in [3cm] (including feet and keys)
+  + Width: 20cm [8in]
+  + Depth: 11cm [4.3in]
+  + Height: 3cm [1.2in] (including feet and keys)
 
 * Braille Display: 20 cells, 8 dots per cell
 
