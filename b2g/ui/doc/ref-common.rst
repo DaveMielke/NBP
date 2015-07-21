@@ -10,7 +10,7 @@ L          |ArrowLeft|
 R          |ArrowRight|
 7X         |DescribeCharacter|
 8X         |SetLeft|
-814        |CopyToClipboard|
+S148       |CopyToClipboard|
 B1         |BrailleInputOff|
 F4         |BrailleInputOn|
 B3         |LongPressOff|

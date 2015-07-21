@@ -133,6 +133,7 @@ S InsertCharacter space
 45678 InsertCharacter US
 145678 InsertCharacter DEL
 
+148 InsertCharacter ©
 12348 InsertCharacter ¶
 2348 InsertCharacter §
 12358 InsertCharacter ®

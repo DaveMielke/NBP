@@ -6,7 +6,7 @@ X          |BringCursor|
 S145       |DeleteNext|
 BX         |SetSelectionStart|
 FX         |SetSelectionEnd|
-81         |SelectAll|
-81346      |CutToClipboard|
-81236      |PasteFromClipboard|
+S18        |SelectAll|
+S13468     |CutToClipboard|
+S12368     |PasteFromClipboard|
 =========  =================

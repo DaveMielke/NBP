@@ -4,6 +4,7 @@
   Char-  Code    Bra-  Dot      Character
   acter  Point   ille  Numbers  Name
   -----  ------  ----  -------  --------------------------------------
+  \©     U+00A9  ⢉     148      Copyright Sign
   \¶     U+00B6  ⢏     12348    Paragraph Sign, Pilcrow
   \§     U+00A7  ⢎     2348     Section Sign
   \®     U+00AE  ⢗     12358    Registered Sign

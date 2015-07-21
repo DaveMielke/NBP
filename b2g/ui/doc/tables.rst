@@ -41,9 +41,8 @@ they can be easily recognized. The following methods have been used:
 * The uppercase accented letters are represented by adding dots 7 and 8 to
   their coresponding six-dot Spanish literary representations.
 
-* The additional punctuation symbols are represented by adding dot 7 to their
-  associated NABCC punctuation symbols, e.g. adding dot 7 to the NABCC question
-  mark for the inverted question mark.
+* The inverted punctuation symbols are represented by adding dot 7 to their
+  associated NABCC punctuation symbols.
 
 .. include:: tbl-braille-spanish.rst
 
