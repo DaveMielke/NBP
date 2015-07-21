@@ -126,19 +126,21 @@ time. If more than one cursor routing key is pressed at the same time,
 the first one that was pressed is used.
 
 If any of the keys of a combination is released before the long press timeout
-(|long press timeout|) expires then the action bound to that combination is
+(see `Long Press Mode`_) expires then the action bound to that combination is
 executed. If the timeout expires then the action is immediately executed
 even though none of the keys has been released.
 
 Long Press Mode
 ~~~~~~~~~~~~~~~
 
-A secondary action may be bound to each key combination. If Long Press Mode is
-enabled then, if a key combination that has a secondary action is held until
-the long press timeout expires then its secondary action is executed.
+A secondary action may be bound to a key combination. A key combination's
+secondary action is executed if all of its keys are held until the long press
+timeout expires when Long Press Mode is enabled.
 
 This mode is enabled by default. Pressing Forward+Dot6 enables it,
 and pressing Backward+Dot3 disables it.
+
+The long press timeout is |long press timeout|.
 
 Canceling a Key Combination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
