@@ -133,3 +133,30 @@ S InsertCharacter space
 45678 InsertCharacter US
 145678 InsertCharacter DEL
 
+12348 InsertCharacter ¶
+2348 InsertCharacter §
+12358 InsertCharacter ®
+23458 InsertCharacter ™
+1458 InsertCharacter °
+1348 InsertCharacter µ
+13458 InsertCharacter ¬
+
+158 InsertCharacter €
+134568 InsertCharacter ¥
+34567 InsertCharacter £
+12467 InsertCharacter ¢
+
+467 InsertCharacter ·
+123567 InsertCharacter «
+234567 InsertCharacter »
+
+3467 InsertCharacter ±
+167 InsertCharacter ×
+347 InsertCharacter ÷
+1234567 InsertCharacter ≠
+3457 InsertCharacter ≤
+1267 InsertCharacter ≥
+
+23467 InsertCharacter ¡
+14567 InsertCharacter ¿
+

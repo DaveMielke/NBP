@@ -1,8 +1,12 @@
+* Weight: 20.3oz [575g]
+
 * Dimensions:
 
-  + Width: 8" [20cm]
-  + Depth: 4-1/4" [11cm]
-  + Height: 1-1/8" [2.9cm] (including feet and keys)
+  + Width: 8in [20cm]
+  + Depth: 4.3in [11cm]
+  + Height: 1.2in [3cm] (including feet and keys)
+
+* Braille Display: 20 cells, 8 dots per cell
 
 * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
 
