@@ -236,7 +236,7 @@ public class KeyBindings {
         if (action == null) return true;
 
         if (!addKeyBinding(action, keyMasks)) {
-          Log.w(LOG_TAG, "key combination already defined: " + keysOperand);
+          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
           return true;
         }
 
