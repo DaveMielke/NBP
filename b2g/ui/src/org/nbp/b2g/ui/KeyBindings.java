@@ -220,9 +220,9 @@ public class KeyBindings {
         if (index == operands.length) return true;
         String operand = operands[index++];
         if (operand.charAt(0) == '#') return true;
-        String keyBinding = operand;
+        String keysOperand = operand;
 
-        int[] keyMasks = parseKeys(keyBinding);
+        int[] keyMasks = parseKeys(keysOperand);
         if (keyMasks == null) return true;
         int keyMask = keyMasks[keyMasks.length - 1];
 
@@ -236,7 +236,7 @@ public class KeyBindings {
         if (action == null) return true;
 
         if (!addKeyBinding(action, keyMasks)) {
-          Log.w(LOG_TAG, "key binding already defined: " + keyBinding);
+          Log.w(LOG_TAG, "key combination already defined: " + keysOperand);
           return true;
         }
 
