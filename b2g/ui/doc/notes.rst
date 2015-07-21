@@ -30,7 +30,7 @@ The Front
 ~~~~~~~~~
 
 Two internal speakers (for the left and right stereo channels) are,
-corespondingly, at the left and right ends of the front.
+correspondingly, at the left and right ends of the front.
 
 The internal microphone is just behind a very small slit in the middle of 
 the front.
@@ -137,8 +137,8 @@ the long press timeout expires then its secondary action is executed.
 This mode is enabled by default. Pressing Forward+Dot6 enables it,
 and pressing Backward+Dot3 disables it.
 
-Cancelling a Key Combination
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Canceling a Key Combination
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The way to cancel a key (or keys) that has been accidentally pressed is 
 to press enough additional keys such that an unassigned key combination 
@@ -235,11 +235,11 @@ If a control isn't enabled then the word ``disabled``, enclosed within
 
 When an action is performed that is neither implicitly confirmed (by an 
 expected change on the braille display) nor explicitly confirmed (by a 
-sound) then it is confirmed by a short message that is displayed for a
-brief period of time (|message hold time|). For example::
+sound) then it's confirmed by a short message that's displayed for a brief
+period (|message hold time|). For example::
 
-  one hand on
-  long press off
+  One Hand On
+  Long Press Off
 
 Text Selection
 --------------
@@ -247,47 +247,45 @@ Text Selection
 When on an editable text field, any sequence of text within that field 
 can be easily **selected**. This is how to do it:
 
-1) If necessary, use the Forward and Backward keys to pan to a place 
-   where the first character to be selected can be seen.
+1) If necessary, use the Forward and Backward keys to pan to a place where the
+   first character to be selected can be seen.
 
-2) Hold the Backward key while pressing the cursor routing key on the 
-   character that is to start the selection.
+2) Hold the Backward key while pressing the cursor routing key behind the 
+   character that's to start the selection.
 
-3) If necessary, use the Forward and Backward keys to pan to a place 
-   where the last character to be selected can be seen.
+3) If necessary, use the Forward and Backward keys to pan to a place where the
+   last character to be selected can be seen.
 
-4) Hold the Forward key while pressing the cursor routing key on the 
-   character that is to end the selection.
+4) Hold the Forward key while pressing the cursor routing key behind the 
+   character that's to end the selection.
 
-Using steps 1 and 2, the start of the selection can be changed at any 
-time. Likewise, using steps 3 and 4, the end of the selection can be 
-changed at any time. In fact, the end of the selection can be set before 
-the start of the selection is set, i.e. steps 3 and 4 can be performed 
-before steps 1 and 2 have been performed.
+Steps 1 and 2 may be reperformed at any time in order to change the start of
+the selection. Likewise, steps 3 and 4 may be reperformed at any time in order
+to change the end of the selection. In fact, the end of the selection can be
+set before the start of the selection has been set, i.e. steps 3 and 4 may be
+performed before steps 1 and 2 have been performed.
 
 The current text selection is highlighted via |the selection indicator|.
 Selecting text is useful in at least the following ways:
 
 * Typing a character deletes the selected text, puts the cursor where
-  the selected text was, and then inserts the character at that point 
-  within the text. This, in other words, is an efficient way to replace 
-  old text with new text. Just select the old text and then start typing 
-  the new text.
+  the selected text was, and then inserts the typed character at that point.
+  This, in other words, is an efficient way to replace old text with new text.
+  Just select the old text, and then start typing the new text.
 
-* Pressing any of the delete keys (see `Editable Text Fields`_)
-  deletes the selected text. This, in other words, is an efficient way 
-  to delete a block of text. Just select it and then delete it.
+* Pressing any of the delete keys (see `Editable Text Fields`_) removes all of
+  the selected text. This, in other words, is an efficient way to delete a
+  block of text. Just select it, and then delete it.
 
-If the start of the selection is set first, and if the cursor is after 
-that character, then the selection is implicitly extended forward to 
-(but not including) the character where the cursor is. This, for 
-example, provides an easy way to delete or replace several characters 
-that have just been typed.
+If the start of the selection is set first, and if the cursor is after that
+character, then the selection is implicitly extended forward to (but not
+including) the character where the cursor is. This, for example, provides an
+easy way to delete or replace several characters that have just been typed.
 
-If the end of the selection is set first, and if the cursor is before 
-that character, then the selection is implicitly extended back to (and 
-including) the character where the cursor is. This, for example, 
-provides an easy way to replace a word, line, paragraph, etc.
+If the end of the selection is set first, and if the cursor is before that
+character, then the selection is implicitly extended back to (and including)
+the character where the cursor is. This, for example, provides an easy way to
+replace a word, line, paragraph, etc.
 
 Seek Bars
 ---------
