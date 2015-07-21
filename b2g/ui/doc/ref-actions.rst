@@ -55,7 +55,7 @@
 .. |MoveToPreviousSibling| replace:: go to and describe previous sibling node
 .. |MoveToSelf| replace:: describe current node
 .. |Notifications| replace:: go to the Notifications screen
-.. |Null| replace:: cancel an acidentally-started key combination
+.. |Null| replace:: cancel an accidentally-started key combination
 .. |OneHandOff| replace:: turn off one hand mode
 .. |OneHandOn| replace:: turn on one hand mode
 .. |Options| replace:: go to the Options (User Interface Settings) screen

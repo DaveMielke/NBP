@@ -10,7 +10,7 @@
 
 * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
 
-* Camera: 5MP, builtin flash
+* Camera: 5MP, built-in flash
 
 * Wi-Fi: IEEE 802.11 b/g, Hotspot, Wi-Fi Direct
 
