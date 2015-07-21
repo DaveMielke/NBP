@@ -182,6 +182,10 @@ the power on.
 Braille Rendering
 -----------------
 
+The basic characters are rendered using the `North American Braille Computer
+Code`_. Internally-designed representations for `Additional Common Symbols`_,
+as well as for `Additional Characters for Spanish`_, have also been included.
+
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have its own defined representation.
 
