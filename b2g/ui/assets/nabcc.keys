@@ -127,8 +127,8 @@ S InsertCharacter space
 1345678 InsertCharacter EM
 135678 InsertCharacter SUB
 24678 InsertCharacter ESC
-125678 InsertCharacter FS
-1245678 InsertCharacter GS
+#125678 InsertCharacter FS
+#1245678 InsertCharacter GS
 4578 InsertCharacter RS
 45678 InsertCharacter US
 145678 InsertCharacter DEL
