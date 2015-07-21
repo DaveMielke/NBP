@@ -12,6 +12,9 @@ back of the top comprise a standard, eight-dot, braille keyboard. The
 four on the left, from left to right, are dots 7, 3, 2, and 1. The four 
 on the right, from left to right, are dots 4, 5, 6, and 8.
 
+* The Dot7 key is often referred to as the Backspace key.
+* The Dot8 key is often referred to as the Enter key.
+
 The square with a small, round button in the middle, in between dots 1 
 and 4, is the five-key D-Pad (directional pad). Its four edges are the
 Up, Down, Left, and Right keys. The button in the middle is the Center
@@ -82,8 +85,8 @@ bottom. If the device is turned over, front to back, the hole is at
 about the eight o'clock position, very close to the foot nearest to the 
 Power switch. A thin, round object, like a pin or paperclip, is needed.
 
-The Bottom Cover
-~~~~~~~~~~~~~~~~
+The Removable Cover
+~~~~~~~~~~~~~~~~~~~
 
 There's a removable, rectangular, plastic cover in the middle of the 
 bottom. To remove it:
