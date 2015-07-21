@@ -179,6 +179,24 @@ S InsertCharacter space
 2368 InsertCharacter ₈
 358 InsertCharacter ₉
 
+123568 InsertCharacter á
+23468 InsertCharacter é
+348 InsertCharacter í
+3468 InsertCharacter ó
+234568 InsertCharacter ú
+12468 InsertCharacter ë
+12568 InsertCharacter ü
+124568 InsertCharacter ñ
+
+1235678 InsertCharacter Á
+234678 InsertCharacter É
+3478 InsertCharacter Í
+34678 InsertCharacter Ó
+2345678 InsertCharacter Ú
+124678 InsertCharacter Ë
+125678 InsertCharacter Ü
+1245678 InsertCharacter Ñ
+
 23467 InsertCharacter ¡
 14567 InsertCharacter ¿
 
