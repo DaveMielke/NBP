@@ -73,7 +73,6 @@ public class KeyBindings {
         intermediate = new IntermediateAction(endpoint);
         bindings.put(keyMask, intermediate);
       } else if (!isIntermediateAction(intermediate)) {
-        Log.w(LOG_TAG, "key combination already defined");
         return false;
       }
 
@@ -82,12 +81,7 @@ public class KeyBindings {
 
     {
       int keyMask = keyMasks[last];
-
-      if (bindings.get(keyMask) != null) {
-        Log.w(LOG_TAG, "key combination already defined");
-        return false;
-      }
-
+      if (bindings.get(keyMask) != null) return false;
       bindings.put(keyMask, action);
     }
 
@@ -226,20 +220,25 @@ public class KeyBindings {
         if (index == operands.length) return true;
         String operand = operands[index++];
         if (operand.charAt(0) == '#') return true;
+        String keyBinding = operand;
 
-        int[] keyMasks = parseKeys(operand);
+        int[] keyMasks = parseKeys(keyBinding);
         if (keyMasks == null) return true;
         int keyMask = keyMasks[keyMasks.length - 1];
 
         if (index == operands.length) {
-          Log.w(LOG_TAG, "missing keys action: " + text);
+          Log.w(LOG_TAG, "missing action: " + text);
           return true;
         }
 
         operand = operands[index++];
         Action action = getAction(operand);
         if (action == null) return true;
-        addKeyBinding(action, keyMasks);
+
+        if (!addKeyBinding(action, keyMasks)) {
+          Log.w(LOG_TAG, "key binding already defined: " + keyBinding);
+          return true;
+        }
 
         if (index == operands.length) return true;
         operand = operands[index++];
