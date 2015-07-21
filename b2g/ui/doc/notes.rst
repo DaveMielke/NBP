@@ -130,6 +130,11 @@ If any of the keys of a combination is released before the long press timeout
 executed. If the timeout expires then the action is immediately executed
 even though none of the keys has been released.
 
+The way to cancel a key (or keys) that has been accidentally pressed is to
+press enough additional keys such that an unbound key combination is being
+attempted. A key combination that's been formally defined for this purpose is
+all eight dots plus Space.
+
 Long Press Mode
 ~~~~~~~~~~~~~~~
 
@@ -142,34 +147,25 @@ and pressing Backward+Dot3 disables it.
 
 The long press timeout is |long press timeout|.
 
-Canceling a Key Combination
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The way to cancel a key (or keys) that has been accidentally pressed is 
-to press enough additional keys such that an unassigned key combination 
-is being attempted. Two key combinations have been formally defined for 
-this purpose. One is all eight dots, and the other is all eight dots 
-plus Space.
-
 One Hand Mode
 ~~~~~~~~~~~~~
 
 One Hand Mode is primarily for those users who only have the use of one 
-hand. It's off by default. Pressing Forward+Dot8 enables it, and 
-pressing Backward+Dot7 disables it. Both of these key combinations have 
-been chosen so that they can be reasonably easily pressed with a single 
-hand.
-
-When One Hand Mode is on, each key of a key combination may be pressed 
-separately. Pressing Space indicates that all of the keys of the 
-combination have been pressed. If Space itself is part of the 
-combination then it must be pressed first.
+hand. When it's on, each key of a key combination may be pressed separately.
+Pressing Space indicates that all of the keys of the combination have been
+pressed. If Space itself is part of the combination then it must be pressed
+first.
 
 For those whose operable hand is sufficiently functional, pressing more 
 than one key at a time is supported. The only exception to this is that 
 Space, whether pressed at the start (to include it in the combination) 
 or at the end (to indicate that the combination is complete), should 
 always be pressed separately.
+
+One Hand Mode is off by default. Pressing Forward+Dot8 enables it, and pressing
+Backward+Dot7 (followed, of course, by Space) disables it. Both of these key
+combinations have been chosen so that they can be reasonably easily pressed
+with a single hand.
 
 Switching the power switch **off** and then back **on** automatically disables
 One Hand Mode. This provides an intuitive way for a user who has accidentally
@@ -295,24 +291,4 @@ If the end of the selection is set first, and if the cursor is before that
 character, then the selection is implicitly extended back to (and including)
 the character where the cursor is. This, for example, provides an easy way to
 replace a word, line, paragraph, etc.
-
-Seek Bars
----------
-
-A ``SeekBar`` is a slider-type control that intuitively (from a visual 
-perspective) represents an amount (distance, magnitude, etc). It's often 
-used, for example, to represent a volume control. It's normally set by 
-tapping the desired point along it. This, of course, can't be done on a 
-device that doesn't have a touch screen. Instead, use the Left and Right 
-keys (on the D-Pad) to adjust a ``SeekBar``. The Left key decreases its 
-setting, and the Right key increases it.
-
-Each time the bar is adjusted, a brief message is displayed that 
-announces its new position (as a percentage). Unfortunately, due to a 
-current system limitation, its current position can't be determined. 
-It's necessary, therefore, to adjust its position back and forth in 
-order to figure out what it is. Attempting to increase the bar's value 
-when it's already at its maximum, or attempting to decrease its value 
-when it's already at its minimum, neither displays a position message 
-nor indicates an error.
 

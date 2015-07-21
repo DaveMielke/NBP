@@ -206,6 +206,26 @@ Dot8+v (dots 12368)
   where the cursor is. If characters have been selected then the
   clipboard content replaces them.
 
+Seek Bars
+---------
+
+A ``SeekBar`` is a slider-type control that intuitively (from a visual 
+perspective) represents an amount (distance, magnitude, etc). It's often 
+used, for example, to represent a volume control. It's normally set by 
+tapping the desired point along it. This, of course, can't be done on a 
+device that doesn't have a touch screen. Instead, use the Left and Right 
+keys (on the D-Pad) to adjust a ``SeekBar``. The Left key decreases its 
+setting, and the Right key increases it.
+
+Each time the bar is adjusted, a brief message is displayed that 
+announces its new position (as a percentage). Unfortunately, due to a 
+current system limitation, its current position can't be determined. 
+It's necessary, therefore, to adjust its position back and forth in 
+order to figure out what it is. Attempting to increase the bar's value 
+when it's already at its maximum, or attempting to decrease its value 
+when it's already at its minimum, neither displays a position message 
+nor indicates an error.
+
 Legacy Key Combinations
 -----------------------
 

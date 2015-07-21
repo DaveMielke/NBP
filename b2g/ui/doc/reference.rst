@@ -1,16 +1,13 @@
 Quick Reference
 ===============
 
-Braille
--------
-
-Special Symbols
-~~~~~~~~~~~~~~~
+Special Braille Symbols
+-----------------------
 
 .. include:: ref-symbols.rst
 
-Keys
-----
+Key Bindings
+------------
 
 .. include:: ref-actions.rst
 
