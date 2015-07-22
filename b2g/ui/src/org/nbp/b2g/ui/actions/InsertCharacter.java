@@ -38,12 +38,26 @@ public class InsertCharacter extends Action {
   @Override
   public boolean performAction () {
     int keyMask = getNavigationKeys();
-    Character character = getCharacters().getCharacter(keyMask);
 
-    if (character == null) {
-      Log.w(LOG_TAG, String.format("not mapped to a character: 0X%02X", keyMask));
-    } else if (insertCharacter(character)) {
-      return true;
+    if (ApplicationSettings.BRAILLE_INPUT) {
+      Byte dots = KeyMask.toDots(keyMask);
+
+      if (dots != null) {
+        if (getEndpoint().insertText(Braille.toCharacter(dots))) {
+          return true;
+        }
+      }
+    } else {
+      Character character = getCharacters().getCharacter(keyMask);
+
+      if (character == null) {
+        Log.w(LOG_TAG, String.format(
+          "not mapped to a character: %s",
+          KeyMask.toString(keyMask)
+        ));
+      } else if (insertCharacter(character)) {
+        return true;
+      }
     }
 
     return false;

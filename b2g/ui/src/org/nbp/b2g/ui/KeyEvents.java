@@ -42,44 +42,39 @@ public abstract class KeyEvents {
   }
 
   private static boolean performAction (boolean isLongPress) {
-    int keys = activeNavigationKeys;
-    if (keys == 0) return true;
+    try {
+      int keys = activeNavigationKeys;
+      if (keys == 0) return true;
 
-    if (!ApplicationSettings.LONG_PRESS) {
-      isLongPress = false;
-    }
+      KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
+      Action action = null;
+      boolean performed = false;
 
-    KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
-    Action action = null;
-    boolean performed = false;
-
-    if (ApplicationSettings.BRAILLE_INPUT) {
-      if (KeyMask.toDots(keys) != null) {
-        action = keyBindings.getAction(InsertBraille.class);
-      }
-    }
-
-    if (action == null) {
-      if (isLongPress) {
+      if (isLongPress && ApplicationSettings.LONG_PRESS) {
         action = keyBindings.getAction(keys | KeyMask.LONG_PRESS);
       }
 
       if (action == null) {
         action = keyBindings.getAction(keys);
       }
-    }
 
-    if (action != null) {
-      if (performAction(action, isLongPress)) {
-        performed = true;
+      if (action == null) {
+        if (KeyMask.toDots(keys) != null) {
+          action = keyBindings.getAction(InsertCharacter.class);
+        }
       }
+
+      if (action != null) {
+        if (performAction(action, isLongPress)) {
+          performed = true;
+        }
+      }
+
+      if (!performed) ApplicationUtilities.beep();
+      return performed;
+    } finally {
+      activeNavigationKeys = 0;
     }
-
-    activeNavigationKeys = 0;
-    if (performed) return true;
-
-    ApplicationUtilities.beep();
-    return false;
   }
 
   private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME, "long-key-press-timeout") {
