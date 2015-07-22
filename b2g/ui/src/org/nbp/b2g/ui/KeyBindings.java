@@ -36,6 +36,10 @@ public class KeyBindings {
     }
   }
 
+  public boolean isRootKeyBindings () {
+    return currentKeyBindings == rootKeyBindings;
+  }
+
   public void resetKeyBindings () {
     currentKeyBindings = rootKeyBindings;
   }
