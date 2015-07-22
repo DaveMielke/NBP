@@ -211,7 +211,7 @@ public class KeyBindings {
 
     InputProcessor inputProcessor = new InputProcessor() {
       @Override
-      protected boolean processLine (String text, int number) {
+      protected boolean handleLine (String text, int number) {
         String[] operands = pattern.split(text);
         int index = 0;
 

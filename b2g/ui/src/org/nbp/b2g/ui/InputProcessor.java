@@ -23,7 +23,7 @@ public abstract class InputProcessor {
 
   public final String INPUT_ENCODING = "UTF8";
 
-  protected abstract boolean processLine (String text, int number);
+  protected abstract boolean handleLine (String text, int number);
 
   public static void close (Closeable closeable) {
     try {
@@ -33,7 +33,7 @@ public abstract class InputProcessor {
     }
   }
 
-  public boolean processInput (Reader reader) {
+  public final boolean processInput (Reader reader) {
     BufferedReader buffer;
 
     if (reader instanceof BufferedReader) {
@@ -47,7 +47,7 @@ public abstract class InputProcessor {
         try {
           String text = buffer.readLine();
           if (text == null) break;
-          if (!processLine(text, number)) break;
+          if (!handleLine(text, number)) break;
         } catch (IOException exception) {
           Log.w(LOG_TAG, "line read error", exception);
           return false;
@@ -60,7 +60,7 @@ public abstract class InputProcessor {
     return true;
   }
 
-  public boolean processInput (InputStream stream) {
+  public final boolean processInput (InputStream stream) {
     String encoding = INPUT_ENCODING;
 
     try {
@@ -78,7 +78,7 @@ public abstract class InputProcessor {
     return false;
   }
 
-  public boolean processInput (File file) {
+  public final boolean processInput (File file) {
     try {
       InputStream stream = new FileInputStream(file);
 
@@ -94,7 +94,7 @@ public abstract class InputProcessor {
     return false;
   }
 
-  public boolean processInput (String asset) {
+  public final boolean processInput (String asset) {
     Context context = ApplicationContext.getContext();
     if (context == null) return false;
 

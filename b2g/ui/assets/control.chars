@@ -26,8 +26,8 @@ char CAN 134678
 char EM 1345678
 char SUB 135678
 char ESC 24678
-#char FS 125678
-#char GS 1245678
+glyph FS 125678
+glyph GS 1245678
 char RS 4578
 char US 45678
 char DEL 145678

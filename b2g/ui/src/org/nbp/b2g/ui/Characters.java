@@ -153,7 +153,7 @@ public class Characters {
     return null;
   }
 
-  private boolean handleCharDirective (String[] operands) {
+  private boolean defineCharacter (String[] operands, boolean forInput) {
     int index = 0;
 
     if (index == operands.length) {
@@ -184,18 +184,33 @@ public class Characters {
       Log.w(LOG_TAG, "too many operands");
     }
 
-    if (characterMap.get(keyMask) != null) {
-      Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
-      return true;
+    if (forInput) {
+      Character old = characterMap.get(keyMask);
+
+      if (old != null) {
+        if (!old.equals(character)) {
+          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
+          return true;
+        }
+
+        character = null;
+      }
+    } else {
+      character = null;
     }
 
-    if (dotsMap.get(character) != null) {
-      Log.w(LOG_TAG, "character already defined: " + characterOperand);
-      return true;
+    {
+      Byte old = dotsMap.get(character);
+
+      if (old == null) {
+        dotsMap.put(character, dots);
+      } else if (!old.equals(dots)) {
+        Log.w(LOG_TAG, "character already defined: " + characterOperand);
+        return true;
+      }
     }
 
-    characterMap.put(keyMask, character);
-    dotsMap.put(character, dots);
+    if (character != null) characterMap.put(keyMask, character);
     return true;
   }
 
@@ -205,7 +220,14 @@ public class Characters {
     directiveProcessor.addDirective("char", new DirectiveProcessor.DirectiveHandler() {
       @Override
       public boolean handleDirective (String[] operands) {
-        return handleCharDirective(operands);
+        return defineCharacter(operands, true);
+      }
+    });
+
+    directiveProcessor.addDirective("glyph", new DirectiveProcessor.DirectiveHandler() {
+      @Override
+      public boolean handleDirective (String[] operands) {
+        return defineCharacter(operands, false);
       }
     });
 

@@ -11,11 +11,19 @@ import android.util.Log;
 public class DirectiveProcessor extends InputProcessor {
   private final static String LOG_TAG = DirectiveProcessor.class.getName();
 
-  private final Pattern OPERANDS_PATTERN = Pattern.compile("\\s+");
+  private final static Pattern OPERANDS_PATTERN = Pattern.compile("\\s+");
 
   public interface DirectiveHandler {
     public abstract boolean handleDirective (String[] operands);
   }
+
+  DirectiveHandler unknownDirectiveHandler = new DirectiveHandler() {
+    @Override
+    public boolean handleDirective (String[] operands) {
+      Log.w(LOG_TAG, "unknown directive: " + operands[0]);
+      return true;
+    }
+  };
 
   private final Map<String, DirectiveHandler> directives = new HashMap<String, DirectiveHandler>();
 
@@ -23,7 +31,7 @@ public class DirectiveProcessor extends InputProcessor {
     return name.toLowerCase();
   }
 
-  public boolean addDirective (String name, DirectiveHandler handler, boolean force) {
+  public final boolean addDirective (String name, DirectiveHandler handler, boolean force) {
     name = normalizeName(name);
 
     if (!force) {
@@ -37,12 +45,12 @@ public class DirectiveProcessor extends InputProcessor {
     return true;
   }
 
-  public boolean addDirective (String name, DirectiveHandler handler) {
+  public final boolean addDirective (String name, DirectiveHandler handler) {
     return addDirective(name, handler, false);
   }
 
   @Override
-  protected boolean processLine (String text, int number) {
+  protected final boolean handleLine (String text, int number) {
     String[] operands = OPERANDS_PATTERN.split(text);
     int index = 0;
 
@@ -61,11 +69,11 @@ public class DirectiveProcessor extends InputProcessor {
 
     if (handler != null) {
       operands = Arrays.copyOfRange(operands, index+1, operands.length);
-      return handler.handleDirective(operands);
+    } else {
+      handler = unknownDirectiveHandler;
     }
 
-    Log.w(LOG_TAG, "unknown directive: " + directive);
-    return true;
+    return handler.handleDirective(operands);
   }
 
   public DirectiveProcessor () {

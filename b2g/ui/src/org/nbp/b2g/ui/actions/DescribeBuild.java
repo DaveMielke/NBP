@@ -15,7 +15,7 @@ public class DescribeBuild extends Action {
   ) {
     InputProcessor inputProcessor = new InputProcessor() {
       @Override
-      protected final boolean processLine (String text, int number) {
+      protected final boolean handleLine (String text, int number) {
         int label = labels[number];
         text = text.trim();
 
