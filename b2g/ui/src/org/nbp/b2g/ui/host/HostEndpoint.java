@@ -164,6 +164,11 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
+  public boolean isBar () {
+    return ScreenUtilities.isBar(currentNode);
+  }
+
+  @Override
   public boolean isSlider () {
     return ScreenUtilities.isSlider(currentNode);
   }

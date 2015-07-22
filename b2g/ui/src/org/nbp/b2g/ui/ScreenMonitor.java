@@ -192,7 +192,7 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private static void showSlider (AccessibilityEvent event, StringHandler stringHandler) {
+  private static void showBar (AccessibilityEvent event, StringHandler stringHandler) {
     int count = event.getItemCount();
 
     if (count != -1) {
@@ -217,10 +217,10 @@ public class ScreenMonitor extends AccessibilityService {
         }
       };
 
-      showSlider(event, stringHandler);
-    } else if (ScreenUtilities.isSlider(view)) {
+      showBar(event, stringHandler);
+    } else if (ScreenUtilities.isBar(view)) {
       ScreenUtilities.logNavigation(view, String.format(
-        "slider %d/%d", event.getCurrentItemIndex(), event.getItemCount()
+        "bar %d/%d", event.getCurrentItemIndex(), event.getItemCount()
       ));
 
       if (view.isAccessibilityFocused()) {
@@ -233,7 +233,7 @@ public class ScreenMonitor extends AccessibilityService {
           }
         };
 
-        showSlider(event, stringHandler);
+        showBar(event, stringHandler);
       }
     } else if (view.isFocused()) {
       setCurrentNode(event);

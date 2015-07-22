@@ -138,8 +138,13 @@ public abstract class ScreenUtilities {
     return canAssign(android.widget.EditText.class, node);
   }
 
-  public static boolean isSlider (AccessibilityNodeInfo node) {
+  public static boolean isBar (AccessibilityNodeInfo node) {
     if (canAssign(android.widget.ProgressBar.class, node)) return true;
+    return false;
+  }
+
+  public static boolean isSlider (AccessibilityNodeInfo node) {
+    if (canAssign(android.widget.AbsSeekBar.class, node)) return true;
 
     if (node == null) return false;
     if (node.getChildCount() > 0) return false;
@@ -279,8 +284,8 @@ public abstract class ScreenUtilities {
       logNavigation(node, "node has description");
     } else if (node.isCheckable()) {
       logNavigation(node, "node is checkable");
-    } else if (isSlider(node)) {
-      logNavigation(node, "node is slider");
+    } else if (isBar(node)) {
+      logNavigation(node, "node is bar");
     } else if (node.isFocusable() && !isContainer(node)) {
       logNavigation(node, "node is input focusable");
     } else {

@@ -120,6 +120,10 @@ public abstract class Endpoint {
     return false;
   }
 
+  public boolean isBar () {
+    return false;
+  }
+
   public boolean isSlider () {
     return false;
   }
