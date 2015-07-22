@@ -42,10 +42,13 @@ public class InsertCharacter extends Action {
     if (ApplicationSettings.BRAILLE_INPUT) {
       Byte dots = KeyMask.toDots(keyMask);
 
-      if (dots != null) {
-        if (getEndpoint().insertText(Braille.toCharacter(dots))) {
-          return true;
-        }
+      if (dots == null) {
+        Log.w(LOG_TAG, String.format(
+          "not a braille character: %s",
+          KeyMask.toString(keyMask)
+        ));
+      } else if (getEndpoint().insertText(Braille.toCharacter(dots))) {
+        return true;
       }
     } else {
       Character character = getCharacters().getCharacter(keyMask);
