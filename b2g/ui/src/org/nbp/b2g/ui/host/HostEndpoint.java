@@ -308,7 +308,7 @@ public class HostEndpoint extends Endpoint {
   @Override
   protected String[] getKeysFileNames () {
     return new String[] {
-      "nabcc", "common", "speech", "edit", "host"
+      "common", "speech", "edit", "host"
     };
   }
 

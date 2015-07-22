@@ -61,7 +61,7 @@ public abstract class PromptEndpoint extends Endpoint {
   @Override
   protected String[] getKeysFileNames () {
     return new String[] {
-      "nabcc", "common", "speech", "edit"
+      "common", "speech", "edit"
     };
   }
 

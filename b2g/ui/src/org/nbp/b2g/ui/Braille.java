@@ -51,7 +51,8 @@ public abstract class Braille {
     clearCells(cells, 0);
   }
 
-  public static void setCells (byte[] cells, String text, Characters characters) {
+  public static void setCells (byte[] cells, String text) {
+    Characters characters = Characters.getCharacters();
     int count = Math.min(text.length(), cells.length);
     int index = 0;
 
@@ -64,10 +65,6 @@ public abstract class Braille {
     clearCells(cells, index);
   }
 
-  public static void setCells (byte[] cells, String text) {
-    setCells(cells, text, Endpoints.getCurrentEndpoint().getCharacters());
-  }
-
   public static void setCells (byte[] cells, Endpoint endpoint) {
     synchronized (endpoint) {
       String text = endpoint.getLineText();
@@ -75,7 +72,7 @@ public abstract class Braille {
 
       int indent = endpoint.getLineIndent();
       if (indent > length) indent = length;
-      setCells(cells, text.substring(indent), endpoint.getCharacters());
+      setCells(cells, text.substring(indent));
 
       if (endpoint.isEditable()) {
         int start = endpoint.getSelectionStart();

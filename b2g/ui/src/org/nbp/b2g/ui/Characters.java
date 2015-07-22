@@ -5,6 +5,8 @@ import java.lang.reflect.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.regex.Pattern;
+
 import android.util.Log;
 
 public class Characters {
@@ -45,14 +47,11 @@ public class Characters {
   public final static char CHAR_SPACE = 0X0020;
   public final static char CHAR_DEL   = 0X007F;
 
-  private Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
-  private Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
-
-  private Character getCharacter (String name) {
+  public static Character getCharacter (String name) {
     name = "CHAR_" + name.toUpperCase();
 
     try {
-      Field field = getClass().getField(name);
+      Field field = Character.class.getField(name);
       int modifiers = field.getModifiers();
 
       if (Modifier.isStatic(modifiers)) {
@@ -78,33 +77,16 @@ public class Characters {
     return null;
   }
 
-  private boolean setDots (char character, int keyMask) {
-    Byte dots = KeyMask.toDots(keyMask);
-    if (dots == null) return false;
+  private final static Characters characters = new Characters(
+    "nabcc", "control", "symbols", "spanish"
+  );
 
-    dotsMap.put(character, dots);
-    return true;
+  public static Characters getCharacters () {
+    return characters;
   }
 
-  public boolean setCharacter (int keyMask, String name) {
-    char character;
-
-    {
-      Character c = getCharacter(name);
-
-      if (c != null) {
-        character = c;
-      } else if (name.length() == 1) {
-        character = name.charAt(0);
-      } else {
-        return false;
-      }
-    }
-
-    characterMap.put(keyMask, character);
-    setDots(character, keyMask);
-    return true;
-  }
+  private Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
+  private Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
 
   public Character getCharacter (int keyMask) {
     return characterMap.get(keyMask);
@@ -138,6 +120,111 @@ public class Characters {
     return null;
   }
 
-  public Characters () {
+  private boolean setDots (char character, int keyMask) {
+    Byte dots = KeyMask.toDots(keyMask);
+    if (dots == null) return false;
+
+    dotsMap.put(character, dots);
+    return true;
+  }
+
+  private boolean setCharacter (char character, int keyMask) {
+    characterMap.put(keyMask, character);
+    setDots(character, keyMask);
+    return true;
+  }
+
+  private boolean addCharacter (Character character, Integer keyMask) {
+    return false;
+  }
+
+  private static Integer parseKeys (String operand) {
+    int length = operand.length();
+    int mask = 0;
+
+    for (int index=0; index<length; index+=1) {
+      char character = operand.charAt(index);
+      Integer bit = KeyMask.toBit(Character.toUpperCase(character));
+
+      if (bit == null) {
+        Log.w(LOG_TAG, "invalid key: " + character);
+        return null;
+      }
+
+      if ((mask & bit) != 0) {
+        Log.w(LOG_TAG, "key specified more than once: " + operand);
+        return null;
+      }
+
+      mask |= bit;
+    }
+
+    return mask;
+  }
+
+  private static Character parseCharacter (String operand) {
+    {
+      Character character = getCharacter(operand);
+      if (character != null) return character;
+    }
+
+    if (operand.length() == 1) return operand.charAt(0);
+    return null;
+  }
+
+  private void addCharacters (String asset) {
+    final Pattern pattern = Pattern.compile("\\s+");
+
+    InputProcessor inputProcessor = new InputProcessor() {
+      @Override
+      protected boolean processLine (String text, int number) {
+        String[] operands = pattern.split(text);
+        int index = 0;
+
+        if (index < operands.length) {
+          if (operands[index].isEmpty()) {
+            index += 1;
+          }
+        }
+
+        if (index == operands.length) return true;
+        String operand = operands[index++];
+        if (operand.charAt(0) == '#') return true;
+        String keysOperand = operand;
+
+        Integer keyMask = parseKeys(keysOperand);
+        if (keyMask == null) return true;
+
+        if (index == operands.length) {
+          Log.w(LOG_TAG, "missing character: " + text);
+          return true;
+        }
+
+        operand = operands[index++];
+        Character character = parseCharacter(operand);
+        if (character == null) return true;
+
+        if (!setCharacter(character, keyMask)) {
+          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
+          return true;
+        }
+
+        if (index < operands.length) {
+          Log.w(LOG_TAG, "too many operands: " + text);
+        }
+
+        return true;
+      }
+    };
+
+    inputProcessor.processInput(asset);
+  }
+
+  public Characters (String... names) {
+    for (String name : names) {
+      Log.d(LOG_TAG, "begin character definitions: " + name);
+      addCharacters((name + ".chars"));
+      Log.d(LOG_TAG, "end character definitions: " + name);
+    }
   }
 }

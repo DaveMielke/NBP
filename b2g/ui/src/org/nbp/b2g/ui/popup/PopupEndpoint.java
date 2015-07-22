@@ -35,7 +35,7 @@ public class PopupEndpoint extends Endpoint {
   @Override
   protected String[] getKeysFileNames () {
     return new String[] {
-      "nabcc", "common", "speech"
+      "common", "speech"
     };
   }
 

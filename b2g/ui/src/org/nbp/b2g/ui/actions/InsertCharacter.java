@@ -6,15 +6,6 @@ import android.util.Log;
 public class InsertCharacter extends Action {
   private final static String LOG_TAG = InsertCharacter.class.getName();
 
-  private Characters getCharacters () {
-    return getEndpoint().getCharacters();
-  }
-
-  @Override
-  public boolean parseOperand (int keyMask, String operand) {
-    return getCharacters().setCharacter(keyMask, operand);
-  }
-
   private boolean insertCharacter (char character) {
     Endpoint endpoint = getEndpoint();
     ModifierAction control = (ControlModifier)getAction(ControlModifier.class);
@@ -51,7 +42,7 @@ public class InsertCharacter extends Action {
         return true;
       }
     } else {
-      Character character = getCharacters().getCharacter(keyMask);
+      Character character = Characters.getCharacters().getCharacter(keyMask);
 
       if (character == null) {
         Log.w(LOG_TAG, String.format(

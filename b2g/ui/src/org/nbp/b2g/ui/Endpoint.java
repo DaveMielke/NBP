@@ -189,12 +189,6 @@ public abstract class Endpoint {
   public void onBackground () {
   }
 
-  private final Characters characters;
-
-  public Characters getCharacters () {
-    return characters;
-  }
-
   private String textString;
   private boolean softEdges;
 
@@ -586,7 +580,6 @@ public abstract class Endpoint {
   }
 
   public Endpoint () {
-    characters = new Characters();
     keyBindings = new KeyBindings(this, getKeysFileNames());
     setText("");
   }
