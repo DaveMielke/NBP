@@ -25,10 +25,10 @@ char ETB 245678
 char CAN 134678
 char EM 1345678
 char SUB 135678
-char ESC 24678
+glyph ESC 24678
 glyph FS 125678
 glyph GS 1245678
-char RS 4578
-char US 45678
-char DEL 145678
+glyph RS 4578
+glyph US 45678
+glyph DEL 145678
 

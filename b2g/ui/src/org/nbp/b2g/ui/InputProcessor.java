@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.FileNotFoundException;
 
+import java.util.Collection;
+
 public abstract class InputProcessor {
   private final static String LOG_TAG = InputProcessor.class.getName();
 
@@ -94,26 +96,33 @@ public abstract class InputProcessor {
     return false;
   }
 
-  public final boolean processInput (String asset) {
+  public final boolean processInput (String... names) {
     Context context = ApplicationContext.getContext();
     if (context == null) return false;
 
     AssetManager assets = context.getAssets();
     if (assets == null) return false;
 
-    try {
-      InputStream stream = assets.open(asset);
-
+    for (String name : names) {
       try {
-        return processInput(stream);
-      } finally {
-        close(stream);
+        InputStream stream = assets.open(name);
+
+        try {
+          Log.w(LOG_TAG, "processing asset: " + name);
+          return processInput(stream);
+        } finally {
+          close(stream);
+        }
+      } catch (IOException exception) {
+        Log.w(LOG_TAG, "asset not found: " + name);
       }
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, "asset not found: " + asset);
     }
 
     return false;
+  }
+
+  public final boolean processInput (Collection<String> names) {
+    return processInput(names.toArray(new String[names.size()]));
   }
 
   public InputProcessor () {

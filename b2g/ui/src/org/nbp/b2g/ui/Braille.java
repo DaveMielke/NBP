@@ -58,7 +58,7 @@ public abstract class Braille {
 
     while (index < count) {
       char character = text.charAt(index);
-      Byte dots = characters.getDots(character);
+      Byte dots = characters.toDots(character);
       cells[index++] = (dots != null)? dots: ApplicationParameters.BRAILLE_CHARACTER_UNDEFINED;
     }
 

@@ -2,8 +2,13 @@ package org.nbp.b2g.ui;
 
 import java.lang.reflect.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Map;
 import java.util.HashMap;
+
+import java.util.Locale;
 
 import android.util.Log;
 
@@ -75,9 +80,7 @@ public class Characters {
     return null;
   }
 
-  private final static Characters characters = new Characters(
-    "en_US"
-  );
+  private final static Characters characters = new Characters();
 
   public static Characters getCharacters () {
     return characters;
@@ -86,11 +89,11 @@ public class Characters {
   private final Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
   private final Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
 
-  public Character getCharacter (int keyMask) {
+  public Character toCharacter (int keyMask) {
     return characterMap.get(keyMask);
   }
 
-  public Byte getDots (char character) {
+  public Byte toDots (char character) {
     {
       Byte dots = dotsMap.get(character);
       if (dots != null) return dots;
@@ -232,13 +235,45 @@ public class Characters {
     return directiveProcessor;
   }
 
-  public Characters (String... names) {
-    InputProcessor inputProcessor = makeInputProcessor();
+  public Characters (String name) {
+    List<String> names = new ArrayList<String>();
 
-    for (String name : names) {
-      Log.d(LOG_TAG, "begin character definitions: " + name);
-      inputProcessor.processInput((name + ".chars"));
-      Log.d(LOG_TAG, "end character definitions: " + name);
+    if (name != null) {
+      names.add(name);
+    } else {
+      Locale locale = Locale.getDefault();
+
+      if (locale != null) {
+        String language = locale.getLanguage();
+
+        if (language != null) {
+          String country = locale.getCountry();
+
+          if (country != null) {
+            names.add((language + "_" + country));
+          }
+
+          names.add(language);
+        }
+      }
+
+      names.add("en_US");
     }
+
+    {
+      final int size = names.size();
+
+      for (int index=0; index<size; index+=1) {
+        names.set(index, (names.get(index) + ".chars"));
+      }
+    }
+
+    Log.d(LOG_TAG, "begin character definitions");
+    makeInputProcessor().processInput(names);
+    Log.d(LOG_TAG, "end character definitions");
+  }
+
+  public Characters () {
+    this(null);
   }
 }

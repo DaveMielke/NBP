@@ -45,7 +45,7 @@ public class InsertCharacter extends Action {
         return true;
       }
     } else {
-      Character character = Characters.getCharacters().getCharacter(keyMask);
+      Character character = Characters.getCharacters().toCharacter(keyMask);
 
       if (character == null) {
         Log.w(LOG_TAG, String.format(
