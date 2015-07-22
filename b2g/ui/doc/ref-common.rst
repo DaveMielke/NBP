@@ -18,7 +18,6 @@ F6         |LongPressOn|
 B7         |OneHandOff|
 F8         |OneHandOn|
 SBF        |DescribeBuild|
-12345678   |Null|
 S12345678  |Null|
 <          |VolumeDown|
 >          |VolumeUp|
