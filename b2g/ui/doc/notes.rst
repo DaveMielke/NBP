@@ -163,9 +163,9 @@ or at the end (to indicate that the combination is complete), should
 always be pressed separately.
 
 One Hand Mode is off by default. Pressing Forward+Dot8 enables it, and pressing
-Backward+Dot7 (followed, of course, by Space) disables it. Both of these key
-combinations have been chosen so that they can be reasonably easily pressed
-with a single hand.
+Backward+Dot7 (followed, of course, by pressing Space) disables it. Both of
+these key combinations have been chosen so that they can be reasonably easily
+pressed with a single hand.
 
 Switching the power switch **off** and then back **on** automatically disables
 One Hand Mode. This provides an intuitive way for a user who has accidentally
