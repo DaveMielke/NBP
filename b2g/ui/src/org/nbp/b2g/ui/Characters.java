@@ -193,10 +193,8 @@ public class Characters {
           return true;
         }
 
-        character = null;
+        forInput = false;
       }
-    } else {
-      character = null;
     }
 
     {
@@ -210,7 +208,7 @@ public class Characters {
       }
     }
 
-    if (character != null) characterMap.put(keyMask, character);
+    if (forInput) characterMap.put(keyMask, character);
     return true;
   }
 
