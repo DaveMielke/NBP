@@ -76,6 +76,33 @@ public class DirectiveProcessor extends InputProcessor {
     return handler.handleDirective(operands);
   }
 
+  private final boolean processNestedInput (String[] operands) {
+    int index = 0;
+
+    if (index == operands.length) {
+      Log.w(LOG_TAG, "asset name not specified");
+      return true;
+    }
+
+    String assetName = operands[index++];
+
+    if (index < operands.length) {
+      Log.w(LOG_TAG, "too many operands");
+    }
+
+    return processInput(assetName);
+  }
+
+  private final void addDirectives () {
+    addDirective("include", new DirectiveProcessor.DirectiveHandler() {
+      @Override
+      public boolean handleDirective (String[] operands) {
+        return processNestedInput(operands);
+      }
+    });
+  }
+
   public DirectiveProcessor () {
+    addDirectives();
   }
 }

@@ -76,7 +76,7 @@ public class Characters {
   }
 
   private final static Characters characters = new Characters(
-    "nabcc", "control", "symbols", "spanish"
+    "en_US"
   );
 
   public static Characters getCharacters () {

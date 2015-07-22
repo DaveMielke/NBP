@@ -1,0 +1,4 @@
+include nabcc.subchars
+include control.subchars
+include symbols.subchars
+include spanish.subchars
