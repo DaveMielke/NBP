@@ -190,7 +190,7 @@ public class KeyBindings {
         Integer bit = KeyMask.toBit(Character.toUpperCase(character));
 
         if (bit == null) {
-          Log.w(LOG_TAG, "invalid key: " + character);
+          Log.w(LOG_TAG, "unknown key: " + character);
           return null;
         }
 
@@ -231,7 +231,7 @@ public class KeyBindings {
         int keyMask = keyMasks[keyMasks.length - 1];
 
         if (index == operands.length) {
-          Log.w(LOG_TAG, "missing action: " + text);
+          Log.w(LOG_TAG, "action not specified: " + text);
           return true;
         }
 

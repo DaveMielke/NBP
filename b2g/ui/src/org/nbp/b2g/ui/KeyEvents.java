@@ -60,7 +60,7 @@ public abstract class KeyEvents {
 
       if (action == null) {
         if (keyBindings.isRootKeyBindings()) {
-          if (KeyMask.toDots(keys) != null) {
+          if (KeyMask.isDots(keys)) {
             action = keyBindings.getAction(InsertCharacter.class);
           }
         }

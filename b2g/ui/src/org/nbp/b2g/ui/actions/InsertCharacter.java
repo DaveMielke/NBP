@@ -6,8 +6,11 @@ import android.util.Log;
 public class InsertCharacter extends Action {
   private final static String LOG_TAG = InsertCharacter.class.getName();
 
+  private boolean insertText (char character) {
+    return getEndpoint().insertText(character);
+  }
+
   private boolean insertCharacter (char character) {
-    Endpoint endpoint = getEndpoint();
     ModifierAction control = (ControlModifier)getAction(ControlModifier.class);
 
     if (control != null) {
@@ -23,7 +26,7 @@ public class InsertCharacter extends Action {
       }
     }
 
-    return endpoint.insertText(character);
+    return insertText(character);
   }
 
   @Override
@@ -38,7 +41,7 @@ public class InsertCharacter extends Action {
           "not a braille character: %s",
           KeyMask.toString(keyMask)
         ));
-      } else if (getEndpoint().insertText(Braille.toCharacter(dots))) {
+      } else if (insertText(Braille.toCharacter(dots))) {
         return true;
       }
     } else {

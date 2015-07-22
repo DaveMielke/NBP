@@ -50,6 +50,10 @@ public abstract class KeyMask {
     return dots;
   }
 
+  public static boolean isDots (int mask) {
+    return toDots(mask) != null;
+  }
+
   private static Map<Character, Integer> charToBit = new LinkedHashMap<Character, Integer>();
 
   public static Integer toBit (char character) {

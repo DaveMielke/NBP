@@ -51,7 +51,7 @@ public class Characters {
     name = "CHAR_" + name.toUpperCase();
 
     try {
-      Field field = Character.class.getField(name);
+      Field field = Characters.class.getField(name);
       int modifiers = field.getModifiers();
 
       if (Modifier.isStatic(modifiers)) {
@@ -120,24 +120,6 @@ public class Characters {
     return null;
   }
 
-  private boolean setDots (char character, int keyMask) {
-    Byte dots = KeyMask.toDots(keyMask);
-    if (dots == null) return false;
-
-    dotsMap.put(character, dots);
-    return true;
-  }
-
-  private boolean setCharacter (char character, int keyMask) {
-    characterMap.put(keyMask, character);
-    setDots(character, keyMask);
-    return true;
-  }
-
-  private boolean addCharacter (Character character, Integer keyMask) {
-    return false;
-  }
-
   private static Integer parseKeys (String operand) {
     int length = operand.length();
     int mask = 0;
@@ -147,7 +129,7 @@ public class Characters {
       Integer bit = KeyMask.toBit(Character.toUpperCase(character));
 
       if (bit == null) {
-        Log.w(LOG_TAG, "invalid key: " + character);
+        Log.w(LOG_TAG, "unknown key: " + character);
         return null;
       }
 
@@ -169,6 +151,7 @@ public class Characters {
     }
 
     if (operand.length() == 1) return operand.charAt(0);
+    Log.w(LOG_TAG, "unknown character: " + operand);
     return null;
   }
 
@@ -190,29 +173,42 @@ public class Characters {
         if (index == operands.length) return true;
         String operand = operands[index++];
         if (operand.charAt(0) == '#') return true;
-        String keysOperand = operand;
 
+        String keysOperand = operand;
         Integer keyMask = parseKeys(keysOperand);
         if (keyMask == null) return true;
+        Byte dots = KeyMask.toDots(keyMask);
+
+        if (dots == null) {
+          Log.w(LOG_TAG, "not space or just dots: " + keysOperand);
+          return true;
+        }
 
         if (index == operands.length) {
-          Log.w(LOG_TAG, "missing character: " + text);
+          Log.w(LOG_TAG, "character not specified: " + text);
           return true;
         }
 
-        operand = operands[index++];
-        Character character = parseCharacter(operand);
+        String characterOperand = operands[index++];
+        Character character = parseCharacter(characterOperand);
         if (character == null) return true;
-
-        if (!setCharacter(character, keyMask)) {
-          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
-          return true;
-        }
 
         if (index < operands.length) {
           Log.w(LOG_TAG, "too many operands: " + text);
         }
 
+        if (characterMap.get(keyMask) != null) {
+          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
+          return true;
+        }
+
+        if (dotsMap.get(character) != null) {
+          Log.w(LOG_TAG, "character already defined: " + characterOperand);
+          return true;
+        }
+
+        characterMap.put(keyMask, character);
+        dotsMap.put(character, dots);
         return true;
       }
     };
