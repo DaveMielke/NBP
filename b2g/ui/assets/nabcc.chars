@@ -1,101 +1,101 @@
-S space
-2346 !
-5 "
-3456 #
-1246 $
-146 %
-12346 &
-3 '
-12356 (
-23456 )
-16 *
-346 +
-6 ,
-36 -
-46 .
-34 /
+char space S
+char ! 2346
+char " 5
+char # 3456
+char $ 1246
+char % 146
+char & 12346
+char ' 3
+char ( 12356
+char ) 23456
+char * 16
+char + 346
+char , 6
+char - 36
+char . 46
+char / 34
 
-356 0
-2 1
-23 2
-25 3
-256 4
-26 5
-235 6
-2356 7
-236 8
-35 9
-156 :
-56 ;
-126 <
-123456 =
-345 >
-1456 ?
+char 0 356
+char 1 2
+char 2 23
+char 3 25
+char 4 256
+char 5 26
+char 6 235
+char 7 2356
+char 8 236
+char 9 35
+char : 156
+char ; 56
+char < 126
+char = 123456
+char > 345
+char ? 1456
 
-1 a
-12 b
-14 c
-145 d
-15 e
-124 f
-1245 g
-125 h
-24 i
-245 j
-13 k
-123 l
-134 m
-1345 n
-135 o
-1234 p
-12345 q
-1235 r
-234 s
-2345 t
-136 u
-1236 v
-2456 w
-1346 x
-13456 y
-1356 z
+char a 1
+char b 12
+char c 14
+char d 145
+char e 15
+char f 124
+char g 1245
+char h 125
+char i 24
+char j 245
+char k 13
+char l 123
+char m 134
+char n 1345
+char o 135
+char p 1234
+char q 12345
+char r 1235
+char s 234
+char t 2345
+char u 136
+char v 1236
+char w 2456
+char x 1346
+char y 13456
+char z 1356
 
-17 A
-127 B
-147 C
-1457 D
-157 E
-1247 F
-12457 G
-1257 H
-247 I
-2457 J
-137 K
-1237 L
-1347 M
-13457 N
-1357 O
-12347 P
-123457 Q
-12357 R
-2347 S
-23457 T
-1367 U
-12367 V
-24567 W
-13467 X
-134567 Y
-13567 Z
+char A 17
+char B 127
+char C 147
+char D 1457
+char E 157
+char F 1247
+char G 12457
+char H 1257
+char I 247
+char J 2457
+char K 137
+char L 1237
+char M 1347
+char N 13457
+char O 1357
+char P 12347
+char Q 123457
+char R 12357
+char S 2347
+char T 23457
+char U 1367
+char V 12367
+char W 24567
+char X 13467
+char Y 134567
+char Z 13567
 
-4 `
-246 {
-1256 |
-12456 }
-45 ~
-456 _
+char ` 4
+char { 246
+char | 1256
+char } 12456
+char ~ 45
+char _ 456
 
-47 @
-2467 [
-12567 \
-124567 ]
-457 ^
+char @ 47
+char [ 2467
+char \ 12567
+char ] 124567
+char ^ 457
 

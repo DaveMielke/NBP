@@ -5,8 +5,6 @@ import java.lang.reflect.*;
 import java.util.Map;
 import java.util.HashMap;
 
-import java.util.regex.Pattern;
-
 import android.util.Log;
 
 public class Characters {
@@ -85,8 +83,8 @@ public class Characters {
     return characters;
   }
 
-  private Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
-  private Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
+  private final Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
+  private final Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
 
   public Character getCharacter (int keyMask) {
     return characterMap.get(keyMask);
@@ -155,71 +153,71 @@ public class Characters {
     return null;
   }
 
-  private void addCharacters (String asset) {
-    final Pattern pattern = Pattern.compile("\\s+");
+  private boolean handleCharDirective (String[] operands) {
+    int index = 0;
 
-    InputProcessor inputProcessor = new InputProcessor() {
+    if (index == operands.length) {
+      Log.w(LOG_TAG, "character not specified");
+      return true;
+    }
+
+    String characterOperand = operands[index++];
+    Character character = parseCharacter(characterOperand);
+    if (character == null) return true;
+
+    if (index == operands.length) {
+      Log.w(LOG_TAG, "keys not specified");
+      return true;
+    }
+
+    String keysOperand = operands[index++];
+    Integer keyMask = parseKeys(keysOperand);
+    if (keyMask == null) return true;
+    Byte dots = KeyMask.toDots(keyMask);
+
+    if (dots == null) {
+      Log.w(LOG_TAG, "not space or just dots: " + keysOperand);
+      return true;
+    }
+
+    if (index < operands.length) {
+      Log.w(LOG_TAG, "too many operands");
+    }
+
+    if (characterMap.get(keyMask) != null) {
+      Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
+      return true;
+    }
+
+    if (dotsMap.get(character) != null) {
+      Log.w(LOG_TAG, "character already defined: " + characterOperand);
+      return true;
+    }
+
+    characterMap.put(keyMask, character);
+    dotsMap.put(character, dots);
+    return true;
+  }
+
+  private InputProcessor makeInputProcessor () {
+    DirectiveProcessor directiveProcessor = new DirectiveProcessor();
+
+    directiveProcessor.addDirective("char", new DirectiveProcessor.DirectiveHandler() {
       @Override
-      protected boolean processLine (String text, int number) {
-        String[] operands = pattern.split(text);
-        int index = 0;
-
-        if (index < operands.length) {
-          if (operands[index].isEmpty()) {
-            index += 1;
-          }
-        }
-
-        if (index == operands.length) return true;
-        String operand = operands[index++];
-        if (operand.charAt(0) == '#') return true;
-
-        String keysOperand = operand;
-        Integer keyMask = parseKeys(keysOperand);
-        if (keyMask == null) return true;
-        Byte dots = KeyMask.toDots(keyMask);
-
-        if (dots == null) {
-          Log.w(LOG_TAG, "not space or just dots: " + keysOperand);
-          return true;
-        }
-
-        if (index == operands.length) {
-          Log.w(LOG_TAG, "character not specified: " + text);
-          return true;
-        }
-
-        String characterOperand = operands[index++];
-        Character character = parseCharacter(characterOperand);
-        if (character == null) return true;
-
-        if (index < operands.length) {
-          Log.w(LOG_TAG, "too many operands: " + text);
-        }
-
-        if (characterMap.get(keyMask) != null) {
-          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
-          return true;
-        }
-
-        if (dotsMap.get(character) != null) {
-          Log.w(LOG_TAG, "character already defined: " + characterOperand);
-          return true;
-        }
-
-        characterMap.put(keyMask, character);
-        dotsMap.put(character, dots);
-        return true;
+      public boolean handleDirective (String[] operands) {
+        return handleCharDirective(operands);
       }
-    };
+    });
 
-    inputProcessor.processInput(asset);
+    return directiveProcessor;
   }
 
   public Characters (String... names) {
+    InputProcessor inputProcessor = makeInputProcessor();
+
     for (String name : names) {
       Log.d(LOG_TAG, "begin character definitions: " + name);
-      addCharacters((name + ".chars"));
+      inputProcessor.processInput((name + ".chars"));
       Log.d(LOG_TAG, "end character definitions: " + name);
     }
   }
