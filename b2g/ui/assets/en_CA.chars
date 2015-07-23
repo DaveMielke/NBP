@@ -1,6 +1,4 @@
-include nabcc.chars.inc
-include control.chars.inc
-include symbols.chars.inc
+include en.chars
 include french.chars.inc
 include german.chars.inc
 include italian.chars.inc

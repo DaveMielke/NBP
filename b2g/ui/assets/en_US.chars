@@ -1,4 +1,2 @@
-include nabcc.chars.inc
-include control.chars.inc
-include symbols.chars.inc
+include en.chars
 include spanish.chars.inc

@@ -15,8 +15,8 @@ import java.io.BufferedReader;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 import java.util.Collection;
 
@@ -85,7 +85,10 @@ public abstract class InputProcessor {
       InputStream stream = new FileInputStream(file);
 
       try {
-        return processInput(stream);
+        Log.d(LOG_TAG, "begin file: " + file);
+        boolean processed = processInput(stream);
+        Log.d(LOG_TAG, "end file: " + file);
+        return processed;
       } finally {
         close(stream);
       }
@@ -100,21 +103,33 @@ public abstract class InputProcessor {
     Context context = ApplicationContext.getContext();
     if (context == null) return false;
 
+    File directory = ApplicationUtilities.getExternalStorageDirectory();
     AssetManager assets = context.getAssets();
-    if (assets == null) return false;
 
     for (String name : names) {
-      try {
-        InputStream stream = assets.open(name);
+      if (directory != null) {
+        File file = new File(directory, name);
 
-        try {
-          Log.w(LOG_TAG, "processing asset: " + name);
-          return processInput(stream);
-        } finally {
-          close(stream);
+        if (file.exists()) {
+          return processInput(file);
         }
-      } catch (IOException exception) {
-        Log.w(LOG_TAG, "asset not found: " + name);
+      }
+
+      if (assets != null) {
+        try {
+          InputStream stream = assets.open(name);
+
+          try {
+            Log.d(LOG_TAG, "begin asset: " + name);
+            boolean processed = processInput(stream);
+            Log.d(LOG_TAG, "end asset: " + name);
+            return processed;
+          } finally {
+            close(stream);
+          }
+        } catch (IOException exception) {
+          Log.w(LOG_TAG, "asset not found: " + name);
+        }
       }
     }
 

@@ -1,12 +1,15 @@
 package org.nbp.b2g.ui;
 
 import android.os.Build;
+import android.os.Environment;
 import android.os.SystemClock;
 
 import android.view.ViewConfiguration;
 
 import android.media.ToneGenerator;
 import android.media.AudioManager;
+
+import java.io.File;
 
 public abstract class ApplicationUtilities {
   public static boolean haveSdkVersion (int version) {
@@ -19,6 +22,18 @@ public abstract class ApplicationUtilities {
 
   public static void sleep (long duration) {
     if (duration > 0) SystemClock.sleep(duration);
+  }
+
+  public static File getExternalStorageDirectory () {
+    File directory = Environment.getExternalStorageDirectory();
+    if (directory == null) return null;
+    directory = new File(directory, ApplicationUtilities.class.getPackage().getName());
+
+    if (!directory.exists()) {
+      if (!directory.mkdir()) return null;
+    }
+
+    return directory;
   }
 
   public static long getTapTimeout () {

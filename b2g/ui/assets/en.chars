@@ -1,0 +1,3 @@
+include nabcc.chars.inc
+include control.chars.inc
+include symbols.chars.inc
