@@ -172,7 +172,7 @@ public class KeyBindings {
     return newMasks;
   }
 
-  private static int[] parseKeys (String operand) {
+  private static int[] parseKeyCombination (String operand) {
     int length = operand.length();
     int[] masks = null;
     int mask = 0;
@@ -204,16 +204,16 @@ public class KeyBindings {
     return addKeyMask(masks, mask);
   }
 
-  private boolean bindKeys (String[] operands) {
+  private boolean bindKeyCombination (String[] operands) {
     int index = 0;
 
     if (index == operands.length) {
-      Log.w(LOG_TAG, "keys not specified");
+      Log.w(LOG_TAG, "key combination not specified");
       return true;
     }
 
     String keyCombination = operands[index++];
-    int[] keyMasks = parseKeys(keyCombination);
+    int[] keyMasks = parseKeyCombination(keyCombination);
     if (keyMasks == null) return true;
     int keyMask = keyMasks[keyMasks.length - 1];
 
@@ -225,18 +225,21 @@ public class KeyBindings {
     String actionName = operands[index++];
     Action action = getAction(actionName);
     if (action == null) return true;
+    String actionOperand = (index < operands.length)? operands[index++]: null;
+
+    if (index < operands.length) {
+      Log.w(LOG_TAG, "too many operands");
+    }
 
     if (!addKeyBinding(action, keyMasks)) {
       Log.w(LOG_TAG, "key combination already bound: " + keyCombination);
       return true;
     }
 
-    if (index == operands.length) return true;
-    String actionOperand = operands[index++];
-    if (!action.parseOperand(keyMask, actionOperand)) return true;
-
-    if (index < operands.length) {
-      Log.w(LOG_TAG, "too many operands");
+    if (actionOperand != null) {
+      if (!action.parseOperand(keyMask, actionOperand)) {
+        return true;
+      }
     }
 
     return true;
@@ -248,7 +251,7 @@ public class KeyBindings {
     directiveProcessor.addDirective("bind", new DirectiveProcessor.DirectiveHandler() {
       @Override
       public boolean handleDirective (String[] operands) {
-        return bindKeys(operands);
+        return bindKeyCombination(operands);
       }
     });
 
