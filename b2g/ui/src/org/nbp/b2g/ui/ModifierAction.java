@@ -21,7 +21,7 @@ public abstract class ModifierAction extends Action {
     }
   }
 
-  public static void cancelModifiers () {
+  private static void resetModifiers () {
     boolean cancelled = false;
 
     for (ModifierAction modifier : getModifiers()) {
@@ -31,13 +31,27 @@ public abstract class ModifierAction extends Action {
     if (cancelled) ApplicationUtilities.message(R.string.message_modifier_cancelled);
   }
 
+  private static Timeout modifierTimeout = new Timeout(ApplicationParameters.INTERMEDIATE_ACTION_TIMEOUT, "modifier-timeout") {
+    @Override
+    public void run () {
+      resetModifiers();
+    }
+  };
+
+  public static void cancelModifiers () {
+    modifierTimeout.cancel();
+    resetModifiers();
+  }
+
   public final boolean getState () {
     return setState(false);
   }
 
   @Override
   public boolean performAction () {
+    modifierTimeout.cancel();
     setState(true);
+    modifierTimeout.start();
     return true;
   }
 
