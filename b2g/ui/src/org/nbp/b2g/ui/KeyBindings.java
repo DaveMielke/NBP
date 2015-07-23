@@ -225,7 +225,6 @@ public class KeyBindings {
     String actionName = operands[index++];
     Action action = getAction(actionName);
     if (action == null) return true;
-    String actionOperand = (index < operands.length)? operands[index++]: null;
 
     if (index < operands.length) {
       Log.w(LOG_TAG, "too many operands");
@@ -234,12 +233,6 @@ public class KeyBindings {
     if (!addKeyBinding(action, keyMasks)) {
       Log.w(LOG_TAG, "key combination already bound: " + keyCombination);
       return true;
-    }
-
-    if (actionOperand != null) {
-      if (!action.parseOperand(keyMask, actionOperand)) {
-        return true;
-      }
     }
 
     return true;

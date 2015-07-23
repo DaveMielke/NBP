@@ -37,11 +37,6 @@ public abstract class Action {
     return performAction();
   }
 
-  public boolean parseOperand (int keyMask, String operand) {
-    Log.w(LOG_TAG, "invalid " + getName() + " operand: " + operand);
-    return false;
-  }
-
   protected void log (String message) {
     Log.v(LOG_TAG, message);
   }
