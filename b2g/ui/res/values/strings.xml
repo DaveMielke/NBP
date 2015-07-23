@@ -89,6 +89,7 @@
   <string name="message_no_screen_content">no screen content</string>
   <string name="message_no_character_name">no character name</string>
   <string name="message_select_outgoing_email_app">Select outgoing email app ...</string>
+  <string name="message_intermediate_action_timeout">incomplete entry</string>
 
   <string name="describeBuild_title">Build Properties</string>
   <string name="describeBuild_label_revision">Revision</string>

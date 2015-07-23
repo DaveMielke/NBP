@@ -20,12 +20,41 @@ public class KeyBindings {
   private final KeyBindingMap rootKeyBindings = new KeyBindingMap();
   private KeyBindingMap currentKeyBindings = rootKeyBindings;
 
+  private boolean setKeyBindings (KeyBindingMap keyBindings) {
+    synchronized (rootKeyBindings) {
+      if (currentKeyBindings == keyBindings) return false;
+
+      currentKeyBindings = keyBindings;
+      return true;
+    }
+  }
+
+  private boolean setKeyBindings () {
+    return setKeyBindings(rootKeyBindings);
+  }
+
+  private final Timeout intermediateActionTimeout = new Timeout(ApplicationParameters.INTERMEDIATE_ACTION_TIMEOUT, "intermediate-action-timeout") {
+    @Override
+    public void run () {
+      if (setKeyBindings()) {
+        ApplicationUtilities.message(R.string.message_intermediate_action_timeout);
+      }
+    }
+  };
+
+  public void resetKeyBindings () {
+    intermediateActionTimeout.cancel();
+    setKeyBindings();
+  }
+
   private class IntermediateAction extends Action {
     public final KeyBindingMap keyBindings = new KeyBindingMap();
 
     @Override
     public boolean performAction () {
-      currentKeyBindings = keyBindings;
+      intermediateActionTimeout.cancel();
+      setKeyBindings(keyBindings);
+      intermediateActionTimeout.start();
       return true;
     }
 
@@ -36,10 +65,6 @@ public class KeyBindings {
 
   public boolean isRootKeyBindings () {
     return currentKeyBindings == rootKeyBindings;
-  }
-
-  public void resetKeyBindings () {
-    currentKeyBindings = rootKeyBindings;
   }
 
   private static boolean isIntermediateAction (Action action) {
@@ -215,7 +240,6 @@ public class KeyBindings {
     String keyCombination = operands[index++];
     int[] keyMasks = parseKeyCombination(keyCombination);
     if (keyMasks == null) return true;
-    int keyMask = keyMasks[keyMasks.length - 1];
 
     if (index == operands.length) {
       Log.w(LOG_TAG, "action not specified");

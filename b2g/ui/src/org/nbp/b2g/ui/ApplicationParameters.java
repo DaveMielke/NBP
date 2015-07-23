@@ -35,9 +35,11 @@ public abstract class ApplicationParameters {
   public final static int SCREEN_LEFT_OFFSET = 60; // DIPs
   public final static boolean CHORDS_SEND_SYSTEM_KEYS = true;
 
-  public final static long LONG_PRESS_TIME = 500; // milliseconds
   public final static long LONG_PRESS_DELAY = 100; // milliseconds
   public final static long VIEW_SCROLL_TIMEOUT = 5000; // milliseconds
+
+  public final static long LONG_PRESS_TIME = 500; // milliseconds
+  public final static long INTERMEDIATE_ACTION_TIMEOUT = 5000; // milliseconds
 
   public final static long TAP_HOLD_TIME = 45; // milliseconds
   public final static long TAP_WAIT_TIME = 100; // milliseconds
