@@ -1,6 +1,11 @@
 Quick Reference
 ===============
 
+Hardware Alerts
+---------------
+
+.. include:: ref-alerts.rst
+
 Special Braille Symbols
 -----------------------
 
