@@ -1,83 +1,83 @@
-8 Enter
+bind 8 Enter
 
-B PanLeft
-F PanRight
+bind B PanLeft
+bind F PanRight
 
-U ArrowUp
-D ArrowDown
-L ArrowLeft
-R ArrowRight
+bind U ArrowUp
+bind D ArrowDown
+bind L ArrowLeft
+bind R ArrowRight
 
-7X DescribeCharacter
-8X SetLeft
+bind 7X DescribeCharacter
+bind 8X SetLeft
 
-S148 CopyToClipboard
+bind S148 CopyToClipboard
 
-B1 BrailleInputOff
-F4 BrailleInputOn
+bind B1 BrailleInputOff
+bind F4 BrailleInputOn
 
-B3 LongPressOff
-F6 LongPressOn
+bind B3 LongPressOff
+bind F6 LongPressOn
 
-B7 OneHandOff
-F8 OneHandOn
+bind B7 OneHandOff
+bind F8 OneHandOn
 
-SBF DescribeBuild
+bind SBF DescribeBuild
 
-S12345678 Null
+bind S12345678 Null
 
 ####################
 # required actions #
 ####################
 
-< VolumeDown
-> VolumeUp
+bind < VolumeDown
+bind > VolumeUp
 
-W Null
-Q Null
+bind W Null
+bind Q Null
 
 ##################
 # Legacy Actions #
 ##################
 
-S3 CursorLeft
-S6 CursorRight
+bind S3 CursorLeft
+bind S6 CursorRight
 
-S1 CursorUp
-S4 CursorDown
+bind S1 CursorUp
+bind S4 CursorDown
 
-S23 PageUp
-S56 PageDown
+bind S23 PageUp
+bind S56 PageDown
 
-S123 Home
-S456 End
+bind S123 Home
+bind S456 End
 
-S12 TabBackward
-S45 TabForward
+bind S12 TabBackward
+bind S45 TabForward
 
-S1346 ControlModifier
+bind S1346 ControlModifier
 
-S14 SayLine
-<> SpeechOff
+bind S14 SayLine
+bind <> SpeechOff
 
-8W OneHandOn
+bind 8W OneHandOn
 
 #####################
 # Developer Actions #
 #####################
 
 # make this one very hard to type by accident
-FB1245 DeveloperActions
+bind FB1245 DeveloperActions
 
-F1237 LogNone
-F1 LogKeys
-F2 LogActions
-F3 LogNavigation
-F7 LogUpdates
+bind F1237 LogNone
+bind F1 LogKeys
+bind F2 LogActions
+bind F3 LogNavigation
+bind F7 LogUpdates
 
-F12 SaveSettings
-F23 RestoreSettings
-F37 ResetSettings
+bind F12 SaveSettings
+bind F23 RestoreSettings
+bind F37 ResetSettings
 
-F17 ForceCrash
+bind F17 ForceCrash
 

@@ -5,8 +5,6 @@ import java.lang.reflect.*;
 import java.util.Map;
 import java.util.HashMap;
 
-import java.util.regex.Pattern;
-
 import android.util.Log;
 
 public class KeyBindings {
@@ -206,57 +204,55 @@ public class KeyBindings {
     return addKeyMask(masks, mask);
   }
 
-  private void addKeyBindings (String asset) {
-    final Pattern pattern = Pattern.compile("\\s+");
+  private boolean bindKeys (String[] operands) {
+    int index = 0;
 
-    InputProcessor inputProcessor = new InputProcessor() {
+    if (index == operands.length) {
+      Log.w(LOG_TAG, "keys not specified");
+      return true;
+    }
+
+    String keyCombination = operands[index++];
+    int[] keyMasks = parseKeys(keyCombination);
+    if (keyMasks == null) return true;
+    int keyMask = keyMasks[keyMasks.length - 1];
+
+    if (index == operands.length) {
+      Log.w(LOG_TAG, "action not specified");
+      return true;
+    }
+
+    String actionName = operands[index++];
+    Action action = getAction(actionName);
+    if (action == null) return true;
+
+    if (!addKeyBinding(action, keyMasks)) {
+      Log.w(LOG_TAG, "key combination already bound: " + keyCombination);
+      return true;
+    }
+
+    if (index == operands.length) return true;
+    String actionOperand = operands[index++];
+    if (!action.parseOperand(keyMask, actionOperand)) return true;
+
+    if (index < operands.length) {
+      Log.w(LOG_TAG, "too many operands");
+    }
+
+    return true;
+  }
+
+  private InputProcessor makeInputProcessor () {
+    DirectiveProcessor directiveProcessor = new DirectiveProcessor();
+
+    directiveProcessor.addDirective("bind", new DirectiveProcessor.DirectiveHandler() {
       @Override
-      protected boolean handleLine (String text, int number) {
-        String[] operands = pattern.split(text);
-        int index = 0;
-
-        if (index < operands.length) {
-          if (operands[index].isEmpty()) {
-            index += 1;
-          }
-        }
-
-        if (index == operands.length) return true;
-        String operand = operands[index++];
-        if (operand.charAt(0) == '#') return true;
-        String keysOperand = operand;
-
-        int[] keyMasks = parseKeys(keysOperand);
-        if (keyMasks == null) return true;
-        int keyMask = keyMasks[keyMasks.length - 1];
-
-        if (index == operands.length) {
-          Log.w(LOG_TAG, "action not specified: " + text);
-          return true;
-        }
-
-        operand = operands[index++];
-        Action action = getAction(operand);
-        if (action == null) return true;
-
-        if (!addKeyBinding(action, keyMasks)) {
-          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
-          return true;
-        }
-
-        if (index == operands.length) return true;
-        operand = operands[index++];
-        if (!action.parseOperand(keyMask, operand)) return true;
-
-        if (index < operands.length) {
-          Log.w(LOG_TAG, "too many operands: " + text);
-        }
-
-        return true;
+      public boolean handleDirective (String[] operands) {
+        return bindKeys(operands);
       }
-    };
+    });
 
-    inputProcessor.processInput(asset);
+    return directiveProcessor;
   }
 
   private void addKeyBindings (String[] keysFileNames) {
@@ -264,8 +260,10 @@ public class KeyBindings {
     Log.d(LOG_TAG, "begin key binding definitions: " + endpointName);
 
     if (keysFileNames != null) {
+      InputProcessor inputProcessor = makeInputProcessor();
+
       for (String keysFileName : keysFileNames) {
-        addKeyBindings((keysFileName + ".keys"));
+        inputProcessor.processInput((keysFileName + ".keys"));
       }
     }
 

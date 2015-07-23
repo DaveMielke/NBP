@@ -1,18 +1,18 @@
-S< SpeechOff
-S> SpeechOn
+bind S< SpeechOff
+bind S> SpeechOn
 
-B< StopSpeaking
-B> SayLine
+bind B< StopSpeaking
+bind B> SayLine
 
-1< SpeakSofter
-1> SpeakLouder
+bind 1< SpeakSofter
+bind 1> SpeakLouder
 
-2< SpeakSlower
-2> SpeakFaster
+bind 2< SpeakSlower
+bind 2> SpeakFaster
 
-3< SpeakLower
-3> SpeakHigher
+bind 3< SpeakLower
+bind 3> SpeakHigher
 
-4< SpeakLeft
-4> SpeakRight
+bind 4< SpeakLeft
+bind 4> SpeakRight
 

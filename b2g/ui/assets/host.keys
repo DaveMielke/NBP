@@ -1,56 +1,56 @@
-BH MoveBackward
-FH MoveForward
+bind BH MoveBackward
+bind FH MoveForward
 
-SB MoveBackward
-SF MoveForward
+bind SB MoveBackward
+bind SF MoveForward
 
-C Click
-SC LongClick
+bind C Click
+bind SC LongClick
 
-4U Notifications
-4D HomeKey
+bind 4U Notifications
+bind 4D HomeKey
 
-4L BackKey
-4R RecentApps
+bind 4L BackKey
+bind 4R RecentApps
 
-S1478 PowerOff
-S123456 HomeKey
+bind S1478 PowerOff
+bind S123456 HomeKey
 
-SL MoveFirst
-SR MoveLast
+bind SL MoveFirst
+bind SR MoveLast
 
-SU MovePrevious
-SD MoveNext
+bind SU MovePrevious
+bind SD MoveNext
 
-S124 FindNext
-S134 MenuKey
-S1345 Notifications
-S135 Options
-S1235 RecentApps
-S2345 Clock
-S1356 BackKey
-S1246 Editor
-S1456 Assist
+bind S124 FindNext
+bind S134 MenuKey
+bind S1345 Notifications
+bind S135 Options
+bind S1235 RecentApps
+bind S2345 Clock
+bind S1356 BackKey
+bind S1246 Editor
+bind S1456 Assist
 
-S234-S AndroidSettings
-S234-1 AndroidAccessibilitySettings
-S234-12 AndroidBluetoothSettings
-S234-2456 AndroidWifiSettings
+bind S234-S AndroidSettings
+bind S234-1 AndroidAccessibilitySettings
+bind S234-12 AndroidBluetoothSettings
+bind S234-2456 AndroidWifiSettings
 
 #####################
 # Developer Actions #
 #####################
 
-B4568 SaveScreen
+bind B4568 SaveScreen
 
-B4 MoveToParent
-B5 MoveToPreviousSibling
-B6 MoveToNextSibling
-B8 MoveToChild
-B56 MoveToSelf
+bind B4 MoveToParent
+bind B5 MoveToPreviousSibling
+bind B6 MoveToNextSibling
+bind B8 MoveToChild
+bind B56 MoveToSelf
 
-B456 ScrollBackward
-B568 ScrollForward
+bind B456 ScrollBackward
+bind B568 ScrollForward
 
-B48 SwitchLauncher
+bind B48 SwitchLauncher
 

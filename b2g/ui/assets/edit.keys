@@ -1,12 +1,12 @@
-X BringCursor
+bind X BringCursor
 
-7 DeletePrevious
-S145 DeleteNext
+bind 7 DeletePrevious
+bind S145 DeleteNext
 
-BX SetSelectionStart
-FX SetSelectionEnd
-S18 SelectAll
+bind BX SetSelectionStart
+bind FX SetSelectionEnd
+bind S18 SelectAll
 
-S13468 CutToClipboard
-S12368 PasteFromClipboard
+bind S13468 CutToClipboard
+bind S12368 PasteFromClipboard
 
