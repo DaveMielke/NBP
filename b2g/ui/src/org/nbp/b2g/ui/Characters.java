@@ -151,7 +151,25 @@ public class Characters {
       if (character != null) return character;
     }
 
-    if (operand.length() == 1) return operand.charAt(0);
+    final int length = operand.length();
+    if (length == 1) return operand.charAt(0);
+
+    if ((length == 6) && operand.startsWith("U+")) {
+      String digits = operand.substring(2);
+      int radix = 16;
+
+      if (Character.digit(digits.charAt(0), radix) >= 0) {
+        try {
+          int value = Integer.parseInt(digits, radix);
+
+          if ((value >= Character.MIN_VALUE) && (value <= Character.MAX_VALUE)) {
+            return (char)value;
+          }
+        } catch (NumberFormatException exception) {
+        }
+      }
+    }
+
     Log.w(LOG_TAG, "unknown character: " + operand);
     return null;
   }
