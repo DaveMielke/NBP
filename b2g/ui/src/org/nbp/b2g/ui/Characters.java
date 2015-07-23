@@ -257,7 +257,10 @@ public class Characters {
         }
       }
 
-      names.add("en_US");
+      {
+        String fallback = "en_US";
+        if (!names.contains(fallback)) names.add(fallback);
+      }
     }
 
     {
