@@ -42,10 +42,12 @@ public abstract class KeyEvents {
   }
 
   private static boolean performAction (boolean isLongPress) {
-    try {
-      int keys = activeNavigationKeys;
-      if (keys == 0) return true;
+    boolean wasModifier = false;
 
+    int keys = activeNavigationKeys;
+    if (keys == 0) return true;
+
+    try {
       KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
       Action action = null;
       boolean performed = false;
@@ -67,6 +69,8 @@ public abstract class KeyEvents {
       }
 
       if (action != null) {
+        if (action instanceof ModifierAction) wasModifier = true;
+
         if (performAction(action, isLongPress)) {
           performed = true;
         }
@@ -76,6 +80,7 @@ public abstract class KeyEvents {
       return performed;
     } finally {
       activeNavigationKeys = 0;
+      if (!wasModifier) ModifierAction.cancelModifiers();
     }
   }
 
