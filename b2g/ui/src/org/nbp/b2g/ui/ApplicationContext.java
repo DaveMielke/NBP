@@ -54,16 +54,16 @@ public abstract class ApplicationContext {
     }
   }
 
+  public static String getString (int resource) {
+    Context context = getContext();
+    if (context == null) return null;
+    return context.getString(resource);
+  }
+
   public static Resources getResources () {
     Context context = getContext();
     if (context == null) return null;
     return context.getResources();
-  }
-
-  public static String getString (int resource) {
-    Resources resources = getResources();
-    if (resources == null) return null;
-    return resources.getString(resource);
   }
 
   public static String[] getStringArray (int resource) {
