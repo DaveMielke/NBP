@@ -329,9 +329,11 @@ public class Characters {
     return currentCharacters;
   }
 
-  public static void setCharacters (Characters characters) {
+  public static Characters setCharacters (Characters newCharacters) {
     synchronized (CURRENT_CHARACTERS_LOCK) {
-      currentCharacters = characters;
+      Characters oldCharacters = currentCharacters;
+      currentCharacters = newCharacters;
+      return oldCharacters;
     }
   }
 }
