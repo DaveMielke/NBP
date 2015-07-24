@@ -1,7 +1,5 @@
 package org.nbp.b2g.ui;
 
-import java.lang.reflect.*;
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -50,34 +48,27 @@ public class Characters {
   public final static char CHAR_SPACE = 0X0020;
   public final static char CHAR_DEL   = 0X007F;
 
-  public static Character getCharacter (String name) {
-    name = "CHAR_" + name.toUpperCase();
-
-    try {
-      Field field = Characters.class.getField(name);
-      int modifiers = field.getModifiers();
-
-      if (Modifier.isStatic(modifiers)) {
-        if (Modifier.isFinal(modifiers)) {
-          Class type = field.getType();
-
-          if (type.equals(char.class)) {
-            return field.getChar(null);
-          } else {
-            Log.w(LOG_TAG, "field is not a char: " + name);
-          }
-        } else {
-          Log.w(LOG_TAG, "field is not final: " + name);
-        }
-      } else {
-        Log.w(LOG_TAG, "field is not static: " + name);
-      }
-    } catch (NoSuchFieldException exception) {
-    } catch (IllegalAccessException exception) {
-      Log.w(LOG_TAG, "field not accessible: " + name);
+  private final static NumericFieldMap characterFields = new NumericFieldMap() {
+    @Override
+    protected final String getMapType () {
+      return "character";
     }
 
-    return null;
+    @Override
+    protected final String getNamePrefix () {
+      return "CHAR_";
+    }
+  };
+
+  static {
+    NumericFieldMap.makeMaps(
+      Characters.class, char.class,
+      characterFields
+    );
+  }
+
+  public static Character getCharacter (String name) {
+    return characterFields.getCharacterValue(name.toUpperCase());
   }
 
   private final static Characters characters = new Characters();
