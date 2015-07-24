@@ -24,7 +24,8 @@
 .. |DeletePrevious| replace:: delete previous character
 .. |DescribeBuild| replace:: popup a description of the build
 .. |DescribeCharacter| replace:: popup a description of a character
-.. |DeveloperActions| replace:: enable/disable (long/short press) developer actions
+.. |DeveloperOff| replace:: disable developer actions
+.. |DeveloperOn| replace:: enable developer actions
 .. |Editor| replace:: go to the Editor
 .. |End| replace:: the End key
 .. |Enter| replace:: the Enter key
@@ -34,11 +35,11 @@
 .. |HomeKey| replace:: the Android Home key
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
-.. |LogActions| replace:: turn on logging of user-requested actions
-.. |LogKeys| replace:: turn on logging of keyboard key events
-.. |LogNavigation| replace:: turn on logging of internal screen navigation operations
-.. |LogNone| replace:: turn off all log categories
-.. |LogUpdates| replace:: turn on logging of Android accessibility events
+.. |LogActions| replace:: enable logging of user-requested actions
+.. |LogKeys| replace:: enable logging of keyboard key events
+.. |LogNavigation| replace:: enable logging of internal screen navigation operations
+.. |LogNone| replace:: disable all log categories
+.. |LogUpdates| replace:: enable logging of Android accessibility events
 .. |LongClick| replace:: hold (long click) current screen element
 .. |LongPressOff| replace:: disable long key press actions
 .. |LongPressOn| replace:: enable long key press actions
@@ -56,8 +57,8 @@
 .. |MoveToSelf| replace:: describe current node
 .. |Notifications| replace:: go to the Notifications screen
 .. |Null| replace:: cancel an accidentally-started key combination
-.. |OneHandOff| replace:: turn off one hand mode
-.. |OneHandOn| replace:: turn on one hand mode
+.. |OneHandOff| replace:: disable one hand mode
+.. |OneHandOn| replace:: enable one hand mode
 .. |Options| replace:: go to the Options (User Interface Settings) screen
 .. |PageDown| replace:: the Page Down key
 .. |PageUp| replace:: the Page Up key
@@ -85,8 +86,8 @@
 .. |SpeakRight| replace:: pan speech to the right
 .. |SpeakSlower| replace:: decrease speech rate
 .. |SpeakSofter| replace:: decrease speech volume
-.. |SpeechOff| replace:: turn speech off
-.. |SpeechOn| replace:: turn speech on
+.. |SpeechOff| replace:: disable speech
+.. |SpeechOn| replace:: enable speech
 .. |StopSpeaking| replace:: stop speaking
 .. |SwitchLauncher| replace:: go to the Launcher chooser
 .. |TabBackward| replace:: the Shift and Tab keys

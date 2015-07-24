@@ -1,5 +1,6 @@
 # make this one very hard to type by accident
-bind FB1245 DeveloperActions
+bind FB1245 DeveloperOff
+bind FB1245H DeveloperOn
 
 bind F1237 LogNone
 bind F1 LogKeys

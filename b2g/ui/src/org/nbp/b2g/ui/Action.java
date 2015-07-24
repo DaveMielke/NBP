@@ -33,10 +33,6 @@ public abstract class Action {
     return performAction(cursorKeys[0]);
   }
 
-  public boolean performAction (boolean isLongPress) {
-    return performAction();
-  }
-
   protected void log (String message) {
     Log.v(LOG_TAG, message);
   }
