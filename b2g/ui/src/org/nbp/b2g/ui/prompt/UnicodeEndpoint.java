@@ -15,9 +15,17 @@ public class UnicodeEndpoint extends PromptEndpoint {
 
   @Override
   protected String getTrailer () {
+    StringBuilder sb = new StringBuilder();
     Character character = toCharacter(getResponse());
-    if (character == null) return "";
-    return ": " + Character.getName(character);
+
+    if (character != null) {
+      sb.append(' ');
+      sb.append(character);
+      sb.append('\n');
+      sb.append(Character.getName(character).toLowerCase());
+    }
+
+    return sb.toString();
   }
 
   @Override
@@ -33,10 +41,12 @@ public class UnicodeEndpoint extends PromptEndpoint {
 
   @Override
   public final boolean handleResponse (String response) {
-    return false;
+    Character character = toCharacter(response);
+    if (character == null) return false;
+    return Endpoints.host.get().insertText(character);
   }
 
   public UnicodeEndpoint () {
-    super("Unicode");
+    super("Unicode", "U+");
   }
 }

@@ -72,11 +72,17 @@ public abstract class PromptEndpoint extends Endpoint {
     return success;
   }
 
-  public PromptEndpoint (String prompt) {
+  public PromptEndpoint (String prompt, String prefix) {
     super("prompt");
 
     buffer.append(prompt);
     buffer.append("> ");
+    buffer.append(prefix);
+
     start = buffer.length();
+  }
+
+  public PromptEndpoint (String prompt) {
+    this(prompt, "");
   }
 }
