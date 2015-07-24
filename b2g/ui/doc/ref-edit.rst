@@ -9,4 +9,5 @@ FX         |SetSelectionEnd|
 S18        |SelectAll|
 S13468     |CutToClipboard|
 S12368     |PasteFromClipboard|
+S136       |InsertUnicode|
 =========  =================

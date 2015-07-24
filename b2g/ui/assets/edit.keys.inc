@@ -10,3 +10,5 @@ bind S18 SelectAll
 bind S13468 CutToClipboard
 bind S12368 PasteFromClipboard
 
+bind S136 InsertUnicode
+

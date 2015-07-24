@@ -33,6 +33,7 @@
 .. |ForceCrash| replace:: force a component crash
 .. |Home| replace:: the Home key
 .. |HomeKey| replace:: the Android Home key
+.. |InsertUnicode| replace:: insert a Unicode character by value
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
 .. |LogActions| replace:: enable logging of user-requested actions

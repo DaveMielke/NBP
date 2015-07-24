@@ -7,52 +7,66 @@ public abstract class PromptEndpoint extends Endpoint {
   private final StringBuilder buffer = new StringBuilder();
   private final int start;
 
+  protected String getTrailer () {
+    return "";
+  }
+
   @Override
-  public boolean write () {
-    setText(buffer.toString(), true);
+  public final boolean write () {
+    setText((buffer.toString() + getTrailer()), true);
     return super.write();
   }
 
   @Override
-  public void onForeground () {
+  public final void onForeground () {
     setSelection(start, buffer.length());
     super.onForeground();
   }
 
+  protected final int getResponseLength () {
+    return buffer.length() - start;
+  }
+
+  protected boolean canInsertText (String string) {
+    return true;
+  }
+
   @Override
-  public boolean insertText (String string) {
+  public final boolean insertText (String string) {
+    if (!canInsertText(string)) return false;
+
     int start = getSelectionStart();
     int end = getSelectionEnd();
 
     buffer.delete(start, end);
     buffer.insert(start, string);
-    if (!setCursor(start + string.length())) return false;
+    if (!setCursor((start + string.length()))) return false;
     return write();
   }
 
   @Override
-  public boolean deleteText (int start, int end) {
+  public final boolean deleteText (int start, int end) {
     buffer.delete(start, end);
     if (!setCursor(start)) return false;
     return write();
   }
 
-  public String getResponse () {
+  public final String getResponse () {
     return buffer.toString().substring(start);
   }
 
   @Override
-  public boolean isEditable () {
+  public final boolean isEditable () {
     return true;
   }
 
   @Override
-  public boolean isSelectable (int offset) {
+  public final boolean isSelectable (int offset) {
     return offset >= start;
   }
 
   @Override
-  public boolean handleKeyboardKey_enter () {
+  public final boolean handleKeyboardKey_enter () {
     boolean success = handleResponse(getResponse());
     if (!super.handleKeyboardKey_enter()) return false;
     return success;

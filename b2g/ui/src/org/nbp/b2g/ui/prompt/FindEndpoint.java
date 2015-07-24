@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class FindEndpoint extends PromptEndpoint {
   @Override
-  public boolean handleResponse (String response) {
+  public final boolean handleResponse (String response) {
     boolean found = false;
 
     if (response.length() > 0) {
