@@ -105,6 +105,7 @@ public class Characters {
         if ((character & Braille.UNICODE_DOT_7) != 0) dots |= BrailleDevice.DOT_7;
         if ((character & Braille.UNICODE_DOT_8) != 0) dots |= BrailleDevice.DOT_8;
 
+        dotsMap.put(character, dots);
         return dots;
       }
     }
@@ -114,7 +115,11 @@ public class Characters {
 
       if (base != character) {
         Byte dots = dotsMap.get(base);
-        if (dots != null) return dots;
+
+        if (dots != null) {
+          dotsMap.put(character, dots);
+          return dots;
+        }
       }
     }
 
