@@ -305,15 +305,8 @@ public class HostEndpoint extends Endpoint {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
-  @Override
-  protected String[] getKeysFileNames () {
-    return new String[] {
-      "common", "speech", "edit", "host"
-    };
-  }
-
   public HostEndpoint () {
-    super();
+    super("common", "speech", "edit", "host");
     resetNode();
     write(R.string.message_no_screen_monitor);
   }

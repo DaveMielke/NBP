@@ -58,15 +58,8 @@ public abstract class PromptEndpoint extends Endpoint {
     return success;
   }
 
-  @Override
-  protected String[] getKeysFileNames () {
-    return new String[] {
-      "common", "speech", "edit"
-    };
-  }
-
   public PromptEndpoint (String prompt) {
-    super();
+    super("common", "speech", "edit");
 
     buffer.append(prompt);
     buffer.append("> ");
