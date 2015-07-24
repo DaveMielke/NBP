@@ -1,5 +1,6 @@
 package org.nbp.b2g.ui;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -273,39 +274,12 @@ public class Characters {
     return directiveProcessor;
   }
 
-  public Characters (String name) {
-    List<String> names = new ArrayList<String>();
-
-    if (name != null) {
-      names.add(name);
-    } else {
-      Locale locale = Locale.getDefault();
-
-      if (locale != null) {
-        String language = locale.getLanguage();
-
-        if (language != null) {
-          String country = locale.getCountry();
-
-          if (country != null) {
-            names.add((language + "_" + country));
-          }
-
-          names.add(language);
-        }
-      }
-
-      {
-        String fallback = "en_US";
-        if (!names.contains(fallback)) names.add(fallback);
-      }
-    }
-
+  public Characters (String[] names) {
     {
-      final int size = names.size();
+      final int length = names.length;
 
-      for (int index=0; index<size; index+=1) {
-        names.set(index, (names.get(index) + ".chars"));
+      for (int index=0; index<length; index+=1) {
+        names[index] = names[index] + ".chars";
       }
     }
 
@@ -314,8 +288,42 @@ public class Characters {
     Log.d(LOG_TAG, "end character definitions");
   }
 
+  public Characters (String name) {
+    this(new String[] {name});
+  }
+
+  public Characters (Collection<String> names) {
+    this(names.toArray(new String[names.size()]));
+  }
+
+  private static Collection<String> getDefaultNames () {
+    Collection<String> names = new ArrayList<String>();
+    Locale locale = Locale.getDefault();
+
+    if (locale != null) {
+      String language = locale.getLanguage();
+
+      if (language != null) {
+        String country = locale.getCountry();
+
+        if (country != null) {
+          names.add((language + "_" + country));
+        }
+
+        names.add(language);
+      }
+    }
+
+    {
+      String fallback = "en_US";
+      if (!names.contains(fallback)) names.add(fallback);
+    }
+
+    return names;
+  }
+
   public Characters () {
-    this(null);
+    this(getDefaultNames());
   }
 
   private final static Object CURRENT_CHARACTERS_LOCK = new Object();
