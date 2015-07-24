@@ -18,7 +18,8 @@ public class HostMonitor extends BroadcastReceiver {
       Log.d(LOG_TAG, "host action: " + action);
 
       if (Environment.isExternalStorageRemovable()) {
-        if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+        if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+          Characters.setCharacters(new Characters());
         }
       }
     }
