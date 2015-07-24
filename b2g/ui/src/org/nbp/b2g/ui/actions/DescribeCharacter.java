@@ -2,6 +2,10 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class DescribeCharacter extends Action {
+  private static String normalizeName (String name) {
+    return name.replace('_', ' ').toLowerCase();
+  }
+
   @Override
   public boolean performAction (int cursorKey) {
     Character character;
@@ -32,7 +36,7 @@ public class DescribeCharacter extends Action {
 
       if (block != null) {
         sb.append("\nBlock: ");
-        sb.append(block.toString().replace('_', ' ').toLowerCase());
+        sb.append(normalizeName(block.toString()));
       }
     }
 
@@ -44,7 +48,7 @@ public class DescribeCharacter extends Action {
         String name = UnicodeUtilities.getCategoryName(value);
 
         if (name != null) {
-          sb.append(name);
+          sb.append(normalizeName(name));
         } else {
           sb.append(value);
         }
@@ -59,7 +63,7 @@ public class DescribeCharacter extends Action {
         String name = UnicodeUtilities.getDirectionalityName(value);
 
         if (name != null) {
-          sb.append(name);
+          sb.append(normalizeName(name));
         } else {
           sb.append(value);
         }
