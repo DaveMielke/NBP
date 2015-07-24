@@ -8,7 +8,7 @@ import android.util.Log;
 public abstract class UnicodeUtilities {
   private final static String LOG_TAG = UnicodeUtilities.class.getName();
 
-  private final static NumericFieldMap directionalityFields = new NumericFieldMap() {
+  private final static ByteFieldMap directionalityFields = new ByteFieldMap() {
     @Override
     protected final String getMapType () {
       return "Unicode directionality";
@@ -20,7 +20,7 @@ public abstract class UnicodeUtilities {
     }
   };
 
-  private final static NumericFieldMap categoryFields = new NumericFieldMap() {
+  private final static ByteFieldMap categoryFields = new ByteFieldMap() {
     @Override
     protected final String getMapType () {
       return "Unicode category";
@@ -33,8 +33,8 @@ public abstract class UnicodeUtilities {
   };
 
   static {
-    NumericFieldMap.makeMaps(
-      Character.class, byte.class,
+    ByteFieldMap.makeMaps(
+      Character.class,
       directionalityFields,
       categoryFields // must be last (no name prefix)
     );

@@ -16,7 +16,7 @@ public abstract class NumericFieldMap {
   private final Map<String, Long> values = new HashMap<String, Long>();
   private final Map<Long, String> names = new HashMap<Long, String>();
 
-  private void add (String name, long value) {
+  private final void add (String name, long value) {
     values.put(name, value);
     names.put(value, name);
   }
@@ -25,7 +25,7 @@ public abstract class NumericFieldMap {
     return names.get(value);
   }
 
-  private Long getValue (String name, long minimum, long maximum) {
+  protected final Long getValue (String name, long minimum, long maximum) {
     Long value = values.get(name);
     if (value == null) return null;
     if (value < minimum) return null;
@@ -33,37 +33,7 @@ public abstract class NumericFieldMap {
     return value;
   }
 
-  public final Long getLongValue (String name) {
-    Long value = getValue(name, Long.MIN_VALUE, Long.MAX_VALUE);
-    if (value == null) return null;
-    return value.longValue();
-  }
-
-  public final Integer getIntegerValue (String name) {
-    Long value = getValue(name, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    if (value == null) return null;
-    return value.intValue();
-  }
-
-  public final Short getShortValue (String name) {
-    Long value = getValue(name, Short.MIN_VALUE, Short.MAX_VALUE);
-    if (value == null) return null;
-    return value.shortValue();
-  }
-
-  public final Byte getByteValue (String name) {
-    Long value = getValue(name, Byte.MIN_VALUE, Byte.MAX_VALUE);
-    if (value == null) return null;
-    return value.byteValue();
-  }
-
-  public final Character getCharacterValue (String name) {
-    Long value = getValue(name, Character.MIN_VALUE, Character.MAX_VALUE);
-    if (value == null) return null;
-    return (char)value.longValue();
-  }
-
-  public static void makeMaps (Class container, Class type, NumericFieldMap... maps) {
+  protected static void makeMaps (Class container, Class type, NumericFieldMap... maps) {
     for (Field field : container.getFields()) {
       if (!field.getType().equals(type)) continue;
       Long value;
@@ -107,7 +77,7 @@ public abstract class NumericFieldMap {
     }
   }
 
-  public NumericFieldMap () {
+  protected NumericFieldMap () {
     super();
   }
 }

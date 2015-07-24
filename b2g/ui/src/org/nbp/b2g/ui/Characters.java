@@ -48,7 +48,7 @@ public class Characters {
   public final static char CHAR_SPACE = 0X0020;
   public final static char CHAR_DEL   = 0X007F;
 
-  private final static NumericFieldMap characterFields = new NumericFieldMap() {
+  private final static CharacterFieldMap characterFields = new CharacterFieldMap() {
     @Override
     protected final String getMapType () {
       return "character";
@@ -61,14 +61,14 @@ public class Characters {
   };
 
   static {
-    NumericFieldMap.makeMaps(
-      Characters.class, char.class,
+    CharacterFieldMap.makeMaps(
+      Characters.class,
       characterFields
     );
   }
 
   public static Character getCharacter (String name) {
-    return characterFields.getCharacterValue(name.toUpperCase());
+    return characterFields.getValue(name.toUpperCase());
   }
 
   private final static Characters characters = new Characters();
