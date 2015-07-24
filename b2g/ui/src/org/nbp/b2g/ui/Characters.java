@@ -61,32 +61,47 @@ public class Characters {
   };
 
   static {
+    Log.d(LOG_TAG, "begin mapping character fields");
+
     CharacterFieldMap.makeMaps(
       Characters.class,
       characterFields
     );
+
+    Log.d(LOG_TAG, "end mapping character fields");
   }
 
   public static Character getCharacter (String name) {
     return characterFields.getValue(name.toUpperCase());
   }
 
-  private final static Characters characters = new Characters();
+  private final Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
 
-  public static Characters getCharacters () {
-    return characters;
+  private final void setCharacter (Integer keyMask, Character character) {
+    characterMap.put(keyMask, character);
   }
 
-  private final Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
-  private final Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
-
-  public Character toCharacter (int keyMask) {
+  private final Character getCharacter (Integer keyMask) {
     return characterMap.get(keyMask);
   }
 
-  public Byte toDots (char character) {
+  public final Character toCharacter (int keyMask) {
+    return getCharacter(keyMask);
+  }
+
+  private final Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
+
+  private final void setDots (Character character, Byte dots) {
+    dotsMap.put(character, dots);
+  }
+
+  private final Byte getDots (Character character) {
+    return dotsMap.get(character);
+  }
+
+  public final Byte toDots (char character) {
     {
-      Byte dots = dotsMap.get(character);
+      Byte dots = getDots(character);
       if (dots != null) return dots;
     }
 
@@ -105,7 +120,7 @@ public class Characters {
         if ((character & Braille.UNICODE_DOT_7) != 0) dots |= BrailleDevice.DOT_7;
         if ((character & Braille.UNICODE_DOT_8) != 0) dots |= BrailleDevice.DOT_8;
 
-        dotsMap.put(character, dots);
+        setDots(character, dots);
         return dots;
       }
     }
@@ -114,40 +129,16 @@ public class Characters {
       char base = UnicodeUtilities.getBaseCharacter(character);
 
       if (base != character) {
-        Byte dots = dotsMap.get(base);
+        Byte dots = getDots(base);
 
         if (dots != null) {
-          dotsMap.put(character, dots);
+          setDots(character, dots);
           return dots;
         }
       }
     }
 
     return null;
-  }
-
-  private static Integer parseKeys (String operand) {
-    int length = operand.length();
-    int mask = 0;
-
-    for (int index=0; index<length; index+=1) {
-      char character = operand.charAt(index);
-      Integer bit = KeyMask.toBit(Character.toUpperCase(character));
-
-      if (bit == null) {
-        Log.w(LOG_TAG, "unknown key: " + character);
-        return null;
-      }
-
-      if ((mask & bit) != 0) {
-        Log.w(LOG_TAG, "key specified more than once: " + operand);
-        return null;
-      }
-
-      mask |= bit;
-    }
-
-    return mask;
   }
 
   private static Character parseCharacter (String operand) {
@@ -179,7 +170,31 @@ public class Characters {
     return null;
   }
 
-  private boolean defineCharacter (String[] operands, boolean forInput) {
+  private static Integer parseKeys (String operand) {
+    int length = operand.length();
+    int mask = 0;
+
+    for (int index=0; index<length; index+=1) {
+      char character = operand.charAt(index);
+      Integer bit = KeyMask.toBit(Character.toUpperCase(character));
+
+      if (bit == null) {
+        Log.w(LOG_TAG, "unknown key: " + character);
+        return null;
+      }
+
+      if ((mask & bit) != 0) {
+        Log.w(LOG_TAG, "key specified more than once: " + operand);
+        return null;
+      }
+
+      mask |= bit;
+    }
+
+    return mask;
+  }
+
+  private final boolean defineCharacter (String[] operands, boolean forInput) {
     int index = 0;
 
     if (index == operands.length) {
@@ -211,7 +226,7 @@ public class Characters {
     }
 
     if (forInput) {
-      Character old = characterMap.get(keyMask);
+      Character old = getCharacter(keyMask);
 
       if (old != null) {
         if (!old.equals(character)) {
@@ -224,21 +239,21 @@ public class Characters {
     }
 
     {
-      Byte old = dotsMap.get(character);
+      Byte old = getDots(character);
 
       if (old == null) {
-        dotsMap.put(character, dots);
+        setDots(character, dots);
       } else if (!old.equals(dots)) {
         Log.w(LOG_TAG, "character already defined: " + characterOperand);
         return true;
       }
     }
 
-    if (forInput) characterMap.put(keyMask, character);
+    if (forInput) setCharacter(keyMask, character);
     return true;
   }
 
-  private InputProcessor makeInputProcessor () {
+  private final InputProcessor makeInputProcessor () {
     DirectiveProcessor directiveProcessor = new DirectiveProcessor();
 
     directiveProcessor.addDirective("char", new DirectiveProcessor.DirectiveHandler() {
@@ -301,5 +316,11 @@ public class Characters {
 
   public Characters () {
     this(null);
+  }
+
+  private final static Characters characters = new Characters();
+
+  public static Characters getCharacters () {
+    return characters;
   }
 }
