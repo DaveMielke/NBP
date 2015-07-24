@@ -109,6 +109,11 @@ public class Characters {
       }
     }
 
+    {
+      Byte dots = dotsMap.get(UnicodeUtilities.getBaseCharacter(character));
+      if (dots != null) return dots;
+    }
+
     return null;
   }
 
