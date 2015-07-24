@@ -318,9 +318,20 @@ public class Characters {
     this(null);
   }
 
-  private final static Characters characters = new Characters();
+  private final static Object CURRENT_CHARACTERS_LOCK = new Object();
+  private static Characters currentCharacters = null;
 
   public static Characters getCharacters () {
-    return characters;
+    synchronized (CURRENT_CHARACTERS_LOCK) {
+      if (currentCharacters == null) currentCharacters = new Characters();
+    }
+
+    return currentCharacters;
+  }
+
+  public static void setCharacters (Characters characters) {
+    synchronized (CURRENT_CHARACTERS_LOCK) {
+      currentCharacters = characters;
+    }
   }
 }
