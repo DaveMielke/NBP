@@ -80,13 +80,25 @@ The camera's lens is the small circle on the bottom that's about 2cm
 (3/4 of an inch) in from the middle of the right side. The rectangular 
 window that's just a little further in is where the flash LEDs are.
 
+The Reset Switch
+````````````````
+
 The Reset button is hidden within a very small, round hole on the 
 bottom. If the device is turned over, front to back, the hole is at 
 about the eight o'clock position, very close to the foot nearest to the 
 Power switch. A thin, round object, like a pin or paperclip, is needed.
 
+Try to keep the object you're using as perpendicular to the bottom as you can.
+You only need to press gently. If it feels like you're pressing against a hard
+surface then you've missed the button. You should feel a soft click. You should
+also hear a long, high-pitched beep.
+
+If you also hear three short beeps then the battery is too low, and you'll need
+to charge the battery for a while before you'll be able to successfully boot
+the device.
+
 The Removable Cover
-~~~~~~~~~~~~~~~~~~~
+```````````````````
 
 There's a removable, rectangular, plastic cover in the middle of the 
 bottom. To remove it:
