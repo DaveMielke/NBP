@@ -33,6 +33,6 @@ public class PopupEndpoint extends Endpoint {
   }
 
   public PopupEndpoint () {
-    super("common", "speech");
+    super("popup");
   }
 }

@@ -1,0 +1,40 @@
+bind BH MoveBackward
+bind FH MoveForward
+
+bind SB MoveBackward
+bind SF MoveForward
+
+bind C Click
+bind SC LongClick
+
+bind 4U Notifications
+bind 4D HomeKey
+
+bind 4L BackKey
+bind 4R RecentApps
+
+bind S1478 PowerOff
+bind S123456 HomeKey
+
+bind SL MoveFirst
+bind SR MoveLast
+
+bind SU MovePrevious
+bind SD MoveNext
+
+bind S124 FindNext
+bind S134 MenuKey
+bind S1345 Notifications
+bind S135 Options
+bind S1235 RecentApps
+bind S2345 Clock
+bind S1356 BackKey
+bind S1246 Editor
+bind S1456 Assist
+
+bind S234-S AndroidSettings
+bind S234-1 AndroidAccessibilitySettings
+bind S234-12 AndroidBluetoothSettings
+bind S234-2456 AndroidWifiSettings
+
+include screen-developer.keys.inc

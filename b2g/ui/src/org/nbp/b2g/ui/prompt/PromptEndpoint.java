@@ -59,7 +59,7 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   public PromptEndpoint (String prompt) {
-    super("common", "speech", "edit");
+    super("prompt");
 
     buffer.append(prompt);
     buffer.append("> ");

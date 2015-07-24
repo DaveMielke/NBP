@@ -306,7 +306,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   public HostEndpoint () {
-    super("common", "speech", "edit", "host");
+    super("host");
     resetNode();
     write(R.string.message_no_screen_monitor);
   }

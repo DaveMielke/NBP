@@ -26,6 +26,6 @@ bind SBF DescribeBuild
 
 bind S12345678 Null
 
-include common-required.keys.inc
-include common-legacy.keys.inc
-include common-developer.keys.inc
+include all-required.keys.inc
+include all-legacy.keys.inc
+include all-developer.keys.inc

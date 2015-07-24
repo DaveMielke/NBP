@@ -575,8 +575,8 @@ public abstract class Endpoint {
     return keyBindings;
   }
 
-  public Endpoint (String... keysFileNames) {
-    keyBindings = new KeyBindings(this, keysFileNames);
+  public Endpoint (String name) {
+    keyBindings = new KeyBindings(this, name);
     setText("");
   }
 }

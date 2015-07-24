@@ -275,23 +275,14 @@ public class KeyBindings {
     return directiveProcessor;
   }
 
-  private void addKeyBindings (String[] keysFileNames) {
-    String endpointName = LanguageUtilities.getClassName(endpoint.getClass());
-    Log.d(LOG_TAG, "begin key binding definitions: " + endpointName);
-
-    if (keysFileNames != null) {
-      InputProcessor inputProcessor = makeInputProcessor();
-
-      for (String keysFileName : keysFileNames) {
-        inputProcessor.processInput((keysFileName + ".keys"));
-      }
-    }
-
-    Log.d(LOG_TAG, "end key binding definitions: " + endpointName);
+  private void addKeyBindings (String name) {
+    Log.d(LOG_TAG, "begin key binding definitions: " + name);
+    makeInputProcessor().processInput((name + ".keys"));
+    Log.d(LOG_TAG, "end key binding definitions: " + name);
   }
 
-  public KeyBindings (Endpoint endpoint, String[] keysFileNames) {
+  public KeyBindings (Endpoint endpoint, String name) {
     this.endpoint = endpoint;
-    addKeyBindings(keysFileNames);
+    addKeyBindings(name);
   }
 }
