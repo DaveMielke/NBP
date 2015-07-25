@@ -7,8 +7,8 @@ Symbol  Name
 4       Dot 4
 5       Dot 5
 6       Dot 6
-7       Dot 7
-8       Dot 8
+7       Dot 7 (Backspace)
+8       Dot 8 (Enter)
 B       Backward
 C       D-Pad Center
 D       D-Pad Down
