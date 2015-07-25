@@ -298,6 +298,7 @@ public class Characters {
 
   private static Collection<String> getDefaultNames () {
     Collection<String> names = new ArrayList<String>();
+    names.add("override");
     Locale locale = Locale.getDefault();
 
     if (locale != null) {
