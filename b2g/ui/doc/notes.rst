@@ -221,7 +221,7 @@ possible:
   dot 8 (the Enter key).
 
 In order to indirectly type it, press Chord-u (dots 136). This brings up a
-prompt with the following header::
+prompt (see `Prompts`_) with the following header::
 
   Unicode> U+
 
@@ -397,14 +397,29 @@ Popups are used to present user-requested data as well as important system
 information. This includes (but isn't limited to):
 
 * The arrival of an Android notification.
+
 * The description of a character.
+
 * Detailed information that identifies the build.
 
-A popup is a multi-line, read-only dialog. Normal ``Navigation`` may be
+A popup is a multi-line, read-only dialog. Normal navigation may be
 performed within it, except that it isn't editable. Dismiss it by pressing
 Enter. It's automatically dismissed if no navigation operations are performed
 within it for |popup timeout|.
 
 Prompts
 ~~~~~~~
+
+Prompts are used to request information from the user. This includes (but isn't
+limited to):
+
+* Requesting the value of a Unicode character (see `Typing Any Unicode
+  Character`_).
+
+* Requesting the text to search within the current screen element for (see
+  `Find Mode`_).
+
+A prompt is a single-line, read-write dialog. Normal navigation and editing may
+be performed within its response area. Press Enter once the requested
+information has been entered.
 
