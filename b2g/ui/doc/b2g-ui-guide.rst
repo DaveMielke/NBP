@@ -3,8 +3,10 @@ The B2G User Interface
 ======================
 
 .. |long press timeout| replace:: half a second
+.. |control modifier timeout| replace:: five seconds
+
 .. |popup timeout| replace:: 30 seconds
-.. |message hold time| replace:: two seconds
+.. |message time| replace:: two seconds
 
 .. |clock standard| replace:: ISO 8601 international format
 .. |clock format| replace:: YYYY-MM-DD hh:mm:ss

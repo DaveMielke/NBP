@@ -205,6 +205,8 @@ before the letter or special symbol that represents it (see `ASCII Control
 Characters`_). For example, in order to type a tab (which happens to be control
 I), press Space+x and then immediately type the letter ``i``.
 
+The letter or special symbol must be typed within |control modifier timeout|.
+
 Typing Any Unicode Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -362,8 +364,7 @@ If a control isn't enabled then the word ``disabled``, enclosed within
 
 When an action is performed that is neither implicitly confirmed (by an 
 expected change on the braille display) nor explicitly confirmed (by a 
-sound) then it's confirmed by a short message that's displayed for a brief
-period (|message hold time|). For example::
+sound) then it's confirmed by a message (see `Messages`_). For example::
 
   One Hand On
   Long Press Off
@@ -373,6 +374,21 @@ Braille-only Dialogs
 
 A number of braille-only dialogs are used in order to directly communicate to
 or interact with the user. They don't appear on an external video monitor.
+
+Messages
+~~~~~~~~
+
+Messages are used to give feedback to the user for significant events. These
+include (but aren't limited to):
+
+* The successful changing of a setting via a key combination shortcut.
+
+* The timeout of a partially entered request, e.g. the control modifier has
+  been pressed but the (then required) letter or special symbol hasn't been
+  typed quickly enough (see `Typing a Control Character`_).
+
+A message is a single-line, read-only dialog. No navigation may be performed
+within it. It remains on the braille display for |message time|.
 
 Popups
 ~~~~~~
@@ -388,4 +404,7 @@ A popup is a multi-line, read-only dialog. Normal ``Navigation`` may be
 performed within it, except that it isn't editable. Dismiss it by pressing
 Enter. It's automatically dismissed if no navigation operations are performed
 within it for |popup timeout|.
+
+Prompts
+~~~~~~~
 
