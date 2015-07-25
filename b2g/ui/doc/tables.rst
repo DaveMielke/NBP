@@ -1,6 +1,8 @@
 Tables
 ======
 
+.. include:: dots.rst
+
 Braille Character Representations
 ---------------------------------
 
