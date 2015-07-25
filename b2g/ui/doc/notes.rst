@@ -221,7 +221,7 @@ possible:
 In order to indirectly type it, press Chord-u (dots 136). This brings up a
 prompt with the following header::
 
-  Unicoe> U+
+  Unicode> U+
 
 ``U+`` is the conventional prefix for the hexadecimal value of a Unicode 
 character. The prompt allows you to enter up to four hexadecimal digits -
@@ -289,6 +289,18 @@ themselves.
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have its own defined representation.
 
+If you encounter a character that you don't recognize, then you can find out
+what it is by holding Dot7 while pressing the cursor routing key behind that
+character. This will cause a description of the character to be presented
+within a popup (see `Popups`_). For example, the description for the letter
+``s`` is::
+
+  latin small letter s
+  Codepoint: U+0073
+  Block: basic latin
+  Category: lowercase letter
+  Directionality: left to right
+
 Special Symbols
 ~~~~~~~~~~~~~~~
 
@@ -312,8 +324,8 @@ If a screen element (list, group of pages, etc) needs to be scrolled, then:
 * Scrolling backward (up or to the left) is indicated via
   |the scrolling backward symbol|.
 
-Descriptive Annotation
-~~~~~~~~~~~~~~~~~~~~~~
+Descriptive Annotations
+~~~~~~~~~~~~~~~~~~~~~~~
 
 A **checkbox** is rendered as either a space (meaning unchecked) or an 
 ``X`` (meaning checked) enclosed within [brackets], followed by its
@@ -355,4 +367,25 @@ period (|message hold time|). For example::
 
   One Hand On
   Long Press Off
+
+Braille-only Dialogs
+--------------------
+
+A number of braille-only dialogs are used in order to directly communicate to
+or interact with the user. They don't appear on an external video monitor.
+
+Popups
+~~~~~~
+
+Popups are used to present user-requested data as well as important system
+information. This includes (but isn't limited to):
+
+* The arrival of an Android notification.
+* The description of a character.
+* Detailed information that identifies the build.
+
+A popup is a multi-line, read-only dialog. Normal ``Navigation`` may be
+performed within it, except that it isn't editable. Dismiss it by pressing
+Enter. It's automatically dismissed if no navigation operations are performed
+within it for |popup timeout|.
 
