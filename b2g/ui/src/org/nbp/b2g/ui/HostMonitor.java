@@ -20,6 +20,7 @@ public class HostMonitor extends BroadcastReceiver {
       if (Environment.isExternalStorageRemovable()) {
         if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
           Characters.setCharacters(new Characters());
+          return;
         }
       }
     }
