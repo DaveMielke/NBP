@@ -62,7 +62,9 @@ public abstract class PromptEndpoint extends Endpoint {
 
   @Override
   public final boolean isSelectable (int offset) {
-    return offset >= start;
+    if (offset < start) return false;
+    if (offset > buffer.length()) return false;
+    return true;
   }
 
   @Override
