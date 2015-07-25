@@ -399,11 +399,14 @@ public abstract class Endpoint {
 
   public boolean setSelection (int start, int end) {
     boolean startSelected = isSelected(start);
-    boolean endSelected = isSelected(end);
-    if (startSelected != endSelected) return false;
-
     if (startSelected && !isSelectable(start)) return false;
-    if (endSelected && !isSelectable(end)) return false;
+
+    if (end != start) {
+      boolean endSelected = isSelected(end);
+      if (endSelected != startSelected) return false;
+      if (endSelected && !isSelectable(end)) return false;
+    }
+
     return updateSelection(start, end);
   }
 
