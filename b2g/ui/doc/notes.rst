@@ -49,7 +49,7 @@ external video monitor. This provides an easy way for a sighted person,
 e.g. a teacher, to offer direct assistance.
 
 A standard USB-A (or host) port is near the back of the left side. USB 
-devices (memory stick, external keyboard, mouse, ethernet adapter, hub, etc)
+devices (memory stick, external keyboard, mouse, Ethernet adapter, hub, etc)
 can be connected to it. Devices that draw power from the port will drain the
 battery so using a powered hub, when possible, should be considered.
 
@@ -190,12 +190,27 @@ the power on.
 Braille Rendering
 -----------------
 
+Characters
+~~~~~~~~~~
+
 The basic characters are rendered using the `North American Braille Computer
 Code`_. Internally-designed representations for `Additional Common Symbols`_,
 as well as for `Additional Characters for Spanish`_, have also been included.
 
+If the braille representation for a complex character (e.g. a letter with an
+accent) hasn't been defined, then its base character (e.g. just the latter) is
+displayed (unless, of course, even the base character's representation hasn't
+been defined).  
+
+The characters that render in text as actual braille characters needn't (and,
+in fact, shouldn't) be defined. They're always rendered in braille as
+themselves.
+
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have its own defined representation.
+
+Special Symbols
+~~~~~~~~~~~~~~~
 
 When on an editable text field:
 
@@ -216,6 +231,9 @@ If a screen element (list, group of pages, etc) needs to be scrolled, then:
 
 * Scrolling backward (up or to the left) is indicated via
   |the scrolling backward symbol|.
+
+Descriptive Annotation
+~~~~~~~~~~~~~~~~~~~~~~
 
 A **checkbox** is rendered as either a space (meaning unchecked) or an 
 ``X`` (meaning checked) enclosed within [brackets], followed by its
@@ -257,50 +275,4 @@ period (|message hold time|). For example::
 
   One Hand On
   Long Press Off
-
-Text Selection
---------------
-
-When on an editable text field, any sequence of text within that field 
-can be easily **selected**. This is how to do it:
-
-1) If necessary, use the Forward and Backward keys to pan to a place where the
-   first character to be selected can be seen.
-
-2) Hold the Backward key while pressing the cursor routing key behind the 
-   character that's to start the selection.
-
-3) If necessary, use the Forward and Backward keys to pan to a place where the
-   last character to be selected can be seen.
-
-4) Hold the Forward key while pressing the cursor routing key behind the 
-   character that's to end the selection.
-
-Steps 1 and 2 may be reperformed at any time in order to change the start of
-the selection. Likewise, steps 3 and 4 may be reperformed at any time in order
-to change the end of the selection. In fact, the end of the selection can be
-set before the start of the selection has been set, i.e. steps 3 and 4 may be
-performed before steps 1 and 2 have been performed.
-
-The current text selection is highlighted via |the selection indicator|.
-Selecting text is useful in at least the following ways:
-
-* Typing a character deletes the selected text, puts the cursor where
-  the selected text was, and then inserts the typed character at that point.
-  This, in other words, is an efficient way to replace old text with new text.
-  Just select the old text, and then start typing the new text.
-
-* Pressing any of the delete keys (see `Editable Text Fields`_) removes all of
-  the selected text. This, in other words, is an efficient way to delete a
-  block of text. Just select it, and then delete it.
-
-If the start of the selection is set first, and if the cursor is after that
-character, then the selection is implicitly extended forward to (but not
-including) the character where the cursor is. This, for example, provides an
-easy way to delete or replace several characters that have just been typed.
-
-If the end of the selection is set first, and if the cursor is before that
-character, then the selection is implicitly extended back to (and including)
-the character where the cursor is. This, for example, provides an easy way to
-replace a word, line, paragraph, etc.
 
