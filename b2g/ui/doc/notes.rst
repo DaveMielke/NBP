@@ -423,3 +423,8 @@ A prompt is a single-line, read-write dialog. Normal navigation and editing may
 be performed within its response area. Press Enter once the requested
 information has been entered.
 
+The response to a prompt is remembered. The response area of a prompt is
+initially empty, but, from then on, it's initialized to the previous response
+entered for that prompt. The remembered response is selected (see `Text
+Selection`_) so that it can be easily replaced.
+
