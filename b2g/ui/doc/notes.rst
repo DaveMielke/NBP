@@ -187,6 +187,86 @@ keyboard to normal operation.
 Another (legacy) way to enable One Hand Mode is to hold dot 8 while switching
 the power on.
 
+Typing
+------
+
+In order to type a braille character that has a defined representation (see
+`Braille Character Representations`_), just press those keys as a single
+combination. There are two exceptions to this simple (and obvious) rule. If the
+defined representation of a character is either just dot 7 or just dot 8 then
+it can't be directly typed because those keys are, respectively, Backspace and
+Enter.
+
+Typing a Control Character
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to type a control character, press Space+x (dots 1346) immediately
+before the letter or special symbol that represents it (see `ASCII Control
+Characters`_). For example, in order to type a tab (which happens to be control
+I), press Space+x and then immediately type the letter ``i``.
+
+Typing Any Unicode Character
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Any character can always be indirectly typed, even if directly typing it isn't 
+possible:
+
+* Its braille representation hasn't been defined.
+
+* You don't know its braille representation.
+
+* It's represented in braille by either just dot 7 (the Backspace key) or just
+  dot 8 (the Enter key).
+
+In order to indirectly type it, press Chord-u (dots 136). This brings up a
+prompt with the following header::
+
+  Unicoe> U+
+
+``U+`` is the conventional prefix for the hexadecimal value of a Unicode 
+character. The prompt allows you to enter up to four hexadecimal digits -
+``0`` through ``9`` and ``A`` through ``F`` (either upper or lower case).
+Leading zeroes may be omitted. The Unicode values of characters are, of course,
+beyond the scope of this document.
+
+The digits you enter may be freely edited, e.g. the cursor can be moved, any
+digit may be deleted, a new digit may be inserted, etc. In other words, making
+corrections doesn't require backspacing and retyping. When you're done, press
+Enter.
+
+If no digits have been entered yet (or if they've all been deleted) then you'll
+only see the header. If, however, at least one digit has been entered then the
+character represented (so far) by the digit(s) is displayed just to the right,
+and that character's formal name is displayed on the next line.
+
+To illustrate, let's see how a lowercase ``s`` would be indirectly typed. It's
+Unicode value is U+0073. In order to keep this example simple, let's skip the
+two leading zeroes.
+
+.. topic:: Indirectly Typing the Letter ``s`` (U+0073)
+
+  1) Press Space+u (dots 136)::
+
+       Unicode> U+
+
+  2) Type the digit ``7`` (dots 2356)::
+
+       Unicode> U+7 ⣛
+       bell
+
+  3) Type the digit ``3`` (dots 25)::
+
+       Unicode> U+73 ⠎
+       latin small letter s
+
+  4) Press Enter. The prompt goes away, and the ``s`` is typed.
+
+Braille Input Mode
+~~~~~~~~~~~~~~~~~~
+
+Braille Input Mode is off by default. Pressing Forward+Dot4 enables it, and
+pressing Backward+Dot1 disables it.
+
 Braille Rendering
 -----------------
 

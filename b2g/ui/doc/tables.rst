@@ -4,10 +4,13 @@ Tables
 Braille Character Representations
 ---------------------------------
 
+These tables show how English US braille is represented. This mapping is 
+also used by locales that don't (yet) have their own.
+
 North American Braille Computer Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The North American convention for how the 95 basic ASCIi characters are
+The North American convention for how the 95 basic ASCII characters are
 rendered in computer (8-dot) braille.
 
 .. include:: tbl-braille-nabcc.rst
@@ -52,10 +55,8 @@ they can be easily recognized. The following methods have been used:
 ASCII Control Characters
 ------------------------
 
-Use any of the following methods to type a control character:
-
-* Add dots 7 and 8 to any of these characters.
-* Prefix any of these characters with Space+x (dots 1346).
+To type a control character, press Space+x (dots 1346) immediately before any
+of these characters.
 
 .. include:: tbl-control.rst
 

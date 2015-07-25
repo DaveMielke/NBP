@@ -120,11 +120,9 @@ Editable Text Fields
 
 Dots 1 through 6 are used, as defined by the `North American Braille 
 Computer Code`_, to type characters, and the Space key is used to type a 
-space. Add dot 7 to a letter to make it uppercase. Add dots 7 and 8 to a 
-character to type its control variant (see `ASCII Control Characters`_). 
-If no characters have been selected then, when a character is typed, it 
-is inserted where the cursor is. If characters have been selected then 
-the next typed character replaces them.
+space. Add dot 7 to a letter to make it uppercase. If no characters have been
+selected then, when a character is typed, it is inserted where the cursor is.
+If characters have been selected then the next typed character replaces them.
 
 Dot 8 is the Enter key. If the field supports more than one line, this 
 key ends the current line and starts a new one.
@@ -294,12 +292,6 @@ Space+Dots45
 Space+Dots12
   Enter a ``shift tab``. A number of apps use this character for moving
   backward through their control widgets.
-
-Space+x (dots 1346)
-  Enter a control character (see `ASCII Control Characters`_). This
-  key combination is a sticky modifier. The next character typed will
-  be translated into its control variant. For example, another way to
-  enter a ``tab`` character is to type Space+x followed by the letter ``i``.
 
 Key Combinations for Developers
 -------------------------------

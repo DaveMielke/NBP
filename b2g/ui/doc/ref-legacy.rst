@@ -11,8 +11,7 @@ S123       |Home|
 S456       |End|
 S12        |TabBackward|
 S45        |TabForward|
-S1346      |ControlModifier|
 S14        |SayLine|
 <>         |SpeechOff|
-8P         |OneHandOn|
+8W         |OneHandOn|
 =========  ==============================

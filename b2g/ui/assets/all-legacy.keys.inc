@@ -13,8 +13,6 @@ bind S456 End
 bind S12 TabBackward
 bind S45 TabForward
 
-bind S1346 ControlModifier
-
 bind S14 SayLine
 bind <> SpeechOff
 
