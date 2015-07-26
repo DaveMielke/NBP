@@ -16,7 +16,7 @@ The B2G User Interface
 
 .. contents::
 
-.. include:: notes.rst
+.. include:: introduction.rst
 .. include:: navigation.rst
 .. include:: reference.rst
 .. include:: tables.rst
