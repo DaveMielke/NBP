@@ -1,19 +1,18 @@
-===================  =======  =========  ==========
-Setting              Default  Previous   Next      
-Name                 Value    Label      Label     
--------------------  -------  ---------  ----------
-Long Press           On
-Reverse Panning      Off
-One Hand             Off
-Braille Input        Off
-Braille Firmness     4        Decrease   Increase
-Cursor Indicator     Dots 78  Previous   Next
-Selection Indicator  Dot 8    Previous   Next
-Speech               On
-Speak When Asleep    Off
-Volume               10       Softer     Louder
-Balance              Center   More Left  More Right
-Rate                 0        Slower     Faster
-Pitch                0        Lower      Higher
-Developer            Off
-===================  =======  =========  ==========
+===================  =======  =================
+Setting              Default  Value Range
+-------------------  -------  -----------------
+Long Press           On       Off - On
+Reverse Panning      Off      Off - On
+One Hand             Off      Off - On
+Braille Input        Off      Off - On
+Braille Firmness     4        0 - 7
+Cursor Indicator     Dots78   Dots78, Dot7, Dot8
+Selection Indicator  Dot8     Dots78, Dot7, Dot8
+Speech               On       Off - On
+Speak When Asleep    Off      Off - On
+Volume               10       0 - 10
+Balance              Center   Left100% - Right100%
+Rate                 0        -10 - 10
+Pitch                0        -10 - 10
+Developer            Off      Off - On
+===================  =======  =================
