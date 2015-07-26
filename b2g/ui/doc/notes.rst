@@ -323,11 +323,13 @@ Special Symbols
 
 When on an editable text field:
 
-* The character immediately to the right of the cursor is highlighted by
-  |the cursor indicator|.
+* The character that the cursor is on is highlighted by |the cursor indicator|.
+  This is its default representation. It can be changed via `The Settings
+  Screen`_.
 
-* Each of the currently selected characters is highlighted by
-  |the selection indicator|. 
+* Each of the currently selected characters is highlighted by |the selection
+  indicator|. This is its default representation. It can be changed via `The
+  Settings Screen`_.
 
 Note that the cursor isn't shown when at least one character has been 
 selected. This is because edit actions are then performed on all of the
