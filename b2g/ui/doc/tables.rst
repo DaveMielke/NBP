@@ -1,7 +1,18 @@
 Tables
 ======
 
-.. include:: dots.rst
+Braille Characters
+------------------
+
+Dot Numbering
+~~~~~~~~~~~~~
+
+.. include:: braille-cell.rst
+
+Unicode Braille Characters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. include:: braille-unicode.rst
 
 Braille Character Representations
 ---------------------------------

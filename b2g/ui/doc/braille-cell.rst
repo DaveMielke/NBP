@@ -1,6 +1,3 @@
-Braille Dot Numbering
----------------------
-
 A standard braille cell consists of six dots arranged in three rows and two
 columns. Each dot can be specifically identified by its number as follows:
 

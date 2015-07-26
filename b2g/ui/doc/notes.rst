@@ -284,9 +284,9 @@ accent) hasn't been defined, then its base character (e.g. just the latter) is
 displayed (unless, of course, even the base character's representation hasn't
 been defined).  
 
-The characters that render in text as actual braille characters needn't (and,
-in fact, shouldn't) be defined. They're always rendered in braille as
-themselves.
+The characters that render in text as actual braille characters (see `Unicode
+Braille Characters`_) needn't (and, in fact, shouldn't) be defined. They're
+always rendered in braille as themselves.
 
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have its own defined representation.
