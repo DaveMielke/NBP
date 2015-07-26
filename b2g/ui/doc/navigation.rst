@@ -50,10 +50,6 @@ Space+n (dots 1345)
 Space+r (dots 1235)
   Go to the Recent Apps screen.
 
-Space+t (dots 2345)
-  Display the current date and time in the |clock standard|
-  (|clock format|). The displayed time is continually updated.
-
 Space+? (dots 1456)
   Go to the currently registered **assist** app. The default is
   ``Google Now``.

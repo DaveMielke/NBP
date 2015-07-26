@@ -8,9 +8,6 @@ The B2G User Interface
 .. |popup timeout| replace:: 30 seconds
 .. |message time| replace:: two seconds
 
-.. |clock standard| replace:: ISO 8601 international format
-.. |clock format| replace:: YYYY-MM-DD hh:mm:ss
-
 .. |the undefined character| replace:: dots 3, 6, 7, and 8 (⣤)
 .. |the cursor indicator| replace:: dots 7 and 8 (⣀)
 .. |the selection indicator| replace:: dot 8 (⢀)

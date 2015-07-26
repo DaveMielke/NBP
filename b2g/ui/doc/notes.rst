@@ -443,3 +443,42 @@ initially empty, but, from then on, it's initialized to the previous response
 entered for that prompt. The remembered response is selected (see `Text
 Selection`_) so that it can be easily replaced.
 
+Special Commands
+----------------
+
+The Braille-friendly Clock
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can access a braille-friendly clock by pressing Space+t (dots 2345). The
+date and time are displayed on the first line using the conventional
+international format. The second line contains the week day and month, and the
+third line identifies the time zone. For example::
+
+  2012-02-29 10:26:53
+  Wed, Feb 29
+  EST (-0500)
+
+The four-digit number within (parentheses) on the third line is the time zone's
+offset, in (two-digit) hours and (two-digit) minutes, from UTC (Universal
+Coordinated Time). The abbreviation EST means Eastern Standard Time in North
+America, which is five hours earlier (hence the minus sign) than UTC.
+
+The Settings Screen
+~~~~~~~~~~~~~~~~~~~
+
+Identifying the Build
+~~~~~~~~~~~~~~~~~~~~~
+
+There may be times when you need to identify the exact build of the User
+Interface that you're currently using. For example, this information is 
+particularly helpful when you're reporting a problem or checking if there's a
+newer version.
+
+You can get this information by pressing Space, Backward, and Forward
+altogether. This will cause details that identify the build to be presented
+within a popup (see `Popups`_) that looks something like this::
+
+  Build Details
+  Time: 2015-07-22 00:34:02 UTC
+  Revision: d3d8210
+
