@@ -14,8 +14,8 @@ Unicode Braille Characters
 
 .. include:: braille-unicode.rst
 
-Braille Character Representations
----------------------------------
+Braille Character Map
+---------------------
 
 These tables show how English US braille is represented. This mapping is 
 also used by locales that don't (yet) have their own.
@@ -40,11 +40,11 @@ they can be relatively easily remembered. The following methods have been used:
 * Adding dot 7 to a related punctuation symbol, e.g. adding dot 7 to the dollar
   sign for the cent sign.
 
-* The superscript digits are rendered by adding dot 7 to the representation of
-  the corresponding regular digit.
+* The superscript digits are rendered by adding dot 7 to the representations of
+  the corresponding regular digits.
 
-* The subscript digits are rendered by adding dot 8 to the representation of
-  the corresponding regular digit.
+* The subscript digits are rendered by adding dot 8 to the representations of
+  the corresponding regular digits.
 
 .. include:: tbl-braille-symbols.rst
 
@@ -61,7 +61,8 @@ they can be easily recognized. The following methods have been used:
   six-dot Spanish literary braille representations.
 
 * The inverted punctuation symbols are rendered by adding dot 7 to the
-  representation of the associated NABCC punctuation symbol.
+  representations of the associated `North American Braille Computer Code`_
+  punctuation symbols.
 
 .. include:: tbl-braille-spanish.rst
 
@@ -69,7 +70,7 @@ ASCII Control Characters
 ------------------------
 
 To type a control character, press Space+x (dots 1346) immediately before any
-of these characters.
+of these characters:
 
 .. include:: tbl-control.rst
 
