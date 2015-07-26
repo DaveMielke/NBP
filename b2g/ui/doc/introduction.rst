@@ -190,24 +190,15 @@ the power on.
 Typing
 ------
 
-In order to type a braille character that has a defined representation (see
-`Braille Character Map`_), just press those keys as a single combination. There
-are two exceptions to this simple (and obvious) rule. If the defined
-representation of a character is either just dot 7 or just dot 8 then it can't
-be directly typed because those keys are, respectively, Backspace and Enter.
+A braille character that has a defined representation (see `Braille Character
+Map`_) can be directly typed by just pressing the corresponding keys as a
+single combination. There are two exceptions to this simple (and obvious) rule.
+If the defined representation of a character is either just dot 7 or just dot 8
+then it can't be directly typed because those keys are, respectively, Backspace
+and Enter.
 
-Typing a Control Character
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In order to type a control character, press Space+x (dots 1346) immediately
-before the letter or special symbol that represents it (see `ASCII Control
-Characters`_). For example, in order to type a tab (which happens to be control
-I), press Space+x and then immediately type the letter ``i``.
-
-The letter or special symbol must be typed within |control modifier timeout|.
-
-Typing Any Unicode Character
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Indirectly Typing Any Character
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any character can always be indirectly typed, even if directly typing it isn't 
 possible:
@@ -262,6 +253,16 @@ two leading zeroes.
 
   4) Press Enter. The prompt goes away, and the ``s`` is typed.
 
+Typing a Control Character
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to type a control character, press Space+x (dots 1346) immediately
+before the letter or special symbol that represents it (see `ASCII Control
+Characters`_). For example, in order to type a tab (which happens to be control
+I), press Space+x and then immediately type the letter ``i``.
+
+The letter or special symbol must be typed within |control modifier timeout|.
+
 Braille Input Mode
 ~~~~~~~~~~~~~~~~~~
 
@@ -269,7 +270,7 @@ The characters that render in text as actual braille characters (see `Unicode
 Braille Characters`_) can be typed by enabling Braille Input Mode. Two of these
 characters can't be directly typed - just dot 7 (because it's the Backspace
 key), and just dot 8 (because it's the Enter key). Both of these can, of
-course, still be indirectly typed (see `Typing Any Unicode Character`_).
+course, still be indirectly typed (see `Indirectly Typing Any Character`_).
 
 Braille Input Mode is off by default. Pressing Forward+Dot4 enables it, and
 pressing Backward+Dot1 disables it.
@@ -429,7 +430,7 @@ Prompts
 Prompts are used to request information from the user. This includes (but isn't
 limited to):
 
-* Requesting the value of a Unicode character (see `Typing Any Unicode
+* Requesting the value of a Unicode character (see `Indirectly Typing Any
   Character`_).
 
 * Requesting the text to search within the current screen element for (see
@@ -439,7 +440,7 @@ A prompt is a read-write dialog. Normal navigation and editing may be performed
 within its response area. Press Enter once the requested information has been
 entered.
 
-The prompt's header and its response area are always on the first line. Helpful
+The prompt's header and response area are always on the first line. Helpful
 information may be added to the rest of the first line and/or to additional
 lines.  
 
