@@ -22,14 +22,10 @@
   <string name="resetSettings_action_label">Reset to Defaults</string>
   <string name="resetSettings_action_confirmation">Settings Reset</string>
 
-  <string name="logNone_action_confirmation">Logs Off</string>
-
-  <string name="saveScreen_action_confirmation">Screen Saved</string>
-
   <string name="copyToClipboard_action_confirmation">Copied to Clipboard</string>
-
   <string name="cutToClipboard_action_confirmation">Cut to Clipboard</string>
-
+  <string name="logNone_action_confirmation">Logs Off</string>
+  <string name="saveScreen_action_confirmation">Screen Saved</string>
   <string name="stopSpeaking_action_confirmation">Speech Stopped</string>
 
   <string name="default_control_previous">Previous</string>
@@ -41,25 +37,18 @@
   <string name="numeric_control_previous">Decrease</string>
   <string name="numeric_control_next">Increase</string>
 
-  <string name="longPress_control_label">Long Press</string>
-  <string name="reversePanning_control_label">Reverse Panning</string>
-  <string name="oneHand_control_label">One Hand</string>
-
-  <string name="brailleInput_control_label">Braille Input</string>
   <string name="brailleFirmness_control_label">Braille Firmness</string>
-
+  <string name="brailleInput_control_label">Braille Input</string>
   <string name="cursorIndicator_control_label">Cursor Indicator</string>
+  <string name="longPress_control_label">Long Press</string>
+  <string name="oneHand_control_label">One Hand</string>
+  <string name="reversePanning_control_label">Reverse Panning</string>
   <string name="selectionIndicator_control_label">Selection Indicator</string>
-
   <string name="speechEnabled_control_label">Speech</string>
 
   <string name="sleepTalk_control_label">Speak When Asleep</string>
   <string name="sleepTalk_control_previous">Only When Awake</string>
   <string name="sleepTalk_control_next">Even When Asleep</string>
-
-  <string name="speechVolume_control_label">Volume</string>
-  <string name="speechVolume_control_previous">Softer</string>
-  <string name="speechVolume_control_next">Louder</string>
 
   <string name="speechBalance_control_label">Balance</string>
   <string name="speechBalance_control_previous">More Left</string>
@@ -68,13 +57,17 @@
   <string name="speechBalance_control_left">Left</string>
   <string name="speechBalance_control_right">Right</string>
 
+  <string name="speechPitch_control_label">Pitch</string>
+  <string name="speechPitch_control_previous">Lower</string>
+  <string name="speechPitch_control_next">Higher</string>
+
   <string name="speechRate_control_label">Rate</string>
   <string name="speechRate_control_previous">Slower</string>
   <string name="speechRate_control_next">Faster</string>
 
-  <string name="speechPitch_control_label">Pitch</string>
-  <string name="speechPitch_control_previous">Lower</string>
-  <string name="speechPitch_control_next">Higher</string>
+  <string name="speechVolume_control_label">Volume</string>
+  <string name="speechVolume_control_previous">Softer</string>
+  <string name="speechVolume_control_next">Louder</string>
 
   <string name="developerActions_control_label">Developer</string>
   <string name="logKeys_control_label">Log Keys</string>
@@ -85,14 +78,17 @@
   <string name="character_end">end</string>
   <string name="character_newline">new line</string>
 
-  <string name="message_no_screen_monitor">no screen monitor</string>
-  <string name="message_no_screen_content">no screen content</string>
-  <string name="message_no_character_name">no character name</string>
-  <string name="message_select_outgoing_email_app">Select outgoing email app ...</string>
   <string name="message_intermediate_action_timeout">incomplete entry</string>
   <string name="message_modifier_cancelled">modifier cancelled</string>
+  <string name="message_no_character_name">no character name</string>
+  <string name="message_no_screen_content">no screen content</string>
+  <string name="message_no_screen_monitor">no screen monitor</string>
+  <string name="message_select_outgoing_email_app">Select outgoing email app ...</string>
 
   <string name="describeBuild_title">Build Properties</string>
   <string name="describeBuild_label_revision">Revision</string>
   <string name="describeBuild_label_time">Time</string>
+
+  <string name="prompt_find">find</string>
+  <string name="prompt_unicode">Unicode</string>
 </resources>

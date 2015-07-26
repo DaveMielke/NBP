@@ -28,6 +28,6 @@ public class FindEndpoint extends PromptEndpoint {
   }
 
   public FindEndpoint () {
-    super("find");
+    super(R.string.prompt_find);
   }
 }

@@ -47,6 +47,6 @@ public class UnicodeEndpoint extends PromptEndpoint {
   }
 
   public UnicodeEndpoint () {
-    super("Unicode", "U+");
+    super(R.string.prompt_unicode, "U+");
   }
 }
