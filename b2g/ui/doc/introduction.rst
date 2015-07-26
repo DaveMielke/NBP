@@ -436,9 +436,13 @@ limited to):
 * Requesting the text to search within the current screen element for (see
   `Find Mode`_).
 
-A prompt is a single-line, read-write dialog. Normal navigation and editing may
-be performed within its response area. Press Enter once the requested
-information has been entered.
+A prompt is a read-write dialog. Normal navigation and editing may be performed
+within its response area. Press Enter once the requested information has been
+entered.
+
+The prompt's header and its response area are always on the first line. Helpful
+information may be added to the rest of the first line and/or to additional
+lines.  
 
 The response to a prompt is remembered. The response area of a prompt is
 initially empty, but, from then on, it's initialized to the previous response

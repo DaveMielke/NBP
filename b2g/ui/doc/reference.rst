@@ -52,10 +52,10 @@ Developer Actions
 Common Actions
 ``````````````
 
-.. include:: ref-dev-all.rst
+.. include:: ref-all-developer.rst
 
 Host Screen Actions
 ```````````````````
 
-.. include:: ref-dev-screen.rst
+.. include:: ref-screen-developer.rst
 
