@@ -80,7 +80,7 @@ The camera's lens is the small circle on the bottom that's about 2cm
 (3/4 of an inch) in from the middle of the right side. The rectangular 
 window that's just a little further in is where the flash LEDs are.
 
-The Reset Switch
+The Reset Button
 ````````````````
 
 The Reset button is hidden within a very small, round hole on the 
