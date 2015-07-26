@@ -266,8 +266,23 @@ two leading zeroes.
 Braille Input Mode
 ~~~~~~~~~~~~~~~~~~
 
+The characters that render in text as actual braille characters (see `Unicode
+Braille Characters`_) can be typed by enabling Braille Input Mode. Two of these
+characters can't be directly typed - just dot 7 (because it's the Backspace
+key), and just dot 8 (because it's the Enter key). Both of these can, of
+course, still be indirectly typed (see `Typing Any Unicode Character`_).
+
 Braille Input Mode is off by default. Pressing Forward+Dot4 enables it, and
 pressing Backward+Dot1 disables it.
+
+These characters have several uses, including (but not limited to):
+
+* Actual braille characters can be written into text documents.
+
+* Contracted braille can be accurately saved.
+
+* Braille music can be accurately saved, and also shared with others who use
+  different localized braille character mappings.
 
 Braille Rendering
 -----------------

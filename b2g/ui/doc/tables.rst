@@ -7,7 +7,7 @@ Braille Characters
 Dot Numbering
 ~~~~~~~~~~~~~
 
-.. include:: braille-cell.rst
+.. include:: braille-dots.rst
 
 Unicode Braille Characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
