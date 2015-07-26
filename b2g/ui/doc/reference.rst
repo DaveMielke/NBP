@@ -26,13 +26,13 @@ Common Operations
 
 .. include:: ref-all.rst
 
-Editable Text Fields and Prompts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Editing Operations
+~~~~~~~~~~~~~~~~~~
 
 .. include:: ref-edit.rst
 
-Navigating the Host Screen
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Navigating the Screen
+~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: ref-screen.rst
 
@@ -54,8 +54,8 @@ Common Actions
 
 .. include:: ref-all-developer.rst
 
-Host Screen Actions
-```````````````````
+Screen Actions
+``````````````
 
 .. include:: ref-screen-developer.rst
 

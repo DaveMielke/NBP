@@ -498,10 +498,10 @@ in columns, as follows:
    value.
 
 3) For non-boolean settings, this column contains a button that changes the
-   setting to its previous (lower for numeric settings) value.
+   setting to its *previous* (lower for numeric settings) value.
 
 4) For non-boolean settings, this column contains a button that changes the
-   setting to its next (higher for numeric settings) value.
+   setting to its *next* (higher for numeric settings) value.
 
 General Settings
 ````````````````
@@ -513,8 +513,7 @@ The following settings (as of the time of this writing) are presented:
 Developer Settings
 ``````````````````
 
-If the Developer setting is enabled, then these additional settings are
-presented:
+If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
 
@@ -533,4 +532,19 @@ within a popup (see `Popups`_) that looks something like this::
   Build Details
   Time: 2015-07-22 00:34:02 UTC
   Revision: d3d8210
+
+Developer Mode
+~~~~~~~~~~~~~~
+
+A very intentionally difficult-to-press key combination has been defined for
+enabling and disabling Developer Mode::
+
+  Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
+
+A long press enables it, and a short press disables it. Note that this means
+that this mode can't be enabled unless `Long Press Mode`_ is enabled (another
+accident prevention scheme).
+
+See `Developer Actions`_ for a list of additional key combinations that this
+mode defines.
 

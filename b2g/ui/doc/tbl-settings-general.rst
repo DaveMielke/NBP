@@ -1,7 +1,7 @@
 .. table:: General Settings
 
   ===================  =======  ====================  ==========  ==========
-  Setting              Default  Range
+  Setting              Default  Range                 *Previous*  *Next*
   -------------------  -------  --------------------  ----------  ----------
   Long Press           On       Off - On
   Reverse Panning      Off      Off - On
