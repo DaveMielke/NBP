@@ -191,11 +191,10 @@ Typing
 ------
 
 In order to type a braille character that has a defined representation (see
-`Braille Character Representations`_), just press those keys as a single
-combination. There are two exceptions to this simple (and obvious) rule. If the
-defined representation of a character is either just dot 7 or just dot 8 then
-it can't be directly typed because those keys are, respectively, Backspace and
-Enter.
+`Braille Character Map`_), just press those keys as a single combination. There
+are two exceptions to this simple (and obvious) rule. If the defined
+representation of a character is either just dot 7 or just dot 8 then it can't
+be directly typed because those keys are, respectively, Backspace and Enter.
 
 Typing a Control Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
