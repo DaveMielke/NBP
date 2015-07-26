@@ -306,6 +306,9 @@ always rendered in braille as themselves.
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have its own defined representation.
 
+Identifying an Unrecognized Character
+`````````````````````````````````````
+
 If you encounter a character that you don't recognize, then you can find out
 what it is by holding Dot7 while pressing the cursor routing key behind that
 character. This will cause a description of the character to be presented
