@@ -6,8 +6,8 @@ Reverse Panning      Off      Off - On
 One Hand             Off      Off - On
 Braille Input        Off      Off - On
 Braille Firmness     4        0 - 7                 Decrease    Increase
-Cursor Indicator     Dots78   Dots78, Dot7, Dot8
-Selection Indicator  Dot8     Dots78, Dot7, Dot8
+Cursor Indicator     Dots78   Dots78, Dot7, Dot8    Previous    Next
+Selection Indicator  Dot8     Dots78, Dot7, Dot8    Previous    Next
 Speech               On       Off - On
 Speak When Asleep    Off      Off - On
 Volume               10       0 - 10                Softer      Louder

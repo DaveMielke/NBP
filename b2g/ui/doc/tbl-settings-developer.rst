@@ -1,5 +1,5 @@
 ===================  =======  ====================  ==========  ==========
-Setting Name         Default  Value Range
+Setting              Default  Value Range
 -------------------  -------  --------------------  ----------  ----------
 Log Keys             Off      Off - On
 Log Actions          Off      Off - On
