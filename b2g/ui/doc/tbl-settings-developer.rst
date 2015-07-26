@@ -1,9 +1,9 @@
 ===================  =======  =========  ==========
-Setting              Current  Previous   Next      
+Setting              Default  Previous   Next      
 Name                 Value    Label      Label     
 -------------------  -------  ---------  ----------
-Log Keys             switch
-Log Actions          switch
-Log Navigation       switch
-Log Updates          switch
+Log Keys             Off
+Log Actions          Off
+Log Navigation       Off
+Log Updates          Off
 ===================  =======  =========  ==========

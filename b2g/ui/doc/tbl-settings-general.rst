@@ -1,19 +1,19 @@
 ===================  =======  =========  ==========
-Setting              Current  Previous   Next      
+Setting              Default  Previous   Next      
 Name                 Value    Label      Label     
 -------------------  -------  ---------  ----------
-Long Press           switch
-Reverse Panning      switch
-One Hand             switch
-Braille Input        switch
-Braille Firmness     value    Decrease   Increase
-Cursor Indicator     value    Previous   Next
-Selection Indicator  value    Previous   Next
-Speech               switch
-Speak When Asleep    switch
-Volume               value    Softer     Louder
-Balance              value    More Left  More Right
-Rate                 value    Slower     Faster
-Pitch                value    Lower      Higher
-Developer            switch
+Long Press           On
+Reverse Panning      Off
+One Hand             Off
+Braille Input        Off
+Braille Firmness     4        Decrease   Increase
+Cursor Indicator     Dots 78  Previous   Next
+Selection Indicator  Dot 8    Previous   Next
+Speech               On
+Speak When Asleep    Off
+Volume               10       Softer     Louder
+Balance              Center   More Left  More Right
+Rate                 0        Slower     Faster
+Pitch                0        Lower      Higher
+Developer            Off
 ===================  =======  =========  ==========
