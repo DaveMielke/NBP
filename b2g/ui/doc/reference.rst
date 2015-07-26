@@ -24,7 +24,7 @@ as follows:
 Common Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: ref-common.rst
+.. include:: ref-all.rst
 
 Editable Text Fields and Prompts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +34,7 @@ Editable Text Fields and Prompts
 Navigating the Host Screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. include:: ref-host.rst
+.. include:: ref-screen.rst
 
 Speech Operations
 ~~~~~~~~~~~~~~~~~
@@ -52,10 +52,10 @@ Developer Actions
 Common Actions
 ``````````````
 
-.. include:: ref-dev-common.rst
+.. include:: ref-dev-all.rst
 
 Host Screen Actions
 ```````````````````
 
-.. include:: ref-dev-host.rst
+.. include:: ref-dev-screen.rst
 
