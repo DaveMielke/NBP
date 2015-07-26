@@ -1,18 +1,18 @@
-===================  =======  =================
+===================  =======  ====================  ==========  ==========
 Setting              Default  Value Range
--------------------  -------  -----------------
+-------------------  -------  --------------------  ----------  ----------
 Long Press           On       Off - On
 Reverse Panning      Off      Off - On
 One Hand             Off      Off - On
 Braille Input        Off      Off - On
-Braille Firmness     4        0 - 7
+Braille Firmness     4        0 - 7                 Decrease    Increase
 Cursor Indicator     Dots78   Dots78, Dot7, Dot8
 Selection Indicator  Dot8     Dots78, Dot7, Dot8
 Speech               On       Off - On
 Speak When Asleep    Off      Off - On
-Volume               10       0 - 10
-Balance              Center   Left100% - Right100%
-Rate                 0        -10 - 10
-Pitch                0        -10 - 10
+Volume               10       0 - 10                Softer      Louder
+Balance              Center   Left100% - Right100%  More Left   More Right
+Rate                 0        -10 - 10              Slower      Faster
+Pitch                0        -10 - 10              Lower       Higher
 Developer            Off      Off - On
-===================  =======  =================
+===================  =======  ====================  ==========  ==========
