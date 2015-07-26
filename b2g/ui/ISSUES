@@ -1,0 +1,22 @@
+Document
+  locale-based character table autodetection
+  override files
+  recent apps has two entries per app
+  how kbd and ui navigation can get out of sync
+  crash email
+
+User Interface
+  string resources for enumeration control values and next/previous buttons when two choices
+  LibLouis
+  make SD unmount easier
+  input service doesn't restart immediately after reinstall
+  arrowed-to item blocks scrolling
+  Chord for key binding list
+
+Editor
+  interpret typed characters rather than keyboard events
+
+Launcher
+  routing key scroll bar
+  bindable routing keys
+  typing should present sublist
