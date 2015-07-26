@@ -445,8 +445,8 @@ initially empty, but, from then on, it's initialized to the previous response
 entered for that prompt. The remembered response is selected (see `Text
 Selection`_) so that it can be easily replaced.
 
-Special Commands
-----------------
+Additional Features
+-------------------
 
 The Braille-friendly Clock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
