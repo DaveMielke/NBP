@@ -31,8 +31,8 @@ Editing Operations
 
 .. include:: ref-edit.rst
 
-Navigating the Screen
-~~~~~~~~~~~~~~~~~~~~~
+Screen Operations
+~~~~~~~~~~~~~~~~~
 
 .. include:: ref-screen.rst
 
@@ -46,8 +46,8 @@ Legacy Actions
 
 .. include:: ref-legacy.rst
 
-Developer Actions
-~~~~~~~~~~~~~~~~~
+Developer Operations
+~~~~~~~~~~~~~~~~~~~~
 
 Common Actions
 ``````````````

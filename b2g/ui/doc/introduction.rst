@@ -517,6 +517,30 @@ If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
 
+Speech
+~~~~~~
+
+Speech is supported. It's on by default. Pressing Space+VolumeUp enables it,
+and pressing Space+VolumeDown disables it. Pressing VolumeDown and VolumeUp
+together also disables it.
+
+* To interrupt what's currently being spoken, press Backward+VolumeDown.
+
+* To speak the current line, press Backward+VolumeUp. Space+c (dots 14) may
+  also be used.
+
+* To adjust the volume: press Dot1+VolumeDown for **softer**, and Dot1+VolumeUp
+  for **louder**.
+
+* To adjust the rate: press Dot2+VolumeDown for **slower**, and Dot2+VolumeUp
+  for **faster**.
+
+* To adjust the pitch: press Dot3+VolumeDown for **lower**, and Dot3+VolumeUp
+  for **higher**.
+
+* To adjust the balance: press Dot4+VolumeDown for **more left**, and
+  Dot4+VolumeUp for **more right**.
+
 Identifying the Build
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -526,7 +550,7 @@ particularly helpful when you're reporting a problem or checking if there's a
 newer version.
 
 You can get this information by pressing Space, Backward, and Forward
-altogether. This will cause details that identify the build to be presented
+together. This will cause details that identify the build to be presented
 within a popup (see `Popups`_) that looks something like this::
 
   Build Details
@@ -545,6 +569,6 @@ A long press enables it, and a short press disables it. Note that this means
 that this mode can't be enabled unless `Long Press Mode`_ is enabled (another
 accident prevention scheme).
 
-See `Developer Actions`_ for a list of additional key combinations that this
+See `Developer Operations`_ for a list of additional key combinations that this
 mode defines.
 
