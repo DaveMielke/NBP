@@ -37,7 +37,8 @@
   <string name="numeric_control_previous">Decrease</string>
   <string name="numeric_control_next">Increase</string>
 
-  <string name="brailleFirmness_control_label">Braille Firmness</string>
+  <string name="brailleEnabled_control_label">Braille</string>
+  <string name="brailleFirmness_control_label">Firmness</string>
   <string name="brailleInput_control_label">Braille Input</string>
   <string name="cursorIndicator_control_label">Cursor Indicator</string>
   <string name="longPress_control_label">Long Press</string>

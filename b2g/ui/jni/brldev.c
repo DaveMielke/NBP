@@ -49,6 +49,34 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
+  org_nbp_b2g_ui_BrailleDevice, enableDevice, jboolean
+) {
+  if (isOpen()) {
+    if (ioctl(brailleDevice, METEC_FLAT20_DISPLAY_CONTROL, DISPLAY_ENABLE) != -1) {
+      return JNI_TRUE;
+    } else {
+      logSystemError(LOG_TAG, "METEC_FLAT20_DISPLAY_CONTROL[DISPLAY_ENABLE]");
+    }
+  }
+
+  return JNI_FALSE;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_BrailleDevice, disableDevice, jboolean
+) {
+  if (isOpen()) {
+    if (ioctl(brailleDevice, METEC_FLAT20_DISPLAY_CONTROL, DISPLAY_DISABLE) != -1) {
+      return JNI_TRUE;
+    } else {
+      logSystemError(LOG_TAG, "METEC_FLAT20_DISPLAY_CONTROL[DISPLAY_DISABLE]");
+    }
+  }
+
+  return JNI_FALSE;
+}
+
+JAVA_METHOD(
   org_nbp_b2g_ui_BrailleDevice, getDriverVersion, jstring
 ) {
   if (isOpen()) {

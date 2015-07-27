@@ -19,6 +19,9 @@ public class BrailleDevice {
   private native boolean openDevice ();
   private native void closeDevice ();
 
+  private native boolean enableDevice ();
+  private native boolean disableDevice ();
+
   private native String getDriverVersion ();
   private native int getCellCount ();
 
@@ -96,6 +99,26 @@ public class BrailleDevice {
         }
       }
     }
+  }
+
+  public boolean enable () {
+    if (open()) {
+      if (enableDevice()) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean disable () {
+    if (open()) {
+      if (disableDevice()) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public int getLength () {

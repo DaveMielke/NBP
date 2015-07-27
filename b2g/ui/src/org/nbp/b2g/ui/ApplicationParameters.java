@@ -8,14 +8,14 @@ public abstract class ApplicationParameters {
   public final static boolean DEFAULT_ONE_HAND = false;
 
   public final static boolean DEFAULT_BRAILLE_INPUT = false;
-  public final static int DEFAULT_BRAILLE_FIRMNESS = 4;
-
   public final static IndicatorOverlay DEFAULT_CURSOR_INDICATOR = IndicatorOverlay.DOTS_78;
   public final static IndicatorOverlay DEFAULT_SELECTION_INDICATOR = IndicatorOverlay.DOT_8;
 
+  public final static boolean DEFAULT_BRAILLE_ENABLED = true;
+  public final static int DEFAULT_BRAILLE_FIRMNESS = 4;
+
   public final static boolean DEFAULT_SPEECH_ENABLED = true;
   public final static boolean DEFAULT_SLEEP_TALK = false;
-
   public final static float DEFAULT_SPEECH_VOLUME = 1.0f;
   public final static float DEFAULT_SPEECH_BALANCE = 0.0f;
   public final static float DEFAULT_SPEECH_RATE = 1.0f;

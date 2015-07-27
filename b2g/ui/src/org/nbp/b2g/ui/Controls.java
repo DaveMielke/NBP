@@ -9,14 +9,14 @@ public abstract class Controls {
   private final static BooleanControl oneHandControl = new OneHandControl();
 
   private final static BooleanControl brailleInputControl = new BrailleInputControl();
-  private final static IntegerControl brailleFirmnessControl = new BrailleFirmnessControl();
-
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
 
+  private final static BooleanControl brailleEnabledControl = new BrailleEnabledControl();
+  private final static IntegerControl brailleFirmnessControl = new BrailleFirmnessControl();
+
   private final static BooleanControl speechEnabledControl = new SpeechEnabledControl();
   private final static BooleanControl sleepTalkControl = new SleepTalkControl();
-
   private final static IntegerControl speechVolumeControl = new SpeechVolumeControl();
   private final static IntegerControl speechBalanceControl = new SpeechBalanceControl();
   private final static IntegerControl speechRateControl = new SpeechRateControl();
@@ -34,14 +34,14 @@ public abstract class Controls {
     oneHandControl,
 
     brailleInputControl,
-    brailleFirmnessControl,
-
     cursorIndicatorControl,
     selectionIndicatorControl,
 
+    brailleEnabledControl,
+    brailleFirmnessControl,
+
     speechEnabledControl,
     sleepTalkControl,
-
     speechVolumeControl,
     speechBalanceControl,
     speechRateControl,
@@ -70,16 +70,20 @@ public abstract class Controls {
     return brailleInputControl;
   }
 
-  public static IntegerControl getBrailleFirmnessControl () {
-    return brailleFirmnessControl;
-  }
-
   public static CursorIndicatorControl getCursorIndicatorControl () {
     return cursorIndicatorControl;
   }
 
-  public static SelectionIndicatorControl getCSelectionndicatorControl () {
+  public static SelectionIndicatorControl getSelectionIndicatorControl () {
     return selectionIndicatorControl;
+  }
+
+  public static BooleanControl getBrailleEnabledControl () {
+    return brailleEnabledControl;
+  }
+
+  public static IntegerControl getBrailleFirmnessControl () {
+    return brailleFirmnessControl;
   }
 
   public static BooleanControl getSpeechEnabledControl () {
