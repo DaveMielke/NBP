@@ -152,12 +152,11 @@ Long Press Mode
 
 A secondary action may be bound to a key combination. A key combination's
 secondary action is executed if all of its keys are held until the long press
-timeout expires when Long Press Mode is enabled.
+timeout expires when Long Press Mode is enabled. The long press timeout is
+|long press timeout|.
 
 This mode is enabled by default. Pressing Forward+Dot6 enables it,
 and pressing Backward+Dot3 disables it.
-
-The long press timeout is |long press timeout|.
 
 One Hand Mode
 ~~~~~~~~~~~~~
@@ -174,10 +173,10 @@ Space, whether pressed at the start (to include it in the combination)
 or at the end (to indicate that the combination is complete), should 
 always be pressed separately.
 
-One Hand Mode is off by default. Pressing Forward+Dot8 enables it, and pressing
-Backward+Dot7 (followed, of course, by pressing Space) disables it. Both of
-these key combinations have been chosen so that they can be reasonably easily
-pressed with a single hand.
+One Hand Mode is disabled by default. Pressing Forward+Dot8 enables it, and
+pressing Backward+Dot7 (followed, of course, by pressing Space) disables it.
+Both of these key combinations have been chosen so that they can be reasonably
+easily pressed with a single hand.
 
 Switching the power switch **off** and then back **on** automatically disables
 One Hand Mode. This provides an intuitive way for a user who has accidentally
@@ -272,8 +271,8 @@ characters can't be directly typed - just dot 7 (because it's the Backspace
 key), and just dot 8 (because it's the Enter key). Both of these can, of
 course, still be indirectly typed (see `Indirectly Typing Any Character`_).
 
-Braille Input Mode is off by default. Pressing Forward+Dot4 enables it, and
-pressing Backward+Dot1 disables it.
+Braille Input Mode is disabled by default. Pressing Forward+Dot4 enables it,
+and pressing Backward+Dot1 disables it.
 
 These characters have several uses, including (but not limited to):
 
@@ -524,13 +523,9 @@ If `Developer Mode`_ is enabled, then these additional settings are presented:
 Speech
 ~~~~~~
 
-Speech is supported. It's on by default. Pressing Space+VolumeUp enables it,
-and pressing Space+VolumeDown disables it. Pressing VolumeDown and VolumeUp
+Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
+it, and pressing Space+VolumeDown disables it. Pressing VolumeDown and VolumeUp
 together also disables it.
-
-Sleep Talk Mode is off by default. Pressing Forward+VolumeUp enables it, and
-pressing Forward+VolumeDown disables it. When this mode is enabled, speech
-remains active even when the power switch is off.
 
 * To interrupt what's currently being spoken, press Backward+VolumeDown.
 
@@ -548,6 +543,17 @@ remains active even when the power switch is off.
 
 * To adjust the balance: press Dot4+VolumeDown for **more left**, and
   Dot4+VolumeUp for **more right**.
+
+Sleep Talk Mode
+```````````````
+
+Sleep Talk Mode leaves speech active while the power switch is off. This
+capability is useful when, for example, you'd like to reduce battery drain but
+still be informed when important asynchronous events, e.g. the arrival of
+notifications, occur.
+
+This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
+pressing Forward+VolumeDown disables it.
 
 Identifying the Build
 ~~~~~~~~~~~~~~~~~~~~~
