@@ -528,6 +528,10 @@ Speech is supported. It's on by default. Pressing Space+VolumeUp enables it,
 and pressing Space+VolumeDown disables it. Pressing VolumeDown and VolumeUp
 together also disables it.
 
+Sleep Talk Mode is off by default. Pressing Forward+VolumeUp enables it, and
+pressing Forward+VolumeDown disables it. When this mode is enabled, speech
+remains active even when the power switch is off.
+
 * To interrupt what's currently being spoken, press Backward+VolumeDown.
 
 * To speak the current line, press Backward+VolumeUp. Space+c (dots 14) may

@@ -44,11 +44,8 @@
   <string name="oneHand_control_label">One Hand</string>
   <string name="reversePanning_control_label">Reverse Panning</string>
   <string name="selectionIndicator_control_label">Selection Indicator</string>
+  <string name="sleepTalk_control_label">Sleep Talk</string>
   <string name="speechEnabled_control_label">Speech</string>
-
-  <string name="sleepTalk_control_label">Speak When Asleep</string>
-  <string name="sleepTalk_control_previous">Only When Awake</string>
-  <string name="sleepTalk_control_next">Even When Asleep</string>
 
   <string name="speechBalance_control_label">Balance</string>
   <string name="speechBalance_control_previous">More Left</string>

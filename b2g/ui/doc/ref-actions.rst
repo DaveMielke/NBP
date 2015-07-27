@@ -79,6 +79,8 @@
 .. |SetLeft| replace:: shift the braille display a specific amount to the right
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection
+.. |SleepTalkOff| replace:: speak only when awake
+.. |SleepTalkOn| replace:: speak even when asleep
 .. |SpeakFaster| replace:: increase the speech rate
 .. |SpeakHigher| replace:: increase the speech pitch
 .. |SpeakLeft| replace:: pan the speech more to the left

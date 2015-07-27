@@ -11,7 +11,7 @@
   Cursor Indicator     Dots78   Dots78, Dot7, Dot8    Previous    Next
   Selection Indicator  Dot8     Dots78, Dot7, Dot8    Previous    Next
   Speech               On       Off - On
-  Speak When Asleep    Off      Off - On
+  Sleep Talk           Off      Off - On
   Volume               10       0 - 10                Softer      Louder
   Balance              Center   Left100% - Right100%  More Left   More Right
   Rate                 0        -10 - 10              Slower      Faster

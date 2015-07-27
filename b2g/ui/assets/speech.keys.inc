@@ -1,6 +1,9 @@
 bind S< SpeechOff
 bind S> SpeechOn
 
+bind F< SleepTalkOff
+bind F> SleepTalkOn
+
 bind B< StopSpeaking
 bind B> SayLine
 
