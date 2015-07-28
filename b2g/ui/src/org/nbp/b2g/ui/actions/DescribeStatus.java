@@ -41,17 +41,21 @@ public class DescribeStatus extends Action {
       WifiInfo info = wifi.getConnectionInfo();
 
       if (info != null) {
-        startLine(sb, R.string.describeStatus_label_wifi);
-        sb.append(info.getSSID());
+        String name = info.getSSID();
 
-        int dbm = info.getRssi();
-        sb.append(' ');
-        sb.append(wifi.calculateSignalLevel(dbm, 100));
-        sb.append('%');
+        if (name != null) {
+          startLine(sb, R.string.describeStatus_label_wifi);
+          sb.append(name);
 
-        sb.append(' ');
-        sb.append(info.getLinkSpeed());
-        sb.append("Mbps");
+          int dbm = info.getRssi();
+          sb.append(' ');
+          sb.append(wifi.calculateSignalLevel(dbm, 100));
+          sb.append('%');
+
+          sb.append(' ');
+          sb.append(info.getLinkSpeed());
+          sb.append("Mbps");
+        }
       }
     }
   }
