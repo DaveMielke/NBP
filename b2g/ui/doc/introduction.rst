@@ -424,7 +424,7 @@ information. This includes (but isn't limited to):
 A popup is a multi-line, read-only dialog. Normal navigation may be
 performed within it, except that it isn't editable. Dismiss it by pressing
 Enter. It's automatically dismissed if no navigation operations are performed
-within it for |popup timeout|.
+within it for |popup time|.
 
 Prompts
 ~~~~~~~

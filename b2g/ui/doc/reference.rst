@@ -1,10 +1,16 @@
 Quick Reference
 ===============
 
-Hardware Alerts
----------------
+Firmware Features
+-----------------
 
-.. include:: ref-alerts.rst
+Status Alerts
+~~~~~~~~~~~~~
+
+A high-pitched beep (approximately |beep frequency|) is used to indicate the
+following events:
+
+.. include:: ref-firmware-alerts.rst
 
 Special Braille Symbols
 -----------------------

@@ -5,8 +5,8 @@ Two Short Beeps
   The kernel has finished initializing.
 
 Three Short Beeps
-  The battery is low.
+  The battery is very low.
 
 One Long Beep
-  The device has been reset.
+  The device has been successfully reset.
 
