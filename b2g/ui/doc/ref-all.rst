@@ -17,6 +17,7 @@ B3         |LongPressOff|
 F6         |LongPressOn|
 B7         |OneHandOff|
 F8         |OneHandOn|
+BF         |DescribeStatus|
 SBF        |DescribeBuild|
 S12345678  |Null|
 <          |VolumeDown|

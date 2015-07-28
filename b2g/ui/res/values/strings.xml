@@ -87,6 +87,9 @@
   <string name="describeBuild_label_revision">Revision</string>
   <string name="describeBuild_label_time">Time</string>
 
+  <string name="describeStatus_label_battery">Battery</string>
+  <string name="describeStatus_label_wifi">Wi-Fi</string>
+
   <string name="prompt_find">find</string>
   <string name="prompt_unicode">Unicode</string>
 </resources>

@@ -555,6 +555,16 @@ notifications, occur.
 This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
 pressing Forward+VolumeDown disables it.
 
+Checking Status Indicators
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can check various helpful status indicators by pressing Backward and
+Forward together. This will cause the indicators to be presented within a popup
+(see `Popups`_) that looks something like this::
+
+  Battery: 30%
+  Wi-Fi: MyNetwork 60% 54Mbps
+
 Identifying the Build
 ~~~~~~~~~~~~~~~~~~~~~
 

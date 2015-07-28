@@ -24,6 +24,7 @@
 .. |DeletePrevious| replace:: delete the character to the left of the cursor
 .. |DescribeBuild| replace:: show details that identify the build
 .. |DescribeCharacter| replace:: show the description of a specific character
+.. |DescribeStatus| replace:: show important status indicators
 .. |DeveloperOff| replace:: disable developer actions
 .. |DeveloperOn| replace:: enable developer actions
 .. |Editor| replace:: go to the B2G editor

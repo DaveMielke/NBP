@@ -22,6 +22,7 @@ bind F6 LongPressOn
 bind B7 OneHandOff
 bind F8 OneHandOn
 
+bind BF DescribeStatus
 bind SBF DescribeBuild
 
 bind S12345678 Null

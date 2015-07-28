@@ -6,7 +6,7 @@
   + Depth: 11cm [4.3in]
   + Height: 3cm [1.2in] (including feet and keys)
 
-* Braille Display: 20 cells, 8 dots per cell
+* Braille Display: Metec, 20 cells, 8 dots per cell
 
 * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
 

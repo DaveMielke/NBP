@@ -14,6 +14,7 @@
   <uses-permission android:name="android.permission.INJECT_EVENTS" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
   <uses-permission android:name="android.permission.BLUETOOTH" />
 
@@ -30,9 +31,7 @@
         >
 
       <intent-filter>
-        <action
-          android:name="android.view.InputMethod"
-         />
+        <action android:name="android.view.InputMethod" />
       </intent-filter>
 
       <meta-data
@@ -97,6 +96,10 @@
         <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
 
         <data android:scheme="file" />
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.BATTERY_CHANGED" />
       </intent-filter>
     </receiver>
   </application>
