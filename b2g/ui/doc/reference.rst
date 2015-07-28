@@ -7,10 +7,15 @@ Firmware Features
 Status Alerts
 ~~~~~~~~~~~~~
 
-A high-pitched beep (approximately |beep frequency|) is used to indicate the
-following events:
+A high-pitched beep (|beep frequency|) is used to indicate the following
+statuses:
 
 .. include:: ref-firmware-alerts.rst
+
+Key Bindings
+~~~~~~~~~~~~
+
+.. include:: ref-firmware-bindings.rst
 
 Special Braille Symbols
 -----------------------

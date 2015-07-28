@@ -10,4 +10,4 @@
 .. |the scrolling forward symbol| replace:: dots 15,38,76,24 (⠑⢄⡠⠊)
 .. |the scrolling backward symbol| replace:: dots 76,24,15,38 (⡠⠊⠑⢄)
 
-.. |beep frequency| replace:: 4KHz
+.. |beep frequency| replace:: approximately 4KHz
