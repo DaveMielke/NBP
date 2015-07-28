@@ -37,7 +37,7 @@ public abstract class Controls {
     cursorIndicatorControl,
     selectionIndicatorControl,
 
-    brailleEnabledControl,
+  //brailleEnabledControl,
     brailleFirmnessControl,
 
     speechEnabledControl,

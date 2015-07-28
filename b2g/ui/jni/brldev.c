@@ -51,11 +51,13 @@ JAVA_METHOD(
 JAVA_METHOD(
   org_nbp_b2g_ui_BrailleDevice, enableDevice, jboolean
 ) {
+  LOG(DEBUG, "enabling device");
+
   if (isOpen()) {
     if (ioctl(brailleDevice, METEC_FLAT20_DISPLAY_CONTROL, DISPLAY_ENABLE) != -1) {
       return JNI_TRUE;
     } else {
-      logSystemError(LOG_TAG, "METEC_FLAT20_DISPLAY_CONTROL[DISPLAY_ENABLE]");
+      logSystemError(LOG_TAG, "ioctl[METEC_FLAT20_DISPLAY_CONTROL,DISPLAY_ENABLE]");
     }
   }
 
@@ -65,11 +67,13 @@ JAVA_METHOD(
 JAVA_METHOD(
   org_nbp_b2g_ui_BrailleDevice, disableDevice, jboolean
 ) {
+  LOG(DEBUG, "disabling device");
+
   if (isOpen()) {
     if (ioctl(brailleDevice, METEC_FLAT20_DISPLAY_CONTROL, DISPLAY_DISABLE) != -1) {
       return JNI_TRUE;
     } else {
-      logSystemError(LOG_TAG, "METEC_FLAT20_DISPLAY_CONTROL[DISPLAY_DISABLE]");
+      logSystemError(LOG_TAG, "ioctl[METEC_FLAT20_DISPLAY_CONTROL,DISPLAY_DISABLE]");
     }
   }
 
