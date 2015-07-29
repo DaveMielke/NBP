@@ -36,7 +36,7 @@ public class DescribeCharacter extends Action {
     }
 
     startLine(sb, R.string.describeCharacter_label_codepoint);
-    sb.append(String.format("U+%04X", (int)character));
+    sb.append(String.format("%s%04X", Characters.UNICODE_PREFIX, (int)character));
 
     {
       Character.UnicodeBlock block = Character.UnicodeBlock.of(character);

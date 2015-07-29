@@ -14,6 +14,8 @@ import android.util.Log;
 public class Characters {
   private final static String LOG_TAG = Characters.class.getName();
 
+  public final static String UNICODE_PREFIX = "U+";
+
   public final static char CHAR_NUL   = 0X0000;
   public final static char CHAR_SOH   = 0X0001;
   public final static char CHAR_STX   = 0X0002;
@@ -151,8 +153,8 @@ public class Characters {
     final int length = operand.length();
     if (length == 1) return operand.charAt(0);
 
-    if ((length == 6) && operand.startsWith("U+")) {
-      String digits = operand.substring(2);
+    if ((length == 6) && operand.startsWith(UNICODE_PREFIX)) {
+      String digits = operand.substring(UNICODE_PREFIX.length());
       int radix = 16;
 
       if (Character.digit(digits.charAt(0), radix) >= 0) {
