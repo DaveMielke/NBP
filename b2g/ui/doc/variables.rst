@@ -11,3 +11,6 @@
 .. |the scrolling backward symbol| replace:: dots 76,24,15,38 (⡠⠊⠑⢄)
 
 .. |beep frequency| replace:: approximately 4KHz
+.. |short beep length| replace:: 100ms
+.. |medium beep length| replace:: 500ms
+.. |long beep length| replace:: 1s
