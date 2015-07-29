@@ -87,6 +87,11 @@
   <string name="describeBuild_label_revision">Revision</string>
   <string name="describeBuild_label_time">Time</string>
 
+  <string name="describeCharacter_label_block">Block</string>
+  <string name="describeCharacter_label_category">Category</string>
+  <string name="describeCharacter_label_codepoint">Code Point</string>
+  <string name="describeCharacter_label_directionality">Directionality</string>
+
   <string name="describeStatus_battery_label">Battery</string>
   <string name="describeStatus_wifi_label">Wi-Fi</string>
   <string name="describeStatus_wifi_state_disabled">disabled</string>

@@ -316,7 +316,7 @@ within a popup (see `Popups`_). For example, the description for the letter
 ``s`` is::
 
   latin small letter s
-  Codepoint: U+0073
+  Code Point: U+0073
   Block: basic latin
   Category: lowercase letter
   Directionality: left to right

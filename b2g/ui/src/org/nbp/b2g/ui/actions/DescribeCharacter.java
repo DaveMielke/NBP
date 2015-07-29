@@ -6,6 +6,12 @@ public class DescribeCharacter extends Action {
     return name.replace('_', ' ').toLowerCase();
   }
 
+  private static void startLine (StringBuilder sb, int label) {
+    sb.append('\n');
+    sb.append(ApplicationContext.getString(label));
+    sb.append(": ");
+  }
+
   @Override
   public boolean performAction (int cursorKey) {
     Character character;
@@ -29,13 +35,14 @@ public class DescribeCharacter extends Action {
       sb.append(name);
     }
 
-    sb.append(String.format("\nCodepoint: U+%04X", (int)character));
+    startLine(sb, R.string.describeCharacter_label_codepoint);
+    sb.append(String.format("U+%04X", (int)character));
 
     {
       Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
 
       if (block != null) {
-        sb.append("\nBlock: ");
+        startLine(sb, R.string.describeCharacter_label_block);
         sb.append(normalizeName(block.toString()));
       }
     }
@@ -44,7 +51,7 @@ public class DescribeCharacter extends Action {
       int value = Character.getType(character);
 
       if (value != Character.UNASSIGNED) {
-        sb.append("\nCategory: ");
+        startLine(sb, R.string.describeCharacter_label_category);
         String name = UnicodeUtilities.getCategoryName(value);
 
         if (name != null) {
@@ -59,7 +66,7 @@ public class DescribeCharacter extends Action {
       int value = Character.getDirectionality(character);
 
       if (value != Character.DIRECTIONALITY_UNDEFINED) {
-        sb.append("\nDirectionality: ");
+        startLine(sb, R.string.describeCharacter_label_directionality);
         String name = UnicodeUtilities.getDirectionalityName(value);
 
         if (name != null) {
