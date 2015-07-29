@@ -15,13 +15,13 @@ on the right, from left to right, are dots 4, 5, 6, and 8.
 * The Dot7 key is often referred to as the Backspace key.
 * The Dot8 key is often referred to as the Enter key.
 
-The square with a small, round button in the middle, in between dots 1 
-and 4, is the five-key D-Pad (directional pad). Its four edges are the
+The square with a small, round button in the middle, in between the Dot1 and
+Dot4 keys, is the five-key D-Pad (directional pad). Its four edges are the
 Up, Down, Left, and Right keys. The button in the middle is the Center
 key.
 
-The long, rectangular key in front of dot 1, the D-Pad, and dot 4 is the 
-Space key (or bar).
+The long, rectangular key in front of the Dot1 key, the D-Pad, and the Dot4 key
+is the Space key (or bar).
 
 The braille display (20 eight-dot cells) is at the front of the top. 
 There's a small, round button just behind each cell - these are the 
@@ -85,8 +85,9 @@ The Reset Button
 
 The Reset button is hidden within a very small, round hole on the 
 bottom. If the device is turned over, front to back, the hole is at 
-about the eight o'clock position, very close to the foot nearest to the 
-Power switch. A thin, round object, like a pin or paperclip, is needed.
+about the eight o'clock position relative to, and very close to, the foot
+nearest to the Power switch. A thin, round object, like a pin or paperclip, is
+needed.
 
 Try to keep the object you're using as perpendicular to the bottom as you can.
 You only need to press gently. If it feels like you're pressing against a hard
@@ -105,8 +106,8 @@ bottom. To remove it:
 
 1) Turn the device over so that its bottom is on top.
 
-2) Press gently down on the cover and slide it toward the side where
-   the power switch is.
+2) Press gently down on the cover, and then slide it toward the side where
+   the Power switch is.
 
 3) Lift the end of the cover that's toward the side where the earphone
    jack is.
@@ -115,34 +116,32 @@ Be careful after you've removed the cover because the underside of a circuit
 board will be exposed. Removing the cover is how to gain access to the 
 following:
 
-* The Micro-SD card slot.
-  It's in the corner that's toward the back and toward the side where the 
-  earphone jack is. The open end of the slot is toward the side where the 
-  power switch is. To insert a card, gently press it in until you hear a 
-  click. To remove the card, gently press it until you hear a click, and 
-  then allow the slot's internal spring to push it out.
+* The Micro-SD card slot, which is in the corner that's toward the back and
+  toward the side where the earphone jack is. The open end of the slot is
+  toward the side where the Power switch is. To insert a card, gently press it
+  in until you hear a click. To remove the card, gently press it until you hear
+  a click, and then allow the slot's internal spring to push it out.
 
-* The SIM card slot.
-  It's in the corner that's toward the front and toward the side where the 
-  power switch is. To gain access to the actual slot, lift the end of its 
-  cover that's toward the back. As with most SIM card slot covers, its 
-  hinge is fragile so be gentle.
+* The SIM card slot, which is in the corner that's toward the front and toward
+  the side where the Power switch is. To gain access to the actual slot, lift
+  the end of its cover that's toward the back. As with most SIM card slot
+  covers, its hinge is fragile so be gentle.
 
 Key Combinations
 ----------------
 
 A key combination may include any number of keys (including just one). 
-There is only one restriction on which keys may be used to form a key 
+There's only one restriction regarding which keys may be used to form a key 
 combination, namely that only one cursor routing key may be used at a 
-time. If more than one cursor routing key is pressed at the same time, 
+time. If more than one cursor routing key is pressed at the same time, then
 the first one that was pressed is used.
 
 If any of the keys of a combination is released before the long press timeout
 (see `Long Press Mode`_) expires then the action bound to that combination is
 executed. If the timeout expires then the action is immediately executed
-even though none of the keys has been released.
+even though none of the keys has been released yet.
 
-The way to cancel a key (or keys) that has been accidentally pressed is to
+The way to cancel a key combination that's been accidentally started is to
 press enough additional keys such that an unbound key combination is being
 attempted. A key combination that's been formally defined for this purpose is
 all eight dots plus Space.
@@ -152,8 +151,7 @@ Long Press Mode
 
 A secondary action may be bound to a key combination. A key combination's
 secondary action is executed if all of its keys are held until the long press
-timeout expires when Long Press Mode is enabled. The long press timeout is
-|long press timeout|.
+timeout expires. The long press timeout is |long press timeout|.
 
 This mode is enabled by default. Pressing Forward+Dot6 enables it,
 and pressing Backward+Dot3 disables it.
@@ -173,12 +171,12 @@ Space, whether pressed at the start (to include it in the combination)
 or at the end (to indicate that the combination is complete), should 
 always be pressed separately.
 
-One Hand Mode is disabled by default. Pressing Forward+Dot8 enables it, and
+This mode is disabled by default. Pressing Forward+Dot8 enables it, and
 pressing Backward+Dot7 (followed, of course, by pressing Space) disables it.
 Both of these key combinations have been chosen so that they can be reasonably
 easily pressed with a single hand.
 
-Switching the power switch **off** and then back **on** automatically disables
+Switching the Power switch **off** and then back **on** automatically disables
 One Hand Mode. This provides an intuitive way for a user who has accidentally
 enabled this mode, and who may not know how to disable it, to easily revert the
 keyboard to normal operation.
@@ -189,7 +187,7 @@ the power on.
 Typing
 ------
 
-A braille character that has a defined representation (see `Braille Character
+Any character that has a defined braille representation (see `Braille Character
 Map`_) can be directly typed by just pressing the corresponding keys as a
 single combination. There are two exceptions to this simple (and obvious) rule.
 If the defined representation of a character is either just dot 7 or just dot 8
@@ -209,7 +207,7 @@ possible:
 * It's represented in braille by either just dot 7 (the Backspace key) or just
   dot 8 (the Enter key).
 
-In order to indirectly type it, press Chord-u (dots 136). This brings up a
+In order to indirectly type it, press Space+u (dots 136). This brings up a
 prompt (see `Prompts`_) with the following header::
 
   Unicode> U+
@@ -265,14 +263,17 @@ The letter or special symbol must be typed within |control modifier timeout|.
 Braille Input Mode
 ~~~~~~~~~~~~~~~~~~
 
-The characters that render in text as actual braille characters (see `Unicode
+The characters that render in text as actual braille cells (see `Unicode
 Braille Characters`_) can be typed by enabling Braille Input Mode. Two of these
 characters can't be directly typed - just dot 7 (because it's the Backspace
 key), and just dot 8 (because it's the Enter key). Both of these can, of
 course, still be indirectly typed (see `Indirectly Typing Any Character`_).
 
-Braille Input Mode is disabled by default. Pressing Forward+Dot4 enables it,
-and pressing Backward+Dot1 disables it.
+* The Unicode value for a braille cell containing just dot 7 is U+2840.
+* The Unicode value for a braille cell containing just dot 8 is U+2880.
+
+This Mode is disabled by default. Pressing Forward+Dot4 enables it, and
+pressing Backward+Dot1 disables it.
 
 These characters have several uses, including (but not limited to):
 
@@ -291,14 +292,14 @@ Characters
 
 The basic characters are rendered using the `North American Braille Computer
 Code`_. Internally-designed representations for `Additional Common Symbols`_,
-as well as for `Additional Characters for Spanish`_, have also been included.
+as well as for `Additional Characters for Spanish`_, have also been defined.
 
 If the braille representation for a complex character (e.g. a letter with an
 accent) hasn't been defined, then its base character (e.g. just the latter) is
 displayed (unless, of course, even the base character's representation hasn't
 been defined).  
 
-The characters that render in text as actual braille characters (see `Unicode
+The characters that render in text as actual braille cells (see `Unicode
 Braille Characters`_) needn't (and, in fact, shouldn't) be defined. They're
 always rendered in braille as themselves.
 
@@ -400,7 +401,7 @@ Messages
 Messages are used to give feedback to the user for significant events. These
 include (but aren't limited to):
 
-* The successful changing of a setting via a key combination shortcut.
+* The successful changing of a setting.
 
 * The timeout of a partially entered request, e.g. the control modifier has
   been pressed but the (then required) letter or special symbol hasn't been
@@ -417,9 +418,12 @@ information. This includes (but isn't limited to):
 
 * The arrival of an Android notification.
 
-* The description of a character.
+* The description of a character (see `Identifying an Unrecognized
+  Character`_).
 
-* Detailed information that identifies the build.
+* The values of various status indicators (see `Checking Status Indicators`_).
+
+* Information that identifies the build (see `Identifying the Build`_).
 
 A popup is a multi-line, read-only dialog. Normal navigation may be
 performed within it, except that it isn't editable. Dismiss it by pressing
@@ -459,8 +463,8 @@ The Braille-friendly Clock
 
 You can access a braille-friendly clock by pressing Space+t (dots 2345). The
 date and time are displayed on the first line using the conventional
-international format. The second line contains the week day and month, and the
-third line identifies the time zone. For example::
+international format. The second line contains the abbreviated week day and
+month names, and the third line identifies the time zone. For example::
 
   2012-02-29 10:26:53
   Wed, Feb 29
@@ -469,7 +473,7 @@ third line identifies the time zone. For example::
 The four-digit number within (parentheses) on the third line is the time zone's
 offset, in (two-digit) hours and (two-digit) minutes, from UTC (Universal
 Coordinated Time). The abbreviation EST means Eastern Standard Time in North
-America, which is five hours earlier (hence the minus sign) than UTC.
+America, which is five hours earlier (hence the leading minus sign) than UTC.
 
 The Settings Screen
 ~~~~~~~~~~~~~~~~~~~
@@ -491,8 +495,8 @@ Reset to Defaults
   how to recover if, for example, you've accidentally messed up your saved 
   settings.
 
-Each subsequent line contains a setting that can be changed. They're laid out
-in columns, as follows:
+Each subsequent line contains a setting that can be changed, and is laid out in
+columns as follows:
 
 1) This column contains the name of the setting.
 
@@ -547,7 +551,7 @@ together also disables it.
 Sleep Talk Mode
 ```````````````
 
-Sleep Talk Mode leaves speech active while the power switch is off. This
+Sleep Talk Mode leaves speech active while the Power switch is off. This
 capability is useful when, for example, you'd like to reduce battery drain but
 still be informed when important asynchronous events, e.g. the arrival of
 notifications, occur.
