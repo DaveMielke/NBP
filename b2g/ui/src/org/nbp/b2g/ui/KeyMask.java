@@ -56,7 +56,8 @@ public abstract class KeyMask {
     return toDots(mask) != null;
   }
 
-  private static Map<String, Integer> keyNames = new LinkedHashMap<String, Integer>();
+  private static Map<String, String> keyNames = new LinkedHashMap<String, String>();
+  private static Map<String, Integer> keyMasks = new LinkedHashMap<String, Integer>();
 
   private static String normalizeKeyName (String name) {
     return name.toLowerCase();
@@ -105,7 +106,7 @@ public abstract class KeyMask {
     name = normalizeKeyName(name);
 
     {
-      Integer mask = keyNames.get(name);
+      Integer mask = keyMasks.get(name);
       if (mask != null) return mask;
     }
 
@@ -127,11 +128,12 @@ public abstract class KeyMask {
     StringBuilder sb = new StringBuilder();
 
     if (mask != 0) {
-      for (String name : keyNames.keySet()) {
-        int bit = keyNames.get(name);
+      for (String name : keyMasks.keySet()) {
+        int bit = keyMasks.get(name);
 
         if ((mask & bit) != 0) {
-          sb.append(name);
+          if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
+          sb.append(keyNames.get(name));
           if ((mask &= ~bit) == 0) break;
         }
       }
@@ -146,7 +148,9 @@ public abstract class KeyMask {
   }
 
   private static void map (String name, int bit) {
-    keyNames.put(normalizeKeyName(name), bit);
+    String normalizedName = normalizeKeyName(name);
+    keyNames.put(normalizedName, name);
+    keyMasks.put(normalizedName, bit);
   }
 
   static {
