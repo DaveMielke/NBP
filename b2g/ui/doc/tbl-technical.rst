@@ -26,7 +26,9 @@
 
 * Internal Flash Memory: eMMC, 8.5GB, not user accessible
 
-* Micro SD Card Slot: 32GB max, internal, user accessible (beneath cover on bottom)
+.. comment
+
+  * Micro SD Card Slot: 32GB max, internal, user accessible (beneath cover on bottom)
 
 * SD Card Slot: 32GB max, external (on back)
 

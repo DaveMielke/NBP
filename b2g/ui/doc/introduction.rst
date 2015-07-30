@@ -116,11 +116,13 @@ Be careful after you've removed the cover because the underside of a circuit
 board will be exposed. Removing the cover is how to gain access to the 
 following:
 
-* The Micro-SD card slot, which is in the corner that's toward the back and
-  toward the side where the earphone jack is. The open end of the slot is
-  toward the side where the Power switch is. To insert a card, gently press it
-  in until you hear a click. To remove the card, gently press it until you hear
-  a click, and then allow the slot's internal spring to push it out.
+.. comment
+
+  * The Micro-SD card slot, which is in the corner that's toward the back and
+    toward the side where the earphone jack is. The open end of the slot is
+    toward the side where the Power switch is. To insert a card, gently press it
+    in until you hear a click. To remove the card, gently press it until you hear
+    a click, and then allow the slot's internal spring to push it out.
 
 * The SIM card slot, which is in the corner that's toward the front and toward
   the side where the Power switch is. To gain access to the actual slot, lift
