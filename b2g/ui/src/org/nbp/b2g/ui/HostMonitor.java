@@ -1,5 +1,8 @@
 package org.nbp.b2g.ui;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.util.Log;
 
 import android.content.BroadcastReceiver;
@@ -12,10 +15,16 @@ import android.os.Bundle;
 public class HostMonitor extends BroadcastReceiver {
   private final static String LOG_TAG = HostMonitor.class.getName();
 
-  private static Bundle batteryStatus = null;
+  private final static Map<String, Bundle> intentExtras = new HashMap<String, Bundle>();
+
+  private static Bundle getIntentExtras (String action) {
+    synchronized (intentExtras) {
+      return intentExtras.get(action);
+    }
+  }
 
   public static Bundle getBatteryStatus () {
-    return batteryStatus;
+    return getIntentExtras(Intent.ACTION_BATTERY_CHANGED);
   }
 
   @Override
@@ -25,16 +34,15 @@ public class HostMonitor extends BroadcastReceiver {
     if (action != null) {
       Log.d(LOG_TAG, "host event: " + action);
 
-      if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
-        batteryStatus = intent.getExtras();
-        return;
-      }
-
       if (Environment.isExternalStorageRemovable()) {
         if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
           Characters.setCharacters(new Characters());
           return;
         }
+      }
+
+      synchronized (intentExtras) {
+        intentExtras.put(action, intent.getExtras());
       }
     }
   }

@@ -3,7 +3,10 @@ import org.nbp.b2g.ui.*;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import android.os.BatteryManager;
+
+import android.telephony.TelephonyManager;
 
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
@@ -33,6 +36,21 @@ public class DescribeStatus extends Action {
           sb.append(' ');
           sb.append(Integer.toString((level * 100) / scale));
           sb.append('%');
+        }
+      }
+    }
+  }
+
+  private static void addTelephonyStatus (StringBuilder sb) {
+    TelephonyManager tel = (TelephonyManager)ApplicationContext.getSystemService(Context.TELEPHONY_SERVICE);
+
+    if (tel != null) {
+      String operator = tel.getSimOperatorName();
+
+      if (operator != null) {
+        if (!operator.isEmpty()) {
+          startLine(sb, R.string.describeStatus_sim_label);
+          sb.append(operator);
         }
       }
     }
@@ -95,6 +113,7 @@ public class DescribeStatus extends Action {
     StringBuilder sb = new StringBuilder();
 
     addBatteryStatus(sb);
+    addTelephonyStatus(sb);
     addWifiStatus(sb);
 
     if (sb.length() == 0) return false;

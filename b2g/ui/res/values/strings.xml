@@ -93,6 +93,9 @@
   <string name="describeCharacter_label_directionality">Directionality</string>
 
   <string name="describeStatus_battery_label">Battery</string>
+
+  <string name="describeStatus_sim_label">SIM</string>
+
   <string name="describeStatus_wifi_label">Wi-Fi</string>
   <string name="describeStatus_wifi_state_disabled">disabled</string>
   <string name="describeStatus_wifi_state_enabling">enabling</string>
