@@ -126,8 +126,9 @@ following:
 
 * The Micro-SIM card slot, which is in the corner that's toward the front and
   toward the side where the Power switch is. To gain access to the actual slot,
-  lift the end of its cover that's toward the back. As with most SIM card slot
-  covers, its hinge is fragile so be gentle.
+  slide its cover slightly toward the front and then lift the end of it that's
+  toward the back. As with most SIM card slot covers, its hinge is fragile so
+  be gentle.
 
 Key Combinations
 ----------------
