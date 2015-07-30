@@ -1,13 +1,13 @@
-bind B4568 SaveScreen
+bind Backward+Dots4568 SaveScreen
 
-bind B4 MoveToParent
-bind B5 MoveToPreviousSibling
-bind B6 MoveToNextSibling
-bind B8 MoveToChild
-bind B56 MoveToSelf
+bind Backward+Dot4 MoveToParent
+bind Backward+Dot5 MoveToPreviousSibling
+bind Backward+Dot6 MoveToNextSibling
+bind Backward+Dot8 MoveToChild
+bind Backward+Dots56 MoveToSelf
 
-bind B456 ScrollBackward
-bind B568 ScrollForward
+bind Backward+Dots456 ScrollBackward
+bind Backward+Dots568 ScrollForward
 
-bind B48 SwitchLauncher
+bind Backward+Dots48 SwitchLauncher
 

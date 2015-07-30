@@ -1,4 +1,4 @@
-char space S
+char space 0
 char ! 2346
 char " 5
 char # 3456

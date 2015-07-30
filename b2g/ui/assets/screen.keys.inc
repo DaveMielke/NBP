@@ -1,40 +1,40 @@
-bind BH MoveBackward
-bind FH MoveForward
+bind Backward+LongPress MoveBackward
+bind Forward+LongPress MoveForward
 
-bind SB MoveBackward
-bind SF MoveForward
+bind Backward+Space MoveBackward
+bind Forward+Space MoveForward
 
-bind C Click
-bind SC LongClick
+bind Center Click
+bind Space+Center LongClick
 
-bind 4U Notifications
-bind 4D HomeKey
+bind Dot4+Up Notifications
+bind Dot4+Down HomeKey
 
-bind 4L BackKey
-bind 4R RecentApps
+bind Dot4+Left BackKey
+bind Dot4+Right RecentApps
 
-bind S1478 PowerOff
-bind S123456 HomeKey
+bind Space+Dots1478 PowerOff
+bind Space+Dots123456 HomeKey
 
-bind SL MoveFirst
-bind SR MoveLast
+bind Space+Left MoveFirst
+bind Space+Right MoveLast
 
-bind SU MovePrevious
-bind SD MoveNext
+bind Space+Up MovePrevious
+bind Space+Down MoveNext
 
-bind S124 FindNext
-bind S134 MenuKey
-bind S1345 Notifications
-bind S135 Options
-bind S1235 RecentApps
-bind S2345 Clock
-bind S1356 BackKey
-bind S1246 Editor
-bind S1456 Assist
+bind Space+Dots124 FindNext
+bind Space+Dots134 MenuKey
+bind Space+Dots1345 Notifications
+bind Space+Dots135 Options
+bind Space+Dots1235 RecentApps
+bind Space+Dots2345 Clock
+bind Space+Dots1356 BackKey
+bind Space+Dots1246 Editor
+bind Space+Dots1456 Assist
 
-bind S234-S AndroidSettings
-bind S234-1 AndroidAccessibilitySettings
-bind S234-12 AndroidBluetoothSettings
-bind S234-2456 AndroidWifiSettings
+bind Space+Dots234,Space AndroidSettings
+bind Space+Dots234,Dot1 AndroidAccessibilitySettings
+bind Space+Dots234,Dots12 AndroidBluetoothSettings
+bind Space+Dots234,Dots2456 AndroidWifiSettings
 
 include screen-developer.keys.inc

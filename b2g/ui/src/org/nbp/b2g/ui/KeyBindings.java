@@ -5,12 +5,20 @@ import java.lang.reflect.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.regex.Pattern;
+
 import android.util.Log;
 
 public class KeyBindings {
   private final static String LOG_TAG = KeyBindings.class.getName();
 
-  public final static char KEY_COMBINATION_DELIMITER = '-';
+  private final static Pattern KEY_COMBINATION_PATTERN = Pattern.compile(
+    "\\" + KeyMask.KEY_COMBINATION_DELIMITER
+  );
+
+  private final static Pattern KEY_NAME_PATTERN = Pattern.compile(
+    "\\" + KeyMask.KEY_NAME_DELIMITER
+  );
 
   private final Endpoint endpoint;
 
@@ -198,35 +206,40 @@ public class KeyBindings {
   }
 
   private static int[] parseKeyCombination (String operand) {
-    int length = operand.length();
+    String[] combinations = KEY_COMBINATION_PATTERN.split(operand);
     int[] masks = null;
-    int mask = 0;
 
-    for (int index=0; index<length; index+=1) {
-      char character = operand.charAt(index);
+    for (String combination : combinations) {
+      if (combination.isEmpty()) {
+        Log.w(LOG_TAG, "missing key combination: " + operand);
+        return null;
+      }
 
-      if (character == KEY_COMBINATION_DELIMITER) {
-        masks = addKeyMask(masks, mask);
-        if (masks == null) return null;
-        mask = 0;
-      } else {
-        Integer bit = KeyMask.toBit(Character.toUpperCase(character));
+      String[] names = KEY_NAME_PATTERN.split(combination);
+      int mask = 0;
 
-        if (bit == null) {
-          Log.w(LOG_TAG, "unknown key: " + character);
+      for (String name : names) {
+        if (name.isEmpty()) {
+          Log.w(LOG_TAG, "missing key name: " + combination);
           return null;
         }
 
+        Integer bit = KeyMask.toBit(name);
+        if (bit == null) return null;
+
         if ((mask & bit) != 0) {
-          Log.w(LOG_TAG, "key specified more than once: " + operand);
+          Log.w(LOG_TAG, "key specified more than once: " + name);
           return null;
         }
 
         mask |= bit;
       }
+
+      masks = addKeyMask(masks, mask);
+      if (masks == null) return null;
     }
 
-    return addKeyMask(masks, mask);
+    return masks;
   }
 
   private boolean bindKeyCombination (String[] operands) {

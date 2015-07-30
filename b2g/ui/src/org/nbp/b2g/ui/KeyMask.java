@@ -32,6 +32,8 @@ public abstract class KeyMask {
   public final static int LONG_PRESS  = 0X200000;
 
   public final static int DOTS_ALL = (DOT_1 | DOT_2 | DOT_3 | DOT_4 | DOT_5 | DOT_6 | DOT_7 | DOT_8);
+  public final static char KEY_COMBINATION_DELIMITER = ',';
+  public final static char KEY_NAME_DELIMITER = '+';
 
   public static Byte toDots (int mask) {
     if (mask == 0) return null;
@@ -54,33 +56,88 @@ public abstract class KeyMask {
     return toDots(mask) != null;
   }
 
-  private static Map<Character, Integer> charToBit = new LinkedHashMap<Character, Integer>();
+  private static Map<String, Integer> keyNames = new LinkedHashMap<String, Integer>();
 
-  public static Integer toBit (char character) {
-    Integer bit = charToBit.get(character);
+  private static String normalizeKeyName (String name) {
+    return name.toLowerCase();
+  }
 
-    if (bit == null) {
-      Log.w(LOG_TAG, "key mask character not defined: " + character);
+  public static Integer parseDots (String numbers) {
+    if (numbers.isEmpty()) {
+      Log.w(LOG_TAG, "missing dot numbers");
+      return null;
     }
 
-    return bit;
+    int mask = 0;
+    int length = numbers.length();
+
+    for (int index=0; index<length; index+=1) {
+      char number = numbers.charAt(index);
+      int bit;
+
+      switch (number) {
+        case '1': bit = KeyMask.DOT_1; break;
+        case '2': bit = KeyMask.DOT_2; break;
+        case '3': bit = KeyMask.DOT_3; break;
+        case '4': bit = KeyMask.DOT_4; break;
+        case '5': bit = KeyMask.DOT_5; break;
+        case '6': bit = KeyMask.DOT_6; break;
+        case '7': bit = KeyMask.DOT_7; break;
+        case '8': bit = KeyMask.DOT_8; break;
+
+        default:
+          Log.w(LOG_TAG, "unknown dot number: " + number);
+          return null;
+      }
+
+      if ((mask & bit) != 0) {
+        Log.w(LOG_TAG, "dot number specified more than once: " + number);
+        return null;
+      }
+
+      mask |= bit;
+    }
+
+    return mask;
+  }
+
+  public static Integer toBit (String name) {
+    name = normalizeKeyName(name);
+
+    {
+      Integer mask = keyNames.get(name);
+      if (mask != null) return mask;
+    }
+
+    {
+      String prefix = "dots";
+
+      if (name.startsWith(prefix)) {
+        String numbers = name.substring(prefix.length());
+        Integer mask = parseDots(numbers);
+        if (mask != null) return mask;
+      }
+    }
+
+    Log.w(LOG_TAG, "unknown key name: " + name);
+    return null;
   }
 
   public static String toString (int mask) {
     StringBuilder sb = new StringBuilder();
 
     if (mask != 0) {
-      for (Character character : charToBit.keySet()) {
-        int bit = charToBit.get(character);
+      for (String name : keyNames.keySet()) {
+        int bit = keyNames.get(name);
 
         if ((mask & bit) != 0) {
-          sb.append(character);
+          sb.append(name);
           if ((mask &= ~bit) == 0) break;
         }
       }
 
       if (mask != 0) {
-        if (sb.length() > 0) sb.append('+');
+        if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
         sb.append(String.format("0X%X", mask));
       }
     }
@@ -88,39 +145,38 @@ public abstract class KeyMask {
     return sb.toString();
   }
 
-  private static void map (char character, int bit) {
-    charToBit.put(character, bit);
+  private static void map (String name, int bit) {
+    keyNames.put(normalizeKeyName(name), bit);
   }
 
   static {
-    map('S', SPACE);
+    map("Forward", FORWARD);
+    map("Backward", BACKWARD);
+    map("Space", SPACE);
 
-    map('F', FORWARD);
-    map('B', BACKWARD);
+    map("Up", DPAD_UP);
+    map("Down", DPAD_DOWN);
+    map("Left", DPAD_LEFT);
+    map("Right", DPAD_RIGHT);
+    map("Center", DPAD_CENTER);
 
-    map('U', DPAD_UP);
-    map('D', DPAD_DOWN);
-    map('L', DPAD_LEFT);
-    map('R', DPAD_RIGHT);
-    map('C', DPAD_CENTER);
+    map("Dot1", DOT_1);
+    map("Dot2", DOT_2);
+    map("Dot3", DOT_3);
+    map("Dot4", DOT_4);
+    map("Dot5", DOT_5);
+    map("Dot6", DOT_6);
+    map("Dot7", DOT_7);
+    map("Dot8", DOT_8);
 
-    map('1', DOT_1);
-    map('2', DOT_2);
-    map('3', DOT_3);
-    map('4', DOT_4);
-    map('5', DOT_5);
-    map('6', DOT_6);
-    map('7', DOT_7);
-    map('8', DOT_8);
+    map("VolumeDown", VOLUME_DOWN);
+    map("VolumeUp", VOLUME_UP);
 
-    map('<', VOLUME_DOWN);
-    map('>', VOLUME_UP);
+    map("Cursor", CURSOR);
+    map("LongPress", LONG_PRESS);
 
-    map('X', CURSOR);
-    map('H', LONG_PRESS);
-
-    map('W', POWER_ON);
-    map('Q', POWER_OFF);
+    map("PowerOn", POWER_ON);
+    map("PowerOff", POWER_OFF);
   }
 
   private KeyMask () {

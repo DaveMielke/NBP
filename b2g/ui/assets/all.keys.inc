@@ -1,31 +1,31 @@
-bind 8 Enter
+bind Dot8 Enter
 
-bind B PanLeft
-bind F PanRight
+bind Backward PanLeft
+bind Forward PanRight
 
-bind U ArrowUp
-bind D ArrowDown
-bind L ArrowLeft
-bind R ArrowRight
+bind Up ArrowUp
+bind Down ArrowDown
+bind Left ArrowLeft
+bind Right ArrowRight
 
-bind 7X DescribeCharacter
-bind 8X SetLeft
+bind Dot7+Cursor DescribeCharacter
+bind Dot8+Cursor SetLeft
 
-bind S148 CopyToClipboard
+bind Space+Dots148 CopyToClipboard
 
-bind B1 BrailleInputOff
-bind F4 BrailleInputOn
+bind Backward+Dot1 BrailleInputOff
+bind Forward+Dot4 BrailleInputOn
 
-bind B3 LongPressOff
-bind F6 LongPressOn
+bind Backward+Dot3 LongPressOff
+bind Forward+Dot6 LongPressOn
 
-bind B7 OneHandOff
-bind F8 OneHandOn
+bind Backward+Dot7 OneHandOff
+bind Forward+Dot8 OneHandOn
 
-bind BF DescribeStatus
-bind SBF DescribeBuild
+bind Backward+Forward DescribeStatus
+bind Backward+Forward+Space DescribeBuild
 
-bind S12345678 Null
+bind Space+Dots12345678 Null
 
 include all-required.keys.inc
 include all-legacy.keys.inc

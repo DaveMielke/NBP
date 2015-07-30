@@ -173,28 +173,9 @@ public class Characters {
     return null;
   }
 
-  private static Integer parseKeys (String operand) {
-    int length = operand.length();
-    int mask = 0;
-
-    for (int index=0; index<length; index+=1) {
-      char character = operand.charAt(index);
-      Integer bit = KeyMask.toBit(Character.toUpperCase(character));
-
-      if (bit == null) {
-        Log.w(LOG_TAG, "unknown key: " + character);
-        return null;
-      }
-
-      if ((mask & bit) != 0) {
-        Log.w(LOG_TAG, "key specified more than once: " + operand);
-        return null;
-      }
-
-      mask |= bit;
-    }
-
-    return mask;
+  private static Integer parseDots (String operand) {
+    if (operand.equals("0")) return KeyMask.SPACE;
+    return KeyMask.parseDots(operand);
   }
 
   private final boolean defineCharacter (String[] operands, boolean forInput) {
@@ -214,13 +195,13 @@ public class Characters {
       return true;
     }
 
-    String keysOperand = operands[index++];
-    Integer keyMask = parseKeys(keysOperand);
+    String dotsOperand = operands[index++];
+    Integer keyMask = parseDots(dotsOperand);
     if (keyMask == null) return true;
     Byte dots = KeyMask.toDots(keyMask);
 
     if (dots == null) {
-      Log.w(LOG_TAG, "not space or just dots: " + keysOperand);
+      Log.w(LOG_TAG, "not space or just dots: " + dotsOperand);
       return true;
     }
 
@@ -233,7 +214,7 @@ public class Characters {
 
       if (old != null) {
         if (!old.equals(character)) {
-          Log.w(LOG_TAG, "key combination already bound: " + keysOperand);
+          Log.w(LOG_TAG, "key combination already bound: " + dotsOperand);
           return true;
         }
 

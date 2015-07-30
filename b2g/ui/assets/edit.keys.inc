@@ -1,15 +1,15 @@
-bind X BringCursor
+bind Cursor BringCursor
 
-bind 7 DeletePrevious
-bind S145 DeleteNext
+bind Dot7 DeletePrevious
+bind Space+Dots145 DeleteNext
 
-bind BX SetSelectionStart
-bind FX SetSelectionEnd
-bind S18 SelectAll
+bind Backward+Cursor SetSelectionStart
+bind Forward+Cursor SetSelectionEnd
+bind Space+Dots18 SelectAll
 
-bind S13468 CutToClipboard
-bind S12368 PasteFromClipboard
+bind Space+Dots13468 CutToClipboard
+bind Space+Dots12368 PasteFromClipboard
 
-bind S136 InsertUnicode
-bind S1346 ControlModifier
+bind Space+Dots136 InsertUnicode
+bind Space+Dots1346 ControlModifier
 

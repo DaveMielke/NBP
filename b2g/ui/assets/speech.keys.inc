@@ -1,21 +1,21 @@
-bind S< SpeechOff
-bind S> SpeechOn
+bind Space+VolumeDown SpeechOff
+bind Space+VolumeUp SpeechOn
 
-bind F< SleepTalkOff
-bind F> SleepTalkOn
+bind Forward+VolumeDown SleepTalkOff
+bind Forward+VolumeUp SleepTalkOn
 
-bind B< StopSpeaking
-bind B> SayLine
+bind Backward+VolumeDown StopSpeaking
+bind Backward+VolumeUp SayLine
 
-bind 1< SpeakSofter
-bind 1> SpeakLouder
+bind Dot1+VolumeDown SpeakSofter
+bind Dot1+VolumeUp SpeakLouder
 
-bind 2< SpeakSlower
-bind 2> SpeakFaster
+bind Dot2+VolumeDown SpeakSlower
+bind Dot2+VolumeUp SpeakFaster
 
-bind 3< SpeakLower
-bind 3> SpeakHigher
+bind Dot3+VolumeDown SpeakLower
+bind Dot3+VolumeUp SpeakHigher
 
-bind 4< SpeakLeft
-bind 4> SpeakRight
+bind Dot4+VolumeDown SpeakLeft
+bind Dot4+VolumeUp SpeakRight
 

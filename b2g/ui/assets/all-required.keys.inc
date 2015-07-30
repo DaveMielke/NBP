@@ -1,6 +1,6 @@
-bind < VolumeDown
-bind > VolumeUp
+bind VolumeDown VolumeDown
+bind VolumeUp VolumeUp
 
-bind W Null
-bind Q Null
+bind PowerOn Null
+bind PowerOff Null
 

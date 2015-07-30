@@ -1,16 +1,16 @@
 # make this one very hard to type by accident
-bind FB1245 DeveloperOff
-bind FB1245H DeveloperOn
+bind Forward+Backward+Dots1245 DeveloperOff
+bind Forward+Backward+Dots1245+LongPress DeveloperOn
 
-bind F1237 LogNone
-bind F1 LogKeys
-bind F2 LogActions
-bind F3 LogNavigation
-bind F7 LogUpdates
+bind Forward+Dots1237 LogNone
+bind Forward+Dot1 LogKeys
+bind Forward+Dot2 LogActions
+bind Forward+Dot3 LogNavigation
+bind Forward+Dot7 LogUpdates
 
-bind F12 SaveSettings
-bind F23 RestoreSettings
-bind F37 ResetSettings
+bind Forward+Dots12 SaveSettings
+bind Forward+Dots23 RestoreSettings
+bind Forward+Dots37 ResetSettings
 
-bind F17 ForceCrash
+bind Forward+Dots17 ForceCrash
 
