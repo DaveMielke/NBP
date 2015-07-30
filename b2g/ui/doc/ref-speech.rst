@@ -1,18 +1,42 @@
-====  ==============
-Keys  Action
-----  --------------
-S<    |SpeechOff|
-S>    |SpeechOn|
-F<    |SleepTalkOff|
-F>    |SleepTalkOn|
-B<    |StopSpeaking|
-B>    |SayLine|
-1<    |SpeakSofter|
-1>    |SpeakLouder|
-2<    |SpeakSlower|
-2>    |SpeakFaster|
-3<    |SpeakLower|
-3>    |SpeakHigher|
-4<    |SpeakLeft|
-4>    |SpeakRight|
-====  ==============
+Space+VolumeDown
+  |SpeechOff|
+
+Space+VolumeUp
+  |SpeechOn|
+
+Forward+VolumeDown
+  |SleepTalkOff|
+
+Forward+VolumeUp
+  |SleepTalkOn|
+
+Backward+VolumeDown
+  |StopSpeaking|
+
+Backward+VolumeUp
+  |SayLine|
+
+Dot1+VolumeDown
+  |SpeakSofter|
+
+Dot1+VolumeUp
+  |SpeakLouder|
+
+Dot2+VolumeDown
+  |SpeakSlower|
+
+Dot2+VolumeUp
+  |SpeakFaster|
+
+Dot3+VolumeDown
+  |SpeakLower|
+
+Dot3+VolumeUp
+  |SpeakHigher|
+
+Dot4+VolumeDown
+  |SpeakLeft|
+
+Dot4+VolumeUp
+  |SpeakRight|
+
