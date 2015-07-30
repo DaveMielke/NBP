@@ -24,7 +24,7 @@
 
 * Compass
 
-* Internal Flash Memory: 8.5GB (for system)
+* Internal Flash Memory: eMMC, 8.5GB, not user accessible
 
 * Micro SD Card Slot: 32GB max, internal, user accessible (beneath cover on bottom)
 

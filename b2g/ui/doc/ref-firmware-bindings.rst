@@ -1,19 +1,30 @@
-VolumeDown + Dot1 + Dot2 + Dot3 + Dot7
-  Go to the Power Off screen.
+Simultaneously pressing VolumeDown, Dot1, Dot2, Dot3, and Dot7:
+  If the system is running then go to the Power Off screen. This is
+  equivalent to a medium press of the Power button on an Android device.
 
-VolumeDown + Dot4 + Dot5 + Dot6 + Dot8
-  Reboot the system.
+Simultaneously pressing VolumeDown, Dot4, Dot5, Dot6, and Dot8:
+  If the system is running then reset the main processor and then boot the
+  system. This is equivalent to a long press of the Power button on an
+  Android device.
 
-switch the power on
-  If the system is fully shut down then boot it. If it's up then wake it.
+Switching the power on:
 
-switch the power off
-  Put the system to sleep in order to save power. The system itself stays up
-  but most of the peripherals (the braille display, the keyboard, etc) are shut
-  down.
+  * If the system is shut down then boot it. This is equivalent to a long
+    press of the Power button on an Android device.
 
-VolumeDown while switching the power on
-  Boot into Recovery Mode. This binding only applies to when the system is
-  fully shut down. Neither braille nor speech works in Recovery Mode. This
-  binding is intended for a sighted person using an external video monitor.
+  * If the system is running then wake it up. This is equivalent to a short
+    press of the Power button on an Android device.
+
+Switching the power off:
+  If the system is running then put it to sleep. This is equivalent to a
+  short press of the Power button on an Android device. The system itself
+  will stay up, but most of the peripherals (the braille display, the keyboard,
+  etc) will be shut down in order to save power.
+
+Holding VolumeDown while switching the power on:
+  If the system is shut down then boot into Recovery Mode. This is equivalent
+  to a simultaneous long press of the Power button and the Volume Up key on an
+  Android device. Neither braille nor speech works in Recovery Mode. This
+  binding is intended for use by a sighted person using an external video
+  monitor.
 
