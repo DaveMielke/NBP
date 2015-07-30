@@ -24,7 +24,7 @@
 
 * Compass
 
-* Internal Flash Memory: eMMC, 8.5GB, not user accessible
+* Internal Memory: 8.5GB eMMC, 500MB DRAM
 
 .. comment
 
