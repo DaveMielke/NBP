@@ -23,7 +23,8 @@ Two Short Beeps
   when the User Interface starts, regular screen content will appear.
 
 Three Short Beeps
-  The battery is very low.
+  The battery is too low to boot the system. This check is made when the Power
+  switch is turned on while the system is shut down.
 
 Two Medium Beeps
   The battery is full. This occurs when the charger is connected, and indicates
