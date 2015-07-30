@@ -11,7 +11,7 @@ bind Right ArrowRight
 bind Dot7+Cursor DescribeCharacter
 bind Dot8+Cursor SetLeft
 
-bind Space+Dots148 CopyToClipboard
+bind Space+Dot8+Dots14#c CopyToClipboard
 
 bind Backward+Dot1 BrailleInputOff
 bind Forward+Dot4 BrailleInputOn

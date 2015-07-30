@@ -219,6 +219,11 @@ public class KeyBindings {
       int mask = 0;
 
       for (String name : names) {
+        {
+          int comment = name.indexOf('#');
+          if (comment >= 0) name = name.substring(0, comment);
+        }
+
         if (name.isEmpty()) {
           Log.w(LOG_TAG, "missing key name: " + combination);
           return null;

@@ -10,7 +10,7 @@
   "Right","|ArrowRight|"
   "Dot7+Cursor","|DescribeCharacter|"
   "Dot8+Cursor","|SetLeft|"
-  "Space+Dots148","|CopyToClipboard|"
+  "Space+Dot8+Dots14#c","|CopyToClipboard|"
   "Backward+Dot1","|BrailleInputOff|"
   "Forward+Dot4","|BrailleInputOn|"
   "Backward+Dot3","|LongPressOff|"

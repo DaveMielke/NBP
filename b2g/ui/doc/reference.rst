@@ -44,8 +44,8 @@ Speech Operations
 
 .. include:: ref-speech.rst
 
-Legacy Actions
-~~~~~~~~~~~~~~
+Legacy Bindings
+~~~~~~~~~~~~~~~
 
 .. include:: ref-legacy.rst
 

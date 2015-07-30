@@ -22,19 +22,19 @@ bind Space+Right MoveLast
 bind Space+Up MovePrevious
 bind Space+Down MoveNext
 
-bind Space+Dots124 FindNext
-bind Space+Dots134 MenuKey
-bind Space+Dots1345 Notifications
-bind Space+Dots135 Options
-bind Space+Dots1235 RecentApps
-bind Space+Dots2345 Clock
-bind Space+Dots1356 BackKey
-bind Space+Dots1246 Editor
-bind Space+Dots1456 Assist
+bind Space+Dots124#f FindNext
+bind Space+Dots134#m MenuKey
+bind Space+Dots1345#n Notifications
+bind Space+Dots135#o Options
+bind Space+Dots1235#r RecentApps
+bind Space+Dots2345#t Clock
+bind Space+Dots1356#z BackKey
+bind Space+Dots1246#ed Editor
+bind Space+Dots1456#? Assist
 
-bind Space+Dots234,Space AndroidSettings
-bind Space+Dots234,Dot1 AndroidAccessibilitySettings
-bind Space+Dots234,Dots12 AndroidBluetoothSettings
-bind Space+Dots234,Dots2456 AndroidWifiSettings
+bind Space+Dots234#s,Space AndroidSettings
+bind Space+Dots234#s,Dot1#a AndroidAccessibilitySettings
+bind Space+Dots234#s,Dots12#b AndroidBluetoothSettings
+bind Space+Dots234#s,Dots2456#w AndroidWifiSettings
 
 include screen-developer.keys.inc
