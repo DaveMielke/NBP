@@ -1,25 +1,22 @@
-=========  =================
-Keys       Action
----------  -----------------
-8          |Enter|
-B          |PanLeft|
-F          |PanRight|
-U          |ArrowUp|
-D          |ArrowDown|
-L          |ArrowLeft|
-R          |ArrowRight|
-7X         |DescribeCharacter|
-8X         |SetLeft|
-S148       |CopyToClipboard|
-B1         |BrailleInputOff|
-F4         |BrailleInputOn|
-B3         |LongPressOff|
-F6         |LongPressOn|
-B7         |OneHandOff|
-F8         |OneHandOn|
-BF         |DescribeStatus|
-SBF        |DescribeBuild|
-S12345678  |Null|
-<          |VolumeDown|
->          |VolumeUp|
-=========  =================
+.. csv-table:: Common Operations
+  :header: "Keys", "Description"
+
+  "Dot8","|Enter|"
+  "Backward","|PanLeft|"
+  "Forward","|PanRight|"
+  "Up","|ArrowUp|"
+  "Down","|ArrowDown|"
+  "Left","|ArrowLeft|"
+  "Right","|ArrowRight|"
+  "Dot7+Cursor","|DescribeCharacter|"
+  "Dot8+Cursor","|SetLeft|"
+  "Space+Dots148","|CopyToClipboard|"
+  "Backward+Dot1","|BrailleInputOff|"
+  "Forward+Dot4","|BrailleInputOn|"
+  "Backward+Dot3","|LongPressOff|"
+  "Forward+Dot6","|LongPressOn|"
+  "Backward+Dot7","|OneHandOff|"
+  "Forward+Dot8","|OneHandOn|"
+  "Backward+Forward","|DescribeStatus|"
+  "Backward+Forward+Space","|DescribeBuild|"
+  "Space+Dots12345678","|Null|"

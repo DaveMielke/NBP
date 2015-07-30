@@ -24,11 +24,6 @@ Key Bindings
 
 .. include:: ref-actions.rst
 
-The key combinations within these quick reference tables are represented
-as follows:
-
-.. include:: ref-keys.rst
-
 Common Operations
 ~~~~~~~~~~~~~~~~~
 

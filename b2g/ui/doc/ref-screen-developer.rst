@@ -1,13 +1,12 @@
-======  =======================
-Keys    Action
-------  -----------------------
-B4568   |SaveScreen|
-B4      |MoveToParent|
-B5      |MoveToPreviousSibling|
-B6      |MoveToNextSibling|
-B8      |MoveToChild|
-B56     |MoveToSelf|
-B456    |ScrollBackward|
-B568    |ScrollForward|
-B48     |SwitchLauncher|
-======  =======================
+.. csv-table:: Screen Developer Operations
+  :header: "Keys", "Description"
+
+  "Backward+Dots4568","|SaveScreen|"
+  "Backward+Dot4","|MoveToParent|"
+  "Backward+Dot5","|MoveToPreviousSibling|"
+  "Backward+Dot6","|MoveToNextSibling|"
+  "Backward+Dot8","|MoveToChild|"
+  "Backward+Dots56","|MoveToSelf|"
+  "Backward+Dots456","|ScrollBackward|"
+  "Backward+Dots568","|ScrollForward|"
+  "Backward+Dots48","|SwitchLauncher|"

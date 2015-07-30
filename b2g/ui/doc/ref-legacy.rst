@@ -1,17 +1,16 @@
-=========  ==============================
-Keys       Action
----------  ------------------------------
-S3         |CursorLeft|
-S6         |CursorRight|
-S1         |CursorUp|
-S4         |CursorDown|
-S23        |PageUp|
-S56        |PageDown|
-S123       |Home|
-S456       |End|
-S12        |TabBackward|
-S45        |TabForward|
-S14        |SayLine|
-<>         |SpeechOff|
-8W         |OneHandOn|
-=========  ==============================
+.. csv-table:: Legacy Operations
+  :header: "Keys", "Description"
+
+  "Space+Dot3","|CursorLeft|"
+  "Space+Dot6","|CursorRight|"
+  "Space+Dot1","|CursorUp|"
+  "Space+Dot4","|CursorDown|"
+  "Space+Dots23","|PageUp|"
+  "Space+Dots56","|PageDown|"
+  "Space+Dots123","|Home|"
+  "Space+Dots456","|End|"
+  "Space+Dots12","|TabBackward|"
+  "Space+Dots45","|TabForward|"
+  "Space+Dots14","|SayLine|"
+  "VolumeDown+VolumeUp","|SpeechOff|"
+  "Dot8+PowerOn","|OneHandOn|"
