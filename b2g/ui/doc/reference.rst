@@ -17,7 +17,7 @@ Key Bindings
 Special Braille Symbols
 -----------------------
 
-.. include:: ref-symbols.rst
+.. include:: ref-braille-symbols.rst
 
 Key Bindings
 ------------
