@@ -1,0 +1,26 @@
+1.  Dot8+c (dots 148)Copy all of the text to the clipboard.
+I don't think we should have commands without space bar. Add a space and
+I'd be happy.
+
+2. We should define the word Field in the context of the screen.
+
+3. Under Hardware Alerts, describe the context of what is happening.  Like
+starting the Hardware from a power off state.
+
+4.  I find myself wishing there was another column in your key definition
+tables like screen operations.  This new column would be the old chord
+notation if one exists.  For example S1356 would have n-chord or chord-z.
+The mental effort to translate S1356 into space plus Z is considerable.
+The column would be blank in some cases where a chord is difficult to
+define.  Your notation is very precise but difficult to read. Both would be
+nice.
+
+5.  In the legacy actions, what is W in one hand mode on?  I found myself
+scrolling back to the table that defines symbols.  The added column could
+help with this.
+
+6.  The internal flash memory is 8.5GB not 1.5GB
+
+7.  The internal SD card is not used in rev C.  It was removed and replaced
+with the internal 8GB flash memory also called emmc flash.
+
