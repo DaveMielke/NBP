@@ -28,11 +28,11 @@
 
 .. comment
 
-  * Micro SD Card Slot: 32GB max, internal, user accessible (beneath cover on bottom)
+  * Micro-SD Card Slot: 32GB max, internal, user accessible (beneath cover on bottom)
 
 * SD Card Slot: 32GB max, external (on back)
 
-* SIM Card Slot: internal, user accessible (beneath cover on bottom)
+* Micro-SIM Card Slot: internal, user accessible (beneath cover on bottom)
 
 * Cellular Wireless Module:
 

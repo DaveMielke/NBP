@@ -124,9 +124,9 @@ following:
     in until you hear a click. To remove the card, gently press it until you hear
     a click, and then allow the slot's internal spring to push it out.
 
-* The SIM card slot, which is in the corner that's toward the front and toward
-  the side where the Power switch is. To gain access to the actual slot, lift
-  the end of its cover that's toward the back. As with most SIM card slot
+* The Micro-SIM card slot, which is in the corner that's toward the front and
+  toward the side where the Power switch is. To gain access to the actual slot,
+  lift the end of its cover that's toward the back. As with most SIM card slot
   covers, its hinge is fragile so be gentle.
 
 Key Combinations
