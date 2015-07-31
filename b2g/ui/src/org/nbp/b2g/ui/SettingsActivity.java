@@ -62,12 +62,12 @@ public class SettingsActivity extends ProgrammaticActivity {
 
   private View createSaveControlsButton () {
     Button button = createButton(
-      R.string.saveSettings_action_label,
+      R.string.SaveSettings_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.saveValues();
-          ApplicationUtilities.message(R.string.saveSettings_action_confirmation);
+          ApplicationUtilities.message(R.string.SaveSettings_action_confirmation);
         }
       }
     );
@@ -77,12 +77,12 @@ public class SettingsActivity extends ProgrammaticActivity {
 
   private View createRestoreControlsButton () {
     Button button = createButton(
-      R.string.restoreSettings_action_label,
+      R.string.RestoreSettings_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.restoreSavedValues();
-          ApplicationUtilities.message(R.string.restoreSettings_action_confirmation);
+          ApplicationUtilities.message(R.string.RestoreSettings_action_confirmation);
         }
       }
     );
@@ -92,12 +92,12 @@ public class SettingsActivity extends ProgrammaticActivity {
 
   private View createResetControlsButton () {
     Button button = createButton(
-      R.string.resetSettings_action_label,
+      R.string.ResetSettings_action_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
           Controls.restoreDefaultValues();
-          ApplicationUtilities.message(R.string.resetSettings_action_confirmation);
+          ApplicationUtilities.message(R.string.ResetSettings_action_confirmation);
         }
       }
     );

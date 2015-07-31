@@ -5,7 +5,7 @@ public class ResetSettings extends Action {
   @Override
   public boolean performAction () {
     Controls.restoreDefaultValues();
-    ApplicationUtilities.message(R.string.resetSettings_action_confirmation);
+    ApplicationUtilities.message(R.string.ResetSettings_action_confirmation);
     return true;
   }
 

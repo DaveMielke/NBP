@@ -10,7 +10,7 @@ public class StopSpeaking extends SpeechAction {
       if (!speech.stopSpeaking()) return false;
     }
 
-    ApplicationUtilities.message(R.string.stopSpeaking_action_confirmation);
+    ApplicationUtilities.message(R.string.StopSpeaking_action_confirmation);
     return true;
   }
 
