@@ -1,11 +1,8 @@
 Navigation
 ==========
 
-Android
--------
-
-Special Keys
-~~~~~~~~~~~~
+The Special Android Keys
+------------------------
 
 All Android devices have a number of special keys. There are two ways to
 emulate each of them:
@@ -21,6 +18,56 @@ emulate each of them:
 
 Basic Screen Navigation
 -----------------------
+
+Physical Navigation
+~~~~~~~~~~~~~~~~~~~
+
+.. include:: tbl-keys-keyboard.rst
+
+The Enter Key
+`````````````
+
+* If not within a text field then perform a short click.
+
+* If within a text field:
+
+  + If text has been selected then replace it with a ``new line`` character.
+
+  + If text hasn't been selected then insert a ``new line`` character to the
+    left of the cursor.
+
+The Cursor Left Key
+```````````````````
+
+The Cursor Right Key
+````````````````````
+
+The Cursor Up Key
+`````````````````
+
+The Cursor Down Key
+```````````````````
+
+The Page Up Key
+```````````````
+
+The Page Down Key
+`````````````````
+
+The Home Key
+````````````
+
+The End Key
+```````````
+
+The Shift+Tab Key
+`````````````````
+
+The Tab Key
+```````````
+
+Logical Navigation
+~~~~~~~~~~~~~~~~~~
 
 While the Left, Right, Up, and Down keys (of the D-Pad) can be used to 
 navigate the screen, they don't actually work very well. The reason they 
@@ -268,27 +315,4 @@ order to figure out what it is. Attempting to increase the bar's value
 when it's already at its maximum, or attempting to decrease its value 
 when it's already at its minimum, neither displays a position message 
 nor indicates an error.
-
-Legacy Key Combinations
------------------------
-
-Space+Dot1
-  Arrow up. Equivalent to the Up key (on the D-Pad).
-
-Space+Dot4
-  Arrow down. Equivalent to the Down key (on the D-Pad).
-
-Space+Dot3
-  Arrow left. Equivalent to the Left key (on the D-Pad).
-
-Space+Dot6
-  Arrow right. Equivalent to the Right key (on the D-Pad).
-
-Space+Dots45
-  Enter a ``tab``. A number of apps use this character for moving
-  forward through their control widgets.
-
-Space+Dots12
-  Enter a ``shift tab``. A number of apps use this character for moving
-  backward through their control widgets.
 

@@ -1,5 +1,5 @@
 .. csv-table:: Special Android Keys
-  :header: "Key", "With Two Hands", "With One Hand"
+  :header: "Key", "Two Hand Version", "One Hand Version"
 
   "Home","Space+Dots123456","Dot4+Down"
   "Back","Space+z (dots 1356)","Dot4+Left"
