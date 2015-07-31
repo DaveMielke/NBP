@@ -531,13 +531,13 @@ Speech
 ~~~~~~
 
 Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
-it, and pressing Space+VolumeDown disables it. Pressing VolumeDown and VolumeUp
-together also disables it.
+it, and pressing Space+VolumeDown disables it. Another (legacy) way to disable
+it is to press VolumeDown and VolumeUp together.
 
 * To interrupt what's currently being spoken, press Backward+VolumeDown.
 
-* To speak the current line, press Backward+VolumeUp. Space+c (dots 14) may
-  also be used.
+* To speak the current line, press Backward+VolumeUp. Another (legacy) way to
+  do so is to press Space+c (dots 14).
 
 * To adjust the volume: press Dot1+VolumeDown for **softer**, and Dot1+VolumeUp
   for **louder**.
