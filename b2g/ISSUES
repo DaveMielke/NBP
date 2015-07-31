@@ -1,3 +1,8 @@
+Verify:
+  USB Ethernet adapter
+  SIM indicators
+  battery indicators
+
 Document
   locale-based character table autodetection
   override files
