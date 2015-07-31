@@ -53,6 +53,11 @@ Here's a summary.
   This operation is not only imprecise, but also doesn't find screen
   elements that merely present helpful text.
 
+.. |describe vertical cursor motion within text| replace::
+  Vertical cursor motion within text may cause it to also move unexpectedly
+  left or right in braille, especially when a proportional font has been
+  used, because the characters may not all have the same width.
+
 The Enter Key
 `````````````
 
@@ -111,6 +116,7 @@ The Cursor Up Key
 
   + If text hasn't been selected then move the cursor one line up. If it's on
     the top line then |describe cursor up navigation| (see above).
+    |describe vertical cursor motion within text|
 
   + If text has been selected then |move cursor to start|.
 
@@ -124,6 +130,7 @@ The Cursor Down Key
 
   + If text hasn't been selected then move the cursor one line down. If it's on
     the bottom line then |describe cursor down navigation| (see above).
+    |describe vertical cursor motion within text|
 
   + If text has been selected then |move cursor to end|.
 
