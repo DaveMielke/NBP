@@ -27,6 +27,32 @@ Physical Navigation
 What each of these keys does is defined by Android - not by the User Interface.
 Here's a summary.
 
+.. |describe cursor left navigation| replace::
+  move to the nearest screen element that's roughly to the left of the
+  current one
+
+.. |describe cursor right navigation| replace::
+  move to the nearest screen element that's roughly to the right of the
+  current one
+
+.. |describe cursor up navigation| replace::
+  move to the nearest screen element that's roughly above the current one
+
+.. |describe cursor down navigation| replace::
+  move to the nearest screen element that's roughly below the current one
+
+.. |move cursor to start| replace::
+  move the cursor to the first selected character and then clear the
+  selection
+
+.. |move cursor to end| replace::
+  move the cursor to the character just after it and then clear the
+  selection
+
+.. |cursor navigation is unreliable| replace::
+  This operation is not only imprecise, but also doesn't find screen
+  elements that merely present helpful text.
+
 The Enter Key
 `````````````
 
@@ -50,10 +76,8 @@ The Enter Key
 The Cursor Left Key
 ```````````````````
 
-* If not within an editable field then move to the nearest screen element
-  that's roughly to the left of the current one. This operation is not only
-  imprecise, but also doesn't find screen elements that merely present helpful
-  text.
+* If not within an editable field then |describe cursor left navigation|.
+  |cursor navigation is unreliable|
 
 * If within an editable field:
 
@@ -61,16 +85,13 @@ The Cursor Left Key
     left. If it's at the start of a line then wrap to the end of the previous
     line.
 
-  + If text has been selected then move the cursor to the first selected
-    character and then clear the selection.
+  + If text has been selected then |move cursor to start|.
 
 The Cursor Right Key
 ````````````````````
 
-* If not within an editable field then move to the nearest screen element
-  that's roughly to the right of the current one. This operation is not only
-  imprecise, but also doesn't find screen elements that merely present helpful
-  text.
+* If not within an editable field then |describe cursor right navigation|.
+  |cursor navigation is unreliable|
 
 * If within an editable field:
 
@@ -78,40 +99,33 @@ The Cursor Right Key
     right. If it's at the end of a line then wrap to the start of the next
     line.
 
-  + If text has been selected then move the cursor to the character just after
-    it and then clear the selection.
+  + If text has been selected then |move cursor to end|.
 
 The Cursor Up Key
 `````````````````
 
-* If not within an editable field then move to the nearest screen element
-  that's roughly above the current one. This operation is not only imprecise,
-  but also doesn't find screen elements that merely present helpful text.
+* If not within an editable field then |describe cursor up navigation|.
+  |cursor navigation is unreliable|
 
 * If within an editable field:
 
   + If text hasn't been selected then move the cursor one line up. If it's on
-    the top line then move to the screen element that's roughly above the
-    current one (see above).
+    the top line then |describe cursor up navigation| (see above).
 
-  + If text has been selected then move the cursor to the first selected
-    character and then clear the selection.
+  + If text has been selected then |move cursor to start|.
 
 The Cursor Down Key
 ```````````````````
 
-* If not within an editable field then move to the nearest screen element
-  that's roughly below the current one. This operation is not only imprecise,
-  but also doesn't find screen elements that merely present helpful text.
+* If not within an editable field then |describe cursor down navigation|.
+  |cursor navigation is unreliable|
 
 * If within an editable field:
 
   + If text hasn't been selected then move the cursor one line down. If it's on
-    the bottom line then move to the screen element that's roughly below the
-    current one (see above).
+    the bottom line then |describe cursor down navigation| (see above).
 
-  + If text has been selected then move the cursor to the character just after
-    it and then clear the selection.
+  + If text has been selected then |move cursor to end|.
 
 The Page Up Key
 ```````````````
