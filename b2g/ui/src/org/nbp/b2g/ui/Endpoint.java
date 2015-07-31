@@ -116,7 +116,7 @@ public abstract class Endpoint {
     return Devices.braille.get().write();
   }
 
-  public boolean isEditable () {
+  public boolean isInputArea () {
     return false;
   }
 
@@ -259,7 +259,7 @@ public abstract class Endpoint {
   }
 
   public boolean hasSoftEdges () {
-    return softEdges || isEditable();
+    return softEdges || isInputArea();
   }
 
   public String getLineText () {
@@ -314,7 +314,7 @@ public abstract class Endpoint {
 
   public String getSelectedText () {
     synchronized (this) {
-      if (isEditable() && isSelected()) {
+      if (isInputArea() && isSelected()) {
         return textString.substring(selectionStart, selectionEnd);
       }
     }
@@ -434,6 +434,7 @@ public abstract class Endpoint {
 
   private abstract class Panner {
     protected abstract boolean moveDisplay (int size);
+    protected abstract int getInputEdgeMessage ();
     protected abstract Class<? extends Action> getLeaveAction ();
 
     public final boolean pan () {
@@ -445,7 +446,7 @@ public abstract class Endpoint {
       synchronized (Endpoint.this) {
         if (!(hasMoved = moveDisplay(size))) {
           if (hasSoftEdges()) {
-            ApplicationUtilities.message(R.string.message_edge_of_input_area);
+            ApplicationUtilities.message(getInputEdgeMessage());
             return false;
           }
         }
@@ -472,7 +473,7 @@ public abstract class Endpoint {
 
           setLine(start-1);
           indent = getLineLength();
-          if (isEditable()) indent += 1;
+          if (isInputArea()) indent += 1;
         } else {
           int length = getLineLength();
           if (indent > length) indent = length;
@@ -481,6 +482,11 @@ public abstract class Endpoint {
         if ((indent -= size) < 0) indent = 0;
         setLineIndent(indent);
         return true;
+      }
+
+      @Override
+      protected int getInputEdgeMessage () {
+        return R.string.message_start_of_input_area;
       }
 
       @Override
@@ -504,7 +510,7 @@ public abstract class Endpoint {
         int length = getLineLength();
 
         int last = length;
-        if (!isEditable()) last -= 1;
+        if (!isInputArea()) last -= 1;
 
         if (indent > last) {
           int offset = getLineStart() + length + 1;
@@ -516,6 +522,11 @@ public abstract class Endpoint {
 
         setLineIndent(indent);
         return true;
+      }
+
+      @Override
+      protected int getInputEdgeMessage () {
+        return R.string.message_end_of_input_area;
       }
 
       @Override

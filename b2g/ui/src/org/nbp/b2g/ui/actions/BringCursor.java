@@ -7,7 +7,7 @@ public class BringCursor extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         int offset = endpoint.getTextOffset(cursorKey);
 
         if (endpoint.isCursorOffset(offset)) {

@@ -9,7 +9,7 @@ public class DeleteNext extends ScanCodeAction {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         return endpoint.deleteText(0);
       }
     }

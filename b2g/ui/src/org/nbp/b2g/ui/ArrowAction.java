@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
 public abstract class ArrowAction extends Action {
-  protected boolean performEditAction (Endpoint endpoint) {
+  protected boolean performInputAction (Endpoint endpoint) {
     return false;
   }
 
@@ -16,8 +16,8 @@ public abstract class ArrowAction extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
-        return performEditAction(endpoint);
+      if (endpoint.isInputArea()) {
+        return performInputAction(endpoint);
       }
 
       if (endpoint.isSlider()) {

@@ -108,7 +108,7 @@ public class HostEndpoint extends Endpoint {
       if (!sameNode) resetSpeech();
       setText(text, sameNode);
 
-      if (isEditable()) {
+      if (isInputArea()) {
         int start = getSelectionStart();
         int end = getSelectionEnd();
 
@@ -159,7 +159,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean isEditable () {
+  public boolean isInputArea () {
     return ScreenUtilities.isEditable(currentNode);
   }
 

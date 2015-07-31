@@ -74,7 +74,7 @@ public abstract class Braille {
       if (indent > length) indent = length;
       setCells(cells, text.substring(indent));
 
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         int start = endpoint.getSelectionStart();
         int end = endpoint.getSelectionEnd();
 

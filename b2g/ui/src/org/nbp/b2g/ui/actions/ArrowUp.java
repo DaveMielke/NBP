@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class ArrowUp extends ArrowAction {
   @Override
-  protected boolean performEditAction (Endpoint endpoint) {
+  protected boolean performInputAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
 
     if (endpoint.isSelected(start)) {
@@ -22,6 +22,8 @@ public class ArrowUp extends ArrowAction {
         if (endpoint.setCursor(start)) {
           return true;
         }
+      } else{
+        ApplicationUtilities.message(R.string.message_top_of_input_area);
       }
     }
 

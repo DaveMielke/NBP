@@ -7,7 +7,7 @@ public class SetSelectionEnd extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         int end = endpoint.getTextOffset(cursorKey);
 
         if (endpoint.isCharacterOffset(end)) {

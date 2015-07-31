@@ -7,7 +7,7 @@ public class SetSelectionStart extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         int start = endpoint.getTextOffset(cursorKey);
 
         if (endpoint.isCharacterOffset(start)) {

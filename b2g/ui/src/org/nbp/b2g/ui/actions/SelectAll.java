@@ -7,7 +7,7 @@ public class SelectAll extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         int start = 0;
         int end = endpoint.getTextLength();
 

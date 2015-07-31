@@ -93,7 +93,11 @@
   <string name="DescribeStatus_wifi_state_disabling">disabling</string>
   <string name="DescribeStatus_wifi_state_unknown">unknown</string>
 
-  <string name="message_edge_of_input_area">edge of input area</string>
+  <string name="message_start_of_input_area">start of input area</string>
+  <string name="message_end_of_input_area">end of input area</string>
+  <string name="message_top_of_input_area">top of input area</string>
+  <string name="message_bottom_of_input_area">bottom of input area</string>
+
   <string name="message_intermediate_action_timeout">incomplete entry</string>
   <string name="message_modifier_cancelled">modifier cancelled</string>
   <string name="message_no_screen_content">no screen content</string>

@@ -5,7 +5,7 @@ import android.accessibilityservice.AccessibilityService;
 
 public class ArrowLeft extends ArrowAction {
   @Override
-  protected boolean performEditAction (Endpoint endpoint) {
+  protected boolean performInputAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
 
     if (endpoint.isSelected(start)) {
@@ -13,6 +13,8 @@ public class ArrowLeft extends ArrowAction {
         if (endpoint.setCursor(start-1)) {
           return true;
         }
+      } else{
+        ApplicationUtilities.message(R.string.message_start_of_input_area);
       }
     }
 

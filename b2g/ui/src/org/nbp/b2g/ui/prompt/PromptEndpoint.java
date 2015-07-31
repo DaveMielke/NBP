@@ -56,7 +56,7 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   @Override
-  public final boolean isEditable () {
+  public final boolean isInputArea () {
     return true;
   }
 

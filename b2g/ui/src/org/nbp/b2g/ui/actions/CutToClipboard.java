@@ -7,7 +7,7 @@ public class CutToClipboard extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         String text = endpoint.getSelectedText();
 
         if (text != null) {

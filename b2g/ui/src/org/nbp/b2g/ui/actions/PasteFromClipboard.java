@@ -7,7 +7,7 @@ public class PasteFromClipboard extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isEditable()) {
+      if (endpoint.isInputArea()) {
         String text = Clipboard.getText();
 
         if (text != null) {
