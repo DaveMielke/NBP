@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class DeveloperOff extends Action {
   @Override
   public boolean performAction () {
-    Control control = Controls.getDeveloperActionsControl();
+    Control control = Controls.getDeveloperModeControl();
     return control.previousValue();
   }
 

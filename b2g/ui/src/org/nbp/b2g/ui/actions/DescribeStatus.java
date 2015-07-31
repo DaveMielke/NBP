@@ -26,7 +26,7 @@ public class DescribeStatus extends Action {
     Bundle battery = HostMonitor.getBatteryStatus();
 
     if (battery != null) {
-      startLine(sb, R.string.describeStatus_battery_label);
+      startLine(sb, R.string.DescribeStatus_battery_label);
 
       {
         int level = battery.getInt(BatteryManager.EXTRA_LEVEL);
@@ -49,7 +49,7 @@ public class DescribeStatus extends Action {
 
       if (operator != null) {
         if (!operator.isEmpty()) {
-          startLine(sb, R.string.describeStatus_sim_label);
+          startLine(sb, R.string.DescribeStatus_sim_label);
           sb.append(operator);
         }
       }
@@ -60,24 +60,24 @@ public class DescribeStatus extends Action {
     WifiManager wifi = (WifiManager)ApplicationContext.getSystemService(Context.WIFI_SERVICE);
 
     if (wifi != null) {
-      startLine(sb, R.string.describeStatus_wifi_label);
+      startLine(sb, R.string.DescribeStatus_wifi_label);
 
       switch (wifi.getWifiState()) {
         default:
         case WifiManager.WIFI_STATE_UNKNOWN:
-          appendString(sb, R.string.describeStatus_wifi_state_unknown);
+          appendString(sb, R.string.DescribeStatus_wifi_state_unknown);
           break;
 
         case WifiManager.WIFI_STATE_DISABLING:
-          appendString(sb, R.string.describeStatus_wifi_state_disabling);
+          appendString(sb, R.string.DescribeStatus_wifi_state_disabling);
           break;
 
         case WifiManager.WIFI_STATE_DISABLED:
-          appendString(sb, R.string.describeStatus_wifi_state_disabled);
+          appendString(sb, R.string.DescribeStatus_wifi_state_disabled);
           break;
 
         case WifiManager.WIFI_STATE_ENABLING:
-          appendString(sb, R.string.describeStatus_wifi_state_enabling);
+          appendString(sb, R.string.DescribeStatus_wifi_state_enabling);
           break;
 
         case WifiManager.WIFI_STATE_ENABLED: {
@@ -99,7 +99,7 @@ public class DescribeStatus extends Action {
               sb.append("Mbps");
             }
           } else {
-            appendString(sb, R.string.describeStatus_wifi_state_enabled);
+            appendString(sb, R.string.DescribeStatus_wifi_state_enabled);
           }
 
           break;

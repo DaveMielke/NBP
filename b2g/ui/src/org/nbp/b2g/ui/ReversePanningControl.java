@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class ReversePanningControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.reversePanning_control_label);
+    return ApplicationContext.getString(R.string.ReversePanning_control_label);
   }
 
   @Override

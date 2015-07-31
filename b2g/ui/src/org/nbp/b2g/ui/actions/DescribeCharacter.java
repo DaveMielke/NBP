@@ -35,7 +35,7 @@ public class DescribeCharacter extends Action {
       sb.append(name);
     }
 
-    startLine(sb, R.string.describeCharacter_label_codepoint);
+    startLine(sb, R.string.DescribeCharacter_label_codepoint);
     sb.append(Characters.UNICODE_PREFIX);
     sb.append(String.format("%04X", (int)character));
 
@@ -43,7 +43,7 @@ public class DescribeCharacter extends Action {
       Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
 
       if (block != null) {
-        startLine(sb, R.string.describeCharacter_label_block);
+        startLine(sb, R.string.DescribeCharacter_label_block);
         sb.append(normalizeName(block.toString()));
       }
     }
@@ -52,7 +52,7 @@ public class DescribeCharacter extends Action {
       int value = Character.getType(character);
 
       if (value != Character.UNASSIGNED) {
-        startLine(sb, R.string.describeCharacter_label_category);
+        startLine(sb, R.string.DescribeCharacter_label_category);
         String name = UnicodeUtilities.getCategoryName(value);
 
         if (name != null) {
@@ -67,7 +67,7 @@ public class DescribeCharacter extends Action {
       int value = Character.getDirectionality(character);
 
       if (value != Character.DIRECTIONALITY_UNDEFINED) {
-        startLine(sb, R.string.describeCharacter_label_directionality);
+        startLine(sb, R.string.DescribeCharacter_label_directionality);
         String name = UnicodeUtilities.getDirectionalityName(value);
 
         if (name != null) {

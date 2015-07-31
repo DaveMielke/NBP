@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class LogActionsControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.logActions_control_label);
+    return ApplicationContext.getString(R.string.LogActions_control_label);
   }
 
   @Override

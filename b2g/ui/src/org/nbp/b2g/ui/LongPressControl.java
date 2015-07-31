@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class LongPressControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.longPress_control_label);
+    return ApplicationContext.getString(R.string.LongPress_control_label);
   }
 
   @Override

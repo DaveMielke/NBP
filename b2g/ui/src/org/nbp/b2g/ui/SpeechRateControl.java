@@ -3,17 +3,17 @@ package org.nbp.b2g.ui;
 public class SpeechRateControl extends LogarithmicFloatControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.speechRate_control_label);
+    return ApplicationContext.getString(R.string.SpeechRate_control_label);
   }
 
   @Override
   public String getNextLabel () {
-    return ApplicationContext.getString(R.string.speechRate_control_next);
+    return ApplicationContext.getString(R.string.SpeechRate_control_next);
   }
 
   @Override
   public String getPreviousLabel () {
-    return ApplicationContext.getString(R.string.speechRate_control_previous);
+    return ApplicationContext.getString(R.string.SpeechRate_control_previous);
   }
 
   @Override

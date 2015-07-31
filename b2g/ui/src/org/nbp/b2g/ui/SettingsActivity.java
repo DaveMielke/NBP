@@ -39,8 +39,8 @@ public class SettingsActivity extends ProgrammaticActivity {
     setDeveloperViewVisibility(((BooleanControl)control).getBooleanValue());
   }
 
-  private void addDeveloperActionsControlListener () {
-    Control control = Controls.getDeveloperActionsControl();
+  private void addDeveloperModeControlListener () {
+    Control control = Controls.getDeveloperModeControl();
     setDeveloperViewVisibility(control);
 
     control.addOnValueChangedListener(new Control.OnValueChangedListener() {
@@ -246,7 +246,7 @@ public class SettingsActivity extends ProgrammaticActivity {
       }
     });
 
-    addDeveloperActionsControlListener();
+    addDeveloperModeControlListener();
     return createVerticalScrollContainer(view);
   }
 

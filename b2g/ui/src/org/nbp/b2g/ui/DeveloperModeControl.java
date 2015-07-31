@@ -1,33 +1,33 @@
 package org.nbp.b2g.ui;
 
-public class BrailleInputControl extends BooleanControl {
+public class DeveloperModeControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.BrailleInput_control_label);
+    return ApplicationContext.getString(R.string.DeveloperMode_control_label);
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "braille-input";
+    return "developer-mode";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_BRAILLE_INPUT;
+    return ApplicationParameters.DEFAULT_DEVELOPER_MODE;
   }
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationSettings.BRAILLE_INPUT;
+    return ApplicationSettings.DEVELOPER_MODE;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.BRAILLE_INPUT = value;
+    ApplicationSettings.DEVELOPER_MODE = value;
     return true;
   }
 
-  public BrailleInputControl () {
+  public DeveloperModeControl () {
     super(false);
   }
 }

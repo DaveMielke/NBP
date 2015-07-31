@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class SpeechEnabledControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.speechEnabled_control_label);
+    return ApplicationContext.getString(R.string.SpeechEnabled_control_label);
   }
 
   @Override

@@ -22,7 +22,7 @@ public abstract class Controls {
   private final static IntegerControl speechRateControl = new SpeechRateControl();
   private final static IntegerControl speechPitchControl = new SpeechPitchControl();
 
-  private final static BooleanControl developerActionsControl = new DeveloperActionsControl();
+  private final static BooleanControl developerModeControl = new DeveloperModeControl();
   private final static BooleanControl logKeysControl = new LogKeysControl();
   private final static BooleanControl logActionsControl = new LogActionsControl();
   private final static BooleanControl logNavigationControl = new LogNavigationControl();
@@ -47,7 +47,7 @@ public abstract class Controls {
     speechRateControl,
     speechPitchControl,
 
-    developerActionsControl,
+    developerModeControl,
     logKeysControl,
     logActionsControl,
     logNavigationControl,
@@ -110,8 +110,8 @@ public abstract class Controls {
     return speechPitchControl;
   }
 
-  public static BooleanControl getDeveloperActionsControl () {
-    return developerActionsControl;
+  public static BooleanControl getDeveloperModeControl () {
+    return developerModeControl;
   }
 
   public static BooleanControl getLogKeysControl () {
