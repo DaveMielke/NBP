@@ -53,74 +53,25 @@ the text associated with the current one:
 
 These methods are also necessary in order to escape an input area.
 
-Basic System Actions
---------------------
+Navigating with the D-Pad Keys
+------------------------------
 
-These key combinations perform basic system actions:
+Navigating with the four directional keys of the D-Pad is equivalent to
+`Navigating with the Forward and Backward keys`_, as follows:
 
-Space+f (dots 124)
-  Find text within the current screen element (see `Find Mode`_).
+.. table::
 
-Space+? (dots 1456)
-  Go to the currently registered **assist** app. The default is
-  ``Google Now``.
+  =========  ==============
+  D-Pad Key  Equivalent To
+  ---------  --------------
+  Left       Backward
+  Right      Forward
+  Up         Backward+Space
+  Down       Forward+Space
+  =========  ==============
 
-Space+Dots1478
-  Go to the Power Off screen.
-
-Center (on the D-Pad)
-  Tap (click) the current screen element.
-
-Space+Center
-  Hold (long click) the current screen element.
-
-Space+Dot8+c (dots 14)
-  Copy all of the text to the clipboard.
-
-Space+s (dots 234)
-  Go to a Settings screen. Another key combination must be pressed
-  in order to specify which Settings screen to go to:
-
-  Space
-    Go to the main Settings screen.
-
-  a (dot 1)
-    Go to the Accessibility Settings screen.
-
-  b (dots 12)
-    Go to the Bluetooth Settings screen.
-
-  w (dots 2456)
-    Go to the Wi-Fi Settings screen.
-
-Find Mode
----------
-
-Find mode is a prompt that allows a search string to be entered. When a 
-character is typed, it is entered where the cursor is. In addition to 
-typing characters, the search string can also be edited as described 
-below.
-
-Dot 8 is the Enter key. It returns to the system screen, searches 
-forward through the current screen element for the text, and, if found, 
-aligns the start of the braille display with the start of the text.
-
-Dot 7 is the Backspace key. It deletes the character to the left of the 
-cursor. A long press deletes all of the characters to the left of the
-cursor.
-
-Space+d (dots 145) is the Delete key. It deletes the character where the 
-cursor is. A long press also deletes all of the characters to the right
-of the cursor.
-
-Pressing a cursor routing key brings the cursor to that character.
-
-Pressing a cursor routing key in combination with the Space key scrolls 
-the braille display to the right such that the visible portion of the 
-prompt begins with that character.
-
-The forward key pans the braille display to the right, and the Backward 
-key pans it to the left.
+See `Input Areas`_, and `Sliders`_ for how these keys act differently when on
+one of those types of screen elements.
 
 Input Areas
 -----------
@@ -257,8 +208,8 @@ character, then the selection is implicitly extended back to (and including)
 the character where the cursor is. This, for example, provides an easy way to
 replace a word, line, paragraph, etc.
 
-Seek Bars
----------
+Sliders
+-------
 
 A ``SeekBar`` is a slider-type control that intuitively (from a visual 
 perspective) represents an amount (distance, magnitude, etc). It's often 
@@ -276,6 +227,75 @@ order to figure out what it is. Attempting to increase the bar's value
 when it's already at its maximum, or attempting to decrease its value 
 when it's already at its minimum, neither displays a position message 
 nor indicates an error.
+
+Basic System Actions
+--------------------
+
+These key combinations perform basic system actions:
+
+Space+f (dots 124)
+  Find text within the current screen element (see `Find Mode`_).
+
+Space+? (dots 1456)
+  Go to the currently registered **assist** app. The default is
+  ``Google Now``.
+
+Space+Dots1478
+  Go to the Power Off screen.
+
+Center (on the D-Pad)
+  Tap (click) the current screen element.
+
+Space+Center
+  Hold (long click) the current screen element.
+
+Space+Dot8+c (dots 14)
+  Copy all of the text to the clipboard.
+
+Space+s (dots 234)
+  Go to a Settings screen. Another key combination must be pressed
+  in order to specify which Settings screen to go to:
+
+  Space
+    Go to the main Settings screen.
+
+  a (dot 1)
+    Go to the Accessibility Settings screen.
+
+  b (dots 12)
+    Go to the Bluetooth Settings screen.
+
+  w (dots 2456)
+    Go to the Wi-Fi Settings screen.
+
+Find Mode
+---------
+
+Find mode is a prompt that allows a search string to be entered. When a 
+character is typed, it is entered where the cursor is. In addition to 
+typing characters, the search string can also be edited as described 
+below.
+
+Dot 8 is the Enter key. It returns to the system screen, searches 
+forward through the current screen element for the text, and, if found, 
+aligns the start of the braille display with the start of the text.
+
+Dot 7 is the Backspace key. It deletes the character to the left of the 
+cursor. A long press deletes all of the characters to the left of the
+cursor.
+
+Space+d (dots 145) is the Delete key. It deletes the character where the 
+cursor is. A long press also deletes all of the characters to the right
+of the cursor.
+
+Pressing a cursor routing key brings the cursor to that character.
+
+Pressing a cursor routing key in combination with the Space key scrolls 
+the braille display to the right such that the visible portion of the 
+prompt begins with that character.
+
+The forward key pans the braille display to the right, and the Backward 
+key pans it to the left.
 
 Legacy Navigation
 -----------------
