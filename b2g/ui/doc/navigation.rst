@@ -143,8 +143,14 @@ The Page Down Key
 The Home Key
 ````````````
 
+Move to the first element of a list, to the start of a line of text, to the
+first page of a group, etc.
+
 The End Key
 ```````````
+
+Move to the last element of a list, to the end of a line of text, to the last
+page of a group, etc.
 
 The Shift+Tab Key
 `````````````````
