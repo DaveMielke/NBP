@@ -1,8 +1,8 @@
 Navigation
 ==========
 
-The Special Android Keys
-------------------------
+The Android Keys
+----------------
 
 All Android devices have a number of special keys. There are two ways to
 emulate each of them:
@@ -61,6 +61,8 @@ Here's a summary.
 The Enter Key
 `````````````
 
+**Dot8**
+
 * If on a button then press it.
 
 * If on a checkbox then check/uncheck it.
@@ -81,6 +83,8 @@ The Enter Key
 The Cursor Left Key
 ```````````````````
 
+**Space+Dot3**
+
 * If not within an editable field then |describe cursor left navigation|.
   |cursor navigation is unreliable|
 
@@ -94,6 +98,8 @@ The Cursor Left Key
 
 The Cursor Right Key
 ````````````````````
+
+**Space+Dot6**
 
 * If not within an editable field then |describe cursor right navigation|.
   |cursor navigation is unreliable|
@@ -109,6 +115,8 @@ The Cursor Right Key
 The Cursor Up Key
 `````````````````
 
+**Space+Dot1**
+
 * If not within an editable field then |describe cursor up navigation|.
   |cursor navigation is unreliable|
 
@@ -122,6 +130,8 @@ The Cursor Up Key
 
 The Cursor Down Key
 ```````````````````
+
+**Space+Dot4**
 
 * If not within an editable field then |describe cursor down navigation|.
   |cursor navigation is unreliable|
@@ -137,6 +147,8 @@ The Cursor Down Key
 The Page Up Key
 ```````````````
 
+**Space+Dots23**
+
 Perform a scroll backward (up or left) operation.
 
 * If within a list then move up several elements. If the first element is
@@ -149,6 +161,8 @@ Perform a scroll backward (up or left) operation.
 
 The Page Down Key
 `````````````````
+
+**Space+Dots56**
 
 Perform a scroll forward (down or right) operation.
 
@@ -163,11 +177,15 @@ Perform a scroll forward (down or right) operation.
 The Home Key
 ````````````
 
+**Space+Dots123**
+
 Move to the first element of a list, to the start of a line of text, to the
 first page of a group, etc.
 
 The End Key
 ```````````
+
+**Space+Dots456**
 
 Move to the last element of a list, to the end of a line of text, to the last
 page of a group, etc.
@@ -175,19 +193,26 @@ page of a group, etc.
 The Shift+Tab Key
 `````````````````
 
+**Space+Dots12**
+
+Move to the previous screen element that can perform an action. If on the first
+screen element then wrap to the last one.
+
 The Tab Key
 ```````````
+
+**Space+Dots45**
+
+Move to the next screen element that can perform an action. If on the last
+screen element then wrap to the first one.
 
 Logical Navigation
 ~~~~~~~~~~~~~~~~~~
 
-While the Left, Right, Up, and Down keys (of the D-Pad) can be used to 
-navigate the screen, they don't actually work very well. The reason they 
-don't is that they try to be too accurate. If the next screen element in 
-the requested direction isn't close enough to being exactly in that 
-direction then it doesn't get found.
+Using the Forward and Backward Keys
+```````````````````````````````````
 
-The best way to navigate the screen is to use the Forward and Backward 
+The easiest way to navigate the screen is to use the Forward and Backward 
 keys because they move sequentially through the screen elements without 
 missing any of them. The Forward key stops at the end of the screen, and 
 the Backward key stops at the beginning of the screen. While these 
