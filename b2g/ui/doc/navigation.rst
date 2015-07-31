@@ -24,12 +24,23 @@ Physical Navigation
 
 .. include:: tbl-keys-keyboard.rst
 
+What each of these keys does is defined by Android - not by the User Interface.
+Here's a summary.
+
 The Enter Key
 `````````````
 
-* If not within a text field then perform a short click.
+* If on a button then press it.
 
-* If within a text field:
+* If on a checkbox then check/uncheck it.
+
+* If on a switch then move it to its other position.
+
+* If on a folder then open it.
+
+* If on an app then go to it.
+
+* If within an editable field:
 
   + If text has been selected then replace it with a ``new line`` character.
 
@@ -39,14 +50,68 @@ The Enter Key
 The Cursor Left Key
 ```````````````````
 
+* If not within an editable field then move to the nearest screen element
+  that's roughly to the left of the current one. This operation is not only
+  imprecise, but also doesn't find screen elements that merely present helpful
+  text.
+
+* If within an editable field:
+
+  + If text hasn't been selected then move the cursor one character to the
+    left. If it's at the start of a line then wrap to the end of the previous
+    line.
+
+  + If text has been selected then move the cursor to the first selected
+    character and then clear the selection.
+
 The Cursor Right Key
 ````````````````````
+
+* If not within an editable field then move to the nearest screen element
+  that's roughly to the right of the current one. This operation is not only
+  imprecise, but also doesn't find screen elements that merely present helpful
+  text.
+
+* If within an editable field:
+
+  + If text hasn't been selected then move the cursor one character to the
+    right. If it's at the end of a line then wrap to the start of the next
+    line.
+
+  + If text has been selected then move the cursor to the character just after
+    it and then clear the selection.
 
 The Cursor Up Key
 `````````````````
 
+* If not within an editable field then move to the nearest screen element
+  that's roughly above the current one. This operation is not only imprecise,
+  but also doesn't find screen elements that merely present helpful text.
+
+* If within an editable field:
+
+  + If text hasn't been selected then move the cursor one line up. If it's on
+    the top line then move to the screen element that's roughly above the
+    current one (see above).
+
+  + If text has been selected then move the cursor to the first selected
+    character and then clear the selection.
+
 The Cursor Down Key
 ```````````````````
+
+* If not within an editable field then move to the nearest screen element
+  that's roughly below the current one. This operation is not only imprecise,
+  but also doesn't find screen elements that merely present helpful text.
+
+* If within an editable field:
+
+  + If text hasn't been selected then move the cursor one line down. If it's on
+    the bottom line then move to the screen element that's roughly below the
+    current one (see above).
+
+  + If text has been selected then move the cursor to the character just after
+    it and then clear the selection.
 
 The Page Up Key
 ```````````````
