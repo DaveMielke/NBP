@@ -137,8 +137,28 @@ The Cursor Down Key
 The Page Up Key
 ```````````````
 
+Perform a scroll backward (up or left) operation.
+
+* If within a list then move up several elements. If the first element is
+  already visible then move to it.
+
+* If within an editable field then move up several lines. If the first line is
+  already visible then move to it.
+
+* If within a set of pages then move to the previous page.
+
 The Page Down Key
 `````````````````
+
+Perform a scroll forward (down or right) operation.
+
+* If within a list then move down several elements. If the last element is
+  already visible then move to it.
+
+* If within an editable field then move down several lines. If the last line is
+  already visible then move to it.
+
+* If within a set of pages then move to the next page.
 
 The Home Key
 ````````````
