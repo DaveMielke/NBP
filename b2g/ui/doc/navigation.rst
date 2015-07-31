@@ -51,7 +51,7 @@ the text associated with the current one:
 
 * Long press the Forward (or Backward) key (see `Long Press Mode`_).
 
-These methods are also necessary in order to escape an input area.
+One of these methods must also be used in order to leave an input area.
 
 Navigating with the D-Pad Keys
 ------------------------------
