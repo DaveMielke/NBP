@@ -1,4 +1,4 @@
-.. csv-table:: Editing Operations
+.. csv-table:: Input Operations
   :header: "Keys", "Description"
 
   "Cursor","|BringCursor|"

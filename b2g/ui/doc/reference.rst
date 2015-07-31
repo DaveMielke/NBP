@@ -29,10 +29,10 @@ Common Operations
 
 .. include:: ref-all.rst
 
-Editing Operations
-~~~~~~~~~~~~~~~~~~
+Input Operations
+~~~~~~~~~~~~~~~~
 
-.. include:: ref-edit.rst
+.. include:: ref-input.rst
 
 Screen Operations
 ~~~~~~~~~~~~~~~~~

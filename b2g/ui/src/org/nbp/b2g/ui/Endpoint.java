@@ -445,6 +445,7 @@ public abstract class Endpoint {
       synchronized (Endpoint.this) {
         if (!(hasMoved = moveDisplay(size))) {
           if (hasSoftEdges()) {
+            ApplicationUtilities.message(R.string.message_edge_of_input_area);
             return false;
           }
         }

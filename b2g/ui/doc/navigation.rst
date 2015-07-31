@@ -1,8 +1,8 @@
 Navigation
 ==========
 
-The Android Keys
-----------------
+Emulating the Android Keys
+--------------------------
 
 All Android devices have a number of special keys. There are two ways to
 emulate each of them:
@@ -16,34 +16,45 @@ emulate each of them:
 
 .. include:: tbl-keys-android.rst
 
-Basic Screen Navigation
------------------------
-
-Logical Navigation
-~~~~~~~~~~~~~~~~~~
-
-Using the Forward and Backward Keys
-```````````````````````````````````
+Navigating with the Forward and Backward Keys
+---------------------------------------------
 
 The easiest way to navigate the screen is to use the Forward and Backward 
-keys because they move sequentially through the screen elements without 
-missing any of them. The Forward key stops at the end of the screen, and 
-the Backward key stops at the beginning of the screen. While these 
-(Forward and Backward) keys, when used on their own, may perform more 
-refined navigation within certain contexts (see below), long pressing 
-them can always be used to force an immediate, direct move to the start 
-of the next or previous screen element. Another way to force a move, 
-which is especially applicable when secondary actions have been 
-disabled, is to press the Space key together with the Forward or Backward 
-key.
+keys because they move sequentially through all of the screen elements,
+including those that only contain descriptive text, without missing any of
+them. The Forward key stops at the end of the screen, and the Backward key
+stops at the start of the screen.
 
 If the text of a screen element is longer than the braille display 
-and/or has more than one line then the Forward key pans to the right, 
-wraps to the start of the next line, etc, as needed, so that all of the 
-text is presented. When it reaches the end, it then moves to the start 
-of the next element. The Backward key moves through such text in the 
-reverse direction, and when it reaches the start of the text it then 
-moves to the start of the previous element.
+and/or has more than one line, then:
+
+* The Forward key pans to the right, wrapping to the start of the next line as
+  needed, such that all of the text is presented. When it reaches the end of
+  the text, it moves to the start of the next screen element.
+
+* The Backward key pans to the left, wrapping to the end of the previous line
+  as needed, such that all of the text is presented. When it reaches the start
+  of the text, it moves to the start of the previous screen element.
+
+Repeatedly pressing the Forward key, therefore, reads through all of the text
+on the screen because it reads through all of the text associated with the
+current screen element before moving to the next one. Repeatedly pressing the
+Backward key, however, pans to the left through the text associated with the
+current screen element, but, from then on, moves directly to the start of each
+preceding screen element.
+
+The following methods may be used to force an immediate, direct move to the
+start of the next (or previous) screen element without first panning through
+the text associated with the current one:
+
+* Press the Space key together with the Forward (or Backward) key.
+
+* Long press the Forward (or Backward) key (see `Long Press Mode`_).
+
+These methods are also necessary in order to escape an input area.
+
+Basic System Actions
+--------------------
 
 These key combinations perform basic system actions:
 
@@ -111,8 +122,8 @@ prompt begins with that character.
 The forward key pans the braille display to the right, and the Backward 
 key pans it to the left.
 
-Editable Text Fields
---------------------
+Input Areas
+-----------
 
 Dots 1 through 6 are used, as defined by the `North American Braille 
 Computer Code`_, to type characters, and the Space key is used to type a 
@@ -182,7 +193,7 @@ Pressing a cursor routing key in combination with the Space key scrolls
 the braille display to the right such that the visible portion of the 
 current line begins with that character.
 
-These key combinations perform actions on editable text fields:
+These key combinations perform actions within input areas:
 
 Space+Dot8+a (dot 1)
   Select all of the text.
@@ -203,7 +214,7 @@ Space+Dot8+v (dots 1236)
 Text Selection
 --------------
 
-When on an editable text field, any sequence of text within that field 
+When within an input area, any sequence of text within that field 
 can be easily **selected**. This is how to do it:
 
 1) If necessary, use the Forward and Backward keys to pan to a place where the
@@ -232,7 +243,7 @@ Selecting text is useful in at least the following ways:
   This, in other words, is an efficient way to replace old text with new text.
   Just select the old text, and then start typing the new text.
 
-* Pressing any of the delete keys (see `Editable Text Fields`_) removes all of
+* Pressing any of the delete keys (see `Input Areas`_) removes all of
   the selected text. This, in other words, is an efficient way to delete a
   block of text. Just select it, and then delete it.
 
@@ -324,7 +335,7 @@ The Enter Key
 
 * If on an app then go to it.
 
-* If within an editable field:
+* If within an input area:
 
   + If text has been selected then replace it with a ``new line`` character.
 
@@ -336,10 +347,10 @@ The Cursor Left Key
 
 **Space+Dot3**
 
-* If not within an editable field then |describe cursor left navigation|.
+* If not within an input area then |describe cursor left navigation|.
   |cursor navigation is unreliable|
 
-* If within an editable field:
+* If within an input area:
 
   + If text hasn't been selected then move the cursor one character to the
     left. If it's at the start of a line then wrap to the end of the previous
@@ -352,10 +363,10 @@ The Cursor Right Key
 
 **Space+Dot6**
 
-* If not within an editable field then |describe cursor right navigation|.
+* If not within an input area then |describe cursor right navigation|.
   |cursor navigation is unreliable|
 
-* If within an editable field:
+* If within an input area:
 
   + If text hasn't been selected then move the cursor one character to the
     right. If it's at the end of a line then wrap to the start of the next
@@ -368,10 +379,10 @@ The Cursor Up Key
 
 **Space+Dot1**
 
-* If not within an editable field then |describe cursor up navigation|.
+* If not within an input area then |describe cursor up navigation|.
   |cursor navigation is unreliable|
 
-* If within an editable field:
+* If within an input area:
 
   + If text hasn't been selected then move the cursor one line up. If it's on
     the top line then |describe cursor up navigation| (see above).
@@ -384,10 +395,10 @@ The Cursor Down Key
 
 **Space+Dot4**
 
-* If not within an editable field then |describe cursor down navigation|.
+* If not within an input area then |describe cursor down navigation|.
   |cursor navigation is unreliable|
 
-* If within an editable field:
+* If within an input area:
 
   + If text hasn't been selected then move the cursor one line down. If it's on
     the bottom line then |describe cursor down navigation| (see above).
@@ -405,7 +416,7 @@ Perform a scroll backward (up or left) operation.
 * If within a list then move up several elements. If the first element is
   already visible then move to it.
 
-* If within an editable field then move up several lines. If the first line is
+* If within an input area then move up several lines. If the first line is
   already visible then move to it.
 
 * If within a set of pages then move to the previous page.
@@ -420,7 +431,7 @@ Perform a scroll forward (down or right) operation.
 * If within a list then move down several elements. If the last element is
   already visible then move to it.
 
-* If within an editable field then move down several lines. If the last line is
+* If within an input area then move down several lines. If the last line is
   already visible then move to it.
 
 * If within a set of pages then move to the next page.

@@ -327,7 +327,7 @@ within a popup (see `Popups`_). For example, the description for the letter
 Special Symbols
 ~~~~~~~~~~~~~~~
 
-When on an editable text field:
+When within an input area:
 
 * The character that the cursor is on is highlighted by |the cursor indicator|.
   This is its default representation. It can be changed via `The Settings
@@ -429,9 +429,8 @@ information. This includes (but isn't limited to):
 * Information that identifies the build (see `Identifying the Build`_).
 
 A popup is a multi-line, read-only dialog. Normal navigation may be
-performed within it, except that it isn't editable. Dismiss it by pressing
-Enter. It's automatically dismissed if no navigation operations are performed
-within it for |popup time|.
+performed within it. Dismiss it by pressing Enter. It's automatically dismissed
+if no navigation operations are performed within it for |popup time|.
 
 Prompts
 ~~~~~~~
