@@ -137,9 +137,7 @@ public abstract class KeyMask {
     StringBuilder sb = new StringBuilder();
 
     if (mask != 0) {
-      for (String name : keyEntries.keySet()) {
-        KeyEntry key = keyEntries.get(name);
-
+      for (KeyEntry key : keyEntries.values()) {
         if ((mask & key.bit) != 0) {
           if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
           sb.append(key.name);
