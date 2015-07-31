@@ -52,7 +52,7 @@
   <string name="SpeechVolume_control_previous">Softer</string>
   <string name="SpeechVolume_control_next">Louder</string>
 
-  <string name="DeveloperMode_control_label">Developer</string>
+  <string name="DeveloperEnabled_control_label">Developer</string>
   <string name="LogActions_control_label">Log Actions</string>
   <string name="LogKeys_control_label">Log Keys</string>
   <string name="LogNavigation_control_label">Log Navigation</string>

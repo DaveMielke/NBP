@@ -21,7 +21,7 @@ public abstract class ApplicationParameters {
   public final static float DEFAULT_SPEECH_RATE = 1.0f;
   public final static float DEFAULT_SPEECH_PITCH = 1.0f;
 
-  public final static boolean DEFAULT_DEVELOPER_MODE = false;
+  public final static boolean DEFAULT_DEVELOPER_ENABLED = false;
   public final static boolean DEFAULT_LOG_KEYS = false;
   public final static boolean DEFAULT_LOG_ACTIONS = false;
   public final static boolean DEFAULT_LOG_NAVIGATION = false;

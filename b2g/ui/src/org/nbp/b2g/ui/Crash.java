@@ -88,7 +88,10 @@ public abstract class Crash {
   public static void handleCrash (Throwable problem, String component, String data) {
     ApplicationUtilities.alert();
     logCrash(problem, component, data);
-    reportCrash(problem, component, data);
+
+    if (ApplicationSettings.DEVELOPER_ENABLED) {
+      reportCrash(problem, component, data);
+    }
   }
 
   public static void handleCrash (Throwable problem, String component) {
