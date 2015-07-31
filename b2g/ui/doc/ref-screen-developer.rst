@@ -10,3 +10,4 @@
   "Backward+Dots456","|ScrollBackward|"
   "Backward+Dots568","|ScrollForward|"
   "Backward+Dots48","|SwitchLauncher|"
+

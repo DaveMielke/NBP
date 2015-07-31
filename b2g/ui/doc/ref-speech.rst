@@ -15,3 +15,4 @@
   "Dot3+VolumeUp","|SpeakHigher|"
   "Dot4+VolumeDown","|SpeakLeft|"
   "Dot4+VolumeUp","|SpeakRight|"
+
