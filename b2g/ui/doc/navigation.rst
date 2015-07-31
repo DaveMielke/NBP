@@ -1,6 +1,24 @@
 Navigation
 ==========
 
+Android
+-------
+
+Special Keys
+~~~~~~~~~~~~
+
+All Android devices have a number of special keys. There are two ways to
+emulate each of them:
+
+* With two hands, by pressing the Space key together with a related letter or
+  special symbol. While these may be easier to remember, they're also more
+  awkward to use because it's not possible to be reading the display at the
+  same time.
+
+* With one hand, by pressing the Dot4 key together with one of the D-Pad keys.
+
+.. include:: tbl-keys-android.rst
+
 Basic Screen Navigation
 -----------------------
 
@@ -32,23 +50,8 @@ moves to the start of the previous element.
 
 These key combinations perform basic system actions:
 
-Space+Dots123456
-  The Home button. Go to the app launcher.
-
-Space+z (dots 1356)
-  The Back button.
-
 Space+f (dots 124)
   Find text within the current screen element (see `Find Mode`_).
-
-Space+m (dots 134)
-  The Menu button. Go to the current app's main choices screen.
-
-Space+n (dots 1345)
-  Go to the Notifications screen.
-
-Space+r (dots 1235)
-  Go to the Recent Apps screen.
 
 Space+? (dots 1456)
   Go to the currently registered **assist** app. The default is

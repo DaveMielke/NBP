@@ -11,6 +11,7 @@
   "Dot4+Down","|HomeKey|"
   "Dot4+Left","|BackKey|"
   "Dot4+Right","|RecentApps|"
+  "Dot4+Center","|MenuKey|"
   "Space+Dots1478","|PowerOff|"
   "Space+Dots123456","|HomeKey|"
   "Space+Left","|MoveFirst|"

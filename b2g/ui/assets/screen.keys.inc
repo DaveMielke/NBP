@@ -9,9 +9,9 @@ bind Space+Center LongClick
 
 bind Dot4+Up Notifications
 bind Dot4+Down HomeKey
-
 bind Dot4+Left BackKey
 bind Dot4+Right RecentApps
+bind Dot4+Center MenuKey
 
 bind Space+Dots1478 PowerOff
 bind Space+Dots123456 HomeKey
