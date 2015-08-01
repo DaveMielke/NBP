@@ -53,27 +53,27 @@ the text associated with the current one:
 
 One of these methods must also be used in order to leave an input area.
 
-Navigating with the D-Pad Keys
-------------------------------
+Navigating with the Directional Keys
+------------------------------------
 
-Navigating with the four directional keys of the D-Pad is equivalent to
+Navigating with the four directional keys (of the D-Pad) is equivalent to
 `Navigating with the Forward and Backward keys`_, as follows:
 
 .. table::
 
-  =========  ==============
-  D-Pad Key  Equivalent To
-  ---------  --------------
-  Left       Backward
-  Right      Forward
-  Up         Backward+Space
-  Down       Forward+Space
-  =========  ==============
+  ===============  ================
+  Directional Key  Is Equivalent To
+  ---------------  ----------------
+  Left             Backward
+  Right            Forward
+  Up               Backward+Space
+  Down             Forward+Space
+  ===============  ================
 
 See `Input Areas`_, and `Sliders`_ for how these keys act differently when on
 one of those types of screen elements.
 
-The D-Pad keys can also be used to perform these additional operations:
+The directional keys can also be used to perform these additional operations:
 
 Space+Up
 
@@ -126,76 +126,42 @@ The Delete key is Space+d (dots 145).
 
 * If text has been selected then it's deleted.
 
-The Forward and Backward keys navigate through the text as defined 
-previously, except that they will not leave the field. They must be long 
-pressed in order to force an immediate move to the start of the next or 
-previous field. Another way to force a move, which is especially 
-applicable when secondary actions have been disabled, is to press the 
-Space key together with the Forward or Backward key.
+Pressing a cursor routing key brings the cursor to that character. If 
+text has been selected then the selection is cleared.
 
-The four directional keys (of the D-Pad) move the cursor through the 
-text, one step at a time. They will not leave the field. The braille 
-display is panned, as needed, such that the cursor is always visible.
+Pressing a cursor routing key together with the Dot8 key repositions the
+braille display such that the rendered portion of the current line starts with
+that character. This is a good way, for example, to read an indented block of
+related text.
 
-The Left key moves the cursor to the previous character of the current 
-line. If the cursor is on the first character of the line then it wraps 
-to the last character of the previous line. If characters are selected 
-then the cursor is moved to just before the first selected character, 
-and the character selection is cleared.
+The Directional Keys within an Input Area
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Right key moves the cursor to the next character of the current 
-line. If the cursor is on the last character of the line then it wraps 
-to the first character of the next line. If characters are selected then 
-the cursor is moved to just after the last selected character, and the 
-character selection is cleared.
+The directional keys move the cursor through the text, one step at a time. They
+will not leave the input area. The braille display is panned, as needed, such
+that the cursor is always visible.
+
+The Left key moves the cursor to the previous character. If it's on the first
+character of a line then it wraps to the last character of the previous line.
+If text has been selected then the cursor is moved to just before the first
+selected character, and the selection is cleared.
+
+The Right key moves the cursor to the next character. If it's on the last
+character of a line then it wraps to the first character of the next line. If
+text has been selected then the cursor is moved to just after the last selected
+character, and the selection is cleared.
 
 The Up key moves the cursor to the same column of the previous line. If 
 the previous line is too short then the cursor is also moved leftward to 
-just after its last character. If characters are selected then the 
+just after its last character. If text has been selected then the 
 cursor is moved to just above the first selected character, and the 
-character selection is cleared.
+selection is cleared.
 
 The Down key moves the cursor to the same column of the next line. If 
 the next line is too short then the cursor is also moved leftward to 
-just after its last character. If characters are selected then the 
+just after its last character. If text has been selected then the 
 cursor is moved to just below the last selected character, and the 
-character selection is cleared.
-
-Pressing a cursor routing key brings the cursor to that character. If 
-characters are selected then the character selection is cleared.
-
-Pressing a cursor routing key in combination with the Backward key sets 
-the first selected character, and pressing a cursor routing key in 
-combination with the Forward key sets the last selected character. If 
-either of these actions is performed while characters are already 
-selected then the start or end of the selection is readjusted as 
-requested. The sequence of selected characters may:
-
-* Span multiple lines.
-* Begin anywhere on its first line.
-* End anywhere on its last line.
-
-Pressing a cursor routing key in combination with the Space key scrolls 
-the braille display to the right such that the visible portion of the 
-current line begins with that character.
-
-These key combinations perform actions within input areas:
-
-Space+Dot8+a (dot 1)
-  Select all of the text.
-
-Space+Dot8+x (dots 1346)
-  Cut the currently selected text to the clipboard.
-
-Space+Dot8+c (dots 14)
-  Copy the currently selected text to the clipboard. If no text is
-  selected then all of the text is copied.
-
-Space+Dot8+v (dots 1236)
-  Paste the clipboard content into the text being edited. If no
-  characters have been selected then the clipboard content is inserted
-  where the cursor is. If characters have been selected then the
-  clipboard content replaces them.
+selection is cleared.
 
 Text Selection
 --------------
