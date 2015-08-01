@@ -102,6 +102,14 @@ Space+Right
 Input Areas
 -----------
 
+Pressing a cursor routing key brings the cursor to that character. If 
+text has been selected then the selection is cleared.
+
+Pressing a cursor routing key together with the Dot8 key repositions the
+braille display such that the rendered portion of the current line starts with
+that character. This is a good way, for example, to read an indented block of
+related text.
+
 When a characer is typed (see `Typing`_), then:
 
 * If text hasn't been selected then the character is inserted just to the left
@@ -111,6 +119,9 @@ When a characer is typed (see `Typing`_), then:
 
 The Enter key is Dot8. If the input area supports more than one line then this
 key ends the current line and starts a new one.
+
+Deleting Characters
+~~~~~~~~~~~~~~~~~~~
 
 The Backspace key is Dot7.
 
@@ -125,14 +136,6 @@ The Delete key is Space+d (dots 145).
   deleted.
 
 * If text has been selected then it's deleted.
-
-Pressing a cursor routing key brings the cursor to that character. If 
-text has been selected then the selection is cleared.
-
-Pressing a cursor routing key together with the Dot8 key repositions the
-braille display such that the rendered portion of the current line starts with
-that character. This is a good way, for example, to read an indented block of
-related text.
 
 The Directional Keys within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,7 +169,7 @@ selection is cleared.
 Text Selection
 --------------
 
-When within an input area, any sequence of text within that field 
+When within an input area, any sequence of characters within that area 
 can be easily **selected**. This is how to do it:
 
 1) If necessary, use the Forward and Backward keys to pan to a place where the
@@ -187,7 +190,10 @@ to change the end of the selection. In fact, the end of the selection can be
 set before the start of the selection has been set, i.e. steps 3 and 4 may be
 performed before steps 1 and 2 have been performed.
 
+A quick way to select all of the characters is to press Space+Dot8+a (dot 1).
+
 The current text selection is highlighted via |the selection indicator|.
+
 Selecting text is useful in at least the following ways:
 
 * Typing a character deletes the selected text, puts the cursor where
@@ -195,7 +201,7 @@ Selecting text is useful in at least the following ways:
   This, in other words, is an efficient way to replace old text with new text.
   Just select the old text, and then start typing the new text.
 
-* Pressing any of the delete keys (see `Input Areas`_) removes all of
+* Pressing any of the delete keys (see `Deleting Characters`_) removes all of
   the selected text. This, in other words, is an efficient way to delete a
   block of text. Just select it, and then delete it.
 
@@ -208,6 +214,23 @@ If the end of the selection is set first, and if the cursor is before that
 character, then the selection is implicitly extended back to (and including)
 the character where the cursor is. This, for example, provides an easy way to
 replace a word, line, paragraph, etc.
+
+Using the Clipboard
+-------------------
+
+To copy text to the clipboard, press Space+Dot8+c (dots 14). If this is done
+when not within an input area, or when within an input area with no selected
+text, then all of the text is copied. If this is done within an input area with
+selected text then only that text is copied.
+
+To cut text to the clipboard, press Space+Dot8+x (dots 1346). This can only be
+done within an input area. If text hasn't been selected then all of the text is
+cut. If text has been selected then only that text is cut.
+
+To paste text from the clipboard, press Space+Dot8+v (dots 1236). This can only
+be done within an input area. If text hasn't been selected then the pasted text
+is inserted just to the left of the cursor. If text has been selected then the
+pasted text replaces the selection.
 
 Sliders
 -------
