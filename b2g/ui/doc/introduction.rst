@@ -461,8 +461,11 @@ Text`_) so that it can be easily replaced.
 Additional Features
 -------------------
 
-Android Shortcuts
-~~~~~~~~~~~~~~~~~
+Shortcuts
+~~~~~~~~~
+
+To Useful Android Screens
+`````````````````````````
 
 The following shortcuts to useful Android screens are provided:
 
@@ -489,6 +492,17 @@ Space+s (dots 234)
 
   w (dots 2456)
     Go to the Wi-Fi Settings screen.
+
+To Other |product name| Applications
+````````````````````````````````````
+
+The following shortcuts to other |product name| applications are provided:
+
+Space+ed (dots 1246)
+  Go to the |product name| editor.
+
+Describing how any of these applications work is, of course, beyond the scope
+of this document.
 
 Checking the Time
 ~~~~~~~~~~~~~~~~~
@@ -632,10 +646,4 @@ Developer Settings
 If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
-
-The |product name| Editor
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Pressing Space+ed (dots 1246) takes you to the |product name| editor.
-Describing how it works is, of course, beyond the scope of this document.
 
