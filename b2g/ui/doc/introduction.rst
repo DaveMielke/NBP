@@ -441,8 +441,8 @@ limited to):
 * Requesting the value of a Unicode character (see `Indirectly Typing Any
   Character`_).
 
-* Requesting the text to search within the current screen element for (see
-  `Find Mode`_).
+* Requesting the text to search for within the current screen element (see
+  `Finding Text`_).
 
 A prompt is a read-write dialog. Normal navigation and editing may be performed
 within its response area. Press Enter once the requested information has been
@@ -525,6 +525,23 @@ Developer Settings
 If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
+
+Finding Text
+~~~~~~~~~~~~
+
+To find a sequence of characters within the text that's associated with the
+current screen element, press Space+f (dots 124). This brings up a prompt (see
+`Prompts`_) with the following header::
+
+  find>
+
+Type the sequence of characters that you're looking for, editing them as
+needed, and then press Enter.
+
+A forward search through the text is performed, starting with the second 
+character that's currently on the braille display. If the characters are found
+then the braille display is repositioned such that they begin in its leftmost
+character.
 
 Speech
 ~~~~~~
