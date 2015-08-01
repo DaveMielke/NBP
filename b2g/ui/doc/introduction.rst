@@ -461,6 +461,35 @@ Text`_) so that it can be easily replaced.
 Additional Features
 -------------------
 
+Android Shortcuts
+~~~~~~~~~~~~~~~~~
+
+The following shortcuts to useful Android screens are provided:
+
+Space+Dots1478
+  Go to the Power Off screen.
+
+Space+? (dots 1456)
+  Go to the currently registered **assist** app. The default is
+  ``Google Now``.
+
+Space+s (dots 234)
+  Go to a Settings screen. Another key combination must be pressed within
+  |intermediate action timeout| in order to specify which Settings screen to go
+  to:
+
+  Space
+    Go to the main Settings screen.
+
+  a (dot 1)
+    Go to the Accessibility Settings screen.
+
+  b (dots 12)
+    Go to the Bluetooth Settings screen.
+
+  w (dots 2456)
+    Go to the Wi-Fi Settings screen.
+
 Checking the Time
 ~~~~~~~~~~~~~~~~~
 
@@ -477,6 +506,82 @@ The four-digit number within (parentheses) on the third line is the time zone's
 offset, in (two-digit) hours and (two-digit) minutes, from UTC (Universal
 Coordinated Time). The abbreviation EST means Eastern Standard Time in North
 America, which is five hours earlier (hence the leading minus sign) than UTC.
+
+Checking Status Indicators
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can check various helpful status indicators by pressing Backward and
+Forward together. This will cause the indicators to be presented within a popup
+(see `Popups`_) that looks something like this::
+
+  Battery: 30%
+  Wi-Fi: MyNetwork 60% 54Mbps
+
+Identifying the Build
+~~~~~~~~~~~~~~~~~~~~~
+
+There may be times when you need to identify the exact build of the
+|user interface| that you're currently using. For example, this information is
+particularly helpful when you're reporting a problem or checking if there's a
+newer version.
+
+You can get this information by pressing Space, Backward, and Forward
+together. This will cause details that identify the build to be presented
+within a popup (see `Popups`_) that looks something like this::
+
+  Build Details
+  Time: 2015-07-22 00:34:02 UTC
+  Revision: d3d8210
+
+Developer Mode
+~~~~~~~~~~~~~~
+
+A very intentionally difficult-to-press key combination has been defined for
+enabling and disabling Developer Mode::
+
+  Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
+
+A long press enables it, and a short press disables it. Note that this means
+that this mode can't be enabled unless `Long Press Mode`_ is enabled (another
+accident prevention scheme).
+
+See `Developer Operations`_ for a list of additional key combinations that this
+mode defines.
+
+Speech
+~~~~~~
+
+Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
+it, and pressing Space+VolumeDown disables it. Another (legacy) way to disable
+it is to press VolumeDown and VolumeUp together.
+
+* To interrupt what's currently being spoken, press Backward+VolumeDown.
+
+* To speak the current line, press Backward+VolumeUp. Another (legacy) way to
+  do so is to press Space+c (dots 14).
+
+* To adjust the volume: press Dot1+VolumeDown for **softer**, and Dot1+VolumeUp
+  for **louder**.
+
+* To adjust the rate: press Dot2+VolumeDown for **slower**, and Dot2+VolumeUp
+  for **faster**.
+
+* To adjust the pitch: press Dot3+VolumeDown for **lower**, and Dot3+VolumeUp
+  for **higher**.
+
+* To adjust the balance: press Dot4+VolumeDown for **more left**, and
+  Dot4+VolumeUp for **more right**.
+
+Sleep Talk Mode
+```````````````
+
+Sleep Talk Mode leaves speech active while the Power switch is off. This
+capability is useful when, for example, you'd like to reduce battery drain but
+still be informed when an important asynchronous event, e.g. the arrival of a
+notification, occurs.
+
+This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
+pressing Forward+VolumeDown disables it.
 
 The Settings Screen
 ~~~~~~~~~~~~~~~~~~~
@@ -528,114 +633,9 @@ If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
 
-Speech
-~~~~~~
-
-Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
-it, and pressing Space+VolumeDown disables it. Another (legacy) way to disable
-it is to press VolumeDown and VolumeUp together.
-
-* To interrupt what's currently being spoken, press Backward+VolumeDown.
-
-* To speak the current line, press Backward+VolumeUp. Another (legacy) way to
-  do so is to press Space+c (dots 14).
-
-* To adjust the volume: press Dot1+VolumeDown for **softer**, and Dot1+VolumeUp
-  for **louder**.
-
-* To adjust the rate: press Dot2+VolumeDown for **slower**, and Dot2+VolumeUp
-  for **faster**.
-
-* To adjust the pitch: press Dot3+VolumeDown for **lower**, and Dot3+VolumeUp
-  for **higher**.
-
-* To adjust the balance: press Dot4+VolumeDown for **more left**, and
-  Dot4+VolumeUp for **more right**.
-
-Sleep Talk Mode
-```````````````
-
-Sleep Talk Mode leaves speech active while the Power switch is off. This
-capability is useful when, for example, you'd like to reduce battery drain but
-still be informed when an important asynchronous event, e.g. the arrival of a
-notification, occurs.
-
-This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
-pressing Forward+VolumeDown disables it.
-
-Checking Status Indicators
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can check various helpful status indicators by pressing Backward and
-Forward together. This will cause the indicators to be presented within a popup
-(see `Popups`_) that looks something like this::
-
-  Battery: 30%
-  Wi-Fi: MyNetwork 60% 54Mbps
-
-Identifying the Build
-~~~~~~~~~~~~~~~~~~~~~
-
-There may be times when you need to identify the exact build of the
-|user interface| that you're currently using. For example, this information is
-particularly helpful when you're reporting a problem or checking if there's a
-newer version.
-
-You can get this information by pressing Space, Backward, and Forward
-together. This will cause details that identify the build to be presented
-within a popup (see `Popups`_) that looks something like this::
-
-  Build Details
-  Time: 2015-07-22 00:34:02 UTC
-  Revision: d3d8210
-
-Developer Mode
-~~~~~~~~~~~~~~
-
-A very intentionally difficult-to-press key combination has been defined for
-enabling and disabling Developer Mode::
-
-  Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
-
-A long press enables it, and a short press disables it. Note that this means
-that this mode can't be enabled unless `Long Press Mode`_ is enabled (another
-accident prevention scheme).
-
-See `Developer Operations`_ for a list of additional key combinations that this
-mode defines.
-
 The |product name| Editor
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pressing Space+ed (dots 1246) takes you to the |product name| editor.
 Describing how it works is, of course, beyond the scope of this document.
-
-Android Shortcuts
-~~~~~~~~~~~~~~~~~
-
-The following Android shortcuts are supported:
-
-Space+Dots1478
-  Go to the Power Off screen.
-
-Space+? (dots 1456)
-  Go to the currently registered **assist** app. The default is
-  ``Google Now``.
-
-Space+s (dots 234)
-  Go to a Settings screen. Another key combination must be pressed within
-  |intermediate action timeout| in order to specify which Settings screen to go
-  to:
-
-  Space
-    Go to the main Settings screen.
-
-  a (dot 1)
-    Go to the Accessibility Settings screen.
-
-  b (dots 12)
-    Go to the Bluetooth Settings screen.
-
-  w (dots 2456)
-    Go to the Wi-Fi Settings screen.
 
