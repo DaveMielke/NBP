@@ -15,8 +15,8 @@ on the right, from left to right, are dots 4, 5, 6, and 8.
 * The Dot7 key is often referred to as the Backspace key.
 * The Dot8 key is often referred to as the Enter key.
 
-The square with a small, round button in the middle, in between the Dot1 and
-Dot4 keys, is the five-key D-Pad (directional pad). Its four edges are the
+The square pad with a small, round button in the middle, in between the Dot1
+and Dot4 keys, is the five-key D-Pad (directional pad). Its four edges are the
 Up, Down, Left, and Right keys. The button in the middle is the Center
 key.
 
@@ -67,9 +67,9 @@ toward the back.
 The Back
 ~~~~~~~~
 
-The SD card port is the long slot in the middle of the back.
+The SD card slot is the long slot in the middle of the back.
 
-A micro USB-B (or device) port is near the left of the back. It's 
+A micro USB-B (or device) port is near the left end of the back. It's 
 primary use is for charging the battery. The battery can be charged from 
 a computer's USB port.
 
@@ -184,8 +184,8 @@ One Hand Mode. This provides an intuitive way for a user who has accidentally
 enabled this mode, and who may not know how to disable it, to easily revert the
 keyboard to normal operation.
 
-Another (legacy) way to enable One Hand Mode is to hold dot 8 while switching
-the power on.
+Another (legacy) way to enable One Hand Mode is to hold the Dot8 key while
+switching the power on.
 
 Typing
 ------
@@ -307,7 +307,7 @@ Braille Characters`_) needn't (and, in fact, shouldn't) be defined. They're
 always rendered in braille as themselves.
 
 The special character rendered as |the undefined character| is used to
-represent a character that doesn't have its own defined representation.
+represent a character that doesn't have a defined representation.
 
 Identifying an Unrecognized Character
 `````````````````````````````````````
@@ -327,9 +327,9 @@ within a popup (see `Popups`_). For example, the description for the letter
 Special Symbols
 ~~~~~~~~~~~~~~~
 
-When within an input area:
+When within an input area (see `Input Areas`_):
 
-* The character that the cursor is on is highlighted by |the cursor indicator|.
+* The character where the cursor is is highlighted by |the cursor indicator|.
   This is its default representation. It can be changed via `The Settings
   Screen`_.
 
@@ -337,9 +337,10 @@ When within an input area:
   indicator|. This is its default representation. It can be changed via `The
   Settings Screen`_.
 
-Note that the cursor isn't shown when at least one character has been 
-selected. This is because edit actions are then performed on all of the
-selected characters as a single entity rather than at the cursor's location.
+Note that the cursor isn't shown when at least one character has been selected
+(see `Selecting Text`_). This is because editing actions are then performed on
+all of the selected characters as a single unit rather than at the cursor's
+location.
 
 If a screen element (list, group of pages, etc) needs to be scrolled, then:
 
@@ -378,14 +379,13 @@ rendered as its widget type enclosed within {braces}. For example::
 
   {ImageButton}
   {SeekBar}
-  {ViewPager}
 
 If a control isn't enabled then the word ``disabled``, enclosed within
 (parentheses), is appended to its descriptive text. For example::
 
   OK (disabled)
 
-When an action is performed that is neither implicitly confirmed (by an 
+When an action is performed that's neither implicitly confirmed (by an 
 expected change on the braille display) nor explicitly confirmed (by a 
 sound) then it's confirmed by a message (see `Messages`_). For example::
 
@@ -430,7 +430,7 @@ information. This includes (but isn't limited to):
 
 A popup is a multi-line, read-only dialog. Normal navigation may be
 performed within it. Dismiss it by pressing Enter. It's automatically dismissed
-if no navigation operations are performed within it for |popup time|.
+if no navigation operations have been performed within it for |popup time|.
 
 Prompts
 ~~~~~~~
@@ -448,9 +448,9 @@ A prompt is a read-write dialog. Normal navigation and editing may be performed
 within its response area. Press Enter once the requested information has been
 entered.
 
-The prompt's header and response area are always on the first line. Helpful
-information may be added to the rest of the first line and/or to additional
-lines.  
+The prompt's header and response area are always on the first line. The
+|user interface| may add helpful information to the rest of the first line
+and/or to additional lines.  
 
 The response to a prompt is remembered. The response area of a prompt is
 initially empty, but, from then on, it's initialized to the previous response
@@ -480,7 +480,8 @@ America, which is five hours earlier (hence the leading minus sign) than UTC.
 The Settings Screen
 ~~~~~~~~~~~~~~~~~~~
 
-Pressing Space+o (dots 135) takes you to the User Interface's settings screen.
+Pressing Space+o (dots 135) takes you to the settings screen for the
+|user interface|.
 
 The top line contains the following buttons:
 
@@ -555,8 +556,8 @@ Sleep Talk Mode
 
 Sleep Talk Mode leaves speech active while the Power switch is off. This
 capability is useful when, for example, you'd like to reduce battery drain but
-still be informed when important asynchronous events, e.g. the arrival of
-notifications, occur.
+still be informed when an important asynchronous event, e.g. the arrival of a
+notification, occurs.
 
 This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
 pressing Forward+VolumeDown disables it.
@@ -574,8 +575,8 @@ Forward together. This will cause the indicators to be presented within a popup
 Identifying the Build
 ~~~~~~~~~~~~~~~~~~~~~
 
-There may be times when you need to identify the exact build of the User
-Interface that you're currently using. For example, this information is 
+There may be times when you need to identify the exact build of the
+|user interface| that you're currently using. For example, this information is
 particularly helpful when you're reporting a problem or checking if there's a
 newer version.
 

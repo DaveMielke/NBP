@@ -20,7 +20,7 @@ Navigating with the Forward and Backward Keys
 
 The easiest way to navigate the screen is to use the Forward and Backward 
 keys because they move sequentially through all of the screen elements,
-including those that only contain descriptive text, without missing any of
+including those that merely present helpful text, without missing any of
 them. The Forward key stops at the end of the screen, and the Backward key
 stops at the start of the screen.
 
@@ -209,7 +209,8 @@ Selecting text is useful in at least the following ways:
   the selected text. This, in other words, is an efficient way to delete a
   block of text. Just select it, and then delete it.
 
-A quick way to select all of the characters is to press Space+Dot8+a (dot 1).
+A quick way to select all of the characters within the input area is to press
+Space+Dot8+a (dot 1).
 
 Any subset of the characters within the input area can be selected by following
 these steps:
@@ -248,23 +249,24 @@ Using the Clipboard
 To copy text to the clipboard, press Space+Dot8+c (dots 14). If this is done
 when not within an input area, or when within an input area with no selected
 text, then all of the text is copied. If this is done within an input area with
-selected text then only that text is copied.
+selected text then just that text is copied.
 
 To cut text to the clipboard, press Space+Dot8+x (dots 1346). This can only be
 done within an input area. If text hasn't been selected then all of the text is
-cut. If text has been selected then only that text is cut.
+cut. If text has been selected then just that text is cut.
 
 To paste text from the clipboard, press Space+Dot8+v (dots 1236). This can only
 be done within an input area. If text hasn't been selected then the pasted text
 is inserted just to the left of the cursor. If text has been selected then the
-pasted text replaces the selection.
+pasted text replaces the selected text.
 
 Sliders
 -------
 
 A ``slider`` is a control that intuitively (from a visual perspective)
-represents an amount (distance, magnitude, etc). It's often used, for example,
-to represent a volume control, the current position within a song, etc.
+represents a numeric value (distance, magnitude, etc). It's often used, for
+example, to represent a volume control, the current position within a song,
+etc.
 
 Each time the slider is adjusted, a brief message is displayed that 
 announces its new position (as a percentage). Unfortunately, due to a 
@@ -308,12 +310,13 @@ Legacy Navigation
 
 Navigation used to be done by using real keys on an actual keyboard. This
 method can still be used via an external keyboard connected via Bluetooth or
-USB. The User Interface also supports it by emulating the following keys:
+USB. The |user interface| also supports it by emulating the following keyboard
+keys:
 
 .. include:: tbl-keys-keyboard.rst
 
-What each of these keys does is defined by Android - not by the User Interface.
-Here's a summary.
+What each of these keys does is defined by Android - not by the
+|user interface|. Here's a summary.
 
 .. |describe cursor left navigation| replace::
   move to the nearest screen element that's roughly to the left of the
@@ -344,7 +347,7 @@ Here's a summary.
 .. |describe vertical cursor motion within text| replace::
   Vertical cursor motion within text may cause it to also move unexpectedly
   left or right in braille, especially when a proportional font has been
-  used, because the characters may not all have the same width.
+  used, because the characters on the screen may not all have the same width.
 
 The Enter Key
 ~~~~~~~~~~~~~
@@ -437,7 +440,7 @@ The Page Up Key
 
 **Space+Dots23**
 
-Perform a scroll backward (up or left) operation.
+Perform a scroll backward (up or to the left) operation.
 
 * If within a list then move up several elements. If the first element is
   already visible then move to it.
@@ -452,7 +455,7 @@ The Page Down Key
 
 **Space+Dots56**
 
-Perform a scroll forward (down or right) operation.
+Perform a scroll forward (down or to the right) operation.
 
 * If within a list then move down several elements. If the last element is
   already visible then move to it.

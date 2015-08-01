@@ -1,3 +1,6 @@
+.. |product name| replace:: B2G
+.. |user interface| replace:: |product name| User Interface
+
 .. |long press timeout| replace:: half a second
 .. |control modifier timeout| replace:: five seconds
 
