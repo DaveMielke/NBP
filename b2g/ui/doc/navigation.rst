@@ -42,9 +42,11 @@ Backward key, however, pans to the left through the text associated with the
 current screen element, but, from then on, moves directly to the start of each
 successive preceding screen element.
 
+Leaving the Current Screen Element
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The following methods may be used to force an immediate, direct move to the
-start of the next (or previous) screen element without first panning through
-the text associated with the current one:
+start of the next (or previous) screen element:
 
 * Press the Space key together with the Forward (or Backward) key.
 
@@ -122,7 +124,7 @@ that follows it.
 
 * Deleting it joins the line to the start of the next one.
 
-When a characer is typed (see `Typing`_), then:
+When a character is typed (see `Typing`_), then:
 
 * If text hasn't been selected then the typed character is inserted just to the
   left of the cursor.

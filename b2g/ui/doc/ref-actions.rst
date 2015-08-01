@@ -50,8 +50,8 @@
 .. |MoveFirst| replace:: go to the beginning of a list or line
 .. |MoveForward| replace:: go to the start of the next screen element
 .. |MoveLast| replace:: go to the end of a list or line
-.. |MoveNext| replace:: go to the next page of a list or text field
-.. |MovePrevious| replace:: go to the previous page of a list or text field
+.. |MoveNext| replace:: go to the next page of a list or block of text
+.. |MovePrevious| replace:: go to the previous page of a list or block of text
 .. |MoveToChild| replace:: go to and describe the first child node
 .. |MoveToNextSibling| replace:: go to and describe the next sibling node
 .. |MoveToParent| replace:: go to and describe the parent node
