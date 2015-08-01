@@ -2,7 +2,7 @@
 .. |user interface| replace:: |product name| User Interface
 
 .. |long press timeout| replace:: half a second
-.. |control modifier timeout| replace:: five seconds
+.. |intermediate action timeout| replace:: five seconds
 
 .. |message time| replace:: two seconds
 .. |popup time| replace:: 30 seconds

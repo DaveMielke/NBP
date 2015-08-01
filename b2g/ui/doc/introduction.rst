@@ -261,7 +261,8 @@ before the letter or special symbol that represents it (see `ASCII Control
 Characters`_). For example, in order to type a tab (which happens to be control
 I), press Space+x and then immediately type the letter ``i``.
 
-The letter or special symbol must be typed within |control modifier timeout|.
+The letter or special symbol must be typed within
+|intermediate action timeout|.
 
 Braille Input Mode
 ~~~~~~~~~~~~~~~~~~
@@ -460,8 +461,8 @@ Text`_) so that it can be easily replaced.
 Additional Features
 -------------------
 
-The Braille-friendly Clock
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Checking the Time
+~~~~~~~~~~~~~~~~~
 
 You can access a braille-friendly clock by pressing Space+t (dots 2345). The
 date and time are displayed on the first line using the conventional
@@ -602,4 +603,39 @@ accident prevention scheme).
 
 See `Developer Operations`_ for a list of additional key combinations that this
 mode defines.
+
+The |product name| Editor
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pressing Space+ed (dots 1246) takes you to the |product name| editor.
+Describing how it works is, of course, beyond the scope of this document.
+
+Android Shortcuts
+~~~~~~~~~~~~~~~~~
+
+The following Android shortcuts are supported:
+
+Space+Dots1478
+  Go to the Power Off screen.
+
+Space+? (dots 1456)
+  Go to the currently registered **assist** app. The default is
+  ``Google Now``.
+
+Space+s (dots 234)
+  Go to a Settings screen. Another key combination must be pressed within
+  |intermediate action timeout| in order to specify which Settings screen to go
+  to:
+
+  Space
+    Go to the main Settings screen.
+
+  a (dot 1)
+    Go to the Accessibility Settings screen.
+
+  b (dots 12)
+    Go to the Bluetooth Settings screen.
+
+  w (dots 2456)
+    Go to the Wi-Fi Settings screen.
 
