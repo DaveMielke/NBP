@@ -8,9 +8,8 @@ All Android devices have a number of special keys. There are two ways to
 emulate each of them:
 
 * With two hands, by pressing the Space key together with a related letter or
-  special symbol. While these may be easier to remember, they're also more
-  awkward to use because it's not possible to be reading the display at the
-  same time.
+  special symbol. While these may be easier to remember, they're also less
+  convenient because both hands must be removed from the display.
 
 * With one hand, by pressing the Dot4 key together with one of the D-Pad keys.
 
@@ -41,7 +40,7 @@ on the screen because it reads through all of the text associated with the
 current screen element before moving to the next one. Repeatedly pressing the
 Backward key, however, pans to the left through the text associated with the
 current screen element, but, from then on, moves directly to the start of each
-preceding screen element.
+successive preceding screen element.
 
 The following methods may be used to force an immediate, direct move to the
 start of the next (or previous) screen element without first panning through
@@ -51,7 +50,8 @@ the text associated with the current one:
 
 * Long press the Forward (or Backward) key (see `Long Press Mode`_).
 
-One of these methods must also be used in order to leave an input area.
+One of these methods must also be used in order to leave an input area (see
+`Input Areas`_).
 
 Navigating with the Directional Keys
 ------------------------------------
@@ -70,7 +70,7 @@ Navigating with the four directional keys (of the D-Pad) is equivalent to
   Down             Forward+Space
   ===============  ================
 
-These keys act differently within certain contexts. See:
+These keys, however, do act differently within certain contexts. See:
 
 * `The Directional Keys within an Input Area`_
 * `The Directional Keys When on a Slider`_
@@ -104,23 +104,41 @@ Space+Right
 Input Areas
 -----------
 
+The character where the cursor is is highlighted via |the cursor indicator|.
+
 Pressing a cursor routing key brings the cursor to that character. If 
 text has been selected then the selection is cleared.
 
 Pressing a cursor routing key together with the Dot8 key repositions the
 braille display such that the rendered portion of the current line starts with
 that character. This is a good way, for example, to read an indented block of
-related text.
+related text (such as a column).
+
+An additional blank character is rendered at the end of each line within an
+input area. This character represents the delimiter between a line and the one
+that follows it.
+
+* Typing while the cursor is on it appends characters to the line.
+
+* Deleting it joins the line to the start of the next one.
 
 When a characer is typed (see `Typing`_), then:
 
-* If text hasn't been selected then the character is inserted just to the left
-  of the cursor.
+* If text hasn't been selected then the typed character is inserted just to the
+  left of the cursor.
 
-* If text has been selected then the character replaces it.
+* If text has been selected then the typed character replaces the selected
+  text.
 
 The Enter key is Dot8. If the input area supports more than one line then this
 key ends the current line and starts a new one.
+
+* Pressing it when at the start of a line inserts an empty line just above it.
+
+* Pressing it when in the middle of a line splits that line just to the left of
+  the cursor.
+
+* Pressing it when at the end of a line starts a new line just below it.
 
 Deleting Characters
 ~~~~~~~~~~~~~~~~~~~
@@ -128,51 +146,71 @@ Deleting Characters
 The Backspace key is Dot7.
 
 * If text hasn't been selected then the character just to the left of the
-  cursor is deleted.
+  cursor is deleted. If this key is pressed when at the start of a line then
+  that line is joined to the end of the previous one.
 
-* If text has been selected then it's deleted.
+* If text has been selected then the selected text is deleted.
 
 The Delete key is Space+d (dots 145).
 
 * If text hasn't been selected then the character where the cursor is is
-  deleted.
+  deleted. If this key is pressed when at the end of a line then that line is
+  joined to the start of the next one.
 
-* If text has been selected then it's deleted.
+* If text has been selected then the selected text is deleted.
 
 The Directional Keys within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. |directional move to short line| replace::
+  If that line is too short then the cursor is also moved leftward.
 
 The directional keys move the cursor through the text, one step at a time. They
 will not leave the input area. The braille display is panned, as needed, such
 that the cursor is always visible.
 
-The Left key moves the cursor to the previous character. If it's on the first
-character of a line then it wraps to the last character of the previous line.
-If text has been selected then the cursor is moved to just before the first
+The Left key moves the cursor to the previous character. If it's at the start
+of a line then it wraps to the end of the previous line. If text has been
+selected then the cursor is moved to just before the first selected character,
+and the selection is cleared.
+
+The Right key moves the cursor to the next character. If it's at the end of a
+line then it wraps to the start of the next line. If text has been selected
+then the cursor is moved to just after the last selected character, and the
+selection is cleared.
+
+The Up key moves the cursor to the same position on the previous line.
+|directional move to short line|
+If text has been selected then the cursor is moved to just above the first
 selected character, and the selection is cleared.
 
-The Right key moves the cursor to the next character. If it's on the last
-character of a line then it wraps to the first character of the next line. If
-text has been selected then the cursor is moved to just after the last selected
-character, and the selection is cleared.
-
-The Up key moves the cursor to the same column of the previous line. If 
-the previous line is too short then the cursor is also moved leftward to 
-just after its last character. If text has been selected then the 
-cursor is moved to just above the first selected character, and the 
-selection is cleared.
-
-The Down key moves the cursor to the same column of the next line. If 
-the next line is too short then the cursor is also moved leftward to 
-just after its last character. If text has been selected then the 
-cursor is moved to just below the last selected character, and the 
-selection is cleared.
+The Down key moves the cursor to the same position on the next line.
+|directional move to short line|
+If text has been selected then the cursor is moved to just below the last
+selected character, and the selection is cleared.
 
 Selecting Text
 --------------
 
-When within an input area, any sequence of characters within that area 
-can be easily **selected**. This is how to do it:
+Each character within the current text selection is highlighted via
+|the selection indicator|. If text has been selected then the cursor isn't
+shown.
+
+Selecting text is useful in at least the following ways:
+
+* Typing a character deletes the selected text, puts the cursor where
+  the selected text was, and then inserts the typed character at that point.
+  This, in other words, is an efficient way to replace old text with new text.
+  Just select the old text, and then start typing the new text.
+
+* Pressing any of the delete keys (see `Deleting Characters`_) removes all of
+  the selected text. This, in other words, is an efficient way to delete a
+  block of text. Just select it, and then delete it.
+
+A quick way to select all of the characters is to press Space+Dot8+a (dot 1).
+
+Any subset of the characters within the input area can be selected by following
+these steps:
 
 1) If necessary, use the Forward and Backward keys to pan to a place where the
    first character to be selected can be seen.
@@ -191,21 +229,6 @@ the selection. Likewise, steps 3 and 4 may be reperformed at any time in order
 to change the end of the selection. In fact, the end of the selection can be
 set before the start of the selection has been set, i.e. steps 3 and 4 may be
 performed before steps 1 and 2 have been performed.
-
-A quick way to select all of the characters is to press Space+Dot8+a (dot 1).
-
-The current text selection is highlighted via |the selection indicator|.
-
-Selecting text is useful in at least the following ways:
-
-* Typing a character deletes the selected text, puts the cursor where
-  the selected text was, and then inserts the typed character at that point.
-  This, in other words, is an efficient way to replace old text with new text.
-  Just select the old text, and then start typing the new text.
-
-* Pressing any of the delete keys (see `Deleting Characters`_) removes all of
-  the selected text. This, in other words, is an efficient way to delete a
-  block of text. Just select it, and then delete it.
 
 If the start of the selection is set first, and if the cursor is after that
 character, then the selection is implicitly extended forward to (but not
