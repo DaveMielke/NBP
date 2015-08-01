@@ -73,23 +73,58 @@ Navigating with the four directional keys of the D-Pad is equivalent to
 See `Input Areas`_, and `Sliders`_ for how these keys act differently when on
 one of those types of screen elements.
 
+The D-Pad keys can also be used to perform these additional operations:
+
+Space+Up
+
+  Perform a scroll backward (up or left) operation.
+
+  + If within a list then move up several elements.
+
+  + If within a set of pages then move to the previous page.
+
+Space+Down
+
+  Perform a scroll forward (down or right) operation.
+
+  + If within a list then move down several elements.
+
+  + If within a set of pages then move to the next page.
+
+Space+Left
+
+  Move to the first element of a list, to the first page of a group, etc.
+
+Space+Right
+
+  Move to the last element of a list, to the last page of a group, etc.
+
 Input Areas
 -----------
 
-Dots 1 through 6 are used, as defined by the `North American Braille 
-Computer Code`_, to type characters, and the Space key is used to type a 
-space. Add dot 7 to a letter to make it uppercase. If no characters have been
-selected then, when a character is typed, it is inserted where the cursor is.
-If characters have been selected then the next typed character replaces them.
+When a characer is typed (see `Typing`_), then:
 
-Dot 8 is the Enter key. If the field supports more than one line, this 
+* If text hasn't been selected then the character is inserted just to the left
+  of the cursor.
+
+* If text has been selected then the character replaces it.
+
+The Enter key is Dot8. If the input area supports more than one line then this
 key ends the current line and starts a new one.
 
-Dot 7 is the Backspace key. It deletes the character to the left of the 
-cursor. If characters have been selected then it deletes all of them.
+The Backspace key is Dot7.
 
-Space+d (dots 145) is the Delete key. It deletes the character where the 
-cursor is. If characters have been selected then it deletes all of them.
+* If text hasn't been selected then the character just to the left of the
+  cursor is deleted.
+
+* If text has been selected then it's deleted.
+
+The Delete key is Space+d (dots 145).
+
+* If text hasn't been selected then the character where the cursor is is
+  deleted.
+
+* If text has been selected then it's deleted.
 
 The Forward and Backward keys navigate through the text as defined 
 previously, except that they will not leave the field. They must be long 
