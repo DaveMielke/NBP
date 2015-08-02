@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import android.util.Log;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -12,6 +14,8 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 
 public class DescribeStatus extends Action {
+  private final static String LOG_TAG = DescribeStatus.class.getName();
+
   private static void appendString (StringBuilder sb, int string) {
     sb.append(ApplicationContext.getString(string));
   }
@@ -45,12 +49,42 @@ public class DescribeStatus extends Action {
     TelephonyManager tel = (TelephonyManager)ApplicationContext.getSystemService(Context.TELEPHONY_SERVICE);
 
     if (tel != null) {
-      String operator = tel.getSimOperatorName();
+      startLine(sb, R.string.DescribeStatus_sim_label);
+      int state = tel.getSimState();
 
-      if (operator != null) {
-        if (!operator.isEmpty()) {
-          startLine(sb, R.string.DescribeStatus_sim_label);
-          sb.append(operator);
+      switch (state) {
+        default:
+          Log.w(LOG_TAG, "unknown SIM state: " + state);
+        case TelephonyManager.SIM_STATE_UNKNOWN:
+          appendString(sb, R.string.DescribeStatus_sim_state_unknown);
+          break;
+
+        case TelephonyManager.SIM_STATE_ABSENT:
+          appendString(sb, R.string.DescribeStatus_sim_state_absent);
+          break;
+
+        case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
+          appendString(sb, R.string.DescribeStatus_sim_state_locked_net);
+          break;
+
+        case TelephonyManager.SIM_STATE_PIN_REQUIRED:
+          appendString(sb, R.string.DescribeStatus_sim_state_locked_pin);
+          break;
+
+        case TelephonyManager.SIM_STATE_PUK_REQUIRED:
+          appendString(sb, R.string.DescribeStatus_sim_state_locked_puk);
+          break;
+
+        case TelephonyManager.SIM_STATE_READY: {
+          String operator = tel.getSimOperatorName();
+
+          if ((operator != null) && !operator.isEmpty()) {
+            sb.append(operator);
+          } else {
+            appendString(sb, R.string.DescribeStatus_sim_state_ready);
+          }
+
+          break;
         }
       }
     }
@@ -61,9 +95,11 @@ public class DescribeStatus extends Action {
 
     if (wifi != null) {
       startLine(sb, R.string.DescribeStatus_wifi_label);
+      int state = wifi.getWifiState();
 
-      switch (wifi.getWifiState()) {
+      switch (state) {
         default:
+          Log.w(LOG_TAG, "unknown Wi-Fi state: " + state);
         case WifiManager.WIFI_STATE_UNKNOWN:
           appendString(sb, R.string.DescribeStatus_wifi_state_unknown);
           break;

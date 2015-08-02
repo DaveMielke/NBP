@@ -85,12 +85,18 @@
   <string name="DescribeStatus_battery_label">Battery</string>
 
   <string name="DescribeStatus_sim_label">SIM</string>
+  <string name="DescribeStatus_sim_state_absent">not installed</string>
+  <string name="DescribeStatus_sim_state_locked_net">locked (need network PIN)</string>
+  <string name="DescribeStatus_sim_state_locked_pin">locked (need user PIN)</string>
+  <string name="DescribeStatus_sim_state_locked_puk">locked (need user PUK)</string>
+  <string name="DescribeStatus_sim_state_ready">ready</string>
+  <string name="DescribeStatus_sim_state_unknown">unknown</string>
 
   <string name="DescribeStatus_wifi_label">Wi-Fi</string>
   <string name="DescribeStatus_wifi_state_disabled">disabled</string>
-  <string name="DescribeStatus_wifi_state_enabling">enabling</string>
-  <string name="DescribeStatus_wifi_state_enabled">enabled</string>
   <string name="DescribeStatus_wifi_state_disabling">disabling</string>
+  <string name="DescribeStatus_wifi_state_enabled">enabled</string>
+  <string name="DescribeStatus_wifi_state_enabling">enabling</string>
   <string name="DescribeStatus_wifi_state_unknown">unknown</string>
 
   <string name="message_start_of_input_area">start of input area</string>
