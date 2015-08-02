@@ -122,7 +122,7 @@ public class DescribeStatus extends Action {
           if (info != null) {
             String name = info.getSSID();
 
-            if (name != null) {
+            if ((name != null) && !name.isEmpty()) {
               sb.append(name);
 
               int dbm = info.getRssi();
@@ -133,8 +133,12 @@ public class DescribeStatus extends Action {
               sb.append(' ');
               sb.append(info.getLinkSpeed());
               sb.append("Mbps");
+            } else {
+              info = null;
             }
-          } else {
+          }
+
+          if (info == null) {
             appendString(sb, R.string.DescribeStatus_wifi_state_enabled);
           }
 
