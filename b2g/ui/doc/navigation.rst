@@ -169,6 +169,13 @@ The Delete key is Space+d (dots 145).
 
 * If text has been selected then the selected text is deleted.
 
+The Forward and Backward keys pan through the input area in the expected way,
+but won't leave it. The Forward key pans to the right, and, at the end of each
+line, wraps to the start of the next one. The Backward key pans to the left,
+and, at the start of each line, wraps to the end of the previous one. See
+`Leaving the Current Screen Element`_ for how to move to another screen
+element.
+
 The Directional Keys within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
