@@ -125,14 +125,23 @@ public class DescribeStatus extends Action {
             if ((name != null) && !name.isEmpty()) {
               sb.append(name);
 
-              int dbm = info.getRssi();
-              sb.append(' ');
-              sb.append(wifi.calculateSignalLevel(dbm, 100));
-              sb.append('%');
+              {
+                int dbm = info.getRssi();
 
-              sb.append(' ');
-              sb.append(info.getLinkSpeed());
-              sb.append("Mbps");
+                sb.append(' ');
+                sb.append(wifi.calculateSignalLevel(dbm, 100));
+                sb.append('%');
+              }
+
+              {
+                int speed = info.getLinkSpeed();
+
+                if (speed > 0) {
+                  sb.append(' ');
+                  sb.append(speed);
+                  sb.append("Mbps");
+                }
+              }
             } else {
               info = null;
             }
