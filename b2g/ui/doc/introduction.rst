@@ -70,9 +70,10 @@ toward the back.
 
 If the system is shut down, then:
 
-* Switching it on boots the device. If you hear three short beeps then the
-  battery is too low and the device won't boot. In this case, switch it back
-  off, and charge the battery for a while before trying again.
+* Switching it on boots the device. You should hear one short beep. If,
+  instead, you hear three short beeps then the battery is too low and the
+  device won't boot. In this case, switch it back off, and then charge the
+  battery for a while before trying again.
 
 * Switching it on while holding VolumeDown boots the device into Recovery Mode.
 
