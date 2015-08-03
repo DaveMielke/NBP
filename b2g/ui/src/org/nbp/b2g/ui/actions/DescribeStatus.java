@@ -126,10 +126,10 @@ public class DescribeStatus extends Action {
               sb.append(name);
 
               {
-                int dbm = info.getRssi();
+                int rssi = info.getRssi();
 
                 sb.append(' ');
-                sb.append(wifi.calculateSignalLevel(dbm, 100));
+                sb.append(wifi.calculateSignalLevel(rssi, 101));
                 sb.append('%');
               }
 
