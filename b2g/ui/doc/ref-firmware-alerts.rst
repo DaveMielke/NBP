@@ -33,3 +33,7 @@ Two Medium Beeps
 One Long Beep
   The device has been successfully reset (see `The Reset Button`_).
 
+Four Long Beeps
+  The system is about to reboot. This occurs after the
+  `VolumeDown+Dot4+Dot5+Dot6+Dot8`_ firmware key binding has been pressed.
+

@@ -58,11 +58,29 @@ The Right Side
 
 The volume controls are the two, small, round buttons near the front of 
 the right side. The one toward the front is the Volume Down key, and the 
-one toward the back is the Volume Up key.
+one toward the back is the Volume Up key. These keys, when pressed on their
+own, adjust the volume of the current Android audio stream.
+
+The Power Switch
+````````````````
 
 The Power switch is the slide switch near the back of the right side. 
 It's **off** position is toward the front, and its **on** position is 
 toward the back.
+
+If the system is shut down, then:
+
+* Switching it on boots the device. If you hear three short beeps then the
+  battery is too low and the device won't boot. In this case, switch it back
+  off, and charge the battery for a while before trying again.
+
+* Switching it on while holding VolumeDown boots the device into Recovery Mode.
+
+If the system is running, then:
+
+* Switching it off puts the system to sleep.
+
+* Switching it on wakes the system up.
 
 The Back
 ~~~~~~~~
@@ -93,10 +111,6 @@ Try to keep the object you're using as perpendicular to the bottom as you can.
 You only need to press gently. If it feels like you're pressing against a hard
 surface then you've missed the button. You should feel a soft click. You should
 also hear a long, high-pitched beep.
-
-If you also hear three short beeps then the battery is too low, and you'll need
-to charge the battery for a while before you'll be able to successfully boot
-the device.
 
 The Removable Cover
 ```````````````````

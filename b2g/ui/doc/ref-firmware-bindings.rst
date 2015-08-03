@@ -2,10 +2,12 @@ Simultaneously pressing VolumeDown, Dot1, Dot2, Dot3, and Dot7:
   If the system is running then go to the Power Off screen. This is
   equivalent to a medium press of the Power button on an Android device.
 
+.. _VolumeDown+Dot4+Dot5+Dot6+Dot8:
+
 Simultaneously pressing VolumeDown, Dot4, Dot5, Dot6, and Dot8:
   If the system is running then reset the main processor and then boot the
   system. This is equivalent to a long press of the Power button on an
-  Android device.
+  Android device. You should hear four long beeps.
 
 Switching the power on:
 

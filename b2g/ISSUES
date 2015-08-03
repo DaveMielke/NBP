@@ -4,6 +4,10 @@ Verify:
   battery indicators
 
 Document
+  Dot8+Cursor doesn't just apply to input areas
+  braille enabled
+  braille firmness
+  reverse panning
   locale-based character table autodetection
   override files
   recent apps has two entries per app
