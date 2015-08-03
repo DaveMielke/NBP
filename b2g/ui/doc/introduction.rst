@@ -184,7 +184,7 @@ One Hand Mode. This provides an intuitive way for a user who has accidentally
 enabled this mode, and who may not know how to disable it, to easily revert the
 keyboard to normal operation.
 
-Another (legacy) way to enable One Hand Mode is to hold the Dot8 key while
+Another (legacy) way to enable One Hand Mode is to hold Dot8 while
 switching the power on.
 
 Typing

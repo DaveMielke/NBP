@@ -7,18 +7,18 @@ Emulating the Android Keys
 All Android devices have a number of special keys. There are two ways to
 emulate each of them:
 
-* With two hands, by pressing the Space key together with a related letter or
+* With two hands, by pressing Space together with a related letter or
   special symbol. While these may be easier to remember, they're also less
   convenient because both hands must be removed from the display.
 
-* With one hand, by pressing the Dot4 key together with one of the D-Pad keys.
+* With one hand, by pressing Dot4 together with one of the D-Pad keys.
 
 .. include:: tbl-keys-android.rst
 
 Emulating Screen Gestures
 -------------------------
 
-To tap (or click) the current screen element, press the Center key. Another
+To tap (or click) the current screen element, press Center. Another
 (legacy) way to do it is to press `The Enter Key`_.
 
 To hold (or long click) the current screen element, press Space+Center.
@@ -43,10 +43,10 @@ and/or has more than one line, then:
   as needed, such that all of the text is presented. When it reaches the start
   of the text, it moves to the start of the previous screen element.
 
-Repeatedly pressing the Forward key, therefore, reads through all of the text
+Repeatedly pressing Forward, therefore, reads through all of the text
 on the screen because it reads through all of the text associated with the
-current screen element before moving to the next one. Repeatedly pressing the
-Backward key, however, pans to the left through the text associated with the
+current screen element before moving to the next one. Repeatedly pressing
+Backward, however, pans to the left through the text associated with the
 current screen element, but, from then on, moves directly to the start of each
 successive preceding screen element.
 
@@ -56,9 +56,9 @@ Leaving the Current Screen Element
 The following methods may be used to force an immediate, direct move to the
 start of the next (or previous) screen element:
 
-* Press the Space key together with the Forward (or Backward) key.
+* Press Space together with Forward (or Backward).
 
-* Long press the Forward (or Backward) key (see `Long Press Mode`_).
+* Long press Forward (or Backward). See `Long Press Mode`_.
 
 One of these methods must also be used in order to leave an input area (see
 `Input Areas`_).
@@ -233,13 +233,13 @@ these steps:
 1) If necessary, use the Forward and Backward keys to pan to a place where the
    first character to be selected can be seen.
 
-2) Hold the Backward key while pressing the cursor routing key behind the 
+2) Hold Backward while pressing the cursor routing key behind the 
    character that's to start the selection.
 
 3) If necessary, use the Forward and Backward keys to pan to a place where the
    last character to be selected can be seen.
 
-4) Hold the Forward key while pressing the cursor routing key behind the 
+4) Hold Forward while pressing the cursor routing key behind the 
    character that's to end the selection.
 
 Steps 1 and 2 may be reperformed at any time in order to change the start of
