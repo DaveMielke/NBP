@@ -7,9 +7,13 @@ import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import android.util.Log;
+
 import android.net.Uri;
 
 public class SendLog extends Action {
+  private final static String LOG_TAG = SendLog.class.getName();
+
   private File makeLogFile () {
     boolean success = false;
 
@@ -30,6 +34,7 @@ public class SendLog extends Action {
               writer.write(log);
               writer.newLine();
             } catch (IOException exception) {
+              Log.w(LOG_TAG, "log file write error", exception);
             }
 
             return true;
@@ -43,6 +48,7 @@ public class SendLog extends Action {
         writer.close();
       }
     } catch (IOException exception) {
+      Log.w(LOG_TAG, "log file creation error", exception);
     }
 
     if (!success) return null;
