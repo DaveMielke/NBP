@@ -74,15 +74,8 @@ public abstract class KeyCode {
       case KeyCode.DOT_8:    return KeyMask.DOT_8;
       case KeyCode.SPACE:    return KeyMask.SPACE;
 
-      case KeyCode.FORWARD:
-        return ApplicationSettings.REVERSE_PANNING?
-               KeyMask.BACKWARD:
-               KeyMask.FORWARD;
-
-      case KeyCode.BACKWARD:
-        return ApplicationSettings.REVERSE_PANNING?
-               KeyMask.FORWARD:
-               KeyMask.BACKWARD;
+      case KeyCode.FORWARD:  return KeyMask.FORWARD;
+      case KeyCode.BACKWARD: return KeyMask.BACKWARD;
 
       case KeyEvent.KEYCODE_DPAD_CENTER: return KeyMask.DPAD_CENTER;
       case KeyEvent.KEYCODE_DPAD_LEFT:   return KeyMask.DPAD_LEFT;

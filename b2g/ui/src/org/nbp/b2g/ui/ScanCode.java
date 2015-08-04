@@ -83,15 +83,8 @@ public abstract class ScanCode {
       case ScanCode.DOT_8:    return KeyMask.DOT_8;
       case ScanCode.SPACE:    return KeyMask.SPACE;
 
-      case ScanCode.FORWARD:
-        return ApplicationSettings.REVERSE_PANNING?
-               KeyMask.BACKWARD:
-               KeyMask.FORWARD;
-
-      case ScanCode.BACKWARD:
-        return ApplicationSettings.REVERSE_PANNING?
-               KeyMask.FORWARD:
-               KeyMask.BACKWARD;
+      case ScanCode.FORWARD:  return KeyMask.FORWARD;
+      case ScanCode.BACKWARD: return KeyMask.BACKWARD;
 
       case ScanCode.DPAD_CENTER: return KeyMask.DPAD_CENTER;
     }

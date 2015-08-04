@@ -1,8 +1,16 @@
 package org.nbp.b2g.ui;
-import org.nbp.b2g.ui.actions.*;
+
+import org.nbp.b2g.ui.actions.InsertCharacter;
+import org.nbp.b2g.ui.actions.PanLeft;
+import org.nbp.b2g.ui.actions.PanRight;
+import org.nbp.b2g.ui.host.actions.MoveBackward;
+import org.nbp.b2g.ui.host.actions.MoveForward;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import java.util.Map;
+import java.util.HashMap;
 
 import android.util.Log;
 
@@ -28,13 +36,58 @@ public abstract class KeyEvents {
     return false;
   }
 
+  private static Action getAction (Class<? extends Action> type, Endpoint endpoint) {
+    if (type == null) return null;
+    return endpoint.getKeyBindings().getAction(type);
+  }
+
   public static boolean performAction (Class<? extends Action> type, Endpoint endpoint) {
-    if (type == null) return false;
-
-    Action action = endpoint.getKeyBindings().getAction(type);
+    Action action = getAction(type, endpoint);
     if (action == null) return false;
-
     return performAction(action);
+  }
+
+  private final static Map<Class<? extends Action>, Class<? extends Action>> reversePanningActionMap =
+    new HashMap<Class<? extends Action>, Class<? extends Action>>();
+
+  static {
+    reversePanningActionMap.put(PanLeft.class, PanRight.class);
+    reversePanningActionMap.put(PanRight.class, PanLeft.class);
+
+    reversePanningActionMap.put(MoveBackward.class, MoveForward.class);
+    reversePanningActionMap.put(MoveForward.class, MoveBackward.class);
+  }
+
+  private static Action getAction (int keys, boolean isLongPress) {
+    KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
+    Action action = null;
+
+    if (isLongPress && ApplicationSettings.LONG_PRESS) {
+      action = keyBindings.getAction(keys | KeyMask.LONG_PRESS);
+    }
+
+    if (action == null) {
+      action = keyBindings.getAction(keys);
+    }
+
+    if (action == null) {
+      if (keyBindings.isRootKeyBindings()) {
+        if (KeyMask.isDots(keys)) {
+          action = keyBindings.getAction(InsertCharacter.class);
+        }
+      }
+    }
+
+    if (action != null) {
+      if (ApplicationSettings.REVERSE_PANNING) {
+        if (((keys & KeyMask.FORWARD) != 0) != ((keys & KeyMask.BACKWARD) != 0)) {
+          Action reverse = keyBindings.getAction(reversePanningActionMap.get((Class <? extends Action>)action.getClass()));
+          if (reverse != null) action = reverse;
+        }
+      }
+    }
+
+    return action;
   }
 
   private static boolean performAction (boolean isLongPress) {
@@ -44,25 +97,8 @@ public abstract class KeyEvents {
     if (keys == 0) return true;
 
     try {
-      KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
-      Action action = null;
+      Action action = getAction(keys, isLongPress);
       boolean performed = false;
-
-      if (isLongPress && ApplicationSettings.LONG_PRESS) {
-        action = keyBindings.getAction(keys | KeyMask.LONG_PRESS);
-      }
-
-      if (action == null) {
-        action = keyBindings.getAction(keys);
-      }
-
-      if (action == null) {
-        if (keyBindings.isRootKeyBindings()) {
-          if (KeyMask.isDots(keys)) {
-            action = keyBindings.getAction(InsertCharacter.class);
-          }
-        }
-      }
 
       if (action != null) {
         if (action instanceof ModifierAction) wasModifier = true;

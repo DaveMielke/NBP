@@ -144,11 +144,20 @@ public class KeyBindings {
   }
 
   public Action getAction (Class<? extends Action> type) {
-    Action action;
-    if ((action = actionClassCache.get(type)) != null) return action;
+    if (type == null) return null;
 
-    if ((action = newAction(type)) != null) actionClassCache.put(type, action);
-    return action;
+    {
+      Action action = actionClassCache.get(type);
+      if (action != null) return action;
+    }
+
+    {
+      Action action = newAction(type);
+      if (action == null) return null;
+
+      actionClassCache.put(type, action);
+      return action;
+    }
   }
 
   private Class<? extends Action> getActionClass (String name, Object owner) {
