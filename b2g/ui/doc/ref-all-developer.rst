@@ -12,4 +12,5 @@
   "Forward+Dots23","|RestoreSettings|"
   "Forward+Dots37","|ResetSettings|"
   "Forward+Dots17","|ForceCrash|"
+  "Forward+Space+Dot2","|SendLog|"
 

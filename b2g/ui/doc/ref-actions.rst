@@ -77,6 +77,7 @@
 .. |ScrollBackward| replace:: force the screen to scroll backward (up or left)
 .. |ScrollForward| replace:: force the screen to scroll forward (down or right)
 .. |SelectAll| replace:: select all of the text
+.. |SendLog| replace:: send a copy of the host log to the developers
 .. |SetLeft| replace:: shift the braille display a specific amount to the right
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection

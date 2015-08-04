@@ -6,4 +6,8 @@
   <string-array name="recipients_crash">
     <item>@string/recipient_dm</item>
   </string-array>
+
+  <string-array name="recipients_log">
+    <item>@string/recipient_dm</item>
+  </string-array>
 </resources>

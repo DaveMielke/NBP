@@ -1,19 +1,18 @@
 package org.nbp.b2g.ui;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
-import java.io.InputStream;
-import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
 import android.util.Log;
 
-public class LogsReader {
-  private final static String LOG_TAG = LogsReader.class.getName();
+public abstract class LogProcessor {
+  private final static String LOG_TAG = LogProcessor.class.getName();
+
+  protected abstract boolean handleLog (String log);
 
   public enum Format {
     BRIEF,
@@ -118,28 +117,25 @@ public class LogsReader {
     return command;
   }
 
-  public Collection<String> read () {
+  public boolean processLogs () {
     ProcessBuilder pb = new ProcessBuilder(makeCommand());
 
     try {
       Process process = pb.start();
       BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-      List<String> logs = new ArrayList<String>();
-      String line;
-
-      while ((line = reader.readLine()) != null) {
-        logs.add(line);
+      while (true) {
+        String log = reader.readLine();
+        if (log == null) return true;
+        if (!handleLog(log)) break;
       }
-
-      return logs;
     } catch (IOException exception) {
       Log.w(LOG_TAG, "logs read error", exception);
     }
 
-    return null;
+    return false;
   }
 
-  public LogsReader () {
+  public LogProcessor () {
   }
 }
