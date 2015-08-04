@@ -2,6 +2,7 @@ package org.nbp.b2g.ui;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 
@@ -19,16 +20,16 @@ public class OutgoingMessage {
   private final Collection<String> primaryRecipients = new LinkedHashSet<String>();
   private final Collection<String> secondaryRecipients = new LinkedHashSet<String>();
   private final Collection<String> hiddenRecipients = new LinkedHashSet<String>();
-  private String subjectText = EMPTY_STRING;
-  private final StringBuilder bodyText = new StringBuilder();
+  private String subject = EMPTY_STRING;
+  private final List<String> body = new ArrayList<String>();
   private final Collection<Uri> attachments = new LinkedHashSet<Uri>();
 
   public void reset () {
     primaryRecipients.clear();
     secondaryRecipients.clear();
     hiddenRecipients.clear();
-    subjectText = EMPTY_STRING;
-    bodyText.setLength(0);
+    subject = EMPTY_STRING;
+    body.clear();
     attachments.clear();
   }
 
@@ -85,21 +86,49 @@ public class OutgoingMessage {
   }
 
   public String getSubject () {
-    return subjectText;
+    return subject;
   }
 
-  public void setSubject (String subject) {
-    if (subject == null) subject = EMPTY_STRING;
-    subjectText = subject;
+  public void setSubject (String text) {
+    if (text == null) text = EMPTY_STRING;
+    subject = text;
   }
 
-  public String getBody () {
-    return bodyText.toString();
+  public String formatBody () {
+    StringBuilder sb = new StringBuilder();
+    boolean wasParagraph = true;
+
+    for (String line : body) {
+      boolean isParagraph;
+
+      if (line.isEmpty()) {
+        isParagraph = false;
+      } else if (line.charAt(0) == ' ') {
+        isParagraph = false;
+      } else {
+        isParagraph = true;
+      }
+
+      sb.append((isParagraph && wasParagraph)? ' ': '\n');
+      sb.append(line);
+      wasParagraph = isParagraph;
+    }
+
+    if (sb.length() > 0) sb.append('\n');
+    return sb.toString();
   }
 
   public void addBodyLine (String line) {
-    if (bodyText.length() > 0) bodyText.append('\n');
-    bodyText.append(line);
+    body.add(line);
+  }
+
+  public void addBodyLine (int line) {
+    String string = ApplicationContext.getString(line);
+    if (string != null) addBodyLine(string);
+  }
+
+  public void addBodyLine () {
+    addBodyLine("");
   }
 
   public Uri[] getAttachments () {
@@ -156,14 +185,14 @@ public class OutgoingMessage {
       sender.putExtra(Intent.EXTRA_BCC, getHiddenRecipients());
     }
 
-    if (!subjectText.isEmpty()) {
+    if (!subject.isEmpty()) {
       sender.putExtra(Intent.EXTRA_SUBJECT, getSubject());
     } else {
       Log.w(LOG_TAG, "no subject");
     }
 
-    if (bodyText.length() > 0) {
-      sender.putExtra(Intent.EXTRA_TEXT, getBody());
+    if (!body.isEmpty()) {
+      sender.putExtra(Intent.EXTRA_TEXT, formatBody());
     } else {
       Log.w(LOG_TAG, "no body");
     }

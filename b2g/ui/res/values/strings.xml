@@ -117,4 +117,8 @@
 
   <string name="message_select_outgoing_email_app">Select outgoing email app ...</string>
   <string name="message_no_character_name">no character name</string>
+
+  <string name="email_to_the_user">To the user:</string>
+  <string name="email_sending_log">This email will send a copy of your Android system log to the B2G developers for their analysis.</string>
+  <string name="email_sensitive_data_warning">If you suspect that it may contain sensitive information that they should not see then DO NOT send it.</string>
 </resources>

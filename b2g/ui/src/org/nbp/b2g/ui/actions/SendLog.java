@@ -53,7 +53,6 @@ public class SendLog extends Action {
 
     if (!success) return null;
     file.setReadable(true, false);
-    directory.setReadable(true, false);
     return file;
   }
 
@@ -78,7 +77,10 @@ public class SendLog extends Action {
     }
 
     message.setSubject("Android log from user.");
-    message.addBodyLine("The log is attached.");
+    message.addBodyLine(R.string.email_to_the_user);
+    message.addBodyLine();
+    message.addBodyLine(R.string.email_sending_log);
+    message.addBodyLine(R.string.email_sensitive_data_warning);
 
     return message.send();
   }
