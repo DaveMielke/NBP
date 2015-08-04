@@ -562,21 +562,6 @@ within a popup (see `Popups`_) that looks something like this::
   Time: 2015-07-22 00:34:02 UTC
   Revision: d3d8210
 
-Developer Mode
-~~~~~~~~~~~~~~
-
-A very intentionally difficult-to-press key combination has been defined for
-enabling and disabling Developer Mode::
-
-  Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
-
-A long press enables it, and a short press disables it. Note that this means
-that this mode can't be enabled unless `Long Press Mode`_ is enabled (another
-accident prevention scheme).
-
-See `Developer Operations`_ for a list of additional key combinations that this
-mode defines.
-
 Speech
 ~~~~~~
 
@@ -661,4 +646,19 @@ Developer Settings
 If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
+
+Developer Mode
+~~~~~~~~~~~~~~
+
+A very intentionally difficult-to-press key combination has been defined for
+enabling and disabling Developer Mode::
+
+  Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
+
+A long press enables it, and a short press disables it. Note that this means
+that this mode can't be enabled unless `Long Press Mode`_ is enabled (another
+accident prevention scheme).
+
+See `Developer Operations`_ for a list of additional key combinations that this
+mode defines.
 
