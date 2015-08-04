@@ -63,6 +63,21 @@ start of the next (or previous) screen element:
 One of these methods must also be used in order to leave an input area (see
 `Input Areas`_).
 
+Reverse Panning Mode
+~~~~~~~~~~~~~~~~~~~~
+
+Reverse Panning Mode is designed for those who prefer to read with their right
+hands while navigating with their left hands. When enabled, the Forward and
+Backward keys are reversed insofar as navigation is concerned:
+
+* Backward pans to the right, wraps to the start of the next line, moves to the
+  next screen element, etc.
+
+* Forward pans to the left, wraps to the end of the previous line, moves to the
+  previous screen element, etc.
+  
+This mode is disabled by default.
+
 Navigating with the Directional Keys
 ------------------------------------
 
