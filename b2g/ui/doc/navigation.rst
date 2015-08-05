@@ -78,8 +78,8 @@ Backward keys are reversed insofar as navigation is concerned:
   
 This mode is disabled by default.
 
-Explicitly Positioning the Braille Display
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Explicit Panning
+~~~~~~~~~~~~~~~~
 
 The Forward and Backward keys pan right and left by the full length of the
 braille display. This can make it difficult to read an indented block of
