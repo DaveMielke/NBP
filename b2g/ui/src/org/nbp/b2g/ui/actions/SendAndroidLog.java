@@ -68,10 +68,10 @@ public class SendAndroidLog extends Action {
     }
 
     message.addAttachment(file);
-    message.setSubject("Android log from user.");
+    message.setSubject("Android log sent by user");
     message.addBodyLine(R.string.email_to_the_user);
     message.addBodyLine();
-    message.addBodyLine(R.string.email_sending_log);
+    message.addBodyLine(R.string.email_sending_android_log);
     message.addBodyLine(R.string.email_sensitive_data_warning);
 
     return message.send();

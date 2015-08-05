@@ -31,7 +31,7 @@ public abstract class Crash {
     Log.w(LOG_TAG, sb.toString(), problem);
   }
 
-  private static File makeBacktraceFile (Throwable problem) {
+  private static File makeBacktraceFile (Throwable problem, String component, String data) {
     File directory = ApplicationContext.getObjectDirectory(Crash.class);
     if (directory == null) return null;
 
@@ -43,34 +43,47 @@ public abstract class Crash {
 
       try {
         StringBuilder sb = new StringBuilder();
-        Throwable cause = problem;
+        sb.append(component);
 
-        while (cause != null) {
-          sb.setLength(0);
-          if (cause != problem) sb.append("caused by: ");
-          sb.append(cause.getClass().getName());
+        if (data != null) {
+          sb.append(": ");
+          sb.append(data);
+        }
 
-          {
-            String message = cause.getMessage();
+        writer.write(sb.toString());
+        writer.newLine();
+        writer.newLine();
 
-            if (message != null) {
-              sb.append(": ");
-              sb.append(message);
-            }
-          }
+        {
+          Throwable cause = problem;
 
-          writer.write(sb.toString());
-          writer.newLine();
-
-          for (StackTraceElement element : cause.getStackTrace()) {
+          while (cause != null) {
             sb.setLength(0);
-            sb.append("\tat ");
-            sb.append(element.toString());
+            if (cause != problem) sb.append("caused by: ");
+            sb.append(cause.getClass().getName());
+
+            {
+              String message = cause.getMessage();
+
+              if (message != null) {
+                sb.append(": ");
+                sb.append(message);
+              }
+            }
+
             writer.write(sb.toString());
             writer.newLine();
-          }
 
-          cause = cause.getCause();
+            for (StackTraceElement element : cause.getStackTrace()) {
+              sb.setLength(0);
+              sb.append("\tat ");
+              sb.append(element.toString());
+              writer.write(sb.toString());
+              writer.newLine();
+            }
+
+            cause = cause.getCause();
+          }
         }
 
         return file;
@@ -94,28 +107,15 @@ public abstract class Crash {
         report.addPrimaryRecipient(recipient);
       }
 
-      {
-        StringBuilder sb = new StringBuilder();
-        sb.append(component);
-        sb.append(" crash: ");
-        sb.append(Crash.class.getPackage().getName());
-        report.setSubject(sb.toString());
-      }
+      report.setSubject("Java backtrace sent by user");
+
+      report.addBodyLine(R.string.email_to_the_user);
+      report.addBodyLine();
+      report.addBodyLine(R.string.email_sending_java_backtrace);
+      report.addBodyLine(R.string.email_no_sensitive_data);
 
       {
-        StringBuilder sb = new StringBuilder();
-        sb.append(component);
-
-        if (data != null) {
-          sb.append(": ");
-          sb.append(data);
-        }
-
-        report.addBodyLine(sb.toString());
-      }
-
-      {
-        File file = makeBacktraceFile(problem);
+        File file = makeBacktraceFile(problem, component, data);
 
         if (file != null) {
           file.setReadable(true, false);
