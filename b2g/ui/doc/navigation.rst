@@ -78,6 +78,17 @@ Backward keys are reversed insofar as navigation is concerned:
   
 This mode is disabled by default.
 
+Explicitly Positioning the Braille Display
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Forward and Backward keys pan right and left by the full length of the
+braille display. This can make it difficult to read an indented block of
+related text (a column, a long word, a timestamp, etc).
+
+The braille display can be explicitly panned by holding Dot8 while pressing a
+cursor routing key. This positions the braille display such that the rendered
+portion of the current line starts with that character.
+
 Navigating with the Directional Keys
 ------------------------------------
 
@@ -133,11 +144,6 @@ The character where the cursor is is highlighted via |the cursor indicator|.
 
 Pressing a cursor routing key brings the cursor to that character. If 
 text has been selected then the selection is cleared.
-
-Pressing a cursor routing key together with the Dot8 key repositions the
-braille display such that the rendered portion of the current line starts with
-that character. This is a good way, for example, to read an indented block of
-related text (such as a column).
 
 An additional blank character is rendered at the end of each line within an
 input area. This character represents the delimiter between a line and the one
