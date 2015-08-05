@@ -54,6 +54,8 @@
 
   <string name="DeveloperEnabled_control_label">Developer</string>
   <string name="LogActions_control_label">Log Actions</string>
+  <string name="LogBraille_control_label">Log Braille</string>
+  <string name="LogGestures_control_label">Log Gestures</string>
   <string name="LogKeys_control_label">Log Keys</string>
   <string name="LogNavigation_control_label">Log Navigation</string>
   <string name="LogUpdates_control_label">Log Updates</string>

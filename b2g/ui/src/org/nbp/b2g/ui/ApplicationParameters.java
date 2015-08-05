@@ -22,10 +22,12 @@ public abstract class ApplicationParameters {
   public final static float DEFAULT_SPEECH_PITCH = 1.0f;
 
   public final static boolean DEFAULT_DEVELOPER_ENABLED = false;
+  public final static boolean DEFAULT_LOG_UPDATES = false;
   public final static boolean DEFAULT_LOG_KEYS = false;
   public final static boolean DEFAULT_LOG_ACTIONS = false;
   public final static boolean DEFAULT_LOG_NAVIGATION = false;
-  public final static boolean DEFAULT_LOG_UPDATES = false;
+  public final static boolean DEFAULT_LOG_GESTURES = false;
+  public final static boolean DEFAULT_LOG_BRAILLE = false;
 
   public final static boolean ENABLE_SPEECH_DEVICE = true;
   public final static boolean ENABLE_KEYBOARD_MONITOR = true;

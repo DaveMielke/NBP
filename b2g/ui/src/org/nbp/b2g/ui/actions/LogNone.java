@@ -3,10 +3,12 @@ import org.nbp.b2g.ui.*;
 
 public class LogNone extends Action {
   private final static BooleanControl[] controls = new BooleanControl[] {
+    Controls.getLogUpdatesControl(),
     Controls.getLogKeysControl(),
     Controls.getLogActionsControl(),
     Controls.getLogNavigationControl(),
-    Controls.getLogUpdatesControl()
+    Controls.getLogGesturesControl(),
+    Controls.getLogBrailleControl()
   };
 
   private final static ControlProcessor disableControl = new ControlProcessor() {

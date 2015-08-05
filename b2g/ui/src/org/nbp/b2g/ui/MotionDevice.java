@@ -113,7 +113,7 @@ public class MotionDevice implements GestureInjector {
       edgeFlags, InputDevice.SOURCE_TOUCHSCREEN, eventFlags
     );
 
-    if (ApplicationSettings.LOG_ACTIONS) {
+    if (ApplicationSettings.LOG_GESTURES) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("motion event:");

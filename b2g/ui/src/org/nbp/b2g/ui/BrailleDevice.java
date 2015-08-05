@@ -34,7 +34,7 @@ public class BrailleDevice {
   private boolean writePending = false;
 
   private void logCells (byte[] cells, String reason) {
-    if (ApplicationSettings.LOG_UPDATES) {
+    if (ApplicationSettings.LOG_BRAILLE) {
       Log.v(LOG_TAG, String.format(
         "braille cells: %s: %s",
         reason, Braille.toString(cells)

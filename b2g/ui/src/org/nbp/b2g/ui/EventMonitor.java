@@ -30,7 +30,7 @@ public abstract class EventMonitor extends Thread {
         sb.append(')');
       }
 
-      Log.v(LOG_TAG, sb.toString());
+      Log.d(LOG_TAG, sb.toString());
     }
 
     if (!handleKeyEvent(code, press)) {

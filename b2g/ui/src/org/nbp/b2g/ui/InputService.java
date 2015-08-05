@@ -150,7 +150,7 @@ public class InputService extends InputMethodService {
 
   public boolean insertText (char character) {
     if (ApplicationSettings.LOG_ACTIONS) {
-      Log.d(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
+      Log.v(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
     }
 
     if (insertText(Character.toString(character))) return true;
@@ -207,7 +207,7 @@ public class InputService extends InputMethodService {
       sb.append(" received: ");
       appendKeyCode(sb, code);
 
-      Log.v(LOG_TAG, sb.toString());
+      Log.d(LOG_TAG, sb.toString());
     }
   }
 

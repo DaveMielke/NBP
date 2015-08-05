@@ -111,7 +111,7 @@ public abstract class ScreenUtilities {
   public static void logNavigation (AccessibilityNodeInfo node, String reason) {
     if (ApplicationSettings.LOG_NAVIGATION) {
       if (node != null) reason += ": " + toString(node);
-      Log.v(LOG_TAG, reason);
+      Log.d(LOG_TAG, reason);
     }
   }
 

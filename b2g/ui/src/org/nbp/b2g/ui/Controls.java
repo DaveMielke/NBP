@@ -23,10 +23,12 @@ public abstract class Controls {
   private final static IntegerControl speechPitchControl = new SpeechPitchControl();
 
   private final static BooleanControl developerEnabledControl = new DeveloperEnabledControl();
+  private final static BooleanControl logUpdatesControl = new LogUpdatesControl();
   private final static BooleanControl logKeysControl = new LogKeysControl();
   private final static BooleanControl logActionsControl = new LogActionsControl();
   private final static BooleanControl logNavigationControl = new LogNavigationControl();
-  private final static BooleanControl logUpdatesControl = new LogUpdatesControl();
+  private final static BooleanControl logGesturesControl = new LogGesturesControl();
+  private final static BooleanControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
     longPressControl,
@@ -48,10 +50,12 @@ public abstract class Controls {
     speechPitchControl,
 
     developerEnabledControl,
+    logUpdatesControl,
     logKeysControl,
     logActionsControl,
     logNavigationControl,
-    logUpdatesControl
+    logGesturesControl,
+    logBrailleControl
   };
 
   public static BooleanControl getLongPressControl () {
@@ -114,6 +118,10 @@ public abstract class Controls {
     return developerEnabledControl;
   }
 
+  public static BooleanControl getLogUpdatesControl () {
+    return logUpdatesControl;
+  }
+
   public static BooleanControl getLogKeysControl () {
     return logKeysControl;
   }
@@ -126,8 +134,12 @@ public abstract class Controls {
     return logNavigationControl;
   }
 
-  public static BooleanControl getLogUpdatesControl () {
-    return logUpdatesControl;
+  public static BooleanControl getLogGesturesControl () {
+    return logGesturesControl;
+  }
+
+  public static BooleanControl getLogBrailleControl () {
+    return logBrailleControl;
   }
 
   public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {
