@@ -184,8 +184,8 @@ public abstract class KeyMask {
     map("Cursor", CURSOR);
     map("LongPress", LONG_PRESS);
 
-    map("Wake", WAKE);
-    map("Sleep", SLEEP);
+    map("PowerOn", WAKE);
+    map("PowerOff", SLEEP);
   }
 
   private KeyMask () {
