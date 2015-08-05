@@ -1,10 +1,6 @@
 package org.nbp.b2g.ui;
 
-import java.io.File;
-
 import android.util.Log;
-
-import android.content.Context;
 
 public abstract class Action {
   private final static String LOG_TAG = Action.class.getName();
@@ -49,18 +45,6 @@ public abstract class Action {
 
   protected static boolean isChord () {
     return (getNavigationKeys() & KeyMask.SPACE) != 0;
-  }
-
-  protected final File getActionDirectory () {
-    Context context = ApplicationContext.getContext();
-    if (context == null) return null;
-    return context.getDir(getClass().getSimpleName(), Context.MODE_PRIVATE);
-  }
-
-  protected final File getActionFile (String name) {
-    File directory = getActionDirectory();
-    if (directory == null) return null;
-    return new File(directory, name);
   }
 
   protected Action (Endpoint endpoint, boolean isForDevelopers) {

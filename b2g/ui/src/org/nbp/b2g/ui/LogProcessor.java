@@ -136,6 +136,31 @@ public abstract class LogProcessor {
     return false;
   }
 
+  public static boolean clear () {
+    List<String> command = new ArrayList<String>();
+    command.add("logcat");
+    command.add("-c");
+
+    ProcessBuilder pb = new ProcessBuilder(command);
+    Process process;
+
+    try {
+      process = pb.start();
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "log clear start error", exception);
+      return false;
+    }
+
+    try {
+      int status = process.waitFor();
+      if (status == 0) return true;
+    } catch (InterruptedException exception) {
+      Log.w(LOG_TAG, "log clear wait interrupted");
+    }
+
+    return false;
+  }
+
   public LogProcessor () {
   }
 }

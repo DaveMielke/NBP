@@ -109,7 +109,10 @@ public class OutgoingMessage {
         isParagraph = true;
       }
 
-      sb.append((isParagraph && wasParagraph)? ' ': '\n');
+      if (sb.length() > 0) {
+        sb.append((isParagraph && wasParagraph)? ' ': '\n');
+      }
+
       sb.append(line);
       wasParagraph = isParagraph;
     }

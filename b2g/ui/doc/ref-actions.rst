@@ -11,6 +11,7 @@
 .. |BrailleInputOff| replace:: disable Unicode braille input
 .. |BrailleInputOn| replace:: enable Unicode braille input
 .. |BringCursor| replace:: bring the cursor to a specific character
+.. |ClearAndroidLog| replace:: clear the Android log
 .. |Click| replace:: tap (click) the current screen element
 .. |Clock| replace:: go to the B2G digital clock
 .. |ControlModifier| replace:: control modifier (applies to the next typed character)
@@ -77,7 +78,7 @@
 .. |ScrollBackward| replace:: force the screen to scroll backward (up or left)
 .. |ScrollForward| replace:: force the screen to scroll forward (down or right)
 .. |SelectAll| replace:: select all of the text
-.. |SendLog| replace:: send a copy of the host log to the developers
+.. |SendAndroidLog| replace:: send a copy of the Android log to the B2G developers
 .. |SetLeft| replace:: shift the braille display a specific amount to the right
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection

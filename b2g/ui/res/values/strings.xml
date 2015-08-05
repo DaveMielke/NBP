@@ -58,6 +58,7 @@
   <string name="LogNavigation_control_label">Log Navigation</string>
   <string name="LogUpdates_control_label">Log Updates</string>
 
+  <string name="ClearAndroidLog_action_confirmation">Android log cleared</string>
   <string name="CopyToClipboard_action_confirmation">Copied to Clipboard</string>
   <string name="CutToClipboard_action_confirmation">Cut to Clipboard</string>
   <string name="LogNone_action_confirmation">Logs Off</string>

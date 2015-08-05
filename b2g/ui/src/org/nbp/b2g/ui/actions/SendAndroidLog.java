@@ -11,13 +11,13 @@ import android.util.Log;
 
 import android.net.Uri;
 
-public class SendLog extends Action {
-  private final static String LOG_TAG = SendLog.class.getName();
+public class SendAndroidLog extends Action {
+  private final static String LOG_TAG = SendAndroidLog.class.getName();
 
   private File makeLogFile () {
     boolean success = false;
 
-    File directory = getActionDirectory();
+    File directory = ApplicationContext.getObjectDirectory(this);
     if (directory == null) return null;
 
     File file = new File(directory, "Android.log");
@@ -92,7 +92,7 @@ public class SendLog extends Action {
     return sendLogFile(file);
   }
 
-  public SendLog (Endpoint endpoint) {
+  public SendAndroidLog (Endpoint endpoint) {
     super(endpoint, true);
   }
 }

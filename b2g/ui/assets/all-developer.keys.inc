@@ -13,5 +13,7 @@ bind Forward+Dots23 RestoreSettings
 bind Forward+Dots37 ResetSettings
 
 bind Forward+Dots17 ForceCrash
-bind Forward+Space+Dot2 SendLog
+
+bind Forward+Space+Dot1 ClearAndroidLog
+bind Forward+Space+Dot2 SendAndroidLog
 

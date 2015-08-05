@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import java.io.File;
+
 import android.util.Log;
 
 import android.util.TypedValue;
@@ -28,11 +30,11 @@ import android.accessibilityservice.AccessibilityService;
 public abstract class ApplicationContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
 
-  private final static Object LOCK = new Object();
+  private final static Object CONTEXT_LOCK = new Object();
   private static Context applicationContext = null;
 
   public static boolean setContext (Context context) {
-    synchronized (LOCK) {
+    synchronized (CONTEXT_LOCK) {
       if (applicationContext != null) return false;
       applicationContext = context.getApplicationContext();
     }
@@ -47,11 +49,17 @@ public abstract class ApplicationContext {
   }
 
   public static Context getContext () {
-    synchronized (LOCK) {
+    synchronized (CONTEXT_LOCK) {
       Context context = applicationContext;
       if (context == null) Log.w(LOG_TAG, "no application context");
       return context;
     }
+  }
+
+  public static File getObjectDirectory (Object object) {
+    Context context = getContext();
+    if (context == null) return null;
+    return context.getDir(object.getClass().getSimpleName(), Context.MODE_PRIVATE);
   }
 
   public static String getString (int resource) {
