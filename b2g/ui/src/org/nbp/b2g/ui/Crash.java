@@ -1,9 +1,7 @@
 package org.nbp.b2g.ui;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.BufferedWriter;
+import java.io.Writer;
 import java.io.IOException;
 
 import android.util.Log;
@@ -31,19 +29,10 @@ public abstract class Crash {
     Log.w(LOG_TAG, sb.toString(), problem);
   }
 
-  private static File makeBacktraceFile (Throwable problem, String component, String data) {
-    boolean success = false;
-
-    File directory = ApplicationContext.getObjectDirectory(Crash.class);
-    if (directory == null) return null;
-
-    File file = new File(directory, "Java.log");
-    if (file == null) return null;
-
-    try {
-      BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-
-      try {
+  private static File makeBacktraceFile (final Throwable problem, final String component, final String data) {
+    FileMaker fileMaker = new AttachmentMaker() {
+      @Override
+      protected boolean writeContent (Writer writer) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(component);
 
@@ -53,8 +42,8 @@ public abstract class Crash {
         }
 
         writer.write(sb.toString());
-        writer.newLine();
-        writer.newLine();
+        writer.write('\n');
+        writer.write('\n');
 
         {
           Throwable cause = problem;
@@ -74,32 +63,25 @@ public abstract class Crash {
             }
 
             writer.write(sb.toString());
-            writer.newLine();
+            writer.write('\n');
 
             for (StackTraceElement element : cause.getStackTrace()) {
               sb.setLength(0);
               sb.append("\tat ");
               sb.append(element.toString());
               writer.write(sb.toString());
-              writer.newLine();
+              writer.write('\n');
             }
 
             cause = cause.getCause();
           }
         }
 
-        success = true;
-      } finally {
-        writer.close();
+        return true;
       }
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, "backtrace file creation error", exception);
-      success = false;
-    }
+    };
 
-    if (!success) return null;
-    file.setReadable(true, false);
-    return file;
+    return fileMaker.makeFile("Java.log", Crash.class);
   }
 
   private static void reportCrash (Throwable problem, String component, String data) {
