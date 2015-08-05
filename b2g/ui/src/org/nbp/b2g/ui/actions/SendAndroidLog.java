@@ -9,8 +9,6 @@ import java.io.IOException;
 
 import android.util.Log;
 
-import android.net.Uri;
-
 public class SendAndroidLog extends Action {
   private final static String LOG_TAG = SendAndroidLog.class.getName();
 
@@ -69,13 +67,7 @@ public class SendAndroidLog extends Action {
       }
     }
 
-    {
-      Uri.Builder ub = new Uri.Builder();
-      ub.scheme("file");
-      ub.path(file.toString());
-      message.addAttachment(ub.build());
-    }
-
+    message.addAttachment(file);
     message.setSubject("Android log from user.");
     message.addBodyLine(R.string.email_to_the_user);
     message.addBodyLine();

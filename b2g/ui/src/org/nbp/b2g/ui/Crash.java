@@ -1,5 +1,11 @@
 package org.nbp.b2g.ui;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import android.util.Log;
 
 public abstract class Crash {
@@ -25,6 +31,59 @@ public abstract class Crash {
     Log.w(LOG_TAG, sb.toString(), problem);
   }
 
+  private static File makeBacktraceFile (Throwable problem) {
+    File directory = ApplicationContext.getObjectDirectory(Crash.class);
+    if (directory == null) return null;
+
+    File file = new File(directory, "Java.log");
+    if (file == null) return null;
+
+    try {
+      BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+
+      try {
+        StringBuilder sb = new StringBuilder();
+        Throwable cause = problem;
+
+        while (cause != null) {
+          sb.setLength(0);
+          if (cause != problem) sb.append("caused by: ");
+          sb.append(cause.getClass().getName());
+
+          {
+            String message = cause.getMessage();
+
+            if (message != null) {
+              sb.append(": ");
+              sb.append(message);
+            }
+          }
+
+          writer.write(sb.toString());
+          writer.newLine();
+
+          for (StackTraceElement element : cause.getStackTrace()) {
+            sb.setLength(0);
+            sb.append("\tat ");
+            sb.append(element.toString());
+            writer.write(sb.toString());
+            writer.newLine();
+          }
+
+          cause = cause.getCause();
+        }
+
+        return file;
+      } finally {
+        writer.close();
+      }
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "backtrace file creation error", exception);
+    }
+
+    return null;
+  }
+
   private static void reportCrash (Throwable problem, String component, String data) {
     String[] recipients = ApplicationContext.getStringArray(R.array.recipients_crash);
 
@@ -45,39 +104,22 @@ public abstract class Crash {
 
       {
         StringBuilder sb = new StringBuilder();
-        Throwable cause = problem;
-
         sb.append(component);
+
         if (data != null) {
           sb.append(": ");
           sb.append(data);
         }
+
         report.addBodyLine(sb.toString());
+      }
 
-        while (cause != null) {
-          sb.setLength(0);
-          if (cause != problem) sb.append("caused by: ");
-          sb.append(cause.getClass().getName());
+      {
+        File file = makeBacktraceFile(problem);
 
-          {
-            String message = cause.getMessage();
-
-            if (message != null) {
-              sb.append(": ");
-              sb.append(message);
-            }
-          }
-
-          report.addBodyLine(sb.toString());
-
-          for (StackTraceElement element : cause.getStackTrace()) {
-            sb.setLength(0);
-            sb.append("\tat ");
-            sb.append(element.toString());
-            report.addBodyLine(sb.toString());
-          }
-
-          cause = cause.getCause();
+        if (file != null) {
+          file.setReadable(true, false);
+          report.addAttachment(file);
         }
       }
 

@@ -56,10 +56,14 @@ public abstract class ApplicationContext {
     }
   }
 
-  public static File getObjectDirectory (Object object) {
+  public static File getObjectDirectory (Class type) {
     Context context = getContext();
     if (context == null) return null;
-    return context.getDir(object.getClass().getSimpleName(), Context.MODE_PRIVATE);
+    return context.getDir(type.getSimpleName(), Context.MODE_PRIVATE);
+  }
+
+  public static File getObjectDirectory (Object object) {
+    return getObjectDirectory(object.getClass());
   }
 
   public static String getString (int resource) {
