@@ -28,30 +28,27 @@ public abstract class FileMaker {
 
       if (directory != null) {
         File file = new File(directory, name);
+        file.delete();
 
-        if (file != null) {
-          file.delete();
+        try {
+          boolean written = false;
+          BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
 
           try {
-            boolean written = false;
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-
-            try {
-              if (writeContent(writer)) written = true;
-            } finally {
-              writer.close();
-            }
-
-            if (written) {
-              if (setAttributes(file)) {
-                return file;
-              }
-            }
-
-            file.delete();
-          } catch (IOException exception) {
-            Log.w(LOG_TAG, "file make error", exception);
+            if (writeContent(writer)) written = true;
+          } finally {
+            writer.close();
           }
+
+          if (written) {
+            if (setAttributes(file)) {
+              return file;
+            }
+          }
+
+          file.delete();
+        } catch (IOException exception) {
+          Log.w(LOG_TAG, "file make error", exception);
         }
       }
     }
