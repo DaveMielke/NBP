@@ -45,6 +45,8 @@ public abstract class FileMaker {
                 return file;
               }
             }
+
+            file.delete();
           } catch (IOException exception) {
             Log.w(LOG_TAG, "file make error", exception);
           }
