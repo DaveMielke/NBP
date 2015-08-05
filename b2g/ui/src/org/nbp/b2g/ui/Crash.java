@@ -34,7 +34,9 @@ public abstract class Crash {
       @Override
       protected boolean writeContent (Writer writer) throws IOException {
         StringBuilder sb = new StringBuilder();
+
         sb.append(component);
+        sb.append(" that crashed");
 
         if (data != null) {
           sb.append(": ");
