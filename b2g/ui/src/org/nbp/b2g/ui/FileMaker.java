@@ -30,6 +30,8 @@ public abstract class FileMaker {
         File file = new File(directory, name);
 
         if (file != null) {
+          file.delete();
+
           try {
             boolean written = false;
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
