@@ -32,6 +32,8 @@ public abstract class Crash {
   }
 
   private static File makeBacktraceFile (Throwable problem, String component, String data) {
+    boolean success = false;
+
     File directory = ApplicationContext.getObjectDirectory(Crash.class);
     if (directory == null) return null;
 
@@ -86,15 +88,18 @@ public abstract class Crash {
           }
         }
 
-        return file;
+        success = true;
       } finally {
         writer.close();
       }
     } catch (IOException exception) {
       Log.w(LOG_TAG, "backtrace file creation error", exception);
+      success = false;
     }
 
-    return null;
+    if (!success) return null;
+    file.setReadable(true, false);
+    return file;
   }
 
   private static void reportCrash (Throwable problem, String component, String data) {
@@ -116,11 +121,7 @@ public abstract class Crash {
 
       {
         File file = makeBacktraceFile(problem, component, data);
-
-        if (file != null) {
-          file.setReadable(true, false);
-          report.addAttachment(file);
-        }
+        if (file != null) report.addAttachment(file);
       }
 
       report.send();

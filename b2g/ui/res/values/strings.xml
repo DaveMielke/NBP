@@ -120,8 +120,8 @@
   <string name="message_no_character_name">no character name</string>
 
   <string name="email_to_the_user">To the user:</string>
+  <string name="email_no_sensitive_data">It is safe to send because it does not contain any sensitive data.</string>
+  <string name="email_sensitive_data_warning">If you suspect that it may contain sensitive information that they should not see then DO NOT send it.</string>
   <string name="email_sending_java_backtrace">This email will send the Java backtrace of a User Interface crash to the B2G developers for their analysis.</string>
   <string name="email_sending_android_log">This email will send a copy of your Android system log to the B2G developers for their analysis.</string>
-  <string name="email_sensitive_data_warning">If you suspect that it may contain sensitive information that they should not see then DO NOT send it.</string>
-  <string name="email_no_sensitive_data">It is safe to send because it does not contain any sensitive data.</string>
 </resources>

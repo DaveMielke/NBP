@@ -33,6 +33,7 @@ public class SendAndroidLog extends Action {
               writer.newLine();
             } catch (IOException exception) {
               Log.w(LOG_TAG, "log file write error", exception);
+              return false;
             }
 
             return true;
@@ -47,6 +48,7 @@ public class SendAndroidLog extends Action {
       }
     } catch (IOException exception) {
       Log.w(LOG_TAG, "log file creation error", exception);
+      success = false;
     }
 
     if (!success) return null;
