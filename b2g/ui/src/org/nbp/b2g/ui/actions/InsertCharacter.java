@@ -20,7 +20,6 @@ public class InsertCharacter extends Action {
         } else if (character == 0X3F) {
           character |= 0X40;
         } else {
-          ApplicationUtilities.beep();
           return false;
         }
       }
