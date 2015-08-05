@@ -1,3 +1,6 @@
+include letters-latin.chars.inc
+include numbers-nemeth.chars.inc
+
 char space 0
 char ! 2346
 char " 5
@@ -15,76 +18,12 @@ char - 36
 char . 46
 char / 34
 
-char 0 356
-char 1 2
-char 2 23
-char 3 25
-char 4 256
-char 5 26
-char 6 235
-char 7 2356
-char 8 236
-char 9 35
 char : 156
 char ; 56
 char < 126
 char = 123456
 char > 345
 char ? 1456
-
-char a 1
-char b 12
-char c 14
-char d 145
-char e 15
-char f 124
-char g 1245
-char h 125
-char i 24
-char j 245
-char k 13
-char l 123
-char m 134
-char n 1345
-char o 135
-char p 1234
-char q 12345
-char r 1235
-char s 234
-char t 2345
-char u 136
-char v 1236
-char w 2456
-char x 1346
-char y 13456
-char z 1356
-
-char A 17
-char B 127
-char C 147
-char D 1457
-char E 157
-char F 1247
-char G 12457
-char H 1257
-char I 247
-char J 2457
-char K 137
-char L 1237
-char M 1347
-char N 13457
-char O 1357
-char P 12347
-char Q 123457
-char R 12357
-char S 2347
-char T 23457
-char U 1367
-char V 12367
-char W 24567
-char X 13467
-char Y 134567
-char Z 13567
 
 char ` 4
 char { 246
