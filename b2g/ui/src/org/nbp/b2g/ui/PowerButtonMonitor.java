@@ -19,7 +19,7 @@ public class PowerButtonMonitor extends EventMonitor {
     Keyboard.injectKey(code, press);
     Controls.getOneHandControl().previousValue();
 
-    int keyMask = wasAwake? KeyMask.POWER_OFF: KeyMask.POWER_ON;
+    int keyMask = wasAwake? KeyMask.SLEEP: KeyMask.WAKE;
     KeyEvents.handleNavigationKeyEvent(keyMask, press);
 
     return true;

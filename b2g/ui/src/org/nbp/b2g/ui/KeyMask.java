@@ -26,8 +26,8 @@ public abstract class KeyMask {
   public final static int DPAD_DOWN   = 0X008000;
   public final static int VOLUME_DOWN = 0X010000;
   public final static int VOLUME_UP   = 0X020000;
-  public final static int POWER_ON    = 0X040000;
-  public final static int POWER_OFF   = 0X080000;
+  public final static int WAKE        = 0X040000;
+  public final static int SLEEP       = 0X080000;
   public final static int CURSOR      = 0X100000;
   public final static int LONG_PRESS  = 0X200000;
 
@@ -184,8 +184,8 @@ public abstract class KeyMask {
     map("Cursor", CURSOR);
     map("LongPress", LONG_PRESS);
 
-    map("PowerOn", POWER_ON);
-    map("PowerOff", POWER_OFF);
+    map("Wake", WAKE);
+    map("Sleep", SLEEP);
   }
 
   private KeyMask () {
