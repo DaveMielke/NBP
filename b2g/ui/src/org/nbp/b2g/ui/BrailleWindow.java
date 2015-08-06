@@ -1,54 +1,37 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
 import android.content.Context;
-import android.view.WindowManager;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.graphics.PixelFormat;
+import android.widget.TextView;
 
-public abstract class BrailleWindow {
-  private static ViewGroup window = null;
+public class BrailleWindow extends SystemWindow {
+  private final static String LOG_TAG = BrailleWindow.class.getName();
 
-  private final static WindowManager.LayoutParams parameters = new WindowManager.LayoutParams(
-    WindowManager.LayoutParams.WRAP_CONTENT,
-    WindowManager.LayoutParams.WRAP_CONTENT,
-    WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-    PixelFormat.TRANSLUCENT
-  );
+  public final TextView textView;
 
-  public static boolean start () {
-    synchronized (parameters) {
-      if (window == null) {
-        Context context = ApplicationContext.getContext();
-        if (context == null) return false;
-
-        window = new LinearLayout(context);
-        window.setBackgroundColor(0X88FF0000);
-      }
-    }
-
-    WindowManager wm = ApplicationContext.getWindowManager();
-    if (wm == null) return false;
-
-    synchronized (wm) {
-      wm.addView(window, parameters);
-    }
-
-    return true;
+  public void log () {
+    StringBuilder sb = new StringBuilder();
+    sb.append("braille window:");
+    sb.append(" Vis:");
+    sb.append(textView.getVisibility());
+    sb.append(" Height:");
+    sb.append(textView.getHeight());
+    sb.append(" Width:");
+    sb.append(textView.getWidth());
+    sb.append(" Alpha:");
+    sb.append(textView.getAlpha());
+    Log.d(LOG_TAG, sb.toString());
   }
 
-  public static boolean stop () {
-    WindowManager wm = ApplicationContext.getWindowManager();
-    if (wm == null) return false;
+  public BrailleWindow (Context context) {
+    super(context);
 
-    synchronized (wm) {
-      wm.removeView(window);
-    }
+    window.setOrientation(window.VERTICAL);
+    window.setAlpha(0f);
 
-    return true;
-  }
-
-  private BrailleWindow () {
+    textView = new TextView(context);
+    textView.setFocusable(false);
+    textView.setAlpha(0.5f);
+    window.addView(textView);
   }
 }

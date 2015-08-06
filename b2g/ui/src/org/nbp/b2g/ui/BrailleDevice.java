@@ -3,6 +3,7 @@ package org.nbp.b2g.ui;
 import java.util.Arrays;
 
 import android.util.Log;
+import android.content.Context;
 
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
@@ -15,6 +16,21 @@ public class BrailleDevice {
   public final static byte DOT_6 =       0X20;
   public final static byte DOT_7 =       0X40;
   public final static byte DOT_8 = (byte)0X80;
+
+  private BrailleWindow brailleWindow = null;
+
+  private BrailleWindow getWindow () {
+    synchronized (this) {
+      if (brailleWindow == null) {
+        Context context = ApplicationContext.getContext();
+        if (context == null) return null;
+        brailleWindow = new BrailleWindow(context);
+        brailleWindow.start();
+      }
+    }
+
+    return brailleWindow;
+  }
 
   private native boolean openDevice ();
   private native void closeDevice ();
