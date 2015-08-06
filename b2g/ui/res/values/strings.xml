@@ -56,14 +56,14 @@
   <string name="LogActions_control_label">Log Actions</string>
   <string name="LogBraille_control_label">Log Braille</string>
   <string name="LogGestures_control_label">Log Gestures</string>
-  <string name="LogKeys_control_label">Log Keys</string>
+  <string name="LogKeyboard_control_label">Log Keyboard</string>
   <string name="LogNavigation_control_label">Log Navigation</string>
   <string name="LogUpdates_control_label">Log Updates</string>
 
   <string name="ClearAndroidLog_action_confirmation">Android log cleared</string>
   <string name="CopyToClipboard_action_confirmation">Copied to Clipboard</string>
   <string name="CutToClipboard_action_confirmation">Cut to Clipboard</string>
-  <string name="LogNone_action_confirmation">Logs Off</string>
+  <string name="LogsOff_action_confirmation">Logs Off</string>
   <string name="SaveScreen_action_confirmation">Screen Saved</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
 

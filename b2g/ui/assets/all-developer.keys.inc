@@ -2,11 +2,11 @@
 bind Forward+Backward+Dots1245 DeveloperOff
 bind Forward+Backward+Dots1245+LongPress DeveloperOn
 
-bind Forward+Dots1237 LogNone
-bind Forward+Dot1 LogKeys
-bind Forward+Dot2 LogActions
-bind Forward+Dot3 LogNavigation
-bind Forward+Dot7 LogUpdates
+bind Forward+Dots1237 LogsOff
+bind Forward+Dot1 LogKeyboardOn
+bind Forward+Dot2 LogActionsOn
+bind Forward+Dot3 LogNavigationOn
+bind Forward+Dot7 LogUpdatesOn
 
 bind Forward+Dots12 SaveSettings
 bind Forward+Dots23 RestoreSettings

@@ -23,7 +23,7 @@ public abstract class ApplicationParameters {
 
   public final static boolean DEFAULT_DEVELOPER_ENABLED = false;
   public final static boolean DEFAULT_LOG_UPDATES = false;
-  public final static boolean DEFAULT_LOG_KEYS = false;
+  public final static boolean DEFAULT_LOG_KEYBOARD = false;
   public final static boolean DEFAULT_LOG_ACTIONS = false;
   public final static boolean DEFAULT_LOG_NAVIGATION = false;
   public final static boolean DEFAULT_LOG_GESTURES = false;

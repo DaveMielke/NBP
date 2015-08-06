@@ -24,7 +24,7 @@ public abstract class Controls {
 
   private final static BooleanControl developerEnabledControl = new DeveloperEnabledControl();
   private final static BooleanControl logUpdatesControl = new LogUpdatesControl();
-  private final static BooleanControl logKeysControl = new LogKeysControl();
+  private final static BooleanControl logKeyboardControl = new LogKeyboardControl();
   private final static BooleanControl logActionsControl = new LogActionsControl();
   private final static BooleanControl logNavigationControl = new LogNavigationControl();
   private final static BooleanControl logGesturesControl = new LogGesturesControl();
@@ -51,7 +51,7 @@ public abstract class Controls {
 
     developerEnabledControl,
     logUpdatesControl,
-    logKeysControl,
+    logKeyboardControl,
     logActionsControl,
     logNavigationControl,
     logGesturesControl,
@@ -122,8 +122,8 @@ public abstract class Controls {
     return logUpdatesControl;
   }
 
-  public static BooleanControl getLogKeysControl () {
-    return logKeysControl;
+  public static BooleanControl getLogKeyboardControl () {
+    return logKeyboardControl;
   }
 
   public static BooleanControl getLogActionsControl () {

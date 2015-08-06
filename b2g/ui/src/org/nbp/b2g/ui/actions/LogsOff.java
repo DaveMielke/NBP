@@ -1,10 +1,10 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class LogNone extends Action {
+public class LogsOff extends Action {
   private final static BooleanControl[] controls = new BooleanControl[] {
     Controls.getLogUpdatesControl(),
-    Controls.getLogKeysControl(),
+    Controls.getLogKeyboardControl(),
     Controls.getLogActionsControl(),
     Controls.getLogNavigationControl(),
     Controls.getLogGesturesControl(),
@@ -21,12 +21,12 @@ public class LogNone extends Action {
 
   @Override
   public boolean performAction () {
-    ApplicationUtilities.message(R.string.LogNone_action_confirmation);
+    ApplicationUtilities.message(R.string.LogsOff_action_confirmation);
     Controls.forEachControl(controls, disableControl);
     return true;
   }
 
-  public LogNone (Endpoint endpoint) {
+  public LogsOff (Endpoint endpoint) {
     super(endpoint, true);
   }
 }

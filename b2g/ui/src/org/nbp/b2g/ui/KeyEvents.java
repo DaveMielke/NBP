@@ -128,7 +128,7 @@ public abstract class KeyEvents {
   }
 
   private static void logNavigationKeysChange (int keyMask, String action) {
-    if (ApplicationSettings.LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYBOARD) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("navigation key ");
@@ -204,7 +204,7 @@ public abstract class KeyEvents {
   }
 
   private static void logCursorKeyAction (int keyNumber, String action) {
-    if (ApplicationSettings.LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYBOARD) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("cursor key ");
@@ -257,7 +257,7 @@ public abstract class KeyEvents {
   }
 
   public static void resetKeys () {
-    if (ApplicationSettings.LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYBOARD) {
       Log.d(LOG_TAG, "resetting key state");
     }
 

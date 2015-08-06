@@ -38,11 +38,19 @@
 .. |InsertUnicode| replace:: type any character by its Unicode value
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
-.. |LogActions| replace:: enable the logging of user-requested actions
-.. |LogKeys| replace:: enable the logging of keyboard key events
-.. |LogNavigation| replace:: enable the logging of internal screen navigation operations
-.. |LogNone| replace:: disable all of the logging categories
-.. |LogUpdates| replace:: enable the logging of Android accessibility events
+.. |LogActionsOff| replace:: disable the logging of user-requested actions
+.. |LogActionsOn| replace:: enable the logging of user-requested actions
+.. |LogBrailleOff| replace:: disable the logging of braille display updates
+.. |LogBrailleOn| replace:: enable the logging of braille display updates
+.. |LogGesturesOff| replace:: disable the logging of touch screen gestures
+.. |LogGesturesOn| replace:: enable the logging of touch screen gestures
+.. |LogKeyboardOff| replace:: disable the logging of keyboard key events
+.. |LogKeyboardOn| replace:: enable the logging of keyboard key events
+.. |LogNavigationOff| replace:: disable the logging of internal screen navigation operations
+.. |LogNavigationOn| replace:: enable the logging of internal screen navigation operations
+.. |LogUpdatesOff| replace:: disable the logging of Android accessibility events
+.. |LogUpdatesOn| replace:: enable the logging of Android accessibility events
+.. |LogsOff| replace:: disable all of the logging categories
 .. |LongClick| replace:: hold (long click) the current screen element
 .. |LongPressOff| replace:: disable long key press actions
 .. |LongPressOn| replace:: enable long key press actions

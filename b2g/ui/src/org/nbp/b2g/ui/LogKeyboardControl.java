@@ -1,33 +1,33 @@
 package org.nbp.b2g.ui;
 
-public class LogKeysControl extends BooleanControl {
+public class LogKeyboardControl extends BooleanControl {
   @Override
   public String getLabel () {
-    return ApplicationContext.getString(R.string.LogKeys_control_label);
+    return ApplicationContext.getString(R.string.LogKeyboard_control_label);
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "log-keys";
+    return "log-keyboard";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LOG_KEYS;
+    return ApplicationParameters.DEFAULT_LOG_KEYBOARD;
   }
 
   @Override
   protected boolean getBooleanValue () {
-    return ApplicationSettings.LOG_KEYS;
+    return ApplicationSettings.LOG_KEYBOARD;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.LOG_KEYS = value;
+    ApplicationSettings.LOG_KEYBOARD = value;
     return true;
   }
 
-  public LogKeysControl () {
+  public LogKeyboardControl () {
     super(true);
   }
 }

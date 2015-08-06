@@ -199,7 +199,7 @@ public class InputService extends InputMethodService {
   }
 
   private static void logKeyEvent (int code, boolean press) {
-    if (ApplicationSettings.LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYBOARD) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("key code ");

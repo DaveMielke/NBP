@@ -1,13 +1,13 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class LogActions extends Action {
+public class LogBrailleOn extends Action {
   @Override
   public boolean performAction () {
-    return Controls.getLogActionsControl().nextValue();
+    return Controls.getLogBrailleControl().nextValue();
   }
 
-  public LogActions (Endpoint endpoint) {
+  public LogBrailleOn (Endpoint endpoint) {
     super(endpoint, true);
   }
 }

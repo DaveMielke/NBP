@@ -21,7 +21,7 @@ public abstract class ApplicationSettings {
 
   public static volatile boolean DEVELOPER_ENABLED = ApplicationParameters.DEFAULT_DEVELOPER_ENABLED;
   public static volatile boolean LOG_UPDATES = ApplicationParameters.DEFAULT_LOG_UPDATES;
-  public static volatile boolean LOG_KEYS = ApplicationParameters.DEFAULT_LOG_KEYS;
+  public static volatile boolean LOG_KEYBOARD = ApplicationParameters.DEFAULT_LOG_KEYBOARD;
   public static volatile boolean LOG_ACTIONS = ApplicationParameters.DEFAULT_LOG_ACTIONS;
   public static volatile boolean LOG_NAVIGATION = ApplicationParameters.DEFAULT_LOG_NAVIGATION;
   public static volatile boolean LOG_GESTURES = ApplicationParameters.DEFAULT_LOG_GESTURES;

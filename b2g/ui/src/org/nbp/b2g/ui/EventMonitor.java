@@ -15,7 +15,7 @@ public abstract class EventMonitor extends Thread {
   }
 
   public void onKeyEvent (int code, boolean press) {
-    if (ApplicationSettings.LOG_KEYS) {
+    if (ApplicationSettings.LOG_KEYBOARD) {
       StringBuilder sb = new StringBuilder();
       String name = Keyboard.getScanCodeName(code);
 
