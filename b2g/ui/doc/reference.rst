@@ -55,10 +55,10 @@ Developer Operations
 Common Actions
 ``````````````
 
-.. include:: ref-all-developer.rst
+.. include:: ref-developer-all.rst
 
 Screen Actions
 ``````````````
 
-.. include:: ref-screen-developer.rst
+.. include:: ref-developer-screen.rst
 

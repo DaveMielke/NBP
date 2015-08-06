@@ -36,4 +36,4 @@ bind Space+Dots234#s,Dot1#a AndroidAccessibilitySettings
 bind Space+Dots234#s,Dots12#b AndroidBluetoothSettings
 bind Space+Dots234#s,Dots2456#w AndroidWifiSettings
 
-include screen-developer.keys.inc
+include developer-screen.keys.inc
