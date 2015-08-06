@@ -3,10 +3,10 @@
   ===================  =======  ====================  ==========  ==========
   Setting              Default  Range                 *Previous*  *Next*
   -------------------  -------  --------------------  ----------  ----------
+  Braille Input        Off      Off - On
   Long Press           On       Off - On
   Reverse Panning      Off      Off - On
   One Hand             Off      Off - On
-  Braille Input        Off      Off - On
   Cursor Indicator     Dots78   Dots78, Dot7, Dot8    Previous    Next
   Selection Indicator  Dot8     Dots78, Dot7, Dot8    Previous    Next
   Firmness             4        0 - 7                 Decrease    Increase

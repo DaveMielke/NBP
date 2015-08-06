@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
+  private final static BooleanControl brailleInputControl = new BrailleInputControl();
   private final static BooleanControl longPressControl = new LongPressControl();
   private final static BooleanControl reversePanningControl = new ReversePanningControl();
   private final static BooleanControl oneHandControl = new OneHandControl();
 
-  private final static BooleanControl brailleInputControl = new BrailleInputControl();
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
 
@@ -31,11 +31,11 @@ public abstract class Controls {
   private final static BooleanControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
+    brailleInputControl,
     longPressControl,
     reversePanningControl,
     oneHandControl,
 
-    brailleInputControl,
     cursorIndicatorControl,
     selectionIndicatorControl,
 
@@ -58,6 +58,10 @@ public abstract class Controls {
     logBrailleControl
   };
 
+  public static BooleanControl getBrailleInputControl () {
+    return brailleInputControl;
+  }
+
   public static BooleanControl getLongPressControl () {
     return longPressControl;
   }
@@ -68,10 +72,6 @@ public abstract class Controls {
 
   public static BooleanControl getOneHandControl () {
     return oneHandControl;
-  }
-
-  public static BooleanControl getBrailleInputControl () {
-    return brailleInputControl;
   }
 
   public static CursorIndicatorControl getCursorIndicatorControl () {
