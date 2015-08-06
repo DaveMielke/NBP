@@ -2,12 +2,20 @@ package org.nbp.b2g.ui;
 
 import android.content.Context;
 import android.view.WindowManager;
+
 import android.widget.LinearLayout;
 import android.graphics.PixelFormat;
 
+import android.os.Looper;
+import android.os.Handler;
+import android.os.Message;
+
 public class SystemWindow {
   private final WindowManager windowManager;
-  protected final LinearLayout window;
+  private final Thread windowThread;
+
+  protected LinearLayout windowView = null;
+  private Handler windowHandler = null;
 
   private final static WindowManager.LayoutParams layoutParameters = new WindowManager.LayoutParams(
     WindowManager.LayoutParams.WRAP_CONTENT,
@@ -17,20 +25,58 @@ public class SystemWindow {
     PixelFormat.TRANSLUCENT
   );
 
+  protected void runOnWindowThread (Runnable runnable) {
+    windowHandler.post(runnable);
+  }
+
   public final void start () {
-    synchronized (layoutParameters) {
-      windowManager.addView(window, layoutParameters);
-    }
+    runOnWindowThread(new Runnable() {
+      @Override
+      public void run () {
+        windowManager.addView(windowView, layoutParameters);
+      }
+    });
   }
 
   public final void stop () {
-    synchronized (layoutParameters) {
-      windowManager.removeView(window);
-    }
+    runOnWindowThread(new Runnable() {
+      @Override
+      public void run () {
+        windowManager.removeView(windowView);
+      }
+    });
   }
 
-  public SystemWindow (Context context) {
+  public SystemWindow (final Context context) {
     windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-    window = new LinearLayout(context);
+
+    windowThread = new Thread() {
+      @Override
+      public void run () {
+        Looper.prepare();
+        windowView = new LinearLayout(context);
+
+        windowHandler = new Handler() {
+          @Override
+          public void handleMessage (Message msg) {
+          }
+        };
+
+        synchronized (this) {
+          notify();
+        }
+
+        Looper.loop();
+      }
+    };
+
+    synchronized (windowThread) {
+      windowThread.start();
+
+      try {
+        windowThread.wait();
+      } catch (InterruptedException exception) {
+      }
+    }
   }
 }
