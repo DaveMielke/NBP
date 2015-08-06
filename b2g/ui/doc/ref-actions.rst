@@ -48,8 +48,8 @@
 .. |LogKeyboardOn| replace:: enable the logging of keyboard key events
 .. |LogNavigationOff| replace:: disable the logging of internal screen navigation operations
 .. |LogNavigationOn| replace:: enable the logging of internal screen navigation operations
-.. |LogUpdatesOff| replace:: disable the logging of Android accessibility events
-.. |LogUpdatesOn| replace:: enable the logging of Android accessibility events
+.. |LogUpdatesOff| replace:: disable the logging of screen updates
+.. |LogUpdatesOn| replace:: enable the logging of screen updates
 .. |LogsOff| replace:: disable all of the logging categories
 .. |LongClick| replace:: hold (long click) the current screen element
 .. |LongPressOff| replace:: disable long key press actions

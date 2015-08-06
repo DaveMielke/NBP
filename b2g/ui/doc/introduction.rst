@@ -484,7 +484,7 @@ To Useful Android Screens
 
 The following shortcuts to useful Android screens are provided:
 
-Space+Dots1478
+Space+p (dots 1234)
   Go to the Power Off screen.
 
 Space+? (dots 1456)
