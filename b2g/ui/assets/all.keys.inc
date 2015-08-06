@@ -28,5 +28,5 @@ bind Backward+Forward+Space DescribeBuild
 bind Space+Dots12345678 Null
 
 include all-required.keys.inc
-include all-legacy.keys.inc
 include all-developer.keys.inc
+include legacy.keys.inc

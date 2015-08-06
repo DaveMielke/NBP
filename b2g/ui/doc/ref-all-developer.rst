@@ -3,7 +3,6 @@
 
   "Forward+Backward+Dots1245+LongPress","|DeveloperOn|"
   "Forward+Backward+Dots1245","|DeveloperOff|"
-  "Forward+Dots1237","|LogsOff|"
   "Space+Dots78+Dots136#u","|LogUpdatesOn|"
   "Space+Dots78+Dots136#u+LongPress","|LogUpdatesOff|"
   "Space+Dots78+Dots13#k","|LogKeyboardOn|"
@@ -19,6 +18,9 @@
   "Space+Dots78+Dots234#s","|SaveSettings|"
   "Space+Dots78+Dots1235#r","|RestoreSettings|"
   "Space+Dots78+Dots145#d","|ResetSettings|"
-  "Forward+Space+Dot1","|ClearAndroidLog|"
-  "Forward+Space+Dot2","|SendAndroidLog|"
+  "Space+Dots78+Dots1346#x","|ForceCrash|"
+  "Forward+Space+Dot1","|LogsOn|"
+  "Forward+Space+Dot2","|ClearAndroidLog|"
+  "Forward+Space+Dot3","|SendAndroidLog|"
+  "Forward+Space+Dot7","|LogsOff|"
 

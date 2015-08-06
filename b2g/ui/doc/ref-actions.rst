@@ -51,6 +51,7 @@
 .. |LogUpdatesOff| replace:: disable the logging of screen updates
 .. |LogUpdatesOn| replace:: enable the logging of screen updates
 .. |LogsOff| replace:: disable all of the logging categories
+.. |LogsOn| replace:: enable the most useful logging categories
 .. |LongClick| replace:: hold (long click) the current screen element
 .. |LongPressOff| replace:: disable long key press actions
 .. |LongPressOn| replace:: enable long key press actions

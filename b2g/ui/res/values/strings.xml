@@ -64,6 +64,7 @@
   <string name="CopyToClipboard_action_confirmation">Copied to Clipboard</string>
   <string name="CutToClipboard_action_confirmation">Cut to Clipboard</string>
   <string name="LogsOff_action_confirmation">Logs Off</string>
+  <string name="LogsOn_action_confirmation">Logs On</string>
   <string name="SaveScreen_action_confirmation">Screen Saved</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
 
