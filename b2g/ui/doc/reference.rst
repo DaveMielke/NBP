@@ -14,10 +14,18 @@ Key Bindings
 
 .. include:: ref-firmware-bindings.rst
 
-Special Braille Symbols
------------------------
+Braille
+-------
+
+Special Symbols
+~~~~~~~~~~~~~~~
 
 .. include:: ref-braille-symbols.rst
+
+Annotations
+~~~~~~~~~~~
+
+.. include:: ref-braille-annotations.rst
 
 Key Bindings
 ------------
