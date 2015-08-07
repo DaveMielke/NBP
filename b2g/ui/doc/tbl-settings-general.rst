@@ -9,14 +9,15 @@
   One Hand             Off      Off - On
   Cursor Indicator     Dots78   Dots78, Dot7, Dot8    Previous    Next
   Selection Indicator  Dot8     Dots78, Dot7, Dot8    Previous    Next
+  **Braille**          On       Off - On
   Firmness             4        0 - 7                 Decrease    Increase
   Monitor              Off      Off - On
-  Speech               On       Off - On
+  **Speech**           On       Off - On
   Sleep Talk           Off      Off - On
   Volume               10       0 - 10                Softer      Louder
   Balance              Center   Left100% - Right100%  More Left   More Right
   Rate                 0        -10 - 10              Slower      Faster
   Pitch                0        -10 - 10              Lower       Higher
-  Developer            Off      Off - On
+  **Developer**        Off      Off - On
   ===================  =======  ====================  ==========  ==========
 

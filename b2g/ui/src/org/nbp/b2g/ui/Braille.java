@@ -52,9 +52,10 @@ public abstract class Braille {
   }
 
   public static String setCells (byte[] cells, String text) {
-    Characters characters = Characters.getCharacters();
     int count = Math.min(text.length(), cells.length);
     text = text.substring(0, count);
+
+    Characters characters = Characters.getCharacters();
     int index = 0;
 
     while (index < count) {

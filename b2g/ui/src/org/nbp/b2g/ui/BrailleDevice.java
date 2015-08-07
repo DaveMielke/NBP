@@ -155,18 +155,15 @@ public class BrailleDevice {
     String characters = Braille.toString(cells);
 
     if (log) {
-      Log.v(LOG_TAG, String.format(
+      Log.d(LOG_TAG, String.format(
         "braille cells: %s: %s", reason, characters
       ));
     }
 
     if (text != null) {
       BrailleWindow window = getWindow();
-
-      if (window != null) {
-        window.setText((characters + '\n' + text));
-        if (log) Log.d(LOG_TAG, "braille text: " + text);
-      }
+      if (window != null) window.setText((characters + '\n' + text));
+      if (log) Log.d(LOG_TAG, "braille text: " + text);
     }
   }
 
@@ -190,7 +187,12 @@ public class BrailleDevice {
       }
     }
 
-    if (!writeCells(cells)) return false;
+    if (ApplicationSettings.BRAILLE_ENABLED) {
+      if (!writeCells(cells)) {
+        return false;
+      }
+    }
+
     logCells(cells, reason, text);
     return true;
   }
