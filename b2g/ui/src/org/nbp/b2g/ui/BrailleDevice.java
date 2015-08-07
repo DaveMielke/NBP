@@ -25,7 +25,7 @@ public class BrailleDevice {
         Context context = ApplicationContext.getContext();
         if (context == null) return null;
         brailleWindow = new BrailleWindow(context);
-        brailleWindow.start();
+        brailleWindow.showWindow();
       }
     }
 
@@ -47,6 +47,7 @@ public class BrailleDevice {
   private native boolean writeCells (byte[] cells);
 
   private byte[] brailleCells = null;
+  private String brailleText = null;
   private boolean writePending = false;
 
   private void logCells (byte[] cells, String reason) {
@@ -89,6 +90,7 @@ public class BrailleDevice {
 
           clearCells();
           Braille.clearCells(brailleCells);
+          brailleText = "";
           writePending = false;
 
           restoreControls();
@@ -108,6 +110,7 @@ public class BrailleDevice {
 
       synchronized (this) {
         writePending = false;
+        brailleText = null;
 
         if (brailleCells != null) {
           brailleCells = null;
@@ -183,7 +186,20 @@ public class BrailleDevice {
     public void run () {
       synchronized (BrailleDevice.this) {
         if (writePending) {
-          if (writeCells()) writePending = false;
+          if (writeCells()) {
+            BrailleWindow window = getWindow();
+
+            if (window != null) {
+              window.setText(brailleText);
+
+              if (ApplicationSettings.LOG_BRAILLE) {
+                Log.d(LOG_TAG, "braille text: " + brailleText);
+              }
+            }
+
+            writePending = false;
+          }
+
           start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
         }
       }
@@ -196,8 +212,13 @@ public class BrailleDevice {
 
       {
         byte[] oldCells = getCells();
-        Braille.setCells(brailleCells);
-        if (Arrays.equals(brailleCells, oldCells)) return true;
+        String text = Braille.setCells(brailleCells);
+
+        if (!text.equals(brailleText)) {
+          brailleText = text;
+        } else if (Arrays.equals(brailleCells, oldCells)) {
+          return true;
+        }
       }
 
       writePending = true;

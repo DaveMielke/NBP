@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
+
 import android.content.Context;
 import android.view.WindowManager;
 
@@ -11,6 +13,8 @@ import android.os.Handler;
 import android.os.Message;
 
 public class SystemWindow {
+  private final static String LOG_TAG = SystemWindow.class.getName();
+
   private final WindowManager windowManager;
   private final Thread windowThread;
 
@@ -25,24 +29,52 @@ public class SystemWindow {
     PixelFormat.TRANSLUCENT
   );
 
-  protected void runOnWindowThread (Runnable runnable) {
-    windowHandler.post(runnable);
-  }
-
-  public final void start () {
+  public final void logProperties () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        windowManager.addView(windowView, layoutParameters);
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("system window: ");
+        sb.append(SystemWindow.this.getClass().getSimpleName());
+        sb.append(':');
+
+        sb.append(" Height:");
+        sb.append(windowView.getHeight());
+
+        sb.append(" Width:");
+        sb.append(windowView.getWidth());
+
+        sb.append(" Alpha:");
+        sb.append(windowView.getAlpha());
+
+        Log.d(LOG_TAG, sb.toString());
       }
     });
   }
 
-  public final void stop () {
+  protected final void runOnWindowThread (Runnable runnable) {
+    windowHandler.post(runnable);
+  }
+
+  private boolean hasParent () {
+    return windowView.getParent() != null;
+  }
+
+  public final void showWindow () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        windowManager.removeView(windowView);
+        if (!hasParent()) windowManager.addView(windowView, layoutParameters);
+      }
+    });
+  }
+
+  public final void hideWindow () {
+    runOnWindowThread(new Runnable() {
+      @Override
+      public void run () {
+        if (hasParent()) windowManager.removeView(windowView);
       }
     });
   }
