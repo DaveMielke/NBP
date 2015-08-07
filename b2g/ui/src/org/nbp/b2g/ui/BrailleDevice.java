@@ -159,6 +159,18 @@ public class BrailleDevice {
     return false;
   }
 
+  private void writeText (String text) {
+    BrailleWindow window = getWindow();
+
+    if (window != null) {
+      window.setText(text);
+
+      if (ApplicationSettings.LOG_BRAILLE) {
+        Log.d(LOG_TAG, "braille text: " + text);
+      }
+    }
+  }
+
   private boolean writeCells (byte[] cells, String reason) {
     final int suppliedLength = cells.length;
     final int requiredLength = brailleCells.length;
@@ -187,16 +199,7 @@ public class BrailleDevice {
       synchronized (BrailleDevice.this) {
         if (writePending) {
           if (writeCells()) {
-            BrailleWindow window = getWindow();
-
-            if (window != null) {
-              window.setText(brailleText);
-
-              if (ApplicationSettings.LOG_BRAILLE) {
-                Log.d(LOG_TAG, "braille text: " + brailleText);
-              }
-            }
-
+            writeText(brailleText);
             writePending = false;
           }
 
@@ -259,8 +262,11 @@ public class BrailleDevice {
 
   public boolean write (String text, long duration) {
     byte[] cells = new byte[text.length()];
-    Braille.setCells(cells, text);
-    return write(cells, duration);
+    text = Braille.setCells(cells, text);
+
+    boolean written = write(cells, duration);
+    if (written) writeText(text);
+    return written;
   }
 
   public boolean write (String text) {
