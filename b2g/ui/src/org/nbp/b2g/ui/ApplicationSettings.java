@@ -11,6 +11,7 @@ public abstract class ApplicationSettings {
 
   public static volatile boolean BRAILLE_ENABLED = ApplicationParameters.DEFAULT_BRAILLE_ENABLED;
   public static volatile int BRAILLE_FIRMNESS = ApplicationParameters.DEFAULT_BRAILLE_FIRMNESS;
+  public static volatile boolean BRAILLE_MONITOR = ApplicationParameters.DEFAULT_BRAILLE_MONITOR;
 
   public static volatile boolean SPEECH_ENABLED = ApplicationParameters.DEFAULT_SPEECH_ENABLED;
   public static volatile boolean SLEEP_TALK = ApplicationParameters.DEFAULT_SLEEP_TALK;

@@ -10,6 +10,7 @@
   Cursor Indicator     Dots78   Dots78, Dot7, Dot8    Previous    Next
   Selection Indicator  Dot8     Dots78, Dot7, Dot8    Previous    Next
   Firmness             4        0 - 7                 Decrease    Increase
+  Monitor              Off      Off - On
   Speech               On       Off - On
   Sleep Talk           Off      Off - On
   Volume               10       0 - 10                Softer      Louder

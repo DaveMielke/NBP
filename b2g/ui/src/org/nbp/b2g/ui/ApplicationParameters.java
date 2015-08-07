@@ -13,6 +13,7 @@ public abstract class ApplicationParameters {
 
   public final static boolean DEFAULT_BRAILLE_ENABLED = true;
   public final static int DEFAULT_BRAILLE_FIRMNESS = 4;
+  public final static boolean DEFAULT_BRAILLE_MONITOR = false;
 
   public final static boolean DEFAULT_SPEECH_ENABLED = true;
   public final static boolean DEFAULT_SLEEP_TALK = false;

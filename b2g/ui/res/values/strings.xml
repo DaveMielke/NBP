@@ -25,6 +25,7 @@
   <string name="BrailleEnabled_control_label">Braille</string>
   <string name="BrailleFirmness_control_label">Firmness</string>
   <string name="BrailleInput_control_label">Braille Input</string>
+  <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
