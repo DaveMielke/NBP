@@ -13,15 +13,15 @@ public class BrailleMonitorWindow extends SystemWindow {
   private final static float ALPHA = 0.5f;
   private final Typeface BRAILLE_FONT;
 
-  private TextView brailleView = null;
-  private TextView textView = null;
+  private final ThreadLocal<TextView> brailleView = new ThreadLocal<TextView>();
+  private final ThreadLocal<TextView> textView = new ThreadLocal<TextView>();
 
   public final void setContent (final String braille, final String text) {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        brailleView.setText(braille);
-        textView.setText(text);
+        brailleView.get().setText(braille);
+        textView.get().setText(text);
       }
     });
   }
@@ -44,13 +44,19 @@ public class BrailleMonitorWindow extends SystemWindow {
         layout.setOrientation(layout.VERTICAL);
         layout.setAlpha(0f);
 
-        brailleView = new TextView(context);
-        brailleView.setTypeface(BRAILLE_FONT);
-        addView(layout, brailleView);
+        {
+          TextView view = new TextView(context);
+          view.setTypeface(BRAILLE_FONT);
+          brailleView.set(view);
+          addView(layout, view);
+        }
 
-        textView = new TextView(context);
-        textView.setTypeface(Typeface.MONOSPACE);
-        addView(layout, textView);
+        {
+          TextView view = new TextView(context);
+          view.setTypeface(Typeface.MONOSPACE);
+          textView.set(view);
+          addView(layout, view);
+        }
       }
     });
   }

@@ -74,10 +74,6 @@ public class SystemWindow {
     return layout.getParent() != null;
   }
 
-  public final boolean isVisible () {
-    return isVisible(getLayout());
-  }
-
   public final void setVisible () {
     runOnWindowThread(new Runnable() {
       @Override
