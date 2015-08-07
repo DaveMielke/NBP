@@ -1,36 +1,51 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
+
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 import android.graphics.Typeface;
 
 public class BrailleWindow extends SystemWindow {
+  private final static String LOG_TAG = BrailleWindow.class.getName();
+
+  private final static float ALPHA = 0.5f;
+
+  private TextView brailleView = null;
   private TextView textView = null;
 
-  public void setText (final String text) {
+  public final void setContent (final String braille, final String text) {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
+        brailleView.setText(braille);
         textView.setText(text);
       }
     });
   }
 
-  public BrailleWindow (final Context context) {
+  private final void addView (WindowLayout layout, View view) {
+    view.setFocusable(false);
+    view.setAlpha(ALPHA);
+    layout.addView(view);
+  }
+
+  private final void initializeWindow (Context context, WindowLayout window) {
+    window.setOrientation(window.VERTICAL);
+    window.setAlpha(0f);
+
+    brailleView = new TextView(context);
+    brailleView.setTypeface(Typeface.MONOSPACE);
+    addView(window, brailleView);
+
+    textView = new TextView(context);
+    textView.setTypeface(Typeface.MONOSPACE);
+    addView(window, textView);
+  }
+
+  public BrailleWindow (Context context) {
     super(context);
-
-    runOnWindowThread(new Runnable() {
-      @Override
-      public void run () {
-        windowView.setOrientation(windowView.VERTICAL);
-        windowView.setAlpha(0f);
-
-        textView = new TextView(context);
-        textView.setFocusable(false);
-        textView.setAlpha(0.5f);
-        textView.setTypeface(Typeface.MONOSPACE);
-        windowView.addView(textView);
-      }
-    });
+    initializeWindow(context, getWindowLayout());
   }
 }

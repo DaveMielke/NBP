@@ -18,10 +18,16 @@ public class SystemWindow {
   private final WindowManager windowManager;
   private final Thread windowThread;
 
-  protected LinearLayout windowView = null;
+  protected final class WindowLayout extends LinearLayout {
+    public WindowLayout (Context context) {
+      super(context);
+    }
+  }
+
+  private WindowLayout windowLayout = null;
   private Handler windowHandler = null;
 
-  private final static WindowManager.LayoutParams windowLayout = new WindowManager.LayoutParams(
+  private final static WindowManager.LayoutParams windowParameters = new WindowManager.LayoutParams(
     WindowManager.LayoutParams.WRAP_CONTENT /* width */,
     WindowManager.LayoutParams.WRAP_CONTENT /* height */,
     0 /* x */,
@@ -42,17 +48,21 @@ public class SystemWindow {
         sb.append(':');
 
         sb.append(" Height:");
-        sb.append(windowView.getHeight());
+        sb.append(windowLayout.getHeight());
 
         sb.append(" Width:");
-        sb.append(windowView.getWidth());
+        sb.append(windowLayout.getWidth());
 
         sb.append(" Alpha:");
-        sb.append(windowView.getAlpha());
+        sb.append(windowLayout.getAlpha());
 
         Log.d(LOG_TAG, sb.toString());
       }
     });
+  }
+
+  protected final WindowLayout getWindowLayout () {
+    return windowLayout;
   }
 
   protected final void runOnWindowThread (Runnable runnable) {
@@ -60,32 +70,32 @@ public class SystemWindow {
   }
 
   private boolean hasParent () {
-    return windowView.getParent() != null;
+    return windowLayout.getParent() != null;
   }
 
-  public final void setVisible () {
+  public final void setWindowVisible () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        if (!hasParent()) windowManager.addView(windowView, windowLayout);
+        if (!hasParent()) windowManager.addView(windowLayout, windowParameters);
       }
     });
   }
 
-  public final void setInvisible () {
+  public final void setWindowInvisible () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        if (hasParent()) windowManager.removeView(windowView);
+        if (hasParent()) windowManager.removeView(windowLayout);
       }
     });
   }
 
-  public void setVisibility (boolean visible) {
+  public void setWindowVisibility (boolean visible) {
    if (visible) {
-     setVisible();
+     setWindowVisible();
    } else {
-     setInvisible();
+     setWindowInvisible();
    }
   }
 
@@ -96,7 +106,7 @@ public class SystemWindow {
       @Override
       public void run () {
         Looper.prepare();
-        windowView = new LinearLayout(context);
+        windowLayout = new WindowLayout(context);
 
         windowHandler = new Handler() {
           @Override

@@ -152,17 +152,17 @@ public class BrailleDevice {
 
   private void logCells (byte[] cells, String reason, String text) {
     boolean log = ApplicationSettings.LOG_BRAILLE;
-    String characters = Braille.toString(cells);
+    String braille = Braille.toString(cells);
 
     if (log) {
       Log.d(LOG_TAG, String.format(
-        "braille cells: %s: %s", reason, characters
+        "braille cells: %s: %s", reason, braille
       ));
     }
 
     if (text != null) {
       BrailleWindow window = getWindow();
-      if (window != null) window.setText((characters + '\n' + text));
+      if (window != null) window.setContent(braille, text);
       if (log) Log.d(LOG_TAG, "braille text: " + text);
     }
   }

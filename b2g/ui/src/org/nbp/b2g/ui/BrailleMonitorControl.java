@@ -24,7 +24,7 @@ public class BrailleMonitorControl extends BooleanControl {
   @Override
   protected boolean setBooleanValue (boolean value) {
     BrailleWindow window = Devices.braille.get().getWindow();
-    if (window != null) window.setVisibility(value);
+    if (window != null) window.setWindowVisibility(value);
 
     ApplicationSettings.BRAILLE_MONITOR = value;
     return true;
