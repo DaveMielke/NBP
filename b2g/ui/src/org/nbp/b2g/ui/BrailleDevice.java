@@ -49,15 +49,6 @@ public class BrailleDevice {
   private String brailleText = null;
   private boolean writePending = false;
 
-  private void logCells (byte[] cells, String reason) {
-    if (ApplicationSettings.LOG_BRAILLE) {
-      Log.v(LOG_TAG, String.format(
-        "braille cells: %s: %s",
-        reason, Braille.toString(cells)
-      ));
-    }
-  }
-
   public byte[] getCells () {
     synchronized (this) {
       if (!open()) return null;
@@ -159,38 +150,53 @@ public class BrailleDevice {
     return false;
   }
 
-  private void writeText (String text) {
-    BrailleWindow window = getWindow();
+  private void logCells (byte[] cells, String reason, String text) {
+    boolean log = ApplicationSettings.LOG_BRAILLE;
+    String characters = Braille.toString(cells);
 
-    if (window != null) {
-      window.setText(text);
+    if (log) {
+      Log.v(LOG_TAG, String.format(
+        "braille cells: %s: %s", reason, characters
+      ));
+    }
 
-      if (ApplicationSettings.LOG_BRAILLE) {
-        Log.d(LOG_TAG, "braille text: " + text);
+    if (text != null) {
+      BrailleWindow window = getWindow();
+
+      if (window != null) {
+        window.setText((characters + '\n' + text));
+        if (log) Log.d(LOG_TAG, "braille text: " + text);
       }
     }
   }
 
-  private boolean writeCells (byte[] cells, String reason) {
-    final int suppliedLength = cells.length;
-    final int requiredLength = brailleCells.length;
+  private void logCells (byte[] cells, String reason) {
+    logCells(cells, reason, null);
+  }
 
-    if (suppliedLength != requiredLength) {
-      byte[] newCells = new byte[requiredLength];
-      final int count = Math.min(suppliedLength, requiredLength);
+  private boolean writeCells (byte[] cells, String text, String reason) {
+    {
+      final int suppliedLength = cells.length;
+      final int requiredLength = brailleCells.length;
 
-      System.arraycopy(cells, 0, newCells, 0, count);
-      Braille.clearCells(newCells, count);
+      if (suppliedLength != requiredLength) {
+        byte[] newCells = new byte[requiredLength];
+        final int count = Math.min(suppliedLength, requiredLength);
 
-      cells = newCells;
+        System.arraycopy(cells, 0, newCells, 0, count);
+        Braille.clearCells(newCells, count);
+
+        cells = newCells;
+      }
     }
 
-    logCells(cells, reason);
-    return writeCells(cells);
+    if (!writeCells(cells)) return false;
+    logCells(cells, reason, text);
+    return true;
   }
 
   private boolean writeCells () {
-    return writeCells(brailleCells, "writing");
+    return writeCells(brailleCells, brailleText, "writing");
   }
 
   private final Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
@@ -198,11 +204,7 @@ public class BrailleDevice {
     public void run () {
       synchronized (BrailleDevice.this) {
         if (writePending) {
-          if (writeCells()) {
-            writeText(brailleText);
-            writePending = false;
-          }
-
+          if (writeCells()) writePending = false;
           start(ApplicationParameters.BRAILLE_REWRITE_DELAY);
         }
       }
@@ -237,12 +239,12 @@ public class BrailleDevice {
     return true;
   }
 
-  public boolean write (byte[] cells, long duration) {
+  public boolean write (byte[] cells, String text, long duration) {
     synchronized (this) {
       if (open()) {
         writeDelay.cancel();
 
-        if (writeCells(cells, "message")) {
+        if (writeCells(cells, text, "message")) {
           if (duration > 0) {
             writePending = true;
             writeDelay.start(duration);
@@ -256,6 +258,10 @@ public class BrailleDevice {
     return false;
   }
 
+  public boolean write (byte[] cells, long duration) {
+    return write(cells, "", 0);
+  }
+
   public boolean write (byte[] cells) {
     return write(cells, 0);
   }
@@ -263,10 +269,7 @@ public class BrailleDevice {
   public boolean write (String text, long duration) {
     byte[] cells = new byte[text.length()];
     text = Braille.setCells(cells, text);
-
-    boolean written = write(cells, duration);
-    if (written) writeText(text);
-    return written;
+    return write(cells, text, duration);
   }
 
   public boolean write (String text) {
