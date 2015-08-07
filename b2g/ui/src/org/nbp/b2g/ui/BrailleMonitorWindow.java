@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.graphics.Typeface;
 
-public class BrailleMonitorWindow extends SystemWindow {
+public class BrailleMonitorWindow extends SystemOverlayWindow {
   private final static String LOG_TAG = BrailleMonitorWindow.class.getName();
 
   private final static float ALPHA = 0.5f;

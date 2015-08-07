@@ -12,8 +12,8 @@ import android.os.Looper;
 import android.os.Handler;
 import android.os.Message;
 
-public class SystemWindow {
-  private final static String LOG_TAG = SystemWindow.class.getName();
+public class SystemOverlayWindow {
+  private final static String LOG_TAG = SystemOverlayWindow.class.getName();
 
   private final WindowManager windowManager;
   private final Thread windowThread;
@@ -49,7 +49,7 @@ public class SystemWindow {
         StringBuilder sb = new StringBuilder();
 
         sb.append("system window: ");
-        sb.append(SystemWindow.this.getClass().getSimpleName());
+        sb.append(SystemOverlayWindow.this.getClass().getSimpleName());
         sb.append(':');
 
         sb.append(" Height:");
@@ -102,7 +102,7 @@ public class SystemWindow {
    }
   }
 
-  public SystemWindow (final Context context) {
+  public SystemOverlayWindow (final Context context) {
     windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
     windowThread = new Thread() {
