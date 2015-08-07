@@ -26,28 +26,32 @@ public class BrailleMonitorWindow extends SystemWindow {
     });
   }
 
-  private final void addView (WindowLayout layout, View view) {
+  private static void addView (WindowLayout layout, View view) {
     view.setFocusable(false);
     view.setAlpha(ALPHA);
     layout.addView(view);
   }
 
-  private final void initializeWindow (Context context, WindowLayout layout) {
-    layout.setOrientation(layout.VERTICAL);
-    layout.setAlpha(0f);
-
-    brailleView = new TextView(context);
-    brailleView.setTypeface(BRAILLE_FONT);
-    addView(layout, brailleView);
-
-    textView = new TextView(context);
-    textView.setTypeface(Typeface.MONOSPACE);
-    addView(layout, textView);
-  }
-
-  public BrailleMonitorWindow (Context context) {
+  public BrailleMonitorWindow (final Context context) {
     super(context);
     BRAILLE_FONT = Typeface.createFromAsset(context.getAssets(), "UBraille.ttf");
-    initializeWindow(context, getLayout());
+
+    runOnWindowThread(new Runnable() {
+      @Override
+      public void run () {
+        WindowLayout layout = getLayout();
+
+        layout.setOrientation(layout.VERTICAL);
+        layout.setAlpha(0f);
+
+        brailleView = new TextView(context);
+        brailleView.setTypeface(BRAILLE_FONT);
+        addView(layout, brailleView);
+
+        textView = new TextView(context);
+        textView.setTypeface(Typeface.MONOSPACE);
+        addView(layout, textView);
+      }
+    });
   }
 }

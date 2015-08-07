@@ -24,7 +24,7 @@ public class SystemWindow {
     }
   }
 
-  private WindowLayout windowLayout = null;
+  private final ThreadLocal<WindowLayout> windowLayout = new ThreadLocal<WindowLayout>();
   private Handler windowHandler = null;
 
   private final static WindowManager.LayoutParams windowParameters = new WindowManager.LayoutParams(
@@ -37,10 +37,15 @@ public class SystemWindow {
     PixelFormat.TRANSLUCENT
   );
 
+  protected final WindowLayout getLayout () {
+    return windowLayout.get();
+  }
+
   public final void logProperties () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
+        WindowLayout layout = getLayout();
         StringBuilder sb = new StringBuilder();
 
         sb.append("system window: ");
@@ -48,36 +53,37 @@ public class SystemWindow {
         sb.append(':');
 
         sb.append(" Height:");
-        sb.append(windowLayout.getHeight());
+        sb.append(layout.getHeight());
 
         sb.append(" Width:");
-        sb.append(windowLayout.getWidth());
+        sb.append(layout.getWidth());
 
         sb.append(" Alpha:");
-        sb.append(windowLayout.getAlpha());
+        sb.append(layout.getAlpha());
 
         Log.d(LOG_TAG, sb.toString());
       }
     });
   }
 
-  protected final WindowLayout getLayout () {
-    return windowLayout;
-  }
-
   protected final void runOnWindowThread (Runnable runnable) {
     windowHandler.post(runnable);
   }
 
+  private static boolean isVisible (WindowLayout layout) {
+    return layout.getParent() != null;
+  }
+
   public final boolean isVisible () {
-    return windowLayout.getParent() != null;
+    return isVisible(getLayout());
   }
 
   public final void setVisible () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        if (!isVisible()) windowManager.addView(windowLayout, windowParameters);
+        WindowLayout layout = getLayout();
+        if (!isVisible(layout)) windowManager.addView(layout, windowParameters);
       }
     });
   }
@@ -86,7 +92,8 @@ public class SystemWindow {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        if (isVisible()) windowManager.removeView(windowLayout);
+        WindowLayout layout = getLayout();
+        if (isVisible(layout)) windowManager.removeView(layout);
       }
     });
   }
@@ -106,7 +113,7 @@ public class SystemWindow {
       @Override
       public void run () {
         Looper.prepare();
-        windowLayout = new WindowLayout(context);
+        windowLayout.set(new WindowLayout(context));
 
         windowHandler = new Handler() {
           @Override
