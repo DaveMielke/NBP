@@ -61,7 +61,7 @@ public class SystemWindow {
     return windowView.getParent() != null;
   }
 
-  public final void showWindow () {
+  public final void setVisible () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
@@ -70,13 +70,21 @@ public class SystemWindow {
     });
   }
 
-  public final void hideWindow () {
+  public final void setInvisible () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
         if (hasParent()) windowManager.removeView(windowView);
       }
     });
+  }
+
+  public void setVisibility (boolean visible) {
+   if (visible) {
+     setVisible();
+   } else {
+     setInvisible();
+   }
   }
 
   public SystemWindow (final Context context) {

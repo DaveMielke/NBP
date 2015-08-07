@@ -19,13 +19,12 @@ public class BrailleDevice {
 
   private BrailleWindow brailleWindow = null;
 
-  private BrailleWindow getWindow () {
+  public BrailleWindow getWindow () {
     synchronized (this) {
       if (brailleWindow == null) {
         Context context = ApplicationContext.getContext();
         if (context == null) return null;
         brailleWindow = new BrailleWindow(context);
-        brailleWindow.showWindow();
       }
     }
 
@@ -68,7 +67,8 @@ public class BrailleDevice {
 
   public void restoreControls () {
     Control[] controls = new Control[] {
-      Controls.getBrailleFirmnessControl()
+      Controls.getBrailleFirmnessControl(),
+      Controls.getBrailleMonitorControl()
     };
 
     Controls.forEachControl(controls, Controls.restoreCurrentValue);
