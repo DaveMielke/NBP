@@ -21,9 +21,10 @@ public class SystemWindow {
   protected LinearLayout windowView = null;
   private Handler windowHandler = null;
 
-  private final static WindowManager.LayoutParams layoutParameters = new WindowManager.LayoutParams(
-    WindowManager.LayoutParams.WRAP_CONTENT,
-    WindowManager.LayoutParams.WRAP_CONTENT,
+  private final static WindowManager.LayoutParams windowLayout = new WindowManager.LayoutParams(
+    WindowManager.LayoutParams.WRAP_CONTENT, // width
+    WindowManager.LayoutParams.WRAP_CONTENT, // height
+    0, 0, // x, y
     WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
     PixelFormat.TRANSLUCENT
@@ -65,7 +66,7 @@ public class SystemWindow {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        if (!hasParent()) windowManager.addView(windowView, layoutParameters);
+        if (!hasParent()) windowManager.addView(windowView, windowLayout);
       }
     });
   }
