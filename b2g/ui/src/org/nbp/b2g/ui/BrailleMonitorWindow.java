@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.graphics.Typeface;
 
-public class BrailleWindow extends SystemWindow {
-  private final static String LOG_TAG = BrailleWindow.class.getName();
+public class BrailleMonitorWindow extends SystemWindow {
+  private final static String LOG_TAG = BrailleMonitorWindow.class.getName();
 
   private final static float ALPHA = 0.5f;
   private final Typeface BRAILLE_FONT;
@@ -32,22 +32,22 @@ public class BrailleWindow extends SystemWindow {
     layout.addView(view);
   }
 
-  private final void initializeWindow (Context context, WindowLayout window) {
-    window.setOrientation(window.VERTICAL);
-    window.setAlpha(0f);
+  private final void initializeWindow (Context context, WindowLayout layout) {
+    layout.setOrientation(layout.VERTICAL);
+    layout.setAlpha(0f);
 
     brailleView = new TextView(context);
     brailleView.setTypeface(BRAILLE_FONT);
-    addView(window, brailleView);
+    addView(layout, brailleView);
 
     textView = new TextView(context);
     textView.setTypeface(Typeface.MONOSPACE);
-    addView(window, textView);
+    addView(layout, textView);
   }
 
-  public BrailleWindow (Context context) {
+  public BrailleMonitorWindow (Context context) {
     super(context);
     BRAILLE_FONT = Typeface.createFromAsset(context.getAssets(), "UBraille.ttf");
-    initializeWindow(context, getWindowLayout());
+    initializeWindow(context, getLayout());
   }
 }

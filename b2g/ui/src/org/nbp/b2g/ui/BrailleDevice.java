@@ -17,18 +17,18 @@ public class BrailleDevice {
   public final static byte DOT_7 =       0X40;
   public final static byte DOT_8 = (byte)0X80;
 
-  private BrailleWindow brailleWindow = null;
+  private BrailleMonitorWindow monitorWindow = null;
 
-  public BrailleWindow getWindow () {
+  public BrailleMonitorWindow getMonitorWindow () {
     synchronized (this) {
-      if (brailleWindow == null) {
+      if (monitorWindow == null) {
         Context context = ApplicationContext.getContext();
         if (context == null) return null;
-        brailleWindow = new BrailleWindow(context);
+        monitorWindow = new BrailleMonitorWindow(context);
       }
     }
 
-    return brailleWindow;
+    return monitorWindow;
   }
 
   private native boolean openDevice ();
@@ -161,7 +161,7 @@ public class BrailleDevice {
     }
 
     if (text != null) {
-      BrailleWindow window = getWindow();
+      BrailleMonitorWindow window = getMonitorWindow();
       if (window != null) window.setContent(braille, text);
       if (log) Log.d(LOG_TAG, "braille text: " + text);
     }

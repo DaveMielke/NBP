@@ -61,7 +61,7 @@ public class SystemWindow {
     });
   }
 
-  protected final WindowLayout getWindowLayout () {
+  protected final WindowLayout getLayout () {
     return windowLayout;
   }
 
@@ -69,33 +69,33 @@ public class SystemWindow {
     windowHandler.post(runnable);
   }
 
-  private boolean hasParent () {
+  public final boolean isVisible () {
     return windowLayout.getParent() != null;
   }
 
-  public final void setWindowVisible () {
+  public final void setVisible () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        if (!hasParent()) windowManager.addView(windowLayout, windowParameters);
+        if (!isVisible()) windowManager.addView(windowLayout, windowParameters);
       }
     });
   }
 
-  public final void setWindowInvisible () {
+  public final void setInvisible () {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {
-        if (hasParent()) windowManager.removeView(windowLayout);
+        if (isVisible()) windowManager.removeView(windowLayout);
       }
     });
   }
 
-  public void setWindowVisibility (boolean visible) {
+  public void setVisibility (boolean visible) {
    if (visible) {
-     setWindowVisible();
+     setVisible();
    } else {
-     setWindowInvisible();
+     setInvisible();
    }
   }
 
