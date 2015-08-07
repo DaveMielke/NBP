@@ -11,6 +11,7 @@ public class BrailleWindow extends SystemWindow {
   private final static String LOG_TAG = BrailleWindow.class.getName();
 
   private final static float ALPHA = 0.5f;
+  private final Typeface BRAILLE_FONT;
 
   private TextView brailleView = null;
   private TextView textView = null;
@@ -36,7 +37,7 @@ public class BrailleWindow extends SystemWindow {
     window.setAlpha(0f);
 
     brailleView = new TextView(context);
-    brailleView.setTypeface(Typeface.MONOSPACE);
+    brailleView.setTypeface(BRAILLE_FONT);
     addView(window, brailleView);
 
     textView = new TextView(context);
@@ -46,6 +47,7 @@ public class BrailleWindow extends SystemWindow {
 
   public BrailleWindow (Context context) {
     super(context);
+    BRAILLE_FONT = Typeface.createFromAsset(context.getAssets(), "UBraille.ttf");
     initializeWindow(context, getWindowLayout());
   }
 }
