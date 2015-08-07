@@ -22,9 +22,10 @@ public class SystemWindow {
   private Handler windowHandler = null;
 
   private final static WindowManager.LayoutParams windowLayout = new WindowManager.LayoutParams(
-    WindowManager.LayoutParams.WRAP_CONTENT, // width
-    WindowManager.LayoutParams.WRAP_CONTENT, // height
-    0, 0, // x, y
+    WindowManager.LayoutParams.WRAP_CONTENT /* width */,
+    WindowManager.LayoutParams.WRAP_CONTENT /* height */,
+    0 /* x */,
+    0 /* y */,
     WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
     PixelFormat.TRANSLUCENT
