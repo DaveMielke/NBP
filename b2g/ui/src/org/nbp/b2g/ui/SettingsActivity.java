@@ -250,7 +250,8 @@ public class SettingsActivity extends ProgrammaticActivity {
     return createVerticalScrollContainer(view);
   }
 
-  private View createRootView () {
+  @Override
+  protected final View createContentView () {
     LinearLayout view = new LinearLayout(this);
     view.setOrientation(view.VERTICAL);
 
@@ -266,11 +267,6 @@ public class SettingsActivity extends ProgrammaticActivity {
     view.addView(createActionsView(), parameters);
     view.addView(createControlsView(), parameters);
 
-    view.setLayoutParams(new ViewGroup.LayoutParams(
-      ViewGroup.LayoutParams.MATCH_PARENT,
-      ViewGroup.LayoutParams.MATCH_PARENT
-    ));
-
     return view;
   }
 
@@ -278,6 +274,6 @@ public class SettingsActivity extends ProgrammaticActivity {
   public void onCreate (Bundle state) {
     super.onCreate(state);
     ApplicationContext.setContext(this);
-    setContentView(createRootView());
+    setContentView();
   }
 }

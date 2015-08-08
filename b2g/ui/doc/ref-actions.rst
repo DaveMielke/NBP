@@ -33,6 +33,7 @@
 .. |Enter| replace:: the keyboard Enter key
 .. |FindNext| replace:: find text within the current screen element (forward search)
 .. |ForceCrash| replace:: force a B2G User Interface crash
+.. |Guide| replace:: go to the User Guide screen of the B2G User Interface
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
 .. |InsertUnicode| replace:: type any character by its Unicode value
@@ -71,7 +72,6 @@
 .. |Null| replace:: cancel an accidentally-started key combination
 .. |OneHandOff| replace:: disable one hand mode
 .. |OneHandOn| replace:: enable one hand mode
-.. |Options| replace:: go to the Settings screen of the B2G User Interface
 .. |PageDown| replace:: the keyboard Page Down key
 .. |PageUp| replace:: the keyboard Page Up key
 .. |PanLeft| replace:: pan to the left
@@ -91,6 +91,7 @@
 .. |SetLeft| replace:: shift the braille display a specific amount to the right
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection
+.. |Settings| replace:: go to the Settings screen of the B2G User Interface
 .. |SleepTalkOff| replace:: speak only when awake
 .. |SleepTalkOn| replace:: speak even when asleep
 .. |SpeakFaster| replace:: increase the speech rate

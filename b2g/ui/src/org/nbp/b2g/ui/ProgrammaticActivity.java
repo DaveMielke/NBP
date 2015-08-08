@@ -34,10 +34,15 @@ public abstract class ProgrammaticActivity extends Activity {
     return view;
   }
 
-  protected TextView createTextView (String text) {
+  protected TextView createTextView () {
     TextView view = new TextView(this);
-    view.setText(text);
     view.setFocusable(true);
+    return view;
+  }
+
+  protected TextView createTextView (String text) {
+    TextView view = createTextView();
+    view.setText(text);
     return view;
   }
 
@@ -50,5 +55,18 @@ public abstract class ProgrammaticActivity extends Activity {
 
   protected Button createButton (int label, Button.OnClickListener listener) {
     return createButton(ApplicationContext.getString(label), listener);
+  }
+
+  protected abstract View createContentView ();
+
+  protected final void setContentView () {
+    View view = createContentView();
+
+    view.setLayoutParams(new ViewGroup.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT
+    ));
+
+    setContentView(view);
   }
 }

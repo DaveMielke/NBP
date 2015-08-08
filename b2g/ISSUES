@@ -3,9 +3,12 @@ Verify:
   SIM indicators
   battery indicators
   braille enable/disable
+  braille monitor
 
 Document
   braille enabled
+  braille monitor
+  user guide
   braille firmness
   locale-based character table autodetection
   override files

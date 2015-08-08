@@ -7,16 +7,34 @@
     android:versionName="1.0"
     >
 
+  <!-- Android 4.1 (Jellybean) -->
   <uses-sdk android:minSdkVersion="16" />
+
+  <!-- x -->
   <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+  <!-- x -->
   <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+  <!-- to start the screen monitor (accessibility service) -->
   <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+  <!-- to inject touch screen gestures (tap, swipe, etc) -->
   <uses-permission android:name="android.permission.INJECT_EVENTS" />
+
+  <!-- to read user-provided data files (keys, chars, etc) -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+  <!-- for the SendAndroidLog action -->
   <uses-permission android:name="android.permission.READ_LOGS" />
+
+  <!-- for the braille monitor (system overlay) window -->
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+  <!-- for the DescribeStatus action -->
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+  <!-- for the braille display endpoint -->
   <uses-permission android:name="android.permission.BLUETOOTH" />
 
   <application
@@ -66,6 +84,12 @@
     <activity
         android:name=".SettingsActivity"
         android:label="@string/settings_activity_label"
+        >
+    </activity>
+
+    <activity
+        android:name=".GuideActivity"
+        android:label="@string/guide_activity_label"
         >
     </activity>
 

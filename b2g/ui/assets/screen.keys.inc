@@ -21,9 +21,10 @@ bind Dot4+Center MenuKey
 
 bind Space+Dots123456 HomeKey
 bind Space+Dots124#f FindNext
+bind Space+Dots1245#g Guide
 bind Space+Dots134#m MenuKey
 bind Space+Dots1345#n Notifications
-bind Space+Dots135#o Options
+bind Space+Dots135#o Settings
 bind Space+Dots1234#p PowerOff
 bind Space+Dots1235#r RecentApps
 bind Space+Dots2345#t Clock
