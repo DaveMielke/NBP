@@ -40,7 +40,7 @@ public abstract class Controls {
     cursorIndicatorControl,
     selectionIndicatorControl,
 
-  //brailleEnabledControl,
+    brailleEnabledControl,
     brailleFirmnessControl,
     brailleMonitorControl,
 
