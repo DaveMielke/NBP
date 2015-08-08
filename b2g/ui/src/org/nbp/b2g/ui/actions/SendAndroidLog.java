@@ -13,7 +13,7 @@ public class SendAndroidLog extends Action {
   private File makeLogFile () {
     FileMaker fileMaker = new AttachmentMaker() {
       @Override
-      protected boolean writeContent (final Writer writer) throws IOException {
+      protected boolean writeContent (final Writer writer) {
         LogProcessor logProcessor = new LogProcessor() {
           @Override
           protected boolean handleLog (String log) {

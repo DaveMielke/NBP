@@ -20,40 +20,41 @@ public abstract class FileMaker {
     return true;
   }
 
-  public final File makeFile (String name, String owner) {
-    Context context = ApplicationContext.getContext();
+  public final File makeFile (File file) {
+    file.delete();
 
-    if (context != null) {
-      File directory = context.getDir(owner, Context.MODE_PRIVATE);
+    try {
+      boolean written = false;
+      BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
 
-      if (directory != null) {
-        File file = new File(directory, name);
-        file.delete();
+      try {
+        if (writeContent(writer)) written = true;
+      } finally {
+        writer.close();
+      }
 
-        try {
-          boolean written = false;
-          BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-
-          try {
-            if (writeContent(writer)) written = true;
-          } finally {
-            writer.close();
-          }
-
-          if (written) {
-            if (setAttributes(file)) {
-              return file;
-            }
-          }
-
-          file.delete();
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, "file make error", exception);
+      if (written) {
+        if (setAttributes(file)) {
+          return file;
         }
       }
+
+      file.delete();
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "file make error", exception);
     }
 
     return null;
+  }
+
+  public final File makeFile (String name, String owner) {
+    Context context = ApplicationContext.getContext();
+    if (context == null) return null;
+
+    File directory = context.getDir(owner, Context.MODE_PRIVATE);
+    if (directory == null) return null;
+
+    return makeFile(new File(directory, name));
   }
 
   public final File makeFile (String name, Class owner) {

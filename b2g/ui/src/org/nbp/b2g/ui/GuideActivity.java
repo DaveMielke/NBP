@@ -2,11 +2,13 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 import android.os.Bundle;
+import android.os.AsyncTask;
 
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.text.Spanned;
 import android.text.Html;
 import android.text.util.Linkify;
 
@@ -14,21 +16,50 @@ public class GuideActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = GuideActivity.class.getName();
 
   private View createGuideView () {
-    final StringBuilder guideText = new StringBuilder();
+    final TextView view = createTextView();
+    view.setAutoLinkMask(Linkify.WEB_URLS);
 
-    InputProcessor guideProcessor = new InputProcessor() {
+    AsyncTask<String, String, Spanned> task = new AsyncTask<String, String, Spanned>() {
+      private final String readDocument (String name) {
+        final StringBuilder result = new StringBuilder();
+
+        InputProcessor inputProcessor = new InputProcessor() {
+          @Override
+          protected final boolean handleLine (String text, int number) {
+            result.append(text);
+            result.append('\n');
+            return true;
+          }
+        };
+
+        inputProcessor.processInput(name);
+        return result.toString();
+      }
+
       @Override
-      protected final boolean handleLine (String text, int number) {
-        guideText.append(text);
-        guideText.append('\n');
-        return true;
+      protected Spanned doInBackground (String... names) {
+        publishProgress("reading");
+        String html = readDocument(names[0]);
+
+        publishProgress("formatting");
+        Spanned text = Html.fromHtml(html);
+
+        publishProgress("done");
+        return text;
+      }
+
+      @Override
+      protected void onProgressUpdate (String... values) {
+        view.setText(values[0]);
+      }
+
+      @Override
+      protected void onPostExecute (Spanned result) {
+        view.setText(result);
       }
     };
 
-    guideProcessor.processInput("guide.html");
-    TextView view = createTextView();
-    view.setText(Html.fromHtml(guideText.toString()));
-    view.setAutoLinkMask(Linkify.WEB_URLS);
+    task.execute("guide.html");
     return view;
   }
 
