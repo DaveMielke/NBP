@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 
 public class BrailleFirmnessControl extends IntegerControl {
   @Override
-  public String getLabel () {
+  public CharSequence getLabel () {
     return ApplicationContext.getString(R.string.BrailleFirmness_control_label);
   }
 

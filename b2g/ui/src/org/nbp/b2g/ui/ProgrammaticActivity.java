@@ -40,13 +40,13 @@ public abstract class ProgrammaticActivity extends Activity {
     return view;
   }
 
-  protected TextView createTextView (String text) {
+  protected TextView createTextView (CharSequence text) {
     TextView view = createTextView();
     view.setText(text);
     return view;
   }
 
-  protected Button createButton (String label, Button.OnClickListener listener) {
+  protected Button createButton (CharSequence label, Button.OnClickListener listener) {
     Button button = new Button(this);
     button.setText(label);
     button.setOnClickListener(listener);

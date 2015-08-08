@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 
 public class BrailleInputControl extends BooleanControl {
   @Override
-  public String getLabel () {
+  public CharSequence getLabel () {
     return ApplicationContext.getString(R.string.BrailleInput_control_label);
   }
 

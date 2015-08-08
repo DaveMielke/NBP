@@ -2,8 +2,8 @@ package org.nbp.b2g.ui;
 
 public class DeveloperEnabledControl extends BooleanControl {
   @Override
-  public String getLabel () {
-    return ApplicationContext.getString(R.string.DeveloperEnabled_control_label);
+  public CharSequence getLabel () {
+    return toHeader(ApplicationContext.getString(R.string.DeveloperEnabled_control_label));
   }
 
   @Override

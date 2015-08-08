@@ -27,17 +27,17 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
-  public String getValue () {
+  public CharSequence getValue () {
     return Integer.toString(getIntegerValue());
   }
 
   @Override
-  public String getNextLabel () {
+  public CharSequence getNextLabel () {
     return ApplicationContext.getString(R.string.numeric_control_next);
   }
 
   @Override
-  public String getPreviousLabel () {
+  public CharSequence getPreviousLabel () {
     return ApplicationContext.getString(R.string.numeric_control_previous);
   }
 

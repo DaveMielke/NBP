@@ -6,23 +6,35 @@ import android.content.SharedPreferences;
 import java.util.Set;
 import java.util.HashSet;
 
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
+
 public abstract class Control {
   protected abstract boolean setNextValue ();
   protected abstract boolean setPreviousValue ();
   protected abstract boolean setDefaultValue ();
 
-  public abstract String getLabel ();
-  public abstract String getValue ();
+  public abstract CharSequence getLabel ();
+  public abstract CharSequence getValue ();
 
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
 
-  public String getNextLabel () {
+  public CharSequence getNextLabel () {
     return ApplicationContext.getString(R.string.default_control_next);
   }
 
-  public String getPreviousLabel () {
+  public CharSequence getPreviousLabel () {
     return ApplicationContext.getString(R.string.default_control_previous);
+  }
+
+  private final static StyleSpan HEADER_SPAN = new StyleSpan(Typeface.BOLD);
+
+  protected final CharSequence toHeader (CharSequence text) {
+    SpannableStringBuilder header = new SpannableStringBuilder(text);
+    header.setSpan(HEADER_SPAN, 0, text.length(), 0);
+    return header;
   }
 
   protected String getPreferenceKey () {

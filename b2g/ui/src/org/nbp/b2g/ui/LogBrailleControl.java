@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 
 public class LogBrailleControl extends BooleanControl {
   @Override
-  public String getLabel () {
+  public CharSequence getLabel () {
     return ApplicationContext.getString(R.string.LogBraille_control_label);
   }
 

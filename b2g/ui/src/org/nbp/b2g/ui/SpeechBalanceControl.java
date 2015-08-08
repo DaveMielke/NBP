@@ -2,22 +2,22 @@ package org.nbp.b2g.ui;
 
 public class SpeechBalanceControl extends LinearFloatControl {
   @Override
-  public String getLabel () {
+  public CharSequence getLabel () {
     return ApplicationContext.getString(R.string.SpeechBalance_control_label);
   }
 
   @Override
-  public String getNextLabel () {
+  public CharSequence getNextLabel () {
     return ApplicationContext.getString(R.string.SpeechBalance_control_next);
   }
 
   @Override
-  public String getPreviousLabel () {
+  public CharSequence getPreviousLabel () {
     return ApplicationContext.getString(R.string.SpeechBalance_control_previous);
   }
 
   @Override
-  public String getValue () {
+  public CharSequence getValue () {
     float value = getFloatValue();
     if (value == 0.0f) return ApplicationContext.getString(R.string.SpeechBalance_control_center);
 

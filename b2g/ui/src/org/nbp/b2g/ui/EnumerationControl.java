@@ -60,7 +60,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   @Override
-  public String getValue () {
+  public CharSequence getValue () {
     return getValueLabel(getEnumerationValue());
   }
 
@@ -72,12 +72,12 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   @Override
-  public String getNextLabel () {
+  public CharSequence getNextLabel () {
     return getLabel(1, R.string.default_control_next);
   }
 
   @Override
-  public String getPreviousLabel () {
+  public CharSequence getPreviousLabel () {
     return getLabel(0, R.string.default_control_previous);
   }
 
