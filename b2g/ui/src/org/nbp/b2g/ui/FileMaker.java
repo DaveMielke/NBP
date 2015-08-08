@@ -47,6 +47,10 @@ public abstract class FileMaker {
     return null;
   }
 
+  public final File makeFile (String name, File directory) {
+    return makeFile(new File(directory, name));
+  }
+
   public final File makeFile (String name, String owner) {
     Context context = ApplicationContext.getContext();
     if (context == null) return null;
@@ -54,7 +58,7 @@ public abstract class FileMaker {
     File directory = context.getDir(owner, Context.MODE_PRIVATE);
     if (directory == null) return null;
 
-    return makeFile(new File(directory, name));
+    return makeFile(name, directory);
   }
 
   public final File makeFile (String name, Class owner) {
