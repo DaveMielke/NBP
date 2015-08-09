@@ -19,7 +19,7 @@ public class GuideActivity extends ProgrammaticActivity {
     view.setAutoLinkMask(Linkify.WEB_URLS);
 
     new AsyncTask<String, String, CharSequence>() {
-      private final String readDocument (String name) {
+      private final String loadDocument (String name) {
         final StringBuilder result = new StringBuilder();
 
         new InputProcessor() {
@@ -34,13 +34,37 @@ public class GuideActivity extends ProgrammaticActivity {
         return result.toString();
       }
 
+      private CharSequence trimText (CharSequence text) {
+        String string = text.toString();
+        int from = string.indexOf('\n');
+        int to = string.length();
+
+        if (from < 0) {
+          from = 0;
+        } else {
+          while (from < to) {
+            if (!Character.isWhitespace(string.charAt(from))) break;
+            from += 1;
+          }
+        }
+
+        while (to > from) {
+          if (!Character.isWhitespace(string.charAt(--to))) {
+            to += 1;
+            break;
+          }
+        }
+
+        return text.subSequence(from, to);
+      }
+
       @Override
       protected CharSequence doInBackground (String... names) {
-        publishProgress("reading");
-        String html = readDocument(names[0]);
+        publishProgress("loading document");
+        String html = loadDocument(names[0]);
 
-        publishProgress("formatting");
-        CharSequence text = Html.fromHtml(html);
+        publishProgress("formatting document");
+        CharSequence text = trimText(Html.fromHtml(html));
 
         publishProgress("done");
         return text;
@@ -48,7 +72,9 @@ public class GuideActivity extends ProgrammaticActivity {
 
       @Override
       protected void onProgressUpdate (String... values) {
-        view.setText(values[0]);
+        String report = values[0];
+        view.setText(report);
+        Log.v(LOG_TAG, report);
       }
 
       @Override
