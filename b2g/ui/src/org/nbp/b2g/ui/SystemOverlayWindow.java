@@ -30,8 +30,6 @@ public class SystemOverlayWindow {
   private final static WindowManager.LayoutParams windowParameters = new WindowManager.LayoutParams(
     WindowManager.LayoutParams.WRAP_CONTENT /* width */,
     WindowManager.LayoutParams.WRAP_CONTENT /* height */,
-    0 /* x */,
-    0 /* y */,
     WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
     PixelFormat.TRANSLUCENT
@@ -64,6 +62,10 @@ public class SystemOverlayWindow {
         Log.d(LOG_TAG, sb.toString());
       }
     });
+  }
+
+  protected final void setGravity (int gravity) {
+    windowParameters.gravity = gravity;
   }
 
   protected final void runOnWindowThread (Runnable runnable) {

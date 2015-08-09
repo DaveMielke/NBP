@@ -4,13 +4,14 @@ import android.util.Log;
 
 import android.content.Context;
 import android.view.View;
+import android.view.Gravity;
 import android.widget.TextView;
 import android.graphics.Typeface;
 
 public class BrailleMonitorWindow extends SystemOverlayWindow {
   private final static String LOG_TAG = BrailleMonitorWindow.class.getName();
 
-  private final static float ALPHA = 0.5f;
+  private final static float ALPHA = 0.8f;
   private final Typeface BRAILLE_FONT;
 
   private final ThreadLocal<TextView> brailleView = new ThreadLocal<TextView>();
@@ -59,5 +60,7 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
         }
       }
     });
+
+    setGravity(Gravity.BOTTOM);
   }
 }
