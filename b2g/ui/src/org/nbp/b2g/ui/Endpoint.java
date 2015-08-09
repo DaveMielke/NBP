@@ -153,13 +153,13 @@ public abstract class Endpoint {
     return deleteText(getSelectionStart(), getSelectionEnd());
   }
 
-  public boolean deleteText (int position) {
+  public boolean deleteText (int offset) {
     int start = getSelectionStart();
     int end = getSelectionEnd();
 
     if (!isSelected(start, end)) {
       if (!isSelected(end)) return false;
-      start = end + position;
+      start = end + offset;
       end = start + 1;
 
       if (start < 0) return false;

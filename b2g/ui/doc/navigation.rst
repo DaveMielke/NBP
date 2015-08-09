@@ -92,21 +92,23 @@ portion of the current line starts with that character.
 Navigating with the Directional Keys
 ------------------------------------
 
-Navigating with the four directional keys (of the D-Pad) is equivalent to
-`Navigating with the Forward and Backward keys`_, as follows:
+The Right key pans to the right through the text for the current screen 
+element, wrapping to the start of the next line, and, when at the end of 
+the text, moves to the start of the text for the next screen element.
 
-.. table::
+The Left key pans to the left through the text for the current screen 
+element, wrapping to the end of the previous line, and, when at the start of 
+the text, moves to the start of the text for the previous screen element.
 
-  ===============  ================
-  Directional Key  Is Equivalent To
-  ---------------  ----------------
-  Left             Backward
-  Right            Forward
-  Up               Backward+Space
-  Down             Forward+Space
-  ===============  ================
+The Down key moves down through the lines of text for the current screen 
+element, and, when on the bottom line, moves to the start of the text for
+the next screen element.
 
-These keys, however, do act differently within certain contexts. See:
+The Up key moves up through the lines of text for the current screen 
+element, and, when on the top line, moves to the start of the text for
+the previous screen element.
+
+These keys act differently within some other contexts. For those details, see:
 
 * `The Directional Keys within an Input Area`_
 * `The Directional Keys When on a Slider`_
@@ -114,27 +116,21 @@ These keys, however, do act differently within certain contexts. See:
 The directional keys can also be used to perform these additional operations:
 
 Space+Up
-
   Perform a scroll backward (up or left) operation.
 
   + If within a list then move up several elements.
-
   + If within a set of pages then move to the previous page.
 
 Space+Down
-
   Perform a scroll forward (down or right) operation.
 
   + If within a list then move down several elements.
-
   + If within a set of pages then move to the next page.
 
 Space+Left
-
   Move to the first element of a list, to the first page of a group, etc.
 
 Space+Right
-
   Move to the last element of a list, to the last page of a group, etc.
 
 Input Areas
@@ -323,6 +319,7 @@ Instead, use the Left and Right directional keys (on the D-Pad) to adjust it.
 
 * The Left key decreases its position.
 * The Right key increases its position.
+* The Up and Down keys don't do anything.
 
 Finding Text within the Current Screen Element
 ----------------------------------------------
