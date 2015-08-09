@@ -201,6 +201,13 @@ public class BrailleDevice {
     return writeCells(brailleCells, brailleText, "writing");
   }
 
+  public boolean refreshCells () {
+    synchronized (this) {
+      if (brailleCells == null) return true;
+      return writeCells();
+    }
+  }
+
   private final Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
     @Override
     public void run () {

@@ -27,6 +27,7 @@ public class BrailleEnabledControl extends BooleanControl {
   //if (!(value? braille.enable(): braille.disable())) return false;
 
     ApplicationSettings.BRAILLE_ENABLED = value;
+    if (value) braille.refreshCells();
     return true;
   }
 
