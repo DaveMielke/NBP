@@ -39,9 +39,12 @@ public abstract class ApplicationContext {
 
     acquireWakeLock();
     Clipboard.setClipboard();
+
+    Controls.restoreCurrentValues();
+    Controls.restoreSaneValues();
+
     Devices.speech.get().say(null);
     EventMonitors.startEventMonitors();
-    Controls.restoreCurrentValues();
     enableService(ScreenMonitor.class);
     return true;
   }

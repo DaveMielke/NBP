@@ -210,6 +210,11 @@ public abstract class Controls {
     forEachControl(restoreCurrentValue);
   }
 
+  public static void restoreSaneValues () {
+    oneHandControl.previousValue();
+    brailleEnabledControl.nextValue();
+  }
+
   private Controls () {
   }
 }
