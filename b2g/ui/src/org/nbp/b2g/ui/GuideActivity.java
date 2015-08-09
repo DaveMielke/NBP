@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import android.text.Spanned;
 import android.text.Html;
 import android.text.util.Linkify;
 
@@ -19,30 +18,29 @@ public class GuideActivity extends ProgrammaticActivity {
     final TextView view = createTextView();
     view.setAutoLinkMask(Linkify.WEB_URLS);
 
-    AsyncTask<String, String, Spanned> task = new AsyncTask<String, String, Spanned>() {
+    new AsyncTask<String, String, CharSequence>() {
       private final String readDocument (String name) {
         final StringBuilder result = new StringBuilder();
 
-        InputProcessor inputProcessor = new InputProcessor() {
+        new InputProcessor() {
           @Override
           protected final boolean handleLine (String text, int number) {
             result.append(text);
             result.append('\n');
             return true;
           }
-        };
+        }.processInput(name);
 
-        inputProcessor.processInput(name);
         return result.toString();
       }
 
       @Override
-      protected Spanned doInBackground (String... names) {
+      protected CharSequence doInBackground (String... names) {
         publishProgress("reading");
         String html = readDocument(names[0]);
 
         publishProgress("formatting");
-        Spanned text = Html.fromHtml(html);
+        CharSequence text = Html.fromHtml(html);
 
         publishProgress("done");
         return text;
@@ -54,12 +52,11 @@ public class GuideActivity extends ProgrammaticActivity {
       }
 
       @Override
-      protected void onPostExecute (Spanned result) {
+      protected void onPostExecute (CharSequence result) {
         view.setText(result);
       }
-    };
+    }.execute("guide.html");
 
-    task.execute("guide.html");
     return view;
   }
 
@@ -68,7 +65,7 @@ public class GuideActivity extends ProgrammaticActivity {
     LinearLayout view = new LinearLayout(this);
     view.setOrientation(view.VERTICAL);
 
-     LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
+    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
       LinearLayout.LayoutParams.MATCH_PARENT,
       LinearLayout.LayoutParams.WRAP_CONTENT
     );

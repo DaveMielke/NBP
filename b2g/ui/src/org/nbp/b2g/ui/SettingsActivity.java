@@ -255,7 +255,7 @@ public class SettingsActivity extends ProgrammaticActivity {
     LinearLayout view = new LinearLayout(this);
     view.setOrientation(view.VERTICAL);
 
-     LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
+    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
       LinearLayout.LayoutParams.MATCH_PARENT,
       LinearLayout.LayoutParams.WRAP_CONTENT
     );

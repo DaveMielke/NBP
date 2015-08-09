@@ -47,6 +47,10 @@ public abstract class FileMaker {
     return null;
   }
 
+  public final File makeFile (String path) {
+    return makeFile(new File(path));
+  }
+
   public final File makeFile (String name, File directory) {
     return makeFile(new File(directory, name));
   }
