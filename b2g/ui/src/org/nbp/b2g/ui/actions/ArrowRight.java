@@ -5,6 +5,11 @@ import android.accessibilityservice.AccessibilityService;
 
 public class ArrowRight extends ArrowAction {
   @Override
+  protected boolean performSliderAction (Endpoint endpoint) {
+    return endpoint.seekNext();
+  }
+
+  @Override
   protected boolean performInputAction (Endpoint endpoint) {
     int end = endpoint.getSelectionEnd();
 
@@ -20,11 +25,6 @@ public class ArrowRight extends ArrowAction {
     }
 
     return false;
-  }
-
-  @Override
-  protected boolean performSliderAction (Endpoint endpoint) {
-    return endpoint.seekNext();
   }
 
   @Override

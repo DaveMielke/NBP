@@ -33,6 +33,11 @@ public class ArrowDown extends ArrowAction {
   }
 
   @Override
+  protected Class<? extends Action> getMoveAction () {
+    return LineNext.class;
+  }
+
+  @Override
   protected Class<? extends Action> getNavigationAction () {
     return getEndpoint().getMoveForwardAction();
   }

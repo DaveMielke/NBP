@@ -22,16 +22,6 @@ public class PopupEndpoint extends Endpoint {
     super.onBackground();
   }
 
-  @Override
-  public Class<? extends Action> getMoveBackwardAction () {
-    return LinePrevious.class;
-  }
-
-  @Override
-  public Class<? extends Action> getMoveForwardAction () {
-    return LineNext.class;
-  }
-
   public PopupEndpoint () {
     super("popup");
   }
