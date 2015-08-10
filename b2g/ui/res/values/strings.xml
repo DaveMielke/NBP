@@ -28,16 +28,13 @@
   <string name="BrailleFirmness_control_label">Firmness</string>
   <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
+  <string name="InputMode_control_label">Input Mode</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
   <string name="ReversePanning_control_label">Reverse Panning</string>
   <string name="SelectionIndicator_control_label">Selection Indicator</string>
   <string name="SleepTalk_control_label">Sleep Talk</string>
   <string name="SpeechEnabled_control_label">Speech</string>
-
-  <string name="BrailleInput_control_label">Input Mode</string>
-  <string name="BrailleInput_control_previous">Text</string>
-  <string name="BrailleInput_control_next">Braille</string>
 
   <string name="SpeechBalance_control_label">Balance</string>
   <string name="SpeechBalance_control_previous">More Left</string>

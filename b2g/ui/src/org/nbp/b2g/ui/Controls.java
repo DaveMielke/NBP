@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
-  private final static BooleanControl brailleInputControl = new BrailleInputControl();
+  private final static InputModeControl inputModeControl = new InputModeControl();
   private final static BooleanControl longPressControl = new LongPressControl();
   private final static BooleanControl reversePanningControl = new ReversePanningControl();
   private final static BooleanControl oneHandControl = new OneHandControl();
@@ -32,7 +32,7 @@ public abstract class Controls {
   private final static BooleanControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
-    brailleInputControl,
+    inputModeControl,
     longPressControl,
     reversePanningControl,
     oneHandControl,
@@ -60,8 +60,8 @@ public abstract class Controls {
     logBrailleControl
   };
 
-  public static BooleanControl getBrailleInputControl () {
-    return brailleInputControl;
+  public static InputModeControl getInputModeControl () {
+    return inputModeControl;
   }
 
   public static BooleanControl getLongPressControl () {
@@ -212,7 +212,7 @@ public abstract class Controls {
 
   public static void restoreSaneValues () {
     final boolean confirm = false;
-    brailleInputControl.previousValue(confirm);
+    inputModeControl.previousValue(confirm);
     oneHandControl.previousValue(confirm);
     brailleEnabledControl.nextValue(confirm);
   }

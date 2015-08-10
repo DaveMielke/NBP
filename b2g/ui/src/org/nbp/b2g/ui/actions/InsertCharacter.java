@@ -32,27 +32,35 @@ public class InsertCharacter extends Action {
   public boolean performAction () {
     int keyMask = getNavigationKeys();
 
-    if (ApplicationSettings.BRAILLE_INPUT) {
-      Byte dots = KeyMask.toDots(keyMask);
+    switch (ApplicationSettings.INPUT_MODE) {
+      case TEXT: {
+        Character character = Characters.getCharacters().toCharacter(keyMask);
 
-      if (dots == null) {
-        Log.w(LOG_TAG, String.format(
-          "not a braille character: %s",
-          KeyMask.toString(keyMask)
-        ));
-      } else if (insertText(Braille.toCharacter(dots))) {
-        return true;
+        if (character == null) {
+          Log.w(LOG_TAG, String.format(
+            "not mapped to a character: %s",
+            KeyMask.toString(keyMask)
+          ));
+        } else if (insertCharacter(character)) {
+          return true;
+        }
+
+        break;
       }
-    } else {
-      Character character = Characters.getCharacters().toCharacter(keyMask);
 
-      if (character == null) {
-        Log.w(LOG_TAG, String.format(
-          "not mapped to a character: %s",
-          KeyMask.toString(keyMask)
-        ));
-      } else if (insertCharacter(character)) {
-        return true;
+      case BRAILLE: {
+        Byte dots = KeyMask.toDots(keyMask);
+
+        if (dots == null) {
+          Log.w(LOG_TAG, String.format(
+            "not a braille character: %s",
+            KeyMask.toString(keyMask)
+          ));
+        } else if (insertText(Braille.toCharacter(dots))) {
+          return true;
+        }
+
+        break;
       }
     }
 

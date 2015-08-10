@@ -3,7 +3,7 @@
   ===================  =======  ====================  ==========  ==========
   Setting              Default  Range                 *Previous*  *Next*
   -------------------  -------  --------------------  ----------  ----------
-  Input Mode           Text     Text, Braille
+  Input Mode           Text     Text, Braille         Text        Braille
   Long Press           On       Off - On
   Reverse Panning      Off      Off - On
   One Hand             Off      Off - On
