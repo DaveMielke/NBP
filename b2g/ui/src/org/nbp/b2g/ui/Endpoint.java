@@ -585,19 +585,19 @@ public abstract class Endpoint {
   }
 
   public boolean handleKeyboardKey_pageUp () {
-    return false;
+    return performAction(ScrollUp.class);
   }
 
   public boolean handleKeyboardKey_pageDown () {
-    return false;
+    return performAction(ScrollDown.class);
   }
 
   public boolean handleKeyboardKey_home () {
-    return false;
+    return performAction(ScrollLeft.class);
   }
 
   public boolean handleKeyboardKey_end () {
-    return false;
+    return performAction(ScrollRight.class);
   }
 
   private final KeyBindings keyBindings;
