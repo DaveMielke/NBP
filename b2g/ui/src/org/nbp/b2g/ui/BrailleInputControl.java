@@ -7,6 +7,16 @@ public class BrailleInputControl extends BooleanControl {
   }
 
   @Override
+  public CharSequence getNextLabel () {
+    return ApplicationContext.getString(R.string.BrailleInput_control_next);
+  }
+
+  @Override
+  public CharSequence getPreviousLabel () {
+    return ApplicationContext.getString(R.string.BrailleInput_control_previous);
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "braille-input";
   }

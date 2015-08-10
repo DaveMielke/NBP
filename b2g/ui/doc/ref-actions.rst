@@ -4,8 +4,8 @@
 .. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
-.. |BrailleInputOff| replace:: disable Unicode braille input
-.. |BrailleInputOn| replace:: enable Unicode braille input
+.. |BrailleInputOff| replace:: set the input mode to text
+.. |BrailleInputOn| replace:: set the input mode to braille
 .. |BringCursor| replace:: bring the cursor to a specific character
 .. |ClearAndroidLog| replace:: clear the Android log
 .. |Click| replace:: tap (click) the current screen element
