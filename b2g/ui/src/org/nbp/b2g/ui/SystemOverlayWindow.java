@@ -81,7 +81,11 @@ public class SystemOverlayWindow {
       @Override
       public void run () {
         WindowLayout layout = getLayout();
-        if (!isVisible(layout)) windowManager.addView(layout, windowParameters);
+
+        if (!isVisible(layout)) {
+          windowManager.addView(layout, windowParameters);
+          Log.d(LOG_TAG, "window now visible");
+        }
       }
     });
   }
@@ -91,7 +95,11 @@ public class SystemOverlayWindow {
       @Override
       public void run () {
         WindowLayout layout = getLayout();
-        if (isVisible(layout)) windowManager.removeView(layout);
+
+        if (isVisible(layout)) {
+          windowManager.removeView(layout);
+          Log.d(LOG_TAG, "window now invisible");
+        }
       }
     });
   }
