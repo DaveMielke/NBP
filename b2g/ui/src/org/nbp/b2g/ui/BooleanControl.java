@@ -10,24 +10,30 @@ public abstract class BooleanControl extends Control {
     return false;
   }
 
-  private final boolean setValue (boolean value) {
+  private final boolean changeValue (boolean value) {
     if (value == getBooleanValue()) return false;
     return setBooleanValue(value);
   }
 
   @Override
   protected final boolean setNextValue () {
-    return setValue(true);
+    return changeValue(true);
   }
 
   @Override
   protected final boolean setPreviousValue () {
-    return setValue(false);
+    return changeValue(false);
   }
 
   @Override
   protected final boolean setDefaultValue () {
     return setBooleanValue(getBooleanDefault());
+  }
+
+  public final boolean setValue (boolean value) {
+    if (!setBooleanValue(value)) return false;
+    reportValue(false);
+    return true;
   }
 
   @Override

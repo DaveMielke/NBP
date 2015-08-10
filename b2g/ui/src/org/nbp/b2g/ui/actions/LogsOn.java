@@ -9,18 +9,14 @@ public class LogsOn extends Action {
     Controls.getLogBrailleControl()
   };
 
-  private final static ControlProcessor enableControl = new ControlProcessor() {
-    @Override
-    public boolean processControl (Control control) {
-      control.nextValue(false);
-      return true;
-    }
-  };
-
   @Override
   public boolean performAction () {
     ApplicationUtilities.message(R.string.LogsOn_action_confirmation);
-    Controls.forEachControl(controls, enableControl);
+
+    for (BooleanControl control : controls) {
+      control.setValue(true);
+    }
+
     return true;
   }
 

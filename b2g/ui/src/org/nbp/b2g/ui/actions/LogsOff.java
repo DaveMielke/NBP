@@ -11,18 +11,14 @@ public class LogsOff extends Action {
     Controls.getLogBrailleControl()
   };
 
-  private final static ControlProcessor disableControl = new ControlProcessor() {
-    @Override
-    public boolean processControl (Control control) {
-      control.previousValue(false);
-      return true;
-    }
-  };
-
   @Override
   public boolean performAction () {
     ApplicationUtilities.message(R.string.LogsOff_action_confirmation);
-    Controls.forEachControl(controls, disableControl);
+
+    for (BooleanControl control : controls) {
+      control.setValue(false);
+    }
+
     return true;
   }
 

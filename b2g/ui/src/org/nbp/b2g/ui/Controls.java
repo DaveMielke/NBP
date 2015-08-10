@@ -5,31 +5,31 @@ import java.util.Collection;
 
 public abstract class Controls {
   private final static InputModeControl inputModeControl = new InputModeControl();
-  private final static BooleanControl longPressControl = new LongPressControl();
-  private final static BooleanControl reversePanningControl = new ReversePanningControl();
-  private final static BooleanControl oneHandControl = new OneHandControl();
+  private final static LongPressControl longPressControl = new LongPressControl();
+  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
+  private final static OneHandControl oneHandControl = new OneHandControl();
 
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
 
-  private final static BooleanControl brailleEnabledControl = new BrailleEnabledControl();
+  private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
   private final static IntegerControl brailleFirmnessControl = new BrailleFirmnessControl();
-  private final static BooleanControl brailleMonitorControl = new BrailleMonitorControl();
+  private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
 
-  private final static BooleanControl speechEnabledControl = new SpeechEnabledControl();
-  private final static BooleanControl sleepTalkControl = new SleepTalkControl();
+  private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
+  private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
   private final static IntegerControl speechVolumeControl = new SpeechVolumeControl();
   private final static IntegerControl speechBalanceControl = new SpeechBalanceControl();
   private final static IntegerControl speechRateControl = new SpeechRateControl();
   private final static IntegerControl speechPitchControl = new SpeechPitchControl();
 
-  private final static BooleanControl developerEnabledControl = new DeveloperEnabledControl();
-  private final static BooleanControl logUpdatesControl = new LogUpdatesControl();
-  private final static BooleanControl logKeyboardControl = new LogKeyboardControl();
-  private final static BooleanControl logActionsControl = new LogActionsControl();
-  private final static BooleanControl logNavigationControl = new LogNavigationControl();
-  private final static BooleanControl logGesturesControl = new LogGesturesControl();
-  private final static BooleanControl logBrailleControl = new LogBrailleControl();
+  private final static DeveloperEnabledControl developerEnabledControl = new DeveloperEnabledControl();
+  private final static LogUpdatesControl logUpdatesControl = new LogUpdatesControl();
+  private final static LogKeyboardControl logKeyboardControl = new LogKeyboardControl();
+  private final static LogActionsControl logActionsControl = new LogActionsControl();
+  private final static LogNavigationControl logNavigationControl = new LogNavigationControl();
+  private final static LogGesturesControl logGesturesControl = new LogGesturesControl();
+  private final static LogBrailleControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
     inputModeControl,
@@ -64,15 +64,15 @@ public abstract class Controls {
     return inputModeControl;
   }
 
-  public static BooleanControl getLongPressControl () {
+  public static LongPressControl getLongPressControl () {
     return longPressControl;
   }
 
-  public static BooleanControl getReversePanningControl () {
+  public static ReversePanningControl getReversePanningControl () {
     return reversePanningControl;
   }
 
-  public static BooleanControl getOneHandControl () {
+  public static OneHandControl getOneHandControl () {
     return oneHandControl;
   }
 
@@ -84,7 +84,7 @@ public abstract class Controls {
     return selectionIndicatorControl;
   }
 
-  public static BooleanControl getBrailleEnabledControl () {
+  public static BrailleEnabledControl getBrailleEnabledControl () {
     return brailleEnabledControl;
   }
 
@@ -92,15 +92,15 @@ public abstract class Controls {
     return brailleFirmnessControl;
   }
 
-  public static BooleanControl getBrailleMonitorControl () {
+  public static BrailleMonitorControl getBrailleMonitorControl () {
     return brailleMonitorControl;
   }
 
-  public static BooleanControl getSpeechEnabledControl () {
+  public static SpeechEnabledControl getSpeechEnabledControl () {
     return speechEnabledControl;
   }
 
-  public static BooleanControl getSleepTalkControl () {
+  public static SleepTalkControl getSleepTalkControl () {
     return sleepTalkControl;
   }
 
@@ -120,31 +120,31 @@ public abstract class Controls {
     return speechPitchControl;
   }
 
-  public static BooleanControl getDeveloperEnabledControl () {
+  public static DeveloperEnabledControl getDeveloperEnabledControl () {
     return developerEnabledControl;
   }
 
-  public static BooleanControl getLogUpdatesControl () {
+  public static LogUpdatesControl getLogUpdatesControl () {
     return logUpdatesControl;
   }
 
-  public static BooleanControl getLogKeyboardControl () {
+  public static LogKeyboardControl getLogKeyboardControl () {
     return logKeyboardControl;
   }
 
-  public static BooleanControl getLogActionsControl () {
+  public static LogActionsControl getLogActionsControl () {
     return logActionsControl;
   }
 
-  public static BooleanControl getLogNavigationControl () {
+  public static LogNavigationControl getLogNavigationControl () {
     return logNavigationControl;
   }
 
-  public static BooleanControl getLogGesturesControl () {
+  public static LogGesturesControl getLogGesturesControl () {
     return logGesturesControl;
   }
 
-  public static BooleanControl getLogBrailleControl () {
+  public static LogBrailleControl getLogBrailleControl () {
     return logBrailleControl;
   }
 
@@ -211,10 +211,9 @@ public abstract class Controls {
   }
 
   public static void restoreSaneValues () {
-    final boolean confirm = false;
-    inputModeControl.previousValue(confirm);
-    oneHandControl.previousValue(confirm);
-    brailleEnabledControl.nextValue(confirm);
+    inputModeControl.setValue(InputMode.TEXT);
+    oneHandControl.setValue(false);
+    brailleEnabledControl.setValue(true);
   }
 
   private Controls () {

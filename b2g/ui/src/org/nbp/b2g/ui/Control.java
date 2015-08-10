@@ -72,7 +72,7 @@ public abstract class Control {
     return getSettings("current-settings");
   }
 
-  private final void reportValue (boolean confirm) {
+  protected final void reportValue (boolean confirm) {
     saveValue(getCurrentSettings());
 
     if (confirm) {
@@ -115,24 +115,16 @@ public abstract class Control {
     return restoreValue(getSavedSettings());
   }
 
-  public final boolean nextValue (boolean confirm) {
-    if (!setNextValue()) return false;
-    reportValue(confirm);
-    return true;
-  }
-
   public final boolean nextValue () {
-    return nextValue(true);
-  }
-
-  public final boolean previousValue (boolean confirm) {
-    if (!setPreviousValue()) return false;
-    reportValue(confirm);
+    if (!setNextValue()) return false;
+    reportValue(true);
     return true;
   }
 
   public final boolean previousValue () {
-    return previousValue(true);
+    if (!setPreviousValue()) return false;
+    reportValue(true);
+    return true;
   }
 
   private final boolean isDeveloperControl;

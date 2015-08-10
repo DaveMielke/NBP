@@ -35,6 +35,12 @@ public abstract class FloatControl extends IntegerControl {
     return setFloatValue(toFloatValue((float)value / getLinearScale()));
   }
 
+  public final boolean setValue (float value) {
+    if (!setFloatValue(value)) return false;
+    reportValue(false);
+    return true;
+  }
+
   @Override
   protected void saveValue (SharedPreferences.Editor editor, String key) {
     editor.putFloat(key, getFloatValue());

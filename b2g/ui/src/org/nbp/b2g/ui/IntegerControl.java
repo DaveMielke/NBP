@@ -26,6 +26,12 @@ public abstract class IntegerControl extends Control {
     return setIntegerValue(getIntegerDefault());
   }
 
+  public final boolean setValue (int value) {
+    if (!setIntegerValue(value)) return false;
+    reportValue(false);
+    return true;
+  }
+
   @Override
   public CharSequence getValue () {
     return Integer.toString(getIntegerValue());

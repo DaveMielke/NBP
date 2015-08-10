@@ -61,6 +61,12 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return setEnumerationValue(values[value]);
   }
 
+  public final boolean setValue (E value) {
+    if (!setEnumerationValue(value)) return false;
+    reportValue(false);
+    return true;
+  }
+
   @Override
   public CharSequence getValue () {
     return getValueLabel(getEnumerationValue());
