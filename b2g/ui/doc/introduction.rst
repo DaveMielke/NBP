@@ -83,6 +83,13 @@ If the system is running, then:
 
 * Switching it on wakes the system up.
 
+When the system is either booted or woken up, the following settings are reset
+to their default values:
+
+* Input Mode is set to Text.
+* One Hand Mode is disabled.
+* Braille is enabled.
+
 The Back
 ~~~~~~~~
 
@@ -279,20 +286,20 @@ I), press Space+x and then immediately type the letter ``i``.
 The letter or special symbol must be typed within
 |intermediate action timeout|.
 
-Braille Input Mode
-~~~~~~~~~~~~~~~~~~
+Directly Typing Unicode Braille Characters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The characters that render in text as actual braille cells (see `Unicode
-Braille Characters`_) can be typed by enabling Braille Input Mode. Two of these
-characters can't be directly typed - just dot 7 (because it's the Backspace
-key), and just dot 8 (because it's the Enter key). Both of these can, of
-course, still be indirectly typed (see `Indirectly Typing Any Character`_).
+Braille Characters`_) can be typed by setting Input Mode to Braille. Two of
+these characters can't be directly typed - just dot 7 (because it's the
+Backspace key), and just dot 8 (because it's the Enter key). Both of these can,
+of course, still be indirectly typed (see `Indirectly Typing Any Character`_).
 
 * The Unicode value for a braille cell containing just dot 7 is U+2840.
 * The Unicode value for a braille cell containing just dot 8 is U+2880.
 
-This Mode is disabled by default. Pressing Forward+Dot4 enables it, and
-pressing Backward+Dot1 disables it.
+This mode is set to Text by default. Pressing Forward+Dot4 sets it to Braille,
+and pressing Backward+Dot1 sets it to Text.
 
 These characters have several uses, including (but not limited to):
 

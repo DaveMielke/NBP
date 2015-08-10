@@ -212,9 +212,9 @@ public abstract class Controls {
 
   public static void restoreSaneValues () {
     final boolean confirm = false;
+    brailleInputControl.previousValue(confirm);
     oneHandControl.previousValue(confirm);
     brailleEnabledControl.nextValue(confirm);
-    brailleInputControl.previousValue(confirm);
   }
 
   private Controls () {
