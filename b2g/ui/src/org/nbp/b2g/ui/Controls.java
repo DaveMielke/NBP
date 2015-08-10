@@ -214,6 +214,7 @@ public abstract class Controls {
     final boolean confirm = false;
     oneHandControl.previousValue(confirm);
     brailleEnabledControl.nextValue(confirm);
+    brailleInputControl.previousValue(confirm);
   }
 
   private Controls () {
