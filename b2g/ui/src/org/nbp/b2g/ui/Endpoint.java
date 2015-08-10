@@ -432,6 +432,30 @@ public abstract class Endpoint {
     return KeyEvents.performAction(type, this);
   }
 
+  public Class<? extends Action> getMoveBackwardAction () {
+    return null;
+  }
+
+  public Class<? extends Action> getMoveForwardAction () {
+    return null;
+  }
+
+  public Class<? extends Action> getScrollBackwardAction () {
+    return null;
+  }
+
+  public Class<? extends Action> getScrollForwardAction () {
+    return null;
+  }
+
+  public Class<? extends Action> getScrollFirstAction () {
+    return null;
+  }
+
+  public Class<? extends Action> getScrollLastAction () {
+    return null;
+  }
+
   private abstract class Panner {
     protected abstract boolean moveDisplay (int size);
     protected abstract int getInputLeaveMessage ();
@@ -455,10 +479,6 @@ public abstract class Endpoint {
       if (hasMoved) return write();
       return performAction(getLeaveAction());
     }
-  }
-
-  public Class<? extends Action> getMoveBackwardAction () {
-    return null;
   }
 
   public boolean panLeft () {
@@ -496,10 +516,6 @@ public abstract class Endpoint {
     };
 
     return panner.pan();
-  }
-
-  public Class<? extends Action> getMoveForwardAction () {
-    return null;
   }
 
   public boolean panRight () {

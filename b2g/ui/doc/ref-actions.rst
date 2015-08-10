@@ -2,10 +2,6 @@
 .. |AndroidBluetoothSettings| replace:: go to the Bluetooth Settings screen
 .. |AndroidSettings| replace:: go to the main Settings screen
 .. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
-.. |MoveDown| replace:: go to the next line of text or element on the screen
-.. |MoveLeft| replace:: go to the previous character of editable text or part of the line
-.. |MoveRight| replace:: go to the next character of editable text or part of the line
-.. |MoveUp| replace:: go to the previous line of text or element on the screen
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
 .. |BrailleInputOff| replace:: disable Unicode braille input
@@ -58,16 +54,16 @@
 .. |LongPressOn| replace:: enable long key press actions
 .. |MenuKey| replace:: the Android Menu key
 .. |MoveBackward| replace:: go to the start of the previous screen element
-.. |MoveFirst| replace:: go to the beginning of a list or line
+.. |MoveDown| replace:: go to the next line of text or element on the screen
 .. |MoveForward| replace:: go to the start of the next screen element
-.. |MoveLast| replace:: go to the end of a list or line
-.. |MoveNext| replace:: go to the next page of a list or block of text
-.. |MovePrevious| replace:: go to the previous page of a list or block of text
+.. |MoveLeft| replace:: go to the previous character of editable text or part of the line
+.. |MoveRight| replace:: go to the next character of editable text or part of the line
 .. |MoveToChild| replace:: go to and describe the first child node
 .. |MoveToNextSibling| replace:: go to and describe the next sibling node
 .. |MoveToParent| replace:: go to and describe the parent node
 .. |MoveToPreviousSibling| replace:: go to and describe the previous sibling node
 .. |MoveToSelf| replace:: describe the current node
+.. |MoveUp| replace:: go to the previous line of text or element on the screen
 .. |Notifications| replace:: go to the Notifications screen
 .. |Null| replace:: cancel an accidentally-started key combination
 .. |OneHandOff| replace:: disable one hand mode
@@ -85,7 +81,11 @@
 .. |SaveScreen| replace:: write the screen element structure to the log
 .. |SayLine| replace:: speak the current line
 .. |ScrollBackward| replace:: force the screen to scroll backward (up or left)
+.. |ScrollDown| replace:: go to the next page of a list or block of text
 .. |ScrollForward| replace:: force the screen to scroll forward (down or right)
+.. |ScrollLeft| replace:: go to the beginning of a list or line
+.. |ScrollRight| replace:: go to the end of a list or line
+.. |ScrollUp| replace:: go to the previous page of a list or block of text
 .. |SelectAll| replace:: select all of the text
 .. |SendAndroidLog| replace:: send a copy of the Android log to the B2G developers
 .. |SetLeft| replace:: shift the braille display a specific amount to the right

@@ -3,10 +3,15 @@ bind Dot8 Enter
 bind Backward PanLeft
 bind Forward PanRight
 
-bind Up MoveUp
-bind Down MoveDown
 bind Left MoveLeft
 bind Right MoveRight
+bind Up MoveUp
+bind Down MoveDown
+
+bind Space+Left ScrollLeft
+bind Space+Right ScrollRight
+bind Space+Up ScrollUp
+bind Space+Down ScrollDown
 
 bind Dot7+Cursor DescribeCharacter
 bind Dot8+Cursor SetLeft

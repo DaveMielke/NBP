@@ -13,7 +13,13 @@ public abstract class DirectionalAction extends Action {
     return false;
   }
 
-  protected abstract Class<? extends Action> getExternalAction ();
+  protected boolean performExternalAction () {
+    return false;
+  }
+
+  protected Class<? extends Action> getExternalAction () {
+    return null;
+  }
 
   @Override
   public boolean performAction () {
@@ -33,9 +39,16 @@ public abstract class DirectionalAction extends Action {
           return true;
         }
       }
+
+      if (performExternalAction()) return true;
     }
 
-    return endpoint.performAction(getExternalAction());
+    {
+      Class<? extends Action> action = getExternalAction();
+      if (action != null) return endpoint.performAction(action);
+    }
+
+    return false;
   }
 
   protected DirectionalAction (Endpoint endpoint, boolean isForDevelopers) {

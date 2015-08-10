@@ -7,12 +7,6 @@ bind Forward+Space MoveForward
 bind Center Click
 bind Space+Center LongClick
 
-bind Space+Left MoveFirst
-bind Space+Right MoveLast
-
-bind Space+Up MovePrevious
-bind Space+Down MoveNext
-
 bind Dot4+Up Notifications
 bind Dot4+Down HomeKey
 bind Dot4+Left BackKey

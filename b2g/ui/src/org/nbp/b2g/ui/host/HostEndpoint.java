@@ -261,6 +261,26 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
+  public Class<? extends Action> getScrollBackwardAction () {
+    return MovePrevious.class;
+  }
+
+  @Override
+  public Class<? extends Action> getScrollForwardAction () {
+    return MoveNext.class;
+  }
+
+  @Override
+  public Class<? extends Action> getScrollFirstAction () {
+    return MoveFirst.class;
+  }
+
+  @Override
+  public Class<? extends Action> getScrollLastAction () {
+    return MoveLast.class;
+  }
+
+  @Override
   public boolean handleKeyboardKey_enter () {
     return InputService.injectKey(KeyEvent.KEYCODE_ENTER);
   }
