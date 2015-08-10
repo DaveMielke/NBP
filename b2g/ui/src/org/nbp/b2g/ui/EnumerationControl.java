@@ -34,6 +34,8 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   private String getValueLabel (E value) {
+    String label = EnumerationLabels.getLabel(value);
+    if (label != null) return label;
     return value.name().replace('_', ' ').toLowerCase();
   }
 

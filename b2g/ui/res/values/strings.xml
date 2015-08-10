@@ -15,6 +15,13 @@
 
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
+  <string name="enum_IndicatorOverlay_DOTS_78">Dots 78</string>
+  <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
+  <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
+
+  <string name="enum_InputMode_BRAILLE">Braille</string>
+  <string name="enum_InputMode_TEXT">Text</string>
+
   <string name="default_control_previous">Previous</string>
   <string name="default_control_next">Next</string>
 

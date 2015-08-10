@@ -18,7 +18,6 @@ Document
   crash email
 
 User Interface
-  string resources for enumeration control values and next/previous buttons when two choices
   LibLouis
   make SD unmount easier
   input service doesn't restart immediately after reinstall
