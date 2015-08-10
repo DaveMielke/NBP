@@ -24,7 +24,7 @@ public class MoveDown extends DirectionalAction {
         if (endpoint.setCursor(end)) {
           return true;
         }
-      } else{
+      } else {
         ApplicationUtilities.message(R.string.message_bottom_of_input_area);
       }
     }

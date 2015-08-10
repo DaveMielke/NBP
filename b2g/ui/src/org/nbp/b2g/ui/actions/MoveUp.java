@@ -22,7 +22,7 @@ public class MoveUp extends DirectionalAction {
         if (endpoint.setCursor(start)) {
           return true;
         }
-      } else{
+      } else {
         ApplicationUtilities.message(R.string.message_top_of_input_area);
       }
     }

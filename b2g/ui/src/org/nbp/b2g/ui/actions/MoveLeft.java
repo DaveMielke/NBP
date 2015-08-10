@@ -18,7 +18,7 @@ public class MoveLeft extends DirectionalAction {
         if (endpoint.setCursor(start-1)) {
           return true;
         }
-      } else{
+      } else {
         ApplicationUtilities.message(R.string.message_start_of_input_area);
       }
     }
