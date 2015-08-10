@@ -33,16 +33,12 @@ public class MoveDown extends DirectionalAction {
   }
 
   @Override
-  public boolean performInternalAction () {
-    Endpoint endpoint = getEndpoint();
+  public boolean performInternalAction (Endpoint endpoint) {
+    int end = endpoint.getLineStart() + endpoint.getLineLength();
+    if (end == endpoint.getTextLength()) return false;
 
-    synchronized (endpoint) {
-      int end = endpoint.getLineStart() + endpoint.getLineLength();
-      if (end == endpoint.getTextLength()) return false;
-
-      endpoint.setLine(end+1);
-      endpoint.setLineIndent(0);
-    }
+    endpoint.setLine(end+1);
+    endpoint.setLineIndent(0);
 
     return endpoint.write();
   }

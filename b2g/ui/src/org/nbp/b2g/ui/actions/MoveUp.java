@@ -31,16 +31,12 @@ public class MoveUp extends DirectionalAction {
   }
 
   @Override
-  public boolean performInternalAction () {
-    Endpoint endpoint = getEndpoint();
+  public boolean performInternalAction (Endpoint endpoint) {
+    int start = endpoint.getLineStart();
+    if (start == 0) return false;
 
-    synchronized (endpoint) {
-      int start = endpoint.getLineStart();
-      if (start == 0) return false;
-
-      endpoint.setLine(start-1);
-      endpoint.setLineIndent(0);
-    }
+    endpoint.setLine(start-1);
+    endpoint.setLineIndent(0);
 
     return endpoint.write();
   }

@@ -9,11 +9,11 @@ public abstract class DirectionalAction extends Action {
     return false;
   }
 
-  protected boolean performInternalAction () {
+  protected boolean performInternalAction (Endpoint endpoint) {
     return false;
   }
 
-  protected boolean performExternalAction () {
+  protected boolean performExternalAction (Endpoint endpoint) {
     return false;
   }
 
@@ -35,12 +35,12 @@ public abstract class DirectionalAction extends Action {
       }
 
       if ((endpoint.getLineStart() > 0) || (endpoint.getLineLength() < endpoint.getTextLength())) {
-        if (performInternalAction()) {
+        if (performInternalAction(endpoint)) {
           return true;
         }
       }
 
-      if (performExternalAction()) return true;
+      if (performExternalAction(endpoint)) return true;
     }
 
     {
@@ -49,6 +49,10 @@ public abstract class DirectionalAction extends Action {
     }
 
     return false;
+  }
+
+  protected int getBrailleLength () {
+    return Devices.braille.get().getLength();
   }
 
   protected DirectionalAction (Endpoint endpoint, boolean isForDevelopers) {
