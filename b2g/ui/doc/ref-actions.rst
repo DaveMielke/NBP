@@ -2,10 +2,10 @@
 .. |AndroidBluetoothSettings| replace:: go to the Bluetooth Settings screen
 .. |AndroidSettings| replace:: go to the main Settings screen
 .. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
-.. |ArrowDown| replace:: go to the next line of text or element on the screen
-.. |ArrowLeft| replace:: go to the previous character of editable text or part of the line
-.. |ArrowRight| replace:: go to the next character of editable text or part of the line
-.. |ArrowUp| replace:: go to the previous line of text or element on the screen
+.. |MoveDown| replace:: go to the next line of text or element on the screen
+.. |MoveLeft| replace:: go to the previous character of editable text or part of the line
+.. |MoveRight| replace:: go to the next character of editable text or part of the line
+.. |MoveUp| replace:: go to the previous line of text or element on the screen
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
 .. |BrailleInputOff| replace:: disable Unicode braille input

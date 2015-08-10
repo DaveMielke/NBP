@@ -66,7 +66,7 @@ public class GuideActivity extends ProgrammaticActivity {
         publishProgress("formatting document");
         CharSequence text = trimText(Html.fromHtml(html));
 
-        publishProgress("done");
+        publishProgress("rendering document");
         return text;
       }
 

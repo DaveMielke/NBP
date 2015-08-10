@@ -553,19 +553,19 @@ public abstract class Endpoint {
   }
 
   public boolean handleKeyboardKey_cursorLeft () {
-    return performAction(ArrowLeft.class);
+    return performAction(MoveLeft.class);
   }
 
   public boolean handleKeyboardKey_cursorRight () {
-    return performAction(ArrowRight.class);
+    return performAction(MoveRight.class);
   }
 
   public boolean handleKeyboardKey_cursorUp () {
-    return performAction(ArrowUp.class);
+    return performAction(MoveUp.class);
   }
 
   public boolean handleKeyboardKey_cursorDown () {
-    return performAction(ArrowDown.class);
+    return performAction(MoveDown.class);
   }
 
   public boolean handleKeyboardKey_pageUp () {

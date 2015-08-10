@@ -3,14 +3,14 @@ import org.nbp.b2g.ui.*;
 
 import android.accessibilityservice.AccessibilityService;
 
-public class ArrowRight extends ArrowAction {
+public class MoveRight extends DirectionalAction {
   @Override
   protected boolean performSliderAction (Endpoint endpoint) {
     return endpoint.seekNext();
   }
 
   @Override
-  protected boolean performInputAction (Endpoint endpoint) {
+  protected boolean performCursorAction (Endpoint endpoint) {
     int end = endpoint.getSelectionEnd();
 
     if (endpoint.isSelected(end)) {
@@ -28,11 +28,11 @@ public class ArrowRight extends ArrowAction {
   }
 
   @Override
-  protected Class<? extends Action> getNavigationAction () {
+  protected Class<? extends Action> getExternalAction () {
     return PanRight.class;
   }
 
-  public ArrowRight (Endpoint endpoint) {
+  public MoveRight (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class ArrowUp extends ArrowAction {
+public class MoveUp extends DirectionalAction {
   @Override
-  protected boolean performInputAction (Endpoint endpoint) {
+  protected boolean performCursorAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
 
     if (endpoint.isSelected(start)) {
@@ -31,16 +31,26 @@ public class ArrowUp extends ArrowAction {
   }
 
   @Override
-  protected Class<? extends Action> getMoveAction () {
-    return LinePrevious.class;
+  public boolean performInternalAction () {
+    Endpoint endpoint = getEndpoint();
+
+    synchronized (endpoint) {
+      int start = endpoint.getLineStart();
+      if (start == 0) return false;
+
+      endpoint.setLine(start-1);
+      endpoint.setLineIndent(0);
+    }
+
+    return endpoint.write();
   }
 
   @Override
-  protected Class<? extends Action> getNavigationAction () {
+  protected Class<? extends Action> getExternalAction () {
     return getEndpoint().getMoveBackwardAction();
   }
 
-  public ArrowUp (Endpoint endpoint) {
+  public MoveUp (Endpoint endpoint) {
     super(endpoint, false);
   }
 }
