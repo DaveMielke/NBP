@@ -2,22 +2,22 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class ScrollRight extends DirectionalAction {
-  private boolean scrollText (Endpoint endpoint, boolean isInputArea) {
+  private ActionResult scrollText (Endpoint endpoint, boolean isInputArea) {
     int indent = endpoint.getLineLength() - getBrailleLength();
     if (isInputArea) indent += 1;
-    if (indent <= endpoint.getLineIndent()) return false;
+    if (indent <= endpoint.getLineIndent()) return ActionResult.FAILED;
 
     endpoint.setLineIndent(indent);
-    return endpoint.write();
+    return ActionResult.WRITE;
   }
 
   @Override
-  protected boolean performCursorAction (Endpoint endpoint) {
+  protected ActionResult performCursorAction (Endpoint endpoint) {
     return scrollText(endpoint, true);
   }
 
   @Override
-  protected boolean performInternalAction (Endpoint endpoint) {
+  protected ActionResult performInternalAction (Endpoint endpoint) {
     return scrollText(endpoint, false);
   }
 

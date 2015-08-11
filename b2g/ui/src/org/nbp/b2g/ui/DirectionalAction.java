@@ -1,54 +1,97 @@
 package org.nbp.b2g.ui;
 
+import android.util.Log;
+
 public abstract class DirectionalAction extends Action {
-  protected boolean performSliderAction (Endpoint endpoint) {
-    return false;
+  private final static String LOG_TAG = DirectionalAction.class.getName();
+
+  protected enum ActionResult {
+    DONE,
+    WRITE,
+    FAILED,
+    NEXT
   }
 
-  protected boolean performCursorAction (Endpoint endpoint) {
-    return false;
+  private interface ActionPerformer {
+    public abstract ActionResult performAction (Endpoint endpoint);
   }
 
-  protected boolean performInternalAction (Endpoint endpoint) {
-    return false;
+  protected ActionResult performSliderAction (Endpoint endpoint) {
+    return ActionResult.FAILED;
   }
 
-  protected boolean performExternalAction (Endpoint endpoint) {
-    return false;
+  protected ActionResult performCursorAction (Endpoint endpoint) {
+    return ActionResult.FAILED;
+  }
+
+  protected ActionResult performInternalAction (Endpoint endpoint) {
+    return ActionResult.FAILED;
   }
 
   protected Class<? extends Action> getExternalAction () {
     return null;
   }
 
+  private final ActionPerformer[] actionPerformers = new ActionPerformer[] {
+    new ActionPerformer() {
+      @Override
+      public final ActionResult performAction (Endpoint endpoint) {
+        if (!endpoint.isSlider()) return ActionResult.NEXT;
+        return performSliderAction(endpoint);
+      }
+    },
+
+    new ActionPerformer() {
+      @Override
+      public final ActionResult performAction (Endpoint endpoint) {
+        if (!endpoint.isInputArea()) return ActionResult.NEXT;
+        return performCursorAction(endpoint);
+      }
+    },
+
+    new ActionPerformer() {
+      @Override
+      public final ActionResult performAction (Endpoint endpoint) {
+        ActionResult result = performInternalAction(endpoint);
+        if (result == ActionResult.FAILED) result = ActionResult.NEXT;
+        return result;
+      }
+    }
+  };
+
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
+    boolean write = false;
 
     synchronized (endpoint) {
-      if (endpoint.isSlider()) {
-        return performSliderAction(endpoint);
-      }
+    ACTION_PERFORMER_LOOP:
+      for (ActionPerformer actionPerformer : actionPerformers) {
+        ActionResult result = actionPerformer.performAction(endpoint);
 
-      if (endpoint.isInputArea()) {
-        return performCursorAction(endpoint);
-      }
+        switch (result) {
+          case DONE:
+            return true;
 
-      if ((endpoint.getLineStart() > 0) || (endpoint.getLineLength() < endpoint.getTextLength())) {
-        if (performInternalAction(endpoint)) {
-          return true;
+          case WRITE:
+            write = true;
+            break ACTION_PERFORMER_LOOP;
+
+          default:
+            Log.w(LOG_TAG, "unsupported action result: " + result.name());
+          case FAILED:
+            return false;
+
+          case NEXT:
+            continue ACTION_PERFORMER_LOOP;
         }
       }
-
-      if (performExternalAction(endpoint)) return true;
     }
 
-    {
-      Class<? extends Action> action = getExternalAction();
-      if (action != null) return endpoint.performAction(action);
-    }
-
-    return false;
+    if (write) return endpoint.write();
+    Class<? extends Action> action = getExternalAction();
+    if (action == null) return false;
+    return endpoint.performAction(action);
   }
 
   protected int getBrailleLength () {

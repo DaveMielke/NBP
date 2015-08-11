@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class MoveDown extends DirectionalAction {
   @Override
-  protected boolean performCursorAction (Endpoint endpoint) {
+  protected ActionResult performCursorAction (Endpoint endpoint) {
     int end = endpoint.getSelectionEnd();
 
     if (endpoint.isSelected(end)) {
@@ -22,25 +22,25 @@ public class MoveDown extends DirectionalAction {
         end += start;
 
         if (endpoint.setCursor(end)) {
-          return true;
+          return ActionResult.DONE;
         }
       } else {
         ApplicationUtilities.message(R.string.message_bottom_of_input_area);
       }
     }
 
-    return false;
+    return ActionResult.FAILED;
   }
 
   @Override
-  public boolean performInternalAction (Endpoint endpoint) {
+  public ActionResult performInternalAction (Endpoint endpoint) {
     int end = endpoint.getLineStart() + endpoint.getLineLength();
-    if (end == endpoint.getTextLength()) return false;
+    if (end == endpoint.getTextLength()) return ActionResult.FAILED;
 
     endpoint.setLine(end+1);
     endpoint.setLineIndent(0);
 
-    return endpoint.write();
+    return ActionResult.WRITE;
   }
 
   @Override

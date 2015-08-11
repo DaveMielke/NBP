@@ -2,7 +2,7 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class ScrollDown extends DirectionalAction {
-  private boolean scrollText (Endpoint endpoint, boolean isInputArea) {
+  private ActionResult scrollText (Endpoint endpoint, boolean isInputArea) {
     int brailleLength = getBrailleLength();
     int textLength = endpoint.getTextLength();
 
@@ -11,7 +11,7 @@ public class ScrollDown extends DirectionalAction {
 
     if ((endpoint.getLineStart() + endpoint.getLineLength()) == textLength) {
       if ((endpoint.getBrailleStart() + brailleLength) >= textEnd) {
-        return false;
+        return ActionResult.FAILED;
       }
     }
 
@@ -21,16 +21,16 @@ public class ScrollDown extends DirectionalAction {
     endpoint.setLine(endpoint.getLineStart() + indent);
     endpoint.setLineIndent(indent);
 
-    return endpoint.write();
+    return ActionResult.WRITE;
   }
 
   @Override
-  protected boolean performCursorAction (Endpoint endpoint) {
+  protected ActionResult performCursorAction (Endpoint endpoint) {
     return scrollText(endpoint, true);
   }
 
   @Override
-  protected boolean performInternalAction (Endpoint endpoint) {
+  protected ActionResult performInternalAction (Endpoint endpoint) {
     return scrollText(endpoint, false);
   }
 

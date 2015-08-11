@@ -5,26 +5,26 @@ import android.accessibilityservice.AccessibilityService;
 
 public class MoveRight extends DirectionalAction {
   @Override
-  protected boolean performSliderAction (Endpoint endpoint) {
-    return endpoint.seekNext();
+  protected ActionResult performSliderAction (Endpoint endpoint) {
+    return endpoint.seekNext()? ActionResult.DONE: ActionResult.FAILED;
   }
 
   @Override
-  protected boolean performCursorAction (Endpoint endpoint) {
+  protected ActionResult performCursorAction (Endpoint endpoint) {
     int end = endpoint.getSelectionEnd();
 
     if (endpoint.isSelected(end)) {
       if (end < endpoint.getTextLength()) {
         if (end == endpoint.getSelectionStart()) end += 1;
         if (endpoint.setCursor(end)) {
-          return true;
+          return ActionResult.DONE;
         }
       } else {
         ApplicationUtilities.message(R.string.message_end_of_input_area);
       }
     }
 
-    return false;
+    return ActionResult.FAILED;
   }
 
   @Override
