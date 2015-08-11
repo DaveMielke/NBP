@@ -9,19 +9,18 @@ public abstract class Controls {
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
   private final static OneHandControl oneHandControl = new OneHandControl();
 
+  private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
-
-  private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
-  private final static IntegerControl brailleFirmnessControl = new BrailleFirmnessControl();
+  private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
   private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
 
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
   private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
-  private final static IntegerControl speechVolumeControl = new SpeechVolumeControl();
-  private final static IntegerControl speechBalanceControl = new SpeechBalanceControl();
-  private final static IntegerControl speechRateControl = new SpeechRateControl();
-  private final static IntegerControl speechPitchControl = new SpeechPitchControl();
+  private final static SpeechVolumeControl speechVolumeControl = new SpeechVolumeControl();
+  private final static SpeechBalanceControl speechBalanceControl = new SpeechBalanceControl();
+  private final static SpeechRateControl speechRateControl = new SpeechRateControl();
+  private final static SpeechPitchControl speechPitchControl = new SpeechPitchControl();
 
   private final static DeveloperEnabledControl developerEnabledControl = new DeveloperEnabledControl();
   private final static LogUpdatesControl logUpdatesControl = new LogUpdatesControl();
@@ -37,10 +36,9 @@ public abstract class Controls {
     reversePanningControl,
     oneHandControl,
 
+    brailleEnabledControl,
     cursorIndicatorControl,
     selectionIndicatorControl,
-
-    brailleEnabledControl,
     brailleFirmnessControl,
     brailleMonitorControl,
 
@@ -76,6 +74,10 @@ public abstract class Controls {
     return oneHandControl;
   }
 
+  public static BrailleEnabledControl getBrailleEnabledControl () {
+    return brailleEnabledControl;
+  }
+
   public static CursorIndicatorControl getCursorIndicatorControl () {
     return cursorIndicatorControl;
   }
@@ -84,11 +86,7 @@ public abstract class Controls {
     return selectionIndicatorControl;
   }
 
-  public static BrailleEnabledControl getBrailleEnabledControl () {
-    return brailleEnabledControl;
-  }
-
-  public static IntegerControl getBrailleFirmnessControl () {
+  public static BrailleFirmnessControl getBrailleFirmnessControl () {
     return brailleFirmnessControl;
   }
 
@@ -104,19 +102,19 @@ public abstract class Controls {
     return sleepTalkControl;
   }
 
-  public static IntegerControl getSpeechVolumeControl () {
+  public static SpeechVolumeControl getSpeechVolumeControl () {
     return speechVolumeControl;
   }
 
-  public static IntegerControl getSpeechBalanceControl () {
+  public static SpeechBalanceControl getSpeechBalanceControl () {
     return speechBalanceControl;
   }
 
-  public static IntegerControl getSpeechRateControl () {
+  public static SpeechRateControl getSpeechRateControl () {
     return speechRateControl;
   }
 
-  public static IntegerControl getSpeechPitchControl () {
+  public static SpeechPitchControl getSpeechPitchControl () {
     return speechPitchControl;
   }
 

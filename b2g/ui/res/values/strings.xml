@@ -19,8 +19,8 @@
   <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
   <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
 
-  <string name="enum_InputMode_BRAILLE">Braille</string>
-  <string name="enum_InputMode_TEXT">Text</string>
+  <string name="enum_InputMode_BRAILLE">Unicode Braille</string>
+  <string name="enum_InputMode_TEXT">Regular Text</string>
 
   <string name="default_control_previous">Previous</string>
   <string name="default_control_next">Next</string>
@@ -35,7 +35,7 @@
   <string name="BrailleFirmness_control_label">Firmness</string>
   <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
-  <string name="InputMode_control_label">Input Mode</string>
+  <string name="InputMode_control_label">Input</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
   <string name="ReversePanning_control_label">Reverse Panning</string>

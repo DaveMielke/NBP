@@ -3,13 +3,13 @@
   ===================  =======  ====================  ==========  ==========
   Setting              Default  Range                 *Previous*  *Next*
   -------------------  -------  --------------------  ----------  ----------
-  Input Mode           Text     Text, Braille         Text        Braille
+  **Input**            Text     Text, Braille         Text        Braille
   Long Press           On       Off - On
   Reverse Panning      Off      Off - On
   One Hand             Off      Off - On
+  **Braille**          On       Off - On
   Cursor Indicator     Dots78   Dots78, Dot7, Dot8    Previous    Next
   Selection Indicator  Dot8     Dots78, Dot7, Dot8    Previous    Next
-  **Braille**          On       Off - On
   Firmness             4        0 - 7                 Decrease    Increase
   Monitor              Off      Off - On
   **Speech**           On       Off - On

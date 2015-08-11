@@ -212,15 +212,23 @@ switching the power on.
 Typing
 ------
 
-Space+i (dots 24) displays a message (see `Messages`_) that confirms what the
-input mode is currently set to.
+Input Modes
+~~~~~~~~~~~
+
+Space+i (dots 24) displays a message (see `Messages`_) that confirms
+which input mode is currently being used.
+
+Text mode is the default, and is used for `Directly Typing Regular Text`_.
+
+Braille mode is used for `Directly Typing Unicode Braille Characters`_.
+
+Either booting the device or waking it up (see `The Power Switch`_)
+automatically resets the input mode to Text.
 
 Directly Typing Regular Text
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+````````````````````````````
 
-Space+Dot7+i (dots 24) restores the input mode to **text** (the default).
-Either booting the device or waking it up (see `The Power Switch`_)
-automatically restores input to this mode.
+Space+Dot7+i (dots 24) restores the input mode to Text (the default).
 
 In this input mode, any character that has a defined braille representation
 (see `Braille Character Map`_) can be directly typed by pressing the
@@ -229,21 +237,10 @@ simple (and obvious) rule. If the defined representation of a character is
 either just dot 7 or just dot 8 then it can't be directly typed because those
 keys are, respectively, Backspace and Enter.
 
-Typing a Control Character
-``````````````````````````
-
-In order to type a control character, press Space+x (dots 1346) immediately
-before the letter or special symbol that represents it (see `ASCII Control
-Characters`_). For example, in order to type a tab (which happens to be control
-I), press Space+x and then immediately type the letter ``i``.
-
-The letter or special symbol must be typed within
-|intermediate action timeout|.
-
 Directly Typing Unicode Braille Characters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``````````````````````````````````````````
 
-Space+Dot8+i (dots 24) sets the input mode to **braille**.
+Space+Dot8+i (dots 24) sets the input mode to Braille.
 
 In this input mode, the characters that render in text as actual braille cells
 (see `Unicode Braille Characters`_) can be directly typed by pressing the
@@ -263,6 +260,17 @@ These characters have several uses, including (but not limited to):
 
 * Braille music can be accurately saved, and also shared with others who use
   different localized braille character mappings.
+
+Typing a Control Character
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to type a control character, press Space+x (dots 1346) immediately
+before the letter or special symbol that represents it (see `ASCII Control
+Characters`_). For example, in order to type a tab (which happens to be control
+I), press Space+x and then immediately type the letter ``i``.
+
+The letter or special symbol must be typed within
+|intermediate action timeout|.
 
 Indirectly Typing Any Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
