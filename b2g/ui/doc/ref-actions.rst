@@ -92,6 +92,7 @@
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection
 .. |Settings| replace:: go to the Settings screen of the B2G User Interface
+.. |ShowInputMode| replace:: show the current input mode
 .. |SleepTalkOff| replace:: speak only when awake
 .. |SleepTalkOn| replace:: speak even when asleep
 .. |SpeakFaster| replace:: increase the speech rate

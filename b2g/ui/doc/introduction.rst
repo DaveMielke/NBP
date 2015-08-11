@@ -212,19 +212,22 @@ switching the power on.
 Typing
 ------
 
+Space+i (dots 24) displays a message (see `Messages`_) that confirms what the
+input mode is currently set to.
+
 Directly Typing Regular Text
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Backward+Dot1 restores the input mode to **text** (the default). Either booting
-the device or waking it up (see `The Power Switch`_) automatically resotres
-input to this mode.
+Space+Dot7+i (dots 24) restores the input mode to **text** (the default).
+Either booting the device or waking it up (see `The Power Switch`_)
+automatically restores input to this mode.
 
-In this mode, any character that has a defined braille representation (see
-`Braille Character Map`_) can be directly typed by pressing the corresponding
-keys as a single combination. There are two exceptions to this simple (and
-obvious) rule. If the defined representation of a character is either just
-dot 7 or just dot 8 then it can't be directly typed because those keys are,
-respectively, Backspace and Enter.
+In this input mode, any character that has a defined braille representation
+(see `Braille Character Map`_) can be directly typed by pressing the
+corresponding keys as a single combination. There are two exceptions to this
+simple (and obvious) rule. If the defined representation of a character is
+either just dot 7 or just dot 8 then it can't be directly typed because those
+keys are, respectively, Backspace and Enter.
 
 Typing a Control Character
 ``````````````````````````
@@ -240,14 +243,14 @@ The letter or special symbol must be typed within
 Directly Typing Unicode Braille Characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Forward+Dot4 sets the input mode to **braille**.
+Space+Dot8+i (dots 24) sets the input mode to **braille**.
 
-In this mode, the characters that render in text as actual braille cells (see
-`Unicode Braille Characters`_) can be directly typed by pressing the
+In this input mode, the characters that render in text as actual braille cells
+(see `Unicode Braille Characters`_) can be directly typed by pressing the
 corresponding keys as a single combination. Two of these characters can't be
 directly typed - just dot 7 (because it's the Backspace key), and just dot 8
 (because it's the Enter key). Both of these can still be indirectly typed (see
-`Indirectly Typing Any Character`_).
+`Indirectly Typing Any Character`_):
 
 * The Unicode value for a braille cell containing just dot 7 is U+2840.
 * The Unicode value for a braille cell containing just dot 8 is U+2880.

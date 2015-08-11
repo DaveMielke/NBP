@@ -72,12 +72,13 @@ public abstract class Control {
     return getSettings("current-settings");
   }
 
+  public final void confirmValue () {
+    ApplicationUtilities.message(getLabel() + " " + getValue());
+  }
+
   protected final void reportValue (boolean confirm) {
     saveValue(getCurrentSettings());
-
-    if (confirm) {
-      ApplicationUtilities.message(getLabel() + " " + getValue());
-    }
+    if (confirm) confirmValue();
 
     for (OnValueChangedListener listener : onValueChangedListeners) {
       listener.onValueChanged(this);
