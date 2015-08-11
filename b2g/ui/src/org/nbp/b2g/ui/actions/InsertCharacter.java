@@ -6,10 +6,6 @@ import android.util.Log;
 public class InsertCharacter extends Action {
   private final static String LOG_TAG = InsertCharacter.class.getName();
 
-  private boolean insertText (char character) {
-    return getEndpoint().insertText(character);
-  }
-
   private boolean insertCharacter (char character) {
     ModifierAction control = (ControlModifier)getAction(ControlModifier.class);
 
@@ -25,24 +21,26 @@ public class InsertCharacter extends Action {
       }
     }
 
-    return insertText(character);
+    return getEndpoint().insertText(character);
   }
 
   @Override
   public boolean performAction () {
+    InputMode inputMode = ApplicationSettings.INPUT_MODE;
     int keyMask = getNavigationKeys();
+    Character character;
 
-    switch (ApplicationSettings.INPUT_MODE) {
+    switch (inputMode) {
       case TEXT: {
-        Character character = Characters.getCharacters().toCharacter(keyMask);
+        character = Characters.getCharacters().toCharacter(keyMask);
 
         if (character == null) {
           Log.w(LOG_TAG, String.format(
             "not mapped to a character: %s",
             KeyMask.toString(keyMask)
           ));
-        } else if (insertCharacter(character)) {
-          return true;
+
+          return false;
         }
 
         break;
@@ -56,15 +54,20 @@ public class InsertCharacter extends Action {
             "not a braille character: %s",
             KeyMask.toString(keyMask)
           ));
-        } else if (insertText(Braille.toCharacter(dots))) {
-          return true;
+
+          return false;
         }
 
+        character = Braille.toCharacter(dots);
         break;
       }
+
+      default:
+        Log.w(LOG_TAG, "unsupported input mode: " + inputMode.name());
+        return false;
     }
 
-    return false;
+    return insertCharacter(character);
   }
 
   public InsertCharacter (Endpoint endpoint) {
