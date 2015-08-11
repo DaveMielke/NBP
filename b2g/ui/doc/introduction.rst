@@ -212,12 +212,54 @@ switching the power on.
 Typing
 ------
 
-Any character that has a defined braille representation (see `Braille Character
-Map`_) can be directly typed by just pressing the corresponding keys as a
-single combination. There are two exceptions to this simple (and obvious) rule.
-If the defined representation of a character is either just dot 7 or just dot 8
-then it can't be directly typed because those keys are, respectively, Backspace
-and Enter.
+Directly Typing Regular Text
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Backward+Dot1 restores the input mode to **text** (the default). Either booting
+the device or waking it up (see `The Power Switch`_) automatically resotres
+input to this mode.
+
+In this mode, any character that has a defined braille representation (see
+`Braille Character Map`_) can be directly typed by pressing the corresponding
+keys as a single combination. There are two exceptions to this simple (and
+obvious) rule. If the defined representation of a character is either just
+dot 7 or just dot 8 then it can't be directly typed because those keys are,
+respectively, Backspace and Enter.
+
+Typing a Control Character
+``````````````````````````
+
+In order to type a control character, press Space+x (dots 1346) immediately
+before the letter or special symbol that represents it (see `ASCII Control
+Characters`_). For example, in order to type a tab (which happens to be control
+I), press Space+x and then immediately type the letter ``i``.
+
+The letter or special symbol must be typed within
+|intermediate action timeout|.
+
+Directly Typing Unicode Braille Characters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Forward+Dot4 sets the input mode to **braille**.
+
+In this mode, the characters that render in text as actual braille cells (see
+`Unicode Braille Characters`_) can be directly typed by pressing the
+corresponding keys as a single combination. Two of these characters can't be
+directly typed - just dot 7 (because it's the Backspace key), and just dot 8
+(because it's the Enter key). Both of these can still be indirectly typed (see
+`Indirectly Typing Any Character`_).
+
+* The Unicode value for a braille cell containing just dot 7 is U+2840.
+* The Unicode value for a braille cell containing just dot 8 is U+2880.
+
+These characters have several uses, including (but not limited to):
+
+* Actual braille characters can be written into text documents.
+
+* Contracted braille can be accurately saved.
+
+* Braille music can be accurately saved, and also shared with others who use
+  different localized braille character mappings.
 
 Indirectly Typing Any Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -274,41 +316,6 @@ two leading zeroes.
        latin small letter s
 
   4) Press Enter. The prompt goes away, and the ``s`` is typed.
-
-Typing a Control Character
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In order to type a control character, press Space+x (dots 1346) immediately
-before the letter or special symbol that represents it (see `ASCII Control
-Characters`_). For example, in order to type a tab (which happens to be control
-I), press Space+x and then immediately type the letter ``i``.
-
-The letter or special symbol must be typed within
-|intermediate action timeout|.
-
-Directly Typing Unicode Braille Characters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The characters that render in text as actual braille cells (see `Unicode
-Braille Characters`_) can be typed by setting Input Mode to Braille. Two of
-these characters can't be directly typed - just dot 7 (because it's the
-Backspace key), and just dot 8 (because it's the Enter key). Both of these can,
-of course, still be indirectly typed (see `Indirectly Typing Any Character`_).
-
-* The Unicode value for a braille cell containing just dot 7 is U+2840.
-* The Unicode value for a braille cell containing just dot 8 is U+2880.
-
-This mode is set to Text by default. Pressing Forward+Dot4 sets it to Braille,
-and pressing Backward+Dot1 sets it to Text.
-
-These characters have several uses, including (but not limited to):
-
-* Actual braille characters can be written into text documents.
-
-* Contracted braille can be accurately saved.
-
-* Braille music can be accurately saved, and also shared with others who use
-  different localized braille character mappings.
 
 Braille Rendering
 -----------------
