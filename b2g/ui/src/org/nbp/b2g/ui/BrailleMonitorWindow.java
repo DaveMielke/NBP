@@ -19,7 +19,7 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
   private final ThreadLocal<TextView> brailleView = new ThreadLocal<TextView>();
   private final ThreadLocal<TextView> textView = new ThreadLocal<TextView>();
 
-  public final void setContent (final String braille, final String text) {
+  public final void setContent (final String braille, final CharSequence text) {
     runOnWindowThread(new Runnable() {
       @Override
       public void run () {

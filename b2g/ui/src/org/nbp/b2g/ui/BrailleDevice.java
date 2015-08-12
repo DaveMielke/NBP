@@ -46,7 +46,7 @@ public class BrailleDevice {
   private native boolean writeCells (byte[] cells);
 
   private byte[] brailleCells = null;
-  private String brailleText = null;
+  private CharSequence brailleText = null;
   private boolean writePending = false;
 
   public byte[] getCells () {
@@ -150,7 +150,7 @@ public class BrailleDevice {
     return false;
   }
 
-  private void logCells (byte[] cells, String reason, String text) {
+  private void logCells (byte[] cells, String reason, CharSequence text) {
     boolean log = ApplicationSettings.LOG_BRAILLE;
     String braille = Braille.toString(cells);
 
@@ -171,7 +171,7 @@ public class BrailleDevice {
     logCells(cells, reason, null);
   }
 
-  private boolean writeCells (byte[] cells, String text, String reason) {
+  private boolean writeCells (byte[] cells, CharSequence text, String reason) {
     {
       final int suppliedLength = cells.length;
       final int requiredLength = brailleCells.length;
@@ -226,7 +226,7 @@ public class BrailleDevice {
 
       {
         byte[] oldCells = getCells();
-        String text = Braille.setCells(brailleCells);
+        CharSequence text = Braille.setCells(brailleCells);
 
         if (!text.equals(brailleText)) {
           brailleText = text;
@@ -248,7 +248,7 @@ public class BrailleDevice {
     return true;
   }
 
-  public boolean write (byte[] cells, String text, long duration) {
+  public boolean write (byte[] cells, CharSequence text, long duration) {
     synchronized (this) {
       if (open()) {
         writeDelay.cancel();
@@ -275,13 +275,13 @@ public class BrailleDevice {
     return write(cells, 0);
   }
 
-  public boolean write (String text, long duration) {
+  public boolean write (CharSequence text, long duration) {
     byte[] cells = new byte[text.length()];
     text = Braille.setCells(cells, text);
     return write(cells, text, duration);
   }
 
-  public boolean write (String text) {
+  public boolean write (CharSequence text) {
     return write(text, 0);
   }
 
