@@ -11,6 +11,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
 import android.text.Spanned;
+import android.text.SpannableStringBuilder;
 
 public class HostEndpoint extends Endpoint {
   private final static String LOG_TAG = HostEndpoint.class.getName();
@@ -34,14 +35,14 @@ public class HostEndpoint extends Endpoint {
     }
   }
 
-  private static String toText (CharSequence text) {
+  private static CharSequence toText (CharSequence text) {
     if (text instanceof Spanned) {
       Spanned spanned = (Spanned)text;
-      Object[] spans = spanned.getSpans(0, text.length(), Object.class);
+      Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
 
       if (spans != null) {
         if (spans.length > 0) {
-          StringBuilder sb = new StringBuilder(text);
+          SpannableStringBuilder sb = new SpannableStringBuilder(text);
 
           /*
           for (Object span : spans) {
@@ -52,16 +53,16 @@ public class HostEndpoint extends Endpoint {
           sb.append(spans.length);
           */
 
-          return sb.toString();
+          return sb.subSequence(0, sb.length());
         }
       }
     }
 
-    return text.toString();
+    return text.subSequence(0, text.length());
   }
 
-  private static String toText (AccessibilityNodeInfo node) {
-    StringBuilder sb = new StringBuilder();
+  private static CharSequence toText (AccessibilityNodeInfo node) {
+    SpannableStringBuilder sb = new SpannableStringBuilder();
     CharSequence characters;
 
     if (node.isCheckable()) {
@@ -86,11 +87,11 @@ public class HostEndpoint extends Endpoint {
       sb.append(" (disabled)");
     }
 
-    return sb.toString();
+    return sb.subSequence(0, sb.length());
   }
 
   public boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
-    String text;
+    CharSequence text;
 
     if (describe) {
       text = ScreenUtilities.toString(node);
