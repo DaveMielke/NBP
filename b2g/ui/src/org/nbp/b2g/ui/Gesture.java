@@ -144,6 +144,7 @@ public abstract class Gesture {
 
       while (time > 0) {
         if (!move(x2, y2)) return false;
+        sleep(stepInterval);
         time -= stepInterval;
       }
     }
