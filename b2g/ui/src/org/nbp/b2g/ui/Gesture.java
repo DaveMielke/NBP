@@ -128,7 +128,7 @@ public abstract class Gesture {
 
     while (true) {
       sleep(stepInterval);
-      if (stepCount < 1.5) break;
+      if (stepCount <= 1.0) break;
       stepCount -= 1.0;
 
       horizontalPosition += horizontalStep;
@@ -137,6 +137,15 @@ public abstract class Gesture {
       int x = (int)Math.rint(horizontalPosition);
       int y = (int)Math.rint(verticalPosition);
       if (!move(x, y)) return false;
+    }
+
+    {
+      long time = ApplicationParameters.SWIPE_HOLD_DURATION;
+
+      while (time > 0) {
+        if (!move(x2, y2)) return false;
+        time -= stepInterval;
+      }
     }
 
     return end(x2, y2);

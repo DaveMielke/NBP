@@ -47,8 +47,9 @@ public abstract class ApplicationParameters {
   public final static long TAP_HOLD_TIME = 45; // milliseconds
   public final static long TAP_WAIT_TIME = 100; // milliseconds
 
-  public final static long SWIPE_STEP_INTERVAL = 10; // milliseconds
   public final static double SWIPE_STEP_DISTANCE = 10.0; // pixels
+  public final static long SWIPE_STEP_INTERVAL = 10; // milliseconds
+  public final static long SWIPE_HOLD_DURATION = 100; // milliseconds
 
   public final static int TONE_VOLUME = 100; // percentage
   public final static int BEEP_DURATION = 100; // milliseconds
