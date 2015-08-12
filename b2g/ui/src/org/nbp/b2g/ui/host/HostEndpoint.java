@@ -148,7 +148,7 @@ public class HostEndpoint extends Endpoint {
     return write(node, describe, indent);
   }
 
-  public boolean write (AccessibilityNodeInfo node, String text) {
+  public boolean write (AccessibilityNodeInfo node, CharSequence text) {
     synchronized (this) {
       if (!node.equals(currentNode)) return true;
       if (text.equals(getText())) return true;
@@ -201,11 +201,11 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean insertText (String string) {
+  public boolean insertText (CharSequence text) {
     InputService service = getInputService();
 
     if (service != null) {
-      if (service.insertText(string)) {
+      if (service.insertText(text)) {
         return true;
       }
     }

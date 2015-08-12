@@ -27,20 +27,20 @@ public abstract class PromptEndpoint extends Endpoint {
     return buffer.length() - start;
   }
 
-  protected boolean canInsertText (String string) {
+  protected boolean canInsertText (CharSequence text) {
     return true;
   }
 
   @Override
-  public final boolean insertText (String string) {
-    if (!canInsertText(string)) return false;
+  public final boolean insertText (CharSequence text) {
+    if (!canInsertText(text)) return false;
 
     int start = getSelectionStart();
     int end = getSelectionEnd();
 
     buffer.delete(start, end);
-    buffer.insert(start, string);
-    if (!setCursor((start + string.length()))) return false;
+    buffer.insert(start, text);
+    if (!setCursor((start + text.length()))) return false;
     return write();
   }
 

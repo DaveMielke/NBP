@@ -136,7 +136,7 @@ public abstract class Endpoint {
     return false;
   }
 
-  public boolean insertText (String string) {
+  public boolean insertText (CharSequence text) {
     return false;
   }
 
@@ -267,7 +267,7 @@ public abstract class Endpoint {
     }
   }
 
-  protected void setText (String text) {
+  protected void setText (CharSequence text) {
     setText(text, false);
     resetSpeech();
   }
@@ -428,7 +428,7 @@ public abstract class Endpoint {
     return setSelection(offset, offset);
   }
 
-  public boolean write (String text) {
+  public boolean write (CharSequence text) {
     synchronized (this) {
       setText(text);
       clearSelection();

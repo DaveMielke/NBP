@@ -136,11 +136,11 @@ public class InputService extends InputMethodService {
     );
   }
 
-  public boolean insertText (String string) {
+  public boolean insertText (CharSequence text) {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {
-      if (connection.commitText(string, 1)) {
+      if (connection.commitText(text, 1)) {
         return true;
       }
     }
