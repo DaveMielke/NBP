@@ -93,6 +93,10 @@ public class SpeechDevice {
     return false;
   }
 
+  public boolean say (CharSequence text) {
+    return say(text.toString());
+  }
+
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
     String reason;
 

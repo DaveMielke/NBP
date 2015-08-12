@@ -6,7 +6,7 @@ import android.util.Log;
 public abstract class Endpoint {
   private final static String LOG_TAG = Endpoint.class.getName();
 
-  private String oldText;
+  private CharSequence oldText;
   private int oldLineStart;
   private int oldSelectionStart;
   private int oldSelectionEnd;
@@ -20,9 +20,9 @@ public abstract class Endpoint {
 
   private void say () {
     synchronized (this) {
-      String text = null;
+      CharSequence text = null;
 
-      final String newText = getText();
+      final CharSequence newText = getText();
       final int newLength = newText.length();
 
       final int newLineStart = getLineStart();
@@ -53,7 +53,7 @@ public abstract class Endpoint {
         from = Math.min(from, to);
         to = Math.max(to, from);
 
-        text = newText.substring(from, to);
+        text = newText.subSequence(from, to);
       } else if (oldEnd > start) {
         int from = Math.max(start, newLineStart);
         int to = Math.max(oldEnd, start);
@@ -61,7 +61,7 @@ public abstract class Endpoint {
         from = Math.min(from, to);
         to = Math.max(to, from);
 
-        text = oldText.substring(from, to);
+        text = oldText.subSequence(from, to);
       } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
         int offset = NO_SELECTION;
 
@@ -73,7 +73,7 @@ public abstract class Endpoint {
 
         if (offset != NO_SELECTION) {
           if (offset < newLength) {
-            text = newText.substring(offset, offset+1);
+            text = newText.subSequence(offset, offset+1);
           } else if (offset == newLength) {
             text = ApplicationContext.getString(R.string.character_end);
           }
