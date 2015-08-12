@@ -28,7 +28,7 @@ public abstract class Clipboard {
     }
   }
 
-  public static ClipData newClip (String text) {
+  public static ClipData newClip (CharSequence text) {
     return ClipData.newPlainText("B2G User Interface", text);
   }
 
@@ -47,7 +47,7 @@ public abstract class Clipboard {
     return null;
   }
 
-  public static boolean putText (String text) {
+  public static boolean putText (CharSequence text) {
     synchronized (LOCK) {
       if (clipboard != null) {
         clipboard.setPrimaryClip(newClip(text));

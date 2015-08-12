@@ -8,7 +8,7 @@ public class CutToClipboard extends Action {
 
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
-        String text = endpoint.getSelectedText();
+        CharSequence text = endpoint.getSelectedText();
 
         if (text != null) {
           if (Clipboard.putText(text)) {

@@ -189,10 +189,10 @@ public abstract class Endpoint {
   public void onBackground () {
   }
 
-  private String textString;
+  private CharSequence textString;
   private boolean softEdges;
 
-  public String getText () {
+  public CharSequence getText () {
     return textString;
   }
 
@@ -200,16 +200,30 @@ public abstract class Endpoint {
     return textString.length();
   }
 
-  private String lineText;
+  private CharSequence lineText;
   private int lineStart;
   private int lineIndent;
 
   public int findPreviousNewline (int offset) {
-    return textString.lastIndexOf('\n', offset-1);
+    int length = textString.length();
+    if (offset > length) offset = length;
+
+    while (offset > 0) {
+      if (textString.charAt(--offset) == '\n') return offset;
+    }
+
+    return -1;
   }
 
   public int findNextNewline (int offset) {
-    return textString.indexOf('\n', offset);
+    int length = textString.length();
+
+    while (offset < length) {
+      if (textString.charAt(offset) == '\n') return offset;
+      offset += 1;
+    }
+
+    return -1;
   }
 
   public int setLine (int textOffset) {
@@ -218,11 +232,11 @@ public abstract class Endpoint {
     int lineEnd = findNextNewline(lineStart);
     if (lineEnd == -1) lineEnd = getTextLength();
 
-    lineText = textString.substring(lineStart, lineEnd);
+    lineText = textString.subSequence(lineStart, lineEnd);
     return textOffset - lineStart;
   }
 
-  protected void setText (String text, boolean stay) {
+  protected void setText (CharSequence text, boolean stay) {
     textString = text;
     softEdges = false;
 
@@ -262,7 +276,7 @@ public abstract class Endpoint {
     return softEdges || isInputArea();
   }
 
-  public String getLineText () {
+  public CharSequence getLineText () {
     return lineText;
   }
 
@@ -312,10 +326,10 @@ public abstract class Endpoint {
     }
   }
 
-  public String getSelectedText () {
+  public CharSequence getSelectedText () {
     synchronized (this) {
       if (isInputArea() && isSelected()) {
-        return textString.substring(selectionStart, selectionEnd);
+        return textString.subSequence(selectionStart, selectionEnd);
       }
     }
 

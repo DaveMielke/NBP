@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class SayLine extends SpeechAction {
   @Override
   public boolean performAction () {
-    String line;
+    CharSequence line;
 
     {
       Endpoint endpoint = getEndpoint();

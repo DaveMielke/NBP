@@ -13,7 +13,7 @@ public class FindEndpoint extends PromptEndpoint {
         int start = endpoint.getBrailleStart();
 
         if (start < endpoint.getTextLength()) {
-          String text = endpoint.getText();
+          String text = endpoint.getText().toString();
           int offset = text.indexOf(response, start+1);
 
           if (offset >= 0) {

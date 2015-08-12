@@ -5,7 +5,7 @@ public class CopyToClipboard extends Action {
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
-    String text = endpoint.getSelectedText();
+    CharSequence text = endpoint.getSelectedText();
     if (text == null) text = endpoint.getText();
 
     if (text != null) {
