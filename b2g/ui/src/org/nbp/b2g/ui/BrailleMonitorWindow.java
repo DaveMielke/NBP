@@ -11,6 +11,8 @@ import android.graphics.Typeface;
 public class BrailleMonitorWindow extends SystemOverlayWindow {
   private final static String LOG_TAG = BrailleMonitorWindow.class.getName();
 
+                                  /* RRGGBB */
+  private final static int COLOR = 0XC00000;
   private final static float ALPHA = 0.8f;
   private final Typeface BRAILLE_FONT;
 
@@ -33,6 +35,11 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
     layout.addView(view);
   }
 
+  private static void addTextView (WindowLayout layout, TextView view) {
+    view.setTextColor(COLOR);
+    addView(layout, view);
+  }
+
   public BrailleMonitorWindow (final Context context) {
     super(context);
     BRAILLE_FONT = Typeface.createFromAsset(context.getAssets(), "UBraille.ttf");
@@ -50,7 +57,7 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
           view.setTypeface(BRAILLE_FONT);
 
           brailleView.set(view);
-          addView(layout, view);
+          addTextView(layout, view);
         }
 
         {
@@ -58,7 +65,7 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
           view.setTypeface(Typeface.MONOSPACE);
 
           textView.set(view);
-          addView(layout, view);
+          addTextView(layout, view);
         }
       }
     });
