@@ -7,6 +7,8 @@ public abstract class ModifierAction extends Action {
   private final static Set<ModifierAction> modifierActions = new HashSet<ModifierAction>();
   private boolean modifierState = false;
 
+  protected abstract int getModifierLabel ();
+
   private final boolean setState (boolean newState) {
     synchronized (this) {
       boolean oldState = modifierState;
@@ -52,6 +54,7 @@ public abstract class ModifierAction extends Action {
     modifierTimeout.cancel();
     setState(true);
     modifierTimeout.start();
+    ApplicationUtilities.message(getModifierLabel());
     return true;
   }
 
