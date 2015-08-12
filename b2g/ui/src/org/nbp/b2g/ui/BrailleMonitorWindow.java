@@ -36,7 +36,7 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
   }
 
   private static void addTextView (WindowLayout layout, TextView view) {
-    view.setTextColor(COLOR);
+    view.setTextColor(COLOR | 0XFF000000);
     addView(layout, view);
   }
 
