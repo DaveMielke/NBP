@@ -37,6 +37,7 @@
   <string name="SaveScreen_action_confirmation">Screen Saved</string>
   <string name="SaveSettings_action_confirmation">Settings Saved</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
+  <string name="intermediate_action_confirmation">intermediate</string>
 
   <string name="default_control_previous">Previous</string>
   <string name="default_control_next">Next</string>

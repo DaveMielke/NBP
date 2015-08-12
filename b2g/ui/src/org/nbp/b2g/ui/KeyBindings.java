@@ -66,6 +66,11 @@ public class KeyBindings {
       return true;
     }
 
+    @Override
+    protected Integer getConfirmation () {
+      return R.string.intermediate_action_confirmation;
+    }
+
     public IntermediateAction (Endpoint endpoint) {
       super(endpoint, false);
     }
