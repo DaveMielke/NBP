@@ -27,7 +27,12 @@ public abstract class KeyEvents {
     }
 
     try {
-      if (action.performAction()) return true;
+      if (action.performAction()) {
+        Integer confirmation = action.getConfirmation();
+        if (confirmation != null) ApplicationUtilities.message(confirmation);
+        return true;
+      }
+
       Log.w(LOG_TAG, "action failed: " + action.getName());
     } catch (Exception exception) {
       Crash.handleCrash(exception, "action", action.getName());

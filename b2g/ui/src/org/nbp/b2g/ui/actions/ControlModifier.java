@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class ControlModifier extends ModifierAction {
   @Override
-  protected final int getModifierLabel () {
-    return R.string.message_modifier_control;
+  protected Integer getConfirmation () {
+    return R.string.ControlModifier_action_confirmation;
   }
 
   public ControlModifier (Endpoint endpoint) {

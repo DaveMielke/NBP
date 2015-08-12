@@ -10,12 +10,16 @@ public class CopyToClipboard extends Action {
 
     if (text != null) {
       if (Clipboard.putText(text)) {
-        ApplicationUtilities.message(R.string.CopyToClipboard_action_confirmation);
         return true;
       }
     }
 
     return false;
+  }
+
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.CopyToClipboard_action_confirmation;
   }
 
   public CopyToClipboard (Endpoint endpoint) {

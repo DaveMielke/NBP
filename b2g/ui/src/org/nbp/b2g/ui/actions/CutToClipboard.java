@@ -13,7 +13,6 @@ public class CutToClipboard extends Action {
         if (text != null) {
           if (Clipboard.putText(text)) {
             if (endpoint.deleteSelectedText()) {
-              ApplicationUtilities.message(R.string.CutToClipboard_action_confirmation);
               return true;
             }
           }
@@ -22,6 +21,11 @@ public class CutToClipboard extends Action {
     }
 
     return false;
+  }
+
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.CutToClipboard_action_confirmation;
   }
 
   public CutToClipboard (Endpoint endpoint) {

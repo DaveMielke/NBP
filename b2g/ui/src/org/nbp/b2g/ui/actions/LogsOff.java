@@ -13,13 +13,16 @@ public class LogsOff extends Action {
 
   @Override
   public boolean performAction () {
-    ApplicationUtilities.message(R.string.LogsOff_action_confirmation);
-
     for (BooleanControl control : controls) {
       control.setValue(false);
     }
 
     return true;
+  }
+
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.LogsOff_action_confirmation;
   }
 
   public LogsOff (Endpoint endpoint) {

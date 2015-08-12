@@ -7,11 +7,13 @@ public class StopSpeaking extends SpeechAction {
     SpeechDevice speech = getSpeechDevice();
 
     synchronized (speech) {
-      if (!speech.stopSpeaking()) return false;
+      return speech.stopSpeaking();
     }
+  }
 
-    ApplicationUtilities.message(R.string.StopSpeaking_action_confirmation);
-    return true;
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.StopSpeaking_action_confirmation;
   }
 
   public StopSpeaking (Endpoint endpoint) {

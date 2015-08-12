@@ -31,6 +31,10 @@ public abstract class Action {
     return performAction(cursorKeys[0]);
   }
 
+  protected Integer getConfirmation () {
+    return null;
+  }
+
   protected final void log (String message) {
     Log.v(LOG_TAG, message);
   }

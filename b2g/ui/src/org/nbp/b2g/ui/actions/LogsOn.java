@@ -11,13 +11,16 @@ public class LogsOn extends Action {
 
   @Override
   public boolean performAction () {
-    ApplicationUtilities.message(R.string.LogsOn_action_confirmation);
-
     for (BooleanControl control : controls) {
       control.setValue(true);
     }
 
     return true;
+  }
+
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.LogsOff_action_confirmation;
   }
 
   public LogsOn (Endpoint endpoint) {

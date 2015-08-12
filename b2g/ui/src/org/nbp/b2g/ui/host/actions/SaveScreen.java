@@ -40,8 +40,12 @@ public class SaveScreen extends Action {
     }
 
     write("end screen elements");
-    ApplicationUtilities.message(R.string.SaveScreen_action_confirmation);
     return true;
+  }
+
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.SaveScreen_action_confirmation;
   }
 
   public SaveScreen (Endpoint endpoint) {

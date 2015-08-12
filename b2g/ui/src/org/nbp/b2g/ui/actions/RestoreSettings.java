@@ -5,8 +5,12 @@ public class RestoreSettings extends Action {
   @Override
   public boolean performAction () {
     Controls.restoreSavedValues();
-    ApplicationUtilities.message(R.string.RestoreSettings_action_confirmation);
     return true;
+  }
+
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.RestoreSettings_action_confirmation;
   }
 
   public RestoreSettings (Endpoint endpoint) {

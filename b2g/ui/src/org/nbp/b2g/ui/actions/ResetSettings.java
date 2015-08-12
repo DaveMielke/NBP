@@ -5,8 +5,12 @@ public class ResetSettings extends Action {
   @Override
   public boolean performAction () {
     Controls.restoreDefaultValues();
-    ApplicationUtilities.message(R.string.ResetSettings_action_confirmation);
     return true;
+  }
+
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.ResetSettings_action_confirmation;
   }
 
   public ResetSettings (Endpoint endpoint) {

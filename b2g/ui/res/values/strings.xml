@@ -22,6 +22,22 @@
   <string name="enum_InputMode_BRAILLE">Unicode Braille</string>
   <string name="enum_InputMode_TEXT">Regular Text</string>
 
+  <string name="ResetSettings_action_label">Reset to Defaults</string>
+  <string name="RestoreSettings_action_label">Restore Settings</string>
+  <string name="SaveSettings_action_label">Save Settings</string>
+
+  <string name="ClearAndroidLog_action_confirmation">Android log cleared</string>
+  <string name="ControlModifier_action_confirmation">control</string>
+  <string name="CopyToClipboard_action_confirmation">Copied to Clipboard</string>
+  <string name="CutToClipboard_action_confirmation">Cut to Clipboard</string>
+  <string name="LogsOff_action_confirmation">Logs Off</string>
+  <string name="LogsOn_action_confirmation">Logs On</string>
+  <string name="ResetSettings_action_confirmation">Settings Reset</string>
+  <string name="RestoreSettings_action_confirmation">Settings Restored</string>
+  <string name="SaveScreen_action_confirmation">Screen Saved</string>
+  <string name="SaveSettings_action_confirmation">Settings Saved</string>
+  <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
+
   <string name="default_control_previous">Previous</string>
   <string name="default_control_next">Next</string>
 
@@ -70,23 +86,6 @@
   <string name="LogNavigation_control_label">Log Navigation</string>
   <string name="LogUpdates_control_label">Log Updates</string>
 
-  <string name="ClearAndroidLog_action_confirmation">Android log cleared</string>
-  <string name="CopyToClipboard_action_confirmation">Copied to Clipboard</string>
-  <string name="CutToClipboard_action_confirmation">Cut to Clipboard</string>
-  <string name="LogsOff_action_confirmation">Logs Off</string>
-  <string name="LogsOn_action_confirmation">Logs On</string>
-  <string name="SaveScreen_action_confirmation">Screen Saved</string>
-  <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
-
-  <string name="ResetSettings_action_label">Reset to Defaults</string>
-  <string name="ResetSettings_action_confirmation">Settings Reset</string>
-
-  <string name="RestoreSettings_action_label">Restore Settings</string>
-  <string name="RestoreSettings_action_confirmation">Settings Restored</string>
-
-  <string name="SaveSettings_action_label">Save Settings</string>
-  <string name="SaveSettings_action_confirmation">Settings Saved</string>
-
   <string name="DescribeBuild_title">Build Details</string>
   <string name="DescribeBuild_label_revision">Revision</string>
   <string name="DescribeBuild_label_time">Time</string>
@@ -120,7 +119,6 @@
 
   <string name="message_intermediate_action_timeout">incomplete entry</string>
   <string name="message_modifier_cancelled">modifier cancelled</string>
-  <string name="message_modifier_control">control</string>
   <string name="message_no_screen_content">no screen content</string>
   <string name="message_no_screen_monitor">no screen monitor</string>
 
