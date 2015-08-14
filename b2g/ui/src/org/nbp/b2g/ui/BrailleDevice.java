@@ -220,6 +220,15 @@ public class BrailleDevice {
     }
   };
 
+  public final void dismiss () {
+    synchronized (writeDelay) {
+      if (writeDelay.isActive()) {
+        writeDelay.cancel();
+        writeDelay.start();
+      }
+    }
+  }
+
   public final boolean write () {
     synchronized (this) {
       if (!open()) return false;

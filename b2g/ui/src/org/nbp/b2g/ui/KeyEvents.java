@@ -107,6 +107,7 @@ public abstract class KeyEvents {
 
       if (action != null) {
         if (action instanceof ModifierAction) wasModifier = true;
+        Devices.braille.get().dismiss();
 
         if (performAction(action)) {
           performed = true;
