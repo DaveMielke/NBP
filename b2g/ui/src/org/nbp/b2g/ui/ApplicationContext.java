@@ -187,6 +187,15 @@ public abstract class ApplicationContext {
     return (WindowManager)systemService;
   }
 
+  public static Point getWindowSize () {
+    WindowManager windowManager = getWindowManager();
+    if (windowManager == null) return null;
+
+    Point size = new Point();
+    windowManager.getDefaultDisplay().getSize(size);
+    return size;
+  }
+
   public static Point getScreenSize () {
     WindowManager windowManager = getWindowManager();
     if (windowManager == null) return null;

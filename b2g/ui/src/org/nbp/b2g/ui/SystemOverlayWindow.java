@@ -7,6 +7,10 @@ import android.view.WindowManager;
 
 import android.widget.LinearLayout;
 import android.graphics.PixelFormat;
+import android.view.Gravity;
+
+import android.view.Display;
+import android.graphics.Point;
 
 import android.os.Looper;
 import android.os.Handler;
@@ -31,7 +35,8 @@ public class SystemOverlayWindow {
     WindowManager.LayoutParams.WRAP_CONTENT /* width */,
     WindowManager.LayoutParams.WRAP_CONTENT /* height */,
     WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+    | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
     PixelFormat.TRANSLUCENT
   );
 
@@ -39,33 +44,17 @@ public class SystemOverlayWindow {
     return windowLayout.get();
   }
 
-  public final void logProperties () {
-    runOnWindowThread(new Runnable() {
-      @Override
-      public void run () {
-        WindowLayout layout = getLayout();
-        StringBuilder sb = new StringBuilder();
+  private final void setPosition () {
+    Display display = windowManager.getDefaultDisplay();
 
-        sb.append("system window: ");
-        sb.append(SystemOverlayWindow.this.getClass().getSimpleName());
-        sb.append(':');
+    Point windowSize = new Point();
+    display.getSize(windowSize);
 
-        sb.append(" Height:");
-        sb.append(layout.getHeight());
+    Point screenSize = new Point();
+    display.getRealSize(screenSize);
 
-        sb.append(" Width:");
-        sb.append(layout.getWidth());
-
-        sb.append(" Alpha:");
-        sb.append(layout.getAlpha());
-
-        Log.d(LOG_TAG, sb.toString());
-      }
-    });
-  }
-
-  protected final void setGravity (int gravity) {
-    windowParameters.gravity = gravity;
+    windowParameters.gravity = Gravity.BOTTOM;
+    windowParameters.y = windowSize.y - screenSize.y;
   }
 
   protected final void runOnWindowThread (Runnable runnable) {
@@ -114,6 +103,7 @@ public class SystemOverlayWindow {
 
   public SystemOverlayWindow (final Context context) {
     windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+    setPosition();
 
     windowThread = new Thread() {
       @Override

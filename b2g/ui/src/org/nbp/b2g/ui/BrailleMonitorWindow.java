@@ -4,7 +4,6 @@ import android.util.Log;
 
 import android.content.Context;
 import android.view.View;
-import android.view.Gravity;
 import android.widget.TextView;
 import android.graphics.Typeface;
 
@@ -69,7 +68,5 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
         }
       }
     });
-
-    setGravity(Gravity.BOTTOM);
   }
 }
