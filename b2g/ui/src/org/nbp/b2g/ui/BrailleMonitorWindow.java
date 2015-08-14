@@ -61,7 +61,6 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
 
         {
           TextView view = new TextView(context);
-          view.setTypeface(Typeface.MONOSPACE);
 
           textView.set(view);
           addTextView(layout, view);

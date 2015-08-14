@@ -267,6 +267,10 @@ public class BrailleDevice {
     return false;
   }
 
+  public boolean write (byte[] cells, CharSequence text) {
+    return write(cells, text, 0);
+  }
+
   public boolean write (byte[] cells, long duration) {
     return write(cells, "", 0);
   }

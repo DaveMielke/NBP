@@ -113,6 +113,9 @@
   <string name="DescribeStatus_wifi_state_enabling">enabling</string>
   <string name="DescribeStatus_wifi_state_unknown">unknown</string>
 
+  <string name="message_scrolling_backward">scrolling backward</string>
+  <string name="message_scrolling_forward">scrolling forward</string>
+
   <string name="message_start_of_input_area">start of input area</string>
   <string name="message_end_of_input_area">end of input area</string>
   <string name="message_top_of_input_area">top of input area</string>
