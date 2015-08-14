@@ -19,7 +19,7 @@ public class BrailleDevice {
 
   private BrailleMonitorWindow monitorWindow = null;
 
-  public BrailleMonitorWindow getMonitorWindow () {
+  public final BrailleMonitorWindow getMonitorWindow () {
     synchronized (this) {
       if (monitorWindow == null) {
         Context context = ApplicationContext.getContext();
@@ -49,14 +49,14 @@ public class BrailleDevice {
   private CharSequence brailleText = null;
   private boolean writePending = false;
 
-  public byte[] getCells () {
+  public final byte[] getCells () {
     synchronized (this) {
       if (!open()) return null;
       return Arrays.copyOf(brailleCells, brailleCells.length);
     }
   }
 
-  public void restoreControls () {
+  public final void restoreControls () {
     Control[] controls = new Control[] {
       Controls.getBrailleFirmnessControl(),
       Controls.getBrailleMonitorControl()
@@ -65,7 +65,7 @@ public class BrailleDevice {
     Controls.forEachControl(controls, Controls.restoreCurrentValue);
   }
 
-  public boolean open () {
+  public final boolean open () {
     synchronized (this) {
       if (brailleCells != null) return true;
 
@@ -95,7 +95,7 @@ public class BrailleDevice {
     return false;
   }
 
-  public void close () {
+  public final void close () {
     synchronized (writeDelay) {
       writeDelay.cancel();
 
@@ -111,7 +111,7 @@ public class BrailleDevice {
     }
   }
 
-  public boolean enable () {
+  public final boolean enable () {
     if (open()) {
       if (enableDevice()) {
         return true;
@@ -121,7 +121,7 @@ public class BrailleDevice {
     return false;
   }
 
-  public boolean disable () {
+  public final boolean disable () {
     if (open()) {
       if (disableDevice()) {
         return true;
@@ -131,14 +131,14 @@ public class BrailleDevice {
     return false;
   }
 
-  public int getLength () {
+  public final int getLength () {
     synchronized (this) {
       if (open()) return brailleCells.length;
       return 0;
     }
   }
 
-  public boolean setFirmness (int firmness) {
+  public final boolean setFirmness (int firmness) {
     synchronized (this) {
       if (open()) {
         if (setCellFirmness(firmness)) {
@@ -150,7 +150,7 @@ public class BrailleDevice {
     return false;
   }
 
-  private void logCells (byte[] cells, String reason, CharSequence text) {
+  private final void logCells (byte[] cells, String reason, CharSequence text) {
     boolean log = ApplicationSettings.LOG_BRAILLE;
     String braille = Braille.toString(cells);
 
@@ -167,11 +167,11 @@ public class BrailleDevice {
     }
   }
 
-  private void logCells (byte[] cells, String reason) {
+  private final void logCells (byte[] cells, String reason) {
     logCells(cells, reason, null);
   }
 
-  private boolean writeCells (byte[] cells, CharSequence text, String reason) {
+  private final boolean writeCells (byte[] cells, CharSequence text, String reason) {
     {
       final int suppliedLength = cells.length;
       final int requiredLength = brailleCells.length;
@@ -197,11 +197,11 @@ public class BrailleDevice {
     return true;
   }
 
-  private boolean writeCells () {
+  private final boolean writeCells () {
     return writeCells(brailleCells, brailleText, "writing");
   }
 
-  public boolean refreshCells () {
+  public final boolean refreshCells () {
     synchronized (this) {
       if (brailleCells == null) return true;
       return writeCells();
@@ -220,7 +220,7 @@ public class BrailleDevice {
     }
   };
 
-  public boolean write () {
+  public final boolean write () {
     synchronized (this) {
       if (!open()) return false;
 
@@ -248,7 +248,7 @@ public class BrailleDevice {
     return true;
   }
 
-  public boolean write (byte[] cells, CharSequence text, long duration) {
+  public final boolean write (byte[] cells, CharSequence text, long duration) {
     synchronized (this) {
       if (open()) {
         writeDelay.cancel();
@@ -267,25 +267,25 @@ public class BrailleDevice {
     return false;
   }
 
-  public boolean write (byte[] cells, CharSequence text) {
+  public final boolean write (byte[] cells, CharSequence text) {
     return write(cells, text, 0);
   }
 
-  public boolean write (byte[] cells, long duration) {
+  public final boolean write (byte[] cells, long duration) {
     return write(cells, "", 0);
   }
 
-  public boolean write (byte[] cells) {
+  public final boolean write (byte[] cells) {
     return write(cells, 0);
   }
 
-  public boolean write (CharSequence text, long duration) {
+  public final boolean write (CharSequence text, long duration) {
     byte[] cells = new byte[text.length()];
     text = Braille.setCells(cells, text);
     return write(cells, text, duration);
   }
 
-  public boolean write (CharSequence text) {
+  public final boolean write (CharSequence text) {
     return write(text, 0);
   }
 
