@@ -1,13 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class LogUpdatesOff extends Action {
-  @Override
-  public boolean performAction () {
-    return Controls.getLogUpdatesControl().previousValue();
-  }
-
+public class LogUpdatesOff extends PreviousValueAction {
   public LogUpdatesOff (Endpoint endpoint) {
-    super(endpoint, true);
+    super(endpoint, Controls.getLogUpdatesControl(), true);
   }
 }

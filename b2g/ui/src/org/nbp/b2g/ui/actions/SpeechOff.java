@@ -1,19 +1,14 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class SpeechOff extends SpeechAction {
+public class SpeechOff extends PreviousValueAction {
   @Override
   public boolean performAction () {
-    SpeechDevice speech = getSpeechDevice();
-
-    synchronized (speech) {
-      speech.stopSpeaking();
-    }
-
-    return Controls.getSpeechEnabledControl().previousValue();
+    if (!Devices.speech.get().stopSpeaking()) return false;
+    return super.performAction();
   }
 
   public SpeechOff (Endpoint endpoint) {
-    super(endpoint);
+    super(endpoint, Controls.getSpeechEnabledControl(), false);
   }
 }

@@ -1,21 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class SpeakHigher extends SpeechAction {
-  @Override
-  public boolean performAction () {
-    SpeechDevice speech = getSpeechDevice();
-
-    synchronized (speech) {
-      if (Controls.getSpeechPitchControl().nextValue()) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
+public class SpeakHigher extends NextValueAction {
   public SpeakHigher (Endpoint endpoint) {
-    super(endpoint);
+    super(endpoint, Controls.getSpeechPitchControl(), false);
   }
 }

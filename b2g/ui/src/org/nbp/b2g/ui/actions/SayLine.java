@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class SayLine extends SpeechAction {
+public class SayLine extends Action {
   @Override
   public boolean performAction () {
     CharSequence line;
@@ -14,7 +14,7 @@ public class SayLine extends SpeechAction {
       }
     }
 
-    SpeechDevice speech = getSpeechDevice();
+    SpeechDevice speech = Devices.speech.get();
     synchronized (speech) {
       speech.stopSpeaking();
       return speech.say(line);
@@ -22,6 +22,6 @@ public class SayLine extends SpeechAction {
   }
 
   public SayLine (Endpoint endpoint) {
-    super(endpoint);
+    super(endpoint, false);
   }
 }

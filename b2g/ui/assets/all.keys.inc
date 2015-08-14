@@ -18,8 +18,8 @@ bind Dot8+Cursor SetLeft
 
 bind Space+Dot8+Dots14#c CopyToClipboard
 
+bind Space+Dots24#i InputModeConfirm
 bind Space+Dot7+Dots24#i InputModeText
-bind Space+Dots24#i ShowInputMode
 bind Space+Dot8+Dots24#i InputModeBraille
 
 bind Backward+Dot3 LongPressOff

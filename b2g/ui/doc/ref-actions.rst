@@ -31,6 +31,7 @@
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
 .. |InputModeBraille| replace:: set the input mode to braille
+.. |InputModeConfirm| replace:: show the current input mode setting
 .. |InputModeText| replace:: set the input mode to text
 .. |InsertUnicode| replace:: type any character by its Unicode value
 .. |LineNext| replace:: go to the start of the next line
@@ -92,7 +93,6 @@
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection
 .. |Settings| replace:: go to the Settings screen of the B2G User Interface
-.. |ShowInputMode| replace:: show the current input mode
 .. |SleepTalkOff| replace:: speak only when awake
 .. |SleepTalkOn| replace:: speak even when asleep
 .. |SpeakFaster| replace:: increase the speech rate

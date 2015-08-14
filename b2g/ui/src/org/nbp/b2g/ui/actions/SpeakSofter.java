@@ -1,21 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class SpeakSofter extends SpeechAction {
-  @Override
-  public boolean performAction () {
-    SpeechDevice speech = getSpeechDevice();
-
-    synchronized (speech) {
-      if (Controls.getSpeechVolumeControl().previousValue()) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
+public class SpeakSofter extends PreviousValueAction {
   public SpeakSofter (Endpoint endpoint) {
-    super(endpoint);
+    super(endpoint, Controls.getSpeechVolumeControl(), false);
   }
 }

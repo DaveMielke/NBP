@@ -1,13 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class BrailleOn extends Action {
-  @Override
-  public boolean performAction () {
-    return Controls.getBrailleEnabledControl().nextValue();
-  }
-
+public class BrailleOn extends NextValueAction {
   public BrailleOn (Endpoint endpoint) {
-    super(endpoint, false);
+    super(endpoint, Controls.getBrailleEnabledControl(), false);
   }
 }

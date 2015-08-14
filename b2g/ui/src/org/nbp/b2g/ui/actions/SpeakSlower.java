@@ -1,21 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class SpeakSlower extends SpeechAction {
-  @Override
-  public boolean performAction () {
-    SpeechDevice speech = getSpeechDevice();
-
-    synchronized (speech) {
-      if (Controls.getSpeechRateControl().previousValue()) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
+public class SpeakSlower extends PreviousValueAction {
   public SpeakSlower (Endpoint endpoint) {
-    super(endpoint);
+    super(endpoint, Controls.getSpeechRateControl(), false);
   }
 }

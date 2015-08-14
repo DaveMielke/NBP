@@ -1,14 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class DeveloperOff extends Action {
-  @Override
-  public boolean performAction () {
-    Control control = Controls.getDeveloperEnabledControl();
-    return control.previousValue();
-  }
-
+public class DeveloperOff extends PreviousValueAction {
   public DeveloperOff (Endpoint endpoint) {
-    super(endpoint, true);
+    super(endpoint, Controls.getDeveloperEnabledControl(), true);
   }
 }

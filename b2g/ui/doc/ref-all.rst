@@ -15,7 +15,7 @@
   "Dot7+Cursor","|DescribeCharacter|"
   "Dot8+Cursor","|SetLeft|"
   "Space+Dot8+Dots14#c","|CopyToClipboard|"
-  "Space+Dots24#i","|ShowInputMode|"
+  "Space+Dots24#i","|InputModeConfirm|"
   "Space+Dot7+Dots24#i","|InputModeText|"
   "Space+Dot8+Dots24#i","|InputModeBraille|"
   "Backward+Dot3","|LongPressOff|"
