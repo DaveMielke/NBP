@@ -86,9 +86,9 @@ If the system is running, then:
 When the system is either booted or woken up, the following settings are reset
 to their default values:
 
-* Input Mode is set to Text.
-* One Hand Mode is disabled.
-* Braille is enabled.
+* The input mode is set to Text (see `Input Modes`_).
+* One Hand Mode is disabled (see `One Hand Mode`_).
+* The braille display is enabled (see `Disabling the Braille Display`_).
 
 The Back
 ~~~~~~~~
@@ -621,6 +621,12 @@ notification, occurs.
 
 This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
 pressing Forward+VolumeDown disables it.
+
+Disabling the Braille Display
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The braille display is enabled by default. It can be disabled by pressing
+Backward+Dot1, and reenabled by pressing Forward+Dot4.
 
 The Settings Screen
 ~~~~~~~~~~~~~~~~~~~

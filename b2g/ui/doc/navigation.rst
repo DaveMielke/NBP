@@ -76,7 +76,8 @@ Backward keys are reversed insofar as navigation is concerned:
 * Forward pans to the left, wraps to the end of the previous line, moves to the
   previous screen element, etc.
   
-This mode is disabled by default.
+This mode is disabled by default. Pressing Forward+Dot5 enables it, and
+pressing Backward+Dot2 disables it.
 
 Explicit Panning
 ~~~~~~~~~~~~~~~~

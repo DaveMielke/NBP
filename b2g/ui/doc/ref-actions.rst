@@ -4,6 +4,8 @@
 .. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
+.. |BrailleOff| replace:: disable braille
+.. |BrailleOn| replace:: enable braille
 .. |BringCursor| replace:: bring the cursor to a specific character
 .. |ClearAndroidLog| replace:: clear the Android log
 .. |Click| replace:: tap (click) the current screen element
@@ -78,6 +80,8 @@
 .. |RecentApps| replace:: go to the Recent Apps screen
 .. |ResetSettings| replace:: reset the B2G User Interface settings to default values
 .. |RestoreSettings| replace:: restore the most recently saved B2G User Interface settings
+.. |ReversePanningOff| replace:: disable reverse panning mode
+.. |ReversePanningOn| replace:: enable reverse panning mode
 .. |SaveSettings| replace:: save the current B2G User Interface settings
 .. |SaveScreen| replace:: write the screen element structure to the log
 .. |SayLine| replace:: speak the current line

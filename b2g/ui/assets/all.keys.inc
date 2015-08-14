@@ -22,6 +22,12 @@ bind Space+Dots24#i InputModeConfirm
 bind Space+Dot7+Dots24#i InputModeText
 bind Space+Dot8+Dots24#i InputModeBraille
 
+bind Backward+Dot1 BrailleOff
+bind Forward+Dot4 BrailleOn
+
+bind Backward+Dot2 ReversePanningOff
+bind Forward+Dot5 ReversePanningOn
+
 bind Backward+Dot3 LongPressOff
 bind Forward+Dot6 LongPressOn
 
