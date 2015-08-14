@@ -47,14 +47,24 @@ public class SystemOverlayWindow {
   private final void setPosition () {
     Display display = windowManager.getDefaultDisplay();
 
-    Point windowSize = new Point();
-    display.getSize(windowSize);
-
     Point screenSize = new Point();
     display.getRealSize(screenSize);
 
+    Log.d(LOG_TAG, String.format(
+      "screen size: %dx%d", screenSize.x, screenSize.y
+    ));
+
+    Point windowSize = new Point();
+    display.getSize(windowSize);
+
+    Log.d(LOG_TAG, String.format(
+      "window size: %dx%d", windowSize.x, windowSize.y
+    ));
+
     windowParameters.gravity = Gravity.BOTTOM;
     windowParameters.y = windowSize.y - screenSize.y;
+
+    Log.d(LOG_TAG, "bottom adjustment: " + windowParameters.y);
   }
 
   protected final void runOnWindowThread (Runnable runnable) {
