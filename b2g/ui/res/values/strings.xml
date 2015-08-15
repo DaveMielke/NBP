@@ -97,6 +97,12 @@
   <string name="DescribeCharacter_label_directionality">Directionality</string>
 
   <string name="DescribeStatus_battery_label">Battery</string>
+  <string name="DescribeStatus_battery_health_cold">cold</string>
+  <string name="DescribeStatus_battery_health_dead">dead</string>
+  <string name="DescribeStatus_battery_health_failure">failure</string>
+  <string name="DescribeStatus_battery_health_good">good</string>
+  <string name="DescribeStatus_battery_health_hot">too hot</string>
+  <string name="DescribeStatus_battery_health_voltage">voltage too high</string>
 
   <string name="DescribeStatus_sim_label">SIM</string>
   <string name="DescribeStatus_sim_state_absent">not installed</string>

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import android.os.Environment;
 import android.os.Bundle;
@@ -45,5 +46,13 @@ public class HostMonitor extends BroadcastReceiver {
         intentExtras.put(action, intent.getExtras());
       }
     }
+  }
+
+  public static void monitorEvents (Context context) {
+    IntentFilter filter = new IntentFilter();
+    filter.addAction(Intent.ACTION_BATTERY_CHANGED);
+
+    BroadcastReceiver receiver = new HostMonitor();
+    context.registerReceiver(receiver, filter);
   }
 }

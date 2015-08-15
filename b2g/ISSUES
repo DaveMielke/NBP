@@ -1,5 +1,4 @@
 Verify:
-  bold setting labels (braille, speech, developer)
   USB Ethernet adapter
   SIM indicators
   battery indicators
@@ -15,6 +14,10 @@ Document
   recent apps has two entries per app
   how kbd and ui navigation can get out of sync
   crash email
+
+Device:
+   unique USB serial numbers
+   unique Wi-Fi mac addresses
 
 User Interface
   LibLouis

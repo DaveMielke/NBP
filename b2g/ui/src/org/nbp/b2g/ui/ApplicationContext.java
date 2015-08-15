@@ -38,7 +38,8 @@ public abstract class ApplicationContext {
     }
 
     acquireWakeLock();
-    Clipboard.setClipboard();
+    HostMonitor.monitorEvents(context);
+    Clipboard.setClipboard(context);
 
     Controls.restoreCurrentValues();
     Controls.restoreSaneValues();

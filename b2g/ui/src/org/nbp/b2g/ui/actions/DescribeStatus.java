@@ -23,7 +23,7 @@ public class DescribeStatus extends Action {
   private static void startLine (StringBuilder sb, int label) {
     if (sb.length() > 0) sb.append('\n');
     appendString(sb, label);
-    sb.append(": ");
+    sb.append(":");
   }
 
   private static void addBatteryStatus (StringBuilder sb) {
@@ -33,13 +33,55 @@ public class DescribeStatus extends Action {
       startLine(sb, R.string.DescribeStatus_battery_label);
 
       {
-        int level = battery.getInt(BatteryManager.EXTRA_LEVEL);
-        int scale = battery.getInt(BatteryManager.EXTRA_SCALE);
+        sb.append(' ');
+        boolean present = battery.getBoolean(BatteryManager.EXTRA_PRESENT, true);
 
-        if (scale > 0) {
+        if (present) {
+          int level = battery.getInt(BatteryManager.EXTRA_LEVEL, 0);
+          int scale = battery.getInt(BatteryManager.EXTRA_SCALE, 0);
+
+          if (scale > 0) {
+            sb.append(Integer.toString((level * 100) / scale));
+            sb.append('%');
+          }
+        } else {
+          sb.append("none");
+        }
+      }
+
+      {
+        int value = battery.getInt(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN);
+        int string = 0;
+
+        switch (value) {
+          case BatteryManager.BATTERY_HEALTH_GOOD:
+            string = R.string.DescribeStatus_battery_health_good;
+            break;
+
+          case BatteryManager.BATTERY_HEALTH_DEAD:
+            string = R.string.DescribeStatus_battery_health_dead;
+            break;
+
+          case BatteryManager.BATTERY_HEALTH_COLD:
+            string = R.string.DescribeStatus_battery_health_cold;
+            break;
+
+          case BatteryManager.BATTERY_HEALTH_OVERHEAT:
+            string = R.string.DescribeStatus_battery_health_hot;
+            break;
+
+          case BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE:
+            string = R.string.DescribeStatus_battery_health_voltage;
+            break;
+
+          case BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE:
+            string = R.string.DescribeStatus_battery_health_failure;
+            break;
+        }
+
+        if (string != 0) {
           sb.append(' ');
-          sb.append(Integer.toString((level * 100) / scale));
-          sb.append('%');
+          appendString(sb, string);
         }
       }
     }
@@ -50,6 +92,8 @@ public class DescribeStatus extends Action {
 
     if (tel != null) {
       startLine(sb, R.string.DescribeStatus_sim_label);
+
+      sb.append(' ');
       int state = tel.getSimState();
 
       switch (state) {
@@ -95,6 +139,8 @@ public class DescribeStatus extends Action {
 
     if (wifi != null) {
       startLine(sb, R.string.DescribeStatus_wifi_label);
+
+      sb.append(' ');
       int state = wifi.getWifiState();
 
       switch (state) {

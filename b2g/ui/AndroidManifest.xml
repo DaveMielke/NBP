@@ -25,6 +25,9 @@
   <!-- to read user-provided data files (keys, chars, etc) -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+  <!-- to create org.nbp.b2g.ui/ -->
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
   <!-- for the SendAndroidLog action -->
   <uses-permission android:name="android.permission.READ_LOGS" />
 
@@ -32,6 +35,7 @@
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
   <!-- for the DescribeStatus action -->
+  <uses-permission android:name="android.permission.BATTERY_STATS" />
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
   <!-- for the braille display endpoint -->
@@ -121,10 +125,6 @@
         <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
 
         <data android:scheme="file" />
-      </intent-filter>
-
-      <intent-filter>
-        <action android:name="android.intent.action.BATTERY_CHANGED" />
       </intent-filter>
     </receiver>
   </application>
