@@ -88,7 +88,7 @@ to their default values:
 
 * The input mode is set to Text (see `Input Modes`_).
 * One Hand Mode is disabled (see `One Hand Mode`_).
-* The braille display is enabled (see `Disabling the Braille Display`_).
+* The braille display is enabled (see `Disabling the Display`_).
 
 The Back
 ~~~~~~~~
@@ -622,8 +622,22 @@ notification, occurs.
 This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
 pressing Forward+VolumeDown disables it.
 
-Disabling the Braille Display
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Braille
+~~~~~~~
+
+The On-screen Monitor
+`````````````````````
+
+An on-screen monitor that shows what's on the braille display can be enabled
+from `The Settings Screen`_. It shows both the braille cells and the text.
+
+Adjusting the dot firmness
+``````````````````````````
+
+The firmness of the braille dots can be adjusted from `The Settings Screen`_.
+
+Disabling the Display
+`````````````````````
 
 The braille display is enabled by default. It can be disabled by pressing
 Backward+Dot1, and reenabled by pressing Forward+Dot4.
