@@ -96,28 +96,36 @@
   <string name="DescribeCharacter_label_codepoint">Code Point</string>
   <string name="DescribeCharacter_label_directionality">Directionality</string>
 
-  <string name="DescribeStatus_battery_label">Battery</string>
-  <string name="DescribeStatus_battery_health_cold">cold</string>
-  <string name="DescribeStatus_battery_health_dead">dead</string>
-  <string name="DescribeStatus_battery_health_failure">failure</string>
-  <string name="DescribeStatus_battery_health_good">good</string>
-  <string name="DescribeStatus_battery_health_hot">too hot</string>
-  <string name="DescribeStatus_battery_health_voltage">voltage too high</string>
+  <string name="DescribeIndicators_battery_label">Battery</string>
+  <string name="DescribeIndicators_battery_health_cold">cold</string>
+  <string name="DescribeIndicators_battery_health_dead">dead</string>
+  <string name="DescribeIndicators_battery_health_failure">failure</string>
+  <string name="DescribeIndicators_battery_health_good">good</string>
+  <string name="DescribeIndicators_battery_health_hot">too hot</string>
+  <string name="DescribeIndicators_battery_health_voltage">voltage too high</string>
+  <string name="DescribeIndicators_battery_plugged_ac">AC</string>
+  <string name="DescribeIndicators_battery_plugged_battery">battery</string>
+  <string name="DescribeIndicators_battery_plugged_usb">USB</string>
+  <string name="DescribeIndicators_battery_plugged_wireless">wireless</string>
+  <string name="DescribeIndicators_battery_status_charging">charging</string>
+  <string name="DescribeIndicators_battery_status_discharging">discharging</string>
+  <string name="DescribeIndicators_battery_status_full">full</string>
+  <string name="DescribeIndicators_battery_status_not_charging">not charging</string>
 
-  <string name="DescribeStatus_sim_label">SIM</string>
-  <string name="DescribeStatus_sim_state_absent">not installed</string>
-  <string name="DescribeStatus_sim_state_locked_net">locked (need network PIN)</string>
-  <string name="DescribeStatus_sim_state_locked_pin">locked (need user PIN)</string>
-  <string name="DescribeStatus_sim_state_locked_puk">locked (need user PUK)</string>
-  <string name="DescribeStatus_sim_state_ready">ready</string>
-  <string name="DescribeStatus_sim_state_unknown">unknown</string>
+  <string name="DescribeIndicators_sim_label">SIM</string>
+  <string name="DescribeIndicators_sim_state_absent">not installed</string>
+  <string name="DescribeIndicators_sim_state_locked_net">locked (need network PIN)</string>
+  <string name="DescribeIndicators_sim_state_locked_pin">locked (need user PIN)</string>
+  <string name="DescribeIndicators_sim_state_locked_puk">locked (need user PUK)</string>
+  <string name="DescribeIndicators_sim_state_ready">ready</string>
+  <string name="DescribeIndicators_sim_state_unknown">unknown</string>
 
-  <string name="DescribeStatus_wifi_label">Wi-Fi</string>
-  <string name="DescribeStatus_wifi_state_disabled">disabled</string>
-  <string name="DescribeStatus_wifi_state_disabling">disabling</string>
-  <string name="DescribeStatus_wifi_state_enabled">enabled</string>
-  <string name="DescribeStatus_wifi_state_enabling">enabling</string>
-  <string name="DescribeStatus_wifi_state_unknown">unknown</string>
+  <string name="DescribeIndicators_wifi_label">Wi-Fi</string>
+  <string name="DescribeIndicators_wifi_state_disabled">disabled</string>
+  <string name="DescribeIndicators_wifi_state_disabling">disabling</string>
+  <string name="DescribeIndicators_wifi_state_enabled">enabled</string>
+  <string name="DescribeIndicators_wifi_state_enabling">enabling</string>
+  <string name="DescribeIndicators_wifi_state_unknown">unknown</string>
 
   <string name="message_scrolling_backward">scrolling backward</string>
   <string name="message_scrolling_forward">scrolling forward</string>

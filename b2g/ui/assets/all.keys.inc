@@ -34,7 +34,7 @@ bind Forward+Dot6 LongPressOn
 bind Backward+Dot7 OneHandOff
 bind Forward+Dot8 OneHandOn
 
-bind Backward+Forward DescribeStatus
+bind Backward+Forward DescribeIndicators
 bind Backward+Forward+Space DescribeBuild
 
 bind Space+Dots12345678 Null

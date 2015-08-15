@@ -26,7 +26,7 @@
   "Forward+Dot6","|LongPressOn|"
   "Backward+Dot7","|OneHandOff|"
   "Forward+Dot8","|OneHandOn|"
-  "Backward+Forward","|DescribeStatus|"
+  "Backward+Forward","|DescribeIndicators|"
   "Backward+Forward+Space","|DescribeBuild|"
   "Space+Dots12345678","|Null|"
 
