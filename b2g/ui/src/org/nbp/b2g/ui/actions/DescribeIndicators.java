@@ -21,12 +21,7 @@ public class DescribeIndicators extends Action {
   private final static String LOG_TAG = DescribeIndicators.class.getName();
 
   private static void appendString (StringBuilder sb, int resource) {
-    String string = ApplicationContext.getString(resource);
-
-    if (!string.isEmpty()) {
-      sb.append(' ');
-      sb.append(string);
-    }
+    sb.append(ApplicationContext.getString(resource));
   }
 
   private static void startLine (StringBuilder sb, int label) {
@@ -40,7 +35,11 @@ public class DescribeIndicators extends Action {
 
     public final void report (StringBuilder sb, int value) {
       Integer text = map.get(value);
-      if (text != null) appendString(sb, text);
+
+      if (text != null) {
+        sb.append(' ');
+        appendString(sb, text);
+      }
     }
 
     protected final void addValue (int value, int text) {
