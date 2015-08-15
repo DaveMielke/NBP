@@ -18,7 +18,7 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 
 public class DescribeIndicators extends Action {
-  private final static String LOG_TAG = DescribeIndicators.class.getName();
+  protected final static String LOG_TAG = DescribeIndicators.class.getName();
 
   private static void appendString (StringBuilder sb, int resource) {
     sb.append(ApplicationContext.getString(resource));
@@ -31,6 +31,8 @@ public class DescribeIndicators extends Action {
   }
 
   private class IndicatorProperty {
+    private final String logLabel;
+
     private final Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
     public final void report (StringBuilder sb, int value) {
@@ -40,14 +42,22 @@ public class DescribeIndicators extends Action {
         sb.append(' ');
         appendString(sb, text);
       }
+
+      if (ApplicationSettings.LOG_ACTIONS) {
+        Log.v(LOG_TAG, (logLabel + ": " + value));
+      }
     }
 
     protected final void addValue (int value, int text) {
       map.put(value, text);
     }
+
+    public IndicatorProperty (String label) {
+      logLabel = label;
+    }
   }
 
-  private final IndicatorProperty batteryHealth = new IndicatorProperty() {
+  private final IndicatorProperty batteryHealth = new IndicatorProperty("battery health") {
     {
       addValue(BatteryManager.BATTERY_HEALTH_GOOD, R.string.DescribeIndicators_battery_health_good);
       addValue(BatteryManager.BATTERY_HEALTH_DEAD, R.string.DescribeIndicators_battery_health_dead);
@@ -58,7 +68,7 @@ public class DescribeIndicators extends Action {
     }
   };
 
-  private final IndicatorProperty batteryPlugged = new IndicatorProperty() {
+  private final IndicatorProperty batteryPlugged = new IndicatorProperty("battery plugged") {
     {
       addValue(BatteryManager.BATTERY_PLUGGED_AC, R.string.DescribeIndicators_battery_plugged_ac);
       addValue(BatteryManager.BATTERY_PLUGGED_USB, R.string.DescribeIndicators_battery_plugged_usb);
@@ -69,7 +79,7 @@ public class DescribeIndicators extends Action {
     }
   };
 
-  private final IndicatorProperty batteryStatus = new IndicatorProperty() {
+  private final IndicatorProperty batteryStatus = new IndicatorProperty("battery status") {
     {
       addValue(BatteryManager.BATTERY_STATUS_CHARGING, R.string.DescribeIndicators_battery_status_charging);
       addValue(BatteryManager.BATTERY_STATUS_DISCHARGING, R.string.DescribeIndicators_battery_status_discharging);
@@ -107,7 +117,7 @@ public class DescribeIndicators extends Action {
     }
   }
 
-  private final IndicatorProperty simState = new IndicatorProperty() {
+  private final IndicatorProperty simState = new IndicatorProperty("SIM state") {
     {
       addValue(TelephonyManager.SIM_STATE_UNKNOWN, R.string.DescribeIndicators_sim_state_unknown);
       addValue(TelephonyManager.SIM_STATE_ABSENT, R.string.DescribeIndicators_sim_state_absent);
@@ -143,7 +153,7 @@ public class DescribeIndicators extends Action {
     }
   }
 
-  private final IndicatorProperty wifiState = new IndicatorProperty() {
+  private final IndicatorProperty wifiState = new IndicatorProperty("Wi-Fi state") {
     {
       addValue(WifiManager.WIFI_STATE_UNKNOWN, R.string.DescribeIndicators_wifi_state_unknown);
       addValue(WifiManager.WIFI_STATE_DISABLING, R.string.DescribeIndicators_wifi_state_disabling);
