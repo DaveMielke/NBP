@@ -107,13 +107,40 @@ public class DescribeIndicators extends Action {
             sb.append('%');
           }
         } else {
-          sb.append("none");
+          sb.append(' ');
+          appendString(sb, R.string.DescribeIndicators_battery_present_no);
         }
       }
 
       batteryStatus.report(sb, battery.getInt(BatteryManager.EXTRA_STATUS, 0));
       batteryPlugged.report(sb, battery.getInt(BatteryManager.EXTRA_STATUS, 0));
       batteryHealth.report(sb, battery.getInt(BatteryManager.EXTRA_HEALTH, 0));
+
+      {
+        int voltage = battery.getInt(BatteryManager.EXTRA_VOLTAGE, -1);
+
+        if (voltage >= 0) {
+          sb.append(' ');
+
+          if (voltage < 100) {
+            sb.append(voltage);
+          } else {
+            sb.append((float)voltage / 1000f);
+          }
+
+          sb.append('V');
+        }
+      }
+
+      {
+        int temperature = battery.getInt(BatteryManager.EXTRA_TEMPERATURE, -1);
+
+        if (temperature >= 0) {
+          sb.append(' ');
+          sb.append((float)temperature / 10f);
+          sb.append('C');
+        }
+      }
     }
   }
 

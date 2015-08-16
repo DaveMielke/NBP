@@ -107,6 +107,7 @@
   <string name="DescribeIndicators_battery_plugged_battery">battery</string>
   <string name="DescribeIndicators_battery_plugged_usb">USB</string>
   <string name="DescribeIndicators_battery_plugged_wireless">wireless</string>
+  <string name="DescribeIndicators_battery_present_no">none</string>
   <string name="DescribeIndicators_battery_status_charging">charging</string>
   <string name="DescribeIndicators_battery_status_discharging">discharging</string>
   <string name="DescribeIndicators_battery_status_full">full</string>
