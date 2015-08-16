@@ -233,9 +233,12 @@ Space+Dot7+i (dots 24) restores the input mode to Text (the default).
 In this input mode, any character that has a defined braille representation
 (see `Braille Character Map`_) can be directly typed by pressing the
 corresponding keys as a single combination. There are two exceptions to this
-simple (and obvious) rule. If the defined representation of a character is
-either just dot 7 or just dot 8 then it can't be directly typed because those
-keys are, respectively, Backspace and Enter.
+simple (and obvious) rule.
+
+If the defined representation of a character is either just dot 7 or just dot 8
+then it can't be typed by pressing the corresponding key because those keys
+are, respectively, Backspace and Enter. Press Space+Dot7 for just dot 7, and
+press Space+Dot8 for just dot 8.
 
 Directly Typing Unicode Braille Characters
 ``````````````````````````````````````````
@@ -244,13 +247,12 @@ Space+Dot8+i (dots 24) sets the input mode to Braille.
 
 In this input mode, the characters that render in text as actual braille cells
 (see `Unicode Braille Characters`_) can be directly typed by pressing the
-corresponding keys as a single combination. Two of these characters can't be
-directly typed - just dot 7 (because it's the Backspace key), and just dot 8
-(because it's the Enter key). Both of these can still be indirectly typed (see
-`Indirectly Typing Any Character`_):
+corresponding keys as a single combination.
 
-* The Unicode value for a braille cell containing just dot 7 is U+2840.
-* The Unicode value for a braille cell containing just dot 8 is U+2880.
+Two of these characters can't be typed by pressing the corresponding keys -
+just dot 7 (because it's the Backspace key), and just dot 8 (because it's the
+Enter key). Press Space+Dot7 for just dot 7, and press Space+Dot8 for just dot
+8.
 
 These characters have several uses, including (but not limited to):
 

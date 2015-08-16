@@ -1,8 +1,9 @@
-======================
-The B2G User Interface
-======================
-
 .. include:: variables.rst
+
+====================
+The |user interface|
+====================
+
 .. contents::
 
 .. include:: introduction.rst
