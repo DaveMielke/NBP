@@ -10,6 +10,9 @@ bind Space+Dot8+Dot1#a SelectAll
 bind Space+Dot8+Dots1346#x CutToClipboard
 bind Space+Dot8+Dots1236#v PasteFromClipboard
 
-bind Space+Dots136#u InsertUnicode
-bind Space+Dots1346#x ControlModifier
+bind Space+Dot7 TypeDot7
+bind Space+Dot8 TypeDot8
+
+bind Space+Dots136#u TypeUnicode
+bind Space+Dots1346#x TypeControl
 

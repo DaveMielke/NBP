@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-import org.nbp.b2g.ui.actions.InsertCharacter;
+import org.nbp.b2g.ui.actions.TypeCharacter;
 import org.nbp.b2g.ui.actions.PanLeft;
 import org.nbp.b2g.ui.actions.PanRight;
 import org.nbp.b2g.ui.host.actions.MoveBackward;
@@ -78,7 +78,7 @@ public abstract class KeyEvents {
     if (action == null) {
       if (keyBindings.isRootKeyBindings()) {
         if (KeyMask.isDots(keys)) {
-          action = keyBindings.getAction(InsertCharacter.class);
+          action = keyBindings.getAction(TypeCharacter.class);
         }
       }
     }

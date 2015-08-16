@@ -9,8 +9,7 @@
 .. |BringCursor| replace:: bring the cursor to a specific character
 .. |ClearAndroidLog| replace:: clear the Android log
 .. |Click| replace:: tap (click) the current screen element
-.. |Clock| replace:: go to the B2G digital clock
-.. |ControlModifier| replace:: control modifier (applies to the next typed character)
+.. |Clock| replace:: go to the |product name| digital clock
 .. |CopyToClipboard| replace:: copy the selected (or all) text to the clipboard
 .. |CursorDown| replace:: the keyboard Cursor Down key
 .. |CursorLeft| replace:: the keyboard Cursor Left key
@@ -24,18 +23,17 @@
 .. |DescribeIndicators| replace:: show important status indicators
 .. |DeveloperOff| replace:: disable developer actions
 .. |DeveloperOn| replace:: enable developer actions
-.. |Editor| replace:: go to the B2G editor
+.. |Editor| replace:: go to the |product name| editor
 .. |End| replace:: the keyboard End key
 .. |Enter| replace:: the keyboard Enter key
 .. |FindNext| replace:: find text within the current screen element (forward search)
-.. |ForceCrash| replace:: force a B2G User Interface crash
-.. |Guide| replace:: go to the User Guide screen of the B2G User Interface
+.. |ForceCrash| replace:: force a |user interface| crash
+.. |Guide| replace:: go to the |product name| user guide
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
 .. |InputModeBraille| replace:: set the input mode to braille
 .. |InputModeConfirm| replace:: show the current input mode setting
 .. |InputModeText| replace:: set the input mode to text
-.. |InsertUnicode| replace:: type any character by its Unicode value
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
 .. |LogActionsOff| replace:: disable the logging of user-requested actions
@@ -78,11 +76,11 @@
 .. |PasteFromClipboard| replace:: paste the clipboard into the text
 .. |PowerOff| replace:: go to the Power Off screen
 .. |RecentApps| replace:: go to the Recent Apps screen
-.. |ResetSettings| replace:: reset the B2G User Interface settings to default values
-.. |RestoreSettings| replace:: restore the most recently saved B2G User Interface settings
+.. |ResetSettings| replace:: reset the |user interface| settings to default values
+.. |RestoreSettings| replace:: restore the most recently saved |user interface| settings
 .. |ReversePanningOff| replace:: disable reverse panning mode
 .. |ReversePanningOn| replace:: enable reverse panning mode
-.. |SaveSettings| replace:: save the current B2G User Interface settings
+.. |SaveSettings| replace:: save the current |user interface| settings
 .. |SaveScreen| replace:: write the screen element structure to the log
 .. |SayLine| replace:: speak the current line
 .. |ScrollBackward| replace:: force the screen to scroll backward (up or left)
@@ -92,11 +90,11 @@
 .. |ScrollRight| replace:: go to the end of a list or line
 .. |ScrollUp| replace:: go to the previous page of a list or block of text
 .. |SelectAll| replace:: select all of the text
-.. |SendAndroidLog| replace:: send a copy of the Android log to the B2G developers
+.. |SendAndroidLog| replace:: send a copy of the Android log to the |product name| developers
 .. |SetLeft| replace:: shift the braille display a specific amount to the right
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection
-.. |Settings| replace:: go to the Settings screen of the B2G User Interface
+.. |Settings| replace:: go to the Settings screen of the |user interface|
 .. |SleepTalkOff| replace:: speak only when awake
 .. |SleepTalkOn| replace:: speak even when asleep
 .. |SpeakFaster| replace:: increase the speech rate
@@ -113,5 +111,9 @@
 .. |SwitchLauncher| replace:: go to the Launcher chooser
 .. |TabBackward| replace:: the keyboard Shift+Tab keys (tab backward)
 .. |TabForward| replace:: the keyboard Tab key (tab forward)
+.. |TypeControl| replace:: the keyboard Control key (applies to the next typed character)
+.. |TypeDot7| replace:: the keyboard Dot7 key
+.. |TypeDot8| replace:: the keyboard Dot8 key
+.. |TypeUnicode| replace:: type any character by its Unicode value
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)

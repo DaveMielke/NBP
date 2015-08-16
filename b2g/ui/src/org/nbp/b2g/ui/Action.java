@@ -43,11 +43,11 @@ public abstract class Action {
     return getEndpoint().getKeyBindings().getAction(type);
   }
 
-  protected static int getNavigationKeys () {
+  protected int getNavigationKeys () {
     return KeyEvents.getNavigationKeys();
   }
 
-  protected static boolean isChord () {
+  protected final boolean isChord () {
     return (getNavigationKeys() & KeyMask.SPACE) != 0;
   }
 

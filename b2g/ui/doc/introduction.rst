@@ -700,10 +700,18 @@ enabling and disabling Developer Mode::
 
   Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
 
-A long press enables it, and a short press disables it. Note that this means
-that this mode can't be enabled unless `Long Press Mode`_ is enabled (another
+A long press enables it, and a short press disables it. Note that
+this mode can't be enabled unless `Long Press Mode`_ is enabled (another
 accident prevention scheme).
 
-See `Developer Operations`_ for a list of additional key combinations that this
-mode defines.
+When this mode is enabled:
+
+* Additional key combinations are enabled (see `Developer Operations`_).
+
+* The battery indicators line (see `Checking Status Indicators`_) includes the
+  battery's voltage and temperature.
+
+* If a component of the |user interface| crashes, an email containing the Java
+  backtrace of that crash is sent to the |product name| developers for
+  analysis. This email doesn't contain any sensitive information.
 

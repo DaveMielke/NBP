@@ -9,6 +9,8 @@
   "Space+Dot8+Dot1#a","|SelectAll|"
   "Space+Dot8+Dots1346#x","|CutToClipboard|"
   "Space+Dot8+Dots1236#v","|PasteFromClipboard|"
-  "Space+Dots136#u","|InsertUnicode|"
-  "Space+Dots1346#x","|ControlModifier|"
+  "Space+Dot7","|TypeDot7|"
+  "Space+Dot8","|TypeDot8|"
+  "Space+Dots136#u","|TypeUnicode|"
+  "Space+Dots1346#x","|TypeControl|"
 

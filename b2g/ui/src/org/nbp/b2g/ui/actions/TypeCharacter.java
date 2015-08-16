@@ -3,11 +3,11 @@ import org.nbp.b2g.ui.*;
 
 import android.util.Log;
 
-public class InsertCharacter extends Action {
-  private final static String LOG_TAG = InsertCharacter.class.getName();
+public class TypeCharacter extends Action {
+  private final static String LOG_TAG = TypeCharacter.class.getName();
 
-  private boolean insertCharacter (char character) {
-    ModifierAction control = (ControlModifier)getAction(ControlModifier.class);
+  private boolean typeCharacter (char character) {
+    ModifierAction control = (ModifierAction)getAction(TypeControl.class);
 
     if (control != null) {
       if (control.getState()) {
@@ -67,10 +67,10 @@ public class InsertCharacter extends Action {
         return false;
     }
 
-    return insertCharacter(character);
+    return typeCharacter(character);
   }
 
-  public InsertCharacter (Endpoint endpoint) {
+  public TypeCharacter (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

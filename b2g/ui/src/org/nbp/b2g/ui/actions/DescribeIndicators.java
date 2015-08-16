@@ -116,30 +116,32 @@ public class DescribeIndicators extends Action {
       batteryPlugged.report(sb, battery.getInt(BatteryManager.EXTRA_PLUGGED, -1));
       batteryHealth.report(sb, battery.getInt(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN));
 
-      {
-        int voltage = battery.getInt(BatteryManager.EXTRA_VOLTAGE, -1);
+      if (ApplicationSettings.DEVELOPER_ENABLED) {
+        {
+          int voltage = battery.getInt(BatteryManager.EXTRA_VOLTAGE, -1);
 
-        if (voltage >= 0) {
-          sb.append(' ');
+          if (voltage >= 0) {
+            sb.append(' ');
 
-          if (voltage < 100) {
-            sb.append(voltage);
-          } else {
-            sb.append((float)voltage / 1000f);
+            if (voltage < 100) {
+              sb.append(voltage);
+            } else {
+              sb.append((float)voltage / 1000f);
+            }
+
+            sb.append('V');
           }
-
-          sb.append('V');
         }
-      }
 
-      {
-        int temperature = battery.getInt(BatteryManager.EXTRA_TEMPERATURE, -1);
+        {
+          int temperature = battery.getInt(BatteryManager.EXTRA_TEMPERATURE, -1);
 
-        if (temperature >= 0) {
-          sb.append(' ');
-          sb.append((float)temperature / 10f);
-          sb.append('°');
-          sb.append('C');
+          if (temperature >= 0) {
+            sb.append(' ');
+            sb.append((float)temperature / 10f);
+            sb.append('°');
+            sb.append('C');
+          }
         }
       }
     }
