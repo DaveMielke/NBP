@@ -59,9 +59,9 @@ public class DescribeIndicators extends Action {
 
   private final IndicatorProperty batteryHealth = new IndicatorProperty("battery health") {
     {
-      addValue(BatteryManager.BATTERY_HEALTH_GOOD, R.string.DescribeIndicators_battery_health_good);
-      addValue(BatteryManager.BATTERY_HEALTH_DEAD, R.string.DescribeIndicators_battery_health_dead);
       addValue(BatteryManager.BATTERY_HEALTH_COLD, R.string.DescribeIndicators_battery_health_cold);
+      addValue(BatteryManager.BATTERY_HEALTH_DEAD, R.string.DescribeIndicators_battery_health_dead);
+      addValue(BatteryManager.BATTERY_HEALTH_GOOD, R.string.DescribeIndicators_battery_health_good);
       addValue(BatteryManager.BATTERY_HEALTH_OVERHEAT, R.string.DescribeIndicators_battery_health_hot);
       addValue(BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE, R.string.DescribeIndicators_battery_health_voltage);
       addValue(BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE, R.string.DescribeIndicators_battery_health_failure);
@@ -112,9 +112,9 @@ public class DescribeIndicators extends Action {
         }
       }
 
-      batteryStatus.report(sb, battery.getInt(BatteryManager.EXTRA_STATUS, 0));
-      batteryPlugged.report(sb, battery.getInt(BatteryManager.EXTRA_STATUS, 0));
-      batteryHealth.report(sb, battery.getInt(BatteryManager.EXTRA_HEALTH, 0));
+      batteryStatus.report(sb, battery.getInt(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN));
+      batteryPlugged.report(sb, battery.getInt(BatteryManager.EXTRA_PLUGGED, -1));
+      batteryHealth.report(sb, battery.getInt(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN));
 
       {
         int voltage = battery.getInt(BatteryManager.EXTRA_VOLTAGE, -1);
@@ -138,6 +138,7 @@ public class DescribeIndicators extends Action {
         if (temperature >= 0) {
           sb.append(' ');
           sb.append((float)temperature / 10f);
+          sb.append('°');
           sb.append('C');
         }
       }
