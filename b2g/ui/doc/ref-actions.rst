@@ -112,8 +112,8 @@
 .. |TabBackward| replace:: the keyboard Shift+Tab keys (tab backward)
 .. |TabForward| replace:: the keyboard Tab key (tab forward)
 .. |TypeControl| replace:: the keyboard Control key (applies to the next typed character)
-.. |TypeDot7| replace:: the keyboard Dot7 key
-.. |TypeDot8| replace:: the keyboard Dot8 key
+.. |TypeDot7| replace:: type the character represented by just dot 7
+.. |TypeDot8| replace:: type the character represented by just dot 8
 .. |TypeUnicode| replace:: type any character by its Unicode value
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
