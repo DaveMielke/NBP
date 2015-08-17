@@ -55,7 +55,7 @@ $(ANDROID_PROJECT_PACKAGE): jni $(ANDROID_LOCAL_FILES) AndroidManifest.xml
 clean::
 	-rm -f $(ANDROID_LOCAL_FILES)
 	-rm -f -r $(ANDROID_BINARIES_DIRECTORY)
-	-rm -f -r $(ANDROID_LIBRARIES_DIRECTORY)
+	-rm -f -r $(ANDROID_PLATFORM_DIRECTORY)
 	-rm -f -r gen
 
 install: all
