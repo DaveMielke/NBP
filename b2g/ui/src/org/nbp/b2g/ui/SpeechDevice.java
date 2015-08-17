@@ -3,8 +3,12 @@ package org.nbp.b2g.ui;
 import android.util.Log;
 import android.os.Build;
 
+import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
+
+import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class SpeechDevice {
   private final static String LOG_TAG = SpeechDevice.class.getName();
@@ -21,6 +25,20 @@ public class SpeechDevice {
   public final static float MAXIMUM_PITCH = 2.0f;
   public final static float MINIMUM_PITCH = 1.0f / 2.0f;
 
+  private final AudioManager audioManager;
+
+  private final static Map<Integer, String> audioStreams = new LinkedHashMap<Integer, String>() {
+    {
+      put(AudioManager.STREAM_MUSIC, "music");
+      put(AudioManager.STREAM_NOTIFICATION, "notification");
+      put(AudioManager.STREAM_ALARM, "alarm");
+      put(AudioManager.STREAM_RING, "ring");
+      put(AudioManager.STREAM_SYSTEM, "system");
+      put(AudioManager.STREAM_VOICE_CALL, "voice");
+      put(AudioManager.STREAM_DTMF, "DTMF");
+    }
+  };
+
   private final static int OK = TextToSpeech.SUCCESS;
 
   private final HashMap<String, String> ttsParameters = new HashMap<String, String>();
@@ -28,18 +46,52 @@ public class SpeechDevice {
   private int ttsStatus = TextToSpeech.ERROR;
   private int maximumLength;
 
-  private boolean isStarted () {
+  private final void setParameter (String parameter, String value) {
+    synchronized (ttsParameters) {
+      ttsParameters.put(parameter, value);
+    }
+  }
+
+  public final void setAudioStream (int stream) {
+    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, Integer.toString(stream));
+  }
+
+  public final void setAudioStream () {
+    setAudioStream(TextToSpeech.Engine.DEFAULT_STREAM);
+  }
+
+  public final void selectLoudestAudioStream () {
+    int selected = -1;
+    float loudest = -1f;
+
+    for (int stream : audioStreams.keySet()) {
+      int current = audioManager.getStreamVolume(stream);
+      int maximum = audioManager.getStreamMaxVolume(stream);
+      float volume = (float)current / (float)maximum;
+
+      if (volume > loudest) {
+        loudest = volume;
+        selected = stream;
+      }
+
+      if (loudest == 1f) break;
+    }
+
+    setAudioStream(selected);
+  }
+
+  private final boolean isStarted () {
     return ttsStatus == OK;
   }
 
-  private boolean isActive () {
+  private final boolean isActive () {
     if (!isStarted()) return false;
     if (!ApplicationSettings.SPEECH_ENABLED) return false;
     if (ApplicationSettings.SLEEP_TALK) return true;
     return ApplicationContext.isAwake();
   }
 
-  public boolean stopSpeaking () {
+  public final boolean stopSpeaking () {
     synchronized (this) {
       if (isStarted()) {
         if (!ttsObject.isSpeaking()) return true;
@@ -50,7 +102,7 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean say (String text) {
+  public final boolean say (String text) {
     if (text != null) {
       synchronized (this) {
         if (isActive()) {
@@ -93,7 +145,7 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean say (CharSequence text) {
+  public final boolean say (CharSequence text) {
     return say(text.toString());
   }
 
@@ -112,11 +164,11 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setVolume (float volume) {
+  public final boolean setVolume (float volume) {
     if (verifyRange("volume", volume, MINIMUM_VOLUME, MAXIMUM_VOLUME)) {
       synchronized (this) {
         if (isStarted()) {
-          ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
+          setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
           return true;
         }
       }
@@ -125,11 +177,11 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setBalance (float balance) {
+  public final boolean setBalance (float balance) {
     if (verifyRange("balance", balance, MINIMUM_BALANCE, MAXIMUM_BALANCE)) {
       synchronized (this) {
         if (isStarted()) {
-          ttsParameters.put(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
+          setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
           return true;
         }
       }
@@ -138,7 +190,7 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setRate (float rate) {
+  public final boolean setRate (float rate) {
     if (verifyRange("rate", rate, MINIMUM_RATE, MAXIMUM_RATE)) {
       synchronized (this) {
         if (isStarted()) {
@@ -152,7 +204,7 @@ public class SpeechDevice {
     return false;
   }
 
-  public boolean setPitch (float pitch) {
+  public final boolean setPitch (float pitch) {
     if (verifyRange("pitch", pitch, MINIMUM_PITCH, MAXIMUM_PITCH)) {
       synchronized (this) {
         if (isStarted()) {
@@ -166,7 +218,7 @@ public class SpeechDevice {
     return false;
   }
 
-  public void restoreControls () {
+  public final void restoreControls () {
     Control[] controls = new Control[] {
       Controls.getSpeechVolumeControl(),
       Controls.getSpeechBalanceControl(),
@@ -177,7 +229,7 @@ public class SpeechDevice {
     Controls.forEachControl(controls, Controls.restoreCurrentValue);
   }
 
-  private Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY, "speech-device-retry-delay") {
+  private final Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY, "speech-device-retry-delay") {
     @Override
     public void run () {
       synchronized (SpeechDevice.this) {
@@ -186,7 +238,7 @@ public class SpeechDevice {
     }
   };
 
-  private void ttsStart () {
+  private final void ttsStart () {
     synchronized (this) {
       Log.d(LOG_TAG, "speech device starting");
 
@@ -222,6 +274,7 @@ public class SpeechDevice {
   }
 
   public SpeechDevice () {
+    audioManager = ApplicationContext.getAudioManager();
     if (ApplicationParameters.ENABLE_SPEECH_DEVICE) ttsStart();
   }
 }

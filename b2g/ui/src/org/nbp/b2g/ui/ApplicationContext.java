@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.os.PowerManager;
 import android.app.KeyguardManager;
 import android.view.WindowManager;
+import android.media.AudioManager;
 import android.view.accessibility.AccessibilityManager;
 
 import android.view.inputmethod.InputMethodManager;
@@ -204,6 +205,12 @@ public abstract class ApplicationContext {
     Point size = new Point();
     windowManager.getDefaultDisplay().getRealSize(size);
     return size;
+  }
+
+  public static AudioManager getAudioManager () {
+    Object systemService = getSystemService(Context.AUDIO_SERVICE);
+    if (systemService == null) return null;
+    return (AudioManager)systemService;
   }
 
   public static AccessibilityManager getAccessibilityManager () {
