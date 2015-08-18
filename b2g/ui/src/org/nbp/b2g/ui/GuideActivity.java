@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import android.text.Html;
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 import android.text.util.Linkify;
 
 public class GuideActivity extends ProgrammaticActivity {
@@ -19,6 +19,10 @@ public class GuideActivity extends ProgrammaticActivity {
     view.setAutoLinkMask(Linkify.WEB_URLS);
 
     new AsyncTask<String, String, CharSequence>() {
+      @Override
+      protected void onPreExecute () {
+      }
+
       private final String loadDocument (String name) {
         final StringBuilder result = new StringBuilder();
 
@@ -34,39 +38,19 @@ public class GuideActivity extends ProgrammaticActivity {
         return result.toString();
       }
 
-      private CharSequence trimText (CharSequence text) {
-        String string = text.toString();
-        int from = string.indexOf('\n');
-        int to = string.length();
-
-        if (from < 0) {
-          from = 0;
-        } else {
-          while (from < to) {
-            if (!Character.isWhitespace(string.charAt(from))) break;
-            from += 1;
-          }
-        }
-
-        while (to > from) {
-          if (!Character.isWhitespace(string.charAt(--to))) {
-            to += 1;
-            break;
-          }
-        }
-
-        return text.subSequence(from, to);
-      }
-
       @Override
       protected CharSequence doInBackground (String... names) {
         publishProgress("loading document");
+        Thread.yield();
         String html = loadDocument(names[0]);
 
         publishProgress("formatting document");
-        CharSequence text = trimText(Html.fromHtml(html));
+        Thread.yield();
+        HtmlSpanner htmlSpanner = new HtmlSpanner();
+        CharSequence text = htmlSpanner.fromHtml(html);
 
         publishProgress("rendering document");
+        Thread.yield();
         return text;
       }
 
