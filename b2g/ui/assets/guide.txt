@@ -1,0 +1,1370 @@
+The B2G User Interface
+
+Contents
+  * Introduction
+  + Physical Description
+  o The Top
+  o The Front
+  o The Left Side
+  o The Right Side
+  # The Power Switch
+  o The Back
+  o The Bottom
+  # The Reset Button
+  # The Removable Cover
+  + Key Combinations
+  o Long Press Mode
+  o One Hand Mode
+  + Typing
+  o Input Modes
+  # Directly Typing Regular Text
+  # Directly Typing Unicode Braille Characters
+  o Typing a Control Character
+  o Indirectly Typing Any Character
+  + Braille Rendering
+  o Characters
+  # Identifying an Unrecognized Character
+  o Special Symbols
+  o Descriptive Annotations
+  + Braille-only Dialogs
+  o Messages
+  o Popups
+  o Prompts
+  + Additional Features
+  o Shortcuts
+  # To Useful Android Screens
+  # To Other B2G Applications
+  o Checking the Time
+  o Checking Status Indicators
+  o Identifying the Build
+  o Speech
+  # Sleep Talk Mode
+  o Braille
+  # The On-screen Monitor
+  # Adjusting the dot firmness
+  # Disabling the Display
+  o The Settings Screen
+  # General Settings
+  # Developer Settings
+  o Developer Mode
+  * Navigation
+  + Emulating the Android Keys
+  + Emulating Screen Gestures
+  + Navigating with the Forward and Backward Keys
+  o Leaving the Current Screen Element
+  o Reverse Panning Mode
+  o Explicit Panning
+  + Navigating with the Directional Keys
+  + Input Areas
+  o Deleting Characters
+  o The Directional Keys within an Input Area
+  + Selecting Text
+  + Using the Clipboard
+  + Sliders
+  o The Directional Keys When on a Slider
+  + Finding Text within the Current Screen Element
+  + Legacy Navigation
+  o The Enter Key
+  o The Cursor Left Key
+  o The Cursor Right Key
+  o The Cursor Up Key
+  o The Cursor Down Key
+  o The Page Up Key
+  o The Page Down Key
+  o The Home Key
+  o The End Key
+  o The Shift+Tab Key
+  o The Tab Key
+  * Quick Reference
+  + Firmware Features
+  o Status Alerts
+  o Key Bindings
+  + Braille
+  o Special Symbols
+  o Annotations
+  + Key Bindings
+  o Common Operations
+  o Input Operations
+  o Screen Operations
+  o Speech Operations
+  o Legacy Bindings
+  o Developer Operations
+  # Common Actions
+  # Screen Actions
+  * Tables
+  + Braille Characters
+  o Dot Numbering
+  o Unicode Braille Characters
+  + Braille Character Map
+  o North American Braille Computer Code
+  o Additional Common Symbols
+  o Additional Characters for Spanish
+  + ASCII Control Characters
+  + Technical Information
+
+Introduction
+
+Physical Description
+
+The Top
+
+The eight, rectangular, concave keys (in two groups of four) near the back of the top comprise a standard, eight-dot, braille keyboard. The four on the left, from left to right, are dots 7, 3, 2, and 1. The four on the right, from left to right, are dots 4, 5, 6, and 8.
+  * The Dot7 key is often referred to as the Backspace key.
+  * The Dot8 key is often referred to as the Enter key.
+
+The square pad with a small, round button in the middle, in between the Dot1 and Dot4 keys, is the five-key D-Pad (directional pad). Its four edges are the Up, Down, Left, and Right keys. The button in the middle is the Center key.
+
+The long, rectangular key in front of the Dot1 key, the D-Pad, and the Dot4 keyis the Space key (or bar).
+
+The braille display (20 eight-dot cells) is at the front of the top. There's a small, round button just behind each cell - these are the cursor routing keys. The convex, square button to the left of the cursor routing keys is the Backward key, and the one to their right is the Forward key.
+
+The Front
+
+Two internal speakers (for the left and right stereo channels) are, correspondingly, at the left and right ends of the front.
+
+The internal microphone is just behind a very small slit in the middle of the front.
+
+The Left Side
+
+The earphone/microphone jack (3.5mm) is near the front of the left side. Standard cell phone earphones can be used.
+
+The video jack (RCA) is in the middle of the left side. It's for an external video monitor. This provides an easy way for a sighted person, e.g. a teacher, tooffer direct assistance.
+
+A standard USB-A (or host) port is near the back of the left side. USB devices (memory stick, external keyboard, mouse, Ethernet adapter, hub, etc) can be connected to it. Devices that draw power from the port will drain the battery so using a powered hub, when possible, should be considered.
+
+The Right Side
+
+The volume controls are the two, small, round buttons near the front of the right side. The one toward the front is the Volume Down key, and the one toward the back is the Volume Up key. These keys, when pressed on their own, adjust the volume of the current Android audio stream.
+
+The Power Switch
+
+The Power switch is the slide switch near the back of the right side. It's off position is toward the front, and its on position is toward the back.
+
+If the system is shut down, then:
+  * Switching it on boots the device. You should hear one short beep. If, instead, you hear three short beeps then the battery is too low and the device won'tboot. In this case, switch it back off, and then charge the battery for a while before trying again.
+  * Switching it on while holding VolumeDown boots the device into Recovery Mode.
+
+If the system is running, then:
+  * Switching it off puts the system to sleep.
+  * Switching it on wakes the system up.
+
+When the system is either booted or woken up, the following settings are reset to their default values:
+  * The input mode is set to Text (see Input Modes).
+  * One Hand Mode is disabled (see One Hand Mode).
+  * The braille display is enabled (see Disabling the Display).
+
+The Back
+
+The SD card slot is the long slot in the middle of the back.
+
+A micro USB-B (or device) port is near the left end of the back. It's primary use is for charging the battery. The battery can be charged from a computer's USB port.
+
+The Bottom
+
+The camera's lens is the small circle on the bottom that's about 2cm (3/4 of aninch) in from the middle of the right side. The rectangular window that's justa little further in is where the flash LEDs are.
+
+The Reset Button
+
+The Reset button is hidden within a very small, round hole on the bottom. If the device is turned over, front to back, the hole is at about the eight o'clock position relative to, and very close to, the foot nearest to the Power switch. A thin, round object, like a pin or paperclip, is needed.
+
+Try to keep the object you're using as perpendicular to the bottom as you can. You only need to press gently. If it feels like you're pressing against a hard surface then you've missed the button. You should feel a soft click. You shouldalso hear a long, high-pitched beep.
+
+The Removable Cover
+
+There's a removable, rectangular, plastic cover in the middle of the bottom. Toremove it:
+ 1. Turn the device over so that its bottom is on top.
+ 2. Press gently down on the cover, and then slide it toward the side where thePower switch is.
+ 3. Lift the end of the cover that's toward the side where the earphone jack is.
+
+Be careful after you've removed the cover because the underside of a circuit board will be exposed. Removing the cover is how to gain access to the following:
+  * The Micro-SIM card slot, which is in the corner that's toward the front andtoward the side where the Power switch is. To gain access to the actual slot, slide its cover slightly toward the front and then lift the end of it that's toward the back. As with most SIM card slot covers, its hinge is fragile so be gentle.
+
+Key Combinations
+
+A key combination may include any number of keys (including just one). There's only one restriction regarding which keys may be used to form a key combination, namely that only one cursor routing key may be used at a time. If more than one cursor routing key is pressed at the same time, then the first one that was pressed is used.
+
+If any of the keys of a combination is released before the long press timeout (see Long Press Mode) expires then the action bound to that combination is executed. If the timeout expires then the action is immediately executed even thoughnone of the keys has been released yet.
+
+The way to cancel a key combination that's been accidentally started is to press enough additional keys such that an unbound key combination is being attempted. A key combination that's been formally defined for this purpose is all eightdots plus Space.
+
+Long Press Mode
+
+A secondary action may be bound to a key combination. A key combination's secondary action is executed if all of its keys are held until the long press timeout expires. The long press timeout is half a second.
+
+This mode is enabled by default. Pressing Forward+Dot6 enables it, and pressingBackward+Dot3 disables it.
+
+One Hand Mode
+
+One Hand Mode is primarily for those users who only have the use of one hand. When it's on, each key of a key combination may be pressed separately. Pressing Space indicates that all of the keys of the combination have been pressed. If Space itself is part of the combination then it must be pressed first.
+
+For those whose operable hand is sufficiently functional, pressing more than one key at a time is supported. The only exception to this is that Space, whetherpressed at the start (to include it in the combination) or at the end (to indicate that the combination is complete), should always be pressed separately.
+
+This mode is disabled by default. Pressing Forward+Dot8 enables it, and pressing Backward+Dot7 (followed, of course, by pressing Space) disables it. Both of these key combinations have been chosen so that they can be reasonably easily pressed with a single hand.
+
+Switching the Power switch off and then back on automatically disables One HandMode. This provides an intuitive way for a user who has accidentally enabled this mode, and who may not know how to disable it, to easily revert the keyboardto normal operation.
+
+Another (legacy) way to enable One Hand Mode is to hold Dot8 while switching the power on.
+
+Typing
+
+Input Modes
+
+Space+i (dots 24) displays a message (see Messages) that confirms which input mode is currently being used.
+
+Text mode is the default, and is used for Directly Typing Regular Text.
+
+Braille mode is used for Directly Typing Unicode Braille Characters.
+
+Either booting the device or waking it up (see The Power Switch) automatically resets the input mode to Text.
+
+Directly Typing Regular Text
+
+Space+Dot7+i (dots 24) restores the input mode to Text (the default).
+
+In this input mode, any character that has a defined braille representation (see Braille Character Map) can be directly typed by pressing the corresponding keys as a single combination. There are two exceptions to this simple (and obvious) rule. If the defined representation of a character is either just dot 7 or just dot 8 then it can't be directly typed because those keys are, respectively,Backspace and Enter.
+
+Directly Typing Unicode Braille Characters
+
+Space+Dot8+i (dots 24) sets the input mode to Braille.
+
+In this input mode, the characters that render in text as actual braille cells (see Unicode Braille Characters) can be directly typed by pressing the corresponding keys as a single combination. Two of these characters can't be directly typed - just dot 7 (because it's the Backspace key), and just dot 8 (because it's the Enter key). Both of these can still be indirectly typed (see Indirectly Typing Any Character):
+  * The Unicode value for a braille cell containing just dot 7 is U+2840.
+  * The Unicode value for a braille cell containing just dot 8 is U+2880.
+
+These characters have several uses, including (but not limited to):
+  * Actual braille characters can be written into text documents.
+  * Contracted braille can be accurately saved.
+  * Braille music can be accurately saved, and also shared with others who use different localized braille character mappings.
+
+Typing a Control Character
+
+In order to type a control character, press Space+x (dots 1346) immediately before the letter or special symbol that represents it (see ASCII Control Characters). For example, in order to type a tab (which happens to be control I), pressSpace+x and then immediately type the letter i.
+
+The letter or special symbol must be typed within five seconds.
+
+Indirectly Typing Any Character
+
+Any character can always be indirectly typed, even if directly typing it isn't possible:
+  * Its braille representation hasn't been defined.
+  * You don't know its braille representation.
+  * It's represented in braille by either just dot 7 (the Backspace key) or just dot 8 (the Enter key).
+
+In order to indirectly type it, press Space+u (dots 136). This brings up a prompt (see Prompts) with the following header:
+Unicode> U+
+
+U+ is the conventional prefix for the hexadecimal value of a Unicode character.The prompt allows you to enter up to four hexadecimal digits - 0 through 9 andA through F (either upper or lower case). Leading zeroes may be omitted. The Unicode values of characters are, of course, beyond the scope of this document.
+
+The digits you enter may be freely edited, e.g. the cursor can be moved, any digit may be deleted, a new digit may be inserted, etc. In other words, making corrections doesn't require backspacing and retyping. When you're done, press Enter.
+
+If no digits have been entered yet (or if they've all been deleted) then you'llonly see the header. If, however, at least one digit has been entered then thecharacter represented (so far) by the digit(s) is displayed just to the right,and that character's formal name is displayed on the next line.
+
+To illustrate, let's see how a lowercase s would be indirectly typed. It's Unicode value is U+0073. In order to keep this example simple, let's skip the two leading zeroes.
+
+Indirectly Typing the Letter s (U+0073)
+ 1. Press Space+u (dots 136):
+Unicode> U+
+
+ 2. Type the digit 7 (dots 2356):
+Unicode> U+7 ⣛
+bell
+
+ 3. Type the digit 3 (dots 25):
+Unicode> U+73 ⠎
+latin small letter s
+
+ 4. Press Enter. The prompt goes away, and the s is typed.
+
+Braille Rendering
+
+Characters
+
+The basic characters are rendered using the North American Braille Computer Code. Internally-designed representations for Additional Common Symbols, as well as for Additional Characters for Spanish, have also been defined.
+
+If the braille representation for a complex character (e.g. a letter with an accent) hasn't been defined, then its base character (e.g. just the latter) is displayed (unless, of course, even the base character's representation hasn't been defined).
+
+The characters that render in text as actual braille cells (see Unicode BrailleCharacters) needn't (and, in fact, shouldn't) be defined. They're always rendered in braille as themselves.
+
+The special character rendered as dots 3, 6, 7, and 8 (⣤) is used to represent a character that doesn't have a defined representation.
+
+Identifying an Unrecognized Character
+
+If you encounter a character that you don't recognize, then you can find out what it is by holding Dot7 while pressing the cursor routing key behind that character. This will cause a description of the character to be presented within a popup (see Popups). For example, the description for the letter s is:
+latin small letter s
+Code Point: U+0073
+Block: basic latin
+Category: lowercase letter
+Directionality: left to right
+
+Special Symbols
+
+When within an input area (see Input Areas):
+  * The character where the cursor is is highlighted by dots 7 and 8 (⣀). This is its default representation. It can be changed via The Settings Screen.
+  * Each of the currently selected characters is highlighted by dot 8 (⢀). Thisis its default representation. It can be changed via The Settings Screen.
+
+Note that the cursor isn't shown when at least one character has been selected (see Selecting Text). This is because editing actions are then performed on allof the selected characters as a single unit rather than at the cursor's location.
+
+If a screen element (list, group of pages, etc) needs to be scrolled, then:
+  * Scrolling forward (down or to the right) is indicated via dots 15,38,76,24 (⠑⢄⡠⠊).
+  * Scrolling backward (up or to the left) is indicated via dots 76,24,15,38 (⡠⠊⠑⢄).
+
+Descriptive Annotations
+
+A checkbox is rendered as either a space (meaning unchecked) or an X (meaning checked) enclosed within [brackets], followed by its label. For example:
+[ ] This box is not checked.
+[X] This box is checked.
+
+A switch is rendered as though it were a checkbox. The box is checked if the switch is in its on position, and unchecked if it's in its off position. For example:
+[ ] Off
+[X] On
+
+If a screen element has no text of its own but its developer has provided a textual description of it, then that description, enclosed within [brackets], is displayed. For example:
+[More options]
+[Navigate up]
+
+If meaningful text for a screen element can't be found then it is rendered as its widget type enclosed within {braces}. For example:
+{ImageButton}
+{SeekBar}
+
+If a control isn't enabled then the word disabled, enclosed within (parentheses), is appended to its descriptive text. For example:
+OK (disabled)
+
+When an action is performed that's neither implicitly confirmed (by an expectedchange on the braille display) nor explicitly confirmed (by a sound) then it'sconfirmed by a message (see Messages). For example:
+One Hand On
+Long Press Off
+
+Braille-only Dialogs
+
+A number of braille-only dialogs are used in order to directly communicate to or interact with the user. They don't appear on an external video monitor.
+
+Messages
+
+Messages are used to give feedback to the user for significant events. These include (but aren't limited to):
+  * The successful changing of a setting.
+  * The timeout of a partially entered request, e.g. the control modifier has been pressed but the (then required) letter or special symbol hasn't been typed quickly enough (see Typing a Control Character).
+
+A message is a single-line, read-only dialog. No navigation may be performed within it. It remains on the braille display for two seconds.
+
+Popups
+
+Popups are used to present user-requested data as well as important system information. This includes (but isn't limited to):
+  * The arrival of an Android notification.
+  * The description of a character (see Identifying an Unrecognized Character).
+  * The values of various status indicators (see Checking Status Indicators).
+  * Information that identifies the build (see Identifying the Build).
+
+A popup is a multi-line, read-only dialog. Normal navigation may be performed within it. Dismiss it by pressing Enter. It's automatically dismissed if no navigation operations have been performed within it for 30 seconds.
+
+Prompts
+
+Prompts are used to request information from the user. This includes (but isn'tlimited to):
+  * Requesting the value of a Unicode character (see Indirectly Typing Any Character).
+  * Requesting the text to search for within the current screen element (see Finding Text within the Current Screen Element).
+
+A prompt is a read-write dialog. Normal navigation and editing may be performedwithin its response area. Press Enter once the requested information has been entered.
+
+The prompt's header and response area are always on the first line. The B2G User Interface may add helpful information to the rest of the first line and/or toadditional lines.
+
+The response to a prompt is remembered. The response area of a prompt is initially empty, but, from then on, it's initialized to the previous response enteredfor that prompt. The remembered response is selected (see Selecting Text) so that it can be easily replaced.
+
+Additional Features
+
+Shortcuts
+
+To Useful Android Screens
+
+The following shortcuts to useful Android screens are provided:
+
+Space+p (dots 1234)
+Go to the Power Off screen.
+
+Space+? (dots 1456)
+Go to the currently registered assist app. The default is Google Now.
+
+Space+s (dots 234)
+Go to a Settings screen. Another key combination must be pressed within five seconds in order to specify which Settings screen to go to:
+
+Space
+Go to the main Settings screen.
+
+a (dot 1)
+Go to the Accessibility Settings screen.
+
+b (dots 12)
+Go to the Bluetooth Settings screen.
+
+w (dots 2456)
+Go to the Wi-Fi Settings screen.
+
+To Other B2G Applications
+
+The following shortcuts to other B2G applications are provided:
+
+Space+ed (dots 1246)
+Go to the B2G editor.
+
+Describing how any of these applications work is, of course, beyond the scope of this document.
+
+Checking the Time
+
+You can access a braille-friendly clock by pressing Space+t (dots 2345). The date and time are displayed on the first line using the conventional international format. The second line contains the abbreviated week day and month names, and the third line identifies the time zone. For example:
+2012-02-29 10:26:53
+Wed, Feb 29
+EST (-0500)
+
+The four-digit number within (parentheses) on the third line is the time zone'soffset, in (two-digit) hours and (two-digit) minutes, from UTC (Universal Coordinated Time). The abbreviation EST means Eastern Standard Time in North America, which is five hours earlier (hence the leading minus sign) than UTC.
+
+Checking Status Indicators
+
+You can check various helpful status indicators by pressing Backward and Forward together. This will cause the indicators to be presented within a popup (see Popups) that looks something like this:
+Battery: 78% charging USB
+Wi-Fi: MyNetwork 60% 54Mbps
+
+Identifying the Build
+
+There may be times when you need to identify the exact build of the B2G User Interface that you're currently using. For example, this information is particularly helpful when you're reporting a problem or checking if there's a newer version.
+
+You can get this information by pressing Space, Backward, and Forward together.This will cause details that identify the build to be presented within a popup(see Popups) that looks something like this:
+Build Details
+Time: 2015-07-22 00:34:02 UTC
+Revision: d3d8210
+
+Speech
+
+Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables it, and pressing Space+VolumeDown disables it. Another (legacy) way to disable it is to press VolumeDown and VolumeUp together.
+  * To interrupt what's currently being spoken, press Backward+VolumeDown.
+  * To speak the current line, press Backward+VolumeUp. Another (legacy) way todo so is to press Space+c (dots 14).
+  * To adjust the volume: press Dot1+VolumeDown for softer, and Dot1+VolumeUp for louder.
+  * To adjust the rate: press Dot2+VolumeDown for slower, and Dot2+VolumeUp forfaster.
+  * To adjust the pitch: press Dot3+VolumeDown for lower, and Dot3+VolumeUp forhigher.
+  * To adjust the balance: press Dot4+VolumeDown for more left, and Dot4+VolumeUp for more right.
+
+Sleep Talk Mode
+
+Sleep Talk Mode leaves speech active while the Power switch is off. This capability is useful when, for example, you'd like to reduce battery drain but still be informed when an important asynchronous event, e.g. the arrival of a notification, occurs.
+
+This mode is disabled by default. Pressing Forward+VolumeUp enables it, and pressing Forward+VolumeDown disables it.
+
+Braille
+
+The On-screen Monitor
+
+An on-screen monitor that shows what's on the braille display can be enabled from The Settings Screen. It shows both the braille cells and the text.
+
+Adjusting the dot firmness
+
+The firmness of the braille dots can be adjusted from The Settings Screen.
+
+Disabling the Display
+
+The braille display is enabled by default. It can be disabled by pressing Backward+Dot1, and reenabled by pressing Forward+Dot4.
+
+The Settings Screen
+
+Pressing Space+o (dots 135) takes you to the settings screen for the B2G User Interface.
+
+The top line contains the following buttons:
+
+Save Settings
+Save the current values of the settings for later restoration. This is a good way to checkpoint the configuration that you're most comfortable with.
+
+Restore Settings
+Restore the setting values that were most recently saved. This is how to get back to the configuration that you're most comfortable with.
+
+Reset to Defaults
+Restore the setting values to an internally-defined configuration. This is how to recover if, for example, you've accidentally messed up your saved settings.
+
+Each subsequent line contains a setting that can be changed, and is laid out incolumns as follows:
+ 1. This column contains the name of the setting.
+ 2. If it's a boolean setting then this column contains an on/off switch. If it's any other kind of setting then this column shows that setting's current value.
+ 3. For non-boolean settings, this column contains a button that changes the setting to its previous (lower for numeric settings) value.
+ 4. For non-boolean settings, this column contains a button that changes the setting to its next (higher for numeric settings) value.
+
+General Settings
+
+The following settings (as of the time of this writing) are presented:
+
+CAPTION: General Settings
+
+Setting             Default Range                Previous  Next
+Input               Text    Text, Braille        Text      Braille
+Long Press          On      Off - On
+Reverse Panning     Off     Off - On
+One Hand            Off     Off - On
+Braille             On      Off - On
+Cursor Indicator    Dots78  Dots78, Dot7, Dot8   Previous  Next
+Selection Indicator Dot8    Dots78, Dot7, Dot8   Previous  Next
+Firmness            4       0 - 7                Decrease  Increase
+Monitor             Off     Off - On
+Speech              On      Off - On
+Sleep Talk          Off     Off - On
+Volume              10      0 - 10               Softer    Louder
+Balance             Center  Left100% - Right100% More Left More Right
+Rate                0       -10 - 10             Slower    Faster
+Pitch               0       -10 - 10             Lower     Higher
+Developer           Off     Off - On
+
+Developer Settings
+
+If Developer Mode is enabled, then these additional settings are presented:
+
+CAPTION: Developer Settings
+
+Setting        Default Range    Previous Next
+Log Updates    Off     Off - On
+Log Keyboard   Off     Off - On
+Log Actions    Off     Off - On
+Log Navigation Off     Off - On
+Log Gestures   Off     Off - On
+Log Braille    Off     Off - On
+
+Developer Mode
+
+A very intentionally difficult-to-press key combination has been defined for enabling and disabling Developer Mode:
+Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
+
+A long press enables it, and a short press disables it. Note that this mode can't be enabled unless Long Press Mode is enabled (another accident prevention scheme).
+
+When this mode is enabled:
+  * Additional key combinations are enabled (see Developer Operations).
+  * The battery indicators line (see Checking Status Indicators) includes the battery's voltage and temperature.
+  * If a component of the B2G User Interface crashes, an email containing the Java backtrace of that crash is sent to the B2G developers for analysis. This email doesn't contain any sensitive information.
+
+Navigation
+
+Emulating the Android Keys
+
+All Android devices have a number of special keys. There are two ways to emulate each of them:
+  * With two hands, by pressing Space together with a related letter or specialsymbol. While these may be easier to remember, they're also less convenient because both hands must be removed from the display.
+  * With one hand, by pressing Dot4 together with one of the D-Pad keys.
+
+CAPTION: Special Android Keys
+
+     Key       Two Hand Version   One Hand Version
+Home          Space+Dots123456    Dot4+Down
+Back          Space+z (dots 1356) Dot4+Left
+Notifications Space+n (dots 1345) Dot4+Up
+Recent Apps   Space+r (dots 1235) Dot4+Right
+Menu          Space+m (dots 134)  Dot4+Center
+
+Emulating Screen Gestures
+
+To tap (or click) the current screen element, press Center. Another (legacy) way to do it is to press The Enter Key.
+
+To hold (or long click) the current screen element, press Space+Center.
+
+Navigating with the Forward and Backward Keys
+
+The easiest way to navigate the screen is to use the Forward and Backward keys because they move sequentially through all of the screen elements, including those that merely present helpful text, without missing any of them. The Forward key stops at the end of the screen, and the Backward key stops at the start of the screen.
+
+If the text of a screen element is longer than the braille display and/or has more than one line, then:
+  * The Forward key pans to the right, wrapping to the start of the next line as needed, such that all of the text is presented. When it reaches the end of the text, it moves to the start of the next screen element.
+  * The Backward key pans to the left, wrapping to the end of the previous lineas needed, such that all of the text is presented. When it reaches the start of the text, it moves to the start of the previous screen element.
+
+Repeatedly pressing Forward, therefore, reads through all of the text on the screen because it reads through all of the text associated with the current screen element before moving to the next one. Repeatedly pressing Backward, however,pans to the left through the text associated with the current screen element, but, from then on, moves directly to the start of each successive preceding screen element.
+
+Leaving the Current Screen Element
+
+The following methods may be used to force an immediate, direct move to the start of the next (or previous) screen element:
+  * Press Space together with Forward (or Backward).
+  * Long press Forward (or Backward). See Long Press Mode.
+
+One of these methods must also be used in order to leave an input area (see Input Areas).
+
+Reverse Panning Mode
+
+Reverse Panning Mode is designed for those who prefer to read with their right hands while navigating with their left hands. When enabled, the Forward and Backward keys are reversed insofar as navigation is concerned:
+  * Backward pans to the right, wraps to the start of the next line, moves to the next screen element, etc.
+  * Forward pans to the left, wraps to the end of the previous line, moves to the previous screen element, etc.
+
+This mode is disabled by default. Pressing Forward+Dot5 enables it, and pressing Backward+Dot2 disables it.
+
+Explicit Panning
+
+The Forward and Backward keys pan right and left by the full length of the braille display. This can make it difficult to read an indented block of related text (a column, a long word, a timestamp, etc).
+
+The braille display can be explicitly panned by holding Dot8 while pressing a cursor routing key. This positions the braille display such that the rendered portion of the current line starts with that character.
+
+Navigating with the Directional Keys
+
+Up moves up through the lines of text for the current screen element, and, whenon the top line, moves to the start of the text for the previous screen element.
+
+Down moves down through the lines of text for the current screen element, and, when on the bottom line, moves to the start of the text for the next screen element.
+
+Left pans to the left through the text for the current screen element, wrappingto the end of the previous line, and, when at the start of the text, moves to the start of the text for the previous screen element.
+
+Right pans to the right through the text for the current screen element, wrapping to the start of the next line, and, when at the end of the text, moves to the start of the text for the next screen element.
+
+Space+Up performs a scroll backward (up or left) operation.
+  * If within a list then move up several elements.
+  * If within a set of pages then move to the previous page.
+
+Space+Down performs a scroll forward (down or right) operation.
+  * If within a list then move down several elements.
+  * If within a set of pages then move to the next page.
+
+Space+Left moves to the first element of a list, to the first page of a group, etc.
+
+Space+Right moves to the last element of a list, to the last page of a group, etc.
+
+These keys act differently within some other contexts. For those details, see:
+  * The Directional Keys within an Input Area
+  * The Directional Keys When on a Slider
+
+Input Areas
+
+The character where the cursor is is highlighted via dots 7 and 8 (⣀).
+
+Pressing a cursor routing key brings the cursor to that character. If text has been selected then the selection is cleared.
+
+An additional blank character is rendered at the end of each line within an input area. This character represents the delimiter between a line and the one that follows it.
+  * Typing while the cursor is on it appends characters to the line.
+  * Deleting it joins the line to the start of the next one.
+
+When a character is typed (see Typing), then:
+  * If text hasn't been selected then the typed character is inserted just to the left of the cursor.
+  * If text has been selected then the typed character replaces the selected text.
+
+The Enter key is Dot8. If the input area supports more than one line then this key ends the current line and starts a new one.
+  * Pressing it when at the start of a line inserts an empty line just above it.
+  * Pressing it when in the middle of a line splits that line just to the left of the cursor.
+  * Pressing it when at the end of a line starts a new line just below it.
+
+Deleting Characters
+
+The Backspace key is Dot7.
+  * If text hasn't been selected then the character just to the left of the cursor is deleted. If this key is pressed when at the start of a line then that line is joined to the end of the previous one.
+  * If text has been selected then the selected text is deleted.
+
+The Delete key is Space+d (dots 145).
+  * If text hasn't been selected then the character where the cursor is is deleted. If this key is pressed when at the end of a line then that line is joined to the start of the next one.
+  * If text has been selected then the selected text is deleted.
+
+The Forward and Backward keys pan through the input area in the expected way, but won't leave it. The Forward key pans to the right, and, at the end of each line, wraps to the start of the next one. The Backward key pans to the left, and, at the start of each line, wraps to the end of the previous one. See Leaving the Current Screen Element for how to move to another screen element.
+
+The Directional Keys within an Input Area
+
+The directional keys move the cursor through the text, one step at a time. Theywill not leave the input area. The braille display is panned, as needed, such that the cursor is always visible.
+
+The Left key moves the cursor to the previous character. If it's at the start of a line then it wraps to the end of the previous line. If text has been selected then the cursor is moved to just before the first selected character, and the selection is cleared.
+
+The Right key moves the cursor to the next character. If it's at the end of a line then it wraps to the start of the next line. If text has been selected thenthe cursor is moved to just after the last selected character, and the selection is cleared.
+
+The Up key moves the cursor to the same position on the previous line. If that line is too short then the cursor is also moved leftward. If text has been selected then the cursor is moved to just above the first selected character, and the selection is cleared.
+
+The Down key moves the cursor to the same position on the next line. If that line is too short then the cursor is also moved leftward. If text has been selected then the cursor is moved to just below the last selected character, and the selection is cleared.
+
+Selecting Text
+
+Each character within the current text selection is highlighted via dot 8 (⢀). If text has been selected then the cursor isn't shown.
+
+Selecting text is useful in at least the following ways:
+  * Typing a character deletes the selected text, puts the cursor where the selected text was, and then inserts the typed character at that point. This, in other words, is an efficient way to replace old text with new text. Just select the old text, and then start typing the new text.
+  * Pressing any of the delete keys (see Deleting Characters) removes all of the selected text. This, in other words, is an efficient way to delete a block oftext. Just select it, and then delete it.
+
+A quick way to select all of the characters within the input area is to press Space+Dot8+a (dot 1).
+
+Any subset of the characters within the input area can be selected by followingthese steps:
+ 1. If necessary, use the Forward and Backward keys to pan to a place where thefirst character to be selected can be seen.
+ 2. Hold Backward while pressing the cursor routing key behind the character that's to start the selection.
+ 3. If necessary, use the Forward and Backward keys to pan to a place where thelast character to be selected can be seen.
+ 4. Hold Forward while pressing the cursor routing key behind the character that's to end the selection.
+
+Steps 1 and 2 may be reperformed at any time in order to change the start of the selection. Likewise, steps 3 and 4 may be reperformed at any time in order tochange the end of the selection. In fact, the end of the selection can be set before the start of the selection has been set, i.e. steps 3 and 4 may be performed before steps 1 and 2 have been performed.
+
+If the start of the selection is set first, and if the cursor is after that character, then the selection is implicitly extended forward to (but not including) the character where the cursor is. This, for example, provides an easy way todelete or replace several characters that have just been typed.
+
+If the end of the selection is set first, and if the cursor is before that character, then the selection is implicitly extended back to (and including) the character where the cursor is. This, for example, provides an easy way to replacea word, line, paragraph, etc.
+
+Using the Clipboard
+
+To copy text to the clipboard, press Space+Dot8+c (dots 14). If this is done when not within an input area, or when within an input area with no selected text, then all of the text is copied. If this is done within an input area with selected text then just that text is copied.
+
+To cut text to the clipboard, press Space+Dot8+x (dots 1346). This can only be done within an input area. If text hasn't been selected then all of the text iscut. If text has been selected then just that text is cut.
+
+To paste text from the clipboard, press Space+Dot8+v (dots 1236). This can onlybe done within an input area. If text hasn't been selected then the pasted text is inserted just to the left of the cursor. If text has been selected then the pasted text replaces the selected text.
+
+Sliders
+
+A slider is a control that intuitively (from a visual perspective) represents anumeric value (distance, magnitude, etc). It's often used, for example, to represent a volume control, the current position within a song, etc.
+
+Each time the slider is adjusted, a brief message is displayed that announces its new position (as a percentage). Unfortunately, due to a current system limitation, its current position can't be determined (without actually looking at iton the screen). It's necessary, therefore, to adjust its position back and forth in order to figure out what it is.
+
+Attempting to either increase a slider's position beyond its maximum or decrease its position beyond its minimum neither displays a position message nor indicates an error.
+
+The Directional Keys When on a Slider
+
+A slider is normally adjusted by tapping the desired point along it's bar. This, of course, can't be done on a device that doesn't have a touch screen. Instead, use the Left and Right directional keys (on the D-Pad) to adjust it.
+  * The Left key decreases its position.
+  * The Right key increases its position.
+  * The Up and Down keys don't do anything.
+
+Finding Text within the Current Screen Element
+
+To find a sequence of characters within the text that's associated with the current screen element, press Space+f (dots 124). This brings up a prompt (see Prompts) with the following header:
+find>
+
+Type the sequence of characters that you're looking for, editing them as needed, and then press Enter.
+
+A forward search through the text is performed, starting with the second character that's currently on the braille display. If the characters are found then the braille display is repositioned such that they begin in its leftmost character.
+
+Legacy Navigation
+
+Navigation used to be done by using real keys on an actual keyboard. This method can still be used via an external keyboard connected via Bluetooth or USB. The B2G User Interface also supports it by emulating the following keyboard keys:
+
+CAPTION: Special Keyboard Keys
+
+Keyboard Key Key Combination
+Enter        Dot8
+Cursor Left  Dot3
+Cursor Right Dot6
+Cursor Up    Dot1
+Cursor Down  Dot4
+Page Up      Dots23
+Page Down    Dots56
+Home         Dots123
+End          Dots456
+Shift+Tab    Dots12
+Tab          Dots45
+
+What each of these keys does is defined by Android - not by the B2G User Interface. Here's a summary.
+
+The Enter Key
+
+Dot8
+  * If on a button then press it.
+  * If on a checkbox then check/uncheck it.
+  * If on a switch then move it to its other position.
+  * If on a folder then open it.
+  * If on an app then go to it.
+  * If within an input area:
+  + If text has been selected then replace it with a new line character.
+  + If text hasn't been selected then insert a new line character to the left of the cursor.
+
+The Cursor Left Key
+
+Space+Dot3
+  * If not within an input area then move to the nearest screen element that's roughly to the left of the current one. This operation is not only imprecise, but also doesn't find screen elements that merely present helpful text.
+  * If within an input area:
+  + If text hasn't been selected then move the cursor one character to the left. If it's at the start of a line then wrap to the end of the previous line.
+  + If text has been selected then move the cursor to the first selected character and then clear the selection.
+
+The Cursor Right Key
+
+Space+Dot6
+  * If not within an input area then move to the nearest screen element that's roughly to the right of the current one. This operation is not only imprecise, but also doesn't find screen elements that merely present helpful text.
+  * If within an input area:
+  + If text hasn't been selected then move the cursor one character to the right. If it's at the end of a line then wrap to the start of the next line.
+  + If text has been selected then move the cursor to the character just after it and then clear the selection.
+
+The Cursor Up Key
+
+Space+Dot1
+  * If not within an input area then move to the nearest screen element that's roughly above the current one. This operation is not only imprecise, but also doesn't find screen elements that merely present helpful text.
+  * If within an input area:
+  + If text hasn't been selected then move the cursor one line up. If it's on the top line then move to the nearest screen element that's roughly above the current one (see above). Vertical cursor motion within text may cause it to also move unexpectedly left or right in braille, especially when a proportional fonthas been used, because the characters on the screen may not all have the same width.
+  + If text has been selected then move the cursor to the first selected character and then clear the selection.
+
+The Cursor Down Key
+
+Space+Dot4
+  * If not within an input area then move to the nearest screen element that's roughly below the current one. This operation is not only imprecise, but also doesn't find screen elements that merely present helpful text.
+  * If within an input area:
+  + If text hasn't been selected then move the cursor one line down. If it's onthe bottom line then move to the nearest screen element that's roughly below the current one (see above). Vertical cursor motion within text may cause it to also move unexpectedly left or right in braille, especially when a proportionalfont has been used, because the characters on the screen may not all have the same width.
+  + If text has been selected then move the cursor to the character just after it and then clear the selection.
+
+The Page Up Key
+
+Space+Dots23
+
+Perform a scroll backward (up or to the left) operation.
+  * If within a list then move up several elements. If the first element is already visible then move to it.
+  * If within an input area then move up several lines. If the first line is already visible then move to it.
+  * If within a set of pages then move to the previous page.
+
+The Page Down Key
+
+Space+Dots56
+
+Perform a scroll forward (down or to the right) operation.
+  * If within a list then move down several elements. If the last element is already visible then move to it.
+  * If within an input area then move down several lines. If the last line is already visible then move to it.
+  * If within a set of pages then move to the next page.
+
+The Home Key
+
+Space+Dots123
+
+Move to the first element of a list, to the start of a line of text, to the first page of a group, etc.
+
+The End Key
+
+Space+Dots456
+
+Move to the last element of a list, to the end of a line of text, to the last page of a group, etc.
+
+The Shift+Tab Key
+
+Space+Dots12
+
+Move to the previous screen element that can perform an action. If on the firstscreen element then wrap to the last one.
+
+The Tab Key
+
+Space+Dots45
+
+Move to the next screen element that can perform an action. If on the last screen element then wrap to the first one.
+
+Quick Reference
+
+Firmware Features
+
+Status Alerts
+
+A high-pitched beep (approximately 4KHz) is used to alert the user to a number of firmware-detected states.
+
+CAPTION: Beep Lengths
+
+Length Duration
+Short  100ms
+Medium 500ms
+Long   1s
+
+One Short Beep
+The system has started booting. This occurs immediately after the Power switch has been turned on while the system is shut down. The braille display is not powered up until later.
+
+Two Short Beeps
+The kernel has finished initializing. This occurs part way through the system'sboot sequence. The braille display is powered up at this point. It will say Starting for a few seconds, and then go blank. Eventually, when the User Interface starts, regular screen content will appear.
+
+Three Short Beeps
+The battery is too low to boot the system. This check is made when the Power switch is turned on while the system is shut down.
+
+Two Medium Beeps
+The battery is full. This occurs when the charger is connected, and indicates that further charging is unnecessary.
+
+One Long Beep
+The device has been successfully reset (see The Reset Button).
+
+Four Long Beeps
+The system is about to reboot. This occurs after the VolumeDown+Dot4+Dot5+Dot6+Dot8 firmware key binding has been pressed.
+
+Key Bindings
+
+Simultaneously pressing VolumeDown, Dot1, Dot2, Dot3, and Dot7:
+If the system is running then go to the Power Off screen. This is equivalent toa medium press of the Power button on an Android device.
+
+Simultaneously pressing VolumeDown, Dot4, Dot5, Dot6, and Dot8:
+If the system is running then reset the main processor and then boot the system. This is equivalent to a long press of the Power button on an Android device. You should hear four long beeps.
+
+Switching the power on:
+
+  * If the system is shut down then boot it. This is equivalent to a long pressof the Power button on an Android device.
+  * If the system is running then wake it up. This is equivalent to a short press of the Power button on an Android device.
+
+Switching the power off:
+If the system is running then put it to sleep. This is equivalent to a short press of the Power button on an Android device. The system itself will stay up, but most of the peripherals (the braille display, the keyboard, etc) will be shut down in order to save power.
+
+Holding VolumeDown while switching the power on:
+If the system is shut down then boot into Recovery Mode. This is equivalent to a simultaneous long press of the Power button and the Volume Up key on an Android device. Neither braille nor speech works in Recovery Mode. This binding is intended for use by a sighted person using an external video monitor.
+
+Braille
+
+Special Symbols
+
+CAPTION: Special Braille Symbols
+
+Symbol Dots        Description
+⣤      3768        undefined character
+⣀      78          default cursor indicator
+⢀      8           default selection indicator
+⠑⢄⡠⠊   15,38,76,24 scrolling forward (down, right)
+⡠⠊⠑⢄   76,24,15,38 scrolling backward (up, left)
+
+Annotations
+
+CAPTION: Braille Annotations
+
+Annotation Description
+[ ]        an unchecked checkbox or a switch in its off position
+[X]        a checked checkbox or a switch in its on position
+[text]     a description provided by the application's developer
+{text}     the screen element's type
+(text)     the screen element's state
+
+Key Bindings
+
+Common Operations
+
+CAPTION: Common Operations
+
+Keys Description
+Dot8 the keyboard Enter key
+Backward pan to the left
+Forward pan to the right
+Left go to the previous character of editable text or part of the line
+Right go to the next character of editable text or part of the line
+Up go to the previous line of text or element on the screen
+Down go to the next line of text or element on the screen
+Space+Left go to the beginning of a list or line
+Space+Right go to the end of a list or line
+Space+Up go to the previous page of a list or block of text
+Space+Down go to the next page of a list or block of text
+Dot7+Cursor show the description of a specific character
+Dot8+Cursor shift the braille display a specific amount to the right
+Space+Dot8+Dots14#c copy the selected (or all) text to the clipboard
+Space+Dots24#i show the current input mode setting
+Space+Dot7+Dots24#i set the input mode to text
+Space+Dot8+Dots24#i set the input mode to braille
+Backward+Dot1 disable braille
+Forward+Dot4 enable braille
+Backward+Dot2 disable reverse panning mode
+Forward+Dot5 enable reverse panning mode
+Backward+Dot3 disable long key press actions
+Forward+Dot6 enable long key press actions
+Backward+Dot7 disable one hand mode
+Forward+Dot8 enable one hand mode
+Backward+Forward show important status indicators
+Backward+Forward+Space show details that identify the build
+Space+Dots12345678 cancel an accidentally-started key combination
+
+Input Operations
+
+CAPTION: Input Operations
+
+Keys Description
+Cursor bring the cursor to a specific character
+Dot7 delete the character to the left of the cursor
+Space+Dots145#d delete the character that the cursor is on
+Backward+Cursor set or change the start of the text selection
+Forward+Cursor set or change the end of the text selection
+Space+Dot8+Dot1#a select all of the text
+Space+Dot8+Dots1346#x cut the selected text to the clipboard
+Space+Dot8+Dots1236#v paste the clipboard into the text
+Space+Dot7 the keyboard Dot7 key
+Space+Dot8 the keyboard Dot8 key
+Space+Dots136#u type any character by its Unicode value
+Space+Dots1346#x the keyboard Control key (applies to the next typed character)
+
+Screen Operations
+
+CAPTION: Screen Operations
+
+Keys Description
+Backward+LongPress go to the start of the previous screen element
+Forward+LongPress go to the start of the next screen element
+Backward+Space go to the start of the previous screen element
+Forward+Space go to the start of the next screen element
+Center tap (click) the current screen element
+Space+Center hold (long click) the current screen element
+Dot4+Up go to the Notifications screen
+Dot4+Down the Android Home key
+Dot4+Left the Android Back key
+Dot4+Right go to the Recent Apps screen
+Dot4+Center the Android Menu key
+Space+Dots123456 the Android Home key
+Space+Dots124#f find text within the current screen element (forward search)
+Space+Dots1245#g go to the B2G user guide
+Space+Dots134#m the Android Menu key
+Space+Dots1345#n go to the Notifications screen
+Space+Dots135#o go to the Settings screen of the B2G User Interface
+Space+Dots1234#p go to the Power Off screen
+Space+Dots1235#r go to the Recent Apps screen
+Space+Dots2345#t go to the B2G digital clock
+Space+Dots1356#z the Android Back key
+Space+Dots1246#ed go to the B2G editor
+Space+Dots1456#? go to the current Google Assist app
+Space+Dots234#s,Space go to the main Settings screen
+Space+Dots234#s,Dot1#a go to the Accessibility Settings screen
+Space+Dots234#s,Dots12#b go to the Bluetooth Settings screen
+Space+Dots234#s,Dots2456#w go to the Wi-Fi Settings screen
+
+Speech Operations
+
+CAPTION: Speech Operations
+
+       Keys                   Description
+Space+VolumeDown    disable speech
+Space+VolumeUp      enable speech
+Forward+VolumeDown  speak only when awake
+Forward+VolumeUp    speak even when asleep
+Backward+VolumeDown stop speaking
+Backward+VolumeUp   speak the current line
+Dot1+VolumeDown     decrease the speech volume
+Dot1+VolumeUp       increase the speech volume
+Dot2+VolumeDown     decrease the speech rate
+Dot2+VolumeUp       increase the speech rate
+Dot3+VolumeDown     decrease the speech pitch
+Dot3+VolumeUp       increase the speech pitch
+Dot4+VolumeDown     pan the speech more to the left
+Dot4+VolumeUp       pan the speech more to the right
+
+Legacy Bindings
+
+CAPTION: Legacy Operations
+
+       Keys                        Description
+Space+Dot3          the keyboard Cursor Left key
+Space+Dot6          the keyboard Cursor Right key
+Space+Dot1          the keyboard Cursor Up key
+Space+Dot4          the keyboard Cursor Down key
+Space+Dots23        the keyboard Page Up key
+Space+Dots56        the keyboard Page Down key
+Space+Dots123       the keyboard Home key
+Space+Dots456       the keyboard End key
+Space+Dots12        the keyboard Shift+Tab keys (tab backward)
+Space+Dots45        the keyboard Tab key (tab forward)
+Space+Dots14#c      speak the current line
+VolumeDown+VolumeUp disable speech
+Dot8+PowerOn        enable one hand mode
+
+Developer Operations
+
+Common Actions
+
+CAPTION: Common Developer Operations
+
+Keys Description
+Forward+Backward+Dots1245+LongPress enable developer actions
+Forward+Backward+Dots1245 disable developer actions
+Space+Dots78+Dots136#u enable the logging of screen updates
+Space+Dots78+Dots136#u+LongPress disable the logging of screen updates
+Space+Dots78+Dots13#k enable the logging of keyboard key events
+Space+Dots78+Dots13#k+LongPress disable the logging of keyboard key events
+Space+Dots78+Dot1#a enable the logging of user-requested actions
+Space+Dots78+Dot1#a+LongPress disable the logging of user-requested actions
+Space+Dots78+Dots1345#n enable the logging of internal screen navigation operations
+Space+Dots78+Dots1345#n+LongPress disable the logging of internal screen navigation operations
+Space+Dots78+Dots1245#g enable the logging of touch screen gestures
+Space+Dots78+Dots1245#g+LongPress disable the logging of touch screen gestures
+Space+Dots78+Dots12#b enable the logging of braille display updates
+Space+Dots78+Dots12#b+LongPress disable the logging of braille display updates
+Space+Dots78+Dots234#s save the current B2G User Interface settings
+Space+Dots78+Dots1235#r restore the most recently saved B2G User Interface settings
+Space+Dots78+Dots145#d reset the B2G User Interface settings to default values
+Space+Dots78+Dots1346#x force a B2G User Interface crash
+Forward+Space+Dot1 enable the most useful logging categories
+Forward+Space+Dot2 clear the Android log
+Forward+Space+Dot3 send a copy of the Android log to the B2G developers
+Forward+Space+Dot7 disable all of the logging categories
+
+Screen Actions
+
+CAPTION: Screen Developer Operations
+
+      Keys                           Description
+Backward+Dots4568 write the screen element structure to the log
+Backward+Dot4     go to and describe the parent node
+Backward+Dot5     go to and describe the previous sibling node
+Backward+Dot6     go to and describe the next sibling node
+Backward+Dot8     go to and describe the first child node
+Backward+Dots56   describe the current node
+Backward+Dots456  force the screen to scroll backward (up or left)
+Backward+Dots568  force the screen to scroll forward (down or right)
+Backward+Dots48   go to the Launcher chooser
+
+Tables
+
+Braille Characters
+
+Dot Numbering
+
+A standard braille cell consists of six dots arranged in three rows and two columns. Each dot can be specifically identified by its number as follows:
+
+CAPTION: The Standard Six-dot Braille Cell
+
+Dot Position     Row Column Cell
+1   top-left     1   1      ⠁
+2   middle-left  2   1      ⠂
+3   bottom-left  3   1      ⠄
+4   top-right    1   2      ⠈
+5   middle-right 2   2      ⠐
+6   bottom-right 3   2      ⠠
+
+Computer braille has introduced two more dots in a fourth row at the bottom.
+
+CAPTION: Additional Dots in Computer Braille
+
+Dot Position    Row Column Cell
+7   below-left  4   1      ⡀
+8   below-right 4   2      ⢀
+
+A picture may make this numbering convention easier to understand:
+1 o o 4
+2 o o 5
+3 o o 6
+7 o o 8
+
+Unicode Braille Characters
+
+Actual braille cells are represented by the 256 characters within the Unicode range U+2800 through U+28FF. Each of the eight bits within the low-order byte ofthis range represents a braille dot within the cell, according to ISO 11548-1,as follows:
+
+CAPTION: Unicode Braille Dots
+
+Dot Cell Hexadecimal Decimal Binary
+1   ⠁    01          1       00000001
+2   ⠂    02          2       00000010
+3   ⠄    04          4       00000100
+4   ⠈    08          8       00001000
+5   ⠐    10          16      00010000
+6   ⠠    20          32      00100000
+7   ⡀    40          64      01000000
+8   ⢀    80          128     10000000
+
+Braille Character Map
+
+These tables show how English US braille is represented. This mapping is also used by locales that don't (yet) have their own.
+
+North American Braille Computer Code
+
+The North American convention for how the 95 basic ASCII characters are rendered in computer (8-dot) braille.
+
+CAPTION: North American Braille Computer Code
+
+Char- Code   Bra- Dot     Character
+acter Point  ille Numbers Name
+      U+0020 ⠀    no dots Space
+!     U+0021 ⠮    2346    Exclamation Point
+"     U+0022 ⠐    5       Quotation Mark (Double Quote)
+#     U+0023 ⠼    3456    Number Sign
+$     U+0024 ⠫    1246    Dollar Sign
+%     U+0025 ⠩    146     Percent Sign
+&     U+0026 ⠯    12346   Ampersand
+'     U+0027 ⠄    3       Apostrophe, Acute Accent, Single Quote
+(     U+0028 ⠷    12356   Left Parenthesis (round bracket)
+)     U+0029 ⠾    23456   Right Parenthesis (round bracket)
+*     U+002A ⠡    16      Asterisk
++     U+002B ⠬    346     Plus Sign
+,     U+002C ⠠    6       Comma
+-     U+002D ⠤    36      Minus, Hyphen
+.     U+002E ⠨    46      Period
+/     U+002F ⠌    34      Slash, Solidus
+0     U+0030 ⠴    356     Zero
+1     U+0031 ⠂    2       One
+2     U+0032 ⠆    23      Two
+3     U+0033 ⠒    25      Three
+4     U+0034 ⠲    256     Four
+5     U+0035 ⠢    26      Five
+6     U+0036 ⠖    235     Six
+7     U+0037 ⠶    2356    Seven
+8     U+0038 ⠦    236     Eight
+9     U+0039 ⠔    35      Nine
+:     U+003A ⠱    156     Colon
+;     U+003B ⠰    56      Semicolon
+<     U+003C ⠣    126     Less Than Sign, Left Angle Bracket
+=     U+003D ⠿    123456  Equals Sign
+>     U+003E ⠜    345     Greater Than Sign, Right Angle Bracket
+?     U+003F ⠹    1456    Question Mark
+@     U+0040 ⡈    47      Commercial At
+A     U+0041 ⡁    17      Uppercase A
+B     U+0042 ⡃    127     Uppercase B
+C     U+0043 ⡉    147     Uppercase C
+D     U+0044 ⡙    1457    Uppercase D
+E     U+0045 ⡑    157     Uppercase E
+F     U+0046 ⡋    1247    Uppercase F
+G     U+0047 ⡛    12457   Uppercase G
+H     U+0048 ⡓    1257    Uppercase H
+I     U+0049 ⡊    247     Uppercase I
+J     U+004A ⡚    2457    Uppercase J
+K     U+004B ⡅    137     Uppercase K
+L     U+004C ⡇    1237    Uppercase L
+M     U+004D ⡍    1347    Uppercase M
+N     U+004E ⡝    13457   Uppercase N
+O     U+004F ⡕    1357    Uppercase O
+P     U+0050 ⡏    12347   Uppercase P
+Q     U+0051 ⡟    123457  Uppercase Q
+R     U+0052 ⡗    12357   Uppercase R
+S     U+0053 ⡎    2347    Uppercase S
+T     U+0054 ⡞    23457   Uppercase T
+U     U+0055 ⡥    1367    Uppercase U
+V     U+0056 ⡧    12367   Uppercase V
+W     U+0057 ⡺    24567   Uppercase W
+X     U+0058 ⡭    13467   Uppercase X
+Y     U+0059 ⡽    134567  Uppercase Y
+Z     U+005A ⡵    13567   Uppercase Z
+[     U+005B ⡪    2467    Left Bracket (square)
+\     U+005C ⡳    12567   Backslash, Reverse Solidus
+]     U+005D ⡻    124567  Right Bracket (square)
+^     U+005E ⡘    457     Circumflex Accent
+_     U+005F ⠸    456     Underscore
+`     U+0060 ⠈    4       Grave Accent, Back Quote
+a     U+0061 ⠁    1       Lowercase A
+b     U+0062 ⠃    12      Lowercase B
+c     U+0063 ⠉    14      Lowercase C
+d     U+0064 ⠙    145     Lowercase D
+e     U+0065 ⠑    15      Lowercase E
+f     U+0066 ⠋    124     Lowercase F
+g     U+0067 ⠛    1245    Lowercase G
+h     U+0068 ⠓    125     Lowercase H
+i     U+0069 ⠊    24      Lowercase I
+j     U+006A ⠚    245     Lowercase J
+k     U+006B ⠅    13      Lowercase K
+l     U+006C ⠇    123     Lowercase L
+m     U+006D ⠍    134     Lowercase M
+n     U+006E ⠝    1345    Lowercase N
+o     U+006F ⠕    135     Lowercase O
+p     U+0070 ⠏    1234    Lowercase P
+q     U+0071 ⠟    12345   Lowercase Q
+r     U+0072 ⠗    1235    Lowercase R
+s     U+0073 ⠎    234     Lowercase S
+t     U+0074 ⠞    2345    Lowercase T
+u     U+0075 ⠥    136     Lowercase U
+v     U+0076 ⠧    1236    Lowercase V
+w     U+0077 ⠺    2456    Lowercase W
+x     U+0078 ⠭    1346    Lowercase X
+y     U+0079 ⠽    13456   Lowercase Y
+z     U+007A ⠵    1356    Lowercase Z
+{     U+007B ⠪    246     Left Brace (curly bracket)
+|     U+007C ⠳    1256    Vertical Bar
+}     U+007D ⠻    12456   Right Brace (curly bracket)
+~     U+007E ⠘    45      Tilde Accent
+
+Additional Common Symbols
+
+The representations of these additional symbols have been designed such that they can be relatively easily remembered. The following methods have been used:
+  * Adding dot 8 to a related letter, e.g. adding dot 8 to the letter c for thecopyright sign.
+  * Adding dot 7 to a related punctuation symbol, e.g. adding dot 7 to the dollar sign for the cent sign.
+  * The superscript digits are rendered by adding dot 7 to the representations of the corresponding regular digits.
+  * The subscript digits are rendered by adding dot 8 to the representations ofthe corresponding regular digits.
+
+CAPTION: Additional Common Symbols
+
+Char- Code   Bra- Dot     Character
+acter Point  ille Numbers Name
+©     U+00A9 ⢉    148     Copyright Sign
+¶     U+00B6 ⢏    12348   Paragraph Sign, Pilcrow
+§     U+00A7 ⢎    2348    Section Sign
+®     U+00AE ⢗    12358   Registered Sign
+™     U+2122 ⢞    23458   Trade Mark Sign
+°     U+00B0 ⢙    1458    Degree Sign, Greek Theta
+µ     U+00B5 ⢍    1348    Micro Sign, Greek Mu
+¬     U+00AC ⢝    13458   Not Sign
+€     U+20AC ⢑    158     Euro Sign
+¥     U+00A5 ⢽    134568  Yen Sign
+£     U+00A3 ⡼    34567   Pound Sign
+¢     U+00A2 ⡫    12467   Cent Sign
+·     U+00B7 ⡨    467     Middle Dot, Bullet
+«     U+00AB ⡷    123567  Left-pointing Double Angle Quotation Mark
+»     U+00BB ⡾    234567  Right-pointing Double Angle Quotation Mark
+±     U+00B1 ⡬    3467    Plus-Minus Sign
+×     U+00D7 ⡡    167     Multiplication Sign
+÷     U+00F7 ⡌    347     Division Sign
+≠     U+2260 ⡿    1234567 Not-Equal-To Sign
+≤     U+2264 ⡜    3457    Less-Than-Or-Equal-To Sign
+≥     U+2265 ⡣    1267    Greater-Than-Or-Equal-To Sign
+⁰     U+2070 ⡴    3567    Superscript Zero
+¹     U+00B9 ⡂    27      Superscript One
+²     U+00B2 ⡆    237     Superscript Two
+³     U+00B3 ⡒    257     Superscript Three
+⁴     U+2074 ⡲    2567    Superscript Four
+⁵     U+2075 ⡢    267     Superscript Five
+⁶     U+2076 ⡖    2357    Superscript Six
+⁷     U+2077 ⡶    23567   Superscript Seven
+⁸     U+2078 ⡦    2367    Superscript Eight
+⁹     U+2079 ⡔    357     Superscript Nine
+₀     U+2080 ⢴    3568    Subscript Zero
+₁     U+2081 ⢂    28      Subscript One
+₂     U+2082 ⢆    238     Subscript Two
+₃     U+2083 ⢒    258     Subscript Three
+₄     U+2084 ⢲    2568    Subscript Four
+₅     U+2085 ⢢    268     Subscript Five
+₆     U+2086 ⢖    2358    Subscript Six
+₇     U+2087 ⢶    23568   Subscript Seven
+₈     U+2088 ⢦    2368    Subscript Eight
+₉     U+2089 ⢔    358     Subscript Nine
+
+Additional Characters for Spanish
+
+The representations of these Spanish characters have been designed such that they can be easily recognized. The following methods have been used:
+  * The lowercase accented letters are rendered by adding dot 8 to their six-dot Spanish literary braille representations.
+  * The uppercase accented letters are rendered by adding dots 7 and 8 to theirsix-dot Spanish literary braille representations.
+  * The inverted punctuation symbols are rendered by adding dot 7 to the representations of the associated North American Braille Computer Code punctuation symbols.
+
+CAPTION: Additional Characters for Spanish
+
+Char- Code   Bra- Dot     Character
+acter Point  ille Numbers Name
+á     U+00E1 ⢷    123568  Lowercase A with Acute
+é     U+00E9 ⢮    23468   Lowercase E with Acute
+í     U+00ED ⢌    348     Lowercase I with Acute
+ó     U+00F3 ⢬    3468    Lowercase O with Acute
+ú     U+00FA ⢾    234568  Lowercase U with Acute
+ë     U+00EB ⢫    12468   Lowercase E with Diaeresis
+ü     U+00FC ⢳    12568   Lowercase U with Diaeresis
+ñ     U+00F1 ⢻    124568  Lowercase N with Tilde
+Á     U+00C1 ⣷    1235678 Uppercase A with Acute
+É     U+00C9 ⣮    234678  Uppercase E with Acute
+Í     U+00CD ⣌    3478    Uppercase I with Acute
+Ó     U+00D3 ⣬    34678   Uppercase O with Acute
+Ú     U+00DA ⣾    2345678 Uppercase U with Acute
+Ë     U+00CB ⣫    124678  Uppercase E with Diaeresis
+Ü     U+00DC ⣳    125678  Uppercase U with Diaeresis
+Ñ     U+00D1 ⣻    1245678 Uppercase N with Tilde
+¡     U+00A1 ⡮    23467   Inverted Exclamation Point
+¿     U+00BF ⡹    14567   Inverted Question Mark
+
+ASCII Control Characters
+
+To type a control character, press Space+x (dots 1346) immediately before any of these characters:
+
+CAPTION: ASCII Control Characters
+
+Char- Code   Bra- Dot     Mne-
+acter Point  ille Numbers monic Meaning
+`     U+0000 ⠈    4       NUL   Null Character
+a     U+0001 ⠁    1       SOH   Start of Heading
+b     U+0002 ⠃    12      STX   Start of Text
+c     U+0003 ⠉    14      ETX   End of Text
+d     U+0004 ⠙    145     EOT   End of Transmission
+e     U+0005 ⠑    15      ENQ   Enquiry
+f     U+0006 ⠋    124     ACK   Acknowledge
+g     U+0007 ⠛    1245    BEL   Bell
+h     U+0008 ⠓    125     BS    Backspace
+i     U+0009 ⠊    24      HT    Horizontal Tab
+j     U+000A ⠚    245     LF    Line Feed (NL, New Line)
+k     U+000B ⠅    13      VT    Vertical Tab
+l     U+000C ⠇    123     FF    Form Feed (NP, New Page)
+m     U+000D ⠍    134     CR    Carriage Return
+n     U+000E ⠝    1345    SO    Shift Out
+o     U+000F ⠕    135     SI    Shift In
+p     U+0010 ⠏    1234    DLE   Data Link Escape
+q     U+0011 ⠟    12345   DC1   Device Control 1 (X-On)
+r     U+0012 ⠗    1235    DC2   Device Control 2
+s     U+0013 ⠎    234     DC3   Device Control 3 (X-Off)
+t     U+0014 ⠞    2345    DC4   Device Control 4
+u     U+0015 ⠥    136     NAK   Negative Acknowledge
+v     U+0016 ⠧    1236    SYN   Synchronous Idle
+w     U+0017 ⠺    2456    ETB   End of Transmission Block
+x     U+0018 ⠭    1346    CAN   Cancel
+y     U+0019 ⠽    13456   EM    End of Medium
+z     U+001A ⠵    1356    SUB   Substitute
+{     U+001B ⠪    246     ESC   Escape
+|     U+001C ⠳    1256    FS    Field Separator
+}     U+001D ⠻    12456   GS    Group Separator
+~     U+001E ⠘    45      RS    Record Separator
+_     U+001F ⠸    456     US    Unit Separator
+?     U+007F ⠹    1456    DEL   Delete
+
+Technical Information
+
+  * Weight: 575g [20.3oz]
+  * Dimensions:
+  + Width: 20cm [8in]
+  + Depth: 11cm [4.3in]
+  + Height: 3cm [1.2in] (including feet and keys)
+  * Braille Display: Metec, 20 cells, 8 dots per cell
+  * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
+  * Camera: 5MP, built-in flash
+  * Wi-Fi: IEEE 802.11 b/g, Hotspot, Wi-Fi Direct
+  * Bluetooth: 2.1+EDR, Power Class 1.5
+  + Profiles: OPP, A2DP, AVRCP, HID
+  * GPS Receiver: NAVSTAR L1C/A Band, 48 channels
+  * Accelerometer: 4 axis
+  * Compass
+  * Internal Memory: 8.5GB eMMC, 500MB DRAM
+
+  * SD Card Slot: 32GB max, external (on back)
+  * Micro-SIM Card Slot: internal, user accessible (beneath cover on bottom)
+  * Cellular Wireless Module:
+  + Quad-band GSM / GPRS / EDGE: 850MHz, 900MHz, 1800MHz, 1900MHz
+  + Quad-band UMTS WCDMA FDD: 800MHz, 850MHz, 1900MHz, 2100MHz
+  + Dual-band CDMA EVDO Rev A: 800MHz, 1900MHz
+  + GPS: 1575.42MHz

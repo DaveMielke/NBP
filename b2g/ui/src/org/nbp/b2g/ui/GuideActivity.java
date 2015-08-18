@@ -18,6 +18,9 @@ public class GuideActivity extends ProgrammaticActivity {
     final TextView view = createTextView();
     view.setAutoLinkMask(Linkify.WEB_URLS);
 
+    final String TEXT_EXTENSION = "txt";
+    final String HTML_EXTENSION = "html";
+
     new AsyncTask<String, String, CharSequence>() {
       @Override
       protected void onPreExecute () {
@@ -42,12 +45,19 @@ public class GuideActivity extends ProgrammaticActivity {
       protected CharSequence doInBackground (String... names) {
         publishProgress("loading document");
         Thread.yield();
-        String html = loadDocument(names[0]);
+
+        String name = names[0];
+        String extension = names[1];
+        String document = loadDocument((name + '.' + extension));
 
         publishProgress("formatting document");
         Thread.yield();
-        HtmlSpanner htmlSpanner = new HtmlSpanner();
-        CharSequence text = htmlSpanner.fromHtml(html);
+        CharSequence text = document;
+
+        if (extension.equals(HTML_EXTENSION)) {
+          HtmlSpanner htmlSpanner = new HtmlSpanner();
+          text = htmlSpanner.fromHtml(document);
+        }
 
         publishProgress("rendering document");
         Thread.yield();
@@ -65,7 +75,7 @@ public class GuideActivity extends ProgrammaticActivity {
       protected void onPostExecute (CharSequence result) {
         view.setText(result);
       }
-    }.execute("guide.html");
+    }.execute("guide", TEXT_EXTENSION);
 
     return view;
   }
