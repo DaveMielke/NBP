@@ -1,6 +1,9 @@
 package org.nbp.b2g.ui.prompt;
 import org.nbp.b2g.ui.*;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class FindEndpoint extends PromptEndpoint {
   @Override
   public final boolean handleResponse (String response) {
@@ -13,11 +16,13 @@ public class FindEndpoint extends PromptEndpoint {
         int start = endpoint.getBrailleStart();
 
         if (start < endpoint.getTextLength()) {
-          String text = endpoint.getText().toString();
-          int offset = text.indexOf(response, start+1);
+          Matcher matcher = Pattern.compile(
+            response,
+            Pattern.LITERAL | Pattern.CASE_INSENSITIVE
+          ).matcher(endpoint.getText().toString());
 
-          if (offset >= 0) {
-            endpoint.setLineIndent(endpoint.setLine(offset));
+          if (matcher.find(start+1)) {
+            endpoint.setLineIndent(endpoint.setLine(matcher.start()));
             found = true;
           }
         }

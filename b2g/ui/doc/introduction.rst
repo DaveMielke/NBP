@@ -633,7 +633,7 @@ The On-screen Monitor
 An on-screen monitor that shows what's on the braille display can be enabled
 from `The Settings Screen`_. It shows both the braille cells and the text.
 
-Adjusting the dot firmness
+Adjusting the Dot Firmness
 ``````````````````````````
 
 The firmness of the braille dots can be adjusted from `The Settings Screen`_.
@@ -715,5 +715,5 @@ When this mode is enabled:
 
 * If a component of the |user interface| crashes, an email containing the Java
   backtrace of that crash is sent to the |product name| developers for
-  analysis. This email doesn't contain any sensitive information.
+  analysis. The email doesn't contain any sensitive information.
 

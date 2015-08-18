@@ -330,10 +330,10 @@ current screen element, press Space+f (dots 124). This brings up a prompt (see
 Type the sequence of characters that you're looking for, editing them as
 needed, and then press Enter.
 
-A forward search through the text is performed, starting with the second 
-character that's currently on the braille display. If the characters are found
-then the braille display is repositioned such that they begin in its leftmost
-character.
+A forward, case insensitive search through the text is performed, starting with
+the second character that's currently on the braille display. If the characters
+are found then the braille display is repositioned such that they begin at its
+leftmost character.
 
 Legacy Navigation
 -----------------
