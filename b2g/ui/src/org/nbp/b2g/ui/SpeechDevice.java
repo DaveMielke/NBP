@@ -255,7 +255,7 @@ public class SpeechDevice {
               if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
                 maximumLength = ttsObject.getMaxSpeechInputLength();
               } else {
-                maximumLength = 0X40;
+                maximumLength = 4000;
               }
             } else {
               Log.d(LOG_TAG, "speech device failed with status " + ttsStatus);
