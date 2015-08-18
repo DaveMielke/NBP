@@ -9,7 +9,8 @@ txt: $(DOCUMENT_NAMES:=.txt)
 	rst2html --config docutils.conf $< $@
 
 %.txt: %.html
-	lynx -dump -stderr -nomargins -dont_wrap_pre -nolist -nonumbers $< >$@
+	lynx -dump -stderr -dont_wrap_pre -nolist -nonumbers $< >$@
+	sed -e '/^ *Contents *$$/,/^ *$$/d' -i $@
 #	links -dump -dump-charset utf-8 -no-references -no-numbering $< >$@
 #	html2text -rcfile html2text.conf -nobs -o $@ $<
 
