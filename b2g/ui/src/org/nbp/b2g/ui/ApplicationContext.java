@@ -114,7 +114,9 @@ public abstract class ApplicationContext {
 
     ContentResolver resolver = context.getContentResolver();
     String serviceNamesKey = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
+
     String serviceNames = Settings.Secure.getString(resolver, serviceNamesKey);
+    if (serviceNames == null) serviceNames = "";
 
     for (String serviceName : serviceNames.split(":")) {
       if (serviceName.equals(longServiceName) || serviceName.equals(shortServiceName)) {
