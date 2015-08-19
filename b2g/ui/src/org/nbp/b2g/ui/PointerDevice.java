@@ -29,4 +29,8 @@ public class PointerDevice extends GestureDevice {
   public PointerDevice () {
     super();
   }
+
+  static {
+    ApplicationUtilities.loadLibrary();
+  }
 }

@@ -97,7 +97,7 @@ public abstract class Keyboard {
   private static native void defineScanCodes ();
 
   static {
-    System.loadLibrary("UserInterface");
+    ApplicationUtilities.loadLibrary();
     defineScanCodes();
   }
 }

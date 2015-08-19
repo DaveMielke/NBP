@@ -64,6 +64,6 @@ public abstract class EventMonitor extends Thread {
   }
 
   static {
-    System.loadLibrary("UserInterface");
+    ApplicationUtilities.loadLibrary();
   }
 }

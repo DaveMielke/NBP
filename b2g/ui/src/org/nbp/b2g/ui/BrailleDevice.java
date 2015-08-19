@@ -302,6 +302,6 @@ public class BrailleDevice {
   }
 
   static {
-    System.loadLibrary("UserInterface");
+    ApplicationUtilities.loadLibrary();
   }
 }

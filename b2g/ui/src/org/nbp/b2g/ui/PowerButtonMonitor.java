@@ -29,4 +29,8 @@ public class PowerButtonMonitor extends EventMonitor {
   public PowerButtonMonitor () {
     super("power-button-monitor");
   }
+
+  static {
+    ApplicationUtilities.loadLibrary();
+  }
 }

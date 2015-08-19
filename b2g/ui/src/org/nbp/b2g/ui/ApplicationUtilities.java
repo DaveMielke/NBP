@@ -94,6 +94,10 @@ public abstract class ApplicationUtilities {
     message((double)index, (double)count);
   }
 
+  public static void loadLibrary () {
+    System.loadLibrary("b2g_ui");
+  }
+
   private ApplicationUtilities () {
   }
 }

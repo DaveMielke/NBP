@@ -24,4 +24,8 @@ public class KeyboardMonitor extends EventMonitor {
   public KeyboardMonitor () {
     super("keyboard-monitor");
   }
+
+  static {
+    ApplicationUtilities.loadLibrary();
+  }
 }

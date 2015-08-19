@@ -49,6 +49,6 @@ public abstract class UInputDevice {
   }
 
   static {
-    System.loadLibrary("UserInterface");
+    ApplicationUtilities.loadLibrary();
   }
 }

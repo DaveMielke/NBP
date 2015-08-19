@@ -29,4 +29,8 @@ public class TouchDevice extends GestureDevice {
   public TouchDevice () {
     super();
   }
+
+  static {
+    ApplicationUtilities.loadLibrary();
+  }
 }

@@ -49,4 +49,8 @@ public class KeyboardDevice extends UInputDevice implements KeyboardInjector {
   public KeyboardDevice () {
     super();
   }
+
+  static {
+    ApplicationUtilities.loadLibrary();
+  }
 }
