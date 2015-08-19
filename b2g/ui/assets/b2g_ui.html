@@ -390,7 +390,7 @@ ul.auto-toc {
 </li>
 <li><a class="reference internal" href="#braille" id="id42">Braille</a><ul>
 <li><a class="reference internal" href="#the-on-screen-monitor" id="id43">The On-screen Monitor</a></li>
-<li><a class="reference internal" href="#adjusting-the-dot-firmness" id="id44">Adjusting the dot firmness</a></li>
+<li><a class="reference internal" href="#adjusting-the-dot-firmness" id="id44">Adjusting the Dot Firmness</a></li>
 <li><a class="reference internal" href="#disabling-the-display" id="id45">Disabling the Display</a></li>
 </ul>
 </li>
@@ -682,23 +682,22 @@ automatically resets the input mode to Text.</p>
 <p>In this input mode, any character that has a defined braille representation
 (see <a class="reference internal" href="#braille-character-map">Braille Character Map</a>) can be directly typed by pressing the
 corresponding keys as a single combination. There are two exceptions to this
-simple (and obvious) rule. If the defined representation of a character is
-either just dot 7 or just dot 8 then it can't be directly typed because those
-keys are, respectively, Backspace and Enter.</p>
+simple (and obvious) rule.</p>
+<p>If the defined representation of a character is either just dot 7 or just dot 8
+then it can't be typed by pressing the corresponding key because those keys
+are, respectively, Backspace and Enter. Press Space+Dot7 for just dot 7, and
+press Space+Dot8 for just dot 8.</p>
 </div>
 <div class="section" id="directly-typing-unicode-braille-characters">
 <h5><a class="toc-backref" href="#id21">Directly Typing Unicode Braille Characters</a></h5>
 <p>Space+Dot8+i (dots 24) sets the input mode to Braille.</p>
 <p>In this input mode, the characters that render in text as actual braille cells
 (see <a class="reference internal" href="#unicode-braille-characters">Unicode Braille Characters</a>) can be directly typed by pressing the
-corresponding keys as a single combination. Two of these characters can't be
-directly typed - just dot 7 (because it's the Backspace key), and just dot 8
-(because it's the Enter key). Both of these can still be indirectly typed (see
-<a class="reference internal" href="#indirectly-typing-any-character">Indirectly Typing Any Character</a>):</p>
-<ul class="simple">
-<li>The Unicode value for a braille cell containing just dot 7 is U+2840.</li>
-<li>The Unicode value for a braille cell containing just dot 8 is U+2880.</li>
-</ul>
+corresponding keys as a single combination.</p>
+<p>Two of these characters can't be typed by pressing the corresponding keys -
+just dot 7 (because it's the Backspace key), and just dot 8 (because it's the
+Enter key). Press Space+Dot7 for just dot 7, and press Space+Dot8 for just dot
+8.</p>
 <p>These characters have several uses, including (but not limited to):</p>
 <ul class="simple">
 <li>Actual braille characters can be written into text documents.</li>
@@ -1043,7 +1042,7 @@ pressing Forward+VolumeDown disables it.</p>
 from <a class="reference internal" href="#the-settings-screen">The Settings Screen</a>. It shows both the braille cells and the text.</p>
 </div>
 <div class="section" id="adjusting-the-dot-firmness">
-<h5><a class="toc-backref" href="#id44">Adjusting the dot firmness</a></h5>
+<h5><a class="toc-backref" href="#id44">Adjusting the Dot Firmness</a></h5>
 <p>The firmness of the braille dots can be adjusted from <a class="reference internal" href="#the-settings-screen">The Settings Screen</a>.</p>
 </div>
 <div class="section" id="disabling-the-display">
@@ -1275,7 +1274,7 @@ accident prevention scheme).</p>
 battery's voltage and temperature.</li>
 <li>If a component of the B2G User Interface crashes, an email containing the Java
 backtrace of that crash is sent to the B2G developers for
-analysis. This email doesn't contain any sensitive information.</li>
+analysis. The email doesn't contain any sensitive information.</li>
 </ul>
 </div>
 </div>
@@ -1593,10 +1592,10 @@ find&gt;
 </pre>
 <p>Type the sequence of characters that you're looking for, editing them as
 needed, and then press Enter.</p>
-<p>A forward search through the text is performed, starting with the second
-character that's currently on the braille display. If the characters are found
-then the braille display is repositioned such that they begin in its leftmost
-character.</p>
+<p>A forward, case insensitive search through the text is performed, starting with
+the second character that's currently on the braille display. If the characters
+are found then the braille display is repositioned such that they begin at its
+leftmost character.</p>
 </div>
 <div class="section" id="legacy-navigation">
 <h3><a class="toc-backref" href="#id66">Legacy Navigation</a></h3>
@@ -2095,10 +2094,10 @@ monitor.</dd>
 <td>paste the clipboard into the text</td>
 </tr>
 <tr><td>Space+Dot7</td>
-<td>the keyboard Dot7 key</td>
+<td>type the character represented by just dot 7</td>
 </tr>
 <tr><td>Space+Dot8</td>
-<td>the keyboard Dot8 key</td>
+<td>type the character represented by just dot 8</td>
 </tr>
 <tr><td>Space+Dots136#u</td>
 <td>type any character by its Unicode value</td>

@@ -75,7 +75,7 @@ public class GuideActivity extends ProgrammaticActivity {
       protected void onPostExecute (CharSequence result) {
         view.setText(result);
       }
-    }.execute("guide", TEXT_EXTENSION);
+    }.execute("b2g_ui", TEXT_EXTENSION);
 
     return view;
   }

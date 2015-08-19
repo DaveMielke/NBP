@@ -1,4 +1,4 @@
-DOCUMENT_NAMES = b2g-ui-guide
+DOCUMENT_NAMES = b2g_ui
 
 all: html txt
 
