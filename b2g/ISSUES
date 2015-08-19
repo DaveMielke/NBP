@@ -1,12 +1,12 @@
 Verify:
   USB Ethernet adapter
   SIM indicators
-  battery indicators
   braille enable/disable
   braille monitor
 
 Document
   user guide
+  speech volume dependent on system volume
   locale-based character table autodetection
   override files
   recent apps has two entries per app
