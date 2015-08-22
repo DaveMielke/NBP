@@ -58,16 +58,20 @@ public class BrailleDevice {
 
   public final void restoreControls () {
     Control[] controls = new Control[] {
-      Controls.getBrailleFirmnessControl(),
-      Controls.getBrailleMonitorControl()
+      Controls.getBrailleEnabledControl(),
+      Controls.getBrailleFirmnessControl()
     };
 
     Controls.forEachControl(controls, Controls.restoreCurrentValue);
   }
 
+  private final boolean isOpen () {
+    return brailleCells != null;
+  }
+
   public final boolean open () {
     synchronized (this) {
-      if (brailleCells != null) return true;
+      if (isOpen()) return true;
 
       if (openDevice()) {
         int cellCount = getCellCount();
@@ -85,7 +89,7 @@ public class BrailleDevice {
           writePending = false;
 
           restoreControls();
-          return true;
+          return writeCells();
         }
 
         closeDevice();
@@ -103,7 +107,7 @@ public class BrailleDevice {
         writePending = false;
         brailleText = null;
 
-        if (brailleCells != null) {
+        if (isOpen()) {
           brailleCells = null;
           closeDevice();
         }
@@ -112,7 +116,7 @@ public class BrailleDevice {
   }
 
   public final boolean enable () {
-    if (open()) {
+    if (isOpen()) {
       if (enableDevice()) {
         return true;
       }
@@ -122,7 +126,7 @@ public class BrailleDevice {
   }
 
   public final boolean disable () {
-    if (open()) {
+    if (isOpen()) {
       if (disableDevice()) {
         return true;
       }
@@ -140,7 +144,7 @@ public class BrailleDevice {
 
   public final boolean setFirmness (int firmness) {
     synchronized (this) {
-      if (open()) {
+      if (isOpen()) {
         if (setCellFirmness(firmness)) {
           return true;
         }
@@ -203,7 +207,7 @@ public class BrailleDevice {
 
   public final boolean refreshCells () {
     synchronized (this) {
-      if (brailleCells == null) return true;
+      if (!isOpen()) return true;
       return writeCells();
     }
   }
