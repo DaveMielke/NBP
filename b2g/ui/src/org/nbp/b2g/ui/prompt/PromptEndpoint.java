@@ -2,8 +2,6 @@ package org.nbp.b2g.ui.prompt;
 import org.nbp.b2g.ui.*;
 
 public abstract class PromptEndpoint extends Endpoint {
-  public abstract boolean handleResponse (String response);
-
   private final StringBuilder buffer = new StringBuilder();
   private final int start;
 
@@ -51,7 +49,7 @@ public abstract class PromptEndpoint extends Endpoint {
     return write();
   }
 
-  public final String getResponse () {
+  protected final String getResponse () {
     return buffer.toString().substring(start);
   }
 
@@ -67,11 +65,17 @@ public abstract class PromptEndpoint extends Endpoint {
     return true;
   }
 
+  protected abstract boolean handleResponse (String response);
+
+  public final boolean handleResponse () {
+    return handleResponse(getResponse());
+  }
+
   @Override
   public final boolean handleKeyboardKey_enter () {
-    boolean success = handleResponse(getResponse());
+    boolean handled = handleResponse();
     if (!super.handleKeyboardKey_enter()) return false;
-    return success;
+    return handled;
   }
 
   public PromptEndpoint (int prompt, String prefix) {

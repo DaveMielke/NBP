@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 
 public class FindEndpoint extends PromptEndpoint {
   @Override
-  public final boolean handleResponse (String response) {
+  protected final boolean handleResponse (String response) {
     boolean found = false;
 
     if (response.length() > 0) {

@@ -40,7 +40,7 @@ public class UnicodeEndpoint extends PromptEndpoint {
   }
 
   @Override
-  public final boolean handleResponse (String response) {
+  protected final boolean handleResponse (String response) {
     Character character = toCharacter(response);
     if (character == null) return false;
     return Endpoints.host.get().insertText(character);

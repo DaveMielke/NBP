@@ -13,7 +13,7 @@
   "Dot4+Right","|RecentApps|"
   "Dot4+Center","|MenuKey|"
   "Space+Dots123456","|HomeKey|"
-  "Space+Dots124#f","|FindNext|"
+  "Space+Dots124#f","|FindForward|"
   "Space+Dots1245#g","|Guide|"
   "Space+Dots134#m","|MenuKey|"
   "Space+Dots1345#n","|Notifications|"

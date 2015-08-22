@@ -26,7 +26,7 @@
 .. |Editor| replace:: go to the |product name| editor
 .. |End| replace:: the keyboard End key
 .. |Enter| replace:: the keyboard Enter key
-.. |FindNext| replace:: find text within the current screen element (forward search)
+.. |FindForward| replace:: find text within the current screen element (forward search)
 .. |ForceCrash| replace:: force a |user interface| crash
 .. |Guide| replace:: go to the |product name| user guide
 .. |Home| replace:: the keyboard Home key
