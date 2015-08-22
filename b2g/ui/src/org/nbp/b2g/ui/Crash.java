@@ -113,7 +113,7 @@ public abstract class Crash {
   }
 
   public static void handleCrash (Throwable problem, String component, String data) {
-    ApplicationUtilities.alert();
+    Devices.tone.get().alert();
     logCrash(problem, component, data);
 
     if (ApplicationSettings.DEVELOPER_ENABLED) {

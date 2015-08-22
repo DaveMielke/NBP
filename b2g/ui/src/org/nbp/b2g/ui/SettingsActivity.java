@@ -128,7 +128,7 @@ public class SettingsActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           if (!control.nextValue()) {
-            ApplicationUtilities.beep();
+            Devices.tone.get().beep();
           }
         }
       }
@@ -144,7 +144,7 @@ public class SettingsActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           if (!control.previousValue()) {
-            ApplicationUtilities.beep();
+            Devices.tone.get().beep();
           }
         }
       }

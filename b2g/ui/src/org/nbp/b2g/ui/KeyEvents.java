@@ -114,7 +114,7 @@ public abstract class KeyEvents {
         }
       }
 
-      if (!performed) ApplicationUtilities.beep();
+      if (!performed) Devices.tone.get().beep();
       return performed;
     } finally {
       activeNavigationKeys = 0;

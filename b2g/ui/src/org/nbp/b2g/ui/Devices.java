@@ -19,6 +19,9 @@ public abstract class Devices {
   public final static LazyInstantiator<SpeechDevice> speech = new
     LazyInstantiator<SpeechDevice>(SpeechDevice.class);
 
+  public final static LazyInstantiator<ToneDevice> tone = new
+    LazyInstantiator<ToneDevice>(ToneDevice.class);
+
   private Devices () {
   }
 }

@@ -6,9 +6,6 @@ import android.os.SystemClock;
 
 import android.view.ViewConfiguration;
 
-import android.media.ToneGenerator;
-import android.media.AudioManager;
-
 import java.io.File;
 
 public abstract class ApplicationUtilities {
@@ -46,19 +43,6 @@ public abstract class ApplicationUtilities {
 
   public static long getGlobalActionTimeout () {
     return ViewConfiguration.getGlobalActionKeyTimeout();
-  }
-
-  private final static ToneGenerator toneGenerator = new ToneGenerator(
-    AudioManager.STREAM_NOTIFICATION,
-    ApplicationParameters.TONE_VOLUME
-  );
-
-  public static void beep () {
-    toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, ApplicationParameters.BEEP_DURATION);
-  }
-
-  public static void alert () {
-    toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, ApplicationParameters.ALERT_DURATION);
   }
 
   public static void message (String text) {
