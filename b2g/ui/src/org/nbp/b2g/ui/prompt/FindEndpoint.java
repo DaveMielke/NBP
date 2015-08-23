@@ -58,9 +58,16 @@ public class FindEndpoint extends PromptEndpoint {
     MatchFinder matchFinder = new MatchFinder() {
       @Override
       public boolean findMatch (Matcher matcher, int start, int end) {
+        int original = start;
+
         while (--start >= 0) {
           matcher.region(start, end);
-          if (matcher.lookingAt()) return true;
+
+          if (matcher.lookingAt()) {
+            if (matcher.start(1) != original) {
+              return true;
+            }
+          }
         }
 
         return false;
