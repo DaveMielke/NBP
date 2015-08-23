@@ -44,7 +44,7 @@ public abstract class Endpoints {
   private final static LazyInstantiator<PopupEndpoint> popup = new
     LazyInstantiator<PopupEndpoint>(PopupEndpoint.class);
 
-  private final static LazyInstantiator<FindEndpoint> find = new
+  public final static LazyInstantiator<FindEndpoint> find = new
     LazyInstantiator<FindEndpoint>(FindEndpoint.class);
 
   private final static LazyInstantiator<UnicodeEndpoint> unicode = new

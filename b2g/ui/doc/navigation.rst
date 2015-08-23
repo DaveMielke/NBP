@@ -328,12 +328,20 @@ current screen element, press Space+f (dots 124). This brings up a prompt (see
   find>
 
 Type the sequence of characters that you're looking for, editing them as
-needed, and then press Enter.
+needed, and then press Enter. A forward search through the text is performed,
+starting with the second character that's currently on the braille display. If
+the characters are found then the braille display is repositioned such that
+they begin at its leftmost character.
 
-A forward, case insensitive search through the text is performed, starting with
-the second character that's currently on the braille display. If the characters
-are found then the braille display is repositioned such that they begin at its
-leftmost character.
+The following convenience key combinations can also be used:
+
+Space+Dot8+f (dots 124):
+  Search forward through the text for the next match.
+
+Space+Dot7+f (dots 124):
+  Search backward through the text for the previous match.
+
+The search isn't case sensitive.
 
 Legacy Navigation
 -----------------

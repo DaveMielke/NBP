@@ -27,6 +27,8 @@
 .. |End| replace:: the keyboard End key
 .. |Enter| replace:: the keyboard Enter key
 .. |FindForward| replace:: find text within the current screen element (forward search)
+.. |FindNext| replace:: find the next occurrence of the same text within the current screen element
+.. |FindPrevious| replace:: find the previous occurrence of the same text within the current screen element
 .. |ForceCrash| replace:: force a |user interface| crash
 .. |Guide| replace:: go to the |product name| user guide
 .. |Home| replace:: the keyboard Home key
