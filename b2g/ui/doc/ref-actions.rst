@@ -21,8 +21,8 @@
 .. |DescribeBuild| replace:: show details that identify the build
 .. |DescribeCharacter| replace:: show the description of a specific character
 .. |DescribeIndicators| replace:: show important status indicators
-.. |DeveloperOff| replace:: disable developer actions
-.. |DeveloperOn| replace:: enable developer actions
+.. |DeveloperOff| replace:: disable developer mode
+.. |DeveloperOn| replace:: enable developer mode
 .. |Editor| replace:: go to the |product name| editor
 .. |End| replace:: the keyboard End key
 .. |Enter| replace:: the keyboard Enter key

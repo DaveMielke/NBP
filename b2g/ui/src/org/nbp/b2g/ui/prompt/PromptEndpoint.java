@@ -67,7 +67,7 @@ public abstract class PromptEndpoint extends Endpoint {
 
   protected abstract boolean handleResponse (String response);
 
-  public final boolean handleResponse () {
+  protected final boolean handleResponse () {
     return handleResponse(getResponse());
   }
 
