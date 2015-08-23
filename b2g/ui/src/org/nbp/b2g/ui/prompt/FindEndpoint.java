@@ -94,7 +94,7 @@ public class FindEndpoint extends PromptEndpoint {
 
     if (from < to) {
       if (words[from].isEmpty()) {
-        sb.append("\\s");
+        sb.append("(?:\\A|\\s)");
         from += 1;
       }
     }
@@ -117,7 +117,7 @@ public class FindEndpoint extends PromptEndpoint {
       sb.append("\\E");
     }
 
-    if (to < words.length) sb.append("\\s");
+    if (to < words.length) sb.append("(?:\\s|\\z)");
     sb.append(')');
 
     occurrencePattern = Pattern.compile(sb.toString());
