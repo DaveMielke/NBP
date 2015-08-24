@@ -52,11 +52,13 @@ public class GuideActivity extends ProgrammaticActivity {
 
         publishProgress("formatting document");
         Thread.yield();
-        CharSequence text = document;
+        CharSequence text;
 
         if (extension.equals(HTML_EXTENSION)) {
           HtmlSpanner htmlSpanner = new HtmlSpanner();
           text = htmlSpanner.fromHtml(document);
+        } else {
+          text = document.replaceFirst("\\s*$", "");
         }
 
         publishProgress("rendering document");

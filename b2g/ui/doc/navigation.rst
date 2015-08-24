@@ -348,8 +348,8 @@ force it to match an entire word.
 
 You can edit the word(s) that you're entering. Press Enter when you're done.
 
-A forward search through the text is performed. If the words are found then the
-braille display is repositioned such that they begin at its leftmost character.
+A forward search through the text is performed. If a match is found then the
+braille display is repositioned to where it starts.
 
 The following convenience key combinations have also been defined:
 
