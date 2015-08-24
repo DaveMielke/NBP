@@ -276,16 +276,39 @@ public abstract class ScreenUtilities {
   }
 
   public static boolean isSignificant (AccessibilityNodeInfo node) {
-    if (node.getText() != null) {
+    boolean isDescribed = false;
+
+    {
+      CharSequence description = node.getContentDescription();
+
+      if (description != null) {
+        final int length = description.length();
+
+        if (length > 0) {
+          int index = 0;
+
+          while (Character.isWhitespace(description.charAt(index))) {
+            if (++index == length) {
+              logNavigation(node, "node has a blank description");
+              return false;
+            }
+          }
+
+          isDescribed = true;
+        }
+      }
+    }
+
+    if (isDescribed) {
+      logNavigation(node, "node is described");
+    } else if (node.getText() != null) {
       logNavigation(node, "node has text");
     } else if (isEditable(node)) {
       logNavigation(node, "node is editable");
-    } else if (node.getContentDescription() != null) {
-      logNavigation(node, "node has description");
     } else if (node.isCheckable()) {
       logNavigation(node, "node is checkable");
     } else if (isBar(node)) {
-      logNavigation(node, "node is bar");
+      logNavigation(node, "node is a bar");
     } else if (node.isFocusable() && !isContainer(node)) {
       logNavigation(node, "node is input focusable");
     } else {
