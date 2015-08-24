@@ -24,6 +24,7 @@ public class FindEndpoint extends PromptEndpoint {
         int start = endpoint.getBrailleStart();
         String text = endpoint.getText().toString();
         Matcher matcher = searchPattern.matcher(text);
+        matcher.useAnchoringBounds(false);
 
         if (searcher.search(matcher, start, text.length())) {
           endpoint.setLineIndent(endpoint.setLine(matcher.start(1)));
@@ -63,7 +64,7 @@ public class FindEndpoint extends PromptEndpoint {
         matcher.region(start, end);
 
         if (matcher.lookingAt()) {
-          if (matcher.start(1) != original) {
+          if (matcher.start(1) < original) {
             return true;
           }
         }
@@ -77,25 +78,25 @@ public class FindEndpoint extends PromptEndpoint {
     return findOccurrence(backwardSearch);
   }
 
-  private final void setSearchPattern (String response) {
+  private final void setSearchPattern (String string) {
     StringBuilder sb = new StringBuilder();
 
-    String[] words = response.split("\\s+", -1);
+    String[] words = string.split("\\s+", -1);
     String separator = null;
 
     int from = 0;
     int to = words.length;
 
-    if (to > from) {
-      if (!words[--to].isEmpty()) {
-        to += 1;
+    if (from < to) {
+      if (words[from].isEmpty()) {
+        sb.append("(?:^|\\s)\\s*+");
+        from += 1;
       }
     }
 
-    if (from < to) {
-      if (words[from].isEmpty()) {
-        sb.append("(?:\\A|\\s)");
-        from += 1;
+    if (to > from) {
+      if (!words[--to].isEmpty()) {
+        to += 1;
       }
     }
 
@@ -117,10 +118,13 @@ public class FindEndpoint extends PromptEndpoint {
       sb.append("\\E");
     }
 
-    if (to < words.length) sb.append("(?:\\s|\\z)");
+    if (to < words.length) sb.append("(?:\\s|$)");
     sb.append(')');
-
     searchPattern = Pattern.compile(sb.toString());
+
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG, "search pattern: " + searchPattern.pattern());
+    }
   }
 
   @Override
