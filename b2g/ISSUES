@@ -5,7 +5,6 @@ Verify:
   braille monitor
 
 Document
-  user guide
   speech volume dependent on system volume
   locale-based character table autodetection
   override files
