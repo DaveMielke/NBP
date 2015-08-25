@@ -21,7 +21,7 @@ public class GuideActivity extends ProgrammaticActivity {
     final String TEXT_EXTENSION = "txt";
     final String HTML_EXTENSION = "html";
 
-    new AsyncTask<String, String, CharSequence>() {
+    new AsyncTask<String, Integer, CharSequence>() {
       @Override
       protected void onPreExecute () {
       }
@@ -43,14 +43,14 @@ public class GuideActivity extends ProgrammaticActivity {
 
       @Override
       protected CharSequence doInBackground (String... names) {
-        publishProgress("loading document");
+        publishProgress(R.string.message_loading_document);
         Thread.yield();
 
         String name = names[0];
         String extension = names[1];
         String document = loadDocument((name + '.' + extension));
 
-        publishProgress("formatting document");
+        publishProgress(R.string.message_formatting_document);
         Thread.yield();
         CharSequence text;
 
@@ -61,14 +61,14 @@ public class GuideActivity extends ProgrammaticActivity {
           text = document.replaceFirst("\\s*$", "");
         }
 
-        publishProgress("rendering document");
+        publishProgress(R.string.message_rendering_document);
         Thread.yield();
         return text;
       }
 
       @Override
-      protected void onProgressUpdate (String... values) {
-        String report = values[0];
+      protected void onProgressUpdate (Integer... values) {
+        String report = ApplicationContext.getString(values[0]);
         view.setText(report);
         Log.v(LOG_TAG, report);
       }
