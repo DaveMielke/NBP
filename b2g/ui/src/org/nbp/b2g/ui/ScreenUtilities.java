@@ -18,8 +18,12 @@ public abstract class ScreenUtilities {
     sb.append(getClassName(node));
 
     if ((characters = node.getText()) != null) {
+      String text = characters.toString();
+      int index = text.indexOf('\n');
+      if (index >= 0) text = text.substring(0, index);
+
       sb.append(" \"");
-      sb.append(characters);
+      sb.append(text);
       sb.append('"');
     }
 

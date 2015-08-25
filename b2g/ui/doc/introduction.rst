@@ -550,7 +550,7 @@ Reading This Document
 ~~~~~~~~~~~~~~~~~~~~~
 
 A copy of this document is available in plain text on the |product name|.
-Press Space+g (dots 1245) to access it.
+Press Space+h (dots 125) to access it.
 See `Finding Text within the Current Screen Element`_ for tips on how to find
 your way around within it.
 
