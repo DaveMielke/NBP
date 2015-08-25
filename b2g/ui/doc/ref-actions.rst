@@ -30,7 +30,7 @@
 .. |FindNext| replace:: find the next occurrence of the same text within the current screen element
 .. |FindPrevious| replace:: find the previous occurrence of the same text within the current screen element
 .. |ForceCrash| replace:: force a |user interface| crash
-.. |Guide| replace:: go to the |product name| user guide
+.. |Help| replace:: go to the document for the |user interface|
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
 .. |InputModeBraille| replace:: set the input mode to braille

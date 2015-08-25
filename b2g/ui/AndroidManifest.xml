@@ -92,8 +92,8 @@
     </activity>
 
     <activity
-        android:name=".GuideActivity"
-        android:label="@string/guide_activity_label"
+        android:name=".HelpActivity"
+        android:label="@string/help_activity_label"
         >
     </activity>
 

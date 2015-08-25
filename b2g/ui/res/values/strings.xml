@@ -11,7 +11,7 @@
 
   <string name="clock_activity_label">B2G Digital Clock</string>
 
-  <string name="guide_activity_label">B2G User Interface Guide</string>
+  <string name="help_activity_label">B2G User Interface Document</string>
 
   <string name="settings_activity_label">B2G User Interface Settings</string>
 

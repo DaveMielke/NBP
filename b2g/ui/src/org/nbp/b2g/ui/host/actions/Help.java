@@ -2,13 +2,13 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-public class Guide extends InternalActivityAction {
+public class Help extends InternalActivityAction {
   @Override
   protected Class getActivityClass () {
-    return GuideActivity.class;
+    return HelpActivity.class;
   }
 
-  public Guide (Endpoint endpoint) {
+  public Help (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

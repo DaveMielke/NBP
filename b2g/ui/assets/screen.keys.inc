@@ -23,7 +23,7 @@ bind Space+Dots124#f FindForward
 bind Space+Dot7+Dots124#f FindPrevious
 bind Space+Dot8+Dots124#f FindNext
 
-bind Space+Dots1245#g Guide
+bind Space+Dots125#h Help
 bind Space+Dots135#o Settings
 bind Space+Dots1234#p PowerOff
 bind Space+Dots2345#t Clock

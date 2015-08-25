@@ -11,10 +11,10 @@ import android.widget.TextView;
 import net.nightwhistler.htmlspanner.HtmlSpanner;
 import android.text.util.Linkify;
 
-public class GuideActivity extends ProgrammaticActivity {
-  private final static String LOG_TAG = GuideActivity.class.getName();
+public class HelpActivity extends ProgrammaticActivity {
+  private final static String LOG_TAG = HelpActivity.class.getName();
 
-  private View createGuideView () {
+  private View createDocumentView () {
     final TextView view = createTextView();
     view.setAutoLinkMask(Linkify.WEB_URLS);
 
@@ -105,7 +105,7 @@ public class GuideActivity extends ProgrammaticActivity {
       ApplicationParameters.SCREEN_LEFT_OFFSET
     );
 
-    view.addView(createGuideView());
+    view.addView(createDocumentView());
     return view;
   }
 

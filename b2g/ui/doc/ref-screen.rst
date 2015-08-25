@@ -20,7 +20,7 @@
   "Space+Dots124#f","|FindForward|"
   "Space+Dot7+Dots124#f","|FindPrevious|"
   "Space+Dot8+Dots124#f","|FindNext|"
-  "Space+Dots1245#g","|Guide|"
+  "Space+Dots125#h","|Help|"
   "Space+Dots135#o","|Settings|"
   "Space+Dots1234#p","|PowerOff|"
   "Space+Dots2345#t","|Clock|"
