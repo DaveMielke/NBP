@@ -58,7 +58,16 @@ public class GuideActivity extends ProgrammaticActivity {
           HtmlSpanner htmlSpanner = new HtmlSpanner();
           text = htmlSpanner.fromHtml(document);
         } else {
-          text = document.replaceFirst("\\s*$", "");
+          int end = document.length();
+
+          while (end > 0) {
+            if (!Character.isWhitespace(document.charAt(--end))) {
+              end += 1;
+              break;
+            }
+          }
+
+          text = document.subSequence(0, end);
         }
 
         publishProgress(R.string.message_rendering_document);
