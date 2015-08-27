@@ -7,13 +7,16 @@ public class SetSelectionEnd extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      if (endpoint.isInputArea()) {
-        int end = endpoint.getTextOffset(cursorKey);
+      int end = endpoint.getTextOffset(cursorKey);
 
-        if (endpoint.isCharacterOffset(end)) {
+      if (endpoint.isCharacterOffset(end)) {
+        if (endpoint.isInputArea()) {
           int start = endpoint.getSelectionStart();
           if (!endpoint.isSelected(start) || (start > end)) start = end;
           if (endpoint.setSelection(start, end+1)) return true;
+        } else if (endpoint.setCopyEnd(end)) {
+          ApplicationUtilities.message(R.string.CopyToClipboard_action_confirmation);
+          return true;
         }
       }
     }

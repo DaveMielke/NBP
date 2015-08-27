@@ -236,9 +236,29 @@ public abstract class Endpoint {
     return textOffset - lineStart;
   }
 
+  private final static int NO_COPY = -1;
+  private int copyStart = NO_COPY;
+
+  public boolean setCopyStart (int offset) {
+    if (offset < 0) return false;
+    if (offset >= getTextLength()) return false;
+
+    copyStart = offset;
+    return true;
+  }
+
+  public boolean setCopyEnd (int offset) {
+    if (copyStart == NO_COPY) return false;
+    if (offset < copyStart) return false;
+    if (offset >= getTextLength()) return false;
+
+    return Clipboard.putText(getText().subSequence(copyStart, offset+1));
+  }
+
   protected void setText (CharSequence text, boolean stay) {
     textString = text;
     softEdges = false;
+    copyStart = NO_COPY;
 
     {
       int start = 0;
