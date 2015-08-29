@@ -296,6 +296,9 @@ To copy part of the text to the clipboard when not within an input area:
    * The first character hasn't been set.
    * The last character is before the first character.
 
+Note that these same steps work somewhat differently within an input area (see
+`Selecting Text`_).
+
 To cut text to the clipboard, press Space+Dot8+x (dots 1346). This can only be
 done within an input area. If text hasn't been selected then all of the text is
 cut. If text has been selected then just that text is cut.

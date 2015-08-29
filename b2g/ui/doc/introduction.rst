@@ -609,17 +609,25 @@ it is to press VolumeDown and VolumeUp together.
 * To speak the current line, press Backward+VolumeUp. Another (legacy) way to
   do so is to press Space+c (dots 14).
 
-* To adjust the volume: press Dot1+VolumeDown for **softer**, and Dot1+VolumeUp
-  for **louder**.
+Adjusting the Volume:
+  * Press Dot1+VolumeDown for **softer**.
+  * Press Dot1+VolumeUp for **louder**.
 
-* To adjust the rate: press Dot2+VolumeDown for **slower**, and Dot2+VolumeUp
-  for **faster**.
+  The speech volume is set relative to the system volume. If, therefore, the
+  speech volume is set as high as it'll go but still sounds too soft then try
+  increasing the system volume (by pressing VolumeUp by itself).
 
-* To adjust the pitch: press Dot3+VolumeDown for **lower**, and Dot3+VolumeUp
-  for **higher**.
+Adjusting the Rate:
+  * Press Dot2+VolumeDown for **slower**.
+  * Press Dot2+VolumeUp for **faster**.
 
-* To adjust the balance: press Dot4+VolumeDown for **more left**, and
-  Dot4+VolumeUp for **more right**.
+Adjusting the Pitch:
+  * Press Dot3+VolumeDown for **lower**.
+  * Press Dot3+VolumeUp for **higher**.
+
+Adjusting the Balance:
+  * Press Dot4+VolumeDown for **more left**.
+  * Press Dot4+VolumeUp for **more right**.
 
 Sleep Talk Mode
 ```````````````
