@@ -378,6 +378,30 @@ Space+Dot8+f (dots 124):
 Space+Dot7+f (dots 124):
   Search backward through the text for the previous match.
 
+Following a Reference
+~~~~~~~~~~~~~~~~~~~~~
+
+Since the ``find`` prompt is an input area, the current clipboard content
+can be pasted into it. This capability makes it fairly easy to follow a
+reference (``see``, ``see also``, etc).
+
+The first step is to copy the reference to the clipboard:
+
+1) Move to where the start of the reference is visible.
+2) Hold Backward while pressing the cursor routing key behind its first character.
+3) Move to where the end of the reference is visible.
+4) Hold Forward while pressing the cursor routing key behind its last character.
+
+The second step is to search through the text for a match:
+
+5) Press Space+f (dots 124) to bring up the ``find`` prompt.
+6) Press Space+Dot8+v (dots 1236) to paste the reference into the response.
+7) Press Enter (dot 8) to search forward for the reference.
+
+The next match may, of course, be another reference rather than the referenced
+header. You may, therefore, need to continue searching further forward with
+Space+Dot8+f (dots 124), or to search backward with Space+Dot7+f (dots 124).
+
 Legacy Navigation
 -----------------
 
