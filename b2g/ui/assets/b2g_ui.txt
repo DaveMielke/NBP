@@ -304,6 +304,10 @@ To Other B2G Applications
 
    Describing how any of these applications work is, of course, beyond the scope of this document.
 
+Reading This Document
+
+   A copy of this document is available in plain text on the B2G. Press Space+h (dots 125) to access it. See Finding Text within the Current Screen Element for tips on how to find your way around within it.
+
 Checking the Time
 
    You can access a braille-friendly clock by pressing Space+t (dots 2345). The date and time are displayed on the first line using the conventional international format. The second line contains the abbreviated week day and month names, and the third line identifies the time zone. For example:
@@ -333,10 +337,28 @@ Speech
    Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables it, and pressing Space+VolumeDown disables it. Another (legacy) way to disable it is to press VolumeDown and VolumeUp together.
      * To interrupt what's currently being spoken, press Backward+VolumeDown.
      * To speak the current line, press Backward+VolumeUp. Another (legacy) way to do so is to press Space+c (dots 14).
-     * To adjust the volume: press Dot1+VolumeDown for softer, and Dot1+VolumeUp for louder.
-     * To adjust the rate: press Dot2+VolumeDown for slower, and Dot2+VolumeUp for faster.
-     * To adjust the pitch: press Dot3+VolumeDown for lower, and Dot3+VolumeUp for higher.
-     * To adjust the balance: press Dot4+VolumeDown for more left, and Dot4+VolumeUp for more right.
+
+   Adjusting the Volume:
+
+          + Press Dot1+VolumeDown for softer.
+          + Press Dot1+VolumeUp for louder.
+
+          The speech volume is set relative to the system volume. If, therefore, the speech volume is set as high as it'll go but still sounds too soft then try increasing the system volume (by pressing VolumeUp by itself).
+
+   Adjusting the Rate:
+
+          + Press Dot2+VolumeDown for slower.
+          + Press Dot2+VolumeUp for faster.
+
+   Adjusting the Pitch:
+
+          + Press Dot3+VolumeDown for lower.
+          + Press Dot3+VolumeUp for higher.
+
+   Adjusting the Balance:
+
+          + Press Dot4+VolumeDown for more left.
+          + Press Dot4+VolumeUp for more right.
 
 Sleep Talk Mode
 
@@ -579,6 +601,16 @@ Using the Clipboard
 
    To copy text to the clipboard, press Space+Dot8+c (dots 14). If this is done when not within an input area, or when within an input area with no selected text, then all of the text is copied. If this is done within an input area with selected text then just that text is copied.
 
+   To copy part of the text to the clipboard when not within an input area:
+    1. Move to a place where the first character is visible.
+    2. Hold Backward while pressing the cursor routing key behind the first character.
+    3. Move to a place where the last character is visible.
+    4. Hold Forward while pressing the cursor routing key behind the last character. The text from the first character through the last character (inclusive) will be copied to the clipboard. This step will fail if:
+          + The first character hasn't been set.
+          + The last character is before the first character.
+
+   Note that these same steps work somewhat differently within an input area (see Selecting Text).
+
    To cut text to the clipboard, press Space+Dot8+x (dots 1346). This can only be done within an input area. If text hasn't been selected then all of the text is cut. If text has been selected then just that text is cut.
 
    To paste text from the clipboard, press Space+Dot8+v (dots 1236). This can only be done within an input area. If text hasn't been selected then the pasted text is inserted just to the left of the cursor. If text has been selected then the pasted text replaces the selected text.
@@ -600,14 +632,45 @@ The Directional Keys When on a Slider
 
 Finding Text within the Current Screen Element
 
-   To find a sequence of characters within the text that's associated with the current screen element, press Space+f (dots 124). This brings up a prompt (see Prompts) with the following header:
+   To find a sequence of words within the text that's associated with the current screen element, press Space+f (dots 124). This brings up a prompt (see Prompts) with the following header:
 find>
 
-   Type the sequence of characters that you're looking for, editing them as needed, and then press Enter.
+   Enter one or more words (sequences of non-space characters) separated by spaces. The same words must occur together, in the same order, within the text. You don't need to know how many spaces are between each pair of words within the text because however many spaces you enter will match any number of spaces within the text. You also don't need to know which letters are in uppercase and which are in lowercase because the search isn't case sensitive.
 
-   A forward, case insensitive search through the text is performed, starting with the second character that's currently on the braille display. If the characters are found then the braille display is repositioned such that they begin at its leftmost character.
+   The first word you enter need only match the end of the corresponding word within the text. Likewise, the last word you enter need only match the start of the corresponding word within the text. Enter a leading space to force the first word to match an entire word. Likewise, enter a trailing space to force the last word to match an entire word.
 
-Legacy Navigation
+   These same rules apply if you enter a single word. Since it's both the first and the last word, it need only match part (the start, middle, or end) of a word within the text. Enter a leading space to force it to match to start of a word, a trailing space to force it to match the end of a word, and both to force it to match an entire word.
+
+   You can edit the word(s) that you're entering. Press Enter when you're done.
+
+   A forward search through the text is performed. If a match is found then the braille display is repositioned to where it starts.
+
+   The following convenience key combinations have also been defined:
+
+   Space+Dot8+f (dots 124):
+          Search forward through the text for the next match.
+
+   Space+Dot7+f (dots 124):
+          Search backward through the text for the previous match.
+
+Following a Reference
+
+   Since the find prompt is an input area, the current clipboard content can be pasted into it. This capability makes it fairly easy to follow a reference (see, see also, etc).
+
+   The first step is to copy the reference to the clipboard:
+    1. Move to where the start of the reference is visible.
+    2. Hold Backward while pressing the cursor routing key behind its first character.
+    3. Move to where the end of the reference is visible.
+    4. Hold Forward while pressing the cursor routing key behind its last character.
+
+   The second step is to search through the text for a match:
+    5. Press Space+f (dots 124) to bring up the find prompt.
+    6. Press Space+Dot8+v (dots 1236) to paste the reference into the response.
+    7. Press Enter (dot 8) to search forward for the reference.
+
+   The next match may, of course, be another reference rather than the referenced header. You may, therefore, need to continue searching further forward with Space+Dot8+f (dots 124), or to search backward with Space+Dot7+f (dots 124).
+
+Navigating with Keyboard Keys
 
    Navigation used to be done by using real keys on an actual keyboard. This method can still be used via an external keyboard connected via Bluetooth or USB. The B2G User Interface also supports it by emulating the following keyboard keys:
 
@@ -626,7 +689,14 @@ Legacy Navigation
    Shift+Tab    Dots12
    Tab          Dots45
 
-   What each of these keys does is defined by Android - not by the B2G User Interface. Here's a summary.
+   What each of these keys does is defined by Android - not by the B2G User Interface. Because of this, navigating with these keys isn't fully compatible with B2G User Interface navigation:
+     * Navigating with the Forward and Backward Keys
+     * Navigating with the Directional Keys
+
+   Android keeps track of the current screen element when these keys are used, and B2G User Interface navigation can't override this. So, for each screen:
+     * The first keyboard navigation operation is relative to the current screen element.
+     * Any subsequent keyboard navigation operation is relative to the result of the previous keyboard navigation operation. Intervening B2G User Interface navigation operations won't be considered.
+     * B2G User Interface navigation operations are always relative to the current screen element no matter which type of navigation was previously used.
 
 The Enter Key
 
@@ -848,7 +918,7 @@ Screen Operations
 
    CAPTION: Screen Operations
 
-              Keys                                    Description
+              Keys                                              Description
    Backward+LongPress         go to the start of the previous screen element
    Forward+LongPress          go to the start of the next screen element
    Backward+Space             go to the start of the previous screen element
@@ -860,16 +930,18 @@ Screen Operations
    Dot4+Left                  the Android Back key
    Dot4+Right                 go to the Recent Apps screen
    Dot4+Center                the Android Menu key
-   Space+Dots123456           the Android Home key
-   Space+Dots124#f            find text within the current screen element (forward search)
-   Space+Dots1245#g           go to the B2G user guide
-   Space+Dots134#m            the Android Menu key
    Space+Dots1345#n           go to the Notifications screen
+   Space+Dots123456           the Android Home key
+   Space+Dots1356#z           the Android Back key
+   Space+Dots1235#r           go to the Recent Apps screen
+   Space+Dots134#m            the Android Menu key
+   Space+Dots124#f            find text within the current screen element (forward search)
+   Space+Dot7+Dots124#f       find the previous occurrence of the same text within the current screen element
+   Space+Dot8+Dots124#f       find the next occurrence of the same text within the current screen element
+   Space+Dots125#h            go to the document for the B2G User Interface
    Space+Dots135#o            go to the Settings screen of the B2G User Interface
    Space+Dots1234#p           go to the Power Off screen
-   Space+Dots1235#r           go to the Recent Apps screen
    Space+Dots2345#t           go to the B2G digital clock
-   Space+Dots1356#z           the Android Back key
    Space+Dots1246#ed          go to the B2G editor
    Space+Dots1456#?           go to the current Google Assist app
    Space+Dots234#s,Space      go to the main Settings screen
@@ -923,8 +995,8 @@ Common Actions
    CAPTION: Common Developer Operations
 
                   Keys                                         Description
-   Forward+Backward+Dots1245+LongPress enable developer actions
-   Forward+Backward+Dots1245           disable developer actions
+   Forward+Backward+Dots1245+LongPress enable developer mode
+   Forward+Backward+Dots1245           disable developer mode
    Space+Dots78+Dots136#u              enable the logging of screen updates
    Space+Dots78+Dots136#u+LongPress    disable the logging of screen updates
    Space+Dots78+Dots13#k               enable the logging of keyboard key events
