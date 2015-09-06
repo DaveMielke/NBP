@@ -402,8 +402,8 @@ The next match may, of course, be another reference rather than the referenced
 header. You may, therefore, need to continue searching further forward with
 Space+Dot8+f (dots 124), or to search backward with Space+Dot7+f (dots 124).
 
-Legacy Navigation
------------------
+Navigating with Keyboard Keys
+-----------------------------
 
 Navigation used to be done by using real keys on an actual keyboard. This
 method can still be used via an external keyboard connected via Bluetooth or
@@ -413,7 +413,24 @@ keys:
 .. include:: tbl-keys-keyboard.rst
 
 What each of these keys does is defined by Android - not by the
-|user interface|. Here's a summary.
+|user interface|. Because of this, navigating with these keys isn't fully
+compatible with |user interface| navigation:
+
+* `Navigating with the Forward and Backward Keys`_
+* `Navigating with the Directional Keys`_
+
+Android keeps track of the current screen element when these keys are used, and
+|user interface| navigation can't override this. So, for each screen:
+
+* The first keyboard navigation operation is relative to the current screen
+  element.
+
+* Any subsequent keyboard navigation operation is relative to the result of the
+  previous keyboard navigation operation. Intervening |user interface|
+  navigation operations won't be considered.
+
+* |user interface| navigation operations are always relative to the current
+  screen element no matter which type of navigation was previously used.
 
 .. |describe cursor left navigation| replace::
   move to the nearest screen element that's roughly to the left of the
