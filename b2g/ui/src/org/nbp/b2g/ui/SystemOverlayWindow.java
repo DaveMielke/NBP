@@ -54,8 +54,8 @@ public class SystemOverlayWindow {
       "window size: %dx%d", windowSize.x, windowSize.y
     ));
 
-    windowParameters.gravity = Gravity.TOP;
-    windowParameters.y = windowSize.y;
+    windowParameters.gravity = Gravity.BOTTOM;
+  //windowParameters.y = windowSize.y;
   }
 
   protected final void runOnWindowThread (Runnable runnable) {

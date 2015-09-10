@@ -11,7 +11,7 @@ public class BrailleMonitorWindow extends SystemOverlayWindow {
   private final static String LOG_TAG = BrailleMonitorWindow.class.getName();
 
                                   /* RRGGBB */
-  private final static int COLOR = 0XC00000;
+  private final static int COLOR = 0XFFFFFF;
   private final static float ALPHA = 0.8f;
   private final Typeface BRAILLE_FONT;
 
