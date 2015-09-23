@@ -1,0 +1,62 @@
+#!/bin/bash -p
+###############################################################################
+# BRLTTY - A background process providing access to the console screen (when in
+#          text mode) for a blind person using a refreshable braille display.
+#
+# Copyright (C) 1995-2015 by The BRLTTY Developers.
+#
+# BRLTTY comes with ABSOLUTELY NO WARRANTY.
+#
+# This is free software, placed under the terms of the
+# GNU General Public License, as published by the Free Software
+# Foundation; either version 2 of the License, or (at your option) any
+# later version. Please see the file LICENSE-GPL for details.
+#
+# Web Page: http://mielke.cc/brltty/
+#
+# This software is maintained by Dave Mielke <dave@mielke.cc>.
+###############################################################################
+
+set -e
+cd "$(dirname "${0}")"
+
+cd brltty
+./configure \
+   --host=arm-none-linux-gnueabi \
+   --enable-relocatable-install \
+   --enable-standalone-programs \
+   \
+   --disable-api \
+   --disable-gpm \
+   --disable-iconv \
+   --disable-icu \
+   --disable-x \
+   \
+   --with-braille-driver=bg,-all \
+   --disable-speech-support \
+   --with-screen-driver=lx,-all \
+   \
+   --without-pgmpath-package \
+   --without-service-package \
+   --without-params-package \
+   --without-dynld-package \
+   --without-charset-package \
+   --without-mntpt-package \
+   --without-mntfs-package \
+   --without-kbd-package \
+   --without-pcm-package \
+   --without-midi-package \
+   --without-fm-package \
+   --without-serial-package \
+   --without-usb-package \
+   --without-bluetooth-package \
+   --without-ports-package \
+   \
+   --disable-java-bindings \
+   --disable-ocaml-bindings \
+   --disable-python-bindings \
+   --disable-tcl-bindings \
+   \
+   --quiet \
+   "${@}"
+exit "${?}"
