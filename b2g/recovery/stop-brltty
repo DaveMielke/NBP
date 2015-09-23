@@ -1,0 +1,7 @@
+#!/system/bin/sh
+
+set -e
+cd "$(dirname "${0}")"
+
+bin/brltty -f etc/brltty.conf -C -L var/log.stop "${@}"
+exit 0
