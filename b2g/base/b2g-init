@@ -103,6 +103,9 @@ permitEventDevice twl4030_pwrbutton
 # enable keyboard monitoring
 permitEventDevice cp430_keypad
 
+# enable firmware version querying
+chmod 644 /dev/cp430_core
+
 # enable key event injection
 chmod 666 /dev/uinput
 
