@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+cd "$(dirname "${0}")"
+
+cd brltty/Programs
+make -s brltty
+adb push brltty /data/brltty/bin/
+
+exit 0
