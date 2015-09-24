@@ -10,7 +10,7 @@ MAKE_FILE_LOG_TAG;
 
 #define DEVICE_PATH "/dev/cp430_core"
 
-static char firmwareVersion[] = {0, 0};
+static unsigned char firmwareVersion[] = {0, 0};
 
 static void
 getFirmwareVersion (void) {
@@ -27,18 +27,21 @@ getFirmwareVersion (void) {
     } else {
       LOG(WARN, "open error: %s: %s", DEVICE_PATH, strerror(errno));
     }
+
+    LOG(INFO, "firmware version: %u.%u",
+        firmwareVersion[0], firmwareVersion[1]);
   }
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_FirmwareVersion, getMajor, jbyte
+  org_nbp_b2g_ui_FirmwareVersion, getMajor, jint
 ) {
   getFirmwareVersion();
   return firmwareVersion[0];
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_FirmwareVersion, getMinor, jbyte
+  org_nbp_b2g_ui_FirmwareVersion, getMinor, jint
 ) {
   getFirmwareVersion();
   return firmwareVersion[1];
