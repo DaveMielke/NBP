@@ -115,7 +115,13 @@ public class BrailleDevice {
     }
   }
 
+  public static boolean canEnableDisable () {
+    return FirmwareVersion.getMajor() >= 3;
+  }
+
   public final boolean enable () {
+    if (!canEnableDisable()) return true;
+
     if (isOpen()) {
       if (enableDevice()) {
         return true;
@@ -126,6 +132,8 @@ public class BrailleDevice {
   }
 
   public final boolean disable () {
+    if (!canEnableDisable()) return true;
+
     if (isOpen()) {
       if (disableDevice()) {
         return true;
