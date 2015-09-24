@@ -7,6 +7,7 @@ PLATFORM_NAME = armeabi
 JNI_SOURCES := Android.mk
 JNI_SOURCES += utils.h
 JNI_SOURCES += utils.c
+JNI_SOURCES += fwver.c
 JNI_SOURCES += uinput.c
 JNI_SOURCES += keyboard.c
 JNI_SOURCES += kbdmon.c
