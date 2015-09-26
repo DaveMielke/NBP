@@ -1,0 +1,220 @@
+# BRLTTY Preferences File
+
+# save-on-exit: no {no yes}
+save-on-exit no
+
+# show-submenu-sizes: no {no yes}
+show-submenu-sizes no
+
+# show-advanced-submenus: no {no yes}
+show-advanced-submenus no
+
+# show-all-items: no {no yes}
+show-all-items no
+
+# text-style: 8dot {8dot contracted 6dot}
+text-style 8dot
+
+# expand-current-word: yes {no yes}
+expand-current-word yes
+
+# capitalization-mode: sign {none sign dot7}
+capitalization-mode sign
+
+# braille-firmness: medium {minimum low medium high maximum}
+braille-firmness medium
+
+# show-screen-cursor: yes {no yes}
+show-screen-cursor yes
+
+# screen-cursor-style: underline {underline block dot7 dot8}
+screen-cursor-style underline
+
+# blinking-screen-cursor: no {no yes}
+blinking-screen-cursor no
+
+# screen-cursor-visible-time: 40
+screen-cursor-visible-time 40
+
+# screen-cursor-invisible-time: 40
+screen-cursor-invisible-time 40
+
+# show-attributes: no {no yes}
+show-attributes yes
+
+# blinking-attributes: yes {no yes}
+blinking-attributes yes
+
+# attributes-visible-time: 20
+attributes-visible-time 20
+
+# attributes-invisible-time: 60
+attributes-invisible-time 60
+
+# blinking-capitals: no {no yes}
+blinking-capitals no
+
+# capitals-visible-time: 60
+capitals-visible-time 60
+
+# capitals-invisible-time: 20
+capitals-invisible-time 20
+
+# skip-identical-lines: no {no yes}
+skip-identical-lines yes
+
+# skip-blank-braille-windows: no {no yes}
+skip-blank-braille-windows yes
+
+# skip-blank-braille-windows-mode: end {all end rest}
+skip-blank-braille-windows-mode end
+
+# sliding-braille-window: no {no yes}
+sliding-braille-window no
+
+# eager-sliding-braille-window: no {no yes}
+eager-sliding-braille-window no
+
+# braille-window-overlap: 0
+braille-window-overlap 0
+
+# track-screen-pointer: no {no yes}
+track-screen-pointer no
+
+# highlight-braille-window-location: no {no yes}
+highlight-braille-window-location no
+
+# long-press-time: 50
+long-press-time 50
+
+# autorepeat: yes {no yes}
+autorepeat yes
+
+# autorepeat-panning: no {no yes}
+autorepeat-panning no
+
+# autorepeat-interval: 10
+autorepeat-interval 10
+
+# braille-sensitivity: medium {minimum low medium high maximum}
+braille-sensitivity medium
+
+# braille-keyboard-enabled: yes {no yes}
+braille-keyboard-enabled yes
+
+# braille-input-mode: text {text dots}
+braille-input-mode text
+
+# braille-display-orientation: normal {normal rotated}
+braille-display-orientation normal
+
+# alert-tunes: yes {no yes}
+alert-tunes yes
+
+# tune-device: beeper {beeper pcm midi fm}
+tune-device beeper
+
+# pcm-volume: 70
+pcm-volume 70
+
+# midi-volume: 70
+midi-volume 70
+
+# midi-instrument: 0
+midi-instrument 0
+
+# fm-volume: 70
+fm-volume 70
+
+# alert-dots: no {no yes}
+alert-dots no
+
+# alert-messages: no {no yes}
+alert-messages no
+
+# speech-volume: 10
+speech-volume 10
+
+# speech-rate: 10
+speech-rate 10
+
+# speech-pitch: 10
+speech-pitch 10
+
+# speech-punctuation: some {none some all}
+speech-punctuation some
+
+# speech-uppercase-indicator: none {none cap higher}
+speech-uppercase-indicator none
+
+# speech-whitespace-indicator: none {none space}
+speech-whitespace-indicator none
+
+# say-line-mode: immediate {immediate enqueue}
+say-line-mode immediate
+
+# autospeak: no {no yes}
+autospeak no
+
+# autospeak-selected-line: yes {no yes}
+autospeak-selected-line yes
+
+# autospeak-selected-character: yes {no yes}
+autospeak-selected-character yes
+
+# autospeak-inserted-characters: yes {no yes}
+autospeak-inserted-characters yes
+
+# autospeak-deleted-characters: yes {no yes}
+autospeak-deleted-characters yes
+
+# autospeak-replaced-characters: yes {no yes}
+autospeak-replaced-characters yes
+
+# autospeak-completed-words: yes {no yes}
+autospeak-completed-words yes
+
+# show-speech-cursor: no {no yes}
+show-speech-cursor no
+
+# speech-cursor-style: dot8 {underline block dot7 dot8}
+speech-cursor-style dot8
+
+# blinking-speech-cursor: no {no yes}
+blinking-speech-cursor no
+
+# speech-cursor-visible-time: 50
+speech-cursor-visible-time 50
+
+# speech-cursor-invisible-time: 30
+speech-cursor-invisible-time 30
+
+# time-format: 24hour {24hour 12hour}
+time-format 24hour
+
+# time-separator: colon {colon dot}
+time-separator colon
+
+# show-seconds: yes {no yes}
+show-seconds yes
+
+# date-position: no {no before after}
+date-position before
+
+# date-format: ymd {ymd mdy dmy}
+date-format ymd
+
+# date-separator: dash {dash slash dot}
+date-separator dash
+
+# status-position: none {none left right}
+status-position none
+
+# status-count: 0
+status-count 0
+
+# status-separator: none {none space block status text}
+status-separator none
+
+# status-fields[10]: end {end wxy wx wy cxy cx cy cwx cwy sn dots letter time wxya cxya generic}
+status-fields
