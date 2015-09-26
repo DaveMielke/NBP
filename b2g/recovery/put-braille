@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -e
+cd "$(dirname "${0}")"
+
+putFile() {
+  local fromFile="${1}"
+  local toDirectory="${2}"
+
+  local toFile="${toDirectory}/${fromFile##*/}"
+  adb push "${fromFile}" "${toFile}"
+  adb shell chmod a-x "${toFile}"
+}
+
+(
+  set -e
+  cd brltty/Programs
+  make -s brltty
+  adb push brltty /sbin/
+  adb shell chmod go-w /sbin/brltty
+)
+
+adb shell mkdir -p /etc/brltty/Input/bg
+putFile brltty/Tables/Input/chords.kti /etc/brltty/Input/
+putFile brltty/Tables/Input/toggle.kti /etc/brltty/Input/
+putFile brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
+adb shell chmod -R go-w /etc/brltty
+
+adb push start-braille /sbin/
+adb shell chmod go-w /sbin/start-braille
+
+exit 0

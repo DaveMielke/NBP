@@ -1,0 +1,64 @@
+#!/system/bin/sh
+
+logLevel="info"
+vtNumber=2
+
+set -e
+umask 022
+cd /
+
+packageName="brltty"
+systemDirectory="/etc/${packageName}"
+cacheDirectory="/cache/${packageName}"
+mkdir -p "${cacheDirectory}"
+
+programMessage() {
+  local message="${1}"
+  
+  echo >&2 "${0##*/}: ${message}"
+}
+
+(
+  set -e
+  pidFile="${cacheDirectory}/shell"
+  
+  [ ! -f "${pidFile}" ] || {
+    pid="$(cat "${pidFile}")"
+    
+    ! kill -0 "${pid}" || {
+      programMessage "shell already running"
+      exit 0
+    }
+  }
+    
+  export PS1='rsh: \W# '
+  openvt -w -c "${vtNumber}" /system/bin/sh &
+  echo $! >"${pidFile}"
+  programMessage "shell started"
+)
+
+export BRLTTY_PID_FILE="${cacheDirectory}/pid"
+export BRLTTY_LOG_FILE="${cacheDirectory}/log"
+export BRLTTY_LOG_LEVEL="${logLevel}"
+
+export BRLTTY_UPDATABLE_DIRECTORY="${cacheDirectory}"
+export BRLTTY_WRITABLE_DIRECTORY="${cacheDirectory}"
+export BRLTTY_TABLES_DIRECTORY="${systemDirectory}"
+
+export BRLTTY_CONFIGURATION_FILE="${cacheDirectory}/config"
+export BRLTTY_PREFERENCES_FILE="prefs"
+
+export BRLTTY_SCREEN_DRIVER="lx"
+export BRLTTY_SCREEN_PARAMETERS="lx:vt=${vtNumber}"
+
+[ ! -f "${BRLTTY_PID_FILE}" ] || {
+  pid="$(cat "${BRLTTY_PID_FILE}")"
+  
+  ! kill -0 "${pid}"  || {
+    programMessage "${packageName} already running"
+    exit 2
+  }
+}
+
+exec brltty -E "${@}"
+exit 0
