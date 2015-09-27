@@ -1,12 +1,15 @@
 #!/usr/bin/sh
 
 set -e
+set -o ignoreeof
 umask 022
+
+programName="rsh"
 
 programMessage() {
   local message="${1}"
 
-  echo >&2 "${0##*/}: ${message}"
+  echo >&2 "${programName}: ${message}"
 }
 
 getVariable() {
@@ -17,84 +20,138 @@ setVariable() {
   eval "${1}='${2}'"
 }
 
-addChoice() {
+getReply() {
+  local prompt="${1}"
+  shift 1
+
+  read -p "${prompt}" -- "${@}" || {
+    echo >&2 ""
+    programMessage "end of file"
+    exit 1
+  }
+}
+
+confirmAction() {
+  local action="${1}"
+
+  while true
+  do
+    getReply "${action}? "
+
+    case "${REPLY}"
+    in
+      yes|ye|y) return 0;;
+      no|n) return 1;;
+      *) programMessage "unrecognized confirmation: ${REPLY}";;
+    esac
+  done
+}
+
+actionCount=0
+nameWidth=0
+
+addAction() {
   local name="${1}"
   local description="${2}"
 
-  setVariable "choice_$((choiceCount++))" "${name}"
-  setVariable "description_${name}" "${description}"
-  [ "${#name}" -le "${choiceWidth}" ] || choiceWidth="${#name}"
+  setVariable "name_$((actionCount))" "${name}"
+  setVariable "description_${actionCount}" "${description}"
+
+  [ "${#name}" -le "${nameWidth}" ] || nameWidth="${#name}"
   local alias="${name}"
 
   while [ "${#alias}" -gt 0 ]
   do
-    setVariable "alias_${alias}" "${name}"
+    setVariable "alias_${alias}" "${actionCount}"
     alias="${alias:0:$((${#alias} - 1))}"
   done
+
+  let "actionCount += 1"
 }
 
-choiceCount=0
-choiceWidth=0
+addAction boot "boot Android"
+addAction cache "wipe cache partition"
+addAction data "wipe data partition (factory reset)"
+addAction exit "exit this menu"
+addAction shell "start an interactive shell"
 
-addChoice android "boot Android"
-addChoice exit "exit this shell"
-addChoice interactive "start an interactive shell"
-
-performChoice_android() {
-  reboot -f
+performAction_boot() {
+  if confirmAction "boot Android"
+  then
+    reboot -f
+  else
+    programMessage "boot cancelled"
+  fi
 }
 
-performChoice_exit() {
-  programMessage "exiting"
-  exit 0
+performAction_cache() {
+  if confirmAction "wipe cache"
+  then
+    recovery --wipe_cache
+  else
+    programMessage "cache wipe cancelled"
+  fi
 }
 
-performChoice_interactive() {
-  PS1='rsh:\W# ' /usr/bin/sh || :
+performAction_data() {
+  if confirmAction "wipe data"
+  then
+    recovery --wipe_data
+  else
+    programMessage "data wipe cancelled"
+  fi
+}
+
+performAction_exit() {
+  if confirmAction "exit shell"
+  then
+    programMessage "shell exited"
+    exit 0
+  else
+    programMessage "exit cancelled"
+  fi
+}
+
+performAction_shell() {
+  PS1="${programName}:\W# " /usr/bin/sh || :
 }
 
 while true
 do
-  echo "Recovery Mode"
+  echo "Recovery Mode Menu"
   echo ""
-  echo "Choose one of the following actions:"
-  choiceIndex=0
+  echo "Choose an action:"
+  actionIndex=0
 
-  while [ "${choiceIndex}" -lt "${choiceCount}" ]
+  while [ "${actionIndex}" -lt "${actionCount}" ]
   do
-    choice="$(getVariable "choice_${choiceIndex}")"
-    line="${choice}"
+    name="$(getVariable "name_${actionIndex}")"
+    line="${name}"
 
-    while [ "${#line}" -lt "${choiceWidth}" ]
+    while [ "${#line}" -lt "${nameWidth}" ]
     do
       line="${line} "
     done
 
-    line="${line}  $(getVariable "description_${choice}")"
+    line="${line}  $(getVariable "description_${actionIndex}")"
     echo "${line}"
     
-    let "choiceIndex += 1"
+    let "actionIndex += 1"
   done
 
   while true
   do
-    echo -e "choice> \c"
+    getReply "action> "
+    [ -n "${REPLY}" ] || break
+    actionIndex="$(getVariable "alias_${REPLY}")"
 
-    read response || {
-      echo ""
-      programMessage "end of file"
-      exit 0
-    }
-
-    [ -n "${response}" ] || break
-    choice="$(getVariable "alias_${response}")"
-
-    [ -z "${choice}" ] || {
-      eval "performChoice_${choice}"
+    [ -z "${actionIndex}" ] || {
+      name="$(getVariable "name_${actionIndex}")"
+      eval "performAction_${name}"
       break
     }
 
-    programMessage "unrecognized choice: ${response}"
+    programMessage "unrecognized action: ${REPLY}"
   done
 done
 
