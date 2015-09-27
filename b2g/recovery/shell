@@ -87,7 +87,10 @@ performAction_boot() {
 performAction_cache() {
   if confirmAction "wipe cache"
   then
+    braille stop
+    sleep 5
     recovery --wipe_cache
+    braille start
   else
     programMessage "cache wipe cancelled"
   fi
