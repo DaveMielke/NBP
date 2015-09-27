@@ -47,6 +47,15 @@ confirmAction() {
   done
 }
 
+stopBraille() {
+  braille stop
+  sleep 5
+}
+
+startBraille() {
+  braille start
+}
+
 actionCount=0
 nameWidth=0
 
@@ -87,10 +96,9 @@ performAction_boot() {
 performAction_cache() {
   if confirmAction "wipe cache"
   then
-    braille stop
-    sleep 5
+    stopBraille
     recovery --wipe_cache
-    braille start
+    startBraille
   else
     programMessage "cache wipe cancelled"
   fi
@@ -99,7 +107,9 @@ performAction_cache() {
 performAction_data() {
   if confirmAction "wipe data"
   then
+    stopBraille
     recovery --wipe_data
+    startBraille
   else
     programMessage "data wipe cancelled"
   fi
