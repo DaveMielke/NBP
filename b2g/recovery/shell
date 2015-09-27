@@ -78,68 +78,15 @@ addAction() {
   let "actionCount += 1"
 }
 
-addAction boot "boot Android"
-addAction cache "wipe cache partition"
-addAction data "wipe data partition (factory reset)"
-addAction exit "exit this menu"
-addAction shell "start an interactive shell"
-
-performAction_boot() {
-  if confirmAction "boot Android"
-  then
-    reboot -f
-  else
-    programMessage "boot cancelled"
-  fi
-}
-
-performAction_cache() {
-  if confirmAction "wipe cache"
-  then
-    stopBraille
-    recovery --wipe_cache
-    startBraille
-  else
-    programMessage "cache wipe cancelled"
-  fi
-}
-
-performAction_data() {
-  if confirmAction "wipe data"
-  then
-    stopBraille
-    recovery --wipe_data
-    startBraille
-  else
-    programMessage "data wipe cancelled"
-  fi
-}
-
-performAction_exit() {
-  if confirmAction "exit shell"
-  then
-    programMessage "shell exited"
-    exit 0
-  else
-    programMessage "exit cancelled"
-  fi
-}
-
-performAction_shell() {
-  PS1="${programName}:\W# " /usr/bin/sh || :
-}
-
-while true
-do
-  echo "Recovery Mode Menu"
+showActions() {
   echo ""
   echo "Choose an action:"
-  actionIndex=0
+  local actionIndex=0
 
   while [ "${actionIndex}" -lt "${actionCount}" ]
   do
-    name="$(getVariable "name_${actionIndex}")"
-    line="${name}"
+    local name="$(getVariable "name_${actionIndex}")"
+    local line="${name}"
 
     while [ "${#line}" -lt "${nameWidth}" ]
     do
@@ -151,21 +98,80 @@ do
     
     let "actionIndex += 1"
   done
+}
 
+performActions() {
   while true
   do
     getReply "action> "
-    [ -n "${REPLY}" ] || break
-    actionIndex="$(getVariable "alias_${REPLY}")"
+    if [ -z "${REPLY}" ]
+    then
+      showActions
+    else
+      local actionIndex="$(getVariable "alias_${REPLY}")"
 
-    [ -z "${actionIndex}" ] || {
-      name="$(getVariable "name_${actionIndex}")"
-      eval "performAction_${name}"
-      break
-    }
-
-    programMessage "unrecognized action: ${REPLY}"
+      if [ -n "${actionIndex}" ]
+      then
+        local name="$(getVariable "name_${actionIndex}")"
+        eval "performAction_${name}"
+      else
+        programMessage "unrecognized action: ${REPLY}"
+      fi
+    fi
   done
-done
+}
 
+performAction_boot() {
+  if confirmAction "boot system"
+  then
+    reboot -f
+  else
+    programMessage "boot cancelled"
+  fi
+}
+addAction boot "boot main system"
+
+performAction_cache() {
+  if confirmAction "wipe cache"
+  then
+    stopBraille
+    recovery --wipe_cache
+    startBraille
+  else
+    programMessage "wipe cancelled"
+  fi
+}
+addAction cache "wipe cache partition"
+
+performAction_data() {
+  if confirmAction "wipe data"
+  then
+    stopBraille
+    recovery --wipe_data
+    startBraille
+  else
+    programMessage "wipe cancelled"
+  fi
+}
+addAction data "wipe data partition (factory reset)"
+
+performAction_exit() {
+  if confirmAction "exit menu"
+  then
+    programMessage "menu exited"
+    exit 0
+  else
+    programMessage "exit cancelled"
+  fi
+}
+addAction exit "exit this menu"
+
+performAction_shell() {
+  PS1="${programName}:\W# " /usr/bin/sh || :
+}
+addAction shell "start interactive shell"
+
+echo "Recovery Mode Menu"
+showActions
+performActions
 exit 0
