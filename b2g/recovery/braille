@@ -1,0 +1,100 @@
+#!/usr/bin/sh
+
+logLevel="info"
+vtNumber=2
+
+set -e
+umask 022
+cd /
+
+packageName="brltty"
+systemDirectory="/etc/${packageName}"
+cacheDirectory="/cache/${packageName}"
+
+programMessage() {
+  local message="${1}"
+  
+  echo >&2 "${0##*/}: ${message}"
+}
+
+syntaxError() {
+  local message="${1}"
+  
+  programMessage "${message}"
+  exit 2
+}
+
+checkProcess() {
+  local file="${1}"
+
+  [ ! -f "${file}" ] || {
+    local pid="$(cat "${file}")"
+    ! kill -0 "${pid}" 2>/dev/null || return 0
+  }
+
+  return 1
+}
+
+startInteractiveShell() {
+  local pidFile="${systemDirectory}/shell.${vtNumber}"
+  
+  if checkProcess "${pidFile}"
+  then
+    programMessage "shell already running"
+  else
+    PS1='rsh:\W# ' \
+    openvt -w -c "${vtNumber}" /system/bin/sh &
+    echo $! >"${pidFile}"
+
+    programMessage "shell started"
+  fi
+}
+
+setBrailleParameters() {
+  export BRLTTY_PID_FILE="${systemDirectory}/pid"
+  export BRLTTY_LOG_FILE="${cacheDirectory}/log"
+  export BRLTTY_LOG_LEVEL="${logLevel}"
+
+  export BRLTTY_UPDATABLE_DIRECTORY="${cacheDirectory}"
+  export BRLTTY_WRITABLE_DIRECTORY="${systemDirectory}/Writable"
+  export BRLTTY_TABLES_DIRECTORY="${systemDirectory}"
+
+  export BRLTTY_CONFIGURATION_FILE="${cacheDirectory}/config"
+  export BRLTTY_PREFERENCES_FILE="prefs"
+
+  export BRLTTY_SCREEN_DRIVER="lx"
+  export BRLTTY_SCREEN_PARAMETERS="lx:vt=${vtNumber}"
+}
+
+performAction_start() {
+  startInteractiveShell
+  setBrailleParameters
+  mkdir -p "${cacheDirectory}"
+
+  if checkProcess "${BRLTTY_PID_FILE}"
+  then
+    programMessage "${packageName} already running"
+  else
+    exec brltty -E "${@}"
+  fi
+}
+
+performAction_stop() {
+  setBrailleParameters
+  export BRLTTY_LOG_FILE="${BRLTTY_LOG_FILE}.stop"
+  brltty -E -C
+}
+
+[ "${#}" -gt 0 ] || syntaxError "missing action"
+action="${1}"
+shift 1
+
+[ "${#}" -eq 0 ] || syntaxError "too many parameters"
+
+case "${action}"
+in
+  start|stop) "performAction_${action}";;
+  *) syntaxError "unknown action: ${action}";;
+esac
+
+exit 0

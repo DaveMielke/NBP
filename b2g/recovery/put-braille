@@ -26,7 +26,7 @@ putFile brltty/Tables/Input/toggle.kti /etc/brltty/Input/
 putFile brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
 adb shell chmod -R go-w /etc/brltty
 
-adb push start-braille /sbin/
-adb shell chmod go-w /sbin/start-braille
+adb push braille /sbin/
+adb shell chmod ugo+rx,go-w /sbin/braille
 
 exit 0
