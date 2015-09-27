@@ -1,9 +1,10 @@
-#!/usr/bin/sh
+#!/system/bin/sh
 
 logLevel="info"
 vtNumber=2
 
 set -e
+set +o monitor
 umask 022
 cd /
 
@@ -42,15 +43,21 @@ startInteractiveShell() {
   then
     programMessage "shell already running"
   else
-    PS1='rsh:\W# ' \
-    openvt -w -c "${vtNumber}" /system/bin/sh &
-    echo $! >"${pidFile}"
+    (
+      PS1='rsh:\W# ' \
+      openvt -w -c "${vtNumber}" /system/bin/sh
 
+      reboot -f
+    ) <&- >&- 2>&- &
+
+    echo $! >"${pidFile}"
     programMessage "shell started"
   fi
 }
 
 setBrailleParameters() {
+  mkdir -p "${cacheDirectory}"
+  
   export BRLTTY_PID_FILE="${systemDirectory}/pid"
   export BRLTTY_LOG_FILE="${cacheDirectory}/log"
   export BRLTTY_LOG_LEVEL="${logLevel}"
@@ -66,34 +73,41 @@ setBrailleParameters() {
   export BRLTTY_SCREEN_PARAMETERS="lx:vt=${vtNumber}"
 }
 
+verifyOperandsDone() {
+  [ "${#}" -eq 0 ] || syntaxError "too many parameters"
+}
+
 performAction_start() {
+  verifyOperandsDone "${@}"
+
   startInteractiveShell
   setBrailleParameters
-  mkdir -p "${cacheDirectory}"
 
   if checkProcess "${BRLTTY_PID_FILE}"
   then
     programMessage "${packageName} already running"
   else
-    exec brltty -E "${@}"
+    brltty -E -q &
+    programMessage "${packageName} started"
   fi
 }
 
 performAction_stop() {
+  verifyOperandsDone "${@}"
+
   setBrailleParameters
   export BRLTTY_LOG_FILE="${BRLTTY_LOG_FILE}.stop"
   brltty -E -C
+  programMessage "${packageName} stopped"
 }
 
 [ "${#}" -gt 0 ] || syntaxError "missing action"
 action="${1}"
 shift 1
 
-[ "${#}" -eq 0 ] || syntaxError "too many parameters"
-
 case "${action}"
 in
-  start|stop) "performAction_${action}";;
+  start|stop) "performAction_${action}" "${@}";;
   *) syntaxError "unknown action: ${action}";;
 esac
 
