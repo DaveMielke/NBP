@@ -86,8 +86,6 @@ do
       exit 0
     }
 
-    response="${response/^ */}"
-    response="${response/ *$/}"
     [ -n "${response}" ] || break
     choice="$(getVariable "alias_${response}")"
 
