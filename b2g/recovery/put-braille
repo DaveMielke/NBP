@@ -6,27 +6,41 @@ cd "$(dirname "${0}")"
 putFile() {
   local fromFile="${1}"
   local toDirectory="${2}"
+  local toMode="${3}"
 
   local toFile="${toDirectory}/${fromFile##*/}"
   adb push "${fromFile}" "${toFile}"
-  adb shell chmod a-x "${toFile}"
+  adb shell chmod "a=${toMode},u+w" "${toFile}"
+}
+
+putData() {
+  local fromFile="${1}"
+  local toDirectory="${2}"
+
+  putFile "${fromFile}" "${toDirectory}" r
+}
+
+putProgram() {
+  local fromFile="${1}"
+  local toDirectory="${2}"
+
+  putFile "${fromFile}" "${toDirectory}" rx
 }
 
 (
   set -e
   cd brltty/Programs
   make -s brltty
-  adb push brltty /sbin/
-  adb shell chmod go-w /sbin/brltty
+  putProgram brltty /sbin/
 )
 
 adb shell mkdir -p /etc/brltty/Input/bg
-putFile brltty/Tables/Input/chords.kti /etc/brltty/Input/
-putFile brltty/Tables/Input/toggle.kti /etc/brltty/Input/
-putFile brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
+putData brltty/Tables/Input/chords.kti /etc/brltty/Input/
+putData brltty/Tables/Input/toggle.kti /etc/brltty/Input/
+putData brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
 adb shell chmod -R go-w /etc/brltty
 
-adb push braille /sbin/
-adb shell chmod ugo+rx,go-w /sbin/braille
+putProgram braille /sbin/
+putProgram shell /sbin/
 
 exit 0

@@ -1,0 +1,103 @@
+#!/usr/bin/sh
+
+set -e
+umask 022
+
+programMessage() {
+  local message="${1}"
+
+  echo >&2 "${0##*/}: ${message}"
+}
+
+getVariable() {
+  eval 'echo ${'"${1}"'}'
+}
+
+setVariable() {
+  eval "${1}='${2}'"
+}
+
+addChoice() {
+  local name="${1}"
+  local description="${2}"
+
+  setVariable "choice_$((choiceCount++))" "${name}"
+  setVariable "description_${name}" "${description}"
+  [ "${#name}" -le "${choiceWidth}" ] || choiceWidth="${#name}"
+  local alias="${name}"
+
+  while [ "${#alias}" -gt 0 ]
+  do
+    setVariable "alias_${alias}" "${name}"
+    alias="${alias:0:$((${#alias} - 1))}"
+  done
+}
+
+choiceCount=0
+choiceWidth=0
+
+addChoice android "boot Android"
+addChoice exit "exit this shell"
+addChoice interactive "start an interactive shell"
+
+performChoice_android() {
+  reboot -f
+}
+
+performChoice_exit() {
+  programMessage "exiting"
+  exit 0
+}
+
+performChoice_interactive() {
+  PS1='rsh:\W# ' /usr/bin/sh || :
+}
+
+while true
+do
+  echo "Recovery Mode"
+  echo ""
+  echo "Choose one of the following actions:"
+  choiceIndex=0
+
+  while [ "${choiceIndex}" -lt "${choiceCount}" ]
+  do
+    choice="$(getVariable "choice_${choiceIndex}")"
+    line="${choice}"
+
+    while [ "${#line}" -lt "${choiceWidth}" ]
+    do
+      line="${line} "
+    done
+
+    line="${line}  $(getVariable "description_${choice}")"
+    echo "${line}"
+    
+    let "choiceIndex += 1"
+  done
+
+  while true
+  do
+    echo -e "choice> \c"
+
+    read response || {
+      echo ""
+      programMessage "end of file"
+      exit 0
+    }
+
+    response="${response/^ */}"
+    response="${response/ *$/}"
+    [ -n "${response}" ] || break
+    choice="$(getVariable "alias_${response}")"
+
+    [ -z "${choice}" ] || {
+      eval "performChoice_${choice}"
+      break
+    }
+
+    programMessage "unrecognized choice: ${response}"
+  done
+done
+
+exit 0

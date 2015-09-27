@@ -1,4 +1,4 @@
-#!/system/bin/sh
+#!/usr/bin/sh
 
 logLevel="info"
 vtNumber=2
@@ -43,13 +43,7 @@ startInteractiveShell() {
   then
     programMessage "shell already running"
   else
-    (
-      PS1='rsh:\W# ' \
-      openvt -w -c "${vtNumber}" /system/bin/sh
-
-      reboot -f
-    ) <&- >&- 2>&- &
-
+    openvt -w -c "${vtNumber}" shell &
     echo $! >"${pidFile}"
     programMessage "shell started"
   fi
