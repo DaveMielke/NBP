@@ -101,8 +101,22 @@ performAction_stop() {
 
   initializeCacheDirectory
   setBrailleParameters
+
   export BRLTTY_LOG_FILE="${BRLTTY_LOG_FILE}.stop"
   brltty -E -C
+
+  local timeout=50
+
+  while [ -f "${BRLTTY_PID_FILE}" ]
+  do
+    let "timeout -= 1" || {
+      programMessage "stop timed out"
+      exit 3
+    }
+
+    sleep 0.1
+  done
+
   programMessage "${packageName} stopped"
 }
 
