@@ -70,7 +70,7 @@ skip-blank-braille-windows yes
 skip-blank-braille-windows-mode end
 
 # sliding-braille-window: no {no yes}
-sliding-braille-window no
+sliding-braille-window yes
 
 # eager-sliding-braille-window: no {no yes}
 eager-sliding-braille-window no
