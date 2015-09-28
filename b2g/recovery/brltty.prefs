@@ -199,7 +199,7 @@ time-separator colon
 show-seconds yes
 
 # date-position: no {no before after}
-date-position before
+date-position after
 
 # date-format: ymd {ymd mdy dmy}
 date-format ymd
