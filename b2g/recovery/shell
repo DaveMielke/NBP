@@ -49,7 +49,6 @@ confirmAction() {
 
 stopBraille() {
   braille stop
-  sleep 5
 }
 
 startBraille() {
@@ -182,6 +181,7 @@ performAction_exit() {
   if confirmAction "exit menu"
   then
     programMessage "menu exited"
+    stopBraille
     exit 0
   else
     programMessage "exit cancelled"
