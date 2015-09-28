@@ -4,27 +4,27 @@ set -e
 cd "$(dirname "${0}")"
 
 putFile() {
-  local fromFile="${1}"
-  local toDirectory="${2}"
+  local from="${1}"
+  local to="${2}"
   local toMode="${3}"
 
-  local toFile="${toDirectory}/${fromFile##*/}"
-  adb push "${fromFile}" "${toFile}"
-  adb shell chmod "a=${toMode},u+w" "${toFile}"
+  [ "${to%/}" = "${to}" ] || to="${to}/${from##*/}"
+  adb push "${from}" "${to}"
+  adb shell chmod "a=${toMode},u+w" "${to}"
 }
 
 putData() {
-  local fromFile="${1}"
-  local toDirectory="${2}"
+  local from="${1}"
+  local to="${2}"
 
-  putFile "${fromFile}" "${toDirectory}" r
+  putFile "${from}" "${to}" r
 }
 
 putProgram() {
-  local fromFile="${1}"
-  local toDirectory="${2}"
+  local from="${1}"
+  local to="${2}"
 
-  putFile "${fromFile}" "${toDirectory}" rx
+  putFile "${from}" "${to}" rx
 }
 
 (
@@ -35,6 +35,7 @@ putProgram() {
 )
 
 adb shell mkdir -p /etc/brltty/Input/bg
+putData brltty.prefs /etc/brltty/prefs.template
 putData brltty/Tables/Input/chords.kti /etc/brltty/Input/
 putData brltty/Tables/Input/toggle.kti /etc/brltty/Input/
 putData brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/

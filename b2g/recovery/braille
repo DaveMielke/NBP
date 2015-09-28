@@ -67,6 +67,13 @@ setBrailleParameters() {
   export BRLTTY_SCREEN_PARAMETERS="lx:vt=${vtNumber}"
 }
 
+initializeBraillePreferences() {
+  local from="${systemDirectory}/prefs.template"
+  local to="${BRLTTY_UPDATABLE_DIRECTORY}/${BRLTTY_PREFERENCES_FILE}"
+  
+  [ -f "${to}" ] || cp -a "${from}" "${to}"
+}
+
 verifyOperandsDone() {
   [ "${#}" -eq 0 ] || syntaxError "too many parameters"
 }
@@ -81,7 +88,8 @@ performAction_start() {
   then
     programMessage "${packageName} already running"
   else
-    brltty -E -q &
+    initializeBraillePreferences
+    brltty -E -q
     programMessage "${packageName} started"
   fi
 }
