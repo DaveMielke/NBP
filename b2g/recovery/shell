@@ -71,7 +71,17 @@ addAction() {
 
   while [ "${#alias}" -gt 0 ]
   do
-    setVariable "alias_${alias}" "${actionCount}"
+    local variable="alias_${alias}"
+    local value="$(getVariable "${variable}")"
+
+    if [ -z "${value}" ]
+    then
+      value="${actionCount}"
+    else
+      value="${value} ${actionCount}"
+    fi
+
+    setVariable "${variable}" "${value}"
     alias="${alias:0:$((${#alias} - 1))}"
   done
 
@@ -80,7 +90,7 @@ addAction() {
 
 showActions() {
   echo ""
-  echo "Choose an action:"
+  echo "Choose an action (unambiguous abbreviations are allowed):"
   local actionIndex=0
 
   while [ "${actionIndex}" -lt "${actionCount}" ]
@@ -108,19 +118,32 @@ performActions() {
     then
       showActions
     else
-      local actionIndex="$(getVariable "alias_${REPLY}")"
+      set -- $(getVariable "alias_${REPLY}")
 
-      if [ -n "${actionIndex}" ]
+      if [ "${#}" -eq 0 ]
       then
-        local name="$(getVariable "name_${actionIndex}")"
-        eval "performAction_${name}"
-      else
         programMessage "unrecognized action: ${REPLY}"
+      elif [ "${#}" -gt 1 ]
+      then
+        local names=""
+        local index
+
+        for index
+        do
+          [ -z "${names}" ] || names="${names}, "
+          names="${names}$(getVariable "name_${index}")"
+        done
+
+        programMessage "ambiguous action: ${REPLY} -> ${names}"
+      else
+        local name="$(getVariable "name_${1}")"
+        eval "performAction_${name}"
       fi
     fi
   done
 }
 
+addAction boot "boot main system"
 performAction_boot() {
   if confirmAction "boot system"
   then
@@ -129,8 +152,8 @@ performAction_boot() {
     programMessage "boot cancelled"
   fi
 }
-addAction boot "boot main system"
 
+addAction cache "wipe cache partition"
 performAction_cache() {
   if confirmAction "wipe cache"
   then
@@ -141,8 +164,8 @@ performAction_cache() {
     programMessage "wipe cancelled"
   fi
 }
-addAction cache "wipe cache partition"
 
+addAction data "wipe data partition (factory reset)"
 performAction_data() {
   if confirmAction "wipe data"
   then
@@ -153,8 +176,8 @@ performAction_data() {
     programMessage "wipe cancelled"
   fi
 }
-addAction data "wipe data partition (factory reset)"
 
+addAction exit "exit this menu"
 performAction_exit() {
   if confirmAction "exit menu"
   then
@@ -164,12 +187,16 @@ performAction_exit() {
     programMessage "exit cancelled"
   fi
 }
-addAction exit "exit this menu"
 
+addAction shell "start interactive shell"
 performAction_shell() {
   PS1="${programName}:\W# " /usr/bin/sh || :
 }
-addAction shell "start interactive shell"
+
+addAction update "apply OTA update"
+performAction_update() {
+  programMessage "not implemented"
+}
 
 echo "Recovery Mode Menu"
 showActions
