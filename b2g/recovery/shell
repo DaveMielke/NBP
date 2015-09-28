@@ -20,7 +20,7 @@ setVariable() {
   eval "${1}='${2}'"
 }
 
-getReply() {
+askUser() {
   local prompt="${1}"
   shift 1
 
@@ -36,7 +36,7 @@ confirmAction() {
 
   while true
   do
-    getReply "${action}? "
+    askUser "${action}? "
 
     case "${REPLY}"
     in
@@ -113,18 +113,21 @@ showActions() {
 performActions() {
   while true
   do
-    getReply "action> "
+    askUser "action> "
     if [ -z "${REPLY}" ]
     then
       showActions
     else
       set -- $(getVariable "alias_${REPLY}")
 
-      if [ "${#}" -eq 0 ]
+      if [ "${#}" -eq 1 ]
+      then
+        local name="$(getVariable "name_${1}")"
+        eval "performAction_${name}"
+      elif [ "${#}" -eq 0 ]
       then
         programMessage "unrecognized action: ${REPLY}"
-      elif [ "${#}" -gt 1 ]
-      then
+      else
         local names=""
         local index
 
@@ -135,9 +138,6 @@ performActions() {
         done
 
         programMessage "ambiguous action: ${REPLY} -> ${names}"
-      else
-        local name="$(getVariable "name_${1}")"
-        eval "performAction_${name}"
       fi
     fi
   done
