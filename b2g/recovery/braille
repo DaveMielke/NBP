@@ -50,8 +50,6 @@ startInteractiveShell() {
 }
 
 setBrailleParameters() {
-  mkdir -p "${cacheDirectory}"
-  
   export BRLTTY_PID_FILE="${systemDirectory}/pid"
   export BRLTTY_LOG_FILE="${cacheDirectory}/log"
   export BRLTTY_LOG_LEVEL="${logLevel}"
@@ -67,11 +65,15 @@ setBrailleParameters() {
   export BRLTTY_SCREEN_PARAMETERS="lx:vt=${vtNumber}"
 }
 
-initializeBraillePreferences() {
-  local from="${systemDirectory}/prefs.template"
-  local to="${BRLTTY_UPDATABLE_DIRECTORY}/${BRLTTY_PREFERENCES_FILE}"
-  
-  [ -f "${to}" ] || cp -a "${from}" "${to}"
+initializeCacheDirectory() {
+  mkdir -p "${cacheDirectory}"
+  local from
+
+  for from in "${systemDirectory}/Initial/"*
+  do
+    local to="${cacheDirectory}/${from##*/}"
+    [ -f "${to}" ] || cp -a "${from}" "${to}"
+  done
 }
 
 verifyOperandsDone() {
@@ -82,13 +84,13 @@ performAction_start() {
   verifyOperandsDone "${@}"
 
   startInteractiveShell
+  initializeCacheDirectory
   setBrailleParameters
 
   if checkProcess "${BRLTTY_PID_FILE}"
   then
     programMessage "${packageName} already running"
   else
-    initializeBraillePreferences
     brltty -E -q
     programMessage "${packageName} started"
   fi
@@ -97,6 +99,7 @@ performAction_start() {
 performAction_stop() {
   verifyOperandsDone "${@}"
 
+  initializeCacheDirectory
   setBrailleParameters
   export BRLTTY_LOG_FILE="${BRLTTY_LOG_FILE}.stop"
   brltty -E -C

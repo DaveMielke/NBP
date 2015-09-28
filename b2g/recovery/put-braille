@@ -34,14 +34,16 @@ putProgram() {
   putProgram brltty /sbin/
 )
 
+adb shell mkdir -p /etc/brltty/Initial
+putData brltty.prefs /etc/brltty/Initial/prefs
+
 adb shell mkdir -p /etc/brltty/Input/bg
-putData brltty.prefs /etc/brltty/prefs.template
 putData brltty/Tables/Input/chords.kti /etc/brltty/Input/
 putData brltty/Tables/Input/toggle.kti /etc/brltty/Input/
 putData brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
-adb shell chmod -R go-w /etc/brltty
 
 putProgram braille /sbin/
 putProgram shell /sbin/
 
+adb shell chmod -R go-w /etc/brltty
 exit 0
