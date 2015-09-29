@@ -596,6 +596,7 @@ within a popup (see `Popups`_) that looks something like this::
   Build Details
   Time: 2015-07-22 00:34:02 UTC
   Revision: d3d8210
+  Firmware: 3.0
 
 Speech
 ~~~~~~

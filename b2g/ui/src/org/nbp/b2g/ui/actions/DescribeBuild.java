@@ -10,6 +10,12 @@ public class DescribeBuild extends Action {
     sb.append(ApplicationContext.getString(string));
   }
 
+  private static void startLine (StringBuilder sb, int label) {
+    if (sb.length() > 0) sb.append('\n');
+    appendString(sb, label);
+    sb.append(": ");
+  }
+
   private static boolean addBuildProperty (
     final StringBuilder sb, String property, final int... labels
   ) {
@@ -20,9 +26,7 @@ public class DescribeBuild extends Action {
         text = text.trim();
 
         if (!text.isEmpty()) {
-          if (sb.length() > 0) sb.append('\n');
-          appendString(sb, label);
-          sb.append(": ");
+          startLine(sb, label);
           sb.append(text);
         } else {
           Log.w(LOG_TAG, "build property not available: " + label);
@@ -35,6 +39,14 @@ public class DescribeBuild extends Action {
     return inputProcessor.processInput(("build." + property));
   }
 
+  private static void addBuildFirmware (StringBuilder sb) {
+    startLine(sb, R.string.DescribeBuild_label_firmware);
+    sb.append(' ');
+    sb.append(FirmwareVersion.getMajor());
+    sb.append('.');
+    sb.append(FirmwareVersion.getMinor());
+  }
+
   @Override
   public boolean performAction () {
     StringBuilder sb = new StringBuilder();
@@ -42,6 +54,7 @@ public class DescribeBuild extends Action {
 
     addBuildProperty(sb, "time", R.string.DescribeBuild_label_time);
     addBuildProperty(sb, "revision", R.string.DescribeBuild_label_revision);
+    addBuildFirmware(sb);
 
     if (sb.length() == 0) return false;
     Endpoints.setPopupEndpoint(sb.toString());
