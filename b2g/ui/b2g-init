@@ -97,6 +97,18 @@ permitEventDevice() {
 setProperty persist.service.adb.enable 1
 setField secure adb_enabled 1
 
+# enable power switch monitoring
+permitEventDevice twl4030_pwrbutton
+
+# enable keyboard monitoring
+permitEventDevice cp430_keypad
+
+# enable key event injection
+chmod 666 /dev/uinput
+
+# enable the braille device
+chmod 666 /dev/braille0
+
 # disable scren locking
 setField secure lockscreen.disabled 1
 
@@ -119,21 +131,6 @@ do
   sleep 5
 done
 log "boot completed"
-
-# enable firmware version querying
-setPermission /dev/cp430_core 644
-
-# enable the braille device
-setPermission /dev/braille0 666
-
-# enable key event injection
-setPermission /dev/uinput 666
-
-# enable power switch monitoring
-permitEventDevice twl4030_pwrbutton
-
-# enable keyboard monitoring
-permitEventDevice cp430_keypad
 
 log "setting input method"
 package="org.nbp.b2g.ui"
