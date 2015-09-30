@@ -7,6 +7,27 @@ log() {
   echo >&2 "`date +%Y-%m-%d@%H:%M:%S` ${message}"
 }
 
+waitForPath() {
+  local path="${1}"
+
+  local timeout=0
+
+  while [ ! -e "${path}" ]
+  do
+    [ "${timeout}" -gt 0 ] || log "waiting for path: ${path}"
+
+    let "(timeout += 1) < 100" || {
+      log "path wait timed out: ${path}"
+      return 1
+    }
+
+    sleep 0.1
+  done
+
+  [ "${timeout}" -eq 0 ] || log "path exists: ${path}"
+  return 0
+}
+
 hostCommand() {
 # log "host command: ${*}"
   "${@}"
@@ -68,30 +89,51 @@ setPermission() {
   local path="${1}"
   local newValue="${2}"
 
-  oldValue="$(getPermission "${path}")"
-  log "checking permission: ${path}: ${oldValue}"
+  ! waitForPath "${path}" || {
+    oldValue="$(getPermission "${path}")"
+    log "checking permission: ${path}: ${oldValue}"
 
-  [ "${oldValue}" = "${newValue}" ] || {
-    log "setting permission: ${path} = ${newValue}"
-    hostCommand chmod "${newValue}" "${path}"
+    [ "${oldValue}" = "${newValue}" ] || {
+      log "setting permission: ${path} = ${newValue}"
+      hostCommand chmod "${newValue}" "${path}"
+    }
   }
 }
 
 permitEventDevice() {
   local identifier="${1}"
-  set -- `ls /sys/bus/platform/devices/${identifier}/input*`
+  local root="/sys/bus/platform/devices/${identifier}"
 
-  [ "${#}" -eq 1 ] && {
-    local name="${1##*/}"
-    local event="${name#input}"
+  ! waitForPath "${root}" || {
+    set -- `ls "${root}/input"*`
 
-    [ -n "${event}" ] && {
-      local device="/dev/input/event${event}"
-      log "permitting event device: ${identifier}"
-      setPermission "${device}" 666
+    [ "${#}" -eq 1 ] && {
+      local name="${1##*/}"
+      local event="${name#input}"
+
+      [ -n "${event}" ] && {
+        local device="/dev/input/event${event}"
+        log "permitting event device: ${identifier}"
+        setPermission "${device}" 666
+      }
     }
   }
 }
+
+# enable firmware version querying
+setPermission /dev/cp430_core 644
+
+# enable the braille device
+setPermission /dev/braille0 666
+
+# enable key event injection
+setPermission /dev/uinput 666
+
+# enable power switch monitoring
+permitEventDevice twl4030_pwrbutton
+
+# enable keyboard monitoring
+permitEventDevice cp430_keypad
 
 # enable ADB (the Android Debug Bridge)
 setProperty persist.service.adb.enable 1
@@ -119,21 +161,6 @@ do
   sleep 5
 done
 log "boot completed"
-
-# enable firmware version querying
-setPermission /dev/cp430_core 644
-
-# enable the braille device
-setPermission /dev/braille0 666
-
-# enable key event injection
-setPermission /dev/uinput 666
-
-# enable power switch monitoring
-permitEventDevice twl4030_pwrbutton
-
-# enable keyboard monitoring
-permitEventDevice cp430_keypad
 
 log "setting input method"
 package="org.nbp.b2g.ui"
