@@ -594,8 +594,9 @@ together. This will cause details that identify the build to be presented
 within a popup (see `Popups`_) that looks something like this::
 
   Build Details
-  Time: 2015-07-22 00:34:02 UTC
-  Revision: d3d8210
+  Time: 2015-09-30 14:04:27 UTC
+  Revision: 1797952
+  System: v4.1.2
   Firmware: 3.0
 
 Speech
