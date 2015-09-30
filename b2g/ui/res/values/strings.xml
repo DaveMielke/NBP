@@ -91,6 +91,7 @@
   <string name="DescribeBuild_title">Build Details</string>
   <string name="DescribeBuild_label_time">Time</string>
   <string name="DescribeBuild_label_revision">Revision</string>
+  <string name="DescribeBuild_label_system">System</string>
   <string name="DescribeBuild_label_firmware">Firmware</string>
 
   <string name="DescribeCharacter_label_block">Block</string>

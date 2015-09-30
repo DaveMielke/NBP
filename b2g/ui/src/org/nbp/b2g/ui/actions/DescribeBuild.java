@@ -2,6 +2,7 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 import android.util.Log;
+import android.os.Build;
 
 public class DescribeBuild extends Action {
   private final static String LOG_TAG = DescribeBuild.class.getName();
@@ -39,9 +40,13 @@ public class DescribeBuild extends Action {
     return inputProcessor.processInput(("build." + property));
   }
 
+  private static void addBuildSystem (StringBuilder sb) {
+    startLine(sb, R.string.DescribeBuild_label_system);
+    sb.append(Build.ID);
+  }
+
   private static void addBuildFirmware (StringBuilder sb) {
     startLine(sb, R.string.DescribeBuild_label_firmware);
-    sb.append(' ');
     sb.append(FirmwareVersion.getMajor());
     sb.append('.');
     sb.append(FirmwareVersion.getMinor());
@@ -54,6 +59,7 @@ public class DescribeBuild extends Action {
 
     addBuildProperty(sb, "time", R.string.DescribeBuild_label_time);
     addBuildProperty(sb, "revision", R.string.DescribeBuild_label_revision);
+    addBuildSystem(sb);
     addBuildFirmware(sb);
 
     if (sb.length() == 0) return false;
