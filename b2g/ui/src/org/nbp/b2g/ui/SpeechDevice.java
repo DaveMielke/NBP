@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import android.text.Spanned;
+import android.text.style.TtsSpan;
+
 public class SpeechDevice {
   private final static String LOG_TAG = SpeechDevice.class.getName();
 
@@ -146,7 +149,28 @@ public class SpeechDevice {
   }
 
   public final boolean say (CharSequence text) {
-    return say(text.toString());
+    if (!(text instanceof Spanned)) return say(text.toString());
+
+    Spanned spanned = (Spanned)text;
+    int length = spanned.length();
+    int start = 0;
+
+    while (start < length) {
+      int end = spanned.nextSpanTransition(start, length, SpeechSpan.class);
+      SpeechSpan[] spans = spanned.getSpans(start, start+1, SpeechSpan.class);
+      String segment;
+
+      if (spans.length == 0) {
+        segment = spanned.subSequence(start, end).toString();
+      } else {
+        segment = spans[0].getText();
+      }
+
+      if (!say(segment)) return false;
+      start = end;
+    }
+
+    return true;
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {

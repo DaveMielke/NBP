@@ -61,22 +61,47 @@ public class HostEndpoint extends Endpoint {
     return text.subSequence(0, text.length());
   }
 
+  private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
+    sb.setSpan(new SpeechSpan(text), start, sb.length(), 0);
+  }
+
+  private static void setSpeechSpan (SpannableStringBuilder sb, int start, CharSequence text) {
+    setSpeechSpan(sb, start, text.toString());
+  }
+
+  private static void setSpeechSpan (SpannableStringBuilder sb, int start, int text) {
+    setSpeechSpan(sb, start, ApplicationContext.getString(text));
+  }
+
   private static CharSequence toText (AccessibilityNodeInfo node) {
     SpannableStringBuilder sb = new SpannableStringBuilder();
     CharSequence characters;
 
     if (node.isCheckable()) {
+      boolean isChecked = node.isChecked();
+      int start = sb.length();
+
       sb.append('[');
-      sb.append(node.isChecked()? 'X': ' ');
+      sb.append(isChecked? 'X': ' ');
       sb.append("] ");
+
+      setSpeechSpan(sb, start, (
+        isChecked?
+        R.string.checkbox_on:
+        R.string.checkbox_off
+      ));
     }
 
     if ((characters = node.getText()) != null) {
       sb.append(toText(characters));
     } else if ((characters = node.getContentDescription()) != null) {
+      int start = sb.length();
+
       sb.append('[');
       sb.append(toText(characters));
       sb.append(']');
+
+      setSpeechSpan(sb, start, characters);
     } else if (!ScreenUtilities.isEditable(node)) {
       sb.append('{');
       sb.append(ScreenUtilities.getClassName(node));
