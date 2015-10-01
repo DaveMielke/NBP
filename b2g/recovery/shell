@@ -250,29 +250,29 @@ chooseFile() {
 
     case "${REPLY}"
     in
-      a) {
+      a|f) {
         [ "${index}" -le 1 ] || {
           let "index -= 1"
           continue
         }
       };;
 
-     \`) {
+     \`|j) {
         [ "${index}" -ge "${#}" ] || {
           let "index += 1"
           continue
         }
       };;
 
-     \') {
+     \'|s) {
        return 1
      };;
 
-      1) {
+      1|d) {
         return 0
       };;
 
-     \") {
+     \"|k) {
         [ -z "${path}" ] || {
           if [ ! -d "${path}" ]
           then
