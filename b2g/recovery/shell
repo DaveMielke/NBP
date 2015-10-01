@@ -240,6 +240,7 @@ chooseFile() {
     then
       eval 'local name=${'"${index}"'}'
       local path="${directory}${name}"
+      [ ! -d "${path}" ] || name="${name}/"
     else
       local name="(empty directory)"
       local path=""
