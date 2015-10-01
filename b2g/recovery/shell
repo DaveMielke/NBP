@@ -193,13 +193,19 @@ performAction_shell() {
   PS1="${programName}:\W# " /usr/bin/sh || :
 }
 
+writeLine() {
+  local line="${1}"
+
+  echo >&2 -e "${line}"
+}
+
 writeCharacters() {
   local characters="${1}"
 
-  echo >&2 -e "${characters}\\c"
+  writeLine "${characters}\\c"
 }
 
-writeLine() {
+rewriteLine() {
   local line="${1}"
 
   writeCharacters "\\r${line}\\e[K"
@@ -246,7 +252,7 @@ chooseFile() {
       local path=""
     fi
 
-    writeLine "${name}"
+    rewriteLine "${name}"
     read -s -n 1 || return 1
 
     case "${REPLY}"
@@ -299,8 +305,14 @@ chooseFile() {
 }
 
 findFile() {
+  writeLine "Dot1  previous"
+  writeLine "Dot4  next"
+  writeLine "Dot2  back"
+  writeLine "Dot5  select"
+  writeLine "Dot3  quit"
+
   local file="$(chooseFile / cache data sdcard || :)"
-  writeLine ""
+  rewriteLine ""
 
   [ -z "${file}" ] || echo "${file}"
 }
