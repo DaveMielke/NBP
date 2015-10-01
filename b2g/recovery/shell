@@ -193,9 +193,129 @@ performAction_shell() {
   PS1="${programName}:\W# " /usr/bin/sh || :
 }
 
+writeCharacters() {
+  local characters="${1}"
+
+  echo >&2 -e "${characters}\\c"
+}
+
+writeLine() {
+  local line="${1}"
+
+  writeCharacters "\\r${line}\\e[K"
+}
+
+soundAlarm() {
+  writeCharacters '\a'
+}
+
+mountDirectory() {
+  local path="${1}"
+  
+  set -- $(awk -v "path=${path}" '$1 == path { print $0; exit }' /etc/recovery.fstab)
+  
+  [ "${#}" -eq 0 ] || {
+    ! awk -v "path=${path}" '$2 == path { exit 1 }' /proc/mounts || {
+      ! mount -t "${2}" "${3}" "${1}" || return 0
+    }
+  }
+  
+  return 1
+}
+
+unmountDirectory() {
+  local path="${1}"
+  
+  umount "${path}"
+}
+
+chooseFile() {
+  local directory="${1}"
+  shift 1
+  local index=1
+
+  while true
+  do
+    if [ "${#}" -gt 0 ]
+    then
+      eval 'local name=${'"${index}"'}'
+      local path="${directory}${name}"
+    else
+      local name="(empty directory)"
+      local path=""
+    fi
+
+    writeLine "${name}"
+    read -s -n 1 || return 1
+
+    case "${REPLY}"
+    in
+      a) {
+        [ "${index}" -le 1 ] || {
+          let "index -= 1"
+          continue
+        }
+      };;
+
+     \`) {
+        [ "${index}" -ge "${#}" ] || {
+          let "index += 1"
+          continue
+        }
+      };;
+
+     \') {
+       return 1
+     };;
+
+      1) {
+        return 0
+      };;
+
+     \") {
+        [ -z "${path}" ] || {
+          if [ ! -d "${path}" ]
+          then
+            echo "${path}"
+          elif chooseFile "${path}/" $(cd "${path}" && ls -1)
+          then
+            continue
+          fi
+
+          return 1
+        }
+      };;
+    esac
+
+    soundAlarm
+  done
+}
+
+findFile() {
+  local file="$(chooseFile / cache data sdcard || :)"
+  writeLine ""
+
+  [ -z "${file}" ] || echo "${file}"
+}
+
 addAction update "apply OTA update"
 performAction_update() {
-  programMessage "not implemented"
+  local file="$(findFile)"
+
+  if [ -n "${file}" ]
+  then
+    programMessage "file: ${file}"
+
+    if confirmAction "apply update"
+    then
+      stopBraille
+      startBraille
+    else
+      programMessage "update cancelled"
+    fi
+  else
+    programMessage "file not chosen"
+  fi
 }
 
 echo "Recovery Mode Menu"
