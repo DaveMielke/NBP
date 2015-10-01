@@ -48,7 +48,7 @@ confirmAction() {
 }
 
 stopBraille() {
-  braille stop
+  braille stop || :
 }
 
 startBraille() {
@@ -277,9 +277,15 @@ chooseFile() {
           if [ ! -d "${path}" ]
           then
             echo "${path}"
-          elif chooseFile "${path}/" $(cd "${path}" && ls -1)
-          then
-            continue
+          else
+            local mounted=false
+            ! mountDirectory "${path}" || mounted=true
+
+            local done=true
+            ! chooseFile "${path}/" $(cd "${path}" && ls -1) || done=false
+
+            ! "${mounted}" || unmountDirectory "${path}"
+            ! "${done}" && continue
           fi
 
           return 1
@@ -309,6 +315,7 @@ performAction_update() {
     if confirmAction "apply update"
     then
       stopBraille
+      recovery "--update_package=${file}"
       startBraille
     else
       programMessage "update cancelled"
