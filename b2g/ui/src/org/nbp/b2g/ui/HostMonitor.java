@@ -18,6 +18,16 @@ public class HostMonitor extends BroadcastReceiver {
 
   private final static Map<String, Bundle> intentExtras = new HashMap<String, Bundle>();
 
+  private static Bundle getIntentExtras (String action) {
+    synchronized (intentExtras) {
+      return intentExtras.get(action);
+    }
+  }
+
+  public static Bundle getBatteryStatus () {
+    return getIntentExtras(Intent.ACTION_BATTERY_CHANGED);
+  }
+
   private final static String sdcardPath;
   private static PowerManager.WakeLock sdcardWakeLock = null;
 
@@ -29,17 +39,12 @@ public class HostMonitor extends BroadcastReceiver {
     Log.d(LOG_TAG, "SD card path: " + sdcardPath);
   }
 
-  private static Bundle getIntentExtras (String action) {
-    synchronized (intentExtras) {
-      return intentExtras.get(action);
-    }
+  private enum MediaAction {
+    ADDED,
+    REMOVED
   }
 
-  public static Bundle getBatteryStatus () {
-    return getIntentExtras(Intent.ACTION_BATTERY_CHANGED);
-  }
-
-  public static void changeMediaState (Intent intent, boolean added) {
+  private static void handleMediaAction (Intent intent, MediaAction action) {
     String path = intent.getData().getPath();
     Log.d(LOG_TAG, "media path: " + path);
 
@@ -47,17 +52,30 @@ public class HostMonitor extends BroadcastReceiver {
       synchronized (sdcardPath) {
         boolean haveWakeLock = sdcardWakeLock != null;
 
-        if (added) {
-          if (!haveWakeLock) {
-            sdcardWakeLock = ApplicationContext.getPowerManager().newWakeLock(
-              PowerManager.PARTIAL_WAKE_LOCK,
-              ApplicationContext.getString(R.string.app_name)
-            );
+        switch (action) {
+          case ADDED: {
+            if (!haveWakeLock) {
+              sdcardWakeLock = ApplicationContext.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK, "sdcard"
+              );
+            }
+
+            if (!sdcardWakeLock.isHeld()) {
+              Log.d(LOG_TAG, "acquiring SD card wake lock");
+              sdcardWakeLock.acquire();
+            }
+
+            break;
           }
 
-          sdcardWakeLock.acquire();
-        } else if (haveWakeLock) {
-          sdcardWakeLock.release();
+          case REMOVED: {
+            if (haveWakeLock && sdcardWakeLock.isHeld()) {
+              Log.d(LOG_TAG, "releasing SD card wake lock");
+              sdcardWakeLock.release();
+            }
+
+            break;
+          }
         }
       }
     }
@@ -71,13 +89,13 @@ public class HostMonitor extends BroadcastReceiver {
       Log.d(LOG_TAG, "host event: " + action);
 
       if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-        changeMediaState(intent, true);
+        handleMediaAction(intent, MediaAction.ADDED);
         Characters.setCharacters(new Characters());
         return;
       }
 
       if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-        changeMediaState(intent, false);
+        handleMediaAction(intent, MediaAction.REMOVED);
         return;
       }
 

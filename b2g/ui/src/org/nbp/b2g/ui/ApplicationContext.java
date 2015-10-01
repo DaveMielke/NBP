@@ -162,12 +162,18 @@ public abstract class ApplicationContext {
     return powerManager.isScreenOn();
   }
 
+  public static PowerManager.WakeLock newWakeLock (int type, String component) {
+    PowerManager pm = getPowerManager();
+    if (pm == null) return null;
+    return pm.newWakeLock(type, ("b2g_ui-" + component));
+  }
+
   private static PowerManager.WakeLock wakeLock = null;
 
   private static void acquireWakeLock () {
-    wakeLock = getPowerManager().newWakeLock(
+    wakeLock = newWakeLock(
       PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
-      getString(R.string.app_name)
+      "screen"
     );
 
     wakeLock.acquire();
