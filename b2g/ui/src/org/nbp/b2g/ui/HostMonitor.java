@@ -18,6 +18,15 @@ public class HostMonitor extends BroadcastReceiver {
 
   private final static Map<String, Bundle> intentExtras = new HashMap<String, Bundle>();
 
+  private final static String sdcardPath;
+  static {
+    String path = System.getenv("SECONDARY_STORAGE");
+    if (path == null) path = System.getenv("EXTERNAL_STORAGE");
+
+    sdcardPath = path;
+    Log.d(LOG_TAG, "SD card path: " + sdcardPath);
+  }
+
   private static Bundle getIntentExtras (String action) {
     synchronized (intentExtras) {
       return intentExtras.get(action);
@@ -28,6 +37,19 @@ public class HostMonitor extends BroadcastReceiver {
     return getIntentExtras(Intent.ACTION_BATTERY_CHANGED);
   }
 
+  public static void changeMediaState (Intent intent, boolean added) {
+    String path = intent.getData().getPath();
+    Log.d(LOG_TAG, "media path: " + path);
+
+    if (path.equals(sdcardPath)) {
+      synchronized (sdcardPath) {
+        if (added) {
+        } else {
+        }
+      }
+    }
+  }
+
   @Override
   public void onReceive (Context context, Intent intent) {
     String action = intent.getAction();
@@ -35,11 +57,15 @@ public class HostMonitor extends BroadcastReceiver {
     if (action != null) {
       Log.d(LOG_TAG, "host event: " + action);
 
-      if (Environment.isExternalStorageRemovable()) {
-        if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-          Characters.setCharacters(new Characters());
-          return;
-        }
+      if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+        changeMediaState(intent, true);
+        Characters.setCharacters(new Characters());
+        return;
+      }
+
+      if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+        changeMediaState(intent, false);
+        return;
       }
 
       synchronized (intentExtras) {
