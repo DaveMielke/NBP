@@ -642,6 +642,26 @@ notification, occurs.
 This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
 pressing Forward+VolumeDown disables it.
 
+Differences from Braille Rendering
+``````````````````````````````````
+
+Speech is rendered differently than braille is in the following ways:
+
+* The [brackets] around screen element descriptions provided by application
+  developers aren't spoken.
+
+* The {braces} around screen element types aren't spoken.
+
+* A space is inserted in between each pair of a lowercase letter followed by an
+  uppercase letter within screen element types in order to improve the way that
+  each implied word is pronounced. For example, ``SeekBar`` is spoken as
+  ``Seek Bar``.
+
+* The (parentheses) around screen element states aren't spoken.
+
+* The state of a checkbox (or switch) is spoken as either ``checked`` or
+  ``not checked``.
+
 Braille
 ~~~~~~~
 
