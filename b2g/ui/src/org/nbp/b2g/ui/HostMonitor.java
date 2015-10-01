@@ -10,8 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import android.os.Environment;
 import android.os.Bundle;
+import android.os.PowerManager;
 
 public class HostMonitor extends BroadcastReceiver {
   private final static String LOG_TAG = HostMonitor.class.getName();
@@ -19,6 +19,8 @@ public class HostMonitor extends BroadcastReceiver {
   private final static Map<String, Bundle> intentExtras = new HashMap<String, Bundle>();
 
   private final static String sdcardPath;
+  private static PowerManager.WakeLock sdcardWakeLock = null;
+
   static {
     String path = System.getenv("SECONDARY_STORAGE");
     if (path == null) path = System.getenv("EXTERNAL_STORAGE");
@@ -43,8 +45,19 @@ public class HostMonitor extends BroadcastReceiver {
 
     if (path.equals(sdcardPath)) {
       synchronized (sdcardPath) {
+        boolean haveWakeLock = sdcardWakeLock != null;
+
         if (added) {
-        } else {
+          if (!haveWakeLock) {
+            sdcardWakeLock = ApplicationContext.getPowerManager().newWakeLock(
+              PowerManager.PARTIAL_WAKE_LOCK,
+              ApplicationContext.getString(R.string.app_name)
+            );
+          }
+
+          sdcardWakeLock.acquire();
+        } else if (haveWakeLock) {
+          sdcardWakeLock.release();
         }
       }
     }
