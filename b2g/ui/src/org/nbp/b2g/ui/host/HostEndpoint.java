@@ -87,6 +87,20 @@ public class HostEndpoint extends Endpoint {
     setSpeechSpan(sb, start, ApplicationContext.getString(text));
   }
 
+  private final static void appendElementState (SpannableStringBuilder sb, String word) {
+    int start = sb.length();
+
+    sb.append(" (");
+    sb.append(word);
+    sb.append(')');
+
+    setSpeechSpan(sb, start, word);
+  }
+
+  private final static void appendElementState (SpannableStringBuilder sb, int word) {
+    appendElementState(sb, ApplicationContext.getString(word));
+  }
+
   private static CharSequence toText (AccessibilityNodeInfo node) {
     SpannableStringBuilder sb = new SpannableStringBuilder();
     CharSequence characters;
@@ -128,7 +142,7 @@ public class HostEndpoint extends Endpoint {
     }
 
     if (!node.isEnabled()) {
-      sb.append(" (disabled)");
+      appendElementState(sb, R.string.state_disabled);
     }
 
     return sb.subSequence(0, sb.length());
