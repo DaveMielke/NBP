@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import android.text.Spanned;
-import android.text.style.TtsSpan;
 
 public class SpeechDevice {
   private final static String LOG_TAG = SpeechDevice.class.getName();
