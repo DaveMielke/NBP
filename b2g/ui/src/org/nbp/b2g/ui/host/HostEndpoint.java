@@ -2,6 +2,9 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.host.actions.*;
 import org.nbp.b2g.ui.*;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.util.Log;
 
 import android.os.Bundle;
@@ -61,6 +64,17 @@ public class HostEndpoint extends Endpoint {
     return text.subSequence(0, text.length());
   }
 
+  private final static Map<String, String> expandedTypes = new HashMap<String, String>();
+
+  private final static String getExpandedType (String type) {
+    String text = expandedTypes.get(type);
+    if (text != null) return text;
+
+    text = type.replaceAll("(?<=\\p{Lower})()(?=\\p{Upper})", " ");
+    expandedTypes.put(type, text);
+    return text;
+  }
+
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
     sb.setSpan(new SpeechSpan(text), start, sb.length(), 0);
   }
@@ -103,9 +117,14 @@ public class HostEndpoint extends Endpoint {
 
       setSpeechSpan(sb, start, characters);
     } else if (!ScreenUtilities.isEditable(node)) {
+      String type = ScreenUtilities.getClassName(node);
+      int start = sb.length();
+
       sb.append('{');
-      sb.append(ScreenUtilities.getClassName(node));
+      sb.append(type);
       sb.append('}');
+
+      setSpeechSpan(sb, start, getExpandedType(type));
     }
 
     if (!node.isEnabled()) {
