@@ -164,18 +164,6 @@ performAction_cache() {
   fi
 }
 
-addAction data "wipe data partition (factory reset)"
-performAction_data() {
-  if confirmAction "wipe data"
-  then
-    stopBraille
-    recovery --wipe_data
-    startBraille
-  else
-    programMessage "wipe cancelled"
-  fi
-}
-
 addAction exit "exit this menu"
 performAction_exit() {
   if confirmAction "exit menu"
@@ -185,6 +173,18 @@ performAction_exit() {
     exit 0
   else
     programMessage "exit cancelled"
+  fi
+}
+
+addAction reset "factory reset (wipe cache and user data)"
+performAction_reset() {
+  if confirmAction "factory reset"
+  then
+    stopBraille
+    recovery --wipe_data
+    startBraille
+  else
+    programMessage "reset cancelled"
   fi
 }
 

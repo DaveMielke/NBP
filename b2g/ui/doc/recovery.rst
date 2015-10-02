@@ -28,17 +28,20 @@ The Boot Action
 The Cache Action
 ~~~~~~~~~~~~~~~~
 
-The Data Action
-~~~~~~~~~~~~~~~
-
 The Exit Action
 ~~~~~~~~~~~~~~~
+
+The Reset Action
+~~~~~~~~~~~~~~~~
 
 The Shell Action
 ~~~~~~~~~~~~~~~~
 
 The Update Action
 ~~~~~~~~~~~~~~~~~
+
+The File Browser
+~~~~~~~~~~~~~~~~
 
 Dot1
   Go up to the previous entry within the current folder.
@@ -57,3 +60,4 @@ Dot5
 
 Dot3
   Exit the file browser without choosing a file.
+
