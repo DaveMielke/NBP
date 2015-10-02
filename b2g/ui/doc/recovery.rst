@@ -28,6 +28,19 @@ VolumeUp) in order to stop BRLTTY's |product name| braille driver. The
 The Braille Menu
 ----------------
 
+The braille menu offers the same functionality as the visual menu but in
+a different way because it's been designed for a text-mode environment.
+When it starts,
+it shows a list summarizing the actions that can be selected,
+and then presents the prompt::
+
+  action>
+
+To select an action, type its name and then press Enter.
+Unambiguous abbreviations of action names are recognized.
+Leading and/or trailing spaces are ignored.
+Entering an empty line redisplays the action summary.
+
 The Boot Action
 ~~~~~~~~~~~~~~~
 
