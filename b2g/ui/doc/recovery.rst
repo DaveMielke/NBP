@@ -28,23 +28,6 @@ VolumeUp) in order to stop BRLTTY's |product name| braille driver. The
 The Braille Menu
 ----------------
 
-User Confirmation
-~~~~~~~~~~~~~~~~~
-
-Some actions require user confirmation.
-The prompt is a brief description of the action that's to be performed,
-followed by a question mark (``?``).
-The user's response may be:
-
-``yes`` (or any abbreviation thereof)
-  The action is performed.
-
-``no`` (or any abbreviation thereof)
-  The action is cancelled.
-
-anything else
-  The confirmation prompt is reissued.
-
 The Boot Action
 ~~~~~~~~~~~~~~~
 
@@ -92,24 +75,43 @@ OTA updates are ``.zip`` files that contain special meta-data
 They're used to update either the whole Android system
 or just parts of it.
 You must first choose the specific update that you'd like to apply
-via `The File Browser`_ (which is automatically started for you).
+via `The File System Browser`_ (which is automatically started for you).
 
-The File Browser
-~~~~~~~~~~~~~~~~
+The File System Browser
+-----------------------
 
-The file browser is used to look through the file system in order to find
-the file that's to be processed by the currently selected action.
+The file system browser is used to look through the file system in order
+to find the file that's to be processed by the currently selected action.
 It's used, for example, by `The Update Action`_.
 
-When the file browser starts,
-it shows a list summarizing what each of the |product name| keys does,
-and then presents the top-level folder list
-(a list of the volumes that can be browsed).
-It contains:
+When the file system browser starts,
+it shows a list summarizing `The Navigation Keys`_,
+and then presents `The Top-Level Folder List`_.
+
+Only the current entry of the current folder is displayed.
+The line containing it is always rewritten,
+so the navigation key summary is always just above it for easy reference.
+
+The following suffixes are used to describe the current file system entry:
+
+=========  ========
+Character  Type
+---------  --------
+/          a folder
+=========  ========
+
+The Top-Level Folder List
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The top-level folder list contains the volumes that can be browsed.
+They are:
 
 * |the SD card|
 * |the system cache|
 * |user data|
+
+The Navigation Keys
+~~~~~~~~~~~~~~~~~~~
 
 The following |product name| keys can be used to browse the file system:
 
@@ -121,13 +123,30 @@ Dot4
 
 Dot2
   Go back to the parent folder (equivalent to ``..`` within the visual 
-  menu). If within the top-level folder list then exit the file browser 
-  without choosing a file.
+  menu). If within `The Top-Level Folder List`_
+  then exit the file system browser without choosing a file.
 
 Dot5
   If the current entry is a folder then go into it. If it's a file 
-  then choose it and exit the file browser.
+  then choose it and exit the file system browser.
 
 Dot3
-  Exit the file browser without choosing a file.
+  Exit the file system browser without choosing a file.
+
+User Confirmation
+-----------------
+
+Some actions require user confirmation.
+The prompt is a brief description of the action that's to be performed,
+followed by a question mark (``?``).
+The user's response may be:
+
+``yes`` (or any abbreviation thereof)
+  The action is performed.
+
+``no`` (or any abbreviation thereof)
+  The action is cancelled.
+
+anything else
+  The confirmation prompt is reissued.
 
