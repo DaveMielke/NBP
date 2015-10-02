@@ -158,6 +158,8 @@ public abstract class KeyEvents {
   }
 
   private static void handleNavigationKeyPress (int keyMask) {
+    ApplicationContext.awakenSystem();
+
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
         pressedNavigationKeys |= keyMask;
@@ -233,6 +235,8 @@ public abstract class KeyEvents {
   }
 
   private static void handleCursorKeyPress (int keyNumber) {
+    ApplicationContext.awakenSystem();
+
     if (ApplicationSettings.ONE_HAND) {
       pressedCursorKeys.clear();
     }

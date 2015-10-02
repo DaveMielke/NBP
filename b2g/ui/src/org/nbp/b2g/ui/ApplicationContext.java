@@ -38,7 +38,6 @@ public abstract class ApplicationContext {
       applicationContext = context.getApplicationContext();
     }
 
-    acquireWakeLock();
     HostMonitor.monitorEvents(context);
     Clipboard.setClipboard(context);
 
@@ -168,15 +167,21 @@ public abstract class ApplicationContext {
     return pm.newWakeLock(type, ("b2g_ui-" + component));
   }
 
-  private static PowerManager.WakeLock wakeLock = null;
+  private final static Object awakenSynchronizeLock = new Object();
+  private static PowerManager.WakeLock awakenWakeLock = null;
 
-  private static void acquireWakeLock () {
-    wakeLock = newWakeLock(
-      PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
-      "screen"
-    );
+  public static void awakenSystem () {
+    synchronized (awakenSynchronizeLock) {
+      if (awakenWakeLock == null) {
+        awakenWakeLock = newWakeLock(
+          PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
+          "awaken"
+        );
+      }
 
-    wakeLock.acquire();
+      awakenWakeLock.acquire();
+      awakenWakeLock.release();
+    }
   }
 
   public static KeyguardManager getKeyguardManager () {
