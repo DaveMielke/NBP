@@ -8,5 +8,6 @@ The |user interface|
 
 .. include:: introduction.rst
 .. include:: navigation.rst
+.. include:: recovery.rst
 .. include:: reference.rst
 .. include:: tables.rst

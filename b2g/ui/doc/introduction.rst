@@ -75,7 +75,7 @@ If the system is shut down, then:
   device won't boot. In this case, switch it back off, and then charge the
   battery for a while before trying again.
 
-* Switching it on while holding VolumeDown boots the device into Recovery Mode.
+* Switching it on while holding VolumeDown boots the device into `Recovery Mode`_.
 
 If the system is running, then:
 

@@ -24,9 +24,7 @@ Switching the power off:
   etc) will be shut down in order to save power.
 
 Holding VolumeDown while switching the power on:
-  If the system is shut down then boot into Recovery Mode. This is equivalent
+  If the system is shut down then boot into `Recovery Mode`_. This is equivalent
   to a simultaneous long press of the Power button and the Volume Up key on an
-  Android device. Neither braille nor speech works in Recovery Mode. This
-  binding is intended for use by a sighted person using an external video
-  monitor.
+  Android device.
 
