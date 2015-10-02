@@ -105,13 +105,21 @@ Only the current entry of the current folder is displayed.
 The line containing it is always rewritten,
 so the navigation key summary is always just above it for easy reference.
 
-The following suffixes are used to describe the current file system entry:
+A single-character indicator is appended to the name of the current
+file system entry that describes what it is.
+The indicators are:
 
-=========  ========
-Character  Type
----------  --------
-/          a folder
-=========  ========
+=========  ==================
+Indicator  Type
+---------  ------------------
+\/         folder (directory)
+\*         executable file
+\@         symbolic link
+\|         FIFO (named pipe)
+\=         socket
+\%         character device
+\$         block device
+=========  ==================
 
 The Top-Level Folder List
 ~~~~~~~~~~~~~~~~~~~~~~~~~

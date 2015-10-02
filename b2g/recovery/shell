@@ -242,7 +242,35 @@ chooseFile() {
     then
       eval 'local name=${'"${index}"'}'
       local path="${directory}${name}"
-      [ ! -d "${path}" ] || name="${name}/"
+      local indicator=""
+
+      if [ -d "${path}" ]
+      then
+        indicator='/'
+      elif [ -f "${path}" ]
+      then
+        if [ -x "${path}" ]
+        then
+          indicator='*'
+        fi
+      elif [ -h "${path}" ]
+      then
+        indicator='@'
+      elif [ -p "${path}" ]
+      then
+        indicator='|'
+      elif [ -S "${path}" ]
+      then
+        indicator='='
+      elif [ -c "${path}" ]
+      then
+        indicator='%'
+      elif [ -b "${path}" ]
+      then
+        indicator='$'
+      fi
+
+      name="${name}${indicator}"
     else
       local name="(empty folder)"
       local path=""
