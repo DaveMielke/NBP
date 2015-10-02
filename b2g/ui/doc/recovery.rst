@@ -17,7 +17,7 @@ Recovery Mode. Braille access in Recovery Mode is provided by BRLTTY
 
 BRLTTY's key bindings for the |product name| are different than those 
 defined by the |user interface|. Describing them is beyond the scope of 
-this document. Please see |BRLTTY key table URL|.
+this document - please see |BRLTTY key table URL|.
 
 Android's visual 
 Recovery Mode menu can still be used, though braille must first be disabled. Those who prefer to use an external 
@@ -48,42 +48,70 @@ anything else
 The Boot Action
 ~~~~~~~~~~~~~~~
 
+This action reboots to Android.
 |user confirmation|
 
 The Cache Action
 ~~~~~~~~~~~~~~~~
 
-|the system cache|
-
+This action wipes |the system cache|, and then reboots to Android.
 |user confirmation|
 
 The Exit Action
 ~~~~~~~~~~~~~~~
 
+This action terminates this menu.
 |user confirmation|
+
+Once terminated, it's not that easy to restart the menu.
+This action has only been defined so that the |product name| developers
+can easily test changes to the menu.
 
 The Reset Action
 ~~~~~~~~~~~~~~~~
 
-|the system cache|
-|user data|
-
+This action performs a factory reset, and then reboots to Android.
+Both |the system cache| and |user data| are wiped.
 |user confirmation|
 
 The Shell Action
 ~~~~~~~~~~~~~~~~
 
+This action starts an interactive Unix-style shell.
+Use the shell's ``exit`` command to return to this menu.
+
 The Update Action
 ~~~~~~~~~~~~~~~~~
 
+This action applies an OTA (over-the-air) update,
+and then reboots to Android.
 |user confirmation|
+
+OTA updates are ``.zip`` files that contain special meta-data
+(including an electronic signature).
+They're used to update either the whole Android system
+or just parts of it.
+You must first choose the specific update that you'd like to apply
+via `The File Browser`_ (which is automatically started for you).
 
 The File Browser
 ~~~~~~~~~~~~~~~~
 
+The file browser is used to look through the file system in order to find
+the file that's to be processed by the currently selected action.
+It's used, for example, by `The Update Action`_.
+
+When the file browser starts,
+it shows a list summarizing what each of the |product name| keys does,
+and then presents the top-level folder list
+(a list of the volumes that can be browsed).
+It contains:
+
 * |the SD card|
 * |the system cache|
 * |user data|
+
+The following |product name| keys can be used to browse the file system:
 
 Dot1
   Go up to the previous entry within the current folder.
@@ -93,7 +121,7 @@ Dot4
 
 Dot2
   Go back to the parent folder (equivalent to ``..`` within the visual 
-  menu). If within the initial volume list then exit the file browser 
+  menu). If within the top-level folder list then exit the file browser 
   without choosing a file.
 
 Dot5
