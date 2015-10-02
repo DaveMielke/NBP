@@ -4,6 +4,12 @@ Recovery Mode
 .. |BRLTTY home page URL| replace:: http://brltty.com
 .. |BRLTTY key table URL| replace:: http://brltty.com/doc/KeyBindings/brl-bg-all.html
 
+.. |the SD card| replace:: ``/sdcard`` (the removable SD card)
+.. |the system cache| replace:: ``/cache`` (the system cache partition)
+.. |user data| replace:: ``/data`` (the user data partition)
+
+.. |user confirmation| replace:: This requires `User Confirmation`_.
+
 Recovery Mode is a single-user environment within which system 
 maintenance can be performed safely. The |user interface| isn't available in 
 Recovery Mode. Braille access in Recovery Mode is provided by BRLTTY
@@ -22,17 +28,47 @@ VolumeUp) in order to stop BRLTTY's |product name| braille driver. The
 The Braille Menu
 ----------------
 
+User Confirmation
+~~~~~~~~~~~~~~~~~
+
+Some actions require user confirmation.
+The prompt is a brief description of the action that's to be performed,
+followed by a question mark (``?``).
+The user's response may be:
+
+``yes`` (or any abbreviation thereof)
+  The action is performed.
+
+``no`` (or any abbreviation thereof)
+  The action is cancelled.
+
+anything else
+  The confirmation prompt is reissued.
+
 The Boot Action
 ~~~~~~~~~~~~~~~
+
+|user confirmation|
 
 The Cache Action
 ~~~~~~~~~~~~~~~~
 
+|the system cache|
+
+|user confirmation|
+
 The Exit Action
 ~~~~~~~~~~~~~~~
 
+|user confirmation|
+
 The Reset Action
 ~~~~~~~~~~~~~~~~
+
+|the system cache|
+|user data|
+
+|user confirmation|
 
 The Shell Action
 ~~~~~~~~~~~~~~~~
@@ -40,8 +76,14 @@ The Shell Action
 The Update Action
 ~~~~~~~~~~~~~~~~~
 
+|user confirmation|
+
 The File Browser
 ~~~~~~~~~~~~~~~~
+
+* |the SD card|
+* |the system cache|
+* |user data|
 
 Dot1
   Go up to the previous entry within the current folder.
