@@ -123,7 +123,7 @@ Dot4
 
 Dot2
   Go back to the parent folder (equivalent to ``..`` within the visual 
-  menu). If within `The Top-Level Folder List`_
+  file system browser). If within `The Top-Level Folder List`_
   then exit the file system browser without choosing a file.
 
 Dot5

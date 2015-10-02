@@ -1,19 +1,6 @@
 Quick Reference
 ===============
 
-Firmware Features
------------------
-
-Status Alerts
-~~~~~~~~~~~~~
-
-.. include:: ref-firmware-alerts.rst
-
-Key Bindings
-~~~~~~~~~~~~
-
-.. include:: ref-firmware-bindings.rst
-
 Braille
 -------
 
