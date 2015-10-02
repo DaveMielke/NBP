@@ -19,3 +19,41 @@ video monitor must press both volume keys together (VolumeDown +
 VolumeUp) in order to stop BRLTTY's |product name| braille driver. The 
 |product name| keyboard can then be used to navigate the visual menu.
 
+The Braille Menu
+----------------
+
+The Boot Action
+~~~~~~~~~~~~~~~
+
+The Cache Action
+~~~~~~~~~~~~~~~~
+
+The Data Action
+~~~~~~~~~~~~~~~
+
+The Exit Action
+~~~~~~~~~~~~~~~
+
+The Shell Action
+~~~~~~~~~~~~~~~~
+
+The Update Action
+~~~~~~~~~~~~~~~~~
+
+Dot1
+  Go up to the previous entry within the current folder.
+
+Dot4
+  Go down to the next entry within the current folder.
+
+Dot2
+  Go back to the parent folder (equivalent to ``..`` within the visual 
+  menu). If within the initial volume list then exit the file browser 
+  without choosing a file.
+
+Dot5
+  If the current entry is a folder then go into it. If it's a file 
+  then choose it and exit the file browser.
+
+Dot3
+  Exit the file browser without choosing a file.
