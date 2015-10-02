@@ -65,6 +65,7 @@ public class HostMonitor extends BroadcastReceiver {
               sdcardWakeLock.acquire();
             }
 
+            Characters.setCharacters(new Characters());
             break;
           }
 
@@ -90,17 +91,12 @@ public class HostMonitor extends BroadcastReceiver {
 
       if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
         handleMediaAction(intent, MediaAction.ADDED);
-        Characters.setCharacters(new Characters());
-        return;
-      }
-
-      if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+      } else if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
         handleMediaAction(intent, MediaAction.REMOVED);
-        return;
-      }
-
-      synchronized (intentExtras) {
-        intentExtras.put(action, intent.getExtras());
+      } else {
+        synchronized (intentExtras) {
+          intentExtras.put(action, intent.getExtras());
+        }
       }
     }
   }
