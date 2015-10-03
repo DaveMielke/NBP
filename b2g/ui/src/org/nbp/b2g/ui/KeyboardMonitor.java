@@ -11,14 +11,13 @@ public class KeyboardMonitor extends EventMonitor {
 
   @Override
   protected boolean handleKeyEvent (int code, boolean press) {
-    switch (code) {
-      case ScanCode.WAKEUP:
-        Keyboard.injectKey(code, press);
-        return true;
-
-      default:
-        return false;
+    if (code == ScanCode.WAKEUP) {
+      Keyboard.injectKey(code, press);
+    } else {
+      return false;
     }
+
+    return true;
   }
 
   public KeyboardMonitor () {

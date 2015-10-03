@@ -34,8 +34,8 @@ public abstract class EventMonitor extends Thread {
     }
 
     if (!handleKeyEvent(code, press)) {
-      if ((code >= ScanCode.CURSOR_0) && (code <= ScanCode.CURSOR_19)) {
-        KeyEvents.handleCursorKeyEvent((code - ScanCode.CURSOR_0), press);
+      if ((code >= ScanCode.CURSOR_FIRST) && (code <= ScanCode.CURSOR_LAST)) {
+        KeyEvents.handleCursorKeyEvent((code - ScanCode.CURSOR_FIRST), press);
       } else {
         KeyEvents.handleNavigationKeyEvent(ScanCode.toKeyMask(code), press);
       }
