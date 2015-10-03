@@ -12,24 +12,48 @@ import android.os.PowerManager;
 
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Button;
 
 public class MaintenanceActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = MaintenanceActivity.class.getName();
 
-  public PowerManager getPowerManager () {
-    return (PowerManager)getSystemService(Context.POWER_SERVICE);
-  }
-  private void rebootDevice (String reason) {
-    getPowerManager().reboot(reason);
+  private TextView messageView;
+
+  private Context getContext () {
+    return MaintenanceActivity.this;
   }
 
-  private View createRebootAndroidButton () {
+  private void setMessage (String message) {
+    Devices.braille.get().write(message);
+    Devices.speech.get().say(message);
+    messageView.setText(message);
+  }
+
+  private void setMessage (int message) {
+    setMessage(getString(message));
+  }
+
+  private PowerManager getPowerManager () {
+    return (PowerManager)getSystemService(Context.POWER_SERVICE);
+  }
+
+  private String getRebootFailureMessage () {
+    return getString(R.string.maintenance_message_reboot_failed);
+  }
+
+  private void rebootDevice (String reason) {
+    getPowerManager().reboot(reason);
+    setMessage(getRebootFailureMessage());
+  }
+
+  private View createRestartSystemButton () {
     Button button = createButton(
-      R.string.maintenance_RebootAndroid_label,
+      R.string.maintenance_RestartSystem_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          setMessage(R.string.maintenance_RestartSystem_start);
           rebootDevice(null);
         }
       }
@@ -44,6 +68,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          setMessage(R.string.maintenance_RecoveryMode_start);
           rebootDevice("recovery");
         }
       }
@@ -58,6 +83,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          setMessage(R.string.maintenance_BootLoader_start);
           rebootDevice("bootloader");
         }
       }
@@ -66,16 +92,22 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
-  private View createWipeCacheButton () {
+  private View createClearCacheButton () {
     Button button = createButton(
-      R.string.maintenance_WipeCache_label,
+      R.string.maintenance_ClearCache_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          setMessage(R.string.maintenance_ClearCache_start);
+          String failure = getRebootFailureMessage();
+
           try {
-            RecoverySystem.rebootWipeCache(MaintenanceActivity.this);
+            RecoverySystem.rebootWipeCache(getContext());
           } catch (IOException exception) {
+            failure = exception.getMessage();
           }
+
+          setMessage(failure);
         }
       }
     );
@@ -83,16 +115,22 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
-  private View createWipeCacheAndDataButton () {
+  private View createFactoryResetButton () {
     Button button = createButton(
-      R.string.maintenance_WipeCacheAndData_label,
+      R.string.maintenance_FactoryReset_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          setMessage(R.string.maintenance_FactoryReset_start);
+          String failure = getRebootFailureMessage();
+
           try {
-            RecoverySystem.rebootWipeUserData(MaintenanceActivity.this);
+            RecoverySystem.rebootWipeUserData(getContext());
           } catch (IOException exception) {
+            failure = exception.getMessage();
           }
+
+          setMessage(failure);
         }
       }
     );
@@ -114,12 +152,15 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       ApplicationParameters.SCREEN_LEFT_OFFSET
     );
 
-    view.addView(createRebootAndroidButton());
+    messageView = createTextView();
+    view.addView(messageView);
+
+    view.addView(createRestartSystemButton());
     view.addView(createRecoveryModeButton());
     view.addView(createBootLoaderButton());
 
-    view.addView(createWipeCacheButton());
-    view.addView(createWipeCacheAndDataButton());
+    view.addView(createClearCacheButton());
+    view.addView(createFactoryResetButton());
 
     return view;
   }

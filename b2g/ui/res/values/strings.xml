@@ -16,11 +16,22 @@
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
   <string name="maintenance_activity_label">B2G System Maintenance Operations</string>
-  <string name="maintenance_RebootAndroid_label">Reboot Android</string>
+  <string name="maintenance_message_reboot_failed">device reboot failed</string>
+
+  <string name="maintenance_RestartSystem_label">Restart System</string>
+  <string name="maintenance_RestartSystem_start">rebooting Android</string>
+
   <string name="maintenance_RecoveryMode_label">Recovery Mode</string>
+  <string name="maintenance_RecoveryMode_start">rebooting to recovery</string>
+
   <string name="maintenance_BootLoader_label">Boot Loader</string>
-  <string name="maintenance_WipeCache_label">Wipe Cache</string>
-  <string name="maintenance_WipeCacheAndData_label">Wipe Cache and Data</string>
+  <string name="maintenance_BootLoader_start">rebooting to loader</string>
+
+  <string name="maintenance_ClearCache_label">Clear Cache</string>
+  <string name="maintenance_ClearCache_start">wiping cache</string>
+
+  <string name="maintenance_FactoryReset_label">Factory Reset</string>
+  <string name="maintenance_FactoryReset_start">wiping cache and data</string>
 
   <string name="state_disabled">disabled</string>
 
