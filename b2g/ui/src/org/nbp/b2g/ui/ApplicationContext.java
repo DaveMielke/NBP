@@ -168,25 +168,6 @@ public abstract class ApplicationContext {
     return pm.newWakeLock(type, ("b2g_ui-" + component));
   }
 
-  private final static Object awakenSynchronizeLock = new Object();
-  private static PowerManager.WakeLock awakenWakeLock = null;
-
-  public static void awakenSystem () {
-    synchronized (awakenSynchronizeLock) {
-      if (awakenWakeLock == null) {
-        awakenWakeLock = newWakeLock(
-          PowerManager.SCREEN_BRIGHT_WAKE_LOCK
-          | PowerManager.ACQUIRE_CAUSES_WAKEUP
-          | PowerManager.ON_AFTER_RELEASE,
-          "awaken"
-        );
-      }
-
-      awakenWakeLock.acquire();
-      awakenWakeLock.release();
-    }
-  }
-
   public static KeyguardManager getKeyguardManager () {
     Object systemService = getSystemService(Context.KEYGUARD_SERVICE);
     if (systemService == null) return null;

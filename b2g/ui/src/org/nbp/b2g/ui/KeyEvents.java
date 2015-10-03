@@ -14,6 +14,8 @@ import java.util.HashMap;
 
 import android.util.Log;
 
+import android.os.PowerManager;
+
 public abstract class KeyEvents {
   private final static String LOG_TAG = KeyEvents.class.getName();
 
@@ -122,8 +124,27 @@ public abstract class KeyEvents {
     }
   }
 
+  private final static Object awakenSynchronizeLock = new Object();
+  private static PowerManager.WakeLock awakenWakeLock = null;
+
+  private static void awakenSystem () {
+    synchronized (awakenSynchronizeLock) {
+      if (awakenWakeLock == null) {
+        awakenWakeLock = ApplicationContext.newWakeLock(
+          PowerManager.SCREEN_BRIGHT_WAKE_LOCK
+          | PowerManager.ACQUIRE_CAUSES_WAKEUP
+          | PowerManager.ON_AFTER_RELEASE,
+          "awaken"
+        );
+      }
+
+      awakenWakeLock.acquire();
+      awakenWakeLock.release();
+    }
+  }
+
   private static void onKeyPress () {
-    ApplicationContext.awakenSystem();
+    awakenSystem();
   }
 
   private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME, "long-key-press-timeout") {
