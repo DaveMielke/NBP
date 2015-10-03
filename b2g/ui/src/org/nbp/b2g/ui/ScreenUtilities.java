@@ -304,7 +304,7 @@ public abstract class ScreenUtilities {
     }
 
     if (isDescribed) {
-      logNavigation(node, "node is described");
+      logNavigation(node, "node has description");
     } else if (node.getText() != null) {
       logNavigation(node, "node has text");
     } else if (isEditable(node)) {
