@@ -8,7 +8,9 @@ import android.util.Log;
 public abstract class ScanCode {
   private final static String LOG_TAG = ScanCode.class.getName();
 
+  public final static int POWER;
   public final static int WAKEUP;
+
   public final static int CURSOR_FIRST;
   public final static int CURSOR_LAST;
 
@@ -41,7 +43,9 @@ public abstract class ScanCode {
   }
 
   static {
+    POWER = map("POWER");
     WAKEUP = map("B2G_WAKEUP");
+
     CURSOR_FIRST = map("B2G_CURSOR_0");
     CURSOR_LAST = map("B2G_CURSOR_39");
 

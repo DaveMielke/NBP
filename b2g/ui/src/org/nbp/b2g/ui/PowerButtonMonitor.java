@@ -9,8 +9,6 @@ public class PowerButtonMonitor extends EventMonitor {
   @Override
   protected native int openDevice ();
 
-  private final static int POWER_BUTTON_SCAN_CODE = Keyboard.getScanCodeValue("POWER");
-
   private static boolean isAwake = true;
 
   @Override
@@ -20,8 +18,10 @@ public class PowerButtonMonitor extends EventMonitor {
     Keyboard.injectKey(code, press);
     Controls.restoreSaneValues();
 
-    int keyMask = isAwake? KeyMask.SLEEP: KeyMask.WAKE;
-    KeyEvents.handleNavigationKeyEvent(keyMask, press);
+    {
+      int keyMask = isAwake? KeyMask.SLEEP: KeyMask.WAKE;
+      KeyEvents.handleNavigationKeyEvent(keyMask, press);
+    }
 
     return true;
   }
