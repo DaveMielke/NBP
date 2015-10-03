@@ -175,7 +175,9 @@ public abstract class ApplicationContext {
     synchronized (awakenSynchronizeLock) {
       if (awakenWakeLock == null) {
         awakenWakeLock = newWakeLock(
-          PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
+          PowerManager.SCREEN_BRIGHT_WAKE_LOCK
+          | PowerManager.ACQUIRE_CAUSES_WAKEUP
+          | PowerManager.ON_AFTER_RELEASE,
           "awaken"
         );
       }
