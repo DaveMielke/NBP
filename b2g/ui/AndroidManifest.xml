@@ -67,7 +67,7 @@
     </service>
 
     <service
-        android:name=".ScreenMonitor"
+        android:name=".host.ScreenMonitor"
         android:label="@string/screen_monitor_label"
         android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
         >

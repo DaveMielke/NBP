@@ -6,7 +6,7 @@ declare -A settingDescriptors=(
    ["adb-enabled"]="boolean database adb_enabled secure"
 
    ["accessibility-services"]="boolean database accessibility_enabled secure"
-   ["b2g-screen-monitor"]="boolean accessibility .ScreenMonitor org.nbp.b2g.ui"
+   ["b2g-screen-monitor"]="boolean accessibility .host.ScreenMonitor org.nbp.b2g.ui"
    ["b2g-input-service"]="boolean input .InputService org.nbp.b2g.ui"
 
    ["screen-timeout"]="milliseconds database screen_off_timeout system"

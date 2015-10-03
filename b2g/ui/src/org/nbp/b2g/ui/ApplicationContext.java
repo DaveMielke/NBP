@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.host.ScreenMonitor;
 
 import android.util.Log;
 
