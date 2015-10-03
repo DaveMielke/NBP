@@ -28,9 +28,9 @@
   <string name="maintenance_BootLoader_starting">rebooting to loader</string>
 
   <string name="maintenance_UpdateSystem_label">Update System</string>
-  <string name="maintenance_UpdateSystem_finding">finding OTA update</string>
-  <string name="maintenance_UpdateSystem_verifying">verifying OTA update</string>
-  <string name="maintenance_UpdateSystem_applying">applying OTA update</string>
+  <string name="maintenance_UpdateSystem_finding">finding update</string>
+  <string name="maintenance_UpdateSystem_verifying">verifying update</string>
+  <string name="maintenance_UpdateSystem_applying">applying update</string>
 
   <string name="maintenance_ClearCache_label">Clear Cache</string>
   <string name="maintenance_ClearCache_starting">wiping cache</string>

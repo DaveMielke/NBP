@@ -52,16 +52,19 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private void updateSystem (File file) {
-    new AsyncTask<File, Integer, Boolean>() {
+    new AsyncTask<File, Integer, String>() {
+      String progressMessage;
+
       @Override
       protected void onPreExecute () {
-        setMessage(R.string.maintenance_UpdateSystem_verifying);
+        progressMessage = getContext().getString(R.string.maintenance_UpdateSystem_verifying);
+        setMessage(progressMessage);
       }
 
       @Override
-      protected Boolean doInBackground (File... files) {
+      protected String doInBackground (File... files) {
         File file = files[0];
-        String failure = getRebootFailureMessage();
+        String result = getRebootFailureMessage();
 
         RecoverySystem.ProgressListener progressListener = new RecoverySystem.ProgressListener() {
           @Override
@@ -71,25 +74,29 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         };
 
         try {
-          RecoverySystem.verifyPackage(file, null, null);
+          RecoverySystem.verifyPackage(file, progressListener, null);
+          result = null;
         } catch (IOException exception) {
-          failure = "system update not readable: " + exception.getMessage();
+          result = "system update not readable: " + exception.getMessage();
         } catch (GeneralSecurityException exception) {
-          failure = "invalid system update: " + exception.getMessage();
+          result = "invalid system update: " + exception.getMessage();
         }
 
-        setMessage(failure);
-        return true;
+        return result;
       }
 
       @Override
       protected void onProgressUpdate (Integer... values) {
+        int percentage = values[0];
+        setMessage(String.format("%s: %d%%", progressMessage, percentage));
       }
 
       @Override
-      protected void onPostExecute (Boolean result) {
-        if (result) {
+      protected void onPostExecute (String result) {
+        if (result == null) {
           setMessage(R.string.maintenance_UpdateSystem_applying);
+        } else {
+          setMessage(result);
         }
       }
     }.execute(file);
