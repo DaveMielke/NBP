@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 public abstract class FloatControl extends IntegerControl {
   protected abstract float getLinearScale ();
   protected abstract float getFloatDefault ();
-  protected abstract float getFloatValue ();
+  public abstract float getFloatValue ();
   protected abstract boolean setFloatValue (float value);
 
   protected float toFloatValue (float linearValue) {
@@ -26,7 +26,7 @@ public abstract class FloatControl extends IntegerControl {
   }
 
   @Override
-  protected final int getIntegerValue () {
+  public final int getIntegerValue () {
     return toIntegerValue(getFloatValue());
   }
 

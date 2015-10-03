@@ -17,7 +17,7 @@ public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverl
   }
 
   @Override
-  protected IndicatorOverlay getEnumerationValue () {
+  public IndicatorOverlay getEnumerationValue () {
     return ApplicationSettings.SELECTION_INDICATOR;
   }
 

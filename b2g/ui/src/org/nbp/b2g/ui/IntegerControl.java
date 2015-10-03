@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 
 public abstract class IntegerControl extends Control {
   protected abstract int getIntegerDefault ();
-  protected abstract int getIntegerValue ();
+  public abstract int getIntegerValue ();
   protected abstract boolean setIntegerValue (int value);
 
   private final boolean adjustValue (int adjustment) {

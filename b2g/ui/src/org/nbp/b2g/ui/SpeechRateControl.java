@@ -32,7 +32,7 @@ public class SpeechRateControl extends LogarithmicFloatControl {
   }
 
   @Override
-  protected float getFloatValue () {
+  public float getFloatValue () {
     return ApplicationSettings.SPEECH_RATE;
   }
 

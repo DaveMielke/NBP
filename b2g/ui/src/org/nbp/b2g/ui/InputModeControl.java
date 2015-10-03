@@ -17,7 +17,7 @@ public class InputModeControl extends EnumerationControl<InputMode> {
   }
 
   @Override
-  protected InputMode getEnumerationValue () {
+  public InputMode getEnumerationValue () {
     return ApplicationSettings.INPUT_MODE;
   }
 

@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 
 public abstract class EnumerationControl<E extends Enum> extends IntegerControl {
   protected abstract E getEnumerationDefault ();
-  protected abstract E getEnumerationValue ();
+  public abstract E getEnumerationValue ();
   protected abstract boolean setEnumerationValue (E value);
 
   private Class getEnumerationClass () {
@@ -49,7 +49,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   @Override
-  protected final int getIntegerValue () {
+  public final int getIntegerValue () {
     return getEnumerationValue().ordinal();
   }
 

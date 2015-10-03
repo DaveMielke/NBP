@@ -17,7 +17,7 @@ public class BrailleFirmnessControl extends IntegerControl {
   }
 
   @Override
-  protected int getIntegerValue () {
+  public int getIntegerValue () {
     return ApplicationSettings.BRAILLE_FIRMNESS;
   }
 

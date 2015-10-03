@@ -49,7 +49,7 @@ public class SpeechBalanceControl extends LinearFloatControl {
   }
 
   @Override
-  protected float getFloatValue () {
+  public float getFloatValue () {
     return ApplicationSettings.SPEECH_BALANCE;
   }
 

@@ -17,7 +17,7 @@ public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay>
   }
 
   @Override
-  protected IndicatorOverlay getEnumerationValue () {
+  public IndicatorOverlay getEnumerationValue () {
     return ApplicationSettings.CURSOR_INDICATOR;
   }
 
