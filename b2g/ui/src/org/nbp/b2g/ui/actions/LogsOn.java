@@ -20,7 +20,7 @@ public class LogsOn extends Action {
 
   @Override
   protected Integer getConfirmation () {
-    return R.string.LogsOff_action_confirmation;
+    return R.string.LogsOn_action_confirmation;
   }
 
   public LogsOn (Endpoint endpoint) {
