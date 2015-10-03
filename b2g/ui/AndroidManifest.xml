@@ -41,6 +41,9 @@
   <!-- for the braille display endpoint -->
   <uses-permission android:name="android.permission.BLUETOOTH" />
 
+  <!-- for system maintenance operations -->
+  <uses-permission android:name="android.permission.REBOOT" />
+
   <application
       android:label="@string/app_name"
       android:icon="@drawable/ic_launcher"
@@ -88,6 +91,12 @@
     <activity
         android:name=".SettingsActivity"
         android:label="@string/settings_activity_label"
+        >
+    </activity>
+
+    <activity
+        android:name=".MaintenanceActivity"
+        android:label="@string/maintenance_activity_label"
         >
     </activity>
 

@@ -55,6 +55,7 @@
 .. |LongClick| replace:: hold (long click) the current screen element
 .. |LongPressOff| replace:: disable long key press actions
 .. |LongPressOn| replace:: enable long key press actions
+.. |Maintenance| replace:: go to the System Maintenance Operations screen of the |user interface|
 .. |MenuKey| replace:: the Android Menu key
 .. |MoveBackward| replace:: go to the start of the previous screen element
 .. |MoveDown| replace:: go to the next line of text or element on the screen

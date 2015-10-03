@@ -15,6 +15,9 @@
 
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
+  <string name="maintenance_activity_label">B2G System Maintenance Operations</string>
+  <string name="maintenance_RecoveryMode_label">Recovery Mode</string>
+
   <string name="state_disabled">disabled</string>
 
   <string name="checkbox_off">not checked</string>

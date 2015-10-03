@@ -122,6 +122,10 @@ public abstract class KeyEvents {
     }
   }
 
+  private static void onKeyPress () {
+    ApplicationContext.awakenSystem();
+  }
+
   private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME, "long-key-press-timeout") {
     @Override
     public void run () {
@@ -158,7 +162,7 @@ public abstract class KeyEvents {
   }
 
   private static void handleNavigationKeyPress (int keyMask) {
-    ApplicationContext.awakenSystem();
+    onKeyPress();
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
@@ -235,7 +239,7 @@ public abstract class KeyEvents {
   }
 
   private static void handleCursorKeyPress (int keyNumber) {
-    ApplicationContext.awakenSystem();
+    onKeyPress();
 
     if (ApplicationSettings.ONE_HAND) {
       pressedCursorKeys.clear();

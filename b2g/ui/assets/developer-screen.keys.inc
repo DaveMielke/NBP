@@ -1,3 +1,5 @@
+bind Space+Dots78+Dots134#m Maintenance
+
 bind Backward+Dots4568 SaveScreen
 
 bind Backward+Dot4 MoveToParent
