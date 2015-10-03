@@ -17,7 +17,7 @@ public class SpeechEnabledControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.SPEECH_ENABLED;
   }
 

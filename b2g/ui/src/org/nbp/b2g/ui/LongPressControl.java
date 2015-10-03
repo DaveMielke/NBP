@@ -17,7 +17,7 @@ public class LongPressControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.LONG_PRESS;
   }
 

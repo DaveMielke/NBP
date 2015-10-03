@@ -17,7 +17,7 @@ public class DeveloperEnabledControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.DEVELOPER_ENABLED;
   }
 

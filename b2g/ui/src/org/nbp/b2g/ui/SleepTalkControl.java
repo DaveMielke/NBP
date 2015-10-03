@@ -17,7 +17,7 @@ public class SleepTalkControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.SLEEP_TALK;
   }
 

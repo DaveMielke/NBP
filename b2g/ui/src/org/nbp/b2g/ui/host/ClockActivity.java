@@ -1,4 +1,5 @@
-package org.nbp.b2g.ui;
+package org.nbp.b2g.ui.host;
+import org.nbp.b2g.ui.*;
 
 import java.util.Timer;
 import java.util.TimerTask;

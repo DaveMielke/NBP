@@ -17,7 +17,7 @@ public class BrailleMonitorControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.BRAILLE_MONITOR;
   }
 

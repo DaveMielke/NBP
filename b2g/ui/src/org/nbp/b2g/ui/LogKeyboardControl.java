@@ -17,7 +17,7 @@ public class LogKeyboardControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.LOG_KEYBOARD;
   }
 

@@ -17,7 +17,7 @@ public class LogNavigationControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.LOG_NAVIGATION;
   }
 

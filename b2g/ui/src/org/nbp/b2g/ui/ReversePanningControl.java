@@ -17,7 +17,7 @@ public class ReversePanningControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.REVERSE_PANNING;
   }
 

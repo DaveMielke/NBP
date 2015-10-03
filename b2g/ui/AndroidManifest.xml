@@ -83,25 +83,25 @@
     </service>
 
     <activity
-        android:name=".ClockActivity"
+        android:name=".host.ClockActivity"
         android:label="@string/clock_activity_label"
         >
     </activity>
 
     <activity
-        android:name=".SettingsActivity"
+        android:name=".host.SettingsActivity"
         android:label="@string/settings_activity_label"
         >
     </activity>
 
     <activity
-        android:name=".MaintenanceActivity"
+        android:name=".host.MaintenanceActivity"
         android:label="@string/maintenance_activity_label"
         >
     </activity>
 
     <activity
-        android:name=".HelpActivity"
+        android:name=".host.HelpActivity"
         android:label="@string/help_activity_label"
         >
     </activity>

@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 import android.content.SharedPreferences;
 
 public abstract class BooleanControl extends Control {
-  protected abstract boolean getBooleanValue ();
+  public abstract boolean getBooleanValue ();
   protected abstract boolean setBooleanValue (boolean value);
 
   protected boolean getBooleanDefault () {

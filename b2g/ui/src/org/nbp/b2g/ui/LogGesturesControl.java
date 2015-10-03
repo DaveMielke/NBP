@@ -17,7 +17,7 @@ public class LogGesturesControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.LOG_GESTURES;
   }
 

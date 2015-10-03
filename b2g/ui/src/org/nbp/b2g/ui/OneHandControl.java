@@ -17,7 +17,7 @@ public class OneHandControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.ONE_HAND;
   }
 

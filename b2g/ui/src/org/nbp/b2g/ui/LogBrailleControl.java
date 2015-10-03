@@ -17,7 +17,7 @@ public class LogBrailleControl extends BooleanControl {
   }
 
   @Override
-  protected boolean getBooleanValue () {
+  public boolean getBooleanValue () {
     return ApplicationSettings.LOG_BRAILLE;
   }
 
