@@ -1,22 +1,25 @@
 package org.nbp.b2g.ui;
 
-import java.io.IOException;
+import java.io.File;
 
 import android.util.Log;
 import android.os.Bundle;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.ActivityNotFoundException;
-
-import android.os.PowerManager;
+import android.net.Uri;
 
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
 
+import android.os.PowerManager;
 import android.os.RecoverySystem;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import android.content.ActivityNotFoundException;
 
 public class MaintenanceActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = MaintenanceActivity.class.getName();
@@ -35,19 +38,62 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     Devices.braille.get().write(message);
     Devices.speech.get().say(message);
     messageView.setText(message);
+    Log.d(LOG_TAG, "system maintenance: " + message);
   }
 
   private void setMessage (int message) {
     setMessage(getString(message));
   }
 
+  private String getRebootFailureMessage () {
+    return getString(R.string.maintenance_message_reboot_failed);
+  }
+
+  private void updateSystem (File file) {
+    String failure = getRebootFailureMessage();
+
+    try {
+      setMessage(R.string.maintenance_UpdateSystem_verifying);
+      RecoverySystem.verifyPackage(file, null, null);
+
+      setMessage(R.string.maintenance_UpdateSystem_applying);
+      RecoverySystem.installPackage(this, file);
+    } catch (IOException exception) {
+      failure = "system update not readable: " + exception.getMessage();
+    } catch (GeneralSecurityException exception) {
+      failure = "invalid system update: " + exception.getMessage();
+    }
+
+    setMessage(failure);
+  }
+
+  private void updateSystem (String path) {
+    updateSystem(new File(path));
+  }
+
+  private void updateSystem (Uri uri) {
+    updateSystem(uri.getPath());
+  }
+
+  private void updateSystem (Intent intent) {
+    updateSystem(intent.getData());
+  }
+
   private enum ActivityRequestType {
-    FIND_OTA_UPDATE;
+    FIND_SYSTEM_UPDATE;
   }
 
   @Override
   protected void onActivityResult (int requestCode, int resultCode, Intent resultData) {
     ActivityRequestType requestType = ActivityRequestType.values()[requestCode];
+
+    if (resultCode == RESULT_OK) {
+      switch (requestType) {
+        case FIND_SYSTEM_UPDATE:
+          updateSystem(resultData);
+          break;
+      }
+    }
   }
 
   private void findFile (ActivityRequestType requestType) {
@@ -59,10 +105,6 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     } catch (ActivityNotFoundException exception) {
       Log.w(LOG_TAG, "file system browser not found: " + exception.getMessage());
     }
-  }
-
-  private String getRebootFailureMessage () {
-    return getString(R.string.maintenance_message_reboot_failed);
   }
 
   private void rebootDevice (String reason) {
@@ -122,7 +164,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           setMessage(R.string.maintenance_UpdateSystem_finding);
-          findFile(ActivityRequestType.FIND_OTA_UPDATE);
+          findFile(ActivityRequestType.FIND_SYSTEM_UPDATE);
         }
       }
     );
