@@ -5,9 +5,10 @@ import java.io.IOException;
 import android.util.Log;
 import android.os.Bundle;
 
-import android.os.RecoverySystem;
-
 import android.content.Context;
+import android.content.Intent;
+import android.content.ActivityNotFoundException;
+
 import android.os.PowerManager;
 
 import android.view.View;
@@ -15,14 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
 
+import android.os.RecoverySystem;
+
 public class MaintenanceActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = MaintenanceActivity.class.getName();
-
-  private TextView messageView;
 
   private Context getContext () {
     return MaintenanceActivity.this;
   }
+
+  private PowerManager getPowerManager () {
+    return (PowerManager)getSystemService(Context.POWER_SERVICE);
+  }
+
+  private TextView messageView;
 
   private void setMessage (String message) {
     Devices.braille.get().write(message);
@@ -34,8 +41,24 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     setMessage(getString(message));
   }
 
-  private PowerManager getPowerManager () {
-    return (PowerManager)getSystemService(Context.POWER_SERVICE);
+  private enum ActivityRequestType {
+    FIND_OTA_UPDATE;
+  }
+
+  @Override
+  protected void onActivityResult (int requestCode, int resultCode, Intent resultData) {
+    ActivityRequestType requestType = ActivityRequestType.values()[requestCode];
+  }
+
+  private void findFile (ActivityRequestType requestType) {
+    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+    intent.setType("file/*");
+
+    try {
+      startActivityForResult(intent, requestType.ordinal());
+    } catch (ActivityNotFoundException exception) {
+      Log.w(LOG_TAG, "file system browser not found: " + exception.getMessage());
+    }
   }
 
   private String getRebootFailureMessage () {
@@ -53,7 +76,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_RestartSystem_start);
+          setMessage(R.string.maintenance_RestartSystem_starting);
           rebootDevice(null);
         }
       }
@@ -68,7 +91,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_RecoveryMode_start);
+          setMessage(R.string.maintenance_RecoveryMode_starting);
           rebootDevice("recovery");
         }
       }
@@ -83,8 +106,23 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_BootLoader_start);
+          setMessage(R.string.maintenance_BootLoader_starting);
           rebootDevice("bootloader");
+        }
+      }
+    );
+
+    return button;
+  }
+
+  private View createUpdateSystemButton () {
+    Button button = createButton(
+      R.string.maintenance_UpdateSystem_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          setMessage(R.string.maintenance_UpdateSystem_finding);
+          findFile(ActivityRequestType.FIND_OTA_UPDATE);
         }
       }
     );
@@ -98,7 +136,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_ClearCache_start);
+          setMessage(R.string.maintenance_ClearCache_starting);
           String failure = getRebootFailureMessage();
 
           try {
@@ -121,7 +159,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_FactoryReset_start);
+          setMessage(R.string.maintenance_FactoryReset_starting);
           String failure = getRebootFailureMessage();
 
           try {
@@ -159,6 +197,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     view.addView(createRecoveryModeButton());
     view.addView(createBootLoaderButton());
 
+    view.addView(createUpdateSystemButton());
     view.addView(createClearCacheButton());
     view.addView(createFactoryResetButton());
 
