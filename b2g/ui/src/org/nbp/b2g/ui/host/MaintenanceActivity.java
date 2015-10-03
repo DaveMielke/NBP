@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import android.os.PowerManager;
 import android.os.RecoverySystem;
+import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -51,21 +52,47 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private void updateSystem (File file) {
-    String failure = getRebootFailureMessage();
+    new AsyncTask<File, Integer, Boolean>() {
+      @Override
+      protected void onPreExecute () {
+        setMessage(R.string.maintenance_UpdateSystem_verifying);
+      }
 
-    try {
-      setMessage(R.string.maintenance_UpdateSystem_verifying);
-      RecoverySystem.verifyPackage(file, null, null);
+      @Override
+      protected Boolean doInBackground (File... files) {
+        File file = files[0];
+        String failure = getRebootFailureMessage();
 
-      setMessage(R.string.maintenance_UpdateSystem_applying);
-      RecoverySystem.installPackage(this, file);
-    } catch (IOException exception) {
-      failure = "system update not readable: " + exception.getMessage();
-    } catch (GeneralSecurityException exception) {
-      failure = "invalid system update: " + exception.getMessage();
-    }
+        RecoverySystem.ProgressListener progressListener = new RecoverySystem.ProgressListener() {
+          @Override
+          public void onProgress (int percentage) {
+            publishProgress(percentage);
+          }
+        };
 
-    setMessage(failure);
+        try {
+          RecoverySystem.verifyPackage(file, null, null);
+        } catch (IOException exception) {
+          failure = "system update not readable: " + exception.getMessage();
+        } catch (GeneralSecurityException exception) {
+          failure = "invalid system update: " + exception.getMessage();
+        }
+
+        setMessage(failure);
+        return true;
+      }
+
+      @Override
+      protected void onProgressUpdate (Integer... values) {
+      }
+
+      @Override
+      protected void onPostExecute (Boolean result) {
+        if (result) {
+          setMessage(R.string.maintenance_UpdateSystem_applying);
+        }
+      }
+    }.execute(file);
   }
 
   private void updateSystem (String path) {
