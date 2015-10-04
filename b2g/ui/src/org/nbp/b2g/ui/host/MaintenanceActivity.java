@@ -271,9 +271,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       LinearLayout.LayoutParams.WRAP_CONTENT
     );
 
-    parameters.leftMargin = ApplicationContext.dipsToPixels(
-      ApplicationParameters.SCREEN_LEFT_OFFSET
-    );
+    parameters.leftMargin = getLeftMargin();
 
     messageView = createTextView();
     view.addView(messageView);

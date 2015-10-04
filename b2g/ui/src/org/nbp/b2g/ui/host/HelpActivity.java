@@ -102,9 +102,7 @@ public class HelpActivity extends ProgrammaticActivity {
       LinearLayout.LayoutParams.WRAP_CONTENT
     );
 
-    parameters.leftMargin = ApplicationContext.dipsToPixels(
-      ApplicationParameters.SCREEN_LEFT_OFFSET
-    );
+    parameters.leftMargin = getLeftMargin();
 
     view.addView(createDocumentView());
     return view;

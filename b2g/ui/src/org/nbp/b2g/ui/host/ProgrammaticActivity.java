@@ -79,13 +79,20 @@ public abstract class ProgrammaticActivity extends Activity {
   }
   protected abstract View createContentView ();
 
-  private final void setContentView () {
-    View view = createContentView();
+  protected final int getLeftMargin () {
+    return ApplicationContext.dipsToPixels(
+      ApplicationParameters.SCREEN_LEFT_OFFSET
+    );
+  }
 
-    view.setLayoutParams(new ViewGroup.LayoutParams(
+  private final void setContentView () {
+    ViewGroup.LayoutParams parameters = new ViewGroup.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT,
       ViewGroup.LayoutParams.MATCH_PARENT
-    ));
+    );
+
+    View view = createContentView();
+    view.setLayoutParams(parameters);
 
     setContentView(view);
   }

@@ -260,9 +260,7 @@ public class SettingsActivity extends ProgrammaticActivity {
       LinearLayout.LayoutParams.WRAP_CONTENT
     );
 
-    parameters.leftMargin = ApplicationContext.dipsToPixels(
-      ApplicationParameters.SCREEN_LEFT_OFFSET
-    );
+    parameters.leftMargin = getLeftMargin();
 
     view.addView(createActionsView(), parameters);
     view.addView(createControlsView(), parameters);
