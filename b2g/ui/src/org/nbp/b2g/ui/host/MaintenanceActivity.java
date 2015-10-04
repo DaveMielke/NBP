@@ -156,7 +156,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private View createRestartSystemButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.maintenance_RestartSystem_label,
       new Button.OnClickListener() {
         @Override
@@ -171,7 +171,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private View createRecoveryModeButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.maintenance_RecoveryMode_label,
       new Button.OnClickListener() {
         @Override
@@ -186,7 +186,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private View createBootLoaderButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.maintenance_BootLoader_label,
       new Button.OnClickListener() {
         @Override
@@ -201,7 +201,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private View createUpdateSystemButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.maintenance_UpdateSystem_label,
       new Button.OnClickListener() {
         @Override
@@ -216,7 +216,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private View createClearCacheButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.maintenance_ClearCache_label,
       new Button.OnClickListener() {
         @Override
@@ -239,7 +239,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private View createFactoryResetButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.maintenance_FactoryReset_label,
       new Button.OnClickListener() {
         @Override
@@ -273,7 +273,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
     parameters.leftMargin = getLeftMargin();
 
-    messageView = createTextView();
+    messageView = newTextView();
     view.addView(messageView);
 
     view.addView(createRestartSystemButton());

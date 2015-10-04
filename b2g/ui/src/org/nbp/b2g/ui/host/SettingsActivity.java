@@ -61,7 +61,7 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createSaveControlsButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.SaveSettings_action_label,
       new Button.OnClickListener() {
         @Override
@@ -76,7 +76,7 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createRestoreControlsButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.RestoreSettings_action_label,
       new Button.OnClickListener() {
         @Override
@@ -91,7 +91,7 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createResetControlsButton () {
-    Button button = createButton(
+    Button button = newButton(
       R.string.ResetSettings_action_label,
       new Button.OnClickListener() {
         @Override
@@ -122,7 +122,7 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createNextValueButton (final Control control) {
-    Button button = createButton(
+    Button button = newButton(
       control.getNextLabel(),
       new Button.OnClickListener() {
         @Override
@@ -138,7 +138,7 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createPreviousValueButton (final Control control) {
-    Button button = createButton(
+    Button button = newButton(
       control.getPreviousLabel(),
       new Button.OnClickListener() {
         @Override
@@ -154,12 +154,12 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createControlLabelView (Control control) {
-    TextView view = createTextView(control.getLabel());
+    TextView view = newTextView(control.getLabel());
     return view;
   }
 
   private View createBooleanValueView (final Control control) {
-    final Switch view = createSwitch(
+    final Switch view = newSwitch(
       new Switch.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged (CompoundButton button, boolean isChecked) {
@@ -194,7 +194,7 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createIntegerValueView (Control control) {
-    final TextView view = createTextView(control.getValue());
+    final TextView view = newTextView(control.getValue());
 
     Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
       @Override
@@ -247,7 +247,7 @@ public class SettingsActivity extends ProgrammaticActivity {
     });
 
     addDeveloperEnabledControlListener();
-    return createVerticalScrollContainer(view);
+    return newVerticalScrollContainer(view);
   }
 
   @Override

@@ -16,7 +16,7 @@ public class HelpActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = HelpActivity.class.getName();
 
   private View createDocumentView () {
-    final TextView view = createTextView();
+    final TextView view = newTextView();
     view.setAutoLinkMask(Linkify.WEB_URLS);
 
     final String TEXT_EXTENSION = "txt";

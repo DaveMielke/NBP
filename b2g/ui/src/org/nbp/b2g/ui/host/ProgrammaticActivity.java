@@ -16,63 +16,63 @@ import android.widget.CheckBox;
 import android.widget.Switch;
 
 public abstract class ProgrammaticActivity extends Activity {
-  protected ViewGroup createVerticalScrollContainer () {
+  protected ViewGroup newVerticalScrollContainer () {
     ScrollView view = new ScrollView(this);
     return view;
   }
 
-  protected ViewGroup createVerticalScrollContainer (View content) {
-    ViewGroup view = createVerticalScrollContainer();
+  protected ViewGroup newVerticalScrollContainer (View content) {
+    ViewGroup view = newVerticalScrollContainer();
     view.addView(content);
     return view;
   }
 
-  protected ViewGroup createHorizontalScrollContainer () {
+  protected ViewGroup newHorizontalScrollContainer () {
     HorizontalScrollView view = new HorizontalScrollView(this);
     return view;
   }
 
-  protected ViewGroup createHorizontalScrollContainer (View content) {
-    ViewGroup view = createHorizontalScrollContainer();
+  protected ViewGroup newHorizontalScrollContainer (View content) {
+    ViewGroup view = newHorizontalScrollContainer();
     view.addView(content);
     return view;
   }
 
-  protected TextView createTextView () {
+  protected TextView newTextView () {
     TextView view = new TextView(this);
     view.setFocusable(true);
     return view;
   }
 
-  protected TextView createTextView (CharSequence text) {
-    TextView view = createTextView();
+  protected TextView newTextView (CharSequence text) {
+    TextView view = newTextView();
     view.setText(text);
     return view;
   }
 
-  protected Button createButton (CharSequence label, Button.OnClickListener listener) {
+  protected Button newButton (CharSequence label, Button.OnClickListener listener) {
     Button button = new Button(this);
     button.setText(label);
     button.setOnClickListener(listener);
     return button;
   }
 
-  protected Button createButton (int label, Button.OnClickListener listener) {
-    return createButton(ApplicationContext.getString(label), listener);
+  protected Button newButton (int label, Button.OnClickListener listener) {
+    return newButton(ApplicationContext.getString(label), listener);
   }
 
-  protected CheckBox createCheckBox (CharSequence label, CheckBox.OnCheckedChangeListener listener) {
+  protected CheckBox newCheckBox (CharSequence label, CheckBox.OnCheckedChangeListener listener) {
     CheckBox checkBox = new CheckBox(this);
     checkBox.setText(label);
     checkBox.setOnCheckedChangeListener(listener);
     return checkBox;
   }
 
-  protected CheckBox createCheckBox (int label, CheckBox.OnCheckedChangeListener listener) {
-    return createCheckBox(ApplicationContext.getString(label), listener);
+  protected CheckBox newCheckBox (int label, CheckBox.OnCheckedChangeListener listener) {
+    return newCheckBox(ApplicationContext.getString(label), listener);
   }
 
-  protected Switch createSwitch (Switch.OnCheckedChangeListener listener) {
+  protected Switch newSwitch (Switch.OnCheckedChangeListener listener) {
     Switch view = new Switch(this);
     view.setOnCheckedChangeListener(listener);
     return view;
