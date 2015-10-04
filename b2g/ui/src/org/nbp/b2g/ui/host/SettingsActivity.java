@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import android.util.Log;
-import android.os.Bundle;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -269,12 +268,5 @@ public class SettingsActivity extends ProgrammaticActivity {
     view.addView(createControlsView(), parameters);
 
     return view;
-  }
-
-  @Override
-  public void onCreate (Bundle state) {
-    super.onCreate(state);
-    ApplicationContext.setContext(this);
-    setContentView();
   }
 }

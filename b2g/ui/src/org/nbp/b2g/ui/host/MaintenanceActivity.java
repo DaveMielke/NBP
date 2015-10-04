@@ -4,7 +4,6 @@ import org.nbp.b2g.ui.*;
 import java.io.File;
 
 import android.util.Log;
-import android.os.Bundle;
 
 import android.content.Context;
 import android.content.Intent;
@@ -288,12 +287,5 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     view.addView(createFactoryResetButton());
 
     return view;
-  }
-
-  @Override
-  public void onCreate (Bundle state) {
-    super.onCreate(state);
-    ApplicationContext.setContext(this);
-    setContentView();
   }
 }

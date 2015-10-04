@@ -2,7 +2,7 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
 import android.util.Log;
-import android.os.Bundle;
+
 import android.os.AsyncTask;
 
 import android.view.View;
@@ -108,12 +108,5 @@ public class HelpActivity extends ProgrammaticActivity {
 
     view.addView(createDocumentView());
     return view;
-  }
-
-  @Override
-  public void onCreate (Bundle state) {
-    super.onCreate(state);
-    ApplicationContext.setContext(this);
-    setContentView();
   }
 }

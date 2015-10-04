@@ -2,6 +2,7 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public abstract class ProgrammaticActivity extends Activity {
   }
   protected abstract View createContentView ();
 
-  protected final void setContentView () {
+  private final void setContentView () {
     View view = createContentView();
 
     view.setLayoutParams(new ViewGroup.LayoutParams(
@@ -87,5 +88,12 @@ public abstract class ProgrammaticActivity extends Activity {
     ));
 
     setContentView(view);
+  }
+
+  @Override
+  public void onCreate (Bundle state) {
+    super.onCreate(state);
+    ApplicationContext.setContext(this);
+    setContentView();
   }
 }
