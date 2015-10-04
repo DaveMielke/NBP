@@ -160,37 +160,37 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createBooleanValueView (final Control control) {
-    final Switch view = new Switch(this);
-    setChecked(view, control);
+    final Switch view = createSwitch(
+      new Switch.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged (CompoundButton button, boolean isChecked) {
+          if (isChecked) {
+            control.nextValue();
+          } else {
+            control.previousValue();
+          }
+        }
+      }
+    );
 
     view.setTextOff(control.getPreviousLabel());
     view.setTextOn(control.getNextLabel());
+    setChecked(view, control);
 
-    Switch.OnCheckedChangeListener switchListener = new Switch.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged (CompoundButton button, boolean isChecked) {
-        if (isChecked) {
-          control.nextValue();
-        } else {
-          control.previousValue();
+    control.addOnValueChangedListener(
+      new Control.OnValueChangedListener() {
+        @Override
+        public void onValueChanged (final Control control) {
+          updateWidget(new Runnable() {
+            @Override
+            public void run () {
+              setChecked((Switch)view, control);
+            }
+          });
         }
       }
-    };
+    );
 
-    Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
-      @Override
-      public void onValueChanged (final Control control) {
-        updateWidget(new Runnable() {
-          @Override
-          public void run () {
-            setChecked((Switch)view, control);
-          }
-        });
-      }
-    };
-
-    view.setOnCheckedChangeListener(switchListener);
-    control.addOnValueChangedListener(controlListener);
     return view;
   }
 

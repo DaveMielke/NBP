@@ -11,6 +11,8 @@ import android.widget.HorizontalScrollView;
 
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Switch;
 
 public abstract class ProgrammaticActivity extends Activity {
   protected ViewGroup createVerticalScrollContainer () {
@@ -58,6 +60,22 @@ public abstract class ProgrammaticActivity extends Activity {
     return createButton(ApplicationContext.getString(label), listener);
   }
 
+  protected CheckBox createCheckBox (CharSequence label, CheckBox.OnCheckedChangeListener listener) {
+    CheckBox checkBox = new CheckBox(this);
+    checkBox.setText(label);
+    checkBox.setOnCheckedChangeListener(listener);
+    return checkBox;
+  }
+
+  protected CheckBox createCheckBox (int label, CheckBox.OnCheckedChangeListener listener) {
+    return createCheckBox(ApplicationContext.getString(label), listener);
+  }
+
+  protected Switch createSwitch (Switch.OnCheckedChangeListener listener) {
+    Switch view = new Switch(this);
+    view.setOnCheckedChangeListener(listener);
+    return view;
+  }
   protected abstract View createContentView ();
 
   protected final void setContentView () {
