@@ -38,7 +38,6 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   private void setMessage (String message) {
     Devices.braille.get().write(message);
-    Devices.speech.get().say(message);
     messageView.setText(message);
     Log.d(LOG_TAG, "system maintenance: " + message);
   }
@@ -54,6 +53,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   private void updateSystem (File file) {
     new AsyncTask<File, Integer, String>() {
       String progressMessage;
+      File systemUpdate;
 
       @Override
       protected void onPreExecute () {
@@ -63,7 +63,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
       @Override
       protected String doInBackground (File... files) {
-        File file = files[0];
+        systemUpdate = files[0];
         String result = getRebootFailureMessage();
 
         RecoverySystem.ProgressListener progressListener = new RecoverySystem.ProgressListener() {
@@ -74,7 +74,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         };
 
         try {
-          RecoverySystem.verifyPackage(file, progressListener, null);
+          RecoverySystem.verifyPackage(systemUpdate, progressListener, null);
           result = null;
         } catch (IOException exception) {
           result = "system update not readable: " + exception.getMessage();
@@ -95,6 +95,15 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       protected void onPostExecute (String result) {
         if (result == null) {
           setMessage(R.string.maintenance_UpdateSystem_applying);
+          String failure = getRebootFailureMessage();
+
+          try {
+            RecoverySystem.installPackage(getContext(), systemUpdate);
+          } catch (IOException exception) {
+            failure = exception.getMessage();
+          }
+
+          setMessage(failure);
         } else {
           setMessage(result);
         }
