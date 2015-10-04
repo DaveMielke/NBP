@@ -11,10 +11,6 @@ public abstract class SystemActivityAction extends ActivityAction {
   protected Intent getIntent (Context context) {
     Intent intent = new Intent(getIntentAction());
 
-    intent.addFlags(
-      Intent.FLAG_ACTIVITY_NEW_TASK
-    );
-
     return intent;
   }
 

@@ -15,6 +15,11 @@ public abstract class ActivityAction extends Action {
     Intent intent = getIntent(context);
     if (intent == null) return false;
 
+    intent.addFlags(
+      Intent.FLAG_ACTIVITY_CLEAR_TOP |
+      Intent.FLAG_ACTIVITY_NEW_TASK
+    );
+
     context.startActivity(intent);
     return true;
   }

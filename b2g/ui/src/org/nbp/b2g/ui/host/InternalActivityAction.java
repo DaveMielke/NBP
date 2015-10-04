@@ -12,9 +12,7 @@ public abstract class InternalActivityAction extends ActivityAction {
     Intent intent = new Intent(context, getActivityClass());
 
     intent.addFlags(
-      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-      Intent.FLAG_ACTIVITY_CLEAR_TOP |
-      Intent.FLAG_ACTIVITY_NEW_TASK
+      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
     );
 
     return intent;
