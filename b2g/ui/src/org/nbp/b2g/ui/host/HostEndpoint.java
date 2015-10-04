@@ -64,17 +64,6 @@ public class HostEndpoint extends Endpoint {
     return text.subSequence(0, text.length());
   }
 
-  private final static Map<String, String> expandedTypes = new HashMap<String, String>();
-
-  private final static String getExpandedType (String type) {
-    String text = expandedTypes.get(type);
-    if (text != null) return text;
-
-    text = type.replaceAll("(?<=\\p{Lower})()(?=\\p{Upper})", " ");
-    expandedTypes.put(type, text);
-    return text;
-  }
-
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
     sb.setSpan(new SpeechSpan(text), start, sb.length(), 0);
   }
@@ -85,6 +74,17 @@ public class HostEndpoint extends Endpoint {
 
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, int text) {
     setSpeechSpan(sb, start, ApplicationContext.getString(text));
+  }
+
+  private final static Map<String, String> wordifiedTypes = new HashMap<String, String>();
+
+  private final static String getWordifiedType (String type) {
+    String text = wordifiedTypes.get(type);
+    if (text != null) return text;
+
+    text = type.replaceAll("(?<=\\p{Lower})()(?=\\p{Upper})", " ");
+    wordifiedTypes.put(type, text);
+    return text;
   }
 
   private final static void appendElementState (SpannableStringBuilder sb, String word) {
@@ -138,7 +138,7 @@ public class HostEndpoint extends Endpoint {
       sb.append(type);
       sb.append('}');
 
-      setSpeechSpan(sb, start, getExpandedType(type));
+      setSpeechSpan(sb, start, getWordifiedType(type));
     }
 
     if (!node.isEnabled()) {
