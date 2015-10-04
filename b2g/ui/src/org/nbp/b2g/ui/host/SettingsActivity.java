@@ -106,19 +106,11 @@ public class SettingsActivity extends ProgrammaticActivity {
   }
 
   private View createActionsView () {
-    LinearLayout view = new LinearLayout(this);
-    view.setOrientation(view.HORIZONTAL);
-
-    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
-      LinearLayout.LayoutParams.WRAP_CONTENT,
-      LinearLayout.LayoutParams.MATCH_PARENT
+    return createHorizontalGroup(
+      createSaveControlsButton(),
+      createRestoreControlsButton(),
+      createResetControlsButton()
     );
-
-    view.addView(createSaveControlsButton(), parameters);
-    view.addView(createRestoreControlsButton(), parameters);
-    view.addView(createResetControlsButton(), parameters);
-
-    return view;
   }
 
   private View createNextValueButton (final Control control) {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.HorizontalScrollView;
 
@@ -16,26 +17,58 @@ import android.widget.CheckBox;
 import android.widget.Switch;
 
 public abstract class ProgrammaticActivity extends Activity {
+  protected final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
+    for (View view : views) {
+      group.addView(view, parameters);
+    }
+  }
+
+  protected ViewGroup createVerticalGroup (View... views) {
+    LinearLayout group = new LinearLayout(this);
+    group.setOrientation(group.VERTICAL);
+
+    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
+      LinearLayout.LayoutParams.MATCH_PARENT,
+      LinearLayout.LayoutParams.WRAP_CONTENT
+    );
+
+    addViews(group, parameters, views);
+    return group;
+  }
+
+  protected ViewGroup createHorizontalGroup (View... views) {
+    LinearLayout group = new LinearLayout(this);
+    group.setOrientation(group.HORIZONTAL);
+
+    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
+      LinearLayout.LayoutParams.WRAP_CONTENT,
+      LinearLayout.LayoutParams.MATCH_PARENT
+    );
+
+    addViews(group, parameters, views);
+    return group;
+  }
+
   protected ViewGroup newVerticalScrollContainer () {
-    ScrollView view = new ScrollView(this);
-    return view;
+    ScrollView container = new ScrollView(this);
+    return container;
   }
 
   protected ViewGroup newVerticalScrollContainer (View content) {
-    ViewGroup view = newVerticalScrollContainer();
-    view.addView(content);
-    return view;
+    ViewGroup container = newVerticalScrollContainer();
+    container.addView(content);
+    return container;
   }
 
   protected ViewGroup newHorizontalScrollContainer () {
-    HorizontalScrollView view = new HorizontalScrollView(this);
-    return view;
+    HorizontalScrollView container = new HorizontalScrollView(this);
+    return container;
   }
 
   protected ViewGroup newHorizontalScrollContainer (View content) {
-    ViewGroup view = newHorizontalScrollContainer();
-    view.addView(content);
-    return view;
+    ViewGroup container = newHorizontalScrollContainer();
+    container.addView(content);
+    return container;
   }
 
   protected TextView newTextView () {

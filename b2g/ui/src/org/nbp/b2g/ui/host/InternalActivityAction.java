@@ -13,7 +13,6 @@ public abstract class InternalActivityAction extends ActivityAction {
 
     intent.addFlags(
       Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-      Intent.FLAG_ACTIVITY_SINGLE_TOP |
       Intent.FLAG_ACTIVITY_NEW_TASK
     );
 
