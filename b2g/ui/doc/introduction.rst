@@ -140,17 +140,21 @@ following:
 
 .. comment
 
-  * The Micro-SD card slot, which is in the corner that's toward the back and
+  * The Micro-SD card slot is in the corner that's toward the back and
     toward the side where the earphone jack is. The open end of the slot is
     toward the side where the Power switch is. To insert a card, gently press it
     in until you hear a click. To remove the card, gently press it until you hear
     a click, and then allow the slot's internal spring to push it out.
 
-* The Micro-SIM card slot, which is in the corner that's toward the front and
+* The Micro-SIM card slot is in the corner that's toward the front and
   toward the side where the Power switch is. To gain access to the actual slot,
   slide its cover slightly toward the front and then lift the end of it that's
   toward the back. As with most SIM card slot covers, its hinge is fragile so
   be gentle.
+
+* The serial port is in the corner that's toward the back and toward the side
+  where the Power switch is. It's a ten-pin (2x5) male connector that can be
+  used by the |product name| developers to perform low-level system maintenance.
 
 Key Combinations
 ----------------

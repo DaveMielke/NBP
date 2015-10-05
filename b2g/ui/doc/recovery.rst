@@ -208,7 +208,7 @@ There are a number of ways to boot the |product name| into Recovery Mode:
   2) Reboot the |product name| into Recovery Mode with the command::
 
        reboot recovery
-* Via the physical serial port under `The Removable Cover`_:
+* Via the serial port under `The Removable Cover`_:
 
   1) Reboot the |product name| into Recovery Mode
      with the ``u-boot`` command::
