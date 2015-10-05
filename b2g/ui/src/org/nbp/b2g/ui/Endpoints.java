@@ -57,10 +57,20 @@ public abstract class Endpoints {
     setCurrentEndpoint(host.get());
   }
 
-  public static void setPopupEndpoint (String text) {
+  public static void setPopupEndpoint (String text, boolean rewrite) {
     Endpoint endpoint = popup.get();
-    endpoint.write(text);
+
+    if (rewrite) {
+      endpoint.rewrite(text);
+    } else {
+      endpoint.write(text);
+    }
+
     setCurrentEndpoint(endpoint);
+  }
+
+  public static void setPopupEndpoint (String text) {
+    setPopupEndpoint(text, false);
   }
 
   public static void setFindEndpoint () {

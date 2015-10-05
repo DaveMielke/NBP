@@ -35,10 +35,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   private TextView messageView;
 
-  private void setMessage (String message) {
-    Devices.braille.get().write(message);
+  private void setMessage (String message, boolean rewrite) {
+    Endpoints.setPopupEndpoint(message, rewrite);
     messageView.setText(message);
     Log.d(LOG_TAG, "system maintenance: " + message);
+  }
+
+  private void setMessage (String message) {
+    setMessage(message, false);
   }
 
   private void setMessage (int message) {
@@ -87,7 +91,11 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       @Override
       protected void onProgressUpdate (Integer... values) {
         int percentage = values[0];
-        setMessage(String.format("%s: %d%%", progressMessage, percentage));
+
+        String message = String.format("%s: %d%%", progressMessage, percentage);
+        boolean rewrite = percentage != 0;
+
+        setMessage(message, rewrite);
       }
 
       @Override
@@ -136,6 +144,8 @@ public class MaintenanceActivity extends ProgrammaticActivity {
           updateSystem(resultData);
           break;
       }
+    } else {
+      setMessage(R.string.maintenance_message_operation_cancelled);
     }
   }
 
@@ -267,12 +277,12 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       (messageView = newTextView()),
 
       createRestartSystemButton(),
-      createRecoveryModeButton(),
-      createBootLoaderButton(),
-
       createUpdateSystemButton(),
+      createRecoveryModeButton(),
+
       createClearCacheButton(),
-      createFactoryResetButton()
+      createFactoryResetButton(),
+      createBootLoaderButton()
     );
   }
 }

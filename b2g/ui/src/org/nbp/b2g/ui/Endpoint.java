@@ -448,6 +448,14 @@ public abstract class Endpoint {
     return setSelection(offset, offset);
   }
 
+  public boolean rewrite (CharSequence text) {
+    synchronized (this) {
+      setText(text, true);
+    }
+
+    return write();
+  }
+
   public boolean write (CharSequence text) {
     synchronized (this) {
       setText(text);
