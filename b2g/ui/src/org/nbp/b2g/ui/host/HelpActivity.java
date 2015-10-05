@@ -89,7 +89,7 @@ public class HelpActivity extends ProgrammaticActivity {
       }
     }.execute("b2g_ui", TEXT_EXTENSION);
 
-    return view;
+    return newVerticalScrollContainer(newHorizontalScrollContainer(view));
   }
 
   @Override
