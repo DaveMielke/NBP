@@ -36,7 +36,12 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   private TextView messageView;
 
   private void setMessage (String message, boolean rewrite) {
-    Endpoints.setPopupEndpoint(message, rewrite);
+    if (rewrite) {
+      Endpoints.popup.get().rewrite(message);
+    } else {
+      Endpoints.setPopupEndpoint(message);
+    }
+
     messageView.setText(message);
     Log.d(LOG_TAG, "system maintenance: " + message);
   }
@@ -149,15 +154,19 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     }
   }
 
-  private void findFile (ActivityRequestType requestType) {
-    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-    intent.setType("file/*");
-
+  private void startRequest (Intent intent, ActivityRequestType requestType) {
     try {
+      Endpoints.setHostEndpoint();
       startActivityForResult(intent, requestType.ordinal());
     } catch (ActivityNotFoundException exception) {
       Log.w(LOG_TAG, "file system browser not found: " + exception.getMessage());
     }
+  }
+
+  private void findFile (ActivityRequestType requestType) {
+    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+    intent.setType("file/*");
+    startRequest(intent, requestType);
   }
 
   private void rebootDevice (String reason) {

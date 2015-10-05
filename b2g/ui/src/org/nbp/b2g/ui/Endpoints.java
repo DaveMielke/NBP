@@ -41,7 +41,7 @@ public abstract class Endpoints {
   public final static LazyInstantiator<HostEndpoint> host = new
     LazyInstantiator<HostEndpoint>(HostEndpoint.class);
 
-  private final static LazyInstantiator<PopupEndpoint> popup = new
+  public final static LazyInstantiator<PopupEndpoint> popup = new
     LazyInstantiator<PopupEndpoint>(PopupEndpoint.class);
 
   public final static LazyInstantiator<FindEndpoint> find = new
@@ -57,20 +57,10 @@ public abstract class Endpoints {
     setCurrentEndpoint(host.get());
   }
 
-  public static void setPopupEndpoint (String text, boolean rewrite) {
-    Endpoint endpoint = popup.get();
-
-    if (rewrite) {
-      endpoint.rewrite(text);
-    } else {
-      endpoint.write(text);
-    }
-
-    setCurrentEndpoint(endpoint);
-  }
-
   public static void setPopupEndpoint (String text) {
-    setPopupEndpoint(text, false);
+    Endpoint endpoint = popup.get();
+    endpoint.write(text);
+    setCurrentEndpoint(endpoint);
   }
 
   public static void setFindEndpoint () {
