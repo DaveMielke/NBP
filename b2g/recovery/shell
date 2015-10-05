@@ -29,6 +29,9 @@ askUser() {
     programMessage "end of file"
     exit 1
   }
+  
+  ! REPLY="$(expr "${REPLY}" : ' *\(.*\)')" ||
+  REPLY="$(expr "${REPLY}" : '\(.*[^ ]\) *$')"
 }
 
 confirmAction() {
@@ -268,6 +271,8 @@ chooseFile() {
       elif [ -b "${path}" ]
       then
         indicator='$'
+      else
+        indicator='?'
       fi
 
       name="${name}${indicator}"

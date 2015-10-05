@@ -119,6 +119,7 @@ Indicator  Type
 \=         socket
 \%         character device
 \$         block device
+\?         unknown
 =========  ==================
 
 The Top-Level Folder List
