@@ -112,7 +112,7 @@ public abstract class ProgrammaticActivity extends Activity {
   }
   protected abstract View createContentView ();
 
-  protected final int getLeftMargin () {
+  private final int getLeftOffset () {
     return ApplicationContext.dipsToPixels(
       ApplicationParameters.SCREEN_LEFT_OFFSET
     );
@@ -127,6 +127,7 @@ public abstract class ProgrammaticActivity extends Activity {
     View view = createContentView();
     view.setLayoutParams(parameters);
 
+    view.setPadding(getLeftOffset(), 0, 0, 0);
     setContentView(view);
   }
 

@@ -94,17 +94,8 @@ public class HelpActivity extends ProgrammaticActivity {
 
   @Override
   protected final View createContentView () {
-    LinearLayout view = new LinearLayout(this);
-    view.setOrientation(view.VERTICAL);
-
-    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
-      LinearLayout.LayoutParams.MATCH_PARENT,
-      LinearLayout.LayoutParams.WRAP_CONTENT
+    return createVerticalGroup(
+      createDocumentView()
     );
-
-    parameters.leftMargin = getLeftMargin();
-
-    view.addView(createDocumentView());
-    return view;
   }
 }

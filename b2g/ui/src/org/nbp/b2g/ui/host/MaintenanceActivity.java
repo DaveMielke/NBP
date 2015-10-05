@@ -263,27 +263,16 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   @Override
   protected final View createContentView () {
-    LinearLayout view = new LinearLayout(this);
-    view.setOrientation(view.VERTICAL);
+    return createVerticalGroup(
+      (messageView = newTextView()),
 
-    LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(
-      LinearLayout.LayoutParams.MATCH_PARENT,
-      LinearLayout.LayoutParams.WRAP_CONTENT
+      createRestartSystemButton(),
+      createRecoveryModeButton(),
+      createBootLoaderButton(),
+
+      createUpdateSystemButton(),
+      createClearCacheButton(),
+      createFactoryResetButton()
     );
-
-    parameters.leftMargin = getLeftMargin();
-
-    messageView = newTextView();
-    view.addView(messageView);
-
-    view.addView(createRestartSystemButton());
-    view.addView(createRecoveryModeButton());
-    view.addView(createBootLoaderButton());
-
-    view.addView(createUpdateSystemButton());
-    view.addView(createClearCacheButton());
-    view.addView(createFactoryResetButton());
-
-    return view;
   }
 }
