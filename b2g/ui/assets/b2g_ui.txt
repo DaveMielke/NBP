@@ -75,7 +75,8 @@ The Removable Cover
     3. Lift the end of the cover that's toward the side where the earphone jack is.
 
    Be careful after you've removed the cover because the underside of a circuit board will be exposed. Removing the cover is how to gain access to the following:
-     * The Micro-SIM card slot, which is in the corner that's toward the front and toward the side where the Power switch is. To gain access to the actual slot, slide its cover slightly toward the front and then lift the end of it that's toward the back. As with most SIM card slot covers, its hinge is fragile so be gentle.
+     * The Micro-SIM card slot is in the corner that's toward the front and toward the side where the Power switch is. To gain access to the actual slot, slide its cover slightly toward the front and then lift the end of it that's toward the back. As with most SIM card slot covers, its hinge is fragile so be gentle.
+     * The Serial Port is in the corner that's toward the back and toward the side where the Power switch is. It's a 10-pin (2x5) male connector that can be used by the B2G developers to perform low-level system maintenance.
 
 Key Combinations
 
@@ -329,8 +330,10 @@ Identifying the Build
 
    You can get this information by pressing Space, Backward, and Forward together. This will cause details that identify the build to be presented within a popup (see Popups) that looks something like this:
 Build Details
-Time: 2015-07-22 00:34:02 UTC
-Revision: d3d8210
+Time: 2015-09-30 14:04:27 UTC
+Revision: 1797952
+System: v4.1.2
+Firmware: 3.0
 
 Speech
 
@@ -365,6 +368,15 @@ Sleep Talk Mode
    Sleep Talk Mode leaves speech active while the Power switch is off. This capability is useful when, for example, you'd like to reduce battery drain but still be informed when an important asynchronous event, e.g. the arrival of a notification, occurs.
 
    This mode is disabled by default. Pressing Forward+VolumeUp enables it, and pressing Forward+VolumeDown disables it.
+
+Differences from Braille Rendering
+
+   Speech is rendered differently than braille is in the following ways:
+     * The [brackets] around screen element descriptions provided by application developers aren't spoken.
+     * The {braces} around screen element types aren't spoken.
+     * A space is inserted in between each pair of a lowercase letter followed by an uppercase letter within screen element types in order to improve the way that each implied word is pronounced. For example, SeekBar is spoken as Seek Bar.
+     * The (parentheses) around screen element states aren't spoken.
+     * The state of a checkbox (or switch) is spoken as either checked or not checked.
 
 Braille
 
@@ -784,7 +796,133 @@ The Tab Key
 
    Move to the next screen element that can perform an action. If on the last screen element then wrap to the first one.
 
-Quick Reference
+Recovery Mode
+
+   Recovery Mode is a single-user environment within which system maintenance can be performed safely. The B2G User Interface isn't available in Recovery Mode. Braille access in Recovery Mode is provided by BRLTTY (see http://brltty.com).
+
+   BRLTTY's key bindings for the B2G are different than those defined by the B2G User Interface. Describing them is beyond the scope of this document - please see http://brltty.com/doc/KeyBindings/brl-bg-all.html.
+
+   Android's visual Recovery Mode menu can still be used, though braille must first be disabled. Those who prefer to use an external video monitor must press both volume keys together (VolumeDown + VolumeUp) in order to stop BRLTTY's B2G braille driver. The B2G keyboard can then be used to navigate the visual menu.
+
+The Action Menu
+
+   The braille menu offers the same functionality as the visual menu but in a different way because it's been designed for a text-mode environment. When it starts, it shows a list summarizing the actions that can be selected, and then presents the prompt:
+action>
+
+   To select an action, type its name and then press Enter. Unambiguous abbreviations of action names are recognized. Leading and/or trailing spaces are ignored. Entering an empty line redisplays the action summary.
+
+The Boot Action
+
+   This action reboots to Android. This requires User Confirmation.
+
+The Cache Action
+
+   This action wipes /cache (the system cache partition), and then reboots to Android. This requires User Confirmation.
+
+The Exit Action
+
+   This action terminates this menu. This requires User Confirmation.
+
+   Once terminated, it's not that easy to restart the menu. This action has only been defined so that the B2G developers can easily test changes to the menu.
+
+The Reset Action
+
+   This action performs a factory reset, and then reboots to Android. Both /cache (the system cache partition) and /data (the user data partition) are wiped. This requires User Confirmation.
+
+The Shell Action
+
+   This action starts an interactive Unix-style shell. Use the shell's exit command to return to this menu.
+
+The Update Action
+
+   This action applies an OTA (over-the-air) update, and then reboots to Android. This requires User Confirmation.
+
+   OTA updates are .zip files that contain special meta-data (including an electronic signature). They're used to update either the whole Android system or just parts of it. You must first choose the specific update that you'd like to apply via The File System Browser (which is automatically started for you).
+
+The File System Browser
+
+   The file system browser is used to look through the file system in order to find the file that's to be processed by the currently selected action. It's used, for example, by The Update Action.
+
+   When the file system browser starts, it shows a list summarizing The Navigation Keys, and then presents The Top-Level Folder List.
+
+   Only the current entry of the current folder is displayed. The line containing it is always rewritten, so the navigation key summary is always just above it for easy reference.
+
+   A single-character indicator is appended to the name of the current file system entry that describes what it is. The indicators are:
+   Indicator Type
+   /         folder (directory)
+   *         executable file
+   @         symbolic link
+   |         FIFO (named pipe)
+   =         socket
+   %         character device
+   $         block device
+   ?         unknown
+
+The Top-Level Folder List
+
+   The top-level folder list contains the volumes that can be browsed. They are:
+     * /sdcard (the removable SD card)
+     * /cache (the system cache partition)
+     * /data (the user data partition)
+
+The Navigation Keys
+
+   The following B2G keys can be used to browse the file system:
+
+   Dot1
+          Go up to the previous entry within the current folder.
+
+   Dot4
+          Go down to the next entry within the current folder.
+
+   Dot2
+          Go back to the parent folder (equivalent to .. within the visual file system browser). If within The Top-Level Folder List then exit the file system browser without choosing a file.
+
+   Dot5
+          If the current entry is a folder then go into it. If it's a file then choose it and exit the file system browser.
+
+   Dot3
+          Exit the file system browser without choosing a file.
+
+User Confirmation
+
+   Some actions require user confirmation. The prompt is a brief description of the action that's to be performed, followed by a question mark (?). The user's response may be:
+
+   yes (or any abbreviation thereof)
+          The action is performed.
+
+   no (or any abbreviation thereof)
+          The action is cancelled.
+
+   anything else
+          The confirmation prompt is reissued.
+
+Booting into Recovery Mode
+
+   There are a number of ways to boot the B2G into Recovery Mode:
+     * Via the B2G User Interface:
+         1. Go to The Settings Screen:
+Space + o (dots 135)
+
+         2. Ensure that Developer Mode is enabled.
+         3. Go into the System Maintenance Operations menu:
+Space + Dots78 + m (dots 134)
+
+         4. Click on Recovery Mode.
+     * When the B2G is fully shut down:
+         1. Press and hold VolumeDown.
+         2. Slide The Power Switch to its on position.
+         3. Continue to hold VolumeDown until Starting appears on the braille display.
+     * For developer builds (the super-user shell capability is disabled in user builds):
+         1. Start an interactive shell on the B2G with the Android SDK command:
+adb shell
+
+         2. Reboot the B2G into Recovery Mode with the command:
+reboot recovery
+
+     * Via The Serial Port:
+         1. Reboot the B2G into Recovery Mode with the u-boot command:
+run recoverycmd
 
 Firmware Features
 
@@ -834,7 +972,9 @@ Key Bindings
           If the system is running then put it to sleep. This is equivalent to a short press of the Power button on an Android device. The system itself will stay up, but most of the peripherals (the braille display, the keyboard, etc) will be shut down in order to save power.
 
    Holding VolumeDown while switching the power on:
-          If the system is shut down then boot into Recovery Mode. This is equivalent to a simultaneous long press of the Power button and the Volume Up key on an Android device. Neither braille nor speech works in Recovery Mode. This binding is intended for use by a sighted person using an external video monitor.
+          If the system is shut down then boot into Recovery Mode. This is equivalent to a simultaneous long press of the Power button and the Volume Up key on an Android device.
+
+Quick Reference
 
 Braille
 
@@ -1022,16 +1162,70 @@ Screen Actions
 
    CAPTION: Screen Developer Operations
 
-         Keys                           Description
-   Backward+Dots4568 write the screen element structure to the log
-   Backward+Dot4     go to and describe the parent node
-   Backward+Dot5     go to and describe the previous sibling node
-   Backward+Dot6     go to and describe the next sibling node
-   Backward+Dot8     go to and describe the first child node
-   Backward+Dots56   describe the current node
-   Backward+Dots456  force the screen to scroll backward (up or left)
-   Backward+Dots568  force the screen to scroll forward (down or right)
-   Backward+Dots48   go to the Launcher chooser
+            Keys                                        Description
+   Space+Dots78+Dots134#m go to the System Maintenance Operations screen of the B2G User Interface
+   Backward+Dots4568      write the screen element structure to the log
+   Backward+Dot4          go to and describe the parent node
+   Backward+Dot5          go to and describe the previous sibling node
+   Backward+Dot6          go to and describe the next sibling node
+   Backward+Dot8          go to and describe the first child node
+   Backward+Dots56        describe the current node
+   Backward+Dots456       force the screen to scroll backward (up or left)
+   Backward+Dots568       force the screen to scroll forward (down or right)
+   Backward+Dots48        go to the Launcher chooser
+
+Technical Information
+
+     * Weight: 575g [20.3oz]
+     * Dimensions:
+          + Width: 20cm [8in]
+          + Depth: 11cm [4.3in]
+          + Height: 3cm [1.2in] (including feet and keys)
+     * Braille Display: Metec, 20 cells, 8 dots per cell
+     * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
+     * Camera: 5MP, built-in flash
+     * Wi-Fi: IEEE 802.11 b/g, Hotspot, Wi-Fi Direct
+     * Bluetooth: 2.1+EDR, Power Class 1.5
+          + Profiles: OPP, A2DP, AVRCP, HID
+     * GPS Receiver: NAVSTAR L1C/A Band, 48 channels
+     * Accelerometer: 4 axis
+     * Compass
+     * Internal Memory: 8.5GB eMMC, 500MB DRAM
+
+     * SD Card Slot: 32GB max, external (on back)
+     * Micro-SIM Card Slot: internal, user accessible (beneath cover on bottom)
+     * Cellular Wireless Module:
+          + Quad-band GSM / GPRS / EDGE: 850MHz, 900MHz, 1800MHz, 1900MHz
+          + Quad-band UMTS WCDMA FDD: 800MHz, 850MHz, 1900MHz, 2100MHz
+          + Dual-band CDMA EVDO Rev A: 800MHz, 1900MHz
+          + GPS: 1575.42MHz
+
+The Serial Port
+
+   The serial port is a 10-pin male connector under The Removable Cover in the corner nearest to the Power switch. In other words, with the bottom toward you and the side with the Power switch up, the port is in the upper-right corner. In this orientation, its pins are arranged in two five-pin columns. From top to bottom:
+     * The pins in the left column are numbered: 1, 3, 5, 7, 9
+     * The pins in the right column are numbered: 2, 4, 6, 8, 10
+
+   Like this:
+1 o o 2
+3 o o 4
+5 o o 6
+7 o o 8
+9 o o 10
+
+   The pins are used as follows:
+   Pin Function
+   2   inbound data
+   3   outbound data
+   5   ground
+
+   The port is configured as follows:
+   Property     Setting
+   Baud         115200
+   Data Bits    8
+   Stop Bits    1
+   Parity       none
+   Flow Control software (X-ON/X-OFF)
 
 Tables
 
@@ -1314,29 +1508,3 @@ ASCII Control Characters
    ~     U+001E ⠘    45      RS    Record Separator
    _     U+001F ⠸    456     US    Unit Separator
    ?     U+007F ⠹    1456    DEL   Delete
-
-Technical Information
-
-     * Weight: 575g [20.3oz]
-     * Dimensions:
-          + Width: 20cm [8in]
-          + Depth: 11cm [4.3in]
-          + Height: 3cm [1.2in] (including feet and keys)
-     * Braille Display: Metec, 20 cells, 8 dots per cell
-     * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
-     * Camera: 5MP, built-in flash
-     * Wi-Fi: IEEE 802.11 b/g, Hotspot, Wi-Fi Direct
-     * Bluetooth: 2.1+EDR, Power Class 1.5
-          + Profiles: OPP, A2DP, AVRCP, HID
-     * GPS Receiver: NAVSTAR L1C/A Band, 48 channels
-     * Accelerometer: 4 axis
-     * Compass
-     * Internal Memory: 8.5GB eMMC, 500MB DRAM
-
-     * SD Card Slot: 32GB max, external (on back)
-     * Micro-SIM Card Slot: internal, user accessible (beneath cover on bottom)
-     * Cellular Wireless Module:
-          + Quad-band GSM / GPRS / EDGE: 850MHz, 900MHz, 1800MHz, 1900MHz
-          + Quad-band UMTS WCDMA FDD: 800MHz, 850MHz, 1900MHz, 2100MHz
-          + Dual-band CDMA EVDO Rev A: 800MHz, 1900MHz
-          + GPS: 1575.42MHz
