@@ -89,7 +89,8 @@ public class HelpActivity extends ProgrammaticActivity {
       }
     }.execute("b2g_ui", TEXT_EXTENSION);
 
-    return newVerticalScrollContainer(newHorizontalScrollContainer(view));
+    view.setVerticalScrollBarEnabled(true);
+    return newVerticalScrollContainer(view);
   }
 
   @Override
