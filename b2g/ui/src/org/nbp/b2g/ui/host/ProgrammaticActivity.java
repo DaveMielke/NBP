@@ -1,6 +1,11 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import java.util.Map;
+import java.util.HashMap;
+
+import android.util.Log;
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -16,7 +21,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Switch;
 
+import android.content.Intent;
+import android.content.ActivityNotFoundException;
+
 public abstract class ProgrammaticActivity extends Activity {
+  private final static String LOG_TAG = ProgrammaticActivity.class.getName();
+
   protected final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
     for (View view : views) {
       group.addView(view, parameters);
@@ -136,5 +146,56 @@ public abstract class ProgrammaticActivity extends Activity {
     super.onCreate(state);
     ApplicationContext.setContext(this);
     setContentView();
+  }
+
+  protected interface ActivityResultHandler {
+    public void handleActivityResult (int code, Intent intent);
+  }
+
+  private int requestCode = 0;
+  private final Map<Integer, ActivityResultHandler> activityResultHandlers =
+    new HashMap<Integer, ActivityResultHandler>();
+
+  @Override
+  protected final void onActivityResult (int requestCode, int resultCode, Intent resultData) {
+    ActivityResultHandler handler;
+
+    synchronized (activityResultHandlers) {
+      if ((handler = activityResultHandlers.get(requestCode)) != null) {
+        activityResultHandlers.remove(requestCode);
+      }
+    }
+
+    if (handler != null) {
+      handler.handleActivityResult(resultCode, resultData);
+    }
+  }
+
+  protected boolean startRequest (Intent intent, ActivityResultHandler handler) {
+    int code;
+
+    synchronized (activityResultHandlers) {
+      code = requestCode++;
+      activityResultHandlers.put(code, handler);
+    }
+
+    try {
+      startActivityForResult(intent, code);
+      return true;
+    } catch (ActivityNotFoundException exception) {
+      Log.w(LOG_TAG, "eligible activity not found: " + exception.getMessage());
+    }
+
+    synchronized (activityResultHandlers) {
+      activityResultHandlers.remove(code);
+    }
+
+    return false;
+  }
+
+  protected final boolean findFile (ActivityResultHandler handler) {
+    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+    intent.setType("file/*");
+    return startRequest(intent, handler);
   }
 }

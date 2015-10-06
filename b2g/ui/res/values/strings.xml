@@ -16,7 +16,9 @@
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
   <string name="maintenance_activity_label">B2G System Maintenance Operations</string>
+  <string name="maintenance_message_operation_succeeded">operation succeeded</string>
   <string name="maintenance_message_operation_cancelled">operation cancelled</string>
+  <string name="maintenance_message_operation_failed">operation failed</string>
   <string name="maintenance_message_reboot_failed">device reboot failed</string>
 
   <string name="maintenance_RestartSystem_label">Restart System</string>
@@ -28,10 +30,13 @@
   <string name="maintenance_BootLoader_label">Boot Loader</string>
   <string name="maintenance_BootLoader_starting">rebooting to loader</string>
 
+  <string name="maintenance_VerifyUpdate_label">Verify Update</string>
+  <string name="maintenance_VerifyUpdate_finding">finding update</string>
+  <string name="maintenance_VerifyUpdate_progress">verifying update</string>
+  <string name="maintenance_VerifyUpdate_done">update verified</string>
+
   <string name="maintenance_UpdateSystem_label">Update System</string>
-  <string name="maintenance_UpdateSystem_finding">finding update</string>
-  <string name="maintenance_UpdateSystem_verifying">verifying update</string>
-  <string name="maintenance_UpdateSystem_applying">applying update</string>
+  <string name="maintenance_UpdateSystem_start">applying update</string>
 
   <string name="maintenance_ClearCache_label">Clear Cache</string>
   <string name="maintenance_ClearCache_starting">wiping cache</string>

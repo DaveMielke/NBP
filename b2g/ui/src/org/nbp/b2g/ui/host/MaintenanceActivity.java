@@ -16,7 +16,9 @@ import android.widget.Button;
 
 import android.os.PowerManager;
 import android.os.RecoverySystem;
+
 import android.os.AsyncTask;
+import java.util.concurrent.Callable;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -58,115 +60,53 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return getString(R.string.maintenance_message_reboot_failed);
   }
 
-  private void updateSystem (File file) {
-    new AsyncTask<File, Integer, String>() {
-      String progressMessage;
-      File systemUpdate;
+  private final void showActivityResultCode (int code) {
+    switch (code) {
+      case RESULT_OK:
+        setMessage(R.string.maintenance_message_operation_succeeded);
+        break;
 
+      case RESULT_CANCELED:
+        setMessage(R.string.maintenance_message_operation_cancelled);
+        break;
+
+      default:
+        setMessage(String.format(
+          "%s: %d",
+          getString(R.string.maintenance_message_operation_failed),
+          code
+        ));
+        break;
+    }
+  }
+
+  private final void runAsAsyncTask (final Callable<String> callable) {
+    new AsyncTask<Void, String, String>() {
       @Override
-      protected void onPreExecute () {
-        progressMessage = getContext().getString(R.string.maintenance_UpdateSystem_verifying);
-        setMessage(progressMessage);
-      }
-
-      @Override
-      protected String doInBackground (File... files) {
-        systemUpdate = files[0];
-        String result = getRebootFailureMessage();
-
-        RecoverySystem.ProgressListener progressListener = new RecoverySystem.ProgressListener() {
-          @Override
-          public void onProgress (int percentage) {
-            publishProgress(percentage);
-          }
-        };
-
+      protected String doInBackground (Void... arguments) {
         try {
-          RecoverySystem.verifyPackage(systemUpdate, progressListener, null);
-          result = null;
-        } catch (IOException exception) {
-          result = "system update not readable: " + exception.getMessage();
-        } catch (GeneralSecurityException exception) {
-          result = "invalid system update: " + exception.getMessage();
+          return callable.call();
+        } catch (Exception exception) {
+          return exception.getMessage();
         }
-
-        return result;
       }
 
       @Override
-      protected void onProgressUpdate (Integer... values) {
-        int percentage = values[0];
-
-        String message = String.format("%s: %d%%", progressMessage, percentage);
-        boolean rewrite = percentage != 0;
-
-        setMessage(message, rewrite);
+      public void onProgressUpdate (String... messages) {
+        setMessage(messages[0], true);
       }
 
       @Override
       protected void onPostExecute (String result) {
-        if (result == null) {
-          setMessage(R.string.maintenance_UpdateSystem_applying);
-          String failure = getRebootFailureMessage();
-
-          try {
-            RecoverySystem.installPackage(getContext(), systemUpdate);
-          } catch (IOException exception) {
-            failure = exception.getMessage();
-          }
-
-          setMessage(failure);
-        } else {
-          setMessage(result);
-        }
+        if (result != null) setMessage(result);
       }
-    }.execute(file);
-  }
-
-  private void updateSystem (String path) {
-    updateSystem(new File(path));
-  }
-
-  private void updateSystem (Uri uri) {
-    updateSystem(uri.getPath());
-  }
-
-  private void updateSystem (Intent intent) {
-    updateSystem(intent.getData());
-  }
-
-  private enum ActivityRequestType {
-    FIND_SYSTEM_UPDATE;
+    }.execute();
   }
 
   @Override
-  protected void onActivityResult (int requestCode, int resultCode, Intent resultData) {
-    ActivityRequestType requestType = ActivityRequestType.values()[requestCode];
-
-    if (resultCode == RESULT_OK) {
-      switch (requestType) {
-        case FIND_SYSTEM_UPDATE:
-          updateSystem(resultData);
-          break;
-      }
-    } else {
-      setMessage(R.string.maintenance_message_operation_cancelled);
-    }
-  }
-
-  private void startRequest (Intent intent, ActivityRequestType requestType) {
-    try {
-      Endpoints.setHostEndpoint();
-      startActivityForResult(intent, requestType.ordinal());
-    } catch (ActivityNotFoundException exception) {
-      Log.w(LOG_TAG, "file system browser not found: " + exception.getMessage());
-    }
-  }
-
-  private void findFile (ActivityRequestType requestType) {
-    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-    intent.setType("file/*");
-    startRequest(intent, requestType);
+  protected boolean startRequest (Intent intent, ActivityResultHandler handler) {
+    Endpoints.setHostEndpoint();
+    return super.startRequest(intent, handler);
   }
 
   private void rebootDevice (String reason) {
@@ -219,14 +159,122 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
+  private void applyUpdate (final File file) {
+    setMessage(R.string.maintenance_UpdateSystem_start);
+
+    runAsAsyncTask(
+      new Callable<String>() {
+        @Override
+        public String call () {
+          String failure = getRebootFailureMessage();
+
+          try {
+            RecoverySystem.installPackage(getContext(), file);
+            return null;
+          } catch (IOException exception) {
+            failure = exception.getMessage();
+          }
+
+          return failure;
+        }
+      }
+    );
+  }
+
+  private void verifyUpdate (final File file, final boolean apply) {
+    new AsyncTask<Void, String, String>() {
+      String progressMessage;
+
+      @Override
+      protected void onPreExecute () {
+        progressMessage = getContext().getString(R.string.maintenance_VerifyUpdate_progress);
+        setMessage(progressMessage);
+      }
+
+      @Override
+      protected String doInBackground (Void... arguments) {
+        String result = getRebootFailureMessage();
+
+        RecoverySystem.ProgressListener progressListener = new RecoverySystem.ProgressListener() {
+          @Override
+          public void onProgress (int percentage) {
+            String message = String.format("%s: %d%%", progressMessage, percentage);
+            publishProgress(message);
+          }
+        };
+
+        try {
+          RecoverySystem.verifyPackage(file, progressListener, null);
+          result = null;
+        } catch (IOException exception) {
+          result = "system update not readable: " + exception.getMessage();
+        } catch (GeneralSecurityException exception) {
+          result = "invalid system update: " + exception.getMessage();
+        }
+
+        return result;
+      }
+
+      @Override
+      protected void onProgressUpdate (String... messages) {
+        setMessage(messages[0], true);
+      }
+
+      @Override
+      protected void onPostExecute (String result) {
+        if (result != null) {
+          setMessage(result);
+        } else if (!apply) {
+          setMessage(R.string.maintenance_VerifyUpdate_done);
+        } else {
+          applyUpdate(file);
+        }
+      }
+    }.execute();
+  }
+
+  private void verifyUpdate (final boolean apply) {
+    setMessage(R.string.maintenance_VerifyUpdate_finding);
+
+    findFile(
+      new ActivityResultHandler() {
+        @Override
+        public void handleActivityResult (int code, Intent intent) {
+          switch (code) {
+            case RESULT_OK:
+              verifyUpdate(new File(intent.getData().getPath()), apply);
+              break;
+
+            default:
+              showActivityResultCode(code);
+              break;
+          }
+        }
+      }
+    );
+  }
+
+  private View createVerifyUpdateButton () {
+    Button button = newButton(
+      R.string.maintenance_VerifyUpdate_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          verifyUpdate(false);
+        }
+      }
+    );
+
+    return button;
+  }
+
   private View createUpdateSystemButton () {
     Button button = newButton(
       R.string.maintenance_UpdateSystem_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_UpdateSystem_finding);
-          findFile(ActivityRequestType.FIND_SYSTEM_UPDATE);
+          verifyUpdate(true);
         }
       }
     );
@@ -286,7 +334,10 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       (messageView = newTextView()),
 
       createRestartSystemButton(),
+
+      createVerifyUpdateButton(),
       createUpdateSystemButton(),
+
       createRecoveryModeButton(),
 
       createClearCacheButton(),
