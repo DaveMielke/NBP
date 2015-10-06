@@ -68,6 +68,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     }
 
     protected void onSuccess () {
+      setMessage(R.string.maintenance_message_operation_succeeded);
     }
 
     @Override
