@@ -74,8 +74,3 @@ of these characters:
 
 .. include:: tbl-control.rst
 
-Technical Information
----------------------
-
-.. include:: tbl-technical.rst
-

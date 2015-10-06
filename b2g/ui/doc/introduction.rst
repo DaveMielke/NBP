@@ -152,9 +152,10 @@ following:
   toward the back. As with most SIM card slot covers, its hinge is fragile so
   be gentle.
 
-* The serial port is in the corner that's toward the back and toward the side
-  where the Power switch is. It's a ten-pin (2x5) male connector that can be
-  used by the |product name| developers to perform low-level system maintenance.
+* `The Serial Port`_ is in the corner that's toward the back and toward the
+  side where the Power switch is. It's a 10-pin (2x5) male connector that
+  can be used by the |product name| developers to perform low-level system
+  maintenance.
 
 Key Combinations
 ----------------
