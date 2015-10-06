@@ -54,10 +54,6 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     setMessage(getString(message));
   }
 
-  private String getRebootFailureMessage () {
-    return getString(R.string.maintenance_message_reboot_failed);
-  }
-
   private abstract class MaintenanceTask extends AsyncTask<Void, String, String> {
     protected abstract String runMaintenanceTask ();
 
@@ -96,7 +92,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         return exception.getMessage();
       }
 
-      return getRebootFailureMessage();
+      return getString(R.string.maintenance_message_reboot_failed);
     }
   }
 
@@ -128,7 +124,6 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   private void rebootDevice (String reason) {
     getPowerManager().reboot(reason);
-    setMessage(getRebootFailureMessage());
   }
 
   private View createRestartSystemButton () {
@@ -200,18 +195,16 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   private void applyUpdate (final File file) {
     setMessage(R.string.maintenance_UpdateSystem_start);
 
-    new MaintenanceTask() {
+    new RebootTask() {
       @Override
-      protected String runMaintenanceTask () {
-        String failure = getRebootFailureMessage();
-
+      protected String runRebootTask () {
         try {
           RecoverySystem.installPackage(getContext(), file);
         } catch (IOException exception) {
-          failure = exception.getMessage();
+          return exception.getMessage();
         }
 
-        return failure;
+        return null;
       }
     }.execute();
   }
@@ -223,8 +216,6 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     new MaintenanceTask() {
       @Override
       protected String runMaintenanceTask () {
-        String result = getRebootFailureMessage();
-
         RecoverySystem.ProgressListener progressListener = new RecoverySystem.ProgressListener() {
           @Override
           public void onProgress (int percentage) {
@@ -235,14 +226,12 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
         try {
           RecoverySystem.verifyPackage(file, progressListener, null);
-          result = null;
+          return null;
         } catch (IOException exception) {
-          result = "system update not readable: " + exception.getMessage();
+          return "system update not readable: " + exception.getMessage();
         } catch (GeneralSecurityException exception) {
-          result = "invalid system update: " + exception.getMessage();
+          return "invalid system update: " + exception.getMessage();
         }
-
-        return result;
       }
 
       @Override
