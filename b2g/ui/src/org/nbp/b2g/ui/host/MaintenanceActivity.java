@@ -35,19 +35,19 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   private TextView messageView;
 
-  private void setMessage (String message, boolean rewrite) {
-    if (rewrite) {
-      Endpoints.popup.get().rewrite(message);
-    } else {
-      Endpoints.setPopupEndpoint(message);
-    }
-
+  private void showMessage (String message) {
     messageView.setText(message);
     Log.d(LOG_TAG, "system maintenance: " + message);
   }
 
+  private void updateMessage (String message) {
+    Endpoints.popup.get().rewrite(message);
+    showMessage(message);
+  }
+
   private void setMessage (String message) {
-    setMessage(message, false);
+    Endpoints.setPopupEndpoint(message);
+    showMessage(message);
   }
 
   private void setMessage (int message) {
@@ -56,6 +56,54 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   private String getRebootFailureMessage () {
     return getString(R.string.maintenance_message_reboot_failed);
+  }
+
+  private abstract class MaintenanceTask extends AsyncTask<Void, String, String> {
+    protected abstract String runMaintenanceTask ();
+
+    @Override
+    protected final String doInBackground (Void... arguments) {
+      return runMaintenanceTask();
+    }
+
+    @Override
+    public final void onProgressUpdate (String... messages) {
+      updateMessage(messages[0]);
+    }
+
+    protected void onSuccess () {
+    }
+
+    @Override
+    protected final void onPostExecute (String result) {
+      if (result == null) {
+        onSuccess();
+      } else {
+        setMessage(result);
+      }
+    }
+  }
+
+  private abstract class RebootTask extends MaintenanceTask {
+    protected abstract String runRebootTask ();
+
+    @Override
+    protected final String runMaintenanceTask () {
+      try {
+        String result = runRebootTask();
+        if (result != null) return result;
+      } catch (SecurityException exception) {
+        return exception.getMessage();
+      }
+
+      return getRebootFailureMessage();
+    }
+  }
+
+  @Override
+  protected boolean startRequest (Intent intent, ActivityResultHandler handler) {
+    Endpoints.setHostEndpoint();
+    return super.startRequest(intent, handler);
   }
 
   private final void showActivityResultCode (int code) {
@@ -78,38 +126,6 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     }
   }
 
-  private abstract class MaintenanceTask extends AsyncTask<Void, String, String> {
-    protected abstract String runMaintenanceTask ();
-
-    @Override
-    protected final String doInBackground (Void... arguments) {
-      return runMaintenanceTask();
-    }
-
-    @Override
-    public final void onProgressUpdate (String... messages) {
-      setMessage(messages[0], true);
-    }
-
-    protected void onSuccess () {
-    }
-
-    @Override
-    protected final void onPostExecute (String result) {
-      if (result == null) {
-        onSuccess();
-      } else {
-        setMessage(result);
-      }
-    }
-  }
-
-  @Override
-  protected boolean startRequest (Intent intent, ActivityResultHandler handler) {
-    Endpoints.setHostEndpoint();
-    return super.startRequest(intent, handler);
-  }
-
   private void rebootDevice (String reason) {
     getPowerManager().reboot(reason);
     setMessage(getRebootFailureMessage());
@@ -122,7 +138,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           setMessage(R.string.maintenance_RestartSystem_starting);
-          rebootDevice(null);
+
+          new RebootTask() {
+            @Override
+            protected String runRebootTask () {
+              rebootDevice(null);
+              return null;
+            }
+          }.execute();
         }
       }
     );
@@ -137,7 +160,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           setMessage(R.string.maintenance_RecoveryMode_starting);
-          rebootDevice("recovery");
+
+          new RebootTask() {
+            @Override
+            protected String runRebootTask () {
+              rebootDevice("recovery");
+              return null;
+            }
+          }.execute();
         }
       }
     );
@@ -152,7 +182,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           setMessage(R.string.maintenance_BootLoader_starting);
-          rebootDevice("bootloader");
+
+          new RebootTask() {
+            @Override
+            protected String runRebootTask () {
+              rebootDevice("bootloader");
+              return null;
+            }
+          }.execute();
         }
       }
     );
@@ -275,15 +312,19 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           setMessage(R.string.maintenance_ClearCache_starting);
-          String failure = getRebootFailureMessage();
 
-          try {
-            RecoverySystem.rebootWipeCache(getContext());
-          } catch (IOException exception) {
-            failure = exception.getMessage();
-          }
+          new RebootTask() {
+            @Override
+            protected String runRebootTask () {
+              try {
+                RecoverySystem.rebootWipeCache(getContext());
+              } catch (IOException exception) {
+                return exception.getMessage();
+              }
 
-          setMessage(failure);
+              return null;
+            }
+          }.execute();
         }
       }
     );
@@ -298,15 +339,19 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           setMessage(R.string.maintenance_FactoryReset_starting);
-          String failure = getRebootFailureMessage();
 
-          try {
-            RecoverySystem.rebootWipeUserData(getContext());
-          } catch (IOException exception) {
-            failure = exception.getMessage();
-          }
+          new RebootTask() {
+            @Override
+            protected String runRebootTask () {
+              try {
+                RecoverySystem.rebootWipeUserData(getContext());
+              } catch (IOException exception) {
+                return exception.getMessage();
+              }
 
-          setMessage(failure);
+              return null;
+            }
+          }.execute();
         }
       }
     );
