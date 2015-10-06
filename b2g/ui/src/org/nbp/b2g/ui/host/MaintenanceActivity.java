@@ -18,11 +18,9 @@ import android.os.PowerManager;
 import android.os.RecoverySystem;
 
 import android.os.AsyncTask;
-import java.util.concurrent.Callable;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import android.content.ActivityNotFoundException;
 
 public class MaintenanceActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = MaintenanceActivity.class.getName();
@@ -80,27 +78,30 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     }
   }
 
-  private final void runAsAsyncTask (final Callable<String> callable) {
-    new AsyncTask<Void, String, String>() {
-      @Override
-      protected String doInBackground (Void... arguments) {
-        try {
-          return callable.call();
-        } catch (Exception exception) {
-          return exception.getMessage();
-        }
-      }
+  private abstract class MaintenanceTask extends AsyncTask<Void, String, String> {
+    protected abstract String runMaintenanceTask ();
 
-      @Override
-      public void onProgressUpdate (String... messages) {
-        setMessage(messages[0], true);
-      }
+    @Override
+    protected final String doInBackground (Void... arguments) {
+      return runMaintenanceTask();
+    }
 
-      @Override
-      protected void onPostExecute (String result) {
-        if (result != null) setMessage(result);
+    @Override
+    public final void onProgressUpdate (String... messages) {
+      setMessage(messages[0], true);
+    }
+
+    protected void onSuccess () {
+    }
+
+    @Override
+    protected final void onPostExecute (String result) {
+      if (result == null) {
+        onSuccess();
+      } else {
+        setMessage(result);
       }
-    }.execute();
+    }
   }
 
   @Override
@@ -162,37 +163,29 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   private void applyUpdate (final File file) {
     setMessage(R.string.maintenance_UpdateSystem_start);
 
-    runAsAsyncTask(
-      new Callable<String>() {
-        @Override
-        public String call () {
-          String failure = getRebootFailureMessage();
+    new MaintenanceTask() {
+      @Override
+      protected String runMaintenanceTask () {
+        String failure = getRebootFailureMessage();
 
-          try {
-            RecoverySystem.installPackage(getContext(), file);
-            return null;
-          } catch (IOException exception) {
-            failure = exception.getMessage();
-          }
-
-          return failure;
+        try {
+          RecoverySystem.installPackage(getContext(), file);
+        } catch (IOException exception) {
+          failure = exception.getMessage();
         }
+
+        return failure;
       }
-    );
+    }.execute();
   }
 
   private void verifyUpdate (final File file, final boolean apply) {
-    new AsyncTask<Void, String, String>() {
-      String progressMessage;
+    final String progressMessage = getString(R.string.maintenance_VerifyUpdate_progress);
+    setMessage(progressMessage);
 
+    new MaintenanceTask() {
       @Override
-      protected void onPreExecute () {
-        progressMessage = getContext().getString(R.string.maintenance_VerifyUpdate_progress);
-        setMessage(progressMessage);
-      }
-
-      @Override
-      protected String doInBackground (Void... arguments) {
+      protected String runMaintenanceTask () {
         String result = getRebootFailureMessage();
 
         RecoverySystem.ProgressListener progressListener = new RecoverySystem.ProgressListener() {
@@ -216,18 +209,11 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       }
 
       @Override
-      protected void onProgressUpdate (String... messages) {
-        setMessage(messages[0], true);
-      }
-
-      @Override
-      protected void onPostExecute (String result) {
-        if (result != null) {
-          setMessage(result);
-        } else if (!apply) {
-          setMessage(R.string.maintenance_VerifyUpdate_done);
-        } else {
+      protected final void onSuccess () {
+        if (apply) {
           applyUpdate(file);
+        } else {
+          setMessage(R.string.maintenance_VerifyUpdate_done);
         }
       }
     }.execute();
