@@ -25,8 +25,8 @@ video monitor must press both volume keys together (VolumeDown +
 VolumeUp) in order to stop BRLTTY's |product name| braille driver. The 
 |product name| keyboard can then be used to navigate the visual menu.
 
-The Braille Menu
-----------------
+The Action Menu
+---------------
 
 The braille menu offers the same functionality as the visual menu but in
 a different way because it's been designed for a text-mode environment.
