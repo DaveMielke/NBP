@@ -598,9 +598,8 @@ You can get this information by pressing Space, Backward, and Forward
 together. This will cause details that identify the build to be presented
 within a popup (see `Popups`_) that looks something like this::
 
-  Build Details
-  Time: 2015-09-30 14:04:27 UTC
-  Revision: 1797952
+  UI Time: 2015-09-30 14:04:27 UTC
+  UI Revision: 1797952
   System: v4.1.2
   Firmware: 3.0
 

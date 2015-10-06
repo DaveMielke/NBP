@@ -3,8 +3,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.nbp.b2g.ui"
-    android:versionCode="5"
-    android:versionName="1.4"
+    android:versionCode="6"
+    android:versionName="1.5"
     >
 
   <!-- Android 4.1 (Jellybean) -->
@@ -86,14 +86,20 @@
     </service>
 
     <activity
+        android:name=".host.BuildActivity"
+        android:label="@string/build_activity_label"
+        >
+    </activity>
+
+    <activity
         android:name=".host.ClockActivity"
         android:label="@string/clock_activity_label"
         >
     </activity>
 
     <activity
-        android:name=".host.SettingsActivity"
-        android:label="@string/settings_activity_label"
+        android:name=".host.HelpActivity"
+        android:label="@string/help_activity_label"
         >
     </activity>
 
@@ -104,8 +110,8 @@
     </activity>
 
     <activity
-        android:name=".host.HelpActivity"
-        android:label="@string/help_activity_label"
+        android:name=".host.SettingsActivity"
+        android:label="@string/settings_activity_label"
         >
     </activity>
 

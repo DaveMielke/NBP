@@ -27,6 +27,5 @@
   "Backward+Dot7","|OneHandOff|"
   "Forward+Dot8","|OneHandOn|"
   "Backward+Forward","|DescribeIndicators|"
-  "Backward+Forward+Space","|DescribeBuild|"
   "Space+Dots12345678","|Null|"
 

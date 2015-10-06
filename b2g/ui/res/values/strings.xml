@@ -9,40 +9,39 @@
   <string name="screen_monitor_label">B2G Screen Monitor</string>
   <string name="screen_monitor_description">This service watches for changes to the host screen, and notifies the undrlying software whenever they occur.</string>
 
+  <string name="build_activity_label">B2G Build Details</string>
+  <string name="build_activity_label_ui_time">UI Time</string>
+  <string name="build_activity_label_ui_revision">UI Revision</string>
+  <string name="build_activity_label_android_build">Android Build</string>
+  <string name="build_activity_label_firmware_version">Firmware Version</string>
+
   <string name="clock_activity_label">B2G Digital Clock</string>
 
   <string name="help_activity_label">B2G User Interface Document</string>
-
-  <string name="settings_activity_label">B2G User Interface Settings</string>
 
   <string name="maintenance_activity_label">B2G System Maintenance Operations</string>
   <string name="maintenance_message_operation_succeeded">operation succeeded</string>
   <string name="maintenance_message_operation_cancelled">operation cancelled</string>
   <string name="maintenance_message_operation_failed">operation failed</string>
   <string name="maintenance_message_reboot_failed">device reboot failed</string>
-
-  <string name="maintenance_RestartSystem_label">Restart System</string>
-  <string name="maintenance_RestartSystem_starting">rebooting Android</string>
-
-  <string name="maintenance_RecoveryMode_label">Recovery Mode</string>
-  <string name="maintenance_RecoveryMode_starting">rebooting to recovery</string>
-
   <string name="maintenance_BootLoader_label">Boot Loader</string>
   <string name="maintenance_BootLoader_starting">rebooting to loader</string>
-
+  <string name="maintenance_ClearCache_label">Clear Cache</string>
+  <string name="maintenance_ClearCache_starting">wiping cache</string>
+  <string name="maintenance_FactoryReset_label">Factory Reset</string>
+  <string name="maintenance_FactoryReset_starting">wiping cache and data</string>
+  <string name="maintenance_RecoveryMode_label">Recovery Mode</string>
+  <string name="maintenance_RecoveryMode_starting">rebooting to recovery</string>
+  <string name="maintenance_RestartSystem_label">Restart System</string>
+  <string name="maintenance_RestartSystem_starting">rebooting Android</string>
+  <string name="maintenance_UpdateSystem_label">Update System</string>
+  <string name="maintenance_UpdateSystem_start">applying update</string>
   <string name="maintenance_VerifyUpdate_label">Verify Update</string>
   <string name="maintenance_VerifyUpdate_finding">finding update</string>
   <string name="maintenance_VerifyUpdate_progress">verifying update</string>
   <string name="maintenance_VerifyUpdate_done">update verified</string>
 
-  <string name="maintenance_UpdateSystem_label">Update System</string>
-  <string name="maintenance_UpdateSystem_start">applying update</string>
-
-  <string name="maintenance_ClearCache_label">Clear Cache</string>
-  <string name="maintenance_ClearCache_starting">wiping cache</string>
-
-  <string name="maintenance_FactoryReset_label">Factory Reset</string>
-  <string name="maintenance_FactoryReset_starting">wiping cache and data</string>
+  <string name="settings_activity_label">B2G User Interface Settings</string>
 
   <string name="state_disabled">disabled</string>
 
@@ -121,12 +120,6 @@
   <string name="LogKeyboard_control_label">Log Keyboard</string>
   <string name="LogNavigation_control_label">Log Navigation</string>
   <string name="LogUpdates_control_label">Log Updates</string>
-
-  <string name="DescribeBuild_title">Build Details</string>
-  <string name="DescribeBuild_label_time">Time</string>
-  <string name="DescribeBuild_label_revision">Revision</string>
-  <string name="DescribeBuild_label_system">System</string>
-  <string name="DescribeBuild_label_firmware">Firmware</string>
 
   <string name="DescribeCharacter_label_block">Block</string>
   <string name="DescribeCharacter_label_category">Category</string>

@@ -1,11 +1,25 @@
-package org.nbp.b2g.ui.actions;
+package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
 import android.util.Log;
 import android.os.Build;
 
-public class DescribeBuild extends Action {
-  private final static String LOG_TAG = DescribeBuild.class.getName();
+import android.view.View;
+import android.widget.TextView;
+
+public class BuildActivity extends ProgrammaticActivity {
+  private final static String LOG_TAG = BuildActivity.class.getName();
+
+  private TextView textView;
+
+  @Override
+  protected final View createContentView () {
+    textView = newTextView();
+
+    return createVerticalGroup(
+      textView
+    );
+  }
 
   private static void appendString (StringBuilder sb, int string) {
     sb.append(ApplicationContext.getString(string));
@@ -41,33 +55,27 @@ public class DescribeBuild extends Action {
   }
 
   private static void addBuildSystem (StringBuilder sb) {
-    startLine(sb, R.string.DescribeBuild_label_system);
+    startLine(sb, R.string.build_activity_label_android_build);
     sb.append(Build.ID);
   }
 
   private static void addBuildFirmware (StringBuilder sb) {
-    startLine(sb, R.string.DescribeBuild_label_firmware);
+    startLine(sb, R.string.build_activity_label_firmware_version);
     sb.append(FirmwareVersion.getMajor());
     sb.append('.');
     sb.append(FirmwareVersion.getMinor());
   }
 
   @Override
-  public boolean performAction () {
+  public void onResume () {
+    super.onResume();
     StringBuilder sb = new StringBuilder();
-    appendString(sb, R.string.DescribeBuild_title);
 
-    addBuildProperty(sb, "time", R.string.DescribeBuild_label_time);
-    addBuildProperty(sb, "revision", R.string.DescribeBuild_label_revision);
+    addBuildProperty(sb, "time", R.string.build_activity_label_ui_time);
+    addBuildProperty(sb, "revision", R.string.build_activity_label_ui_revision);
     addBuildSystem(sb);
     addBuildFirmware(sb);
 
-    if (sb.length() == 0) return false;
-    Endpoints.setPopupEndpoint(sb.toString());
-    return true;
-  }
-
-  public DescribeBuild (Endpoint endpoint) {
-    super(endpoint, false);
+    textView.setText(sb.toString());
   }
 }

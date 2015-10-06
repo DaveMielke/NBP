@@ -30,4 +30,5 @@
   "Space+Dots234#s,Dot1#a","|AndroidAccessibilitySettings|"
   "Space+Dots234#s,Dots12#b","|AndroidBluetoothSettings|"
   "Space+Dots234#s,Dots2456#w","|AndroidWifiSettings|"
+  "Backward+Forward+Space","|DescribeBuild|"
 
