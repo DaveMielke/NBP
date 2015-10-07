@@ -474,8 +474,6 @@ information. This includes (but isn't limited to):
 
 * The values of various status indicators (see `Checking Status Indicators`_).
 
-* Information that identifies the build (see `Identifying the Build`_).
-
 A popup is a multi-line, read-only dialog. Normal navigation may be
 performed within it. Dismiss it by pressing Enter. It's automatically dismissed
 if no navigation operations have been performed within it for |popup time|.
@@ -596,14 +594,12 @@ newer version.
 
 You can get this information by pressing Space, Backward, and Forward
 together. This will cause details that identify the build to be presented
-within a screen that looks something like this:
+within a screen that looks something like this::
 
-================  =======================
-UI Time           2015-09-30 14:04:27 UTC
-UI Revision       1797952
-Android Build     v4.1.2
-Firmware Version  3.0
-================  =======================
+  UI Time           2015-09-30 14:04:27 UTC
+  UI Revision       1797952
+  Android Build     v4.1.2
+  Firmware Version  3.0
 
 Speech
 ~~~~~~
