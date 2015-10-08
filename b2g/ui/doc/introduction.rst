@@ -596,10 +596,10 @@ You can get this information by pressing Space, Backward, and Forward
 together. This will cause details that identify the build to be presented
 within a screen that looks something like this::
 
-  UI Time           2015-09-30 14:04:27 UTC
-  UI Revision       1797952
-  Android Build     v4.1.2
-  Firmware Version  3.0
+  UI Build Revision   1797952
+  UI Build Time       2015-09-30 14:04:27 UTC
+  Android Build Name  v4.1.2
+  Firmware Version    3.0
 
 Speech
 ~~~~~~

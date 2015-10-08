@@ -1,6 +1,10 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import java.util.Date;
+import java.util.TimeZone;
+import java.text.SimpleDateFormat;
+
 import android.util.Log;
 import android.os.Build;
 
@@ -22,10 +26,14 @@ public class BuildActivity extends ProgrammaticActivity {
     );
   }
 
-  private void addBuildDetail (int label, CharSequence value) {
-    setColumn(rowIndex, 0, getString(label));
+  private void addBuildDetail (String label, CharSequence value) {
+    setColumn(rowIndex, 0, label);
     setColumn(rowIndex, 1, value);
     rowIndex += 1;
+  }
+
+  private void addBuildDetail (int label, CharSequence value) {
+    addBuildDetail(getString(label), value);
   }
 
   private boolean addBuildProperty (String property, final int... labels) {
@@ -48,15 +56,28 @@ public class BuildActivity extends ProgrammaticActivity {
     return inputProcessor.processInput(("build." + property));
   }
 
+  private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss zzz";
+  private final static SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+
+  static {
+    dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
+
+  private void addTimeDetail (int label, long time) {
+    addBuildDetail(label, dateFormatter.format(time));
+  }
+
   @Override
   protected final View createContentView () {
     buildDetails = new GridLayout(this);
     buildDetails.setOrientation(buildDetails.VERTICAL);
 
-    addBuildProperty("time", R.string.build_activity_label_ui_time);
     addBuildProperty("revision", R.string.build_activity_label_ui_revision);
+    addBuildProperty("time", R.string.build_activity_label_ui_time);
 
     addBuildDetail(R.string.build_activity_label_android_build, Build.ID);
+    addTimeDetail(R.string.build_activity_label_android_time, Build.TIME);
+    addBuildDetail(R.string.build_activity_label_android_type, Build.TYPE);
 
     addBuildDetail(
       R.string.build_activity_label_firmware_version, 
