@@ -16,6 +16,7 @@
   <string name="build_activity_label_android_time">Android Build Time</string>
   <string name="build_activity_label_android_type">Android Build Type</string>
   <string name="build_activity_label_firmware_version">Firmware Version</string>
+  <string name="build_activity_label_metec_version">Metec Driver Version</string>
 
   <string name="clock_activity_label">B2G Digital Clock</string>
 

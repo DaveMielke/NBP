@@ -88,6 +88,11 @@ public class BuildActivity extends ProgrammaticActivity {
       )
     );
 
+    addBuildDetail(
+      R.string.build_activity_label_metec_version,
+      Devices.braille.get().getDriverVersion()
+    );
+
     return createVerticalGroup(
       buildDetails
     );

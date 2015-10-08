@@ -37,7 +37,7 @@ public class BrailleDevice {
   private native boolean enableDevice ();
   private native boolean disableDevice ();
 
-  private native String getDriverVersion ();
+  public native String getDriverVersion ();
   private native int getCellCount ();
 
   private native boolean setCellFirmness (int firmness);
