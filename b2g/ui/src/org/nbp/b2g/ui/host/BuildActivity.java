@@ -56,11 +56,12 @@ public class BuildActivity extends ProgrammaticActivity {
     return inputProcessor.processInput(("build." + property));
   }
 
-  private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss zzz";
-  private final static SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+  private final static String TIME_FORMAT = "yyyy-MM-dd@HH:mm zzz";
+  private final static String TIME_ZONE = "UTC";
+  private final static SimpleDateFormat dateFormatter = new SimpleDateFormat(TIME_FORMAT);
 
   static {
-    dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+    dateFormatter.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
   }
 
   private void addTimeDetail (int label, long time) {

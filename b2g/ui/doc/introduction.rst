@@ -597,7 +597,7 @@ together. This will cause details that identify the build to be presented
 within a screen that looks something like this::
 
   UI Build Revision   1797952
-  UI Build Time       2015-09-30 14:04:27 UTC
+  UI Build Time       2015-09-30@14:04 UTC
   Android Build Name  v4.1.2
   Firmware Version    3.0
 
