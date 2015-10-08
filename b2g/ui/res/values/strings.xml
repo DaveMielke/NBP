@@ -15,6 +15,7 @@
   <string name="build_activity_label_android_build">Android Build Name</string>
   <string name="build_activity_label_android_time">Android Build Time</string>
   <string name="build_activity_label_android_type">Android Build Type</string>
+  <string name="build_activity_label_linux_version">Linux Kernel Version</string>
   <string name="build_activity_label_firmware_version">Firmware Version</string>
   <string name="build_activity_label_metec_version">Metec Driver Version</string>
 
