@@ -44,13 +44,13 @@ public class BuildActivity extends ProgrammaticActivity {
     addDetail(label, System.getProperty(property));
   }
 
-  private void addBuildProperty (int label, String value) {
+  private void addAndroidBuildField (int label, String value) {
     if (!Build.UNKNOWN.equals(value)) {
       addDetail(label, value);
     }
   }
 
-  private boolean addUserInterfaceProperty (String property, final int... labels) {
+  private boolean addUserInterfaceAsset (String property, final int... labels) {
     InputProcessor inputProcessor = new InputProcessor() {
       @Override
       protected final boolean handleLine (String text, int number) {
@@ -78,7 +78,7 @@ public class BuildActivity extends ProgrammaticActivity {
     dateFormatter.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
   }
 
-  private void addTimeDetail (int label, long time) {
+  private void addTime (int label, long time) {
     addDetail(label, dateFormatter.format(time));
   }
 
@@ -87,12 +87,12 @@ public class BuildActivity extends ProgrammaticActivity {
     buildDetails = new GridLayout(this);
     buildDetails.setOrientation(buildDetails.VERTICAL);
 
-    addUserInterfaceProperty("revision", R.string.build_activity_label_ui_revision);
-    addUserInterfaceProperty("time", R.string.build_activity_label_ui_time);
+    addUserInterfaceAsset("revision", R.string.build_activity_label_ui_revision);
+    addUserInterfaceAsset("time", R.string.build_activity_label_ui_time);
 
-    addBuildProperty(R.string.build_activity_label_android_build, Build.ID);
-    addTimeDetail(R.string.build_activity_label_android_time, Build.TIME);
-    addBuildProperty(R.string.build_activity_label_android_type, Build.TYPE);
+    addAndroidBuildField(R.string.build_activity_label_android_build, Build.ID);
+    addTime(R.string.build_activity_label_android_time, Build.TIME);
+    addAndroidBuildField(R.string.build_activity_label_android_type, Build.TYPE);
 
     addSystemProperty(R.string.build_activity_label_linux_version, "os.version");
 
