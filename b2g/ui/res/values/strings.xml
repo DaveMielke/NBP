@@ -10,14 +10,17 @@
   <string name="screen_monitor_description">This service watches for changes to the host screen, and notifies the undrlying software whenever they occur.</string>
 
   <string name="build_activity_label">B2G Build Details</string>
-  <string name="build_activity_label_ui_revision">UI Build Revision</string>
-  <string name="build_activity_label_ui_time">UI Build Time</string>
   <string name="build_activity_label_android_build">Android Build Name</string>
   <string name="build_activity_label_android_time">Android Build Time</string>
   <string name="build_activity_label_android_type">Android Build Type</string>
-  <string name="build_activity_label_linux_version">Linux Kernel Version</string>
+  <string name="build_activity_label_bootloader_version">Boot Loader Version</string>
   <string name="build_activity_label_firmware_version">Firmware Version</string>
+  <string name="build_activity_label_hardware_serial">Serial Number</string>
+  <string name="build_activity_label_linux_version">Linux Kernel Version</string>
   <string name="build_activity_label_metec_version">Metec Driver Version</string>
+  <string name="build_activity_label_radio_version">Radio Firmware Version</string>
+  <string name="build_activity_label_ui_revision">UI Build Revision</string>
+  <string name="build_activity_label_ui_time">UI Build Time</string>
 
   <string name="clock_activity_label">B2G Digital Clock</string>
 

@@ -87,6 +87,8 @@ public class BuildActivity extends ProgrammaticActivity {
     buildDetails = new GridLayout(this);
     buildDetails.setOrientation(buildDetails.VERTICAL);
 
+    addAndroidBuildField(R.string.build_activity_label_hardware_serial, Build.SERIAL);
+
     addUserInterfaceAsset("revision", R.string.build_activity_label_ui_revision);
     addUserInterfaceAsset("time", R.string.build_activity_label_ui_time);
 
@@ -108,6 +110,9 @@ public class BuildActivity extends ProgrammaticActivity {
       R.string.build_activity_label_metec_version,
       Devices.braille.get().getDriverVersion()
     );
+
+    addAndroidBuildField(R.string.build_activity_label_radio_version, Build.getRadioVersion());
+    addAndroidBuildField(R.string.build_activity_label_bootloader_version, Build.BOOTLOADER);
 
     return createVerticalGroup(
       buildDetails
