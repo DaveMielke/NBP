@@ -26,7 +26,7 @@ public class BuildActivity extends ProgrammaticActivity {
     );
   }
 
-  private void addBuildDetail (String label, CharSequence value) {
+  private void addDetail (String label, CharSequence value) {
     if (value != null) {
       if (value.length() > 0) {
         setColumn(rowIndex, 0, label);
@@ -36,12 +36,18 @@ public class BuildActivity extends ProgrammaticActivity {
     }
   }
 
-  private void addBuildDetail (int label, CharSequence value) {
-    addBuildDetail(getString(label), value);
+  private void addDetail (int label, CharSequence value) {
+    addDetail(getString(label), value);
   }
 
   private void addSystemProperty (int label, String property) {
-    addBuildDetail(label, System.getProperty(property));
+    addDetail(label, System.getProperty(property));
+  }
+
+  private void addBuildProperty (int label, String value) {
+    if (!Build.UNKNOWN.equals(value)) {
+      addDetail(label, value);
+    }
   }
 
   private boolean addUserInterfaceProperty (String property, final int... labels) {
@@ -52,7 +58,7 @@ public class BuildActivity extends ProgrammaticActivity {
         text = text.trim();
 
         if (!text.isEmpty()) {
-          addBuildDetail(label, text);
+          addDetail(label, text);
         } else {
           Log.w(LOG_TAG, "build property not available: " + label);
         }
@@ -73,7 +79,7 @@ public class BuildActivity extends ProgrammaticActivity {
   }
 
   private void addTimeDetail (int label, long time) {
-    addBuildDetail(label, dateFormatter.format(time));
+    addDetail(label, dateFormatter.format(time));
   }
 
   @Override
@@ -84,13 +90,13 @@ public class BuildActivity extends ProgrammaticActivity {
     addUserInterfaceProperty("revision", R.string.build_activity_label_ui_revision);
     addUserInterfaceProperty("time", R.string.build_activity_label_ui_time);
 
-    addBuildDetail(R.string.build_activity_label_android_build, Build.ID);
+    addBuildProperty(R.string.build_activity_label_android_build, Build.ID);
     addTimeDetail(R.string.build_activity_label_android_time, Build.TIME);
-    addBuildDetail(R.string.build_activity_label_android_type, Build.TYPE);
+    addBuildProperty(R.string.build_activity_label_android_type, Build.TYPE);
 
     addSystemProperty(R.string.build_activity_label_linux_version, "os.version");
 
-    addBuildDetail(
+    addDetail(
       R.string.build_activity_label_firmware_version, 
       String.format("%d.%d",
         FirmwareVersion.getMajor(),
@@ -98,7 +104,7 @@ public class BuildActivity extends ProgrammaticActivity {
       )
     );
 
-    addBuildDetail(
+    addDetail(
       R.string.build_activity_label_metec_version,
       Devices.braille.get().getDriverVersion()
     );
