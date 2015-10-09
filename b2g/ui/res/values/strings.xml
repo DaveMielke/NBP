@@ -18,7 +18,7 @@
   <string name="build_activity_label_hardware_serial">Serial Number</string>
   <string name="build_activity_label_linux_version">Linux Kernel Version</string>
   <string name="build_activity_label_metec_version">Metec Driver Version</string>
-  <string name="build_activity_label_radio_version">Radio Firmware Version</string>
+  <string name="build_activity_label_radio_version">Radio Version</string>
   <string name="build_activity_label_ui_revision">UI Build Revision</string>
   <string name="build_activity_label_ui_time">UI Build Time</string>
 
