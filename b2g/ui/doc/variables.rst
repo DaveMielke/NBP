@@ -1,6 +1,12 @@
 .. |product name| replace:: B2G
 .. |user interface| replace:: |product name| User Interface
 
+.. |SD card path| replace:: ``/storage/sdcard1``
+.. |USB host port path| replace:: ``/storage/usb1``
+.. |USB OTG port path| replace:: ``/storage/usb2``
+.. |system cache path| replace:: ``/cache``
+.. |user data path| replace:: ``/data``
+
 .. |long press timeout| replace:: half a second
 .. |intermediate action timeout| replace:: five seconds
 

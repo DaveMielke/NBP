@@ -4,9 +4,9 @@ Recovery Mode
 .. |BRLTTY home page URL| replace:: http://brltty.com
 .. |BRLTTY key table URL| replace:: http://brltty.com/doc/KeyBindings/brl-bg-all.html
 
-.. |the SD card| replace:: ``/sdcard`` (the removable SD card)
-.. |the system cache| replace:: ``/cache`` (the system cache partition)
-.. |user data| replace:: ``/data`` (the user data partition)
+.. |the SD card| replace:: |SD card path| (the removable SD card)
+.. |the system cache| replace:: |system cache path| (the system cache partition)
+.. |user data| replace:: |user data path| (the user data partition)
 
 .. |user confirmation| replace:: This requires `User Confirmation`_.
 

@@ -6,6 +6,7 @@ The |user interface|
 
 .. contents::
 
+.. include:: physical.rst
 .. include:: introduction.rst
 .. include:: navigation.rst
 .. include:: recovery.rst
