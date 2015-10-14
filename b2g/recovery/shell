@@ -4,12 +4,34 @@ set -e
 set -o ignoreeof
 umask 022
 
-programName="rsh"
+readonly programName="rsh"
+
+writeLine() {
+  local line="${1}"
+
+  echo >&2 -e "${line}"
+}
+
+writeCharacters() {
+  local characters="${1}"
+
+  writeLine "${characters}\\c"
+}
+
+rewriteLine() {
+  local line="${1}"
+
+  writeCharacters "\\r${line}\\e[K"
+}
+
+clearLine() {
+  rewriteLine ""
+}
 
 programMessage() {
   local message="${1}"
 
-  echo >&2 "${programName}: ${message}"
+  writeLine "${programName}: ${message}"
 }
 
 getVariable() {
@@ -196,24 +218,6 @@ performAction_shell() {
   PS1="${programName}:\W# " /usr/bin/sh || :
 }
 
-writeLine() {
-  local line="${1}"
-
-  echo >&2 -e "${line}"
-}
-
-writeCharacters() {
-  local characters="${1}"
-
-  writeLine "${characters}\\c"
-}
-
-rewriteLine() {
-  local line="${1}"
-
-  writeCharacters "\\r${line}\\e[K"
-}
-
 mountDirectory() {
   local path="${1}"
   
@@ -283,7 +287,9 @@ chooseFile() {
 
     rewriteLine "${name}"
     read -s -n 1 || return 1
+
     local problem=""
+    clearLine
 
     case "${REPLY}"
     in
@@ -351,7 +357,7 @@ findFile() {
   writeLine "Dot3  quit"
 
   local file="$(chooseFile / cache data sdcard || :)"
-  rewriteLine ""
+  clearLine
 
   [ -z "${file}" ] || echo "${file}"
 }
