@@ -78,6 +78,7 @@ public class ClockActivity extends Activity {
     ApplicationContext.setContext(this);
     setContentView(R.layout.clock);
     timeView = (TextView)findViewById(R.id.clock_time);
+    timeView.setKeepScreenOn(true);
   }
 
   @Override
