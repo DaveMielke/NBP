@@ -195,7 +195,7 @@ performAction() {
 
   local name="$(getAction "${action}")"
   [ -n "${name}" ] || return "${syntaxError}"
-  eval '"performAction_${name}" "${@}"' || return "${?}"
+  "performAction_${name}" "${@}" || return "${?}"
 }
 
 performActions() {
