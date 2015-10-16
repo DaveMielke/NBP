@@ -356,7 +356,19 @@ findFile() {
   writeLine "Dot5  select"
   writeLine "Dot3  quit"
 
-  local file="$(chooseFile / cache data sdcard || :)"
+  set -- /cache /data "${EXTERNAL_STORAGE}" ${SECONDARY_STORAGE//:/ }
+  local count="${#}"
+
+  while [ "${count}" -gt 0 ]
+  do
+    local path="${1}"
+    [ ! -d "${path}" ] || set -- "${@}" "${path#/}"
+
+    shift 1
+    let "count -= 1" || :
+  done
+
+  local file="$(chooseFile / "${@}" || :)"
   clearLine
 
   [ -z "${file}" ] || echo "${file}"
