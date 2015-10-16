@@ -7,6 +7,10 @@ umask 022
 readonly programName="rsh"
 readonly nl=$'\n'
 
+readonly syntaxError=2
+readonly operationCancelled=3
+readonly operationFailed=4
+
 writeLine() {
   local line="${1}"
 
@@ -32,14 +36,7 @@ clearLine() {
 programMessage() {
   local message="${1}"
 
-  writeLine "${programName}: ${message}"
-}
-
-syntaxError() {
-  local message="${1}"
-
-  programMessage "${message}"
-  exit 2
+  [ -z "${message}" ] || writeLine "${programName}: ${message}"
 }
 
 getVariable() {
@@ -81,11 +78,22 @@ confirmAction() {
 }
 
 stopBraille() {
-  braille stop || :
+  braille stop || return "${?}"
 }
 
 startBraille() {
-  braille start
+  braille start || return "${?}"
+}
+
+withoutBraille() {
+  local stopped=true
+  stopBraille || stopped=false
+
+  local status=0
+  "${@}" || status="${?}"
+
+  ! "${stopped}" || startBraille || :
+  return "${status}"
 }
 
 actionCount=0
@@ -151,7 +159,7 @@ listActions() {
   echo "${actionList}"
 }
 
-performAction() {
+getAction() {
   local action="${1}"
 
   if [ -z "${action}" ]
@@ -162,8 +170,7 @@ performAction() {
 
     if [ "${#}" -eq 1 ]
     then
-      local name="$(getVariable "name_${1}")"
-      eval "performAction_${name}"
+      echo "$(getVariable "name_${1}")"
     elif [ "${#}" -eq 0 ]
     then
       programMessage "unrecognized action: ${action}"
@@ -182,6 +189,15 @@ performAction() {
   fi
 }
 
+performAction() {
+  local action="${1}"
+  shift 1
+
+  local name="$(getAction "${action}")"
+  [ -n "${name}" ] || return "${syntaxError}"
+  eval '"performAction_${name}" "${@}"' || return "${?}"
+}
+
 performActions() {
   while true
   do
@@ -191,43 +207,52 @@ performActions() {
     then
       listActions
     else
-      performAction "${REPLY}"
+      performAction "${REPLY}" || :
     fi
   done
 }
 
+readonly noMoreOperands='
+  [ "${#}" -eq 0 ] || {
+    programMessage "too many operands"
+    exit "${syntaxError}"
+  }
+'
+
 addAction boot "boot main system"
 performAction_boot() {
-  if confirmAction "boot system"
-  then
-    reboot -f
-  else
+  eval "${noMoreOperands}"
+
+  confirmAction "boot system" || {
     programMessage "boot cancelled"
-  fi
+    return "${operationCancelled}"
+  }
+
+  withoutBraille reboot -f
 }
 
 addAction clear "wipe cache partition"
 performAction_clear() {
-  if confirmAction "wipe cache"
-  then
-    stopBraille
-    recovery --wipe_cache
-    startBraille
-  else
+  eval "${noMoreOperands}"
+
+  confirmAction "wipe cache" || {
     programMessage "wipe cancelled"
-  fi
+    return "${operationCancelled}"
+  }
+
+  withoutBraille recovery --wipe_cache
 }
 
 addAction reset "factory reset (wipe cache and user data)"
 performAction_reset() {
-  if confirmAction "factory reset"
-  then
-    stopBraille
-    recovery --wipe_data
-    startBraille
-  else
+  eval "${noMoreOperands}"
+
+  confirmAction "factory reset" || {
     programMessage "reset cancelled"
-  fi
+    return "${operationCancelled}"
+  }
+
+  withoutBraille recovery --wipe_data
 }
 
 mountDirectory() {
@@ -388,41 +413,45 @@ findFile() {
 
 addAction update "apply OTA update"
 performAction_update() {
+  eval "${noMoreOperands}"
+
   local file="$(findFile)"
 
-  if [ -n "${file}" ]
-  then
-    programMessage "file: ${file}"
-
-    if confirmAction "apply update"
-    then
-      stopBraille
-      recovery "--update_package=${file}"
-      startBraille
-    else
-      programMessage "update cancelled"
-    fi
-  else
+  [ -n "${file}" ] || {
     programMessage "file not chosen"
-  fi
+    return "${operationCancelled}"
+  }
+
+  programMessage "file: ${file}"
+
+  confirmAction "apply update" || {
+    programMessage "update cancelled"
+    return "${operationCancelled}"
+  }
+
+  withoutBraille recovery "--update_package=${file}"
 }
 
 if [ "${#}" -eq 0 ]
 then
   addAction exit "exit this menu"
   performAction_exit() {
-    if confirmAction "exit menu"
-    then
-      programMessage "menu exited"
-      stopBraille
-      exit 0
-    else
+    eval "${noMoreOperands}"
+
+    confirmAction "exit menu" || {
       programMessage "exit cancelled"
-    fi
+      return "${operationCancelled}"
+    }
+
+    programMessage "menu exited"
+    stopBraille
+    exit 0
   }
 
   addAction shell "start interactive shell"
   performAction_shell() {
+    eval "${noMoreOperands}"
+
     PS1="${programName}:\W# " /usr/bin/sh || :
   }
 
@@ -432,19 +461,30 @@ then
 else
   addAction actions "show action list"
   performAction_actions() {
+    eval "${noMoreOperands}"
+
     listActions
   }
 
   addAction mount "mount cache partition"
   performAction_mount() {
-    local cache=/cache
-    mountDirectory "${cache}" || programMessage "cache not mounted: ${cache}"
+    [ "${#}" -ge 1 ] || {
+      programMessage "directory not specified"
+      return "${syntaxError}"
+    }
+
+    local directory="${1}"
+    shift 1
+
+    eval "${noMoreOperands}"
+
+    mountDirectory "${directory}" || {
+      programMessage "directory not mounted: ${directory}"
+      return "${operationFailed}"
+    }
   }
 
-  action="${1}"
-  shift 1
-
-  performAction "${action}"
+  performAction "${@}" || exit "${?}"
 fi
 
 exit 0
