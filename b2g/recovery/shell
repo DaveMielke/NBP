@@ -129,7 +129,7 @@ addAction() {
 }
 
 listActions() {
-  echo "${nl}Action List (unambiguous abbreviations are allowed):"
+  echo "Action List (unambiguous abbreviations are allowed):"
 
   [ -n "${actionList}" ] || {
     local lines=""
@@ -205,6 +205,7 @@ performActions() {
 
     if [ -z "${REPLY}" ]
     then
+      echo ""
       listActions
     else
       performAction "${REPLY}" || :
@@ -455,7 +456,7 @@ then
     PS1="${programName}:\W# " /usr/bin/sh || :
   }
 
-  echo "Recovery Mode Menu"
+  echo "Recovery Mode Menu${nl}"
   listActions
   performActions
 else
@@ -466,7 +467,7 @@ else
     listActions
   }
 
-  addAction mount "mount cache partition"
+  addAction mount "mount a directory"
   performAction_mount() {
     [ "${#}" -ge 1 ] || {
       programMessage "directory not specified"
