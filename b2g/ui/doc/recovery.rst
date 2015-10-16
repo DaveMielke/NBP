@@ -47,7 +47,7 @@ The Boot Action
 This action reboots to Android.
 |user confirmation|
 
-The Cache Action
+The Clear Action
 ~~~~~~~~~~~~~~~~
 
 This action wipes |the system cache|, and then reboots to Android.

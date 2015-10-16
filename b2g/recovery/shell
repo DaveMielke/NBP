@@ -5,6 +5,7 @@ set -o ignoreeof
 umask 022
 
 readonly programName="rsh"
+readonly nl=$'\n'
 
 writeLine() {
   local line="${1}"
@@ -32,6 +33,13 @@ programMessage() {
   local message="${1}"
 
   writeLine "${programName}: ${message}"
+}
+
+syntaxError() {
+  local message="${1}"
+
+  programMessage "${message}"
+  exit 2
 }
 
 getVariable() {
@@ -112,57 +120,78 @@ addAction() {
   let "actionCount += 1"
 }
 
-showActions() {
-  echo ""
-  echo "Choose an action (unambiguous abbreviations are allowed):"
-  local actionIndex=0
+listActions() {
+  echo "${nl}Action List (unambiguous abbreviations are allowed):"
 
-  while [ "${actionIndex}" -lt "${actionCount}" ]
-  do
-    local name="$(getVariable "name_${actionIndex}")"
-    local line="${name}"
+  [ -n "${actionList}" ] || {
+    local lines=""
+    local index=0
 
-    while [ "${#line}" -lt "${nameWidth}" ]
+    while [ "${index}" -lt "${actionCount}" ]
     do
-      line="${line} "
+      local name="$(getVariable "name_${index}")"
+      local line="${name}"
+
+      while [ "${#line}" -lt "${nameWidth}" ]
+      do
+        line="${line} "
+      done
+
+      line="${line}  $(getVariable "description_${index}")"
+      
+      [ -z "${lines}" ] || lines="${lines}${nl}"
+      lines="${lines}${line}"
+
+      let "index += 1"
     done
 
-    line="${line}  $(getVariable "description_${actionIndex}")"
-    echo "${line}"
-    
-    let "actionIndex += 1"
-  done
+    actionList="$(echo "${lines}" | sort)"
+  }
+
+  echo "${actionList}"
+}
+
+performAction() {
+  local action="${1}"
+
+  if [ -z "${action}" ]
+  then
+    programMessage "action not specified"
+  else
+    set -- $(getVariable "alias_${action}")
+
+    if [ "${#}" -eq 1 ]
+    then
+      local name="$(getVariable "name_${1}")"
+      eval "performAction_${name}"
+    elif [ "${#}" -eq 0 ]
+    then
+      programMessage "unrecognized action: ${action}"
+    else
+      local names=""
+      local index
+
+      for index
+      do
+        [ -z "${names}" ] || names="${names}, "
+        names="${names}$(getVariable "name_${index}")"
+      done
+
+      programMessage "ambiguous action: ${action} -> ${names}"
+    fi
+  fi
 }
 
 performActions() {
   while true
   do
     askUser "action> "
+
     if [ -z "${REPLY}" ]
     then
-      showActions
+      listActions
     else
-      set -- $(getVariable "alias_${REPLY}")
-
-      if [ "${#}" -eq 1 ]
-      then
-        local name="$(getVariable "name_${1}")"
-        eval "performAction_${name}"
-      elif [ "${#}" -eq 0 ]
-      then
-        programMessage "unrecognized action: ${REPLY}"
-      else
-        local names=""
-        local index
-
-        for index
-        do
-          [ -z "${names}" ] || names="${names}, "
-          names="${names}$(getVariable "name_${index}")"
-        done
-
-        programMessage "ambiguous action: ${REPLY} -> ${names}"
-      fi
+      performAction "${REPLY}"
     fi
   done
 }
@@ -177,8 +206,8 @@ performAction_boot() {
   fi
 }
 
-addAction cache "wipe cache partition"
-performAction_cache() {
+addAction clear "wipe cache partition"
+performAction_clear() {
   if confirmAction "wipe cache"
   then
     stopBraille
@@ -186,18 +215,6 @@ performAction_cache() {
     startBraille
   else
     programMessage "wipe cancelled"
-  fi
-}
-
-addAction exit "exit this menu"
-performAction_exit() {
-  if confirmAction "exit menu"
-  then
-    programMessage "menu exited"
-    stopBraille
-    exit 0
-  else
-    programMessage "exit cancelled"
   fi
 }
 
@@ -211,11 +228,6 @@ performAction_reset() {
   else
     programMessage "reset cancelled"
   fi
-}
-
-addAction shell "start interactive shell"
-performAction_shell() {
-  PS1="${programName}:\W# " /usr/bin/sh || :
 }
 
 mountDirectory() {
@@ -395,7 +407,44 @@ performAction_update() {
   fi
 }
 
-echo "Recovery Mode Menu"
-showActions
-performActions
+if [ "${#}" -eq 0 ]
+then
+  addAction exit "exit this menu"
+  performAction_exit() {
+    if confirmAction "exit menu"
+    then
+      programMessage "menu exited"
+      stopBraille
+      exit 0
+    else
+      programMessage "exit cancelled"
+    fi
+  }
+
+  addAction shell "start interactive shell"
+  performAction_shell() {
+    PS1="${programName}:\W# " /usr/bin/sh || :
+  }
+
+  echo "Recovery Mode Menu"
+  listActions
+  performActions
+else
+  addAction actions "show action list"
+  performAction_actions() {
+    listActions
+  }
+
+  addAction mount "mount cache partition"
+  performAction_mount() {
+    local cache=/cache
+    mountDirectory "${cache}" || programMessage "cache not mounted: ${cache}"
+  }
+
+  action="${1}"
+  shift 1
+
+  performAction "${action}"
+fi
+
 exit 0
