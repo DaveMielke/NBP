@@ -306,7 +306,7 @@ else
   }
 fi
 
-mountDirectory() {
+mountVolume() {
   local path="${1}"
   
   if isMountPoint "${path}"
@@ -324,10 +324,36 @@ mountDirectory() {
   return 1
 }
 
-unmountDirectory() {
+unmountVolume() {
   local path="${1}"
   
   umount "${path}"
+}
+
+findMountPoint() {
+  local path="${1}"
+
+  while [ "${path}" != "/" ]
+  do
+    ! isMountPoint "${path}" || break
+    path="$(dirname "${path}")"
+  done
+
+  echo "${path}"
+}
+
+getRealPath() {
+  local path="${1}"
+  [ "${path}" != "${path#/}" ] || path="$(pwd)/${path}"
+
+  while [ -h "${path}" ]
+  do
+    local target="$(readlink "${path}")"
+    [ "${target}" != "${target#/}" ] || target="$(dirname "${path}")/${target}"
+    path="${target}"
+  done
+
+  echo "${path}"
 }
 
 chooseFile() {
@@ -341,20 +367,20 @@ chooseFile() {
     then
       eval 'local name=${'"${index}"'}'
       local path="${directory}${name}"
+
       local indicator=""
+      local mount=false
 
       if [ -d "${path}" ]
       then
         indicator='/'
+        mount=true
       elif [ -f "${path}" ]
       then
         if [ -x "${path}" ]
         then
           indicator='*'
         fi
-      elif [ -h "${path}" ]
-      then
-        indicator='@'
       elif [ -p "${path}" ]
       then
         indicator='|'
@@ -367,6 +393,10 @@ chooseFile() {
       elif [ -b "${path}" ]
       then
         indicator='$'
+      elif [ -h "${path}" ]
+      then
+        indicator='@'
+        mount=true
       else
         indicator='?'
       fi
@@ -413,20 +443,30 @@ chooseFile() {
 
      \"|k) {
         [ -z "${path}" ] || {
-          if [ ! -d "${path}" ]
+          local done=true
+          local mounted=false
+          local mountPoint
+
+          ! "${mount}" || {
+            if [ -d "${path}" ]
+            then
+              mountPoint="${path}"
+            else
+              mountPoint="$(findMountPoint "$(getRealPath "${path}")")"
+            fi
+
+            ! mountVolume "${mountPoint}" || mounted=true
+          }
+
+          if [ -d "${path}" ]
           then
-            echo "${path}"
-          else
-            local mounted=false
-            ! mountDirectory "${path}" || mounted=true
-
-            local done=true
             ! chooseFile "${path}/" $(cd "${path}" && ls -1) || done=false
-
-            ! "${mounted}" || unmountDirectory "${path}"
-            ! "${done}" && continue
+          else
+            echo "${path}"
           fi
 
+          ! "${mounted}" || unmountVolume "${mountPoint}"
+          ! "${done}" && continue
           return 1
         }
       };;
@@ -533,7 +573,7 @@ else
 
     eval "${noMoreParameters}"
 
-    mountDirectory "${directory}" || {
+    mountVolume "${directory}" || {
       programMessage "${mountProblem}"
       return "${operationFailed}"
     }

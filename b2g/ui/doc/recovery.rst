@@ -114,11 +114,11 @@ Indicator  Type
 ---------  ------------------
 \/         folder (directory)
 \*         executable file
-\@         symbolic link
 \|         FIFO (named pipe)
 \=         socket
 \%         character device
 \$         block device
+\@         symbolic link
 \?         unknown
 =========  ==================
 
