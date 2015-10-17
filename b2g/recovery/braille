@@ -25,6 +25,13 @@ syntaxError() {
   exit 2
 }
 
+semanticError() {
+  local message="${1}"
+  
+  programMessage "${message}"
+  exit 3
+}
+
 checkProcess() {
   local file="${1}"
 
@@ -66,7 +73,7 @@ setBrailleParameters() {
 }
 
 initializeCacheDirectory() {
-  mkdir -p "${cacheDirectory}"
+  mkdir -p "${cacheDirectory}" || exit 4
   local from
 
   for from in "${systemDirectory}/Initial/"*
@@ -76,12 +83,12 @@ initializeCacheDirectory() {
   done
 }
 
-verifyOperandsDone() {
+readonly noMoreParameters='
   [ "${#}" -eq 0 ] || syntaxError "too many parameters"
-}
+'
 
 performAction_start() {
-  verifyOperandsDone "${@}"
+  eval "${noMoreParameters}"
 
   startInteractiveShell
   initializeCacheDirectory
@@ -97,10 +104,12 @@ performAction_start() {
 }
 
 performAction_stop() {
-  verifyOperandsDone "${@}"
+  eval "${noMoreParameters}"
 
   initializeCacheDirectory
   setBrailleParameters
+
+  [ -f "${BRLTTY_PID_FILE}" ] || semanticError "${packageName} not running"
 
   export BRLTTY_LOG_FILE="${BRLTTY_LOG_FILE}.stop"
   brltty -E -C

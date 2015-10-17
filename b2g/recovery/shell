@@ -226,16 +226,16 @@ performActions() {
   done
 }
 
-readonly noMoreOperands='
+readonly noMoreParameters='
   [ "${#}" -eq 0 ] || {
-    programMessage "too many operands"
+    programMessage "too many parameters"
     exit "${syntaxError}"
   }
 '
 
 addAction boot "boot main system"
 performAction_boot() {
-  eval "${noMoreOperands}"
+  eval "${noMoreParameters}"
 
   confirmAction "boot system" || {
     programMessage "boot cancelled"
@@ -247,7 +247,7 @@ performAction_boot() {
 
 addAction clear "wipe cache partition"
 performAction_clear() {
-  eval "${noMoreOperands}"
+  eval "${noMoreParameters}"
 
   confirmAction "wipe cache" || {
     programMessage "wipe cancelled"
@@ -259,7 +259,7 @@ performAction_clear() {
 
 addAction reset "factory reset (wipe cache and user data)"
 performAction_reset() {
-  eval "${noMoreOperands}"
+  eval "${noMoreParameters}"
 
   confirmAction "factory reset" || {
     programMessage "reset cancelled"
@@ -432,7 +432,7 @@ findFile() {
 
 addAction update "apply OTA update"
 performAction_update() {
-  eval "${noMoreOperands}"
+  eval "${noMoreParameters}"
 
   local file="$(findFile)"
 
@@ -455,7 +455,7 @@ if [ "${#}" -eq 0 ]
 then
   addAction exit "exit this menu"
   performAction_exit() {
-    eval "${noMoreOperands}"
+    eval "${noMoreParameters}"
 
     confirmAction "exit menu" || {
       programMessage "exit cancelled"
@@ -469,7 +469,7 @@ then
 
   addAction shell "start interactive shell"
   performAction_shell() {
-    eval "${noMoreOperands}"
+    eval "${noMoreParameters}"
 
     PS1="${programName}:\W# " /usr/bin/sh || :
   }
@@ -480,7 +480,7 @@ then
 else
   addAction actions "show action list"
   performAction_actions() {
-    eval "${noMoreOperands}"
+    eval "${noMoreParameters}"
 
     listActions
   }
@@ -495,7 +495,7 @@ else
     local directory="${1}"
     shift 1
 
-    eval "${noMoreOperands}"
+    eval "${noMoreParameters}"
 
     mountDirectory "${directory}" || {
       programMessage "directory not mounted: ${directory}"
