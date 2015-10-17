@@ -269,21 +269,57 @@ performAction_reset() {
   withoutBraille recovery --wipe_data
 }
 
+if [ -f /etc/recovery.fstab ]
+then
+  isMountPoint() {
+    local path="${1}"
+  
+    set -- $(awk -v "path=${path}" '$1 == path { print $0; exit }' /etc/recovery.fstab)
+    [ "${#}" -gt 0 ] || return 1
+
+    mountDirectory="${1}"
+    mountType="${2}"
+    mountVolume="${3}"
+    return 0
+  }
+else
+  isMountPoint() {
+    local path="${1}"
+  
+    return 1
+  }
+fi
+
+if [ -f /proc/mounts ]
+then
+  isMounted() {
+    local path="${1}"
+  
+    awk -v "path=${path}" '$2 == path { exit 1 }' /proc/mounts || return 1
+    return 0
+  }
+else
+  isMounted() {
+    local path="${1}"
+  
+    return 1
+  }
+fi
+
 mountDirectory() {
   local path="${1}"
   
-  if [ -f /etc/recovery.fstab ]
+  if isMountPoint "${path}"
   then
-    set -- $(awk -v "path=${path}" '$1 == path { print $0; exit }' /etc/recovery.fstab)
+    if isMounted "${path}"
+    then
+      ! mount -t "${mountType}" "${mountVolume}" "${mountDirectory}" || return 0
+    else
+      mountProblem="already mounted: ${path}"
+    fi
   else
-    set --
+    mountProblem="not a mount point: ${path}"
   fi
-  
-  [ "${#}" -eq 0 ] || {
-    ! awk -v "path=${path}" '$2 == path { exit 1 }' /proc/mounts || {
-      ! mount -t "${2}" "${3}" "${1}" || return 0
-    }
-  }
   
   return 1
 }
@@ -498,7 +534,7 @@ else
     eval "${noMoreParameters}"
 
     mountDirectory "${directory}" || {
-      programMessage "directory not mounted: ${directory}"
+      programMessage "${mountProblem}"
       return "${operationFailed}"
     }
   }
