@@ -165,6 +165,9 @@ getAction() {
   if [ -z "${action}" ]
   then
     programMessage "action not specified"
+  elif [ "$(expr "${action}" : '[a-zA-Z]*$')" -eq 0 ]
+  then
+    programMessage "invalid action name: ${action}"
   else
     set -- $(getVariable "alias_${action}")
 
@@ -259,7 +262,12 @@ performAction_reset() {
 mountDirectory() {
   local path="${1}"
   
-  set -- $(awk -v "path=${path}" '$1 == path { print $0; exit }' /etc/recovery.fstab)
+  if [ -f /etc/recovery.fstab ]
+  then
+    set -- $(awk -v "path=${path}" '$1 == path { print $0; exit }' /etc/recovery.fstab)
+  else
+    set --
+  fi
   
   [ "${#}" -eq 0 ] || {
     ! awk -v "path=${path}" '$2 == path { exit 1 }' /proc/mounts || {
