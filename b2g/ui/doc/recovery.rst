@@ -63,6 +63,15 @@ Once terminated, it's not that easy to restart the menu.
 This action has only been defined so that the |product name| developers
 can easily test changes to the menu.
 
+The Log Action
+~~~~~~~~~~~~~~
+
+This action uses the ``vi`` editor to view the log
+for the current Recovery Mode session.
+The edit session is read-only in order to prevent
+the log from being accidentally changed.
+Use ``:q`` to exit the edit session.
+
 The Reset Action
 ~~~~~~~~~~~~~~~~
 

@@ -269,6 +269,13 @@ performAction_reset() {
   withoutBraille recovery --wipe_data
 }
 
+addAction log "view recovery log"
+performAction_log() {
+  eval "${noMoreParameters}"
+
+  vi -R /tmp/recovery/recovery.log
+}
+
 if [ -f /etc/recovery.fstab ]
 then
   isMountPoint() {
