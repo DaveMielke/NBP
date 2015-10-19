@@ -68,9 +68,12 @@ The Log Action
 
 This action uses the ``vi`` editor to view the log
 for the current Recovery Mode session.
-The edit session is read-only in order to prevent
-the log from being accidentally changed.
-Use ``:q`` to exit the edit session.
+The edit session is read-only in order to prevent any changes
+from being saved (written back) to the log.
+
+Type ``:q`` followed by Enter to exit the edit session.
+If you've accidentally made any changes to the read-only edit buffer
+then you'll need to use ``:q!`` instead.
 
 The Reset Action
 ~~~~~~~~~~~~~~~~
