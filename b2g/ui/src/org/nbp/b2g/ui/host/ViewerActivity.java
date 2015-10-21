@@ -8,57 +8,59 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import net.nightwhistler.htmlspanner.HtmlSpanner;
 import android.text.util.Linkify;
 
-public class HelpActivity extends ProgrammaticActivity {
-  private final static String LOG_TAG = HelpActivity.class.getName();
+import android.content.Context;
+import android.content.res.AssetManager;
+
+import java.io.IOException;
+import java.io.File;
+import java.io.InputStream;
+import java.io.FileInputStream;
+
+public abstract class ViewerActivity extends ProgrammaticActivity {
+  private final static String LOG_TAG = ViewerActivity.class.getName();
+
+  protected abstract InputStream getInputStream ();
 
   private View createDocumentView () {
     final TextView view = newTextView();
     view.setAutoLinkMask(Linkify.WEB_URLS);
 
-    final String TEXT_EXTENSION = "txt";
-    final String HTML_EXTENSION = "html";
-
-    new AsyncTask<String, Integer, CharSequence>() {
+    new AsyncTask<Void, Integer, CharSequence>() {
       @Override
       protected void onPreExecute () {
       }
 
-      private final String loadDocument (String name) {
+      private final String loadDocument () {
         final StringBuilder result = new StringBuilder();
+        InputStream inputStream = getInputStream();
 
-        new InputProcessor() {
-          @Override
-          protected final boolean handleLine (String text, int number) {
-            result.append(text);
-            result.append('\n');
-            return true;
-          }
-        }.processInput(name);
+        if (inputStream != null) {
+          new InputProcessor() {
+            @Override
+            protected final boolean handleLine (String text, int number) {
+              result.append(text);
+              result.append('\n');
+              return true;
+            }
+          }.processInput(inputStream);
+        }
 
         return result.toString();
       }
 
       @Override
-      protected CharSequence doInBackground (String... names) {
+      protected CharSequence doInBackground (Void... argument) {
         publishProgress(R.string.message_loading_document);
         Thread.yield();
-
-        String name = names[0];
-        String extension = names[1];
-        String document = loadDocument((name + '.' + extension));
+        String document = loadDocument();
 
         publishProgress(R.string.message_formatting_document);
         Thread.yield();
         CharSequence text;
 
-        if (extension.equals(HTML_EXTENSION)) {
-          HtmlSpanner htmlSpanner = new HtmlSpanner();
-          text = htmlSpanner.fromHtml(document);
-        } else {
+        {
           int end = document.length();
 
           while (end > 0) {
@@ -87,7 +89,7 @@ public class HelpActivity extends ProgrammaticActivity {
       protected void onPostExecute (CharSequence result) {
         view.setText(result);
       }
-    }.execute("b2g_ui", TEXT_EXTENSION);
+    }.execute();
 
     View container = newVerticalScrollContainer(view);
     view.setVerticalScrollBarEnabled(true);
@@ -100,5 +102,33 @@ public class HelpActivity extends ProgrammaticActivity {
     return createVerticalGroup(
       createDocumentView()
     );
+  }
+
+  protected final InputStream openFile (String path) {
+    File file = new File(path);
+
+    try {
+      return new FileInputStream(file);
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "file not found: " + exception.getMessage());
+    }
+
+    return null;
+  }
+
+  protected final InputStream openAsset (String name) {
+    Context context = ApplicationContext.getContext();
+    if (context == null) return null;
+
+    AssetManager assets = context.getAssets();
+    if (assets == null) return null;
+
+    try {
+      return assets.open(name);
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, "asset not found: " + exception.getMessage());
+    }
+
+    return null;
   }
 }

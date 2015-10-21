@@ -2,8 +2,12 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 import android.util.Log;
+
+import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,9 +22,6 @@ import android.os.PowerManager;
 import android.os.RecoverySystem;
 
 import android.os.AsyncTask;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 public class MaintenanceActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = MaintenanceActivity.class.getName();
@@ -349,6 +350,33 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
+  private void launchActivity (Class<? extends Activity> activity) {
+    Intent intent = new Intent(this, activity);
+
+    intent.addFlags(
+      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+      Intent.FLAG_ACTIVITY_CLEAR_TOP |
+      Intent.FLAG_ACTIVITY_SINGLE_TOP |
+      Intent.FLAG_ACTIVITY_NEW_TASK
+    );
+
+    startActivity(intent);
+  }
+
+  private View createRecoveryLogButton () {
+    Button button = newButton(
+      R.string.maintenance_RecoveryLog_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          launchActivity(RecoveryLogActivity.class);
+        }
+      }
+    );
+
+    return button;
+  }
+
   @Override
   protected final View createContentView () {
     return createVerticalGroup(
@@ -359,6 +387,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       createVerifyUpdateButton(),
       createUpdateSystemButton(),
 
+      createRecoveryLogButton(),
       createRecoveryModeButton(),
 
       createClearCacheButton(),

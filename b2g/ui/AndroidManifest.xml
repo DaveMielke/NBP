@@ -98,20 +98,26 @@
     </activity>
 
     <activity
-        android:name=".host.HelpActivity"
-        android:label="@string/help_activity_label"
-        >
-    </activity>
-
-    <activity
         android:name=".host.MaintenanceActivity"
         android:label="@string/maintenance_activity_label"
         >
     </activity>
 
     <activity
+        android:name=".host.RecoveryLogActivity"
+        android:label="@string/recoveryLog_activity_label"
+        >
+    </activity>
+
+    <activity
         android:name=".host.SettingsActivity"
         android:label="@string/settings_activity_label"
+        >
+    </activity>
+
+    <activity
+        android:name=".host.UserGuideActivity"
+        android:label="@string/userGuide_activity_label"
         >
     </activity>
 

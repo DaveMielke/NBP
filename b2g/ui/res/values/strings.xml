@@ -24,8 +24,6 @@
 
   <string name="clock_activity_label">B2G Digital Clock</string>
 
-  <string name="help_activity_label">B2G User Interface Document</string>
-
   <string name="maintenance_activity_label">B2G System Maintenance Operations</string>
   <string name="maintenance_message_operation_succeeded">operation succeeded</string>
   <string name="maintenance_message_operation_cancelled">operation cancelled</string>
@@ -37,6 +35,7 @@
   <string name="maintenance_ClearCache_starting">wiping cache</string>
   <string name="maintenance_FactoryReset_label">Factory Reset</string>
   <string name="maintenance_FactoryReset_starting">wiping cache and data</string>
+  <string name="maintenance_RecoveryLog_label">Recovery Log</string>
   <string name="maintenance_RecoveryMode_label">Recovery Mode</string>
   <string name="maintenance_RecoveryMode_starting">rebooting to recovery</string>
   <string name="maintenance_RestartSystem_label">Restart System</string>
@@ -48,7 +47,11 @@
   <string name="maintenance_VerifyUpdate_progress">verifying update</string>
   <string name="maintenance_VerifyUpdate_done">update verified</string>
 
+  <string name="recoveryLog_activity_label">Recovery Mode Log</string>
+
   <string name="settings_activity_label">B2G User Interface Settings</string>
+
+  <string name="userGuide_activity_label">B2G User Interface Guide</string>
 
   <string name="state_disabled">disabled</string>
 
