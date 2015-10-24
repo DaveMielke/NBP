@@ -72,7 +72,17 @@ setBrailleParameters() {
   export BRLTTY_SCREEN_PARAMETERS="lx:vt=${vtNumber}"
 }
 
+mountDirectory() {
+  local directory="${1}"
+  
+  [ ! -d "${directory}" ] || {
+    set -- $(ls "${directory}")
+    [ "${#}" -gt 0 ] || shell mount "${directory}"
+  }
+}
+
 initializeCacheDirectory() {
+  mountDirectory /cache
   mkdir -p "${cacheDirectory}" || exit 4
   local from
 
