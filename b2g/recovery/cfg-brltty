@@ -4,6 +4,9 @@ set -e
 cd "$(dirname "${0}")"
 
 cd brltty
+make -s distclean
+./autogen
+
 ./configure \
    --host=arm-none-linux-gnueabi \
    --enable-relocatable-install \
@@ -28,6 +31,8 @@ cd brltty
    --without-charset-package \
    --without-mntpt-package \
    --without-mntfs-package \
+   --without-bell-package \
+   --without-leds-package \
    --without-pcm-package \
    --without-midi-package \
    --without-fm-package \
@@ -43,4 +48,5 @@ cd brltty
    \
    --quiet \
    "${@}"
+
 exit "${?}"
