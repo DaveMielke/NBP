@@ -5,7 +5,7 @@ import org.nbp.b2g.ui.*;
 public class DescribeBuild extends InternalActivityAction {
   @Override
   protected Class getActivityClass () {
-    return BuildActivity.class;
+    return BuildDetailsActivity.class;
   }
 
   public DescribeBuild (Endpoint endpoint) {

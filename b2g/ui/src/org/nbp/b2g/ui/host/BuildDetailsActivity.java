@@ -11,8 +11,8 @@ import android.os.Build;
 import android.view.View;
 import android.widget.GridLayout;
 
-public class BuildActivity extends ProgrammaticActivity {
-  private final static String LOG_TAG = BuildActivity.class.getName();
+public class BuildDetailsActivity extends ProgrammaticActivity {
+  private final static String LOG_TAG = BuildDetailsActivity.class.getName();
 
   private GridLayout buildDetails;
   private int rowIndex = 0;

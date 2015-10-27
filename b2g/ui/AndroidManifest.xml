@@ -86,7 +86,7 @@
     </service>
 
     <activity
-        android:name=".host.BuildActivity"
+        android:name=".host.BuildDetailsActivity"
         android:label="@string/build_activity_label"
         >
     </activity>
