@@ -1,7 +1,5 @@
 The B2G User Interface
 
-Introduction
-
 Physical Description
 
 The Top
@@ -77,6 +75,8 @@ The Removable Cover
    Be careful after you've removed the cover because the underside of a circuit board will be exposed. Removing the cover is how to gain access to the following:
      * The Micro-SIM card slot is in the corner that's toward the front and toward the side where the Power switch is. To gain access to the actual slot, slide its cover slightly toward the front and then lift the end of it that's toward the back. As with most SIM card slot covers, its hinge is fragile so be gentle.
      * The Serial Port is in the corner that's toward the back and toward the side where the Power switch is. It's a 10-pin (2x5) male connector that can be used by the B2G developers to perform low-level system maintenance.
+
+Introduction
 
 Key Combinations
 
@@ -251,7 +251,6 @@ Popups
      * The arrival of an Android notification.
      * The description of a character (see Identifying an Unrecognized Character).
      * The values of various status indicators (see Checking Status Indicators).
-     * Information that identifies the build (see Identifying the Build).
 
    A popup is a multi-line, read-only dialog. Normal navigation may be performed within it. Dismiss it by pressing Enter. It's automatically dismissed if no navigation operations have been performed within it for 30 seconds.
 
@@ -328,12 +327,11 @@ Identifying the Build
 
    There may be times when you need to identify the exact build of the B2G User Interface that you're currently using. For example, this information is particularly helpful when you're reporting a problem or checking if there's a newer version.
 
-   You can get this information by pressing Space, Backward, and Forward together. This will cause details that identify the build to be presented within a popup (see Popups) that looks something like this:
-Build Details
-Time: 2015-09-30 14:04:27 UTC
-Revision: 1797952
-System: v4.1.2
-Firmware: 3.0
+   You can get this information by pressing Space, Backward, and Forward together. This will cause details that identify the build to be presented within a screen that looks something like this:
+UI Build Revision   1797952
+UI Build Time       2015-09-30@14:04 UTC
+Android Build Name  v4.1.2
+Firmware Version    3.0
 
 Speech
 
@@ -815,7 +813,7 @@ The Boot Action
 
    This action reboots to Android. This requires User Confirmation.
 
-The Cache Action
+The Clear Action
 
    This action wipes /cache (the system cache partition), and then reboots to Android. This requires User Confirmation.
 
@@ -824,6 +822,12 @@ The Exit Action
    This action terminates this menu. This requires User Confirmation.
 
    Once terminated, it's not that easy to restart the menu. This action has only been defined so that the B2G developers can easily test changes to the menu.
+
+The Log Action
+
+   This action uses the vi editor to view the log for the current Recovery Mode session. The edit session is read-only in order to prevent any changes from being saved (written back) to the log.
+
+   Type :q followed by Enter to exit the edit session. If you've accidentally made any changes to the read-only edit buffer then you'll need to use :q! instead.
 
 The Reset Action
 
@@ -851,17 +855,17 @@ The File System Browser
    Indicator Type
    /         folder (directory)
    *         executable file
-   @         symbolic link
    |         FIFO (named pipe)
    =         socket
    %         character device
    $         block device
+   @         symbolic link
    ?         unknown
 
 The Top-Level Folder List
 
    The top-level folder list contains the volumes that can be browsed. They are:
-     * /sdcard (the removable SD card)
+     * /storage/sdcard1 (the removable SD card)
      * /cache (the system cache partition)
      * /data (the user data partition)
 
@@ -1006,35 +1010,34 @@ Common Operations
 
    CAPTION: Common Operations
 
-            Keys                                     Description
-   Dot8                   the keyboard Enter key
-   Backward               pan to the left
-   Forward                pan to the right
-   Left                   go to the previous character of editable text or part of the line
-   Right                  go to the next character of editable text or part of the line
-   Up                     go to the previous line of text or element on the screen
-   Down                   go to the next line of text or element on the screen
-   Space+Left             go to the beginning of a list or line
-   Space+Right            go to the end of a list or line
-   Space+Up               go to the previous page of a list or block of text
-   Space+Down             go to the next page of a list or block of text
-   Dot7+Cursor            show the description of a specific character
-   Dot8+Cursor            shift the braille display a specific amount to the right
-   Space+Dot8+Dots14#c    copy the selected (or all) text to the clipboard
-   Space+Dots24#i         show the current input mode setting
-   Space+Dot7+Dots24#i    set the input mode to text
-   Space+Dot8+Dots24#i    set the input mode to braille
-   Backward+Dot1          disable braille
-   Forward+Dot4           enable braille
-   Backward+Dot2          disable reverse panning mode
-   Forward+Dot5           enable reverse panning mode
-   Backward+Dot3          disable long key press actions
-   Forward+Dot6           enable long key press actions
-   Backward+Dot7          disable one hand mode
-   Forward+Dot8           enable one hand mode
-   Backward+Forward       show important status indicators
-   Backward+Forward+Space show details that identify the build
-   Space+Dots12345678     cancel an accidentally-started key combination
+          Keys                                    Description
+   Dot8                the keyboard Enter key
+   Backward            pan to the left
+   Forward             pan to the right
+   Left                go to the previous character of editable text or part of the line
+   Right               go to the next character of editable text or part of the line
+   Up                  go to the previous line of text or element on the screen
+   Down                go to the next line of text or element on the screen
+   Space+Left          go to the beginning of a list or line
+   Space+Right         go to the end of a list or line
+   Space+Up            go to the previous page of a list or block of text
+   Space+Down          go to the next page of a list or block of text
+   Dot7+Cursor         show the description of a specific character
+   Dot8+Cursor         shift the braille display a specific amount to the right
+   Space+Dot8+Dots14#c copy the selected (or all) text to the clipboard
+   Space+Dots24#i      show the current input mode setting
+   Space+Dot7+Dots24#i set the input mode to text
+   Space+Dot8+Dots24#i set the input mode to braille
+   Backward+Dot1       disable braille
+   Forward+Dot4        enable braille
+   Backward+Dot2       disable reverse panning mode
+   Forward+Dot5        enable reverse panning mode
+   Backward+Dot3       disable long key press actions
+   Forward+Dot6        enable long key press actions
+   Backward+Dot7       disable one hand mode
+   Forward+Dot8        enable one hand mode
+   Backward+Forward    show important status indicators
+   Space+Dots12345678  cancel an accidentally-started key combination
 
 Input Operations
 
@@ -1088,6 +1091,7 @@ Screen Operations
    Space+Dots234#s,Dot1#a     go to the Accessibility Settings screen
    Space+Dots234#s,Dots12#b   go to the Bluetooth Settings screen
    Space+Dots234#s,Dots2456#w go to the Wi-Fi Settings screen
+   Backward+Forward+Space     show details that identify the build
 
 Speech Operations
 
