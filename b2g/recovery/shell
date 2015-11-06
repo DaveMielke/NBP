@@ -503,7 +503,7 @@ findFile() {
   while [ "${count}" -gt 0 ]
   do
     local path="${1}"
-    [ ! -d "${path}" ] || set -- "${@}" "${path#/}"
+    [ ! -d "${path}" -a ! -h "${path}" ] || set -- "${@}" "${path#/}"
 
     shift 1
     let "count -= 1" || :
