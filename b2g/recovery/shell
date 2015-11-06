@@ -476,6 +476,8 @@ chooseFile() {
           ! "${done}" && continue
           return 1
         }
+        
+        problem="not selectable"
       };;
 
       *) {
