@@ -245,6 +245,18 @@ performAction_boot() {
   withoutBraille reboot -f
 }
 
+addAction off "power down device"
+performAction_off() {
+  eval "${noMoreParameters}"
+
+  confirmAction "power down" || {
+    programMessage "power down cancelled"
+    return "${operationCancelled}"
+  }
+
+  withoutBraille poweroff -f
+}
+
 addAction clear "wipe cache partition"
 performAction_clear() {
   eval "${noMoreParameters}"

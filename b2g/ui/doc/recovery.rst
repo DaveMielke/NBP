@@ -75,6 +75,12 @@ Type ``:q`` followed by Enter to exit the edit session.
 If you've accidentally made any changes to the read-only edit buffer
 then you'll need to use ``:q!`` instead.
 
+The Off Action
+~~~~~~~~~~~~~~
+
+This action powers down the device.
+|user confirmation|
+
 The Reset Action
 ~~~~~~~~~~~~~~~~
 
