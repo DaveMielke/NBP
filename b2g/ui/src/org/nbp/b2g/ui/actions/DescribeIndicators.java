@@ -95,7 +95,6 @@ public class DescribeIndicators extends Action {
       startLine(sb, R.string.DescribeIndicators_battery_label);
 
       {
-        sb.append(' ');
         boolean present = battery.getBoolean(BatteryManager.EXTRA_PRESENT, true);
 
         if (present) {
@@ -103,6 +102,7 @@ public class DescribeIndicators extends Action {
           int scale = battery.getInt(BatteryManager.EXTRA_SCALE, 0);
 
           if (scale > 0) {
+            sb.append(' ');
             sb.append(Integer.toString((level * 100) / scale));
             sb.append('%');
           }
