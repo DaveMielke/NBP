@@ -829,6 +829,10 @@ The Log Action
 
    Type :q followed by Enter to exit the edit session. If you've accidentally made any changes to the read-only edit buffer then you'll need to use :q! instead.
 
+The Off Action
+
+   This action powers down the device. This requires User Confirmation.
+
 The Reset Action
 
    This action performs a factory reset, and then reboots to Android. Both /cache (the system cache partition) and /data (the user data partition) are wiped. This requires User Confirmation.
