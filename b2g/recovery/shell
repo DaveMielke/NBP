@@ -87,6 +87,42 @@ confirmAction() {
   done
 }
 
+watchFile() {
+  local file="${1}"
+  local pattern="${2}"
+  local indicator="${3}"
+  
+  local waiting=false
+  local count
+  exec 3<"${file}"
+
+  while true
+  do
+    while read -u3 line
+    do
+      ! "${waiting}" || {
+        waiting=false
+        clearLine
+      }
+
+      count="$(expr "${line}" : "${pattern}" 2>/dev/null)" || count=0
+      [ "${count}" -eq 0 ] || {
+        exec 3<&-
+        return 0
+      }
+        
+      echo "${line}"
+    done
+    
+    "${waiting}" || {
+      waiting=true
+      writeCharacters "${indicator}"
+    }
+
+    sleep 1
+  done
+}
+
 stopBraille() {
   braille stop || return "${?}"
 }
@@ -571,7 +607,11 @@ then
     PS1="${programName}:\W# " /usr/bin/sh || :
   }
 
-  echo "Recovery Mode Menu${nl}"
+  watchFile "/tmp/recovery/recovery.log" ".*select the action" "recovery mode..."
+  echo "------------------"
+  echo "Recovery Mode Menu"
+  echo ""
+
   listActions
   performActions
 else
