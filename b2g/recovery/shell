@@ -26,7 +26,7 @@ writeCharacters() {
 rewriteLine() {
   local line="${1}"
 
-  writeCharacters "\\r${line}\\e[K"
+  writeCharacters "\\r${line}\\e[K\e[${#line}D"
 }
 
 clearLine() {
