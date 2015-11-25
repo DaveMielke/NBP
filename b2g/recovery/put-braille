@@ -36,6 +36,7 @@ putProgram() {
 
 adb shell mkdir -p /etc/brltty/Initial
 putData brltty.prefs /etc/brltty/Initial/prefs
+putData brltty.conf /etc/brltty/Initial/config
 
 adb shell mkdir -p /etc/brltty/Input/bg
 putData brltty/Tables/Input/chords.kti /etc/brltty/Input/
