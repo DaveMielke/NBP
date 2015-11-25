@@ -242,7 +242,7 @@ performAction_boot() {
     return "${operationCancelled}"
   }
 
-  withoutBraille reboot -f
+  withoutBraille recovery --just_exit
 }
 
 addAction off "power down device"
