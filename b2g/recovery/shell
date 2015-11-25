@@ -214,7 +214,7 @@ performAction() {
 performActions() {
   while true
   do
-    askUser "action> "
+    askUser "recovery> "
 
     if [ -z "${REPLY}" ]
     then

@@ -34,7 +34,7 @@ When it starts,
 it shows a list summarizing the actions that can be selected,
 and then presents the prompt::
 
-  action>
+  recovery>
 
 To select an action, type its name and then press Enter.
 Unambiguous abbreviations of action names are recognized.
