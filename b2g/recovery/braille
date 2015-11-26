@@ -122,7 +122,7 @@ performAction_stop() {
   [ -f "${BRLTTY_PID_FILE}" ] || semanticError "${packageName} not running"
 
   export BRLTTY_LOG_FILE="${BRLTTY_LOG_FILE}.stop"
-  brltty -E -C
+  brltty -E -C -q
 
   local timeout=50
 
