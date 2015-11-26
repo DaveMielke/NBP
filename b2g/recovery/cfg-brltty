@@ -32,7 +32,8 @@ cd brltty
    --without-mntfs-package \
    --without-bell-package \
    --without-leds-package \
-   --without-pcm-package \
+   --without-beep-package \
+   --with-pcm-package=oss \
    --without-midi-package \
    --without-fm-package \
    --without-serial-package \

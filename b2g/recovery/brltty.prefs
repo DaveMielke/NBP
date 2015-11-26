@@ -96,8 +96,11 @@ autorepeat-panning no
 # autorepeat-interval: 10
 autorepeat-interval 10
 
-# braille-sensitivity: medium {minimum low medium high maximum}
-braille-sensitivity medium
+# touch-navigation: no {no yes}
+touch-navigation no
+
+# touch-sensitivity: medium {minimum low medium high maximum}
+touch-sensitivity medium
 
 # braille-keyboard-enabled: yes {no yes}
 braille-keyboard-enabled yes
@@ -108,11 +111,17 @@ braille-input-mode text
 # braille-display-orientation: normal {normal rotated}
 braille-display-orientation normal
 
+# alerts-console-bell: no {no yes}
+alerts-console-bell no
+
+# alerts-keyboard-leds: no {no yes}
+alerts-keyboard-leds no
+
 # alert-tunes: yes {no yes}
 alert-tunes yes
 
-# tune-device: beeper {beeper pcm midi fm}
-tune-device beeper
+# tune-device: pcm {beeper pcm midi fm}
+tune-device pcm
 
 # pcm-volume: 70
 pcm-volume 70
