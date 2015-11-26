@@ -5,6 +5,7 @@ set -o ignoreeof
 umask 022
 
 readonly programName="rsh"
+readonly recoveryLog="/tmp/recovery/recovery.log"
 readonly nl=$'\n'
 
 readonly syntaxError=2
@@ -87,40 +88,36 @@ confirmAction() {
   done
 }
 
+viewFile() {
+  local file="${1}"
+
+  vi -R "${file}"
+}
+
 watchFile() {
   local file="${1}"
   local pattern="${2}"
   local indicator="${3}"
   
-  local waiting=false
-  local count
-  exec 3<"${file}"
+  [ ! -f "${file}" ] || {
+    exec 3<"${file}"
+    rewriteLine "${indicator}"
+    local count
 
-  while true
-  do
-    while read -u3 line
+    while true
     do
-      ! "${waiting}" || {
-        waiting=false
-        clearLine
-      }
-
-      count="$(expr "${line}" : "${pattern}" 2>/dev/null)" || count=0
-      [ "${count}" -eq 0 ] || {
-        exec 3<&-
-        return 0
-      }
-        
-      echo "${line}"
+      while read -u3 line
+      do
+        count="$(expr "${line}" : "${pattern}" 2>/dev/null)" || count=0
+        [ "${count}" -eq 0 ] || break 2
+      done
+      
+      sleep 1
     done
-    
-    "${waiting}" || {
-      waiting=true
-      writeCharacters "${indicator}"
-    }
 
-    sleep 1
-  done
+    clearLine
+    exec 3<&-
+  }
 }
 
 stopBraille() {
@@ -321,7 +318,7 @@ addAction log "view recovery log"
 performAction_log() {
   eval "${noMoreParameters}"
 
-  vi -R /tmp/recovery/recovery.log
+  viewFile "${recoveryLog}"
 }
 
 if [ -f /etc/recovery.fstab ]
@@ -607,8 +604,7 @@ then
     PS1="${programName}:\W# " /usr/bin/sh || :
   }
 
-  watchFile "/tmp/recovery/recovery.log" ".*select the action" "recovery mode..."
-  echo "------------------"
+  watchFile "${recoveryLog}" ".*select the action" "Recovery Mode..."
   echo "Recovery Mode Menu"
   echo ""
 
