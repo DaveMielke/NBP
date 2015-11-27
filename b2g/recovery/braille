@@ -1,6 +1,5 @@
 #!/usr/bin/sh
 
-logLevel="info"
 vtNumber=2
 
 set -e
@@ -59,7 +58,6 @@ startInteractiveShell() {
 setBrailleParameters() {
   export BRLTTY_PID_FILE="${systemDirectory}/pid"
   export BRLTTY_LOG_FILE="${cacheDirectory}/log"
-  export BRLTTY_LOG_LEVEL="${logLevel}"
 
   export BRLTTY_UPDATABLE_DIRECTORY="${cacheDirectory}"
   export BRLTTY_WRITABLE_DIRECTORY="${systemDirectory}/Writable"
