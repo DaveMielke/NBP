@@ -116,7 +116,7 @@ watchFile() {
       do
         ! "${handleLine}" "${line}" || break 2
       done
-      
+
       sleep 1
     done
 
@@ -614,6 +614,16 @@ then
     case "${line}"
     in
       *" select the action "*) return 0;;
+      *"inding update"*) rewriteLine "finding update";;
+      *"pening update"*) rewriteLine "opening update";;
+      *"erifying update"*) rewriteLine "verifying update";;
+      *"nstalling update"*) rewriteLine "installing update";;
+
+      *"ormatting /"*)
+        local path="${line#* /}"
+        path="${path%...}"
+        rewriteLine "wiping ${path}"
+        ;;
     esac
 
     return 1
