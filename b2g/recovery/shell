@@ -94,28 +94,32 @@ viewFile() {
   vi -R "${file}"
 }
 
+awaitPath() {
+  local file="${1}"
+
+  while [ ! -f "${file}" ]
+  do
+    sleep 1
+  done
+}
+
 watchFile() {
   local file="${1}"
-  local pattern="${2}"
-  local indicator="${3}"
+  local handleLine="${2}"
   
   [ ! -f "${file}" ] || {
     exec 3<"${file}"
-    rewriteLine "${indicator}"
-    local count
 
     while true
     do
       while read -u3 line
       do
-        count="$(expr "${line}" : "${pattern}" 2>/dev/null)" || count=0
-        [ "${count}" -eq 0 ] || break 2
+        ! "${handleLine}" "${line}" || break 2
       done
       
       sleep 1
     done
 
-    clearLine
     exec 3<&-
   }
 }
@@ -604,7 +608,21 @@ then
     PS1="${programName}:\W# " /usr/bin/sh || :
   }
 
-  watchFile "${recoveryLog}" ".*select the action" "Recovery Mode..."
+  handleRecoveryLogLine() {
+    local line="${1}"
+
+    case "${line}"
+    in
+      *" select the action "*) return 0;;
+    esac
+
+    return 1
+  }
+
+  rewriteLine "Recovery Mode"
+  watchFile "${recoveryLog}" handleRecoveryLogLine
+  clearLine
+
   echo "Recovery Mode Menu"
   echo ""
 
