@@ -45,10 +45,14 @@ makeOssDevice() {
   makeDevice "${path}" c 14 "${minor}" 1000 1005
 }
 
+alsaLoadControlList() {
+  alsaControlList="$(tinymix)"
+}
+
 alsaGetControlIndex() {
   local name="${1}"
 
-  tinymix | sed -n -e $'s%^\\([^\t]*\\).*\t'"${name}  .*\$%\\1%p"
+  echo "${alsaControlList}" | sed -n -e $'s%^\\([^\t]*\\).*\t'"${name}  .*\$%\\1%p"
 }
 
 alsaSetControl() {
@@ -102,6 +106,7 @@ shift $((OPTIND - 1))
   systemMountpoint="/system"
 
   ! shell mount "${systemMountpoint}" || {
+    alsaLoadControlList
     alsaSetControl 'DAC1L Mixer AIF1.1 Switch' 1
     alsaSetControl 'DAC1R Mixer AIF1.1 Switch' 1
     alsaSetControl 'DAC1 Switch' 1
