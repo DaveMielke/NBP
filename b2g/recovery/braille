@@ -9,7 +9,8 @@ cd /
 
 packageName="brltty"
 systemDirectory="/etc/${packageName}"
-cacheDirectory="/cache/${packageName}"
+persistentDirectory="/cache/${packageName}"
+temporaryDirectory="/tmp/${packageName}"
 
 programMessage() {
   local message="${1}"
@@ -42,8 +43,44 @@ checkProcess() {
   return 1
 }
 
+makeDirectory() {
+  local directory="${1}"
+
+  mkdir -p "${directory}" || exit 4
+}
+
+mountDirectory() {
+  local directory="${1}"
+  
+  [ ! -d "${directory}" ] || {
+    set -- $(ls "${directory}")
+    [ "${#}" -gt 0 ] || shell mount "${directory}"
+  }
+}
+
+makePersistentDirectory() {
+  mountDirectory /cache
+  makeDirectory "${persistentDirectory}"
+  local from
+
+  for from in "${systemDirectory}/Initial/"*
+  do
+    local to="${persistentDirectory}/${from##*/}"
+    [ -f "${to}" ] || cp -a "${from}" "${to}"
+  done
+}
+
+makeTemporaryDirectory() {
+  makeDirectory "${temporaryDirectory}"
+}
+
+makeDirectories() {
+  makePersistentDirectory
+  makeTemporaryDirectory
+}
+
 startInteractiveShell() {
-  local pidFile="${systemDirectory}/shell.${vtNumber}"
+  local pidFile="${temporaryDirectory}/shell-${vtNumber}.pid"
   
   if checkProcess "${pidFile}"
   then
@@ -56,39 +93,18 @@ startInteractiveShell() {
 }
 
 setBrailleParameters() {
-  export BRLTTY_PID_FILE="${systemDirectory}/pid"
-  export BRLTTY_LOG_FILE="${cacheDirectory}/log"
+  export BRLTTY_PID_FILE="${temporaryDirectory}/brltty.pid"
+  export BRLTTY_LOG_FILE="${temporaryDirectory}/log"
 
-  export BRLTTY_UPDATABLE_DIRECTORY="${cacheDirectory}"
+  export BRLTTY_UPDATABLE_DIRECTORY="${persistentDirectory}"
   export BRLTTY_WRITABLE_DIRECTORY="${systemDirectory}/Writable"
   export BRLTTY_TABLES_DIRECTORY="${systemDirectory}"
 
-  export BRLTTY_CONFIGURATION_FILE="${cacheDirectory}/config"
+  export BRLTTY_CONFIGURATION_FILE="${persistentDirectory}/config"
   export BRLTTY_PREFERENCES_FILE="prefs"
 
   export BRLTTY_SCREEN_DRIVER="lx"
   export BRLTTY_SCREEN_PARAMETERS="lx:vt=${vtNumber}"
-}
-
-mountDirectory() {
-  local directory="${1}"
-  
-  [ ! -d "${directory}" ] || {
-    set -- $(ls "${directory}")
-    [ "${#}" -gt 0 ] || shell mount "${directory}"
-  }
-}
-
-initializeCacheDirectory() {
-  mountDirectory /cache
-  mkdir -p "${cacheDirectory}" || exit 4
-  local from
-
-  for from in "${systemDirectory}/Initial/"*
-  do
-    local to="${cacheDirectory}/${from##*/}"
-    [ -f "${to}" ] || cp -a "${from}" "${to}"
-  done
 }
 
 readonly noMoreParameters='
@@ -99,7 +115,7 @@ performAction_start() {
   eval "${noMoreParameters}"
 
   startInteractiveShell
-  initializeCacheDirectory
+  makeDirectories
   setBrailleParameters
 
   if checkProcess "${BRLTTY_PID_FILE}"
@@ -114,7 +130,7 @@ performAction_start() {
 performAction_stop() {
   eval "${noMoreParameters}"
 
-  initializeCacheDirectory
+  makeDirectories
   setBrailleParameters
 
   [ -f "${BRLTTY_PID_FILE}" ] || semanticError "${packageName} not running"
