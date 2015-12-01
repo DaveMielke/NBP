@@ -45,12 +45,24 @@ makeOssDevice() {
   makeDevice "${path}" c 14 "${minor}" 1000 1005
 }
 
-alsaSet() {
-  local control="${1}"
-  local setting="${2}"
+alsaGetControlIndex() {
+  local name="${1}"
 
-  tinymix "${control}" "${setting}"
-  "${noOutput}" || programMessage "mixer setting: $(tinymix "${control}")"
+  tinymix | sed -n -e $'s%^\\([^\t]*\\).*\t'"${name}  .*\$%\\1%p"
+}
+
+alsaSetControl() {
+  local name="${1}"
+  local value="${2}"
+
+  local index="$(alsaGetControlIndex "${name}")"
+  if [ -n "${index}" ]
+  then
+    tinymix "${index}" "${value}"
+    "${noOutput}" || programMessage "mixer setting: $(tinymix "${index}")"
+  else
+    programMessage "unrecognized mixer control: ${name}"
+  fi
 }
 
 noOutput=false
@@ -87,17 +99,21 @@ shift $((OPTIND - 1))
 }
 
 ! "${configureMixer}" || {
-  shell mount /system
-  alsaSet 151 1 # DAC1L Mixer AIF1.1 Switch
-  alsaSet 146 1 # DAC1R Mixer AIF1.1 Switch
-  alsaSet 111 1 # DAC1 Switch
-  alsaSet 202 1 # Left Output Mixer DAC Switch
-  alsaSet 194 1 # Right Output Mixer DAC Switch
-  alsaSet 132 1 # SPKL Output Switch
-  alsaSet 127 1 # SPKR Output Switch
-  alsaSet  68 7 # Speaker Boost Volume
-  alsaSet  64 3 # Speaker Mixer Volume
-  umount /system
+  systemMountpoint="/system"
+
+  ! shell mount "${systemMountpoint}" || {
+    alsaSetControl 'DAC1L Mixer AIF1.1 Switch' 1
+    alsaSetControl 'DAC1R Mixer AIF1.1 Switch' 1
+    alsaSetControl 'DAC1 Switch' 1
+    alsaSetControl 'Left Output Mixer DAC Switch' 1
+    alsaSetControl 'Right Output Mixer DAC Switch' 1
+    alsaSetControl 'SPKL Output Switch' 1
+    alsaSetControl 'SPKR Output Switch' 1
+    alsaSetControl 'Speaker Boost Volume' 7
+    alsaSetControl 'Speaker Mixer Volume' 3
+
+    umount "${systemMountpoint}"
+  }
 }
 
 exit 0
