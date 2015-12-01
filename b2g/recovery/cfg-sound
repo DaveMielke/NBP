@@ -3,6 +3,21 @@
 set -e
 umask 007
 
+readonly programName="${0##*/}"
+
+programMessage() {
+  local message="${1}"
+
+  [ -z "${message}" ] || echo >&2 "${programName}: ${message}"
+}
+
+syntaxError() {
+  local message="${1}"
+
+  programMessage "${message}"
+  exit 2
+}
+
 makeDevice() {
   local path="${1}"
   local type="${2}"
@@ -15,6 +30,7 @@ makeDevice() {
   [ "${path#/}" != "${path}" ] || path="/dev/${path}"
 
   [ -e "${path}" ] || {
+    "${noOutput}" || programMessage "creating device: ${path}"
     mknod "${path}" "${type}" "${major}" "${minor}"
     [ -z "${mode}" ] || chmod "${mode}" "${path}"
     [ -z "${group}" ] || chgrp "${group}" "${path}"
@@ -34,23 +50,54 @@ alsaSet() {
   local setting="${2}"
 
   tinymix "${control}" "${setting}"
-  tinymix "${control}"
+  "${noOutput}" || programMessage "mixer setting: $(tinymix "${control}")"
 }
 
-makeOssDevice mixer 0
-makeOssDevice dsp   3
-makeOssDevice audio 4
+noOutput=false
+configureMixer=false
+makeOssDevices=false
 
-shell mount /system
-alsaSet 151 1 # DAC1L Mixer AIF1.1 Switch
-alsaSet 146 1 # DAC1R Mixer AIF1.1 Switch
-alsaSet 111 1 # DAC1 Switch
-alsaSet 202 1 # Left Output Mixer DAC Switch
-alsaSet 194 1 # Right Output Mixer DAC Switch
-alsaSet 132 1 # SPKL Output Switch
-alsaSet 127 1 # SPKR Output Switch
-alsaSet  68 7 # Speaker Boost Volume
-alsaSet  64 3 # Speaker Mixer Volume
-umount /system
+while getopts ":moq" option
+do
+  case "${option}"
+  in
+    q) noOutput=true;;
+
+    m) configureMixer=true;;
+    o) makeOssDevices=true;;
+
+    :) syntaxError "missing operand: -${OPTARG}";;
+   \?) syntaxError "unrecognized option: -${OPTARG}";;
+    *) syntaxError "unimplemented option: -${OPTARG}";;
+  esac
+done
+
+shift $((OPTIND - 1))
+[ "${#}" -eq 0 ] || syntaxError "too many parameters"
+
+"${configureMixer}" || "${makeOssDevices}" || {
+  configureMixer=true
+  makeOssDevices=true
+}
+
+! "${makeOssDevices}" || {
+  makeOssDevice mixer 0
+  makeOssDevice dsp   3
+  makeOssDevice audio 4
+}
+
+! "${configureMixer}" || {
+  shell mount /system
+  alsaSet 151 1 # DAC1L Mixer AIF1.1 Switch
+  alsaSet 146 1 # DAC1R Mixer AIF1.1 Switch
+  alsaSet 111 1 # DAC1 Switch
+  alsaSet 202 1 # Left Output Mixer DAC Switch
+  alsaSet 194 1 # Right Output Mixer DAC Switch
+  alsaSet 132 1 # SPKL Output Switch
+  alsaSet 127 1 # SPKR Output Switch
+  alsaSet  68 7 # Speaker Boost Volume
+  alsaSet  64 3 # Speaker Mixer Volume
+  umount /system
+}
 
 exit 0
