@@ -45,6 +45,7 @@ putData brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
 
 putProgram braille /sbin/
 putProgram shell /sbin/
+putProgram cfg-sound /sbin/
 
 adb shell chmod -R go-w /etc/brltty
 exit 0

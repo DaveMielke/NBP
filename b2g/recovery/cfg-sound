@@ -1,0 +1,56 @@
+#!/usr/bin/sh
+
+set -e
+umask 007
+
+makeDevice() {
+  local path="${1}"
+  local type="${2}"
+  local major="${3}"
+  local minor="${4}"
+  local owner="${5}"
+  local group="${6}"
+  local mode="${7}"
+
+  [ "${path#/}" != "${path}" ] || path="/dev/${path}"
+
+  [ -e "${path}" ] || {
+    mknod "${path}" "${type}" "${major}" "${minor}"
+    [ -z "${mode}" ] || chmod "${mode}" "${path}"
+    [ -z "${group}" ] || chgrp "${group}" "${path}"
+    [ -z "${owner}" ] || chown "${owner}" "${path}"
+  }
+}
+
+makeOssDevice() {
+  local path="${1}"
+  local minor="${2}"
+
+  makeDevice "${path}" c 14 "${minor}" 1000 1005
+}
+
+alsaSet() {
+  local control="${1}"
+  local setting="${2}"
+
+  tinymix "${control}" "${setting}"
+  tinymix "${control}"
+}
+
+makeOssDevice mixer 0
+makeOssDevice dsp   3
+makeOssDevice audio 4
+
+shell mount /system
+alsaSet 151 1 # DAC1L Mixer AIF1.1 Switch
+alsaSet 146 1 # DAC1R Mixer AIF1.1 Switch
+alsaSet 111 1 # DAC1 Switch
+alsaSet 202 1 # Left Output Mixer DAC Switch
+alsaSet 194 1 # Right Output Mixer DAC Switch
+alsaSet 132 1 # SPKL Output Switch
+alsaSet 127 1 # SPKR Output Switch
+alsaSet  68 7 # Speaker Boost Volume
+alsaSet  64 3 # Speaker Mixer Volume
+umount /system
+
+exit 0
