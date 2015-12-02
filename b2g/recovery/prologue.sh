@@ -94,3 +94,11 @@ readonly noMoreParameters='
   [ "${#}" -eq 0 ] || syntaxError "too many parameters"
 '
 
+parseArguments() {
+  local letters="${1}"
+  local words="${2}"
+  shift 2
+
+  parsedArguments="$(getopt -n "${programName}" -s sh -o "+${letters}" -l "${words}" -- "${@}")" || syntaxError
+}
+

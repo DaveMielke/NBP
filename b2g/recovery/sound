@@ -7,14 +7,6 @@ umask 007
 readonly systemPartitionMountpoint="/system"
 systemPartitionMounted=false
 
-parseArguments() {
-  local letters="${1}"
-  local words="${2}"
-  shift 2
-
-  parsedArguments="$(getopt -n "${programName}" -s sh -o "+${letters}" -l "${words}" -- "${@}")" || syntaxError
-}
-
 mountSystemPartition() {
   "${systemPartitionMounted}" || {
     shell mount "${systemPartitionMountpoint}" || exit "${?}"
