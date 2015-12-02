@@ -348,14 +348,14 @@ fi
 
 if [ -f /proc/mounts ]
 then
-  isMounted() {
+  isNotMounted() {
     local path="${1}"
   
     awk -v "path=${path}" '$2 == path { exit 1 }' /proc/mounts || return 1
     return 0
   }
 else
-  isMounted() {
+  isNotMounted() {
     local path="${1}"
   
     return 1
@@ -364,17 +364,17 @@ fi
 
 mountVolume() {
   local path="${1}"
+  local location="${2:-${path}}"
   
-  if isMountPoint "${path}"
+  if ! isMountPoint "${path}"
   then
-    if isMounted "${path}"
-    then
-      ! mount -t "${mountType}" "${mountVolume}" "${mountDirectory}" || return 0
-    else
-      mountProblem="already mounted: ${path}"
-    fi
-  else
     mountProblem="not a mount point: ${path}"
+  elif ! isNotMounted "${location}"
+  then
+    mountProblem="already mounted: ${location}"
+  elif mount -t "${mountType}" "${mountVolume}" "${location}"
+  then
+    return 0
   fi
   
   return 1
@@ -659,9 +659,17 @@ else
     local directory="${1}"
     shift 1
 
+    if [ "${#}" -ge 1 ]
+    then
+      local location="${1}"
+      shift 1
+    else
+      local location=""
+    fi
+
     eval "${noMoreParameters}"
 
-    mountVolume "${directory}" || {
+    mountVolume "${directory}" "${location}" || {
       programMessage "${mountProblem}"
       return "${operationFailed}"
     }
