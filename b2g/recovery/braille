@@ -122,6 +122,7 @@ performAction_start() {
   then
     programMessage "${packageName} already running"
   else
+    cfg-sound -q
     brltty -E -q
     programMessage "${packageName} started"
   fi
