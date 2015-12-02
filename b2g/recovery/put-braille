@@ -43,9 +43,10 @@ putData brltty/Tables/Input/chords.kti /etc/brltty/Input/
 putData brltty/Tables/Input/toggle.kti /etc/brltty/Input/
 putData brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
 
+putData prologue.sh /sbin/
 putProgram braille /sbin/
 putProgram shell /sbin/
-putProgram cfg-sound /sbin/
+putProgram sound /sbin/
 
 adb shell chmod -R go-w /etc/brltty
 exit 0

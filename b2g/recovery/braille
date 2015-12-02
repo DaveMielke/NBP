@@ -1,4 +1,5 @@
 #!/usr/bin/sh
+. "$(dirname "${0}")/prologue.sh"
 
 vtNumber=2
 
@@ -11,12 +12,6 @@ packageName="brltty"
 systemDirectory="/etc/${packageName}"
 persistentDirectory="/cache/${packageName}"
 temporaryDirectory="/tmp/${packageName}"
-
-programMessage() {
-  local message="${1}"
-  
-  echo >&2 "${0##*/}: ${message}"
-}
 
 syntaxError() {
   local message="${1}"
@@ -122,7 +117,7 @@ performAction_start() {
   then
     programMessage "${packageName} already running"
   else
-    cfg-sound -q
+    sound -q configure
     brltty -E -q
     programMessage "${packageName} started"
   fi

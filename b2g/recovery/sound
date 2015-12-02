@@ -1,0 +1,263 @@
+#!/usr/bin/sh
+. "$(dirname "${0}")/prologue.sh"
+
+set -e
+umask 007
+
+readonly systemPartitionMountpoint="/system"
+systemPartitionMounted=false
+
+programMessage() {
+  local message="${1}"
+
+  [ -z "${message}" ] || echo >&2 "${programName}: ${message}"
+}
+
+syntaxError() {
+  local message="${1}"
+
+  programMessage "${message}"
+  exit 2
+}
+
+parseArguments() {
+  local letters="${1}"
+  local words="${2}"
+  shift 2
+
+  parsedArguments="$(getopt -n "${programName}" -s sh -o "+${letters}" -l "${words}" -- "${@}")" || syntaxError
+}
+
+mountSystemPartition() {
+  "${systemPartitionMounted}" || {
+    shell mount "${systemPartitionMountpoint}" || exit "${?}"
+    systemPartitionMounted=true
+  }
+}
+
+unmountSystemPartition() {
+  ! "${systemPartitionMounted}" || {
+    umount "${systemPartitionMountpoint}"
+    systemPartitionMounted=false
+  }
+}
+
+makeDevice() {
+  local path="${1}"
+  local type="${2}"
+  local major="${3}"
+  local minor="${4}"
+  local owner="${5}"
+  local group="${6}"
+  local mode="${7}"
+
+  [ "${path#/}" != "${path}" ] || path="/dev/${path}"
+
+  [ -e "${path}" ] || {
+    "${noOutput}" || programMessage "creating device: ${path}"
+    mknod "${path}" "${type}" "${major}" "${minor}"
+    [ -z "${mode}" ] || chmod "${mode}" "${path}"
+    [ -z "${group}" ] || chgrp "${group}" "${path}"
+    [ -z "${owner}" ] || chown "${owner}" "${path}"
+  }
+}
+
+makeOssDevice() {
+  local path="${1}"
+  local minor="${2}"
+
+  makeDevice "${path}" c 14 "${minor}" 1000 1005
+}
+
+loadMixerControlList() {
+  mountSystemPartition
+  mixerControlList="$(tinymix)"
+}
+
+getMixerControlIndex() {
+  local name="${1}"
+
+  pattern="${name//./\\.}"
+  set -- $(echo "${mixerControlList}" | grep $'\t'"${pattern}  ")
+
+  if [ "${#}" -gt 0 ]
+  then
+    echo "${1}"
+  else
+    programMessage "unrecognized mixer control: ${name}"
+  fi
+}
+
+showMixerControl() {
+  local name="${1}"
+
+  local index="$(getMixerControlIndex "${name}")"
+  [ -z "${index}" ] || tinymix "${index}"
+}
+
+setMixerControl() {
+  local name="${1}"
+  local value="${2}"
+
+  local index="$(getMixerControlIndex "${name}")"
+  [ -z "${index}" ] || {
+    tinymix "${index}" "${value}"
+    "${noOutput}" || programMessage "mixer control: $(tinymix "${index}")"
+  }
+}
+
+onExit() {
+  unmountSystemPartition
+}
+trap onExit exit int quit
+
+noOutput=false
+
+parseArguments "q" "quiet" "${@}"
+eval set -- ${parsedArguments}
+
+while [ "${#}" -gt 0 ]
+do
+  option="${1}"
+  shift 1
+
+  case "${option}"
+  in
+    -q|--quiet) noOutput=true;;
+    --) break;;
+    *) syntaxError "unimplemented option: ${option}";;
+  esac
+done
+
+[ "${#}" -gt 0 ] || syntaxError "missing action"
+actionName="${1}"
+shift 1
+
+readonly noMoreParameters='
+  [ "${#}" -eq 0 ] || syntaxError "too many parameters"
+'
+
+performAction_configure() {
+  local mixer=false
+  local oss=false
+
+  parseArguments "mo" "mixer,oss" "${@}"
+  eval set -- ${parsedArguments}
+
+  while [ "${#}" -gt 0 ]
+  do
+    local option="${1}"
+    shift 1
+
+    case "${option}"
+    in
+      -m|--mixer) mixer=true;;
+      -o|--oss) oss=true;;
+      --) break;;
+      *) syntaxError "unimplemented option: ${option}";;
+    esac
+  done
+
+  eval "${noMoreParameters}"
+
+  "${mixer}" || "${oss}" || {
+    mixer=true
+    oss=true
+  }
+
+  ! "${oss}" || {
+    makeOssDevice mixer 0
+    makeOssDevice dsp   3
+    makeOssDevice audio 4
+  }
+
+  ! "${mixer}" || {
+    loadMixerControlList
+
+    setMixerControl 'DAC1 Switch' 1
+    setMixerControl 'Speaker Boost Volume' 7
+    setMixerControl 'Speaker Mixer Volume' 3
+
+    # these settings have been copied from /system/etc/sound/beagleboard.xml
+    setMixerControl 'Left Output Mixer IN1L Switch' 1
+    setMixerControl 'Left Output Mixer IN1L Volume' 0
+    setMixerControl 'ADCL Mux' 0
+    setMixerControl 'AIF1ADC1L Mixer ADC/DMIC Switch' 1
+    setMixerControl 'AIF1ADC1R Mixer ADC/DMIC Switch' 1
+    setMixerControl 'IN1L PGA IN1LP Switch' 1
+    setMixerControl 'IN1L PGA IN1LN Switch' 1
+    setMixerControl 'IN1L Volume' 20
+    setMixerControl 'MIXINL IN1L Switch' 1
+    setMixerControl 'MIXINL IN1L Volume' 1
+    setMixerControl 'IN1R PGA IN1RP Switch' 1
+    setMixerControl 'IN1R PGA IN1RN Switch' 1
+    setMixerControl 'IN1R Volume' 22
+    setMixerControl 'MIXINR IN1R Switch' 1
+    setMixerControl 'MIXINR IN1R Volume' 1
+    setMixerControl 'DAC1L Mixer AIF1.1 Switch' 1
+    setMixerControl 'DAC1R Mixer AIF1.1 Switch' 1
+    setMixerControl 'Left Headphone Mux' 1
+    setMixerControl 'Right Headphone Mux' 1
+    setMixerControl 'Left Output Mixer DAC Switch' 1
+    setMixerControl 'Right Output Mixer DAC Switch' 1
+    setMixerControl 'SPKL Output Switch' 1
+    setMixerControl 'SPKR Output Switch' 1
+    setMixerControl 'DAC2 Left Sidetone Volume' 8
+    setMixerControl 'AIF2DAC2R Mixer Left Sidetone Switch' 1
+    setMixerControl 'AIF2DAC2L Mixer Left Sidetone Switch' 1
+    setMixerControl 'SPKR DAC2 Switch' 1
+    setMixerControl 'SPKR DAC2 Volume' 0
+  }
+}
+
+performAction_list() {
+  eval "${noMoreParameters}"
+  loadMixerControlList
+  echo "${mixerControlList}"
+}
+
+performAction_play() {
+  [ "${#}" -gt 0 ] || syntaxError "missing sound file"
+  local path="${1}"
+  shift 1
+
+  eval "${noMoreParameters}"
+  mountSystemPartition
+  tinyplay "${path}"
+}
+
+performAction_set() {
+  [ "${#}" -gt 0 ] || syntaxError "missing control name"
+  local name="${1}"
+  shift 1
+
+  [ "${#}" -gt 0 ] || syntaxError "missing control value"
+  local value="${1}"
+  shift 1
+
+  eval "${noMoreParameters}"
+  loadMixerControlList
+  setMixerControl "${name}" "${value}"
+}
+
+performAction_show() {
+  [ "${#}" -gt 0 ] || syntaxError "missing control name"
+  local name="${1}"
+  shift 1
+
+  eval "${noMoreParameters}"
+  loadMixerControlList
+  showMixerControl "${name}"
+}
+
+case "${actionName}"
+in
+  configure|list|play|set|show) 
+    programName="${programName}: ${actionName}"
+    "performAction_${actionName}" "${@}"
+    ;;
+
+  *) syntaxError "unrecognized action: ${actionName}";;
+esac
+
+exit 0
