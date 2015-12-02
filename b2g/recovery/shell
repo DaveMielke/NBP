@@ -614,15 +614,15 @@ then
     case "${line}"
     in
       *" select the action "*) return 0;;
-      *"inding update"*) rewriteLine "finding update";;
-      *"pening update"*) rewriteLine "opening update";;
-      *"erifying update"*) rewriteLine "verifying update";;
-      *"nstalling update"*) rewriteLine "installing update";;
-      *"lashing Kernel"*) rewriteLine "flashing kernel";;
-      *"lashing recovery"*) rewriteLine "flashing recovery";;
-      *"lashing system"*) rewriteLine "flashing system";;
+      *[Ff]"inding "[Uu]"pdate"*) rewriteLine "finding update";;
+      *[Oo]"pening "[Uu]"pdate"*) rewriteLine "opening update";;
+      *[Vv]"erifying "[Uu]"pdate"*) rewriteLine "verifying update";;
+      *[Ii]"nstalling "[Uu]"pdate"*) rewriteLine "installing update";;
+      *[Ff]"lashing "[Kk]"ernel"*) rewriteLine "flashing kernel";;
+      *[Ff]"lashing "[Rr]"ecovery"*) rewriteLine "flashing recovery";;
+      *[Ff]"lashing "[Ss]"ystem"*) rewriteLine "flashing system";;
 
-      *"ormatting /"*)
+      *[Ff]"ormatting /"*)
         local path="${line#* /}"
         path="${path%...}"
         rewriteLine "wiping ${path}"
