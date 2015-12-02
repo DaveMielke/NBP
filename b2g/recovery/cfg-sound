@@ -52,7 +52,9 @@ alsaLoadControlList() {
 alsaGetControlIndex() {
   local name="${1}"
 
-  echo "${alsaControlList}" | sed -n -e $'s%^\\([^\t]*\\).*\t'"${name}  .*\$%\\1%p"
+  name="${name//./\\.}"
+  set -- $(echo "${alsaControlList}" | grep $'\t'"${name}  ")
+  echo "${1}"
 }
 
 alsaSetControl() {
