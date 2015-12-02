@@ -83,7 +83,13 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private abstract class RebootTask extends MaintenanceTask {
+    protected abstract int getRebootMessage ();
     protected abstract String runRebootTask ();
+
+    @Override
+    protected final void onPreExecute () {
+      setMessage(getRebootMessage());
+    }
 
     @Override
     protected final String runMaintenanceTask () {
@@ -136,11 +142,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_RestartSystem_starting);
-
           new RebootTask() {
             @Override
-            protected String runRebootTask () {
+            protected final int getRebootMessage () {
+              return R.string.maintenance_RestartSystem_starting;
+            }
+
+            @Override
+            protected final String runRebootTask () {
               rebootDevice(null);
               return null;
             }
@@ -158,11 +167,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_RecoveryMode_starting);
-
           new RebootTask() {
             @Override
-            protected String runRebootTask () {
+            protected final int getRebootMessage () {
+              return R.string.maintenance_RecoveryMode_starting;
+            }
+
+            @Override
+            protected final String runRebootTask () {
               rebootDevice("recovery");
               return null;
             }
@@ -180,11 +192,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_BootLoader_starting);
-
           new RebootTask() {
             @Override
-            protected String runRebootTask () {
+            protected final int getRebootMessage () {
+              return R.string.maintenance_BootLoader_starting;
+            }
+
+            @Override
+            protected final String runRebootTask () {
               rebootDevice("bootloader");
               return null;
             }
@@ -197,11 +212,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   private void applyUpdate (final File file) {
-    setMessage(R.string.maintenance_UpdateSystem_start);
-
     new RebootTask() {
       @Override
-      protected String runRebootTask () {
+      protected final int getRebootMessage () {
+        return R.string.maintenance_UpdateSystem_start;
+      }
+
+      @Override
+      protected final String runRebootTask () {
         try {
           RecoverySystem.installPackage(getContext(), file);
         } catch (IOException exception) {
@@ -304,11 +322,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_ClearCache_starting);
-
           new RebootTask() {
             @Override
-            protected String runRebootTask () {
+            protected final int getRebootMessage () {
+              return R.string.maintenance_ClearCache_starting;
+            }
+
+            @Override
+            protected final String runRebootTask () {
               try {
                 RecoverySystem.rebootWipeCache(getContext());
               } catch (IOException exception) {
@@ -331,11 +352,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          setMessage(R.string.maintenance_FactoryReset_starting);
-
           new RebootTask() {
             @Override
-            protected String runRebootTask () {
+            protected final int getRebootMessage () {
+              return R.string.maintenance_FactoryReset_starting;
+            }
+
+            @Override
+            protected final String runRebootTask () {
               try {
                 RecoverySystem.rebootWipeUserData(getContext());
               } catch (IOException exception) {
