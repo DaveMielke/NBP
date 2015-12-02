@@ -28,6 +28,20 @@ programMessage() {
   [ -z "${message}" ] || writeLine "${programName}: ${message}"
 }
 
+syntaxError() {
+  local message="${1}"
+
+  programMessage "${message}"
+  exit 2
+}
+
+semanticError() {
+  local message="${1}"
+  
+  programMessage "${message}"
+  exit 3
+}
+
 askUser() {
   local prompt="${1}"
   shift 1
@@ -75,4 +89,8 @@ getVariable() {
 setVariable() {
   eval "${1}='${2}'"
 }
+
+readonly noMoreParameters='
+  [ "${#}" -eq 0 ] || syntaxError "too many parameters"
+'
 

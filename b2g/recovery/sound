@@ -7,19 +7,6 @@ umask 007
 readonly systemPartitionMountpoint="/system"
 systemPartitionMounted=false
 
-programMessage() {
-  local message="${1}"
-
-  [ -z "${message}" ] || echo >&2 "${programName}: ${message}"
-}
-
-syntaxError() {
-  local message="${1}"
-
-  programMessage "${message}"
-  exit 2
-}
-
 parseArguments() {
   local letters="${1}"
   local words="${2}"
@@ -132,10 +119,6 @@ done
 [ "${#}" -gt 0 ] || syntaxError "missing action"
 actionName="${1}"
 shift 1
-
-readonly noMoreParameters='
-  [ "${#}" -eq 0 ] || syntaxError "too many parameters"
-'
 
 performAction_configure() {
   local mixer=false

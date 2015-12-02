@@ -188,13 +188,6 @@ performActions() {
   done
 }
 
-readonly noMoreParameters='
-  [ "${#}" -eq 0 ] || {
-    programMessage "too many parameters"
-    exit "${syntaxError}"
-  }
-'
-
 addAction boot "boot main system"
 performAction_boot() {
   eval "${noMoreParameters}"
