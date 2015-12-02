@@ -87,6 +87,8 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
     @Override
     protected final String runMaintenanceTask () {
+      ApplicationUtilities.sleep(ApplicationParameters.MAINTENANCE_REBOOT_DELAY);
+
       try {
         String result = runRebootTask();
         if (result != null) return result;

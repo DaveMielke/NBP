@@ -77,6 +77,8 @@ public abstract class ApplicationParameters {
 
   public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
 
+  public final static long MAINTENANCE_REBOOT_DELAY = 1000; // milliseconds
+
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
 
   private ApplicationParameters () {
