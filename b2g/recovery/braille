@@ -114,8 +114,8 @@ readonly noMoreParameters='
 performAction_start() {
   eval "${noMoreParameters}"
 
-  startInteractiveShell
   makeDirectories
+  startInteractiveShell
   setBrailleParameters
 
   if checkProcess "${BRLTTY_PID_FILE}"
