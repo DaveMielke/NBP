@@ -618,6 +618,9 @@ then
       *"pening update"*) rewriteLine "opening update";;
       *"erifying update"*) rewriteLine "verifying update";;
       *"nstalling update"*) rewriteLine "installing update";;
+      *"lashing Kernel"*) rewriteLine "flashing kernel";;
+      *"lashing recovery"*) rewriteLine "flashing recovery";;
+      *"lashing system"*) rewriteLine "flashing system";;
 
       *"ormatting /"*)
         local path="${line#* /}"
