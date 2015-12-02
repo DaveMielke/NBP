@@ -109,15 +109,38 @@ shift $((OPTIND - 1))
 
   ! shell mount "${systemMountpoint}" || {
     alsaLoadControlList
+    alsaSetControl 'DAC1 Switch' 1
+    alsaSetControl 'Speaker Boost Volume' 7
+    alsaSetControl 'Speaker Mixer Volume' 3
+
+    alsaSetControl 'Left Output Mixer IN1L Switch' 1
+    alsaSetControl 'Left Output Mixer IN1L Volume' 0
+    alsaSetControl 'ADCL Mux' 0
+    alsaSetControl 'AIF1ADC1L Mixer ADC/DMIC Switch' 1
+    alsaSetControl 'AIF1ADC1R Mixer ADC/DMIC Switch' 1
+    alsaSetControl 'IN1L PGA IN1LP Switch' 1
+    alsaSetControl 'IN1L PGA IN1LN Switch' 1
+    alsaSetControl 'IN1L Volume' 20
+    alsaSetControl 'MIXINL IN1L Switch' 1
+    alsaSetControl 'MIXINL IN1L Volume' 1
+    alsaSetControl 'IN1R PGA IN1RP Switch' 1
+    alsaSetControl 'IN1R PGA IN1RN Switch' 1
+    alsaSetControl 'IN1R Volume' 22
+    alsaSetControl 'MIXINR IN1R Switch' 1
+    alsaSetControl 'MIXINR IN1R Volume' 1
     alsaSetControl 'DAC1L Mixer AIF1.1 Switch' 1
     alsaSetControl 'DAC1R Mixer AIF1.1 Switch' 1
-    alsaSetControl 'DAC1 Switch' 1
+    alsaSetControl 'Left Headphone Mux' 1
+    alsaSetControl 'Right Headphone Mux' 1
     alsaSetControl 'Left Output Mixer DAC Switch' 1
     alsaSetControl 'Right Output Mixer DAC Switch' 1
     alsaSetControl 'SPKL Output Switch' 1
     alsaSetControl 'SPKR Output Switch' 1
-    alsaSetControl 'Speaker Boost Volume' 7
-    alsaSetControl 'Speaker Mixer Volume' 3
+    alsaSetControl 'DAC2 Left Sidetone Volume' 8
+    alsaSetControl 'AIF2DAC2R Mixer Left Sidetone Switch' 1
+    alsaSetControl 'AIF2DAC2L Mixer Left Sidetone Switch' 1
+    alsaSetControl 'SPKR DAC2 Switch' 1
+    alsaSetControl 'SPKR DAC2 Volume' 0
 
     umount "${systemMountpoint}"
   }
