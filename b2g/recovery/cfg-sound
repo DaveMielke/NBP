@@ -109,10 +109,12 @@ shift $((OPTIND - 1))
 
   ! shell mount "${systemMountpoint}" || {
     alsaLoadControlList
+
     alsaSetControl 'DAC1 Switch' 1
     alsaSetControl 'Speaker Boost Volume' 7
     alsaSetControl 'Speaker Mixer Volume' 3
 
+    # these settings have been copied from /system/etc/sound/beagleboard.xml
     alsaSetControl 'Left Output Mixer IN1L Switch' 1
     alsaSetControl 'Left Output Mixer IN1L Volume' 0
     alsaSetControl 'ADCL Mux' 0
