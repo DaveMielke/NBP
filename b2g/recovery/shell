@@ -9,10 +9,6 @@ readonly programName="rsh"
 readonly recoveryLog="/tmp/recovery/recovery.log"
 readonly nl=$'\n'
 
-readonly syntaxError=2
-readonly operationCancelled=3
-readonly operationFailed=4
-
 viewFile() {
   local file="${1}"
 

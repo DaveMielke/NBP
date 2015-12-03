@@ -4,9 +4,6 @@
 set -e
 umask 007
 
-readonly systemPartitionMountpoint="/system"
-systemPartitionMounted=false
-
 mountSystemPartition() {
   "${systemPartitionMounted}" || {
     shell mount "${systemPartitionMountpoint}" || exit "${?}"
@@ -20,6 +17,10 @@ unmountSystemPartition() {
     systemPartitionMounted=false
   }
 }
+
+readonly systemPartitionMountpoint="/system"
+systemPartitionMounted=false
+addShellExitHandler unmountSystemPartition
 
 makeDevice() {
   local path="${1}"
@@ -84,11 +85,6 @@ setMixerControl() {
     "${noOutput}" || programMessage "mixer control: $(tinymix "${index}")"
   }
 }
-
-onExit() {
-  unmountSystemPartition
-}
-trap onExit exit int quit
 
 noOutput=false
 

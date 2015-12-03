@@ -1,5 +1,10 @@
 programName="${0##*/}"
 
+readonly syntaxError=2
+readonly semanticError=3
+readonly operationFailed=4
+readonly operationCancelled=5
+
 writeLine() {
   local line="${1}"
 
@@ -32,14 +37,14 @@ syntaxError() {
   local message="${1}"
 
   programMessage "${message}"
-  exit 2
+  exit "${syntaxError}"
 }
 
 semanticError() {
   local message="${1}"
   
   programMessage "${message}"
-  exit 3
+  exit "${semanticError}"
 }
 
 askUser() {
@@ -89,6 +94,26 @@ getVariable() {
 setVariable() {
   eval "${1}='${2}'"
 }
+
+onShellExit() {
+  set +e
+  cd /
+
+  while [ "${shellExitHandlerCount}" -gt 0 ]
+  do
+    local variable="shellExitHandler_$((--shellExitHandlerCount))"
+    "$(getVariable "${variable}")"
+  done
+}
+
+addShellExitHandler() {
+  local handler="${1}"
+
+  setVariable "shellExitHandler_$((shellExitHandlerCount++))" "${handler}"
+}
+
+shellExitHandlerCount=0
+trap onShellExit exit int quit
 
 readonly noMoreParameters='
   [ "${#}" -eq 0 ] || syntaxError "too many parameters"
