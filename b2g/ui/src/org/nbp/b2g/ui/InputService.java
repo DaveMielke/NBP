@@ -84,8 +84,11 @@ public class InputService extends InputMethodService {
 
   @Override
   public void onDestroy () {
-    super.onDestroy();
-    Log.d(LOG_TAG, "input service stopped");
+    try {
+      Log.d(LOG_TAG, "input service stopped");
+    } finally {
+      super.onDestroy();
+    }
   }
 
   @Override

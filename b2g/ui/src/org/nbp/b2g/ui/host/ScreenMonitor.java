@@ -48,9 +48,12 @@ public class ScreenMonitor extends AccessibilityService {
 
   @Override
   public void onDestroy () {
-    super.onDestroy();
-    screenMonitor = null;
-    Log.d(LOG_TAG, "screen monitor stopped");
+    try {
+      screenMonitor = null;
+      Log.d(LOG_TAG, "screen monitor stopped");
+    } finally {
+      super.onDestroy();
+    }
   }
 
   @Override

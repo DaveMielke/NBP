@@ -89,7 +89,10 @@ public class ClockActivity extends Activity {
 
   @Override
   public void onPause () {
-    super.onPause();
-    cancelClockUpdate();
+    try {
+      cancelClockUpdate();
+    } finally {
+      super.onPause();
+    }
   }
 }

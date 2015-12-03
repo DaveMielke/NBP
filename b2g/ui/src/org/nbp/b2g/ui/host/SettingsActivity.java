@@ -279,7 +279,10 @@ public class SettingsActivity extends ProgrammaticActivity {
 
   @Override
   public void onDestroy () {
-    removeControlValueChangedListeners();
-    super.onDestroy();
+    try {
+      removeControlValueChangedListeners();
+    } finally {
+      super.onDestroy();
+    }
   }
 }
