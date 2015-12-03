@@ -286,7 +286,7 @@ mountVolume() {
   elif ! isNotMounted "${location}"
   then
     mountProblem="already mounted: ${location}"
-  elif mount -t "${mountType}" "${mountVolume}" "${location}"
+  elif mount -r -t "${mountType}" "${mountVolume}" "${location}"
   then
     return 0
   fi

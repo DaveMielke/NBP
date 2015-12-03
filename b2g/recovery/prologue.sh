@@ -1,4 +1,5 @@
 programName="${0##*/}"
+readonly programDirectory="$(realpath "$(dirname "${0}")")"
 
 readonly syntaxError=2
 readonly semanticError=3
