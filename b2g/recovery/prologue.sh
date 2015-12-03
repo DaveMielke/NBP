@@ -54,7 +54,7 @@ askUser() {
   read -p "${prompt}" -- "${@}" || {
     echo >&2 ""
     programMessage "end of file"
-    exit 1
+    continue
   }
   
   ! REPLY="$(expr "${REPLY}" : ' *\(.*\)')" ||

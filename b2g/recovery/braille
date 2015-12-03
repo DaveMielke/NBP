@@ -27,7 +27,7 @@ checkProcess() {
 makeDirectory() {
   local directory="${1}"
 
-  mkdir -p "${directory}" || exit 4
+  mkdir -p "${directory}" || exit "${operationFailed}"
 }
 
 mountDirectory() {
@@ -122,7 +122,7 @@ performAction_stop() {
   do
     let "timeout -= 1" || {
       programMessage "stop timed out"
-      exit 3
+      exit "${operationCancelled}"
     }
 
     sleep 0.1
