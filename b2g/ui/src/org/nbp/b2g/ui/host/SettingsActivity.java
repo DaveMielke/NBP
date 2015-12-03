@@ -25,6 +25,31 @@ public class SettingsActivity extends ProgrammaticActivity {
     runOnUiThread(runnable);
   }
 
+  private static class ControlValueChangedListener {
+    public final Control control;
+    public final Control.OnValueChangedListener listener;
+
+    public ControlValueChangedListener (Control control, Control.OnValueChangedListener listener) {
+      this.control = control;
+      this.listener = listener;
+    }
+  }
+
+  private final List<ControlValueChangedListener> controlValueChangedListeners = new ArrayList<ControlValueChangedListener>();
+
+  private void addControlValueChangedListener (Control control, Control.OnValueChangedListener listener) {
+    control.addOnValueChangedListener(listener);
+    controlValueChangedListeners.add(new ControlValueChangedListener(control, listener));
+  }
+
+  private void removeControlValueChangedListeners () {
+    for (ControlValueChangedListener entry : controlValueChangedListeners) {
+      entry.control.removeOnValueChangedListener(entry.listener);
+    }
+
+    controlValueChangedListeners.clear();
+  }
+
   private final List<View> developerViews = new ArrayList<View>();
 
   private void setDeveloperViewVisibility (boolean visible) {
@@ -43,17 +68,19 @@ public class SettingsActivity extends ProgrammaticActivity {
     Control control = Controls.getDeveloperEnabledControl();
     setDeveloperViewVisibility(control);
 
-    control.addOnValueChangedListener(new Control.OnValueChangedListener() {
-      @Override
-      public void onValueChanged (final Control control) {
-        updateWidget(new Runnable() {
-          @Override
-          public void run () {
-            setDeveloperViewVisibility(control);
-          }
-        });
+    addControlValueChangedListener(control,
+      new Control.OnValueChangedListener() {
+        @Override
+        public void onValueChanged (final Control control) {
+          updateWidget(new Runnable() {
+            @Override
+            public void run () {
+              setDeveloperViewVisibility(control);
+            }
+          });
+        }
       }
-    });
+    );
   }
 
   private static void setChecked (CompoundButton button, Control control) {
@@ -168,14 +195,14 @@ public class SettingsActivity extends ProgrammaticActivity {
     view.setTextOn(control.getNextLabel());
     setChecked(view, control);
 
-    control.addOnValueChangedListener(
+    addControlValueChangedListener(control,
       new Control.OnValueChangedListener() {
         @Override
         public void onValueChanged (final Control control) {
           updateWidget(new Runnable() {
             @Override
             public void run () {
-              setChecked((Switch)view, control);
+              setChecked(view, control);
             }
           });
         }
@@ -188,20 +215,20 @@ public class SettingsActivity extends ProgrammaticActivity {
   private View createIntegerValueView (Control control) {
     final TextView view = newTextView(control.getValue());
 
-    Control.OnValueChangedListener controlListener = new Control.OnValueChangedListener() {
-      @Override
-      public void onValueChanged (final Control control) {
-        updateWidget(new Runnable() {
-          @Override
-          public void run () {
-            TextView t = (TextView)view;
-            t.setText(control.getValue());
-          }
-        });
+    addControlValueChangedListener(control,
+      new Control.OnValueChangedListener() {
+        @Override
+        public void onValueChanged (final Control control) {
+          updateWidget(new Runnable() {
+            @Override
+            public void run () {
+              view.setText(control.getValue());
+            }
+          });
+        }
       }
-    };
+    );
 
-    control.addOnValueChangedListener(controlListener);
     return view;
   }
 
@@ -248,5 +275,11 @@ public class SettingsActivity extends ProgrammaticActivity {
       createActionsView(),
       createControlsView()
     );
+  }
+
+  @Override
+  public void onDestroy () {
+    removeControlValueChangedListeners();
+    super.onDestroy();
   }
 }
