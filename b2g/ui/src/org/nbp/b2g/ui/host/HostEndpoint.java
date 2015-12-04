@@ -122,6 +122,7 @@ public class HostEndpoint extends Endpoint {
 
     if ((characters = node.getText()) != null) {
       sb.append(toText(characters));
+    } else if (ScreenUtilities.isEditable(node)) {
     } else if ((characters = node.getContentDescription()) != null) {
       int start = sb.length();
 
@@ -130,7 +131,7 @@ public class HostEndpoint extends Endpoint {
       sb.append(']');
 
       setSpeechSpan(sb, start, characters);
-    } else if (!ScreenUtilities.isEditable(node)) {
+    } else {
       String type = ScreenUtilities.getClassName(node);
       int start = sb.length();
 
