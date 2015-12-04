@@ -47,14 +47,49 @@ public class ScreenMonitor extends AccessibilityService {
     if (text != null) Endpoints.setPopupEndpoint(text.toString());
   }
 
+  private static CharSequence getAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {
+    if (node.getText() != null) return null;
+    if (event == null) return null;
+
+    {
+      AccessibilityNodeInfo source = event.getSource();
+
+      if (source != null) {
+        boolean same = source.equals(node);
+        source.recycle();
+        if (!same) return null;
+      }
+    }
+
+    {
+      CharSequence text = toText(event.getText());
+      if (text != null) return text;
+    }
+
+    if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
+      int count = event.getItemCount();
+
+      if (count != -1) {
+        StringBuilder sb = new StringBuilder();
+
+        while (count > 0) {
+          sb.append(' ');
+          count -= 1;
+        }
+
+        return sb.toString();
+      }
+    }
+
+    return null;
+  }
+
   private static boolean write (AccessibilityNodeInfo node, boolean force, AccessibilityEvent event) {
     HostEndpoint endpoint = getHostEndpoint();
 
-    if (node.getText() == null) {
-      if (event != null) {
-        CharSequence text = toText(event.getText());
-        if (text != null) endpoint.setAccessibilityText(node, text);
-      }
+    {
+      CharSequence text = getAccessibilityText(node, event);
+      if (text != null) endpoint.setAccessibilityText(node, text);
     }
 
     return endpoint.write(node, force);
@@ -204,7 +239,7 @@ public class ScreenMonitor extends AccessibilityService {
         AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(root);
 
         if (node != null) {
-          write(node, true);
+          write(node, true, event);
           node.recycle();
         }
       }
