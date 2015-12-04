@@ -396,7 +396,7 @@ public abstract class Endpoint {
     adjustRight(offset, keep);
   }
 
-  public boolean onSelectionChange (int start, int end) {
+  private boolean changeSelection (int start, int end) {
     synchronized (this) {
       if (ApplicationSettings.LOG_UPDATES) {
         Log.d(LOG_TAG, String.format(
@@ -405,22 +405,28 @@ public abstract class Endpoint {
         ));
       }
 
-      if ((start == selectionStart) && (end == selectionEnd)) return false;
+      if ((start != selectionStart) || (end != selectionEnd)) {
+        selectionStart = start;
+        selectionEnd = end;
 
-      selectionStart = start;
-      selectionEnd = end;
+        if ((start == end) && isSelected(start)) {
+          adjustScroll(setLine(start));
+        }
 
-      if ((start == end) && isSelected(start)) {
-        adjustScroll(setLine(start));
+        return true;
       }
     }
 
+    return false;
+  }
+
+  private boolean updateSelection (int start, int end) {
+    if (changeSelection(start, end)) return write();
     return true;
   }
 
-  public boolean updateSelection (int start, int end) {
-    if (!onSelectionChange(start, end)) return true;
-    return write();
+  public boolean onSelectionChange (int start, int end) {
+    return changeSelection(start, end);
   }
 
   public boolean clearSelection () {
