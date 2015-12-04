@@ -13,6 +13,8 @@ import android.view.accessibility.AccessibilityEvent;
 
 import android.content.Intent;
 
+import android.text.SpannableStringBuilder;
+
 public class ScreenMonitor extends AccessibilityService {
   private final static String LOG_TAG = ScreenMonitor.class.getName();
 
@@ -27,8 +29,39 @@ public class ScreenMonitor extends AccessibilityService {
     return Endpoints.host.get();
   }
 
+  private static CharSequence toText (Collection<CharSequence> lines) {
+    if (lines == null) return null;
+    if (lines.isEmpty()) return null;
+    SpannableStringBuilder sb = new SpannableStringBuilder();
+
+    for (CharSequence line : lines) {
+      if (sb.length() > 0) sb.append('\n');
+      sb.append(line);
+    }
+
+    return sb.subSequence(0, sb.length());
+  }
+
+  private static void showText (Collection<CharSequence> lines) {
+    CharSequence text = toText(lines);
+    if (text != null) Endpoints.setPopupEndpoint(text.toString());
+  }
+
+  private static boolean write (AccessibilityNodeInfo node, boolean force, AccessibilityEvent event) {
+    HostEndpoint endpoint = getHostEndpoint();
+
+    if (node.getText() == null) {
+      if (event != null) {
+        CharSequence text = toText(event.getText());
+        if (text != null) endpoint.setAccessibilityText(node, text);
+      }
+    }
+
+    return endpoint.write(node, force);
+  }
+
   private static boolean write (AccessibilityNodeInfo node, boolean force) {
-    return getHostEndpoint().write(node, force);
+    return write(node, force, null);
   }
 
   private static boolean write (int string) {
@@ -76,26 +109,6 @@ public class ScreenMonitor extends AccessibilityService {
     return false;
   }
 
-  private static String toString (Collection<CharSequence> lines) {
-    StringBuilder sb = new StringBuilder();
-
-    if (lines != null) {
-      for (CharSequence line : lines) {
-        if (line.length() == 0) continue;
-        if (sb.length() > 0) sb.append('\n');
-        sb.append(line);
-      }
-    }
-
-    if (sb.length() == 0) return null;
-    return sb.toString();
-  }
-
-  private static void showText (Collection<CharSequence> lines) {
-    String string = toString(lines);
-    if (string != null) Endpoints.setPopupEndpoint(string);
-  }
-
   private static void appendProperty (StringBuilder sb, String label, String value) {
     if (value != null) {
       if (!value.isEmpty()) {
@@ -107,12 +120,16 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  private static void appendProperty (StringBuilder sb, String label, CharSequence value) {
+    if (value != null) appendProperty(sb, label, value.toString());
+  }
+
   private static void appendProperty (StringBuilder sb, String label, int value) {
     if (value != -1) appendProperty(sb, label, Integer.toString(value));
   }
 
   private static void appendProperty (StringBuilder sb, String label, Collection<CharSequence> value) {
-    appendProperty(sb, label, toString(value));
+    appendProperty(sb, label, toText(value));
   }
 
   private static void say (AccessibilityEvent event) {
@@ -246,7 +263,7 @@ public class ScreenMonitor extends AccessibilityService {
 
   private static void handleViewAccessibilityFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view.isAccessibilityFocused()) {
-      write(view, true);
+      write(view, true, event);
     }
   }
 
@@ -329,11 +346,11 @@ public class ScreenMonitor extends AccessibilityService {
 
                 switch (type) {
                   case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                    write(node, true);
+                    write(node, true, event);
                     break;
 
                   default:
-                    write(node, false);
+                    write(node, false, event);
                     break;
                 }
 

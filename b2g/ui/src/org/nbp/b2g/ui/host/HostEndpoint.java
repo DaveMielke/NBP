@@ -38,6 +38,20 @@ public class HostEndpoint extends Endpoint {
     }
   }
 
+  private final Map<AccessibilityNodeInfo, CharSequence> accessibilityText = new HashMap<AccessibilityNodeInfo, CharSequence>();
+
+  public void setAccessibilityText (AccessibilityNodeInfo node, CharSequence text) {
+    if (text != null) {
+      accessibilityText.put(AccessibilityNodeInfo.obtain(node), text);
+    } else {
+      accessibilityText.remove(node);
+    }
+  }
+
+  private final CharSequence getAccessibilityText (AccessibilityNodeInfo node) {
+    return accessibilityText.get(node);
+  }
+
   private static CharSequence toText (CharSequence text) {
     if (text instanceof Spanned) {
       Spanned spanned = (Spanned)text;
@@ -120,7 +134,11 @@ public class HostEndpoint extends Endpoint {
       ));
     }
 
-    if ((characters = node.getText()) != null) {
+    if ((characters = node.getText()) == null) {
+      characters = getAccessibilityText(node);
+    }
+
+    if (characters != null) {
       sb.append(toText(characters));
     } else if (ScreenUtilities.isEditable(node)) {
       int end = getSelectionEnd();
@@ -205,6 +223,7 @@ public class HostEndpoint extends Endpoint {
 
       if (!node.equals(currentNode)) {
         if (!force) return false;
+        if (currentNode != null) setAccessibilityText(currentNode, null);
         indent = 0;
 
         if (currentNode != null) {
