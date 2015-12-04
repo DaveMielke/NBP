@@ -554,7 +554,9 @@ public abstract class Endpoint {
 
       @Override
       protected int getInputLeaveMessage () {
-        return R.string.message_start_of_input_area;
+        return isInputArea()?
+               R.string.message_start_of_input_area:
+               R.string.message_start_of_text_area;
       }
 
       @Override
@@ -590,7 +592,9 @@ public abstract class Endpoint {
 
       @Override
       protected int getInputLeaveMessage () {
-        return R.string.message_end_of_input_area;
+        return isInputArea()?
+               R.string.message_end_of_input_area:
+               R.string.message_end_of_text_area;
       }
 
       @Override
