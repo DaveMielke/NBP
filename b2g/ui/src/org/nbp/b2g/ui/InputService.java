@@ -130,13 +130,15 @@ public class InputService extends InputMethodService {
     int newSelectionStart, int newSelectionEnd,
     int candidateStart, int candidateEnd
   ) {
-    getHostEndpoint().onSelectionChange(newSelectionStart, newSelectionEnd);
-
-    super.onUpdateSelection(
-      oldSelectionStart, oldSelectionEnd,
-      newSelectionStart, newSelectionEnd,
-      candidateStart, candidateEnd
-    );
+    try {
+      getHostEndpoint().onSelectionChange(newSelectionStart, newSelectionEnd);
+    } finally {
+      super.onUpdateSelection(
+        oldSelectionStart, oldSelectionEnd,
+        newSelectionStart, newSelectionEnd,
+        candidateStart, candidateEnd
+      );
+    }
   }
 
   public boolean insertText (CharSequence text) {
