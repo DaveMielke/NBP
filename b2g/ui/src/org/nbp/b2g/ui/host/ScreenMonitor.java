@@ -250,7 +250,7 @@ public class ScreenMonitor extends AccessibilityService {
 
   private String mostRecentAlert = null;
 
-  private void showAlert (AccessibilityEvent event, StringHandler stringHandler) {
+  private String toAlert (AccessibilityEvent event) {
     String alert = null;
     CharSequence text = toText(event.getText());
 
@@ -269,43 +269,23 @@ public class ScreenMonitor extends AccessibilityService {
       }
     }
 
-    if (alert != null) {
-      if (!alert.equals(mostRecentAlert)) {
-        mostRecentAlert = alert;
-        stringHandler.handleString(alert.toString());
-      }
-    }
+    if (alert == null) return null;
+    if (alert.equals(mostRecentAlert)) return null;
+    return (mostRecentAlert = alert);
   }
 
   private void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view == null) {
-      showAlert(
-        event,
-        new StringHandler() {
-          @Override
-          public boolean handleString (String string) {
-            ApplicationUtilities.message(string.replace("\n", " "));
-            return true;
-          }
-        }
-      );
+      String alert = toAlert(event);
+      if (alert != null) ApplicationUtilities.message(alert.replace("\n", " "));
     } else if (ScreenUtilities.isBar(view)) {
       ScreenUtilities.logNavigation(view, String.format(
         "bar %d/%d", event.getCurrentItemIndex(), event.getItemCount()
       ));
 
       if (view.isAccessibilityFocused()) {
-        final AccessibilityNodeInfo node = view;
-
-        showAlert(
-          event,
-          new StringHandler() {
-            @Override
-            public boolean handleString (String string) {
-              return getHostEndpoint().write(node, string);
-            }
-          }
-        );
+        String alert = toAlert(event);
+        if (alert != null) getHostEndpoint().write(view, alert);
       }
     } else if (view.isFocused()) {
       setCurrentNode(event);
