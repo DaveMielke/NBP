@@ -248,32 +248,47 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private static void showBar (AccessibilityEvent event, StringHandler stringHandler) {
-    int count = event.getItemCount();
+  private String mostRecentAlert = null;
 
-    if (count != -1) {
-      int index = event.getCurrentItemIndex();
-      int percentage =
-        (count == 0)? 0:
-        ((index * 100) / count);
+  private void showAlert (AccessibilityEvent event, StringHandler stringHandler) {
+    String alert = null;
+    CharSequence text = toText(event.getText());
 
-      if (stringHandler != null) {
-        stringHandler.handleString(String.format("%d%%", percentage));
+    if (text != null) {
+      alert = text.toString();
+    } else {
+      int count = event.getItemCount();
+
+      if (count != -1) {
+        int index = event.getCurrentItemIndex();
+        int percentage =
+          (count == 0)? 0:
+          ((index * 100) / count);
+
+        alert = String.format("%d%%", percentage);
+      }
+    }
+
+    if (alert != null) {
+      if (!alert.equals(mostRecentAlert)) {
+        mostRecentAlert = alert;
+        stringHandler.handleString(alert.toString());
       }
     }
   }
 
-  private static void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
+  private void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view == null) {
-      StringHandler stringHandler = new StringHandler() {
-        @Override
-        public boolean handleString (String string) {
-          ApplicationUtilities.message(string);
-          return true;
+      showAlert(
+        event,
+        new StringHandler() {
+          @Override
+          public boolean handleString (String string) {
+            ApplicationUtilities.message(string.replace("\n", " "));
+            return true;
+          }
         }
-      };
-
-      showBar(event, stringHandler);
+      );
     } else if (ScreenUtilities.isBar(view)) {
       ScreenUtilities.logNavigation(view, String.format(
         "bar %d/%d", event.getCurrentItemIndex(), event.getItemCount()
@@ -282,14 +297,15 @@ public class ScreenMonitor extends AccessibilityService {
       if (view.isAccessibilityFocused()) {
         final AccessibilityNodeInfo node = view;
 
-        StringHandler stringHandler = new StringHandler() {
-          @Override
-          public boolean handleString (String string) {
-            return getHostEndpoint().write(node, string);
+        showAlert(
+          event,
+          new StringHandler() {
+            @Override
+            public boolean handleString (String string) {
+              return getHostEndpoint().write(node, string);
+            }
           }
-        };
-
-        showBar(event, stringHandler);
+        );
       }
     } else if (view.isFocused()) {
       setCurrentNode(event);
