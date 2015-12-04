@@ -333,11 +333,6 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean setCursor (int offset) {
-    return setSelection(offset, offset);
-  }
-
-  @Override
   public Class<? extends Action> getMoveBackwardAction () {
     return MoveBackward.class;
   }
