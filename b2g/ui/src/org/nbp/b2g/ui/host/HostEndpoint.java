@@ -101,7 +101,7 @@ public class HostEndpoint extends Endpoint {
     appendElementState(sb, ApplicationContext.getString(word));
   }
 
-  private static CharSequence toText (AccessibilityNodeInfo node) {
+  private final CharSequence toText (AccessibilityNodeInfo node) {
     SpannableStringBuilder sb = new SpannableStringBuilder();
     CharSequence characters;
 
@@ -123,6 +123,14 @@ public class HostEndpoint extends Endpoint {
     if ((characters = node.getText()) != null) {
       sb.append(toText(characters));
     } else if (ScreenUtilities.isEditable(node)) {
+      int end = getSelectionEnd();
+
+      if (isSelected(end)) {
+        while (end > 0) {
+          sb.append(' ');
+          end -= 1;
+        }
+      }
     } else if ((characters = node.getContentDescription()) != null) {
       int start = sb.length();
 
