@@ -42,16 +42,20 @@ public abstract class Timeout implements Runnable {
         TimerTask task = new TimerTask() {
           @Override
           public void run () {
-            Timeout timeout = Timeout.this;
+            final Timeout timeout = Timeout.this;
 
             synchronized (timeout) {
               timeout.cancel();
 
-              try {
-                timeout.run();
-              } catch (Exception exception) {
-                Crash.handleCrash(exception, "timeout handler", timeout.getName());
-              }
+              Crash.runComponent(
+                "timeout handler", timeout.getName(),
+                new Runnable() {
+                  @Override
+                  public void run () {
+                    timeout.run();
+                  }
+                }
+              );
             }
           }
         };

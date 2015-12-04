@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import java.util.concurrent.Callable;
+
 import java.io.File;
 import java.io.Writer;
 import java.io.IOException;
@@ -112,7 +114,7 @@ public abstract class Crash {
     }
   }
 
-  public static void handleCrash (Throwable problem, String component, String data) {
+  private static void handleCrash (Throwable problem, String component, String data) {
     Devices.tone.get().alert();
     logCrash(problem, component, data);
 
@@ -121,8 +123,26 @@ public abstract class Crash {
     }
   }
 
-  public static void handleCrash (Throwable problem, String component) {
-    handleCrash(problem, component, null);
+  public static <R> R runComponent (String name, String data, Callable<R> callable) {
+    try {
+      return callable.call();
+    } catch (Exception exception) {
+      handleCrash(exception, name, data);
+      return null;
+    }
+  }
+
+  public static void runComponent (String name, String data, final Runnable runnable) {
+    runComponent(
+      name, data,
+      new Callable<Void>() {
+        @Override
+        public Void call () {
+          runnable.run();
+          return null;
+        }
+      }
+    );
   }
 
   private Crash () {

@@ -290,88 +290,96 @@ public class ScreenMonitor extends AccessibilityService {
 
   private final static Object ACCESSIBILITY_EVENT_LOCK = new Object();
 
+  private void handleAccessibilityEvent (AccessibilityEvent event) {
+    int type = event.getEventType();
+    AccessibilityNodeInfo source = event.getSource();
+
+    switch (type) {
+      case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
+        break;
+
+      case AccessibilityEvent.TYPE_VIEW_SELECTED:
+        handleViewSelected(event, source);
+        break;
+
+      default:
+        if (source != null) {
+          logEventComponent(source, "source");
+
+          switch (type) {
+            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
+              handleViewAccessibilityFocused(event, source);
+              break;
+
+            case AccessibilityEvent.TYPE_VIEW_FOCUSED:
+              handleViewInputFocused(event, source);
+              break;
+
+            default: {
+              AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(source);
+
+              switch (type) {
+                case AccessibilityEvent.TYPE_VIEW_SCROLLED:
+                  handleViewScrolled(event, source);
+                  break;
+              }
+
+              if (node != null) {
+                logEventComponent(node, "node");
+
+                switch (type) {
+                  case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                    write(node, true);
+                    break;
+
+                  default:
+                    write(node, false);
+                    break;
+                }
+
+                node.recycle();
+              } else {
+                logMissingEventComponent("node");
+              }
+
+              break;
+            }
+          }
+
+          source.recycle();
+        } else {
+          logMissingEventComponent("source");
+
+          switch (type) {
+            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
+              showText(event.getText());
+              break;
+
+            default:
+              break;
+          }
+        }
+        break;
+    }
+  }
+
   @Override
-  public void onAccessibilityEvent (AccessibilityEvent event) {
+  public void onAccessibilityEvent (final AccessibilityEvent event) {
     synchronized (ACCESSIBILITY_EVENT_LOCK) {
       if (ApplicationSettings.LOG_UPDATES) {
         Log.d(LOG_TAG, "accessibility event starting: " + event.toString());
       //say(event);
       }
 
-      try {
-        int type = event.getEventType();
-        AccessibilityNodeInfo source = event.getSource();
-
-        switch (type) {
-          case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
-            break;
-
-          case AccessibilityEvent.TYPE_VIEW_SELECTED:
-            handleViewSelected(event, source);
-            break;
-
-          default:
-            if (source != null) {
-              logEventComponent(source, "source");
-
-              switch (type) {
-                case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
-                  handleViewAccessibilityFocused(event, source);
-                  break;
-
-                case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-                  handleViewInputFocused(event, source);
-                  break;
-
-                default: {
-                  AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(source);
-
-                  switch (type) {
-                    case AccessibilityEvent.TYPE_VIEW_SCROLLED:
-                      handleViewScrolled(event, source);
-                      break;
-                  }
-
-                  if (node != null) {
-                    logEventComponent(node, "node");
-
-                    switch (type) {
-                      case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                        write(node, true);
-                        break;
-
-                      default:
-                        write(node, false);
-                        break;
-                    }
-
-                    node.recycle();
-                  } else {
-                    logMissingEventComponent("node");
-                  }
-
-                  break;
-                }
-              }
-
-              source.recycle();
-            } else {
-              logMissingEventComponent("source");
-
-              switch (type) {
-                case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
-                  showText(event.getText());
-                  break;
-
-                default:
-                  break;
-              }
-            }
-            break;
+      Crash.runComponent(
+        "accessibility event", event.toString(),
+        new Runnable() {
+          @Override
+          public void run () {
+            handleAccessibilityEvent(event);
+          }
         }
-      } catch (Exception exception) {
-        Crash.handleCrash(exception, "accessibility event", event.toString());
-      }
+      );
 
       if (ApplicationSettings.LOG_UPDATES) {
         Log.d(LOG_TAG, "accessibility event finished");

@@ -12,6 +12,8 @@ import java.util.TreeSet;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.concurrent.Callable;
+
 import android.util.Log;
 
 import android.os.PowerManager;
@@ -23,24 +25,30 @@ public abstract class KeyEvents {
   private static int activeNavigationKeys = 0;
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
-  private static boolean performAction (Action action) {
+  private static boolean performAction (final Action action) {
     if (ApplicationSettings.LOG_ACTIONS) {
       Log.d(LOG_TAG, "performing action: " + action.getName());
     }
 
-    try {
-      if (action.performAction()) {
-        Integer confirmation = action.getConfirmation();
-        if (confirmation != null) ApplicationUtilities.message(confirmation);
-        return true;
+    Boolean result = Crash.runComponent(
+      "action", action.getName(),
+      new Callable<Boolean>() {
+        @Override
+        public Boolean call () {
+          if (action.performAction()) {
+            Integer confirmation = action.getConfirmation();
+            if (confirmation != null) ApplicationUtilities.message(confirmation);
+            return true;
+          }
+
+          Log.w(LOG_TAG, "action failed: " + action.getName());
+          return false;
+        }
       }
+    );
 
-      Log.w(LOG_TAG, "action failed: " + action.getName());
-    } catch (Exception exception) {
-      Crash.handleCrash(exception, "action", action.getName());
-    }
-
-    return false;
+    if (result == null) return false;
+    return result;
   }
 
   private static Action getAction (Class<? extends Action> type, Endpoint endpoint) {
