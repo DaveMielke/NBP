@@ -85,14 +85,18 @@ public abstract class Braille {
           int brailleStart = endpoint.getBrailleStart();
           int nextLine = length - indent + 1;
 
-          if ((start -= brailleStart) < 0) start = 0;
-          if ((end -= brailleStart) > nextLine) end = nextLine;
+          start -= brailleStart;
+          end -= brailleStart;
 
           if (start == end) {
-            if (end < cells.length) {
-              cells[end] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
+            if ((end >= 0) && (end <= nextLine)) {
+              if (end < cells.length) {
+                cells[end] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
+              }
             }
           } else {
+            if (start < 0) start = 0;
+            if (end > nextLine) end = nextLine;
             if (end > cells.length) end = cells.length;
 
             while (start < end) {
