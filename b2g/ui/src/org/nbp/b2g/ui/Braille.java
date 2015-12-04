@@ -78,29 +78,29 @@ public abstract class Braille {
       text = setCells(cells, text.subSequence(indent, text.length()));
 
       if (endpoint.isInputArea()) {
-        int start = endpoint.getSelectionStart();
-        int end = endpoint.getSelectionEnd();
+        int from = endpoint.getSelectionStart();
+        int to = endpoint.getSelectionEnd();
 
-        if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
+        if (endpoint.isSelected(from) && endpoint.isSelected(to)) {
           int brailleStart = endpoint.getBrailleStart();
-          int nextLine = length - indent + 1;
+          int end = length - indent;
 
-          start -= brailleStart;
-          end -= brailleStart;
+          from -= brailleStart;
+          to -= brailleStart;
 
-          if (start == end) {
-            if ((end >= 0) && (end <= nextLine)) {
-              if (end < cells.length) {
-                cells[end] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
+          if (from == to) {
+            if ((to >= 0) && (to <= end)) {
+              if (to < cells.length) {
+                cells[to] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
               }
             }
           } else {
-            if (start < 0) start = 0;
-            if (end > nextLine) end = nextLine;
-            if (end > cells.length) end = cells.length;
+            if (from < 0) from = 0;
+            if (to > end) to = end;
+            if (to > cells.length) to = cells.length;
 
-            while (start < end) {
-              cells[start++] |= ApplicationSettings.SELECTION_INDICATOR.getDots();
+            while (from < to) {
+              cells[from++] |= ApplicationSettings.SELECTION_INDICATOR.getDots();
             }
           }
         }
