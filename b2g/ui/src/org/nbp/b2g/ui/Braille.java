@@ -82,11 +82,13 @@ public abstract class Braille {
         int to = endpoint.getSelectionEnd();
 
         if (endpoint.isSelected(from) && endpoint.isSelected(to)) {
-          int brailleStart = endpoint.getBrailleStart();
           int end = length - indent;
 
-          from -= brailleStart;
-          to -= brailleStart;
+          {
+            int offset = endpoint.getBrailleStart();
+            from -= offset;
+            to -= offset;
+          }
 
           if (from == to) {
             if ((to >= 0) && (to <= end)) {
