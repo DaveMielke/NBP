@@ -567,7 +567,7 @@ columns as follows:
 General Settings
 ````````````````
 
-The following settings (as of the time of this writing) are presented:
+The following settings are presented:
 
 .. include:: tbl-settings-general.rst
 
@@ -577,6 +577,77 @@ Developer Settings
 If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
+
+The Maintenance Operations Screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pressing Space+Dots78+m (dots 134) takes you to the
+maintenance operations screen for the |user interface|.
+
+A text area at the top of the screen is used to show progress information
+for the currently running (or most recently invoked) operation.
+This text area is initially empty.
+The list of available operations is below it.
+
+Maintenance Operations
+``````````````````````
+
+The following operations may be performed:
+
+.. |uses recovery mode| replace::
+
+  The |product name| will be temporarily rebooted into `Recovery Mode`_.
+
+.. |uses file chooser| replace::
+
+  A `File Browser`_ will be invoked so that you can
+  locate and select the needed file.
+
+Restart System
+  Reboot the |product name|.
+
+Verify Update
+  Verify a `System Update`_ without applying it.
+  |uses file chooser|
+
+Update System
+  Apply a `System Update`_.
+  |uses file chooser|
+  |uses recovery mode|
+
+Recovery Log
+  View the log of the most recent reboot of the |product name|
+  into `Recovery Mode`_.
+
+Recovery Mode
+  Reboot the |product name| into `Recovery Mode`_.
+
+Clear Cache
+  Reinitialize the system cache partition.
+  |uses recovery mode|
+
+Factory Reset
+  Reinitialize the user data and system cache partitions.
+  |uses recovery mode|
+
+Boot Loader
+  Reboot the |product name| into its `Boot Loader`_.
+
+System Update
+`````````````
+
+System updates are also known as **OTA** (over-the-air) updates.
+They're used to update either the whole Android system
+or just parts of it.
+
+A system update is a ``.zip`` file that contain special meta-data
+(including an electronic signature).
+
+File Browser
+````````````
+
+Boot Loader
+```````````
 
 Developer Mode
 ~~~~~~~~~~~~~~

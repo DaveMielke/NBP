@@ -25,6 +25,8 @@ bind Space+Dot8+Dots124#f FindNext
 
 bind Space+Dots125#h Help
 bind Space+Dots135#o Settings
+bind Space+Dots78+Dots134#m Maintenance
+
 bind Space+Dots1234#p PowerOff
 bind Space+Dots2345#t Clock
 bind Space+Dots1246#ed Editor

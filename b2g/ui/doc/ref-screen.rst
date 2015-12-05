@@ -22,6 +22,7 @@
   "Space+Dot8+Dots124#f","|FindNext|"
   "Space+Dots125#h","|Help|"
   "Space+Dots135#o","|Settings|"
+  "Space+Dots78+Dots134#m","|Maintenance|"
   "Space+Dots1234#p","|PowerOff|"
   "Space+Dots2345#t","|Clock|"
   "Space+Dots1246#ed","|Editor|"

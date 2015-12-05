@@ -8,7 +8,7 @@ Recovery Mode
 .. |the system cache| replace:: |system cache path| (the system cache partition)
 .. |user data| replace:: |user data path| (the user data partition)
 
-.. |user confirmation| replace:: This requires `User Confirmation`_.
+.. |user confirmation| replace:: This action requires `User Confirmation`_.
 
 Recovery Mode is a single-user environment within which system 
 maintenance can be performed safely. The |user interface| isn't available in 
@@ -97,16 +97,10 @@ Use the shell's ``exit`` command to return to this menu.
 The Update Action
 ~~~~~~~~~~~~~~~~~
 
-This action applies an OTA (over-the-air) update,
-and then reboots to Android.
-|user confirmation|
-
-OTA updates are ``.zip`` files that contain special meta-data
-(including an electronic signature).
-They're used to update either the whole Android system
-or just parts of it.
-You must first choose the specific update that you'd like to apply
+This action applies a `System Update`_, and then reboots to Android.
+You must first choose the update that you'd like to apply
 via `The File System Browser`_ (which is automatically started for you).
+|user confirmation|
 
 The File System Browser
 -----------------------

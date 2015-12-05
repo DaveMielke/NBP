@@ -9,6 +9,6 @@ public class Maintenance extends InternalActivityAction {
   }
 
   public Maintenance (Endpoint endpoint) {
-    super(endpoint, true);
+    super(endpoint, false);
   }
 }

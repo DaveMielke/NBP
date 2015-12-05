@@ -1,7 +1,6 @@
 .. csv-table:: Screen Developer Operations
   :header: "Keys", "Description"
 
-  "Space+Dots78+Dots134#m","|Maintenance|"
   "Backward+Dots4568","|SaveScreen|"
   "Backward+Dot4","|MoveToParent|"
   "Backward+Dot5","|MoveToPreviousSibling|"
