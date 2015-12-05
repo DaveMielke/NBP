@@ -9,13 +9,7 @@ public abstract class InternalActivityAction extends ActivityAction {
 
   @Override
   protected Intent getIntent (Context context) {
-    Intent intent = new Intent(context, getActivityClass());
-
-    intent.addFlags(
-      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-    );
-
-    return intent;
+    return ApplicationContext.toIntent(getActivityClass());
   }
 
   protected InternalActivityAction (Endpoint endpoint, boolean isForDevelopers) {

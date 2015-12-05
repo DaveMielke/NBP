@@ -20,9 +20,11 @@ import android.view.WindowManager;
 import android.media.AudioManager;
 import android.view.accessibility.AccessibilityManager;
 
+import android.app.Activity;
+import android.inputmethodservice.InputMethodService;
+
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodInfo;
-import android.inputmethodservice.InputMethodService;
 
 import android.provider.Settings;
 import android.accessibilityservice.AccessibilityService;
@@ -47,7 +49,7 @@ public abstract class ApplicationContext {
 
     Devices.speech.get().say(null);
     EventMonitors.startEventMonitors();
-    enableService(ScreenMonitor.class);
+    enableAccessibilityService(ScreenMonitor.class);
     return true;
   }
 
@@ -98,21 +100,31 @@ public abstract class ApplicationContext {
     return result == PackageManager.PERMISSION_GRANTED;
   }
 
-  public static void launchActivity (Class activity) {
-    Context context = getContext();
-    Intent intent = new Intent(context, activity);
+  public static Intent toIntent (Class<? extends Activity> activity) {
+    Intent intent = new Intent(getContext(), activity);
 
     intent.addFlags(
-      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+    );
+
+    return intent;
+  }
+
+  public static void launchActivity (Intent intent) {
+    intent.addFlags(
       Intent.FLAG_ACTIVITY_CLEAR_TOP |
       Intent.FLAG_ACTIVITY_SINGLE_TOP |
       Intent.FLAG_ACTIVITY_NEW_TASK
     );
 
-    context.startActivity(intent);;
+    getContext().startActivity(intent);
   }
 
-  public static boolean enableService (Class<? extends AccessibilityService> serviceClass) {
+  public static void launchActivity (Class<? extends Activity> activity) {
+    launchActivity(toIntent(activity));
+  }
+
+  public static boolean enableAccessibilityService (Class<? extends AccessibilityService> serviceClass) {
     Context context = getContext();
     if (context == null) return false;
 
