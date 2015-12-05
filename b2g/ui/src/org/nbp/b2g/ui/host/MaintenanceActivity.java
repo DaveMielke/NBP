@@ -376,26 +376,13 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
-  private void launchActivity (Class<? extends Activity> activity) {
-    Intent intent = new Intent(this, activity);
-
-    intent.addFlags(
-      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-      Intent.FLAG_ACTIVITY_CLEAR_TOP |
-      Intent.FLAG_ACTIVITY_SINGLE_TOP |
-      Intent.FLAG_ACTIVITY_NEW_TASK
-    );
-
-    startActivity(intent);
-  }
-
   private View createRecoveryLogButton () {
     Button button = newButton(
       R.string.maintenance_RecoveryLog_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          launchActivity(RecoveryLogActivity.class);
+          ApplicationContext.launchActivity(RecoveryLogActivity.class);
         }
       }
     );
