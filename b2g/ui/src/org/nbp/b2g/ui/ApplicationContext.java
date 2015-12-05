@@ -98,6 +98,20 @@ public abstract class ApplicationContext {
     return result == PackageManager.PERMISSION_GRANTED;
   }
 
+  public static void launchActivity (Class activity) {
+    Context context = getContext();
+    Intent intent = new Intent(context, activity);
+
+    intent.addFlags(
+      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+      Intent.FLAG_ACTIVITY_CLEAR_TOP |
+      Intent.FLAG_ACTIVITY_SINGLE_TOP |
+      Intent.FLAG_ACTIVITY_NEW_TASK
+    );
+
+    context.startActivity(intent);;
+  }
+
   public static boolean enableService (Class<? extends AccessibilityService> serviceClass) {
     Context context = getContext();
     if (context == null) return false;

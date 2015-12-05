@@ -68,6 +68,7 @@
   <string name="ResetSettings_action_label">Reset to Defaults</string>
   <string name="RestoreSettings_action_label">Restore Settings</string>
   <string name="SaveSettings_action_label">Save Settings</string>
+  <string name="SystemMaintenance_action_label">System Maintenance</string>
 
   <string name="ClearAndroidLog_action_confirmation">Android log cleared</string>
   <string name="CopyToClipboard_action_confirmation">Copied to Clipboard</string>

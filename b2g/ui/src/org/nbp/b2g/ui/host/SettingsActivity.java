@@ -132,11 +132,26 @@ public class SettingsActivity extends ProgrammaticActivity {
     return button;
   }
 
+  private View createSystemMaintenanceButton () {
+    Button button = newButton(
+      R.string.SystemMaintenance_action_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          ApplicationContext.launchActivity(MaintenanceActivity.class);
+        }
+      }
+    );
+
+    return button;
+  }
+
   private View createActionsView () {
     return createHorizontalGroup(
       createSaveControlsButton(),
       createRestoreControlsButton(),
-      createResetControlsButton()
+      createResetControlsButton(),
+      createSystemMaintenanceButton()
     );
   }
 

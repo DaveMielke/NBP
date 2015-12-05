@@ -549,6 +549,9 @@ Reset to Defaults
   how to recover if, for example, you've accidentally messed up your saved 
   settings.
 
+System Maintenance
+  Go to `The Maintenance Operations Screen`_.
+
 Each subsequent line contains a setting that can be changed, and is laid out in
 columns as follows:
 
