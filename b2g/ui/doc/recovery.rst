@@ -197,7 +197,7 @@ There are a number of ways to boot the |product name| into Recovery Mode:
 
   2) Ensure that `Developer Mode`_ is enabled.
 
-  3) Go into the System Maintenance Operations menu::
+  3) Go to `The System Maintenance Screen`_::
 
        Space + Dots78 + m (dots 134)
 

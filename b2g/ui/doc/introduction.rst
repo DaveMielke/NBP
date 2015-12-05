@@ -531,7 +531,7 @@ Backward+Dot1, and reenabled by pressing Forward+Dot4.
 The Settings Screen
 ~~~~~~~~~~~~~~~~~~~
 
-Pressing Space+o (dots 135) takes you to the settings screen for the
+Pressing Space+o (dots 135) takes you to the Settings screen for the
 |user interface|.
 
 The top line contains the following buttons:
@@ -550,7 +550,7 @@ Reset to Defaults
   settings.
 
 System Maintenance
-  Go to `The Maintenance Operations Screen`_.
+  Go to `The System Maintenance Screen`_.
 
 Each subsequent line contains a setting that can be changed, and is laid out in
 columns as follows:
@@ -581,11 +581,11 @@ If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: tbl-settings-developer.rst
 
-The Maintenance Operations Screen
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The System Maintenance Screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pressing Space+Dots78+m (dots 134) takes you to the
-maintenance operations screen for the |user interface|.
+System Maintenance screen for the |user interface|.
 
 A text area at the top of the screen is used to show progress information
 for the currently running (or most recently invoked) operation.
