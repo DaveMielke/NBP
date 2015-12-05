@@ -179,6 +179,7 @@
   <string name="message_top_of_input_area">top of input area</string>
   <string name="message_bottom_of_input_area">bottom of input area</string>
 
+  <string name="message_no_document">data not available</string>
   <string name="message_loading_document">loading document</string>
   <string name="message_formatting_document">formatting document</string>
   <string name="message_rendering_document">rendering document</string>

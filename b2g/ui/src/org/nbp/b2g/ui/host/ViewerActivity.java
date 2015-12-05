@@ -46,7 +46,7 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
             }
           }.processInput(inputStream);
         } else {
-          result.append("data not available");
+          result.append(ApplicationContext.getString(R.string.message_no_document));
         }
 
         return result.toString();
