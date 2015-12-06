@@ -10,13 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.text.util.Linkify;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-
 import java.io.IOException;
-import java.io.File;
 import java.io.InputStream;
-import java.io.FileInputStream;
 
 public abstract class ViewerActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = ViewerActivity.class.getName();
@@ -104,33 +99,5 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
     return createVerticalGroup(
       createDocumentView()
     );
-  }
-
-  protected final InputStream openFile (String path) {
-    File file = new File(path);
-
-    try {
-      return new FileInputStream(file);
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, "file not found: " + exception.getMessage());
-    }
-
-    return null;
-  }
-
-  protected final InputStream openAsset (String name) {
-    Context context = ApplicationContext.getContext();
-    if (context == null) return null;
-
-    AssetManager assets = context.getAssets();
-    if (assets == null) return null;
-
-    try {
-      return assets.open(name);
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, "asset not found: " + exception.getMessage());
-    }
-
-    return null;
   }
 }
