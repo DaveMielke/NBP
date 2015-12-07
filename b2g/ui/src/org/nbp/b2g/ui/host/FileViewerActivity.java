@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.io.UnsupportedEncodingException;
+import java.io.ByteArrayInputStream;
+
 public abstract class FileViewerActivity extends ViewerActivity {
   private final static String LOG_TAG = FileViewerActivity.class.getName();
 
@@ -23,10 +26,25 @@ public abstract class FileViewerActivity extends ViewerActivity {
     if (path == null) return null;
     Log.d(LOG_TAG, "file: " + path);
 
-    try {
-      return new FileInputStream(file);
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, "file not opened: " + exception.getMessage());
+    if (file.isDirectory()) {
+      StringBuilder sb = new StringBuilder();
+
+      for (String name : file.list()) {
+        sb.append(name);
+        sb.append('\n');
+      }
+
+      try {
+        return new ByteArrayInputStream(sb.toString().getBytes("UTF8"));
+      } catch (UnsupportedEncodingException exception) {
+        Log.w(LOG_TAG, "directory not opened: " + exception.getMessage());
+      }
+    } else {
+      try {
+        return new FileInputStream(file);
+      } catch (IOException exception) {
+        Log.w(LOG_TAG, "file not opened: " + exception.getMessage());
+      }
     }
 
     return null;
