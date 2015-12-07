@@ -478,7 +478,7 @@ findFile() {
   [ -z "${file}" ] || echo "${file}"
 }
 
-addAction update "apply OTA update"
+addAction update "apply system update"
 performAction_update() {
   eval "${noMoreParameters}"
 
