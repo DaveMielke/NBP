@@ -41,7 +41,7 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
             }
           }.processInput(inputStream);
         } else {
-          result.append(ApplicationContext.getString(R.string.message_no_document));
+          result.append(ApplicationContext.getString(R.string.message_no_text));
         }
 
         return result.toString();
@@ -49,11 +49,11 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
 
       @Override
       protected CharSequence doInBackground (Void... argument) {
-        publishProgress(R.string.message_loading_document);
+        publishProgress(R.string.message_reading_text);
         Thread.yield();
         String document = loadDocument();
 
-        publishProgress(R.string.message_formatting_document);
+        publishProgress(R.string.message_formatting_text);
         Thread.yield();
         CharSequence text;
 
@@ -70,7 +70,7 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
           text = document.subSequence(0, end);
         }
 
-        publishProgress(R.string.message_rendering_document);
+        publishProgress(R.string.message_rendering_text);
         Thread.yield();
         return text;
       }
