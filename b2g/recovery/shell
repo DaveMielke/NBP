@@ -503,6 +503,11 @@ addAction details "display build details"
 performAction_details() {
   eval "${noMoreParameters}"
 
+  set -- engineering user
+  isEngineeringBuild || shift 1
+  echo "Type: ${1}"
+
+  echo "Build: $(getProperty ro.build.id)"
   echo "Kernel: $(uname -r)"
   echo "Firmware: $(getMSP430Version)"
   echo "Hardware: $(uname -m)"

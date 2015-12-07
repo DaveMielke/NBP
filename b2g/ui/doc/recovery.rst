@@ -60,6 +60,8 @@ The Details Action
 Display information about the current build.
 For example::
 
+  Type: user
+  Build: v4.2.9
   Kernel: 2.6.37
   Firmware: v3.1
   Hardware: armv7l
