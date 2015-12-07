@@ -499,6 +499,22 @@ performAction_update() {
   withoutBraille recovery "--update_package=${file}"
 }
 
+addAction details "display build details"
+performAction_details() {
+  eval "${noMoreParameters}"
+
+  echo "Kernel: $(uname -r)"
+  echo "Firmware: $(getMSP430Version)"
+  echo "Hardware: $(uname -m)"
+}
+
+addAction time "display date and time"
+performAction_time() {
+  eval "${noMoreParameters}"
+
+  date +"%Y-%m-%d@%H:%M:%S"
+}
+
 if [ "${#}" -eq 0 ]
 then
   if isEngineeringBuild
@@ -559,8 +575,8 @@ then
   listActions
   performActions
 else
-  addAction actions "show action list"
-  performAction_actions() {
+  addAction help "show action list"
+  performAction_help() {
     eval "${noMoreParameters}"
 
     listActions

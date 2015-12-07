@@ -54,6 +54,16 @@ The Clear Action
 This action wipes |the system cache|, and then reboots to Android.
 |user confirmation|
 
+The Details Action
+~~~~~~~~~~~~~~~~~~
+
+Display information about the current build.
+For example::
+
+  Kernel: 2.6.37
+  Firmware: v3.1
+  Hardware: armv7l
+
 The Exit Action
 ~~~~~~~~~~~~~~~
 
@@ -98,6 +108,15 @@ This action starts an interactive Unix-style shell.
 |engineering build|
 
 Use the shell's ``exit`` command to return to this menu.
+
+The Time Action
+~~~~~~~~~~~~~~~
+
+Display the current date and time.
+The format is ``yyyy-mm-dd@hh:mm:ss``.
+For example::
+
+  2015-12-07@09:43:26
 
 The Update Action
 ~~~~~~~~~~~~~~~~~
