@@ -120,7 +120,7 @@ getProperty() {
   local property="${1}"
 
   property="${property//./\\.}"
-  sed -n "s/^ *${property} *= *//p" /default.prop
+  sed -n -e 's/ *$//' -e "s/^ *${property} *= *//p" /default.prop
 }
 
 testProperty() {
