@@ -116,6 +116,24 @@ addShellExitHandler() {
 shellExitHandlerCount=0
 trap onShellExit exit int quit
 
+getProperty() {
+  local property="${1}"
+
+  property="${property//./\\.}"
+  sed -n "s/^ *${property} *= *//p" /default.prop
+}
+
+testProperty() {
+  local property="${1}"
+  local value="${2}"
+
+  [ "$(getProperty "${property}")" = "${value}" ] || return 1
+}
+
+isEngineeringBuild() {
+  testProperty ro.debuggable 1 || return "${?}"
+}
+
 readonly noMoreParameters='
   [ "${#}" -eq 0 ] || syntaxError "too many parameters"
 '

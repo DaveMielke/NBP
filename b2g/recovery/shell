@@ -501,26 +501,29 @@ performAction_update() {
 
 if [ "${#}" -eq 0 ]
 then
-  addAction exit "exit this menu"
-  performAction_exit() {
-    eval "${noMoreParameters}"
+  if isEngineeringBuild
+  then
+    addAction exit "exit this menu"
+    performAction_exit() {
+      eval "${noMoreParameters}"
 
-    confirmAction "exit menu" || {
-      programMessage "exit cancelled"
-      return "${operationCancelled}"
+      confirmAction "exit menu" || {
+        programMessage "exit cancelled"
+        return "${operationCancelled}"
+      }
+
+      programMessage "menu exited"
+      stopBraille
+      exit 0
     }
 
-    programMessage "menu exited"
-    stopBraille
-    exit 0
-  }
+    addAction shell "start interactive shell"
+    performAction_shell() {
+      eval "${noMoreParameters}"
 
-  addAction shell "start interactive shell"
-  performAction_shell() {
-    eval "${noMoreParameters}"
-
-    PS1="${programName}:\W# " /usr/bin/sh || :
-  }
+      PS1="${programName}:\W# " /usr/bin/sh || :
+    }
+  fi
 
   handleRecoveryLogLine() {
     local line="${1}"
