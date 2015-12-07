@@ -8,7 +8,8 @@ Recovery Mode
 .. |the system cache| replace:: |system cache path| (the system cache partition)
 .. |user data| replace:: |user data path| (the user data partition)
 
-.. |user confirmation| replace:: This action requires `User Confirmation`_.
+.. |user confirmation| replace:: It requires `User Confirmation`_.
+.. |engineering build| replace:: It's only available within an engineering build.
 
 Recovery Mode is a single-user environment within which system 
 maintenance can be performed safely. The |user interface| isn't available in 
@@ -58,6 +59,7 @@ The Exit Action
 
 This action terminates this menu.
 |user confirmation|
+|engineering build|
 
 Once terminated, it's not that easy to restart the menu.
 This action has only been defined so that the |product name| developers
@@ -78,29 +80,33 @@ then you'll need to use ``:q!`` instead.
 The Off Action
 ~~~~~~~~~~~~~~
 
-This action powers down the device.
+This action powers down the |product name|.
 |user confirmation|
 
 The Reset Action
 ~~~~~~~~~~~~~~~~
 
 This action performs a factory reset, and then reboots to Android.
-Both |the system cache| and |user data| are wiped.
 |user confirmation|
+
+Both |the system cache| and |user data| are wiped.
 
 The Shell Action
 ~~~~~~~~~~~~~~~~
 
 This action starts an interactive Unix-style shell.
+|engineering build|
+
 Use the shell's ``exit`` command to return to this menu.
 
 The Update Action
 ~~~~~~~~~~~~~~~~~
 
 This action applies a `System Update`_, and then reboots to Android.
+|user confirmation|
+
 You must first choose the update that you'd like to apply
 via `The File System Browser`_ (which is automatically started for you).
-|user confirmation|
 
 The File System Browser
 -----------------------
