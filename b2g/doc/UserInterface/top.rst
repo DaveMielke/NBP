@@ -13,4 +13,4 @@ The |user interface|
 .. include:: FirmwareFeatures/top.rst
 .. include:: QuickReference/top.rst
 .. include:: TechnicalInformation/top.rst
-.. include:: Tables/top.rst
+.. include:: BrailleTables/top.rst

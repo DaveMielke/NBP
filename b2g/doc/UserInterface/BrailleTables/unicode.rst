@@ -1,8 +1,3 @@
-Actual braille cells are represented by the 256 characters within the Unicode
-range U+2800 through U+28FF. Each of the eight bits within the low-order byte
-of this range represents a braille dot within the cell, according to
-ISO 11548-1, as follows:
-
 .. table:: Unicode Braille Dots
 
   ===  ====  ===========  =======  ========

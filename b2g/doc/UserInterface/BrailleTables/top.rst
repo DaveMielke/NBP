@@ -1,5 +1,5 @@
-Tables
-======
+Braille Tables
+==============
 
 Braille Characters
 ------------------
@@ -7,12 +7,17 @@ Braille Characters
 Dot Numbering
 ~~~~~~~~~~~~~
 
-.. include:: braille-dots.rst
+.. include:: dots.rst
 
 Unicode Braille Characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. include:: braille-unicode.rst
+Actual braille cells are represented by the 256 characters within the Unicode
+range U+2800 through U+28FF. Each of the eight bits within the low-order byte
+of this range represents a braille dot within the cell, according to
+ISO 11548-1, as follows:
+
+.. include:: unicode.rst
 
 Braille Character Map
 ---------------------
@@ -26,7 +31,7 @@ North American Braille Computer Code
 The North American convention for how the 95 basic ASCII characters are
 rendered in computer (8-dot) braille.
 
-.. include:: braille-nabcc.rst
+.. include:: nabcc.rst
 
 Additional Common Symbols
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,7 +51,7 @@ they can be relatively easily remembered. The following methods have been used:
 * The subscript digits are rendered by adding dot 8 to the representations of
   the corresponding regular digits.
 
-.. include:: braille-symbols.rst
+.. include:: symbols.rst
 
 Additional Characters for Spanish
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,7 +69,7 @@ they can be easily recognized. The following methods have been used:
   representations of the associated `North American Braille Computer Code`_
   punctuation symbols.
 
-.. include:: braille-spanish.rst
+.. include:: spanish.rst
 
 ASCII Control Characters
 ------------------------
