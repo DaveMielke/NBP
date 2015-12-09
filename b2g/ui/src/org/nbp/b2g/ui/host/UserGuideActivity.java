@@ -4,6 +4,6 @@ import org.nbp.b2g.ui.*;
 public class UserGuideActivity extends AssetViewerActivity {
   @Override
   protected final String getAsset () {
-    return "b2g_ui.txt";
+    return "UserInterface.txt";
   }
 }
