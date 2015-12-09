@@ -7,42 +7,42 @@ Braille
 Special Symbols
 ~~~~~~~~~~~~~~~
 
-.. include:: ref-braille-symbols.rst
+.. include:: braille-symbols.rst
 
 Annotations
 ~~~~~~~~~~~
 
-.. include:: ref-braille-annotations.rst
+.. include:: braille-annotations.rst
 
 Key Bindings
 ------------
 
-.. include:: ref-actions.rst
+.. include:: actions.rst
 
 Common Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: ref-all.rst
+.. include:: all.rst
 
 Input Operations
 ~~~~~~~~~~~~~~~~
 
-.. include:: ref-input.rst
+.. include:: input.rst
 
 Screen Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: ref-screen.rst
+.. include:: screen.rst
 
 Speech Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: ref-speech.rst
+.. include:: speech.rst
 
 Legacy Bindings
 ~~~~~~~~~~~~~~~
 
-.. include:: ref-legacy.rst
+.. include:: legacy.rst
 
 Developer Operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -50,10 +50,10 @@ Developer Operations
 Common Actions
 ``````````````
 
-.. include:: ref-developer-all.rst
+.. include:: developer-all.rst
 
 Screen Actions
 ``````````````
 
-.. include:: ref-developer-screen.rst
+.. include:: developer-screen.rst
 

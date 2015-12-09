@@ -26,7 +26,7 @@ North American Braille Computer Code
 The North American convention for how the 95 basic ASCII characters are
 rendered in computer (8-dot) braille.
 
-.. include:: tbl-braille-nabcc.rst
+.. include:: braille-nabcc.rst
 
 Additional Common Symbols
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,7 +46,7 @@ they can be relatively easily remembered. The following methods have been used:
 * The subscript digits are rendered by adding dot 8 to the representations of
   the corresponding regular digits.
 
-.. include:: tbl-braille-symbols.rst
+.. include:: braille-symbols.rst
 
 Additional Characters for Spanish
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,7 +64,7 @@ they can be easily recognized. The following methods have been used:
   representations of the associated `North American Braille Computer Code`_
   punctuation symbols.
 
-.. include:: tbl-braille-spanish.rst
+.. include:: braille-spanish.rst
 
 ASCII Control Characters
 ------------------------
@@ -72,5 +72,5 @@ ASCII Control Characters
 To type a control character, press Space+x (dots 1346) immediately before any
 of these characters:
 
-.. include:: tbl-control.rst
+.. include:: control.rst
 

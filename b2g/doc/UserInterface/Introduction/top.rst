@@ -572,14 +572,14 @@ General Settings
 
 The following settings are presented:
 
-.. include:: tbl-settings-general.rst
+.. include:: settings-general.rst
 
 Developer Settings
 ``````````````````
 
 If `Developer Mode`_ is enabled, then these additional settings are presented:
 
-.. include:: tbl-settings-developer.rst
+.. include:: settings-developer.rst
 
 The System Maintenance Screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

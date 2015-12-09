@@ -13,7 +13,7 @@ emulate each of them:
 
 * With one hand, by pressing Dot4 together with one of the D-Pad keys.
 
-.. include:: tbl-keys-android.rst
+.. include:: keys-android.rst
 
 Emulating Screen Gestures
 -------------------------
@@ -410,7 +410,7 @@ method can still be used via an external keyboard connected via Bluetooth or
 USB. The |user interface| also supports it by emulating the following keyboard
 keys:
 
-.. include:: tbl-keys-keyboard.rst
+.. include:: keys-keyboard.rst
 
 What each of these keys does is defined by Android - not by the
 |user interface|. Because of this, navigating with these keys isn't fully
