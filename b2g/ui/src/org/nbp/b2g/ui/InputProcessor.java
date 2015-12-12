@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.nio.charset.StandardCharsets;
 import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -16,14 +17,11 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 
 import java.util.Collection;
 
 public abstract class InputProcessor {
   private final static String LOG_TAG = InputProcessor.class.getName();
-
-  public final String INPUT_ENCODING = "UTF8";
 
   protected abstract boolean handleLine (String text, int number);
 
@@ -63,21 +61,13 @@ public abstract class InputProcessor {
   }
 
   public final boolean processInput (InputStream stream) {
-    String encoding = INPUT_ENCODING;
+    Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
     try {
-      Reader reader = new InputStreamReader(stream, encoding);
-
-      try {
-        return processInput(reader);
-      } finally {
-        close(reader);
-      }
-    } catch (UnsupportedEncodingException exception) {
-      Log.w(LOG_TAG, "unsupported input encoding: " + encoding);
+      return processInput(reader);
+    } finally {
+      close(reader);
     }
-
-    return false;
   }
 
   public final boolean processInput (File file) {

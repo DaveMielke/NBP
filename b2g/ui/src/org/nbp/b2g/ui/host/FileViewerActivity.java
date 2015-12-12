@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 
 public abstract class FileViewerActivity extends ViewerActivity {
@@ -34,11 +34,7 @@ public abstract class FileViewerActivity extends ViewerActivity {
         sb.append('\n');
       }
 
-      try {
-        return new ByteArrayInputStream(sb.toString().getBytes("UTF8"));
-      } catch (UnsupportedEncodingException exception) {
-        Log.w(LOG_TAG, "directory not opened: " + exception.getMessage());
-      }
+      return new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
     } else {
       try {
         return new FileInputStream(file);
