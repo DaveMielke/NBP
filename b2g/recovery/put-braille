@@ -41,6 +41,7 @@ putData brltty.conf /etc/brltty/Initial/config
 adb shell mkdir -p /etc/brltty/Input/bg
 putData brltty/Tables/Input/chords.kti /etc/brltty/Input/
 putData brltty/Tables/Input/toggle.kti /etc/brltty/Input/
+putData brltty/Tables/Input/menu.kti /etc/brltty/Input/
 putData brltty/Tables/Input/bg/all.ktb /etc/brltty/Input/bg/
 
 putData prologue.sh /sbin/
