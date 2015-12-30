@@ -2,6 +2,7 @@
 /assets/build.*
 
 /bin/
-/libs/armeabi
 /gen/
+/libs/armeabi/
+/obj/
 

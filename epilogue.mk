@@ -19,6 +19,7 @@ clean::
 	-rm -f -r $(ANDROID_BINARIES_DIRECTORY)
 	-rm -f -r $(ANDROID_PLATFORM_DIRECTORY)
 	-rm -f -r gen
+	-rm -f -r obj
 
 install: all
 	adb install $(ANDROID_PROJECT_PACKAGE)
