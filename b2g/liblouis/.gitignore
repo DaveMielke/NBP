@@ -1,5 +1,6 @@
 /local.properties
 /git/
+/gen/
 /bin/
-/libs/
 /obj/
+/libs/
