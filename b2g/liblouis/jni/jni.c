@@ -13,3 +13,13 @@ JAVA_METHOD(
 ) {
   return (*env)->NewStringUTF(env, lou_version());
 }
+
+JAVA_METHOD(
+  org_liblouis_Louis, setDataPath, void,
+  jstring jPath
+) {
+  jboolean isCopy;
+  const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
+  lou_setDataPath(cPath);
+  (*env)->ReleaseStringUTFChars(env, jPath, cPath);
+}
