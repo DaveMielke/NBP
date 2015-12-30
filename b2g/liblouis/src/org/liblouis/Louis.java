@@ -19,6 +19,7 @@ public final class Louis {
 
   private static native String getVersion ();
   private static native void setDataPath (String path);
+  private static native void setLogLevel (char character);
 
   private final static String version;
 
@@ -96,29 +97,34 @@ public final class Louis {
   }
 
   private static void updatePackageData () {
-    SharedPreferences prefs = getSharedPreferences();
-    File file = new File(currentContext.getPackageCodePath());
+    final SharedPreferences prefs = getSharedPreferences();
+    final File file = new File(currentContext.getPackageCodePath());
 
-    String prefKey_size = "package-size";
-    long oldSize = prefs.getLong(prefKey_size, -1);
-    long newSize = file.length();
+    final String prefKey_size = "package-size";
+    final long oldSize = prefs.getLong(prefKey_size, -1);
+    final long newSize = file.length();
 
-    String prefKey_time = "package-time";
-    long oldTime = prefs.getLong(prefKey_time, -1);
-    long newTime = file.lastModified();
+    final String prefKey_time = "package-time";
+    final long oldTime = prefs.getLong(prefKey_time, -1);
+    final long newTime = file.lastModified();
 
     if ((newSize != oldSize) || (newTime != oldTime)) {
       Log.d(LOG_TAG, "package size: " + oldSize + " -> " + newSize);
       Log.d(LOG_TAG, "package time: " + oldTime + " -> " + newTime);
 
-      extractAssets();
+      new Thread() {
+        @Override
+        public void run () {
+          Log.d(LOG_TAG, "begin extracting assets");
+          extractAssets();
+          Log.d(LOG_TAG, "end extracting assets");
 
-      {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(prefKey_size, newSize);
-        editor.putLong(prefKey_time, newTime);
-        editor.commit();
-      }
+          SharedPreferences.Editor editor = prefs.edit();
+          editor.putLong(prefKey_size, newSize);
+          editor.putLong(prefKey_time, newTime);
+          editor.commit();
+        }
+      }.start();
     }
   }
 
@@ -134,6 +140,10 @@ public final class Louis {
   public static void end () {
     currentContext = null;
     dataDirectory = null;
+  }
+
+  public static void setLogLevel (LogLevel level) {
+    setLogLevel(level.getCharacter());
   }
 
   private Louis () {

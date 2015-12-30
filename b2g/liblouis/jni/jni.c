@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <android/log.h>
 #include <liblouis.h>
 #include <jni.h>
 
@@ -7,6 +8,10 @@
   JNIEXPORT type JNICALL Java_ ## object ## _ ## name ( \
     JNIEnv *env, jobject this, ## __VA_ARGS__ \
   )
+
+#define LOG_TAG "liblouis/JNI"
+#define LOG(priority,...) \
+  __android_log_print(ANDROID_LOG_##priority, LOG_TAG, __VA_ARGS__)
 
 JAVA_METHOD(
   org_liblouis_Louis, getVersion, jstring
@@ -22,4 +27,52 @@ JAVA_METHOD(
   const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
   lou_setDataPath(cPath);
   (*env)->ReleaseStringUTFChars(env, jPath, cPath);
+}
+
+JAVA_METHOD(
+  org_liblouis_Louis, setLogLevel, void,
+  jchar character
+) {
+  int level;
+
+  switch (character) {
+    case 'A': level = LOG_ALL;   break;
+    case 'D': level = LOG_DEBUG; break;
+    case 'I': level = LOG_INFO;  break;
+    case 'W': level = LOG_WARN;  break;
+    case 'E': level = LOG_ERROR; break;
+    case 'F': level = LOG_FATAL; break;
+    case 'O': level = LOG_OFF;   break;
+
+    default:
+      LOG(WARN, "ignoring unrecognized log level character: 0X%02X", character);
+      return;
+  }
+
+  lou_setLogLevel(level);
+}
+
+static int
+toAndroidLogPriority (int level) {
+  switch (level) {
+    case LOG_ALL:   return ANDROID_LOG_VERBOSE;
+    case LOG_DEBUG: return ANDROID_LOG_DEBUG;
+    case LOG_INFO:  return ANDROID_LOG_INFO;
+    case LOG_WARN:  return ANDROID_LOG_WARN;
+    case LOG_ERROR: return ANDROID_LOG_ERROR;
+    case LOG_FATAL: return ANDROID_LOG_FATAL;
+    case LOG_OFF:   return ANDROID_LOG_SILENT;
+    default:        return ANDROID_LOG_UNKNOWN;
+  }
+}
+
+static void
+logMessage (int level, const char *message) {
+  __android_log_write(toAndroidLogPriority(level), "liblouis", message);
+}
+
+JNIEXPORT jint
+JNI_OnLoad (JavaVM *vm, void *reserved) {
+  lou_registerLogCallback(logMessage);
+  return JNI_VERSION_1_6;
 }
