@@ -13,4 +13,5 @@ $(ANDROID_LOCAL_PROPERTIES): FORCE
 
 NATIVE_SOURCES := Android.mk
 LOCAL_FILES := $(ANDROID_LOCAL_PROPERTIES)
+ANDROID_FILES := AndroidManifest.xml build.xml ant.properties project.properties
 

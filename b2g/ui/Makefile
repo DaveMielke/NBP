@@ -23,4 +23,7 @@ LOCAL_FILES += $(ANDROID_BUILD_TIME)
 $(ANDROID_BUILD_TIME): FORCE
 	date --utc +'%Y-%m-%d@%H:%M %Z' >$@
 
+ANDROID_FILES += custom_rules.xml
+ANDROID_FILES += signing.properties
+
 include ../../epilogue.mk
