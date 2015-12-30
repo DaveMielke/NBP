@@ -4,14 +4,14 @@ APPLICATION_NAME = louis
 PACKAGE_PATH = org.liblouis
 PLATFORM_NAME = armeabi
 
-JNI_SOURCES += config.h
-JNI_SOURCES += liblouis.h
-JNI_SOURCES += src/liblouis/louis.h
-JNI_SOURCES += src/liblouis/findTable.h
-JNI_SOURCES += src/liblouis/compileTranslationTable.c
-JNI_SOURCES += src/liblouis/lou_translateString.c
-JNI_SOURCES += src/liblouis/lou_backTranslateString.c
-JNI_SOURCES += src/liblouis/logging.c
-JNI_SOURCES += src/liblouis/wrappers.c
+NATIVE_SOURCES += config.h
+NATIVE_SOURCES += liblouis.h
+NATIVE_SOURCES += src/liblouis/louis.h
+NATIVE_SOURCES += src/liblouis/findTable.h
+NATIVE_SOURCES += src/liblouis/compileTranslationTable.c
+NATIVE_SOURCES += src/liblouis/lou_translateString.c
+NATIVE_SOURCES += src/liblouis/lou_backTranslateString.c
+NATIVE_SOURCES += src/liblouis/logging.c
+NATIVE_SOURCES += src/liblouis/wrappers.c
 
 include ../../epilogue.mk

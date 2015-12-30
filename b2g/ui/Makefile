@@ -4,14 +4,14 @@ APPLICATION_NAME = b2g_ui
 PACKAGE_PATH = org.nbp.b2g.ui
 PLATFORM_NAME = armeabi
 
-JNI_SOURCES += utils.h
-JNI_SOURCES += utils.c
-JNI_SOURCES += fwver.c
-JNI_SOURCES += uinput.c
-JNI_SOURCES += keyboard.c
-JNI_SOURCES += kbdmon.c
-JNI_SOURCES += metec_flat20_ioctl.h
-JNI_SOURCES += brldev.c
+NATIVE_SOURCES += utils.h
+NATIVE_SOURCES += utils.c
+NATIVE_SOURCES += fwver.c
+NATIVE_SOURCES += uinput.c
+NATIVE_SOURCES += keyboard.c
+NATIVE_SOURCES += kbdmon.c
+NATIVE_SOURCES += metec_flat20_ioctl.h
+NATIVE_SOURCES += brldev.c
 
 ANDROID_BUILD_REVISION = $(ANDROID_ASSETS_DIRECTORY)/build.revision
 ANDROID_LOCAL_FILES += $(ANDROID_BUILD_REVISION)
