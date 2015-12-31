@@ -1,7 +1,5 @@
 include config.mk
 
-KEY_NAMES = media platform release shared
-
 KEY_RAW_EXTENSION = pk8
 KEY_ENCODED_EXTENSION = pem
 KEY_CERTIFICATE_EXTENSION = x509.pem
@@ -10,12 +8,27 @@ KEY_STORE_EXTENSION = jks
 
 STORE_FILE = $(STORE_NAME).$(KEY_STORE_EXTENSION)
 
-all: $(foreach key,$(KEY_NAMES),$(key)-key)
-
 list:
-	keytool -list \
+	keytool -list -v \
 	-keystore "$(STORE_FILE)" \
 	-storepass "$(STORE_PASSWORD)"
+
+DISTINGUISHED_NAME = CN=$(COMMON_NAME), OU=$(ORGANIZATION_UNIT), O=$(ORGANIZATION_NAME), L=$(ORGANIZATION_CITY), ST=$(ORGANIZATION_STATE), C=$(ORGANIZATION_COUNTRY)
+
+key:
+	keytool -genkey -v \
+	-keystore "$(STORE_FILE)" \
+	-storepass "$(STORE_PASSWORD)" \
+	-storetype "JKS" \
+	-alias "$(STORE_NAME)" \
+	-keypass "$(KEY_PASSWORD)" \
+	-keyalg RSA \
+	-keysize 2048 \
+	-validity 10000 \
+	-dname "$(DISTINGUISHED_NAME)"
+
+SYSTEM_KEY_NAMES = media platform release shared
+system-keys: $(foreach key,$(SYSTEM_KEY_NAMES),$(key)-key)
 
 %.$(KEY_ENCODED_EXTENSION): $(SOURCE_DIRECTORY)/%.$(KEY_RAW_EXTENSION)
 	openssl pkcs8 \
