@@ -29,6 +29,8 @@ import android.view.inputmethod.InputMethodInfo;
 import android.provider.Settings;
 import android.accessibilityservice.AccessibilityService;
 
+import org.liblouis.Louis;
+
 public abstract class ApplicationContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
 
@@ -41,6 +43,7 @@ public abstract class ApplicationContext {
       applicationContext = context.getApplicationContext();
     }
 
+    Louis.begin(context);
     HostMonitor.monitorEvents(context);
     Clipboard.setClipboard(context);
 

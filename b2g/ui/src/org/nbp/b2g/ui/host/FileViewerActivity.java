@@ -5,11 +5,11 @@ import android.util.Log;
 
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import java.io.File;
 import java.io.FileInputStream;
 
-import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 
 public abstract class FileViewerActivity extends ViewerActivity {
@@ -27,6 +27,7 @@ public abstract class FileViewerActivity extends ViewerActivity {
     Log.d(LOG_TAG, "file: " + path);
 
     if (file.isDirectory()) {
+      String encoding = "UTF8";
       StringBuilder sb = new StringBuilder();
 
       for (String name : file.list()) {
@@ -34,7 +35,11 @@ public abstract class FileViewerActivity extends ViewerActivity {
         sb.append('\n');
       }
 
-      return new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
+      try {
+        return new ByteArrayInputStream(sb.toString().getBytes(encoding));
+      } catch (UnsupportedEncodingException exception) {
+        Log.w(LOG_TAG, "unsupported input encoding: " + encoding);
+      }
     } else {
       try {
         return new FileInputStream(file);
