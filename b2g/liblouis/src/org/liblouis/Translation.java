@@ -8,87 +8,91 @@ public class Translation {
   private final static String LOG_TAG = Translation.class.getName();
 
   private native boolean translate (
-    String table, String text, char[] braille,
-    int[] outputOffsets, int[] inputOffsets, int[] resultValues
+    String tableName, String inputBuffer, char[] outputBuffer,
+    int[] outputOffsets, int[] inputOffsets, int[] resultValues,
+    boolean backTranslate
   );
 
   private final String tableName;
-  private final CharSequence suppliedText;
-  private final Integer textCursor;
+  private final CharSequence suppliedInput;
+  private final Integer inputCursor;
 
-  private final CharSequence consumedText;
-  private final char[] brailleCharacters;
-  private final int[] brailleOffsets;
-  private final int[] textOffsets;
-  private final Integer brailleCursor;
+  private final CharSequence consumedInput;
+  private final char[] outputCharacters;
+  private final int[] outputOffsets;
+  private final int[] inputOffsets;
+  private final Integer outputCursor;
 
   public final String getTableName () {
     return tableName;
   }
 
-  public final CharSequence getSuppliedText () {
-    return suppliedText;
+  public final CharSequence getSuppliedInput () {
+    return suppliedInput;
   }
 
-  public final Integer getTextCursor () {
-    return textCursor;
+  public final Integer getInputCursor () {
+    return inputCursor;
   }
 
-  public final CharSequence getConsumedText () {
-    return consumedText;
+  public final CharSequence getConsumedInput () {
+    return consumedInput;
   }
 
-  public final char[] getBrailleCharacters () {
-    return brailleCharacters;
+  public final char[] getOutputCharacters () {
+    return outputCharacters;
   }
 
-  public final int getBrailleOffset (int textOffset) {
-    return brailleOffsets[textOffset];
+  public final int getOutputOffset (int inputOffset) {
+    return outputOffsets[inputOffset];
   }
 
-  public final int getTextOffset (int brailleOffset) {
-    return textOffsets[brailleOffset];
+  public final int getInputOffset (int outputOffset) {
+    return inputOffsets[outputOffset];
   }
 
-  public final Integer getBrailleCursor () {
-    return brailleCursor;
+  public final Integer getOutputCursor () {
+    return outputCursor;
   }
 
-  public Translation (String table, CharSequence text, int brailleLength, int cursorOffset) {
-    int textLength = text.length();
+  public Translation (
+    String table, CharSequence input, int outputLength,
+    int cursorOffset, boolean backTranslate
+  ) {
+    int inputLength = input.length();
 
     tableName = table;
-    suppliedText = text;
-    textCursor = (cursorOffset < 0)? null: Integer.valueOf(cursorOffset);
+    suppliedInput = input;
+    inputCursor = (cursorOffset < 0)? null: Integer.valueOf(cursorOffset);
 
-    char[] braille = new char[brailleLength];
-    int[] outputOffsets = new int[textLength];
-    int[] inputOffsets = new int[brailleLength];
-    int[] resultValues = new int[] {textLength, brailleLength, cursorOffset};
+    char[] output = new char[outputLength];
+    int[] outOffsets = new int[inputLength];
+    int[] inOffsets = new int[outputLength];
+    int[] resultValues = new int[] {inputLength, outputLength, cursorOffset};
 
-    if (!translate(tableName, text.toString(), braille,
-                   outputOffsets, inputOffsets, resultValues)) {
-    //throw new TranslationFailedException(text);
+    if (!translate(tableName, input.toString(), output,
+                   outOffsets, inOffsets, resultValues, backTranslate)) {
+    //throw new TranslationFailedException(input);
     }
 
-    int newTextLength    = resultValues[0];
-    int newBrailleLength = resultValues[1];
-    int newCursorOffset  = resultValues[2];
+    int newInputLength  = resultValues[0];
+    int newOutputLength = resultValues[1];
+    int newCursorOffset = resultValues[2];
 
-    if (newTextLength < textLength) {
-      text = text.subSequence(0, newTextLength);
-      outputOffsets = Arrays.copyOf(outputOffsets, newTextLength);
+    if (newInputLength < inputLength) {
+      input = input.subSequence(0, newInputLength);
+      outOffsets = Arrays.copyOf(outOffsets, newInputLength);
     }
 
-    if (newBrailleLength < brailleLength) {
-      braille = Arrays.copyOf(braille, newBrailleLength);
-      inputOffsets = Arrays.copyOf(inputOffsets, newBrailleLength);
+    if (newOutputLength < outputLength) {
+      output = Arrays.copyOf(output, newOutputLength);
+      inOffsets = Arrays.copyOf(inOffsets, newOutputLength);
     }
 
-    consumedText = text;
-    brailleCharacters = braille;
-    textOffsets = outputOffsets;
-    brailleOffsets = inputOffsets;
-    brailleCursor = (newCursorOffset < 0)? null: Integer.valueOf(newCursorOffset);
+    consumedInput = input;
+    outputCharacters = output;
+    outputOffsets = outOffsets;
+    inputOffsets = inOffsets;
+    outputCursor = (newCursorOffset < 0)? null: Integer.valueOf(newCursorOffset);
   }
 }

@@ -15,31 +15,35 @@
 
 JAVA_METHOD(
   org_liblouis_Translation, translate, jboolean,
-  jstring jTable, jstring jText, jcharArray jBraille,
-  jintArray jOutputOffsets, jintArray jInputOffsets, jintArray jResultValues
+  jstring jTableName, jstring jInputBuffer, jcharArray jOutputBuffer,
+  jintArray jOutputOffsets, jintArray jInputOffsets,
+  jintArray jResultValues, jboolean backTranslate
 ) {
-  const char *cTable = (*env)->GetStringUTFChars(env, jTable, NULL);
-  const jchar *cText = (*env)->GetStringChars(env, jText, NULL);
-  jchar *cBraille = (*env)->GetCharArrayElements(env, jBraille, NULL);
+  const char *cTableName = (*env)->GetStringUTFChars(env, jTableName, NULL);
+  const jchar *cInputBuffer = (*env)->GetStringChars(env, jInputBuffer, NULL);
+  jchar *cOutputBuffer = (*env)->GetCharArrayElements(env, jOutputBuffer, NULL);
   jint *cOutputOffsets = (*env)->GetIntArrayElements(env, jOutputOffsets, NULL);
   jint *cInputOffsets = (*env)->GetIntArrayElements(env, jInputOffsets, NULL);
   jint *cResultValues = (*env)->GetIntArrayElements(env, jResultValues, NULL);
 
-  jint *textLength    = &cResultValues[0];
-  jint *brailleLength = &cResultValues[1];
-  jint *cursorOffset  = &cResultValues[2];
-
+  jint *inputLength  = &cResultValues[0];
+  jint *outputLength = &cResultValues[1];
+  jint *cursorOffset = &cResultValues[2];
   if (*cursorOffset < 0) cursorOffset = NULL;
-  int successful = lou_translate(cTable,
-                                 cText, textLength,
-                                 cBraille, brailleLength,
-                                 NULL, NULL,
-                                 cOutputOffsets, cInputOffsets,
-                                 cursorOffset, (dotsIO | ucBrl));
 
-  (*env)->ReleaseStringUTFChars(env, jTable, cTable);
-  (*env)->ReleaseStringChars(env, jText, cText);
-  (*env)->ReleaseCharArrayElements(env, jBraille, cBraille, 0);
+  unsigned char *typeForm = NULL;
+  char *spacing = NULL;
+
+  int successful =
+    ((backTranslate != JNI_FALSE)? lou_backTranslate: lou_translate)(
+      cTableName, cInputBuffer, inputLength, cOutputBuffer, outputLength,
+      typeForm, spacing, cOutputOffsets, cInputOffsets, cursorOffset,
+      (dotsIO | ucBrl)
+    );
+
+  (*env)->ReleaseStringUTFChars(env, jTableName, cTableName);
+  (*env)->ReleaseStringChars(env, jInputBuffer, cInputBuffer);
+  (*env)->ReleaseCharArrayElements(env, jOutputBuffer, cOutputBuffer, 0);
   (*env)->ReleaseIntArrayElements(env, jOutputOffsets, cOutputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jInputOffsets, cInputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jResultValues, cResultValues, 0);
