@@ -35,7 +35,7 @@ JAVA_METHOD(
                                  cBraille, brailleLength,
                                  NULL, NULL,
                                  cOutputOffsets, cInputOffsets,
-                                 cursorOffset, ucBrl);
+                                 cursorOffset, (dotsIO | ucBrl));
 
   (*env)->ReleaseStringUTFChars(env, jTable, cTable);
   (*env)->ReleaseStringChars(env, jText, cText);
