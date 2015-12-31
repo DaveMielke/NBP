@@ -14,6 +14,40 @@
   __android_log_print(ANDROID_LOG_##priority, LOG_TAG, __VA_ARGS__)
 
 JAVA_METHOD(
+  org_liblouis_Louis, translate, jboolean,
+  jstring jTable, jstring jText, jcharArray jBraille,
+  jintArray jOutputOffsets, jintArray jInputOffsets, jintArray jResultValues
+) {
+  const char *cTable = (*env)->GetStringUTFChars(env, jTable, NULL);
+  const jchar *cText = (*env)->GetStringChars(env, jText, NULL);
+  jchar *cBraille = (*env)->GetCharArrayElements(env, jBraille, NULL);
+  jint *cOutputOffsets = (*env)->GetIntArrayElements(env, jOutputOffsets, NULL);
+  jint *cInputOffsets = (*env)->GetIntArrayElements(env, jInputOffsets, NULL);
+  jint *cResultValues = (*env)->GetIntArrayElements(env, jResultValues, NULL);
+
+  jint *textLength    = &cResultValues[0];
+  jint *brailleLength = &cResultValues[1];
+  jint *cursorOffset  = &cResultValues[2];
+
+  if (*cursorOffset < 0) cursorOffset = NULL;
+  int successful = lou_translate(cTable,
+                                 cText, textLength,
+                                 cBraille, brailleLength,
+                                 NULL, NULL,
+                                 cOutputOffsets, cInputOffsets,
+                                 cursorOffset, ucBrl);
+
+  (*env)->ReleaseStringUTFChars(env, jTable, cTable);
+  (*env)->ReleaseStringChars(env, jText, cText);
+  (*env)->ReleaseCharArrayElements(env, jBraille, cBraille, 0);
+  (*env)->ReleaseIntArrayElements(env, jOutputOffsets, cOutputOffsets, 0);
+  (*env)->ReleaseIntArrayElements(env, jInputOffsets, cInputOffsets, 0);
+  (*env)->ReleaseIntArrayElements(env, jResultValues, cResultValues, 0);
+
+  return successful? JNI_TRUE: JNI_FALSE;
+}
+
+JAVA_METHOD(
   org_liblouis_Louis, getVersion, jstring
 ) {
   return (*env)->NewStringUTF(env, lou_version());

@@ -17,6 +17,9 @@ public final class Louis {
   private final static String LOG_TAG = Louis.class.getName();
   private final static String LIBRARY_NAME = "louis";
 
+  public final static String TABLES_SUBDIRECTORY = "tables";
+  public final static String TABLE_EXTENSION = ".ctb";
+
   private static native String getVersion ();
   private static native void setDataPath (String path);
   private static native void setLogLevel (char character);
@@ -32,6 +35,7 @@ public final class Louis {
 
   private static Context currentContext = null;
   private static File dataDirectory = null;
+  private static File tablesDirectory = null;
 
   private static SharedPreferences getSharedPreferences () {
     return PreferenceManager.getDefaultSharedPreferences(currentContext);
@@ -132,8 +136,9 @@ public final class Louis {
     currentContext = context;
 
     dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
-    setDataPath(dataDirectory.getAbsolutePath());
+    tablesDirectory = new File(dataDirectory, TABLES_SUBDIRECTORY);
 
+    setDataPath(dataDirectory.getAbsolutePath());
     updatePackageData();
   }
 
