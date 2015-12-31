@@ -2,7 +2,11 @@ package org.liblouis;
 
 import java.util.Arrays;
 
+import android.util.Log;
+
 public class Translation {
+  private final static String LOG_TAG = Translation.class.getName();
+
   private native boolean translate (
     String table, String text, char[] braille,
     int[] outputOffsets, int[] inputOffsets, int[] resultValues
@@ -64,7 +68,7 @@ public class Translation {
 
     if (!translate(tableName, text.toString(), braille,
                    outputOffsets, inputOffsets, resultValues)) {
-      throw new TranslationFailedException(text);
+    //throw new TranslationFailedException(text);
     }
 
     int newTextLength    = resultValues[0];

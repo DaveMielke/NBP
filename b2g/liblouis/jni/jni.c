@@ -14,7 +14,7 @@
   __android_log_print(ANDROID_LOG_##priority, LOG_TAG, __VA_ARGS__)
 
 JAVA_METHOD(
-  org_liblouis_Louis, translate, jboolean,
+  org_liblouis_Translation, translate, jboolean,
   jstring jTable, jstring jText, jcharArray jBraille,
   jintArray jOutputOffsets, jintArray jInputOffsets, jintArray jResultValues
 ) {
@@ -59,6 +59,7 @@ JAVA_METHOD(
 ) {
   jboolean isCopy;
   const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
+  LOG(DEBUG, "setting data path: %s", cPath);
   lou_setDataPath(cPath);
   (*env)->ReleaseStringUTFChars(env, jPath, cPath);
 }
@@ -83,6 +84,7 @@ JAVA_METHOD(
       return;
   }
 
+  LOG(DEBUG, "setting log level: %c -> %d", character, level);
   lou_setLogLevel(level);
 }
 
