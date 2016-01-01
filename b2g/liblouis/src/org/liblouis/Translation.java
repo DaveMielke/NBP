@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 import android.util.Log;
 
+import android.text.Spanned;
+import android.text.SpannableStringBuilder;
+
 public class Translation {
   private final static String LOG_TAG = Translation.class.getName();
 
@@ -14,13 +17,16 @@ public class Translation {
   );
 
   private final String tableName;
+
   private final CharSequence suppliedInput;
+  private final CharSequence consumedInput;
+  private final int[] inputOffsets;
   private final Integer inputCursor;
 
-  private final CharSequence consumedInput;
-  private final char[] outputCharacters;
+  private final char[] outputArray;
+  private String outputString = null;
+  private CharSequence outputWithSpans = null;
   private final int[] outputOffsets;
-  private final int[] inputOffsets;
   private final Integer outputCursor;
 
   public final String getTableName () {
@@ -31,30 +37,70 @@ public class Translation {
     return suppliedInput;
   }
 
-  public final Integer getInputCursor () {
-    return inputCursor;
-  }
-
   public final CharSequence getConsumedInput () {
     return consumedInput;
   }
 
+  public final int getInputOffset (int outputOffset) {
+    if (outputOffset == outputArray.length) return consumedInput.length();
+    return inputOffsets[outputOffset];
+  }
+
+  public final Integer getInputCursor () {
+    return inputCursor;
+  }
+
   public final char[] getOutputAsArray () {
-    return outputCharacters;
+    return outputArray;
   }
 
   public final String getOutputAsString () {
-    return new String(getOutputAsArray());
+    synchronized (this) {
+      if (outputString == null) {
+        outputString = new String(outputArray);
+      }
+    }
+
+    return outputString;
+  }
+
+  public final CharSequence getOutputWithSpans () {
+    synchronized (this) {
+      if (outputWithSpans == null) {
+        CharSequence input = consumedInput;
+
+        if (input instanceof Spanned) {
+          Spanned spanned = (Spanned)input;
+          Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
+
+          if (spans != null) {
+            if (spans.length > 0) {
+              SpannableStringBuilder sb = new SpannableStringBuilder(getOutputAsString());
+
+              for (Object span : spans) {
+                int start = getOutputOffset(spanned.getSpanStart(span));
+                int end = getOutputOffset(spanned.getSpanEnd(span));
+                int flags = spanned.getSpanFlags(span);
+                sb.setSpan(span, start, end, flags);
+              }
+
+              outputWithSpans = sb.subSequence(0, sb.length());
+            }
+          }
+        }
+
+        if (outputWithSpans == null) {
+          outputWithSpans = getOutputAsString();
+        }
+      }
+    }
+
+    return outputWithSpans;
   }
 
   public final int getOutputOffset (int inputOffset) {
-    if (inputOffset == consumedInput.length()) return outputCharacters.length;
+    if (inputOffset == consumedInput.length()) return outputArray.length;
     return outputOffsets[inputOffset];
-  }
-
-  public final int getInputOffset (int outputOffset) {
-    if (outputOffset == outputCharacters.length) return consumedInput.length();
-    return inputOffsets[outputOffset];
   }
 
   public final Integer getOutputCursor () {
@@ -97,7 +143,7 @@ public class Translation {
     }
 
     consumedInput = input;
-    outputCharacters = output;
+    outputArray = output;
     outputOffsets = outOffsets;
     inputOffsets = inOffsets;
     outputCursor = (newCursorOffset < 0)? null: Integer.valueOf(newCursorOffset);

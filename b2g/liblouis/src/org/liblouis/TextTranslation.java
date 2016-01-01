@@ -5,12 +5,16 @@ public class TextTranslation extends Translation {
     return getSuppliedInput();
   }
 
-  public final Integer getBrailleCursor () {
-    return getInputCursor();
-  }
-
   public final CharSequence getConsumedBraille () {
     return getConsumedInput();
+  }
+
+  public final int getBrailleOffset (int textOffset) {
+    return getInputOffset(textOffset);
+  }
+
+  public final Integer getBrailleCursor () {
+    return getInputCursor();
   }
 
   public final char[] getTextAsArray () {
@@ -21,12 +25,12 @@ public class TextTranslation extends Translation {
     return getOutputAsString();
   }
 
-  public final int getTextOffset (int brailleOffset) {
-    return getOutputOffset(brailleOffset);
+  public final CharSequence getTextWithSpans () {
+    return getOutputWithSpans();
   }
 
-  public final int getBrailleOffset (int textOffset) {
-    return getInputOffset(textOffset);
+  public final int getTextOffset (int brailleOffset) {
+    return getOutputOffset(brailleOffset);
   }
 
   public final Integer getTextCursor () {
