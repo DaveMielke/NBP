@@ -66,6 +66,7 @@ public class Translation {
 
   public final CharSequence getOutputWithSpans () {
     synchronized (this) {
+    MAKE_SPANS:
       if (outputWithSpans == null) {
         CharSequence input = consumedInput;
 
@@ -85,13 +86,12 @@ public class Translation {
               }
 
               outputWithSpans = sb.subSequence(0, sb.length());
+              break MAKE_SPANS;
             }
           }
         }
 
-        if (outputWithSpans == null) {
-          outputWithSpans = getOutputAsString();
-        }
+        outputWithSpans = getOutputAsString();
       }
     }
 
