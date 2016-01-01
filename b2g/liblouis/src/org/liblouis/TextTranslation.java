@@ -9,6 +9,10 @@ public class TextTranslation extends Translation {
     return getConsumedInput();
   }
 
+  public final int getBrailleLength () {
+    return getInputLength();
+  }
+
   public final int getBrailleOffset (int textOffset) {
     return getInputOffset(textOffset);
   }
@@ -27,6 +31,10 @@ public class TextTranslation extends Translation {
 
   public final CharSequence getTextWithSpans () {
     return getOutputWithSpans();
+  }
+
+  public final int getTextLength () {
+    return getOutputLength();
   }
 
   public final int getTextOffset (int brailleOffset) {

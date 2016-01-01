@@ -31,7 +31,7 @@ JAVA_METHOD(
   jint *cursorOffset = &cResultValues[2];
 
   if (*cursorOffset < 0) cursorOffset = NULL;
-  int translationMode = backTranslate? 0: (dotsIO | ucBrl);
+  int translationMode = backTranslate? (0): (dotsIO | ucBrl);
 
   unsigned char *typeForm = NULL;
   char *spacing = NULL;

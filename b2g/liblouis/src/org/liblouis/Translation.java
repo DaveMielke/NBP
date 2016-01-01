@@ -41,8 +41,12 @@ public class Translation {
     return consumedInput;
   }
 
+  public final int getInputLength () {
+    return consumedInput.length();
+  }
+
   public final int getInputOffset (int outputOffset) {
-    if (outputOffset == outputArray.length) return consumedInput.length();
+    if (outputOffset == getOutputLength()) return getInputLength();
     return inputOffsets[outputOffset];
   }
 
@@ -64,42 +68,42 @@ public class Translation {
     return outputString;
   }
 
+  private final void copyInputSpans (SpannableStringBuilder sb) {
+    CharSequence input = consumedInput;
+
+    if (input instanceof Spanned) {
+      Spanned spanned = (Spanned)input;
+      Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
+
+      if (spans != null) {
+        for (Object span : spans) {
+          int start = getOutputOffset(spanned.getSpanStart(span));
+          int end = getOutputOffset(spanned.getSpanEnd(span));
+          int flags = spanned.getSpanFlags(span);
+          sb.setSpan(span, start, end, flags);
+        }
+      }
+    }
+  }
+
   public final CharSequence getOutputWithSpans () {
     synchronized (this) {
-    MAKE_SPANS:
       if (outputWithSpans == null) {
-        CharSequence input = consumedInput;
-
-        if (input instanceof Spanned) {
-          Spanned spanned = (Spanned)input;
-          Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
-
-          if (spans != null) {
-            if (spans.length > 0) {
-              SpannableStringBuilder sb = new SpannableStringBuilder(getOutputAsString());
-
-              for (Object span : spans) {
-                int start = getOutputOffset(spanned.getSpanStart(span));
-                int end = getOutputOffset(spanned.getSpanEnd(span));
-                int flags = spanned.getSpanFlags(span);
-                sb.setSpan(span, start, end, flags);
-              }
-
-              outputWithSpans = sb.subSequence(0, sb.length());
-              break MAKE_SPANS;
-            }
-          }
-        }
-
-        outputWithSpans = getOutputAsString();
+        SpannableStringBuilder sb = new SpannableStringBuilder(getOutputAsString());
+        copyInputSpans(sb);
+        outputWithSpans = sb.subSequence(0, sb.length());
       }
     }
 
     return outputWithSpans;
   }
 
+  public final int getOutputLength () {
+    return outputArray.length;
+  }
+
   public final int getOutputOffset (int inputOffset) {
-    if (inputOffset == consumedInput.length()) return outputArray.length;
+    if (inputOffset == getInputLength()) return getOutputLength();
     return outputOffsets[inputOffset];
   }
 
