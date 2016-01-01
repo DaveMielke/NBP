@@ -32,7 +32,6 @@ public final class Louis {
 
   private static Context currentContext = null;
   private static File dataDirectory = null;
-  private static File tablesDirectory = null;
 
   private static SharedPreferences getSharedPreferences () {
     return PreferenceManager.getDefaultSharedPreferences(currentContext);
@@ -131,9 +130,7 @@ public final class Louis {
 
   public static void begin (Context context) {
     currentContext = context;
-
     dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
-    tablesDirectory = new File(dataDirectory, TranslationTable.SUBDIRECTORY);
 
     setDataPath(dataDirectory.getAbsolutePath());
     updatePackageData();
@@ -146,6 +143,10 @@ public final class Louis {
 
   public static void setLogLevel (LogLevel level) {
     setLogLevel(level.getCharacter());
+  }
+
+  public static File getDataDirectory () {
+    return dataDirectory;
   }
 
   private Louis () {
