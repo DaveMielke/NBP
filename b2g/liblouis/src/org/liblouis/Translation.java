@@ -16,7 +16,7 @@ public class Translation {
     boolean backTranslate
   );
 
-  private final String tableName;
+  private final TranslationTable translationTable;
 
   private final CharSequence suppliedInput;
   private final CharSequence consumedInput;
@@ -29,8 +29,8 @@ public class Translation {
   private final int[] outputOffsets;
   private final Integer outputCursor;
 
-  public final String getTableName () {
-    return tableName;
+  public final TranslationTable getTranslationTable () {
+    return translationTable;
   }
 
   public final CharSequence getSuppliedInput () {
@@ -112,12 +112,13 @@ public class Translation {
   }
 
   public Translation (
-    String table, CharSequence input, int outputLength,
-    int cursorOffset, boolean backTranslate
+    TranslationTable table, CharSequence input,
+    int outputLength, int cursorOffset,
+    boolean backTranslate
   ) {
     int inputLength = input.length();
 
-    tableName = table;
+    translationTable = table;
     suppliedInput = input;
     inputCursor = (cursorOffset < 0)? null: Integer.valueOf(cursorOffset);
 
@@ -126,7 +127,7 @@ public class Translation {
     int[] inOffsets = new int[outputLength];
     int[] resultValues = new int[] {inputLength, outputLength, cursorOffset};
 
-    if (!translate(tableName, input.toString(), output,
+    if (!translate(table.getFileName(), input.toString(), output,
                    outOffsets, inOffsets, resultValues, backTranslate)) {
       Log.w(LOG_TAG, "translation failed");
     //throw new TranslationFailedException(input);

@@ -117,8 +117,20 @@ public enum TranslationTable {
 
   private final String tableDescription;
 
+  private String fileName = null;
+
   public final String getDescription () {
     return tableDescription;
+  }
+
+  public final String getFileName () {
+    synchronized (this) {
+      if (fileName == null) {
+        fileName = name().replace('_', '-').toLowerCase() + EXTENSION;
+      }
+    }
+
+    return fileName;
   }
 
   TranslationTable (String description) {

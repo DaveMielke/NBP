@@ -45,7 +45,10 @@ public class BrailleTranslation extends Translation {
     return getOutputCursor();
   }
 
-  public BrailleTranslation (String table, CharSequence text, int brailleLength, int cursorOffset) {
+  public BrailleTranslation (
+    TranslationTable table, CharSequence text,
+    int brailleLength, int cursorOffset
+  ) {
     super(table, text, brailleLength, cursorOffset, false);
   }
 }

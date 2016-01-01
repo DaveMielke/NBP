@@ -19,7 +19,7 @@ public class Tests {
     }
   }
 
-  public static void test (String table, CharSequence input) {
+  public static void test (TranslationTable table, CharSequence input) {
     BrailleTranslation trnb = new BrailleTranslation(table, input, 20, -1);
     CharSequence strb = trnb.getBrailleWithSpans();
     TextTranslation trnt = new TextTranslation(table, strb, 80, -1);
