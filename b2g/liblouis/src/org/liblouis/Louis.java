@@ -17,9 +17,6 @@ public final class Louis {
   private final static String LOG_TAG = Louis.class.getName();
   private final static String LIBRARY_NAME = "louis";
 
-  public final static String TABLES_SUBDIRECTORY = "tables";
-  public final static String TABLE_EXTENSION = ".ctb";
-
   private static native String getVersion ();
   private static native void setDataPath (String path);
   private static native void setLogLevel (char character);
@@ -136,7 +133,7 @@ public final class Louis {
     currentContext = context;
 
     dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
-    tablesDirectory = new File(dataDirectory, TABLES_SUBDIRECTORY);
+    tablesDirectory = new File(dataDirectory, TranslationTable.SUBDIRECTORY);
 
     setDataPath(dataDirectory.getAbsolutePath());
     updatePackageData();
