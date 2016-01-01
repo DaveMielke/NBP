@@ -13,8 +13,12 @@ public class TextTranslation extends Translation {
     return getConsumedInput();
   }
 
-  public final char[] getTextCharacters () {
-    return getOutputCharacters();
+  public final char[] getTextAsArray () {
+    return getOutputAsArray();
+  }
+
+  public final String getTextAsString () {
+    return getOutputAsString();
   }
 
   public final int getTextOffset (int brailleOffset) {

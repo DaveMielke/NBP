@@ -39,15 +39,21 @@ public class Translation {
     return consumedInput;
   }
 
-  public final char[] getOutputCharacters () {
+  public final char[] getOutputAsArray () {
     return outputCharacters;
   }
 
+  public final String getOutputAsString () {
+    return new String(getOutputAsArray());
+  }
+
   public final int getOutputOffset (int inputOffset) {
+    if (inputOffset == consumedInput.length()) return outputCharacters.length;
     return outputOffsets[inputOffset];
   }
 
   public final int getInputOffset (int outputOffset) {
+    if (outputOffset == outputCharacters.length) return consumedInput.length();
     return inputOffsets[outputOffset];
   }
 
@@ -72,6 +78,7 @@ public class Translation {
 
     if (!translate(tableName, input.toString(), output,
                    outOffsets, inOffsets, resultValues, backTranslate)) {
+      Log.w(LOG_TAG, "translation failed");
     //throw new TranslationFailedException(input);
     }
 
