@@ -29,7 +29,9 @@ JAVA_METHOD(
   jint *inputLength  = &cResultValues[0];
   jint *outputLength = &cResultValues[1];
   jint *cursorOffset = &cResultValues[2];
+
   if (*cursorOffset < 0) cursorOffset = NULL;
+  int translationMode = backTranslate? 0: (dotsIO | ucBrl);
 
   unsigned char *typeForm = NULL;
   char *spacing = NULL;
@@ -38,7 +40,7 @@ JAVA_METHOD(
     ((backTranslate != JNI_FALSE)? lou_backTranslate: lou_translate)(
       cTableName, cInputBuffer, inputLength, cOutputBuffer, outputLength,
       typeForm, spacing, cOutputOffsets, cInputOffsets, cursorOffset,
-      (dotsIO | ucBrl)
+      translationMode
     );
 
   (*env)->ReleaseStringUTFChars(env, jTableName, cTableName);
