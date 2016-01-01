@@ -13,7 +13,20 @@ list:
 	-keystore "$(STORE_FILE)" \
 	-storepass "$(STORE_PASSWORD)"
 
-DISTINGUISHED_NAME = CN=$(COMMON_NAME), OU=$(ORGANIZATION_UNIT), O=$(ORGANIZATION_NAME), L=$(ORGANIZATION_CITY), ST=$(ORGANIZATION_STATE), C=$(ORGANIZATION_COUNTRY)
+COMMA = ,
+dnMake = $(shell expr "$(strip $(1))" : '\(.*\),$$')
+dnComponent = $(and $(2),$(1)=$(subst $(COMMA),\\$(COMMA),$(2))$(COMMA))
+DISTINGUISHED_NAME := $(call dnMake, \
+   $(call dnComponent,CN,$(COMMON_NAME)) \
+   $(call dnComponent,OU,$(ORGANIZATION_UNIT)) \
+   $(call dnComponent,O,$(ORGANIZATION_NAME)) \
+   $(call dnComponent,L,$(ORGANIZATION_CITY)) \
+   $(call dnComponent,ST,$(ORGANIZATION_STATE)) \
+   $(call dnComponent,C,$(ORGANIZATION_COUNTRY)) \
+)
+
+show-dn:
+	@echo $(DISTINGUISHED_NAME)
 
 key:
 	keytool -genkey -v \
