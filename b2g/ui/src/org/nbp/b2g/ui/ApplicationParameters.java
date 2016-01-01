@@ -79,7 +79,7 @@ public abstract class ApplicationParameters {
 
   public final static long MAINTENANCE_REBOOT_DELAY = 1000; // milliseconds
 
-  public final static org.liblouis.LogLevel LIBLOUIS_LOG_LEVEL = org.liblouis.LogLevel.DEBUG;
+  public final static org.liblouis.LogLevel LIBLOUIS_LOG_LEVEL = org.liblouis.LogLevel.INFO;
 
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
 
