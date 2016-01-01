@@ -43,7 +43,9 @@ public abstract class ApplicationContext {
       applicationContext = context.getApplicationContext();
     }
 
+    Louis.setLogLevel(ApplicationParameters.LIBLOUIS_LOG_LEVEL);
     Louis.begin(context);
+
     HostMonitor.monitorEvents(context);
     Clipboard.setClipboard(context);
 
