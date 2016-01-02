@@ -145,6 +145,10 @@ public final class Louis {
     setLogLevel(level.getCharacter());
   }
 
+  public static Context getContext () {
+    return currentContext;
+  }
+
   public static File getDataDirectory () {
     return dataDirectory;
   }
