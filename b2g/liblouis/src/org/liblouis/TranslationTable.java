@@ -1,6 +1,7 @@
 package org.liblouis;
 
 import java.io.File;
+import java.io.FileFilter;
 
 public enum TranslationTable {
   AFR_ZA_G1(
@@ -150,7 +151,7 @@ public enum TranslationTable {
 
   EN_US_COMPBRL(
     "en-us-compbrl",
-    ""
+    "English, US (computer braille)"
   ),
 
   EN_US_G1(
@@ -440,7 +441,7 @@ public enum TranslationTable {
 
   RU_COMPBRL(
     "ru-compbrl",
-    ""
+    "Russian (computer braille)"
   ),
 
   RU(
@@ -553,8 +554,28 @@ public enum TranslationTable {
   public final static String SUBDIRECTORY = "liblouis/tables";
   public final static String EXTENSION = ".ctb";
 
+  private final static Object STATIC_LOCK = new Object();
+  private static File tablesDirectory = null;
+
   public static File getDirectory () {
-    return new File(Louis.getDataDirectory(), SUBDIRECTORY);
+    synchronized (STATIC_LOCK) {
+      if (tablesDirectory == null) {
+        tablesDirectory = new File(Louis.getDataDirectory(), SUBDIRECTORY);
+      }
+    }
+
+    return tablesDirectory;
+  }
+
+  public static File[] getFiles () {
+    return getDirectory().listFiles(
+      new FileFilter() {
+        @Override
+        public boolean accept (File file) {
+          return file.getName().endsWith(EXTENSION);
+        }
+      }
+    );
   }
 
   private final String tableName;

@@ -1,5 +1,9 @@
 package org.liblouis;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.HashSet;
+
 import java.io.File;
 
 import android.util.Log;
@@ -7,33 +11,48 @@ import android.util.Log;
 public class Tests {
   private final static String LOG_TAG = Tests.class.getName();
 
-  private static void logOffsets (Translation trn) {
-    int length;
+  private static void logOutputOffsets (Translation translation) {
+    int length = translation.getInputLength();
 
-    length = trn.getInputLength();
     for (int offset=0; offset<=length; offset+=1) {
-      Log.d(LOG_TAG, String.format("in to out: %d -> %d", offset, trn.getOutputOffset(offset)));
-    }
-
-    length = trn.getOutputLength();
-    for (int offset=0; offset<=length; offset+=1) {
-      Log.d(LOG_TAG, String.format("out to in: %d -> %d", offset, trn.getInputOffset(offset)));
+      Log.d(LOG_TAG, String.format("in to out: %d -> %d", offset, translation.getOutputOffset(offset)));
     }
   }
 
-  public static void testTextTranslation (TranslationTable table, CharSequence input) {
-    BrailleTranslation trnb = new BrailleTranslation(table, input, 20, -1);
-    CharSequence strb = trnb.getBrailleWithSpans();
-    TextTranslation trnt = new TextTranslation(table, strb, 80, -1);
-    CharSequence strt = trnt.getTextWithSpans();
-    Log.d(LOG_TAG, "braille translation: " + strb);
-    logOffsets(trnb);
-    Log.d(LOG_TAG, "text translation: " + strt);
-    logOffsets(trnt);
+  private static void logInputOffsets (Translation translation) {
+    int length = translation.getOutputLength();
+
+    for (int offset=0; offset<=length; offset+=1) {
+      Log.d(LOG_TAG, String.format("out to in: %d -> %d", offset, translation.getInputOffset(offset)));
+    }
   }
 
-  public static void testTableDefinitions () {
-    Log.d(LOG_TAG, "begin translation table definition test");
+  private static void logOffsets (Translation translation) {
+    logOutputOffsets(translation);
+    logInputOffsets(translation);
+  }
+
+  public static void translateText (TranslationTable table, CharSequence text) {
+    Log.d(LOG_TAG, ("begin text translation: " + text));
+
+    BrailleTranslation brl = new BrailleTranslation(table, text, 20, -1);
+    CharSequence braille = brl.getBrailleWithSpans();
+    Log.d(LOG_TAG, ("braille translation: " + braille));
+    logOffsets(brl);
+
+    TextTranslation txt = new TextTranslation(table, braille, 80, -1);
+    CharSequence back = txt.getTextWithSpans();
+    Log.d(LOG_TAG, ("text back-translation: " + back));
+    logOffsets(txt);
+
+    Log.d(LOG_TAG, "end text translation");
+  }
+
+  public static void auditTranslationTableEnumeration () {
+    Log.d(LOG_TAG, "begin translation table enumeration audit");
+
+    Set<File> undefinedTables = new HashSet<File>();
+    Collections.addAll(undefinedTables, TranslationTable.getFiles());
 
     for (TranslationTable table : TranslationTable.values()) {
       String symbol = table.name();
@@ -51,8 +70,14 @@ public class Tests {
       if (!file.exists()) {
         Log.d(LOG_TAG, "table not found: " + file.getAbsolutePath());
       }
+
+      undefinedTables.remove(file);
     }
 
-    Log.d(LOG_TAG, "end translation table definition test");
+    for (File file : undefinedTables) {
+      Log.d(LOG_TAG, "table not defned: " + file.getAbsolutePath());
+    }
+
+    Log.d(LOG_TAG, "end translation table enumeration audit");
   }
 }
