@@ -55,8 +55,27 @@ public final class Louis {
     setLogLevel(level.getCharacter());
   }
 
+  private final static Object INITIALIZATION_LOCK = new Object();
   private static Context currentContext = null;
   private static File dataDirectory = null;
+
+  private static void requireInitialization () {
+    synchronized (INITIALIZATION_LOCK) {
+      if (currentContext == null) {
+        throw new IllegalStateException("not initialized yet");
+      }
+    }
+  }
+
+  public static Context getContext () {
+    requireInitialization();
+    return currentContext;
+  }
+
+  public static File getDataDirectory () {
+    requireInitialization();
+    return dataDirectory;
+  }
 
   private static SharedPreferences getSharedPreferences () {
     return PreferenceManager.getDefaultSharedPreferences(currentContext);
@@ -153,25 +172,33 @@ public final class Louis {
     }
   }
 
-  public static void begin (Context context) {
-    currentContext = context;
-    dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
+  public static void initialize (Context context) {
+    synchronized (INITIALIZATION_LOCK) {
+      if (currentContext != null) {
+        throw new IllegalStateException("already initialized");
+      }
 
-    setDataPath(dataDirectory.getAbsolutePath());
+      currentContext = context;
+      dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
+
+      setDataPath(dataDirectory.getAbsolutePath());
+    }
+
     updatePackageData();
   }
 
-  public static void end () {
-    currentContext = null;
-    dataDirectory = null;
+  public static BrailleTranslation getBrailleTranslation (
+    TranslationTable table, CharSequence text,
+    int brailleLength, int cursorOffset
+  ) {
+    return new BrailleTranslation(table, text, brailleLength, cursorOffset);
   }
 
-  public static Context getContext () {
-    return currentContext;
-  }
-
-  public static File getDataDirectory () {
-    return dataDirectory;
+  public static TextTranslation getTextTranslation (
+    TranslationTable table, CharSequence braille,
+    int textLength, int cursorOffset
+  ) {
+    return new TextTranslation(table, braille, textLength, cursorOffset);
   }
 
   private Louis () {

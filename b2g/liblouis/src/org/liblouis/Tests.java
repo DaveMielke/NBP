@@ -35,12 +35,12 @@ public class Tests {
   public static void translateText (TranslationTable table, CharSequence text) {
     Log.d(LOG_TAG, ("begin text translation: " + text));
 
-    BrailleTranslation brl = new BrailleTranslation(table, text, 20, -1);
+    BrailleTranslation brl = Louis.getBrailleTranslation(table, text, 20, -1);
     CharSequence braille = brl.getBrailleWithSpans();
     Log.d(LOG_TAG, ("braille translation: " + braille));
     logOffsets(brl);
 
-    TextTranslation txt = new TextTranslation(table, braille, 80, -1);
+    TextTranslation txt = Louis.getTextTranslation(table, braille, 80, -1);
     CharSequence back = txt.getTextWithSpans();
     Log.d(LOG_TAG, ("text back-translation: " + back));
     logOffsets(txt);
