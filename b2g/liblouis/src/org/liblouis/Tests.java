@@ -51,8 +51,8 @@ public class Tests {
   public static void auditTranslationTableEnumeration () {
     Log.d(LOG_TAG, "begin translation table enumeration audit");
 
-    Set<File> undefinedTables = new HashSet<File>();
-    Collections.addAll(undefinedTables, TranslationTable.getFiles());
+    Set<File> unenumeratedTables = new HashSet<File>();
+    Collections.addAll(unenumeratedTables, TranslationTable.getFiles());
 
     for (TranslationTable table : TranslationTable.values()) {
       String symbol = table.name();
@@ -60,22 +60,22 @@ public class Tests {
       File file = table.getFile();
 
       if (!symbol.equals(symbol.toUpperCase())) {
-        Log.d(LOG_TAG, "table name not all uppercase: " + symbol);
+        Log.d(LOG_TAG, "table enumeration not all uppercase: " + symbol);
       }
 
       if (!symbol.equals(name.toUpperCase().replace('-', '_'))) {
-        Log.d(LOG_TAG, "table name doesn't match file name: " + name);
+        Log.d(LOG_TAG, "table enumeration doesn't match file name: " + name);
       }
 
       if (!file.exists()) {
-        Log.d(LOG_TAG, "table not found: " + file.getAbsolutePath());
+        Log.d(LOG_TAG, "table file not found: " + file.getAbsolutePath());
       }
 
-      undefinedTables.remove(file);
+      unenumeratedTables.remove(file);
     }
 
-    for (File file : undefinedTables) {
-      Log.d(LOG_TAG, "table not defned: " + file.getAbsolutePath());
+    for (File file : unenumeratedTables) {
+      Log.d(LOG_TAG, "table file not enumerated: " + file.getAbsolutePath());
     }
 
     Log.d(LOG_TAG, "end translation table enumeration audit");
