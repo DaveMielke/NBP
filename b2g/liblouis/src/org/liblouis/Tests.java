@@ -55,16 +55,16 @@ public class Tests {
     Collections.addAll(unenumeratedTables, TranslationTable.getFiles());
 
     for (TranslationTable table : TranslationTable.values()) {
-      String symbol = table.name();
+      String identifier = table.name();
       String name = table.getName();
       File file = table.getFile();
 
-      if (!symbol.equals(symbol.toUpperCase())) {
-        Log.d(LOG_TAG, "table enumeration not all uppercase: " + symbol);
+      if (!identifier.equals(identifier.toUpperCase())) {
+        Log.d(LOG_TAG, "table identifier not all uppercase: " + identifier);
       }
 
-      if (!symbol.equals(name.toUpperCase().replace('-', '_'))) {
-        Log.d(LOG_TAG, "table enumeration doesn't match file name: " + name);
+      if (!identifier.equals(name.toUpperCase().replace('-', '_'))) {
+        Log.d(LOG_TAG, "table identifier doesn't match file name: " + name);
       }
 
       if (!file.exists()) {
