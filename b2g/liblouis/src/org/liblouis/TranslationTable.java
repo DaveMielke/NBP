@@ -551,6 +551,22 @@ public enum TranslationTable {
 
   ; // end of enumeration
 
+  private final String tableName;
+  private final String tableDescription;
+
+  TranslationTable (String name, String description) {
+    tableName = name;
+    tableDescription = description;
+  }
+
+  public final String getName () {
+    return tableName;
+  }
+
+  public final String getDescription () {
+    return tableDescription;
+  }
+
   public final static String SUBDIRECTORY = "liblouis/tables";
   public final static String EXTENSION = ".ctb";
 
@@ -578,23 +594,15 @@ public enum TranslationTable {
     );
   }
 
-  private final String tableName;
-  private final String tableDescription;
-
-  public final String getName () {
-    return tableName;
-  }
-
-  public final String getDescription () {
-    return tableDescription;
-  }
+  private File tableFile = null;
 
   public final File getFile () {
-    return new File(getDirectory(), (getName() + EXTENSION));
-  }
+    synchronized (this) {
+      if (tableFile == null) {
+        tableFile = new File(getDirectory(), (getName() + EXTENSION));
+      }
+    }
 
-  TranslationTable (String name, String description) {
-    tableName = name;
-    tableDescription = description;
+    return tableFile;
   }
 }
