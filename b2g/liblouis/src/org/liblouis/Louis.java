@@ -18,8 +18,8 @@ public final class Louis {
   private final static String LIBRARY_NAME = "louis";
 
   private static native String getVersion ();
-  private static native void setDataPath (String path);
   private static native void setLogLevel (char character);
+  private static native void setDataPath (String path);
 
   private final static String version;
 
@@ -28,6 +28,31 @@ public final class Louis {
 
     version = getVersion();
     Log.i(LOG_TAG, "liblouis version: " + version);
+  }
+
+  public enum LogLevel {
+    ALL  ('A'),
+    DEBUG('D'),
+    INFO ('I'),
+    WARN ('W'),
+    ERROR('E'),
+    FATAL('F'),
+    OFF  ('O'),
+    ; // end of enumeration
+
+    private final char character;
+
+    LogLevel (char character) {
+      this.character = character;
+    }
+
+    public final char getCharacter () {
+      return character;
+    }
+  }
+
+  public static void setLogLevel (LogLevel level) {
+    setLogLevel(level.getCharacter());
   }
 
   private static Context currentContext = null;
@@ -139,10 +164,6 @@ public final class Louis {
   public static void end () {
     currentContext = null;
     dataDirectory = null;
-  }
-
-  public static void setLogLevel (LogLevel level) {
-    setLogLevel(level.getCharacter());
   }
 
   public static Context getContext () {

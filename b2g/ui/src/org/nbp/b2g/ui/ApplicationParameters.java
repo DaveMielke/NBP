@@ -2,6 +2,8 @@ package org.nbp.b2g.ui;
 
 import android.os.Build;
 
+import org.liblouis.Louis;
+
 public abstract class ApplicationParameters {
   public final static InputMode DEFAULT_INPUT_MODE = InputMode.TEXT;
   public final static boolean DEFAULT_LONG_PRESS = true;
@@ -79,7 +81,7 @@ public abstract class ApplicationParameters {
 
   public final static long MAINTENANCE_REBOOT_DELAY = 1000; // milliseconds
 
-  public final static org.liblouis.LogLevel LIBLOUIS_LOG_LEVEL = org.liblouis.LogLevel.INFO;
+  public final static Louis.LogLevel LIBLOUIS_LOG_LEVEL = Louis.LogLevel.INFO;
 
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
 

@@ -60,17 +60,6 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_liblouis_Louis, setDataPath, void,
-  jstring jPath
-) {
-  jboolean isCopy;
-  const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
-  LOG(DEBUG, "setting data path: %s", cPath);
-  lou_setDataPath(cPath);
-  (*env)->ReleaseStringUTFChars(env, jPath, cPath);
-}
-
-JAVA_METHOD(
   org_liblouis_Louis, setLogLevel, void,
   jchar character
 ) {
@@ -92,6 +81,17 @@ JAVA_METHOD(
 
   LOG(DEBUG, "setting log level: %c -> %d", character, level);
   lou_setLogLevel(level);
+}
+
+JAVA_METHOD(
+  org_liblouis_Louis, setDataPath, void,
+  jstring jPath
+) {
+  jboolean isCopy;
+  const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
+  LOG(DEBUG, "setting data path: %s", cPath);
+  lou_setDataPath(cPath);
+  (*env)->ReleaseStringUTFChars(env, jPath, cPath);
 }
 
 static int
