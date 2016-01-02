@@ -122,15 +122,28 @@ public class Translation {
     suppliedInput = input;
     inputCursor = (cursorOffset < 0)? null: Integer.valueOf(cursorOffset);
 
+    String inputString = input.toString();
     char[] output = new char[outputLength];
     int[] outOffsets = new int[inputLength];
     int[] inOffsets = new int[outputLength];
     int[] resultValues = new int[] {inputLength, outputLength, cursorOffset};
 
-    if (!translate(table.getFileName(), input.toString(), output,
+    if (!translate(table.getName(), inputString, output,
                    outOffsets, inOffsets, resultValues, backTranslate)) {
       Log.w(LOG_TAG, "translation failed");
-    //throw new TranslationFailedException(input);
+
+      if (resultValues[0] > resultValues[1]) {
+        resultValues[0] = resultValues[1];
+      } else if (resultValues[1] > resultValues[0]) {
+        resultValues[1] = resultValues[0];
+      }
+
+      for (int offset=0; offset<resultValues[0]; offset+=1) {
+        inOffsets[offset] = outOffsets[offset] = offset;
+      }
+
+      inputString.getChars(0, inputString.length(), output, 0);
+      if (resultValues[2] >= resultValues[0]) resultValues[2] = -1;
     }
 
     int newInputLength  = resultValues[0];
