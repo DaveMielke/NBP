@@ -17,11 +17,12 @@ public final class Louis {
   private final static String LOG_TAG = Louis.class.getName();
   private final static String LIBRARY_NAME = "louis";
 
+  public static Object NATIVE_LOCK = new Object();
   public static native void releaseMemory ();
   public static native String getVersion ();
   public static native String getDataPath ();
   public static native void setDataPath (String path);
-  public static native boolean compileTranslationTable (String table);
+  private static native boolean compileTranslationTable (String table);
   private static native void setLogLevel (char character);
 
   private final static String version;
@@ -84,30 +85,32 @@ public final class Louis {
     return PreferenceManager.getDefaultSharedPreferences(currentContext);
   }
 
-  private static void removeFile (File file, boolean yes) {
+  private static void removeFile (File file) {
     if (file.isDirectory()) {
       file.setWritable(true, true);
 
       for (String name : file.list()) {
-        removeFile(new File(file, name), true);
+        removeFile(new File(file, name));
       }
     }
 
-    if (yes) {
-      file.delete();
-    }
+    file.delete();
   }
 
   private static void extractAssets (AssetManager assets, String asset, File location) {
     try {
       String[] names = assets.list(asset);
       boolean isDirectory = names.length > 0;
+      String path = location.getAbsolutePath();
 
       if (isDirectory) {
         if (!location.exists()) {
-          location.mkdir();
+          if (!location.mkdir()) {
+            Log.w(LOG_TAG, "directory not created: " + path);
+            return;
+          }
         } else if (!location.isDirectory()) {
-          Log.w(LOG_TAG, "not a directory: " + location.getPath());
+          Log.w(LOG_TAG, "not a directory: " + path);
           return;
         }
 
@@ -137,10 +140,28 @@ public final class Louis {
 
   private static void extractAssets () {
     AssetManager assets = currentContext.getAssets();
-    File location = dataDirectory;
 
-    removeFile(location, false);
-    extractAssets(assets, "liblouis", location);
+    String name = "liblouis";
+    String oldName = name + ".old";
+    String newName = name + ".new";
+
+    File location = new File(dataDirectory, name);
+    File oldLocation = new File(dataDirectory, oldName);
+    File newLocation = new File(dataDirectory, newName);
+
+    removeFile(oldLocation);
+    removeFile(newLocation);
+    extractAssets(assets, name, newLocation);
+
+    synchronized (NATIVE_LOCK) {
+      location.renameTo(oldLocation);
+      newLocation.renameTo(location);
+
+      Log.d(LOG_TAG, "assets updated");
+      releaseMemory();
+    }
+
+    removeFile(oldLocation);
   }
 
   private static void updatePackageData () {
@@ -190,8 +211,14 @@ public final class Louis {
     updatePackageData();
   }
 
+  public final static boolean compileTranslationTable (File table) {
+    synchronized (NATIVE_LOCK) {
+      return compileTranslationTable(table.getAbsolutePath());
+    }
+  }
+
   public final static boolean compileTranslationTable (TranslationTable table) {
-    return compileTranslationTable(table.getFileName());
+    return compileTranslationTable(table.getFile());
   }
 
   public static BrailleTranslation getBrailleTranslation (

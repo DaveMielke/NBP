@@ -17,6 +17,7 @@ public class Translation {
   );
 
   private final TranslationTable translationTable;
+  private final boolean translationSucceeded;
 
   private final CharSequence suppliedInput;
   private final CharSequence consumedInput;
@@ -128,8 +129,14 @@ public class Translation {
     int[] inOffsets = new int[outputLength];
     int[] resultValues = new int[] {inputLength, outputLength, cursorOffset};
 
-    if (!translate(table.getFileName(), inputString, output,
-                   outOffsets, inOffsets, resultValues, backTranslate)) {
+    synchronized (Louis.NATIVE_LOCK) {
+      translationSucceeded = translate(
+        table.getFileName(), inputString, output,
+        outOffsets, inOffsets, resultValues, backTranslate
+      );
+    }
+
+    if (!translationSucceeded) {
       Log.w(LOG_TAG, "translation failed");
 
       if (resultValues[0] > resultValues[1]) {
