@@ -467,7 +467,7 @@ public enum TranslationTable {
   public static File getDirectory () {
     synchronized (STATIC_LOCK) {
       if (tablesDirectory == null) {
-        tablesDirectory = new File(Louis.getDataDirectory(), SUBDIRECTORY);
+        tablesDirectory = new File(Louis.getDataPath(), SUBDIRECTORY);
       }
     }
 
@@ -487,10 +487,18 @@ public enum TranslationTable {
 
   private File tableFile = null;
 
+  public static String getFileName (String name) {
+    return name + EXTENSION;
+  }
+
+  public final String getFileName () {
+    return getFileName(getName());
+  }
+
   public final File getFile () {
     synchronized (this) {
       if (tableFile == null) {
-        tableFile = new File(getDirectory(), (getName() + EXTENSION));
+        tableFile = new File(getDirectory(), getFileName());
       }
     }
 

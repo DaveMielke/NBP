@@ -17,9 +17,12 @@ public final class Louis {
   private final static String LOG_TAG = Louis.class.getName();
   private final static String LIBRARY_NAME = "louis";
 
-  private static native String getVersion ();
+  public static native void releaseMemory ();
+  public static native String getVersion ();
+  public static native String getDataPath ();
+  public static native void setDataPath (String path);
+  public static native boolean compileTranslationTable (String table);
   private static native void setLogLevel (char character);
-  private static native void setDataPath (String path);
 
   private final static String version;
 
@@ -185,6 +188,10 @@ public final class Louis {
     }
 
     updatePackageData();
+  }
+
+  public final static boolean compileTranslationTable (TranslationTable table) {
+    return compileTranslationTable(table.getFileName());
   }
 
   public static BrailleTranslation getBrailleTranslation (

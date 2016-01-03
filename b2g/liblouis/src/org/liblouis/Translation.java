@@ -128,7 +128,7 @@ public class Translation {
     int[] inOffsets = new int[outputLength];
     int[] resultValues = new int[] {inputLength, outputLength, cursorOffset};
 
-    if (!translate(table.getName(), inputString, output,
+    if (!translate(table.getFileName(), inputString, output,
                    outOffsets, inOffsets, resultValues, backTranslate)) {
       Log.w(LOG_TAG, "translation failed");
 

@@ -33,7 +33,7 @@ public class Tests {
   }
 
   public static void translateText (TranslationTable table, CharSequence text) {
-    Log.d(LOG_TAG, ("begin text translation: " + text));
+    Log.d(LOG_TAG, ("begin text translation test: " + text));
 
     BrailleTranslation brl = Louis.getBrailleTranslation(table, text, 20, -1);
     CharSequence braille = brl.getBrailleWithSpans();
@@ -45,7 +45,7 @@ public class Tests {
     Log.d(LOG_TAG, ("text back-translation: " + back));
     logOffsets(txt);
 
-    Log.d(LOG_TAG, "end text translation");
+    Log.d(LOG_TAG, "end text translation test");
   }
 
   public static void auditTranslationTableEnumeration () {
