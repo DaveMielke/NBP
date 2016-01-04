@@ -13,17 +13,33 @@ public class Tests {
 
   private static void logOutputOffsets (Translation translation) {
     int length = translation.getInputLength();
+    CharSequence input = translation.getConsumedInput();
+    char[] output = translation.getOutputAsArray();
 
-    for (int offset=0; offset<=length; offset+=1) {
-      Log.d(LOG_TAG, String.format("in to out: %d -> %d", offset, translation.getOutputOffset(offset)));
+    for (int from=0; from<length; from+=1) {
+      int to = translation.getOutputOffset(from);
+
+      Log.d(LOG_TAG, String.format(
+        "in->out: %d->%d %c->%c",
+        from, to,
+        input.charAt(from), output[to]
+      ));
     }
   }
 
   private static void logInputOffsets (Translation translation) {
     int length = translation.getOutputLength();
+    CharSequence input = translation.getConsumedInput();
+    char[] output = translation.getOutputAsArray();
 
-    for (int offset=0; offset<=length; offset+=1) {
-      Log.d(LOG_TAG, String.format("out to in: %d -> %d", offset, translation.getInputOffset(offset)));
+    for (int from=0; from<length; from+=1) {
+      int to = translation.getInputOffset(from);
+
+      Log.d(LOG_TAG, String.format(
+        "out->in: %d->%d %c->%c",
+        from, to,
+        output[from], input.charAt(to)
+      ));
     }
   }
 
