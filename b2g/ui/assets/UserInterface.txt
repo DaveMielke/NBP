@@ -392,7 +392,7 @@ Disabling the Display
 
 The Settings Screen
 
-   Pressing Space+o (dots 135) takes you to the settings screen for the B2G User Interface.
+   Pressing Space+o (dots 135) takes you to the Settings screen for the B2G User Interface.
 
    The top line contains the following buttons:
 
@@ -405,6 +405,9 @@ The Settings Screen
    Reset to Defaults
           Restore the setting values to an internally-defined configuration. This is how to recover if, for example, you've accidentally messed up your saved settings.
 
+   System Maintenance
+          Go to The System Maintenance Screen.
+
    Each subsequent line contains a setting that can be changed, and is laid out in columns as follows:
     1. This column contains the name of the setting.
     2. If it's a boolean setting then this column contains an on/off switch. If it's any other kind of setting then this column shows that setting's current value.
@@ -413,7 +416,7 @@ The Settings Screen
 
 General Settings
 
-   The following settings (as of the time of this writing) are presented:
+   The following settings are presented:
 
    CAPTION: General Settings
 
@@ -448,6 +451,60 @@ Developer Settings
    Log Navigation Off     Off - On
    Log Gestures   Off     Off - On
    Log Braille    Off     Off - On
+
+The System Maintenance Screen
+
+   Pressing Space+Dots78+m (dots 134) takes you to the System Maintenance screen for the B2G User Interface.
+
+   A text area at the top of the screen is used to show progress information for the currently running (or most recently invoked) operation. This text area is initially empty. The list of available operations is below it.
+
+Maintenance Operations
+
+   The following operations may be performed:
+
+   Restart System
+          Reboot the B2G.
+
+   Verify Update
+          Verify a System Update without applying it. A File Picker will be invoked so that you can locate and select the needed file.
+
+   Update System
+          Apply a System Update. A File Picker will be invoked so that you can locate and select the needed file. The B2G will be temporarily rebooted into Recovery Mode.
+
+   Recovery Log
+          View the log of the most recent reboot of the B2G into Recovery Mode.
+
+   Recovery Mode
+          Reboot the B2G into Recovery Mode.
+
+   Clear Cache
+          Reinitialize the system cache partition. The B2G will be temporarily rebooted into Recovery Mode.
+
+   Factory Reset
+          Reinitialize the user data and system cache partitions. The B2G will be temporarily rebooted into Recovery Mode.
+
+   Boot Loader
+          Reboot the B2G into its Boot Loader.
+
+System Update
+
+   System updates are also known as OTA (over-the-air) updates. They're used to update either the whole Android system or just parts of it.
+
+   A system update is a .zip file that contain special meta-data (including an electronic signature).
+
+File Picker
+
+   Some of the maintenance operations require you to choose a file. Android refers to the type of application that enables you to choose a file as a file picker.
+
+   If you haven't used a file picker yet, or if you haven't yet chosen your favourite one, then you'll be presented with a list of the file pickers that are currently installed on the B2G, and be asked to select the one that the action should be completed with. Select the one you'd like to use (or just try) by clicking on it, and then click on one of the buttons at the bottom:
+
+   Always
+          This button will make your selection permanent. Only make this choice if you're absolutely sure that you've made the right selection.
+
+   Once
+          This button makes your selection temporary. You'll be presented with this dialog again the next time you need a file picker. Make this choice if you're not sure yet or if you're still trying them out.
+
+Boot Loader
 
 Developer Mode
 
@@ -805,21 +862,30 @@ Recovery Mode
 The Action Menu
 
    The braille menu offers the same functionality as the visual menu but in a different way because it's been designed for a text-mode environment. When it starts, it shows a list summarizing the actions that can be selected, and then presents the prompt:
-action>
+recovery>
 
    To select an action, type its name and then press Enter. Unambiguous abbreviations of action names are recognized. Leading and/or trailing spaces are ignored. Entering an empty line redisplays the action summary.
 
 The Boot Action
 
-   This action reboots to Android. This requires User Confirmation.
+   This action reboots to Android. It requires User Confirmation.
 
 The Clear Action
 
-   This action wipes /cache (the system cache partition), and then reboots to Android. This requires User Confirmation.
+   This action wipes /cache (the system cache partition), and then reboots to Android. It requires User Confirmation.
+
+The Details Action
+
+   Display information about the current build. For example:
+Type: user
+Build: v4.2.9
+Kernel: 2.6.37
+Firmware: v3.1
+Hardware: armv7l
 
 The Exit Action
 
-   This action terminates this menu. This requires User Confirmation.
+   This action terminates this menu. It requires User Confirmation. It's only available within an engineering build.
 
    Once terminated, it's not that easy to restart the menu. This action has only been defined so that the B2G developers can easily test changes to the menu.
 
@@ -831,21 +897,30 @@ The Log Action
 
 The Off Action
 
-   This action powers down the device. This requires User Confirmation.
+   This action powers down the B2G. It requires User Confirmation.
 
 The Reset Action
 
-   This action performs a factory reset, and then reboots to Android. Both /cache (the system cache partition) and /data (the user data partition) are wiped. This requires User Confirmation.
+   This action performs a factory reset, and then reboots to Android. It requires User Confirmation.
+
+   Both /cache (the system cache partition) and /data (the user data partition) are wiped.
 
 The Shell Action
 
-   This action starts an interactive Unix-style shell. Use the shell's exit command to return to this menu.
+   This action starts an interactive Unix-style shell. It's only available within an engineering build.
+
+   Use the shell's exit command to return to this menu.
+
+The Time Action
+
+   Display the current date and time. The format is yyyy-mm-dd@hh:mm:ss. For example:
+2015-12-07@09:43:26
 
 The Update Action
 
-   This action applies an OTA (over-the-air) update, and then reboots to Android. This requires User Confirmation.
+   This action applies a System Update, and then reboots to Android. It requires User Confirmation.
 
-   OTA updates are .zip files that contain special meta-data (including an electronic signature). They're used to update either the whole Android system or just parts of it. You must first choose the specific update that you'd like to apply via The File System Browser (which is automatically started for you).
+   You must first choose the update that you'd like to apply via The File System Browser (which is automatically started for you).
 
 The File System Browser
 
@@ -913,7 +988,7 @@ Booting into Recovery Mode
 Space + o (dots 135)
 
          2. Ensure that Developer Mode is enabled.
-         3. Go into the System Maintenance Operations menu:
+         3. Go to The System Maintenance Screen:
 Space + Dots78 + m (dots 134)
 
          4. Click on Recovery Mode.
@@ -1087,6 +1162,7 @@ Screen Operations
    Space+Dot8+Dots124#f       find the next occurrence of the same text within the current screen element
    Space+Dots125#h            go to the document for the B2G User Interface
    Space+Dots135#o            go to the Settings screen of the B2G User Interface
+   Space+Dots78+Dots134#m     go to the System Maintenance screen of the B2G User Interface
    Space+Dots1234#p           go to the Power Off screen
    Space+Dots2345#t           go to the B2G digital clock
    Space+Dots1246#ed          go to the B2G editor
@@ -1170,17 +1246,16 @@ Screen Actions
 
    CAPTION: Screen Developer Operations
 
-            Keys                                        Description
-   Space+Dots78+Dots134#m go to the System Maintenance Operations screen of the B2G User Interface
-   Backward+Dots4568      write the screen element structure to the log
-   Backward+Dot4          go to and describe the parent node
-   Backward+Dot5          go to and describe the previous sibling node
-   Backward+Dot6          go to and describe the next sibling node
-   Backward+Dot8          go to and describe the first child node
-   Backward+Dots56        describe the current node
-   Backward+Dots456       force the screen to scroll backward (up or left)
-   Backward+Dots568       force the screen to scroll forward (down or right)
-   Backward+Dots48        go to the Launcher chooser
+         Keys                           Description
+   Backward+Dots4568 write the screen element structure to the log
+   Backward+Dot4     go to and describe the parent node
+   Backward+Dot5     go to and describe the previous sibling node
+   Backward+Dot6     go to and describe the next sibling node
+   Backward+Dot8     go to and describe the first child node
+   Backward+Dots56   describe the current node
+   Backward+Dots456  force the screen to scroll backward (up or left)
+   Backward+Dots568  force the screen to scroll forward (down or right)
+   Backward+Dots48   go to the Launcher chooser
 
 Technical Information
 
@@ -1235,7 +1310,7 @@ The Serial Port
    Parity       none
    Flow Control software (X-ON/X-OFF)
 
-Tables
+Braille Tables
 
 Braille Characters
 
