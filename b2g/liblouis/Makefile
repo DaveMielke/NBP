@@ -13,6 +13,10 @@ NATIVE_SOURCES += liblouis-c/liblouis/lou_translateString.c
 NATIVE_SOURCES += liblouis-c/liblouis/lou_backTranslateString.c
 NATIVE_SOURCES += liblouis-c/liblouis/logging.c
 NATIVE_SOURCES += liblouis-c/liblouis/wrappers.c
-NATIVE_SOURCES += jni.c
+
+NATIVE_SOURCES += lljni.h
+NATIVE_SOURCES += log.c
+NATIVE_SOURCES += translation.c
+NATIVE_SOURCES += louis.c
 
 include ../../epilogue.mk

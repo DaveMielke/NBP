@@ -13,6 +13,8 @@ LOCAL_SRC_FILES := \
    liblouis-c/liblouis/lou_backTranslateString.c \
    liblouis-c/liblouis/logging.c \
    liblouis-c/liblouis/wrappers.c \
-   jni.c
+   log.c \
+   translation.c \
+   louis.c
 
 include $(BUILD_SHARED_LIBRARY)
