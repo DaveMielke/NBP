@@ -1,5 +1,11 @@
 #include "lljni.h"
 
+typedef enum {
+  RVI_INPUT_LENGTH,
+  RVI_OUTPUT_LENGTH,
+  RVI_CURSOR_OFFSET,
+} ResultValuesIndex;
+
 JAVA_METHOD(
   org_liblouis_Translation, translate, jboolean,
   jstring jTableName, jstring jInputBuffer, jcharArray jOutputBuffer,
@@ -13,9 +19,9 @@ JAVA_METHOD(
   jint *cInputOffsets = (*env)->GetIntArrayElements(env, jInputOffsets, NULL);
   jint *cResultValues = (*env)->GetIntArrayElements(env, jResultValues, NULL);
 
-  jint *inputLength  = &cResultValues[0];
-  jint *outputLength = &cResultValues[1];
-  jint *cursorOffset = &cResultValues[2];
+  jint *inputLength  = &cResultValues[RVI_INPUT_LENGTH];
+  jint *outputLength = &cResultValues[RVI_OUTPUT_LENGTH];
+  jint *cursorOffset = &cResultValues[RVI_CURSOR_OFFSET];
 
   if (*cursorOffset < 0) cursorOffset = NULL;
   int translationMode = backTranslate? (0): (dotsIO | ucBrl);

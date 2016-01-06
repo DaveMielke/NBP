@@ -112,6 +112,18 @@ public class Translation {
     return outputCursor;
   }
 
+  private enum ResultValuesIndex {
+    INPUT_LENGTH,
+    OUTPUT_LENGTH,
+    CURSOR_OFFSET,
+    ; // end of enumeration
+  }
+
+  private final static int RESULT_VALUES_COUNT = ResultValuesIndex.values().length;
+  private final static int RVI_INPUT_LENGTH = ResultValuesIndex.INPUT_LENGTH.ordinal();
+  private final static int RVI_OUTPUT_LENGTH = ResultValuesIndex.OUTPUT_LENGTH.ordinal();
+  private final static int RVI_CURSOR_OFFSET = ResultValuesIndex.CURSOR_OFFSET.ordinal();
+
   public Translation (
     TranslationTable table, CharSequence input,
     int outputLength, int cursorOffset,
@@ -127,7 +139,11 @@ public class Translation {
     char[] output = new char[outputLength];
     int[] outOffsets = new int[inputLength];
     int[] inOffsets = new int[outputLength];
-    int[] resultValues = new int[] {inputLength, outputLength, cursorOffset};
+
+    int[] resultValues = new int[RESULT_VALUES_COUNT];
+    resultValues[RVI_INPUT_LENGTH] = inputLength;
+    resultValues[RVI_OUTPUT_LENGTH] = outputLength;
+    resultValues[RVI_CURSOR_OFFSET] = cursorOffset;
 
     synchronized (Louis.NATIVE_LOCK) {
       translationSucceeded = translate(
@@ -139,23 +155,26 @@ public class Translation {
     if (!translationSucceeded) {
       Log.w(LOG_TAG, "translation failed");
 
-      if (resultValues[0] > resultValues[1]) {
-        resultValues[0] = resultValues[1];
-      } else if (resultValues[1] > resultValues[0]) {
-        resultValues[1] = resultValues[0];
+      if (resultValues[RVI_INPUT_LENGTH] > resultValues[RVI_OUTPUT_LENGTH]) {
+        resultValues[RVI_INPUT_LENGTH] = resultValues[RVI_OUTPUT_LENGTH];
+      } else if (resultValues[RVI_OUTPUT_LENGTH] > resultValues[RVI_INPUT_LENGTH]) {
+        resultValues[RVI_OUTPUT_LENGTH] = resultValues[RVI_INPUT_LENGTH];
       }
 
-      for (int offset=0; offset<resultValues[0]; offset+=1) {
+      for (int offset=0; offset<resultValues[RVI_INPUT_LENGTH]; offset+=1) {
         inOffsets[offset] = outOffsets[offset] = offset;
       }
 
+      if (resultValues[RVI_CURSOR_OFFSET] >= resultValues[RVI_INPUT_LENGTH]) {
+        resultValues[RVI_CURSOR_OFFSET] = -1;
+      }
+
       inputString.getChars(0, inputString.length(), output, 0);
-      if (resultValues[2] >= resultValues[0]) resultValues[2] = -1;
     }
 
-    int newInputLength  = resultValues[0];
-    int newOutputLength = resultValues[1];
-    int newCursorOffset = resultValues[2];
+    int newInputLength  = resultValues[RVI_INPUT_LENGTH];
+    int newOutputLength = resultValues[RVI_OUTPUT_LENGTH];
+    int newCursorOffset = resultValues[RVI_CURSOR_OFFSET];
 
     if (newInputLength < inputLength) {
       input = input.subSequence(0, newInputLength);
