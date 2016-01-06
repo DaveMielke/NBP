@@ -1,6 +1,30 @@
 #include "lljni.h"
 
 JAVA_METHOD(
+  org_liblouis_Louis, setLogLevel, void,
+  jchar character
+) {
+  int level;
+
+  switch (character) {
+    case 'A': level = LOG_ALL;   break;
+    case 'D': level = LOG_DEBUG; break;
+    case 'I': level = LOG_INFO;  break;
+    case 'W': level = LOG_WARN;  break;
+    case 'E': level = LOG_ERROR; break;
+    case 'F': level = LOG_FATAL; break;
+    case 'O': level = LOG_OFF;   break;
+
+    default:
+      logPrint(LOG_WARN, "ignoring unrecognized log level character: 0X%02X", character);
+      return;
+  }
+
+  logPrint(LOG_DEBUG, "setting log level: %c -> %d", character, level);
+  lou_setLogLevel(level);
+}
+
+JAVA_METHOD(
   org_liblouis_Louis, releaseMemory, void
 ) {
   lou_free();
