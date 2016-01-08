@@ -54,6 +54,10 @@ android {
     exclude "rootdoc.txt"
   }
 
+  dexOptions {
+    incremental true
+    javaMaxHeapSize "4g"
+  }
 }
 
 project.ext.scalaVersion = "2.11.2"
@@ -70,6 +74,10 @@ dependencies {
     fileTree(dir: "libs", include: ["*.jar"])
   ])
 
+}
+
+if (new File("signing.gradle").exists()) {
+  apply from: "signing.gradle";
 }
 
 task wrapper(type: Wrapper)

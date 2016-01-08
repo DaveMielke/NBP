@@ -1,5 +1,14 @@
--dontwarn com.aspose.**
--dontwarn scala.**
+-dontobfuscate
 -ignorewarnings
--libraryjar libs/aspose-words-1.12-android-jdk16.jar
+
 -keep class org.nbp.editor.** { *; }
+-dontwarn scala.**
+
+-keep class com.aspose.** { *; }
+-dontwarn com.aspose.**
+
+-keep class asposewobfuscated.** { *; }
+-dontnote asposewobfuscated.**
+
+#-libraryjar libs/aspose-words-1.12-android-jdk16.jar
+-dontskipnonpubliclibraryclasses

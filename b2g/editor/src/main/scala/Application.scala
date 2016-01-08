@@ -1,6 +1,6 @@
 package org.nbp.editor
 
-import com.aspose.words._
+//import com.aspose.words._
 import org.acra._
 import annotation._
 
@@ -13,7 +13,7 @@ class Application extends android.app.Application {
   override def onCreate() {
     super.onCreate()
     ACRA.init(this)
-    val aspose = new AsposeWordsApplication()
-    aspose.loadLibs(this)
+    //val aspose = new AsposeWordsApplication()
+    //aspose.loadLibs(this)
   }
 }

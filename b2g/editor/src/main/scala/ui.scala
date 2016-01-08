@@ -21,7 +21,7 @@ import android.view._
 import android.webkit.MimeTypeMap
 import android.widget._
 
-import com.aspose.words._
+//import com.aspose.words._
 import org.acra._
 
 /**
@@ -353,8 +353,8 @@ class Editor extends Activity {
     val intent = getIntent
     // Spin this off in its own thread as it seems to slow things down significantly.
     new Thread({ () =>
-      val asposeLicense = new License()
-      asposeLicense.setLicense(getAssets.open("Aspose.Words.lic"))
+      //val asposeLicense = new License()
+      //asposeLicense.setLicense(getAssets.open("Aspose.Words.lic"))
       if(!documents.exists)
         documents.mkdir()
       if(intent.getData != null)
@@ -385,6 +385,7 @@ class Editor extends Activity {
       try {
         val file = new File(filename)
         if(filename.endsWith(".doc") || filename.endsWith(".docx")) {
+        /* aspose
           val doc = new Document(new FileInputStream(file))
           val sb = new SpannableStringBuilder()
           doc.getFirstSection.getBody.getChildNodes.toArray.foreach { n =>
@@ -414,6 +415,7 @@ class Editor extends Activity {
             }
           }
           runOnUiThread(() => editor.foreach(_.setText(sb)))
+        */
         } else {
           val reader = new FileReader(filename)
           val bytes = new Array[Char](file.length.toInt)
@@ -497,6 +499,7 @@ class Editor extends Activity {
     try {
       val file = new File(Preferences.lastFile)
       if(Preferences.lastFile.endsWith(".doc") || Preferences.lastFile.endsWith(".docx")) {
+      /* aspose
         val doc = new DocumentBuilder()
         editedText.foreach { text =>
           var start = 0
@@ -527,6 +530,7 @@ class Editor extends Activity {
           }
         }
         doc.getDocument.save(file.getAbsolutePath)
+      */
       } else {
         editedText.map(_.toString).foreach { text =>
           val writer = new FileWriter(file)
