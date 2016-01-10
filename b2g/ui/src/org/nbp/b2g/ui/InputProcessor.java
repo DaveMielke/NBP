@@ -15,7 +15,6 @@ import java.io.BufferedReader;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.FileNotFoundException;
 
 import java.util.Collection;
@@ -61,21 +60,13 @@ public abstract class InputProcessor {
   }
 
   public final boolean processInput (InputStream stream) {
-    String encoding = "UTF8";
+    Reader reader = new InputStreamReader(stream, ApplicationParameters.INPUT_ENCODING_CHARSET);
 
     try {
-      Reader reader = new InputStreamReader(stream, encoding);
-
-      try {
-        return processInput(reader);
-      } finally {
-        close(reader);
-      }
-    } catch (UnsupportedEncodingException exception) {
-      Log.w(LOG_TAG, "unsupported input encoding: " + encoding);
+      return processInput(reader);
+    } finally {
+      close(reader);
     }
-
-    return false;
   }
 
   public final boolean processInput (File file) {

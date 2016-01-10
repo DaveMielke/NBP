@@ -2,6 +2,8 @@ package org.nbp.b2g.ui;
 
 import android.os.Build;
 
+import java.nio.charset.Charset;
+
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters {
@@ -83,9 +85,12 @@ public abstract class ApplicationParameters {
 
   public final static long MAINTENANCE_REBOOT_DELAY = 1000; // milliseconds
 
-  public final static Louis.LogLevel LIBLOUIS_LOG_LEVEL = Louis.LogLevel.INFO;
-
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
+
+  public final static String INPUT_ENCODING_NAME = "UTF8";
+  public final static Charset INPUT_ENCODING_CHARSET = Charset.forName(INPUT_ENCODING_NAME);
+
+  public final static Louis.LogLevel LIBLOUIS_LOG_LEVEL = Louis.LogLevel.INFO;
 
   private ApplicationParameters () {
   }
