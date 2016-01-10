@@ -98,6 +98,7 @@
   <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
   <string name="InputMode_control_label">Input</string>
+  <string name="LiteraryBraille_control_label">Literary Braille</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
   <string name="ReversePanning_control_label">Reverse Panning</string>

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
+  private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
   private final static InputModeControl inputModeControl = new InputModeControl();
   private final static LongPressControl longPressControl = new LongPressControl();
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
@@ -31,6 +32,7 @@ public abstract class Controls {
   private final static LogBrailleControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
+    literaryBrailleControl,
     inputModeControl,
     longPressControl,
     reversePanningControl,
@@ -57,6 +59,10 @@ public abstract class Controls {
     logGesturesControl,
     logBrailleControl
   };
+
+  public static LiteraryBrailleControl getLiteraryBrailleControl () {
+    return literaryBrailleControl;
+  }
 
   public static InputModeControl getInputModeControl () {
     return inputModeControl;

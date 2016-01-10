@@ -38,6 +38,9 @@
 .. |InputModeText| replace:: set the input mode to text
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
+.. |LiteraryBrailleConfirm| replace:: show the current literary braille setting
+.. |LiteraryBrailleOff| replace:: disable the use of literary braille
+.. |LiteraryBrailleOn| replace:: enable the use of literary braille
 .. |LogActionsOff| replace:: disable the logging of user-requested actions
 .. |LogActionsOn| replace:: enable the logging of user-requested actions
 .. |LogBrailleOff| replace:: disable the logging of braille display updates

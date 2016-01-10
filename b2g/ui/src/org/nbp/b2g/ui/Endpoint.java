@@ -117,15 +117,6 @@ public abstract class Endpoint {
   }
 
   protected boolean braille () {
-    if (false) {
-      brailleTranslation = Louis.getBrailleTranslation(
-        TranslationTable.EN_US_G2, lineText,
-        (lineText.length() * 5), -1
-      );
-    } else {
-      brailleTranslation = null;
-    }
-
     return Devices.braille.get().write();
   }
 
@@ -196,6 +187,7 @@ public abstract class Endpoint {
 
   public void onForeground () {
     resetSpeech();
+    refreshBrailleTranslation();
     write();
   }
 
@@ -214,6 +206,18 @@ public abstract class Endpoint {
   }
 
   private BrailleTranslation brailleTranslation = null;
+
+  public static BrailleTranslation newBrailleTranslation (CharSequence text) {
+    if (!ApplicationSettings.LITERARY_BRAILLE) return null;
+
+    return Louis.getBrailleTranslation(
+      TranslationTable.EN_US_G2, text, (text.length() * 5), -1
+    );
+  }
+
+  private final void refreshBrailleTranslation () {
+    brailleTranslation = newBrailleTranslation(lineText);
+  }
 
   public final BrailleTranslation getBrailleTranslation () {
     return brailleTranslation;
@@ -252,6 +256,8 @@ public abstract class Endpoint {
     if (lineEnd == -1) lineEnd = getTextLength();
 
     lineText = textString.subSequence(lineStart, lineEnd);
+    refreshBrailleTranslation();
+
     return textOffset - lineStart;
   }
 

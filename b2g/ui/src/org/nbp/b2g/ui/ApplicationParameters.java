@@ -5,6 +5,7 @@ import android.os.Build;
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters {
+  public final static boolean DEFAULT_LITERARY_BRAILLE = false;
   public final static InputMode DEFAULT_INPUT_MODE = InputMode.TEXT;
   public final static boolean DEFAULT_LONG_PRESS = true;
   public final static boolean DEFAULT_REVERSE_PANNING = false;
