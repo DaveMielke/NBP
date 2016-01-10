@@ -3,6 +3,10 @@ import org.nbp.b2g.ui.actions.*;
 
 import android.util.Log;
 
+import org.liblouis.Louis;
+import org.liblouis.BrailleTranslation;
+import org.liblouis.TranslationTable;
+
 public abstract class Endpoint {
   private final static String LOG_TAG = Endpoint.class.getName();
 
@@ -200,6 +204,12 @@ public abstract class Endpoint {
     return textString.length();
   }
 
+  private BrailleTranslation brailleTranslation = null;
+
+  public final BrailleTranslation getBrailleTranslation () {
+    return brailleTranslation;
+  }
+
   private CharSequence lineText;
   private int lineStart;
   private int lineIndent;
@@ -285,6 +295,15 @@ public abstract class Endpoint {
 
       lineIndent = indent;
     }
+
+    if (false) {
+      brailleTranslation = Louis.getBrailleTranslation(
+        TranslationTable.EN_US_G2, lineText,
+        (lineText.length() * 5), -1
+      );
+    } else {
+      brailleTranslation = null;
+    }
   }
 
   protected void setText (CharSequence text) {
@@ -357,7 +376,16 @@ public abstract class Endpoint {
   }
 
   public int getTextOffset (int cursorKey) {
-    return getBrailleStart() + cursorKey;
+    BrailleTranslation brl = getBrailleTranslation();
+    boolean isTranslated = brl != null;
+
+    int start = getLineStart();
+    int offset = getLineIndent();
+
+    if (isTranslated) offset = brl.getOutputOffset(offset);
+    offset += cursorKey;
+    if (isTranslated) offset = brl.getInputOffset(offset);
+    return offset;
   }
 
   public int toLineOffset (int textOffset) {
