@@ -11,7 +11,7 @@ import android.util.Log;
 public class Tests {
   private final static String LOG_TAG = Tests.class.getName();
 
-  private static void logOutputOffsets (Translation translation) {
+  public static void logOutputOffsets (Translation translation) {
     int length = translation.getInputLength();
     CharSequence input = translation.getConsumedInput();
     char[] output = translation.getOutputAsArray();
@@ -27,7 +27,7 @@ public class Tests {
     }
   }
 
-  private static void logInputOffsets (Translation translation) {
+  public static void logInputOffsets (Translation translation) {
     int length = translation.getOutputLength();
     CharSequence input = translation.getConsumedInput();
     char[] output = translation.getOutputAsArray();
@@ -43,7 +43,7 @@ public class Tests {
     }
   }
 
-  private static void logOffsets (Translation translation) {
+  public static void logOffsets (Translation translation) {
     logOutputOffsets(translation);
     logInputOffsets(translation);
   }
