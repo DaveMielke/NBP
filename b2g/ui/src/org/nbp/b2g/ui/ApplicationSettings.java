@@ -2,6 +2,7 @@ package org.nbp.b2g.ui;
 
 public abstract class ApplicationSettings {
   public static volatile boolean LITERARY_BRAILLE = ApplicationParameters.DEFAULT_LITERARY_BRAILLE;
+  public static volatile BrailleCode BRAILLE_CODE = ApplicationParameters.DEFAULT_BRAILLE_CODE;
   public static volatile InputMode INPUT_MODE = ApplicationParameters.DEFAULT_INPUT_MODE;
   public static volatile boolean LONG_PRESS = ApplicationParameters.DEFAULT_LONG_PRESS;
   public static volatile boolean REVERSE_PANNING = ApplicationParameters.DEFAULT_REVERSE_PANNING;

@@ -4,6 +4,9 @@
 .. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
+.. |BrailleCodeConfirm| replace:: show the current braille code
+.. |BrailleCodeNext| replace:: switch to the next braille code
+.. |BrailleCodePrevious| replace:: switch to the previous braille code
 .. |BrailleOff| replace:: disable braille
 .. |BrailleOn| replace:: enable braille
 .. |BringCursor| replace:: bring the cursor to a specific character

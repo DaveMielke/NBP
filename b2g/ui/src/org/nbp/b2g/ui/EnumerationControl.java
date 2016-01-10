@@ -33,7 +33,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueArray()[ordinal];
   }
 
-  private String getValueLabel (E value) {
+  protected String getValueLabel (E value) {
     String label = EnumerationLabels.getLabel(value);
     if (label != null) return label;
     return value.name().replace('_', ' ').toLowerCase();

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import org.liblouis.Louis;
 import org.liblouis.BrailleTranslation;
-import org.liblouis.TranslationTable;
 
 public abstract class Endpoint {
   private final static String LOG_TAG = Endpoint.class.getName();
@@ -211,7 +210,8 @@ public abstract class Endpoint {
     if (!ApplicationSettings.LITERARY_BRAILLE) return null;
 
     return Louis.getBrailleTranslation(
-      TranslationTable.EN_US_G2, text, (text.length() * 5), -1
+      ApplicationSettings.BRAILLE_CODE.getTranslationTable(),
+      text, (text.length() * 5), -1
     );
   }
 
