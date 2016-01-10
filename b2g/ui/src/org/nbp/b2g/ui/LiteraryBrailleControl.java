@@ -24,6 +24,11 @@ public class LiteraryBrailleControl extends BooleanControl {
   @Override
   protected boolean setBooleanValue (boolean value) {
     ApplicationSettings.LITERARY_BRAILLE = value;
+
+    Endpoint endpoint = Endpoints.getCurrentEndpoint();
+    endpoint.refreshBrailleTranslation();
+    endpoint.write();
+
     return true;
   }
 

@@ -215,8 +215,10 @@ public abstract class Endpoint {
     );
   }
 
-  private final void refreshBrailleTranslation () {
-    brailleTranslation = newBrailleTranslation(lineText);
+  public final void refreshBrailleTranslation () {
+    synchronized (this) {
+      brailleTranslation = newBrailleTranslation(lineText);
+    }
   }
 
   public final BrailleTranslation getBrailleTranslation () {
