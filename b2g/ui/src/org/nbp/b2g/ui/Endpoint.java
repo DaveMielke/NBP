@@ -117,6 +117,15 @@ public abstract class Endpoint {
   }
 
   protected boolean braille () {
+    if (false) {
+      brailleTranslation = Louis.getBrailleTranslation(
+        TranslationTable.EN_US_G2, lineText,
+        (lineText.length() * 5), -1
+      );
+    } else {
+      brailleTranslation = null;
+    }
+
     return Devices.braille.get().write();
   }
 
@@ -295,15 +304,6 @@ public abstract class Endpoint {
 
       lineIndent = indent;
     }
-
-    if (false) {
-      brailleTranslation = Louis.getBrailleTranslation(
-        TranslationTable.EN_US_G2, lineText,
-        (lineText.length() * 5), -1
-      );
-    } else {
-      brailleTranslation = null;
-    }
   }
 
   protected void setText (CharSequence text) {
@@ -375,17 +375,30 @@ public abstract class Endpoint {
     return null;
   }
 
-  public int getTextOffset (int cursorKey) {
+  public int getLineOffset (int offset, int adjustment) {
     BrailleTranslation brl = getBrailleTranslation();
     boolean isTranslated = brl != null;
 
-    int start = getLineStart();
-    int offset = getLineIndent();
+    if (isTranslated) offset = Braille.findFirstOffset(brl, offset);
+    offset += adjustment;
 
-    if (isTranslated) offset = brl.getOutputOffset(offset);
-    offset += cursorKey;
-    if (isTranslated) offset = brl.getInputOffset(offset);
+    if (offset < 0) {
+      offset = 0;
+    } else {
+      int length = isTranslated? brl.getBrailleLength(): getLineLength();
+      if (offset > length) offset = length;
+    }
+
+    if (isTranslated) offset = brl.getTextOffset(offset);
     return offset;
+  }
+
+  public int getLineOffset (int adjustment) {
+    return getLineOffset(getLineIndent(), adjustment);
+  }
+
+  public int getTextOffset (int adjustment) {
+    return getLineStart() + getLineOffset(adjustment);
   }
 
   public int toLineOffset (int textOffset) {
@@ -575,7 +588,7 @@ public abstract class Endpoint {
           if (indent > length) indent = length;
         }
 
-        if ((indent -= size) < 0) indent = 0;
+        indent = getLineOffset(indent, -size);
         setLineIndent(indent);
         return true;
       }
@@ -600,7 +613,7 @@ public abstract class Endpoint {
     Panner panner = new Panner() {
       @Override
       protected boolean moveDisplay (int size) {
-        int indent = getLineIndent() + size;
+        int indent = getLineOffset(size);
         int length = getLineLength();
 
         int last = length;

@@ -70,7 +70,7 @@ public abstract class Braille {
     return text;
   }
 
-  private static int findFirstOffset (BrailleTranslation brl, int offset) {
+  public static int findFirstOffset (BrailleTranslation brl, int offset) {
     int braille = brl.getBrailleOffset(offset);
     int text = brl.getTextOffset(braille);
 
@@ -83,7 +83,7 @@ public abstract class Braille {
     return braille;
   }
 
-  private static int findLastOffset (BrailleTranslation brl, int offset) {
+  public static int findLastOffset (BrailleTranslation brl, int offset) {
     int braille = brl.getBrailleOffset(offset);
     int text = brl.getTextOffset(braille);
     int length = brl.getBrailleLength();
