@@ -8,6 +8,8 @@ import android.view.ViewConfiguration;
 
 import java.io.File;
 
+import org.liblouis.BrailleTranslation;
+
 public abstract class ApplicationUtilities {
   public static boolean haveSdkVersion (int version) {
     return ApplicationParameters.SDK_VERSION >= version;
@@ -46,7 +48,14 @@ public abstract class ApplicationUtilities {
   }
 
   public static void message (String text) {
-    Devices.braille.get().write(text, ApplicationParameters.BRAILLE_MESSAGE_DURATION);
+    {
+      BrailleTranslation brl = TranslationUtilities.newBrailleTranslation(text);
+
+      Devices.braille.get().write(
+        (brl != null)? brl.getBrailleAsString(): text,
+        ApplicationParameters.BRAILLE_MESSAGE_DURATION
+      );
+    }
 
     SpeechDevice speech = Devices.speech.get();
     synchronized (speech) {

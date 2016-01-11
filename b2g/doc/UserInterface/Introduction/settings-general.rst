@@ -4,7 +4,7 @@
   Setting               Default  Range                 *Previous*  *Next*
   --------------------  -------  --------------------  ----------  ----------
   **Literary Braille**  On       Off - On
-  Braille Code          UEB G2   UEB/EBAE G2/G1        Previous    Next
+  Code                  UEB G2   UEB/EBAE G2/G1        Previous    Next
   **Input**             Text     Text, Braille         Text        Braille
   Long Press            On       Off - On
   Reverse Panning       Off      Off - On

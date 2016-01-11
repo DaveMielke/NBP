@@ -31,9 +31,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
     ApplicationSettings.BRAILLE_CODE = value;
 
     if (ApplicationSettings.LITERARY_BRAILLE) {
-      Endpoint endpoint = Endpoints.getCurrentEndpoint();
-      endpoint.refreshBrailleTranslation();
-      endpoint.write();
+      Endpoints.getCurrentEndpoint().refresh();
     }
 
     return true;

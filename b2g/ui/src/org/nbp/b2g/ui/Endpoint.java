@@ -3,7 +3,6 @@ import org.nbp.b2g.ui.actions.*;
 
 import android.util.Log;
 
-import org.liblouis.Louis;
 import org.liblouis.BrailleTranslation;
 
 public abstract class Endpoint {
@@ -115,8 +114,44 @@ public abstract class Endpoint {
     }
   }
 
+  private BrailleTranslation brailleTranslation = null;
+
+  private final void refreshBrailleTranslation () {
+    synchronized (this) {
+      brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
+    }
+  }
+
+  public final BrailleTranslation getBrailleTranslation () {
+    return brailleTranslation;
+  }
+
   protected boolean braille () {
     return Devices.braille.get().write();
+  }
+
+  public boolean write () {
+    Endpoints.READ_LOCK.lock();
+    try {
+      if (this != Endpoints.getCurrentEndpoint()) return true;
+      say();
+      return braille();
+    } finally {
+      Endpoints.READ_LOCK.unlock();
+    }
+  }
+
+  public final boolean refresh () {
+    refreshBrailleTranslation();
+    return write();
+  }
+
+  public void onForeground () {
+    resetSpeech();
+    refresh();
+  }
+
+  public void onBackground () {
   }
 
   public boolean isInputArea () {
@@ -173,26 +208,6 @@ public abstract class Endpoint {
     return deleteText(start, end);
   }
 
-  public boolean write () {
-    Endpoints.READ_LOCK.lock();
-    try {
-      if (this != Endpoints.getCurrentEndpoint()) return true;
-      say();
-      return braille();
-    } finally {
-      Endpoints.READ_LOCK.unlock();
-    }
-  }
-
-  public void onForeground () {
-    resetSpeech();
-    refreshBrailleTranslation();
-    write();
-  }
-
-  public void onBackground () {
-  }
-
   private CharSequence textString;
   private boolean softEdges;
 
@@ -202,27 +217,6 @@ public abstract class Endpoint {
 
   public int getTextLength () {
     return textString.length();
-  }
-
-  private BrailleTranslation brailleTranslation = null;
-
-  public static BrailleTranslation newBrailleTranslation (CharSequence text) {
-    if (!ApplicationSettings.LITERARY_BRAILLE) return null;
-
-    return Louis.getBrailleTranslation(
-      ApplicationSettings.BRAILLE_CODE.getTranslationTable(),
-      text, (text.length() * 5), -1
-    );
-  }
-
-  public final void refreshBrailleTranslation () {
-    synchronized (this) {
-      brailleTranslation = newBrailleTranslation(lineText);
-    }
-  }
-
-  public final BrailleTranslation getBrailleTranslation () {
-    return brailleTranslation;
   }
 
   private CharSequence lineText;
