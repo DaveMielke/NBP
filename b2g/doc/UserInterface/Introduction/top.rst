@@ -245,19 +245,20 @@ If a screen element (list, group of pages, etc) needs to be scrolled, then:
 Descriptive Annotations
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-A **checkbox** is rendered as either a space (meaning unchecked) or an 
-``X`` (meaning checked) enclosed within [brackets], followed by its
-label. For example::
+A **checkbox** is rendered as
+either |the unchecked checkbox symbol| (meaning unchecked)
+or |the checked checkbox symbol| (meaning checked),
+followed by its label. For example::
 
-  [ ] This box is not checked.
-  [X] This box is checked.
+  ⣏⠀⣹ This box is not checked.
+  ⣏⠶⣹ This box is checked.
 
 A **switch** is rendered as though it were a **checkbox**. The box is checked
 if the switch is in its **on** position, and unchecked if it's in its **off**
 position. For example::
 
-  [ ] Off
-  [X] On
+  ⣏⠀⣹ Off
+  ⣏⠶⣹ On
 
 If a screen element has no text of its own but its developer has 
 provided a textual description of it, then that description, enclosed 

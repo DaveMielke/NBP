@@ -123,9 +123,9 @@ public class HostEndpoint extends Endpoint {
       boolean isChecked = node.isChecked();
       int start = sb.length();
 
-      sb.append('[');
-      sb.append(isChecked? 'X': ' ');
-      sb.append("] ");
+      sb.append('⣏');
+      sb.append(isChecked? '⠶': ' ');
+      sb.append("⣹ ");
 
       setSpeechSpan(sb, start, (
         isChecked?
