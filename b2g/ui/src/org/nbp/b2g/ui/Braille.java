@@ -118,7 +118,10 @@ public abstract class Braille {
 
       if (isTranslated) {
         text = brl.getConsumedText()
-                  .subSequence(0, brl.getTextOffset(text.length()));
+                  .subSequence(
+                     brl.getTextOffset(indent),
+                     brl.getTextOffset(indent + text.length())
+                   );
       }
 
       if (endpoint.isInputArea()) {
