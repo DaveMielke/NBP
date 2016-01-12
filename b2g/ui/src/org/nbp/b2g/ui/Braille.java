@@ -116,6 +116,11 @@ public abstract class Braille {
       CharSequence braille = text.subSequence(indent, text.length());
       text = setCells(cells, braille);
 
+      if (isTranslated) {
+        text = brl.getConsumedText()
+                  .subSequence(0, brl.getTextOffset(text.length()));
+      }
+
       if (endpoint.isInputArea()) {
         int from = endpoint.getSelectionStart();
         int to = endpoint.getSelectionEnd();
