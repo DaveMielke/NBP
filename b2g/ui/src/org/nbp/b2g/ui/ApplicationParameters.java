@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters {
-  public final static boolean DEFAULT_LITERARY_BRAILLE = false;
+  public final static boolean DEFAULT_LITERARY_BRAILLE = true;
   public final static BrailleCode DEFAULT_BRAILLE_CODE = BrailleCode.EN_UEB_G2;
   public final static InputMode DEFAULT_INPUT_MODE = InputMode.TEXT;
   public final static boolean DEFAULT_LONG_PRESS = true;
