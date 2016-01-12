@@ -64,6 +64,22 @@ public class Tests {
     Log.d(LOG_TAG, "end text translation test");
   }
 
+  public static void translateBraille (TranslationTable table, CharSequence braille) {
+    Log.d(LOG_TAG, ("begin braille translation test: " + braille));
+
+     TextTranslation txt = Louis.getTextTranslation(table, braille, 20, -1);
+    CharSequence text = txt.getTextWithSpans();
+    Log.d(LOG_TAG, ("text translation: " + text));
+    logOffsets(txt);
+
+    BrailleTranslation brl = Louis.getBrailleTranslation(table, text, 80, -1);
+    CharSequence back = brl.getBrailleWithSpans();
+    Log.d(LOG_TAG, ("braille back-translation: " + back));
+    logOffsets(brl);
+
+    Log.d(LOG_TAG, "end braille translation test");
+  }
+
   public static void auditTranslationTableEnumeration () {
     Log.d(LOG_TAG, "begin translation table enumeration audit");
 
