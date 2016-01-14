@@ -26,4 +26,7 @@ $(ANDROID_BUILD_TIME): FORCE
 ANDROID_FILES += custom_rules.xml
 ANDROID_FILES += signing.properties
 
+apk::
+	$(MAKE) -C ../liblouis local-files native
+
 include ../../epilogue.mk
