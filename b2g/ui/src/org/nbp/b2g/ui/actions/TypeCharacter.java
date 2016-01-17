@@ -16,6 +16,11 @@ public class TypeCharacter extends Action {
         } else if (character == 0X3F) {
           character |= 0X40;
         } else {
+          Log.w(LOG_TAG, String.format(
+            "no control mapping for character: %s%04X",
+            Characters.UNICODE_PREFIX, (int)character
+          ));
+
           return false;
         }
       }
@@ -29,6 +34,10 @@ public class TypeCharacter extends Action {
     InputMode inputMode = ApplicationSettings.INPUT_MODE;
     int keyMask = getNavigationKeys();
     Character character;
+
+    if (ApplicationSettings.LITERARY_BRAILLE) {
+      inputMode = InputMode.BRAILLE;
+    }
 
     switch (inputMode) {
       case TEXT: {

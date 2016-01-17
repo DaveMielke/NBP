@@ -178,7 +178,7 @@ public abstract class Endpoint {
     return false;
   }
 
-  public boolean insertText (char character) {
+  public final boolean insertText (char character) {
     return insertText(Character.toString(character));
   }
 
@@ -186,12 +186,12 @@ public abstract class Endpoint {
     return false;
   }
 
-  public boolean deleteSelectedText () {
+  public final boolean deleteSelectedText () {
     if (!isSelected()) return false;
     return deleteText(getSelectionStart(), getSelectionEnd());
   }
 
-  public boolean deleteText (int offset) {
+  public final boolean deleteText (int offset) {
     int start = getSelectionStart();
     int end = getSelectionEnd();
 
