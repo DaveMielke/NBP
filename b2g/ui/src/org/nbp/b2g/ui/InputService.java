@@ -141,28 +141,6 @@ public class InputService extends InputMethodService {
     }
   }
 
-  public boolean insertText (CharSequence text) {
-    InputConnection connection = getInputConnection();
-
-    if (connection != null) {
-      if (connection.commitText(text, 1)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  public boolean insertText (char character) {
-    if (ApplicationSettings.LOG_ACTIONS) {
-      Log.v(LOG_TAG, String.format("inserting character: 0X%02X", (int)character));
-    }
-
-    if (insertText(Character.toString(character))) return true;
-    Log.w(LOG_TAG, String.format("character insertion failed: 0X%02X", (int)character));
-    return false;
-  }
-
   private static void appendKeyCode (StringBuilder sb, int code) {
     sb.append(code);
     String name = KeyEvent.keyCodeToString(code);

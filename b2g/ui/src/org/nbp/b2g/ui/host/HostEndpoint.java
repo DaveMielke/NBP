@@ -289,10 +289,10 @@ public class HostEndpoint extends Endpoint {
 
   @Override
   public boolean insertText (CharSequence text) {
-    InputService service = getInputService();
+    InputConnection connection = getInputConnection();
 
-    if (service != null) {
-      if (service.insertText(text)) {
+    if (connection != null) {
+      if (connection.commitText(text, 1)) {
         return true;
       }
     }
