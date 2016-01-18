@@ -1,33 +1,13 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.view.KeyEvent;
-
-public class DeletePrevious extends ScanCodeAction {
+public class DeletePrevious extends DeleteAction {
   @Override
-  public boolean performAction () {
-    Endpoint endpoint = getEndpoint();
-
-    synchronized (endpoint) {
-      if (endpoint.isInputArea()) {
-        return endpoint.deleteText(-1);
-      }
-    }
-
-    return super.performAction();
-  }
-
-  @Override
-  protected String getScanCode () {
-    return "BACKSPACE";
-  }
-
-  @Override
-  protected int getKeyCode () {
-    return KeyEvent.KEYCODE_DEL;
+  protected final int getDeleteOffset () {
+    return -1;
   }
 
   public DeletePrevious (Endpoint endpoint) {
-    super(endpoint, false);
+    super(endpoint);
   }
 }

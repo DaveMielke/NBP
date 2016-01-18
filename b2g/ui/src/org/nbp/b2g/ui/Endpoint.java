@@ -187,7 +187,7 @@ public abstract class Endpoint {
   }
 
   public final boolean deleteSelectedText () {
-    if (!isSelected()) return false;
+    if (!hasSelection()) return false;
     return deleteText(getSelectionStart(), getSelectionEnd());
   }
 
@@ -195,7 +195,7 @@ public abstract class Endpoint {
     int start = getSelectionStart();
     int end = getSelectionEnd();
 
-    if (!isSelected(start, end)) {
+    if (!isSelection(start, end)) {
       if (!isSelected(end)) return false;
       start = end + offset;
       end = start + 1;
@@ -357,19 +357,29 @@ public abstract class Endpoint {
     return offset != NO_SELECTION;
   }
 
-  public static boolean isSelected (int start, int end) {
+  public static boolean isSelection (int start, int end) {
     return (start != end) && isSelected(start) && isSelected(end);
   }
 
-  public boolean isSelected () {
+  public final boolean hasSelection () {
     synchronized (this) {
-      return isSelected(selectionStart, selectionEnd);
+      return isSelection(selectionStart, selectionEnd);
+    }
+  }
+
+  public static boolean isCursor (int start, int end) {
+    return (start == end) && isSelected(start);
+  }
+
+  public final boolean hasCursor () {
+    synchronized (this) {
+      return isCursor(selectionStart, selectionEnd);
     }
   }
 
   public CharSequence getSelectedText () {
     synchronized (this) {
-      if (isInputArea() && isSelected()) {
+      if (isInputArea() && hasSelection()) {
         return textString.subSequence(selectionStart, selectionEnd);
       }
     }
@@ -452,7 +462,7 @@ public abstract class Endpoint {
         selectionStart = start;
         selectionEnd = end;
 
-        if ((start == end) && isSelected(start)) {
+        if (isCursor(start, end)) {
           adjustScroll(setLine(start));
         }
 
