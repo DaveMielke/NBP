@@ -174,8 +174,12 @@ public abstract class Endpoint {
     return false;
   }
 
-  public boolean insertText (CharSequence text) {
+  public boolean replaceText (int start, int end, CharSequence text) {
     return false;
+  }
+
+  public boolean insertText (CharSequence text) {
+    return replaceText(getSelectionStart(), getSelectionEnd(), text);
   }
 
   public final boolean insertText (char character) {
@@ -255,6 +259,33 @@ public abstract class Endpoint {
     refreshBrailleTranslation();
 
     return textOffset - lineStart;
+  }
+
+  public final boolean replaceLine (CharSequence newText) {
+    CharSequence oldText = getLineText();
+    int oldTo = oldText.length();
+    int newTo = newText.length();
+    int from = 0;
+
+    while ((from < oldTo) && (from < newTo)) {
+      if (oldText.charAt(from) != newText.charAt(from)) break;
+      from += 1;
+    }
+
+    while ((from < oldTo) && (from < newTo)) {
+      int oldLast = oldTo - 1;
+      int newLast = newTo - 1;
+      if (oldText.charAt(oldLast) != newText.charAt(newLast)) break;
+      oldTo = oldLast;
+      newTo = newLast;
+    }
+
+    int start = getLineStart();
+    return replaceText(
+      (start + from),
+      (start + oldTo),
+      newText.subSequence(from, newTo)
+    );
   }
 
   private final static int NO_COPY = -1;

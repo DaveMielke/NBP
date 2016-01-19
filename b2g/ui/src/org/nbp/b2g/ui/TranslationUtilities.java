@@ -32,6 +32,10 @@ public abstract class TranslationUtilities {
     }
   }
 
+  public static BrailleTranslation newBrailleTranslation (char text) {
+    return newBrailleTranslation(Character.toString(text));
+  }
+
   public static TextTranslation newTextTranslation (CharSequence braille) {
     TranslationTable table = getTranslationTable();
     if (table == null) return null;
@@ -45,6 +49,10 @@ public abstract class TranslationUtilities {
       if (txt.getBrailleLength() == brailleLength) return txt;
       lengthMultiplier += 1;
     }
+  }
+
+  public static TextTranslation newTextTranslation (char braille) {
+    return newTextTranslation(Character.toString(braille));
   }
 
   private TranslationUtilities () {
