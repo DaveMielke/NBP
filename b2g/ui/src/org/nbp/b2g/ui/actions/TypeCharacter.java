@@ -54,11 +54,17 @@ public class TypeCharacter extends Action {
             Character.toString(character)
           );
 
-          return endpoint.replaceLine(TranslationUtilities.newTextTranslation(sb.subSequence(0, sb.length())).getTextWithSpans());
+          return endpoint.replaceLine(
+            TranslationUtilities.newTextTranslation(sb.subSequence(0, sb.length()))
+                                .getTextWithSpans()
+          );
         }
       }
 
-      return endpoint.insertText(TranslationUtilities.newTextTranslation(character).getTextWithSpans());
+      return endpoint.insertText(
+        TranslationUtilities.newTextTranslation(character)
+                            .getTextWithSpans()
+      );
     }
   }
 
