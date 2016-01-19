@@ -40,13 +40,6 @@ public abstract class PromptEndpoint extends Endpoint {
     return refresh();
   }
 
-  @Override
-  public final boolean deleteText (int start, int end) {
-    buffer.delete(start, end);
-    if (!setCursor(start)) return false;
-    return refresh();
-  }
-
   protected final String getResponse () {
     return buffer.toString().substring(start);
   }
