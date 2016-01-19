@@ -3,20 +3,20 @@ package org.nbp.b2g.ui;
 import org.liblouis.TranslationTable;
 
 public enum BrailleCode {
-  EN_UEB_G2(
-    TranslationTable.EN_UEB_G2
-  ),
-
   EN_UEB_G1(
     TranslationTable.EN_UEB_G1
   ),
 
-  EN_US_G2(
-    TranslationTable.EN_US_G2
+  EN_UEB_G2(
+    TranslationTable.EN_UEB_G2
   ),
 
   EN_US_G1(
     TranslationTable.EN_US_G1
+  ),
+
+  EN_US_G2(
+    TranslationTable.EN_US_G2
   ),
 
   ; // endof enumeration
