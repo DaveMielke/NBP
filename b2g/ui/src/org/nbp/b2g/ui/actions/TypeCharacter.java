@@ -29,22 +29,22 @@ public class TypeCharacter extends Action {
       newTo = newLast;
     }
 
-    boolean deleting = oldTo > from;
+    boolean removing = oldTo > from;
     boolean inserting = newTo > from;
-    if (!(inserting || deleting)) return true;
+    if (!(inserting || removing)) return true;
     CharSequence newSegment = newText.subSequence(from, newTo);
 
     if (ApplicationSettings.LOG_ACTIONS) {
       CharSequence oldSegment = oldText.subSequence(from, oldTo);
 
-      if (deleting) {
+      if (removing) {
         if (inserting) {
           Log.v(LOG_TAG, String.format(
             "replacing text: %s -> %s", oldSegment, newSegment
           ));
         } else {
           Log.v(LOG_TAG, String.format(
-            "deleting text: %s", oldSegment
+            "removing text: %s", oldSegment
           ));
         }
       } else {
@@ -106,7 +106,7 @@ public class TypeCharacter extends Action {
 
               if (oldSegment.length() == 0) {
                 Log.v(LOG_TAG, String.format(
-                  "deleting braille: %s", oldSegment
+                  "removing braille: %s", oldSegment
                 ));
               } else {
                 Log.v(LOG_TAG, String.format(
