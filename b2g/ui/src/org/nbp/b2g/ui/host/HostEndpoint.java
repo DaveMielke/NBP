@@ -31,7 +31,7 @@ public class HostEndpoint extends Endpoint {
     currentDescribe = false;
   }
 
-  public AccessibilityNodeInfo getCurrentNode () {
+  public final AccessibilityNodeInfo getCurrentNode () {
     synchronized (this) {
       if (currentNode == null) return null;
       return AccessibilityNodeInfo.obtain(currentNode);
@@ -40,7 +40,7 @@ public class HostEndpoint extends Endpoint {
 
   private final Map<AccessibilityNodeInfo, CharSequence> accessibilityText = new HashMap<AccessibilityNodeInfo, CharSequence>();
 
-  public void setAccessibilityText (AccessibilityNodeInfo node, CharSequence text) {
+  public final void setAccessibilityText (AccessibilityNodeInfo node, CharSequence text) {
     if (text != null) {
       accessibilityText.put(AccessibilityNodeInfo.obtain(node), text);
     } else {
@@ -175,7 +175,7 @@ public class HostEndpoint extends Endpoint {
     return sb.subSequence(0, sb.length());
   }
 
-  public boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
+  public final boolean write (AccessibilityNodeInfo node, boolean describe, int indent) {
     CharSequence text;
 
     if (describe) {
@@ -211,7 +211,7 @@ public class HostEndpoint extends Endpoint {
     return write();
   }
 
-  public boolean write (AccessibilityNodeInfo node, boolean force) {
+  public final boolean write (AccessibilityNodeInfo node, boolean force) {
     if (node == null) return false;
 
     boolean describe;
@@ -235,7 +235,7 @@ public class HostEndpoint extends Endpoint {
     return write(node, describe, indent);
   }
 
-  public boolean write (AccessibilityNodeInfo node, CharSequence text) {
+  public final boolean write (AccessibilityNodeInfo node, CharSequence text) {
     synchronized (this) {
       if (!node.equals(currentNode)) return true;
       if (text.equals(getText())) return true;
@@ -246,17 +246,17 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean isInputArea () {
+  public final boolean isInputArea () {
     return ScreenUtilities.isEditable(currentNode);
   }
 
   @Override
-  public boolean isBar () {
+  public final boolean isBar () {
     return ScreenUtilities.isBar(currentNode);
   }
 
   @Override
-  public boolean isSlider () {
+  public final boolean isSlider () {
     return ScreenUtilities.isSlider(currentNode);
   }
 
@@ -270,12 +270,12 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean seekNext () {
+  public final boolean seekNext () {
     return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
   }
 
   @Override
-  public boolean seekPrevious () {
+  public final boolean seekPrevious () {
     return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
   }
 
@@ -288,7 +288,22 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean insertText (CharSequence text) {
+  public final boolean replaceText (int start, int end, CharSequence text) {
+    InputConnection connection = getInputConnection();
+
+    if (connection != null) {
+      if (connection.setComposingRegion(start, end)) {
+        if (connection.commitText(text, 1)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  @Override
+  public final boolean insertText (CharSequence text) {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {
@@ -301,7 +316,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean deleteText (int start, int end) {
+  public final boolean deleteText (int start, int end) {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {
@@ -320,7 +335,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean setSelection (int start, int end) {
+  public final boolean setSelection (int start, int end) {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {
@@ -333,77 +348,77 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public Class<? extends Action> getMoveBackwardAction () {
+  public final Class<? extends Action> getMoveBackwardAction () {
     return MoveBackward.class;
   }
 
   @Override
-  public Class<? extends Action> getMoveForwardAction () {
+  public final Class<? extends Action> getMoveForwardAction () {
     return MoveForward.class;
   }
 
   @Override
-  public Class<? extends Action> getScrollBackwardAction () {
+  public final Class<? extends Action> getScrollBackwardAction () {
     return MovePrevious.class;
   }
 
   @Override
-  public Class<? extends Action> getScrollForwardAction () {
+  public final Class<? extends Action> getScrollForwardAction () {
     return MoveNext.class;
   }
 
   @Override
-  public Class<? extends Action> getScrollFirstAction () {
+  public final Class<? extends Action> getScrollFirstAction () {
     return MoveFirst.class;
   }
 
   @Override
-  public Class<? extends Action> getScrollLastAction () {
+  public final Class<? extends Action> getScrollLastAction () {
     return MoveLast.class;
   }
 
   @Override
-  public boolean handleKeyboardKey_enter () {
+  public final boolean handleKeyboardKey_enter () {
     return InputService.injectKey(KeyEvent.KEYCODE_ENTER);
   }
 
   @Override
-  public boolean handleKeyboardKey_cursorLeft () {
+  public final boolean handleKeyboardKey_cursorLeft () {
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_LEFT);
   }
 
   @Override
-  public boolean handleKeyboardKey_cursorRight () {
+  public final boolean handleKeyboardKey_cursorRight () {
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_RIGHT);
   }
 
   @Override
-  public boolean handleKeyboardKey_cursorUp () {
+  public final boolean handleKeyboardKey_cursorUp () {
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_UP);
   }
 
   @Override
-  public boolean handleKeyboardKey_cursorDown () {
+  public final boolean handleKeyboardKey_cursorDown () {
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_DOWN);
   }
 
   @Override
-  public boolean handleKeyboardKey_pageUp () {
+  public final boolean handleKeyboardKey_pageUp () {
     return InputService.injectKey(KeyEvent.KEYCODE_PAGE_UP);
   }
 
   @Override
-  public boolean handleKeyboardKey_pageDown () {
+  public final boolean handleKeyboardKey_pageDown () {
     return InputService.injectKey(KeyEvent.KEYCODE_PAGE_DOWN);
   }
 
   @Override
-  public boolean handleKeyboardKey_home () {
+  public final boolean handleKeyboardKey_home () {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_HOME);
   }
 
   @Override
-  public boolean handleKeyboardKey_end () {
+  public final boolean handleKeyboardKey_end () {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
