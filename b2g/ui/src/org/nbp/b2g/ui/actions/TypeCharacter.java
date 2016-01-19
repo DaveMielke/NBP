@@ -10,6 +10,54 @@ import org.liblouis.BrailleTranslation;
 public class TypeCharacter extends Action {
   private final static String LOG_TAG = TypeCharacter.class.getName();
 
+  private final boolean replaceLine (Endpoint endpoint, CharSequence newText) {
+    CharSequence oldText = endpoint.getLineText();
+    int oldTo = oldText.length();
+    int newTo = newText.length();
+    int from = 0;
+
+    while ((from < oldTo) && (from < newTo)) {
+      if (oldText.charAt(from) != newText.charAt(from)) break;
+      from += 1;
+    }
+
+    while ((from < oldTo) && (from < newTo)) {
+      int oldLast = oldTo - 1;
+      int newLast = newTo - 1;
+      if (oldText.charAt(oldLast) != newText.charAt(newLast)) break;
+      oldTo = oldLast;
+      newTo = newLast;
+    }
+
+    boolean deleting = oldTo > from;
+    boolean inserting = newTo > from;
+    if (!(inserting || deleting)) return true;
+    CharSequence newSegment = newText.subSequence(from, newTo);
+
+    if (ApplicationSettings.LOG_ACTIONS) {
+      CharSequence oldSegment = oldText.subSequence(from, oldTo);
+
+      if (deleting) {
+        if (inserting) {
+          Log.v(LOG_TAG, String.format(
+            "replacing text: %s -> %s", oldSegment, newSegment
+          ));
+        } else {
+          Log.v(LOG_TAG, String.format(
+            "deleting text: %s", oldSegment
+          ));
+        }
+      } else {
+        Log.v(LOG_TAG, String.format(
+          "inserting text: %s", newSegment
+        ));
+      }
+    }
+
+    int start = endpoint.getLineStart();
+    return endpoint.replaceText((start + from), (start + oldTo), newSegment);
+  }
+
   private boolean typeCharacter (char character) {
     Endpoint endpoint = getEndpoint();
 
@@ -23,11 +71,7 @@ public class TypeCharacter extends Action {
           } else if (character == 0X3F) {
             character |= 0X40;
           } else {
-            Log.w(LOG_TAG, String.format(
-              "no control mapping for character: %s%04X",
-              Characters.UNICODE_PREFIX, (int)character
-            ));
-
+            Characters.logProblem(LOG_TAG, character, "no control mapping for character");
             return false;
           }
         }
@@ -38,6 +82,7 @@ public class TypeCharacter extends Action {
       BrailleTranslation brl = endpoint.getBrailleTranslation();
 
       if (brl == null) {
+        Characters.logAction(LOG_TAG, character, "typing text");
         return endpoint.insertText(character);
       }
 
@@ -49,21 +94,50 @@ public class TypeCharacter extends Action {
           boolean isCursor = start == end;
           start = Braille.findFirstOffset(brl, start);
           end = isCursor? start: Braille.findEndOffset(brl, end);
+          CharSequence oldBraille = brl.getBrailleWithSpans();
 
-          SpannableStringBuilder sb = new SpannableStringBuilder(brl.getBrailleWithSpans());
+          if (ApplicationSettings.LOG_ACTIONS) {
+            if (isCursor) {
+              Log.v(LOG_TAG, String.format(
+                "inserting braille: %c", character
+              ));
+            } else {
+              CharSequence oldSegment = oldBraille.subSequence(start, end);
+
+              if (oldSegment.length() == 0) {
+                Log.v(LOG_TAG, String.format(
+                  "deleting braille: %s", oldSegment
+                ));
+              } else {
+                Log.v(LOG_TAG, String.format(
+                  "replacing braille: %s -> %c", oldSegment, character
+                ));
+              }
+            }
+          }
+
+          SpannableStringBuilder sb = new SpannableStringBuilder(oldBraille);
           sb.replace(start, end, Character.toString(character));
 
-          return endpoint.replaceLine(
+          return replaceLine(
+            endpoint,
             TranslationUtilities.newTextTranslation(sb.subSequence(0, sb.length()))
                                 .getTextWithSpans()
           );
         }
       }
 
-      return endpoint.insertText(
-        TranslationUtilities.newTextTranslation(character)
-                            .getTextWithSpans()
-      );
+      {
+        CharSequence text = TranslationUtilities.newTextTranslation(character).getTextWithSpans();
+
+        if (ApplicationSettings.LOG_ACTIONS) {
+          Log.v(LOG_TAG, String.format(
+            "typing braille: %c -> %s", character, text
+          ));
+        }
+
+        return endpoint.insertText(text);
+      }
     }
   }
 

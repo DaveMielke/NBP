@@ -261,33 +261,6 @@ public abstract class Endpoint {
     return textOffset - lineStart;
   }
 
-  public final boolean replaceLine (CharSequence newText) {
-    CharSequence oldText = getLineText();
-    int oldTo = oldText.length();
-    int newTo = newText.length();
-    int from = 0;
-
-    while ((from < oldTo) && (from < newTo)) {
-      if (oldText.charAt(from) != newText.charAt(from)) break;
-      from += 1;
-    }
-
-    while ((from < oldTo) && (from < newTo)) {
-      int oldLast = oldTo - 1;
-      int newLast = newTo - 1;
-      if (oldText.charAt(oldLast) != newText.charAt(newLast)) break;
-      oldTo = oldLast;
-      newTo = newLast;
-    }
-
-    int start = getLineStart();
-    return replaceText(
-      (start + from),
-      (start + oldTo),
-      newText.subSequence(from, newTo)
-    );
-  }
-
   private final static int NO_COPY = -1;
   private int copyStart = NO_COPY;
 

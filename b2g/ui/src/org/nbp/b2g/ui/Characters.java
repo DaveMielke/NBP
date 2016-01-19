@@ -16,6 +16,22 @@ public class Characters {
 
   public final static String UNICODE_PREFIX = "U+";
 
+  public static void logEvent (int priority, String tag, char character, String message) {
+    Log.println(priority, tag, String.format(
+      "%s: %s%04X", message, UNICODE_PREFIX, (int)character
+    ));
+  }
+
+  public static void logProblem (String tag, char character, String problem) {
+    logEvent(Log.WARN, tag, character, problem);
+  }
+
+  public static void logAction (String tag, char character, String action) {
+    if (ApplicationSettings.LOG_ACTIONS) {
+      logEvent(Log.VERBOSE, tag, character, action);
+    }
+  }
+
   public final static char CHAR_NUL   = 0X0000;
   public final static char CHAR_SOH   = 0X0001;
   public final static char CHAR_STX   = 0X0002;
