@@ -97,6 +97,11 @@ public abstract class Braille {
     return braille;
   }
 
+  public static int findEndOffset (BrailleTranslation brl, int offset) {
+    if (offset == 0) return 0;
+    return findLastOffset(brl, offset-1) + 1;
+  }
+
   public static CharSequence setCells (byte[] cells, Endpoint endpoint) {
     synchronized (endpoint) {
       BrailleTranslation brl = endpoint.getBrailleTranslation();
@@ -150,7 +155,7 @@ public abstract class Braille {
 
             if (isTranslated) {
               from = findFirstOffset(brl, from);
-              to = findLastOffset(brl, to-1) + 1;
+              to = findEndOffset(brl, to);
             }
 
             if ((from -= indent) < 0) from = 0;
