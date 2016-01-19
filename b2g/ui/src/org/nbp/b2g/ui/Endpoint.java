@@ -187,7 +187,7 @@ public abstract class Endpoint {
   }
 
   public boolean deleteText (int start, int end) {
-    return false;
+    return replaceText(start, end, "");
   }
 
   public final boolean deleteSelectedText () {
