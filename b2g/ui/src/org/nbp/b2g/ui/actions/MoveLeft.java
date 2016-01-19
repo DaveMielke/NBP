@@ -13,7 +13,7 @@ public class MoveLeft extends DirectionalAction {
   protected ActionResult performCursorAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
 
-    if (endpoint.isSelected(start)) {
+    if (Endpoint.isSelected(start)) {
       if (start > 0) {
         if (endpoint.setCursor(start-1)) {
           return ActionResult.DONE;

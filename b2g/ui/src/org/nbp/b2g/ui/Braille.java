@@ -133,7 +133,7 @@ public abstract class Braille {
         int from = endpoint.getSelectionStart();
         int to = endpoint.getSelectionEnd();
 
-        if (endpoint.isSelected(from) && endpoint.isSelected(to)) {
+        if (Endpoint.isSelected(from) && endpoint.isSelected(to)) {
           {
             int start = endpoint.getLineStart();
             from -= start;

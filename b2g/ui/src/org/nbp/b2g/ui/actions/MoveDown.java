@@ -6,7 +6,7 @@ public class MoveDown extends DirectionalAction {
   protected ActionResult performCursorAction (Endpoint endpoint) {
     int end = endpoint.getSelectionEnd();
 
-    if (endpoint.isSelected(end)) {
+    if (Endpoint.isSelected(end)) {
       if (end != endpoint.getSelectionStart()) end -= 1;
       int start = endpoint.findNextNewline(end);
 

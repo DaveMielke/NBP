@@ -6,7 +6,7 @@ public class MoveUp extends DirectionalAction {
   protected ActionResult performCursorAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
 
-    if (endpoint.isSelected(start)) {
+    if (Endpoint.isSelected(start)) {
       int after = endpoint.findPreviousNewline(start);
 
       if (after != -1) {

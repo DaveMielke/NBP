@@ -13,7 +13,7 @@ public class MoveRight extends DirectionalAction {
   protected ActionResult performCursorAction (Endpoint endpoint) {
     int end = endpoint.getSelectionEnd();
 
-    if (endpoint.isSelected(end)) {
+    if (Endpoint.isSelected(end)) {
       if (end < endpoint.getTextLength()) {
         if (end == endpoint.getSelectionStart()) end += 1;
         if (endpoint.setCursor(end)) {

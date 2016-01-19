@@ -12,7 +12,7 @@ public class SetSelectionEnd extends Action {
       if (endpoint.isCharacterOffset(end)) {
         if (endpoint.isInputArea()) {
           int start = endpoint.getSelectionStart();
-          if (!endpoint.isSelected(start) || (start > end)) start = end;
+          if (!Endpoint.isSelected(start) || (start > end)) start = end;
           if (endpoint.setSelection(start, end+1)) return true;
         } else if (endpoint.setCopyEnd(end)) {
           ApplicationUtilities.message(R.string.CopyToClipboard_action_confirmation);

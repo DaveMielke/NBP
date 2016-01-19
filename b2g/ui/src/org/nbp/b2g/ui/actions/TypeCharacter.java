@@ -90,7 +90,7 @@ public class TypeCharacter extends Action {
         int start = endpoint.getSelectionStart();
         int end = endpoint.getSelectionEnd();
 
-        if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
+        if (Endpoint.isSelected(start) && endpoint.isSelected(end)) {
           boolean isCursor = start == end;
           start = Braille.findFirstOffset(brl, start);
           end = isCursor? start: Braille.findEndOffset(brl, end);
