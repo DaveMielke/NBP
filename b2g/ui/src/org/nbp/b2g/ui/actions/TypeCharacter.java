@@ -46,13 +46,12 @@ public class TypeCharacter extends Action {
         int end = endpoint.getSelectionEnd();
 
         if (endpoint.isSelected(start) && endpoint.isSelected(end)) {
-          SpannableStringBuilder sb = new SpannableStringBuilder(brl.getBrailleWithSpans());
+          boolean isCursor = start == end;
+          start = Braille.findFirstOffset(brl, start);
+          end = isCursor? start: Braille.findEndOffset(brl, end);
 
-          sb.replace(
-            Braille.findFirstOffset(brl, start),
-            Braille.findEndOffset(brl, end),
-            Character.toString(character)
-          );
+          SpannableStringBuilder sb = new SpannableStringBuilder(brl.getBrailleWithSpans());
+          sb.replace(start, end, Character.toString(character));
 
           return endpoint.replaceLine(
             TranslationUtilities.newTextTranslation(sb.subSequence(0, sb.length()))
