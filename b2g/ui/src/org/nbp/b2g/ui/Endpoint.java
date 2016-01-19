@@ -195,23 +195,6 @@ public abstract class Endpoint {
     return deleteText(getSelectionStart(), getSelectionEnd());
   }
 
-  public final boolean deleteText (int offset) {
-    int start = getSelectionStart();
-    int end = getSelectionEnd();
-
-    if (!isSelection(start, end)) {
-      if (!isSelected(end)) return false;
-      start = end + offset;
-      end = start + 1;
-
-      if (start < 0) return false;
-      if (end > getTextLength()) return false;
-      if (!isSelectable(start)) return false;
-    }
-
-    return deleteText(start, end);
-  }
-
   private CharSequence textString;
   private boolean softEdges;
 
