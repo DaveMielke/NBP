@@ -716,8 +716,8 @@ public abstract class Endpoint {
         if (indent == 0) {
           int start = getLineStart();
           if (start == 0) return false;
-
           setLine(start-1);
+
           indent = getLineLength();
           if (isInputArea()) indent += 1;
         } else {
@@ -750,18 +750,20 @@ public abstract class Endpoint {
     Panner panner = new Panner() {
       @Override
       protected boolean moveDisplay (int size) {
-        int indent = getAdjustedLineOffset(size);
+        int indent = getLineIndent();
         int length = getLineLength();
 
         int last = length;
         if (!isInputArea()) last -= 1;
 
-        if (indent > last) {
+        if ((findLastBrailleOffset(last) - findFirstBrailleOffset(indent)) < size) {
           int offset = getLineStart() + length + 1;
           if (offset > getTextLength()) return false;
 
           setLine(offset);
           indent = 0;
+        } else {
+          indent = getAdjustedLineOffset(size);
         }
 
         setLineIndent(indent);
