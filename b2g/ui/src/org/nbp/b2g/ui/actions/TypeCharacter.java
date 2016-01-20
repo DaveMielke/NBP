@@ -5,58 +5,8 @@ import android.util.Log;
 
 import android.text.SpannableStringBuilder;
 
-import org.liblouis.BrailleTranslation;
-
 public class TypeCharacter extends Action {
   private final static String LOG_TAG = TypeCharacter.class.getName();
-
-  private final boolean replaceLine (Endpoint endpoint, CharSequence newText) {
-    CharSequence oldText = endpoint.getLineText();
-    int oldTo = oldText.length();
-    int newTo = newText.length();
-    int from = 0;
-
-    while ((from < oldTo) && (from < newTo)) {
-      if (oldText.charAt(from) != newText.charAt(from)) break;
-      from += 1;
-    }
-
-    while ((from < oldTo) && (from < newTo)) {
-      int oldLast = oldTo - 1;
-      int newLast = newTo - 1;
-      if (oldText.charAt(oldLast) != newText.charAt(newLast)) break;
-      oldTo = oldLast;
-      newTo = newLast;
-    }
-
-    boolean removing = oldTo > from;
-    boolean inserting = newTo > from;
-    if (!(inserting || removing)) return true;
-    CharSequence newSegment = newText.subSequence(from, newTo);
-
-    if (ApplicationSettings.LOG_ACTIONS) {
-      CharSequence oldSegment = oldText.subSequence(from, oldTo);
-
-      if (removing) {
-        if (inserting) {
-          Log.v(LOG_TAG, String.format(
-            "replacing text: %s -> %s", oldSegment, newSegment
-          ));
-        } else {
-          Log.v(LOG_TAG, String.format(
-            "removing text: %s", oldSegment
-          ));
-        }
-      } else {
-        Log.v(LOG_TAG, String.format(
-          "inserting text: %s", newSegment
-        ));
-      }
-    }
-
-    int start = endpoint.getLineStart();
-    return endpoint.replaceText((start + from), (start + oldTo), newSegment);
-  }
 
   private boolean typeCharacter (char character) {
     Endpoint endpoint = getEndpoint();
@@ -79,7 +29,7 @@ public class TypeCharacter extends Action {
     }
 
     synchronized (endpoint) {
-      if (!endpoint.haveBrailleTranslation()) {
+      if (!ApplicationSettings.LITERARY_BRAILLE) {
         Characters.logAction(LOG_TAG, character, "typing text");
         return endpoint.insertText(character);
       }
@@ -92,36 +42,17 @@ public class TypeCharacter extends Action {
           boolean isCursor = start == end;
           start = endpoint.findFirstBrailleOffset(start);
           end = isCursor? start: endpoint.findEndBrailleOffset(end);
-          CharSequence oldBraille = endpoint.getBrailleCharacters();
 
           if (ApplicationSettings.LOG_ACTIONS) {
-            if (isCursor) {
-              Log.v(LOG_TAG, String.format(
-                "inserting braille: %c", character
-              ));
-            } else {
-              CharSequence oldSegment = oldBraille.subSequence(start, end);
-
-              if (oldSegment.length() == 0) {
-                Log.v(LOG_TAG, String.format(
-                  "removing braille: %s", oldSegment
-                ));
-              } else {
-                Log.v(LOG_TAG, String.format(
-                  "replacing braille: %s -> %c", oldSegment, character
-                ));
-              }
-            }
+            Log.v(LOG_TAG, String.format(
+              "inserting braille: %c", character
+            ));
           }
 
-          SpannableStringBuilder sb = new SpannableStringBuilder(oldBraille);
+          CharSequence braille = endpoint.getBrailleCharacters();
+          SpannableStringBuilder sb = new SpannableStringBuilder(braille);
           sb.replace(start, end, Character.toString(character));
-
-          return replaceLine(
-            endpoint,
-            TranslationUtilities.newTextTranslation(sb.subSequence(0, sb.length()))
-                                .getTextWithSpans()
-          );
+          return endpoint.setBrailleCharacters(sb.subSequence(0, sb.length()));
         }
       }
 

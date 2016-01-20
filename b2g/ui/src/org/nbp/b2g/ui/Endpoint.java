@@ -4,6 +4,7 @@ import org.nbp.b2g.ui.actions.*;
 import android.util.Log;
 
 import org.liblouis.BrailleTranslation;
+import org.liblouis.TextTranslation;
 
 public abstract class Endpoint {
   private final static String LOG_TAG = Endpoint.class.getName();
@@ -115,18 +116,99 @@ public abstract class Endpoint {
   }
 
   private BrailleTranslation brailleTranslation = null;
+  private TextTranslation textTranslation = null;
+
+  private static boolean equals (CharSequence cs1, CharSequence cs2) {
+    int length = cs1.length();
+    if (length != cs2.length()) return false;
+
+    for (int index=0; index<length; index+=1) {
+      if (cs1.charAt(index) != cs2.charAt(index)) return false;
+    }
+
+    return true;
+  }
 
   private final void refreshBrailleTranslation () {
     synchronized (this) {
-      brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
+      if (ApplicationSettings.LITERARY_BRAILLE) {
+        if (textTranslation != null) {
+          if (equals(textTranslation.getTextWithSpans(), lineText)) {
+            return;
+          }
+        }
+
+        if (brailleTranslation != null) {
+          if (equals(brailleTranslation.getConsumedText(), lineText)) {
+            return;
+          }
+        }
+
+        brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
+      } else {
+        brailleTranslation = null;
+      }
+
+      textTranslation = null;
     }
   }
 
-  public final boolean haveBrailleTranslation () {
-    return brailleTranslation != null;
+  private final boolean replaceLine (CharSequence newText) {
+    CharSequence oldText = getLineText();
+    int oldTo = oldText.length();
+    int newTo = newText.length();
+    int from = 0;
+
+    while ((from < oldTo) && (from < newTo)) {
+      if (oldText.charAt(from) != newText.charAt(from)) break;
+      from += 1;
+    }
+
+    while ((from < oldTo) && (from < newTo)) {
+      int oldLast = oldTo - 1;
+      int newLast = newTo - 1;
+      if (oldText.charAt(oldLast) != newText.charAt(newLast)) break;
+      oldTo = oldLast;
+      newTo = newLast;
+    }
+
+    boolean removing = oldTo > from;
+    boolean inserting = newTo > from;
+    if (!(inserting || removing)) return true;
+    CharSequence newSegment = newText.subSequence(from, newTo);
+
+    if (ApplicationSettings.LOG_ACTIONS) {
+      CharSequence oldSegment = oldText.subSequence(from, oldTo);
+
+      if (removing) {
+        if (inserting) {
+          Log.v(LOG_TAG, String.format(
+            "replacing text: %s -> %s", oldSegment, newSegment
+          ));
+        } else {
+          Log.v(LOG_TAG, String.format(
+            "removing text: %s", oldSegment
+          ));
+        }
+      } else {
+        Log.v(LOG_TAG, String.format(
+          "inserting text: %s", newSegment
+        ));
+      }
+    }
+
+    int start = getLineStart();
+    return replaceText((start + from), (start + oldTo), newSegment);
+  }
+
+  public final boolean setBrailleCharacters (CharSequence braille) {
+    brailleTranslation = null;
+    textTranslation = TranslationUtilities.newTextTranslation(braille);
+    return replaceLine(textTranslation.getTextWithSpans());
   }
 
   public final CharSequence getBrailleCharacters () {
+    if (textTranslation != null) return textTranslation.getConsumedBraille();
     if (brailleTranslation != null) return brailleTranslation.getBrailleWithSpans();
     return getLineText();
   }
@@ -136,16 +218,19 @@ public abstract class Endpoint {
   }
 
   public final int getBrailleOffset (int textOffset) {
+    if (textTranslation != null) return textTranslation.getBrailleOffset(textOffset);
     if (brailleTranslation != null) return brailleTranslation.getBrailleOffset(textOffset);
     return textOffset;
   }
 
   public final CharSequence getTextCharacters () {
+    if (textTranslation != null) return textTranslation.getTextWithSpans();
     if (brailleTranslation != null) return brailleTranslation.getConsumedText();
     return getLineText();
   }
 
   public final int getTextOffset (int brailleOffset) {
+    if (textTranslation != null) return textTranslation.getTextOffset(brailleOffset);
     if (brailleTranslation != null) return brailleTranslation.getTextOffset(brailleOffset);
     return brailleOffset;
   }
