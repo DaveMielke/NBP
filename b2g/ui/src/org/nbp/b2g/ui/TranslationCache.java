@@ -6,9 +6,12 @@ import org.liblouis.Translation;
 
 public abstract class TranslationCache {
   private final static int CACHE_SIZE = 5;
-  private final static float LOAD_FACTOR = 0.75f;
+  private final static float LOAD_FACTOR = 1f;
 
-  private final static Map<String, Translation> map = new LinkedHashMap<String, Translation>(CACHE_SIZE, LOAD_FACTOR, true) {
+  private final static Map<String, Translation> map =
+  new LinkedHashMap<String, Translation>(
+    CACHE_SIZE*2, LOAD_FACTOR, true
+  ) {
     @Override
     protected boolean removeEldestEntry (Entry entry) {
       return size() > CACHE_SIZE;
