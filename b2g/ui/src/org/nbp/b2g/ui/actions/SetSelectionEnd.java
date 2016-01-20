@@ -7,9 +7,11 @@ public class SetSelectionEnd extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      int end = endpoint.getTextOffset(cursorKey);
+      int end = endpoint.getAdjustedTextOffset(cursorKey);
 
       if (endpoint.isCharacterOffset(end)) {
+        end = endpoint.getTextOffset(endpoint.findLastBrailleOffset(end) + 1) - 1;
+
         if (endpoint.isInputArea()) {
           int start = endpoint.getSelectionStart();
           if (!Endpoint.isSelected(start) || (start > end)) start = end;

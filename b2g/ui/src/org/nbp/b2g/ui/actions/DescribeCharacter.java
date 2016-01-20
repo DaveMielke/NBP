@@ -21,7 +21,7 @@ public class DescribeCharacter extends Action {
 
       synchronized (endpoint) {
         CharSequence line = endpoint.getLineText();
-        int offset = endpoint.getLineOffset(cursorKey);
+        int offset = endpoint.getAdjustedLineOffset(cursorKey);
 
         if (offset >= line.length()) return false;
         character = line.charAt(offset);

@@ -8,7 +8,7 @@ public class BringCursor extends Action {
 
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
-        int offset = endpoint.getTextOffset(cursorKey);
+        int offset = endpoint.getAdjustedTextOffset(cursorKey);
 
         if (endpoint.isCursorOffset(offset)) {
           if (endpoint.setCursor(offset)) {

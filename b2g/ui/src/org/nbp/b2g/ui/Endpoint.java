@@ -126,6 +126,53 @@ public abstract class Endpoint {
     return brailleTranslation;
   }
 
+  public final int getBrailleLength () {
+    if (brailleTranslation != null) return brailleTranslation.getBrailleLength();
+    return getLineLength();
+  }
+
+  public final int getBrailleOffset (int textOffset) {
+    if (brailleTranslation != null) return brailleTranslation.getBrailleOffset(textOffset);
+    return textOffset;
+  }
+
+  public final int getTextOffset (int brailleOffset) {
+    if (brailleTranslation != null) return brailleTranslation.getTextOffset(brailleOffset);
+    return brailleOffset;
+  }
+
+  public final int findFirstBrailleOffset (int textOffset) {
+    int braille = getBrailleOffset(textOffset);
+    int text = getTextOffset(braille);
+
+    while (braille > 0) {
+      int next = braille - 1;
+      if (getTextOffset(next) != text) break;
+      braille = next;
+    }
+
+    return braille;
+  }
+
+  public final int findLastBrailleOffset (int textOffset) {
+    int braille = getBrailleOffset(textOffset);
+    int text = getTextOffset(braille);
+    int length = getBrailleLength();
+
+    while (braille < length) {
+      int next = braille + 1;
+      if (getTextOffset(next) != text) break;
+      braille = next;
+    }
+
+    return braille;
+  }
+
+  public final int findEndBrailleOffset (int textOffset) {
+    if (textOffset == 0) return 0;
+    return findLastBrailleOffset(textOffset-1) + 1;
+  }
+
   protected boolean braille () {
     return Devices.braille.get().write();
   }
@@ -374,30 +421,27 @@ public abstract class Endpoint {
     return null;
   }
 
-  public int getLineOffset (int offset, int adjustment) {
-    BrailleTranslation brl = getBrailleTranslation();
-    boolean isTranslated = brl != null;
-
-    if (isTranslated) offset = Braille.findFirstOffset(brl, offset);
+  public int getAdjustedLineOffset (int adjustment, int offset) {
+    offset = findFirstBrailleOffset(offset);
     offset += adjustment;
 
     if (offset < 0) {
       offset = 0;
     } else {
-      int length = isTranslated? brl.getBrailleLength(): getLineLength();
+      int length = getBrailleLength();
       if (offset > length) offset = length;
     }
 
-    if (isTranslated) offset = brl.getTextOffset(offset);
+    offset = getTextOffset(offset);
     return offset;
   }
 
-  public int getLineOffset (int adjustment) {
-    return getLineOffset(getLineIndent(), adjustment);
+  public int getAdjustedLineOffset (int adjustment) {
+    return getAdjustedLineOffset(adjustment, getLineIndent());
   }
 
-  public int getTextOffset (int adjustment) {
-    return getLineStart() + getLineOffset(adjustment);
+  public int getAdjustedTextOffset (int adjustment) {
+    return getLineStart() + getAdjustedLineOffset(adjustment);
   }
 
   public int toLineOffset (int textOffset) {
@@ -587,7 +631,7 @@ public abstract class Endpoint {
           if (indent > length) indent = length;
         }
 
-        indent = getLineOffset(indent, -size);
+        indent = getAdjustedLineOffset(-size, indent);
         setLineIndent(indent);
         return true;
       }
@@ -612,7 +656,7 @@ public abstract class Endpoint {
     Panner panner = new Panner() {
       @Override
       protected boolean moveDisplay (int size) {
-        int indent = getLineOffset(size);
+        int indent = getAdjustedLineOffset(size);
         int length = getLineLength();
 
         int last = length;
