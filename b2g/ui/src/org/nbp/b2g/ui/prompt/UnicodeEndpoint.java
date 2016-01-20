@@ -30,6 +30,8 @@ public class UnicodeEndpoint extends PromptEndpoint {
 
   @Override
   protected boolean canInsertText (CharSequence text) {
+    if (text.length() == 0) return true;
+
     final int length = text.length();
     if (length != 1) return false;
 
