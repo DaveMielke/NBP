@@ -1,7 +1,5 @@
 package org.nbp.b2g.ui;
 
-import org.liblouis.BrailleTranslation;
-
 public abstract class Braille {
   public final static char UNICODE_ROW   = 0X2800;
   public final static char UNICODE_DOT_1 = 0X0001;
@@ -70,64 +68,24 @@ public abstract class Braille {
     return text;
   }
 
-  public static int findFirstOffset (BrailleTranslation brl, int offset) {
-    int braille = brl.getBrailleOffset(offset);
-    int text = brl.getTextOffset(braille);
-
-    while (braille > 0) {
-      int next = braille - 1;
-      if (brl.getTextOffset(next) != text) break;
-      braille = next;
-    }
-
-    return braille;
-  }
-
-  public static int findLastOffset (BrailleTranslation brl, int offset) {
-    int braille = brl.getBrailleOffset(offset);
-    int text = brl.getTextOffset(braille);
-    int length = brl.getBrailleLength();
-
-    while (braille < length) {
-      int next = braille + 1;
-      if (brl.getTextOffset(next) != text) break;
-      braille = next;
-    }
-
-    return braille;
-  }
-
-  public static int findEndOffset (BrailleTranslation brl, int offset) {
-    if (offset == 0) return 0;
-    return findLastOffset(brl, offset-1) + 1;
-  }
-
   public static CharSequence setCells (byte[] cells, Endpoint endpoint) {
     synchronized (endpoint) {
-      BrailleTranslation brl = endpoint.getBrailleTranslation();
-      boolean isTranslated = brl != null;
-
       CharSequence text = endpoint.getLineText();
       int lineLength = text.length();
 
       int indent = endpoint.getLineIndent();
       if (indent > lineLength) indent = lineLength;
 
-      if (isTranslated) {
-        text = brl.getBrailleWithSpans();
-        indent = findFirstOffset(brl, indent);
-      }
+      text = endpoint.getBrailleCharacters();
+      indent = endpoint.findFirstBrailleOffset(indent);
 
       CharSequence braille = text.subSequence(indent, text.length());
       text = setCells(cells, braille);
-
-      if (isTranslated) {
-        text = brl.getConsumedText()
-                  .subSequence(
-                     brl.getTextOffset(indent),
-                     brl.getTextOffset(indent + text.length())
-                   );
-      }
+      text = endpoint.getTextCharacters()
+                     .subSequence(
+                        endpoint.getTextOffset(indent),
+                        endpoint.getTextOffset(indent + text.length())
+                      );
 
       if (endpoint.isInputArea()) {
         int from = endpoint.getSelectionStart();
@@ -142,7 +100,7 @@ public abstract class Braille {
 
           if (from == to) {
             if ((to >= 0) && (to <= lineLength)) {
-              if (isTranslated) to = brl.getBrailleOffset(to);
+              to = endpoint.getBrailleOffset(to);
               to -= indent;
 
               if ((to >= 0) && (to < cells.length)) {
@@ -153,10 +111,8 @@ public abstract class Braille {
             if (from < 0) from = 0;
             if (to > lineLength) to = lineLength;
 
-            if (isTranslated) {
-              from = findFirstOffset(brl, from);
-              to = findEndOffset(brl, to);
-            }
+            from = endpoint.findFirstBrailleOffset(from);
+            to = endpoint.findEndBrailleOffset(to);
 
             if ((from -= indent) < 0) from = 0;
             if ((to -= indent) > cells.length) to = cells.length;

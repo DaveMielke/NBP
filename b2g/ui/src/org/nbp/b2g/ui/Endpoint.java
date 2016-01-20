@@ -126,14 +126,23 @@ public abstract class Endpoint {
     return brailleTranslation;
   }
 
+  public final CharSequence getBrailleCharacters () {
+    if (brailleTranslation != null) return brailleTranslation.getBrailleWithSpans();
+    return getLineText();
+  }
+
   public final int getBrailleLength () {
-    if (brailleTranslation != null) return brailleTranslation.getBrailleLength();
-    return getLineLength();
+    return getBrailleCharacters().length();
   }
 
   public final int getBrailleOffset (int textOffset) {
     if (brailleTranslation != null) return brailleTranslation.getBrailleOffset(textOffset);
     return textOffset;
+  }
+
+  public final CharSequence getTextCharacters () {
+    if (brailleTranslation != null) return brailleTranslation.getConsumedText();
+    return getLineText();
   }
 
   public final int getTextOffset (int brailleOffset) {

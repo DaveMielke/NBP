@@ -92,8 +92,8 @@ public class TypeCharacter extends Action {
 
         if (Endpoint.isSelected(start) && endpoint.isSelected(end)) {
           boolean isCursor = start == end;
-          start = Braille.findFirstOffset(brl, start);
-          end = isCursor? start: Braille.findEndOffset(brl, end);
+          start = endpoint.findFirstBrailleOffset(start);
+          end = isCursor? start: endpoint.findEndBrailleOffset(end);
           CharSequence oldBraille = brl.getBrailleWithSpans();
 
           if (ApplicationSettings.LOG_ACTIONS) {
