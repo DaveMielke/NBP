@@ -19,6 +19,6 @@ public class SetSelectionStart extends CursorKeyAction {
   }
 
   public SetSelectionStart (Endpoint endpoint) {
-    super(endpoint, true);
+    super(endpoint, false);
   }
 }

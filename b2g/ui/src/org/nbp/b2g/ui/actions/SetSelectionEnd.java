@@ -20,6 +20,6 @@ public class SetSelectionEnd extends CursorKeyAction {
   }
 
   public SetSelectionEnd (Endpoint endpoint) {
-    super(endpoint, true);
+    super(endpoint, false);
   }
 }
