@@ -19,10 +19,15 @@ public class UnicodeEndpoint extends PromptEndpoint {
     Character character = toCharacter(getResponse());
 
     if (character != null) {
+      String name = Character.getName(character).toLowerCase();
+
       sb.append(' ');
       sb.append(character);
-      sb.append('\n');
-      sb.append(Character.getName(character).toLowerCase());
+
+      if ((name != null) && !name.isEmpty()) {
+        sb.append('\n');
+        sb.append(name);
+      }
     }
 
     return sb.toString();
