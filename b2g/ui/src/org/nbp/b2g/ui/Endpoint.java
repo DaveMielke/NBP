@@ -524,7 +524,7 @@ public abstract class Endpoint {
       offset = findFirstBrailleOffset(offset);
     } else {
       if (offset <= 0) return 0;
-      offset = findLastBrailleOffset(offset-1) + 1;
+      offset = findEndBrailleOffset(offset);
     }
 
     offset += adjustment;
