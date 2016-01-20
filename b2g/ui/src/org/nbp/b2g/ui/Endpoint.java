@@ -796,15 +796,6 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
-  public final boolean scrollRight (int offset) {
-    if (offset < 1) return false;
-    if (offset >= Devices.braille.get().getLength()) return false;
-
-    if ((offset += getLineIndent()) >= getLineLength()) return false;
-    setLineIndent(offset);
-    return write();
-  }
-
   public boolean handleKeyboardKey_enter () {
     Endpoints.setHostEndpoint();
     return true;

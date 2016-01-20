@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class DescribeCharacter extends Action {
+public class DescribeCharacter extends CursorKeyAction {
   private static String normalizeName (String name) {
     return name.replace('_', ' ').toLowerCase();
   }
@@ -13,22 +13,10 @@ public class DescribeCharacter extends Action {
   }
 
   @Override
-  public boolean performAction (int cursorKey) {
-    Character character;
-
-    {
-      Endpoint endpoint = getEndpoint();
-
-      synchronized (endpoint) {
-        CharSequence line = endpoint.getLineText();
-        int offset = endpoint.getAdjustedLineOffset(cursorKey);
-
-        if (offset >= line.length()) return false;
-        character = line.charAt(offset);
-      }
-    }
-
+  protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
+    Character character = endpoint.getLineText().charAt(offset);
     StringBuilder sb = new StringBuilder();
+
     {
       String name = Character.getName(character).toLowerCase();
       if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
