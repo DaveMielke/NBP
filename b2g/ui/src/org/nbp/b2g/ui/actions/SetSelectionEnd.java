@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class SetSelectionEnd extends CursorKeyAction {
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int end) {
-    end = endpoint.getTextOffset(endpoint.findLastBrailleOffset(end) + 1) - 1;
+    end = endpoint.getLineOffset(endpoint.findLastBrailleOffset(end) + 1) - 1;
     end += endpoint.getLineStart();
 
     if (endpoint.isInputArea()) {

@@ -223,13 +223,13 @@ public abstract class Endpoint {
     return textOffset;
   }
 
-  public final CharSequence getTextCharacters () {
+  public final CharSequence getLineCharacters () {
     if (textTranslation != null) return textTranslation.getTextWithSpans();
     if (brailleTranslation != null) return brailleTranslation.getConsumedText();
     return getLineText();
   }
 
-  public final int getTextOffset (int brailleOffset) {
+  public final int getLineOffset (int brailleOffset) {
     if (textTranslation != null) return textTranslation.getTextOffset(brailleOffset);
     if (brailleTranslation != null) return brailleTranslation.getTextOffset(brailleOffset);
     return brailleOffset;
@@ -237,11 +237,11 @@ public abstract class Endpoint {
 
   public final int findFirstBrailleOffset (int textOffset) {
     int braille = getBrailleOffset(textOffset);
-    int text = getTextOffset(braille);
+    int text = getLineOffset(braille);
 
     while (braille > 0) {
       int next = braille - 1;
-      if (getTextOffset(next) != text) break;
+      if (getLineOffset(next) != text) break;
       braille = next;
     }
 
@@ -250,12 +250,12 @@ public abstract class Endpoint {
 
   public final int findLastBrailleOffset (int textOffset) {
     int braille = getBrailleOffset(textOffset);
-    int text = getTextOffset(braille);
+    int text = getLineOffset(braille);
     int length = getBrailleLength();
 
     while (braille < length) {
       int next = braille + 1;
-      if (getTextOffset(next) != text) break;
+      if (getLineOffset(next) != text) break;
       braille = next;
     }
 
@@ -536,7 +536,7 @@ public abstract class Endpoint {
       if (offset > length) offset = length;
     }
 
-    offset = getTextOffset(offset);
+    offset = getLineOffset(offset);
     return offset;
   }
 

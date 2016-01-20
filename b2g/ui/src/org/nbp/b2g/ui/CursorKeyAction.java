@@ -20,7 +20,7 @@ public abstract class CursorKeyAction extends Action {
       last -= start;
       if (cursorKey > last) return false;
 
-      if (!performCursorKeyAction(endpoint, endpoint.getTextOffset(start + cursorKey))) return false;
+      if (!performCursorKeyAction(endpoint, endpoint.getLineOffset(start + cursorKey))) return false;
     }
 
     return endpoint.write();

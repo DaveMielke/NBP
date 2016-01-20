@@ -81,10 +81,10 @@ public abstract class Braille {
 
       CharSequence braille = text.subSequence(indent, text.length());
       text = setCells(cells, braille);
-      text = endpoint.getTextCharacters()
+      text = endpoint.getLineCharacters()
                      .subSequence(
-                        endpoint.getTextOffset(indent),
-                        endpoint.getTextOffset(indent + text.length())
+                        endpoint.getLineOffset(indent),
+                        endpoint.getLineOffset(indent + text.length())
                       );
 
       if (endpoint.isInputArea()) {
