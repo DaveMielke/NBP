@@ -11,11 +11,11 @@ public enum BrailleCode {
     TranslationTable.EN_UEB_G2
   ),
 
-  EN_US_G1(
+  EN_EBAE_G1(
     TranslationTable.EN_US_G1
   ),
 
-  EN_US_G2(
+  EN_EBAE_G2(
     TranslationTable.EN_US_G2
   ),
 
