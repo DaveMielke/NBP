@@ -10,12 +10,6 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   @Override
-  public final boolean write () {
-    setText((buffer.toString() + getTrailer()), true);
-    return super.write();
-  }
-
-  @Override
   public final void onForeground () {
     setSelection(start, buffer.length());
     super.onForeground();
@@ -29,15 +23,20 @@ public abstract class PromptEndpoint extends Endpoint {
     return true;
   }
 
+  private final void setText () {
+    setText((buffer.toString() + getTrailer()), true);
+  }
+
   @Override
   public final boolean replaceText (int start, int end, CharSequence text) {
     if (!canInsertText(text)) return false;
 
     buffer.delete(start, end);
     buffer.insert(start, text);
-    if (!setCursor((start + text.length()))) return false;
 
-    return refresh();
+    setText();
+    if (!setCursor((start + text.length()))) return false;
+    return write();
   }
 
   protected final String getResponse () {
@@ -77,6 +76,7 @@ public abstract class PromptEndpoint extends Endpoint {
     buffer.append(prefix);
 
     start = buffer.length();
+    setText();
   }
 
   public PromptEndpoint (int prompt) {
