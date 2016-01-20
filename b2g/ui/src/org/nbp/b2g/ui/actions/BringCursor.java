@@ -1,27 +1,15 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class BringCursor extends Action {
+public class BringCursor extends CursorKeyAction {
   @Override
-  public boolean performAction (int cursorKey) {
-    Endpoint endpoint = getEndpoint();
-
-    synchronized (endpoint) {
-      if (endpoint.isInputArea()) {
-        int offset = endpoint.getAdjustedTextOffset(cursorKey);
-
-        if (endpoint.isCursorOffset(offset)) {
-          if (endpoint.setCursor(offset)) {
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
+  protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
+    if (!endpoint.isInputArea()) return false;
+    offset += endpoint.getLineStart();
+    return endpoint.setCursor(offset);
   }
 
   public BringCursor (Endpoint endpoint) {
-    super(endpoint, false);
+    super(endpoint, true);
   }
 }

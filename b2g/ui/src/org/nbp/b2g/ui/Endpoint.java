@@ -717,7 +717,7 @@ public abstract class Endpoint {
     }
   }
 
-  public boolean panLeft () {
+  public final boolean panLeft () {
     Panner panner = new Panner() {
       @Override
       protected boolean moveDisplay (int size) {
@@ -756,7 +756,7 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
-  public boolean panRight () {
+  public final boolean panRight () {
     Panner panner = new Panner() {
       @Override
       protected boolean moveDisplay (int size) {
@@ -796,7 +796,7 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
-  public boolean scrollRight (int offset) {
+  public final boolean scrollRight (int offset) {
     if (offset < 1) return false;
     if (offset >= Devices.braille.get().getLength()) return false;
 
