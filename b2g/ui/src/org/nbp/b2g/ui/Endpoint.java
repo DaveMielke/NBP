@@ -3,6 +3,7 @@ import org.nbp.b2g.ui.actions.*;
 
 import android.util.Log;
 
+import org.liblouis.Translation;
 import org.liblouis.BrailleTranslation;
 import org.liblouis.TextTranslation;
 
@@ -117,6 +118,7 @@ public abstract class Endpoint {
 
   private BrailleTranslation brailleTranslation = null;
   private TextTranslation textTranslation = null;
+  private final TranslationCache translationCache = new TranslationCache();
 
   private static boolean equals (CharSequence cs1, CharSequence cs2) {
     int length = cs1.length();
@@ -144,12 +146,31 @@ public abstract class Endpoint {
           }
         }
 
+        brailleTranslation = null;
+        textTranslation = null;
+
+        {
+          Translation translation = translationCache.get(lineText.toString());
+
+          if (translation != null) {
+            if (translation instanceof BrailleTranslation) {
+              brailleTranslation = (BrailleTranslation)translation;
+              return;
+            }
+
+            if (translation instanceof TextTranslation) {
+              textTranslation = (TextTranslation)translation;
+              return;
+            }
+          }
+        }
+
         brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
+        translationCache.put(lineText.toString(), brailleTranslation);
       } else {
         brailleTranslation = null;
+        textTranslation = null;
       }
-
-      textTranslation = null;
     }
   }
 
@@ -204,7 +225,10 @@ public abstract class Endpoint {
   public final boolean setBrailleCharacters (CharSequence braille) {
     brailleTranslation = null;
     textTranslation = TranslationUtilities.newTextTranslation(braille);
-    return replaceLine(textTranslation.getTextWithSpans());
+
+    CharSequence text = textTranslation.getTextWithSpans();
+    translationCache.put(text.toString(), textTranslation);
+    return replaceLine(text);
   }
 
   public final CharSequence getBrailleCharacters () {
