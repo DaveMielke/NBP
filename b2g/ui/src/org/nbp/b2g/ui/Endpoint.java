@@ -516,7 +516,17 @@ public abstract class Endpoint {
   }
 
   public int getAdjustedLineOffset (int adjustment, int offset) {
-    offset = findFirstBrailleOffset(offset);
+    if (adjustment == 0) return offset;
+
+    if (adjustment > 0) {
+      int length = getLineLength();
+      if (offset >= length) return length;
+      offset = findFirstBrailleOffset(offset);
+    } else {
+      if (offset <= 0) return 0;
+      offset = findLastBrailleOffset(offset-1) + 1;
+    }
+
     offset += adjustment;
 
     if (offset < 0) {
