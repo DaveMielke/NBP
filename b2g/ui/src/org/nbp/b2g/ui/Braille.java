@@ -128,10 +128,6 @@ public abstract class Braille {
     }
   }
 
-  public static CharSequence setCells (byte[] cells) {
-    return setCells(cells, Endpoints.getCurrentEndpoint());
-  }
-
   private Braille () {
   }
 }

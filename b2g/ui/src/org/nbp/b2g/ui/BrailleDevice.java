@@ -241,23 +241,25 @@ public class BrailleDevice {
     }
   }
 
-  public final boolean write () {
-    synchronized (this) {
-      if (!open()) return false;
+  public final boolean write (Endpoint endpoint) {
+    synchronized (endpoint) {
+      synchronized (this) {
+        if (!open()) return false;
 
-      {
-        byte[] oldCells = getCells();
-        CharSequence text = Braille.setCells(brailleCells);
+        {
+          byte[] oldCells = getCells();
+          CharSequence text = Braille.setCells(brailleCells, endpoint);
 
-        if (!text.equals(brailleText)) {
-          brailleText = text;
-        } else if (Arrays.equals(brailleCells, oldCells)) {
-          return true;
+          if (!text.equals(brailleText)) {
+            brailleText = text;
+          } else if (Arrays.equals(brailleCells, oldCells)) {
+            return true;
+          }
         }
-      }
 
-      writePending = true;
-      logCells(brailleCells, "updated");
+        writePending = true;
+        logCells(brailleCells, "updated");
+      }
     }
 
     synchronized (writeDelay) {

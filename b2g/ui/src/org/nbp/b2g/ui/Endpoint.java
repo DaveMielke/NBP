@@ -268,7 +268,7 @@ public abstract class Endpoint {
   }
 
   protected boolean braille () {
-    return Devices.braille.get().write();
+    return Devices.braille.get().write(this);
   }
 
   public boolean write () {
