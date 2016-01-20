@@ -122,8 +122,8 @@ public abstract class Endpoint {
     }
   }
 
-  public final BrailleTranslation getBrailleTranslation () {
-    return brailleTranslation;
+  public final boolean haveBrailleTranslation () {
+    return brailleTranslation != null;
   }
 
   public final CharSequence getBrailleCharacters () {

@@ -79,9 +79,7 @@ public class TypeCharacter extends Action {
     }
 
     synchronized (endpoint) {
-      BrailleTranslation brl = endpoint.getBrailleTranslation();
-
-      if (brl == null) {
+      if (!endpoint.haveBrailleTranslation()) {
         Characters.logAction(LOG_TAG, character, "typing text");
         return endpoint.insertText(character);
       }
@@ -94,7 +92,7 @@ public class TypeCharacter extends Action {
           boolean isCursor = start == end;
           start = endpoint.findFirstBrailleOffset(start);
           end = isCursor? start: endpoint.findEndBrailleOffset(end);
-          CharSequence oldBraille = brl.getBrailleWithSpans();
+          CharSequence oldBraille = endpoint.getBrailleCharacters();
 
           if (ApplicationSettings.LOG_ACTIONS) {
             if (isCursor) {
