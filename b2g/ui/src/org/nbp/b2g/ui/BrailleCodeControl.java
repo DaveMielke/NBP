@@ -29,6 +29,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   @Override
   protected boolean setEnumerationValue (BrailleCode value) {
     ApplicationSettings.BRAILLE_CODE = value;
+    TranslationCache.clear();
 
     if (ApplicationSettings.LITERARY_BRAILLE) {
       Endpoints.getCurrentEndpoint().refresh();

@@ -1,18 +1,38 @@
 package org.nbp.b2g.ui;
 
+import java.util.Map;
 import java.util.LinkedHashMap;
 import org.liblouis.Translation;
 
-public class TranslationCache extends LinkedHashMap<String, Translation> {
+public abstract class TranslationCache {
   private final static int CACHE_SIZE = 5;
   private final static float LOAD_FACTOR = 0.75f;
 
-  @Override
-  protected boolean removeEldestEntry (Entry entry) {
-    return size() > CACHE_SIZE;
+  private final static Map<String, Translation> map = new LinkedHashMap<String, Translation>(CACHE_SIZE, LOAD_FACTOR, true) {
+    @Override
+    protected boolean removeEldestEntry (Entry entry) {
+      return size() > CACHE_SIZE;
+    }
+  };
+
+  public static void clear () {
+    synchronized (map) {
+      map.clear();
+    }
   }
 
-  public TranslationCache () {
-    super(CACHE_SIZE+1, LOAD_FACTOR, true);
+  public static void put (CharSequence text, Translation translation) {
+    synchronized (map) {
+      map.put(text.toString(), translation);
+    }
+  }
+
+  public static Translation get (CharSequence text) {
+    synchronized (map) {
+      return map.get(text.toString());
+    }
+  }
+
+  private TranslationCache () {
   }
 }

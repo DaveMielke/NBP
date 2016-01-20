@@ -118,7 +118,6 @@ public abstract class Endpoint {
 
   private BrailleTranslation brailleTranslation = null;
   private TextTranslation textTranslation = null;
-  private final TranslationCache translationCache = new TranslationCache();
 
   private static boolean equals (CharSequence cs1, CharSequence cs2) {
     int length = cs1.length();
@@ -150,7 +149,7 @@ public abstract class Endpoint {
         textTranslation = null;
 
         {
-          Translation translation = translationCache.get(lineText.toString());
+          Translation translation = TranslationCache.get(lineText);
 
           if (translation != null) {
             if (translation instanceof BrailleTranslation) {
@@ -166,7 +165,7 @@ public abstract class Endpoint {
         }
 
         brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
-        translationCache.put(lineText.toString(), brailleTranslation);
+        TranslationCache.put(lineText, brailleTranslation);
       } else {
         brailleTranslation = null;
         textTranslation = null;
@@ -227,7 +226,7 @@ public abstract class Endpoint {
     textTranslation = TranslationUtilities.newTextTranslation(braille);
 
     CharSequence text = textTranslation.getTextWithSpans();
-    translationCache.put(text.toString(), textTranslation);
+    TranslationCache.put(text, textTranslation);
     return replaceLine(text);
   }
 
