@@ -5,7 +5,7 @@ all: html txt
 html: $(DOCUMENT_NAMES:=.html)
 txt: $(DOCUMENT_NAMES:=.txt)
 
-%.html: %/top.rst
+%.html: %/main.rst
 	rst2html --config docutils.conf $< $@
 
 %.txt: %.html

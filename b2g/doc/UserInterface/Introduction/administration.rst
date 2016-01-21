@@ -73,7 +73,7 @@ The following operations may be performed:
 .. |uses internet| replace::
 
   This operation requires access to the Internet.
-  Data transfer charges may apply.
+  Standard data charges may apply.
 
 .. |uses recovery mode| replace::
 
