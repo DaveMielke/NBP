@@ -123,7 +123,7 @@ Updating the User Interface
 ```````````````````````````
 
 1) You'll be asked to choose a package downloader.
-   We recommend **ES Downloader**.
+   We recommend |recommended package downloader|.
 
 2) When the download is complete, select ``Open File``.
    You'll then see lots of information about the package.
@@ -132,7 +132,7 @@ Updating the User Interface
    Select ``Install`` if you wish to proceed or ``Cancel`` if not.
 
 3) You'll be asked to choose a package installer.
-   We recommend **Package Installer**.
+   We recommend |recommended package installer|.
 
 4) You'll be asked to confirm that you really want
    to replace the currently-installed version with the new one.
@@ -168,6 +168,8 @@ or if you haven't yet chosen your favourite one,
 then you'll be presented with a list of the file pickers
 that are currently installed on the |product name|, 
 and be asked to select the one that the action should be completed with.
+We recommend |recommended file picker|.
+
 Select the one you'd like to use (or just try) by clicking on it,
 and then click on one of the buttons at the bottom:
 

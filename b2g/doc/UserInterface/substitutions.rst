@@ -1,6 +1,10 @@
 .. |product name| replace:: B2G
 .. |user interface| replace:: |product name| User Interface
 
+.. |recommended file picker| replace:: ES File Explorer
+.. |recommended package downloader| replace:: ES Downloader
+.. |recommended package installer| replace:: Package Installer
+
 .. |internal memory path| replace:: ``/storage/sdcard0``
 .. |SD card path| replace:: ``/storage/sdcard1``
 .. |USB host port path| replace:: ``/storage/usb1``
@@ -35,3 +39,4 @@
 .. |short beep length| replace:: 100ms
 .. |medium beep length| replace:: 500ms
 .. |long beep length| replace:: 1s
+
