@@ -23,18 +23,21 @@ printResource() {
   printf "  <${type} name=\"${name}\">${format}</${type}>\\n" "${@}"
 }
 
-revision="$(git describe --long --tags --match "${tagPrefix}-*")"
-set -- ${revision//-/ }
-version="${2}"
-incredment="${3}"
+revisionIdentifier="$(git describe --long --tags --abbrev=16 --match "${tagPrefix}-*")"
+set -- ${revisionIdentifier//-/ }
+revisionVersion="${2}"
+revisionIncrement="${3}"
+revisionCommit="${4#g}"
 
-set -- ${version//./ }
-major="${1}"
-minor="${2}"
+set -- ${revisionVersion//./ }
+versionMajor="${1}"
+versionMinor="${2}"
 
 printHeader
-printResource string app_version_name "%d.%d.%d" "${major}" "${minor}" "${incredment}"
-printResource integer app_version_code "0x%02X%02X%04X" "${major}" "${minor}" "${incredment}"
+printResource string app_version_name "%d.%d.%d" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
+printResource integer app_version_code "0x%02X%02X%04X" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
+printResource string app_source_revision "git:%s" "${revisionCommit}"
+printResource string app_build_time "%s" "$(date --utc +'%Y-%m-%d@%H:%M %Z')"
 printFooter
 
 exit 0

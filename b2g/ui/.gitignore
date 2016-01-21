@@ -1,7 +1,6 @@
 /signing.properties
 
 /local.properties
-/assets/build.*
 /res/values/version.xml
 
 /bin/

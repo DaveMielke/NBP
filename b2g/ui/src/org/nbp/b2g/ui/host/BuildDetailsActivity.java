@@ -40,6 +40,10 @@ public class BuildDetailsActivity extends ProgrammaticActivity {
     addDetail(getString(label), value);
   }
 
+  private void addDetail (int label, int value) {
+    addDetail(label, getString(value));
+  }
+
   private void addSystemProperty (int label, String property) {
     addDetail(label, System.getProperty(property));
   }
@@ -48,26 +52,6 @@ public class BuildDetailsActivity extends ProgrammaticActivity {
     if (!Build.UNKNOWN.equals(value)) {
       addDetail(label, value);
     }
-  }
-
-  private boolean addUserInterfaceAsset (String property, final int... labels) {
-    InputProcessor inputProcessor = new InputProcessor() {
-      @Override
-      protected final boolean handleLine (String text, int number) {
-        int label = labels[number];
-        text = text.trim();
-
-        if (!text.isEmpty()) {
-          addDetail(label, text);
-        } else {
-          Log.w(LOG_TAG, "build property not available: " + label);
-        }
-
-        return number < (labels.length - 1);
-      }
-    };
-
-    return inputProcessor.processInput(("build." + property));
   }
 
   private final static String TIME_FORMAT = "yyyy-MM-dd@HH:mm zzz";
@@ -89,8 +73,9 @@ public class BuildDetailsActivity extends ProgrammaticActivity {
 
     addAndroidBuildField(R.string.build_activity_label_hardware_serial, Build.SERIAL);
 
-    addUserInterfaceAsset("revision", R.string.build_activity_label_ui_revision);
-    addUserInterfaceAsset("time", R.string.build_activity_label_ui_time);
+    addDetail(R.string.build_activity_label_ui_version, R.string.app_version_name);
+    addDetail(R.string.build_activity_label_ui_revision, R.string.app_source_revision);
+    addDetail(R.string.build_activity_label_ui_time, R.string.app_build_time);
 
     addAndroidBuildField(R.string.build_activity_label_android_build, Build.ID);
     addTime(R.string.build_activity_label_android_time, Build.TIME);

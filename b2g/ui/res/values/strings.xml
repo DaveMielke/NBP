@@ -19,7 +19,8 @@
   <string name="build_activity_label_linux_version">Linux Kernel Version</string>
   <string name="build_activity_label_metec_version">Metec Driver Version</string>
   <string name="build_activity_label_radio_version">Radio Version</string>
-  <string name="build_activity_label_ui_revision">UI Build Revision</string>
+  <string name="build_activity_label_ui_version">UI Package Version</string>
+  <string name="build_activity_label_ui_revision">UI Source Revision</string>
   <string name="build_activity_label_ui_time">UI Build Time</string>
 
   <string name="clock_activity_label">B2G Digital Clock</string>
