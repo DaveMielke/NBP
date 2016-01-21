@@ -4,6 +4,7 @@ Recovery Mode
 .. |BRLTTY home page URL| replace:: http://brltty.com
 .. |BRLTTY key table URL| replace:: http://brltty.com/doc/KeyBindings/brl-bg-all.html
 
+.. |internal memory| replace:: |internal memory path| (the internal memory partition)
 .. |the SD card| replace:: |SD card path| (the removable SD card)
 .. |the system cache| replace:: |system cache path| (the system cache partition)
 .. |user data| replace:: |user data path| (the user data partition)
@@ -167,6 +168,7 @@ The Top-Level Folder List
 The top-level folder list contains the volumes that can be browsed.
 They are:
 
+* |internal memory|
 * |the SD card|
 * |the system cache|
 * |user data|

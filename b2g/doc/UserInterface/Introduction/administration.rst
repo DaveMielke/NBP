@@ -88,11 +88,11 @@ Update User Interface
   1) You'll be asked to choose a package downloader.
      We recommend **ES Downloader**.
 
-  2) When the download is complete, select `Open File`.
+  2) When the download is complete, select ``Open File``.
      You'll then see lots of information about the package.
      Compare the new version of the package
      with that of the already-installed one.
-     Select `Install` if you wish to proceed or `Cancel` if not.
+     Select ``Install`` if you wish to proceed or ``Cancel`` if not.
 
   3) You'll be asked to choose a package installer.
      We recommend **Package Installer**.
@@ -107,7 +107,7 @@ Update User Interface
      This involves restarting the |user interface|, so don't worry
      if the keys stop responding and the display goes blank for a moment.
 
-  7) Click `Done` to clear the confirmation screen.
+  7) Click ``Done`` to clear the confirmation screen.
 
 Verify System Update
   Verify a `System Update`_ without applying it.

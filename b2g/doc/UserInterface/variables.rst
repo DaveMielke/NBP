@@ -1,6 +1,7 @@
 .. |product name| replace:: B2G
 .. |user interface| replace:: |product name| User Interface
 
+.. |internal memory path| replace:: ``/storage/sdcard0``
 .. |SD card path| replace:: ``/storage/sdcard1``
 .. |USB host port path| replace:: ``/storage/usb1``
 .. |USB OTG port path| replace:: ``/storage/usb2``
