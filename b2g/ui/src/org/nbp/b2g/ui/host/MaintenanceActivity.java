@@ -231,8 +231,8 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     }.execute();
   }
 
-  private void verifyUpdate (final File file, final boolean apply) {
-    final String progressMessage = getString(R.string.maintenance_VerifyUpdate_progress);
+  private void verifySystemUpdate (final File file, final boolean apply) {
+    final String progressMessage = getString(R.string.maintenance_VerifySystemUpdate_progress);
     setMessage(progressMessage);
 
     new MaintenanceTask() {
@@ -261,14 +261,14 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         if (apply) {
           applyUpdate(file);
         } else {
-          setMessage(R.string.maintenance_VerifyUpdate_done);
+          setMessage(R.string.maintenance_VerifySystemUpdate_done);
         }
       }
     }.execute();
   }
 
-  private void verifyUpdate (final boolean apply) {
-    setMessage(R.string.maintenance_VerifyUpdate_finding);
+  private void verifySystemUpdate (final boolean apply) {
+    setMessage(R.string.maintenance_VerifySystemUpdate_finding);
 
     findFile(
       new ActivityResultHandler() {
@@ -276,7 +276,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
         public void handleActivityResult (int code, Intent intent) {
           switch (code) {
             case RESULT_OK:
-              verifyUpdate(new File(intent.getData().getPath()), apply);
+              verifySystemUpdate(new File(intent.getData().getPath()), apply);
               break;
 
             default:
@@ -288,13 +288,13 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     );
   }
 
-  private View createVerifyUpdateButton () {
+  private View createVerifySystemUpdateButton () {
     Button button = newButton(
-      R.string.maintenance_VerifyUpdate_label,
+      R.string.maintenance_VerifySystemUpdate_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          verifyUpdate(false);
+          verifySystemUpdate(false);
         }
       }
     );
@@ -308,7 +308,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          verifyUpdate(true);
+          verifySystemUpdate(true);
         }
       }
     );
@@ -376,9 +376,9 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
-  private View createRecoveryLogButton () {
+  private View createViewRecoveryLogButton () {
     Button button = newButton(
-      R.string.maintenance_RecoveryLog_label,
+      R.string.maintenance_ViewRecoveryLog_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -430,11 +430,11 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       createRestartSystemButton(),
 
       createUpdateUserInterfaceButton(),
-      createVerifyUpdateButton(),
+      createVerifySystemUpdateButton(),
       createUpdateSystemButton(),
 
-      createRecoveryLogButton(),
       createRecoveryModeButton(),
+      createViewRecoveryLogButton(),
 
       createClearCacheButton(),
       createFactoryResetButton(),

@@ -26,7 +26,7 @@ The following operations may be performed:
 Restart System
   Reboot the |product name|.
 
-Verify Update
+Verify System Update
   Verify a `System Update`_ without applying it.
   |uses file picker|
 
@@ -35,12 +35,12 @@ Update System
   |uses file picker|
   |uses recovery mode|
 
-Recovery Log
-  View the log of the most recent reboot of the |product name|
-  into `Recovery Mode`_.
-
 Recovery Mode
   Reboot the |product name| into `Recovery Mode`_.
+
+View Recovery Log
+  View the log of the most recent reboot of the |product name|
+  into `Recovery Mode`_.
 
 Clear Cache
   Reinitialize the system cache partition.
