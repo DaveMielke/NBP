@@ -49,6 +49,10 @@ public class TypeCharacter extends Action {
             ));
           }
 
+          if (isCursor && (start == 0) && (endpoint.getBrailleLength() > 0)) {
+            TranslationUtilities.cacheBraille(character);
+          }
+
           CharSequence braille = endpoint.getBrailleCharacters();
           SpannableStringBuilder sb = new SpannableStringBuilder(braille);
           sb.replace(start, end, Character.toString(character));

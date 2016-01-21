@@ -55,6 +55,13 @@ public abstract class TranslationUtilities {
     return newTextTranslation(Character.toString(braille));
   }
 
+  public static void cacheBraille (char character) {
+    String braille = Character.toString(character);
+    TextTranslation translation = newTextTranslation(braille);
+    CharSequence text = translation.getTextWithSpans();
+    TranslationCache.put(text, translation);
+  }
+
   private TranslationUtilities () {
   }
 }
