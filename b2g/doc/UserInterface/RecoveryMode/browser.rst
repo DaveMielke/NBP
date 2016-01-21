@@ -17,18 +17,7 @@ A single-character indicator is appended to the name of the current
 file system entry that describes what it is.
 The indicators are:
 
-=========  ==================
-Indicator  Type
----------  ------------------
-\/         folder (directory)
-\*         executable file
-\|         FIFO (named pipe)
-\=         socket
-\%         character device
-\$         block device
-\@         symbolic link
-\?         unknown
-=========  ==================
+.. include:: browser-indicators.rst
 
 The Top-Level Folder List
 ~~~~~~~~~~~~~~~~~~~~~~~~~
