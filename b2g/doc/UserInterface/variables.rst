@@ -8,6 +8,13 @@
 .. |system cache path| replace:: ``/cache``
 .. |user data path| replace:: ``/data``
 
+.. |internal memory| replace:: |internal memory path| (the internal memory partition)
+.. |the SD card| replace:: |SD card path| (the removable SD card)
+.. |the host USB port| replace:: |USB host port path| (the host USB port)
+.. |the USB OTG port| replace:: |USB OTG port path| (the USB OTG port)
+.. |the system cache| replace:: |system cache path| (the system cache partition)
+.. |user data| replace:: |user data path| (the user data partition)
+
 .. |long press timeout| replace:: half a second
 .. |intermediate action timeout| replace:: five seconds
 
