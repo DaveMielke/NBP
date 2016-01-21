@@ -404,6 +404,10 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     launchViewer(getContext().getResources().getString(uri));
   }
 
+  private void launchViewer (File file) {
+    launchViewer(Uri.fromFile(file));
+  }
+
   private View createUpdateUserInterfaceButton () {
     Button button = newButton(
       R.string.maintenance_UpdateUserInterface_label,
