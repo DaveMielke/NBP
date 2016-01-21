@@ -23,6 +23,11 @@ LOCAL_FILES += $(ANDROID_BUILD_TIME)
 $(ANDROID_BUILD_TIME): FORCE
 	date --utc +'%Y-%m-%d@%H:%M %Z' >$@
 
+XML_VERSION_RESOURCE = res/values/version.xml
+LOCAL_FILES += $(XML_VERSION_RESOURCE)
+$(XML_VERSION_RESOURCE)::
+	./mkversion >$@
+
 ANDROID_FILES += custom_rules.xml
 ANDROID_FILES += signing.properties
 

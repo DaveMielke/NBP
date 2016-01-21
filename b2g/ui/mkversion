@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+tagPrefix="B2G_UI"
+xmlVersion="1.0"
+xmlEncoding="utf-8"
+
+revision="$(git describe --long --tags --match "${tagPrefix}-*")"
+set -- ${revision//-/ }
+version="${2}"
+distance="${3}"
+
+set -- ${version//./ }
+major="${1}"
+minor="${2}"
+
+printf "<?xml version=\"%s\" encoding=\"%s\" ?>\\n\\n" "${xmlVersion}" "${xmlEncoding}"
+printf "<resources>\\n"
+printf "  <string name=\"app_version_name\">%s</string>\\n" "${version}"
+printf "  <integer name=\"app_version_code\">0x%02X%02X%04X</integer>\\n" "${major}" "${minor}" "${distance}"
+printf "</resources>\\n"
+
+exit 0
