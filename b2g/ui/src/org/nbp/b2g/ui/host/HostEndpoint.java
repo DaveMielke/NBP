@@ -53,24 +53,24 @@ public class HostEndpoint extends Endpoint {
   }
 
   private static CharSequence toText (CharSequence text) {
-    if (text instanceof Spanned) {
-      Spanned spanned = (Spanned)text;
-      Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
+    if (false) {
+      if (text instanceof Spanned) {
+        Spanned spanned = (Spanned)text;
+        Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
 
-      if (spans != null) {
-        if (spans.length > 0) {
-          SpannableStringBuilder sb = new SpannableStringBuilder(text);
+        if (spans != null) {
+          if (spans.length > 0) {
+            SpannableStringBuilder sb = new SpannableStringBuilder(text);
 
-          /*
-          for (Object span : spans) {
-            Log.d(LOG_TAG, "span object: " + span.getClass().getName());
+            for (Object span : spans) {
+              Log.d(LOG_TAG, "span object: " + span.getClass().getName());
+            }
+
+            sb.append('|');
+            sb.append(Integer.toString(spans.length));
+
+            return sb.subSequence(0, sb.length());
           }
-
-          sb.append('|');
-          sb.append(spans.length);
-          */
-
-          return sb.subSequence(0, sb.length());
         }
       }
     }
