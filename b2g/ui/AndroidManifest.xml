@@ -3,11 +3,11 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.nbp.b2g.ui"
-    android:versionCode="9"
-    android:versionName="1.8"
+    android:versionCode="@integer/app_version_code"
+    android:versionName="@string/app_version_name"
     >
 
-  <!-- Android 4.1 (Jellybean) -->
+  <!-- Android 4.1 (JellyBean) -->
   <uses-sdk android:minSdkVersion="16" />
 
   <!-- for waking up the system on key presses -->
