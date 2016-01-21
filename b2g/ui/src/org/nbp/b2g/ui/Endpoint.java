@@ -789,7 +789,8 @@ public abstract class Endpoint {
         int last = length;
         if (!isInputArea()) last -= 1;
 
-        if ((findLastBrailleOffset(last) - findFirstBrailleOffset(indent)) < size) {
+        if ((last < 0) ||
+            ((findLastBrailleOffset(last) - findFirstBrailleOffset(indent)) < size)) {
           int offset = getLineStart() + length + 1;
           if (offset > getTextLength()) return false;
 
