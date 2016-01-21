@@ -1,48 +1,13 @@
 Additional Features
 -------------------
 
-Shortcuts
-~~~~~~~~~
+Reading This Document
+~~~~~~~~~~~~~~~~~~~~~
 
-To Useful Android Screens
-`````````````````````````
-
-The following shortcuts to useful Android screens are provided:
-
-Space+p (dots 1234)
-  Go to the Power Off screen.
-
-Space+? (dots 1456)
-  Go to the currently registered **assist** app. The default is
-  ``Google Now``.
-
-Space+s (dots 234)
-  Go to a Settings screen. Another key combination must be pressed within
-  |intermediate action timeout| in order to specify which Settings screen to go
-  to:
-
-  Space
-    Go to the main Settings screen.
-
-  a (dot 1)
-    Go to the Accessibility Settings screen.
-
-  b (dots 12)
-    Go to the Bluetooth Settings screen.
-
-  w (dots 2456)
-    Go to the Wi-Fi Settings screen.
-
-To Other |product name| Applications
-````````````````````````````````````
-
-The following shortcuts to other |product name| applications are provided:
-
-Space+ed (dots 1246)
-  Go to the |product name| editor.
-
-Describing how any of these applications work is, of course, beyond the scope
-of this document.
+A copy of this document is available in plain text on the |product name|.
+Press Space+h (dots 125) to access it.
+See `Finding Text within the Current Screen Element`_ for tips on how to find
+your way around within it.
 
 Checking the Time
 ~~~~~~~~~~~~~~~~~
@@ -92,6 +57,49 @@ within a screen that looks something like this::
   Linux Kernel Version  2.6.37
   Firmware Version      3.1
   Metec Driver Version  1.00
+
+Shortcuts
+~~~~~~~~~
+
+To Useful Android Screens
+`````````````````````````
+
+The following shortcuts to useful Android screens are provided:
+
+Space+p (dots 1234)
+  Go to the Power Off screen.
+
+Space+? (dots 1456)
+  Go to the currently registered **assist** app. The default is
+  ``Google Now``.
+
+Space+s (dots 234)
+  Go to a Settings screen. Another key combination must be pressed within
+  |intermediate action timeout| in order to specify which Settings screen to go
+  to:
+
+  Space
+    Go to the main Settings screen.
+
+  a (dot 1)
+    Go to the Accessibility Settings screen.
+
+  b (dots 12)
+    Go to the Bluetooth Settings screen.
+
+  w (dots 2456)
+    Go to the Wi-Fi Settings screen.
+
+To Other |product name| Applications
+````````````````````````````````````
+
+The following shortcuts to other |product name| applications are provided:
+
+Space+ed (dots 1246)
+  Go to the |product name| editor.
+
+Describing how any of these applications work is, of course, beyond the scope
+of this document.
 
 Speech
 ~~~~~~
@@ -198,12 +206,4 @@ When this mode is enabled:
 * If a component of the |user interface| crashes, an email containing the Java
   backtrace of that crash is sent to the |product name| developers for
   analysis. The email doesn't contain any sensitive information.
-
-Reading This Document
-~~~~~~~~~~~~~~~~~~~~~
-
-A copy of this document is available in plain text on the |product name|.
-Press Space+h (dots 125) to access it.
-See `Finding Text within the Current Screen Element`_ for tips on how to find
-your way around within it.
 
