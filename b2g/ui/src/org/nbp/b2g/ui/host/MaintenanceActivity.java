@@ -390,18 +390,27 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
+  private static void launchViewer (Uri uri) {
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    intent.setData(uri);
+    ApplicationContext.launchActivity(intent);
+  }
+
+  private static void launchViewer (String uri) {
+    launchViewer(Uri.parse(uri));
+  }
+
+  private void launchViewer (int uri) {
+    launchViewer(getContext().getResources().getString(uri));
+  }
+
   private View createUpdateUserInterfaceButton () {
     Button button = newButton(
       R.string.maintenance_UpdateUserInterface_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Intent intent = new Intent(Intent.ACTION_VIEW);
-
-          String url = getContext().getResources().getString(R.string.url_ui);
-          intent.setData(Uri.parse(url));
-
-          ApplicationContext.launchActivity(intent);
+          launchViewer(R.string.uri_ui_apk);
         }
       }
     );
@@ -414,9 +423,9 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return createVerticalGroup(
       (messageView = newTextView()),
 
-      createUpdateUserInterfaceButton(),
       createRestartSystemButton(),
 
+      createUpdateUserInterfaceButton(),
       createVerifyUpdateButton(),
       createUpdateSystemButton(),
 
