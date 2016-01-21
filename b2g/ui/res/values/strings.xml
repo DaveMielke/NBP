@@ -42,6 +42,7 @@
   <string name="maintenance_RestartSystem_starting">rebooting Android</string>
   <string name="maintenance_UpdateSystem_label">Update System</string>
   <string name="maintenance_UpdateSystem_start">applying update</string>
+  <string name="maintenance_UpdateUserInterface_label">Update UI</string>
   <string name="maintenance_VerifyUpdate_label">Verify Update</string>
   <string name="maintenance_VerifyUpdate_finding">finding update</string>
   <string name="maintenance_VerifyUpdate_progress">verifying update</string>

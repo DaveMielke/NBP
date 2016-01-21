@@ -390,11 +390,31 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
+  private View createUpdateUserInterfaceButton () {
+    Button button = newButton(
+      R.string.maintenance_UpdateUserInterface_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          Intent intent = new Intent(Intent.ACTION_VIEW);
+
+          String url = getContext().getResources().getString(R.string.url_ui);
+          intent.setData(Uri.parse(url));
+
+          ApplicationContext.launchActivity(intent);
+        }
+      }
+    );
+
+    return button;
+  }
+
   @Override
   protected final View createContentView () {
     return createVerticalGroup(
       (messageView = newTextView()),
 
+      createUpdateUserInterfaceButton(),
       createRestartSystemButton(),
 
       createVerifyUpdateButton(),
