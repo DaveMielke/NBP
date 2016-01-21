@@ -70,6 +70,11 @@ Maintenance Operations
 
 The following operations may be performed:
 
+.. |uses internet| replace::
+
+  This operation requires access to the Internet.
+  Data transfer charges may apply.
+
 .. |uses recovery mode| replace::
 
   The |product name| will be temporarily rebooted into `Recovery Mode`_.
@@ -84,30 +89,8 @@ Restart System
 
 Update User Interface
   Upgrade to the latest version of the |user interface|.
-
-  1) You'll be asked to choose a package downloader.
-     We recommend **ES Downloader**.
-
-  2) When the download is complete, select ``Open File``.
-     You'll then see lots of information about the package.
-     Compare the new version of the package
-     with that of the already-installed one.
-     Select ``Install`` if you wish to proceed or ``Cancel`` if not.
-
-  3) You'll be asked to choose a package installer.
-     We recommend **Package Installer**.
-
-  4) You'll be asked to confirm that you really want
-     to replace the currently-installed version with the new one.
-
-  5) You'll be asked to consent that the |user interface|
-     can perform lots of priviletged system operations.
-
-  6) The currently running version will be replaced by the new one.
-     This involves restarting the |user interface|, so don't worry
-     if the keys stop responding and the display goes blank for a moment.
-
-  7) Click ``Done`` to clear the confirmation screen.
+  See `Updating the User Interface`_ for details.
+  |uses internet|
 
 Verify System Update
   Verify a `System Update`_ without applying it.
@@ -135,6 +118,33 @@ Factory Reset
 
 Boot Loader
   Reboot the |product name| into its `Boot Loader`_.
+
+Updating the User Interface
+```````````````````````````
+
+1) You'll be asked to choose a package downloader.
+   We recommend **ES Downloader**.
+
+2) When the download is complete, select ``Open File``.
+   You'll then see lots of information about the package.
+   Compare the new version of the package
+   with that of the already-installed one.
+   Select ``Install`` if you wish to proceed or ``Cancel`` if not.
+
+3) You'll be asked to choose a package installer.
+   We recommend **Package Installer**.
+
+4) You'll be asked to confirm that you really want
+   to replace the currently-installed version with the new one.
+
+5) You'll be asked to consent that the |user interface|
+   can perform lots of priviletged system operations.
+
+6) The currently running version will be replaced by the new one.
+   This involves restarting the |user interface|, so don't worry
+   if the keys stop responding and the display goes blank for a moment.
+
+7) Click ``Done`` to clear the confirmation screen.
 
 System Update
 `````````````
