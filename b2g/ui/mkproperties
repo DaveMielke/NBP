@@ -4,11 +4,11 @@ set -e
 . ../../properties.sh
 . ../../resources.sh
 
-printResourcesPrologue
-printSimpleResource integer app_version_code "${versionCode}"
-printSimpleResource string app_version_name "${versionNumber}"
-printSimpleResource string app_source_revision "${sourceRevision}"
-printSimpleResource string app_build_time "${buildDate}@${buildTime} ${buildZone}"
-printResourcesEpilogue
+writeResourcesPrologue
+writeSimpleResource integer app_version_code "${versionCode}"
+writeSimpleResource string app_version_name "${versionNumber}"
+writeSimpleResource string app_source_revision "${sourceRevision}"
+writeSimpleResource string app_build_time "${buildDate}@${buildTime} ${buildZone}"
+writeResourcesEpilogue
 
 exit 0

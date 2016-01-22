@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-printProperty() {
+writeProperty() {
   local name="${1}"
   local value="${2}"
 
@@ -10,8 +10,8 @@ printProperty() {
 
 . ../../properties.sh
 
-printProperty "package version" "${versionNumber}"
-printProperty "source revision" "${sourceRevision}"
-printProperty "build time" "${buildDate} ${buildTime} ${buildZone}"
+writeProperty "package version" "${versionNumber}"
+writeProperty "source revision" "${sourceRevision}"
+writeProperty "build time" "${buildDate} ${buildTime} ${buildZone}"
 
 exit 0
