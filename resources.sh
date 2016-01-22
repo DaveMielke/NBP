@@ -18,3 +18,20 @@ printResource() {
 
   echo "  <${type} name=\"${name}\">${value}</${type}>"
 }
+
+printResourceArray() {
+  local type="${1}"
+  local name="${2}"
+  shift 2
+
+  local element="${type}-array"
+  echo "  <${element} name=\"${name}\">"
+
+  local value
+  for value
+  do
+    echo "    <item>${value}</item>"
+  done
+
+  echo "  </${element}>"
+}
