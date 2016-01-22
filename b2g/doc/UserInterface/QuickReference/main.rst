@@ -22,27 +22,27 @@ Key Bindings
 Common Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: all.rst
+.. include:: keys-all.rst
 
 Input Operations
 ~~~~~~~~~~~~~~~~
 
-.. include:: input.rst
+.. include:: keys-input.rst
 
 Screen Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: screen.rst
+.. include:: keys-screen.rst
 
 Speech Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: speech.rst
+.. include:: keys-speech.rst
 
 Legacy Bindings
 ~~~~~~~~~~~~~~~
 
-.. include:: legacy.rst
+.. include:: keys-legacy.rst
 
 Developer Operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -50,10 +50,10 @@ Developer Operations
 Common Actions
 ``````````````
 
-.. include:: developer-all.rst
+.. include:: keys-developer-all.rst
 
 Screen Actions
 ``````````````
 
-.. include:: developer-screen.rst
+.. include:: keys-developer-screen.rst
 
