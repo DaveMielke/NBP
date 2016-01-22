@@ -23,5 +23,9 @@ ANDROID_FILES += signing.properties
 
 apk::
 	$(MAKE) -C ../liblouis local-files native
+	$(MAKE) -C ../doc all
+
+clean::
+	$(MAKE) -C ../doc $@
 
 include ../../epilogue.mk
