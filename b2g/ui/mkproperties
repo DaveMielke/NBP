@@ -4,16 +4,6 @@ set -e
 xmlVersion="1.0"
 xmlEncoding="utf-8"
 
-printHeader() {
-  echo "<?xml version=\"${xmlVersion}\" encoding=\"${xmlEncoding}\" ?>"
-  echo ""
-  echo "<resources>"
-}
-
-printFooter() {
-  echo "</resources>"
-}
-
 printProperty() {
   local type="${1}"
   local name="${2}"
@@ -24,11 +14,14 @@ printProperty() {
 
 . ../../properties.sh
 
-printHeader
+echo "<?xml version=\"${xmlVersion}\" encoding=\"${xmlEncoding}\" ?>"
+echo ""
+echo "<resources>"
+
 printProperty integer app_version_code "${versionCode}"
 printProperty string app_version_name "${versionNumber}"
 printProperty string app_source_revision "${sourceRevision}"
 printProperty string app_build_time "${buildDate}@${buildTime} ${buildZone}"
-printFooter
 
+echo "</resources>"
 exit 0
