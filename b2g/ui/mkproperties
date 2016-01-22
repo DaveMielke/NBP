@@ -5,30 +5,30 @@ xmlVersion="1.0"
 xmlEncoding="utf-8"
 
 printHeader() {
-  printf "<?xml version=\"%s\" encoding=\"%s\" ?>\\n\\n" "${xmlVersion}" "${xmlEncoding}"
-  printf "<resources>\\n"
+  echo "<?xml version=\"${xmlVersion}\" encoding=\"${xmlEncoding}\" ?>"
+  echo ""
+  echo "<resources>"
 }
 
 printFooter() {
-  printf "</resources>\\n"
+  echo "</resources>"
 }
 
 printProperty() {
   local type="${1}"
   local name="${2}"
-  local format="${3}"
-  shift 3
+  local value="${3}"
 
-  printf "  <${type} name=\"${name}\">${format}</${type}>\\n" "${@}"
+  echo "  <${type} name=\"${name}\">${value}</${type}>"
 }
 
-. ../../revision.sh
+. ../../properties.sh
 
 printHeader
-printProperty integer app_version_code "0x%02X%02X%04X" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
-printProperty string app_version_name "%d.%d.%d" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
-printProperty string app_source_revision "git:%s" "${revisionCommit}"
-printProperty string app_build_time "%s" "$(date --utc +'%Y-%m-%d@%H:%M %Z')"
+printProperty integer app_version_code "$(printf "0x%02X%02X%04X" "${versionMajor}" "${versionMinor}" "${revisionIncrement}")"
+printProperty string app_version_name "${packageVersion}"
+printProperty string app_source_revision "${sourceRevision}"
+printProperty string app_build_time "${buildDate}@${buildTime} ${buildZone}"
 printFooter
 
 exit 0
