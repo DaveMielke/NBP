@@ -4,6 +4,8 @@
 The |user interface|
 ====================
 
+.. include:: ../metadata.rst
+
 .. contents::
 
 .. include:: PhysicalDescription/main.rst

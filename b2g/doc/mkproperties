@@ -13,6 +13,6 @@ printProperty() {
 
 printProperty "package version" "%d.%d.%d" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
 printProperty "source revision" "git:%s" "${revisionCommit}"
-printProperty "build time" "%s" "$(date --utc +'%Y-%m-%d@%H:%M %Z')"
+printProperty "build time" "%s" "$(date --utc +'%Y-%m-%d %H:%M %Z')"
 
 exit 0
