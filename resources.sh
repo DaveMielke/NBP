@@ -1,17 +1,17 @@
 xmlVersion="1.0"
 xmlEncoding="utf-8"
 
-printResourcesHeader() {
+printResourcesPrologue() {
   echo "<?xml version=\"${xmlVersion}\" encoding=\"${xmlEncoding}\" ?>"
   echo ""
   echo "<resources>"
 }
 
-printResourcesFooter() {
+printResourcesEpilogue() {
   echo "</resources>"
 }
 
-printResource() {
+printSimpleResource() {
   local type="${1}"
   local name="${2}"
   local value="${3}"
@@ -19,7 +19,7 @@ printResource() {
   echo "  <${type} name=\"${name}\">${value}</${type}>"
 }
 
-printResourceArray() {
+printArrayResource() {
   local type="${1}"
   local name="${2}"
   shift 2
