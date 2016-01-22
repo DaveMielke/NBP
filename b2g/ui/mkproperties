@@ -1,27 +1,14 @@
 #!/bin/sh
 set -e
 
-xmlVersion="1.0"
-xmlEncoding="utf-8"
-
-printProperty() {
-  local type="${1}"
-  local name="${2}"
-  local value="${3}"
-
-  echo "  <${type} name=\"${name}\">${value}</${type}>"
-}
-
 . ../../properties.sh
+. ../../resources.sh
 
-echo "<?xml version=\"${xmlVersion}\" encoding=\"${xmlEncoding}\" ?>"
-echo ""
-echo "<resources>"
+printResourcesHeader
+printResource integer app_version_code "${versionCode}"
+printResource string app_version_name "${versionNumber}"
+printResource string app_source_revision "${sourceRevision}"
+printResource string app_build_time "${buildDate}@${buildTime} ${buildZone}"
+printResourcesFooter
 
-printProperty integer app_version_code "${versionCode}"
-printProperty string app_version_name "${versionNumber}"
-printProperty string app_source_revision "${sourceRevision}"
-printProperty string app_build_time "${buildDate}@${buildTime} ${buildZone}"
-
-echo "</resources>"
 exit 0
