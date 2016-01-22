@@ -10,7 +10,7 @@ printProperty() {
 
 . ../../properties.sh
 
-printProperty "package version" "${packageVersion}"
+printProperty "package version" "${versionNumber}"
 printProperty "source revision" "${sourceRevision}"
 printProperty "build time" "${buildDate} ${buildTime} ${buildZone}"
 

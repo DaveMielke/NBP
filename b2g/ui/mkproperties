@@ -25,8 +25,8 @@ printProperty() {
 . ../../properties.sh
 
 printHeader
-printProperty integer app_version_code "$(printf "0x%02X%02X%04X" "${versionMajor}" "${versionMinor}" "${revisionIncrement}")"
-printProperty string app_version_name "${packageVersion}"
+printProperty integer app_version_code "${versionCode}"
+printProperty string app_version_name "${versionNumber}"
 printProperty string app_source_revision "${sourceRevision}"
 printProperty string app_build_time "${buildDate}@${buildTime} ${buildZone}"
 printFooter

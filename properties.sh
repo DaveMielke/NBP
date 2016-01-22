@@ -15,5 +15,6 @@ buildDate="${1}"
 buildTime="${2}"
 buildZone="${3}"
 
-packageVersion="${versionMajor}.${versionMinor}.${revisionIncrement}"
+versionCode=$(((versionMajor << 24) | (versionMinor << 16) | revisionIncrement))
+versionNumber="${versionMajor}.${versionMinor}.${revisionIncrement}"
 sourceRevision="git:${revisionCommit}"
