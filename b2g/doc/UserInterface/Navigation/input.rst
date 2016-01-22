@@ -14,7 +14,7 @@ that follows it.
 
 * Deleting it joins the line to the start of the next one.
 
-When a character is typed (see `Typing`_), then:
+When a character is typed (see `Typing Characters`_), then:
 
 * If text hasn't been selected then the typed character is inserted just to the
   left of the cursor.

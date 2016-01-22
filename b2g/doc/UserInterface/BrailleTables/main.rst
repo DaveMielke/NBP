@@ -9,8 +9,8 @@ Dot Numbering
 
 .. include:: dots.rst
 
-Unicode Braille Characters
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unicode Braille Patterns
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Actual braille cells are represented by the 256 characters within the Unicode
 range U+2800 through U+28FF. Each of the eight bits within the low-order byte

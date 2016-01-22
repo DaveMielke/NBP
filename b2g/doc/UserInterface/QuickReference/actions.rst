@@ -41,8 +41,8 @@
 .. |InputModeText| replace:: set the input mode to text
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
-.. |LiteraryBrailleOff| replace:: switch to computer braille (eight dots)
-.. |LiteraryBrailleOn| replace:: switch to literary braille (six dots)
+.. |LiteraryBrailleOff| replace:: select computer braille (eight dots) mode
+.. |LiteraryBrailleOn| replace:: select literary braille (six dots) mode
 .. |LogActionsOff| replace:: disable the logging of user-requested actions
 .. |LogActionsOn| replace:: enable the logging of user-requested actions
 .. |LogBrailleOff| replace:: disable the logging of braille display updates

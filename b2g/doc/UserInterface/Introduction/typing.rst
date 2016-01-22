@@ -1,5 +1,5 @@
-Typing
-------
+Typing Characters
+-----------------
 
 Input Modes
 ~~~~~~~~~~~
@@ -35,7 +35,7 @@ Directly Typing Unicode Braille Characters
 Space+Dot8+i (dots 24) sets the input mode to Braille.
 
 In this input mode, the characters that render in text as actual braille cells
-(see `Unicode Braille Characters`_) can be directly typed by pressing the
+(see `Unicode Braille Patterns`_) can be directly typed by pressing the
 corresponding keys as a single combination.
 
 Two of these characters can't be typed by pressing the corresponding keys -
