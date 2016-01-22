@@ -32,6 +32,23 @@ literary braille symbol that it's behind. The only exception to this rule is
 when setting the end of a text selection (see `Selecting Text`_). In that case
 it corresponds to the last character of the symbol.
 
+A cursor routing key may, on occasion, seem to be corresponding to the wrong
+character. This is because the rules used to define the currently selected
+braille code sometimes need to group more than one symbol together. For
+example, in UEB (Unified English Braille), at the time of this writing:
+
+* There are two ways to contract "ear": either by using the "ea" contraction or
+  by using the "ar" contraction. To ensure that the "ar" contraction is always
+  used, the whole sequence is covered by a single rule. The cursor routing key
+  behind the "ar" contraction, therefore, unexpectedly corresponds to the "e"
+  rather than to the "a".
+
+* The honourific title "Saint" is often written as "St.". In order to prevent
+  the "st" contraction from being used, there's a rule that also covers the
+  trailing period. When setting the end of a text selection, therefore, the
+  cursor routing keys behind the "s" and the "t" unexpectedly set the end of
+  the selection to the period.
+
 Deleting characters (see `Input Areas`_) is done one text character at a time.
 
 A special literary braille prefix, e.g. a capitalization sign, may not appear
