@@ -15,6 +15,27 @@ It's the default, and is typically used for:
 
 * Reading books.
 
+Characters are rendered using the currently selected braille code.
+Space+g (dots 1245) displays a message (see `Messages`_) that confirms
+which braille code has been selected.
+Space+Dot8+g (dots 1245) selects the next braille code,
+and Space+Dot7+g (dots 1245) selects the previous braille code.
+The default braille code is UEB Grade 2.
+
+The following braille codes are supported:
+
+* English
+
+  + UEB (Unified English Braille) grades 1 and 2.
+  + EBAE (English Braille, American Edition) grades 1 and 2.
+
+.. |LibLouis home page URL| replace:: http://liblouis.org/
+
+We'd like to take this opportunity to publicly thank the LibLouis project
+(see |LibLouis home page URL|)
+as it's the package that's being used by the |user interface|
+to perform translation to/from literary braille.
+
 Computer Braille
 ''''''''''''''''
 
@@ -22,6 +43,10 @@ Space+8 (dots 236) selects computer braille (eight dot) mode.
 It's typically used for:
 
 * Computer programming.
+
+* When there's a need for a strict one-to-one correspondence
+  between a character and its braille representation,
+  e.g. to verify column alignment.
 
 The basic characters are rendered using the `North American Braille Computer
 Code`_. Internally-designed representations for `Additional Common Symbols`_,
