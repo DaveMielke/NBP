@@ -6,6 +6,9 @@ The Top
 
 .. image:: b2g-top.jpg
   :align: right
+  :width: 1143 px
+  :height: 857 px
+  :scale: 60 %
   :alt: [picture of top showing keys and braille display]
 
 The eight, rectangular, concave keys (in two groups of four) near the 
@@ -35,6 +38,9 @@ The Front
 
 .. image:: b2g-front.jpg
   :align: right
+  :width: 1143 px
+  :height: 857 px
+  :scale: 60 %
   :alt: [picture of front showing speakers and microphone]
 
 Two internal speakers (for the left and right stereo channels) are,
@@ -48,6 +54,9 @@ The Left Side
 
 .. image:: b2g-left.jpg
   :align: right
+  :width: 896 px
+  :height: 672 px
+  :scale: 76 %
   :alt: [picture of left side showing host USB port]
 
 The earphone/microphone jack (3.5mm) is near the front of the left side.
@@ -67,6 +76,9 @@ The Right Side
 
 .. image:: b2g-right.jpg
   :align: right
+  :width: 1143 px
+  :height: 857 px
+  :scale: 60 %
   :alt: [picture of right side showing power switch and volume controls]
 
 The volume controls are the two, small, round buttons near the front of 
@@ -108,6 +120,9 @@ The Back
 
 .. image:: b2g-back.jpg
   :align: right
+  :width: 1306 px
+  :height: 980 px
+  :scale: 52 %
   :alt: [picture of back showing SD card slot]
 
 The SD card slot is the long slot in the middle of the back.
@@ -121,6 +136,9 @@ The Bottom
 
 .. image:: b2g-bottom.jpg
   :align: right
+  :width: 1143 px
+  :height: 857 px
+  :scale: 60 %
   :alt: [picture of bottom]
 
 The camera's lens is the small circle on the bottom that's about 2cm 
@@ -146,6 +164,9 @@ The Removable Cover
 
 .. image:: b2g-open.jpg
   :align: right
+  :width: 1143 px
+  :height: 857 px
+  :scale: 60 %
   :alt: [picture of bottom with cover removed (including MC9090 phone card in its slot)]
 
 There's a removable, rectangular, plastic cover in the middle of the 
