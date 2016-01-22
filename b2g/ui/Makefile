@@ -13,10 +13,10 @@ NATIVE_SOURCES += kbdmon.c
 NATIVE_SOURCES += metec_flat20_ioctl.h
 NATIVE_SOURCES += brldev.c
 
-XML_VERSION_RESOURCE = res/values/version.xml
-LOCAL_FILES += $(XML_VERSION_RESOURCE)
-$(XML_VERSION_RESOURCE)::
-	./mkversion >$@
+BUILD_PROPERTIES = res/values/properties.xml
+LOCAL_FILES += $(BUILD_PROPERTIES)
+$(BUILD_PROPERTIES)::
+	./mkproperties >$@
 
 ANDROID_FILES += custom_rules.xml
 ANDROID_FILES += signing.properties

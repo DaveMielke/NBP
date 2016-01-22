@@ -14,7 +14,7 @@ printFooter() {
   printf "</resources>\\n"
 }
 
-printResource() {
+printProperty() {
   local type="${1}"
   local name="${2}"
   local format="${3}"
@@ -34,10 +34,10 @@ versionMajor="${1}"
 versionMinor="${2}"
 
 printHeader
-printResource string app_version_name "%d.%d.%d" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
-printResource integer app_version_code "0x%02X%02X%04X" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
-printResource string app_source_revision "git:%s" "${revisionCommit}"
-printResource string app_build_time "%s" "$(date --utc +'%Y-%m-%d@%H:%M %Z')"
+printProperty integer app_version_code "0x%02X%02X%04X" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
+printProperty string app_version_name "%d.%d.%d" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
+printProperty string app_source_revision "git:%s" "${revisionCommit}"
+printProperty string app_build_time "%s" "$(date --utc +'%Y-%m-%d@%H:%M %Z')"
 printFooter
 
 exit 0
