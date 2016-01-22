@@ -18,8 +18,33 @@ Directly Typing Regular Text
 ````````````````````````````
 
 Space+Dot7+i (dots 24) restores the input mode to Text (the default).
+This mode honours the currently selected braille mode
+(see `Braille Modes and Codes`_).
 
-In this input mode, any character that has a defined braille representation
+Typing Literary Braille Characters
+''''''''''''''''''''''''''''''''''
+
+Any character (or character sequence) that has a defined `Literary Braille`_
+representation within the currently selected braille code can be typed.
+
+In general, a cursor routing key corresponds to the first character of the
+literary braille symbol that it's behind. The only exception to this rule is
+when setting the end of a text selection (see `Selecting Text`_). In that case
+it corresponds to the last character of the symbol.
+
+Deleting characters (see `Input Areas`_) is done one text character at a time.
+
+A special literary braille prefix, e.g. a capitalization sign, may not appear
+until the first character of the symbol it applies to has been typed.
+
+`Directly Typing Unicode Braille Characters`_ doesn't work when literary
+braille is being used. If you need to do it then you'll need to (temporarily)
+switch to `Computer Braille`_ mode.
+
+Typing Computer Braille Characters
+''''''''''''''''''''''''''''''''''
+
+Any character that has a defined `Computer Braille`_ representation
 (see `Braille Character Map`_) can be directly typed by pressing the
 corresponding keys as a single combination. There are two exceptions to this
 simple (and obvious) rule.
