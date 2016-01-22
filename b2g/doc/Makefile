@@ -2,10 +2,15 @@ DOCUMENT_NAMES = UserInterface
 
 all: html txt
 
+BUILD_PROPERTIES = properties.rst
+properties: $(BUILD_PROPERTIES)
+$(BUILD_PROPERTIES):
+	./mkproperties >$@
+
 html: $(DOCUMENT_NAMES:=.html)
 txt: $(DOCUMENT_NAMES:=.txt)
 
-%.html: %/main.rst
+%.html: %/main.rst properties
 	rst2html --config docutils.conf $< $@
 
 %.txt: %.html
@@ -17,4 +22,5 @@ txt: $(DOCUMENT_NAMES:=.txt)
 clean:
 	-rm -f -- *.html
 	-rm -f -- *.txt
+	-rm -f -- $(BUILD_PROPERTIES)
 

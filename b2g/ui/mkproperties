@@ -1,7 +1,6 @@
 #!/bin/sh
 set -e
 
-tagPrefix="B2G_UI"
 xmlVersion="1.0"
 xmlEncoding="utf-8"
 
@@ -23,15 +22,7 @@ printProperty() {
   printf "  <${type} name=\"${name}\">${format}</${type}>\\n" "${@}"
 }
 
-revisionIdentifier="$(git describe --long --tags --abbrev=16 --match "${tagPrefix}-*")"
-set -- ${revisionIdentifier//-/ }
-revisionVersion="${2}"
-revisionIncrement="${3}"
-revisionCommit="${4#g}"
-
-set -- ${revisionVersion//./ }
-versionMajor="${1}"
-versionMinor="${2}"
+. ../../revision.sh
 
 printHeader
 printProperty integer app_version_code "0x%02X%02X%04X" "${versionMajor}" "${versionMinor}" "${revisionIncrement}"
