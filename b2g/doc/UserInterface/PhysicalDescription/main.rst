@@ -6,7 +6,7 @@ The Top
 
 .. image:: b2g-top.jpg
   :align: right
-  :alt: [picture of top showing keys and braille display]
+  :alt: [a picture of the top]
 
 The eight, rectangular, concave keys (in two groups of four) near the 
 back of the top comprise a standard, eight-dot, braille keyboard. The 
@@ -35,7 +35,7 @@ The Front
 
 .. image:: b2g-front.jpg
   :align: right
-  :alt: [picture of front showing speakers and microphone]
+  :alt: [a picture of the front]
 
 Two internal speakers (for the left and right stereo channels) are,
 correspondingly, at the left and right ends of the front.
@@ -48,7 +48,7 @@ The Left Side
 
 .. image:: b2g-left.jpg
   :align: right
-  :alt: [picture of left side showing host USB port]
+  :alt: [a picture of the left side]
 
 The earphone/microphone jack (3.5mm) is near the front of the left side.
 Standard cell phone earphones can be used.
@@ -67,7 +67,7 @@ The Right Side
 
 .. image:: b2g-right.jpg
   :align: right
-  :alt: [picture of right side showing power switch and volume controls]
+  :alt: [a picture of the right side]
 
 The volume controls are the two, small, round buttons near the front of 
 the right side. The one toward the front is the Volume Down key, and the 
@@ -108,7 +108,7 @@ The Back
 
 .. image:: b2g-back.jpg
   :align: right
-  :alt: [picture of back showing SD card slot]
+  :alt: [a picture of the back]
 
 The SD card slot is the long slot in the middle of the back.
 
@@ -121,7 +121,7 @@ The Bottom
 
 .. image:: b2g-bottom.jpg
   :align: right
-  :alt: [picture of bottom]
+  :alt: [a picture of the bottom]
 
 The camera's lens is the small circle on the bottom that's about 2cm 
 (3/4 of an inch) in from the middle of the right side. The rectangular 
@@ -144,10 +144,6 @@ also hear a long, high-pitched beep.
 The Removable Cover
 ~~~~~~~~~~~~~~~~~~~
 
-.. image:: b2g-open.jpg
-  :align: right
-  :alt: [picture of bottom with cover removed (including MC9090 phone card in its slot)]
-
 There's a removable, rectangular, plastic cover in the middle of the 
 bottom. To remove it:
 
@@ -160,8 +156,13 @@ bottom. To remove it:
    jack is.
 
 Be careful after you've removed the cover because the underside of a circuit 
-board will be exposed. Removing the cover is how to gain access to the 
-following:
+board will be exposed.
+
+.. image:: b2g-open.jpg
+  :align: right
+  :alt: [a picture of what's under the cover]
+
+Removing the cover is how to gain access to the following:
 
 .. comment
 
