@@ -96,10 +96,15 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
 
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
+    E value = null;
     String name = prefs.getString(key, "");
-    E value = (name.length() > 0)?
-              (E)(Enum.valueOf(getEnumerationClass(), name)):
-              null;
+
+    if (name.length() > 0) {
+      try {
+        value = (E)(Enum.valueOf(getEnumerationClass(), name));
+      } catch (IllegalArgumentException exception) {
+      }
+    }
 
     if (value == null) value = getEnumerationDefault();
     return setEnumerationValue(value);
