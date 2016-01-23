@@ -1,12 +1,12 @@
 tagPrefix="B2G_UI"
 
 revisionIdentifier="$(git describe --long --tags --abbrev=16 --match "${tagPrefix}-*")"
-set -- ${revisionIdentifier//-/ }
+set -- $(echo "${revisionIdentifier}" | sed 's/-/ /g')
 revisionVersion="${2}"
 revisionIncrement="${3}"
 revisionCommit="${4#g}"
 
-set -- ${revisionVersion//./ }
+set -- $(echo "${revisionVersion}" | sed 's/\./ /g')
 versionMajor="${1}"
 versionMinor="${2}"
 
