@@ -193,22 +193,8 @@ public class HostEndpoint extends Endpoint {
 
       if (!sameNode) resetSpeech();
       setText(text, sameNode);
-
-      if (isInputArea()) {
-        int start = getSelectionStart();
-        int end = getSelectionEnd();
-
-        if (isSelected(end)) {
-          adjustRight(setLine(end-1), 1);
-        }
-
-        if (isSelected(start)) {
-          adjustLeft(setLine(start), 0);
-        }
-      }
+      return write();
     }
-
-    return write();
   }
 
   public final boolean write (AccessibilityNodeInfo node, boolean force) {
