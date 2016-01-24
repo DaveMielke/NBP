@@ -168,7 +168,6 @@ public class OutgoingMessage {
   }
 
   public boolean send () {
-    Context context = ApplicationContext.getContext();
     Intent sender = new Intent();
 
     sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -216,19 +215,13 @@ public class OutgoingMessage {
       }
     }
 
-    if (context != null) {
-      String title = ApplicationContext.getString(R.string.message_select_outgoing_email_app);
-      Intent chooser = Intent.createChooser(sender, title);
-      chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    boolean found = LaunchUtilities.launchActivity(
+      sender, R.string.message_select_outgoing_email_app,
+      "com.android.email"
+    );
 
-      try {
-        context.startActivity(chooser);
-        return true;
-      } catch (android.content.ActivityNotFoundException ex) {
-        Log.w(LOG_TAG, "outgoing message sender not found");
-      }
-    }
-
+    if (found) return true;
+    Log.w(LOG_TAG, "outgoing message sender not found");
     return false;
   }
 

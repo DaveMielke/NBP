@@ -1,5 +1,6 @@
-package org.nbp.b2g.ui.host;
-import org.nbp.b2g.ui.*;
+package org.nbp.b2g.ui;
+
+import java.util.List;
 
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import android.content.pm.ActivityInfo;
 import android.content.ComponentName;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 
 import android.net.Uri;
 import java.io.File;
@@ -47,24 +49,60 @@ public abstract class LaunchUtilities {
     launchActivity(toIntent(activity));
   }
 
-  public static void launchActivity (ActivityInfo info) {
+  public static void launchActivity (ComponentName name) {
     Intent intent = new Intent(Intent.ACTION_MAIN);
     intent.addCategory(Intent.CATEGORY_LAUNCHER);
+    intent.setComponent(name);
 
     intent.setFlags(
       Intent.FLAG_ACTIVITY_NEW_TASK |
       Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
     );
 
-    intent.setComponent(new ComponentName(
-      info.applicationInfo.packageName, info.name
-    ));
-
     getContext().startActivity(intent);
+  }
+
+  public static void launchActivity (String packageName, String activityClass) {
+    launchActivity(new ComponentName(packageName, activityClass));
+  }
+
+  public static ComponentName toComponentName (ActivityInfo info) {
+    return new ComponentName(info.applicationInfo.packageName, info.name);
+  }
+
+  public static void launchActivity (ActivityInfo info) {
+    launchActivity(info.applicationInfo.packageName, info.name);
   }
 
   public static void launchActivity (ResolveInfo info) {
     launchActivity(info.activityInfo);
+  }
+
+  public static boolean launchActivity (Intent intent, int title, String... packages) {
+    Context context = getContext();
+    PackageManager pm = context.getPackageManager();
+    List<ResolveInfo> choices = pm.queryIntentActivities(intent, 0);
+
+    for (String name : packages) {
+      for (ResolveInfo choice : choices) {
+        if (name.equals(choice.activityInfo.applicationInfo.packageName)) {
+          intent.setComponent(toComponentName(choice.activityInfo));
+          launchActivity(intent);
+          return true;
+        }
+      }
+    }
+
+    Intent chooser = Intent.createChooser(intent, context.getResources().getString(title));
+    chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+    try {
+      context.startActivity(chooser);
+      return true;
+    } catch (ActivityNotFoundException exception) {
+    }
+
+    return false;
   }
 
   public static void launchViewer (Uri uri) {
