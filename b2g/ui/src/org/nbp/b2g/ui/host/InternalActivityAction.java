@@ -9,7 +9,7 @@ public abstract class InternalActivityAction extends ActivityAction {
 
   @Override
   protected Intent getIntent (Context context) {
-    return ApplicationContext.toIntent(getActivityClass());
+    return LaunchUtilities.toIntent(getActivityClass());
   }
 
   protected InternalActivityAction (Endpoint endpoint, boolean isForDevelopers) {

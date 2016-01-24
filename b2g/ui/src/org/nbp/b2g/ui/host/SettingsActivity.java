@@ -138,7 +138,7 @@ public class SettingsActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          ApplicationContext.launchActivity(MaintenanceActivity.class);
+          LaunchUtilities.launchActivity(MaintenanceActivity.class);
         }
       }
     );

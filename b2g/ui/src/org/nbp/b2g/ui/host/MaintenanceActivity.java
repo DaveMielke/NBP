@@ -11,7 +11,6 @@ import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
 import android.view.View;
 import android.widget.LinearLayout;
@@ -382,30 +381,12 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          ApplicationContext.launchActivity(RecoveryLogActivity.class);
+          LaunchUtilities.launchActivity(RecoveryLogActivity.class);
         }
       }
     );
 
     return button;
-  }
-
-  private static void launchViewer (Uri uri) {
-    Intent intent = new Intent(Intent.ACTION_VIEW);
-    intent.setData(uri);
-    ApplicationContext.launchActivity(intent);
-  }
-
-  private static void launchViewer (String uri) {
-    launchViewer(Uri.parse(uri));
-  }
-
-  private void launchViewer (int uri) {
-    launchViewer(getContext().getResources().getString(uri));
-  }
-
-  private void launchViewer (File file) {
-    launchViewer(Uri.fromFile(file));
   }
 
   private View createUpdateUserInterfaceButton () {
@@ -414,7 +395,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          launchViewer(R.string.uri_ui_apk);
+          LaunchUtilities.launchViewer(R.string.uri_ui_apk);
         }
       }
     );

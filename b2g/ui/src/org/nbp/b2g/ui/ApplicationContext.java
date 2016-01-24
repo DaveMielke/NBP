@@ -20,7 +20,6 @@ import android.view.WindowManager;
 import android.media.AudioManager;
 import android.view.accessibility.AccessibilityManager;
 
-import android.app.Activity;
 import android.inputmethodservice.InputMethodService;
 
 import android.view.inputmethod.InputMethodManager;
@@ -103,30 +102,6 @@ public abstract class ApplicationContext {
     PackageManager pm = context.getPackageManager();
     int result = pm.checkPermission(permission, context.getPackageName());
     return result == PackageManager.PERMISSION_GRANTED;
-  }
-
-  public static Intent toIntent (Class<? extends Activity> activity) {
-    Intent intent = new Intent(getContext(), activity);
-
-    intent.addFlags(
-      Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-    );
-
-    return intent;
-  }
-
-  public static void launchActivity (Intent intent) {
-    intent.addFlags(
-      Intent.FLAG_ACTIVITY_CLEAR_TOP |
-      Intent.FLAG_ACTIVITY_SINGLE_TOP |
-      Intent.FLAG_ACTIVITY_NEW_TASK
-    );
-
-    getContext().startActivity(intent);
-  }
-
-  public static void launchActivity (Class<? extends Activity> activity) {
-    launchActivity(toIntent(activity));
   }
 
   public static boolean enableAccessibilityService (Class<? extends AccessibilityService> serviceClass) {

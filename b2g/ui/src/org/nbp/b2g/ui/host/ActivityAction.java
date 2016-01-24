@@ -15,7 +15,7 @@ public abstract class ActivityAction extends Action {
     Intent intent = getIntent(context);
     if (intent == null) return false;
 
-    ApplicationContext.launchActivity(intent);
+    LaunchUtilities.launchActivity(intent);
     return true;
   }
 
