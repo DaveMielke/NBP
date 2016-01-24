@@ -171,8 +171,8 @@ public class OutgoingMessage {
     Context context = ApplicationContext.getContext();
     Intent sender = new Intent();
 
-    sender.setData(Uri.parse("mailto:"));
     sender.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    sender.addCategory(Intent.CATEGORY_DEFAULT);
 
     if (!primaryRecipients.isEmpty()) {
       sender.putExtra(Intent.EXTRA_EMAIL, getPrimaryRecipients());
@@ -201,7 +201,7 @@ public class OutgoingMessage {
     }
 
     if (attachments.isEmpty()) {
-    //sender.setType("message/rfc822");
+      sender.setData(Uri.parse("mailto:"));
       sender.setAction(Intent.ACTION_SENDTO);
     } else {
       sender.setType("*/*");
