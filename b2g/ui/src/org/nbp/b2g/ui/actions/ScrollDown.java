@@ -2,36 +2,46 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class ScrollDown extends DirectionalAction {
-  private ActionResult scrollText (Endpoint endpoint, boolean isInputArea) {
-    int brailleLength = getBrailleLength();
-    int textLength = endpoint.getTextLength();
+  private ActionResult scrollText (Endpoint endpoint) {
+    CharSequence text = endpoint.getText();
+    int length = text.length();
 
-    int textEnd = textLength;
-    if (isInputArea) textEnd += 1;
+    int start = endpoint.getLineStart();
+    boolean wasBlank = false;
 
-    if ((endpoint.getLineStart() + endpoint.getLineLength()) == textLength) {
-      if ((endpoint.getBrailleStart() + brailleLength) >= textEnd) {
-        return ActionResult.FAILED;
+    do {
+      int end = endpoint.findNextNewline(start);
+      if (end == -1) end = length;
+      boolean isBlank = true;
+
+      for (int index=start; index<end; index+=1) {
+        if (text.charAt(index) != ' ') {
+          isBlank = false;
+          break;
+        }
       }
-    }
 
-    int indent = endpoint.setLine(textEnd) - brailleLength;
-    if (indent < 0) indent = 0;
+      if (wasBlank && !isBlank) {
+        endpoint.setLine(start);
+        endpoint.setLineIndent(0);
+        return ActionResult.WRITE;
+      }
 
-    endpoint.setLine(endpoint.getLineStart() + indent);
-    endpoint.setLineIndent(indent);
+      wasBlank = isBlank;
+      start = end + 1;
+    } while (start <= length);
 
-    return ActionResult.WRITE;
+    return ActionResult.FAILED;
   }
 
   @Override
   protected ActionResult performCursorAction (Endpoint endpoint) {
-    return scrollText(endpoint, true);
+    return scrollText(endpoint);
   }
 
   @Override
   protected ActionResult performInternalAction (Endpoint endpoint) {
-    return scrollText(endpoint, false);
+    return scrollText(endpoint);
   }
 
   @Override

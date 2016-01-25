@@ -16,6 +16,7 @@ public class MoveRight extends DirectionalAction {
     if (Endpoint.isSelected(end)) {
       if (end < endpoint.getTextLength()) {
         if (end == endpoint.getSelectionStart()) end += 1;
+
         if (endpoint.setCursor(end)) {
           return ActionResult.DONE;
         }
