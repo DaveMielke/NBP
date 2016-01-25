@@ -14,5 +14,5 @@ The |user interface|
 .. include:: RecoveryMode/main.rst
 .. include:: FirmwareFeatures/main.rst
 .. include:: QuickReference/main.rst
-.. include:: TechnicalInformation/main.rst
 .. include:: BrailleTables/main.rst
+.. include:: TechnicalInformation/main.rst

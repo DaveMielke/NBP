@@ -22,8 +22,9 @@ ISO 11548-1, as follows:
 Braille Character Map
 ---------------------
 
-These tables show how English US braille is represented. This mapping is 
-also used by locales that don't (yet) have their own.
+These tables show how US English braille characters are represented
+when `Computer Braille`_ is being used.
+This mapping is also used for locales that don't (yet) have their own.
 
 North American Braille Computer Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -72,7 +73,7 @@ they can be easily recognized. The following methods have been used:
 .. include:: spanish.rst
 
 ASCII Control Characters
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To type a control character, press Space+x (dots 1346) immediately before any
 of these characters:
