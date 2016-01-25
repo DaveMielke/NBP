@@ -35,6 +35,10 @@ public abstract class LaunchUtilities {
     return intent;
   }
 
+  public static ComponentName toComponentName (ActivityInfo info) {
+    return new ComponentName(info.applicationInfo.packageName, info.name);
+  }
+
   public static void launchActivity (Intent intent) {
     intent.addFlags(
       Intent.FLAG_ACTIVITY_CLEAR_TOP |
@@ -66,12 +70,8 @@ public abstract class LaunchUtilities {
     launchActivity(new ComponentName(packageName, activityClass));
   }
 
-  public static ComponentName toComponentName (ActivityInfo info) {
-    return new ComponentName(info.applicationInfo.packageName, info.name);
-  }
-
   public static void launchActivity (ActivityInfo info) {
-    launchActivity(info.applicationInfo.packageName, info.name);
+    launchActivity(toComponentName(info));
   }
 
   public static void launchActivity (ResolveInfo info) {
