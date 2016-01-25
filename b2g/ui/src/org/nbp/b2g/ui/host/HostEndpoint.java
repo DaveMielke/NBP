@@ -351,41 +351,49 @@ public class HostEndpoint extends Endpoint {
 
   @Override
   public final boolean handleKeyboardKey_cursorLeft () {
+    if (isInputArea()) return super.handleKeyboardKey_cursorLeft();
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_LEFT);
   }
 
   @Override
   public final boolean handleKeyboardKey_cursorRight () {
+    if (isInputArea()) return super.handleKeyboardKey_cursorRight();
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_RIGHT);
   }
 
   @Override
   public final boolean handleKeyboardKey_cursorUp () {
+    if (isInputArea()) return super.handleKeyboardKey_cursorUp();
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_UP);
   }
 
   @Override
   public final boolean handleKeyboardKey_cursorDown () {
+    if (isInputArea()) return super.handleKeyboardKey_cursorDown();
     return InputService.injectKey(KeyEvent.KEYCODE_DPAD_DOWN);
   }
 
   @Override
   public final boolean handleKeyboardKey_pageUp () {
+    if (isInputArea()) return super.handleKeyboardKey_pageUp();
     return InputService.injectKey(KeyEvent.KEYCODE_PAGE_UP);
   }
 
   @Override
   public final boolean handleKeyboardKey_pageDown () {
+    if (isInputArea()) return super.handleKeyboardKey_pageDown();
     return InputService.injectKey(KeyEvent.KEYCODE_PAGE_DOWN);
   }
 
   @Override
   public final boolean handleKeyboardKey_home () {
+    if (isInputArea()) return super.handleKeyboardKey_home();
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_HOME);
   }
 
   @Override
   public final boolean handleKeyboardKey_end () {
+    if (isInputArea()) return super.handleKeyboardKey_end();
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
