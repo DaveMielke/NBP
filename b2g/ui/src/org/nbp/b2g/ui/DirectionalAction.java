@@ -6,10 +6,10 @@ public abstract class DirectionalAction extends Action {
   private final static String LOG_TAG = DirectionalAction.class.getName();
 
   protected enum ActionResult {
+    NEXT,
     DONE,
     WRITE,
-    FAILED,
-    NEXT
+    FAILED
   }
 
   private interface ActionPerformer {
@@ -62,33 +62,29 @@ public abstract class DirectionalAction extends Action {
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
-    boolean write = false;
 
     synchronized (endpoint) {
-    ACTION_PERFORMER_LOOP:
       for (ActionPerformer actionPerformer : actionPerformers) {
         ActionResult result = actionPerformer.performAction(endpoint);
 
         switch (result) {
+          case NEXT:
+            continue;
+
           case DONE:
             return true;
 
           case WRITE:
-            write = true;
-            break ACTION_PERFORMER_LOOP;
+            return endpoint.write();
 
           default:
             Log.w(LOG_TAG, "unsupported action result: " + result.name());
           case FAILED:
             return false;
-
-          case NEXT:
-            continue ACTION_PERFORMER_LOOP;
         }
       }
     }
 
-    if (write) return endpoint.write();
     Class<? extends Action> action = getExternalAction();
     if (action == null) return false;
     return endpoint.performAction(action);
