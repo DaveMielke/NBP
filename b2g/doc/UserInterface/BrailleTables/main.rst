@@ -19,8 +19,8 @@ ISO 11548-1, as follows:
 
 .. include:: unicode.rst
 
-Braille Character Map
----------------------
+Computer Braille Characters
+---------------------------
 
 These tables show how US English braille characters are represented
 when `Computer Braille`_ is being used.

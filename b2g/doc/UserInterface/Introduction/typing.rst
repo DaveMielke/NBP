@@ -62,7 +62,7 @@ Typing Computer Braille Characters
 ''''''''''''''''''''''''''''''''''
 
 Any character that has a defined `Computer Braille`_ representation
-(see `Braille Character Map`_) can be directly typed by pressing the
+(see `Computer Braille Characters`_) can be directly typed by pressing the
 corresponding keys as a single combination. There are two exceptions to this
 simple (and obvious) rule.
 
