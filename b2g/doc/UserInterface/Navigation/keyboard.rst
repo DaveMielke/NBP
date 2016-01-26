@@ -155,8 +155,9 @@ Perform a scroll backward (up or to the left) operation.
 * If within a list then move up several elements. If the first element is
   already visible then move to it.
 
-* If within an input area then move up several lines. If the first line is
-  already visible then move to it.
+* If within an input area then move up to the first line of the current
+  paragraph. If already on the first line of a paragraph then move up to the
+  first line of the previous paragraph.
 
 * If within a set of pages then move to the previous page.
 
@@ -170,8 +171,8 @@ Perform a scroll forward (down or to the right) operation.
 * If within a list then move down several elements. If the last element is
   already visible then move to it.
 
-* If within an input area then move down several lines. If the last line is
-  already visible then move to it.
+* If within an input area then move down to the first line of the next
+  paragraph.
 
 * If within a set of pages then move to the next page.
 

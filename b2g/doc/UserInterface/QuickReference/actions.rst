@@ -92,11 +92,11 @@
 .. |SaveScreen| replace:: write the screen element structure to the log
 .. |SayLine| replace:: speak the current line
 .. |ScrollBackward| replace:: force the screen to scroll backward (up or left)
-.. |ScrollDown| replace:: go to the next page of a list or block of text
+.. |ScrollDown| replace:: go to the next page of a list or paragraph of text
 .. |ScrollForward| replace:: force the screen to scroll forward (down or right)
 .. |ScrollLeft| replace:: go to the beginning of a list or line
 .. |ScrollRight| replace:: go to the end of a list or line
-.. |ScrollUp| replace:: go to the previous page of a list or block of text
+.. |ScrollUp| replace:: go to the previous page of a list or paragraph of text
 .. |SelectAll| replace:: select all of the text
 .. |SendAndroidLog| replace:: send a copy of the Android log to the |product name| developers
 .. |SetLeft| replace:: shift the braille display a specific amount to the right

@@ -20,11 +20,20 @@ the text, moves to the start of the text for the next screen element.
 Space+Up performs a scroll backward (up or left) operation.
 
 * If within a list then move up several elements.
+
+* If within an input area then move up to the first line of the current
+  paragraph. If already on the first line of a paragraph then move up to the
+  first line of the previous paragraph.
+
 * If within a set of pages then move to the previous page.
 
 Space+Down performs a scroll forward (down or right) operation.
 
 * If within a list then move down several elements.
+
+* If within an input area then move down to the first line of the next
+  paragraph.
+
 * If within a set of pages then move to the next page.
 
 Space+Left moves to the first element of a list, to the first page of a group,
