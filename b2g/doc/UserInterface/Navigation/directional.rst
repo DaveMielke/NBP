@@ -36,10 +36,16 @@ Space+Down performs a scroll forward (down or right) operation.
 
 * If within a set of pages then move to the next page.
 
-Space+Left moves to the first element of a list, to the first page of a group,
+Space+Left moves
+to the first element of a list,
+to the first character of a line,
+to the first page of a group,
 etc.
 
-Space+Right moves to the last element of a list, to the last page of a group,
+Space+Right moves
+to the last element of a list,
+to the last character of a line,
+to the last page of a group,
 etc.
 
 These keys act differently within some other contexts. For those details, see:
