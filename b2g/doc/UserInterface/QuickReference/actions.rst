@@ -1,18 +1,20 @@
-.. |AndroidAccessibilitySettings| replace:: go to the Accessibility Settings screen
-.. |AndroidBluetoothSettings| replace:: go to the Bluetooth Settings screen
-.. |AndroidSettings| replace:: go to the main Settings screen
-.. |AndroidWifiSettings| replace:: go to the Wi-Fi Settings screen
+.. |AccessibilitySettings| replace:: go to the Accessibility Settings screen
+.. |AndroidSettings| replace:: go to the Android Settings screen
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
+.. |BluetoothSettings| replace:: go to the Bluetooth Settings screen
 .. |BrailleCodeConfirm| replace:: show the current braille code
 .. |BrailleCodeNext| replace:: switch to the next braille code
 .. |BrailleCodePrevious| replace:: switch to the previous braille code
 .. |BrailleOff| replace:: disable braille
 .. |BrailleOn| replace:: enable braille
 .. |BringCursor| replace:: bring the cursor to a specific character
+.. |Calculator| replace:: go to the Calculator app
+.. |Calendar| replace:: go to the Calendar app
 .. |ClearAndroidLog| replace:: clear the Android log
 .. |Click| replace:: tap (click) the current screen element
 .. |Clock| replace:: go to the |product name| digital clock
+.. |Contacts| replace:: go to the Contacts (People) app
 .. |CopyToClipboard| replace:: copy the selected (or all) text to the clipboard
 .. |CursorDown| replace:: the keyboard Cursor Down key
 .. |CursorLeft| replace:: the keyboard Cursor Left key
@@ -27,12 +29,14 @@
 .. |DeveloperOff| replace:: disable developer mode
 .. |DeveloperOn| replace:: enable developer mode
 .. |Editor| replace:: go to the |product name| editor
+.. |EMail| replace:: go to the EMail app
 .. |End| replace:: the keyboard End key
 .. |Enter| replace:: the keyboard Enter key
 .. |FindForward| replace:: find text within the current screen element (forward search)
 .. |FindNext| replace:: find the next occurrence of the same text within the current screen element
 .. |FindPrevious| replace:: find the previous occurrence of the same text within the current screen element
 .. |ForceCrash| replace:: force a |user interface| crash
+.. |Gallery| replace:: go to the Gallery app
 .. |Help| replace:: go to the document for the |user interface|
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
@@ -61,7 +65,9 @@
 .. |LongPressOff| replace:: disable long key press actions
 .. |LongPressOn| replace:: enable long key press actions
 .. |Maintenance| replace:: go to the System Maintenance screen of the |user interface|
+.. |Market| replace:: go to the Market (Store, Vendor) app
 .. |MenuKey| replace:: the Android Menu key
+.. |Messaging| replace:: go to the (Text) Messaging [SMS, MMS] app
 .. |MoveBackward| replace:: go to the start of the previous screen element
 .. |MoveDown| replace:: go to the next line of text or element on the screen
 .. |MoveForward| replace:: go to the start of the next screen element
@@ -73,6 +79,7 @@
 .. |MoveToPreviousSibling| replace:: go to and describe the previous sibling node
 .. |MoveToSelf| replace:: describe the current node
 .. |MoveUp| replace:: go to the previous line of text or element on the screen
+.. |Music| replace:: go to the Music app
 .. |Notifications| replace:: go to the Notifications screen
 .. |Null| replace:: cancel an accidentally-started key combination
 .. |OneHandOff| replace:: disable one hand mode
@@ -125,3 +132,4 @@
 .. |TypeUnicode| replace:: type any character by its Unicode value
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
+.. |WifiSettings| replace:: go to the Wi-Fi Settings screen

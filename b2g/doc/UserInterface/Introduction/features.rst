@@ -80,11 +80,35 @@ Space+s (dots 234)
   b (dots 12)
     Go to the Bluetooth Settings screen.
 
+  c (dots 14)
+    Go to the Calendar app.
+
+  e (dots 15)
+    Go to the EMail app.
+
+  g (dots 1245)
+    Go to the Gallery app.
+
+  m (dots 134)
+    Go to the Music app.
+
+  p (dots 1234)
+    Go to the Contacts (People) app.
+
   s (dots 234)
-    Go to the main Settings screen.
+    Go to the Android Settings screen.
+
+  t (dots 2345)
+    Go to the (Text) Messaging [SMS, MMS] app.
+
+  v (dots 1236)
+    Go to the Market (Store, Vendor) app.
 
   w (dots 2456)
     Go to the Wi-Fi Settings screen.
+
+  x (dots 1346)
+    Go to the Calculator app.
 
 To Other |product name| Applications
 ````````````````````````````````````
