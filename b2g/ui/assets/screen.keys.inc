@@ -32,9 +32,9 @@ bind Space+Dots2345#t Clock
 bind Space+Dots1246#ed Editor
 bind Space+Dots1456#? Assist
 
-bind Space+Dots234#s,Space AndroidSettings
 bind Space+Dots234#s,Dot1#a AndroidAccessibilitySettings
 bind Space+Dots234#s,Dots12#b AndroidBluetoothSettings
+bind Space+Dots234#s,Dots234#s AndroidSettings
 bind Space+Dots234#s,Dots2456#w AndroidWifiSettings
 
 bind Backward+Forward+Space DescribeBuild

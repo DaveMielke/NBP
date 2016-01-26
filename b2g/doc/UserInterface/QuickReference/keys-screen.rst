@@ -27,9 +27,9 @@
   "Space+Dots2345#t","|Clock|"
   "Space+Dots1246#ed","|Editor|"
   "Space+Dots1456#?","|Assist|"
-  "Space+Dots234#s,Space","|AndroidSettings|"
   "Space+Dots234#s,Dot1#a","|AndroidAccessibilitySettings|"
   "Space+Dots234#s,Dots12#b","|AndroidBluetoothSettings|"
+  "Space+Dots234#s,Dots234#s","|AndroidSettings|"
   "Space+Dots234#s,Dots2456#w","|AndroidWifiSettings|"
   "Backward+Forward+Space","|DescribeBuild|"
 

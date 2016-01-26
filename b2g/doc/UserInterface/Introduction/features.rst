@@ -74,18 +74,14 @@ Space+? (dots 1456)
   ``Google Now``.
 
 Space+s (dots 234)
-  Go to a Settings screen. Another key combination must be pressed within
-  |intermediate action timeout| in order to specify which Settings screen to go
-  to:
-
-  Space
-    Go to the main Settings screen.
-
   a (dot 1)
     Go to the Accessibility Settings screen.
 
   b (dots 12)
     Go to the Bluetooth Settings screen.
+
+  s (dots 234)
+    Go to the main Settings screen.
 
   w (dots 2456)
     Go to the Wi-Fi Settings screen.
