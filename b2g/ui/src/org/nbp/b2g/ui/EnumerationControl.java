@@ -76,7 +76,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     E[] values = getValueArray();
     if (values.length < 2) return null;
     if (values.length == 2) return getValueLabel(ordinal);
-    return ApplicationContext.getString(resource);
+    return getString(resource);
   }
 
   @Override

@@ -3,32 +3,32 @@ package org.nbp.b2g.ui;
 public class SpeechBalanceControl extends LinearFloatControl {
   @Override
   public CharSequence getLabel () {
-    return ApplicationContext.getString(R.string.SpeechBalance_control_label);
+    return getString(R.string.SpeechBalance_control_label);
   }
 
   @Override
   public CharSequence getNextLabel () {
-    return ApplicationContext.getString(R.string.SpeechBalance_control_next);
+    return getString(R.string.SpeechBalance_control_next);
   }
 
   @Override
   public CharSequence getPreviousLabel () {
-    return ApplicationContext.getString(R.string.SpeechBalance_control_previous);
+    return getString(R.string.SpeechBalance_control_previous);
   }
 
   @Override
   public CharSequence getValue () {
     float value = getFloatValue();
-    if (value == 0.0f) return ApplicationContext.getString(R.string.SpeechBalance_control_center);
+    if (value == 0.0f) return getString(R.string.SpeechBalance_control_center);
 
     StringBuilder sb = new StringBuilder();
     float maximum = SpeechDevice.MAXIMUM_BALANCE;
 
     if (value < 0.0f) {
-      sb.append(ApplicationContext.getString(R.string.SpeechBalance_control_left));
+      sb.append(getString(R.string.SpeechBalance_control_left));
       value = -value;
     } else {
-      sb.append(ApplicationContext.getString(R.string.SpeechBalance_control_right));
+      sb.append(getString(R.string.SpeechBalance_control_right));
     }
 
     sb.append(' ');

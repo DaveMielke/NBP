@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   @Override
   public CharSequence getLabel () {
-    return toHeader(ApplicationContext.getString(R.string.BrailleCode_control_label));
+    return getString(R.string.BrailleCode_control_label);
   }
 
   @Override

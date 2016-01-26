@@ -21,17 +21,22 @@ public abstract class Control {
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
 
+  protected final String getString (int resource) {
+    return ApplicationContext.getString(resource);
+  }
+
   public CharSequence getNextLabel () {
-    return ApplicationContext.getString(R.string.default_control_next);
+    return getString(R.string.default_control_next);
   }
 
   public CharSequence getPreviousLabel () {
-    return ApplicationContext.getString(R.string.default_control_previous);
+    return getString(R.string.default_control_previous);
   }
 
   private final static StyleSpan HEADER_SPAN = new StyleSpan(Typeface.BOLD);
 
-  protected final CharSequence toHeader (CharSequence text) {
+  protected final CharSequence toHeader (int resource) {
+    String text = getString(resource);
     SpannableStringBuilder header = new SpannableStringBuilder(text);
     header.setSpan(HEADER_SPAN, 0, text.length(), 0);
     return header;

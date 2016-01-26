@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class InputModeControl extends EnumerationControl<InputMode> {
   @Override
   public CharSequence getLabel () {
-    return toHeader(ApplicationContext.getString(R.string.InputMode_control_label));
+    return toHeader(R.string.InputMode_control_label);
   }
 
   @Override

@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class BrailleEnabledControl extends BooleanControl {
   @Override
   public CharSequence getLabel () {
-    return toHeader(ApplicationContext.getString(R.string.BrailleEnabled_control_label));
+    return toHeader(R.string.BrailleEnabled_control_label);
   }
 
   @Override

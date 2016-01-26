@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 public class OneHandControl extends BooleanControl {
   @Override
   public CharSequence getLabel () {
-    return ApplicationContext.getString(R.string.OneHand_control_label);
+    return getString(R.string.OneHand_control_label);
   }
 
   @Override

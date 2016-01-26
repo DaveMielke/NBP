@@ -3,12 +3,12 @@ package org.nbp.b2g.ui;
 public class LiteraryBrailleControl extends BooleanControl {
   @Override
   public CharSequence getLabel () {
-    return toHeader(ApplicationContext.getString(R.string.LiteraryBraille_control_label));
+    return toHeader(R.string.LiteraryBraille_control_label);
   }
 
   @Override
   public String getConfirmation () {
-    return ApplicationContext.getString(
+    return getString(
              getBooleanValue()?
                R.string.LiteraryBraille_control_on:
                R.string.LiteraryBraille_control_off

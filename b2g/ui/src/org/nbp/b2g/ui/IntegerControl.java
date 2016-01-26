@@ -39,12 +39,12 @@ public abstract class IntegerControl extends Control {
 
   @Override
   public CharSequence getNextLabel () {
-    return ApplicationContext.getString(R.string.numeric_control_next);
+    return getString(R.string.numeric_control_next);
   }
 
   @Override
   public CharSequence getPreviousLabel () {
-    return ApplicationContext.getString(R.string.numeric_control_previous);
+    return getString(R.string.numeric_control_previous);
   }
 
   @Override

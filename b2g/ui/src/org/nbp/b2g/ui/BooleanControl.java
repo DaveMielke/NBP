@@ -43,12 +43,12 @@ public abstract class BooleanControl extends Control {
 
   @Override
   public CharSequence getNextLabel () {
-    return ApplicationContext.getString(R.string.boolean_control_next);
+    return getString(R.string.boolean_control_next);
   }
 
   @Override
   public CharSequence getPreviousLabel () {
-    return ApplicationContext.getString(R.string.boolean_control_previous);
+    return getString(R.string.boolean_control_previous);
   }
 
   @Override
