@@ -7,6 +7,15 @@ public class LiteraryBrailleControl extends BooleanControl {
   }
 
   @Override
+  public String getConfirmation () {
+    return ApplicationContext.getString(
+             getBooleanValue()?
+               R.string.LiteraryBraille_control_on:
+               R.string.LiteraryBraille_control_off
+           );
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "literary-braille";
   }

@@ -72,8 +72,12 @@ public abstract class Control {
     return getSettings("current-settings");
   }
 
+  protected String getConfirmation () {
+    return getLabel() + " " + getValue();
+  }
+
   public final void confirmValue () {
-    ApplicationUtilities.message(getLabel() + " " + getValue());
+    ApplicationUtilities.message(getConfirmation());
   }
 
   protected final void reportValue (boolean confirm) {
