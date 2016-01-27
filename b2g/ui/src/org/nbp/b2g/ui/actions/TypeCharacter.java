@@ -8,7 +8,7 @@ import android.text.SpannableStringBuilder;
 public class TypeCharacter extends Action {
   private final static String LOG_TAG = TypeCharacter.class.getName();
 
-  private boolean typeCharacter (char character) {
+  private boolean typeCharacter (char character, boolean literaryBraille) {
     Endpoint endpoint = getEndpoint();
 
     {
@@ -29,7 +29,7 @@ public class TypeCharacter extends Action {
     }
 
     synchronized (endpoint) {
-      if (!ApplicationSettings.LITERARY_BRAILLE) {
+      if (!literaryBraille) {
         Characters.logAction(LOG_TAG, character, "typing text");
         return endpoint.insertText(character);
       }
@@ -77,12 +77,11 @@ public class TypeCharacter extends Action {
   @Override
   public boolean performAction () {
     InputMode inputMode = ApplicationSettings.INPUT_MODE;
+    boolean literaryBraille = ApplicationSettings.LITERARY_BRAILLE && (inputMode == InputMode.TEXT);
+    if (literaryBraille) inputMode = InputMode.BRAILLE;
+
     int keyMask = getNavigationKeys();
     Character character;
-
-    if (ApplicationSettings.LITERARY_BRAILLE) {
-      inputMode = InputMode.BRAILLE;
-    }
 
     switch (inputMode) {
       case TEXT: {
@@ -121,7 +120,7 @@ public class TypeCharacter extends Action {
         return false;
     }
 
-    return typeCharacter(character);
+    return typeCharacter(character, literaryBraille);
   }
 
   public TypeCharacter (Endpoint endpoint) {
