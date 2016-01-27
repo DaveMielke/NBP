@@ -129,7 +129,7 @@
 .. |TypeControl| replace:: the keyboard Control key (applies to the next typed character)
 .. |TypeDot7| replace:: type the character represented by just dot 7
 .. |TypeDot8| replace:: type the character represented by just dot 8
-.. |TypeUnicode| replace:: type any character by its Unicode value
+.. |TypeUnicode| replace:: prompt for the Unicode value of the character to be typed
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
 .. |WifiSettings| replace:: go to the Wi-Fi Settings screen

@@ -9,7 +9,7 @@ which input mode is currently being used.
 
 Text mode is the default, and is used for `Directly Typing Regular Text`_.
 
-Braille mode is used for `Directly Typing Unicode Braille Characters`_.
+Braille mode is used for `Directly Typing Actual Braille Cells`_.
 
 Either booting the device or waking it up (see `The Power Switch`_)
 automatically resets the input mode to Text.
@@ -54,7 +54,7 @@ Deleting characters (see `Input Areas`_) is done one text character at a time.
 A special literary braille prefix, e.g. a capitalization sign, may not appear
 until the first character of the symbol it applies to has been typed.
 
-`Directly Typing Unicode Braille Characters`_ doesn't work when literary
+`Indirectly Typing Any Character`_ doesn't work when literary
 braille is being used. If you need to do it then you'll need to (temporarily)
 switch to `Computer Braille`_ mode.
 
@@ -71,8 +71,8 @@ then it can't be typed by pressing the corresponding key because those keys
 are, respectively, Backspace and Enter. Press Space+Dot7 for just dot 7, and
 press Space+Dot8 for just dot 8.
 
-Directly Typing Unicode Braille Characters
-``````````````````````````````````````````
+Directly Typing Actual Braille Cells
+````````````````````````````````````
 
 Space+Dot8+i (dots 24) sets the input mode to Braille.
 

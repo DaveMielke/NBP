@@ -60,8 +60,8 @@ been defined).
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have a defined representation.
 
-Unicode Braille Characters
-``````````````````````````
+Actual Braille Cells
+````````````````````
 
 The characters that render in text as actual braille cells (see `Unicode
 Braille Patterns`_) needn't (and, in fact, shouldn't) be defined. They're
