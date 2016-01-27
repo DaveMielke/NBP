@@ -68,16 +68,20 @@ public class InputService extends InputMethodService {
   private int selectionEnd = -1;
 
   private final void setSelection (int start, int end) {
-    synchronized (this) {
-      Log.d(LOG_TAG, String.format(
-        "selection change: [%d:%d] -> [%d:%d]",
-        selectionStart, selectionEnd,
-        start, end
-      ));
+    HostEndpoint endpoint = getHostEndpoint();
 
-      selectionStart = start;
-      selectionEnd = end;
-      getHostEndpoint().onInputSelectionChange(start, end);
+    synchronized (endpoint) {
+      synchronized (this) {
+        Log.d(LOG_TAG, String.format(
+          "selection change: [%d:%d] -> [%d:%d]",
+          selectionStart, selectionEnd,
+          start, end
+        ));
+
+        selectionStart = start;
+        selectionEnd = end;
+        endpoint.onInputSelectionChange(start, end);
+      }
     }
   }
 
