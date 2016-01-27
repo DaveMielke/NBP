@@ -87,7 +87,7 @@ Enter key). Press Space+Dot7 for just dot 7, and press Space+Dot8 for just dot
 
 These characters have several uses, including (but not limited to):
 
-* Actual braille characters can be written into text documents.
+* Actual braille cells can be written into text documents.
 
 * Contracted braille can be accurately saved.
 
