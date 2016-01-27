@@ -6,7 +6,7 @@ public class ForceCrash extends Action {
   public boolean performAction () {
     Object object = null;
     String string = object.toString();
-    return true;
+    return false;
   }
 
   public ForceCrash (Endpoint endpoint) {
