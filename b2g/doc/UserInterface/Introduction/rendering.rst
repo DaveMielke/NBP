@@ -53,7 +53,7 @@ Code`_. Internally-designed representations for `Additional Common Symbols`_,
 as well as for `Additional Characters for Spanish`_, have also been defined.
 
 If the braille representation for a complex character (e.g. a letter with an
-accent) hasn't been defined, then its base character (e.g. just the latter) is
+accent) hasn't been defined, then its base character (i.e. just the letter) is
 displayed (unless, of course, even the base character's representation hasn't
 been defined).  
 
