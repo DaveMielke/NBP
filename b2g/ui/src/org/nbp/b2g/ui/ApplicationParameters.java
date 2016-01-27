@@ -72,7 +72,7 @@ public abstract class ApplicationParameters {
   public final static int BRAILLE_SCROLL_KEEP = 3; // cells
   public final static long BRAILLE_MESSAGE_DURATION = 2000; // milliseconds
   public final static long BRAILLE_POPUP_TIMEOUT = 30000; // milliseconds
-  public final static long BRAILLE_WRITE_DELAY = 10; // milliseconds
+  public final static long BRAILLE_WRITE_DELAY = 40; // milliseconds
   public final static long BRAILLE_REWRITE_DELAY = 50; // milliseconds
 
   public final static byte BRAILLE_CHARACTER_UNDEFINED =
