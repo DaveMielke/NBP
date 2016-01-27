@@ -40,8 +40,15 @@ public class TypeCharacter extends Action {
 
         if (Endpoint.isSelected(start) && endpoint.isSelected(end)) {
           boolean isCursor = start == end;
+
+          {
+            int offset = endpoint.getLineStart();
+            start -= offset;
+            end -= offset;
+          }
+
+          end = endpoint.findEndBrailleOffset(isCursor? start: end);
           start = endpoint.findFirstBrailleOffset(start);
-          end = isCursor? start: endpoint.findEndBrailleOffset(end);
 
           if (ApplicationSettings.LOG_ACTIONS) {
             Log.v(LOG_TAG, String.format(
