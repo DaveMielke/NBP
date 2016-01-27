@@ -54,9 +54,11 @@ Deleting characters (see `Input Areas`_) is done one text character at a time.
 A special literary braille prefix, e.g. a capitalization sign, may not appear
 until the first character of the symbol it applies to has been typed.
 
-`Indirectly Typing Any Character`_ doesn't work when literary
-braille is being used. If you need to do it then you'll need to (temporarily)
-switch to `Computer Braille`_ mode.
+The ability to type any character by entering its Unicode value
+(see `Indirectly Typing Any Character`_)
+doesn't work when literary braille is being used.
+If you need to do it then you'll need to (temporarily) switch to
+`Computer Braille`_ mode.
 
 Typing Computer Braille Characters
 ''''''''''''''''''''''''''''''''''
