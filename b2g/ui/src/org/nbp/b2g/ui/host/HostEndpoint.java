@@ -254,11 +254,10 @@ public class HostEndpoint extends Endpoint {
     return write();
   }
 
-  public final void onTextSelectionChange (AccessibilityNodeInfo node, int start, int end, boolean update) {
+  public final void onTextSelectionChange (AccessibilityNodeInfo node, int start, int end) {
     synchronized (this) {
       if (node.equals(currentNode)) {
-        boolean changed = changeSelection(start, end);
-        if (changed && update) write();
+        changeSelection(start, end);
       }
     }
   }

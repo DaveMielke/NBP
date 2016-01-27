@@ -363,10 +363,6 @@ public class ScreenMonitor extends AccessibilityService {
               handleViewInputFocused(event, source);
               break;
 
-            case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
-              getHostEndpoint().onTextSelectionChange(source, event.getFromIndex(), event.getToIndex(), true);
-              break;
-
             default: {
               AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(source);
 
@@ -377,9 +373,15 @@ public class ScreenMonitor extends AccessibilityService {
 
                 case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED: {
                   int cursor = event.getFromIndex() + event.getAddedCount();
-                  getHostEndpoint().onTextSelectionChange(source, cursor, cursor, false);
+                  getHostEndpoint().onTextSelectionChange(source, cursor, cursor);
                   break;
                 }
+
+                case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
+                  getHostEndpoint().onTextSelectionChange(
+                    source, event.getFromIndex(), event.getToIndex()
+                  );
+                  break;
               }
 
               if (node != null) {
