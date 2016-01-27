@@ -7,9 +7,13 @@ import android.content.Intent;
 public abstract class ActivityAction extends Action {
   protected abstract Intent getIntent (Context context);
 
+  protected final Context getContext () {
+    return ApplicationContext.getContext();
+  }
+
   @Override
   public boolean performAction () {
-    Context context = ApplicationContext.getContext();
+    Context context = getContext();
     if (context == null) return false;
 
     Intent intent = getIntent(context);

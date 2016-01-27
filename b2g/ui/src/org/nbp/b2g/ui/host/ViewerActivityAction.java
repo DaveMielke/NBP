@@ -8,6 +8,10 @@ import android.net.Uri;
 public abstract class ViewerActivityAction extends ActivityAction {
   protected abstract Uri getUri ();
 
+  protected final String getString (int resource) {
+    return getContext().getResources().getString(resource);
+  }
+
   @Override
   protected Intent getIntent (Context context) {
     return new Intent(Intent.ACTION_VIEW, getUri());
