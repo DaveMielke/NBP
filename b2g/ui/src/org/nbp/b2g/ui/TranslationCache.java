@@ -25,8 +25,10 @@ public abstract class TranslationCache {
   }
 
   public static void put (CharSequence text, Translation translation) {
-    synchronized (map) {
-      map.put(text.toString(), translation);
+    if (text.length() > 0) {
+      synchronized (map) {
+        map.put(text.toString(), translation);
+      }
     }
   }
 
