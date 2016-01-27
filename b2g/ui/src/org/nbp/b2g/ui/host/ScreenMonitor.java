@@ -363,6 +363,10 @@ public class ScreenMonitor extends AccessibilityService {
               handleViewInputFocused(event, source);
               break;
 
+            case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
+              getHostEndpoint().onTextSelectionChange(source, event.getFromIndex(), event.getToIndex());
+              break;
+
             default: {
               AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(source);
 

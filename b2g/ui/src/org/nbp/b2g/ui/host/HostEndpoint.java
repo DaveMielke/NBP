@@ -191,8 +191,31 @@ public class HostEndpoint extends Endpoint {
       currentNode = AccessibilityNodeInfo.obtain(node);
       currentDescribe = describe;
 
-      if (!sameNode) resetSpeech();
+      if (!sameNode) {
+        resetSpeech();
+        clearSelection();
+      }
+
       setText(text, sameNode);
+
+      if (!sameNode) {
+        if (isInputArea()) {
+          InputService service = InputService.getInputService();
+
+          if (service != null) {
+            int start;
+            int end;
+
+            synchronized (service) {
+              start = service.getSelectionStart();
+              end = service.getSelectionEnd();
+            }
+
+            changeSelection(start, end);
+          }
+        }
+      }
+
       return write();
     }
   }
@@ -209,10 +232,10 @@ public class HostEndpoint extends Endpoint {
 
       if (!node.equals(currentNode)) {
         if (!force) return false;
-        if (currentNode != null) setAccessibilityText(currentNode, null);
         indent = 0;
 
         if (currentNode != null) {
+          setAccessibilityText(currentNode, null);
           ScreenUtilities.setCurrentNode(node);
         }
       }
@@ -229,6 +252,24 @@ public class HostEndpoint extends Endpoint {
     }
 
     return write();
+  }
+
+  public final void onTextSelectionChange (AccessibilityNodeInfo node, int start, int end) {
+    synchronized (this) {
+      if (node.equals(currentNode)) {
+        updateSelection(start, end);
+      }
+    }
+  }
+
+  public final void onInputSelectionChange (int start, int end) {
+    synchronized (this) {
+      if (isInputArea()) {
+        if (!isSelected(getSelectionStart())) {
+          updateSelection(start, end);
+        }
+      }
+    }
   }
 
   @Override

@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.host.HostEndpoint;
 
 import android.util.Log;
 import android.os.Bundle;
@@ -59,8 +60,33 @@ public class InputService extends InputMethodService {
     return connection;
   }
 
-  private static Endpoint getHostEndpoint () {
+  private static HostEndpoint getHostEndpoint () {
     return Endpoints.host.get();
+  }
+
+  private int selectionStart = -1;
+  private int selectionEnd = -1;
+
+  private final void setSelection (int start, int end) {
+    synchronized (this) {
+      Log.d(LOG_TAG, String.format(
+        "selection change: [%d:%d] -> [%d:%d]",
+        selectionStart, selectionEnd,
+        start, end
+      ));
+
+      selectionStart = start;
+      selectionEnd = end;
+      getHostEndpoint().onInputSelectionChange(start, end);
+    }
+  }
+
+  public final int getSelectionStart () {
+    return selectionStart;
+  }
+
+  public final int getSelectionEnd () {
+    return selectionEnd;
   }
 
   private static KeyboardMonitor getKeyboardMonitor () {
@@ -115,7 +141,7 @@ public class InputService extends InputMethodService {
   @Override
   public void onStartInput (EditorInfo info, boolean restarting) {
     Log.d(LOG_TAG, "input service " + (restarting? "reconnected": "connected"));
-    getHostEndpoint().onSelectionChange(info.initialSelStart, info.initialSelEnd);
+    setSelection(info.initialSelStart, info.initialSelEnd);
   }
 
   @Override
@@ -131,7 +157,7 @@ public class InputService extends InputMethodService {
     int candidateStart, int candidateEnd
   ) {
     try {
-      getHostEndpoint().onSelectionChange(newSelectionStart, newSelectionEnd);
+      setSelection(newSelectionStart, newSelectionEnd);
     } finally {
       super.onUpdateSelection(
         oldSelectionStart, oldSelectionEnd,

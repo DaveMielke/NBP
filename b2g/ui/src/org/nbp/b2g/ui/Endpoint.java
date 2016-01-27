@@ -528,7 +528,7 @@ public abstract class Endpoint {
     }
   }
 
-  public CharSequence getSelectedText () {
+  public final CharSequence getSelectedText () {
     synchronized (this) {
       if (isInputArea() && hasSelection()) {
         return textString.subSequence(selectionStart, selectionEnd);
@@ -538,7 +538,7 @@ public abstract class Endpoint {
     return null;
   }
 
-  public int getAdjustedLineOffset (int adjustment, int offset) {
+  public final int getAdjustedLineOffset (int adjustment, int offset) {
     if (adjustment == 0) return offset;
 
     if (adjustment > 0) {
@@ -563,29 +563,29 @@ public abstract class Endpoint {
     return offset;
   }
 
-  public int getAdjustedLineOffset (int adjustment) {
+  public final int getAdjustedLineOffset (int adjustment) {
     return getAdjustedLineOffset(adjustment, getLineIndent());
   }
 
-  public int getAdjustedTextOffset (int adjustment) {
+  public final int getAdjustedTextOffset (int adjustment) {
     return getLineStart() + getAdjustedLineOffset(adjustment);
   }
 
-  public int toLineOffset (int textOffset) {
+  public final int toLineOffset (int textOffset) {
     return textOffset - getLineStart();
   }
 
-  public boolean isCharacterOffset (int textOffset) {
+  public final boolean isCharacterOffset (int textOffset) {
     int lineOffset = toLineOffset(textOffset);
     return ((lineOffset >= 0) && (lineOffset < getLineLength()));
   }
 
-  public boolean isCursorOffset (int textOffset) {
+  public final boolean isCursorOffset (int textOffset) {
     int lineOffset = toLineOffset(textOffset);
     return ((lineOffset >= 0) && (lineOffset <= getLineLength()));
   }
 
-  protected void adjustLeft (int offset, int keep) {
+  protected final void adjustLeft (int offset, int keep) {
     if (offset < lineIndent) {
       int newIndent = offset - keep;
       if (newIndent < 0) newIndent = 0;
@@ -593,7 +593,7 @@ public abstract class Endpoint {
     }
   }
 
-  protected void adjustRight (int offset, int keep) {
+  protected final void adjustRight (int offset, int keep) {
     int brailleLength = Devices.braille.get().getLength();
 
     if (offset >= (lineIndent + brailleLength)) {
@@ -601,18 +601,18 @@ public abstract class Endpoint {
     }
   }
 
-  protected void adjustScroll (int offset) {
+  protected final void adjustScroll (int offset) {
     int keep = ApplicationParameters.BRAILLE_SCROLL_KEEP;
     adjustLeft(offset, keep);
     adjustRight(offset, keep);
   }
 
-  private boolean changeSelection (int start, int end) {
+  protected final boolean changeSelection (int start, int end) {
     synchronized (this) {
       if (ApplicationSettings.LOG_UPDATES) {
         Log.d(LOG_TAG, String.format(
-          "selection changed: Start:%d->%d End:%d->%d",
-          selectionStart, start, selectionEnd, end
+          "selection change: [%d:%d] -> [%d:%d]",
+          selectionStart, selectionEnd, start, end
         ));
       }
 
@@ -631,16 +631,12 @@ public abstract class Endpoint {
     return false;
   }
 
-  private boolean updateSelection (int start, int end) {
+  protected final boolean updateSelection (int start, int end) {
     if (changeSelection(start, end)) return write();
     return true;
   }
 
-  public boolean onSelectionChange (int start, int end) {
-    return changeSelection(start, end);
-  }
-
-  public boolean clearSelection () {
+  public final boolean clearSelection () {
     return updateSelection(NO_SELECTION, NO_SELECTION);
   }
 
@@ -661,11 +657,11 @@ public abstract class Endpoint {
     return updateSelection(start, end);
   }
 
-  public boolean setCursor (int offset) {
+  public final boolean setCursor (int offset) {
     return setSelection(offset, offset);
   }
 
-  public boolean rewrite (CharSequence text) {
+  public final boolean rewrite (CharSequence text) {
     synchronized (this) {
       setText(text, true);
     }
@@ -673,7 +669,7 @@ public abstract class Endpoint {
     return write();
   }
 
-  public boolean write (CharSequence text) {
+  public final boolean write (CharSequence text) {
     synchronized (this) {
       setText(text);
       clearSelection();
@@ -683,7 +679,7 @@ public abstract class Endpoint {
     return write();
   }
 
-  public boolean write (int string) {
+  public final boolean write (int string) {
     return write(ApplicationContext.getString(string));
   }
 
