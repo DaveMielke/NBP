@@ -41,6 +41,18 @@ public class TextTranslation extends Translation {
     return getOutputOffset(brailleOffset);
   }
 
+  public final int findFirstTextOffset (int brailleOffset) {
+    return findFirstOutputOffset(brailleOffset);
+  }
+
+  public final int findLastTextOffset (int brailleOffset) {
+    return findLastOutputOffset(brailleOffset);
+  }
+
+  public final int findEndTextOffset (int brailleOffset) {
+    return findEndOutputOffset(brailleOffset);
+  }
+
   public final Integer getTextCursor () {
     return getOutputCursor();
   }

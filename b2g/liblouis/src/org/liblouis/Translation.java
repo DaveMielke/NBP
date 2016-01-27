@@ -131,6 +131,36 @@ public class Translation {
     return outputOffsets[inputOffset];
   }
 
+  public final int findFirstOutputOffset (int inputOffset) {
+    int outputOffset = getOutputOffset(inputOffset);
+
+    while (outputOffset > 0) {
+      int next = outputOffset - 1;
+      if (getInputOffset(next) != inputOffset) break;
+      outputOffset = next;
+    }
+
+    return outputOffset;
+  }
+
+  public final int findLastOutputOffset (int inputOffset) {
+    final int outputLength = getOutputLength();
+    int outputOffset = getOutputOffset(inputOffset);
+
+    while (outputOffset < outputLength) {
+      int next = outputOffset + 1;
+      if (getInputOffset(next) != inputOffset) break;
+      outputOffset = next;
+    }
+
+    return outputOffset;
+  }
+
+  public final int findEndOutputOffset (int inputOffset) {
+    if (inputOffset == 0) return 0;
+    return findLastOutputOffset(inputOffset-1) + 1;
+  }
+
   public final Integer getOutputCursor () {
     return outputCursor;
   }
