@@ -22,6 +22,9 @@ When a character is typed (see `Typing Characters`_), then:
 * If text has been selected then the typed character replaces the selected
   text.
 
+The Enter Key within an Input Area
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The Enter key is Dot8. If the input area supports more than one line then this
 key ends the current line and starts a new one.
 
@@ -51,12 +54,23 @@ The Delete key is Space+d (dots 145).
 
 * If text has been selected then the selected text is deleted.
 
-The Forward and Backward keys pan through the input area in the expected way,
+Panning within an Input Area
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Forward and Backward keys pan through an input area in the expected way,
 but won't leave it. The Forward key pans to the right, and, at the end of each
 line, wraps to the start of the next one. The Backward key pans to the left,
 and, at the start of each line, wraps to the end of the previous one. See
 `Leaving the Current Screen Element`_ for how to move to another screen
 element.
+
+Pressing Space+Dots17 pans the braille display such that
+its first character corresponds to the cursor's location,
+or, if text has been selected, to the start of the selection.
+
+Pressing Space+Dots48 pans the braille display such that
+its last character corresponds to the cursor's location,
+or, if text has been selected, to the end of the selection.
 
 The Directional Keys within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
