@@ -74,6 +74,8 @@ Space+? (dots 1456)
   ``Google Now``.
 
 Space+s (dots 234)
+  Begin a shortcut:
+
   a (dot 1)
     Go to the Accessibility Settings screen.
 

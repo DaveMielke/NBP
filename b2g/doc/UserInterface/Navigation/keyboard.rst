@@ -192,6 +192,20 @@ The End Key
 Move to the last element of a list, to the end of a line of text, to the last
 page of a group, etc.
 
+The Control+Home Key
+~~~~~~~~~~~~~~~~~~~~
+
+**Space+Dots123**
+
+Move to the start of the first line of text.
+
+The Control+End Key
+~~~~~~~~~~~~~~~~~~~
+
+**Space+Dots456**
+
+Move to the end of the last line of text.
+
 The Shift+Tab Key
 ~~~~~~~~~~~~~~~~~
 

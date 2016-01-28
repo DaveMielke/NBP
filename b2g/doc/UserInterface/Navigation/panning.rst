@@ -65,3 +65,10 @@ The braille display can be explicitly panned by holding Dot8 while pressing a
 cursor routing key. This positions the braille display such that the rendered
 portion of the current line starts with that character.
 
+The braille display can be directly moved
+to the start of the first line by pressing Space+Dots123,
+or to the end of the last line by pressing Space+Dots456.
+These key combinations are the same as those that have been traditionally used
+to emulate the Control+Home/End keys of a standard keyboard
+(see `Navigating with Keyboard Keys`_).
+
