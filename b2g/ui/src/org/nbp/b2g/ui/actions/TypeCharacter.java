@@ -40,7 +40,7 @@ public class TypeCharacter extends Action {
 
         if (Endpoint.isSelected(start) && endpoint.isSelected(end)) {
           boolean isCursor = start == end;
-          boolean atEnd = end == (endpoint.getLineStart() + endpoint.getLineLength());
+          boolean atEnd = end == endpoint.getLineEnd();
 
           {
             int offset = endpoint.getLineStart();

@@ -464,31 +464,35 @@ public abstract class Endpoint {
     resetSpeech();
   }
 
-  public boolean hasSoftEdges () {
+  public final boolean hasSoftEdges () {
     return softEdges || isInputArea();
   }
 
-  public CharSequence getLineText () {
+  public final CharSequence getLineText () {
     return lineText;
   }
 
-  public int getLineStart () {
+  public final int getLineStart () {
     return lineStart;
   }
 
-  public int getLineLength () {
+  public final int getLineLength () {
     return lineText.length();
   }
 
-  public int getLineIndent () {
+  public final int getLineEnd () {
+    return getLineStart() + getLineLength();
+  }
+
+  public final int getLineIndent () {
     return lineIndent;
   }
 
-  public void setLineIndent (int indent) {
+  public final void setLineIndent (int indent) {
     lineIndent = indent;
   }
 
-  public int getBrailleStart () {
+  public final int getBrailleStart () {
     return lineStart + lineIndent;
   }
 

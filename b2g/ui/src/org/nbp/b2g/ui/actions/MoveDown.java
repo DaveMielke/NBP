@@ -34,7 +34,7 @@ public class MoveDown extends DirectionalAction {
 
   @Override
   public ActionResult performInternalAction (Endpoint endpoint) {
-    int end = endpoint.getLineStart() + endpoint.getLineLength();
+    int end = endpoint.getLineEnd();
     if (end == endpoint.getTextLength()) return ActionResult.FAILED;
 
     endpoint.setLine(end+1);
