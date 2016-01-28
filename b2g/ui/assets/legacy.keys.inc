@@ -7,8 +7,8 @@ bind Space+Dot4 CursorDown
 bind Space+Dots23 PageUp
 bind Space+Dots56 PageDown
 
-bind Space+Dots123 Home
-bind Space+Dots456 End
+bind Space+Dots13 Home
+bind Space+Dots46 End
 
 bind Space+Dots12 TabBackward
 bind Space+Dots45 TabForward

@@ -201,14 +201,23 @@ public class InputService extends InputMethodService {
     return connection.sendKeyEvent(new KeyEvent(action, key));
   }
 
-  public static boolean injectKey (int key) {
-    if (injectKeyEvent(key, true)) {
-      if (injectKeyEvent(key, false)) {
-        return true;
+  public static boolean injectKey (int... keys) {
+    final int count = keys.length;
+    int index = 0;
+
+    while (index < count) {
+      if (!injectKeyEvent(keys[index++], true)) {
+        return false;
       }
     }
 
-    return false;
+    while (index > 0) {
+      if (!injectKeyEvent(keys[--index], false)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private static void logKeyEvent (int code, boolean press) {

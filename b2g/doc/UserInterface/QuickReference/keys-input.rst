@@ -13,4 +13,6 @@
   "Space+Dot8","|TypeDot8|"
   "Space+Dots136#u","|TypeUnicode|"
   "Space+Dots1346#x","|TypeControl|"
+  "Space+Dots17","|ToSelectionStart|"
+  "Space+Dots48","|ToSelectionEnd|"
 

@@ -179,7 +179,7 @@ Perform a scroll forward (down or to the right) operation.
 The Home Key
 ~~~~~~~~~~~~
 
-**Space+Dots123**
+**Space+Dots13**
 
 Move to the first element of a list, to the start of a line of text, to the
 first page of a group, etc.
@@ -187,7 +187,7 @@ first page of a group, etc.
 The End Key
 ~~~~~~~~~~~
 
-**Space+Dots456**
+**Space+Dots46**
 
 Move to the last element of a list, to the end of a line of text, to the last
 page of a group, etc.

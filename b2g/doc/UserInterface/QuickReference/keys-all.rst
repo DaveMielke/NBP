@@ -14,6 +14,8 @@
   "Space+Down","|ScrollDown|"
   "Dot7+Cursor","|DescribeCharacter|"
   "Dot8+Cursor","|SetLeft|"
+  "Space+Dots123","|ToTextStart|"
+  "Space+Dots456","|ToTextEnd|"
   "Space+Dot8+Dots14#c","|CopyToClipboard|"
   "Space+Dots1245#g","|BrailleCodeConfirm|"
   "Space+Dot7+Dots1245#g","|BrailleCodePrevious|"

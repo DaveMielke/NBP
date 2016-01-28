@@ -114,10 +114,10 @@
 .. |SleepTalkOn| replace:: speak even when asleep
 .. |SpeakFaster| replace:: increase the speech rate
 .. |SpeakHigher| replace:: increase the speech pitch
-.. |SpeakLeft| replace:: pan the speech more to the left
+.. |SpeakLeft| replace:: adjust the speech balance more to the left
 .. |SpeakLouder| replace:: increase the speech volume
 .. |SpeakLower| replace:: decrease the speech pitch
-.. |SpeakRight| replace:: pan the speech more to the right
+.. |SpeakRight| replace:: adjust the speech balance more to the right
 .. |SpeakSlower| replace:: decrease the speech rate
 .. |SpeakSofter| replace:: decrease the speech volume
 .. |SpeechOff| replace:: disable speech
@@ -126,6 +126,10 @@
 .. |SwitchLauncher| replace:: go to the Launcher chooser
 .. |TabBackward| replace:: the keyboard Shift+Tab keys (tab backward)
 .. |TabForward| replace:: the keyboard Tab key (tab forward)
+.. |ToSelectionEnd| replace:: go to the end of the input area
+.. |ToSelectionStart| replace:: go to the start of the input area
+.. |ToTextEnd| replace:: go to the cursor or end of the text selection
+.. |ToTextStart| replace:: go to the cursor or start of the text selection
 .. |TypeControl| replace:: the keyboard Control key (applies to the next typed character)
 .. |TypeDot7| replace:: type the character represented by just dot 7
 .. |TypeDot8| replace:: type the character represented by just dot 8

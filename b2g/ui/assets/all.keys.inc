@@ -16,6 +16,9 @@ bind Space+Down ScrollDown
 bind Dot7+Cursor DescribeCharacter
 bind Dot8+Cursor SetLeft
 
+bind Space+Dots123 ToTextStart
+bind Space+Dots456 ToTextEnd
+
 bind Space+Dot8+Dots14#c CopyToClipboard
 
 bind Space+Dots1245#g BrailleCodeConfirm

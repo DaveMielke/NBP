@@ -16,3 +16,6 @@ bind Space+Dot8 TypeDot8
 bind Space+Dots136#u TypeUnicode
 bind Space+Dots1346#x TypeControl
 
+bind Space+Dots17 ToSelectionStart
+bind Space+Dots48 ToSelectionEnd
+
