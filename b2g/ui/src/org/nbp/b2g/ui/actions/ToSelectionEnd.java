@@ -14,7 +14,15 @@ public class ToSelectionEnd extends Action {
       if (endpoint.isInputArea()) {
         int textOffset = endpoint.getSelectionEnd();
         endpoint.setLine(textOffset);
-        endpoint.setLineIndent(endpoint.toLineOffset(textOffset));
+
+        int end = endpoint.toLineOffset(textOffset);
+        if (endpoint.hasCursor()) end += 1;
+
+        int length = Devices.braille.get().getLength();
+        int indent = endpoint.getAdjustedLineOffset(-length, end);
+        if (indent < 0) indent = 0;
+        endpoint.setLineIndent(indent);
+
         return endpoint.write();
       }
     }
