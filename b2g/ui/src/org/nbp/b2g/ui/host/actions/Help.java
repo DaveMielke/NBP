@@ -5,7 +5,7 @@ import org.nbp.b2g.ui.*;
 public class Help extends InternalActivityAction {
   @Override
   protected Class getActivityClass () {
-    return UserGuideActivity.class;
+    return UserManualActivity.class;
   }
 
   public Help (Endpoint endpoint) {

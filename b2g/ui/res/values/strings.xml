@@ -53,7 +53,7 @@
 
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
-  <string name="userGuide_activity_label">B2G User Interface Guide</string>
+  <string name="userManual_activity_label">B2G User Interface Manual</string>
 
   <string name="state_disabled">disabled</string>
 
