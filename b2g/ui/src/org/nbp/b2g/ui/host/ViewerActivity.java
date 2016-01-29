@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.text.util.Linkify;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +19,6 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
 
   private View createDocumentView () {
     final TextView view = newTextView();
-    view.setAutoLinkMask(Linkify.WEB_URLS);
 
     new AsyncTask<Void, Integer, CharSequence>() {
       @Override
