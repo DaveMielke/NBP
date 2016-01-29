@@ -121,34 +121,11 @@ public class Translation {
     }
   }
 
-  private final void addBackTranslationSpans (SpannableStringBuilder sb) {
-    int start = -1;
-    int from = -1;
-    int length = getOutputLength();
-
-    for (int end=0; end<=length; end+=1) {
-      int to = getInputOffset(end);
-
-      if (to != from) {
-        if (from != -1) {
-          sb.setSpan(
-            new BackTranslationSpan(consumedInput.subSequence(from, to)),
-            start, end, 0
-          );
-        }
-
-        start = end;
-        from = to;
-      }
-    }
-  }
-
   public final CharSequence getOutputWithSpans () {
     synchronized (this) {
       if (outputWithSpans == null) {
         SpannableStringBuilder sb = new SpannableStringBuilder(getOutputAsString());
         copyInputSpans(sb);
-        addBackTranslationSpans(sb);
         outputWithSpans = sb.subSequence(0, sb.length());
       }
     }
