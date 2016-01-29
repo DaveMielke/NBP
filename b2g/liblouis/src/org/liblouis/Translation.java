@@ -182,9 +182,7 @@ public class Translation {
   private final static byte BOLD      = 0X4;
 
   private static byte[] createTypeForm (CharSequence text) {
-    final int length = text.length();
-    final byte[] typeForm = new byte[length];
-    for (int index=0; index<length; index+=1) typeForm[index] = 0;
+    byte[] typeForm = null;
 
     if (text instanceof Spanned) {
       Spanned spanned = (Spanned)text;
@@ -213,6 +211,12 @@ public class Translation {
           }
 
           if (flags != 0) {
+            if (typeForm == null) {
+              int length = text.length();
+              typeForm = new byte[length];
+              for (int index=0; index<length; index+=1) typeForm[index] = 0;
+            }
+
             int start = spanned.getSpanStart(span);
             int end = spanned.getSpanEnd(span);
 

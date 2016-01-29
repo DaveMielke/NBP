@@ -14,13 +14,17 @@ JAVA_METHOD(
   jintArray jResultValues, jboolean backTranslate
 ) {
   const char *cTableName = (*env)->GetStringUTFChars(env, jTableName, NULL);
+
   const jchar *cInputBuffer = (*env)->GetStringChars(env, jInputBuffer, NULL);
   jchar *cOutputBuffer = (*env)->GetCharArrayElements(env, jOutputBuffer, NULL);
-  jbyte *cTypeForm = (*env)->GetByteArrayElements(env, jTypeForm, NULL);
+
+  int haveTypeForm = jTypeForm != NULL;
+  jbyte *cTypeForm = haveTypeForm? (*env)->GetByteArrayElements(env, jTypeForm, NULL): NULL;
+
   jint *cOutputOffsets = (*env)->GetIntArrayElements(env, jOutputOffsets, NULL);
   jint *cInputOffsets = (*env)->GetIntArrayElements(env, jInputOffsets, NULL);
-  jint *cResultValues = (*env)->GetIntArrayElements(env, jResultValues, NULL);
 
+  jint *cResultValues = (*env)->GetIntArrayElements(env, jResultValues, NULL);
   jint *inputLength  = &cResultValues[RVI_INPUT_LENGTH];
   jint *outputLength = &cResultValues[RVI_OUTPUT_LENGTH];
   jint *cursorOffset = &cResultValues[RVI_CURSOR_OFFSET];
@@ -43,7 +47,7 @@ JAVA_METHOD(
   (*env)->ReleaseStringUTFChars(env, jTableName, cTableName);
   (*env)->ReleaseStringChars(env, jInputBuffer, cInputBuffer);
   (*env)->ReleaseCharArrayElements(env, jOutputBuffer, cOutputBuffer, 0);
-  (*env)->ReleaseByteArrayElements(env, jTypeForm, cTypeForm, JNI_ABORT);
+  if (haveTypeForm) (*env)->ReleaseByteArrayElements(env, jTypeForm, cTypeForm, JNI_ABORT);
   (*env)->ReleaseIntArrayElements(env, jOutputOffsets, cOutputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jInputOffsets, cInputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jResultValues, cResultValues, 0);
