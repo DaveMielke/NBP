@@ -75,7 +75,7 @@ public class HostEndpoint extends Endpoint {
       }
     }
 
-    return text.subSequence(0, text.length());
+    return text;
   }
 
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
