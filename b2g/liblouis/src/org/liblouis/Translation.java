@@ -7,13 +7,17 @@ import android.util.Log;
 import android.text.Spanned;
 import android.text.SpannableStringBuilder;
 
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
+
 public class Translation {
   private final static String LOG_TAG = Translation.class.getName();
 
   private native boolean translate (
-    String tableName, String inputBuffer, char[] outputBuffer,
-    int[] outputOffsets, int[] inputOffsets, int[] resultValues,
-    boolean backTranslate
+    String tableName,
+    String inputBuffer, char[] outputBuffer, byte[] typeForm,
+    int[] outputOffsets, int[] inputOffsets,
+    int[] resultValues, boolean backTranslate
   );
 
   private final TranslationTable translationTable;
@@ -195,6 +199,54 @@ public class Translation {
     return outputCursor;
   }
 
+  private final static byte ITALIC    = 0X1;
+  private final static byte UNDERLINE = 0X2;
+  private final static byte BOLD      = 0X4;
+
+  private static byte[] createTypeForm (CharSequence text) {
+    final int length = text.length();
+    final byte[] typeForm = new byte[length];
+    for (int index=0; index<length; index+=1) typeForm[index] = 0;
+
+    if (text instanceof Spanned) {
+      Spanned spanned = (Spanned)text;
+      Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
+
+      if (spans != null) {
+        for (Object span : spans) {
+          byte flags = 0;
+
+          if (span instanceof StyleSpan) {
+            switch (((StyleSpan)span).getStyle()) {
+              case Typeface.BOLD:
+                flags = BOLD;
+                break;
+
+              case Typeface.ITALIC:
+                flags = ITALIC;
+                break;
+
+              case Typeface.BOLD_ITALIC:
+                flags = BOLD | ITALIC;
+                break;
+            }
+          }
+
+          if (flags != 0) {
+            int start = spanned.getSpanStart(span);
+            int end = spanned.getSpanEnd(span);
+
+            for (int index=start; index<end; index+=1) {
+              typeForm[index] |= flags;
+            }
+          }
+        }
+      }
+    }
+
+    return typeForm;
+  }
+
   private enum ResultValuesIndex {
     INPUT_LENGTH,
     OUTPUT_LENGTH,
@@ -230,7 +282,7 @@ public class Translation {
 
     synchronized (Louis.NATIVE_LOCK) {
       translationSucceeded = translate(
-        table.getFileName(), inputString, output,
+        table.getFileName(), inputString, output, createTypeForm(input),
         outOffsets, inOffsets, resultValues, backTranslate
       );
     }
