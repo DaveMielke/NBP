@@ -7,6 +7,7 @@ import android.util.Log;
 import android.text.Spanned;
 import android.text.SpannableStringBuilder;
 
+import android.text.style.UnderlineSpan;
 import android.text.style.StyleSpan;
 import android.graphics.Typeface;
 
@@ -193,7 +194,9 @@ public class Translation {
         for (Object span : spans) {
           byte flags = 0;
 
-          if (span instanceof StyleSpan) {
+          if (span instanceof UnderlineSpan) {
+            flags = UNDERLINE;
+          } else if (span instanceof StyleSpan) {
             switch (((StyleSpan)span).getStyle()) {
               case Typeface.BOLD:
                 flags = BOLD;
