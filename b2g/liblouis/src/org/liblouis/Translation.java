@@ -56,8 +56,8 @@ public class Translation {
     return inputOffsets[outputOffset];
   }
 
-  public final int findFirstInputOffset (int outputOffset) {
-    int inputOffset = getInputOffset(outputOffset);
+  public final int findFirstInputOffset (int inputOffset) {
+    final int outputOffset = getOutputOffset(inputOffset);
 
     while (inputOffset > 0) {
       int next = inputOffset - 1;
@@ -68,9 +68,9 @@ public class Translation {
     return inputOffset;
   }
 
-  public final int findLastInputOffset (int outputOffset) {
+  public final int findLastInputOffset (int inputOffset) {
+    final int outputOffset = getOutputOffset(inputOffset);
     final int inputLength = getInputLength();
-    int inputOffset = getInputOffset(outputOffset);
 
     while (inputOffset < inputLength) {
       int next = inputOffset + 1;
@@ -79,11 +79,6 @@ public class Translation {
     }
 
     return inputOffset;
-  }
-
-  public final int findEndInputOffset (int outputOffset) {
-    if (outputOffset == 0) return 0;
-    return findLastInputOffset(outputOffset-1) + 1;
   }
 
   public final Integer getInputCursor () {
@@ -143,8 +138,8 @@ public class Translation {
     return outputOffsets[inputOffset];
   }
 
-  public final int findFirstOutputOffset (int inputOffset) {
-    int outputOffset = getOutputOffset(inputOffset);
+  public final int findFirstOutputOffset (int outputOffset) {
+    final int inputOffset = getInputOffset(outputOffset);
 
     while (outputOffset > 0) {
       int next = outputOffset - 1;
@@ -155,9 +150,9 @@ public class Translation {
     return outputOffset;
   }
 
-  public final int findLastOutputOffset (int inputOffset) {
+  public final int findLastOutputOffset (int outputOffset) {
+    final int inputOffset = getInputOffset(outputOffset);
     final int outputLength = getOutputLength();
-    int outputOffset = getOutputOffset(inputOffset);
 
     while (outputOffset < outputLength) {
       int next = outputOffset + 1;
@@ -166,11 +161,6 @@ public class Translation {
     }
 
     return outputOffset;
-  }
-
-  public final int findEndOutputOffset (int inputOffset) {
-    if (inputOffset == 0) return 0;
-    return findLastOutputOffset(inputOffset-1) + 1;
   }
 
   public final Integer getOutputCursor () {

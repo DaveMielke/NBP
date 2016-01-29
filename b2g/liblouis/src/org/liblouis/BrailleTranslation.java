@@ -17,16 +17,12 @@ public class BrailleTranslation extends Translation {
     return getInputOffset(brailleOffset);
   }
 
-  public final int findFirstTextOffset (int brailleOffset) {
-    return findFirstInputOffset(brailleOffset);
+  public final int findFirstTextOffset (int textOffset) {
+    return findFirstInputOffset(textOffset);
   }
 
-  public final int findLastTextOffset (int brailleOffset) {
-    return findLastInputOffset(brailleOffset);
-  }
-
-  public final int findEndTextOffset (int brailleOffset) {
-    return findEndInputOffset(brailleOffset);
+  public final int findLastTextOffset (int textOffset) {
+    return findLastInputOffset(textOffset);
   }
 
   public final Integer getTextCursor () {
@@ -53,16 +49,12 @@ public class BrailleTranslation extends Translation {
     return getOutputOffset(textOffset);
   }
 
-  public final int findFirstBrailleOffset (int textOffset) {
-    return findFirstOutputOffset(textOffset);
+  public final int findFirstBrailleOffset (int brailleOffset) {
+    return findFirstOutputOffset(brailleOffset);
   }
 
-  public final int findLastBrailleOffset (int textOffset) {
-    return findLastOutputOffset(textOffset);
-  }
-
-  public final int findEndBrailleOffset (int textOffset) {
-    return findEndOutputOffset(textOffset);
+  public final int findLastBrailleOffset (int brailleOffset) {
+    return findLastOutputOffset(brailleOffset);
   }
 
   public final Integer getBrailleCursor () {
