@@ -2,8 +2,8 @@
 
 <resources>
   <string name="uri_ui_apk">http://brltty.com/archive/B2G/B2G_UI.apk</string>
-  <string name="uri_ui_ug_html">http://brltty.com/archive/B2G/UserInterface.html</string>
-  <string name="uri_ui_ug_text">http://brltty.com/archive/B2G/UserInterface.txt</string>
+  <string name="uri_ui_manual_html">http://brltty.com/archive/B2G/UserInterface.html</string>
+  <string name="uri_ui_manual_text">http://brltty.com/archive/B2G/UserInterface.txt</string>
 
   <string name="uri_editor_apk">http://brltty.com/archive/B2G/B2G_Editor.apk</string>
 
