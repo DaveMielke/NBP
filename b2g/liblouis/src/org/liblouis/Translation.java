@@ -174,7 +174,7 @@ public class Translation {
 
   private static byte[] createTypeForm (int length) {
     byte[] typeForm = new byte[length];
-    for (int index=0; index<length; index+=1) typeForm[index] = 0;
+    Arrays.fill(typeForm, (byte)0);
     return typeForm;
   }
 
@@ -258,8 +258,7 @@ public class Translation {
     resultValues[RVI_CURSOR_OFFSET] = cursorOffset;
 
     int typeFormLength = Math.max(inputLength, outputLength);
-    byte[] typeForm = backTranslate?
-                      createTypeForm(typeFormLength):
+    byte[] typeForm = backTranslate? null:
                       createTypeForm(typeFormLength, input);
 
     synchronized (Louis.NATIVE_LOCK) {
