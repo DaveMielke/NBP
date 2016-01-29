@@ -177,9 +177,10 @@ public class Translation {
     return outputCursor;
   }
 
-  private final static byte ITALIC    = 0X1;
-  private final static byte UNDERLINE = 0X2;
-  private final static byte BOLD      = 0X4;
+  private final static byte TYPE_FORM_ITALIC    = 0X1;
+  private final static byte TYPE_FORM_UNDERLINE = 0X2;
+  private final static byte TYPE_FORM_BOLD      = 0X4;
+  private final static byte TYPE_FORM_COMPUTER  = 0X8;
 
   private static byte[] createTypeForm (CharSequence text) {
     byte[] typeForm = null;
@@ -193,19 +194,19 @@ public class Translation {
           byte flags = 0;
 
           if (span instanceof UnderlineSpan) {
-            flags = UNDERLINE;
+            flags = TYPE_FORM_UNDERLINE;
           } else if (span instanceof StyleSpan) {
             switch (((StyleSpan)span).getStyle()) {
               case Typeface.BOLD:
-                flags = BOLD;
+                flags = TYPE_FORM_BOLD;
                 break;
 
               case Typeface.ITALIC:
-                flags = ITALIC;
+                flags = TYPE_FORM_ITALIC;
                 break;
 
               case Typeface.BOLD_ITALIC:
-                flags = BOLD | ITALIC;
+                flags = TYPE_FORM_BOLD | TYPE_FORM_ITALIC;
                 break;
             }
           }
