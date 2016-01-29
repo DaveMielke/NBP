@@ -47,7 +47,7 @@ JAVA_METHOD(
   (*env)->ReleaseStringUTFChars(env, jTableName, cTableName);
   (*env)->ReleaseStringChars(env, jInputBuffer, cInputBuffer);
   (*env)->ReleaseCharArrayElements(env, jOutputBuffer, cOutputBuffer, 0);
-  if (haveTypeForm) (*env)->ReleaseByteArrayElements(env, jTypeForm, cTypeForm, JNI_ABORT);
+  if (haveTypeForm) (*env)->ReleaseByteArrayElements(env, jTypeForm, cTypeForm, 0);
   (*env)->ReleaseIntArrayElements(env, jOutputOffsets, cOutputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jInputOffsets, cInputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jResultValues, cResultValues, 0);

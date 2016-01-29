@@ -172,7 +172,13 @@ public class Translation {
   private final static byte TYPE_FORM_BOLD      = 0X4;
   private final static byte TYPE_FORM_COMPUTER  = 0X8;
 
-  private static byte[] createTypeForm (CharSequence text) {
+  private static byte[] createTypeForm (int length) {
+    byte[] typeForm = new byte[length];
+    for (int index=0; index<length; index+=1) typeForm[index] = 0;
+    return typeForm;
+  }
+
+  private static byte[] createTypeForm (int length, CharSequence text) {
     byte[] typeForm = null;
 
     if (text instanceof Spanned) {
@@ -202,11 +208,7 @@ public class Translation {
           }
 
           if (flags != 0) {
-            if (typeForm == null) {
-              int length = text.length();
-              typeForm = new byte[length];
-              for (int index=0; index<length; index+=1) typeForm[index] = 0;
-            }
+            if (typeForm == null) typeForm = createTypeForm(length);
 
             int start = spanned.getSpanStart(span);
             int end = spanned.getSpanEnd(span);
@@ -255,9 +257,14 @@ public class Translation {
     resultValues[RVI_OUTPUT_LENGTH] = outputLength;
     resultValues[RVI_CURSOR_OFFSET] = cursorOffset;
 
+    int typeFormLength = Math.max(inputLength, outputLength);
+    byte[] typeForm = backTranslate?
+                      createTypeForm(typeFormLength):
+                      createTypeForm(typeFormLength, input);
+
     synchronized (Louis.NATIVE_LOCK) {
       translationSucceeded = translate(
-        table.getFileName(), inputString, output, createTypeForm(input),
+        table.getFileName(), inputString, output, typeForm,
         outOffsets, inOffsets, resultValues, backTranslate
       );
     }
