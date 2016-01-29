@@ -52,32 +52,6 @@ public class HostEndpoint extends Endpoint {
     return accessibilityText.get(node);
   }
 
-  private static CharSequence toText (CharSequence text) {
-    if (false) {
-      if (text instanceof Spanned) {
-        Spanned spanned = (Spanned)text;
-        Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
-
-        if (spans != null) {
-          if (spans.length > 0) {
-            SpannableStringBuilder sb = new SpannableStringBuilder(text);
-
-            for (Object span : spans) {
-              Log.d(LOG_TAG, "span object: " + span.getClass().getName());
-            }
-
-            sb.append('|');
-            sb.append(Integer.toString(spans.length));
-
-            return sb.subSequence(0, sb.length());
-          }
-        }
-      }
-    }
-
-    return text;
-  }
-
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
     sb.setSpan(new SpeechSpan(text), start, sb.length(), 0);
   }
@@ -140,7 +114,6 @@ public class HostEndpoint extends Endpoint {
     }
 
     if (text != null) {
-      text = toText(text);
       textInsertionOffset = sb.length();
     } else if (ScreenUtilities.isEditable(node)) {
       int end = getSelectionEnd();
@@ -155,7 +128,7 @@ public class HostEndpoint extends Endpoint {
       int start = sb.length();
 
       sb.append('[');
-      sb.append(toText(text));
+      sb.append(text);
       sb.append(']');
 
       setSpeechSpan(sb, start, text);
