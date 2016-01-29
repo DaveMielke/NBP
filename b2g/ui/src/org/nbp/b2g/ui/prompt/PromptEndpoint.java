@@ -63,15 +63,11 @@ public abstract class PromptEndpoint extends Endpoint {
 
   @Override
   public final boolean handleKeyboardKey_enter () {
-    boolean handled;
-
     try {
-      handled = handleResponse();
+      return handleResponse();
     } finally {
       if (!super.handleKeyboardKey_enter()) return false;
     }
-
-    return handled;
   }
 
   public PromptEndpoint (int prompt, String prefix) {
