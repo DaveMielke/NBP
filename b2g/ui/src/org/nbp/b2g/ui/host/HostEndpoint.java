@@ -117,7 +117,8 @@ public class HostEndpoint extends Endpoint {
 
   private final CharSequence toText (AccessibilityNodeInfo node) {
     SpannableStringBuilder sb = new SpannableStringBuilder();
-    CharSequence characters;
+    int textInsertionOffset = -1;
+    CharSequence text;
 
     if (node.isCheckable()) {
       boolean isChecked = node.isChecked();
@@ -134,12 +135,13 @@ public class HostEndpoint extends Endpoint {
       ));
     }
 
-    if ((characters = node.getText()) == null) {
-      characters = getAccessibilityText(node);
+    if ((text = node.getText()) == null) {
+      text = getAccessibilityText(node);
     }
 
-    if (characters != null) {
-      sb.append(toText(characters));
+    if (text != null) {
+      text = toText(text);
+      textInsertionOffset = sb.length();
     } else if (ScreenUtilities.isEditable(node)) {
       int end = getSelectionEnd();
 
@@ -149,14 +151,14 @@ public class HostEndpoint extends Endpoint {
           end -= 1;
         }
       }
-    } else if ((characters = node.getContentDescription()) != null) {
+    } else if ((text = node.getContentDescription()) != null) {
       int start = sb.length();
 
       sb.append('[');
-      sb.append(toText(characters));
+      sb.append(toText(text));
       sb.append(']');
 
-      setSpeechSpan(sb, start, characters);
+      setSpeechSpan(sb, start, text);
     } else {
       String type = ScreenUtilities.getClassName(node);
       int start = sb.length();
@@ -170,6 +172,11 @@ public class HostEndpoint extends Endpoint {
 
     if (!node.isEnabled()) {
       appendElementState(sb, R.string.state_disabled);
+    }
+
+    if (textInsertionOffset >= 0) {
+      if (sb.length() == 0) return text;
+      sb.insert(textInsertionOffset, text);
     }
 
     return sb.subSequence(0, sb.length());
