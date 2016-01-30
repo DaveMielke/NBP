@@ -591,17 +591,17 @@ public abstract class Endpoint {
 
   protected final void adjustLeft (int offset, int keep) {
     if (offset < lineIndent) {
-      int newIndent = offset - keep;
-      if (newIndent < 0) newIndent = 0;
-      lineIndent = newIndent;
+      lineIndent = getAdjustedLineOffset(-keep, offset);
     }
   }
 
   protected final void adjustRight (int offset, int keep) {
     int brailleLength = Devices.braille.get().getLength();
+    int start = findFirstBrailleOffset(lineIndent);
+    int end = findLastBrailleOffset(offset);
 
-    if (offset >= (lineIndent + brailleLength)) {
-      lineIndent = offset + keep - brailleLength;
+    if ((end - start) >= brailleLength) {
+      lineIndent = getAdjustedLineOffset((keep - brailleLength), offset);
     }
   }
 
