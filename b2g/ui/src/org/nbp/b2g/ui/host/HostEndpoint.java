@@ -309,38 +309,40 @@ public class HostEndpoint extends Endpoint {
   private final static StyleSpan SPAN_BOLD_ITALIC = new StyleSpan(Typeface.BOLD_ITALIC);
 
   private static CharSequence addSpans (CharSequence text) {
-    Object[] spans = new Object[2];
-    int count = 0;
+    if (text.length() > 0) {
+      Object[] spans = new Object[2];
+      int count = 0;
 
-    if (UNDERLINE) spans[count++] = SPAN_UNDERLINE;
+      if (UNDERLINE) spans[count++] = SPAN_UNDERLINE;
 
-    if (BOLD && ITALIC) {
-      spans[count++] = SPAN_BOLD_ITALIC;
-    } else if (BOLD) {
-      spans[count++] = SPAN_BOLD;
-    } else if (ITALIC) {
-      spans[count++] = SPAN_ITALIC;
-    }
+      if (BOLD && ITALIC) {
+        spans[count++] = SPAN_BOLD_ITALIC;
+      } else if (BOLD) {
+        spans[count++] = SPAN_BOLD;
+      } else if (ITALIC) {
+        spans[count++] = SPAN_ITALIC;
+      }
 
-    if (count > 0) {
-      int start = 0;
-      int end = text.length();
-      int flags = 0;
+      if (count > 0) {
+        int start = 0;
+        int end = text.length();
+        int flags = 0;
 
-      if (text instanceof Spannable) {
-        Spannable spannable = (Spannable)text;
+        if (text instanceof Spannable) {
+          Spannable spannable = (Spannable)text;
 
-        for (int index=0; index<count; index+=1) {
-          spannable.setSpan(spans[index], start, end, flags);
+          for (int index=0; index<count; index+=1) {
+            spannable.setSpan(spans[index], start, end, flags);
+          }
+        } else {
+          SpannableStringBuilder sb = new SpannableStringBuilder(text);
+
+          for (int index=0; index<count; index+=1) {
+            sb.setSpan(spans[index], start, end, flags);
+          }
+
+          text = sb.subSequence(start, end);
         }
-      } else {
-        SpannableStringBuilder sb = new SpannableStringBuilder(text);
-
-        for (int index=0; index<count; index+=1) {
-          sb.setSpan(spans[index], start, end, flags);
-        }
-
-        text = sb.subSequence(start, end);
       }
     }
 
@@ -353,7 +355,7 @@ public class HostEndpoint extends Endpoint {
 
     if (connection != null) {
       if (connection.setComposingRegion(start, end)) {
-        if (connection.commitText(text, 1)) {
+        if (connection.commitText(addSpans(text), 1)) {
           return true;
         }
       }
