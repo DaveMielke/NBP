@@ -14,7 +14,12 @@ import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
 import android.text.Spanned;
+import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+
+import android.text.style.UnderlineSpan;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
 
 public class HostEndpoint extends Endpoint {
   private final static String LOG_TAG = HostEndpoint.class.getName();
@@ -294,6 +299,54 @@ public class HostEndpoint extends Endpoint {
     return InputService.getInputConnection();
   }
 
+  private static boolean BOLD = false;
+  private static boolean ITALIC = false;
+  private static boolean UNDERLINE = false;
+
+  private final static UnderlineSpan SPAN_UNDERLINE = new UnderlineSpan();
+  private final static StyleSpan SPAN_BOLD = new StyleSpan(Typeface.BOLD);
+  private final static StyleSpan SPAN_ITALIC = new StyleSpan(Typeface.ITALIC);
+  private final static StyleSpan SPAN_BOLD_ITALIC = new StyleSpan(Typeface.BOLD_ITALIC);
+
+  private static CharSequence addSpans (CharSequence text) {
+    Object[] spans = new Object[2];
+    int count = 0;
+
+    if (UNDERLINE) spans[count++] = SPAN_UNDERLINE;
+
+    if (BOLD && ITALIC) {
+      spans[count++] = SPAN_BOLD_ITALIC;
+    } else if (BOLD) {
+      spans[count++] = SPAN_BOLD;
+    } else if (ITALIC) {
+      spans[count++] = SPAN_ITALIC;
+    }
+
+    if (count > 0) {
+      int start = 0;
+      int end = text.length();
+      int flags = 0;
+
+      if (text instanceof Spannable) {
+        Spannable spannable = (Spannable)text;
+
+        for (int index=0; index<count; index+=1) {
+          spannable.setSpan(spans[index], start, end, flags);
+        }
+      } else {
+        SpannableStringBuilder sb = new SpannableStringBuilder(text);
+
+        for (int index=0; index<count; index+=1) {
+          sb.setSpan(spans[index], start, end, flags);
+        }
+
+        text = sb.subSequence(start, end);
+      }
+    }
+
+    return text;
+  }
+
   @Override
   public final boolean replaceText (int start, int end, CharSequence text) {
     InputConnection connection = getInputConnection();
@@ -314,7 +367,7 @@ public class HostEndpoint extends Endpoint {
     InputConnection connection = getInputConnection();
 
     if (connection != null) {
-      if (connection.commitText(text, 1)) {
+      if (connection.commitText(addSpans(text), 1)) {
         return true;
       }
     }

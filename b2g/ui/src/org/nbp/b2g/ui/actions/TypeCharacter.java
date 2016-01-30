@@ -74,7 +74,7 @@ public class TypeCharacter extends Action {
       }
 
       {
-        CharSequence text = TranslationUtilities.newTextTranslation(character).getTextWithSpans();
+        CharSequence text = TranslationUtilities.newTextTranslation(character).getTextAsString();
 
         if (ApplicationSettings.LOG_ACTIONS) {
           Log.v(LOG_TAG, String.format(
