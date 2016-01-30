@@ -13,17 +13,21 @@ public abstract class CursorKeyAction extends Action {
     if (cursorKey >= Devices.braille.get().getLength()) return false;
 
     synchronized (endpoint) {
-      int last = endpoint.getBrailleLength();
-      if (!(allowEnd && endpoint.isInputArea())) last -= 1;
+      int last;
+
+      if (allowEnd && endpoint.isInputArea()) {
+        last = endpoint.getBrailleLength();
+      } else {
+        last = endpoint.findFirstBrailleOffset(endpoint.getLineLength()) - 1;
+      }
 
       int start = endpoint.findFirstBrailleOffset(endpoint.getLineIndent());
       last -= start;
       if (cursorKey > last) return false;
 
       if (!performCursorKeyAction(endpoint, endpoint.getLineOffset(start + cursorKey))) return false;
+      return endpoint.write();
     }
-
-    return endpoint.write();
   }
 
   protected CursorKeyAction (Endpoint endpoint, boolean allowEnd) {
