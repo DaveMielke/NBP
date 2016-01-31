@@ -47,6 +47,10 @@
   <!-- for applying an OTA update (requires writing to /cache/recovery/command) -->
   <uses-permission android:name="android.permission.ACCESS_CACHE_FILESYSTEM" />
 
+  <!-- for managing the home screen -->
+  <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+  <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+
   <application
       android:label="@string/app_name"
       android:icon="@drawable/ic_launcher"

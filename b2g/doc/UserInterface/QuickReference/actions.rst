@@ -1,4 +1,5 @@
 .. |AccessibilitySettings| replace:: go to the Accessibility Settings screen
+.. |AddShortcut| replace:: add a shortcut to the home screen
 .. |AndroidSettings| replace:: go to the Android Settings screen
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
@@ -91,6 +92,7 @@
 .. |PasteFromClipboard| replace:: paste the clipboard into the text
 .. |PowerOff| replace:: go to the Power Off screen
 .. |RecentApps| replace:: go to the Recent Apps screen
+.. |RemoveShortcut| replace:: remove a shortcut from the home screen
 .. |ResetSettings| replace:: reset the |user interface| settings to default values
 .. |RestoreSettings| replace:: restore the most recently saved |user interface| settings
 .. |ReversePanningOff| replace:: disable reverse panning mode

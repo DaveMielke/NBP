@@ -45,6 +45,9 @@ bind Space+Dots234#s,Dots1236#v Market
 bind Space+Dots234#s,Dots2456#w WifiSettings
 bind Space+Dots234#s,Dots1346#x Calculator
 
+bind Space+Dots234#s,Dots36#- RemoveShortcut
+bind Space+Dots234#s,Dots346#+ AddShortcut
+
 bind Backward+Forward+Space DescribeBuild
 
 include developer-screen.keys.inc

@@ -58,6 +58,28 @@ within a screen that looks something like this::
   Firmware Version      3.1
   Metec Driver Version  1.00
 
+Managing the Home Screen
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Adding an Application
+`````````````````````
+
+To add a shortcut to the home screen:
+
+1) Go to the home screen.
+2) Click on ``Apps``.
+3) Navigate to the name of the application that you'd like to add.
+4) Press Space+s (dots 234), and then press + (dots 346).
+
+Removing an Application
+```````````````````````
+
+To remove a shortcut from the home screen:
+
+1) Go to the home screen.
+2) Navigate to the shortcut that you'd like to remove.
+3) Press Space+s (dots 234), and then press - (dots 36).
+
 Shortcuts
 ~~~~~~~~~
 
