@@ -5,7 +5,7 @@ import android.util.Log;
 
 import android.text.SpannableStringBuilder;
 
-public class TypeCharacter extends Action {
+public class TypeCharacter extends InputAction {
   private final static String LOG_TAG = TypeCharacter.class.getName();
 
   private boolean typeCharacter (char character, boolean literaryBraille) {
@@ -88,7 +88,7 @@ public class TypeCharacter extends Action {
   }
 
   @Override
-  public boolean performAction () {
+  protected boolean performInputAction () {
     TypingMode typingMode = ApplicationSettings.TYPING_MODE;
     boolean literaryBraille = ApplicationSettings.LITERARY_BRAILLE && (typingMode == TypingMode.TEXT);
     if (literaryBraille) typingMode = TypingMode.BRAILLE;
@@ -137,6 +137,6 @@ public class TypeCharacter extends Action {
   }
 
   public TypeCharacter (Endpoint endpoint) {
-    super(endpoint, false);
+    super(endpoint);
   }
 }
