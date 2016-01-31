@@ -67,7 +67,7 @@
   <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
   <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
 
-  <string name="enum_InputMode_BRAILLE">Unicode Braille</string>
+  <string name="enum_InputMode_BRAILLE">Actual Cells</string>
   <string name="enum_InputMode_TEXT">Regular Text</string>
 
   <string name="ResetSettings_action_label">Reset to Defaults</string>
