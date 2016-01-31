@@ -25,7 +25,7 @@ public abstract class KeyEvents {
   private static int activeNavigationKeys = 0;
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
-  private static boolean performAction (final Action action) {
+  public static boolean performAction (final Action action) {
     if (ApplicationSettings.LOG_ACTIONS) {
       Log.d(LOG_TAG, "performing action: " + action.getName());
     }

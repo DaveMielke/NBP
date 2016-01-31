@@ -1,8 +1,8 @@
 package org.nbp.b2g.ui;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-class KeyBindingMap extends HashMap<Integer, Action> {
+class KeyBindingMap extends LinkedHashMap<Integer, Action> {
   public KeyBindingMap () {
     super();
   }

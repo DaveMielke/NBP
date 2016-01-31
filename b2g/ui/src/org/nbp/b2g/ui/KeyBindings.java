@@ -28,6 +28,10 @@ public class KeyBindings {
   private final KeyBindingMap rootKeyBindings = new KeyBindingMap();
   private KeyBindingMap currentKeyBindings = rootKeyBindings;
 
+  public final KeyBindingMap getRootKeyBindingMap () {
+    return rootKeyBindings;
+  }
+
   private boolean setKeyBindings (KeyBindingMap keyBindings) {
     synchronized (rootKeyBindings) {
       if (currentKeyBindings == keyBindings) return false;
