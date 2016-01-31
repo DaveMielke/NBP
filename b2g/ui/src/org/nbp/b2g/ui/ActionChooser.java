@@ -12,7 +12,7 @@ public class ActionChooser {
       if (action.isForDevelopers() && !ApplicationSettings.DEVELOPER_ENABLED) continue;
       sb.append('\n');
 
-      sb.append(action.getName());
+      sb.append(Wordify.get(action.getName()));
 
       sb.append(": ");
       sb.append(KeyMask.toString(keys));
