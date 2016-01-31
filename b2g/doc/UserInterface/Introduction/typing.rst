@@ -7,17 +7,17 @@ Typing Modes
 Space+Dots78+t (dots 2345) displays a message (see `Messages`_) that confirms
 which typing mode is currently being used.
 
-Text mode is the default, and is used for `Directly Typing Regular Text`_.
+Regular text is the default, and is used for `Directly Typing Regular Text`_.
 
-Braille mode is used for `Directly Typing Actual Braille Cells`_.
+Actual cells is used for `Directly Typing Actual Braille Cells`_.
 
 Either booting the device or waking it up (see `The Power Switch`_)
-automatically resets the typing mode to Text.
+automatically resets the typing mode to regular text.
 
 Directly Typing Regular Text
 ````````````````````````````
 
-Space+Dot7+t (dots 2345) restores the typing mode to Text (the default).
+Space+Dot7+t (dots 2345) restores the typing mode to regular text (the default).
 This mode honours the currently selected braille mode
 (see `Braille Modes and Codes`_).
 
@@ -76,7 +76,7 @@ press Space+Dot8 for just dot 8.
 Directly Typing Actual Braille Cells
 ````````````````````````````````````
 
-Space+Dot8+t (dots 2345) sets the typing mode to Braille.
+Space+Dot8+t (dots 2345) sets the typing mode to actual cells.
 
 In this typing mode, the characters that render in text as actual braille cells
 (see `Unicode Braille Patterns`_) can be directly typed by pressing the
