@@ -1,12 +1,16 @@
 package org.nbp.b2g.ui;
 
 public abstract class ApplicationSettings {
-  public static volatile boolean LITERARY_BRAILLE = ApplicationParameters.DEFAULT_LITERARY_BRAILLE;
-  public static volatile BrailleCode BRAILLE_CODE = ApplicationParameters.DEFAULT_BRAILLE_CODE;
   public static volatile InputMode INPUT_MODE = ApplicationParameters.DEFAULT_INPUT_MODE;
+  public static volatile boolean INPUT_BOLD = ApplicationParameters.DEFAULT_INPUT_BOLD;
+  public static volatile boolean INPUT_ITALIC = ApplicationParameters.DEFAULT_INPUT_ITALIC;
+  public static volatile boolean INPUT_UNDERLINE = ApplicationParameters.DEFAULT_INPUT_UNDERLINE;
   public static volatile boolean LONG_PRESS = ApplicationParameters.DEFAULT_LONG_PRESS;
   public static volatile boolean REVERSE_PANNING = ApplicationParameters.DEFAULT_REVERSE_PANNING;
   public static volatile boolean ONE_HAND = ApplicationParameters.DEFAULT_ONE_HAND;
+
+  public static volatile boolean LITERARY_BRAILLE = ApplicationParameters.DEFAULT_LITERARY_BRAILLE;
+  public static volatile BrailleCode BRAILLE_CODE = ApplicationParameters.DEFAULT_BRAILLE_CODE;
 
   public static volatile IndicatorOverlay CURSOR_INDICATOR = ApplicationParameters.DEFAULT_CURSOR_INDICATOR;
   public static volatile IndicatorOverlay SELECTION_INDICATOR = ApplicationParameters.DEFAULT_CURSOR_INDICATOR;

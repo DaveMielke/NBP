@@ -4,12 +4,16 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
-  private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
-  private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
   private final static InputModeControl inputModeControl = new InputModeControl();
+  private final static InputBoldControl inputBoldControl = new InputBoldControl();
+  private final static InputItalicControl inputItalicControl = new InputItalicControl();
+  private final static InputUnderlineControl inputUnderlineControl = new InputUnderlineControl();
   private final static LongPressControl longPressControl = new LongPressControl();
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
   private final static OneHandControl oneHandControl = new OneHandControl();
+
+  private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
+  private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
 
   private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
@@ -33,12 +37,16 @@ public abstract class Controls {
   private final static LogBrailleControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
-    literaryBrailleControl,
-    brailleCodeControl,
     inputModeControl,
+    inputBoldControl,
+    inputItalicControl,
+    inputUnderlineControl,
     longPressControl,
     reversePanningControl,
     oneHandControl,
+
+    literaryBrailleControl,
+    brailleCodeControl,
 
     brailleEnabledControl,
     cursorIndicatorControl,
@@ -62,16 +70,20 @@ public abstract class Controls {
     logBrailleControl
   };
 
-  public static LiteraryBrailleControl getLiteraryBrailleControl () {
-    return literaryBrailleControl;
-  }
-
-  public static BrailleCodeControl getBrailleCodeControl () {
-    return brailleCodeControl;
-  }
-
   public static InputModeControl getInputModeControl () {
     return inputModeControl;
+  }
+
+  public static InputBoldControl getInputBoldControl () {
+    return inputBoldControl;
+  }
+
+  public static InputItalicControl getInputItalicControl () {
+    return inputItalicControl;
+  }
+
+  public static InputUnderlineControl getInputUnderlineControl () {
+    return inputUnderlineControl;
   }
 
   public static LongPressControl getLongPressControl () {
@@ -84,6 +96,14 @@ public abstract class Controls {
 
   public static OneHandControl getOneHandControl () {
     return oneHandControl;
+  }
+
+  public static LiteraryBrailleControl getLiteraryBrailleControl () {
+    return literaryBrailleControl;
+  }
+
+  public static BrailleCodeControl getBrailleCodeControl () {
+    return brailleCodeControl;
   }
 
   public static BrailleEnabledControl getBrailleEnabledControl () {
@@ -222,6 +242,9 @@ public abstract class Controls {
 
   public static void restoreSaneValues () {
     inputModeControl.setValue(InputMode.TEXT);
+    inputBoldControl.setValue(false);
+    inputItalicControl.setValue(false);
+    inputUnderlineControl.setValue(false);
     oneHandControl.setValue(false);
     brailleEnabledControl.setValue(true);
   }

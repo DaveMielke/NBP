@@ -3,12 +3,15 @@
   ====================  =======  ====================  ==========  ==========
   Setting               Default  Range                 *Previous*  *Next*
   --------------------  -------  --------------------  ----------  ----------
-  **Literary Braille**  On       Off - On
-  Code                  UEB G2   UEB/EBAE G2/G1        Previous    Next
   **Input**             Text     Text, Braille         Text        Braille
+  Bold                  Off      Off - On
+  Italic                Off      Off - On
+  Underline             Off      Off - On
   Long Press            On       Off - On
   Reverse Panning       Off      Off - On
   One Hand              Off      Off - On
+  **Literary Braille**  On       Off - On
+  Code                  UEB G2   UEB/EBAE G2/G1        Previous    Next
   **Braille**           On       Off - On
   Cursor Indicator      Dots78   Dots78, Dot7, Dot8    Previous    Next
   Selection Indicator   Dot8     Dots78, Dot7, Dot8    Previous    Next

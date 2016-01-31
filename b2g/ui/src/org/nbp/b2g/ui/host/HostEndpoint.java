@@ -299,10 +299,6 @@ public class HostEndpoint extends Endpoint {
     return InputService.getInputConnection();
   }
 
-  private static boolean BOLD = false;
-  private static boolean ITALIC = false;
-  private static boolean UNDERLINE = false;
-
   private final static UnderlineSpan SPAN_UNDERLINE = new UnderlineSpan();
   private final static StyleSpan SPAN_BOLD = new StyleSpan(Typeface.BOLD);
   private final static StyleSpan SPAN_ITALIC = new StyleSpan(Typeface.ITALIC);
@@ -313,13 +309,15 @@ public class HostEndpoint extends Endpoint {
       Object[] spans = new Object[2];
       int count = 0;
 
-      if (UNDERLINE) spans[count++] = SPAN_UNDERLINE;
+      if (ApplicationSettings.INPUT_UNDERLINE) {
+        spans[count++] = SPAN_UNDERLINE;
+      }
 
-      if (BOLD && ITALIC) {
+      if (ApplicationSettings.INPUT_BOLD && ApplicationSettings.INPUT_ITALIC) {
         spans[count++] = SPAN_BOLD_ITALIC;
-      } else if (BOLD) {
+      } else if (ApplicationSettings.INPUT_BOLD) {
         spans[count++] = SPAN_BOLD;
-      } else if (ITALIC) {
+      } else if (ApplicationSettings.INPUT_ITALIC) {
         spans[count++] = SPAN_ITALIC;
       }
 

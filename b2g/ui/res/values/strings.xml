@@ -103,7 +103,10 @@
   <string name="BrailleFirmness_control_label">Firmness</string>
   <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
+  <string name="InputBold_control_label">Bold</string>
+  <string name="InputItalic_control_label">Italic</string>
   <string name="InputMode_control_label">Input</string>
+  <string name="InputUnderline_control_label">Underline</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
   <string name="ReversePanning_control_label">Reverse Panning</string>

@@ -7,12 +7,16 @@ import java.nio.charset.Charset;
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters {
-  public final static boolean DEFAULT_LITERARY_BRAILLE = true;
-  public final static BrailleCode DEFAULT_BRAILLE_CODE = BrailleCode.EN_UEB_G2;
   public final static InputMode DEFAULT_INPUT_MODE = InputMode.TEXT;
+  public final static boolean DEFAULT_INPUT_BOLD = false;
+  public final static boolean DEFAULT_INPUT_ITALIC = false;
+  public final static boolean DEFAULT_INPUT_UNDERLINE = false;
   public final static boolean DEFAULT_LONG_PRESS = true;
   public final static boolean DEFAULT_REVERSE_PANNING = false;
   public final static boolean DEFAULT_ONE_HAND = false;
+
+  public final static boolean DEFAULT_LITERARY_BRAILLE = true;
+  public final static BrailleCode DEFAULT_BRAILLE_CODE = BrailleCode.EN_UEB_G2;
 
   public final static IndicatorOverlay DEFAULT_CURSOR_INDICATOR = IndicatorOverlay.DOTS_78;
   public final static IndicatorOverlay DEFAULT_SELECTION_INDICATOR = IndicatorOverlay.DOT_8;
