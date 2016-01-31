@@ -48,8 +48,10 @@ public class KeyBindings {
   private final Timeout intermediateActionTimeout = new Timeout(ApplicationParameters.INTERMEDIATE_ACTION_TIMEOUT, "intermediate-action-timeout") {
     @Override
     public void run () {
-      if (setKeyBindings()) {
-        ApplicationUtilities.message(R.string.message_intermediate_action_timeout);
+      try {
+        ActionChooser.chooseAction(currentKeyBindings);
+      } finally {
+        setKeyBindings();
       }
     }
   };

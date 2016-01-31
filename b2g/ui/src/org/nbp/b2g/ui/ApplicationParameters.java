@@ -19,7 +19,7 @@ public abstract class ApplicationParameters {
   public final static long VIEW_SCROLL_TIMEOUT = 5000; // milliseconds
 
   public final static long LONG_PRESS_TIME = 500; // milliseconds
-  public final static long INTERMEDIATE_ACTION_TIMEOUT = 5000; // milliseconds
+  public final static long INTERMEDIATE_ACTION_TIMEOUT = 2000; // milliseconds
 
   public final static long TAP_HOLD_TIME = 45; // milliseconds
   public final static long TAP_WAIT_TIME = 100; // milliseconds
