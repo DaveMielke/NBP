@@ -21,8 +21,8 @@ Space+Dot7+i (dots 24) restores the input mode to Text (the default).
 This mode honours the currently selected braille mode
 (see `Braille Modes and Codes`_).
 
-Typing Literary Braille Characters
-''''''''''''''''''''''''''''''''''
+Typing in Literary Braille
+''''''''''''''''''''''''''
 
 Any character (or character sequence) that has a defined `Literary Braille`_
 representation within the currently selected braille code can be typed.
@@ -60,8 +60,8 @@ doesn't work when literary braille is being used.
 If you need to do it then you'll need to (temporarily) switch to
 `Computer Braille`_ mode.
 
-Typing Computer Braille Characters
-''''''''''''''''''''''''''''''''''
+Typing in Computer Braille
+''''''''''''''''''''''''''
 
 Any character that has a defined `Computer Braille`_ representation
 (see `Computer Braille Characters`_) can be directly typed by pressing the
@@ -95,6 +95,9 @@ These characters have several uses, including (but not limited to):
 
 * Braille music can be accurately saved, and also shared with others who use
   different localized braille character mappings.
+
+Input Highlighting
+``````````````````
 
 Typing a Control Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

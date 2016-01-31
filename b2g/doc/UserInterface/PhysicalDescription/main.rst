@@ -100,6 +100,7 @@ When the system is either booted or woken up, the following settings are reset
 to their default values:
 
 * The input mode is set to Text (see `Input Modes`_).
+* Input highlighting is turned off (see `Input Highlighting`_).
 * One Hand Mode is disabled (see `One Hand Mode`_).
 * The braille display is enabled (see `Disabling the Display`_).
 
