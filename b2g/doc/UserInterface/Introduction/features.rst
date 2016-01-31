@@ -68,14 +68,25 @@ To add a shortcut to the home screen:
 
 1) Go to the home screen.
 2) Click on ``Apps``.
-3) Navigate to the name of the application that you'd like to add.
+3) Navigate to the label of the application that you'd like to add.
 4) Press Space+Dot8+s (dots 234).
 
 To remove a shortcut from the home screen:
 
 1) Go to the home screen.
-2) Navigate to the shortcut that you'd like to remove.
+2) Navigate to the label of the application that you'd like to remove.
 3) Press Space+Dot7+s (dots 234).
+
+If you'd rather not search for the application's label then you can
+find an empty line within any input area (see `Input Areas`_) and type it.
+You only need to type enough characters to uniquely identify it
+among all of the applications that are installed on your |product name|.
+Letters can be in either lower or upper case,
+and the characters don't need to be at the beginning or end of the label.
+
+Press Enter when you're done. If the characters match the labels of more than
+one application then the list will be presented within a popup (see `Popups`_).
+If this happens then navigate to the one you'd like to add and press Enter.
 
 Builtin Shortcuts
 `````````````````
