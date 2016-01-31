@@ -84,8 +84,10 @@ among all of the applications that are installed on your |product name|.
 Letters can be in either lower or upper case,
 and the characters don't need to be at the beginning or end of the label.
 
-Press Enter when you're done. If the characters match the labels of more than
-one application then the list will be presented within a popup (see `Popups`_).
+When you're finished typing, press the key combination for the shortcut action
+that you'd like to perform (see above). If the characters match the labels of
+more than one application then the list will be presented within a popup
+(see `Popups`_).
 If this happens then navigate to the one you'd like to add and press Enter.
 
 Builtin Shortcuts
