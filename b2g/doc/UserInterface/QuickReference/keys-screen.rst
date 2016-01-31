@@ -34,6 +34,7 @@
   "Space+Dots234#s,Dots14#c","|Calendar|"
   "Space+Dots234#s,Dots15#e","|EMail|"
   "Space+Dots234#s,Dots1245#g","|Gallery|"
+  "Space+Dots234#s,Dots123#l","|VoiceCommand|"
   "Space+Dots234#s,Dots134#m","|Music|"
   "Space+Dots234#s,Dots1234#p","|Contacts|"
   "Space+Dots234#s,Dots234#s","|AndroidSettings|"

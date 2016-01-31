@@ -121,6 +121,9 @@ Space+s (dots 234)
   g (dots 1245)
     Go to the Gallery app.
 
+  l (dots 123)
+    Listen for a voice command.
+
   m (dots 134)
     Go to the Music app.
 

@@ -143,6 +143,7 @@
 .. |TypingUnderlineOff| replace:: turn off underline typing
 .. |TypingUnderlineOn| replace:: turn on underline typing
 .. |UpdateEditor| replace:: update the |product name| editor
+.. |VoiceCommand| replace:: listen for a voice command
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
 .. |WifiSettings| replace:: go to the Wi-Fi Settings screen
