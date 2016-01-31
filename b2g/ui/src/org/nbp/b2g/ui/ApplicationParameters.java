@@ -7,10 +7,10 @@ import java.nio.charset.Charset;
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters {
-  public final static InputMode DEFAULT_INPUT_MODE = InputMode.TEXT;
-  public final static boolean DEFAULT_INPUT_BOLD = false;
-  public final static boolean DEFAULT_INPUT_ITALIC = false;
-  public final static boolean DEFAULT_INPUT_UNDERLINE = false;
+  public final static TypingMode DEFAULT_TYPING_MODE = TypingMode.TEXT;
+  public final static boolean DEFAULT_TYPING_BOLD = false;
+  public final static boolean DEFAULT_TYPING_ITALIC = false;
+  public final static boolean DEFAULT_TYPING_UNDERLINE = false;
   public final static boolean DEFAULT_LONG_PRESS = true;
   public final static boolean DEFAULT_REVERSE_PANNING = false;
   public final static boolean DEFAULT_ONE_HAND = false;

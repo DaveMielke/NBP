@@ -1,33 +1,33 @@
 package org.nbp.b2g.ui;
 
-public class InputItalicControl extends BooleanControl {
+public class TypingBoldControl extends BooleanControl {
   @Override
   public CharSequence getLabel () {
-    return getString(R.string.InputItalic_control_label);
+    return getString(R.string.TypingBold_control_label);
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "input-italic";
+    return "typing-bold";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_INPUT_ITALIC;
+    return ApplicationParameters.DEFAULT_TYPING_BOLD;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.INPUT_ITALIC;
+    return ApplicationSettings.TYPING_BOLD;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.INPUT_ITALIC = value;
+    ApplicationSettings.TYPING_BOLD = value;
     return true;
   }
 
-  public InputItalicControl () {
+  public TypingBoldControl () {
     super(false);
   }
 }

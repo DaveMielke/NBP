@@ -99,8 +99,8 @@ If the system is running, then:
 When the system is either booted or woken up, the following settings are reset
 to their default values:
 
-* The input mode is set to Text (see `Input Modes`_).
-* Input highlighting is turned off (see `Input Highlighting`_).
+* The typing mode is set to Text (see `Typing Modes`_).
+* Highlighted typing is turned off (see `Highlighted Typing`_).
 * One Hand Mode is disabled (see `One Hand Mode`_).
 * The braille display is enabled (see `Disabling the Display`_).
 

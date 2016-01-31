@@ -89,14 +89,14 @@ public class TypeCharacter extends Action {
 
   @Override
   public boolean performAction () {
-    InputMode inputMode = ApplicationSettings.INPUT_MODE;
-    boolean literaryBraille = ApplicationSettings.LITERARY_BRAILLE && (inputMode == InputMode.TEXT);
-    if (literaryBraille) inputMode = InputMode.BRAILLE;
+    TypingMode typingMode = ApplicationSettings.TYPING_MODE;
+    boolean literaryBraille = ApplicationSettings.LITERARY_BRAILLE && (typingMode == TypingMode.TEXT);
+    if (literaryBraille) typingMode = TypingMode.BRAILLE;
 
     int keyMask = getNavigationKeys();
     Character character;
 
-    switch (inputMode) {
+    switch (typingMode) {
       case TEXT: {
         character = Characters.getCharacters().toCharacter(keyMask);
 
@@ -129,7 +129,7 @@ public class TypeCharacter extends Action {
       }
 
       default:
-        Log.w(LOG_TAG, "unsupported input mode: " + inputMode.name());
+        Log.w(LOG_TAG, "unsupported typing mode: " + typingMode.name());
         return false;
     }
 

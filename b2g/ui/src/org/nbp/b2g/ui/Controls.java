@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
-  private final static InputModeControl inputModeControl = new InputModeControl();
-  private final static InputBoldControl inputBoldControl = new InputBoldControl();
-  private final static InputItalicControl inputItalicControl = new InputItalicControl();
-  private final static InputUnderlineControl inputUnderlineControl = new InputUnderlineControl();
+  private final static TypingModeControl typingModeControl = new TypingModeControl();
+  private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
+  private final static TypingItalicControl typingItalicControl = new TypingItalicControl();
+  private final static TypingUnderlineControl typingUnderlineControl = new TypingUnderlineControl();
   private final static LongPressControl longPressControl = new LongPressControl();
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
   private final static OneHandControl oneHandControl = new OneHandControl();
@@ -37,10 +37,10 @@ public abstract class Controls {
   private final static LogBrailleControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
-    inputModeControl,
-    inputBoldControl,
-    inputItalicControl,
-    inputUnderlineControl,
+    typingModeControl,
+    typingBoldControl,
+    typingItalicControl,
+    typingUnderlineControl,
     longPressControl,
     reversePanningControl,
     oneHandControl,
@@ -70,20 +70,20 @@ public abstract class Controls {
     logBrailleControl
   };
 
-  public static InputModeControl getInputModeControl () {
-    return inputModeControl;
+  public static TypingModeControl getTypingModeControl () {
+    return typingModeControl;
   }
 
-  public static InputBoldControl getInputBoldControl () {
-    return inputBoldControl;
+  public static TypingBoldControl getTypingBoldControl () {
+    return typingBoldControl;
   }
 
-  public static InputItalicControl getInputItalicControl () {
-    return inputItalicControl;
+  public static TypingItalicControl getTypingItalicControl () {
+    return typingItalicControl;
   }
 
-  public static InputUnderlineControl getInputUnderlineControl () {
-    return inputUnderlineControl;
+  public static TypingUnderlineControl getTypingUnderlineControl () {
+    return typingUnderlineControl;
   }
 
   public static LongPressControl getLongPressControl () {
@@ -240,21 +240,21 @@ public abstract class Controls {
     forEachControl(restoreCurrentValue);
   }
 
-  private final static BooleanControl[] inputHighlightingControls = new BooleanControl[] {
-    inputBoldControl,
-    inputItalicControl,
-    inputUnderlineControl
+  private final static BooleanControl[] highlightedTypingControls = new BooleanControl[] {
+    typingBoldControl,
+    typingItalicControl,
+    typingUnderlineControl
   };
 
-  public static void resetInputHighlighting () {
-    for (BooleanControl control : inputHighlightingControls) {
+  public static void resetHighlightedTyping () {
+    for (BooleanControl control : highlightedTypingControls) {
       control.setValue(false);
     }
   }
 
   public static void restoreSaneValues () {
-    inputModeControl.setValue(InputMode.TEXT);
-    resetInputHighlighting();
+    typingModeControl.setValue(TypingMode.TEXT);
+    resetHighlightedTyping();
     oneHandControl.setValue(false);
     brailleEnabledControl.setValue(true);
   }

@@ -3,7 +3,7 @@
   ====================  =======  ====================  ==========  ==========
   Setting               Default  Range                 *Previous*  *Next*
   --------------------  -------  --------------------  ----------  ----------
-  **Input**             Text     Text, Cells           Text        Cells
+  **Typing**            Text     Text, Cells           Text        Cells
   Bold                  Off      Off - On
   Italic                Off      Off - On
   Underline             Off      Off - On

@@ -1,14 +1,14 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class InputHighlightOff extends Action {
+public class ResetHighlightedTyping extends Action {
   @Override
   public boolean performAction () {
-    Controls.resetInputHighlighting();
+    Controls.resetHighlightedTyping();
     return true;
   }
 
-  public InputHighlightOff (Endpoint endpoint) {
+  public ResetHighlightedTyping (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

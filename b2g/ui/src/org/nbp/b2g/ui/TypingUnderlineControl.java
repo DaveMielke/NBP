@@ -1,33 +1,33 @@
 package org.nbp.b2g.ui;
 
-public class InputBoldControl extends BooleanControl {
+public class TypingUnderlineControl extends BooleanControl {
   @Override
   public CharSequence getLabel () {
-    return getString(R.string.InputBold_control_label);
+    return getString(R.string.TypingUnderline_control_label);
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "input-bold";
+    return "typing-underline";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_INPUT_BOLD;
+    return ApplicationParameters.DEFAULT_TYPING_UNDERLINE;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.INPUT_BOLD;
+    return ApplicationSettings.TYPING_UNDERLINE;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.INPUT_BOLD = value;
+    ApplicationSettings.TYPING_UNDERLINE = value;
     return true;
   }
 
-  public InputBoldControl () {
+  public TypingUnderlineControl () {
     super(false);
   }
 }

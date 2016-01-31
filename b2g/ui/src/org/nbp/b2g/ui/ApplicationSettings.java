@@ -1,10 +1,10 @@
 package org.nbp.b2g.ui;
 
 public abstract class ApplicationSettings {
-  public static volatile InputMode INPUT_MODE = ApplicationParameters.DEFAULT_INPUT_MODE;
-  public static volatile boolean INPUT_BOLD = ApplicationParameters.DEFAULT_INPUT_BOLD;
-  public static volatile boolean INPUT_ITALIC = ApplicationParameters.DEFAULT_INPUT_ITALIC;
-  public static volatile boolean INPUT_UNDERLINE = ApplicationParameters.DEFAULT_INPUT_UNDERLINE;
+  public static volatile TypingMode TYPING_MODE = ApplicationParameters.DEFAULT_TYPING_MODE;
+  public static volatile boolean TYPING_BOLD = ApplicationParameters.DEFAULT_TYPING_BOLD;
+  public static volatile boolean TYPING_ITALIC = ApplicationParameters.DEFAULT_TYPING_ITALIC;
+  public static volatile boolean TYPING_UNDERLINE = ApplicationParameters.DEFAULT_TYPING_UNDERLINE;
   public static volatile boolean LONG_PRESS = ApplicationParameters.DEFAULT_LONG_PRESS;
   public static volatile boolean REVERSE_PANNING = ApplicationParameters.DEFAULT_REVERSE_PANNING;
   public static volatile boolean ONE_HAND = ApplicationParameters.DEFAULT_ONE_HAND;

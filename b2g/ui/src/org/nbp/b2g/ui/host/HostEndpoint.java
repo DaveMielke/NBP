@@ -24,6 +24,14 @@ import android.graphics.Typeface;
 public class HostEndpoint extends Endpoint {
   private final static String LOG_TAG = HostEndpoint.class.getName();
 
+  protected final InputService getInputService () {
+    return InputService.getInputService();
+  }
+
+  protected final InputConnection getInputConnection () {
+    return InputService.getInputConnection();
+  }
+
   private AccessibilityNodeInfo currentNode = null;
   private boolean currentDescribe = false;
 
@@ -185,7 +193,7 @@ public class HostEndpoint extends Endpoint {
 
       if (!sameNode) {
         if (isInputArea()) {
-          InputService service = InputService.getInputService();
+          InputService service = getInputService();
 
           if (service != null) {
             int start;
@@ -291,14 +299,6 @@ public class HostEndpoint extends Endpoint {
     return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
   }
 
-  protected final InputService getInputService () {
-    return InputService.getInputService();
-  }
-
-  protected final InputConnection getInputConnection () {
-    return InputService.getInputConnection();
-  }
-
   private final static UnderlineSpan SPAN_UNDERLINE = new UnderlineSpan();
   private final static StyleSpan SPAN_BOLD = new StyleSpan(Typeface.BOLD);
   private final static StyleSpan SPAN_ITALIC = new StyleSpan(Typeface.ITALIC);
@@ -309,15 +309,15 @@ public class HostEndpoint extends Endpoint {
       Object[] spans = new Object[2];
       int count = 0;
 
-      if (ApplicationSettings.INPUT_UNDERLINE) {
+      if (ApplicationSettings.TYPING_UNDERLINE) {
         spans[count++] = SPAN_UNDERLINE;
       }
 
-      if (ApplicationSettings.INPUT_BOLD && ApplicationSettings.INPUT_ITALIC) {
+      if (ApplicationSettings.TYPING_BOLD && ApplicationSettings.TYPING_ITALIC) {
         spans[count++] = SPAN_BOLD_ITALIC;
-      } else if (ApplicationSettings.INPUT_BOLD) {
+      } else if (ApplicationSettings.TYPING_BOLD) {
         spans[count++] = SPAN_BOLD;
-      } else if (ApplicationSettings.INPUT_ITALIC) {
+      } else if (ApplicationSettings.TYPING_ITALIC) {
         spans[count++] = SPAN_ITALIC;
       }
 

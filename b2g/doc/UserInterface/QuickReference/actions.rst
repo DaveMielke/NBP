@@ -41,9 +41,6 @@
 .. |Help| replace:: go to the document for the |user interface|
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
-.. |InputModeBraille| replace:: set the input mode to braille
-.. |InputModeConfirm| replace:: show the current input mode setting
-.. |InputModeText| replace:: set the input mode to text
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
 .. |LiteraryBrailleOff| replace:: select computer braille (eight dots) mode
@@ -136,6 +133,15 @@
 .. |TypeDot7| replace:: type the character represented by just dot 7
 .. |TypeDot8| replace:: type the character represented by just dot 8
 .. |TypeUnicode| replace:: prompt for the Unicode value of the character to be typed
+.. |TypingBoldOff| replace:: turn off bold typing
+.. |TypingBoldOn| replace:: turn on bold typing
+.. |TypingItalicOff| replace:: turn off italic typing
+.. |TypingItalicOn| replace:: turn on italic typing
+.. |TypingModeBraille| replace:: set the typing mode to braille
+.. |TypingModeConfirm| replace:: show the current typing mode
+.. |TypingModeText| replace:: set the typing mode to text
+.. |TypingUnderlineOff| replace:: turn off underline typing
+.. |TypingUnderlineOn| replace:: turn on underline typing
 .. |UpdateEditor| replace:: update the |product name| editor
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)

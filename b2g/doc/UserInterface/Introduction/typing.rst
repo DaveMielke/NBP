@@ -1,23 +1,23 @@
 Typing Characters
 -----------------
 
-Input Modes
-~~~~~~~~~~~
+Typing Modes
+~~~~~~~~~~~~
 
-Space+i (dots 24) displays a message (see `Messages`_) that confirms
-which input mode is currently being used.
+Space+Dots78+t (dots 2345) displays a message (see `Messages`_) that confirms
+which typing mode is currently being used.
 
 Text mode is the default, and is used for `Directly Typing Regular Text`_.
 
 Braille mode is used for `Directly Typing Actual Braille Cells`_.
 
 Either booting the device or waking it up (see `The Power Switch`_)
-automatically resets the input mode to Text.
+automatically resets the typing mode to Text.
 
 Directly Typing Regular Text
 ````````````````````````````
 
-Space+Dot7+i (dots 24) restores the input mode to Text (the default).
+Space+Dot7+t (dots 2345) restores the typing mode to Text (the default).
 This mode honours the currently selected braille mode
 (see `Braille Modes and Codes`_).
 
@@ -76,9 +76,9 @@ press Space+Dot8 for just dot 8.
 Directly Typing Actual Braille Cells
 ````````````````````````````````````
 
-Space+Dot8+i (dots 24) sets the input mode to Braille.
+Space+Dot8+t (dots 2345) sets the typing mode to Braille.
 
-In this input mode, the characters that render in text as actual braille cells
+In this typing mode, the characters that render in text as actual braille cells
 (see `Unicode Braille Patterns`_) can be directly typed by pressing the
 corresponding keys as a single combination.
 
@@ -96,8 +96,11 @@ These characters have several uses, including (but not limited to):
 * Braille music can be accurately saved, and also shared with others who use
   different localized braille character mappings.
 
-Input Highlighting
+Highlighted Typing
 ``````````````````
+
+Either booting the device or waking it up (see `The Power Switch`_)
+automatically resets (turns off) highlighted typing.
 
 Typing a Control Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

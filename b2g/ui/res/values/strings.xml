@@ -67,8 +67,9 @@
   <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
   <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
 
-  <string name="enum_InputMode_BRAILLE">Actual Cells</string>
-  <string name="enum_InputMode_TEXT">Regular Text</string>
+  <string name="TypingMode_control_label">Typing</string>
+  <string name="enum_TypingMode_BRAILLE">Actual Cells</string>
+  <string name="enum_TypingMode_TEXT">Regular Text</string>
 
   <string name="ResetSettings_action_label">Reset to Defaults</string>
   <string name="RestoreSettings_action_label">Restore Settings</string>
@@ -103,16 +104,15 @@
   <string name="BrailleFirmness_control_label">Firmness</string>
   <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
-  <string name="InputBold_control_label">Bold</string>
-  <string name="InputItalic_control_label">Italic</string>
-  <string name="InputMode_control_label">Input</string>
-  <string name="InputUnderline_control_label">Underline</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
   <string name="ReversePanning_control_label">Reverse Panning</string>
   <string name="SelectionIndicator_control_label">Selection Indicator</string>
   <string name="SleepTalk_control_label">Sleep Talk</string>
   <string name="SpeechEnabled_control_label">Speech</string>
+  <string name="TypingBold_control_label">Bold</string>
+  <string name="TypingItalic_control_label">Italic</string>
+  <string name="TypingUnderline_control_label">Underline</string>
 
   <string name="SpeechBalance_control_label">Balance</string>
   <string name="SpeechBalance_control_previous">More Left</string>
