@@ -27,6 +27,8 @@
   "Space+Dots2345#t","|Clock|"
   "Space+Dots1246#ed","|Editor|"
   "Space+Dots1456#?","|Assist|"
+  "Space+Dot8+Dots234#s","|AddShortcut|"
+  "Space+Dot7+Dots234#s","|RemoveShortcut|"
   "Space+Dots234#s,Dot1#a","|AccessibilitySettings|"
   "Space+Dots234#s,Dots12#b","|BluetoothSettings|"
   "Space+Dots234#s,Dots14#c","|Calendar|"
@@ -39,7 +41,5 @@
   "Space+Dots234#s,Dots1236#v","|Market|"
   "Space+Dots234#s,Dots2456#w","|WifiSettings|"
   "Space+Dots234#s,Dots1346#x","|Calculator|"
-  "Space+Dots234#s,Dots36#-","|RemoveShortcut|"
-  "Space+Dots234#s,Dots346#+","|AddShortcut|"
   "Backward+Forward+Space","|DescribeBuild|"
 

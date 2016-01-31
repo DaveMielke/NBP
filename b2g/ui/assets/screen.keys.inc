@@ -32,6 +32,9 @@ bind Space+Dots2345#t Clock
 bind Space+Dots1246#ed Editor
 bind Space+Dots1456#? Assist
 
+bind Space+Dot8+Dots234#s AddShortcut
+bind Space+Dot7+Dots234#s RemoveShortcut
+
 bind Space+Dots234#s,Dot1#a AccessibilitySettings
 bind Space+Dots234#s,Dots12#b BluetoothSettings
 bind Space+Dots234#s,Dots14#c Calendar
@@ -44,9 +47,6 @@ bind Space+Dots234#s,Dots2345#t Messaging
 bind Space+Dots234#s,Dots1236#v Market
 bind Space+Dots234#s,Dots2456#w WifiSettings
 bind Space+Dots234#s,Dots1346#x Calculator
-
-bind Space+Dots234#s,Dots36#- RemoveShortcut
-bind Space+Dots234#s,Dots346#+ AddShortcut
 
 bind Backward+Forward+Space DescribeBuild
 
