@@ -96,8 +96,25 @@ These characters have several uses, including (but not limited to):
 * Braille music can be accurately saved, and also shared with others who use
   different localized braille character mappings.
 
-Highlighted Typing
-``````````````````
+Typing Highlighted Characters
+`````````````````````````````
+
+The following types of highlighted typing are supported:
+
+Bold
+
+  * Press Space+Dot8+b (dots 12) to turn it on.
+  * Press Space+Dot7+b (dots 12) to turn it off.
+
+Italic
+
+  * Press Space+Dot8+i (dots 24) to turn it on.
+  * Press Space+Dot7+i (dots 24) to turn it off.
+
+Underline
+
+  * Press Space+Dot8+u (dots 136) to turn it on.
+  * Press Space+Dot7+u (dots 136) to turn it off.
 
 Either booting the device or waking it up (see `The Power Switch`_)
 automatically resets (turns off) highlighted typing.
