@@ -13,7 +13,7 @@ public class LogKeyboardControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LOG_KEYBOARD;
+    return ApplicationDefaults.LOG_KEYBOARD;
   }
 
   @Override

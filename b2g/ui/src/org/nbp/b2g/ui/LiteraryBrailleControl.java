@@ -22,7 +22,7 @@ public class LiteraryBrailleControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LITERARY_BRAILLE;
+    return ApplicationDefaults.LITERARY_BRAILLE;
   }
 
   @Override

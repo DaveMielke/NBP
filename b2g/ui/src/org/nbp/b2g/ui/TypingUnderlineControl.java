@@ -13,7 +13,7 @@ public class TypingUnderlineControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_TYPING_UNDERLINE;
+    return ApplicationDefaults.TYPING_UNDERLINE;
   }
 
   @Override

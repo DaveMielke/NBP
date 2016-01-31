@@ -23,7 +23,7 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
 
   @Override
   protected float getFloatDefault () {
-    return ApplicationParameters.DEFAULT_SPEECH_PITCH;
+    return ApplicationDefaults.SPEECH_PITCH;
   }
 
   @Override

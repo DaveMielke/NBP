@@ -13,7 +13,7 @@ public class BrailleFirmnessControl extends IntegerControl {
 
   @Override
   protected int getIntegerDefault () {
-    return ApplicationParameters.DEFAULT_BRAILLE_FIRMNESS;
+    return ApplicationDefaults.BRAILLE_FIRMNESS;
   }
 
   @Override

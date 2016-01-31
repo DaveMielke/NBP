@@ -13,7 +13,7 @@ public class SleepTalkControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_SLEEP_TALK;
+    return ApplicationDefaults.SLEEP_TALK;
   }
 
   @Override

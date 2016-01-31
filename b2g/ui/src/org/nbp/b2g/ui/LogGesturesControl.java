@@ -13,7 +13,7 @@ public class LogGesturesControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LOG_GESTURES;
+    return ApplicationDefaults.LOG_GESTURES;
   }
 
   @Override

@@ -13,7 +13,7 @@ public class ReversePanningControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_REVERSE_PANNING;
+    return ApplicationDefaults.REVERSE_PANNING;
   }
 
   @Override

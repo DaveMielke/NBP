@@ -13,7 +13,7 @@ public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverl
 
   @Override
   protected IndicatorOverlay getEnumerationDefault () {
-    return ApplicationParameters.DEFAULT_SELECTION_INDICATOR;
+    return ApplicationDefaults.SELECTION_INDICATOR;
   }
 
   @Override

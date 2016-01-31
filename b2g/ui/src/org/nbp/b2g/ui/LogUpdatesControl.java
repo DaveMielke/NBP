@@ -13,7 +13,7 @@ public class LogUpdatesControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LOG_UPDATES;
+    return ApplicationDefaults.LOG_UPDATES;
   }
 
   @Override

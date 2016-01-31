@@ -28,7 +28,7 @@ public class SpeechRateControl extends LogarithmicFloatControl {
 
   @Override
   protected float getFloatDefault () {
-    return ApplicationParameters.DEFAULT_SPEECH_RATE;
+    return ApplicationDefaults.SPEECH_RATE;
   }
 
   @Override

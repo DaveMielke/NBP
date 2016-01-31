@@ -13,7 +13,7 @@ public class LongPressControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LONG_PRESS;
+    return ApplicationDefaults.LONG_PRESS;
   }
 
   @Override

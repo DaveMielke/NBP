@@ -13,7 +13,7 @@ public class TypingItalicControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_TYPING_ITALIC;
+    return ApplicationDefaults.TYPING_ITALIC;
   }
 
   @Override

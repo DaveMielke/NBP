@@ -18,7 +18,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
 
   @Override
   protected BrailleCode getEnumerationDefault () {
-    return ApplicationParameters.DEFAULT_BRAILLE_CODE;
+    return ApplicationDefaults.BRAILLE_CODE;
   }
 
   @Override

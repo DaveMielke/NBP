@@ -13,7 +13,7 @@ public class LogBrailleControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LOG_BRAILLE;
+    return ApplicationDefaults.LOG_BRAILLE;
   }
 
   @Override

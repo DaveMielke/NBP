@@ -23,7 +23,7 @@ public class SpeechVolumeControl extends LinearFloatControl {
 
   @Override
   protected float getFloatDefault () {
-    return ApplicationParameters.DEFAULT_SPEECH_VOLUME;
+    return ApplicationDefaults.SPEECH_VOLUME;
   }
 
   @Override

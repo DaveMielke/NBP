@@ -13,7 +13,7 @@ public class DeveloperEnabledControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_DEVELOPER_ENABLED;
+    return ApplicationDefaults.DEVELOPER_ENABLED;
   }
 
   @Override

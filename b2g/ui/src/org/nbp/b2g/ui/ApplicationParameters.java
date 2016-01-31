@@ -7,39 +7,6 @@ import java.nio.charset.Charset;
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters {
-  public final static TypingMode DEFAULT_TYPING_MODE = TypingMode.TEXT;
-  public final static boolean DEFAULT_TYPING_BOLD = false;
-  public final static boolean DEFAULT_TYPING_ITALIC = false;
-  public final static boolean DEFAULT_TYPING_UNDERLINE = false;
-  public final static boolean DEFAULT_LONG_PRESS = true;
-  public final static boolean DEFAULT_REVERSE_PANNING = false;
-  public final static boolean DEFAULT_ONE_HAND = false;
-
-  public final static boolean DEFAULT_LITERARY_BRAILLE = true;
-  public final static BrailleCode DEFAULT_BRAILLE_CODE = BrailleCode.EN_UEB_G2;
-
-  public final static IndicatorOverlay DEFAULT_CURSOR_INDICATOR = IndicatorOverlay.DOTS_78;
-  public final static IndicatorOverlay DEFAULT_SELECTION_INDICATOR = IndicatorOverlay.DOT_8;
-
-  public final static boolean DEFAULT_BRAILLE_ENABLED = true;
-  public final static int DEFAULT_BRAILLE_FIRMNESS = 4;
-  public final static boolean DEFAULT_BRAILLE_MONITOR = false;
-
-  public final static boolean DEFAULT_SPEECH_ENABLED = true;
-  public final static boolean DEFAULT_SLEEP_TALK = false;
-  public final static float DEFAULT_SPEECH_VOLUME = 1.0f;
-  public final static float DEFAULT_SPEECH_BALANCE = 0.0f;
-  public final static float DEFAULT_SPEECH_RATE = 1.0f;
-  public final static float DEFAULT_SPEECH_PITCH = 1.0f;
-
-  public final static boolean DEFAULT_DEVELOPER_ENABLED = false;
-  public final static boolean DEFAULT_LOG_UPDATES = false;
-  public final static boolean DEFAULT_LOG_KEYBOARD = false;
-  public final static boolean DEFAULT_LOG_ACTIONS = false;
-  public final static boolean DEFAULT_LOG_NAVIGATION = false;
-  public final static boolean DEFAULT_LOG_GESTURES = false;
-  public final static boolean DEFAULT_LOG_BRAILLE = false;
-
   public final static boolean ENABLE_SPEECH_DEVICE = true;
   public final static boolean ENABLE_KEYBOARD_MONITOR = true;
   public final static boolean ENABLE_POWER_BUTTON_MONITOR = true;

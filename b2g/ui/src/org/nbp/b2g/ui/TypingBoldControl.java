@@ -13,7 +13,7 @@ public class TypingBoldControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_TYPING_BOLD;
+    return ApplicationDefaults.TYPING_BOLD;
   }
 
   @Override

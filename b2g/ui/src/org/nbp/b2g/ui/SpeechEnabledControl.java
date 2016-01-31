@@ -13,7 +13,7 @@ public class SpeechEnabledControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_SPEECH_ENABLED;
+    return ApplicationDefaults.SPEECH_ENABLED;
   }
 
   @Override

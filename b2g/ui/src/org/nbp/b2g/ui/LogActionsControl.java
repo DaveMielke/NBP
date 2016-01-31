@@ -13,7 +13,7 @@ public class LogActionsControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LOG_ACTIONS;
+    return ApplicationDefaults.LOG_ACTIONS;
   }
 
   @Override

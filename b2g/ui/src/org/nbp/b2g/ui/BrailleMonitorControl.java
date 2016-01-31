@@ -13,7 +13,7 @@ public class BrailleMonitorControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_BRAILLE_MONITOR;
+    return ApplicationDefaults.BRAILLE_MONITOR;
   }
 
   @Override

@@ -13,7 +13,7 @@ public class TypingModeControl extends EnumerationControl<TypingMode> {
 
   @Override
   protected TypingMode getEnumerationDefault () {
-    return ApplicationParameters.DEFAULT_TYPING_MODE;
+    return ApplicationDefaults.TYPING_MODE;
   }
 
   @Override

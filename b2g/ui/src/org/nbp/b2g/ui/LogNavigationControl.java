@@ -13,7 +13,7 @@ public class LogNavigationControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_LOG_NAVIGATION;
+    return ApplicationDefaults.LOG_NAVIGATION;
   }
 
   @Override

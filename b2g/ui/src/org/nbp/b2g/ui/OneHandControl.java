@@ -13,7 +13,7 @@ public class OneHandControl extends BooleanControl {
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationParameters.DEFAULT_ONE_HAND;
+    return ApplicationDefaults.ONE_HAND;
   }
 
   @Override

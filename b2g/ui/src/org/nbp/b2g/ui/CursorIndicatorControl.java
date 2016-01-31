@@ -13,7 +13,7 @@ public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay>
 
   @Override
   protected IndicatorOverlay getEnumerationDefault () {
-    return ApplicationParameters.DEFAULT_CURSOR_INDICATOR;
+    return ApplicationDefaults.CURSOR_INDICATOR;
   }
 
   @Override

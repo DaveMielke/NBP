@@ -45,7 +45,7 @@ public class SpeechBalanceControl extends LinearFloatControl {
 
   @Override
   protected float getFloatDefault () {
-    return ApplicationParameters.DEFAULT_SPEECH_BALANCE;
+    return ApplicationDefaults.SPEECH_BALANCE;
   }
 
   @Override
