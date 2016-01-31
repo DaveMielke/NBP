@@ -137,11 +137,23 @@ public abstract class KeyMask {
     StringBuilder sb = new StringBuilder();
 
     if (mask != 0) {
+      int dotCount = 0;
+
       for (KeyEntry key : keyEntries.values()) {
         if ((mask & key.bit) != 0) {
-          if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
-          sb.append(key.name);
+          String name = key.name;
+          boolean isDot = (key.bit & DOTS_ALL) != 0;
+
+          if (!(isDot && (dotCount > 0))) {
+            if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
+            sb.append(name);
+          } else {
+            if (dotCount == 1) sb.insert((sb.length() - 1), 's');
+            sb.append(name.charAt(name.length() - 1));
+          }
+
           if ((mask &= ~key.bit) == 0) break;
+          dotCount = isDot? (dotCount + 1): 0;
         }
       }
 
