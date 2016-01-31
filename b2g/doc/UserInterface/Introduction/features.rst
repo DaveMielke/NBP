@@ -58,11 +58,11 @@ within a screen that looks something like this::
   Firmware Version      3.1
   Metec Driver Version  1.00
 
-Managing the Home Screen
-~~~~~~~~~~~~~~~~~~~~~~~~
+Shortcuts
+~~~~~~~~~
 
-Adding an Application
-`````````````````````
+Managing the Home Screen
+````````````````````````
 
 To add a shortcut to the home screen:
 
@@ -71,20 +71,17 @@ To add a shortcut to the home screen:
 3) Navigate to the name of the application that you'd like to add.
 4) Press Space+s (dots 234), and then press + (dots 346).
 
-Removing an Application
-```````````````````````
-
 To remove a shortcut from the home screen:
 
 1) Go to the home screen.
 2) Navigate to the shortcut that you'd like to remove.
 3) Press Space+s (dots 234), and then press - (dots 36).
 
-Shortcuts
-~~~~~~~~~
+Builtin Shortcuts
+`````````````````
 
 To Useful Android Screens
-`````````````````````````
+'''''''''''''''''''''''''
 
 The following shortcuts to useful Android screens are provided:
 
@@ -135,7 +132,7 @@ Space+s (dots 234)
     Go to the Calculator app.
 
 To Other |product name| Applications
-````````````````````````````````````
+''''''''''''''''''''''''''''''''''''
 
 The following shortcuts to other |product name| applications are provided:
 
