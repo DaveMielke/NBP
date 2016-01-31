@@ -1,19 +1,19 @@
+document supported literary braille highlighting types
+document input highlighitng controls
+key bindings for input highlighting controls
+literary braille current line refresh
+highlighted literary braille input
+home screen navigation problems
+
 Verify:
-  USB Ethernet adapter
   SIM indicators
-  braille enable/disable
-  braille monitor
 
 Document
   locale-based character table autodetection
   override files
 
-Device:
-   unique USB serial numbers
-   unique Wi-Fi mac addresses
-
 User Interface
-  LibLouis
+  occasional deadlock
   make SD unmount easier
   input service doesn't restart immediately after reinstall
   arrowed-to item blocks scrolling
@@ -21,7 +21,3 @@ User Interface
 Editor
   interpret typed characters rather than keyboard events
 
-Launcher
-  routing key scroll bar
-  bindable routing keys
-  typing should present sublist
