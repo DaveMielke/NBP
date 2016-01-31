@@ -1,13 +1,14 @@
 package org.nbp.b2g.ui;
 
 public abstract class ApplicationDefaults {
+  public final static boolean LONG_PRESS = true;
+  public final static boolean REVERSE_PANNING = false;
+  public final static boolean ONE_HAND = false;
+
   public final static TypingMode TYPING_MODE = TypingMode.TEXT;
   public final static boolean TYPING_BOLD = false;
   public final static boolean TYPING_ITALIC = false;
   public final static boolean TYPING_UNDERLINE = false;
-  public final static boolean LONG_PRESS = true;
-  public final static boolean REVERSE_PANNING = false;
-  public final static boolean ONE_HAND = false;
 
   public final static boolean LITERARY_BRAILLE = true;
   public final static BrailleCode BRAILLE_CODE = BrailleCode.EN_UEB_G2;

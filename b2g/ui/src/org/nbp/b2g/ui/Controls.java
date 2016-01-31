@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
+  private final static LongPressControl longPressControl = new LongPressControl();
+  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
+  private final static OneHandControl oneHandControl = new OneHandControl();
+
   private final static TypingModeControl typingModeControl = new TypingModeControl();
   private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
   private final static TypingItalicControl typingItalicControl = new TypingItalicControl();
   private final static TypingUnderlineControl typingUnderlineControl = new TypingUnderlineControl();
-  private final static LongPressControl longPressControl = new LongPressControl();
-  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
-  private final static OneHandControl oneHandControl = new OneHandControl();
 
   private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
   private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
@@ -37,13 +38,14 @@ public abstract class Controls {
   private final static LogBrailleControl logBrailleControl = new LogBrailleControl();
 
   private final static Control[] allControls = new Control[] {
+    longPressControl,
+    reversePanningControl,
+    oneHandControl,
+
     typingModeControl,
     typingBoldControl,
     typingItalicControl,
     typingUnderlineControl,
-    longPressControl,
-    reversePanningControl,
-    oneHandControl,
 
     literaryBrailleControl,
     brailleCodeControl,
@@ -70,6 +72,18 @@ public abstract class Controls {
     logBrailleControl
   };
 
+  public static LongPressControl getLongPressControl () {
+    return longPressControl;
+  }
+
+  public static ReversePanningControl getReversePanningControl () {
+    return reversePanningControl;
+  }
+
+  public static OneHandControl getOneHandControl () {
+    return oneHandControl;
+  }
+
   public static TypingModeControl getTypingModeControl () {
     return typingModeControl;
   }
@@ -84,18 +98,6 @@ public abstract class Controls {
 
   public static TypingUnderlineControl getTypingUnderlineControl () {
     return typingUnderlineControl;
-  }
-
-  public static LongPressControl getLongPressControl () {
-    return longPressControl;
-  }
-
-  public static ReversePanningControl getReversePanningControl () {
-    return reversePanningControl;
-  }
-
-  public static OneHandControl getOneHandControl () {
-    return oneHandControl;
   }
 
   public static LiteraryBrailleControl getLiteraryBrailleControl () {
