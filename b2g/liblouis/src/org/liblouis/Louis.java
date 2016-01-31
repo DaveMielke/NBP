@@ -15,24 +15,24 @@ import java.io.InputStream;
 
 public final class Louis {
   private final static String LOG_TAG = Louis.class.getName();
+
   private final static String LIBRARY_NAME = "louis";
-
-  public static Object NATIVE_LOCK = new Object();
-  public static native void releaseMemory ();
+  private final static String LIBRARY_VERSION;
   public static native String getVersion ();
-  public static native String getDataPath ();
-  public static native void setDataPath (String path);
-  private static native boolean compileTranslationTable (String table);
-  private static native void setLogLevel (char character);
-
-  private final static String version;
 
   static {
     System.loadLibrary(LIBRARY_NAME);
 
-    version = getVersion();
-    Log.i(LOG_TAG, "liblouis version: " + version);
+    LIBRARY_VERSION = getVersion();
+    Log.i(LOG_TAG, "liblouis version: " + LIBRARY_VERSION);
   }
+
+  public static Object NATIVE_LOCK = new Object();
+  public static native void releaseMemory ();
+  public static native String getDataPath ();
+  public static native void setDataPath (String path);
+  private static native boolean compileTranslationTable (String table);
+  private static native void setLogLevel (char character);
 
   public enum LogLevel {
     ALL  ('A'),
