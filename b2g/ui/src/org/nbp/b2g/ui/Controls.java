@@ -240,11 +240,21 @@ public abstract class Controls {
     forEachControl(restoreCurrentValue);
   }
 
+  private final static BooleanControl[] inputHighlightingControls = new BooleanControl[] {
+    inputBoldControl,
+    inputItalicControl,
+    inputUnderlineControl
+  };
+
+  public static void resetInputHighlighting () {
+    for (BooleanControl control : inputHighlightingControls) {
+      control.setValue(false);
+    }
+  }
+
   public static void restoreSaneValues () {
     inputModeControl.setValue(InputMode.TEXT);
-    inputBoldControl.setValue(false);
-    inputItalicControl.setValue(false);
-    inputUnderlineControl.setValue(false);
+    resetInputHighlighting();
     oneHandControl.setValue(false);
     brailleEnabledControl.setValue(true);
   }
