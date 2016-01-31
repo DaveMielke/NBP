@@ -13,6 +13,8 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.ActivityInfo;
 
 public abstract class ShortcutAction extends Action {
+  protected abstract void performShortcutAction (PackageManager pm, ActivityInfo activity);
+
   protected final String getText () {
     return getEndpoint().getLineText().toString();
   }
@@ -29,13 +31,13 @@ public abstract class ShortcutAction extends Action {
     return pm.getApplicationLabel(activity.applicationInfo).toString();
   }
 
-  protected static ActivityInfo findActivity (PackageManager pm, String text) {
+  protected final ActivityInfo findActivity (final PackageManager pm, String text) {
     Intent intent = new Intent(Intent.ACTION_MAIN);
     intent.addCategory(Intent.CATEGORY_LAUNCHER);
     List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
 
     text = text.toLowerCase();
-    List<ActivityInfo> choices = new ArrayList<ActivityInfo>();
+    final List<ActivityInfo> choices = new ArrayList<ActivityInfo>();
 
     for (ResolveInfo resolve : activities) {
       ActivityInfo activity = resolve.activityInfo;
@@ -64,7 +66,19 @@ public abstract class ShortcutAction extends Action {
           sb.append(getLabel(pm, activity));
         }
 
-        Endpoints.setPopupEndpoint(sb.toString());
+        Endpoints.setPopupEndpoint(sb.toString(),
+          new IndexHandler () {
+            @Override
+            public boolean handleIndex (int index) {
+              if ((index -= 1) < 0) return true;
+              ActivityInfo activity = choices.get(index);
+
+              performShortcutAction(pm, activity);
+              return true;
+            }
+          }
+        );
+
         break;
       }
     }
@@ -85,6 +99,18 @@ public abstract class ShortcutAction extends Action {
 
   protected static void sendIntent (Intent intent) {
     getContext().sendBroadcast(intent);
+  }
+
+  @Override
+  public boolean performAction () {
+    PackageManager pm = getPackageManager();
+
+    String text = getText();
+    ActivityInfo activity = findActivity(pm, text);
+    if (activity == null) return false;
+
+    performShortcutAction(pm, activity);
+    return true;
   }
 
   protected ShortcutAction (Endpoint endpoint) {

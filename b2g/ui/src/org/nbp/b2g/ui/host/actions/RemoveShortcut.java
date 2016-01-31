@@ -7,7 +7,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ActivityInfo;
 
 public class RemoveShortcut extends ShortcutAction {
-  private static void removeShortcut (PackageManager pm, ActivityInfo activity) {
+  @Override
+  protected void performShortcutAction (PackageManager pm, ActivityInfo activity) {
     Intent intent = new Intent();
     intent.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
 
@@ -15,18 +16,6 @@ public class RemoveShortcut extends ShortcutAction {
     intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getLabel(pm, activity));
 
     sendIntent(intent);
-  }
-
-  @Override
-  public boolean performAction () {
-    PackageManager pm = getPackageManager();
-
-    String text = getText();
-    ActivityInfo activity = findActivity(pm, text);
-    if (activity == null) return false;
-
-    removeShortcut(pm, activity);
-    return true;
   }
 
   public RemoveShortcut (Endpoint endpoint) {

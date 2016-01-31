@@ -7,7 +7,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ActivityInfo;
 
 public class AddShortcut extends ShortcutAction {
-  private static void addShortcut (PackageManager pm, ActivityInfo activity) {
+  @Override
+  protected void performShortcutAction (PackageManager pm, ActivityInfo activity) {
     Intent intent = new Intent();
     intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 
@@ -16,18 +17,6 @@ public class AddShortcut extends ShortcutAction {
     intent.putExtra("duplicate", false);
 
     sendIntent(intent);
-  }
-
-  @Override
-  public boolean performAction () {
-    PackageManager pm = getPackageManager();
-
-    String text = getText();
-    ActivityInfo activity = findActivity(pm, text);
-    if (activity == null) return false;
-
-    addShortcut(pm, activity);
-    return true;
   }
 
   public AddShortcut (Endpoint endpoint) {
