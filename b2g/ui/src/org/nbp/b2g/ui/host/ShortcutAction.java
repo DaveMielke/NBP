@@ -39,6 +39,7 @@ public abstract class ShortcutAction extends Action {
 
     for (ResolveInfo resolve : activities) {
       ActivityInfo activity = resolve.activityInfo;
+      if (activity.targetActivity != null) continue;
       String label = getLabel(pm, activity);
 
       if (label.toLowerCase().contains(text)) {
