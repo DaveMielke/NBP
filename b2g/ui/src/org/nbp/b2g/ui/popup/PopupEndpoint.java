@@ -18,8 +18,48 @@ public class PopupEndpoint extends Endpoint {
 
   @Override
   public void onBackground () {
-    timeout.cancel();
-    super.onBackground();
+    synchronized (this) {
+      try {
+        timeout.cancel();
+      } finally {
+        super.onBackground();
+      }
+    }
+  }
+
+  private IndexHandler enterKeyHandler = null;
+
+  @Override
+  public boolean handleKeyboardKey_enter () {
+    try {
+      synchronized (this) {
+        if (enterKeyHandler != null) {
+          int index = 0;
+          int offset = getLineStart();
+
+          while (true) {
+            int previous = findPreviousNewline(offset);
+            if (previous == -1) break;
+
+            index += 1;
+            offset = previous;
+          }
+
+          if (!enterKeyHandler.handleIndex(index)) return false;
+        }
+      }
+    } finally {
+      if (!super.handleKeyboardKey_enter()) return false;
+    }
+
+    return true;
+  }
+
+  public final void set (String text, IndexHandler handler) {
+    synchronized (this) {
+      enterKeyHandler = handler;
+      write(text);
+    }
   }
 
   public PopupEndpoint () {
