@@ -23,7 +23,10 @@ bind Space+Dots124#f FindForward
 bind Space+Dot7+Dots124#f FindPrevious
 bind Space+Dot8+Dots124#f FindNext
 
-bind Space+Dots125#h Help
+bind Space+Dots125#h HelpText
+bind Space+Dot7+Dots125#h HelpHTML
+bind Space+Dot8+Dots125#h DescribeActions
+
 bind Space+Dots135#o Settings
 bind Space+Dots78+Dots134#m Maintenance
 

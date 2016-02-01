@@ -24,6 +24,7 @@
 .. |CutToClipboard| replace:: cut the selected text to the clipboard
 .. |DeleteNext| replace:: delete the character that the cursor is on
 .. |DeletePrevious| replace:: delete the character to the left of the cursor
+.. |DescribeActions| replace:: show a list of the top-level actions
 .. |DescribeBuild| replace:: show details that identify the build
 .. |DescribeCharacter| replace:: show the description of a specific character
 .. |DescribeIndicators| replace:: show important status indicators
@@ -38,7 +39,8 @@
 .. |FindPrevious| replace:: find the previous occurrence of the same text within the current screen element
 .. |ForceCrash| replace:: force a |user interface| crash
 .. |Gallery| replace:: go to the Gallery app
-.. |Help| replace:: go to the document for the |user interface|
+.. |HelpText| replace:: present the plain text version of the |user interface| manual
+.. |HelpHTML| replace:: present the HTML version of the |user interface| manual
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
 .. |LineNext| replace:: go to the start of the next line
