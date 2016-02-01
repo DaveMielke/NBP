@@ -52,7 +52,7 @@
   <string name="recoveryLog_activity_label">Recovery Mode Log</string>
 
   <string name="shortcut_message_none">activity not found</string>
-  <string name="shortcut_message_ambiguous">activity not unique</string>
+  <string name="shortcut_message_ambiguous">Select a shortcut by pressing Enter on it:</string>
 
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
@@ -145,7 +145,7 @@
   <string name="LogNavigation_control_label">Log Navigation</string>
   <string name="LogUpdates_control_label">Log Updates</string>
 
-  <string name="ChooseAction_label">Action List</string>
+  <string name="ChooseAction_label">Perform an action by pressing Enter on it:</string>
   <string name="ChooseAction_message_cursor">needs cursor key</string>
 
   <string name="DescribeCharacter_label_block">Block</string>
