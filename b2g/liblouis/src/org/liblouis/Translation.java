@@ -240,11 +240,12 @@ public class Translation {
     translationTable = builder.getTranslationTable();
     suppliedInput = builder.getInputCharacters();
     inputCursor = builder.getCursorOffset();
+
+    final int outputLength = builder.getOutputLength();
     final boolean includeHighlighting = builder.getIncludeHighlighting();
 
     CharSequence input = suppliedInput;
     int inputLength = input.length();
-    final int outputLength = builder.getOutputLength();
 
     String inputString = input.toString();
     char[] output = new char[outputLength];
