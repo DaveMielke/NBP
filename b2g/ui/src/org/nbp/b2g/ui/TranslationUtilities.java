@@ -2,8 +2,7 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
-import org.liblouis.Louis;
-import org.liblouis.TranslationTable;
+import org.liblouis.TranslationBuilder;
 import org.liblouis.BrailleTranslation;
 import org.liblouis.TextTranslation;
 
@@ -12,21 +11,24 @@ public abstract class TranslationUtilities {
 
   private static int lengthMultiplier = 1;
 
-  private static TranslationTable getTranslationTable () {
+  private static TranslationBuilder newTranslationBuilder () {
     if (!ApplicationSettings.LITERARY_BRAILLE) return null;
-    return ApplicationSettings.BRAILLE_CODE.getTranslationTable();
+
+    TranslationBuilder builder = new TranslationBuilder();
+    builder.setTranslationTable(ApplicationSettings.BRAILLE_CODE.getTranslationTable());
+    return builder;
   }
 
   public static BrailleTranslation newBrailleTranslation (CharSequence text) {
-    TranslationTable table = getTranslationTable();
-    if (table == null) return null;
+    TranslationBuilder builder = newTranslationBuilder();
+    if (builder == null) return null;
+
+    builder.setInputCharacters(text);
     final int textLength = text.length();
 
     while (true) {
-      BrailleTranslation brl = Louis.getBrailleTranslation(
-        table, text, (textLength * lengthMultiplier)
-      );
-
+      builder.setOutputLength(textLength * lengthMultiplier);
+      BrailleTranslation brl = builder.newBrailleTranslation();
       if (brl.getTextLength() == textLength) return brl;
       lengthMultiplier += 1;
     }
@@ -37,15 +39,15 @@ public abstract class TranslationUtilities {
   }
 
   public static TextTranslation newTextTranslation (CharSequence braille) {
-    TranslationTable table = getTranslationTable();
-    if (table == null) return null;
+    TranslationBuilder builder = newTranslationBuilder();
+    if (builder == null) return null;
+
+    builder.setInputCharacters(braille);
     final int brailleLength = braille.length();
 
     while (true) {
-      TextTranslation txt = Louis.getTextTranslation(
-        table, braille, (brailleLength * lengthMultiplier)
-      );
-
+      builder.setOutputLength(brailleLength * lengthMultiplier);
+      TextTranslation txt = builder.newTextTranslation();
       if (txt.getBrailleLength() == brailleLength) return txt;
       lengthMultiplier += 1;
     }
