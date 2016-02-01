@@ -130,44 +130,58 @@ public abstract class Endpoint {
     return true;
   }
 
+  private final void discardBrailleTranslation () {
+    brailleTranslation = null;
+    textTranslation = null;
+  }
+
+  private final boolean haveBrailleTranslation () {
+    if (textTranslation != null) {
+      if (equals(textTranslation.getTextWithSpans(), lineText)) {
+        return true;
+      }
+    }
+
+    if (brailleTranslation != null) {
+      if (equals(brailleTranslation.getConsumedText(), lineText)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private final boolean retrieveBrailleTranslation () {
+    Translation translation = TranslationCache.get(lineText);
+
+    if (translation != null) {
+      if (translation instanceof BrailleTranslation) {
+        brailleTranslation = (BrailleTranslation)translation;
+        return true;
+      }
+
+      if (translation instanceof TextTranslation) {
+        textTranslation = (TextTranslation)translation;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private final void makeBrailleTranslation () {
+    brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
+    TranslationCache.put(lineText, brailleTranslation);
+  }
+
   private final void refreshBrailleTranslation () {
     if (ApplicationSettings.LITERARY_BRAILLE) {
-      if (textTranslation != null) {
-        if (equals(textTranslation.getTextWithSpans(), lineText)) {
-          return;
-        }
-      }
-
-      if (brailleTranslation != null) {
-        if (equals(brailleTranslation.getConsumedText(), lineText)) {
-          return;
-        }
-      }
-
-      brailleTranslation = null;
-      textTranslation = null;
-
-      {
-        Translation translation = TranslationCache.get(lineText);
-
-        if (translation != null) {
-          if (translation instanceof BrailleTranslation) {
-            brailleTranslation = (BrailleTranslation)translation;
-            return;
-          }
-
-          if (translation instanceof TextTranslation) {
-            textTranslation = (TextTranslation)translation;
-            return;
-          }
-        }
-      }
-
-      brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
-      TranslationCache.put(lineText, brailleTranslation);
+      if (haveBrailleTranslation()) return;
+      discardBrailleTranslation();
+      if (retrieveBrailleTranslation()) return;
+      makeBrailleTranslation();
     } else {
-      brailleTranslation = null;
-      textTranslation = null;
+      discardBrailleTranslation();
     }
   }
 
