@@ -13,11 +13,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.ActivityInfo;
 
 public abstract class ShortcutAction extends Action {
-  protected abstract void performShortcutAction (PackageManager pm, ActivityInfo activity);
-
-  protected final String getText () {
-    return getEndpoint().getLineText().toString();
-  }
+  protected abstract Intent getShortcutIntent ();
 
   protected static Context getContext () {
     return ApplicationContext.getContext();
@@ -31,12 +27,45 @@ public abstract class ShortcutAction extends Action {
     return pm.getApplicationLabel(activity.applicationInfo).toString();
   }
 
-  protected final ActivityInfo findActivity (final PackageManager pm, String text) {
+  protected static void sendIntent (Intent intent) {
+    getContext().sendBroadcast(intent);
+  }
+
+  protected static ComponentName toComponentName (ActivityInfo activity) {
+    return new ComponentName(activity.applicationInfo.packageName, activity.name);
+  }
+
+  protected static Intent newActivityIntent (ActivityInfo activity) {
     Intent intent = new Intent(Intent.ACTION_MAIN);
     intent.addCategory(Intent.CATEGORY_LAUNCHER);
-    List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
+    intent.setComponent(toComponentName(activity));
+    return intent;
+  }
 
-    text = text.toLowerCase();
+  protected final void performShortcutAction (PackageManager pm, ActivityInfo activity) {
+    Intent intent = getShortcutIntent();
+
+    intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, newActivityIntent(activity));
+    intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getLabel(pm, activity));
+
+    sendIntent(intent);
+  }
+
+  protected final String getText () {
+    return getEndpoint().getLineText().toString();
+  }
+
+  protected static List<ResolveInfo> getLaunchableActivities (PackageManager pm) {
+    Intent intent = new Intent(Intent.ACTION_MAIN);
+    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+    return pm.queryIntentActivities(intent, 0);
+  }
+
+  @Override
+  public boolean performAction () {
+    String text = getText().toLowerCase();
+    final PackageManager pm = getPackageManager();
+    List<ResolveInfo> activities = getLaunchableActivities(pm);
     final List<ActivityInfo> choices = new ArrayList<ActivityInfo>();
 
     for (ResolveInfo resolve : activities) {
@@ -52,10 +81,11 @@ public abstract class ShortcutAction extends Action {
     switch (choices.size()) {
       case 0:
         ApplicationUtilities.message(R.string.shortcut_message_none);
-        break;
+        return false;
 
       case 1:
-        return choices.get(0);
+        performShortcutAction(pm, choices.get(0));
+        break;
 
       default: {
         StringBuilder sb = new StringBuilder();
@@ -83,33 +113,6 @@ public abstract class ShortcutAction extends Action {
       }
     }
 
-    return null;
-  }
-
-  protected static ComponentName toComponentName (ActivityInfo activity) {
-    return new ComponentName(activity.applicationInfo.packageName, activity.name);
-  }
-
-  protected static Intent newActivityIntent (ActivityInfo activity) {
-    Intent intent = new Intent(Intent.ACTION_MAIN);
-    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-    intent.setComponent(toComponentName(activity));
-    return intent;
-  }
-
-  protected static void sendIntent (Intent intent) {
-    getContext().sendBroadcast(intent);
-  }
-
-  @Override
-  public boolean performAction () {
-    PackageManager pm = getPackageManager();
-
-    String text = getText();
-    ActivityInfo activity = findActivity(pm, text);
-    if (activity == null) return false;
-
-    performShortcutAction(pm, activity);
     return true;
   }
 
