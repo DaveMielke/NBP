@@ -24,7 +24,7 @@ public abstract class TranslationUtilities {
 
     while (true) {
       BrailleTranslation brl = Louis.getBrailleTranslation(
-        table, text, (textLength * lengthMultiplier), -1
+        table, text, (textLength * lengthMultiplier)
       );
 
       if (brl.getTextLength() == textLength) return brl;
@@ -43,7 +43,7 @@ public abstract class TranslationUtilities {
 
     while (true) {
       TextTranslation txt = Louis.getTextTranslation(
-        table, braille, (brailleLength * lengthMultiplier), -1
+        table, braille, (brailleLength * lengthMultiplier)
       );
 
       if (txt.getBrailleLength() == brailleLength) return txt;
