@@ -67,9 +67,9 @@ public abstract class ShortcutAction extends Action {
         }
 
         Endpoints.setPopupEndpoint(sb.toString(),
-          new IndexHandler () {
+          new ValueHandler<Integer> () {
             @Override
-            public boolean handleIndex (int index) {
+            public boolean handleValue (Integer index) {
               if ((index -= 1) < 0) return true;
               ActivityInfo activity = choices.get(index);
 

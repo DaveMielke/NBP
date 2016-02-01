@@ -27,7 +27,7 @@ public class PopupEndpoint extends Endpoint {
     }
   }
 
-  private IndexHandler enterKeyHandler = null;
+  private ValueHandler<Integer> enterKeyHandler = null;
 
   @Override
   public boolean handleKeyboardKey_enter () {
@@ -45,7 +45,7 @@ public class PopupEndpoint extends Endpoint {
             offset = previous;
           }
 
-          if (!enterKeyHandler.handleIndex(index)) return false;
+          if (!enterKeyHandler.handleValue(index)) return false;
         }
       }
     } finally {
@@ -55,7 +55,7 @@ public class PopupEndpoint extends Endpoint {
     return true;
   }
 
-  public final void set (String text, IndexHandler handler) {
+  public final void set (String text, ValueHandler<Integer> handler) {
     synchronized (this) {
       enterKeyHandler = handler;
       write(text);

@@ -23,9 +23,9 @@ public class ActionChooser {
 
   public static void chooseAction (final KeyBindingMap map) {
     Endpoints.setPopupEndpoint(makeText(map),
-      new IndexHandler () {
+      new ValueHandler<Integer> () {
         @Override
-        public boolean handleIndex (int index) {
+        public boolean handleValue (Integer index) {
           if ((index -= 1) < 0) return true;
           Integer keys = map.keySet().toArray(new Integer[map.size()])[index];
 
