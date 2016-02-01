@@ -51,12 +51,12 @@ public class Tests {
   public static void translateText (TranslationTable table, CharSequence text) {
     Log.d(LOG_TAG, ("begin text translation test: " + text));
 
-    BrailleTranslation brl = Louis.getBrailleTranslation(table, text, 20, -1);
+    BrailleTranslation brl = Louis.getBrailleTranslation(table, text, 20);
     CharSequence braille = brl.getBrailleWithSpans();
     Log.d(LOG_TAG, ("braille translation: " + braille));
     logOffsets(brl);
 
-    TextTranslation txt = Louis.getTextTranslation(table, braille, 80, -1);
+    TextTranslation txt = Louis.getTextTranslation(table, braille, 80);
     CharSequence back = txt.getTextWithSpans();
     Log.d(LOG_TAG, ("text back-translation: " + back));
     logOffsets(txt);
@@ -67,12 +67,12 @@ public class Tests {
   public static void translateBraille (TranslationTable table, CharSequence braille) {
     Log.d(LOG_TAG, ("begin braille translation test: " + braille));
 
-     TextTranslation txt = Louis.getTextTranslation(table, braille, 20, -1);
+     TextTranslation txt = Louis.getTextTranslation(table, braille, 20);
     CharSequence text = txt.getTextWithSpans();
     Log.d(LOG_TAG, ("text translation: " + text));
     logOffsets(txt);
 
-    BrailleTranslation brl = Louis.getBrailleTranslation(table, text, 80, -1);
+    BrailleTranslation brl = Louis.getBrailleTranslation(table, text, 80);
     CharSequence back = brl.getBrailleWithSpans();
     Log.d(LOG_TAG, ("braille back-translation: " + back));
     logOffsets(brl);

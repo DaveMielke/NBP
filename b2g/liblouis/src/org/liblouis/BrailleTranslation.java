@@ -61,10 +61,7 @@ public class BrailleTranslation extends Translation {
     return getOutputCursor();
   }
 
-  public BrailleTranslation (
-    TranslationTable table, CharSequence text,
-    int brailleLength, int cursorOffset
-  ) {
-    super(table, text, brailleLength, cursorOffset, false);
+  public BrailleTranslation (TranslationBuilder builder) {
+    super(builder, false);
   }
 }

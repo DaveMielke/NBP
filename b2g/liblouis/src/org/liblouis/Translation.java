@@ -236,16 +236,15 @@ public class Translation {
   private final static int RVI_OUTPUT_LENGTH = ResultValuesIndex.OUTPUT_LENGTH.ordinal();
   private final static int RVI_CURSOR_OFFSET = ResultValuesIndex.CURSOR_OFFSET.ordinal();
 
-  public Translation (
-    TranslationTable table, CharSequence input,
-    int outputLength, int cursorOffset,
-    boolean backTranslate
-  ) {
-    int inputLength = input.length();
+  public Translation (TranslationBuilder builder, boolean backTranslate) {
+    translationTable = builder.getTranslationTable();
+    suppliedInput = builder.getInputCharacters();
+    inputCursor = builder.getCursorOffset();
+    final boolean includeHighlighting = builder.getIncludeHighlighting();
 
-    translationTable = table;
-    suppliedInput = input;
-    inputCursor = (cursorOffset < 0)? null: Integer.valueOf(cursorOffset);
+    CharSequence input = suppliedInput;
+    int inputLength = input.length();
+    final int outputLength = builder.getOutputLength();
 
     String inputString = input.toString();
     char[] output = new char[outputLength];
@@ -255,7 +254,7 @@ public class Translation {
     int[] resultValues = new int[RESULT_VALUES_COUNT];
     resultValues[RVI_INPUT_LENGTH] = inputLength;
     resultValues[RVI_OUTPUT_LENGTH] = outputLength;
-    resultValues[RVI_CURSOR_OFFSET] = cursorOffset;
+    resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
     int typeFormLength = Math.max(inputLength, outputLength);
     byte[] typeForm = backTranslate? null:
@@ -263,8 +262,10 @@ public class Translation {
 
     synchronized (Louis.NATIVE_LOCK) {
       translationSucceeded = translate(
-        table.getFileName(), inputString, output, typeForm,
-        outOffsets, inOffsets, resultValues, backTranslate
+        translationTable.getFileName(),
+        inputString, output, typeForm,
+        outOffsets, inOffsets, resultValues,
+        backTranslate
       );
     }
 

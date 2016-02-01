@@ -222,17 +222,23 @@ public final class Louis {
   }
 
   public static BrailleTranslation getBrailleTranslation (
-    TranslationTable table, CharSequence text,
-    int brailleLength, int cursorOffset
+    TranslationTable table, CharSequence text, int brailleLength
   ) {
-    return new BrailleTranslation(table, text, brailleLength, cursorOffset);
+    return new TranslationBuilder()
+              .setTranslationTable(table)
+              .setInputCharacters(text)
+              .setOutputLength(brailleLength)
+              .newBrailleTranslation();
   }
 
   public static TextTranslation getTextTranslation (
-    TranslationTable table, CharSequence braille,
-    int textLength, int cursorOffset
+    TranslationTable table, CharSequence braille, int textLength
   ) {
-    return new TextTranslation(table, braille, textLength, cursorOffset);
+    return new TranslationBuilder()
+              .setTranslationTable(table)
+              .setInputCharacters(braille)
+              .setOutputLength(textLength)
+              .newTextTranslation();
   }
 
   private Louis () {
