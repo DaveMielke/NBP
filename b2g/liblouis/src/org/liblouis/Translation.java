@@ -257,7 +257,8 @@ public class Translation {
     resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
     int typeFormLength = Math.max(inputLength, outputLength);
-    byte[] typeForm = backTranslate? null:
+    byte[] typeForm = !includeHighlighting? null:
+                      backTranslate? null:
                       createTypeForm(typeFormLength, input);
 
     synchronized (Louis.NATIVE_LOCK) {
