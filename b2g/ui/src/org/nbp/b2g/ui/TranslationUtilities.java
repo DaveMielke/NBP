@@ -14,9 +14,8 @@ public abstract class TranslationUtilities {
   private static TranslationBuilder newTranslationBuilder () {
     if (!ApplicationSettings.LITERARY_BRAILLE) return null;
 
-    TranslationBuilder builder = new TranslationBuilder();
-    builder.setTranslationTable(ApplicationSettings.BRAILLE_CODE.getTranslationTable());
-    return builder;
+    return new TranslationBuilder()
+              .setTranslationTable(ApplicationSettings.BRAILLE_CODE.getTranslationTable());
   }
 
   public static BrailleTranslation newBrailleTranslation (CharSequence text) {
