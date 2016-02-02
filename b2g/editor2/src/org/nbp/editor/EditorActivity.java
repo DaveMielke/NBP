@@ -1,8 +1,12 @@
 package org.nbp.editor;
 
+import android.util.Log;
+
+import android.os.AsyncTask;
+
+import android.content.Context;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 import android.view.MenuInflater;
 import android.view.Menu;
@@ -14,17 +18,28 @@ import com.aspose.words.License;
 public class EditorActivity extends Activity {
   private final static String LOG_TAG = EditorActivity.class.getName();
 
-  private final void prepareAsposeWords () {
-    AsposeWordsApplication app = new AsposeWordsApplication();
-    app.loadLibs(this);
+  protected final Context getContext () {
+    return this;
+  }
 
-    try {
-      License license = new License();
-      license.setLicense(getAssets().open("Aspose.Words.lic"));
-      Log.d(LOG_TAG, "Aspose Words license set");
-    } catch (Exception exception) {
-      Log.w(LOG_TAG, ("Aspose Words license failure: " + exception.getMessage()));
-    }
+  private final void prepareAsposeWords () {
+    new AsyncTask<Void, Void, Void>() {
+      @Override
+      protected Void doInBackground (Void... arguments) {
+        AsposeWordsApplication app = new AsposeWordsApplication();
+        app.loadLibs(getContext());
+
+        try {
+          License license = new License();
+          license.setLicense(getAssets().open("Aspose.Words.lic"));
+          Log.d(LOG_TAG, "Aspose Words license set");
+        } catch (Exception exception) {
+          Log.w(LOG_TAG, ("Aspose Words license failure: " + exception.getMessage()));
+        }
+
+        return null;
+      }
+    }.execute();
   }
 
   @Override
