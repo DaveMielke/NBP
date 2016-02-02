@@ -15,7 +15,6 @@
 .. |ClearAndroidLog| replace:: clear the Android log
 .. |Click| replace:: tap (click) the current screen element
 .. |Clock| replace:: go to the |product name| digital clock
-.. |Contacts| replace:: go to the Contacts (People) app
 .. |CopyToClipboard| replace:: copy the selected (or all) text to the clipboard
 .. |CursorDown| replace:: the keyboard Cursor Down key
 .. |CursorLeft| replace:: the keyboard Cursor Left key
@@ -45,6 +44,7 @@
 .. |HomeKey| replace:: the Android Home key
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
+.. |Listen| replace:: listen for a voice command
 .. |LiteraryBrailleOff| replace:: select computer braille (eight dots) mode
 .. |LiteraryBrailleOn| replace:: select literary braille (six dots) mode
 .. |LogActionsOff| replace:: disable the logging of user-requested actions
@@ -65,9 +65,7 @@
 .. |LongPressOff| replace:: disable long key press actions
 .. |LongPressOn| replace:: enable long key press actions
 .. |Maintenance| replace:: go to the System Maintenance screen of the |user interface|
-.. |Market| replace:: go to the Market (Store, Vendor) app
 .. |MenuKey| replace:: the Android Menu key
-.. |Messaging| replace:: go to the (Text) Messaging [SMS, MMS] app
 .. |MoveBackward| replace:: go to the start of the previous screen element
 .. |MoveDown| replace:: go to the next line of text or element on the screen
 .. |MoveForward| replace:: go to the start of the next screen element
@@ -89,6 +87,7 @@
 .. |PanLeft| replace:: pan to the left
 .. |PanRight| replace:: pan to the right
 .. |PasteFromClipboard| replace:: paste the clipboard into the text
+.. |People| replace:: go to the People (Contacts) app
 .. |PowerOff| replace:: go to the Power Off screen
 .. |RecentApps| replace:: go to the Recent Apps screen
 .. |RemoveShortcut| replace:: remove a shortcut from the home screen
@@ -124,9 +123,11 @@
 .. |SpeechOff| replace:: disable speech
 .. |SpeechOn| replace:: enable speech
 .. |StopSpeaking| replace:: stop speaking
+.. |Store| replace:: go to the Store (Market) app
 .. |SwitchLauncher| replace:: go to the Launcher chooser
 .. |TabBackward| replace:: the keyboard Shift+Tab keys (tab backward)
 .. |TabForward| replace:: the keyboard Tab key (tab forward)
+.. |TextMessaging| replace:: go to the Text (Messaging) [SMS, MMS] app
 .. |ToSelectionEnd| replace:: go to the end of the input area
 .. |ToSelectionStart| replace:: go to the start of the input area
 .. |ToTextEnd| replace:: go to the cursor or end of the text selection
@@ -145,7 +146,6 @@
 .. |TypingUnderlineOff| replace:: turn off underline typing
 .. |TypingUnderlineOn| replace:: turn on underline typing
 .. |UpdateEditor| replace:: update the |product name| editor
-.. |VoiceCommand| replace:: listen for a voice command
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
 .. |WifiSettings| replace:: go to the Wi-Fi Settings screen

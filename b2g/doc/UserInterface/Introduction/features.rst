@@ -78,15 +78,15 @@ and the characters don't need to be at the beginning or end of the label.
 
 When you're finished typing, press the key combination for the shortcut action
 that you'd like to perform (see above). If the characters match the labels of
-more than one application then the list will be presented within a popup
-(see `Popups`_).
+more than one application then the list will be presented within an
+`Action Chooser`_.
 If this happens then navigate to the one you'd like to add and press Enter.
 
 Builtin Shortcuts
 `````````````````
 
-To Useful Android Screens
-'''''''''''''''''''''''''
+Shortcuts to Useful Android Screens
+'''''''''''''''''''''''''''''''''''
 
 The following shortcuts to useful Android screens are provided:
 
@@ -122,16 +122,16 @@ Space+s (dots 234)
     Go to the Music app.
 
   p (dots 1234)
-    Go to the Contacts (People) app.
+    Go to the People (Contacts) app.
 
   s (dots 234)
     Go to the Android Settings screen.
 
-  t (dots 2345)
-    Go to the (Text) Messaging [SMS, MMS] app.
+  st (dots 34)
+    Go to the Store (Market) app.
 
-  v (dots 1236)
-    Go to the Market (Store, Vendor) app.
+  t (dots 2345)
+    Go to the Text (Messaging) [SMS, MMS] app.
 
   w (dots 2456)
     Go to the Wi-Fi Settings screen.
@@ -139,8 +139,8 @@ Space+s (dots 234)
   x (dots 1346)
     Go to the Calculator app.
 
-To Other |product name| Applications
-''''''''''''''''''''''''''''''''''''
+Shortcuts to Other |product name| Applications
+''''''''''''''''''''''''''''''''''''''''''''''
 
 The following shortcuts to other |product name| applications are provided:
 

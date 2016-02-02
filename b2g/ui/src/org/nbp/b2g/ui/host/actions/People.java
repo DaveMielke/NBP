@@ -4,13 +4,13 @@ import org.nbp.b2g.ui.*;
 
 import android.content.Intent;
 
-public class Messaging extends MainActivityAction {
+public class People extends MainActivityAction {
   @Override
   protected String getCategory () {
-    return Intent.CATEGORY_APP_MESSAGING;
+    return Intent.CATEGORY_APP_CONTACTS;
   }
 
-  public Messaging (Endpoint endpoint) {
+  public People (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

@@ -4,13 +4,13 @@ import org.nbp.b2g.ui.*;
 
 import android.content.Intent;
 
-public class VoiceCommand extends SystemActivityAction {
+public class Listen extends SystemActivityAction {
   @Override
   protected String getIntentAction () {
     return Intent.ACTION_VOICE_COMMAND;
   }
 
-  public VoiceCommand (Endpoint endpoint) {
+  public Listen (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

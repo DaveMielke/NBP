@@ -32,6 +32,8 @@ information. This includes (but isn't limited to):
 
 * The values of various status indicators (see `Checking Status Indicators`_).
 
+* An `Action Chooser`_.
+
 A popup is a multi-line, read-only dialog. Normal navigation may be
 performed within it. Dismiss it by pressing Enter. It's automatically dismissed
 if no navigation operations have been performed within it for |popup time|.
@@ -60,4 +62,15 @@ The response to a prompt is remembered. The response area of a prompt is
 initially empty, but, from then on, it's initialized to the previous response
 entered for that prompt. The remembered response is selected (see `Selecting
 Text`_) so that it can be easily replaced.
+
+Action Chooser
+~~~~~~~~~~~~~~
+
+An action chooser is a special kind of popup (see `Popups`_)
+that presents you with a list of actins
+and lets you choose which one to invoke.
+For places where it's used, see:
+
+* `Ways to Learn`_
+* `Shortcuts to Useful Android Screens`_
 

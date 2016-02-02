@@ -43,12 +43,12 @@ bind Space+Dots234#s,Dots12#b BluetoothSettings
 bind Space+Dots234#s,Dots14#c Calendar
 bind Space+Dots234#s,Dots15#e EMail
 bind Space+Dots234#s,Dots1245#g Gallery
-bind Space+Dots234#s,Dots123#l VoiceCommand
+bind Space+Dots234#s,Dots123#l Listen
 bind Space+Dots234#s,Dots134#m Music
-bind Space+Dots234#s,Dots1234#p Contacts
+bind Space+Dots234#s,Dots1234#p People
 bind Space+Dots234#s,Dots234#s AndroidSettings
-bind Space+Dots234#s,Dots2345#t Messaging
-bind Space+Dots234#s,Dots1236#v Market
+bind Space+Dots234#s,Dots34#st Store
+bind Space+Dots234#s,Dots2345#t TextMessaging
 bind Space+Dots234#s,Dots2456#w WifiSettings
 bind Space+Dots234#s,Dots1346#x Calculator
 
