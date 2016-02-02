@@ -1,6 +1,6 @@
 include ../../prologue.mk
 
-APPLICATION_NAME = b2g_ui
+APPLICATION_NAME = B2G_UI
 PACKAGE_PATH = org.nbp.b2g.ui
 PLATFORM_NAME = armeabi
 
