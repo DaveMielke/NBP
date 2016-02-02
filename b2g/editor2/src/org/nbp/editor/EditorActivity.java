@@ -2,8 +2,6 @@ package org.nbp.editor;
 
 import android.util.Log;
 
-import android.os.AsyncTask;
-
 import android.content.Context;
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,9 +21,9 @@ public class EditorActivity extends Activity {
   }
 
   private final void prepareAsposeWords () {
-    new AsyncTask<Void, Void, Void>() {
+    new Thread() {
       @Override
-      protected Void doInBackground (Void... arguments) {
+      public void run () {
         AsposeWordsApplication app = new AsposeWordsApplication();
         app.loadLibs(getContext());
 
@@ -36,10 +34,8 @@ public class EditorActivity extends Activity {
         } catch (Exception exception) {
           Log.w(LOG_TAG, ("Aspose Words license failure: " + exception.getMessage()));
         }
-
-        return null;
       }
-    }.execute();
+    }.start();
   }
 
   @Override
