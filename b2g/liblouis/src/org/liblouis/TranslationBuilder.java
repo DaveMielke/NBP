@@ -6,76 +6,86 @@ public class TranslationBuilder {
   private int outputLength = 1;
   private Integer cursorOffset = null;
   private boolean includeHighlighting = false;
+  private boolean allowLongerOutput = false;
 
-  public TranslationTable getTranslationTable () {
+  public final TranslationTable getTranslationTable () {
     return translationTable;
   }
 
-  public TranslationBuilder setTranslationTable (TranslationTable table) {
+  public final TranslationBuilder setTranslationTable (TranslationTable table) {
     translationTable = table;
     return this;
   }
 
-  public CharSequence getInputCharacters () {
+  public final CharSequence getInputCharacters () {
     return inputCharacters;
   }
 
-  public TranslationBuilder setInputCharacters (CharSequence characters) {
+  public final TranslationBuilder setInputCharacters (CharSequence characters) {
     inputCharacters = characters;
     return this;
   }
 
-  public int getOutputLength () {
+  public final int getOutputLength () {
     return outputLength;
   }
 
-  public TranslationBuilder setOutputLength (int length) {
+  public final TranslationBuilder setOutputLength (int length) {
     outputLength = length;
     return this;
   }
 
-  public Integer getCursorOffset () {
+  public final Integer getCursorOffset () {
     return cursorOffset;
   }
 
-  public TranslationBuilder setCursorOffset (int offset) {
+  public final TranslationBuilder setCursorOffset (int offset) {
     cursorOffset = offset;
     return this;
   }
 
-  public TranslationBuilder setCursorOffset () {
+  public final TranslationBuilder setCursorOffset () {
     cursorOffset = null;
     return this;
   }
 
-  public boolean getIncludeHighlighting () {
+  public final boolean getIncludeHighlighting () {
     return includeHighlighting;
   }
 
-  public TranslationBuilder setIncludeHighlighting (boolean yes) {
+  public final TranslationBuilder setIncludeHighlighting (boolean yes) {
     includeHighlighting = yes;
     return this;
   }
 
-  private void verifyValue (boolean ok, String problem) {
+  public final boolean getAllowLongerOutput () {
+    return allowLongerOutput;
+  }
+
+  public final TranslationBuilder setAllowLongerOutput (boolean yes) {
+    allowLongerOutput = yes;
+    return this;
+  }
+
+  private final void verifyValue (boolean ok, String problem) {
     if (!ok) {
       throw new IllegalArgumentException(problem);
     }
   }
 
-  private void verifyValues () {
+  private final void verifyValues () {
     verifyValue((translationTable != null), "translation table not set");
     verifyValue((inputCharacters != null), "input characters not set");
     verifyValue((outputLength >= 0), "negative output length");
     verifyValue(((cursorOffset == null) || (cursorOffset >= 0)), "negative cursor offset");
   }
 
-  public BrailleTranslation newBrailleTranslation () {
+  public final BrailleTranslation newBrailleTranslation () {
     verifyValues();
     return new BrailleTranslation(this);
   }
 
-  public TextTranslation newTextTranslation () {
+  public final TextTranslation newTextTranslation () {
     verifyValues();
     return new TextTranslation(this);
   }

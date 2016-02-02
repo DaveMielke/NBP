@@ -241,54 +241,67 @@ public class Translation {
     suppliedInput = builder.getInputCharacters();
     inputCursor = builder.getCursorOffset();
 
-    final int outputLength = builder.getOutputLength();
     final boolean includeHighlighting = builder.getIncludeHighlighting();
+    final boolean allowLongerOutput = builder.getAllowLongerOutput();
+    int outputLength = builder.getOutputLength();
+
+    final String inputString = suppliedInput.toString();
+    final int inputLength = inputString.length();
 
     CharSequence input = suppliedInput;
-    int inputLength = input.length();
-
-    String inputString = input.toString();
-    char[] output = new char[outputLength];
     int[] outOffsets = new int[inputLength];
-    int[] inOffsets = new int[outputLength];
+    final int[] resultValues = new int[RESULT_VALUES_COUNT];
 
-    int[] resultValues = new int[RESULT_VALUES_COUNT];
-    resultValues[RVI_INPUT_LENGTH] = inputLength;
-    resultValues[RVI_OUTPUT_LENGTH] = outputLength;
-    resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
+    char[] output;
+    int[] inOffsets;
+    boolean translated;
 
-    int typeFormLength = Math.max(inputLength, outputLength);
-    byte[] typeForm = !includeHighlighting? null:
-                      backTranslate? null:
-                      createTypeForm(typeFormLength, input);
+    while (true) {
+      output = new char[outputLength];
+      inOffsets = new int[outputLength];
 
-    synchronized (Louis.NATIVE_LOCK) {
-      translationSucceeded = translate(
-        translationTable.getFileName(),
-        inputString, output, typeForm,
-        outOffsets, inOffsets, resultValues,
-        backTranslate
-      );
-    }
+      resultValues[RVI_INPUT_LENGTH]  = inputLength;
+      resultValues[RVI_OUTPUT_LENGTH] = outputLength;
+      resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
-    if (!translationSucceeded) {
-      Log.w(LOG_TAG, "translation failed");
+      int typeFormLength = Math.max(inputLength, outputLength);
+      byte[] typeForm = !includeHighlighting? null:
+                        backTranslate? null:
+                        createTypeForm(typeFormLength, input);
 
-      if (resultValues[RVI_INPUT_LENGTH] > resultValues[RVI_OUTPUT_LENGTH]) {
-        resultValues[RVI_INPUT_LENGTH] = resultValues[RVI_OUTPUT_LENGTH];
-      } else if (resultValues[RVI_OUTPUT_LENGTH] > resultValues[RVI_INPUT_LENGTH]) {
-        resultValues[RVI_OUTPUT_LENGTH] = resultValues[RVI_INPUT_LENGTH];
+      synchronized (Louis.NATIVE_LOCK) {
+        translated = translate(
+          translationTable.getFileName(),
+          inputString, output, typeForm,
+          outOffsets, inOffsets, resultValues,
+          backTranslate
+        );
       }
 
-      for (int offset=0; offset<resultValues[RVI_INPUT_LENGTH]; offset+=1) {
-        inOffsets[offset] = outOffsets[offset] = offset;
+      if (!translated) {
+        Log.w(LOG_TAG, "translation failed");
+
+        if (resultValues[RVI_INPUT_LENGTH] > resultValues[RVI_OUTPUT_LENGTH]) {
+          resultValues[RVI_INPUT_LENGTH] = resultValues[RVI_OUTPUT_LENGTH];
+        } else if (resultValues[RVI_OUTPUT_LENGTH] > resultValues[RVI_INPUT_LENGTH]) {
+          resultValues[RVI_OUTPUT_LENGTH] = resultValues[RVI_INPUT_LENGTH];
+        }
+
+        for (int offset=0; offset<resultValues[RVI_INPUT_LENGTH]; offset+=1) {
+          inOffsets[offset] = outOffsets[offset] = offset;
+        }
+
+        if (resultValues[RVI_CURSOR_OFFSET] >= resultValues[RVI_INPUT_LENGTH]) {
+          resultValues[RVI_CURSOR_OFFSET] = -1;
+        }
+
+        inputString.getChars(0, inputString.length(), output, 0);
+        break;
       }
 
-      if (resultValues[RVI_CURSOR_OFFSET] >= resultValues[RVI_INPUT_LENGTH]) {
-        resultValues[RVI_CURSOR_OFFSET] = -1;
-      }
-
-      inputString.getChars(0, inputString.length(), output, 0);
+      if (resultValues[RVI_INPUT_LENGTH] == inputLength) break;
+      if (!allowLongerOutput) break;
+      outputLength <<= 1;
     }
 
     int newInputLength  = resultValues[RVI_INPUT_LENGTH];
@@ -310,5 +323,7 @@ public class Translation {
     outputOffsets = outOffsets;
     inputOffsets = inOffsets;
     outputCursor = (newCursorOffset < 0)? null: Integer.valueOf(newCursorOffset);
+
+    translationSucceeded = translated;
   }
 }
