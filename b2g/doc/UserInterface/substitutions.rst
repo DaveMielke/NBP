@@ -4,6 +4,7 @@
 .. |recommended file picker| replace:: ES File Explorer
 .. |recommended package downloader| replace:: ES Downloader
 .. |recommended package installer| replace:: Package Installer
+.. |recommended web browser| replace:: Firefox
 
 .. |internal memory path| replace:: ``/storage/sdcard0``
 .. |SD card path| replace:: ``/storage/sdcard1``
@@ -39,4 +40,9 @@
 .. |short beep length| replace:: 100ms
 .. |medium beep length| replace:: 500ms
 .. |long beep length| replace:: 1s
+
+.. |uses internet| replace::
+
+  This operation requires access to the Internet.
+  Standard data charges may apply.
 

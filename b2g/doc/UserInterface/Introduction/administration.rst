@@ -70,11 +70,6 @@ Maintenance Operations
 
 The following operations may be performed:
 
-.. |uses internet| replace::
-
-  This operation requires access to the Internet.
-  Standard data charges may apply.
-
 .. |uses recovery mode| replace::
 
   The |product name| will be temporarily rebooted into `Recovery Mode`_.
