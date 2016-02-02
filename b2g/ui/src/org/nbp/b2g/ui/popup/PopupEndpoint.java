@@ -55,7 +55,7 @@ public class PopupEndpoint extends Endpoint {
     return true;
   }
 
-  public final void set (String text, ValueHandler<Integer> handler) {
+  public final void set (CharSequence text, ValueHandler<Integer> handler) {
     synchronized (this) {
       enterKeyHandler = handler;
       write(text);
