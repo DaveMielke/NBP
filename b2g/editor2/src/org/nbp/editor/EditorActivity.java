@@ -6,7 +6,6 @@ import android.content.Context;
 import android.app.Activity;
 import android.os.Bundle;
 
-import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -47,8 +46,7 @@ public class EditorActivity extends Activity {
 
   @Override
   public boolean onCreateOptionsMenu (Menu menu) {
-    MenuInflater inflater = new MenuInflater(this);
-    inflater.inflate(R.menu.options, menu);
+    getMenuInflater().inflate(R.menu.options, menu);
     return true;
   }
 
