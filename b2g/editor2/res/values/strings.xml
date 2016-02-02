@@ -2,4 +2,10 @@
 
 <resources>
   <string name="app_name">NBP Editor</string>
+
+  <string name="menu_options_label_new">New</string>
+  <string name="menu_options_label_open">Open</string>
+  <string name="menu_options_label_save">Save</string>
+  <string name="menu_options_label_saveAs">Save as</string>
+  <string name="menu_options_label_send">Send</string>
 </resources>

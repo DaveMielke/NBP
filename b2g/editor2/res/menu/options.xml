@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/options_new"
+    android:title="@string/menu_options_label_new"
+   />
+
+  <item
+    android:id="@+id/options_open"
+    android:title="@string/menu_options_label_open"
+   />
+
+  <item
+    android:id="@+id/options_save"
+    android:title="@string/menu_options_label_save"
+   />
+
+  <item
+    android:id="@+id/options_saveAs"
+    android:title="@string/menu_options_label_saveAs"
+   />
+
+  <item
+    android:id="@+id/options_send"
+    android:title="@string/menu_options_label_send"
+   />
+</menu>

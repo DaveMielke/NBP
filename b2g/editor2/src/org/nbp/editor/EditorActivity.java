@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import android.view.MenuInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.aspose.words.AsposeWordsApplication;
 import com.aspose.words.License;
 
@@ -28,5 +32,35 @@ public class EditorActivity extends Activity {
     super.onCreate(savedInstanceState);
     prepareAsposeWords();
     setContentView(R.layout.editor_activity);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu (Menu menu) {
+    MenuInflater inflater = new MenuInflater(this);
+    inflater.inflate(R.menu.options, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected (MenuItem item) {
+    switch (item.getItemId()) {
+      case  R.id.options_new:
+        return true;
+
+      case  R.id.options_open:
+        return true;
+
+      case  R.id.options_save:
+        return true;
+
+      case  R.id.options_saveAs:
+        return true;
+
+      case  R.id.options_send:
+        return true;
+
+      default:
+        return false;
+    }
   }
 }
