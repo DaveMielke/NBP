@@ -170,7 +170,7 @@ public abstract class Endpoint {
   }
 
   private final void makeTranslation () {
-    brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText);
+    brailleTranslation = TranslationUtilities.newBrailleTranslation(lineText, !isInputArea());
     TranslationCache.put(lineText, brailleTranslation);
   }
 

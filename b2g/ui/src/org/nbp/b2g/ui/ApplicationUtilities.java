@@ -49,7 +49,7 @@ public abstract class ApplicationUtilities {
 
   public static void message (String text) {
     {
-      BrailleTranslation brl = TranslationUtilities.newBrailleTranslation(text);
+      BrailleTranslation brl = TranslationUtilities.newBrailleTranslation(text, false);
 
       Devices.braille.get().write(
         (brl != null)? brl.getBrailleAsString(): text,

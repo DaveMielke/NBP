@@ -18,11 +18,14 @@ public abstract class TranslationUtilities {
               .setTranslationTable(ApplicationSettings.BRAILLE_CODE.getTranslationTable());
   }
 
-  public static BrailleTranslation newBrailleTranslation (CharSequence text) {
+  public static BrailleTranslation newBrailleTranslation (
+    CharSequence text, boolean includeHighlighting
+  ) {
     TranslationBuilder builder = newTranslationBuilder();
     if (builder == null) return null;
 
     builder.setInputCharacters(text);
+    builder.setIncludeHighlighting(includeHighlighting);
     final int textLength = text.length();
 
     while (true) {
@@ -33,8 +36,10 @@ public abstract class TranslationUtilities {
     }
   }
 
-  public static BrailleTranslation newBrailleTranslation (char text) {
-    return newBrailleTranslation(Character.toString(text));
+  public static BrailleTranslation newBrailleTranslation (
+    char text, boolean includeHighlighting
+  ) {
+    return newBrailleTranslation(Character.toString(text), includeHighlighting);
   }
 
   public static TextTranslation newTextTranslation (CharSequence braille) {
