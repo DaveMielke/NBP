@@ -1,10 +1,9 @@
 /signing.properties
-
 /local.properties
 /res/values/properties.xml
 
 /bin/
 /gen/
-/libs/armeabi/
 /obj/
+/libs/armeabi/
 
