@@ -45,7 +45,7 @@ public abstract class FileHandler {
   }
 
   public abstract void read (File file, SpannableStringBuilder sb);
-  public abstract void write (File file, SpannableStringBuilder sb);
+  public abstract void write (File file, CharSequence text);
 
   protected FileHandler () {
   }

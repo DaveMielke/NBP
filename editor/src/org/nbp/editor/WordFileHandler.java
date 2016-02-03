@@ -53,7 +53,7 @@ public class WordFileHandler extends FileHandler {
   }
 
   @Override
-  public final void write (File file, SpannableStringBuilder sb) {
+  public final void write (File file, CharSequence text) {
     if (startAspose()) {
     }
   }

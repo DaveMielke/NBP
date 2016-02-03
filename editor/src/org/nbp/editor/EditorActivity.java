@@ -65,12 +65,33 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile(null, "");
   }
 
+  private final void saveFile (final Runnable next) {
+    synchronized (this) {
+      final File file = currentFile;
+      final CharSequence content = editArea.getText();
+      hasChanged = false;
+
+      new AsyncTask<Void, Void,Void>() {
+        @Override
+        public Void doInBackground (Void... arguments) {
+          FileHandler.get(file).write(file, content);
+          return null;
+        }
+
+        @Override
+        public void onPostExecute (Void result) {
+          if (next != null) next.run();
+        }
+      }.execute();
+    }
+  }
+
   private final void testHasChanged (final Runnable next) {
     if (hasChanged) {
       OnDialogClickListener positiveListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
-          next.run();
+          saveFile(next);
         }
       };
 
@@ -127,19 +148,26 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_open () {
-    findFile(
-      new ActivityResultHandler() {
+    testHasChanged(
+      new Runnable() {
         @Override
-        public void handleActivityResult (int code, Intent intent) {
-          switch (code) {
-            case RESULT_OK:
-              editFile(new File(intent.getData().getPath()));
-              break;
+        public void run () {
+          findFile(
+            new ActivityResultHandler() {
+              @Override
+              public void handleActivityResult (int code, Intent intent) {
+                switch (code) {
+                  case RESULT_OK:
+                    editFile(new File(intent.getData().getPath()));
+                    break;
 
-            default:
-              showActivityResultCode(code);
-              break;
-          }
+                  default:
+                    showActivityResultCode(code);
+                    break;
+                }
+              }
+            }
+          );
         }
       }
     );

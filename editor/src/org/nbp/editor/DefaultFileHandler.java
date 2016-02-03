@@ -1,9 +1,13 @@
 package org.nbp.editor;
 
 import java.io.File;
-import android.text.SpannableStringBuilder;
 
 import org.nbp.common.InputProcessor;
+import android.text.SpannableStringBuilder;
+
+import org.nbp.common.FileMaker;
+import java.io.Writer;
+import java.io.IOException;
 
 public class DefaultFileHandler extends FileHandler {
   @Override
@@ -19,7 +23,15 @@ public class DefaultFileHandler extends FileHandler {
   }
 
   @Override
-  public final void write (File file, SpannableStringBuilder sb) {
+  public final void write (File file, final CharSequence content) {
+    new FileMaker() {
+      @Override
+      protected final boolean writeContent (Writer writer) throws IOException {
+        writer.write(content.toString());
+        writer.write('\n');
+        return true;
+      }
+    };
   }
 
   public DefaultFileHandler () {
