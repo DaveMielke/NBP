@@ -26,6 +26,9 @@ import android.text.SpannableStringBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 public class EditorActivity extends CommonActivity {
   private final static String LOG_TAG = EditorActivity.class.getName();
 
@@ -62,6 +65,40 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile(null, "");
   }
 
+  private final void testHasChanged (final Runnable next) {
+    if (hasChanged) {
+      OnDialogClickListener positiveListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          next.run();
+        }
+      };
+
+      OnDialogClickListener negativeListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          next.run();
+        }
+      };
+
+      OnDialogClickListener neutralListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+        }
+      };
+
+      new AlertDialog.Builder(this)
+                     .setTitle(R.string.alert_changed_title)
+                     .setMessage(R.string.alert_changed_message)
+                     .setPositiveButton(R.string.alert_changed_positive, positiveListener)
+                     .setNegativeButton(R.string.alert_changed_negative, negativeListener)
+                     .setNeutralButton(R.string.alert_changed_neutral, neutralListener)
+                     .show();
+    } else {
+      next.run();
+    }
+  }
+
   private final void editFile (final File file) {
     new AsyncTask<Void, Void, CharSequence>() {
       @Override
@@ -78,11 +115,18 @@ public class EditorActivity extends CommonActivity {
     }.execute();
   }
 
-  private void newFile () {
-    setCurrentFile();
+  private void menuAction_new () {
+    testHasChanged(
+      new Runnable() {
+        @Override
+        public void run () {
+          setCurrentFile();
+        }
+      }
+    );
   }
 
-  private void openFile () {
+  private void menuAction_open () {
     findFile(
       new ActivityResultHandler() {
         @Override
@@ -101,37 +145,37 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
-  private void saveFile () {
-    if (currentFile == null) saveFileAs();
+  private void menuAction_save () {
+    if (currentFile == null) menuAction_saveAs();
   }
 
-  private void saveFileAs () {
+  private void menuAction_saveAs () {
   }
 
-  private void sendFile () {
+  private void menuAction_send () {
   }
 
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
-      case  R.id.options_new:
-        newFile();
+      case R.id.options_new:
+        menuAction_new();
         return true;
 
-      case  R.id.options_open:
-        openFile();
+      case R.id.options_open:
+        menuAction_open();
         return true;
 
-      case  R.id.options_save:
-        saveFile();
+      case R.id.options_save:
+        menuAction_save();
         return true;
 
-      case  R.id.options_saveAs:
-        saveFileAs();
+      case R.id.options_saveAs:
+        menuAction_saveAs();
         return true;
 
-      case  R.id.options_send:
-        sendFile();
+      case R.id.options_send:
+        menuAction_send();
         return true;
 
       default:
@@ -175,15 +219,15 @@ public class EditorActivity extends CommonActivity {
 
               switch (character) {
                 case 0X0E:
-                  newFile();
+                  menuAction_new();
                   break;
 
                 case 0X0F:
-                  openFile();
+                  menuAction_open();
                   break;
 
                 case 0X13:
-                  saveFile();
+                  menuAction_save();
                   break;
 
                 default:

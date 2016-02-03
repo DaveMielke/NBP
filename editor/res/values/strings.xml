@@ -12,4 +12,10 @@
   <string name="button_actions_label">Actions</string>
 
   <string name="message_new_file">[new file]</string>
+
+  <string name="alert_changed_title">File Changed</string>
+  <string name="alert_changed_message">Save changes?</string>
+  <string name="alert_changed_positive">Save First</string>
+  <string name="alert_changed_negative">Continue without Saving</string>
+  <string name="alert_changed_neutral">Cancel</string>
 </resources>
