@@ -9,9 +9,10 @@ import android.text.SpannableStringBuilder;
 
 public abstract class FileHandler {
   private final static Map<String, FileHandler> map = new HashMap<String, FileHandler>();
+  private final static String DEFAULT_EXTENSION = "";
 
   static {
-    map.put(null, new DefaultFileHandler());
+    map.put(DEFAULT_EXTENSION, new DefaultFileHandler());
 
     {
       FileHandler handler = new WordFileHandler();
@@ -24,7 +25,7 @@ public abstract class FileHandler {
     String name = file.getName();
 
     int index = name.lastIndexOf('.');
-    if (index == -1) return null;
+    if (index < 1) return null;
 
     String extension = name.substring(index);
     if (extension.isEmpty()) return null;
@@ -40,7 +41,7 @@ public abstract class FileHandler {
       if (handler != null) return handler;
     }
 
-    return map.get(null);
+    return map.get(DEFAULT_EXTENSION);
   }
 
   public abstract void read (File file, SpannableStringBuilder sb);
