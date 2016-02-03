@@ -51,8 +51,7 @@ public class DirectiveProcessor extends InputProcessor {
 
   @Override
   protected final boolean handleLine (CharSequence text, int number) {
-    String string = (text instanceof String)? (String)text: text.toString();
-    String[] operands = OPERANDS_PATTERN.split(string);
+    String[] operands = OPERANDS_PATTERN.split(text.toString());
     int index = 0;
 
     if (index < operands.length) {
