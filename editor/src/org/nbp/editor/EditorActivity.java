@@ -65,12 +65,11 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile(null, "");
   }
 
-  private final void saveFile () {
-    File file;
+  private final void saveContent (File file) {
     CharSequence content;
 
     synchronized (this) {
-      file = currentFile;
+      if (file == null) file = currentFile;
       content = editArea.getText();
       hasChanged = false;
     }
@@ -78,11 +77,15 @@ public class EditorActivity extends CommonActivity {
     FileHandler.get(file).write(file, content);
   }
 
+  private final void saveContent () {
+    saveContent(null);
+  }
+
   private final void saveFile (final Runnable next) {
     new AsyncTask<Void, Void,Void>() {
       @Override
       public Void doInBackground (Void... arguments) {
-        saveFile();
+        saveContent();
         return null;
       }
 
@@ -127,6 +130,29 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private interface FileRunnable {
+    public void run (File file);
+  }
+
+  private final void findFile (final FileRunnable next) {
+    findFile(
+      new ActivityResultHandler() {
+        @Override
+        public void handleActivityResult (int code, Intent intent) {
+          switch (code) {
+            case RESULT_OK:
+              next.run(new File(intent.getData().getPath()));
+              break;
+
+            default:
+              showActivityResultCode(code);
+              break;
+          }
+        }
+      }
+    );
+  }
+
   private final void editFile (final File file) {
     new AsyncTask<Void, Void, CharSequence>() {
       @Override
@@ -160,18 +186,10 @@ public class EditorActivity extends CommonActivity {
         @Override
         public void run () {
           findFile(
-            new ActivityResultHandler() {
+            new FileRunnable() {
               @Override
-              public void handleActivityResult (int code, Intent intent) {
-                switch (code) {
-                  case RESULT_OK:
-                    editFile(new File(intent.getData().getPath()));
-                    break;
-
-                  default:
-                    showActivityResultCode(code);
-                    break;
-                }
+              public void run (File file) {
+                editFile(file);
               }
             }
           );
@@ -186,6 +204,14 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_saveAs () {
+    findFile(
+      new FileRunnable() {
+        @Override
+        public void run (File file) {
+          saveContent(file);
+        }
+      }
+    );
   }
 
   private void menuAction_send () {
