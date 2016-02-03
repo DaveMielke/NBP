@@ -6,7 +6,16 @@
   android:layout_height="fill_parent"
   >
 
+  <Button
+    android:id="@+id/actions_button"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Actions"
+    android:visibility="gone"
+   />
+
   <EditText
+    android:id="@+id/edit_area"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
    />
