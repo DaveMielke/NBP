@@ -28,12 +28,6 @@ public class EditorActivity extends Activity {
     return this;
   }
 
-  @Override
-  public boolean onCreateOptionsMenu (Menu menu) {
-    getMenuInflater().inflate(R.menu.options, menu);
-    return true;
-  }
-
   private void newContent () {
   }
 
@@ -75,6 +69,12 @@ public class EditorActivity extends Activity {
       default:
         return false;
     }
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu (Menu menu) {
+    getMenuInflater().inflate(R.menu.options, menu);
+    return true;
   }
 
   private final void prepareAsposeWords () {
@@ -137,17 +137,17 @@ public class EditorActivity extends Activity {
                   break;
 
                 default:
-                  if (character < 0X20) return "";
+                  if (Character.getType(character) == Character.CONTROL) break;
 
                 case '\f':
                 case '\n':
                 case '\r':
                 case '\t':
-                  break;
+                  return null;
               }
             }
 
-            return null;
+            return "";
           }
         }
       }
