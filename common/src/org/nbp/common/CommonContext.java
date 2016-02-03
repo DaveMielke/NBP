@@ -2,30 +2,18 @@ package org.nbp.common;
 
 import android.util.Log;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.pm.PackageManager;
+
 import android.util.TypedValue;
 import android.util.DisplayMetrics;
 import android.graphics.Point;
-
-import android.content.Context;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.ComponentName;
-import android.content.res.Resources;
-import android.content.pm.PackageManager;
 
 import android.os.PowerManager;
 import android.app.KeyguardManager;
 import android.view.WindowManager;
 import android.media.AudioManager;
-import android.view.accessibility.AccessibilityManager;
-
-import android.inputmethodservice.InputMethodService;
-
-import android.view.inputmethod.InputMethodManager;
-import android.view.inputmethod.InputMethodInfo;
-
-import android.provider.Settings;
-import android.accessibilityservice.AccessibilityService;
 
 public abstract class CommonContext {
   private final static String LOG_TAG = CommonContext.class.getName();
@@ -87,52 +75,6 @@ public abstract class CommonContext {
     PackageManager pm = context.getPackageManager();
     int result = pm.checkPermission(permission, context.getPackageName());
     return result == PackageManager.PERMISSION_GRANTED;
-  }
-
-  public static boolean enableAccessibilityService (Class<? extends AccessibilityService> serviceClass) {
-    Context context = getContext();
-    if (context == null) return false;
-
-    Intent intent = new Intent(context, serviceClass);
-    ComponentName component = intent.getComponent();
-    String packageName = component.getPackageName();
-    String longClassName = component.getClassName();
-    String shortClassName = component.getShortClassName();
-
-    String packagePrefix = packageName + '/';
-    String longServiceName = packagePrefix + longClassName;
-    String shortServiceName = packagePrefix + shortClassName;
-
-    ContentResolver resolver = context.getContentResolver();
-    String serviceNamesKey = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
-
-    String serviceNames = Settings.Secure.getString(resolver, serviceNamesKey);
-    if (serviceNames == null) serviceNames = "";
-
-    for (String serviceName : serviceNames.split(":")) {
-      if (serviceName.equals(longServiceName) || serviceName.equals(shortServiceName)) {
-        Log.d(LOG_TAG, "accessibility service already enabled: " + serviceClass.getName());
-        return true;
-      }
-    }
-
-    if (serviceNames.length() == 0) {
-      serviceNames = shortServiceName;
-    } else {
-      serviceNames += ":" + shortServiceName;
-    }
-
-    try {
-      Settings.Secure.putString(resolver, serviceNamesKey, serviceNames);
-      Settings.Secure.putString(resolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1");
-
-      Log.i(LOG_TAG, "accessibility service enabled: " + serviceClass.getName());
-      return true;
-    } catch (SecurityException exception) {
-      Log.w(LOG_TAG, "can't enable accessibility service: " + serviceClass.getName());
-    }
-
-    return false;
   }
 
   public static Object getSystemService (String name) {
@@ -199,52 +141,6 @@ public abstract class CommonContext {
     Object systemService = getSystemService(Context.AUDIO_SERVICE);
     if (systemService == null) return null;
     return (AudioManager)systemService;
-  }
-
-  public static AccessibilityManager getAccessibilityManager () {
-    Object systemService = getSystemService(Context.ACCESSIBILITY_SERVICE);
-    if (systemService == null) return null;
-    return (AccessibilityManager)systemService;
-  }
-
-  public static boolean isTouchExplorationActive () {
-    AccessibilityManager accessibilityManager = getAccessibilityManager();
-    if (accessibilityManager == null) return false;
-    return accessibilityManager.isTouchExplorationEnabled();
-  }
-
-  public static InputMethodManager getInputMethodManager () {
-    Object systemService = getSystemService(Context.INPUT_METHOD_SERVICE);
-    if (systemService == null) return null;
-    return (InputMethodManager)systemService;
-  }
-
-  public static InputMethodInfo getInputMethodInfo (Class<? extends InputMethodService> inputMethodClass) {
-    String packageName = inputMethodClass.getPackage().getName();
-    String className = inputMethodClass.getName();
-
-    InputMethodManager manager = getInputMethodManager();
-    if (manager == null) return null;
-
-    for (InputMethodInfo info : manager.getEnabledInputMethodList()) {
-      ComponentName component = info.getComponent();
-
-      if (packageName.equals(component.getPackageName())) {
-        if (className.equals(component.getClassName())) {
-          return info;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  public static String getSelectedInputMethod () {
-    Context context = getContext();
-    if (context == null) return null;
-
-    ContentResolver resolver = context.getContentResolver();
-    return Settings.Secure.getString(resolver, Settings.Secure.DEFAULT_INPUT_METHOD);
   }
 
   protected CommonContext () {
