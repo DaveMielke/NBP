@@ -1,4 +1,4 @@
-package org.nbp.common;
+package org.nbp.editor;
 
 import java.io.File;
 
@@ -6,11 +6,11 @@ import android.text.SpannableStringBuilder;
 
 public class WordFileHandler extends FileHandler {
   @Override
-  protected final void read (File file, SpannableStringBuilder sb) {
+  public final void read (File file, SpannableStringBuilder sb) {
   }
 
   @Override
-  protected final void write (File file, SpannableStringBuilder sb) {
+  public final void write (File file, SpannableStringBuilder sb) {
   }
 
   public WordFileHandler () {

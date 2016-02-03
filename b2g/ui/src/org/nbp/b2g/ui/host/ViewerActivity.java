@@ -35,7 +35,7 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
         if (inputStream != null) {
           new InputProcessor() {
             @Override
-            protected final boolean handleLine (String text, int number) {
+            protected final boolean handleLine (CharSequence text, int number) {
               result.append(text);
               result.append('\n');
               return true;

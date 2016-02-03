@@ -1,4 +1,4 @@
-package org.nbp.common;
+package org.nbp.editor;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -43,8 +43,8 @@ public abstract class FileHandler {
     return map.get(null);
   }
 
-  protected abstract void read (File file, SpannableStringBuilder sb);
-  protected abstract void write (File file, SpannableStringBuilder sb);
+  public abstract void read (File file, SpannableStringBuilder sb);
+  public abstract void write (File file, SpannableStringBuilder sb);
 
   protected FileHandler () {
   }

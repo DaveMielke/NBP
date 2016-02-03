@@ -3,7 +3,6 @@ package org.nbp.editor;
 import java.io.File;
 
 import org.nbp.common.CommonActivity;
-import org.nbp.common.InputProcessor;
 
 import android.util.Log;
 
@@ -20,7 +19,9 @@ import android.widget.Button;
 
 import android.widget.EditText;
 import android.text.InputFilter;
+
 import android.text.Spanned;
+import android.text.SpannableStringBuilder;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,25 +66,16 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void editFile (final File file) {
-    new AsyncTask<Void, Void, String>() {
+    new AsyncTask<Void, Void, CharSequence>() {
       @Override
-      protected String doInBackground (Void... arguments) {
-        final StringBuilder sb = new StringBuilder();
-
-        new InputProcessor() {
-          @Override
-          protected final boolean handleLine (String text, int number) {
-            if (sb.length() > 0) sb.append('\n');
-            sb.append(text);
-            return true;
-          }
-        }.processInput(file);
-
-        return sb.toString();
+      protected CharSequence doInBackground (Void... arguments) {
+        final SpannableStringBuilder sb = new SpannableStringBuilder();
+        FileHandler.get(file).read(file, sb);
+        return sb.subSequence(0, sb.length());
       }
 
       @Override
-      protected void onPostExecute (String content) {
+      protected void onPostExecute (CharSequence content) {
         setCurrentFile(file, content);
       }
     }.execute();

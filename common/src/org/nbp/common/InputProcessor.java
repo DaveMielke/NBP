@@ -22,7 +22,7 @@ import java.util.Collection;
 public abstract class InputProcessor {
   private final static String LOG_TAG = InputProcessor.class.getName();
 
-  protected abstract boolean handleLine (String text, int number);
+  protected abstract boolean handleLine (CharSequence text, int number);
 
   public static void close (Closeable closeable) {
     try {
