@@ -1,10 +1,9 @@
 package org.nbp.editor;
 
 import java.io.File;
+import android.text.SpannableStringBuilder;
 
 import org.nbp.common.InputProcessor;
-
-import android.text.SpannableStringBuilder;
 
 public class DefaultFileHandler extends FileHandler {
   @Override

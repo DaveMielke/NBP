@@ -26,9 +26,6 @@ import android.text.SpannableStringBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.aspose.words.AsposeWordsApplication;
-import com.aspose.words.License;
-
 public class EditorActivity extends CommonActivity {
   private final static String LOG_TAG = EditorActivity.class.getName();
 
@@ -148,24 +145,6 @@ public class EditorActivity extends CommonActivity {
     return true;
   }
 
-  private final void prepareAsposeWords () {
-    new Thread() {
-      @Override
-      public void run () {
-        AsposeWordsApplication app = new AsposeWordsApplication();
-        app.loadLibs(getActivity());
-
-        try {
-          License license = new License();
-          license.setLicense(getAssets().open("Aspose.Words.lic"));
-          Log.d(LOG_TAG, "Aspose Words license set");
-        } catch (Exception exception) {
-          Log.w(LOG_TAG, ("Aspose Words license failure: " + exception.getMessage()));
-        }
-      }
-    }.start();
-  }
-
   private final void prepareActionsButton () {
     if (getActionBar() == null) {
       Button button = (Button)findViewById(R.id.actions_button);
@@ -229,7 +208,6 @@ public class EditorActivity extends CommonActivity {
   @Override
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    prepareAsposeWords();
 
     setContentView(R.layout.editor);
     currentPath = (TextView)findViewById(R.id.current_file);
