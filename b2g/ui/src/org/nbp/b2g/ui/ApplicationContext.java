@@ -2,6 +2,7 @@ package org.nbp.b2g.ui;
 
 import android.content.Context;
 import org.nbp.common.CommonContext;
+
 import org.nbp.b2g.ui.host.ScreenMonitor;
 import org.liblouis.Louis;
 

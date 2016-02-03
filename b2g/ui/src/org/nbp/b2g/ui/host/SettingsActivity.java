@@ -1,6 +1,5 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
-import org.nbp.common.ProgrammaticActivity;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -18,6 +17,8 @@ import android.widget.Button;
 
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import org.nbp.common.ProgrammaticActivity;
 
 public class SettingsActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = SettingsActivity.class.getName();

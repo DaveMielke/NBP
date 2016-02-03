@@ -1,14 +1,11 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
-import org.nbp.common.ProgrammaticActivity;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import android.util.Log;
-
-import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +18,7 @@ import android.widget.Button;
 import android.os.PowerManager;
 import android.os.RecoverySystem;
 
+import org.nbp.common.ProgrammaticActivity;
 import android.os.AsyncTask;
 
 public class MaintenanceActivity extends ProgrammaticActivity {

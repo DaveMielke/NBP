@@ -1,6 +1,5 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
-import org.nbp.common.ProgrammaticActivity;
 
 import java.util.Date;
 import java.util.TimeZone;
@@ -11,6 +10,8 @@ import android.os.Build;
 
 import android.view.View;
 import android.widget.GridLayout;
+
+import org.nbp.common.ProgrammaticActivity;
 
 public class BuildDetailsActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = BuildDetailsActivity.class.getName();
