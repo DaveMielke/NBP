@@ -1,5 +1,4 @@
-package org.nbp.b2g.ui.host;
-import org.nbp.b2g.ui.*;
+package org.nbp.common;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -101,7 +100,7 @@ public abstract class ProgrammaticActivity extends Activity {
   }
 
   protected Button newButton (int label, Button.OnClickListener listener) {
-    return newButton(ApplicationContext.getString(label), listener);
+    return newButton(getString(label), listener);
   }
 
   protected CheckBox newCheckBox (CharSequence label, CheckBox.OnCheckedChangeListener listener) {
@@ -112,7 +111,7 @@ public abstract class ProgrammaticActivity extends Activity {
   }
 
   protected CheckBox newCheckBox (int label, CheckBox.OnCheckedChangeListener listener) {
-    return newCheckBox(ApplicationContext.getString(label), listener);
+    return newCheckBox(getString(label), listener);
   }
 
   protected Switch newSwitch (Switch.OnCheckedChangeListener listener) {
@@ -123,8 +122,8 @@ public abstract class ProgrammaticActivity extends Activity {
   protected abstract View createContentView ();
 
   private final int getLeftOffset () {
-    return ApplicationContext.dipsToPixels(
-      ApplicationParameters.SCREEN_LEFT_OFFSET
+    return CommonContext.dipsToPixels(
+      CommonParameters.SCREEN_LEFT_OFFSET
     );
   }
 
@@ -144,7 +143,7 @@ public abstract class ProgrammaticActivity extends Activity {
   @Override
   public void onCreate (Bundle state) {
     super.onCreate(state);
-    ApplicationContext.setContext(this);
+    CommonContext.setContext(this);
     setContentView();
   }
 

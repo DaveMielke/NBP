@@ -12,7 +12,6 @@ public abstract class ApplicationParameters {
   public final static boolean ENABLE_POWER_BUTTON_MONITOR = true;
   public final static boolean ENABLE_BLUETOOTH_SERVER = false;
 
-  public final static int SCREEN_LEFT_OFFSET = 60; // DIPs
   public final static boolean CHORDS_SEND_SYSTEM_KEYS = true;
 
   public final static long LONG_PRESS_DELAY = 100; // milliseconds
