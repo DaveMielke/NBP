@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,7 +56,7 @@ public abstract class FileMaker {
   }
 
   public final File makeFile (String name, String owner) {
-    Context context = ApplicationContext.getContext();
+    Context context = CommonContext.getContext();
     if (context == null) return null;
 
     File directory = context.getDir(owner, Context.MODE_PRIVATE);

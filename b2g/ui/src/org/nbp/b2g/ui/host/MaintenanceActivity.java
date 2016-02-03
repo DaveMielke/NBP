@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import org.nbp.common.ProgrammaticActivity;
+import org.nbp.common.LaunchUtilities;
+
 import android.util.Log;
 
 import android.content.Context;
@@ -18,7 +21,6 @@ import android.widget.Button;
 import android.os.PowerManager;
 import android.os.RecoverySystem;
 
-import org.nbp.common.ProgrammaticActivity;
 import android.os.AsyncTask;
 
 public class MaintenanceActivity extends ProgrammaticActivity {

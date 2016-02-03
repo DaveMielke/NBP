@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.Writer;
 import java.io.IOException;
 
+import org.nbp.common.OutgoingMessage;
+import org.nbp.common.FileMaker;
+import org.nbp.common.AttachmentMaker;
+
 import android.util.Log;
 
 public class SendAndroidLog extends Action {

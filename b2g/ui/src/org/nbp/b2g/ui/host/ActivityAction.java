@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.LaunchUtilities;
+
 import android.content.Context;
 import android.content.Intent;
 

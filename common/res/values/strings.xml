@@ -2,4 +2,6 @@
 
 <resources>
   <string name="app_name">NBP Common Object Library</string>
+
+  <string name="message_select_outgoing_email_app">Select outgoing email app ...</string>
 </resources>

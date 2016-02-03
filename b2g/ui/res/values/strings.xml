@@ -217,6 +217,5 @@
   <string name="character_end">end</string>
   <string name="character_newline">new line</string>
 
-  <string name="message_select_outgoing_email_app">Select outgoing email app ...</string>
   <string name="message_no_character_name">no character name</string>
 </resources>

@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -126,7 +126,7 @@ public class OutgoingMessage {
   }
 
   public void addBodyLine (int line) {
-    String string = ApplicationContext.getString(line);
+    String string = CommonContext.getString(line);
     if (string != null) addBodyLine(string);
   }
 

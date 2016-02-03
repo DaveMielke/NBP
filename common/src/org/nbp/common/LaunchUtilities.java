@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public abstract class LaunchUtilities {
   private final static String LOG_TAG = LaunchUtilities.class.getName();
 
   private static Context getContext () {
-    return ApplicationContext.getContext();
+    return CommonContext.getContext();
   }
 
   public static Intent toIntent (Class<? extends Activity> activity) {
