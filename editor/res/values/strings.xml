@@ -8,4 +8,8 @@
   <string name="menu_options_label_save">Save</string>
   <string name="menu_options_label_saveAs">Save as</string>
   <string name="menu_options_label_send">Send</string>
+
+  <string name="button_actions_label">Actions</string>
+
+  <string name="message_no_file">[no file]</string>
 </resources>

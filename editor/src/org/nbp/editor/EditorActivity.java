@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.AsyncTask;
 
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Button;
 
 import android.widget.EditText;
@@ -31,12 +32,28 @@ public class EditorActivity extends CommonActivity {
   private final static String LOG_TAG = EditorActivity.class.getName();
 
   private EditText editArea = null;
+  private TextView currentPath = null;
+  private File currentFile = null;
+  private boolean hasChanged = false;
 
   protected final Activity getActivity () {
     return this;
   }
 
   private final void showActivityResultCode (int code) {
+  }
+
+  private void setCurrentFile (File file) {
+    String path;
+
+    if (file != null) {
+      path = file.getAbsolutePath();
+    } else {
+      path = getString(R.string.message_no_file);
+    }
+
+    currentFile = file;
+    currentPath.setText(path);
   }
 
   private final void editContent (final File file) {
@@ -59,6 +76,8 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected void onPostExecute (String result) {
+        currentFile = file;
+        currentPath.setText(file.getAbsolutePath());
         editArea.setText(result);
       }
     }.execute();
@@ -195,6 +214,7 @@ public class EditorActivity extends CommonActivity {
                 case '\n':
                 case '\r':
                 case '\t':
+                  hasChanged = true;
                   return null;
               }
             }
@@ -212,7 +232,9 @@ public class EditorActivity extends CommonActivity {
     prepareAsposeWords();
 
     setContentView(R.layout.editor);
+    currentPath = (TextView)findViewById(R.id.current_file);
     editArea = (EditText)findViewById(R.id.edit_area);
+    setCurrentFile(null);
 
     prepareActionsButton();
     setInputFilters();
