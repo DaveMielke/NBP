@@ -1,11 +1,18 @@
 package org.nbp.editor;
 
+import java.io.File;
+
+import org.nbp.common.CommonActivity;
+import org.nbp.common.InputProcessor;
+
 import android.util.Log;
 
 import android.content.Context;
+import android.content.Intent;
+
 import android.app.Activity;
-import org.nbp.common.CommonActivity;
 import android.os.Bundle;
+import android.os.AsyncTask;
 
 import android.view.View;
 import android.widget.Button;
@@ -29,10 +36,54 @@ public class EditorActivity extends CommonActivity {
     return this;
   }
 
+  private final void showActivityResultCode (int code) {
+  }
+
+  private final void editContent (final File file) {
+    new AsyncTask<Void, Void, String>() {
+      @Override
+      protected String doInBackground (Void... arguments) {
+        final StringBuilder sb = new StringBuilder();
+
+        new InputProcessor() {
+          @Override
+          protected final boolean handleLine (String text, int number) {
+            if (sb.length() > 0) sb.append('\n');
+            sb.append(text);
+            return true;
+          }
+        }.processInput(file);
+
+        return sb.toString();
+      }
+
+      @Override
+      protected void onPostExecute (String result) {
+        editArea.setText(result);
+      }
+    }.execute();
+  }
+
   private void newContent () {
   }
 
   private void openContent () {
+    findFile(
+      new ActivityResultHandler() {
+        @Override
+        public void handleActivityResult (int code, Intent intent) {
+          switch (code) {
+            case RESULT_OK:
+              editContent(new File(intent.getData().getPath()));
+              break;
+
+            default:
+              showActivityResultCode(code);
+              break;
+          }
+        }
+      }
+    );
   }
 
   private void saveContent () {
