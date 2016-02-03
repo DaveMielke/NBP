@@ -43,7 +43,7 @@ public class EditorActivity extends CommonActivity {
   private final void showActivityResultCode (int code) {
   }
 
-  private void setCurrentFile (File file) {
+  private void setCurrentFile (File file, CharSequence content) {
     String path;
 
     if (file != null) {
@@ -54,9 +54,15 @@ public class EditorActivity extends CommonActivity {
 
     currentFile = file;
     currentPath.setText(path);
+    editArea.setText(content);
+    hasChanged = false;
   }
 
-  private final void editContent (final File file) {
+  private void setCurrentFile () {
+    setCurrentFile(null, "");
+  }
+
+  private final void editFile (final File file) {
     new AsyncTask<Void, Void, String>() {
       @Override
       protected String doInBackground (Void... arguments) {
@@ -75,25 +81,24 @@ public class EditorActivity extends CommonActivity {
       }
 
       @Override
-      protected void onPostExecute (String result) {
-        currentFile = file;
-        currentPath.setText(file.getAbsolutePath());
-        editArea.setText(result);
+      protected void onPostExecute (String content) {
+        setCurrentFile(file, content);
       }
     }.execute();
   }
 
-  private void newContent () {
+  private void newFile () {
+    setCurrentFile();
   }
 
-  private void openContent () {
+  private void openFile () {
     findFile(
       new ActivityResultHandler() {
         @Override
         public void handleActivityResult (int code, Intent intent) {
           switch (code) {
             case RESULT_OK:
-              editContent(new File(intent.getData().getPath()));
+              editFile(new File(intent.getData().getPath()));
               break;
 
             default:
@@ -105,36 +110,37 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
-  private void saveContent () {
+  private void saveFile () {
+    if (currentFile == null) saveFileAs();
   }
 
-  private void saveContentAs () {
+  private void saveFileAs () {
   }
 
-  private void sendContent () {
+  private void sendFile () {
   }
 
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
       case  R.id.options_new:
-        newContent();
+        newFile();
         return true;
 
       case  R.id.options_open:
-        openContent();
+        openFile();
         return true;
 
       case  R.id.options_save:
-        saveContent();
+        saveFile();
         return true;
 
       case  R.id.options_saveAs:
-        saveContentAs();
+        saveFileAs();
         return true;
 
       case  R.id.options_send:
-        sendContent();
+        sendFile();
         return true;
 
       default:
@@ -196,15 +202,15 @@ public class EditorActivity extends CommonActivity {
 
               switch (character) {
                 case 0X0E:
-                  newContent();
+                  newFile();
                   break;
 
                 case 0X0F:
-                  openContent();
+                  openFile();
                   break;
 
                 case 0X13:
-                  saveContent();
+                  saveFile();
                   break;
 
                 default:
@@ -234,7 +240,7 @@ public class EditorActivity extends CommonActivity {
     setContentView(R.layout.editor);
     currentPath = (TextView)findViewById(R.id.current_file);
     editArea = (EditText)findViewById(R.id.edit_area);
-    setCurrentFile(null);
+    setCurrentFile();
 
     prepareActionsButton();
     setInputFilters();
