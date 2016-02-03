@@ -23,6 +23,7 @@ public abstract class FileHandler {
 
   private static String getExtension (File file) {
     String name = file.getName();
+    if (name == null) return null;
 
     int index = name.lastIndexOf('.');
     if (index < 1) return null;

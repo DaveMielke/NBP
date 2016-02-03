@@ -65,7 +65,7 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile(null, "");
   }
 
-  private final void saveContent (File file) {
+  private final void saveFile (File file, final Runnable next) {
     CharSequence content;
 
     synchronized (this) {
@@ -74,26 +74,47 @@ public class EditorActivity extends CommonActivity {
       hasChanged = false;
     }
 
-    FileHandler.get(file).write(file, content);
-  }
+    final File f = file;
+    final CharSequence c = content;
 
-  private final void saveContent () {
-    saveContent(null);
-  }
+    new AsyncTask<Void, Void, Void>() {
+      AlertDialog dialog;
 
-  private final void saveFile (final Runnable next) {
-    new AsyncTask<Void, Void,Void>() {
+      @Override
+      protected void onPreExecute () {
+        dialog = new AlertDialog.Builder(getActivity())
+                                .setCancelable(false)
+                                .setTitle(R.string.alert_writing_title)
+                                .setMessage(f.getAbsolutePath())
+                                .create();
+
+        dialog.show();
+      }
+
       @Override
       public Void doInBackground (Void... arguments) {
-        saveContent();
+        FileHandler.get(f).write(f, c);
         return null;
       }
 
       @Override
       public void onPostExecute (Void result) {
+        dialog.dismiss();
         if (next != null) next.run();
       }
     }.execute();
+  }
+
+  private final void saveFile (Runnable next) {
+    saveFile(null, next);
+  }
+
+  private final void saveFile (File file) {
+    saveFile(file, null);
+  }
+
+  private final void saveFile () {
+    saveFile(null, null);
   }
 
   private final void testHasChanged (final Runnable next) {
@@ -155,6 +176,19 @@ public class EditorActivity extends CommonActivity {
 
   private final void editFile (final File file) {
     new AsyncTask<Void, Void, CharSequence>() {
+      AlertDialog dialog;
+
+      @Override
+      protected void onPreExecute () {
+        dialog = new AlertDialog.Builder(getActivity())
+                                .setCancelable(false)
+                                .setTitle(R.string.alert_reading_title)
+                                .setMessage(file.getAbsolutePath())
+                                .create();
+
+        dialog.show();
+      }
+
       @Override
       protected CharSequence doInBackground (Void... arguments) {
         final SpannableStringBuilder sb = new SpannableStringBuilder();
@@ -165,6 +199,7 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected void onPostExecute (CharSequence content) {
         setCurrentFile(file, content);
+        dialog.dismiss();
       }
     }.execute();
   }
@@ -199,8 +234,11 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_save () {
-    if (currentFile == null) menuAction_saveAs();
-    saveFile(null);
+    if (currentFile == null) {
+      menuAction_saveAs();
+    } else {
+      saveFile();
+    }
   }
 
   private void menuAction_saveAs () {
@@ -208,7 +246,7 @@ public class EditorActivity extends CommonActivity {
       new FileRunnable() {
         @Override
         public void run (File file) {
-          saveContent(file);
+          saveFile(file);
         }
       }
     );
