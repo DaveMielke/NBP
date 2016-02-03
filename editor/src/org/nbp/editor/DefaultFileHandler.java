@@ -31,7 +31,7 @@ public class DefaultFileHandler extends FileHandler {
         writer.write('\n');
         return true;
       }
-    };
+    }.makeFile(file);
   }
 
   public DefaultFileHandler () {

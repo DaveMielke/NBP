@@ -65,25 +65,32 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile(null, "");
   }
 
-  private final void saveFile (final Runnable next) {
+  private final void saveFile () {
+    File file;
+    CharSequence content;
+
     synchronized (this) {
-      final File file = currentFile;
-      final CharSequence content = editArea.getText();
+      file = currentFile;
+      content = editArea.getText();
       hasChanged = false;
-
-      new AsyncTask<Void, Void,Void>() {
-        @Override
-        public Void doInBackground (Void... arguments) {
-          FileHandler.get(file).write(file, content);
-          return null;
-        }
-
-        @Override
-        public void onPostExecute (Void result) {
-          if (next != null) next.run();
-        }
-      }.execute();
     }
+
+    FileHandler.get(file).write(file, content);
+  }
+
+  private final void saveFile (final Runnable next) {
+    new AsyncTask<Void, Void,Void>() {
+      @Override
+      public Void doInBackground (Void... arguments) {
+        saveFile();
+        return null;
+      }
+
+      @Override
+      public void onPostExecute (Void result) {
+        if (next != null) next.run();
+      }
+    }.execute();
   }
 
   private final void testHasChanged (final Runnable next) {
@@ -175,6 +182,7 @@ public class EditorActivity extends CommonActivity {
 
   private void menuAction_save () {
     if (currentFile == null) menuAction_saveAs();
+    saveFile(null);
   }
 
   private void menuAction_saveAs () {
@@ -288,5 +296,13 @@ public class EditorActivity extends CommonActivity {
 
     prepareActionsButton();
     setInputFilters();
+  }
+
+  @Override
+  public void onDestroy () {
+    try {
+    } finally {
+      super.onDestroy();
+    }
   }
 }
