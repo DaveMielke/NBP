@@ -49,13 +49,15 @@ public class EditorActivity extends CommonActivity {
     if (file != null) {
       path = file.getAbsolutePath();
     } else {
-      path = getString(R.string.message_no_file);
+      path = getString(R.string.message_new_file);
     }
 
-    currentFile = file;
-    currentPath.setText(path);
-    editArea.setText(content);
-    hasChanged = false;
+    synchronized (this) {
+      currentFile = file;
+      currentPath.setText(path);
+      editArea.setText(content);
+      hasChanged = false;
+    }
   }
 
   private void setCurrentFile () {

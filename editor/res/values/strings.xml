@@ -11,5 +11,5 @@
 
   <string name="button_actions_label">Actions</string>
 
-  <string name="message_no_file">[no file]</string>
+  <string name="message_new_file">[new file]</string>
 </resources>
