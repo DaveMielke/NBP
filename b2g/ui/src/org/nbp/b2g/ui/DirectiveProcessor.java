@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.InputProcessor;
+
 import android.util.Log;
 
 public class DirectiveProcessor extends InputProcessor {

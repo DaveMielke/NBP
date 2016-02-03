@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import java.util.regex.Pattern;
 
+import org.nbp.common.InputProcessor;
+
 import android.util.Log;
 
 public class KeyBindings {

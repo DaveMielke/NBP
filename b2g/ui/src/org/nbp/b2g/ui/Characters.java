@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 import java.util.Locale;
 
+import org.nbp.common.InputProcessor;
+
 import android.util.Log;
 
 public class Characters {

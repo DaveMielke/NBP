@@ -6,6 +6,7 @@ import java.util.HashMap;
 import android.util.Log;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,5 +169,11 @@ public abstract class CommonActivity extends Activity {
     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
     intent.setType("file/*");
     return startRequest(intent, handler);
+  }
+
+  @Override
+  public void onCreate (Bundle state) {
+    super.onCreate(state);
+    CommonContext.setContext(this);
   }
 }

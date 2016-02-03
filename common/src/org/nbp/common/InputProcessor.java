@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 import android.util.Log;
 
@@ -60,7 +60,7 @@ public abstract class InputProcessor {
   }
 
   public final boolean processInput (InputStream stream) {
-    Reader reader = new InputStreamReader(stream, ApplicationParameters.INPUT_ENCODING_CHARSET);
+    Reader reader = new InputStreamReader(stream, CommonParameters.INPUT_ENCODING_CHARSET);
 
     try {
       return processInput(reader);
@@ -89,36 +89,26 @@ public abstract class InputProcessor {
   }
 
   public final boolean processInput (String... names) {
-    Context context = ApplicationContext.getContext();
+    Context context = CommonContext.getContext();
     if (context == null) return false;
 
-    File directory = ApplicationUtilities.getExternalStorageDirectory();
     AssetManager assets = context.getAssets();
+    if (assets == null) return false;
 
     for (String name : names) {
-      if (directory != null) {
-        File file = new File(directory, name);
+      try {
+        InputStream stream = assets.open(name);
 
-        if (file.exists()) {
-          return processInput(file);
-        }
-      }
-
-      if (assets != null) {
         try {
-          InputStream stream = assets.open(name);
-
-          try {
-            Log.d(LOG_TAG, "begin asset: " + name);
-            boolean processed = processInput(stream);
-            Log.d(LOG_TAG, "end asset: " + name);
-            return processed;
-          } finally {
-            close(stream);
-          }
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, "asset not found: " + name);
+          Log.d(LOG_TAG, "begin asset: " + name);
+          boolean processed = processInput(stream);
+          Log.d(LOG_TAG, "end asset: " + name);
+          return processed;
+        } finally {
+          close(stream);
         }
+      } catch (IOException exception) {
+        Log.w(LOG_TAG, "asset not found: " + name);
       }
     }
 

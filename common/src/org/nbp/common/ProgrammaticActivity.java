@@ -30,7 +30,6 @@ public abstract class ProgrammaticActivity extends CommonActivity {
   @Override
   public void onCreate (Bundle state) {
     super.onCreate(state);
-    CommonContext.setContext(this);
     setContentView();
   }
 }
