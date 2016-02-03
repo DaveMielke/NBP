@@ -72,22 +72,42 @@ public class EditorActivity extends Activity {
     return true;
   }
 
+  private void newContent () {
+  }
+
+  private void openContent () {
+  }
+
+  private void saveContent () {
+  }
+
+  private void saveContentAs () {
+  }
+
+  private void sendContent () {
+  }
+
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
       case  R.id.options_new:
+        newContent();
         return true;
 
       case  R.id.options_open:
+        openContent();
         return true;
 
       case  R.id.options_save:
+        saveContent();
         return true;
 
       case  R.id.options_saveAs:
+        saveContentAs();
         return true;
 
       case  R.id.options_send:
+        sendContent();
         return true;
 
       default:
