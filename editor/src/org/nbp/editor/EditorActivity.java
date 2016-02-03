@@ -4,6 +4,7 @@ import android.util.Log;
 
 import android.content.Context;
 import android.app.Activity;
+import org.nbp.common.CommonActivity;
 import android.os.Bundle;
 
 import android.view.View;
@@ -19,7 +20,7 @@ import android.view.MenuItem;
 import com.aspose.words.AsposeWordsApplication;
 import com.aspose.words.License;
 
-public class EditorActivity extends Activity {
+public class EditorActivity extends CommonActivity {
   private final static String LOG_TAG = EditorActivity.class.getName();
 
   private EditText editArea = null;
