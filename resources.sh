@@ -35,3 +35,11 @@ writeArrayResource() {
 
   echo "  </${element}>"
 }
+
+writeCommonResources() {
+  writeSimpleResource integer "${applicationPrefix}_version_code" "${versionCode}"
+  writeSimpleResource string "${applicationPrefix}_version_name" "${versionNumber}"
+  writeSimpleResource string "${applicationPrefix}_source_revision" "${sourceRevision}"
+  writeSimpleResource string "${applicationPrefix}_build_time" "${buildDate}@${buildTime} ${buildZone}"
+}
+

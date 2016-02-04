@@ -3,8 +3,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.nbp.b2g.ui"
-    android:versionCode="@integer/app_version_code"
-    android:versionName="@string/app_version_name"
+    android:versionCode="@integer/B2G_UI_version_code"
+    android:versionName="@string/B2G_UI_version_name"
     >
 
   <!-- Android 4.1 (JellyBean) -->

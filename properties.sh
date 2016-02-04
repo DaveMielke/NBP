@@ -1,6 +1,4 @@
-tagPrefix="B2G_UI"
-
-revisionIdentifier="$(git describe --long --tags --abbrev=16 --match "${tagPrefix}-*")"
+revisionIdentifier="$(git describe --long --tags --abbrev=16 --match "${applicationPrefix}-*")"
 set -- $(echo "${revisionIdentifier}" | sed 's/-/ /g')
 revisionVersion="${2}"
 revisionIncrement="${3}"

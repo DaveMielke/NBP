@@ -1,14 +1,15 @@
 #!/bin/sh
 set -e
 
+. ../application.sh
+. ../../properties.sh
+
 writeProperty() {
   local name="${1}"
   local value="${2}"
 
   echo ".. |${name}| replace:: ${value}"
 }
-
-. ../../properties.sh
 
 writeProperty "package version" "${versionNumber}"
 writeProperty "source revision" "${sourceRevision}"

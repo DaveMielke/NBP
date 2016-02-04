@@ -1,14 +1,12 @@
 #!/bin/sh
 set -e
 
+. ../application.sh
 . ../../properties.sh
 . ../../resources.sh
 
 writeResourcesPrologue
-writeSimpleResource integer app_version_code "${versionCode}"
-writeSimpleResource string app_version_name "${versionNumber}"
-writeSimpleResource string app_source_revision "${sourceRevision}"
-writeSimpleResource string app_build_time "${buildDate}@${buildTime} ${buildZone}"
+writeCommonResources
 writeResourcesEpilogue
 
 exit 0
