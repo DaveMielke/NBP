@@ -4,6 +4,9 @@ import java.io.File;
 
 import org.nbp.common.CommonActivity;
 
+import org.nbp.common.OutgoingMessage;
+import android.net.Uri;
+
 import android.util.Log;
 
 import android.content.Context;
@@ -253,6 +256,13 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_send () {
+    synchronized (this) {
+      if (currentFile != null) {
+        OutgoingMessage message = new OutgoingMessage();
+        message.addAttachment(currentFile);
+        message.send();
+      }
+    }
   }
 
   @Override
