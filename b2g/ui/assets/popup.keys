@@ -1,2 +1,4 @@
+bind Center Click
+
 include all.keys.inc
 include speech.keys.inc

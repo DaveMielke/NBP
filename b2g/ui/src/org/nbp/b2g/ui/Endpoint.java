@@ -837,6 +837,10 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
+  public boolean handleClick () {
+    return false;
+  }
+
   public boolean handleKeyboardKey_enter () {
     Endpoints.setHostEndpoint();
     return true;

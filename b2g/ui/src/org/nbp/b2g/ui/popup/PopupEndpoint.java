@@ -27,37 +27,35 @@ public class PopupEndpoint extends Endpoint {
     }
   }
 
-  private ValueHandler<Integer> enterKeyHandler = null;
+  private ValueHandler<Integer> clickHandler = null;
 
   @Override
-  public boolean handleKeyboardKey_enter () {
+  public boolean handleClick () {
     try {
       synchronized (this) {
-        if (enterKeyHandler != null) {
-          int index = 0;
-          int offset = getLineStart();
+        if (clickHandler == null) return false;
 
-          while (true) {
-            int previous = findPreviousNewline(offset);
-            if (previous == -1) break;
+        int index = 0;
+        int offset = getLineStart();
 
-            index += 1;
-            offset = previous;
-          }
+        while (true) {
+          int previous = findPreviousNewline(offset);
+          if (previous == -1) break;
 
-          if (!enterKeyHandler.handleValue(index)) return false;
+          index += 1;
+          offset = previous;
         }
+
+        return clickHandler.handleValue(index);
       }
     } finally {
-      if (!super.handleKeyboardKey_enter()) return false;
+      Endpoints.setHostEndpoint();
     }
-
-    return true;
   }
 
   public final void set (CharSequence text, ValueHandler<Integer> handler) {
     synchronized (this) {
-      enterKeyHandler = handler;
+      clickHandler = handler;
       write(text);
     }
   }

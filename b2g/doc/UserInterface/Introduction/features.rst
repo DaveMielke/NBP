@@ -78,9 +78,9 @@ and the characters don't need to be at the beginning or end of the label.
 
 When you're finished typing, press the key combination for the shortcut action
 that you'd like to perform (see above). If the characters match the labels of
-more than one application then the list will be presented within an
-`Action Chooser`_.
-If this happens then navigate to the one you'd like to add and press Enter.
+more than one application then the list will be presented within a popup
+(see `Popups`_).
+If this happens then navigate to the one you'd like to add and press Center.
 
 Builtin Shortcuts
 `````````````````
