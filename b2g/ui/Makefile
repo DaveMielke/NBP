@@ -1,4 +1,5 @@
 include ../../prologue.mk
+include ../../properties.mk
 
 APPLICATION_NAME = B2G_UI
 PACKAGE_PATH = org.nbp.b2g.ui
@@ -12,11 +13,6 @@ NATIVE_SOURCES += keyboard.c
 NATIVE_SOURCES += kbdmon.c
 NATIVE_SOURCES += metec_flat20_ioctl.h
 NATIVE_SOURCES += brldev.c
-
-BUILD_PROPERTIES = res/values/properties.xml
-LOCAL_FILES += $(BUILD_PROPERTIES)
-$(BUILD_PROPERTIES)::
-	./mkproperties >$@
 
 ANDROID_FILES += custom_rules.xml
 ANDROID_FILES += signing.properties

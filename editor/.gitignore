@@ -1,5 +1,6 @@
 /signing.properties
 /local.properties
+/res/values/properties.xml
 
 /bin/
 /gen/
