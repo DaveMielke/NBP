@@ -1,9 +1,11 @@
 document supported literary braille highlighting types
-document input highlighitng controls
-key bindings for input highlighting controls
+add highlighted input off action
 literary braille current line refresh
+no literary braille on password fields
+mysterious deadlock
 highlighted literary braille input
 home screen navigation problems
+fix refreshing when switching braille codes
 
 Verify:
   SIM indicators

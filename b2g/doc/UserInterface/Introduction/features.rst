@@ -119,9 +119,6 @@ Space+s (dots 234)
   g (dots 1245)
     Go to the Gallery app.
 
-  l (dots 123)
-    Listen for a voice command.
-
   m (dots 134)
     Go to the Music app.
 
@@ -136,6 +133,9 @@ Space+s (dots 234)
 
   t (dots 2345)
     Go to the Text (Messaging) [SMS, MMS] app.
+
+  v (dots 1236)
+    Initiate a voice command.
 
   w (dots 2456)
     Go to the Wi-Fi Settings screen.

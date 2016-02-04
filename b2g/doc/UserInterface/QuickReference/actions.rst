@@ -44,7 +44,6 @@
 .. |HomeKey| replace:: the Android Home key
 .. |LineNext| replace:: go to the start of the next line
 .. |LinePrevious| replace:: go to the start of the previous line
-.. |Listen| replace:: listen for a voice command
 .. |LiteraryBrailleOff| replace:: select computer braille (eight dots) mode
 .. |LiteraryBrailleOn| replace:: select literary braille (six dots) mode
 .. |LogActionsOff| replace:: disable the logging of user-requested actions
@@ -146,6 +145,7 @@
 .. |TypingUnderlineOff| replace:: turn off underline typing
 .. |TypingUnderlineOn| replace:: turn on underline typing
 .. |UpdateEditor| replace:: update the |product name| editor
+.. |VoiceCommand| replace:: initiate a voice command
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
 .. |WifiSettings| replace:: go to the Wi-Fi Settings screen
