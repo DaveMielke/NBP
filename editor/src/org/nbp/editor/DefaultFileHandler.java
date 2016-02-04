@@ -24,6 +24,11 @@ public class DefaultFileHandler extends FileHandler {
 
   @Override
   public final void write (File file, final CharSequence content) {
+    String path = file.getAbsolutePath();
+    String newPath = path + ".new";
+    File newFile = new File(newPath);
+    newFile.delete();
+
     new FileMaker() {
       @Override
       protected final boolean writeContent (Writer writer) throws IOException {
@@ -31,7 +36,9 @@ public class DefaultFileHandler extends FileHandler {
         writer.write('\n');
         return true;
       }
-    }.makeFile(file);
+    }.makeFile(newFile);
+
+    newFile.renameTo(file);
   }
 
   public DefaultFileHandler () {
