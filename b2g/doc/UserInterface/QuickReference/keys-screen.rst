@@ -43,6 +43,6 @@
   "Space+Dots234#s,Dots2345#t","|TextMessaging|"
   "Space+Dots234#s,Dots1236#v","|VoiceCommand|"
   "Space+Dots234#s,Dots2456#w","|WifiSettings|"
-  "Space+Dots234#s,Dots1346#x","|Calculator|"
+  "Space+Dots234#s,Dots3456##","|Calculator|"
   "Backward+Forward+Space","|DescribeBuild|"
 

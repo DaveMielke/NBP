@@ -140,7 +140,7 @@ Space+s (dots 234)
   w (dots 2456)
     Go to the Wi-Fi Settings screen.
 
-  x (dots 1346)
+  # (dots 3456)
     Go to the Calculator app.
 
 Shortcuts to Other |product name| Applications

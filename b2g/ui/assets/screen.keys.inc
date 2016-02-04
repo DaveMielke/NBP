@@ -50,7 +50,7 @@ bind Space+Dots234#s,Dots34#st Store
 bind Space+Dots234#s,Dots2345#t TextMessaging
 bind Space+Dots234#s,Dots1236#v VoiceCommand
 bind Space+Dots234#s,Dots2456#w WifiSettings
-bind Space+Dots234#s,Dots1346#x Calculator
+bind Space+Dots234#s,Dots3456## Calculator
 
 bind Backward+Forward+Space DescribeBuild
 
