@@ -15,7 +15,7 @@ public abstract class FileHandler {
     map.put(DEFAULT_EXTENSION, new DefaultFileHandler());
 
     {
-      FileHandler handler = new WordFileHandler();
+      FileHandler handler = new AsposeFileHandler();
       map.put("doc", handler);
       map.put("docx", handler);
     }

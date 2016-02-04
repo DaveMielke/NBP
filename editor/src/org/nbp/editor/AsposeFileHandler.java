@@ -8,11 +8,10 @@ import android.content.Context;
 import java.io.File;
 import android.text.SpannableStringBuilder;
 
-import com.aspose.words.AsposeWordsApplication;
-import com.aspose.words.License;
+import com.aspose.words.*;
 
-public class WordFileHandler extends FileHandler {
-  private final static String LOG_TAG = WordFileHandler.class.getName();
+public class AsposeFileHandler extends FileHandler {
+  private final static String LOG_TAG = AsposeFileHandler.class.getName();
 
   private enum AsposeState {
     UNSTARTED,
@@ -58,7 +57,7 @@ public class WordFileHandler extends FileHandler {
     }
   }
 
-  public WordFileHandler () {
+  public AsposeFileHandler () {
     super();
   }
 }
