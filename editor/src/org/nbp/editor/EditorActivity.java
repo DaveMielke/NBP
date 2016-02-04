@@ -44,6 +44,17 @@ public class EditorActivity extends CommonActivity {
     return this;
   }
 
+  private final void showMessage (String message) {
+    new AlertDialog.Builder(this)
+                   .setMessage(message)
+                   .setNeutralButton(R.string.alert_message_neutral, null)
+                   .show();
+  }
+
+  private final void showMessage (int message) {
+    showMessage(getString(message));
+  }
+
   private final void showActivityResultCode (int code) {
   }
 
@@ -136,18 +147,12 @@ public class EditorActivity extends CommonActivity {
         }
       };
 
-      OnDialogClickListener neutralListener = new OnDialogClickListener() {
-        @Override
-        public void onClick () {
-        }
-      };
-
       new AlertDialog.Builder(this)
                      .setTitle(R.string.alert_changed_title)
                      .setMessage(R.string.alert_changed_message)
                      .setPositiveButton(R.string.alert_changed_positive, positiveListener)
                      .setNegativeButton(R.string.alert_changed_negative, negativeListener)
-                     .setNeutralButton(R.string.alert_changed_neutral, neutralListener)
+                     .setNeutralButton(R.string.alert_changed_neutral, null)
                      .show();
     } else {
       next.run();
@@ -256,12 +261,19 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_send () {
-    synchronized (this) {
-      if (currentFile != null) {
-        OutgoingMessage message = new OutgoingMessage();
-        message.addAttachment(currentFile);
+    File file = currentFile;
+
+    if (currentFile != null) {
+      OutgoingMessage message = new OutgoingMessage();
+      message.addAttachment(currentFile);
+
+      if (message.getAttachments().length > 0) {
         message.send();
+      } else {
+        showMessage(R.string.alert_send_cant_attach);
       }
+    } else {
+      showMessage(R.string.alert_send_no_file);
     }
   }
 
