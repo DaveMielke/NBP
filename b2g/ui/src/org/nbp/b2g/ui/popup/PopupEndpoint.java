@@ -29,24 +29,23 @@ public class PopupEndpoint extends Endpoint {
 
   private ValueHandler<Integer> clickHandler = null;
 
+  private final int getIndex () {
+    int index = 0;
+    int offset = getLineStart();
+
+    while (true) {
+      offset = findPreviousNewline(offset);
+      if (offset == -1) return index;
+      index += 1;
+    }
+  }
+
   @Override
   public boolean handleClick () {
     try {
       synchronized (this) {
         if (clickHandler == null) return false;
-
-        int index = 0;
-        int offset = getLineStart();
-
-        while (true) {
-          int previous = findPreviousNewline(offset);
-          if (previous == -1) break;
-
-          index += 1;
-          offset = previous;
-        }
-
-        return clickHandler.handleValue(index);
+        return clickHandler.handleValue(getIndex());
       }
     } finally {
       Endpoints.setHostEndpoint();
