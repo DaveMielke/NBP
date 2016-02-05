@@ -1,0 +1,6 @@
+can't save as file that doesn't exist yet
+input filter should be disabled when reading file
+set proper mime type when sending
+should or shouldn't resume with last file
+should file path wrap or scroll
+how should edit area scroll

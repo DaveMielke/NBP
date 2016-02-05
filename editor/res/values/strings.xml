@@ -17,7 +17,7 @@
   <string name="alert_changed_message">Save changes?</string>
   <string name="alert_changed_positive">Save First</string>
   <string name="alert_changed_negative">Continue without Saving</string>
-  <string name="alert_changed_neutral">Cancel this Action</string>
+  <string name="alert_changed_neutral">Cancel This Action</string>
 
   <string name="alert_reading_title">Reading File</string>
 
