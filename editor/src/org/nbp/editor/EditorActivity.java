@@ -331,7 +331,7 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile();
 
     prepareActionsButton();
-    reportErrors();
+    showErrors();
   }
 
   @Override
