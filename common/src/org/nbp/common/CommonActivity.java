@@ -196,11 +196,11 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     );
   }
 
-  protected final void showErrors () {
+  protected final void showReportedErrors () {
     CommonUtilities.setErrorReporter(this);
   }
 
-  protected final void showWarnings () {
+  protected final void showReportedWarnings () {
     CommonUtilities.setWarningReporter(this);
   }
 }

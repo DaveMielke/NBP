@@ -28,7 +28,7 @@ public abstract class InputProcessor {
     try {
       closeable.close();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "close error", exception);
+      CommonUtilities.reportError(LOG_TAG, ("close error: " + exception.getMessage()));
     }
   }
 
@@ -48,7 +48,7 @@ public abstract class InputProcessor {
           if (text == null) break;
           if (!handleLine(text, number)) break;
         } catch (IOException exception) {
-          Log.w(LOG_TAG, "line read error", exception);
+          CommonUtilities.reportError(LOG_TAG, ("read error: " + exception.getMessage()));
           return false;
         }
       }
@@ -82,7 +82,7 @@ public abstract class InputProcessor {
         close(stream);
       }
     } catch (FileNotFoundException exception) {
-      Log.w(LOG_TAG, "file not found: " + file.toString());
+      CommonUtilities.reportError(LOG_TAG, ("file not found: " + file.getAbsolutePath()));
     }
 
     return false;
@@ -108,7 +108,7 @@ public abstract class InputProcessor {
           close(stream);
         }
       } catch (IOException exception) {
-        Log.w(LOG_TAG, "asset not found: " + name);
+        CommonUtilities.reportError(LOG_TAG, ("asset not found: " + name));
       }
     }
 

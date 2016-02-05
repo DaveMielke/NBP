@@ -41,7 +41,7 @@ public abstract class FileMaker {
 
       file.delete();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "file make error", exception);
+      CommonUtilities.reportError(LOG_TAG, ("file creation error: " + exception.getMessage()));
     }
 
     return null;
