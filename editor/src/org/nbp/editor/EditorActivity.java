@@ -18,10 +18,8 @@ import android.os.AsyncTask;
 
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Button;
-
 import android.widget.EditText;
-import android.text.InputFilter;
+import android.widget.Button;
 
 import android.text.Spanned;
 import android.text.SpannableStringBuilder;
@@ -44,15 +42,12 @@ public class EditorActivity extends CommonActivity {
     return this;
   }
 
-  private final void showMessage (String message) {
+  @Override
+  protected final void showMessage (String message) {
     new AlertDialog.Builder(this)
                    .setMessage(message)
                    .setNeutralButton(R.string.alert_message_neutral, null)
                    .show();
-  }
-
-  private final void showMessage (int message) {
-    showMessage(getString(message));
   }
 
   private final void showActivityResultCode (int code) {
@@ -268,9 +263,8 @@ public class EditorActivity extends CommonActivity {
       message.addAttachment(currentFile);
 
       if (message.getAttachments().length > 0) {
-        message.send();
-      } else {
-        showMessage(R.string.alert_send_cant_attach);
+        if (message.send()) {
+        }
       }
     } else {
       showMessage(R.string.alert_send_no_file);
@@ -327,50 +321,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void setInputFilters () {
-    editArea.setFilters(
-      new InputFilter[] {
-        new InputFilter() {
-          @Override
-          public CharSequence filter (
-            CharSequence src, int srcStart, int srcEnd,
-            Spanned dst, int dstStart, int dstEnd
-          ) {
-            while (srcStart < srcEnd) {
-              char character = src.charAt(srcStart++);
-
-              switch (character) {
-                case 0X0E:
-                  menuAction_new();
-                  break;
-
-                case 0X0F:
-                  menuAction_open();
-                  break;
-
-                case 0X13:
-                  menuAction_save();
-                  break;
-
-                default:
-                  if (Character.getType(character) == Character.CONTROL) break;
-
-                case '\f':
-                case '\n':
-                case '\r':
-                case '\t':
-                  hasChanged = true;
-                  return null;
-              }
-            }
-
-            return "";
-          }
-        }
-      }
-    );
-  }
-
   @Override
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -381,7 +331,7 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile();
 
     prepareActionsButton();
-    setInputFilters();
+    reportErrors();
   }
 
   @Override

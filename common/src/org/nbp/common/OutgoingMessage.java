@@ -147,19 +147,24 @@ public class OutgoingMessage {
   }
 
   public boolean addAttachment (File file) {
-    String problem = null;
+    int problem = 0;
 
     if (!file.exists()) {
-      problem = "file not found";
+      problem = R.string.OutgoingMessage_file_not_found;
     } else if (!file.isFile()) {
-      problem = "not a file";
+      problem = R.string.OutgoingMessage_not_a_file;
     } else if (!file.canRead()) {
-      problem = "file not readable";
+      problem = R.string.OutgoingMessage_file_not_readable;
     } else {
       return addAttachment(Uri.fromFile(file));
     }
 
-    Log.w(LOG_TAG, problem + ": " + file.toString());
+    CommonUtilities.reportError(LOG_TAG, String.format(
+      "%s: %s",
+      CommonContext.getString(problem),
+      file.getAbsolutePath()
+    ));
+
     return false;
   }
 
@@ -176,7 +181,7 @@ public class OutgoingMessage {
     if (!primaryRecipients.isEmpty()) {
       sender.putExtra(Intent.EXTRA_EMAIL, getPrimaryRecipients());
     } else {
-      Log.w(LOG_TAG, "no primary recipient");
+      CommonUtilities.reportWarning(LOG_TAG, "no primary recipient");
     }
 
     if (!secondaryRecipients.isEmpty()) {
@@ -190,13 +195,13 @@ public class OutgoingMessage {
     if (!subject.isEmpty()) {
       sender.putExtra(Intent.EXTRA_SUBJECT, getSubject());
     } else {
-      Log.w(LOG_TAG, "no subject");
+      CommonUtilities.reportWarning(LOG_TAG, "no message subject");
     }
 
     if (!body.isEmpty()) {
       sender.putExtra(Intent.EXTRA_TEXT, formatBody());
     } else {
-      Log.w(LOG_TAG, "no body");
+      CommonUtilities.reportWarning(LOG_TAG, "no message body");
     }
 
     if (attachments.isEmpty()) {
@@ -216,12 +221,12 @@ public class OutgoingMessage {
     }
 
     boolean found = LaunchUtilities.launchActivity(
-      sender, R.string.message_select_outgoing_email_app,
+      sender, R.string.OutgoingMessage_select_email_app,
       "com.android.email"
     );
 
     if (found) return true;
-    Log.w(LOG_TAG, "outgoing message sender not found");
+    CommonUtilities.reportError(LOG_TAG, "outgoing message sender not found");
     return false;
   }
 

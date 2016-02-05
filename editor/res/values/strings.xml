@@ -26,5 +26,4 @@
   <string name="alert_message_neutral">Dismiss</string>
 
   <string name="alert_send_no_file">Cannot send new file.</string>
-  <string name="alert_send_cant_attach">Cannot attach file.</string>
 </resources>

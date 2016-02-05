@@ -23,7 +23,7 @@ import android.widget.Switch;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 
-public abstract class CommonActivity extends Activity {
+public abstract class CommonActivity extends Activity implements ProblemReporter {
   private final static String LOG_TAG = CommonActivity.class.getName();
 
   protected final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
@@ -175,5 +175,32 @@ public abstract class CommonActivity extends Activity {
   public void onCreate (Bundle state) {
     super.onCreate(state);
     CommonContext.setContext(this);
+  }
+
+  protected void showMessage (String message) {
+  }
+
+  protected final void showMessage (int message) {
+    showMessage(getString(message));
+  }
+
+  @Override
+  public final void reportProblem (String tag, final String message) {
+    runOnUiThread(
+      new Runnable() {
+        @Override
+        public void run () {
+          showMessage(message);
+        }
+      }
+    );
+  }
+
+  protected final void reportErrors () {
+    CommonUtilities.setErrorReporter(this);
+  }
+
+  protected final void reportWarnings () {
+    CommonUtilities.setWarningReporter(this);
   }
 }
