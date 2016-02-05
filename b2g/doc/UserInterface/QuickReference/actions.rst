@@ -90,6 +90,7 @@
 .. |PowerOff| replace:: go to the Power Off screen
 .. |RecentApps| replace:: go to the Recent Apps screen
 .. |RemoveShortcut| replace:: remove a shortcut from the home screen
+.. |ResetHighlightedTyping| replace:: turn off all of the highlighted typing settings
 .. |ResetSettings| replace:: reset the |user interface| settings to default values
 .. |RestoreSettings| replace:: restore the most recently saved |user interface| settings
 .. |ReversePanningOff| replace:: disable reverse panning mode

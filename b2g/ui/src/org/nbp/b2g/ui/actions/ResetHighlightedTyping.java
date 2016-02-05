@@ -8,6 +8,11 @@ public class ResetHighlightedTyping extends Action {
     return true;
   }
 
+  @Override
+  protected Integer getConfirmation () {
+    return R.string.ResetHighlightedTyping_action_confirmation;
+  }
+
   public ResetHighlightedTyping (Endpoint endpoint) {
     super(endpoint, false);
   }

@@ -24,7 +24,7 @@ bind Space+Dot7+Dots124#f FindPrevious
 bind Space+Dot8+Dots124#f FindNext
 
 bind Space+Dots125#h HelpText
-bind Space+Dot7+Dots125#h HelpHTML
+bind Space+Dots78+Dots125#h HelpHTML
 bind Space+Dot8+Dots125#h DescribeActions
 
 bind Space+Dots135#o Settings

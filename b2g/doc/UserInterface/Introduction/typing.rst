@@ -99,7 +99,7 @@ These characters have several uses, including (but not limited to):
 Typing Highlighted Characters
 `````````````````````````````
 
-The following types of highlighted typing are supported:
+The following highlighted typing styles are supported:
 
 Bold
 
@@ -116,8 +116,9 @@ Underline
   * Press Space+Dot8+u (dots 136) to turn it on.
   * Press Space+Dot7+u (dots 136) to turn it off.
 
+Press Space+Dot7+h (dots 125) to turn off all of these highlighted typing styles.
 Either booting the device or waking it up (see `The Power Switch`_)
-automatically resets (turns off) highlighted typing.
+also turns them off.
 
 Typing a Control Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

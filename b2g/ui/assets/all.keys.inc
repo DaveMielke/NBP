@@ -25,19 +25,6 @@ bind Space+Dots1245#g BrailleCodeConfirm
 bind Space+Dot7+Dots1245#g BrailleCodePrevious
 bind Space+Dot8+Dots1245#g BrailleCodeNext
 
-bind Space+Dot7+Dots2345#t TypingModeText
-bind Space+Dot8+Dots2345#t TypingModeBraille
-bind Space+Dots78+Dots2345#t TypingModeConfirm
-
-bind Space+Dot7+Dots12#b TypingBoldOff
-bind Space+Dot8+Dots12#b TypingBoldOn
-
-bind Space+Dot7+Dots24#i TypingItalicOff
-bind Space+Dot8+Dots24#i TypingItalicOn
-
-bind Space+Dot7+Dots136#u TypingUnderlineOff
-bind Space+Dot8+Dots136#u TypingUnderlineOn
-
 bind Space+Dots235#6 LiteraryBrailleOn
 bind Space+Dots236#8 LiteraryBrailleOff
 

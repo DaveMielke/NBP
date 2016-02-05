@@ -81,6 +81,7 @@
   <string name="CutToClipboard_action_confirmation">Cut to Clipboard</string>
   <string name="LogsOff_action_confirmation">Logs Off</string>
   <string name="LogsOn_action_confirmation">Logs On</string>
+  <string name="ResetHighlightedTyping_action_confirmation">Highlighting Off</string>
   <string name="ResetSettings_action_confirmation">Settings Reset</string>
   <string name="RestoreSettings_action_confirmation">Settings Restored</string>
   <string name="SaveScreen_action_confirmation">Screen Saved</string>

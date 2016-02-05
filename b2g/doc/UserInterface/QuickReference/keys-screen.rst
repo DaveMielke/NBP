@@ -21,7 +21,7 @@
   "Space+Dot7+Dots124#f","|FindPrevious|"
   "Space+Dot8+Dots124#f","|FindNext|"
   "Space+Dots125#h","|HelpText|"
-  "Space+Dot7+Dots125#h","|HelpHTML|"
+  "Space+Dots78+Dots125#h","|HelpHTML|"
   "Space+Dot8+Dots125#h","|DescribeActions|"
   "Space+Dots135#o","|Settings|"
   "Space+Dots78+Dots134#m","|Maintenance|"

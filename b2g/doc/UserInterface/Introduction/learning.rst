@@ -8,7 +8,7 @@ Pressing Space+h (dots 125)
   This brings up an on-device copy of this document so you can read it off-line.
   It's a plain text version, though, so even internal links won't work.
 
-Pressing Space+Dot7+h (dots 125)
+Pressing Space+Dots78+h (dots 125)
   This brings up a web-resident copy of this document.
   It's an HTML version so all links (both internal and external) will work.
   There are, however, two potential problems with this method:
