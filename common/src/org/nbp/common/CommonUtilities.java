@@ -18,6 +18,10 @@ public abstract class CommonUtilities {
     errorReporter.reportProblem(tag, message);
   }
 
+  public static void reportError (String tag, String format, Object... arguments) {
+    reportError(tag, String.format(format, arguments));
+  }
+
   public static void reportError (String tag, int message) {
     reportError(tag, CommonContext.getString(message));
   }
@@ -35,6 +39,10 @@ public abstract class CommonUtilities {
 
   public static void reportWarning (String tag, String message) {
     warningReporter.reportProblem(tag, message);
+  }
+
+  public static void reportWarning (String tag, String format, Object... arguments) {
+    reportWarning(tag, String.format(format, arguments));
   }
 
   public static void reportWarning (String tag, int message) {

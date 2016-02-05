@@ -1,5 +1,7 @@
 package org.nbp.editor;
 
+import org.nbp.common.CommonContext;
+import org.nbp.common.CommonUtilities;
 import java.io.File;
 
 import org.nbp.common.InputProcessor;
@@ -10,6 +12,8 @@ import java.io.Writer;
 import java.io.IOException;
 
 public class DefaultFileHandler extends FileHandler {
+  private final static String LOG_TAG = DefaultFileHandler.class.getName();
+
   @Override
   public final void read (File file, final SpannableStringBuilder sb) {
     new InputProcessor() {
@@ -29,16 +33,24 @@ public class DefaultFileHandler extends FileHandler {
     File newFile = new File(newPath);
     newFile.delete();
 
-    new FileMaker() {
+    FileMaker fileMaker = new FileMaker() {
       @Override
       protected final boolean writeContent (Writer writer) throws IOException {
         writer.write(content.toString());
         writer.write('\n');
         return true;
       }
-    }.makeFile(newFile);
+    };
 
-    newFile.renameTo(file);
+    if (fileMaker.makeFile(newFile) != null) {
+      if (!newFile.renameTo(file)) {
+        CommonUtilities.reportError(
+          LOG_TAG, "%s: %s -> %s",
+          CommonContext.getString(R.string.DefaultFileHandler_rename_failed),
+          newFile.getAbsolutePath(), file.getAbsolutePath()
+        );
+      }
+    }
   }
 
   public DefaultFileHandler () {

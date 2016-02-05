@@ -159,11 +159,10 @@ public class OutgoingMessage {
       return addAttachment(Uri.fromFile(file));
     }
 
-    CommonUtilities.reportError(LOG_TAG, String.format(
-      "%s: %s",
-      CommonContext.getString(problem),
-      file.getAbsolutePath()
-    ));
+    CommonUtilities.reportError(
+      LOG_TAG, "%s: %s",
+      CommonContext.getString(problem), file.getAbsolutePath()
+    );
 
     return false;
   }
