@@ -102,3 +102,15 @@ The Down key moves the cursor to the same position on the next line.
 If text has been selected then the cursor is moved to just below the last
 selected character, and the selection is cleared.
 
+Password Fields
+~~~~~~~~~~~~~~~
+
+If the input area is a password field
+(one in which the characters being typed don't appear)
+then the |user interface| automatically switches to `Computer Braille`_
+(see `Typing in Computer Braille`_).
+This is done because it's extremely difficult
+to accurately enter a password in `Literary Braille`_, especially
+when it contains special characters
+and/or when a braille code that defines contractions is being used.
+

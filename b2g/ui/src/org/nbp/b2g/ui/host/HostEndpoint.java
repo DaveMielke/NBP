@@ -196,6 +196,10 @@ public class HostEndpoint extends Endpoint {
             changeSelection(start, end);
           }
         }
+
+        if (isPasswordField()) {
+          ApplicationUtilities.message(R.string.message_password_field);
+        }
       }
 
       return write();
@@ -257,6 +261,11 @@ public class HostEndpoint extends Endpoint {
   @Override
   public final boolean isInputArea () {
     return ScreenUtilities.isEditable(currentNode);
+  }
+
+  @Override
+  public boolean isPasswordField () {
+    return currentNode.isPassword();
   }
 
   @Override

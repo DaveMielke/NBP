@@ -336,6 +336,10 @@ public abstract class Endpoint {
     return false;
   }
 
+  public boolean isPasswordField () {
+    return false;
+  }
+
   public boolean isBar () {
     return false;
   }

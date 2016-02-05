@@ -185,6 +185,8 @@
   <string name="DescribeIndicators_wifi_state_enabling">enabling</string>
   <string name="DescribeIndicators_wifi_state_unknown">unknown</string>
 
+  <string name="message_password_field">password field</string>
+
   <string name="message_scrolling_backward">scrolling backward</string>
   <string name="message_scrolling_forward">scrolling forward</string>
 
@@ -202,6 +204,7 @@
 
   <string name="message_intermediate_action_timeout">incomplete entry</string>
   <string name="message_modifier_cancelled">modifier cancelled</string>
+
   <string name="message_no_screen_content">no screen content</string>
   <string name="message_no_screen_monitor">no screen monitor</string>
 
