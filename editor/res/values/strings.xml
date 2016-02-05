@@ -23,7 +23,5 @@
 
   <string name="alert_writing_title">Writing File</string>
 
-  <string name="alert_message_neutral">Dismiss</string>
-
-  <string name="alert_send_no_file">Cannot send new file.</string>
+  <string name="alert_send_new_file">Cannot send new file.</string>
 </resources>

@@ -42,14 +42,6 @@ public class EditorActivity extends CommonActivity {
     return this;
   }
 
-  @Override
-  protected final void showMessage (String message) {
-    new AlertDialog.Builder(this)
-                   .setMessage(message)
-                   .setNeutralButton(R.string.alert_message_neutral, null)
-                   .show();
-  }
-
   private final void showActivityResultCode (int code) {
   }
 
@@ -267,7 +259,7 @@ public class EditorActivity extends CommonActivity {
         }
       }
     } else {
-      showMessage(R.string.alert_send_no_file);
+      showMessage(R.string.alert_send_new_file);
     }
   }
 
