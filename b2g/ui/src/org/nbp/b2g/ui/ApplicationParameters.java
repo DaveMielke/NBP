@@ -7,18 +7,27 @@ import android.os.Build;
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters extends CommonParameters {
+  public final static char PASSWORD_CHARACTER = '*';
+
+  public final static long LONG_PRESS_TIME = 500; // milliseconds
+  public final static long INTERMEDIATE_ACTION_TIMEOUT = 2000; // milliseconds
+
+  public final static long BRAILLE_MESSAGE_DURATION = 2000; // milliseconds
+  public final static long BRAILLE_POPUP_TIMEOUT = 30000; // milliseconds
+  public final static int BRAILLE_SCROLL_KEEP = 3; // cells
+
+  public final static long MAINTENANCE_REBOOT_DELAY = 1000; // milliseconds
+  public final static Louis.LogLevel LIBLOUIS_LOG_LEVEL = Louis.LogLevel.INFO;
+
+  public final static boolean ENABLE_BLUETOOTH_SERVER = false;
   public final static boolean ENABLE_SPEECH_DEVICE = true;
+
   public final static boolean ENABLE_KEYBOARD_MONITOR = true;
   public final static boolean ENABLE_POWER_BUTTON_MONITOR = true;
-  public final static boolean ENABLE_BLUETOOTH_SERVER = false;
-
   public final static boolean CHORDS_SEND_SYSTEM_KEYS = true;
 
   public final static long LONG_PRESS_DELAY = 100; // milliseconds
   public final static long VIEW_SCROLL_TIMEOUT = 5000; // milliseconds
-
-  public final static long LONG_PRESS_TIME = 500; // milliseconds
-  public final static long INTERMEDIATE_ACTION_TIMEOUT = 2000; // milliseconds
 
   public final static long TAP_HOLD_TIME = 45; // milliseconds
   public final static long TAP_WAIT_TIME = 100; // milliseconds
@@ -39,9 +48,6 @@ public abstract class ApplicationParameters extends CommonParameters {
   public final static long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
   public final static long BLUETOOTH_READ_TIMEOUT = 1000; // milliseconds
 
-  public final static int BRAILLE_SCROLL_KEEP = 3; // cells
-  public final static long BRAILLE_MESSAGE_DURATION = 2000; // milliseconds
-  public final static long BRAILLE_POPUP_TIMEOUT = 30000; // milliseconds
   public final static long BRAILLE_WRITE_DELAY = 40; // milliseconds
   public final static long BRAILLE_REWRITE_DELAY = 50; // milliseconds
 
@@ -53,11 +59,7 @@ public abstract class ApplicationParameters extends CommonParameters {
 
   public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
 
-  public final static long MAINTENANCE_REBOOT_DELAY = 1000; // milliseconds
-
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
-
-  public final static Louis.LogLevel LIBLOUIS_LOG_LEVEL = Louis.LogLevel.INFO;
 
   private ApplicationParameters () {
   }

@@ -121,8 +121,10 @@ public class HostEndpoint extends Endpoint {
       int end = getSelectionEnd();
 
       if (isSelected(end)) {
+        char character = isPasswordField()? ApplicationParameters.PASSWORD_CHARACTER: ' ';
+
         while (end > 0) {
-          sb.append(' ');
+          sb.append(character);
           end -= 1;
         }
       }

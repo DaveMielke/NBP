@@ -71,9 +71,10 @@ public class ScreenMonitor extends AccessibilityService {
 
       if (count != -1) {
         StringBuilder sb = new StringBuilder();
+        char character = node.isPassword()? ApplicationParameters.PASSWORD_CHARACTER: ' ';
 
         while (count > 0) {
-          sb.append(' ');
+          sb.append(character);
           count -= 1;
         }
 
