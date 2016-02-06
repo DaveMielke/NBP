@@ -9,7 +9,7 @@ The |user interface|
 .. contents::
 
 .. include:: PhysicalDescription/main.rst
-.. include:: Introduction/main.rst
+.. include:: Overview/main.rst
 .. include:: Navigation/main.rst
 .. include:: RecoveryMode/main.rst
 .. include:: FirmwareFeatures/main.rst
