@@ -26,6 +26,7 @@
 .. |DescribeActions| replace:: show a list of the top-level actions
 .. |DescribeBuild| replace:: show details that identify the build
 .. |DescribeCharacter| replace:: show the description of a specific character
+.. |DescribeHighlighting| replace:: show the highlighting of a specific character
 .. |DescribeIndicators| replace:: show important status indicators
 .. |DeveloperOff| replace:: disable developer mode
 .. |DeveloperOn| replace:: enable developer mode

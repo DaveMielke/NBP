@@ -14,6 +14,7 @@ bind Space+Up ScrollUp
 bind Space+Down ScrollDown
 
 bind Dot7+Cursor DescribeCharacter
+bind Dot3+Cursor DescribeHighlighting
 bind Dot8+Cursor SetLeft
 
 bind Space+Dots123 ToTextStart

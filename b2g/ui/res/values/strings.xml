@@ -154,6 +154,11 @@
   <string name="DescribeCharacter_label_codepoint">Code Point</string>
   <string name="DescribeCharacter_label_directionality">Directionality</string>
 
+  <string name="DescribeHighlighting_none">none</string>
+  <string name="DescribeHighlighting_bold">bold</string>
+  <string name="DescribeHighlighting_italic">italic</string>
+  <string name="DescribeHighlighting_underline">uline</string>
+
   <string name="DescribeIndicators_battery_label">Battery</string>
   <string name="DescribeIndicators_battery_health_cold">cold</string>
   <string name="DescribeIndicators_battery_health_dead">dead</string>

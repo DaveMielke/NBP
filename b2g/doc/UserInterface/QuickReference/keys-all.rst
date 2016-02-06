@@ -13,6 +13,7 @@
   "Space+Up","|ScrollUp|"
   "Space+Down","|ScrollDown|"
   "Dot7+Cursor","|DescribeCharacter|"
+  "Dot3+Cursor","|DescribeHighlighting|"
   "Dot8+Cursor","|SetLeft|"
   "Space+Dots123","|ToTextStart|"
   "Space+Dots456","|ToTextEnd|"
