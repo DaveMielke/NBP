@@ -885,8 +885,12 @@ public abstract class Endpoint {
 
   private final KeyBindings keyBindings;
 
-  public KeyBindings getKeyBindings () {
+  public final KeyBindings getKeyBindings () {
     return keyBindings;
+  }
+
+  public final KeyBindingMap getRootKeyBindingMap () {
+    return getKeyBindings().getRootKeyBindingMap();
   }
 
   public Endpoint (String name) {

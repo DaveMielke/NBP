@@ -1,9 +1,11 @@
 package org.nbp.b2g.ui;
 
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ActionChooser {
-  private static String makeText (KeyBindingMap map, Integer cursorKey) {
+  private static String makeText (List<Action> actions, KeyBindingMap map, Integer cursorKey) {
     boolean haveCursorKey = cursorKey != null;
 
     StringBuilder sb = new StringBuilder();
@@ -15,26 +17,29 @@ public class ActionChooser {
 
       Action action = map.get(keys);
       if (action.isForDevelopers() && !ApplicationSettings.DEVELOPER_ENABLED) continue;
-      sb.append('\n');
 
+      sb.append('\n');
       sb.append(Wordify.get(action.getName()));
 
       sb.append(": ");
       sb.append(KeyMask.toString(keys));
+
+      actions.add(action);
     }
 
     return sb.toString();
   }
 
-  public static void chooseAction (final KeyBindingMap map, Integer cursorKey) {
-    Endpoints.setPopupEndpoint(makeText(map, cursorKey),
+  public static void chooseAction (KeyBindingMap map, final Integer cursorKey) {
+    final List<Action> actions = new ArrayList<Action>();
+    Endpoints.setPopupEndpoint(makeText(actions, map, cursorKey),
       new ValueHandler<Integer> () {
         @Override
         public boolean handleValue (Integer index) {
           if ((index -= 1) < 0) return true;
-          Integer keys = map.keySet().toArray(new Integer[map.size()])[index];
+          Action action = actions.get(index);
 
-          Action action = map.get(keys);
+          if (cursorKey != null) return KeyEvents.performAction(action, cursorKey);
           return KeyEvents.performAction(action);
         }
       }

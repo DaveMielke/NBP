@@ -51,6 +51,13 @@ public abstract class KeyEvents {
     return result;
   }
 
+  public static boolean performAction (Action action, int... cursorKeys) {
+    for (int key : cursorKeys) pressedCursorKeys.add(key);
+    boolean result = performAction(action);
+    for (int key : cursorKeys) pressedCursorKeys.remove(key);
+    return result;
+  }
+
   private static Action getAction (Class<? extends Action> type, Endpoint endpoint) {
     if (type == null) return null;
     return endpoint.getKeyBindings().getAction(type);

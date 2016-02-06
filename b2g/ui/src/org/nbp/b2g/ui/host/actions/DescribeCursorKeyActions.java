@@ -5,13 +5,7 @@ import org.nbp.b2g.ui.*;
 public class DescribeCursorKeyActions extends Action {
   @Override
   public boolean performAction (int cursorKey) {
-    ActionChooser.chooseAction(Endpoints.host
-                                        .get()
-                                        .getKeyBindings()
-                                        .getRootKeyBindingMap(),
-      cursorKey
-    );
-
+    ActionChooser.chooseAction(getEndpoint().getRootKeyBindingMap(), cursorKey);
     return true;
   }
 

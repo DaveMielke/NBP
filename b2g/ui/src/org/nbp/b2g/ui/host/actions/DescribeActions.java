@@ -5,12 +5,7 @@ import org.nbp.b2g.ui.*;
 public class DescribeActions extends Action {
   @Override
   public boolean performAction () {
-    ActionChooser.chooseAction(Endpoints.host
-                                        .get()
-                                        .getKeyBindings()
-                                        .getRootKeyBindingMap()
-    );
-
+    ActionChooser.chooseAction(getEndpoint().getRootKeyBindingMap());
     return true;
   }
 
