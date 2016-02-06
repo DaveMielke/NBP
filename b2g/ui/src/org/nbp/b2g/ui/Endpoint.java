@@ -633,6 +633,8 @@ public abstract class Endpoint {
   }
 
   protected final boolean changeSelection (int start, int end) {
+    boolean hasChanged = false;
+
     synchronized (this) {
       if (ApplicationSettings.LOG_UPDATES) {
         Log.d(LOG_TAG, String.format(
@@ -642,18 +644,17 @@ public abstract class Endpoint {
       }
 
       if ((start != selectionStart) || (end != selectionEnd)) {
+        hasChanged = true;
         selectionStart = start;
         selectionEnd = end;
+      }
 
-        if (isCursor(start, end)) {
-          adjustScroll(setLine(start));
-        }
-
-        return true;
+      if (isCursor(start, end)) {
+        adjustScroll(setLine(start));
       }
     }
 
-    return false;
+    return hasChanged;
   }
 
   protected final boolean updateSelection (int start, int end) {
