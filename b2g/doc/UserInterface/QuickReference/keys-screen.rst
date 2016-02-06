@@ -23,6 +23,7 @@
   "Space+Dots125#h","|HelpText|"
   "Space+Dots78+Dots125#h","|HelpHTML|"
   "Space+Dot8+Dots125#h","|DescribeActions|"
+  "Space+Cursor","|DescribeCursorKeyActions|"
   "Space+Dots135#o","|Settings|"
   "Space+Dots78+Dots134#m","|Maintenance|"
   "Space+Dots1234#p","|PowerOff|"

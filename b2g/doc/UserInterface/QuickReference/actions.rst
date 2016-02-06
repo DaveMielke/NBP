@@ -23,9 +23,10 @@
 .. |CutToClipboard| replace:: cut the selected text to the clipboard
 .. |DeleteNext| replace:: delete the character that the cursor is on
 .. |DeletePrevious| replace:: delete the character to the left of the cursor
-.. |DescribeActions| replace:: show a list of the top-level actions
+.. |DescribeActions| replace:: list all the actions that don't need a cursor key
 .. |DescribeBuild| replace:: show details that identify the build
 .. |DescribeCharacter| replace:: show the description of a specific character
+.. |DescribeCursorKeyActions| replace:: list all the actions that need a cursor key
 .. |DescribeHighlighting| replace:: show the highlighting of a specific character
 .. |DescribeIndicators| replace:: show important status indicators
 .. |DeveloperOff| replace:: disable developer mode

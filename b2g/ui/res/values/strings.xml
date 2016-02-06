@@ -146,18 +146,17 @@
   <string name="LogNavigation_control_label">Log Navigation</string>
   <string name="LogUpdates_control_label">Log Updates</string>
 
-  <string name="ChooseAction_label">Perform an action by pressing Enter on it:</string>
-  <string name="ChooseAction_message_cursor">needs cursor key</string>
+  <string name="ChooseAction_label">Perform an action by pressing Center on it:</string>
 
   <string name="DescribeCharacter_label_block">Block</string>
   <string name="DescribeCharacter_label_category">Category</string>
   <string name="DescribeCharacter_label_codepoint">Code Point</string>
   <string name="DescribeCharacter_label_directionality">Directionality</string>
 
-  <string name="DescribeHighlighting_none">none</string>
+  <string name="DescribeHighlighting_none">not highlighted</string>
   <string name="DescribeHighlighting_bold">bold</string>
   <string name="DescribeHighlighting_italic">italic</string>
-  <string name="DescribeHighlighting_underline">uline</string>
+  <string name="DescribeHighlighting_underline">underline</string>
 
   <string name="DescribeIndicators_battery_label">Battery</string>
   <string name="DescribeIndicators_battery_health_cold">cold</string>

@@ -3,11 +3,16 @@ package org.nbp.b2g.ui;
 import java.util.Set;
 
 public class ActionChooser {
-  private static String makeText (KeyBindingMap map) {
+  private static String makeText (KeyBindingMap map, Integer cursorKey) {
+    boolean haveCursorKey = cursorKey != null;
+
     StringBuilder sb = new StringBuilder();
     sb.append(ApplicationContext.getString(R.string.ChooseAction_label));
 
     for (Integer keys : map.keySet()) {
+      boolean needsCursorKey = (keys & KeyMask.CURSOR) != 0;
+      if (needsCursorKey != haveCursorKey) continue;
+
       Action action = map.get(keys);
       if (action.isForDevelopers() && !ApplicationSettings.DEVELOPER_ENABLED) continue;
       sb.append('\n');
@@ -21,24 +26,23 @@ public class ActionChooser {
     return sb.toString();
   }
 
-  public static void chooseAction (final KeyBindingMap map) {
-    Endpoints.setPopupEndpoint(makeText(map),
+  public static void chooseAction (final KeyBindingMap map, Integer cursorKey) {
+    Endpoints.setPopupEndpoint(makeText(map, cursorKey),
       new ValueHandler<Integer> () {
         @Override
         public boolean handleValue (Integer index) {
           if ((index -= 1) < 0) return true;
           Integer keys = map.keySet().toArray(new Integer[map.size()])[index];
 
-          if ((keys & KeyMask.CURSOR) != 0) {
-            ApplicationUtilities.message(R.string.ChooseAction_message_cursor);
-            return false;
-          }
-
           Action action = map.get(keys);
           return KeyEvents.performAction(action);
         }
       }
     );
+  }
+
+  public static void chooseAction (final KeyBindingMap map) {
+    chooseAction(map, null);
   }
 
   public ActionChooser () {
