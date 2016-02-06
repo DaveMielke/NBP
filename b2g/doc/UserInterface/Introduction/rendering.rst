@@ -29,6 +29,12 @@ The following braille codes are supported:
   + UEB (Unified English Braille) grades 1 and 2.
   + EBAE (English Braille, American Edition) grades 1 and 2.
 
+Highlighted words and characters are supported when not within an input area
+(see `Input Areas`_)
+insofar as the tables that define the current braille code support them.
+The types of highlighting supported by the |user interface| are:
+bold, italics, and underlining.
+
 .. |LibLouis home page URL| replace:: http://liblouis.org/
 
 We'd like to take this opportunity to publicly thank the LibLouis project

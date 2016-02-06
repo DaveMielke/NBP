@@ -23,13 +23,11 @@ Pressing Space+Dots78+h (dots 125)
     then you're using a non-accessible browser.
 
 Using an `Action Chooser`_
-  Pressing Space+Dot8+h (dots 125)
-    This brings up an action chooser that lists all of the actions
-    that don't need a cursor routing key.
+  * Press Space+Dot8+h (dots 125) for an action chooser
+    offering all of the actions that don't involve a cursor routing key.
 
-  Holding Space while pressing a cursor routing key
-    This brings up an action chooser that lists all of the actions
-    that need a cursor routing key.
+  * Hold Space while pressing a cursor routing key for an action chooser
+    offering all of the actions that do involve a cursor routing key.
 
   Each line shows the name of an action,
   followed by the key combination that invokes it.
