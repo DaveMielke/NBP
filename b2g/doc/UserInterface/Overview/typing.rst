@@ -11,7 +11,7 @@ Regular text is the default, and is used for `Directly Typing Regular Text`_.
 
 Actual cells is used for `Directly Typing Actual Braille Cells`_.
 
-Either booting the device or waking it up (see `The Power Switch`_)
+Either booting the |product name| or waking it up (see `The Power Switch`_)
 automatically resets the typing mode to regular text.
 
 Directly Typing Regular Text
