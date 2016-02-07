@@ -17,7 +17,12 @@ public abstract class Action {
   }
 
   public final String getName () {
-    return LanguageUtilities.getClassName(getClass());
+    String name = LanguageUtilities.getClassName(getClass());
+
+    int index = name.lastIndexOf('$');
+    if (index >= 0) name = name.substring(index+1);
+
+    return name;
   }
 
   private String actionSummary = null;
