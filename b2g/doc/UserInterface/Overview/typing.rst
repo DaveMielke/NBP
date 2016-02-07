@@ -97,28 +97,33 @@ These characters have several uses, including (but not limited to):
   different localized braille character mappings.
 
 Typing Highlighted Characters
-`````````````````````````````
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following highlighted typing styles are supported:
+The following highlighting styles are supported for typing:
 
 Bold
 
   * Press Space+Dot8+b (dots 12) to turn it on.
   * Press Space+Dot7+b (dots 12) to turn it off.
 
-Italic
+Italics
 
   * Press Space+Dot8+i (dots 24) to turn it on.
   * Press Space+Dot7+i (dots 24) to turn it off.
 
-Underline
+Underlining
 
   * Press Space+Dot8+u (dots 136) to turn it on.
   * Press Space+Dot7+u (dots 136) to turn it off.
 
-Press Space+Dot7+h (dots 125) to turn off all of these highlighted typing styles.
-Either booting the device or waking it up (see `The Power Switch`_)
+Press Space+Dot7+h (dots 125) to turn all of these highlighting styles off.
+Either booting the |product name| or waking it up (see `The Power Switch`_)
 also turns them off.
+
+Each highlighted character that you type will be flagged by
+`The Selection Indicator`_. You can verify that a character has been
+highlighted correctly by holding Dot3 while pressing the cursor routing key
+associated with it.
 
 Typing a Control Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
