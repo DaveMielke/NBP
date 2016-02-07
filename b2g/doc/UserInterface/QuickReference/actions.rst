@@ -5,70 +5,68 @@
 .. |BackKey| replace:: the Android Back key
 .. |BluetoothSettings| replace:: go to the Bluetooth Settings screen
 .. |BrailleCodeConfirm| replace:: show the current braille code
-.. |BrailleCodeNext| replace:: switch to the next braille code
-.. |BrailleCodePrevious| replace:: switch to the previous braille code
-.. |BrailleOff| replace:: disable braille
-.. |BrailleOn| replace:: enable braille
+.. |BrailleCodeNext| replace:: select the next braille code
+.. |BrailleCodePrevious| replace:: select the previous braille code
+.. |BrailleOff| replace:: turn the braille display off
+.. |BrailleOn| replace:: turn the braille display on
 .. |BringCursor| replace:: bring the cursor to a specific character
 .. |Calculator| replace:: go to the Calculator app
 .. |Calendar| replace:: go to the Calendar app
 .. |ClearAndroidLog| replace:: clear the Android log
 .. |Click| replace:: tap (click) the current screen element
-.. |Clock| replace:: go to the |product name| digital clock
+.. |Clock| replace:: go to the B2G digital clock
 .. |CopyToClipboard| replace:: copy the selected (or all) text to the clipboard
 .. |CursorDown| replace:: the keyboard Cursor Down key
 .. |CursorLeft| replace:: the keyboard Cursor Left key
 .. |CursorRight| replace:: the keyboard Cursor Right key
 .. |CursorUp| replace:: the keyboard Cursor Up key
 .. |CutToClipboard| replace:: cut the selected text to the clipboard
-.. |DeleteNext| replace:: delete the character that the cursor is on
-.. |DeletePrevious| replace:: delete the character to the left of the cursor
-.. |DescribeActions| replace:: list all the actions that don't need a cursor key
-.. |DescribeBuild| replace:: show details that identify the build
+.. |DeleteNext| replace:: delete the character that the cursor indicator is on
+.. |DeletePrevious| replace:: delete the character to the left of the cursor indicator
+.. |DescribeActions| replace:: show a list of all the actions that don't involve a cursor routing key
+.. |DescribeBuild| replace:: show details that identify the current build
 .. |DescribeCharacter| replace:: show the description of a specific character
-.. |DescribeCursorKeyActions| replace:: list all the actions that need a cursor key
+.. |DescribeCursorKeyActions| replace:: show a list of all the actions that do involve a cursor routing key
 .. |DescribeHighlighting| replace:: show the highlighting of a specific character
-.. |DescribeIndicators| replace:: show important status indicators
-.. |DeveloperOff| replace:: disable developer mode
-.. |DeveloperOn| replace:: enable developer mode
-.. |Editor| replace:: go to the |product name| editor
+.. |DescribeIndicators| replace:: show the values of important status indicators
+.. |DeveloperOff| replace:: turn developer mode off
+.. |DeveloperOn| replace:: turn developer mode on
+.. |Editor| replace:: go to the NBP editor
 .. |EMail| replace:: go to the EMail app
 .. |End| replace:: the keyboard End key
 .. |Enter| replace:: the keyboard Enter key
 .. |FindForward| replace:: find text within the current screen element (forward search)
 .. |FindNext| replace:: find the next occurrence of the same text within the current screen element
 .. |FindPrevious| replace:: find the previous occurrence of the same text within the current screen element
-.. |ForceCrash| replace:: force a |user interface| crash
+.. |ForceCrash| replace:: force a user interface action crash
 .. |Gallery| replace:: go to the Gallery app
-.. |HelpText| replace:: present the plain text version of the |user interface| manual
-.. |HelpHTML| replace:: present the HTML version of the |user interface| manual
+.. |HelpText| replace:: go to the plain text version of the user interface manual
+.. |HelpHTML| replace:: go to the HTML version of the user interface manual
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
-.. |LineNext| replace:: go to the start of the next line
-.. |LinePrevious| replace:: go to the start of the previous line
 .. |LiteraryBrailleOff| replace:: select computer braille (eight dots) mode
 .. |LiteraryBrailleOn| replace:: select literary braille (six dots) mode
-.. |LogActionsOff| replace:: disable the logging of user-requested actions
-.. |LogActionsOn| replace:: enable the logging of user-requested actions
-.. |LogBrailleOff| replace:: disable the logging of braille display updates
-.. |LogBrailleOn| replace:: enable the logging of braille display updates
-.. |LogGesturesOff| replace:: disable the logging of touch screen gestures
-.. |LogGesturesOn| replace:: enable the logging of touch screen gestures
-.. |LogKeyboardOff| replace:: disable the logging of keyboard key events
-.. |LogKeyboardOn| replace:: enable the logging of keyboard key events
-.. |LogNavigationOff| replace:: disable the logging of internal screen navigation operations
-.. |LogNavigationOn| replace:: enable the logging of internal screen navigation operations
-.. |LogUpdatesOff| replace:: disable the logging of screen updates
-.. |LogUpdatesOn| replace:: enable the logging of screen updates
-.. |LogsOff| replace:: disable all of the logging categories
-.. |LogsOn| replace:: enable the most useful logging categories
+.. |LogActionsOff| replace:: turn the logging of user-requested actions off
+.. |LogActionsOn| replace:: turn the logging of user-requested actions on
+.. |LogBrailleOff| replace:: turn the logging of braille display updates off
+.. |LogBrailleOn| replace:: turn the logging of braille display updates on
+.. |LogGesturesOff| replace:: turn the logging of touch screen gestures off
+.. |LogGesturesOn| replace:: turn the logging of touch screen gestures on
+.. |LogKeyboardOff| replace:: turn the logging of keyboard key events off
+.. |LogKeyboardOn| replace:: turn the logging of keyboard key events on
+.. |LogNavigationOff| replace:: turn the logging of internal screen navigation operations off
+.. |LogNavigationOn| replace:: turn the logging of internal screen navigation operations on
+.. |LogUpdatesOff| replace:: turn the logging of screen updates off
+.. |LogUpdatesOn| replace:: turn the logging of screen updates on
+.. |LogsOff| replace:: turn all of the logging categories off
+.. |LogsOn| replace:: turn the most useful logging categories on
 .. |LongClick| replace:: hold (long click) the current screen element
-.. |LongPressOff| replace:: disable long key press actions
-.. |LongPressOn| replace:: enable long key press actions
-.. |Maintenance| replace:: go to the System Maintenance screen of the |user interface|
+.. |LongPressOff| replace:: turn long key press mode off
+.. |LongPressOn| replace:: turn long key press mode on
+.. |Maintenance| replace:: go to the B2G System Maintenance screen
 .. |MenuKey| replace:: the Android Menu key
 .. |MoveBackward| replace:: go to the start of the previous screen element
-.. |MoveDown| replace:: go to the next line of text or element on the screen
+.. |MoveDown| replace:: go to the next line of text or to the start of the next screen element
 .. |MoveForward| replace:: go to the start of the next screen element
 .. |MoveLeft| replace:: go to the previous character of editable text or part of the line
 .. |MoveRight| replace:: go to the next character of editable text or part of the line
@@ -77,78 +75,78 @@
 .. |MoveToParent| replace:: go to and describe the parent node
 .. |MoveToPreviousSibling| replace:: go to and describe the previous sibling node
 .. |MoveToSelf| replace:: describe the current node
-.. |MoveUp| replace:: go to the previous line of text or element on the screen
+.. |MoveUp| replace:: go to the previous line of text or to the start of the previous screen element
 .. |Music| replace:: go to the Music app
 .. |Notifications| replace:: go to the Notifications screen
-.. |Null| replace:: cancel an accidentally-started key combination
-.. |OneHandOff| replace:: disable one hand mode
-.. |OneHandOn| replace:: enable one hand mode
+.. |Null| replace:: cancel a key combination
+.. |OneHandOff| replace:: turn one hand mode off
+.. |OneHandOn| replace:: turn one hand mode on
 .. |PageDown| replace:: the keyboard Page Down key
 .. |PageUp| replace:: the keyboard Page Up key
 .. |PanLeft| replace:: pan to the left
 .. |PanRight| replace:: pan to the right
-.. |PasteFromClipboard| replace:: paste the clipboard into the text
+.. |PasteFromClipboard| replace:: paste the current clipboard content
 .. |People| replace:: go to the People (Contacts) app
 .. |PowerOff| replace:: go to the Power Off screen
 .. |RecentApps| replace:: go to the Recent Apps screen
 .. |RemoveShortcut| replace:: remove a shortcut from the home screen
-.. |ResetHighlightedTyping| replace:: turn off all of the highlighted typing settings
-.. |ResetSettings| replace:: reset the |user interface| settings to default values
-.. |RestoreSettings| replace:: restore the most recently saved |user interface| settings
-.. |ReversePanningOff| replace:: disable reverse panning mode
-.. |ReversePanningOn| replace:: enable reverse panning mode
-.. |SaveSettings| replace:: save the current |user interface| settings
-.. |SaveScreen| replace:: write the screen element structure to the log
-.. |SayLine| replace:: speak the current line
+.. |ResetHighlightedTyping| replace:: turn all of the highlighted typing styles off
+.. |ResetSettings| replace:: reset the B2G settings to their default values
+.. |RestoreSettings| replace:: restore the B2G settings to their most recently saved values
+.. |ReversePanningOff| replace:: turn reverse panning mode off
+.. |ReversePanningOn| replace:: turn reverse panning mode on
+.. |SaveSettings| replace:: save the current B2G settings
+.. |SaveScreen| replace:: write the current screen element structure to the Android log
+.. |SayLine| replace:: speak the text on the current line
 .. |ScrollBackward| replace:: force the screen to scroll backward (up or left)
 .. |ScrollDown| replace:: go to the next page of a list or paragraph of text
 .. |ScrollForward| replace:: force the screen to scroll forward (down or right)
-.. |ScrollLeft| replace:: go to the beginning of a list or line
+.. |ScrollLeft| replace:: go to the start of a list or line
 .. |ScrollRight| replace:: go to the end of a list or line
 .. |ScrollUp| replace:: go to the previous page of a list or paragraph of text
 .. |SelectAll| replace:: select all of the text
-.. |SendAndroidLog| replace:: send a copy of the Android log to the |product name| developers
-.. |SetLeft| replace:: shift the braille display a specific amount to the right
+.. |SendAndroidLog| replace:: send a copy of the Android log to the B2G developers
+.. |SetLeft| replace:: pan the braille display a specific amount to the right
 .. |SetSelectionEnd| replace:: set or change the end of the text selection
 .. |SetSelectionStart| replace:: set or change the start of the text selection
-.. |Settings| replace:: go to the Settings screen of the |user interface|
-.. |SleepTalkOff| replace:: speak only when awake
-.. |SleepTalkOn| replace:: speak even when asleep
+.. |Settings| replace:: go to the B2G Settings screen
+.. |SleepTalkOff| replace:: speak only when the B2G is awake
+.. |SleepTalkOn| replace:: speak even when the B2G is asleep
 .. |SpeakFaster| replace:: increase the speech rate
 .. |SpeakHigher| replace:: increase the speech pitch
-.. |SpeakLeft| replace:: adjust the speech balance more to the left
+.. |SpeakLeft| replace:: adjust the speech balance more toward the left
 .. |SpeakLouder| replace:: increase the speech volume
 .. |SpeakLower| replace:: decrease the speech pitch
-.. |SpeakRight| replace:: adjust the speech balance more to the right
+.. |SpeakRight| replace:: adjust the speech balance more toward the right
 .. |SpeakSlower| replace:: decrease the speech rate
 .. |SpeakSofter| replace:: decrease the speech volume
-.. |SpeechOff| replace:: disable speech
-.. |SpeechOn| replace:: enable speech
-.. |StopSpeaking| replace:: stop speaking
+.. |SpeechOff| replace:: turn speech off
+.. |SpeechOn| replace:: turn speech on
+.. |StopSpeaking| replace:: stop speaking immediately
 .. |Store| replace:: go to the Store (Market) app
-.. |SwitchLauncher| replace:: go to the Launcher chooser
+.. |SwitchLauncher| replace:: go to the Android Launcher chooser
 .. |TabBackward| replace:: the keyboard Shift+Tab keys (tab backward)
 .. |TabForward| replace:: the keyboard Tab key (tab forward)
 .. |TextMessaging| replace:: go to the Text (Messaging) [SMS, MMS] app
 .. |ToSelectionEnd| replace:: go to the end of the input area
 .. |ToSelectionStart| replace:: go to the start of the input area
-.. |ToTextEnd| replace:: go to the cursor or end of the text selection
-.. |ToTextStart| replace:: go to the cursor or start of the text selection
+.. |ToTextEnd| replace:: go to the end of the text selection (or to the cursor)
+.. |ToTextStart| replace:: go to the start of the text selection (or to the cursor)
 .. |TypeControl| replace:: the keyboard Control key (applies to the next typed character)
 .. |TypeDot7| replace:: type the character represented by just dot 7
 .. |TypeDot8| replace:: type the character represented by just dot 8
 .. |TypeUnicode| replace:: prompt for the Unicode value of the character to be typed
-.. |TypingBoldOff| replace:: turn off bold typing
-.. |TypingBoldOn| replace:: turn on bold typing
-.. |TypingItalicOff| replace:: turn off italic typing
-.. |TypingItalicOn| replace:: turn on italic typing
+.. |TypingBoldOff| replace:: turn bold typing off
+.. |TypingBoldOn| replace:: turn bold typing on
+.. |TypingItalicOff| replace:: turn italic typing off
+.. |TypingItalicOn| replace:: turn italic typing on
 .. |TypingModeBraille| replace:: set the typing mode to braille
 .. |TypingModeConfirm| replace:: show the current typing mode
 .. |TypingModeText| replace:: set the typing mode to text
-.. |TypingUnderlineOff| replace:: turn off underline typing
-.. |TypingUnderlineOn| replace:: turn on underline typing
-.. |UpdateEditor| replace:: update the |product name| editor
-.. |VoiceCommand| replace:: initiate a voice command
+.. |TypingUnderlineOff| replace:: turn underlined typing off
+.. |TypingUnderlineOn| replace:: turn underlined typing on
+.. |UpdateEditor| replace:: update the NBP editor
+.. |VoiceCommand| replace:: initiate an Android voice command
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
 .. |WifiSettings| replace:: go to the Wi-Fi Settings screen
