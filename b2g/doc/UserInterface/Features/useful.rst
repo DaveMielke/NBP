@@ -135,7 +135,7 @@ Space+s (dots 234)
     Go to the Text (Messaging) [SMS, MMS] app.
 
   v (dots 1236)
-    Initiate a voice command.
+    Initiate an Android voice command.
 
   w (dots 2456)
     Go to the Wi-Fi Settings screen.

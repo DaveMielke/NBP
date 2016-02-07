@@ -4,9 +4,9 @@
 .. |Assist| replace:: go to the current Google Assist app
 .. |BackKey| replace:: the Android Back key
 .. |BluetoothSettings| replace:: go to the Bluetooth Settings screen
-.. |BrailleCodeConfirm| replace:: show the current braille code
-.. |BrailleCodeNext| replace:: select the next braille code
-.. |BrailleCodePrevious| replace:: select the previous braille code
+.. |BrailleCodeConfirm| replace:: show the current literary braille code
+.. |BrailleCodeNext| replace:: select the next literary braille code
+.. |BrailleCodePrevious| replace:: select the previous literary braille code
 .. |BrailleOff| replace:: turn the braille display off
 .. |BrailleOn| replace:: turn the braille display on
 .. |BringCursor| replace:: bring the cursor to a specific character
@@ -27,8 +27,8 @@
 .. |DescribeBuild| replace:: show details that identify the current build
 .. |DescribeCharacter| replace:: show the description of a specific character
 .. |DescribeCursorKeyActions| replace:: show a list of all the actions that do involve a cursor routing key
-.. |DescribeHighlighting| replace:: show the highlighting of a specific character
-.. |DescribeIndicators| replace:: show the values of important status indicators
+.. |DescribeHighlighting| replace:: show how a specific character has been highlighted
+.. |DescribeIndicators| replace:: show the values of important device status indicators
 .. |DeveloperOff| replace:: turn developer mode off
 .. |DeveloperOn| replace:: turn developer mode on
 .. |Editor| replace:: go to the NBP editor
@@ -46,8 +46,8 @@
 .. |HomeKey| replace:: the Android Home key
 .. |LiteraryBrailleOff| replace:: select computer braille (eight dots) mode
 .. |LiteraryBrailleOn| replace:: select literary braille (six dots) mode
-.. |LogActionsOff| replace:: turn the logging of user-requested actions off
-.. |LogActionsOn| replace:: turn the logging of user-requested actions on
+.. |LogActionsOff| replace:: turn the logging of user interface actions off
+.. |LogActionsOn| replace:: turn the logging of user interface actions on
 .. |LogBrailleOff| replace:: turn the logging of braille display updates off
 .. |LogBrailleOn| replace:: turn the logging of braille display updates on
 .. |LogGesturesOff| replace:: turn the logging of touch screen gestures off
@@ -66,16 +66,16 @@
 .. |Maintenance| replace:: go to the B2G System Maintenance screen
 .. |MenuKey| replace:: the Android Menu key
 .. |MoveBackward| replace:: go to the start of the previous screen element
-.. |MoveDown| replace:: go to the next line of text or to the start of the next screen element
+.. |MoveDown| replace:: go down one line of text or to the start of the next screen element
 .. |MoveForward| replace:: go to the start of the next screen element
-.. |MoveLeft| replace:: go to the previous character of editable text or part of the line
-.. |MoveRight| replace:: go to the next character of editable text or part of the line
+.. |MoveLeft| replace:: go to the previous character of editable text or pan to the left
+.. |MoveRight| replace:: go to the next character of editable text or pan to the right
 .. |MoveToChild| replace:: go to and describe the first child node
 .. |MoveToNextSibling| replace:: go to and describe the next sibling node
 .. |MoveToParent| replace:: go to and describe the parent node
 .. |MoveToPreviousSibling| replace:: go to and describe the previous sibling node
 .. |MoveToSelf| replace:: describe the current node
-.. |MoveUp| replace:: go to the previous line of text or to the start of the previous screen element
+.. |MoveUp| replace:: go up one line of text or to the start of the previous screen element
 .. |Music| replace:: go to the Music app
 .. |Notifications| replace:: go to the Notifications screen
 .. |Null| replace:: cancel a key combination
@@ -83,8 +83,8 @@
 .. |OneHandOn| replace:: turn one hand mode on
 .. |PageDown| replace:: the keyboard Page Down key
 .. |PageUp| replace:: the keyboard Page Up key
-.. |PanLeft| replace:: pan to the left
-.. |PanRight| replace:: pan to the right
+.. |PanLeft| replace:: pan one braille display length to the left (wrapping to the end of the previous line or going to the start of the previous screen element as needed)
+.. |PanRight| replace:: pan one braille display length to the right (wrapping to the start of the next line or going to the start of the next screen element as needed)
 .. |PasteFromClipboard| replace:: paste the current clipboard content
 .. |People| replace:: go to the People (Contacts) app
 .. |PowerOff| replace:: go to the Power Off screen
@@ -122,9 +122,9 @@
 .. |SpeakSofter| replace:: decrease the speech volume
 .. |SpeechOff| replace:: turn speech off
 .. |SpeechOn| replace:: turn speech on
-.. |StopSpeaking| replace:: stop speaking immediately
+.. |StopSpeaking| replace:: stop speaking immediately (mute)
 .. |Store| replace:: go to the Store (Market) app
-.. |SwitchLauncher| replace:: go to the Android Launcher chooser
+.. |SwitchLauncher| replace:: go to the Android launcher chooser
 .. |TabBackward| replace:: the keyboard Shift+Tab keys (tab backward)
 .. |TabForward| replace:: the keyboard Tab key (tab forward)
 .. |TextMessaging| replace:: go to the Text (Messaging) [SMS, MMS] app
