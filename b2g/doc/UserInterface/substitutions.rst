@@ -21,7 +21,7 @@
 .. |user data| replace:: |user data path| (the user data partition)
 
 .. |long press timeout| replace:: half a second
-.. |intermediate action timeout| replace:: two seconds
+.. |partial entry timeout| replace:: two seconds
 
 .. |message time| replace:: two seconds
 .. |popup time| replace:: 30 seconds

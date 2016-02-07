@@ -10,7 +10,7 @@ public abstract class ApplicationParameters extends CommonParameters {
   public final static char PASSWORD_CHARACTER = '*';
 
   public final static long LONG_PRESS_TIME = 500; // milliseconds
-  public final static long INTERMEDIATE_ACTION_TIMEOUT = 2000; // milliseconds
+  public final static long PARTIAL_ENTRY_TIMEOUT = 2000; // milliseconds
 
   public final static long BRAILLE_MESSAGE_DURATION = 2000; // milliseconds
   public final static long BRAILLE_POPUP_TIMEOUT = 30000; // milliseconds

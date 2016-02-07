@@ -27,7 +27,7 @@ public abstract class Action {
 
   private String actionSummary = null;
 
-  public final String getSummary () {
+  public String getSummary () {
     synchronized (this) {
       if (actionSummary == null) {
         actionSummary = ApplicationContext.getString("action_summary_" + getName());

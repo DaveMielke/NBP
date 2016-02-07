@@ -48,7 +48,7 @@ public class KeyBindings {
     return setKeyBindings(rootKeyBindings);
   }
 
-  private final Timeout intermediateActionTimeout = new Timeout(ApplicationParameters.INTERMEDIATE_ACTION_TIMEOUT, "intermediate-action-timeout") {
+  private final Timeout partialEntryTimeout = new Timeout(ApplicationParameters.PARTIAL_ENTRY_TIMEOUT, "partial-entry-timeout") {
     @Override
     public void run () {
       try {
@@ -60,27 +60,32 @@ public class KeyBindings {
   };
 
   public void resetKeyBindings () {
-    intermediateActionTimeout.cancel();
+    partialEntryTimeout.cancel();
     setKeyBindings();
   }
 
-  private class IntermediateAction extends Action {
+  private class PartialEntry extends Action {
     public final KeyBindingMap keyBindings = new KeyBindingMap();
 
     @Override
     public boolean performAction () {
-      intermediateActionTimeout.cancel();
+      partialEntryTimeout.cancel();
       setKeyBindings(keyBindings);
-      intermediateActionTimeout.start();
+      partialEntryTimeout.start();
       return true;
     }
 
     @Override
-    protected Integer getConfirmation () {
-      return R.string.intermediate_action_confirmation;
+    public String getSummary () {
+      return ApplicationContext.getString(R.string.message_partial_entry_summary);
     }
 
-    public IntermediateAction (Endpoint endpoint) {
+    @Override
+    protected Integer getConfirmation () {
+      return R.string.message_partial_entry_initiated;
+    }
+
+    public PartialEntry (Endpoint endpoint) {
       super(endpoint, false);
     }
   }
@@ -89,8 +94,8 @@ public class KeyBindings {
     return currentKeyBindings == rootKeyBindings;
   }
 
-  private static boolean isIntermediateAction (Action action) {
-    return action instanceof IntermediateAction;
+  private static boolean isPartialEntry (Action action) {
+    return action instanceof PartialEntry;
   }
 
   public Action getAction (int keyMask) {
@@ -98,7 +103,7 @@ public class KeyBindings {
     boolean reset = true;
 
     if (action != null) {
-      if (isIntermediateAction(action)) {
+      if (isPartialEntry(action)) {
         reset = false;
       }
     }
@@ -116,16 +121,16 @@ public class KeyBindings {
 
     for (int index=0; index<last; index+=1) {
       int keyMask = keyMasks[index];
-      Action intermediate = bindings.get(keyMask);
+      Action partialEntry = bindings.get(keyMask);
 
-      if (intermediate == null) {
-        intermediate = new IntermediateAction(endpoint);
-        bindings.put(keyMask, intermediate);
-      } else if (!isIntermediateAction(intermediate)) {
+      if (partialEntry == null) {
+        partialEntry = new PartialEntry(endpoint);
+        bindings.put(keyMask, partialEntry);
+      } else if (!isPartialEntry(partialEntry)) {
         return false;
       }
 
-      bindings = ((IntermediateAction)intermediate).keyBindings;
+      bindings = ((PartialEntry)partialEntry).keyBindings;
     }
 
     {

@@ -133,8 +133,7 @@ before the letter or special symbol that represents it (see `ASCII Control
 Characters`_). For example, in order to type a tab (which happens to be control
 I), press Space+x and then immediately type the letter ``i``.
 
-The letter or special symbol must be typed within
-|intermediate action timeout|.
+The letter or special symbol must be typed within |partial entry timeout|.
 
 Indirectly Typing Any Character
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

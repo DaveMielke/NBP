@@ -89,7 +89,6 @@
   <string name="SetCopyStart_action_confirmation">start of copy</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
   <string name="TypeControl_action_confirmation">control</string>
-  <string name="intermediate_action_confirmation">intermediate</string>
 
   <string name="default_control_previous">Previous</string>
   <string name="default_control_next">Next</string>
@@ -207,7 +206,8 @@
   <string name="message_formatting_text">formatting text</string>
   <string name="message_rendering_text">rendering text</string>
 
-  <string name="message_intermediate_action_timeout">incomplete entry</string>
+  <string name="message_partial_entry_summary">an additional key combination is required</string>
+  <string name="message_partial_entry_initiated">next key combination</string>
   <string name="message_modifier_cancelled">modifier cancelled</string>
 
   <string name="message_no_screen_content">no screen content</string>

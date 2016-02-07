@@ -31,7 +31,7 @@ public abstract class ModifierAction extends Action {
     if (cancelled) ApplicationUtilities.message(R.string.message_modifier_cancelled);
   }
 
-  private static Timeout modifierTimeout = new Timeout(ApplicationParameters.INTERMEDIATE_ACTION_TIMEOUT, "modifier-timeout") {
+  private static Timeout modifierTimeout = new Timeout(ApplicationParameters.PARTIAL_ENTRY_TIMEOUT, "modifier-timeout") {
     @Override
     public void run () {
       resetModifiers();
