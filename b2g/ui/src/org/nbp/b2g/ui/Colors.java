@@ -64,13 +64,16 @@ public abstract class Colors {
     return value * value;
   }
 
+  private final static int MAXIMUM_INTENSITY = 0XFF;
+  private final static int MAXIMUM_DISTANCE = square(MAXIMUM_INTENSITY);
+
   private static String findNearestColor (int actualColor) {
     int actualRed = Color.red(actualColor);
     int actualGreen = Color.green(actualColor);
     int actualBlue = Color.blue(actualColor);
 
-    String colorName = null;
-    int minimumDistance = (square(0XFF) * 3) + 1;
+    String colorName = "?";
+    int minimumDistance = MAXIMUM_DISTANCE + 1;
 
     for (int currentColor : colorNames.keySet()) {
       int currentRed = Color.red(currentColor);
@@ -88,7 +91,6 @@ public abstract class Colors {
       }
     }
 
-    if (colorName == null) colorName = "unknown";
     return colorName;
   }
 
