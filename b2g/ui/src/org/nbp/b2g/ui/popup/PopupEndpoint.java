@@ -42,14 +42,16 @@ public class PopupEndpoint extends Endpoint {
 
   @Override
   public boolean handleClick () {
-    try {
-      synchronized (this) {
-        if (clickHandler == null) return false;
-        return clickHandler.handleValue(getIndex());
+    synchronized (this) {
+      if (clickHandler != null) {
+        if (clickHandler.handleValue(getIndex())) {
+          return true;
+        }
       }
-    } finally {
-      Endpoints.setHostEndpoint();
     }
+
+    Endpoints.setHostEndpoint();
+    return false;
   }
 
   public final void set (CharSequence text, ValueHandler<Integer> handler) {

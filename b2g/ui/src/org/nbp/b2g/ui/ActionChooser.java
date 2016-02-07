@@ -43,6 +43,7 @@ public class ActionChooser {
           if ((index -= 1) < 0) return true;
           Action action = actions.get(index);
 
+          Endpoints.setHostEndpoint();
           if (cursorKey != null) return KeyEvents.performAction(action, cursorKey);
           return KeyEvents.performAction(action);
         }
