@@ -152,6 +152,9 @@
   <string name="DescribeCharacter_label_codepoint">Code Point</string>
   <string name="DescribeCharacter_label_directionality">Directionality</string>
 
+  <string name="DescribeColor_foreground">Foreground</string>
+  <string name="DescribeColor_background">Background</string>
+
   <string name="DescribeHighlighting_none">not highlighted</string>
   <string name="DescribeHighlighting_bold">bold</string>
   <string name="DescribeHighlighting_italic">italic</string>
