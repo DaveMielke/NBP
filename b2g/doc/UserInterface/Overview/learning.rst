@@ -30,7 +30,8 @@ Using an `Action Chooser`_
     offering all of the actions that do involve a cursor routing key.
 
   Each line shows the name of an action,
-  followed by the key combination that invokes it.
-  You can also immediately invoke an action from within the chooser
+  the key combination that performs it (when not within the chooser),
+  and a summary of what it does.
+  You can perform an action from within the chooser
   by pressing Center while on its line.
 

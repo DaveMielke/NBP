@@ -68,7 +68,7 @@ Action Chooser
 
 An action chooser is a special kind of popup (see `Popups`_)
 that presents you with a list of actins
-and lets you choose which one to invoke.
+and lets you choose which one to perform.
 For places where it's used, see:
 
 * `Ways to Learn`_
@@ -76,8 +76,8 @@ For places where it's used, see:
 
 Each line of the dialog shows one of the available actions. It contains
 the name of the action,
-the key combination that invokes it (when not within the chooser),
+the key combination that performs it (when not within the chooser),
 and a summary of what it does.
-Press Center to invoke it from within the chooser.
+Press Center to perform it from within the chooser.
 Press Enter to leave the chooser without invoking an action.
 

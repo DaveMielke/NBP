@@ -100,7 +100,7 @@ Space+? (dots 1456)
 Space+s (dots 234)
   Begin a shortcut. If one of the following key combinations is entered within
   |intermediate action timeout|
-  then the action it's bound to is immediately invoked.
+  then the action it's bound to is immediately performed.
   If not, then an `Action Chooser`_ is presented
   that let's you pick from the following choices.
 

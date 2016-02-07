@@ -5,7 +5,7 @@ Pressing Space+Dots78+m (dots 134) takes you to the
 System Maintenance screen for the |user interface|.
 
 A text area at the top of the screen is used to show progress information
-for the currently running (or most recently invoked) operation.
+for the currently running (or most recently performed) operation.
 This text area is initially empty.
 The list of available operations is below it.
 
