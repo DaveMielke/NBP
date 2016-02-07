@@ -72,12 +72,12 @@ public class DirectiveProcessor extends InputProcessor {
     DirectiveHandler handler = directives.get(directive);
 
     if (handler != null) {
-      operands = Arrays.copyOfRange(operands, index+1, operands.length);
+      index += 1;
     } else {
-      operands = Arrays.copyOfRange(operands, index, operands.length);
       handler = unknownDirectiveHandler;
     }
 
+    operands = Arrays.copyOfRange(operands, index, operands.length);
     return handler.handleDirective(operands);
   }
 
