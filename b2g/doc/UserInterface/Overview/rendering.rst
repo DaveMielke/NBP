@@ -145,6 +145,13 @@ sound) then it's confirmed by a message (see `Messages`_). For example::
   One Hand On
   Long Press Off
 
+Whenever you move onto a password field, a message (see `Messages`_) saying::
+
+  password field
+
+is displayed.
+Also, an asterisk [*] is displayed for each character you type within it.
+
 Input Area Indicators
 `````````````````````
 
