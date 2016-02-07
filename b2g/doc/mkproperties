@@ -3,16 +3,10 @@ set -e
 
 . ../application.sh
 . ../../properties.sh
+. ../../rst.sh
 
-writeProperty() {
-  local name="${1}"
-  local value="${2}"
-
-  echo ".. |${name}| replace:: ${value}"
-}
-
-writeProperty "package version" "${versionNumber}"
-writeProperty "source revision" "${sourceRevision}"
-writeProperty "build time" "${buildDate} ${buildTime} ${buildZone}"
+writeSubstitution "package version" "${versionNumber}"
+writeSubstitution "source revision" "${sourceRevision}"
+writeSubstitution "build time" "${buildDate} ${buildTime} ${buildZone}"
 
 exit 0

@@ -1,8 +1,10 @@
 DOCUMENT_NAMES = UserInterface
 
 all: html txt
+LOCAL_FILES :=
 
 BUILD_PROPERTIES = properties.rst
+LOCAL_FILES += $(BUILD_PROPERTIES)
 properties: $(BUILD_PROPERTIES)
 $(BUILD_PROPERTIES):
 	./mkproperties >$@
@@ -10,7 +12,7 @@ $(BUILD_PROPERTIES):
 html: $(DOCUMENT_NAMES:=.html)
 txt: $(DOCUMENT_NAMES:=.txt)
 
-%.html: %/main.rst properties
+%.html: %/main.rst $(LOCAL_FILES)
 	rst2html --config docutils.conf $< $@
 
 %.txt: %.html
@@ -22,5 +24,5 @@ txt: $(DOCUMENT_NAMES:=.txt)
 clean:
 	-rm -f -- *.html
 	-rm -f -- *.txt
-	-rm -f -- $(BUILD_PROPERTIES)
+	-rm -f -- $(LOCAL_FILES)
 
