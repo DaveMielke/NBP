@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.actions.Null;
 
 import java.util.Set;
 import java.util.List;
@@ -16,6 +17,7 @@ public class ActionChooser {
       if (needsCursorKey != haveCursorKey) continue;
 
       Action action = map.get(keys);
+      if (action instanceof Null) continue;
       if (action.isForDevelopers() && !ApplicationSettings.DEVELOPER_ENABLED) continue;
 
       sb.append('\n');
@@ -23,6 +25,9 @@ public class ActionChooser {
 
       sb.append(": ");
       sb.append(KeyMask.toString(keys));
+
+      sb.append(": ");
+      sb.append(action.getSummary());
 
       actions.add(action);
     }

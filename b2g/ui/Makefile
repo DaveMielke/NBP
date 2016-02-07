@@ -1,6 +1,12 @@
 include ../../prologue.mk
 include ../../properties.mk
 
+ACTION_SUMMARIES = res/values/actions.xml
+LOCAL_FILES += $(ACTION_SUMMARIES)
+actions: $(ACTION_SUMMARIES)
+$(ACTION_SUMMARIES)::
+	./mkactions >$@
+
 APPLICATION_NAME = B2G_UI
 PACKAGE_PATH = org.nbp.b2g.ui
 PLATFORM_NAME = armeabi

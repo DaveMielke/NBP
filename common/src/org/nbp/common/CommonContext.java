@@ -44,6 +44,18 @@ public abstract class CommonContext {
     return context.getString(resource);
   }
 
+  public static String getString (String name) {
+    Context context = getContext();
+    if (context == null) return null;
+
+    int resource = context.getResources().getIdentifier(
+      name, "string", context.getPackageName()
+    );
+
+    if (resource == 0) return null;
+    return getString(resource);
+  }
+
   public static Resources getResources () {
     Context context = getContext();
     if (context == null) return null;

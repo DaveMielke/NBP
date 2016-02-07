@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+. ../../resources.sh
+writeResourcesPrologue
+
+sed <../doc/UserInterface/QuickReference/actions.rst -n \
+    -e 's/^\.\.  *|\([a-zA-Z]*\)|  *replace::  *\(.*\)$/\1 \2/p' |
+while read action description
+do
+  writeSimpleResource string "action_summary_${action}" "${description}"
+done
+
+writeResourcesEpilogue
+exit 0

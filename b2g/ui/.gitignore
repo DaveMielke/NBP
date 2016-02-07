@@ -1,6 +1,7 @@
 /signing.properties
 /local.properties
 /res/values/properties.xml
+/res/values/actions.xml
 
 /bin/
 /gen/

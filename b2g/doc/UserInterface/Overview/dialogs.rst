@@ -74,9 +74,10 @@ For places where it's used, see:
 * `Ways to Learn`_
 * `Shortcuts to Useful Android Screens`_
 
-Each line of the dialog shows one of the available actions.
-It contains the name of the action, followed by
-the key combination that would invoke it when not within the chooser.
-To invoke it from within the chooser, press Center.
-To leave the chooser without invoking an action, press Enter.
+Each line of the dialog shows one of the available actions. It contains
+the name of the action,
+the key combination that invokes it (when not within the chooser),
+and a summary of what it does.
+Press Center to invoke it from within the chooser.
+Press Enter to leave the chooser without invoking an action.
 

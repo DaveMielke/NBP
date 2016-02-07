@@ -20,6 +20,19 @@ public abstract class Action {
     return LanguageUtilities.getClassName(getClass());
   }
 
+  private String actionSummary = null;
+
+  public final String getSummary () {
+    synchronized (this) {
+      if (actionSummary == null) {
+        actionSummary = ApplicationContext.getString("action_summary_" + getName());
+        if (actionSummary == null) actionSummary = "";
+      }
+    }
+
+    return actionSummary;
+  }
+
   public boolean performAction (int cursorKey) {
     return false;
   }

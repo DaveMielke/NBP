@@ -16,6 +16,7 @@ writeSimpleResource() {
   local name="${2}"
   local value="${3}"
 
+  value="$(echo "${value}" | sed -e 's/\(['"'"']\)/\\\1/g')"
   echo "  <${type} name=\"${name}\">${value}</${type}>"
 }
 
