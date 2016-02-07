@@ -1,5 +1,5 @@
-Administration
---------------
+Device Administration
+---------------------
 
 The Settings Screen
 ~~~~~~~~~~~~~~~~~~~

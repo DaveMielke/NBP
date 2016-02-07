@@ -1,5 +1,5 @@
-Additional Features
--------------------
+Useful Features
+---------------
 
 Checking the Time
 ~~~~~~~~~~~~~~~~~

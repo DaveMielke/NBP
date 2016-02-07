@@ -1,5 +1,5 @@
-Navigation
-==========
+Screen Navigation
+=================
 
 Emulating the Android Keys
 --------------------------
