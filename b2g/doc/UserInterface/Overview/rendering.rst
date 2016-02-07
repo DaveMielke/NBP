@@ -88,23 +88,11 @@ within a popup (see `Popups`_). For example, the description for the letter
   Category: lowercase letter
   Directionality: left to right
 
+Theme Description
+~~~~~~~~~~~~~~~~~
+
 Special Symbols
-~~~~~~~~~~~~~~~
-
-When within an input area (see `Input Areas`_):
-
-* The character where the cursor is is highlighted by |the cursor indicator|.
-  This is its default representation. It can be changed via `The Settings
-  Screen`_.
-
-* Each of the currently selected characters is highlighted by |the selection
-  indicator|. This is its default representation. It can be changed via `The
-  Settings Screen`_.
-
-Note that the cursor isn't shown when at least one character has been selected
-(see `Selecting Text`_). This is because editing actions are then performed on
-all of the selected characters as a single unit rather than at the cursor's
-location.
+```````````````
 
 If a screen element (list, group of pages, etc) needs to be scrolled, then:
 
@@ -113,9 +101,6 @@ If a screen element (list, group of pages, etc) needs to be scrolled, then:
 
 * Scrolling backward (up or to the left) is indicated via
   |the scrolling backward symbol|.
-
-Descriptive Annotations
-~~~~~~~~~~~~~~~~~~~~~~~
 
 A **checkbox** is rendered as
 either |the unchecked checkbox symbol| (meaning unchecked)
@@ -145,6 +130,9 @@ rendered as its widget type enclosed within {braces}. For example::
   {ImageButton}
   {SeekBar}
 
+Descriptive Annotations
+```````````````````````
+
 If a control isn't enabled then the word ``disabled``, enclosed within
 (parentheses), is appended to its descriptive text. For example::
 
@@ -156,4 +144,44 @@ sound) then it's confirmed by a message (see `Messages`_). For example::
 
   One Hand On
   Long Press Off
+
+Input Area Indicators
+`````````````````````
+
+Indicators are used to show where important parts of an input area
+(see `Input Areas`_) are. They are dot patterns that are superimposed
+(or overlaid) onto the characters that they're identifying.
+
+The Cursor Indicator
+''''''''''''''''''''
+
+This indicator is superimposed onto the character where the cursor is.
+It's default representation is |the cursor indicator|.
+This can be changed via `The Settings Screen`_.
+
+The actual cursor is a zero-width visual symbol that appears in between two
+characters such that the next character typed is inserted just to its right.
+Since this style of cursor representation can't be used in braille, the
+|user interface| places its cursor indicator on the character that's just to
+the right of the actual cursor.
+
+The cursor isn't shown when at least one character has been selected
+(see `Selecting Text`_). This is because editing actions are then performed on
+all of the selected characters as a single unit rather than at the cursor's
+location.
+
+The Selection Indicator
+'''''''''''''''''''''''
+
+This indicator serves two purposes:
+
+* If text has been selected then it's superimposed onto all of those characters.
+
+* If text hasn't been selected then it's superimposed onto each character
+  that's highlighted (bold, italic, and/or underlined). You can find out
+  exactly how a character has been highlighted by holding Dot3 while pressing
+  the cursor routing key associated with it.
+
+It's default representation is |the selection indicator|.
+This can be changed via `The Settings Screen`_.
 

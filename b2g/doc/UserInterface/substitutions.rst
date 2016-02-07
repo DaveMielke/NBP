@@ -26,9 +26,9 @@
 .. |message time| replace:: two seconds
 .. |popup time| replace:: 30 seconds
 
-.. |the undefined character| replace:: dots 3, 6, 7, and 8 (⣤)
-.. |the cursor indicator| replace:: dots 7 and 8 (⣀)
-.. |the selection indicator| replace:: dot 8 (⢀)
+.. |the undefined character| replace:: dots 3, 6, 7, and 8 [⣤]
+.. |the cursor indicator| replace:: dots 7 and 8 [⣀]
+.. |the selection indicator| replace:: dot 8 [⢀]
 
 .. |the unchecked checkbox symbol| replace:: dots 123478,0,145678 (⣏⠀⣹)
 .. |the checked checkbox symbol| replace:: dots 123478,2356,145678 (⣏⠶⣹)
