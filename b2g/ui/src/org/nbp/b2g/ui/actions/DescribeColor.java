@@ -13,11 +13,18 @@ public class DescribeColor extends CursorKeyAction {
     sb.append(": ");
   }
 
+  private static void addColor (StringBuilder sb, int label, int color) {
+    if (color >= 0) {
+      startLine(sb, label);
+      sb.append(Colors.getName(color));
+    }
+  }
+
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     CharSequence text = getEndpoint().getLineText();
-    int foregroundColor = 0;
-    int backgroundColor = 0;
+    int foregroundColor = -1;
+    int backgroundColor = -1;
 
     if (text instanceof Spanned) {
       Spanned spanned = (Spanned)text;
@@ -35,11 +42,10 @@ public class DescribeColor extends CursorKeyAction {
     }
 
     StringBuilder sb = new StringBuilder();
-    startLine(sb, R.string.DescribeColor_foreground);
-    sb.append(Colors.getName(foregroundColor));
-    startLine(sb, R.string.DescribeColor_background);
-    sb.append(Colors.getName(backgroundColor));
+    addColor(sb, R.string.DescribeColor_foreground, foregroundColor);
+    addColor(sb, R.string.DescribeColor_background, backgroundColor);
 
+    if (sb.length() == 0) return false;
     Endpoints.setPopupEndpoint(sb.toString());
     return true;
   }
