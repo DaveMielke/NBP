@@ -33,6 +33,10 @@ public abstract class Action {
     return actionSummary;
   }
 
+  public boolean isHidden () {
+    return false;
+  }
+
   public boolean performAction (int cursorKey) {
     return false;
   }

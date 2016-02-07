@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class Null extends Action {
   @Override
+  public boolean isHidden () {
+    return true;
+  }
+
+  @Override
   public boolean performAction () {
     return true;
   }
