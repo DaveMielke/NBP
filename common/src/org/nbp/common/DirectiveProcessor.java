@@ -25,6 +25,10 @@ public class DirectiveProcessor extends InputProcessor {
     }
   };
 
+  public final void setUnknownDirectiveHandler (DirectiveHandler handler) {
+    unknownDirectiveHandler = handler;
+  }
+
   private final Map<String, DirectiveHandler> directives = new HashMap<String, DirectiveHandler>();
 
   private static String normalizeName (String name) {
@@ -70,6 +74,7 @@ public class DirectiveProcessor extends InputProcessor {
     if (handler != null) {
       operands = Arrays.copyOfRange(operands, index+1, operands.length);
     } else {
+      operands = Arrays.copyOfRange(operands, index, operands.length);
       handler = unknownDirectiveHandler;
     }
 
