@@ -16,15 +16,17 @@ public abstract class Colors {
   private final static Map<Integer, String> knownColorNames = new HashMap<Integer, String>();
   private final static Map<Integer, String> cachedColorNames = new CacheMap<Integer, String>(0X10);
 
-  private final static int NO_COLOR = -1;
-
   private static int normalizedColor (int color) {
-    return color & 0XFFFFFF;
+    return Color.rgb(
+      Color.red(color),
+      Color.green(color),
+      Color.blue(color)
+    );
   }
 
-  private static void addColorName (String name, int color) {
-    color = normalizedColor(color);
+  private final static int NO_COLOR = normalizedColor(0) - 1;
 
+  private static void addColorName (String name, int color) {
     if (knownColorNames.get(color) == null) {
       knownColorNames.put(color, name);
     }
