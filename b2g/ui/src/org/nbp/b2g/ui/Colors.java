@@ -13,6 +13,8 @@ import android.graphics.Color;
 public abstract class Colors {
   private final static String LOG_TAG = Colors.class.getName();
 
+  private final static int NO_COLOR = -1;
+
   private final static Map<Integer, String> knownColorNames = new HashMap<Integer, String>();
   private final static Map<Integer, String> cachedColorNames = new CacheMap<Integer, String>(0X10);
 
@@ -79,7 +81,7 @@ public abstract class Colors {
     int actualGreen = Color.green(actualColor);
     int actualBlue  = Color.blue(actualColor);
 
-    int nearestColor = -1;
+    int nearestColor = NO_COLOR;
     int minimumDistance = MAXIMUM_DISTANCE + 1;
 
     for (int currentColor : knownColorNames.keySet()) {
@@ -112,7 +114,7 @@ public abstract class Colors {
       if (name != null) return name;
 
       int nearest = findNearestColor(color);
-      if (nearest == -1) return "?";
+      if (nearest == NO_COLOR) return "?";
 
       name = knownColorNames.get(nearest);
       cachedColorNames.put(color, name);
