@@ -13,7 +13,7 @@ import android.graphics.Color;
 public abstract class Colors {
   private final static String LOG_TAG = Colors.class.getName();
 
-  private final static int NO_COLOR = -1;
+  public final static int NO_COLOR = -1;
 
   private final static Map<Integer, String> knownColorNames = new HashMap<Integer, String>();
   private final static Map<Integer, String> cachedColorNames = new CacheMap<Integer, String>(0X10);

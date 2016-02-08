@@ -14,7 +14,7 @@ public class DescribeColor extends CursorKeyAction {
   }
 
   private static void addColor (StringBuilder sb, int label, int color) {
-    if (color >= 0) {
+    if (color != Colors.NO_COLOR) {
       startLine(sb, label);
       sb.append(Colors.getName(color));
     }
@@ -23,8 +23,8 @@ public class DescribeColor extends CursorKeyAction {
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     CharSequence text = getEndpoint().getLineText();
-    int foregroundColor = -1;
-    int backgroundColor = -1;
+    int foregroundColor = Colors.NO_COLOR;
+    int backgroundColor = Colors.NO_COLOR;
 
     if (text instanceof Spanned) {
       Spanned spanned = (Spanned)text;
