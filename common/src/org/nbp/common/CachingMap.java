@@ -3,7 +3,7 @@ package org.nbp.common;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-public class CacheMap<K, V> extends LinkedHashMap<K, V> {
+public class CachingMap<K, V> extends LinkedHashMap<K, V> {
   private final int cacheSize;
 
   @Override
@@ -11,8 +11,8 @@ public class CacheMap<K, V> extends LinkedHashMap<K, V> {
     return size() > cacheSize;
   }
 
-  public CacheMap (int size) {
-    super((((size * 4) / 3) + 1), 1f, true);
+  public CachingMap (int size) {
+    super((((size * 4) / 3) + 2), 1f, true);
     cacheSize = size;
   }
 }

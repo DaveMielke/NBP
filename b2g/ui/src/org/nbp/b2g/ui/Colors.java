@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 
 import java.util.Map;
 import java.util.HashMap;
-import org.nbp.common.CacheMap;
+import org.nbp.common.CachingMap;
 
 import org.nbp.common.InputProcessor;
 import org.nbp.common.DirectiveProcessor;
@@ -14,7 +14,7 @@ public abstract class Colors {
   private final static String LOG_TAG = Colors.class.getName();
 
   private final static Map<Integer, String> knownColorNames = new HashMap<Integer, String>();
-  private final static Map<Integer, String> cachedColorNames = new CacheMap<Integer, String>(0X10);
+  private final static Map<Integer, String> cachedColorNames = new CachingMap<Integer, String>(0X10);
 
   private static int normalizedColor (int color) {
     return Color.rgb(
