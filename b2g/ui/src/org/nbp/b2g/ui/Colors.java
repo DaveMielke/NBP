@@ -18,7 +18,13 @@ public abstract class Colors {
   private final static Map<Integer, String> knownColorNames = new HashMap<Integer, String>();
   private final static Map<Integer, String> cachedColorNames = new CacheMap<Integer, String>(0X10);
 
-  private static void addColorName (String name, Integer color) {
+  private static int normalizedColor (int color) {
+    return color & 0XFFFFFF;
+  }
+
+  private static void addColorName (String name, int color) {
+    color = normalizedColor(color);
+
     if (knownColorNames.get(color) == null) {
       knownColorNames.put(color, name);
     }
@@ -104,6 +110,8 @@ public abstract class Colors {
   }
 
   public static String getName (int color) {
+    color = normalizedColor(color);
+
     synchronized (knownColorNames) {
       if (knownColorNames.isEmpty()) loadColorNames();
 
