@@ -12,7 +12,7 @@ public class CacheMap<K, V> extends LinkedHashMap<K, V> {
   }
 
   public CacheMap (int size) {
-    super(size*2, 1f, true);
+    super((((size * 4) / 3) + 1), 1f, true);
     cacheSize = size;
   }
 }
