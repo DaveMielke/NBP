@@ -13,8 +13,10 @@ import android.graphics.Color;
 public abstract class Colors {
   private final static String LOG_TAG = Colors.class.getName();
 
+  private final static int CACHE_SIZE = 0X10;
+
   private final static Map<Integer, String> knownColorNames = new HashMap<Integer, String>();
-  private final static Map<Integer, String> cachedColorNames = new CachingMap<Integer, String>(0X10);
+  private final static Map<Integer, String> cachedColorNames = new CachingMap<Integer, String>(CACHE_SIZE);
 
   private static int normalizedColor (int color) {
     return Color.rgb(
