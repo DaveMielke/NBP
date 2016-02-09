@@ -5,6 +5,8 @@ import java.util.Arrays;
 import android.util.Log;
 import android.content.Context;
 
+import org.liblouis.BrailleTranslation;
+
 public class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
@@ -303,8 +305,19 @@ public class BrailleDevice {
   }
 
   public final boolean write (CharSequence text, long duration) {
-    byte[] cells = new byte[text.length()];
-    text = Braille.setCells(cells, text);
+    byte[] cells = new byte[getLength()];
+    BrailleTranslation brl = TranslationUtilities.newBrailleTranslation(text, true);
+    int textLength;
+
+    if (brl != null) {
+      CharSequence braille = brl.getBrailleAsString();
+      int brailleLength = Braille.setCells(cells, braille);
+      textLength = brl.findFirstTextOffset(brailleLength);
+    } else {
+      textLength = Braille.setCells(cells, text);
+    }
+
+    text = text.subSequence(0, textLength);
     return write(cells, text, duration);
   }
 

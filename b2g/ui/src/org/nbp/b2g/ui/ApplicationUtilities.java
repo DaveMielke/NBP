@@ -48,14 +48,7 @@ public abstract class ApplicationUtilities {
   }
 
   public static void message (String text) {
-    {
-      BrailleTranslation brl = TranslationUtilities.newBrailleTranslation(text, false);
-
-      Devices.braille.get().write(
-        (brl != null)? brl.getBrailleAsString(): text,
-        ApplicationParameters.BRAILLE_MESSAGE_DURATION
-      );
-    }
+    Devices.braille.get().write(text, ApplicationParameters.BRAILLE_MESSAGE_DURATION);
 
     SpeechDevice speech = Devices.speech.get();
     synchronized (speech) {

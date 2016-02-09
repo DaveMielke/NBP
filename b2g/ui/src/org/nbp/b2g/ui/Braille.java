@@ -56,11 +56,9 @@ public abstract class Braille {
     clearCells(cells, 0);
   }
 
-  public static CharSequence setCells (byte[] cells, CharSequence text) {
-    int count = Math.min(text.length(), cells.length);
-    text = text.subSequence(0, count);
-
-    Characters characters = Characters.getCharacters();
+  public static int setCells (byte[] cells, CharSequence text) {
+    final Characters characters = Characters.getCharacters();
+    final int count = Math.min(text.length(), cells.length);
     int index = 0;
 
     while (index < count) {
@@ -70,7 +68,7 @@ public abstract class Braille {
     }
 
     clearCells(cells, index);
-    return text;
+    return count;
   }
 
   private static void markCells (
@@ -99,8 +97,9 @@ public abstract class Braille {
       int brailleIndent = endpoint.findFirstBrailleOffset(lineIndent);
       braille = braille.subSequence(brailleIndent, braille.length());
 
-      CharSequence text = setCells(cells, braille);
-      text = lineText.subSequence(lineIndent, (lineIndent + text.length()));
+      int cellCount = setCells(cells, braille);
+      int lineEnd = endpoint.getAdjustedLineOffset(cellCount, lineIndent);
+      CharSequence text = lineText.subSequence(lineIndent, lineEnd);
 
       if (endpoint.isInputArea()) {
         boolean hasSelection = false;
