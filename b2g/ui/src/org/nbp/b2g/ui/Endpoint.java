@@ -176,7 +176,7 @@ public abstract class Endpoint {
 
   private final void refreshBrailleTranslation () {
     if (ApplicationSettings.LITERARY_BRAILLE) {
-      if (haveValidTranslation()) return;
+    //if (haveValidTranslation()) return;
       discardTranslation();
       if (retrieveTranslation()) return;
       makeTranslation();
