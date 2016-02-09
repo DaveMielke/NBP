@@ -210,7 +210,7 @@
   <string name="message_rendering_text">rendering text</string>
 
   <string name="message_partial_entry_summary">an additional key combination is required</string>
-  <string name="message_partial_entry_initiated">next key combination</string>
+  <string name="message_partial_entry_initiated">next></string>
   <string name="message_modifier_cancelled">modifier cancelled</string>
 
   <string name="message_no_screen_content">no screen content</string>
