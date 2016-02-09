@@ -119,36 +119,9 @@ public abstract class Endpoint {
   private BrailleTranslation brailleTranslation = null;
   private TextTranslation textTranslation = null;
 
-  private static boolean equals (CharSequence cs1, CharSequence cs2) {
-    int length = cs1.length();
-    if (length != cs2.length()) return false;
-
-    for (int index=0; index<length; index+=1) {
-      if (cs1.charAt(index) != cs2.charAt(index)) return false;
-    }
-
-    return true;
-  }
-
   private final void discardTranslation () {
     brailleTranslation = null;
     textTranslation = null;
-  }
-
-  private final boolean haveValidTranslation () {
-    if (textTranslation != null) {
-      if (equals(textTranslation.getTextWithSpans(), lineText)) {
-        return true;
-      }
-    }
-
-    if (brailleTranslation != null) {
-      if (equals(brailleTranslation.getConsumedText(), lineText)) {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   private final boolean retrieveTranslation () {
@@ -176,7 +149,6 @@ public abstract class Endpoint {
 
   private final void refreshBrailleTranslation () {
     if (ApplicationSettings.LITERARY_BRAILLE) {
-    //if (haveValidTranslation()) return;
       discardTranslation();
       if (retrieveTranslation()) return;
       makeTranslation();
