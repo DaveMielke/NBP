@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-. application.sh
+. ./application.sh
 . ../properties.sh
 . ../resources.sh
 
