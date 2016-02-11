@@ -28,7 +28,7 @@ public class ClockActivity extends Activity {
     format.append(":mm:ss");
     if (!use24HourFormat) format.append(" a");
 
-    format.append("\nLLLL, EEEE");
+    format.append("\nEEE, LLL d");
     format.append("\nzzz ('UTC'ZZZ)");
 
     time.append(new SimpleDateFormat(format.toString()).format(date));
