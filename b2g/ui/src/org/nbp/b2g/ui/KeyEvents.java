@@ -14,6 +14,8 @@ import java.util.HashMap;
 
 import java.util.concurrent.Callable;
 
+import org.nbp.common.Timeout;
+
 import android.util.Log;
 
 import android.os.PowerManager;

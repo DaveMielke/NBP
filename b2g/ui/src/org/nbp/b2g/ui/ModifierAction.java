@@ -3,6 +3,8 @@ package org.nbp.b2g.ui;
 import java.util.Set;
 import java.util.HashSet;
 
+import org.nbp.common.Timeout;
+
 public abstract class ModifierAction extends Action {
   private final static Set<ModifierAction> modifierActions = new HashSet<ModifierAction>();
   private boolean modifierState = false;

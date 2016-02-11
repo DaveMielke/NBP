@@ -12,11 +12,13 @@ import java.io.BufferedOutputStream;
 
 import java.util.UUID;
 
+import org.nbp.common.Timeout;
+
 import android.util.Log;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.bluetooth.BluetoothServerSocket;
 
 public abstract class BrailleDisplay extends Thread {
   private final static String LOG_TAG = BrailleDisplay.class.getName();

@@ -1,14 +1,16 @@
 package org.nbp.b2g.ui;
 
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+import org.nbp.common.Timeout;
+
 import android.util.Log;
 import android.os.Build;
 
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
-
-import java.util.Map;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import android.text.Spanned;
 

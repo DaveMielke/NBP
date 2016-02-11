@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,16 +46,7 @@ public abstract class Timeout implements Runnable {
 
             synchronized (timeout) {
               timeout.cancel();
-
-              Crash.runComponent(
-                "timeout handler", timeout.getName(),
-                new Runnable() {
-                  @Override
-                  public void run () {
-                    timeout.run();
-                  }
-                }
-              );
+              timeout.run();
             }
           }
         };
