@@ -7,13 +7,33 @@ import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
+
+import android.text.format.DateFormat;
 import android.widget.TextView;
 
 public class ClockActivity extends Activity {
-  public TextView timeView;
-  SimpleDateFormat dateFormatter = new SimpleDateFormat(ApplicationParameters.CLOCK_TIME_FORMAT);
+  private TextView timeView;
+
+  private final void showTime (Date date) {
+    StringBuilder time = new StringBuilder();
+    time.append(DateFormat.getDateFormat(this).format(date));
+    time.append(' ');
+
+    StringBuilder format = new StringBuilder();
+    boolean use24HourFormat = DateFormat.is24HourFormat(this);
+
+    format.append(use24HourFormat? "HH": "h");
+    format.append(":mm:ss");
+    if (!use24HourFormat) format.append(" a");
+
+    format.append("\nLLLL, EEEE");
+    format.append("\nzzz ('UTC'ZZZ)");
+
+    time.append(new SimpleDateFormat(format.toString()).format(date));
+    timeView.setText(time.toString());
+  }
 
   private class ClockUpdateTask extends TimerTask {
     private final Timer timer = new Timer();
@@ -35,7 +55,7 @@ public class ClockActivity extends Activity {
           synchronized (getClockUpdateSynchronizationObject()) {
             if (isClockUpdateScheduled()) {
               Date date = new Date();
-              timeView.setText(dateFormatter.format(date));
+              showTime(date);
 
               long interval = ApplicationParameters.CLOCK_UPDATE_INTERVAL;
               scheduleClockUpdate(interval - (date.getTime() % interval));
