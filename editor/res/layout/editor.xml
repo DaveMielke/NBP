@@ -18,6 +18,7 @@
     android:id="@+id/current_file"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:singleLine="true"
     android:text=""
    />
 
