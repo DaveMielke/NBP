@@ -7,17 +7,16 @@ Pressing Space+o (dots 135) takes you to the Settings screen for the
 The top line contains the following buttons:
 
 Save Settings
-  Save the current values of the settings for later restoration. This is a good
-  way to checkpoint the configuration that you're most comfortable with.
+  Save the current settings for later restoration. This is a good way
+  to checkpoint the configuration that you're most comfortable with.
 
 Restore Settings
-  Restore the setting values that were most recently saved. This is how to get
-  back to the configuration that you're most comfortable with.
+  Restore the settings that were most recently saved. This is how to get back
+  to the configuration that you were most comfortable with.
 
 Reset to Defaults
-  Restore the setting values to an internally-defined configuration. This is
-  how to recover if, for example, you've accidentally messed up your saved 
-  settings.
+  Restore the settings to an internally-defined configuration. This is how to
+  recover if, for example, you've accidentally messed up your saved settings.
 
 System Maintenance
   Go to `The System Maintenance Screen`_.
@@ -27,15 +26,14 @@ columns as follows:
 
 1) This column contains the name of the setting.
 
-2) If it's a boolean setting then this column contains an on/off switch. If
-   it's any other kind of setting then this column shows that setting's current
-   value.
+2) For a boolean setting, this column contains an on/off switch.
+   For any other kind of setting, it shows the setting's current value.
 
-3) For non-boolean settings, this column contains a button that changes the
-   setting to its *previous* (lower for numeric settings) value.
+3) For numeric settings, this column contains a button that decreases its value.
+   For settings that have discrete values, this column contains a Change button
+   that brings up a dialog from which the desired value can be selected.
 
-4) For non-boolean settings, this column contains a button that changes the
-   setting to its *next* (higher for numeric settings) value.
+4) For numeric settings, this column contains a button that increases its value.
 
 General Settings
 ~~~~~~~~~~~~~~~~
