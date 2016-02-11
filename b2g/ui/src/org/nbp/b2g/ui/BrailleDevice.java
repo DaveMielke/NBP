@@ -314,7 +314,7 @@ public class BrailleDevice {
     if (brl != null) {
       CharSequence braille = brl.getBrailleAsString();
       int brailleLength = Braille.setCells(cells, braille);
-      textLength = brl.findFirstTextOffset(brailleLength);
+      textLength = brl.findFirstTextOffset(brl.getTextOffset(brailleLength));
     } else {
       textLength = Braille.setCells(cells, text);
     }
