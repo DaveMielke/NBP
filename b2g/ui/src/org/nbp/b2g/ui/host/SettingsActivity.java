@@ -161,10 +161,6 @@ public class SettingsActivity extends ProgrammaticActivity {
     );
   }
 
-  protected final AlertDialog.Builder newAlertDialogBuilder () {
-    return new AlertDialog.Builder(this);
-  }
-
   private View createEnumerationChangeButton (final Control control) {
     final EnumerationControl ec = (EnumerationControl)control;
     final CharSequence[] labels = ec.getValueLabels();
@@ -177,16 +173,18 @@ public class SettingsActivity extends ProgrammaticActivity {
       }
     };
 
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this)
+      .setTitle(ec.getLabel())
+      .setNeutralButton(R.string.button_dialog_cancel, null)
+      .setCancelable(true);
+
     Button button = newButton(
       R.string.button_settings_change,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          newAlertDialogBuilder().setTitle(ec.getLabel())
-                                 .setSingleChoiceItems(labels, ec.getIntegerValue(), listener)
-                                 .setNeutralButton(R.string.button_dialog_cancel, null)
-                                 .setCancelable(true)
-                                 .show();
+          builder.setSingleChoiceItems(labels, ec.getIntegerValue(), listener)
+                 .show();
         }
       }
     );
