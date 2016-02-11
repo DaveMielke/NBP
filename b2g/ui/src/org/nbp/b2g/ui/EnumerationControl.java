@@ -13,7 +13,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
 
   private E[] valueArray = null;
 
-  private E[] getValueArray () {
+  private final E[] getValueArray () {
     synchronized (this) {
       if (valueArray == null) {
         valueArray = (E[])LanguageUtilities.invokeStaticMethod(
@@ -33,14 +33,26 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueArray()[ordinal];
   }
 
-  protected String getValueLabel (E value) {
+  protected CharSequence getValueLabel (E value) {
     String label = EnumerationLabels.getLabel(value);
     if (label != null) return label;
     return value.name().replace('_', ' ').toLowerCase();
   }
 
-  private String getValueLabel (int ordinal) {
+  private CharSequence getValueLabel (int ordinal) {
     return getValueLabel(getValue(ordinal));
+  }
+
+  public final CharSequence[] getValueLabels () {
+    E[] values = getValueArray();
+    int count = values.length;
+    CharSequence[] labels = new CharSequence[count];
+
+    for (int index=0; index<count; index+=1) {
+      labels[index] = getValueLabel(values[index]);
+    }
+
+    return labels;
   }
 
   @Override
@@ -72,7 +84,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueLabel(getEnumerationValue());
   }
 
-  private String getLabel (int ordinal, int resource) {
+  private CharSequence getLabel (int ordinal, int resource) {
     E[] values = getValueArray();
     if (values.length < 2) return null;
     if (values.length == 2) return getValueLabel(ordinal);

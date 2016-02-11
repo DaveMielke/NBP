@@ -90,6 +90,9 @@
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
   <string name="TypeControl_action_confirmation">control</string>
 
+  <string name="button_settings_change">Change</string>
+  <string name="button_dialog_cancel">Cancel</string>
+
   <string name="default_control_previous">Previous</string>
   <string name="default_control_next">Next</string>
 

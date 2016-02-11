@@ -21,6 +21,9 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 public class SettingsActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = SettingsActivity.class.getName();
 
@@ -158,15 +161,32 @@ public class SettingsActivity extends ProgrammaticActivity {
     );
   }
 
-  private View createNextValueButton (final Control control) {
+  protected final AlertDialog.Builder newAlertDialogBuilder () {
+    return new AlertDialog.Builder(this);
+  }
+
+  private View createEnumerationChangeButton (final Control control) {
+    final EnumerationControl ec = (EnumerationControl)control;
+    final CharSequence[] labels = ec.getValueLabels();
+
+    final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick (DialogInterface dialog, int which) {
+        ec.setValue(which);
+        dialog.dismiss();
+      }
+    };
+
     Button button = newButton(
-      control.getNextLabel(),
+      R.string.button_settings_change,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (!control.nextValue()) {
-            Devices.tone.get().beep();
-          }
+          newAlertDialogBuilder().setTitle(ec.getLabel())
+                                 .setSingleChoiceItems(labels, ec.getIntegerValue(), listener)
+                                 .setNeutralButton(R.string.button_dialog_cancel, null)
+                                 .setCancelable(true)
+                                 .show();
         }
       }
     );
@@ -181,6 +201,22 @@ public class SettingsActivity extends ProgrammaticActivity {
         @Override
         public void onClick (View view) {
           if (!control.previousValue()) {
+            Devices.tone.get().beep();
+          }
+        }
+      }
+    );
+
+    return button;
+  }
+
+  private View createNextValueButton (final Control control) {
+    Button button = newButton(
+      control.getNextLabel(),
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          if (!control.nextValue()) {
             Devices.tone.get().beep();
           }
         }
@@ -270,8 +306,13 @@ public class SettingsActivity extends ProgrammaticActivity {
           setColumn(row, 1, createBooleanValueView(control));
         } else {
           setColumn(row, 1, createIntegerValueView(control));
-          setColumn(row, 2, createPreviousValueButton(control));
-          setColumn(row, 3, createNextValueButton(control));
+
+          if (control instanceof EnumerationControl) {
+            setColumn(row, 2, createEnumerationChangeButton(control));
+          } else {
+            setColumn(row, 2, createPreviousValueButton(control));
+            setColumn(row, 3, createNextValueButton(control));
+          }
         }
       }
 
