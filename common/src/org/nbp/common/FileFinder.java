@@ -30,6 +30,7 @@ public class FileFinder {
   private final FileHandler fileHandler;
 
   private final void handleFile (File file) {
+    fileHandler.handleFile(file);
   }
 
   private final void show (final File reference, Set<String> itemSet) {
