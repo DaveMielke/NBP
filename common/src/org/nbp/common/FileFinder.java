@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Button;
 
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
@@ -118,7 +119,7 @@ public class FileFinder {
         } else {
           File file = new File(path);
           file.mkdir();
-          show(file);
+          showListing(file);
         }
       }
     };
@@ -136,7 +137,7 @@ public class FileFinder {
     setEditedPath(dialog, reference);
   }
 
-  private final void show (final File reference, Set<String> itemSet) {
+  private final void showItemListing (final File reference, Set<String> itemSet) {
     final boolean haveReference = reference != null;
     String dialogTitle;
 
@@ -160,20 +161,14 @@ public class FileFinder {
       @Override
       public void onClick (DialogInterface dialog, int itemIndex) {
         if (haveReference && (itemIndex == 0)) {
-          File parent = reference.getParentFile();
-
-          if (parent == null) {
-            show();
-          } else {
-            show(parent);
-          }
+          showListing(reference.getParentFile());
         } else {
           String itemName = itemArray[itemIndex];
 
           if (itemName.charAt(0) == File.separatorChar) {
-            show(new File(itemName));
+            showListing(new File(itemName));
           } else {
-            show(new File(reference, itemName));
+            showListing(new File(reference, itemName));
           }
         }
 
@@ -210,41 +205,34 @@ public class FileFinder {
       );
     }
 
-    builder.show();
-  }
+    AlertDialog dialog = builder.create();
+    dialog.show();
 
-  private final void show (File reference) {
-    if (reference.isDirectory()) {
-      Set<String> items = new TreeSet<String>();
+    if (mayCreate) {
+      boolean canCreate =  (reference != null)
+                        && (reference.isDirectory())
+                        && (reference.canWrite())
+                        ;
 
-      for (File file : reference.listFiles()) {
-        if (file.isHidden()) continue;
+      if (!canCreate) {
+        int[] buttons = new int[] {
+          dialog.BUTTON_POSITIVE,
+          dialog.BUTTON_NEUTRAL
+        };
 
-        String name = file.getName();
-        char indicator = 0;
-
-        if (file.isDirectory()) {
-          if (!file.canRead()) continue;
-          if (!file.canExecute()) continue;
-          indicator = File.separatorChar;
-        } else if (mayCreate) {
-          if (!file.canWrite()) continue;
-        } else {
-          if (!file.canRead()) continue;
+        for (int button : buttons) {
+          dialog.getButton(button).setEnabled(false);
         }
-
-        if (indicator != 0) name += indicator;
-        items.add(name);
       }
-
-      show(reference, items);
-    } else {
-      handleFile(reference);
     }
   }
 
-  private final void show () {
-    Set<String> items = new TreeSet<String>();
+  private final Set<String> newItemSet () {
+    return new TreeSet<String>();
+  }
+
+  private final void showRootListing () {
+    Set<String> items = newItemSet();
 
     for (File file : File.listRoots()) {
       items.add(file.getAbsolutePath());
@@ -257,7 +245,47 @@ public class FileFinder {
     items.add(System.getenv("EXTERNAL_STORAGE"));
     items.remove("");
 
-    show(null, items);
+    showItemListing(null, items);
+  }
+
+  private final void showDirectoryListing (File directory) {
+    Set<String> items = newItemSet();
+
+    for (File file : directory.listFiles()) {
+      if (file.isHidden()) continue;
+
+      String name = file.getName();
+      char indicator = 0;
+
+      if (file.isDirectory()) {
+        if (!file.canRead()) continue;
+        if (!file.canExecute()) continue;
+        indicator = File.separatorChar;
+      } else {
+        if (!file.isFile()) continue;
+
+        if (mayCreate) {
+          if (!file.canWrite()) continue;
+        } else {
+          if (!file.canRead()) continue;
+        }
+      }
+
+      if (indicator != 0) name += indicator;
+      items.add(name);
+    }
+
+    showItemListing(directory, items);
+  }
+
+  private final void showListing (File reference) {
+    if (reference == null) {
+      showRootListing();
+    } else if (reference.isDirectory()) {
+      showDirectoryListing(reference);
+    } else {
+      handleFile(reference);
+    }
   }
 
   private FileFinder (Activity owner, File reference, boolean create, FileHandler handler) {
@@ -267,11 +295,7 @@ public class FileFinder {
 
     pathEditorView = inflateLayout(R.layout.path_editor);
 
-    if (reference != null) {
-      show(reference);
-    } else {
-      show();
-    }
+    showListing(reference);
   }
 
   public static FileFinder findFile (Activity owner, File reference, boolean create, FileHandler handler) {
