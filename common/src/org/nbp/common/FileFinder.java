@@ -7,9 +7,13 @@ import java.io.File;
 
 import android.util.Log;
 import android.content.Context;
+import android.app.Activity;
+
 import android.content.DialogInterface;
 import android.app.AlertDialog;
-import android.app.Activity;
+
+import android.view.View;
+import android.widget.EditText;
 
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
@@ -28,9 +32,59 @@ public class FileFinder {
 
   private final Activity owningActivity;
   private final FileHandler fileHandler;
+  private final View newFileView;
 
   private final void handleFile (File file) {
     fileHandler.handleFile(file);
+  }
+
+  private final DialogInterface.OnClickListener doneListener = new DialogInterface.OnClickListener() {
+    @Override
+    public void onClick (DialogInterface dialog, int itemIndex) {
+      EditText view = (EditText)((AlertDialog)dialog).findViewById(R.id.new_file_path);
+      String path = view.getText().toString();
+
+      if (path.isEmpty()) {
+        handleFile(null);
+      } else {
+        File file = new File(path);
+        handleFile(file);
+      }
+    }
+  };
+
+  private final DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+    @Override
+    public void onClick (DialogInterface dialog, int itemIndex) {
+      handleFile(null);
+    }
+  };
+
+  private final void showNewFileDialog (File reference) {
+    AlertDialog dialog = new AlertDialog
+      .Builder(owningActivity)
+      .setTitle(R.string.FileFinder_action_newFile)
+      .setView(newFileView)
+      .setPositiveButton(R.string.FileFinder_action_done, doneListener)
+      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
+      .setCancelable(false)
+      .create();
+
+    dialog.show();
+
+    if (reference != null) {
+      String path = reference.getAbsolutePath();
+      int length = path.length();
+
+      if (path.charAt(length-1) != File.separatorChar) {
+        path += File.separatorChar;
+        length += 1;
+      }
+
+      EditText view = (EditText)dialog.findViewById(R.id.new_file_path);
+      view.setText(path);
+      view.setSelection(length);
+    }
   }
 
   private final void show (final File reference, Set<String> itemSet) {
@@ -81,6 +135,7 @@ public class FileFinder {
     final DialogInterface.OnClickListener newFileListener = new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int itemIndex) {
+        showNewFileDialog(reference);
       }
     };
 
@@ -90,19 +145,12 @@ public class FileFinder {
       }
     };
 
-    final DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int itemIndex) {
-        handleFile(null);
-      }
-    };
-
     new AlertDialog.Builder(owningActivity)
                    .setTitle(dialogTitle)
                    .setItems(itemArray, itemListener)
-                   .setPositiveButton("New File", newFileListener)
-                   .setNeutralButton("New Folder", newFolderListener)
-                   .setNegativeButton("Cancel", cancelListener)
+                   .setPositiveButton(R.string.FileFinder_action_newFile, newFileListener)
+                   .setNeutralButton(R.string.FileFinder_action_newFolder, newFolderListener)
+                   .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
                    .setCancelable(false)
                    .show();
   }
@@ -149,9 +197,19 @@ public class FileFinder {
     show(null, items);
   }
 
+  private final View inflateLayout (int resource) {
+    return owningActivity.getLayoutInflater().inflate(resource, null);
+  }
+
+  private final View findView (int id) {
+    return owningActivity.findViewById(id);
+  }
+
   private FileFinder (Activity owner, File reference, FileHandler handler) {
     owningActivity = owner;
     fileHandler = handler;
+
+    newFileView = inflateLayout(R.layout.new_file);
 
     if (reference != null) {
       show(reference);

@@ -12,4 +12,8 @@
 
   <string name="FileFinder_title_roots">Root File Systems</string>
   <string name="FileFinder_item_up">[up]</string>
+  <string name="FileFinder_action_done">Done</string>
+  <string name="FileFinder_action_cancel">Cancel</string>
+  <string name="FileFinder_action_newFile">New File</string>
+  <string name="FileFinder_action_newFolder">New Folder</string>
 </resources>
