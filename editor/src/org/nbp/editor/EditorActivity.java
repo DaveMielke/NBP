@@ -3,6 +3,7 @@ package org.nbp.editor;
 import java.io.File;
 
 import org.nbp.common.CommonActivity;
+import org.nbp.common.FileFinder;
 
 import org.nbp.common.OutgoingMessage;
 import android.net.Uri;
@@ -146,29 +147,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private interface FileRunnable {
-    public void run (File file);
-  }
-
-  private final void findFile (final FileRunnable next) {
-    findFile(
-      new ActivityResultHandler() {
-        @Override
-        public void handleActivityResult (int code, Intent intent) {
-          switch (code) {
-            case RESULT_OK:
-              next.run(new File(intent.getData().getPath()));
-              break;
-
-            default:
-              showActivityResultCode(code);
-              break;
-          }
-        }
-      }
-    );
-  }
-
   private final void editFile (final File file) {
     new AsyncTask<Void, Void, CharSequence>() {
       AlertDialog dialog;
@@ -215,10 +193,10 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          findFile(
-            new FileRunnable() {
+          FileFinder.findFile(getActivity(),
+            new FileFinder.FileHandler() {
               @Override
-              public void run (File file) {
+              public void handleFile (File file) {
                 editFile(file);
               }
             }
@@ -237,10 +215,10 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_saveAs () {
-    findFile(
-      new FileRunnable() {
+    FileFinder.findFile(this,
+      new FileFinder.FileHandler() {
         @Override
-        public void run (File file) {
+        public void handleFile (File file) {
           saveFile(file);
         }
       }
@@ -316,6 +294,7 @@ public class EditorActivity extends CommonActivity {
   @Override
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    ApplicationContext.setMainActivity(this);
 
     setContentView(R.layout.editor);
     currentPath = (TextView)findViewById(R.id.current_file);
@@ -327,7 +306,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   @Override
-  public void onDestroy () {
+  protected void onDestroy () {
     try {
     } finally {
       super.onDestroy();
