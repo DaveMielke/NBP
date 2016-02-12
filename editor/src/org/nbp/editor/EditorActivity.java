@@ -193,11 +193,11 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          FileFinder.findFile(getActivity(),
+          FileFinder.findFile(getActivity(), false,
             new FileFinder.FileHandler() {
               @Override
               public void handleFile (File file) {
-                editFile(file);
+                if (file != null) editFile(file);
               }
             }
           );
@@ -215,11 +215,11 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_saveAs () {
-    FileFinder.findFile(this,
+    FileFinder.findFile(this, true,
       new FileFinder.FileHandler() {
         @Override
         public void handleFile (File file) {
-          saveFile(file);
+          if (file != null) saveFile(file);
         }
       }
     );

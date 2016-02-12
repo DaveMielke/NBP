@@ -31,6 +31,7 @@ public class FileFinder {
   }
 
   private final Activity owningActivity;
+  private final boolean mayCreate;
   private final FileHandler fileHandler;
   private final View pathEditorView;
 
@@ -155,7 +156,7 @@ public class FileFinder {
       itemArray[itemCount++] = item;
     }
 
-    final DialogInterface.OnClickListener itemListener = new DialogInterface.OnClickListener() {
+    DialogInterface.OnClickListener itemListener = new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int itemIndex) {
         if (haveReference && (itemIndex == 0)) {
@@ -180,28 +181,36 @@ public class FileFinder {
       }
     };
 
-    final DialogInterface.OnClickListener newFileListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int itemIndex) {
-        showNewFileDialog(reference);
-      }
-    };
+    AlertDialog.Builder builder = new AlertDialog
+      .Builder(owningActivity)
+      .setTitle(dialogTitle)
+      .setItems(itemArray, itemListener)
+      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
+      .setCancelable(false);
 
-    final DialogInterface.OnClickListener newFolderListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int itemIndex) {
-        showNewFolderDialog(reference);
-      }
-    };
+    if (mayCreate) {
+      builder.setPositiveButton(
+        R.string.FileFinder_action_newFile,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int itemIndex) {
+            showNewFileDialog(reference);
+          }
+        }
+      );
 
-    new AlertDialog.Builder(owningActivity)
-                   .setTitle(dialogTitle)
-                   .setItems(itemArray, itemListener)
-                   .setPositiveButton(R.string.FileFinder_action_newFile, newFileListener)
-                   .setNeutralButton(R.string.FileFinder_action_newFolder, newFolderListener)
-                   .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
-                   .setCancelable(false)
-                   .show();
+      builder.setNeutralButton(
+        R.string.FileFinder_action_newFolder,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int itemIndex) {
+            showNewFolderDialog(reference);
+          }
+        }
+      );
+    }
+
+    builder.show();
   }
 
   private final void show (File reference) {
@@ -246,8 +255,9 @@ public class FileFinder {
     show(null, items);
   }
 
-  private FileFinder (Activity owner, File reference, FileHandler handler) {
+  private FileFinder (Activity owner, File reference, boolean create, FileHandler handler) {
     owningActivity = owner;
+    mayCreate = create;
     fileHandler = handler;
 
     pathEditorView = inflateLayout(R.layout.path_editor);
@@ -259,11 +269,11 @@ public class FileFinder {
     }
   }
 
-  public static FileFinder findFile (Activity owner, File reference, FileHandler handler) {
-    return new FileFinder(owner, reference, handler);
+  public static FileFinder findFile (Activity owner, File reference, boolean create, FileHandler handler) {
+    return new FileFinder(owner, reference, create, handler);
   }
 
-  public static FileFinder findFile (Activity owner, FileHandler handler) {
-    return findFile(owner, null, handler);
+  public static FileFinder findFile (Activity owner, boolean create, FileHandler handler) {
+    return findFile(owner, null, create, handler);
   }
 }
