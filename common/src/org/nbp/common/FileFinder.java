@@ -52,12 +52,24 @@ public class FileFinder {
     fileHandler.handleFile(file);
   }
 
-  private final DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
-    @Override
-    public void onClick (DialogInterface dialog, int itemIndex) {
-      handleFile(null);
-    }
-  };
+  private final void setCancelButton (AlertDialog.Builder builder) {
+    builder.setNegativeButton(
+      R.string.FileFinder_action_cancel,
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int itemIndex) {
+          handleFile(null);
+        }
+      }
+    );
+  }
+
+  private final void setDoneButton (
+    AlertDialog.Builder builder,
+    DialogInterface.OnClickListener listener
+  ) {
+    builder.setPositiveButton(R.string.FileFinder_action_done, listener);
+  }
 
   private final void setEditedPath (AlertDialog dialog, File reference) {
     if (reference != null) {
@@ -81,58 +93,60 @@ public class FileFinder {
   }
 
   private final void showNewFileDialog (File reference) {
-    DialogInterface.OnClickListener doneListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int itemIndex) {
-        String path = getEditedPath(dialog);
-
-        if (path.isEmpty()) {
-          handleFile(null);
-        } else {
-          File file = new File(path);
-          handleFile(file);
-        }
-      }
-    };
-
-    AlertDialog dialog = new AlertDialog
+    AlertDialog.Builder builder = new AlertDialog
       .Builder(owningActivity)
       .setTitle(R.string.FileFinder_action_newFile)
       .setView(pathEditorView)
-      .setPositiveButton(R.string.FileFinder_action_done, doneListener)
-      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
-      .setCancelable(false)
-      .create();
+      .setCancelable(false);
 
+    setDoneButton(builder,
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int itemIndex) {
+          String path = getEditedPath(dialog);
+
+          if (path.isEmpty()) {
+            handleFile(null);
+          } else {
+            File file = new File(path);
+            handleFile(file);
+          }
+        }
+      }
+    );
+
+    setCancelButton(builder);
+    AlertDialog dialog = builder.create();
     dialog.show();
     setEditedPath(dialog, reference);
   }
 
   private final void showNewFolderDialog (File reference) {
-    DialogInterface.OnClickListener doneListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int itemIndex) {
-        String path = getEditedPath(dialog);
-
-        if (path.isEmpty()) {
-          handleFile(null);
-        } else {
-          File file = new File(path);
-          file.mkdir();
-          showListing(file);
-        }
-      }
-    };
-
-    AlertDialog dialog = new AlertDialog
+    AlertDialog.Builder builder = new AlertDialog
       .Builder(owningActivity)
       .setTitle(R.string.FileFinder_action_newFolder)
       .setView(pathEditorView)
-      .setPositiveButton(R.string.FileFinder_action_done, doneListener)
-      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
-      .setCancelable(false)
-      .create();
+      .setCancelable(false);
 
+    setDoneButton(builder,
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int itemIndex) {
+          String path = getEditedPath(dialog);
+
+          if (path.isEmpty()) {
+            handleFile(null);
+          } else {
+            File file = new File(path);
+            file.mkdir();
+            showListing(file);
+          }
+        }
+      }
+    );
+
+    setCancelButton(builder);
+    AlertDialog dialog = builder.create();
     dialog.show();
     setEditedPath(dialog, reference);
   }
@@ -180,7 +194,6 @@ public class FileFinder {
       .Builder(owningActivity)
       .setTitle(dialogTitle)
       .setItems(itemArray, itemListener)
-      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
       .setCancelable(false);
 
     if (mayCreate) {
@@ -205,6 +218,7 @@ public class FileFinder {
       );
     }
 
+    setCancelButton(builder);
     AlertDialog dialog = builder.create();
     dialog.show();
 
