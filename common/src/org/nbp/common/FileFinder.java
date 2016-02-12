@@ -52,6 +52,13 @@ public class FileFinder {
     fileHandler.handleFile(file);
   }
 
+  private final void setDoneButton (
+    AlertDialog.Builder builder,
+    DialogInterface.OnClickListener listener
+  ) {
+    builder.setPositiveButton(R.string.FileFinder_action_done, listener);
+  }
+
   private final void setCancelButton (AlertDialog.Builder builder) {
     builder.setNegativeButton(
       R.string.FileFinder_action_cancel,
@@ -62,13 +69,6 @@ public class FileFinder {
         }
       }
     );
-  }
-
-  private final void setDoneButton (
-    AlertDialog.Builder builder,
-    DialogInterface.OnClickListener listener
-  ) {
-    builder.setPositiveButton(R.string.FileFinder_action_done, listener);
   }
 
   private final void setEditedPath (AlertDialog dialog, File reference) {
@@ -89,7 +89,7 @@ public class FileFinder {
 
   private final String getEditedPath (DialogInterface dialog) {
     EditText view = (EditText)findView(dialog, R.id.edited_path);
-    return view.getText().toString();
+    return view.getText().toString().trim();
   }
 
   private final void showNewFileDialog (File reference) {
