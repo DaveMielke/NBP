@@ -7,7 +7,7 @@
   >
 
   <EditText
-    android:id="@+id/new_file_path"
+    android:id="@+id/edited_path"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:singleLine="true"

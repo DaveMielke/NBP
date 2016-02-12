@@ -32,26 +32,23 @@ public class FileFinder {
 
   private final Activity owningActivity;
   private final FileHandler fileHandler;
-  private final View newFileView;
+  private final View pathEditorView;
+
+  private final View inflateLayout (int resource) {
+    return owningActivity.getLayoutInflater().inflate(resource, null);
+  }
+
+  private final View findView (int id) {
+    return owningActivity.findViewById(id);
+  }
+
+  private final View findView (DialogInterface dialog, int id) {
+    return ((AlertDialog)dialog).findViewById(id);
+  }
 
   private final void handleFile (File file) {
     fileHandler.handleFile(file);
   }
-
-  private final DialogInterface.OnClickListener doneListener = new DialogInterface.OnClickListener() {
-    @Override
-    public void onClick (DialogInterface dialog, int itemIndex) {
-      EditText view = (EditText)((AlertDialog)dialog).findViewById(R.id.new_file_path);
-      String path = view.getText().toString();
-
-      if (path.isEmpty()) {
-        handleFile(null);
-      } else {
-        File file = new File(path);
-        handleFile(file);
-      }
-    }
-  };
 
   private final DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
     @Override
@@ -60,18 +57,7 @@ public class FileFinder {
     }
   };
 
-  private final void showNewFileDialog (File reference) {
-    AlertDialog dialog = new AlertDialog
-      .Builder(owningActivity)
-      .setTitle(R.string.FileFinder_action_newFile)
-      .setView(newFileView)
-      .setPositiveButton(R.string.FileFinder_action_done, doneListener)
-      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
-      .setCancelable(false)
-      .create();
-
-    dialog.show();
-
+  private final void setEditedPath (AlertDialog dialog, File reference) {
     if (reference != null) {
       String path = reference.getAbsolutePath();
       int length = path.length();
@@ -81,10 +67,72 @@ public class FileFinder {
         length += 1;
       }
 
-      EditText view = (EditText)dialog.findViewById(R.id.new_file_path);
+      EditText view = (EditText)dialog.findViewById(R.id.edited_path);
       view.setText(path);
       view.setSelection(length);
     }
+  }
+
+  private final String getEditedPath (DialogInterface dialog) {
+    EditText view = (EditText)findView(dialog, R.id.edited_path);
+    return view.getText().toString();
+  }
+
+  private final void showNewFileDialog (File reference) {
+    DialogInterface.OnClickListener doneListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick (DialogInterface dialog, int itemIndex) {
+        String path = getEditedPath(dialog);
+
+        if (path.isEmpty()) {
+          handleFile(null);
+        } else {
+          File file = new File(path);
+          handleFile(file);
+        }
+      }
+    };
+
+    AlertDialog dialog = new AlertDialog
+      .Builder(owningActivity)
+      .setTitle(R.string.FileFinder_action_newFile)
+      .setView(pathEditorView)
+      .setPositiveButton(R.string.FileFinder_action_done, doneListener)
+      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
+      .setCancelable(false)
+      .create();
+
+    dialog.show();
+    setEditedPath(dialog, reference);
+  }
+
+  private final void showNewFolderDialog (File reference) {
+    DialogInterface.OnClickListener doneListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick (DialogInterface dialog, int itemIndex) {
+        String path = getEditedPath(dialog);
+
+        if (path.isEmpty()) {
+          handleFile(null);
+        } else {
+          File file = new File(path);
+          file.mkdir();
+          show(file);
+        }
+      }
+    };
+
+    AlertDialog dialog = new AlertDialog
+      .Builder(owningActivity)
+      .setTitle(R.string.FileFinder_action_newFolder)
+      .setView(pathEditorView)
+      .setPositiveButton(R.string.FileFinder_action_done, doneListener)
+      .setNegativeButton(R.string.FileFinder_action_cancel, cancelListener)
+      .setCancelable(false)
+      .create();
+
+    dialog.show();
+    setEditedPath(dialog, reference);
   }
 
   private final void show (final File reference, Set<String> itemSet) {
@@ -142,6 +190,7 @@ public class FileFinder {
     final DialogInterface.OnClickListener newFolderListener = new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int itemIndex) {
+        showNewFolderDialog(reference);
       }
     };
 
@@ -197,19 +246,11 @@ public class FileFinder {
     show(null, items);
   }
 
-  private final View inflateLayout (int resource) {
-    return owningActivity.getLayoutInflater().inflate(resource, null);
-  }
-
-  private final View findView (int id) {
-    return owningActivity.findViewById(id);
-  }
-
   private FileFinder (Activity owner, File reference, FileHandler handler) {
     owningActivity = owner;
     fileHandler = handler;
 
-    newFileView = inflateLayout(R.layout.new_file);
+    pathEditorView = inflateLayout(R.layout.path_editor);
 
     if (reference != null) {
       show(reference);
