@@ -219,13 +219,18 @@ public class FileFinder {
 
       for (File file : reference.listFiles()) {
         if (file.isHidden()) continue;
-        if (!file.canRead()) continue;
 
         String name = file.getName();
         char indicator = 0;
 
         if (file.isDirectory()) {
+          if (!file.canRead()) continue;
+          if (!file.canExecute()) continue;
           indicator = File.separatorChar;
+        } else if (mayCreate) {
+          if (!file.canWrite()) continue;
+        } else {
+          if (!file.canRead()) continue;
         }
 
         if (indicator != 0) name += indicator;
