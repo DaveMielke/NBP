@@ -134,9 +134,16 @@ public class FilePicker {
   private final void show () {
     Set<String> items = new TreeSet<String>();
 
-    for (File root : File.listRoots()) {
-      items.add(root.getAbsolutePath());
+    for (File file : File.listRoots()) {
+      items.add(file.getAbsolutePath());
     }
+
+    for (String item : System.getenv("SECONDARY_STORAGE").split(":")) {
+      items.add(item);
+    }
+
+    items.add(System.getenv("EXTERNAL_STORAGE"));
+    items.remove("");
 
     show(null, items);
   }
