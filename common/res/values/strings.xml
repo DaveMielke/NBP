@@ -10,6 +10,6 @@
 
   <string name="showMessage_message_neutral">Dismiss</string>
 
-  <string name="FilePicker_title_roots">Root File Systems</string>
-  <string name="FilePicker_item_up">[up]</string>
+  <string name="FileFinder_title_roots">Root File Systems</string>
+  <string name="FileFinder_item_up">[up]</string>
 </resources>

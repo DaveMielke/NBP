@@ -11,8 +11,8 @@ import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.app.Activity;
 
-public class FilePicker {
-  private final static String LOG_TAG = FilePicker.class.getName();
+public class FileFinder {
+  private final static String LOG_TAG = FileFinder.class.getName();
 
   private static Context getContext () {
     return CommonContext.getContext();
@@ -42,10 +42,10 @@ public class FilePicker {
     itemCount = 0;
 
     if (haveReference) {
-      itemArray[itemCount++] = getString(R.string.FilePicker_item_up);
+      itemArray[itemCount++] = getString(R.string.FileFinder_item_up);
       dialogTitle = reference.getAbsolutePath();
     } else {
-      dialogTitle = getString(R.string.FilePicker_title_roots);
+      dialogTitle = getString(R.string.FileFinder_title_roots);
     }
 
     for (String item : itemSet) {
@@ -148,7 +148,7 @@ public class FilePicker {
     show(null, items);
   }
 
-  private FilePicker (Activity owner, File reference, FileHandler handler) {
+  private FileFinder (Activity owner, File reference, FileHandler handler) {
     owningActivity = owner;
     fileHandler = handler;
 
@@ -159,11 +159,11 @@ public class FilePicker {
     }
   }
 
-  public static FilePicker show (Activity owner, File reference, FileHandler handler) {
-    return new FilePicker(owner, reference, handler);
+  public static FileFinder findFile (Activity owner, File reference, FileHandler handler) {
+    return new FileFinder(owner, reference, handler);
   }
 
-  public static FilePicker show (Activity owner, FileHandler handler) {
-    return show(owner, null, handler);
+  public static FileFinder findFile (Activity owner, FileHandler handler) {
+    return findFile(owner, null, handler);
   }
 }
