@@ -1,7 +1,7 @@
 package org.nbp.common;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 import java.io.File;
 
@@ -22,10 +22,6 @@ public class FilePicker {
     return getContext().getString(resource);
   }
 
-  private static String[] toArray (List<String> list) {
-    return list.toArray(new String[list.size()]);
-  }
-
   public interface FileHandler {
     public void handleFile (File file);
   }
@@ -36,18 +32,25 @@ public class FilePicker {
   private final void handleFile (File file) {
   }
 
-  private final void show (
-    final File reference, List<String> itemList, int currentItem
-  ) {
+  private final void show (final File reference, Set<String> itemSet) {
     final boolean haveReference = reference != null;
-    String dialogTitle = getString(R.string.FilePicker_title_roots);
+    String dialogTitle;
+
+    int itemCount = itemSet.size();
+    if (haveReference) itemCount += 1;
+    final String[] itemArray = new String[itemCount];
+    itemCount = 0;
 
     if (haveReference) {
-      itemList.add(0, getString(R.string.FilePicker_item_up));
+      itemArray[itemCount++] = getString(R.string.FilePicker_item_up);
       dialogTitle = reference.getAbsolutePath();
+    } else {
+      dialogTitle = getString(R.string.FilePicker_title_roots);
     }
 
-    final String[] itemArray = toArray(itemList);
+    for (String item : itemSet) {
+      itemArray[itemCount++] = item;
+    }
 
     final DialogInterface.OnClickListener itemListener = new DialogInterface.OnClickListener() {
       @Override
@@ -58,7 +61,7 @@ public class FilePicker {
           if (parent == null) {
             show();
           } else {
-            show(parent, reference.getName());
+            show(parent);
           }
         } else {
           String itemName = itemArray[itemIndex];
@@ -95,7 +98,7 @@ public class FilePicker {
 
     new AlertDialog.Builder(owningActivity)
                    .setTitle(dialogTitle)
-                   .setSingleChoiceItems(itemArray, currentItem, itemListener)
+                   .setItems(itemArray, itemListener)
                    .setPositiveButton("New File", newFileListener)
                    .setNeutralButton("New Folder", newFolderListener)
                    .setNegativeButton("Cancel", cancelListener)
@@ -103,22 +106,16 @@ public class FilePicker {
                    .show();
   }
 
-  private final void show (File reference, String currentName) {
+  private final void show (File reference) {
     if (reference.isDirectory()) {
-      List<String> items = new ArrayList<String>();
-      int currentIndex = -1;
+      Set<String> items = new TreeSet<String>();
 
       for (File file : reference.listFiles()) {
+        if (file.isHidden()) continue;
+        if (!file.canRead()) continue;
+
         String name = file.getName();
         char indicator = 0;
-
-        if (currentIndex == -1) {
-          if (currentName != null) {
-            if (currentName.equals(name)) {
-              currentIndex = items.size();
-            }
-          }
-        }
 
         if (file.isDirectory()) {
           indicator = File.separatorChar;
@@ -128,24 +125,20 @@ public class FilePicker {
         items.add(name);
       }
 
-      show(reference, items, currentIndex);
+      show(reference, items);
     } else {
       handleFile(reference);
     }
   }
 
-  private final void show (File reference) {
-    show(reference, null);
-  }
-
   private final void show () {
-    List<String> roots = new ArrayList<String>();
+    Set<String> items = new TreeSet<String>();
 
     for (File root : File.listRoots()) {
-      roots.add(root.getAbsolutePath());
+      items.add(root.getAbsolutePath());
     }
 
-    show(null, roots, -1);
+    show(null, items);
   }
 
   private FilePicker (Activity owner, File reference, FileHandler handler) {
