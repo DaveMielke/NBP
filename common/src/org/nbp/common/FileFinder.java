@@ -8,24 +8,16 @@ import java.io.File;
 import android.util.Log;
 import android.content.Context;
 import android.app.Activity;
+import android.os.AsyncTask;
 
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Button;
 
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
-
-  private static Context getContext () {
-    return CommonContext.getContext();
-  }
-
-  private static String getString (int resource) {
-    return getContext().getString(resource);
-  }
 
   public interface FileHandler {
     public void handleFile (File file);
@@ -35,6 +27,10 @@ public class FileFinder {
   private final boolean mayCreate;
   private final FileHandler fileHandler;
   private final View pathEditorView;
+
+  private final String getString (int resource) {
+    return owningActivity.getString(resource);
+  }
 
   private final View inflateLayout (int resource) {
     return owningActivity.getLayoutInflater().inflate(resource, null);
@@ -52,6 +48,16 @@ public class FileFinder {
     fileHandler.handleFile(file);
   }
 
+  private final void requestCancelled () {
+    handleFile(null);
+  }
+
+  private final AlertDialog.Builder newAlertDialogBuilder () {
+    return new AlertDialog.Builder(owningActivity)
+                          .setCancelable(false)
+                          ;
+  }
+
   private final void setDoneButton (
     AlertDialog.Builder builder,
     DialogInterface.OnClickListener listener
@@ -65,13 +71,15 @@ public class FileFinder {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int itemIndex) {
-          handleFile(null);
+          requestCancelled();
         }
       }
     );
   }
 
   private final void setEditedPath (AlertDialog dialog, File reference) {
+    EditText view = (EditText)dialog.findViewById(R.id.edited_path);
+
     if (reference != null) {
       String path = reference.getAbsolutePath();
       int length = path.length();
@@ -81,9 +89,10 @@ public class FileFinder {
         length += 1;
       }
 
-      EditText view = (EditText)dialog.findViewById(R.id.edited_path);
       view.setText(path);
       view.setSelection(length);
+    } else {
+      view.setText("");
     }
   }
 
@@ -93,11 +102,9 @@ public class FileFinder {
   }
 
   private final void showNewFileDialog (File reference) {
-    AlertDialog.Builder builder = new AlertDialog
-      .Builder(owningActivity)
+    AlertDialog.Builder builder = newAlertDialogBuilder()
       .setTitle(R.string.FileFinder_action_newFile)
-      .setView(pathEditorView)
-      .setCancelable(false);
+      .setView(pathEditorView);
 
     setDoneButton(builder,
       new DialogInterface.OnClickListener() {
@@ -106,7 +113,7 @@ public class FileFinder {
           String path = getEditedPath(dialog);
 
           if (path.isEmpty()) {
-            handleFile(null);
+            requestCancelled();
           } else {
             File file = new File(path);
             handleFile(file);
@@ -122,11 +129,9 @@ public class FileFinder {
   }
 
   private final void showNewFolderDialog (File reference) {
-    AlertDialog.Builder builder = new AlertDialog
-      .Builder(owningActivity)
+    AlertDialog.Builder builder = newAlertDialogBuilder()
       .setTitle(R.string.FileFinder_action_newFolder)
-      .setView(pathEditorView)
-      .setCancelable(false);
+      .setView(pathEditorView);
 
     setDoneButton(builder,
       new DialogInterface.OnClickListener() {
@@ -135,7 +140,7 @@ public class FileFinder {
           String path = getEditedPath(dialog);
 
           if (path.isEmpty()) {
-            handleFile(null);
+            requestCancelled();
           } else {
             File file = new File(path);
             file.mkdir();
@@ -151,11 +156,16 @@ public class FileFinder {
     setEditedPath(dialog, reference);
   }
 
-  private final void showItemListing (final File reference, Set<String> itemSet) {
+  private interface ListingCreator {
+    public Set<String> createListing ();
+  }
+
+  private final void showListing (final File reference, ListingCreator listingCreator) {
     final boolean haveReference = reference != null;
     String dialogTitle;
 
-    int itemCount = itemSet.size();
+    Set<String> listing = listingCreator.createListing();
+    int itemCount = listing.size();
     if (haveReference) itemCount += 1;
     final String[] itemArray = new String[itemCount];
     itemCount = 0;
@@ -167,34 +177,30 @@ public class FileFinder {
       dialogTitle = getString(R.string.FileFinder_title_roots);
     }
 
-    for (String item : itemSet) {
+    for (String item : listing) {
       itemArray[itemCount++] = item;
     }
 
-    DialogInterface.OnClickListener itemListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int itemIndex) {
-        if (haveReference && (itemIndex == 0)) {
-          showListing(reference.getParentFile());
-        } else {
-          String itemName = itemArray[itemIndex];
+    AlertDialog.Builder builder = newAlertDialogBuilder()
+      .setTitle(dialogTitle)
+      .setItems(itemArray,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int itemIndex) {
+            if (haveReference && (itemIndex == 0)) {
+              showListing(reference.getParentFile());
+            } else {
+              String itemName = itemArray[itemIndex];
 
-          if (itemName.charAt(0) == File.separatorChar) {
-            showListing(new File(itemName));
-          } else {
-            showListing(new File(reference, itemName));
+              if (itemName.charAt(0) == File.separatorChar) {
+                showListing(new File(itemName));
+              } else {
+                showListing(new File(reference, itemName));
+              }
+            }
           }
         }
-
-        dialog.dismiss();
-      }
-    };
-
-    AlertDialog.Builder builder = new AlertDialog
-      .Builder(owningActivity)
-      .setTitle(dialogTitle)
-      .setItems(itemArray, itemListener)
-      .setCancelable(false);
+      );
 
     if (mayCreate) {
       builder.setPositiveButton(
@@ -241,29 +247,29 @@ public class FileFinder {
     }
   }
 
-  private final Set<String> newItemSet () {
+  private final Set<String> newListing () {
     return new TreeSet<String>();
   }
 
-  private final void showRootListing () {
-    Set<String> items = newItemSet();
+  private final Set<String> createRootListing () {
+    Set<String> listing = newListing();
 
     for (File file : File.listRoots()) {
-      items.add(file.getAbsolutePath());
+      listing.add(file.getAbsolutePath());
     }
 
     for (String item : System.getenv("SECONDARY_STORAGE").split(":")) {
-      items.add(item);
+      listing.add(item);
     }
 
-    items.add(System.getenv("EXTERNAL_STORAGE"));
-    items.remove("");
+    listing.add(System.getenv("EXTERNAL_STORAGE"));
+    listing.remove("");
 
-    showItemListing(null, items);
+    return listing;
   }
 
-  private final void showDirectoryListing (File directory) {
-    Set<String> items = newItemSet();
+  private final Set<String> createDirectoryListing (File directory) {
+    Set<String> listing = newListing();
 
     for (File file : directory.listFiles()) {
       if (file.isHidden()) continue;
@@ -286,17 +292,31 @@ public class FileFinder {
       }
 
       if (indicator != 0) name += indicator;
-      items.add(name);
+      listing.add(name);
     }
 
-    showItemListing(directory, items);
+    return listing;
   }
 
-  private final void showListing (File reference) {
+  private final void showListing (final File reference) {
     if (reference == null) {
-      showRootListing();
+      showListing(null,
+        new ListingCreator() {
+          @Override
+          public Set<String> createListing () {
+            return createRootListing();
+          }
+        }
+      );
     } else if (reference.isDirectory()) {
-      showDirectoryListing(reference);
+      showListing(reference,
+        new ListingCreator() {
+          @Override
+          public Set<String> createListing () {
+            return createDirectoryListing(reference);
+          }
+        }
+      );
     } else {
       handleFile(reference);
     }
