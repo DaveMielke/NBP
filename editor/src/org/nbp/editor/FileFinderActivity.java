@@ -2,15 +2,14 @@ package org.nbp.editor;
 
 import java.io.File;
 
+import org.nbp.common.CommonActivity;
 import org.nbp.common.FileFinder;
 
-import android.app.Activity;
 import android.os.Bundle;
-
 import android.content.Intent;
 import android.net.Uri;
 
-public class FileFinderActivity extends Activity implements FileFinder.FileHandler {
+public class FileFinderActivity extends CommonActivity implements FileFinder.FileHandler {
   @Override
   public void handleFile (File file) {
     if (file == null) {
@@ -37,7 +36,11 @@ public class FileFinderActivity extends Activity implements FileFinder.FileHandl
         File reference = null;
         if (uri != null) reference = new File(uri.getPath());
         FileFinder.findFile(this, reference, false, this);
+        return;
       }
     }
+
+    setResult(RESULT_CANCELED);
+    finish();
   }
 }
