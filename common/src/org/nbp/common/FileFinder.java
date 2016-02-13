@@ -70,7 +70,7 @@ public class FileFinder {
       R.string.FileFinder_action_cancel,
       new DialogInterface.OnClickListener() {
         @Override
-        public void onClick (DialogInterface dialog, int itemIndex) {
+        public void onClick (DialogInterface dialog, int button) {
           requestCancelled();
         }
       }
@@ -109,7 +109,7 @@ public class FileFinder {
     setDoneButton(builder,
       new DialogInterface.OnClickListener() {
         @Override
-        public void onClick (DialogInterface dialog, int itemIndex) {
+        public void onClick (DialogInterface dialog, int button) {
           String path = getEditedPath(dialog);
 
           if (path.isEmpty()) {
@@ -136,7 +136,7 @@ public class FileFinder {
     setDoneButton(builder,
       new DialogInterface.OnClickListener() {
         @Override
-        public void onClick (DialogInterface dialog, int itemIndex) {
+        public void onClick (DialogInterface dialog, int button) {
           String path = getEditedPath(dialog);
 
           if (path.isEmpty()) {
@@ -161,44 +161,54 @@ public class FileFinder {
   }
 
   private final void showListing (final File reference, final ListingCreator listingCreator) {
+    final boolean haveReference = reference != null;
+
     new AsyncTask<Void, Void, AlertDialog.Builder>() {
+      AlertDialog message = newAlertDialogBuilder()
+        .setMessage(R.string.FileFinder_message_listing)
+        .create();
+
+      @Override
+      protected void onPreExecute () {
+        message.show();
+      }
+
       @Override
       protected AlertDialog.Builder doInBackground (Void... arguments) {
-        final boolean haveReference = reference != null;
-        String dialogTitle;
+        String title;
 
         Set<String> listing = listingCreator.createListing();
-        int itemCount = listing.size();
-        if (haveReference) itemCount += 1;
-        final String[] itemArray = new String[itemCount];
-        itemCount = 0;
+        int count = listing.size();
+        if (haveReference) count += 1;
+        final String[] items = new String[count];
+        count = 0;
 
         if (haveReference) {
-          itemArray[itemCount++] = getString(R.string.FileFinder_item_up);
-          dialogTitle = reference.getAbsolutePath();
+          items[count++] = getString(R.string.FileFinder_item_up);
+          title = reference.getAbsolutePath();
         } else {
-          dialogTitle = getString(R.string.FileFinder_title_roots);
+          title = getString(R.string.FileFinder_title_roots);
         }
 
         for (String item : listing) {
-          itemArray[itemCount++] = item;
+          items[count++] = item;
         }
 
         AlertDialog.Builder builder = newAlertDialogBuilder()
-          .setTitle(dialogTitle)
-          .setItems(itemArray,
+          .setTitle(title)
+          .setItems(items,
             new DialogInterface.OnClickListener() {
               @Override
-              public void onClick (DialogInterface dialog, int itemIndex) {
-                if (haveReference && (itemIndex == 0)) {
+              public void onClick (DialogInterface dialog, int index) {
+                if (haveReference && (index == 0)) {
                   showListing(reference.getParentFile());
                 } else {
-                  String itemName = itemArray[itemIndex];
+                  String path = items[index];
 
-                  if (itemName.charAt(0) == File.separatorChar) {
-                    showListing(new File(itemName));
+                  if (path.charAt(0) == File.separatorChar) {
+                    showListing(new File(path));
                   } else {
-                    showListing(new File(reference, itemName));
+                    showListing(new File(reference, path));
                   }
                 }
               }
@@ -210,7 +220,7 @@ public class FileFinder {
             R.string.FileFinder_action_newFile,
             new DialogInterface.OnClickListener() {
               @Override
-              public void onClick (DialogInterface dialog, int itemIndex) {
+              public void onClick (DialogInterface dialog, int button) {
                 showNewFileDialog(reference);
               }
             }
@@ -220,7 +230,7 @@ public class FileFinder {
             R.string.FileFinder_action_newFolder,
             new DialogInterface.OnClickListener() {
               @Override
-              public void onClick (DialogInterface dialog, int itemIndex) {
+              public void onClick (DialogInterface dialog, int button) {
                 showNewFolderDialog(reference);
               }
             }
@@ -233,11 +243,13 @@ public class FileFinder {
 
       @Override
       protected void onPostExecute (AlertDialog.Builder builder) {
+        message.dismiss();
+
         AlertDialog dialog = builder.create();
         dialog.show();
 
         if (mayCreate) {
-          boolean canCreate =  (reference != null)
+          boolean canCreate =  haveReference
                             && (reference.isDirectory())
                             && (reference.canWrite())
                             ;
