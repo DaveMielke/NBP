@@ -160,91 +160,101 @@ public class FileFinder {
     public Set<String> createListing ();
   }
 
-  private final void showListing (final File reference, ListingCreator listingCreator) {
-    final boolean haveReference = reference != null;
-    String dialogTitle;
+  private final void showListing (final File reference, final ListingCreator listingCreator) {
+    new AsyncTask<Void, Void, AlertDialog.Builder>() {
+      @Override
+      protected AlertDialog.Builder doInBackground (Void... arguments) {
+        final boolean haveReference = reference != null;
+        String dialogTitle;
 
-    Set<String> listing = listingCreator.createListing();
-    int itemCount = listing.size();
-    if (haveReference) itemCount += 1;
-    final String[] itemArray = new String[itemCount];
-    itemCount = 0;
+        Set<String> listing = listingCreator.createListing();
+        int itemCount = listing.size();
+        if (haveReference) itemCount += 1;
+        final String[] itemArray = new String[itemCount];
+        itemCount = 0;
 
-    if (haveReference) {
-      itemArray[itemCount++] = getString(R.string.FileFinder_item_up);
-      dialogTitle = reference.getAbsolutePath();
-    } else {
-      dialogTitle = getString(R.string.FileFinder_title_roots);
-    }
+        if (haveReference) {
+          itemArray[itemCount++] = getString(R.string.FileFinder_item_up);
+          dialogTitle = reference.getAbsolutePath();
+        } else {
+          dialogTitle = getString(R.string.FileFinder_title_roots);
+        }
 
-    for (String item : listing) {
-      itemArray[itemCount++] = item;
-    }
+        for (String item : listing) {
+          itemArray[itemCount++] = item;
+        }
 
-    AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setTitle(dialogTitle)
-      .setItems(itemArray,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int itemIndex) {
-            if (haveReference && (itemIndex == 0)) {
-              showListing(reference.getParentFile());
-            } else {
-              String itemName = itemArray[itemIndex];
+        AlertDialog.Builder builder = newAlertDialogBuilder()
+          .setTitle(dialogTitle)
+          .setItems(itemArray,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int itemIndex) {
+                if (haveReference && (itemIndex == 0)) {
+                  showListing(reference.getParentFile());
+                } else {
+                  String itemName = itemArray[itemIndex];
 
-              if (itemName.charAt(0) == File.separatorChar) {
-                showListing(new File(itemName));
-              } else {
-                showListing(new File(reference, itemName));
+                  if (itemName.charAt(0) == File.separatorChar) {
+                    showListing(new File(itemName));
+                  } else {
+                    showListing(new File(reference, itemName));
+                  }
+                }
               }
+            }
+          );
+
+        if (mayCreate) {
+          builder.setPositiveButton(
+            R.string.FileFinder_action_newFile,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int itemIndex) {
+                showNewFileDialog(reference);
+              }
+            }
+          );
+
+          builder.setNeutralButton(
+            R.string.FileFinder_action_newFolder,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int itemIndex) {
+                showNewFolderDialog(reference);
+              }
+            }
+          );
+        }
+
+        setCancelButton(builder);
+        return builder;
+      }
+
+      @Override
+      protected void onPostExecute (AlertDialog.Builder builder) {
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        if (mayCreate) {
+          boolean canCreate =  (reference != null)
+                            && (reference.isDirectory())
+                            && (reference.canWrite())
+                            ;
+
+          if (!canCreate) {
+            int[] buttons = new int[] {
+              dialog.BUTTON_POSITIVE,
+              dialog.BUTTON_NEUTRAL
+            };
+
+            for (int button : buttons) {
+              dialog.getButton(button).setEnabled(false);
             }
           }
         }
-      );
-
-    if (mayCreate) {
-      builder.setPositiveButton(
-        R.string.FileFinder_action_newFile,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int itemIndex) {
-            showNewFileDialog(reference);
-          }
-        }
-      );
-
-      builder.setNeutralButton(
-        R.string.FileFinder_action_newFolder,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int itemIndex) {
-            showNewFolderDialog(reference);
-          }
-        }
-      );
-    }
-
-    setCancelButton(builder);
-    AlertDialog dialog = builder.create();
-    dialog.show();
-
-    if (mayCreate) {
-      boolean canCreate =  (reference != null)
-                        && (reference.isDirectory())
-                        && (reference.canWrite())
-                        ;
-
-      if (!canCreate) {
-        int[] buttons = new int[] {
-          dialog.BUTTON_POSITIVE,
-          dialog.BUTTON_NEUTRAL
-        };
-
-        for (int button : buttons) {
-          dialog.getButton(button).setEnabled(false);
-        }
       }
-    }
+    }.execute();
   }
 
   private final Set<String> newListing () {
