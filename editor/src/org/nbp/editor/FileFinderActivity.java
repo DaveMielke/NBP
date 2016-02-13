@@ -24,7 +24,7 @@ public class FileFinderActivity extends CommonActivity implements FileFinder.Fil
   }
 
   @Override
-  public void onCreate (Bundle savedInstanceState) {
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     Intent intent = getIntent();

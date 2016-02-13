@@ -28,7 +28,7 @@ public abstract class ProgrammaticActivity extends CommonActivity {
   }
 
   @Override
-  public void onCreate (Bundle state) {
+  protected void onCreate (Bundle state) {
     super.onCreate(state);
     setContentView();
   }

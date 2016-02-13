@@ -173,7 +173,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
   }
 
   @Override
-  public void onCreate (Bundle state) {
+  protected void onCreate (Bundle state) {
     super.onCreate(state);
     CommonContext.setContext(this);
   }
