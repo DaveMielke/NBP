@@ -63,6 +63,16 @@ public class FileFinder {
                           ;
   }
 
+  private final void showMessage (
+    CharSequence message,
+    DialogInterface.OnClickListener dismissListener
+  ) {
+    newAlertDialogBuilder()
+      .setMessage(message)
+      .setNeutralButton(R.string.FileFinder_action_dismiss, dismissListener)
+      .show();
+  }
+
   private final void disableButton (DialogInterface dialog, int button) {
     ((AlertDialog)dialog).getButton(button).setEnabled(false);
   }
@@ -105,9 +115,11 @@ public class FileFinder {
       String path = reference.getAbsolutePath();
       int length = path.length();
 
-      if (path.charAt(length-1) != File.separatorChar) {
-        path += File.separatorChar;
-        length += 1;
+      if (reference.isDirectory()) {
+        if (path.charAt(length-1) != File.separatorChar) {
+          path += File.separatorChar;
+          length += 1;
+        }
       }
 
       view.setText(path);
@@ -120,6 +132,23 @@ public class FileFinder {
   private final String getEditedPath (DialogInterface dialog) {
     EditText view = (EditText)findView(dialog, R.id.edited_path);
     return view.getText().toString().trim();
+  }
+
+  private final void showPathProblem (final File file, int problem) {
+    showMessage(
+      String.format(
+        "%s: %s",
+        getString(problem),
+        file.getAbsolutePath()
+      ),
+
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+          showPathEditor(file);
+        }
+      }
+    );
   }
 
   private final void showPathEditor (File reference) {
@@ -138,10 +167,12 @@ public class FileFinder {
           } else {
             File file = new File(path);
 
-            if (file.isDirectory()) {
+            if (!file.exists() || file.isFile()) {
+              handleFile(file);
+            } else if (file.isDirectory()) {
               showListing(file);
             } else {
-              handleFile(file);
+              showPathProblem(file, R.string.FileFinder_message_special);
             }
           }
         }
