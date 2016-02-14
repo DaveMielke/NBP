@@ -63,6 +63,10 @@ public class FileFinder {
                           ;
   }
 
+  private final void disableButton (DialogInterface dialog, int button) {
+    ((AlertDialog)dialog).getButton(button).setEnabled(false);
+  }
+
   private final void setDoneButton (
     AlertDialog.Builder builder,
     DialogInterface.OnClickListener listener
@@ -94,21 +98,6 @@ public class FileFinder {
     );
   }
 
-  private final AlertDialog.Builder newPathEditorBuilder (
-    int title,
-    DialogInterface.OnClickListener doneListener
-  ) {
-    AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setTitle(title)
-      .setView(inflateLayout(R.layout.path_editor));
-
-    setDoneButton(builder, doneListener);
-    setBackButton(builder);
-    setCancelButton(builder);
-
-    return builder;
-  }
-
   private final void setEditedPath (AlertDialog dialog, File reference) {
     EditText view = (EditText)dialog.findViewById(R.id.edited_path);
 
@@ -133,9 +122,12 @@ public class FileFinder {
     return view.getText().toString().trim();
   }
 
-  private final void showNewFileDialog (File reference) {
-    AlertDialog.Builder builder = newPathEditorBuilder(
-      R.string.FileFinder_action_newFile,
+  private final void showPathEditor (File reference) {
+    AlertDialog.Builder builder = newAlertDialogBuilder()
+      .setTitle(R.string.FileFinder_action_path)
+      .setView(inflateLayout(R.layout.path_editor));
+
+    setDoneButton(builder,
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
@@ -145,35 +137,19 @@ public class FileFinder {
             requestCancelled();
           } else {
             File file = new File(path);
-            handleFile(file);
+
+            if (file.isDirectory()) {
+              showListing(file);
+            } else {
+              handleFile(file);
+            }
           }
         }
       }
     );
 
-    AlertDialog dialog = builder.create();
-    dialog.show();
-    setEditedPath(dialog, reference);
-  }
-
-  private final void showNewFolderDialog (File reference) {
-    AlertDialog.Builder builder = newPathEditorBuilder(
-      R.string.FileFinder_action_newFolder,
-      new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick (DialogInterface dialog, int button) {
-          String path = getEditedPath(dialog);
-
-          if (path.isEmpty()) {
-            requestCancelled();
-          } else {
-            File file = new File(path);
-            file.mkdir();
-            showListing(file);
-          }
-        }
-      }
-    );
+    setBackButton(builder);
+    setCancelButton(builder);
 
     AlertDialog dialog = builder.create();
     dialog.show();
@@ -200,24 +176,17 @@ public class FileFinder {
 
       @Override
       protected AlertDialog.Builder doInBackground (Void... arguments) {
-        String title;
-
         Set<String> listing = listingCreator.createListing();
-        int count = listing.size();
-        if (haveReference) count += 1;
-        final String[] items = new String[count];
-        count = 0;
-
-        if (haveReference) {
-          items[count++] = getString(R.string.FileFinder_item_up);
-          title = reference.getAbsolutePath();
-        } else {
-          title = getString(R.string.FileFinder_title_main);
-        }
+        final String[] items = new String[listing.size()];
+        int count = 0;
 
         for (String item : listing) {
           items[count++] = item;
         }
+
+        String title = haveReference?
+                       reference.getAbsolutePath():
+                       getString(R.string.FileFinder_title_main);
 
         AlertDialog.Builder builder = newAlertDialogBuilder()
           .setTitle(title)
@@ -229,8 +198,6 @@ public class FileFinder {
 
                 if (!haveReference) {
                   showListing(rootTable.get(item));
-                } else if (index == 0) {
-                  showListing(reference.getParentFile());
                 } else if (item.charAt(0) == File.separatorChar) {
                   showListing(new File(item));
                 } else {
@@ -240,23 +207,23 @@ public class FileFinder {
             }
           );
 
-        if (mayCreate) {
-          builder.setPositiveButton(
-            R.string.FileFinder_action_newFile,
-            new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick (DialogInterface dialog, int button) {
-                showNewFileDialog(reference);
-              }
+        builder.setPositiveButton(
+          R.string.FileFinder_action_up,
+          new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int button) {
+              showListing(reference.getParentFile());
             }
-          );
+          }
+        );
 
+        if (mayCreate) {
           builder.setNeutralButton(
-            R.string.FileFinder_action_newFolder,
+            R.string.FileFinder_action_path,
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick (DialogInterface dialog, int button) {
-                showNewFolderDialog(reference);
+                showPathEditor(reference);
               }
             }
           );
@@ -273,6 +240,10 @@ public class FileFinder {
         AlertDialog dialog = builder.create();
         dialog.show();
 
+        if (!haveReference) {
+          disableButton(dialog, dialog.BUTTON_POSITIVE);
+        }
+
         if (mayCreate) {
           boolean canCreate =  haveReference
                             && (reference.isDirectory())
@@ -280,14 +251,7 @@ public class FileFinder {
                             ;
 
           if (!canCreate) {
-            int[] buttons = new int[] {
-              dialog.BUTTON_POSITIVE,
-              dialog.BUTTON_NEUTRAL
-            };
-
-            for (int button : buttons) {
-              dialog.getButton(button).setEnabled(false);
-            }
+            disableButton(dialog, dialog.BUTTON_NEUTRAL);
           }
         }
       }

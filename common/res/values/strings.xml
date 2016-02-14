@@ -14,10 +14,9 @@
   <string name="FileFinder_root_system">System Root</string>
   <string name="FileFinder_root_user">User Storage</string>
   <string name="FileFinder_message_listing">creating the listing</string>
-  <string name="FileFinder_item_up">Up to Parent Folder</string>
+  <string name="FileFinder_action_up">Parent Folder</string>
+  <string name="FileFinder_action_path">Edit Path</string>
   <string name="FileFinder_action_done">Done</string>
   <string name="FileFinder_action_back">Back</string>
   <string name="FileFinder_action_cancel">Cancel</string>
-  <string name="FileFinder_action_newFile">New File</string>
-  <string name="FileFinder_action_newFolder">New Folder</string>
 </resources>
