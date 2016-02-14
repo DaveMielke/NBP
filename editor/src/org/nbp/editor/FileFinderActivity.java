@@ -5,11 +5,15 @@ import java.io.File;
 import org.nbp.common.CommonActivity;
 import org.nbp.common.FileFinder;
 
+import android.util.Log;
 import android.os.Bundle;
+
 import android.content.Intent;
 import android.net.Uri;
 
 public class FileFinderActivity extends CommonActivity implements FileFinder.FileHandler {
+  private final static String LOG_TAG = FileFinderActivity.class.getName();
+
   @Override
   public void handleFile (File file) {
     if (file == null) {
@@ -26,6 +30,7 @@ public class FileFinderActivity extends CommonActivity implements FileFinder.Fil
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    String problem = null;
 
     Intent intent = getIntent();
     String action = intent.getAction();
@@ -36,11 +41,17 @@ public class FileFinderActivity extends CommonActivity implements FileFinder.Fil
         File reference = null;
         if (uri != null) reference = new File(uri.getPath());
         FileFinder.findFile(this, reference, false, this);
-        return;
+      } else {
+        problem = "unsupported action: " + action;
       }
+    } else {
+      problem = "action not specified in intent";
     }
 
-    setResult(RESULT_CANCELED);
-    finish();
+    if (problem != null) {
+      Log.w(LOG_TAG, problem);
+      setResult(RESULT_CANCELED);
+      finish();
+    }
   }
 }
