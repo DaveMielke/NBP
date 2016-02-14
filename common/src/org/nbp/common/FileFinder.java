@@ -3,6 +3,9 @@ package org.nbp.common;
 import java.util.Set;
 import java.util.TreeSet;
 
+import java.util.Map;
+import java.util.LinkedHashMap;
+
 import java.io.File;
 
 import android.util.Log;
@@ -26,6 +29,7 @@ public class FileFinder {
   private final Activity owningActivity;
   private final boolean mayCreate;
   private final FileHandler fileHandler;
+  private final Map<String, File> rootTable = new LinkedHashMap<String, File>();
 
   private File currentReference = null;
 
@@ -221,16 +225,16 @@ public class FileFinder {
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick (DialogInterface dialog, int index) {
-                if (haveReference && (index == 0)) {
-                  showListing(reference.getParentFile());
-                } else {
-                  String path = items[index];
+                String item = items[index];
 
-                  if (path.charAt(0) == File.separatorChar) {
-                    showListing(new File(path));
-                  } else {
-                    showListing(new File(reference, path));
-                  }
+                if (!haveReference) {
+                  showListing(rootTable.get(item));
+                } else if (index == 0) {
+                  showListing(reference.getParentFile());
+                } else if (item.charAt(0) == File.separatorChar) {
+                  showListing(new File(item));
+                } else {
+                  showListing(new File(reference, item));
                 }
               }
             }
@@ -290,29 +294,12 @@ public class FileFinder {
     }.execute();
   }
 
-  private final Set<String> newListing () {
-    return new TreeSet<String>();
-  }
-
   private final Set<String> createRootListing () {
-    Set<String> listing = newListing();
-
-    for (File file : File.listRoots()) {
-      listing.add(file.getAbsolutePath());
-    }
-
-    for (String item : System.getenv("SECONDARY_STORAGE").split(":")) {
-      listing.add(item);
-    }
-
-    listing.add(System.getenv("EXTERNAL_STORAGE"));
-    listing.remove("");
-
-    return listing;
+    return rootTable.keySet();
   }
 
   private final Set<String> createDirectoryListing (File directory) {
-    Set<String> listing = newListing();
+    Set<String> listing = new TreeSet();
 
     for (File file : directory.listFiles()) {
       if (file.isHidden()) continue;
@@ -365,10 +352,20 @@ public class FileFinder {
     }
   }
 
+  private final void addRoot (int label, String path) {
+    rootTable.put(
+      String.format("%s [%s]", getString(label), path),
+      new File(path)
+    );
+  }
+
   private FileFinder (Activity owner, File reference, boolean create, FileHandler handler) {
     owningActivity = owner;
     mayCreate = create;
     fileHandler = handler;
+
+    addRoot(R.string.FileFinder_root_user, "/storage");
+    addRoot(R.string.FileFinder_root_system, "/");
 
     showListing(reference);
   }
