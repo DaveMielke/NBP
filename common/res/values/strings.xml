@@ -12,7 +12,7 @@
 
   <string name="FileFinder_title_main">NBP File Finder</string>
   <string name="FileFinder_message_listing">creating the listing</string>
-  <string name="FileFinder_item_up">[up]</string>
+  <string name="FileFinder_item_up">[to parent folder]</string>
   <string name="FileFinder_action_done">Done</string>
   <string name="FileFinder_action_back">Back</string>
   <string name="FileFinder_action_cancel">Cancel</string>
