@@ -24,6 +24,7 @@
 
     <activity
       android:name=".FileFinderActivity"
+      android:label="@string/FileFinder_title_main"
       android:exported="true"
       >
 

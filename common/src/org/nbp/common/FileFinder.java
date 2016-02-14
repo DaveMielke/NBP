@@ -208,7 +208,7 @@ public class FileFinder {
           items[count++] = getString(R.string.FileFinder_item_up);
           title = reference.getAbsolutePath();
         } else {
-          title = getString(R.string.FileFinder_title_roots);
+          title = getString(R.string.FileFinder_title_main);
         }
 
         for (String item : listing) {
