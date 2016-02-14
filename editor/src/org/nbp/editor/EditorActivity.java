@@ -15,6 +15,7 @@ import android.content.Intent;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.AsyncTask;
 
 import android.view.View;
@@ -184,8 +185,9 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void findFile (boolean create, FileFinder.FileHandler handler) {
-    File file = currentFile;
-    if (file != null) file = file.getParentFile();
+    File file = (currentFile == null)?
+                Environment.getExternalStoragePublicDirectory("Documents"):
+                currentFile.getParentFile();
 
     FileFinder.findFile(this, file, create, handler);
   }
