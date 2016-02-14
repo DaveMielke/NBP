@@ -171,12 +171,20 @@ public class FileFinder {
               file = new File(currentReference, file.getPath());
             }
 
-            if (!file.exists() || file.isFile()) {
+            if (!file.exists()) {
+              File folder = file.getParentFile();
+
+              if (folder.isDirectory() || folder.mkdirs()) {
+                handleFile(file);
+              } else {
+                showPathProblem(folder, R.string.FileFinder_message_uncreatable_folder);
+              }
+            } else if (file.isFile()) {
               handleFile(file);
             } else if (file.isDirectory()) {
               showListing(file);
             } else {
-              showPathProblem(file, R.string.FileFinder_message_special);
+              showPathProblem(file, R.string.FileFinder_message_uneditable_file);
             }
           }
         }
@@ -201,7 +209,7 @@ public class FileFinder {
 
     new AsyncTask<Void, Void, AlertDialog.Builder>() {
       AlertDialog message = newAlertDialogBuilder()
-        .setMessage(R.string.FileFinder_message_listing)
+        .setMessage(R.string.FileFinder_message_creating_listing)
         .create();
 
       @Override

@@ -13,8 +13,9 @@
   <string name="FileFinder_title_main">NBP File Finder</string>
   <string name="FileFinder_root_system">System Root</string>
   <string name="FileFinder_root_user">User Storage</string>
-  <string name="FileFinder_message_listing">creating the listing</string>
-  <string name="FileFinder_message_special">a special file cannot be edited</string>
+  <string name="FileFinder_message_creating_listing">creating the listing</string>
+  <string name="FileFinder_message_uneditable_file">unable to edit file</string>
+  <string name="FileFinder_message_uncreatable_folder">unable to create folder</string>
   <string name="FileFinder_action_up">Parent Folder</string>
   <string name="FileFinder_action_path">Edit Path</string>
   <string name="FileFinder_action_done">Done</string>
