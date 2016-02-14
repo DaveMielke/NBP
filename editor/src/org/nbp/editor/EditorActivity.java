@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 
+import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.SpannableStringBuilder;
 
@@ -316,6 +317,25 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private final void addInputFilters () {
+    InputFilter hasChangedMonitor = new InputFilter() {
+      @Override
+      public CharSequence filter (
+        CharSequence src, int srcStart, int srcEnd,
+        Spanned dst, int dstStart, int dstEnd
+      ) {
+        hasChanged = true;
+        return null;
+      }
+    };
+
+    InputFilter[] inputFilters = new InputFilter[] {
+      hasChangedMonitor
+    };
+
+    editArea.setFilters(inputFilters);
+  }
+
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -327,6 +347,7 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile();
 
     prepareActionsButton();
+    addInputFilters();
     showReportedErrors();
   }
 
