@@ -167,6 +167,10 @@ public class FileFinder {
           } else {
             File file = new File(path);
 
+            if (!file.isAbsolute()) {
+              file = new File(currentReference, file.getPath());
+            }
+
             if (!file.exists() || file.isFile()) {
               handleFile(file);
             } else if (file.isDirectory()) {
