@@ -291,6 +291,7 @@ public class EditorActivity extends CommonActivity {
         new Button.OnClickListener() {
           @Override
           public void onClick (View view) {
+            editArea.requestFocus();
             getActivity().openOptionsMenu();
           }
         }
@@ -310,6 +311,13 @@ public class EditorActivity extends CommonActivity {
 
     prepareActionsButton();
     showReportedErrors();
+  }
+
+  @Override
+  protected void onResume () {
+    super.onResume();
+
+    editArea.requestFocus();
   }
 
   @Override
