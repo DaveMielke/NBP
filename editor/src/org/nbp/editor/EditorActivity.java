@@ -215,7 +215,10 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_saveAs () {
-    FileFinder.findFile(this, true,
+    File file = currentFile;
+    if (file != null) file = file.getParentFile();
+
+    FileFinder.findFile(this, file, true,
       new FileFinder.FileHandler() {
         @Override
         public void handleFile (File file) {
