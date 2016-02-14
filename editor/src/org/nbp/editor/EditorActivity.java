@@ -132,7 +132,18 @@ public class EditorActivity extends CommonActivity {
       OnDialogClickListener positiveListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
-          saveFile(next);
+          if (currentFile != null) {
+            saveFile(next);
+          } else {
+            findFile(true,
+              new FileFinder.FileHandler() {
+                @Override
+                public void handleFile (File file) {
+                  if (file != null) saveFile(file, next);
+                }
+              }
+            );
+          }
         }
       };
 
