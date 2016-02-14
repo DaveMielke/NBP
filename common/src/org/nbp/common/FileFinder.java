@@ -26,7 +26,8 @@ public class FileFinder {
   private final Activity owningActivity;
   private final boolean mayCreate;
   private final FileHandler fileHandler;
-  private final View pathEditorView;
+
+  private File currentReference = null;
 
   private final String getString (int resource) {
     return owningActivity.getString(resource);
@@ -65,6 +66,18 @@ public class FileFinder {
     builder.setPositiveButton(R.string.FileFinder_action_done, listener);
   }
 
+  private final void setBackButton (AlertDialog.Builder builder) {
+    builder.setNeutralButton(
+      R.string.FileFinder_action_back,
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+          showListing(currentReference);
+        }
+      }
+    );
+  }
+
   private final void setCancelButton (AlertDialog.Builder builder) {
     builder.setNegativeButton(
       R.string.FileFinder_action_cancel,
@@ -75,6 +88,21 @@ public class FileFinder {
         }
       }
     );
+  }
+
+  private final AlertDialog.Builder newPathEditorBuilder (
+    int title,
+    DialogInterface.OnClickListener doneListener
+  ) {
+    AlertDialog.Builder builder = newAlertDialogBuilder()
+      .setTitle(title)
+      .setView(inflateLayout(R.layout.path_editor));
+
+    setDoneButton(builder, doneListener);
+    setBackButton(builder);
+    setCancelButton(builder);
+
+    return builder;
   }
 
   private final void setEditedPath (AlertDialog dialog, File reference) {
@@ -102,11 +130,8 @@ public class FileFinder {
   }
 
   private final void showNewFileDialog (File reference) {
-    AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setTitle(R.string.FileFinder_action_newFile)
-      .setView(pathEditorView);
-
-    setDoneButton(builder,
+    AlertDialog.Builder builder = newPathEditorBuilder(
+      R.string.FileFinder_action_newFile,
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
@@ -122,18 +147,14 @@ public class FileFinder {
       }
     );
 
-    setCancelButton(builder);
     AlertDialog dialog = builder.create();
     dialog.show();
     setEditedPath(dialog, reference);
   }
 
   private final void showNewFolderDialog (File reference) {
-    AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setTitle(R.string.FileFinder_action_newFolder)
-      .setView(pathEditorView);
-
-    setDoneButton(builder,
+    AlertDialog.Builder builder = newPathEditorBuilder(
+      R.string.FileFinder_action_newFolder,
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
@@ -150,7 +171,6 @@ public class FileFinder {
       }
     );
 
-    setCancelButton(builder);
     AlertDialog dialog = builder.create();
     dialog.show();
     setEditedPath(dialog, reference);
@@ -161,6 +181,7 @@ public class FileFinder {
   }
 
   private final void showListing (final File reference, final ListingCreator listingCreator) {
+    currentReference = reference;
     final boolean haveReference = reference != null;
 
     new AsyncTask<Void, Void, AlertDialog.Builder>() {
@@ -348,8 +369,6 @@ public class FileFinder {
     owningActivity = owner;
     mayCreate = create;
     fileHandler = handler;
-
-    pathEditorView = inflateLayout(R.layout.path_editor);
 
     showListing(reference);
   }
