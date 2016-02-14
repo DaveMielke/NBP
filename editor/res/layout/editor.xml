@@ -6,21 +6,28 @@
   android:layout_height="fill_parent"
   >
 
-  <Button
-    android:id="@+id/actions_button"
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/button_actions_label"
-    android:visibility="gone"
-   />
+    >
 
-  <TextView
-    android:id="@+id/current_file"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:singleLine="true"
-    android:text=""
-   />
+    <Button
+      android:id="@+id/actions_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/button_actions_label"
+      android:visibility="gone"
+     />
+
+    <TextView
+      android:id="@+id/current_file"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:singleLine="true"
+      android:text=""
+     />
+  </LinearLayout>
 
   <EditText
     android:id="@+id/edit_area"
