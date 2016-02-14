@@ -177,6 +177,13 @@ public class EditorActivity extends CommonActivity {
     }.execute();
   }
 
+  private final void findFile (boolean create, FileFinder.FileHandler handler) {
+    File file = currentFile;
+    if (file != null) file = file.getParentFile();
+
+    FileFinder.findFile(this, file, create, handler);
+  }
+
   private void menuAction_new () {
     testHasChanged(
       new Runnable() {
@@ -193,7 +200,7 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          FileFinder.findFile(getActivity(), false,
+          findFile(false,
             new FileFinder.FileHandler() {
               @Override
               public void handleFile (File file) {
@@ -215,10 +222,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_saveAs () {
-    File file = currentFile;
-    if (file != null) file = file.getParentFile();
-
-    FileFinder.findFile(this, file, true,
+    findFile(true,
       new FileFinder.FileHandler() {
         @Override
         public void handleFile (File file) {
