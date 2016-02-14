@@ -46,18 +46,24 @@ public class EditorActivity extends CommonActivity {
   private final void showActivityResultCode (int code) {
   }
 
-  private void setCurrentFile (File file, CharSequence content) {
-    String path;
-
-    if (file != null) {
-      path = file.getAbsolutePath();
-    } else {
-      path = getString(R.string.message_new_file);
-    }
-
+  private void setCurrentFile (File file) {
     synchronized (this) {
+      String path;
+
+      if (file != null) {
+        path = file.getAbsolutePath();
+      } else {
+        path = getString(R.string.message_new_file);
+      }
+
       currentFile = file;
       currentPath.setText(path);
+    }
+  }
+
+  private void setCurrentFile (File file, CharSequence content) {
+    synchronized (this) {
+      setCurrentFile(file);
       editArea.setText(content);
       hasChanged = false;
     }
@@ -225,8 +231,17 @@ public class EditorActivity extends CommonActivity {
     findFile(true,
       new FileFinder.FileHandler() {
         @Override
-        public void handleFile (File file) {
-          if (file != null) saveFile(file);
+        public void handleFile (final File file) {
+          if (file != null) {
+            saveFile(file,
+              new Runnable() {
+                @Override
+                public void run () {
+                  setCurrentFile(file);
+                }
+              }
+            );
+          }
         }
       }
     );
