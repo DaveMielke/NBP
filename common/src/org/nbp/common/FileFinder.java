@@ -136,20 +136,23 @@ public class FileFinder {
       }
 
       view.setText(path);
-      final Button button = dialog.getButton(dialog.BUTTON_POSITIVE);
-
-      new OnTextEditedListener(view) {
-        @Override
-        protected final void onTextEdited (boolean isDifferent) {
-          button.setEnabled(isDifferent);
-        }
-      };
-
       int start = path.length();
-      if (isDirectory) view.append("file name");
-      view.setSelection(start, view.length());
 
-      button.setEnabled(false);
+      if (isDirectory) {
+        final Button button = dialog.getButton(dialog.BUTTON_POSITIVE);
+
+        new OnTextEditedListener(view) {
+          @Override
+          protected final void onTextEdited (boolean isDifferent) {
+            button.setEnabled(isDifferent);
+          }
+        };
+
+        view.append(getString(R.string.FileFinder_hint_file_name));
+        button.setEnabled(false);
+      }
+
+      view.setSelection(start, view.length());
     } else {
       view.setText("");
     }
@@ -198,12 +201,12 @@ public class FileFinder {
             }
 
             if (!file.exists()) {
-              File folder = file.getParentFile();
+              File directory = file.getParentFile();
 
-              if (folder.isDirectory() || folder.mkdirs()) {
+              if (directory.isDirectory() || directory.mkdirs()) {
                 handleFile(file);
               } else {
-                showPathProblem(folder, R.string.FileFinder_message_uncreatable_folder);
+                showPathProblem(directory, R.string.FileFinder_message_uncreatable_directory);
               }
             } else if (file.isFile()) {
               handleFile(file);
@@ -257,7 +260,7 @@ public class FileFinder {
         int count = listing.size();
 
         if (count == 0) {
-          builder.setMessage(R.string.FileFinder_message_empty_folder);
+          builder.setMessage(R.string.FileFinder_message_empty_directory);
         } else {
           final String[] items = new String[count];
           count = 0;
