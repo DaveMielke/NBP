@@ -183,6 +183,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     new AlertDialog.Builder(this)
                    .setMessage(message)
                    .setNeutralButton(R.string.showMessage_message_neutral, null)
+                   .setOnDismissListener(listener)
                    .show();
   }
 
