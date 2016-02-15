@@ -210,30 +210,30 @@ public class EditorActivity extends CommonActivity {
     }.execute();
   }
 
-  private final File getDefaultFolder () {
-    File folder = Environment.getExternalStoragePublicDirectory("Documents");
+  private final File getDefaultDirectory () {
+    File directory = Environment.getExternalStoragePublicDirectory("Documents");
 
-    if (!folder.exists()) {
-      if (!folder.mkdir()) {
+    if (!directory.exists()) {
+      if (!directory.mkdir()) {
         return null;
       }
     }
 
-    return folder;
+    return directory;
   }
 
   private final void findFile (boolean create, FileFinder.FileHandler handler) {
-    File folder = (currentFile == null)?
-                  getDefaultFolder():
-                  currentFile.getParentFile();
+    File directory = (currentFile == null)?
+                     getDefaultDirectory():
+                     currentFile.getParentFile();
 
-    if (folder != null) {
-      FileFinder.findFile(this, folder, create, handler);
+    if (directory != null) {
+      FileFinder.findFile(this, directory, create, handler);
     } else {
       showMessage(String.format(
         "%s: %s",
         getString(R.string.alert_uncreatable_directory),
-        folder.getAbsolutePath()
+        directory.getAbsolutePath()
       ));
     }
   }
