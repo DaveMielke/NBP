@@ -22,10 +22,6 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
-import android.graphics.Typeface;
-
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
 
