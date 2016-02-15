@@ -110,7 +110,21 @@ public class EditorActivity extends CommonActivity {
       @Override
       public void onPostExecute (Void result) {
         dialog.dismiss();
-        if (onSaved != null) onSaved.run();
+
+        showMessage(
+          String.format(
+            "%s: %s",
+            getString(R.string.alert_file_saved),
+            f.getAbsolutePath()
+          ),
+
+          new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss (DialogInterface dialog) {
+              if (onSaved != null) onSaved.run();
+            }
+          }
+        );
       }
     }.execute();
   }

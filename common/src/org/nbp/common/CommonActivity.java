@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import android.util.Log;
+import android.content.DialogInterface;
 import android.app.AlertDialog;
 
 import android.app.Activity;
@@ -178,15 +179,23 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     CommonContext.setContext(this);
   }
 
-  protected void showMessage (String message) {
+  protected void showMessage (String message, DialogInterface.OnDismissListener listener) {
     new AlertDialog.Builder(this)
                    .setMessage(message)
                    .setNeutralButton(R.string.showMessage_message_neutral, null)
                    .show();
   }
 
+  protected void showMessage (String message) {
+    showMessage(message, null);
+  }
+
+  protected final void showMessage (int message, DialogInterface.OnDismissListener listener) {
+    showMessage(getString(message), listener);
+  }
+
   protected final void showMessage (int message) {
-    showMessage(getString(message));
+    showMessage(message, null);
   }
 
   @Override
