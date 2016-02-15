@@ -11,7 +11,8 @@
   <string name="FileFinder_message_uncreatable_directory">unable to create folder</string>
   <string name="FileFinder_message_uneditable_file">unable to edit file</string>
 
-  <string name="FileFinder_hint_file_name">file name</string>
+  <string name="FileFinder_hint_path_directory">folder path</string>
+  <string name="FileFinder_hint_path_file">file name</string>
 
   <string name="FileFinder_action_back">Back</string>
   <string name="FileFinder_action_cancel">Cancel</string>

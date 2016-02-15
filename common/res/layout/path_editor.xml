@@ -10,6 +10,7 @@
     android:id="@+id/PathEditor_directory"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:hint="@string/FileFinder_hint_path_directory"
     android:singleLine="true"
    />
 
@@ -17,6 +18,7 @@
     android:id="@+id/PathEditor_file"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:hint="@string/FileFinder_hint_path_file"
     android:singleLine="true"
    />
 </LinearLayout>

@@ -135,14 +135,7 @@ public class FileFinder {
 
     EditText fileView = (EditText)dialog.findViewById(R.id.PathEditor_file);
     fileView.setText(file);
-    int length = fileView.length();
-
-    if (length > 0) {
-      fileView.setSelection(length);
-    } else {
-      fileView.setText(R.string.FileFinder_hint_file_name);
-      fileView.setSelection(0, fileView.length());
-    }
+    fileView.setSelection(fileView.length());
   }
 
   private final File getEditedPath (DialogInterface dialog) {
