@@ -219,21 +219,28 @@ public class FileFinder {
 
       @Override
       protected AlertDialog.Builder doInBackground (Void... arguments) {
-        Set<String> listing = listingCreator.createListing();
-        final String[] items = new String[listing.size()];
-        int count = 0;
+        AlertDialog.Builder builder = newAlertDialogBuilder();
 
-        for (String item : listing) {
-          items[count++] = item;
+        if (haveReference) {
+          builder.setTitle(reference.getAbsolutePath());
+        } else {
+          builder.setTitle(getString(R.string.FileFinder_title_main));
         }
 
-        String title = haveReference?
-                       reference.getAbsolutePath():
-                       getString(R.string.FileFinder_title_main);
+        Set<String> listing = listingCreator.createListing();
+        int count = listing.size();
 
-        AlertDialog.Builder builder = newAlertDialogBuilder()
-          .setTitle(title)
-          .setItems(items,
+        if (count == 0) {
+          builder.setMessage(R.string.FileFinder_message_empty_folder);
+        } else {
+          final String[] items = new String[count];
+          count = 0;
+
+          for (String item : listing) {
+            items[count++] = item;
+          }
+
+          builder.setItems(items,
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick (DialogInterface dialog, int index) {
@@ -249,19 +256,10 @@ public class FileFinder {
               }
             }
           );
-
-        builder.setPositiveButton(
-          R.string.FileFinder_action_up,
-          new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialog, int button) {
-              showListing(reference.getParentFile());
-            }
-          }
-        );
+        }
 
         if (mayCreate) {
-          builder.setNeutralButton(
+          builder.setPositiveButton(
             R.string.FileFinder_action_path,
             new DialogInterface.OnClickListener() {
               @Override
@@ -271,6 +269,16 @@ public class FileFinder {
             }
           );
         }
+
+        builder.setNeutralButton(
+          R.string.FileFinder_action_up,
+          new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int button) {
+              showListing(reference.getParentFile());
+            }
+          }
+        );
 
         setCancelButton(builder);
         return builder;
@@ -283,10 +291,6 @@ public class FileFinder {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        if (!haveReference) {
-          disableButton(dialog, dialog.BUTTON_POSITIVE);
-        }
-
         if (mayCreate) {
           boolean canCreate =  haveReference
                             && (reference.isDirectory())
@@ -294,8 +298,12 @@ public class FileFinder {
                             ;
 
           if (!canCreate) {
-            disableButton(dialog, dialog.BUTTON_NEUTRAL);
+            disableButton(dialog, dialog.BUTTON_POSITIVE);
           }
+        }
+
+        if (!haveReference) {
+          disableButton(dialog, dialog.BUTTON_NEUTRAL);
         }
       }
     }.execute();
