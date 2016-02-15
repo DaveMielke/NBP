@@ -9,7 +9,7 @@
   <string name="menu_options_label_saveAs">Save as</string>
   <string name="menu_options_label_send">Send</string>
 
-  <string name="button_actions_label">Actions</string>
+  <string name="button_menu_label">Menu</string>
 
   <string name="message_new_file">[new file]</string>
 

@@ -13,10 +13,10 @@
     >
 
     <Button
-      android:id="@+id/actions_button"
+      android:id="@+id/menu_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/button_actions_label"
+      android:text="@string/button_menu_label"
       android:visibility="gone"
      />
 

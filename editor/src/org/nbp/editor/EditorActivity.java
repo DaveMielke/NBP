@@ -333,7 +333,7 @@ public class EditorActivity extends CommonActivity {
 
   private final void prepareActionsButton () {
     if (getActionBar() == null) {
-      Button button = (Button)findViewById(R.id.actions_button);
+      Button button = (Button)findViewById(R.id.menu_button);
       button.setVisibility(button.VISIBLE);
 
       button.setOnClickListener(
