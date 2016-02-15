@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.app.AlertDialog;
 
 import android.view.View;
+import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 
@@ -115,52 +116,45 @@ public class FileFinder {
   }
 
   private final void setEditedPath (AlertDialog dialog, File reference) {
-    EditText view = (EditText)dialog.findViewById(R.id.edited_path);
+    String directory;
+    String file;
 
-    if (reference != null) {
-      CharSequence path = reference.getAbsolutePath();
-      boolean isDirectory = reference.isDirectory();
-
-      if (isDirectory) {
-        final char separator = File.separatorChar;
-        SpannableStringBuilder sb = new SpannableStringBuilder(path);
-
-        if (sb.charAt(sb.length()-1) != separator) {
-          sb.append(separator);
-        }
-
-        int length = sb.length();
-        sb.setSpan(new StyleSpan(Typeface.BOLD), length-1, length, 0);
-
-        path = sb.subSequence(0, sb.length());
-      }
-
-      view.setText(path);
-      int start = path.length();
-
-      if (isDirectory) {
-        final Button button = dialog.getButton(dialog.BUTTON_POSITIVE);
-
-        new OnTextEditedListener(view) {
-          @Override
-          protected final void onTextEdited (boolean isDifferent) {
-            button.setEnabled(isDifferent);
-          }
-        };
-
-        view.append(getString(R.string.FileFinder_hint_file_name));
-        button.setEnabled(false);
-      }
-
-      view.setSelection(start, view.length());
+    if (!reference.isAbsolute()) {
+      directory = currentReference.getAbsolutePath();
+      file = reference.getPath();
+    } else if (reference.isDirectory()) {
+      directory = reference.getAbsolutePath();
+      file = "";
     } else {
-      view.setText("");
+      directory = reference.getParentFile().getAbsolutePath();
+      file = reference.getName();
+    }
+
+    TextView directoryView = (TextView)dialog.findViewById(R.id.PathEditor_directory);
+    directoryView.setText(directory);
+
+    EditText fileView = (EditText)dialog.findViewById(R.id.PathEditor_file);
+    fileView.setText(file);
+    int length = fileView.length();
+
+    if (length > 0) {
+      fileView.setSelection(length);
+    } else {
+      fileView.setText(R.string.FileFinder_hint_file_name);
+      fileView.setSelection(0, fileView.length());
     }
   }
 
-  private final String getEditedPath (DialogInterface dialog) {
-    EditText view = (EditText)findView(dialog, R.id.edited_path);
-    return view.getText().toString().trim();
+  private final File getEditedPath (DialogInterface dialog) {
+    TextView directoryView = (TextView)findView(dialog, R.id.PathEditor_directory);
+    String directory = directoryView.getText().toString();
+    if (directory.isEmpty()) return null;
+
+    EditText fileView = (EditText)findView(dialog, R.id.PathEditor_file);
+    String file = fileView.getText().toString().trim();
+    if (file.isEmpty()) return null;
+
+    return new File(new File(directory), file);
   }
 
   private final void showPathProblem (final File file, int problem) {
@@ -189,13 +183,11 @@ public class FileFinder {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
-          String path = getEditedPath(dialog);
+          File file = getEditedPath(dialog);
 
-          if (path.isEmpty()) {
+          if (file == null) {
             requestCancelled();
           } else {
-            File file = new File(path);
-
             if (!file.isAbsolute()) {
               file = new File(currentReference, file.getPath());
             }
