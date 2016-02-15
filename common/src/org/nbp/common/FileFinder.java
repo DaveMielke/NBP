@@ -10,6 +10,7 @@ import java.io.File;
 
 import android.util.Log;
 import android.content.Context;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 
@@ -19,6 +20,10 @@ import android.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
 
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
@@ -113,18 +118,24 @@ public class FileFinder {
     EditText view = (EditText)dialog.findViewById(R.id.edited_path);
 
     if (reference != null) {
-      String path = reference.getAbsolutePath();
-      int length = path.length();
+      CharSequence path = reference.getAbsolutePath();
 
       if (reference.isDirectory()) {
-        if (path.charAt(length-1) != File.separatorChar) {
-          path += File.separatorChar;
-          length += 1;
+        final char separator = File.separatorChar;
+        SpannableStringBuilder sb = new SpannableStringBuilder(path);
+
+        if (sb.charAt(sb.length()-1) != separator) {
+          sb.append(separator);
         }
+
+        int length = sb.length();
+        sb.setSpan(new StyleSpan(Typeface.BOLD), length-1, length, 0);
+
+        path = sb.subSequence(0, sb.length());
       }
 
       view.setText(path);
-      view.setSelection(length);
+      view.setSelection(path.length());
     } else {
       view.setText("");
     }
