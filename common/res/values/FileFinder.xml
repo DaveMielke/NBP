@@ -18,6 +18,6 @@
   <string name="FileFinder_action_cancel">Cancel</string>
   <string name="FileFinder_action_dismiss">Dismiss</string>
   <string name="FileFinder_action_done">Done</string>
-  <string name="FileFinder_action_path">Edit Path</string>
+  <string name="FileFinder_action_path">Type File Name</string>
   <string name="FileFinder_action_up">Parent Folder</string>
 </resources>
