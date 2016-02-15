@@ -73,8 +73,8 @@ public class FileFinder {
       .show();
   }
 
-  private final void disableButton (DialogInterface dialog, int button) {
-    ((AlertDialog)dialog).getButton(button).setEnabled(false);
+  private final void setButtonEnabled (DialogInterface dialog, int button, boolean enabled) {
+    ((AlertDialog)dialog).getButton(button).setEnabled(enabled);
   }
 
   private final void setDoneButton (
@@ -298,12 +298,12 @@ public class FileFinder {
                             ;
 
           if (!canCreate) {
-            disableButton(dialog, dialog.BUTTON_POSITIVE);
+            setButtonEnabled(dialog, dialog.BUTTON_POSITIVE, false);
           }
         }
 
         if (!haveReference) {
-          disableButton(dialog, dialog.BUTTON_NEUTRAL);
+          setButtonEnabled(dialog, dialog.BUTTON_NEUTRAL, false);
         }
       }
     }.execute();
