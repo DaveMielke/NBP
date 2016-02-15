@@ -55,7 +55,7 @@ public class EditorActivity extends CommonActivity {
       if (file != null) {
         path = file.getAbsolutePath();
       } else {
-        path = getString(R.string.message_new_file);
+        path = getString(R.string.hint_new_file);
       }
 
       currentFile = file;
