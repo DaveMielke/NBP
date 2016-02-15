@@ -179,11 +179,10 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     CommonContext.setContext(this);
   }
 
-  protected void showMessage (String message, DialogInterface.OnDismissListener listener) {
+  protected void showMessage (String message, DialogInterface.OnClickListener listener) {
     new AlertDialog.Builder(this)
                    .setMessage(message)
-                   .setNeutralButton(R.string.showMessage_message_neutral, null)
-                   .setOnDismissListener(listener)
+                   .setNeutralButton(R.string.showMessage_message_neutral, listener)
                    .show();
   }
 
@@ -191,7 +190,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     showMessage(message, null);
   }
 
-  protected final void showMessage (int message, DialogInterface.OnDismissListener listener) {
+  protected final void showMessage (int message, DialogInterface.OnClickListener listener) {
     showMessage(getString(message), listener);
   }
 

@@ -118,9 +118,9 @@ public class EditorActivity extends CommonActivity {
             f.getAbsolutePath()
           ),
 
-          new DialogInterface.OnDismissListener() {
+          new DialogInterface.OnClickListener() {
             @Override
-            public void onDismiss (DialogInterface dialog) {
+            public void onClick (DialogInterface dialog, int button) {
               if (onSaved != null) onSaved.run();
             }
           }
