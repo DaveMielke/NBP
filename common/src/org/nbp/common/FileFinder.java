@@ -134,6 +134,15 @@ public class FileFinder {
     directoryView.setText(directory);
 
     EditText fileView = (EditText)dialog.findViewById(R.id.PathEditor_file);
+    final Button doneButton = dialog.getButton(dialog.BUTTON_POSITIVE);
+
+    new OnTextEditedListener(fileView) {
+      @Override
+      protected void onTextEdited (boolean isDifferent) {
+        doneButton.setEnabled(isDifferent);
+      }
+    };
+
     fileView.setText(file);
     fileView.setSelection(fileView.length());
   }
