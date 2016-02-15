@@ -119,8 +119,9 @@ public class FileFinder {
 
     if (reference != null) {
       CharSequence path = reference.getAbsolutePath();
+      boolean isDirectory = reference.isDirectory();
 
-      if (reference.isDirectory()) {
+      if (isDirectory) {
         final char separator = File.separatorChar;
         SpannableStringBuilder sb = new SpannableStringBuilder(path);
 
@@ -135,20 +136,23 @@ public class FileFinder {
       }
 
       view.setText(path);
-      view.setSelection(path.length());
+      final Button button = dialog.getButton(dialog.BUTTON_POSITIVE);
+
+      new OnTextEditedListener(view) {
+        @Override
+        protected final void onTextEdited (boolean isDifferent) {
+          button.setEnabled(isDifferent);
+        }
+      };
+
+      int start = path.length();
+      if (isDirectory) view.append("file name");
+      view.setSelection(start, view.length());
+
+      button.setEnabled(false);
     } else {
       view.setText("");
     }
-
-    final Button button = dialog.getButton(dialog.BUTTON_POSITIVE);
-    button.setEnabled(false);
-
-    new OnTextEditedListener(view) {
-      @Override
-      protected final void onTextEdited (boolean isDifferent) {
-        button.setEnabled(isDifferent);
-      }
-    };
   }
 
   private final String getEditedPath (DialogInterface dialog) {
