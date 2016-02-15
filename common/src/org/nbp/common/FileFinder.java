@@ -18,6 +18,7 @@ import android.app.AlertDialog;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Button;
 
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
@@ -127,6 +128,16 @@ public class FileFinder {
     } else {
       view.setText("");
     }
+
+    final Button button = dialog.getButton(dialog.BUTTON_POSITIVE);
+    button.setEnabled(false);
+
+    new OnTextEditedListener(view) {
+      @Override
+      protected final void onTextEdited (boolean isDifferent) {
+        button.setEnabled(isDifferent);
+      }
+    };
   }
 
   private final String getEditedPath (DialogInterface dialog) {
