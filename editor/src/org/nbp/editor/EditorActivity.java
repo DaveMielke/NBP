@@ -75,7 +75,7 @@ public class EditorActivity extends CommonActivity {
     setCurrentFile(null, "");
   }
 
-  private final void saveFile (File file, final Runnable next) {
+  private final void saveFile (File file, final Runnable onSaved) {
     CharSequence content;
 
     synchronized (this) {
@@ -110,13 +110,13 @@ public class EditorActivity extends CommonActivity {
       @Override
       public void onPostExecute (Void result) {
         dialog.dismiss();
-        if (next != null) next.run();
+        if (onSaved != null) onSaved.run();
       }
     }.execute();
   }
 
-  private final void saveFile (Runnable next) {
-    saveFile(null, next);
+  private final void saveFile (Runnable onSaved) {
+    saveFile(null, onSaved);
   }
 
   private final void saveFile (File file) {
@@ -127,19 +127,19 @@ public class EditorActivity extends CommonActivity {
     saveFile(null, null);
   }
 
-  private final void testHasChanged (final Runnable next) {
+  private final void testHasChanged (final Runnable onSaved) {
     if (hasChanged) {
       OnDialogClickListener positiveListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
           if (currentFile != null) {
-            saveFile(next);
+            saveFile(onSaved);
           } else {
             findFile(true,
               new FileFinder.FileHandler() {
                 @Override
                 public void handleFile (File file) {
-                  if (file != null) saveFile(file, next);
+                  if (file != null) saveFile(file, onSaved);
                 }
               }
             );
@@ -150,7 +150,7 @@ public class EditorActivity extends CommonActivity {
       OnDialogClickListener negativeListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
-          next.run();
+          onSaved.run();
         }
       };
 
@@ -162,7 +162,7 @@ public class EditorActivity extends CommonActivity {
                      .setNeutralButton(R.string.alert_changed_neutral, null)
                      .show();
     } else {
-      next.run();
+      onSaved.run();
     }
   }
 
