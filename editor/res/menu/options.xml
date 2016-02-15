@@ -3,26 +3,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
     android:id="@+id/options_new"
-    android:title="@string/menu_options_label_new"
+    android:title="@string/menu_options_new_label"
    />
 
   <item
     android:id="@+id/options_open"
-    android:title="@string/menu_options_label_open"
+    android:title="@string/menu_options_open_label"
    />
 
   <item
     android:id="@+id/options_save"
-    android:title="@string/menu_options_label_save"
+    android:title="@string/menu_options_save_label"
    />
 
   <item
     android:id="@+id/options_saveAs"
-    android:title="@string/menu_options_label_saveAs"
+    android:title="@string/menu_options_saveAs_label"
    />
 
   <item
     android:id="@+id/options_send"
-    android:title="@string/menu_options_label_send"
+    android:title="@string/menu_options_send_label"
    />
 </menu>

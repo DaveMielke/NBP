@@ -46,7 +46,7 @@ public class DefaultFileHandler extends FileHandler {
       if (!newFile.renameTo(file)) {
         CommonUtilities.reportError(
           LOG_TAG, "%s: %s -> %s",
-          CommonContext.getString(R.string.DefaultFileHandler_rename_failed),
+          CommonContext.getString(R.string.alert_rename_failed),
           newFile.getAbsolutePath(), file.getAbsolutePath()
         );
       }

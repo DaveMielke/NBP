@@ -94,7 +94,7 @@ public class EditorActivity extends CommonActivity {
       protected void onPreExecute () {
         dialog = new AlertDialog.Builder(getActivity())
                                 .setCancelable(false)
-                                .setTitle(R.string.alert_writing_title)
+                                .setTitle(R.string.alert_writing_file)
                                 .setMessage(f.getAbsolutePath())
                                 .create();
 
@@ -155,11 +155,11 @@ public class EditorActivity extends CommonActivity {
       };
 
       new AlertDialog.Builder(this)
-                     .setTitle(R.string.alert_changed_title)
-                     .setMessage(R.string.alert_changed_message)
-                     .setPositiveButton(R.string.alert_changed_positive, positiveListener)
-                     .setNegativeButton(R.string.alert_changed_negative, negativeListener)
-                     .setNeutralButton(R.string.alert_changed_neutral, null)
+                     .setTitle(R.string.changed_title)
+                     .setMessage(R.string.changed_message)
+                     .setPositiveButton(R.string.changed_button_positive, positiveListener)
+                     .setNeutralButton(R.string.changed_button_neutral, null)
+                     .setNegativeButton(R.string.changed_button_negative, negativeListener)
                      .show();
     } else {
       onSaved.run();
@@ -174,7 +174,7 @@ public class EditorActivity extends CommonActivity {
       protected void onPreExecute () {
         dialog = new AlertDialog.Builder(getActivity())
                                 .setCancelable(false)
-                                .setTitle(R.string.alert_reading_title)
+                                .setTitle(R.string.alert_reading_file)
                                 .setMessage(file.getAbsolutePath())
                                 .create();
 
@@ -218,7 +218,7 @@ public class EditorActivity extends CommonActivity {
     } else {
       showMessage(String.format(
         "%s: %s",
-        getString(R.string.alert_find_uncreatable_folder),
+        getString(R.string.alert_uncreatable_directory),
         folder.getAbsolutePath()
       ));
     }
@@ -293,7 +293,7 @@ public class EditorActivity extends CommonActivity {
         }
       }
     } else {
-      showMessage(R.string.alert_send_new_file);
+      showMessage(R.string.alert_unsendable_new_file);
     }
   }
 
