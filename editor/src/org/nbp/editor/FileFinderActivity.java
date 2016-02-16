@@ -40,7 +40,7 @@ public class FileFinderActivity extends CommonActivity implements FileFinder.Fil
         Uri uri = intent.getData();
         File reference = null;
         if (uri != null) reference = new File(uri.getPath());
-        FileFinder.findFile(this, reference, false, this);
+        FileFinder.findFile(this, reference, 0, this);
       } else {
         problem = "unsupported action: " + action;
       }
