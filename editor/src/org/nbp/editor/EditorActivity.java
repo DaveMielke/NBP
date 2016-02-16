@@ -210,11 +210,12 @@ public class EditorActivity extends CommonActivity {
     }.execute();
   }
 
-  private final File getDefaultDirectory () {
+  private final File getDocumentsDirectory () {
     File directory = Environment.getExternalStoragePublicDirectory("Documents");
 
     if (!directory.exists()) {
       if (!directory.mkdir()) {
+        Log.w(LOG_TAG, ("unable to create documents directory: " + directory.getAbsolutePath()));
         return null;
       }
     }
@@ -223,22 +224,24 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
-    File directory = (currentFile == null)?
-                     getDefaultDirectory():
-                     currentFile.getParentFile();
+    FileFinder.Builder builder = new FileFinder
+      .Builder(this)
+      .setForWriting(forWriting)
+      ;
 
-    if (directory != null) {
-      new FileFinder.Builder(this)
-                    .addRootLocation(directory)
-                    .setForWriting(forWriting)
-                    .findFile(handler);
-    } else {
-      showMessage(String.format(
-        "%s: %s",
-        getString(R.string.alert_uncreatable_directory),
-        directory.getAbsolutePath()
-      ));
+    if (currentFile != null) {
+      builder.addRootLocation(currentFile.getParentFile());
     }
+
+    {
+      File directory = getDocumentsDirectory();
+
+      if (directory != null) {
+        builder.addRootLocation("Documents", directory);
+      }
+    }
+
+    builder.findFile(handler);
   }
 
   private void menuAction_new () {

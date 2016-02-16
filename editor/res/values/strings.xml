@@ -17,7 +17,6 @@
   <string name="alert_file_saved">file saved</string>
   <string name="alert_reading_file">reading file</string>
   <string name="alert_rename_failed">rename failed</string>
-  <string name="alert_uncreatable_directory">unable to create folder</string>
   <string name="alert_unsendable_new_file">cannot send new file</string>
   <string name="alert_writing_file">writing file</string>
 
