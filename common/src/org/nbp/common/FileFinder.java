@@ -25,13 +25,16 @@ import android.widget.Button;
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
 
+  public final static int FLAG_FOR_WRITING = 0X01;
+
   public interface FileHandler {
     public void handleFile (File file);
   }
 
   private final Activity owningActivity;
-  private final boolean mayCreate;
+  private final int findFlags;
   private final FileHandler fileHandler;
+
   private final Map<String, File> rootTable = new LinkedHashMap<String, File>();
 
   private File currentReference = null;
@@ -227,9 +230,11 @@ public class FileFinder {
     final boolean haveReference = reference != null;
 
     new AsyncTask<Void, Void, AlertDialog.Builder>() {
-      AlertDialog message = newAlertDialogBuilder()
-        .setMessage(R.string.FileFinder_message_creating_listing)
-        .create();
+      final boolean mayCreate = (findFlags & FLAG_FOR_WRITING) != 0;
+
+      final AlertDialog message = newAlertDialogBuilder()
+              .setMessage(R.string.FileFinder_message_creating_listing)
+              .create();
 
       @Override
       protected void onPreExecute () {
@@ -334,6 +339,7 @@ public class FileFinder {
 
   private final Set<String> createDirectoryListing (File directory) {
     Set<String> listing = new TreeSet();
+    boolean forWriting = (findFlags & FLAG_FOR_WRITING) != 0;
 
     for (File file : directory.listFiles()) {
       if (file.isHidden()) continue;
@@ -348,7 +354,7 @@ public class FileFinder {
       } else {
         if (!file.isFile()) continue;
 
-        if (mayCreate) {
+        if (forWriting) {
           if (!file.canWrite()) continue;
         } else {
           if (!file.canRead()) continue;
@@ -393,9 +399,9 @@ public class FileFinder {
     );
   }
 
-  private FileFinder (Activity owner, File reference, boolean create, FileHandler handler) {
+  private FileFinder (Activity owner, File reference, int flags, FileHandler handler) {
     owningActivity = owner;
-    mayCreate = create;
+    findFlags = flags;
     fileHandler = handler;
 
     addRoot(R.string.FileFinder_root_user, "/storage");
@@ -404,11 +410,11 @@ public class FileFinder {
     showListing(reference);
   }
 
-  public static FileFinder findFile (Activity owner, File reference, boolean create, FileHandler handler) {
-    return new FileFinder(owner, reference, create, handler);
+  public static FileFinder findFile (Activity owner, File reference, int flags, FileHandler handler) {
+    return new FileFinder(owner, reference, flags, handler);
   }
 
-  public static FileFinder findFile (Activity owner, boolean create, FileHandler handler) {
-    return findFile(owner, null, create, handler);
+  public static FileFinder findFile (Activity owner, int flags, FileHandler handler) {
+    return findFile(owner, null, flags, handler);
   }
 }

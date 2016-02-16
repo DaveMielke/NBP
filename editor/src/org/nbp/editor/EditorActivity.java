@@ -222,13 +222,16 @@ public class EditorActivity extends CommonActivity {
     return directory;
   }
 
-  private final void findFile (boolean create, FileFinder.FileHandler handler) {
+  private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
     File directory = (currentFile == null)?
                      getDefaultDirectory():
                      currentFile.getParentFile();
 
+    int flags = 0;
+    if (forWriting) flags |= FileFinder.FLAG_FOR_WRITING;
+
     if (directory != null) {
-      FileFinder.findFile(this, directory, create, handler);
+      FileFinder.findFile(this, directory, flags, handler);
     } else {
       showMessage(String.format(
         "%s: %s",
