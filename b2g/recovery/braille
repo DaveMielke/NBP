@@ -30,17 +30,7 @@ makeDirectory() {
   mkdir -p "${directory}" || exit "${operationFailed}"
 }
 
-mountDirectory() {
-  local directory="${1}"
-  
-  [ ! -d "${directory}" ] || {
-    set -- $(ls "${directory}")
-    [ "${#}" -gt 0 ] || shell mount "${directory}"
-  }
-}
-
 makePersistentDirectory() {
-  mountDirectory /cache
   makeDirectory "${persistentDirectory}"
   local from
 
