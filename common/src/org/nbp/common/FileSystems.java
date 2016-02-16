@@ -1,6 +1,5 @@
 package org.nbp.common;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -21,8 +20,6 @@ public abstract class FileSystems {
   private final static Map<String, File> fileSystems = new LinkedHashMap<String, File>();
 
   private final static void addFileSystem (String label, File mountpoint) {
-    fileSystems.values().removeAll(Collections.singleton(mountpoint));
-
     fileSystems.put(
       String.format("%s [%s]", label, mountpoint.getAbsolutePath()),
       mountpoint
@@ -65,7 +62,10 @@ public abstract class FileSystems {
   }
 
   static {
-    addFileSystem("internal", Environment.getExternalStorageDirectory());
+    if (!Environment.isExternalStorageRemovable()) {
+      addFileSystem("internal", Environment.getExternalStorageDirectory());
+    }
+
     addRemovableFileSystems();
     addFileSystem("root", "/");
   }
