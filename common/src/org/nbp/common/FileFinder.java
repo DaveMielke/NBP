@@ -1,10 +1,7 @@
 package org.nbp.common;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Map;
-import java.util.LinkedHashMap;
 
 import java.io.IOException;
 import java.io.File;
@@ -17,7 +14,6 @@ import android.content.Context;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Environment;
 
 import android.content.DialogInterface;
 import android.app.AlertDialog;
@@ -39,57 +35,6 @@ public class FileFinder {
   private final Activity owningActivity;
   private final int findFlags;
   private final FileHandler fileHandler;
-
-  private final static Map<String, File> rootTable = new LinkedHashMap<String, File>();
-
-  private final static void addRoot (String label, File directory) {
-    rootTable.values().removeAll(Collections.singleton(directory));
-
-    rootTable.put(
-      String.format("%s [%s]", label, directory.getAbsolutePath()),
-      directory
-    );
-  }
-
-  private final static void addRoot (String label, String path) {
-    addRoot(label, new File(path));
-  }
-
-  private final static void addRemovableRoots () {
-    try {
-      Reader reader = new FileReader("/system/etc/vold.fstab");
-
-      try {
-        BufferedReader buffer = new BufferedReader(reader);
-
-        try {
-          while (true) {
-            String line = buffer.readLine();
-            if (line == null) break;
-
-            String[] fields = line.split("\\s+");
-            if (fields.length < 3) continue;
-            if (!fields[0].equals("dev_mount")) continue;
-
-            String label = fields[1];
-            String path = fields[2];
-            addRoot((label + " (removable)"), path);
-          }
-        } finally {
-          buffer.close();
-        }
-      } finally {
-        reader.close();
-      }
-    } catch (IOException exception) {
-    }
-  }
-
-  static {
-    addRoot("Internal Memory", Environment.getExternalStorageDirectory());
-    addRemovableRoots();
-    addRoot("System Root", "/");
-  }
 
   private File currentReference = null;
 
@@ -325,7 +270,7 @@ public class FileFinder {
                 String item = items[index];
 
                 if (!haveReference) {
-                  showListing(rootTable.get(item));
+                  showListing(FileSystems.getMountpoint(item));
                 } else if (item.charAt(0) == File.separatorChar) {
                   showListing(new File(item));
                 } else {
@@ -388,7 +333,7 @@ public class FileFinder {
   }
 
   private final Set<String> createRootListing () {
-    return rootTable.keySet();
+    return FileSystems.getLabels();
   }
 
   private final Set<String> createDirectoryListing (File directory) {

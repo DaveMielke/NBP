@@ -3,9 +3,6 @@
 <resources>
   <string name="FileFinder_title_main">NBP File Finder</string>
 
-  <string name="FileFinder_root_system">System Root</string>
-  <string name="FileFinder_root_user">User Storage</string>
-
   <string name="FileFinder_message_creating_listing">creating the listing</string>
   <string name="FileFinder_message_empty_directory">empty folder</string>
   <string name="FileFinder_message_uncreatable_directory">unable to create folder</string>
