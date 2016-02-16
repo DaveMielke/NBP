@@ -227,11 +227,11 @@ public class EditorActivity extends CommonActivity {
                      getDefaultDirectory():
                      currentFile.getParentFile();
 
-    int flags = 0;
-    if (forWriting) flags |= FileFinder.FLAG_FOR_WRITING;
-
     if (directory != null) {
-      FileFinder.findFile(this, directory, flags, handler);
+      new FileFinder.Builder(this)
+                    .addRootLocation(directory)
+                    .setForWriting(forWriting)
+                    .findFile(handler);
     } else {
       showMessage(String.format(
         "%s: %s",

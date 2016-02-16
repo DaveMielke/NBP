@@ -3,6 +3,9 @@ package org.nbp.common;
 import java.util.Set;
 import java.util.TreeSet;
 
+import java.util.Map;
+import java.util.LinkedHashMap;
+
 import java.io.IOException;
 import java.io.File;
 import java.io.Reader;
@@ -26,15 +29,59 @@ import android.widget.Button;
 public class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
 
-  public final static int FLAG_FOR_WRITING = 0X01;
-
   public interface FileHandler {
     public void handleFile (File file);
   }
 
+  public final static class Builder {
+    private final Activity owningActivity;
+    private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
+    private boolean forWriting = false;
+
+    public final Activity getOwningActivity () {
+      return owningActivity;
+    }
+
+    public final Set<String> getRootLabels () {
+      return rootLocations.keySet();
+    }
+
+    public final File getRootLocation (String label) {
+      return rootLocations.get(label);
+    }
+
+    public final Builder addRootLocation (String label, File location) {
+      rootLocations.put(label, location);
+      return this;
+    }
+
+    public final Builder addRootLocation (File location) {
+      return addRootLocation(location.getAbsolutePath(), location);
+    }
+
+    public final boolean getForWriting () {
+      return forWriting;
+    }
+
+    public final Builder setForWriting (boolean yes) {
+      forWriting = yes;
+      return this;
+    }
+
+    public final void findFile (FileHandler handler) {
+      new FileFinder(this, handler);
+    }
+
+    public Builder (Activity owner) {
+      owningActivity = owner;
+    }
+  }
+
   private final Activity owningActivity;
-  private final int findFlags;
+  private final boolean forWriting;
   private final FileHandler fileHandler;
+
+  private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
 
   private File currentReference = null;
 
@@ -229,8 +276,6 @@ public class FileFinder {
     final boolean haveReference = reference != null;
 
     new AsyncTask<Void, Void, AlertDialog.Builder>() {
-      final boolean mayCreate = (findFlags & FLAG_FOR_WRITING) != 0;
-
       final AlertDialog message = newAlertDialogBuilder()
               .setMessage(R.string.FileFinder_message_creating_listing)
               .create();
@@ -270,7 +315,7 @@ public class FileFinder {
                 String item = items[index];
 
                 if (!haveReference) {
-                  showListing(FileSystems.getMountpoint(item));
+                  showListing(rootLocations.get(item));
                 } else if (item.charAt(0) == File.separatorChar) {
                   showListing(new File(item));
                 } else {
@@ -281,7 +326,7 @@ public class FileFinder {
           );
         }
 
-        if (mayCreate) {
+        if (forWriting) {
           builder.setPositiveButton(
             R.string.FileFinder_action_path,
             new DialogInterface.OnClickListener() {
@@ -314,7 +359,7 @@ public class FileFinder {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        if (mayCreate) {
+        if (forWriting) {
           boolean canCreate =  haveReference
                             && (reference.isDirectory())
                             && (reference.canWrite())
@@ -333,12 +378,11 @@ public class FileFinder {
   }
 
   private final Set<String> createRootListing () {
-    return FileSystems.getLabels();
+    return rootLocations.keySet();
   }
 
   private final Set<String> createDirectoryListing (File directory) {
     Set<String> listing = new TreeSet();
-    boolean forWriting = (findFlags & FLAG_FOR_WRITING) != 0;
 
     for (File file : directory.listFiles()) {
       if (file.isHidden()) continue;
@@ -391,19 +435,30 @@ public class FileFinder {
     }
   }
 
-  private FileFinder (Activity owner, File reference, int flags, FileHandler handler) {
-    owningActivity = owner;
-    findFlags = flags;
+  private FileFinder (Builder builder, FileHandler handler) {
+    owningActivity = builder.getOwningActivity();
+    forWriting = builder.getForWriting();
     fileHandler = handler;
 
-    showListing(reference);
-  }
+    {
+      Set<String> labels = builder.getRootLabels();
 
-  public static FileFinder findFile (Activity owner, File reference, int flags, FileHandler handler) {
-    return new FileFinder(owner, reference, flags, handler);
-  }
+      if (labels.isEmpty()) {
+        for (String label : FileSystems.getLabels()) {
+          rootLocations.put(label, FileSystems.getMountpoint(label));
+        }
+      } else {
+        for (String label : labels) {
+          rootLocations.put(label, builder.getRootLocation(label));
+        }
+      }
+    }
 
-  public static FileFinder findFile (Activity owner, int flags, FileHandler handler) {
-    return findFile(owner, null, flags, handler);
+    if (rootLocations.size() == 1) {
+      Set<String> labels = rootLocations.keySet();
+      showListing(rootLocations.get(labels.toArray(new String[1])[0]));
+    } else {
+      showListing(null);
+    }
   }
 }

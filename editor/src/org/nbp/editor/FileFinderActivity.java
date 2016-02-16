@@ -37,10 +37,12 @@ public class FileFinderActivity extends CommonActivity implements FileFinder.Fil
 
     if (action != null) {
       if (action.equals(Intent.ACTION_GET_CONTENT)) {
+        FileFinder.Builder builder = new FileFinder.Builder(this);
+
         Uri uri = intent.getData();
-        File reference = null;
-        if (uri != null) reference = new File(uri.getPath());
-        FileFinder.findFile(this, reference, 0, this);
+        if (uri != null) builder.addRootLocation(new File(uri.getPath()));
+
+        builder.findFile(this);
       } else {
         problem = "unsupported action: " + action;
       }
