@@ -67,6 +67,11 @@ public abstract class FileSystems {
     }
 
     addRemovableFileSystems();
+
+    addFileSystem("system", Environment.getRootDirectory());
+    addFileSystem("data", Environment.getDataDirectory());
+    addFileSystem("cache", Environment.getDownloadCacheDirectory());
+
     addFileSystem("root", "/");
   }
 
