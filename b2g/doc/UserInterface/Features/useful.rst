@@ -47,6 +47,7 @@ within a screen that looks something like this::
   UI Package Version    1.7.74
   UI Source Revision    git:e6193a401c1a5691
   UI Build Time         2016-01-21@09:40 UTC
+  Android Version       4.1.2
   Android Build Name    v4.2.8-beta
   Android Build Time    2015-12-01@03:09 UTC
   Android Build Type    eng

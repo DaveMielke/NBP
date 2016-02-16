@@ -79,6 +79,7 @@ public class BuildDetailsActivity extends ProgrammaticActivity {
     addDetail(R.string.build_activity_label_ui_revision, R.string.B2G_UI_source_revision);
     addDetail(R.string.build_activity_label_ui_time, R.string.B2G_UI_build_time);
 
+    addAndroidBuildField(R.string.build_activity_label_android_version, Build.VERSION.RELEASE);
     addAndroidBuildField(R.string.build_activity_label_android_build, Build.ID);
     addTime(R.string.build_activity_label_android_time, Build.TIME);
     addAndroidBuildField(R.string.build_activity_label_android_type, Build.TYPE);
