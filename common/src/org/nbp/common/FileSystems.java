@@ -19,15 +19,26 @@ public abstract class FileSystems {
 
   private final static Map<String, File> fileSystems = new LinkedHashMap<String, File>();
 
-  private final static void addFileSystem (String label, File mountpoint) {
+  private final static boolean addFileSystem (
+    String label, File mountpoint, boolean isRemovable
+  ) {
+    if (!isRemovable) {
+      if (!mountpoint.canRead()) return false;
+      if (!mountpoint.canExecute()) return false;
+    }
+
     fileSystems.put(
       String.format("%s [%s]", label, mountpoint.getAbsolutePath()),
       mountpoint
     );
+
+    return true;
   }
 
-  private final static void addFileSystem (String label, String mountpoint) {
-    addFileSystem(label, new File(mountpoint));
+  private final static boolean addFileSystem (
+    String label, String mountpoint, boolean isRemovable
+  ) {
+    return addFileSystem(label, new File(mountpoint), isRemovable);
   }
 
   private final static void addRemovableFileSystems () {
@@ -48,7 +59,7 @@ public abstract class FileSystems {
 
             String label = fields[1];
             String mountpoint = fields[2];
-            addFileSystem(label, mountpoint);
+            addFileSystem(label, mountpoint, true);
           }
         } finally {
           buffer.close();
@@ -63,16 +74,16 @@ public abstract class FileSystems {
 
   static {
     if (!Environment.isExternalStorageRemovable()) {
-      addFileSystem("internal", Environment.getExternalStorageDirectory());
+      addFileSystem("internal", Environment.getExternalStorageDirectory(), false);
     }
 
     addRemovableFileSystems();
 
-    addFileSystem("system", Environment.getRootDirectory());
-    addFileSystem("data", Environment.getDataDirectory());
-    addFileSystem("cache", Environment.getDownloadCacheDirectory());
+    addFileSystem("system", Environment.getRootDirectory(), false);
+    addFileSystem("data", Environment.getDataDirectory(), false);
+    addFileSystem("cache", Environment.getDownloadCacheDirectory(), false);
 
-    addFileSystem("root", "/");
+    addFileSystem("root", "/", false);
   }
 
   private FileSystems () {
