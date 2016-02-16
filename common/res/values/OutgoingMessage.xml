@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="OutgoingMessage_select_email_app">Select outgoing email app ...</string>
+  <string name="OutgoingMessage_file_not_found">file not found</string>
+  <string name="OutgoingMessage_file_not_readable">file not readable</string>
+  <string name="OutgoingMessage_not_a_file">not a file</string>
+</resources>
