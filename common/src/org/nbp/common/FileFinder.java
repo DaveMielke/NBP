@@ -2,6 +2,7 @@ package org.nbp.common;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 import java.util.Map;
 import java.util.LinkedHashMap;
@@ -57,6 +58,10 @@ public class FileFinder {
 
     public final Builder addRootLocation (File location) {
       return addRootLocation(location.getAbsolutePath(), location);
+    }
+
+    public final Builder addRootLocation (String label) {
+      return addRootLocation(label, FileSystems.getMountpoint(label));
     }
 
     public final boolean getForWriting () {
@@ -377,8 +382,22 @@ public class FileFinder {
     }.execute();
   }
 
+  private final static boolean canAccessDirectory (File directory) {
+    if (!directory.canRead()) return false;
+    if (!directory.canExecute()) return false;
+    return true;
+  }
+
   private final Set<String> createRootListing () {
-    return rootLocations.keySet();
+    Set<String> listing = new LinkedHashSet<String>();
+
+    for (String label : rootLocations.keySet()) {
+      if (canAccessDirectory(rootLocations.get(label))) {
+        listing.add(label);
+      }
+    }
+
+    return listing;
   }
 
   private final Set<String> createDirectoryListing (File directory) {
@@ -391,8 +410,7 @@ public class FileFinder {
       char indicator = 0;
 
       if (file.isDirectory()) {
-        if (!file.canRead()) continue;
-        if (!file.canExecute()) continue;
+        if (!canAccessDirectory(file)) continue;
         indicator = File.separatorChar;
       } else {
         if (!file.isFile()) continue;
@@ -444,7 +462,7 @@ public class FileFinder {
       Set<String> labels = builder.getRootLabels();
 
       if (labels.isEmpty()) {
-        for (String label : FileSystems.getLabels()) {
+        for (String label : FileSystems.getAllLabels()) {
           rootLocations.put(label, FileSystems.getMountpoint(label));
         }
       } else {

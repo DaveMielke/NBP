@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.nbp.common.CommonActivity;
 import org.nbp.common.FileFinder;
+import org.nbp.common.FileSystems;
 
 import org.nbp.common.OutgoingMessage;
 import android.net.Uri;
@@ -237,8 +238,12 @@ public class EditorActivity extends CommonActivity {
       File directory = getDocumentsDirectory();
 
       if (directory != null) {
-        builder.addRootLocation("Documents", directory);
+        builder.addRootLocation("documents", directory);
       }
+    }
+
+    for (String label : FileSystems.getRemovableLabels()) {
+      builder.addRootLocation(label);
     }
 
     builder.findFile(handler);

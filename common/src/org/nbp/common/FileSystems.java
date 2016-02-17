@@ -2,7 +2,9 @@ package org.nbp.common;
 
 import java.util.Map;
 import java.util.LinkedHashMap;
+
 import java.util.Set;
+import java.util.LinkedHashSet;
 
 import java.io.IOException;
 import java.io.File;
@@ -17,21 +19,35 @@ import android.os.Environment;
 public abstract class FileSystems {
   private final static String LOG_TAG = FileSystems.class.getName();
 
-  private final static Map<String, File> fileSystems = new LinkedHashMap<String, File>();
+  private static class Entry {
+    private final File mountpoint;
+
+    public final File getMountpoint () {
+      return mountpoint;
+    }
+
+    public Entry (File mountpoint) {
+      this.mountpoint = mountpoint;
+    }
+  }
+
+  private final static Map<String, Entry> fileSystems = new LinkedHashMap<String, Entry>();
+  private final static Set<String> removableFileSystems = new LinkedHashSet<String>();
 
   private final static boolean addFileSystem (
     String label, File mountpoint, boolean isRemovable
   ) {
-    if (!isRemovable) {
+    label = String.format("%s [%s]", label, mountpoint.getAbsolutePath());
+    Entry fs = new Entry(mountpoint);
+
+    if (isRemovable) {
+      removableFileSystems.add(label);
+    } else {
       if (!mountpoint.canRead()) return false;
       if (!mountpoint.canExecute()) return false;
     }
 
-    fileSystems.put(
-      String.format("%s [%s]", label, mountpoint.getAbsolutePath()),
-      mountpoint
-    );
-
+    fileSystems.put(label, fs);
     return true;
   }
 
@@ -78,22 +94,28 @@ public abstract class FileSystems {
     }
 
     addRemovableFileSystems();
-
     addFileSystem("system", Environment.getRootDirectory(), false);
     addFileSystem("data", Environment.getDataDirectory(), false);
     addFileSystem("cache", Environment.getDownloadCacheDirectory(), false);
-
     addFileSystem("root", "/", false);
   }
 
   private FileSystems () {
   }
 
-  public static Set<String> getLabels () {
-    return fileSystems.keySet();
+  private static String[] toArray (Set<String> set) {
+    return set.toArray(new String[set.size()]);
+  }
+
+  public static String[] getAllLabels () {
+    return toArray(fileSystems.keySet());
+  }
+
+  public static String[] getRemovableLabels () {
+    return toArray(removableFileSystems);
   }
 
   public static File getMountpoint (String label) {
-    return fileSystems.get(label);
+    return fileSystems.get(label).getMountpoint();
   }
 }
