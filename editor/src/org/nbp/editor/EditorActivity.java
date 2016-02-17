@@ -224,6 +224,10 @@ public class EditorActivity extends CommonActivity {
     return directory;
   }
 
+  private final void addRootLocation (FileFinder.Builder builder, String name, File location) {
+    builder.addRootLocation(FileSystems.makeLabel(name, location), location);
+  }
+
   private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
@@ -231,14 +235,14 @@ public class EditorActivity extends CommonActivity {
       ;
 
     if (currentFile != null) {
-      builder.addRootLocation(currentFile.getParentFile());
+      addRootLocation(builder, "current", currentFile.getParentFile());
     }
 
     {
       File directory = getDocumentsDirectory();
 
       if (directory != null) {
-        builder.addRootLocation(FileSystems.makeLabel("documents", directory), directory);
+        addRootLocation(builder, "documents", directory);
       }
     }
 
@@ -356,7 +360,7 @@ public class EditorActivity extends CommonActivity {
     return true;
   }
 
-  private final void prepareActionsButton () {
+  private final void prepareMenuButton () {
     if (getActionBar() == null) {
       Button button = (Button)findViewById(R.id.menu_button);
       button.setVisibility(button.VISIBLE);
@@ -371,6 +375,12 @@ public class EditorActivity extends CommonActivity {
         }
       );
     }
+  }
+
+  private final void checkpointFile () {
+  }
+
+  private final void restoreFile () {
   }
 
   private final void addInputFilters () {
@@ -402,9 +412,10 @@ public class EditorActivity extends CommonActivity {
     editArea = (EditText)findViewById(R.id.edit_area);
     setCurrentFile();
 
-    prepareActionsButton();
-    addInputFilters();
     showReportedErrors();
+    prepareMenuButton();
+    addInputFilters();
+    restoreFile();
   }
 
   @Override
@@ -412,6 +423,15 @@ public class EditorActivity extends CommonActivity {
     super.onResume();
 
     editArea.requestFocus();
+  }
+
+  @Override
+  protected void onPause () {
+    try {
+      checkpointFile();
+    } finally {
+      super.onPause();
+    }
   }
 
   @Override
