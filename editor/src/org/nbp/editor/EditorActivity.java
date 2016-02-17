@@ -238,7 +238,7 @@ public class EditorActivity extends CommonActivity {
       File directory = getDocumentsDirectory();
 
       if (directory != null) {
-        builder.addRootLocation("documents", directory);
+        builder.addRootLocation(FileSystems.makeLabel("documents", directory), directory);
       }
     }
 

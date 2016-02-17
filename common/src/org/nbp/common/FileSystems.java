@@ -34,10 +34,14 @@ public abstract class FileSystems {
   private final static Map<String, Entry> fileSystems = new LinkedHashMap<String, Entry>();
   private final static Set<String> removableFileSystems = new LinkedHashSet<String>();
 
+  public static String makeLabel (String name, File file) {
+    return String.format("%s [%s]", name, file.getAbsolutePath());
+  }
+
   private final static boolean addFileSystem (
-    String label, File mountpoint, boolean isRemovable
+    String name, File mountpoint, boolean isRemovable
   ) {
-    label = String.format("%s [%s]", label, mountpoint.getAbsolutePath());
+    String label = makeLabel(name, mountpoint);
     Entry fs = new Entry(mountpoint);
 
     if (isRemovable) {
@@ -52,9 +56,9 @@ public abstract class FileSystems {
   }
 
   private final static boolean addFileSystem (
-    String label, String mountpoint, boolean isRemovable
+    String name, String mountpoint, boolean isRemovable
   ) {
-    return addFileSystem(label, new File(mountpoint), isRemovable);
+    return addFileSystem(name, new File(mountpoint), isRemovable);
   }
 
   private final static void addRemovableFileSystems () {
@@ -73,9 +77,9 @@ public abstract class FileSystems {
             if (fields.length < 3) continue;
             if (!fields[0].equals("dev_mount")) continue;
 
-            String label = fields[1];
+            String name = fields[1];
             String mountpoint = fields[2];
-            addFileSystem(label, mountpoint, true);
+            addFileSystem(name, mountpoint, true);
           }
         } finally {
           buffer.close();
