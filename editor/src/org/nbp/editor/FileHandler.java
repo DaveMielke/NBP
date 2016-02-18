@@ -50,4 +50,12 @@ public abstract class FileHandler {
 
   protected FileHandler () {
   }
+
+  public static void readFile (File file, SpannableStringBuilder sb) {
+    get(file).read(file, sb);
+  }
+
+  public static void writeFile (File file, CharSequence text) {
+    get(file).write(file, text);
+  }
 }

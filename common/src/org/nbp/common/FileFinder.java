@@ -35,12 +35,12 @@ public class FileFinder {
   }
 
   public final static class Builder {
-    private final Activity owningActivity;
+    private final Activity ownerActivity;
     private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
     private boolean forWriting = false;
 
-    public final Activity getOwningActivity () {
-      return owningActivity;
+    public final Activity getOwnerActivity () {
+      return ownerActivity;
     }
 
     public final Set<String> getRootLabels () {
@@ -78,11 +78,11 @@ public class FileFinder {
     }
 
     public Builder (Activity owner) {
-      owningActivity = owner;
+      ownerActivity = owner;
     }
   }
 
-  private final Activity owningActivity;
+  private final Activity ownerActivity;
   private final boolean forWriting;
   private final FileHandler fileHandler;
 
@@ -91,15 +91,15 @@ public class FileFinder {
   private File currentReference = null;
 
   private final String getString (int resource) {
-    return owningActivity.getString(resource);
+    return ownerActivity.getString(resource);
   }
 
   private final View inflateLayout (int resource) {
-    return owningActivity.getLayoutInflater().inflate(resource, null);
+    return ownerActivity.getLayoutInflater().inflate(resource, null);
   }
 
   private final View findView (int id) {
-    return owningActivity.findViewById(id);
+    return ownerActivity.findViewById(id);
   }
 
   private final View findView (DialogInterface dialog, int id) {
@@ -115,7 +115,7 @@ public class FileFinder {
   }
 
   private final AlertDialog.Builder newAlertDialogBuilder () {
-    return new AlertDialog.Builder(owningActivity)
+    return new AlertDialog.Builder(ownerActivity)
                           .setCancelable(false)
                           ;
   }
@@ -454,7 +454,7 @@ public class FileFinder {
   }
 
   private FileFinder (Builder builder, FileHandler handler) {
-    owningActivity = builder.getOwningActivity();
+    ownerActivity = builder.getOwnerActivity();
     forWriting = builder.getForWriting();
     fileHandler = handler;
 

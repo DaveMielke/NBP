@@ -179,19 +179,52 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     CommonContext.setContext(this);
   }
 
-  protected void showMessage (String message, DialogInterface.OnClickListener listener) {
-    new AlertDialog.Builder(this)
-                   .setMessage(message)
-                   .setNeutralButton(R.string.showMessage_message_neutral, listener)
-                   .show();
+  private boolean isResumed = false;
+
+  @Override
+  protected void onResume () {
+    super.onResume();
+    isResumed = true;
+  }
+
+  @Override
+  protected void onPause () {
+    super.onPause();
+    isResumed = false;
+  }
+
+  protected void showMessage (String message, final Runnable runnable) {
+    if (isResumed) {
+      AlertDialog.Builder builder = new AlertDialog
+        .Builder(this)
+        .setMessage(message)
+        ;
+
+      if (runnable != null) {
+        builder.setNeutralButton(
+          R.string.showMessage_message_neutral,
+          new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int button)  {
+              runnable.run();
+            }
+          }
+        );
+      }
+
+      builder.show();
+    } else {
+      Log.w(LOG_TAG, message);
+      if (runnable != null) runnable.run();
+    }
   }
 
   protected void showMessage (String message) {
     showMessage(message, null);
   }
 
-  protected final void showMessage (int message, DialogInterface.OnClickListener listener) {
-    showMessage(getString(message), listener);
+  protected final void showMessage (int message, Runnable runnable) {
+    showMessage(getString(message), runnable);
   }
 
   protected final void showMessage (int message) {

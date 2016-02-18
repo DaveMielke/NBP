@@ -6,7 +6,7 @@
   <string name="menu_options_new_label">New</string>
   <string name="menu_options_open_label">Open</string>
   <string name="menu_options_save_label">Save</string>
-  <string name="menu_options_saveAs_label">Save as</string>
+  <string name="menu_options_saveAs_label">Save As</string>
   <string name="menu_options_send_label">Send</string>
 
   <string name="button_menu_label">Menu</string>

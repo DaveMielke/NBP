@@ -12,7 +12,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -36,6 +36,12 @@ import android.content.DialogInterface;
 
 public class EditorActivity extends CommonActivity {
   private final static String LOG_TAG = EditorActivity.class.getName();
+
+  private File filesDirectory;
+
+  private SharedPreferences prefs;
+  private final static String PREF_CHECKPOINT_NAME = "checkpoint-name";
+  private final static String PREF_CHECKPOINT_PATH = "checkpoint-path";
 
   private EditText editArea = null;
   private TextView currentPath = null;
@@ -104,7 +110,7 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       public Void doInBackground (Void... arguments) {
-        FileHandler.get(f).write(f, c);
+        FileHandler.writeFile(f, c);
         return null;
       }
 
@@ -119,12 +125,7 @@ public class EditorActivity extends CommonActivity {
             f.getAbsolutePath()
           ),
 
-          new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialog, int button) {
-              if (onSaved != null) onSaved.run();
-            }
-          }
+          onSaved
         );
       }
     }.execute();
@@ -181,7 +182,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void editFile (final File file) {
+  private final void editFile (final File file, final String path) {
     new AsyncTask<Void, Void, CharSequence>() {
       AlertDialog dialog;
 
@@ -199,16 +200,24 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected CharSequence doInBackground (Void... arguments) {
         final SpannableStringBuilder sb = new SpannableStringBuilder();
-        FileHandler.get(file).read(file, sb);
+        FileHandler.readFile(file, sb);
         return sb.subSequence(0, sb.length());
       }
 
       @Override
       protected void onPostExecute (CharSequence content) {
-        setCurrentFile(file, content);
         dialog.dismiss();
+
+        setCurrentFile(
+          (path != null)? new File(path): file,
+          content
+        );
       }
     }.execute();
+  }
+
+  private final void editFile (final File file) {
+    editFile(file, null);
   }
 
   private final File getDocumentsDirectory () {
@@ -378,9 +387,56 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void checkpointFile () {
+    synchronized (this) {
+      String oldName = prefs.getString(PREF_CHECKPOINT_NAME, null);
+      String newName;
+
+      if (oldName == null) {
+        newName = "checkpoint1";
+      } else {
+        StringBuilder sb = new StringBuilder(oldName);
+        int last = oldName.length() - 1;
+
+        sb.setCharAt(last, (oldName.charAt(last) == '1')? '2': '1');
+        newName = sb.toString();
+      }
+
+      final File oldFile = (oldName != null)? new File(filesDirectory, oldName): null;
+      final File newFile = new File(filesDirectory, newName);
+      final String path = (currentFile != null)? currentFile.getAbsolutePath(): "";
+
+      saveFile(newFile,
+        new Runnable() {
+          @Override
+          public void run () {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
+            editor.putString(PREF_CHECKPOINT_PATH, path);
+
+            if (editor.commit()) {
+              if (oldFile != null) {
+                oldFile.delete();
+              }
+            }
+          }
+        }
+      );
+    }
   }
 
   private final void restoreFile () {
+    synchronized (this) {
+      String name = prefs.getString(PREF_CHECKPOINT_NAME, null);
+
+      if (name != null) {
+        String path = prefs.getString(PREF_CHECKPOINT_PATH, null);
+
+        if (path != null) {
+          File file = new File(filesDirectory, name);
+          editFile(file, path);
+        }
+      }
+    }
   }
 
   private final void addInputFilters () {
@@ -407,6 +463,9 @@ public class EditorActivity extends CommonActivity {
     super.onCreate(savedInstanceState);
     ApplicationContext.setMainActivity(this);
 
+    filesDirectory = getFilesDir();
+    prefs = getSharedPreferences("editor", MODE_PRIVATE);
+
     setContentView(R.layout.editor);
     currentPath = (TextView)findViewById(R.id.current_file);
     editArea = (EditText)findViewById(R.id.edit_area);
@@ -427,11 +486,8 @@ public class EditorActivity extends CommonActivity {
 
   @Override
   protected void onPause () {
-    try {
-      checkpointFile();
-    } finally {
-      super.onPause();
-    }
+    super.onPause();
+    checkpointFile();
   }
 
   @Override
