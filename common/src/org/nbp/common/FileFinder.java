@@ -40,11 +40,29 @@ public abstract class FileFinder {
 
   public final static class Builder {
     private final Activity ownerActivity;
+    private String userTitle = null;
     private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
     private boolean forWriting = false;
 
+    private final String getString (int resource) {
+      return ownerActivity.getString(resource);
+    }
+
     public final Activity getOwnerActivity () {
       return ownerActivity;
+    }
+
+    public final String getUserTitle () {
+      return userTitle;
+    }
+
+    public final Builder setUserTitle (String title) {
+      userTitle = title;
+      return this;
+    }
+
+    public final Builder setUserTitle (int title) {
+      return setUserTitle(getString(title));
     }
 
     public final Set<String> getRootLabels () {
@@ -91,6 +109,7 @@ public abstract class FileFinder {
   }
 
   private final Activity ownerActivity;
+  private final String userTitle;
   private final boolean forWriting;
 
   private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
@@ -127,6 +146,22 @@ public abstract class FileFinder {
     return new AlertDialog.Builder(ownerActivity)
                           .setCancelable(false)
                           ;
+  }
+
+  private final void setTitle (AlertDialog.Builder builder, String... details) {
+    StringBuilder sb = new StringBuilder(getString(R.string.FileFinder_title_main));
+
+    if (userTitle != null) {
+      sb.append('\n');
+      sb.append(userTitle);
+    }
+
+    for (String detail : details) {
+      sb.append('\n');
+      sb.append(detail);
+    }
+
+    builder.setTitle(sb.toString());
   }
 
   private final void showMessage (
@@ -304,9 +339,9 @@ public abstract class FileFinder {
         AlertDialog.Builder builder = newAlertDialogBuilder();
 
         if (haveReference) {
-          builder.setTitle(reference.getAbsolutePath());
+          setTitle(builder, reference.getAbsolutePath());
         } else {
-          builder.setTitle(getString(R.string.FileFinder_title_main));
+          setTitle(builder);
         }
 
         Set<String> listing = listingCreator.createListing();
@@ -464,6 +499,7 @@ public abstract class FileFinder {
 
   private FileFinder (Builder builder) {
     ownerActivity = builder.getOwnerActivity();
+    userTitle = builder.getUserTitle();
     forWriting = builder.getForWriting();
 
     {

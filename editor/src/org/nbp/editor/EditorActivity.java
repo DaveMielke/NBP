@@ -38,8 +38,8 @@ public class EditorActivity extends CommonActivity {
   private final static String LOG_TAG = EditorActivity.class.getName();
 
   private File filesDirectory;
-
   private SharedPreferences prefs;
+
   private final static String PREF_CHECKPOINT_NAME = "checkpoint-name";
   private final static String PREF_CHECKPOINT_PATH = "checkpoint-path";
   private final static String PREF_CHECKPOINT_SELECTION_START = "checkpoint-selection-start";
@@ -237,8 +237,13 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
+    int title = forWriting?
+                R.string.menu_options_saveAs_label:
+                R.string.menu_options_open_label;
+
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
+      .setUserTitle(getString(title))
       .setForWriting(forWriting)
       ;
 
