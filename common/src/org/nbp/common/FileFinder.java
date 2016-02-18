@@ -143,6 +143,14 @@ public abstract class FileFinder {
     handleFiles(null);
   }
 
+  protected final Button getButton (DialogInterface dialog, int button) {
+    return ((AlertDialog)dialog).getButton(button);
+  }
+
+  private final void setButtonEnabled (DialogInterface dialog, int button, boolean enabled) {
+    getButton(dialog, button).setEnabled(enabled);
+  }
+
   private final AlertDialog.Builder newAlertDialogBuilder () {
     return new AlertDialog.Builder(ownerActivity)
                           .setCancelable(false)
@@ -175,10 +183,6 @@ public abstract class FileFinder {
       .show();
   }
 
-  private final void setButtonEnabled (DialogInterface dialog, int button, boolean enabled) {
-    ((AlertDialog)dialog).getButton(button).setEnabled(enabled);
-  }
-
   private final void setDoneButton (
     AlertDialog.Builder builder,
     DialogInterface.OnClickListener listener
@@ -192,7 +196,7 @@ public abstract class FileFinder {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
-          showListing(currentReference);
+          showListing();
         }
       }
     );
@@ -273,7 +277,7 @@ public abstract class FileFinder {
 
   private final void showPathEditor (File reference) {
     AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setTitle(R.string.FileFinder_action_path)
+      .setTitle(R.string.FileFinder_action_edit)
       .setView(inflateLayout(R.layout.path_editor));
 
     setDoneButton(builder,
@@ -363,7 +367,7 @@ public abstract class FileFinder {
 
         if (forWriting) {
           builder.setPositiveButton(
-            R.string.FileFinder_action_path,
+            R.string.FileFinder_action_edit,
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick (DialogInterface dialog, int button) {
@@ -483,6 +487,10 @@ public abstract class FileFinder {
     }
   }
 
+  protected final void showListing () {
+    showListing(currentReference);
+  }
+
   protected final void showRootListing (String label) {
     showListing(rootLocations.get(label));
   }
@@ -554,12 +562,50 @@ public abstract class FileFinder {
 
   private static class MultipleFileFinder extends FileFinder {
     private final FilesHandler filesHandler;
+    private final Set<String> selectedFiles = new TreeSet<String>();
+    private boolean firstSelection;
 
     protected final void handleFiles (File[] files) {
       filesHandler.handleFiles(files);
     }
 
-    protected final void setItems (AlertDialog.Builder builder, String[] items, File reference) {
+    protected final void setItems (
+      AlertDialog.Builder builder,
+      final String[] items,
+      File reference
+    ) {
+      if (reference == null) {
+        builder.setItems(items,
+          new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int index) {
+              showRootListing(items[index]);
+            }
+          }
+        );
+      } else {
+        selectedFiles.clear();
+        firstSelection = true;
+
+        builder.setMultiChoiceItems(items, null,
+          new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int index, boolean isChecked) {
+              String item = items[index];
+
+              if (firstSelection) {
+                firstSelection = false;
+              }
+
+              if (isChecked) {
+                selectedFiles.add(item);
+              } else {
+                selectedFiles.remove(item);
+              }
+            }
+          }
+        );
+      }
     }
 
     private MultipleFileFinder (Builder builder, FilesHandler handler) {

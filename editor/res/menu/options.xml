@@ -25,4 +25,9 @@
     android:id="@+id/options_send"
     android:title="@string/menu_options_send_label"
    />
+
+  <item
+    android:id="@+id/options_delete"
+    android:title="@string/menu_options_delete_label"
+   />
 </menu>

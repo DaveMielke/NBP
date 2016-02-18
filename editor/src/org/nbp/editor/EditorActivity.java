@@ -236,17 +236,7 @@ public class EditorActivity extends CommonActivity {
     builder.addRootLocation(FileSystems.makeLabel(name, location), location);
   }
 
-  private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
-    int title = forWriting?
-                R.string.menu_options_saveAs_label:
-                R.string.menu_options_open_label;
-
-    FileFinder.Builder builder = new FileFinder
-      .Builder(this)
-      .setUserTitle(getString(title))
-      .setForWriting(forWriting)
-      ;
-
+  private final void addRootLocations (FileFinder.Builder builder) {
     if (currentFile != null) {
       addRootLocation(builder, "current", currentFile.getParentFile());
     }
@@ -262,7 +252,20 @@ public class EditorActivity extends CommonActivity {
     for (String label : FileSystems.getRemovableLabels()) {
       builder.addRootLocation(label);
     }
+  }
 
+  private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
+    int title = forWriting?
+                R.string.menu_options_saveAs_label:
+                R.string.menu_options_open_label;
+
+    FileFinder.Builder builder = new FileFinder
+      .Builder(this)
+      .setUserTitle(getString(title))
+      .setForWriting(forWriting)
+      ;
+
+    addRootLocations(builder);
     builder.find(handler);
   }
 
@@ -339,6 +342,24 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_delete () {
+    FileFinder.Builder builder = new FileFinder
+      .Builder(this)
+      .setUserTitle(R.string.menu_options_delete_label)
+      .setForWriting(true)
+      ;
+
+    addRootLocations(builder);
+
+    builder.find(
+      new FileFinder.FilesHandler() {
+        @Override
+        public void handleFiles (File[] files) {
+        }
+      }
+    );
+  }
+
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
@@ -360,6 +381,10 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.options_send:
         menuAction_send();
+        return true;
+
+      case R.id.options_delete:
+        menuAction_delete();
         return true;
 
       default:
