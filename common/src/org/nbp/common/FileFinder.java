@@ -132,6 +132,7 @@ public abstract class FileFinder {
     return ((AlertDialog)dialog).findViewById(id);
   }
 
+  protected abstract void setItems (AlertDialog.Builder builder, String[] items, File reference);
   protected abstract void handleFiles (File[] files);
 
   private final void handleFile (File file) {
@@ -152,7 +153,7 @@ public abstract class FileFinder {
     StringBuilder sb = new StringBuilder(getString(R.string.FileFinder_title_main));
 
     if (userTitle != null) {
-      sb.append('\n');
+      sb.append(" - ");
       sb.append(userTitle);
     }
 
@@ -357,22 +358,7 @@ public abstract class FileFinder {
             items[count++] = item;
           }
 
-          builder.setItems(items,
-            new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick (DialogInterface dialog, int index) {
-                String item = items[index];
-
-                if (!haveReference) {
-                  showListing(rootLocations.get(item));
-                } else if (item.charAt(0) == File.separatorChar) {
-                  showListing(new File(item));
-                } else {
-                  showListing(new File(reference, item));
-                }
-              }
-            }
-          );
+          setItems(builder, items, reference);
         }
 
         if (forWriting) {
@@ -473,7 +459,7 @@ public abstract class FileFinder {
     return listing;
   }
 
-  private final void showListing (final File reference) {
+  protected final void showListing (final File reference) {
     if (reference == null) {
       showListing(null,
         new ListingCreator() {
@@ -495,6 +481,10 @@ public abstract class FileFinder {
     } else {
       handleFile(reference);
     }
+  }
+
+  protected final void showRootListing (String label) {
+    showListing(rootLocations.get(label));
   }
 
   private FileFinder (Builder builder) {
@@ -533,6 +523,29 @@ public abstract class FileFinder {
       fileHandler.handleFile(file);
     }
 
+    protected final void setItems (
+      AlertDialog.Builder builder,
+      final String[] items,
+      final File reference
+    ) {
+      builder.setItems(items,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int index) {
+            String item = items[index];
+
+            if (reference == null) {
+              showRootListing(item);
+            } else if (item.charAt(0) == File.separatorChar) {
+              showListing(new File(item));
+            } else {
+              showListing(new File(reference, item));
+            }
+          }
+        }
+      );
+    }
+
     private SingleFileFinder (Builder builder, FileHandler handler) {
       super(builder);
       fileHandler = handler;
@@ -544,6 +557,9 @@ public abstract class FileFinder {
 
     protected final void handleFiles (File[] files) {
       filesHandler.handleFiles(files);
+    }
+
+    protected final void setItems (AlertDialog.Builder builder, String[] items, File reference) {
     }
 
     private MultipleFileFinder (Builder builder, FilesHandler handler) {
