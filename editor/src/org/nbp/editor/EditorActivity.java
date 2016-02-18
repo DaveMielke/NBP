@@ -346,15 +346,32 @@ public class EditorActivity extends CommonActivity {
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
       .setUserTitle(R.string.menu_options_delete_label)
-      .setForWriting(true)
       ;
 
     addRootLocations(builder);
 
     builder.find(
-      new FileFinder.FilesHandler() {
+      new FileFinder.FileHandler() {
         @Override
-        public void handleFiles (File[] files) {
+        public void handleFile (final File file) {
+          if (file != null) {
+            final String path = file.getAbsolutePath();
+
+            confirmAction(
+              R.string.delete_question,
+              path,
+              new Runnable() {
+                @Override
+                public void run () {
+                  if (!file.delete()) {
+                    showMessage(
+                      String.format("%s: %s", getString(R.string.delete_failed), path)
+                    );
+                  }
+                }
+              }
+            );
+          }
         }
       }
     );

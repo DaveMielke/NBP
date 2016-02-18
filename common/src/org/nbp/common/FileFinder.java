@@ -491,7 +491,7 @@ public abstract class FileFinder {
     showListing(currentReference);
   }
 
-  protected final void showRootListing (String label) {
+  protected final void showListing (String label) {
     showListing(rootLocations.get(label));
   }
 
@@ -516,9 +516,9 @@ public abstract class FileFinder {
 
     if (rootLocations.size() == 1) {
       Set<String> labels = rootLocations.keySet();
-      showListing(rootLocations.get(labels.toArray(new String[1])[0]));
+      showListing(labels.toArray(new String[1])[0]);
     } else {
-      showListing(null);
+      showListing((File)null);
     }
   }
 
@@ -543,7 +543,7 @@ public abstract class FileFinder {
             String item = items[index];
 
             if (reference == null) {
-              showRootListing(item);
+              showListing(item);
             } else if (item.charAt(0) == File.separatorChar) {
               showListing(new File(item));
             } else {
@@ -579,7 +579,7 @@ public abstract class FileFinder {
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int index) {
-              showRootListing(items[index]);
+              showListing(items[index]);
             }
           }
         );

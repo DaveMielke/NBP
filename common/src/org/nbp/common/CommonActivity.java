@@ -195,24 +195,21 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
 
   protected void showMessage (String message, final Runnable onCleared) {
     if (isResumed) {
-      AlertDialog.Builder builder = new AlertDialog
+      new AlertDialog
         .Builder(this)
         .setMessage(message)
-        ;
 
-      if (onCleared != null) {
-        builder.setNeutralButton(
+        .setNeutralButton(
           R.string.showMessage_message_neutral,
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int button)  {
-              onCleared.run();
+              if (onCleared != null) onCleared.run();
             }
           }
-        );
-      }
+        )
 
-      builder.show();
+        .show();
     } else {
       Log.w(LOG_TAG, message);
       if (onCleared != null) onCleared.run();
@@ -249,5 +246,31 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
 
   protected final void showReportedWarnings () {
     CommonUtilities.setWarningReporter(this);
+  }
+
+  protected final void confirmAction (
+    String question, String detail, final Runnable onConfirmed
+  ) {
+    new AlertDialog
+      .Builder(this)
+      .setTitle(question)
+      .setMessage(detail)
+
+      .setPositiveButton(
+        R.string.confirmAction_button_positive,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int button) {
+            onConfirmed.run();
+          }
+        }
+      )
+
+      .setNegativeButton(R.string.confirmAction_button_negative, null)
+      .show();
+  }
+
+  protected final void confirmAction (int question, String detail, Runnable onConfirmed) {
+    confirmAction(getString(question), detail, onConfirmed);
   }
 }

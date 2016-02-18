@@ -26,4 +26,7 @@
   <string name="changed_button_positive">Save First</string>
   <string name="changed_button_neutral">Cancel This Action</string>
   <string name="changed_button_negative">Continue without Saving</string>
+
+  <string name="delete_question">Delete File?</string>
+  <string name="delete_failed">unable to delete file</string>
 </resources>
