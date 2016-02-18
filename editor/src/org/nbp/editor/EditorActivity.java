@@ -258,7 +258,7 @@ public class EditorActivity extends CommonActivity {
       builder.addRootLocation(label);
     }
 
-    builder.findFile(handler);
+    builder.find(handler);
   }
 
   private void menuAction_new () {

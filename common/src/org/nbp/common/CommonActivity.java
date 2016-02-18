@@ -193,20 +193,20 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     isResumed = false;
   }
 
-  protected void showMessage (String message, final Runnable runnable) {
+  protected void showMessage (String message, final Runnable onCleared) {
     if (isResumed) {
       AlertDialog.Builder builder = new AlertDialog
         .Builder(this)
         .setMessage(message)
         ;
 
-      if (runnable != null) {
+      if (onCleared != null) {
         builder.setNeutralButton(
           R.string.showMessage_message_neutral,
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int button)  {
-              runnable.run();
+              onCleared.run();
             }
           }
         );
@@ -215,7 +215,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
       builder.show();
     } else {
       Log.w(LOG_TAG, message);
-      if (runnable != null) runnable.run();
+      if (onCleared != null) onCleared.run();
     }
   }
 
@@ -223,8 +223,8 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     showMessage(message, null);
   }
 
-  protected final void showMessage (int message, Runnable runnable) {
-    showMessage(getString(message), runnable);
+  protected final void showMessage (int message, Runnable onCleared) {
+    showMessage(getString(message), onCleared);
   }
 
   protected final void showMessage (int message) {

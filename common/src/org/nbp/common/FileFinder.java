@@ -27,11 +27,15 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 
-public class FileFinder {
+public abstract class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
 
   public interface FileHandler {
     public void handleFile (File file);
+  }
+
+  public interface FilesHandler {
+    public void handleFiles (File[] files);
   }
 
   public final static class Builder {
@@ -73,8 +77,12 @@ public class FileFinder {
       return this;
     }
 
-    public final void findFile (FileHandler handler) {
-      new FileFinder(this, handler);
+    public final void find (FileHandler handler) {
+      new SingleFileFinder(this, handler);
+    }
+
+    public final void find (FilesHandler handler) {
+      new MultipleFileFinder(this, handler);
     }
 
     public Builder (Activity owner) {
@@ -84,7 +92,6 @@ public class FileFinder {
 
   private final Activity ownerActivity;
   private final boolean forWriting;
-  private final FileHandler fileHandler;
 
   private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
 
@@ -106,12 +113,14 @@ public class FileFinder {
     return ((AlertDialog)dialog).findViewById(id);
   }
 
+  protected abstract void handleFiles (File[] files);
+
   private final void handleFile (File file) {
-    fileHandler.handleFile(file);
+    handleFiles(new File[] {file});
   }
 
   private final void requestCancelled () {
-    handleFile(null);
+    handleFiles(null);
   }
 
   private final AlertDialog.Builder newAlertDialogBuilder () {
@@ -453,10 +462,9 @@ public class FileFinder {
     }
   }
 
-  private FileFinder (Builder builder, FileHandler handler) {
+  private FileFinder (Builder builder) {
     ownerActivity = builder.getOwnerActivity();
     forWriting = builder.getForWriting();
-    fileHandler = handler;
 
     {
       Set<String> labels = builder.getRootLabels();
@@ -477,6 +485,34 @@ public class FileFinder {
       showListing(rootLocations.get(labels.toArray(new String[1])[0]));
     } else {
       showListing(null);
+    }
+  }
+
+  private static class SingleFileFinder extends FileFinder {
+    private final FileHandler fileHandler;
+
+    protected final void handleFiles (File[] files) {
+      File file = null;
+      if (files != null) file = files[0];
+      fileHandler.handleFile(file);
+    }
+
+    private SingleFileFinder (Builder builder, FileHandler handler) {
+      super(builder);
+      fileHandler = handler;
+    }
+  }
+
+  private static class MultipleFileFinder extends FileFinder {
+    private final FilesHandler filesHandler;
+
+    protected final void handleFiles (File[] files) {
+      filesHandler.handleFiles(files);
+    }
+
+    private MultipleFileFinder (Builder builder, FilesHandler handler) {
+      super(builder);
+      filesHandler = handler;
     }
   }
 }
