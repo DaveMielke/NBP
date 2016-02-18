@@ -193,11 +193,12 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     isResumed = false;
   }
 
-  protected void showMessage (String message, final Runnable onCleared) {
+  protected final void showMessage (int message, String detail, final Runnable onCleared) {
     if (isResumed) {
       new AlertDialog
         .Builder(this)
-        .setMessage(message)
+        .setTitle((message == 0)? null: getString(message))
+        .setMessage(detail)
 
         .setNeutralButton(
           R.string.showMessage_message_neutral,
@@ -211,17 +212,21 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
 
         .show();
     } else {
-      Log.w(LOG_TAG, message);
+      StringBuilder sb = new StringBuilder();
+      if (message != 0) sb.append(getString(message));
+
+      if (detail != null) {
+        if (sb.length() > 0) sb.append(": ");
+        sb.append(detail);
+      }
+
+      Log.w(LOG_TAG, sb.toString());
       if (onCleared != null) onCleared.run();
     }
   }
 
-  protected void showMessage (String message) {
-    showMessage(message, null);
-  }
-
-  protected final void showMessage (int message, Runnable onCleared) {
-    showMessage(getString(message), onCleared);
+  protected final void showMessage (int message, String detail) {
+    showMessage(message, detail, null);
   }
 
   protected final void showMessage (int message) {
@@ -234,7 +239,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
       new Runnable() {
         @Override
         public void run () {
-          showMessage(message);
+          showMessage(0, message);
         }
       }
     );

@@ -174,11 +174,12 @@ public abstract class FileFinder {
   }
 
   private final void showMessage (
-    CharSequence message,
+    int message, CharSequence detail,
     DialogInterface.OnClickListener dismissListener
   ) {
     newAlertDialogBuilder()
-      .setMessage(message)
+      .setTitle(message)
+      .setMessage(detail)
       .setNeutralButton(R.string.FileFinder_action_dismiss, dismissListener)
       .show();
   }
@@ -260,12 +261,7 @@ public abstract class FileFinder {
 
   private final void showPathProblem (final File file, int problem) {
     showMessage(
-      String.format(
-        "%s: %s",
-        getString(problem),
-        file.getAbsolutePath()
-      ),
-
+      problem, file.getAbsolutePath(),
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {

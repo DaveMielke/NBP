@@ -120,15 +120,7 @@ public class EditorActivity extends CommonActivity {
       public void onPostExecute (Void result) {
         dialog.dismiss();
 
-        showMessage(
-          String.format(
-            "%s: %s",
-            getString(R.string.alert_file_saved),
-            f.getAbsolutePath()
-          ),
-
-          onSaved
-        );
+        showMessage(R.string.alert_file_saved, f.getAbsolutePath(), onSaved);
       }
     }.execute();
   }
@@ -364,9 +356,7 @@ public class EditorActivity extends CommonActivity {
                 @Override
                 public void run () {
                   if (!file.delete()) {
-                    showMessage(
-                      String.format("%s: %s", getString(R.string.delete_failed), path)
-                    );
+                    showMessage(R.string.delete_failed, path);
                   }
                 }
               }

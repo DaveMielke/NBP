@@ -36,8 +36,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   private TextView messageView;
 
-  @Override
-  protected final void showMessage (String message) {
+  private final void showMessage (String message) {
     messageView.setText(message);
     Log.d(LOG_TAG, "system maintenance: " + message);
   }
