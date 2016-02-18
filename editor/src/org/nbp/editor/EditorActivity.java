@@ -407,16 +407,20 @@ public class EditorActivity extends CommonActivity {
 
       final File oldFile = (oldName != null)? new File(filesDirectory, oldName): null;
       final File newFile = new File(filesDirectory, newName);
-      final String path = (currentFile != null)? currentFile.getAbsolutePath(): "";
+      final String path = (currentFile != null)? currentFile.getAbsolutePath(): null;
 
       saveFile(newFile,
         new Runnable() {
           @Override
           public void run () {
             SharedPreferences.Editor editor = prefs.edit();
-
             editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
-            editor.putString(PREF_CHECKPOINT_PATH, path);
+
+            if (path != null) {
+              editor.putString(PREF_CHECKPOINT_PATH, path);
+            } else {
+              editor.remove(PREF_CHECKPOINT_PATH);
+            }
 
             editor.putInt(PREF_CHECKPOINT_SELECTION_START, editArea.getSelectionStart());
             editor.putInt(PREF_CHECKPOINT_SELECTION_END, editArea.getSelectionEnd());
@@ -435,28 +439,29 @@ public class EditorActivity extends CommonActivity {
   private final void restoreFile () {
     synchronized (this) {
       String name = prefs.getString(PREF_CHECKPOINT_NAME, null);
+      final String path = prefs.getString(PREF_CHECKPOINT_PATH, null);
 
       if (name != null) {
-        final String path = prefs.getString(PREF_CHECKPOINT_PATH, null);
-
-        if (path != null) {
-          loadFile(
-            new File(filesDirectory, name),
-            new Runnable() {
-              @Override
-              public void run () {
+        loadFile(
+          new File(filesDirectory, name),
+          new Runnable() {
+            @Override
+            public void run () {
+              if (path != null) {
                 setCurrentFile(new File(path));
+              } else {
+                setCurrentFile(null);
+              }
 
-                int start = prefs.getInt(PREF_CHECKPOINT_SELECTION_START, -1);
-                int end = prefs.getInt(PREF_CHECKPOINT_SELECTION_END, -1);
+              int start = prefs.getInt(PREF_CHECKPOINT_SELECTION_START, -1);
+              int end = prefs.getInt(PREF_CHECKPOINT_SELECTION_END, -1);
 
-                if ((start >= 0) && (start <= end) && (end <= editArea.length())) {
-                  editArea.setSelection(start, end);
-                }
+              if ((0 <= start) && (start <= end) && (end <= editArea.length())) {
+                editArea.setSelection(start, end);
               }
             }
-          );
-        }
+          }
+        );
       }
     }
   }
