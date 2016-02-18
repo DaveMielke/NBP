@@ -42,6 +42,8 @@ public class EditorActivity extends CommonActivity {
   private SharedPreferences prefs;
   private final static String PREF_CHECKPOINT_NAME = "checkpoint-name";
   private final static String PREF_CHECKPOINT_PATH = "checkpoint-path";
+  private final static String PREF_CHECKPOINT_SELECTION_START = "checkpoint-selection-start";
+  private final static String PREF_CHECKPOINT_SELECTION_END = "checkpoint-selection-end";
 
   private EditText editArea = null;
   private TextView currentPath = null;
@@ -182,7 +184,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void editFile (final File file, final String path) {
+  private final void loadFile (final File file, final Runnable onLoaded) {
     new AsyncTask<Void, Void, CharSequence>() {
       AlertDialog dialog;
 
@@ -207,17 +209,14 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected void onPostExecute (CharSequence content) {
         dialog.dismiss();
-
-        setCurrentFile(
-          (path != null)? new File(path): file,
-          content
-        );
+        setCurrentFile(file, content);
+        if (onLoaded != null) onLoaded.run();
       }
     }.execute();
   }
 
-  private final void editFile (final File file) {
-    editFile(file, null);
+  private final void loadFile (final File file) {
+    loadFile(file, null);
   }
 
   private final File getDocumentsDirectory () {
@@ -282,7 +281,7 @@ public class EditorActivity extends CommonActivity {
             new FileFinder.FileHandler() {
               @Override
               public void handleFile (File file) {
-                if (file != null) editFile(file);
+                if (file != null) loadFile(file);
               }
             }
           );
@@ -410,8 +409,12 @@ public class EditorActivity extends CommonActivity {
           @Override
           public void run () {
             SharedPreferences.Editor editor = prefs.edit();
+
             editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
             editor.putString(PREF_CHECKPOINT_PATH, path);
+
+            editor.putInt(PREF_CHECKPOINT_SELECTION_START, editArea.getSelectionStart());
+            editor.putInt(PREF_CHECKPOINT_SELECTION_END, editArea.getSelectionEnd());
 
             if (editor.commit()) {
               if (oldFile != null) {
@@ -429,11 +432,25 @@ public class EditorActivity extends CommonActivity {
       String name = prefs.getString(PREF_CHECKPOINT_NAME, null);
 
       if (name != null) {
-        String path = prefs.getString(PREF_CHECKPOINT_PATH, null);
+        final String path = prefs.getString(PREF_CHECKPOINT_PATH, null);
 
         if (path != null) {
-          File file = new File(filesDirectory, name);
-          editFile(file, path);
+          loadFile(
+            new File(filesDirectory, name),
+            new Runnable() {
+              @Override
+              public void run () {
+                setCurrentFile(new File(path));
+
+                int start = prefs.getInt(PREF_CHECKPOINT_SELECTION_START, -1);
+                int end = prefs.getInt(PREF_CHECKPOINT_SELECTION_END, -1);
+
+                if ((start >= 0) && (start <= end) && (end <= editArea.length())) {
+                  editArea.setSelection(start, end);
+                }
+              }
+            }
+          );
         }
       }
     }
