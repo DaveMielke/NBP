@@ -478,17 +478,25 @@ public class EditorActivity extends CommonActivity {
     return found? sb.toString(): null;
   }
 
-  private final static void putTextSpans (Spannable spannable, String spans) {
+  private final static void putTextSpans (Spannable spannable, String[] fields) {
     int length = spannable.length();
-    String[] fields = spans.trim().split("\\s+");
     int count = fields.length;
     int index = 0;
 
     while (index < count) {
-      String identifier = fields[index++];
-      int start = Integer.valueOf(fields[index++]);
-      int end = Integer.valueOf(fields[index++]);
-      int flags = Integer.valueOf(fields[index++]);
+      String identifier;
+      int start;
+      int end;
+      int flags;
+
+      try {
+        identifier = fields[index++];
+        start = Integer.valueOf(fields[index++]);
+        end = Integer.valueOf(fields[index++]);
+        flags = Integer.valueOf(fields[index++]);
+      } catch (Exception exception) {
+        break;
+      }
 
       if (verifyTextRange(start, end, length)) {
         Spans.Entry spanEntry = Spans.getEntry(identifier);
@@ -501,13 +509,19 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void putTextSpans (String spans) {
+    if (spans == null) return;
+
+    spans = spans.trim();
+    if (spans.isEmpty()) return;
+
+    String[] fields = spans.split("\\s+");
     CharSequence text = editArea.getText();
 
     if (text instanceof Spannable) {
-      putTextSpans((Spannable)text, spans);
+      putTextSpans((Spannable)text, fields);
     } else {
       SpannableString string = new SpannableString(text);
-      putTextSpans(string, spans);
+      putTextSpans(string, fields);
       editArea.setText(string);
     }
   }
@@ -586,10 +600,7 @@ public class EditorActivity extends CommonActivity {
 
               {
                 String spans = prefs.getString(PREF_CHECKPOINT_SPANS, null);
-
-                if (spans != null) {
-                  putTextSpans(spans);
-                }
+                putTextSpans(spans);
               }
 
               {
