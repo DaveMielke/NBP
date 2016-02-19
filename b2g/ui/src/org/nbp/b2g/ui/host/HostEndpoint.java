@@ -65,7 +65,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
-    sb.setSpan(new SpeechSpan(text), start, sb.length(), 0);
+    sb.setSpan(new SpeechSpan(text), start, sb.length(), sb.SPAN_EXCLUSIVE_EXCLUSIVE);
   }
 
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, CharSequence text) {
@@ -323,7 +323,7 @@ public class HostEndpoint extends Endpoint {
       if (count > 0) {
         int start = 0;
         int end = text.length();
-        int flags = 0;
+        int flags = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
         if (text instanceof Spannable) {
           Spannable spannable = (Spannable)text;

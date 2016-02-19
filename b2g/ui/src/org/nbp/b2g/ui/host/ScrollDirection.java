@@ -50,16 +50,17 @@ public enum ScrollDirection {
     return Devices.braille.get().write(getBrailleSymbol(), monitorText);
   }
 
-  private final CharacterStyle SPAN = Spans.ITALIC.newInstance();
-
   private ScrollDirection (int nodeAction, byte[] braille, int text) {
     this.nodeAction = nodeAction;
     brailleSymbol = braille;
 
     {
+      CharacterStyle span = Spans.ITALIC.newInstance();
       SpannableStringBuilder sb = new SpannableStringBuilder(ApplicationContext.getString(text));
-      sb.setSpan(SPAN, 0, sb.length(), 0);
-      monitorText = sb;
+      int length = sb.length();
+
+      sb.setSpan(span, 0, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+      monitorText = sb.subSequence(0, length);
     }
   }
 }

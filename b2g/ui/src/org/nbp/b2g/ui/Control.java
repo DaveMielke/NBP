@@ -38,7 +38,7 @@ public abstract class Control {
   protected final CharSequence toHeader (int resource) {
     String text = getString(resource);
     SpannableStringBuilder header = new SpannableStringBuilder(text);
-    header.setSpan(HEADER_SPAN, 0, text.length(), 0);
+    header.setSpan(HEADER_SPAN, 0, text.length(), header.SPAN_EXCLUSIVE_EXCLUSIVE);
     return header;
   }
 
