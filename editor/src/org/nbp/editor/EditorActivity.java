@@ -25,8 +25,10 @@ import android.widget.EditText;
 import android.widget.Button;
 
 import android.text.InputFilter;
-import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 
 import android.text.style.CharacterStyle;
 import android.text.style.UnderlineSpan;
@@ -428,6 +430,10 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private final static boolean verifyTextRange (int start, int end, int length) {
+    return (0 <= start) && (start <= end) && (end <= length);
+  }
+
   private final static String SPAN_NAME_BOLD = "B";
   private final static String SPAN_NAME_BOLD_ITALIC = "BI";
   private final static String SPAN_NAME_ITALIC = "I";
@@ -489,6 +495,49 @@ public class EditorActivity extends CommonActivity {
     }
 
     return found? sb.toString(): null;
+  }
+
+  private final static void putTextSpans (Spannable spannable, String spans) {
+    int length = spannable.length();
+    String[] fields = spans.trim().split("\\s+");
+    int count = fields.length;
+    int index = 0;
+
+    while (index < count) {
+      String name = fields[index++];
+      int start = Integer.valueOf(fields[index++]);
+      int end = Integer.valueOf(fields[index++]);
+      int flags = Integer.valueOf(fields[index++]);
+      CharacterStyle span;
+
+      if (name.equals(SPAN_NAME_BOLD)) {
+        span = new StyleSpan(Typeface.BOLD);
+      } else if (name.equals(SPAN_NAME_BOLD_ITALIC)) {
+        span = new StyleSpan(Typeface.BOLD_ITALIC);
+      } else if (name.equals(SPAN_NAME_ITALIC)) {
+        span = new StyleSpan(Typeface.ITALIC);
+      } else if (name.equals(SPAN_NAME_UNDERLINE)) {
+        span = new UnderlineSpan();
+      } else {
+        continue;
+      }
+
+      if (verifyTextRange(start, end, length)) {
+        spannable.setSpan(span, start, end, flags);
+      }
+    }
+  }
+
+  private final void putTextSpans (String spans) {
+    CharSequence text = editArea.getText();
+
+    if (text instanceof Spannable) {
+      putTextSpans((Spannable)text, spans);
+    } else {
+      SpannableString string = new SpannableString(text);
+      putTextSpans(string, spans);
+      editArea.setText(string);
+    }
   }
 
   private final static void setCheckpointProperty (
@@ -555,17 +604,29 @@ public class EditorActivity extends CommonActivity {
           new Runnable() {
             @Override
             public void run () {
+              int length = editArea.length();
+
               if (path != null) {
                 setCurrentFile(new File(path));
               } else {
                 setCurrentFile(null);
               }
 
-              int start = prefs.getInt(PREF_CHECKPOINT_SELECTION_START, -1);
-              int end = prefs.getInt(PREF_CHECKPOINT_SELECTION_END, -1);
+              {
+                String spans = prefs.getString(PREF_CHECKPOINT_SPANS, null);
 
-              if ((0 <= start) && (start <= end) && (end <= editArea.length())) {
-                editArea.setSelection(start, end);
+                if (spans != null) {
+                  putTextSpans(spans);
+                }
+              }
+
+              {
+                int start = prefs.getInt(PREF_CHECKPOINT_SELECTION_START, -1);
+                int end = prefs.getInt(PREF_CHECKPOINT_SELECTION_END, -1);
+
+                if (verifyTextRange(start, end, length)) {
+                  editArea.setSelection(start, end);
+                }
               }
             }
           }
