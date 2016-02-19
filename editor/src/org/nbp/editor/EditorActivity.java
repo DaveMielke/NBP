@@ -25,8 +25,13 @@ import android.widget.EditText;
 import android.widget.Button;
 
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+
+import android.text.style.CharacterStyle;
+import android.text.style.UnderlineSpan;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +49,7 @@ public class EditorActivity extends CommonActivity {
   private final static String PREF_CHECKPOINT_PATH = "checkpoint-path";
   private final static String PREF_CHECKPOINT_SELECTION_START = "checkpoint-selection-start";
   private final static String PREF_CHECKPOINT_SELECTION_END = "checkpoint-selection-end";
+  private final static String PREF_CHECKPOINT_SPANS = "checkpoint-spans";
 
   private EditText editArea = null;
   private TextView currentPath = null;
@@ -422,6 +428,79 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private final static String SPAN_NAME_BOLD = "B";
+  private final static String SPAN_NAME_BOLD_ITALIC = "BI";
+  private final static String SPAN_NAME_ITALIC = "I";
+  private final static String SPAN_NAME_UNDERLINE = "U";
+
+  private final static String getTextSpans (CharSequence text) {
+    if (text == null) return null;
+
+    if (!(text instanceof Spanned)) return null;
+    Spanned spanned = (Spanned)text;
+
+    CharacterStyle[] spans = spanned.getSpans(0, spanned.length(), CharacterStyle.class);
+    if (spans == null) return null;
+
+    StringBuilder sb = new StringBuilder();
+    boolean found = false;
+
+    for (CharacterStyle span : spans) {
+      String name = null;
+
+      if (span instanceof UnderlineSpan) {
+        name = SPAN_NAME_UNDERLINE;
+      } else if (span instanceof StyleSpan) {
+        switch (((StyleSpan)span).getStyle()) {
+          case Typeface.BOLD:
+            name = SPAN_NAME_BOLD;
+            break;
+
+          case Typeface.BOLD_ITALIC:
+            name = SPAN_NAME_BOLD_ITALIC;
+            break;
+
+          case Typeface.ITALIC:
+            name = SPAN_NAME_ITALIC;
+            break;
+
+          default:
+            continue;
+        }
+      } else {
+        continue;
+      }
+
+      if (found) {
+        sb.append(' ');
+      } else {
+        found = true;
+      }
+      sb.append(name);
+
+      sb.append(' ');
+      sb.append(spanned.getSpanStart(span));
+
+      sb.append(' ');
+      sb.append(spanned.getSpanEnd(span));
+
+      sb.append(' ');
+      sb.append(spanned.getSpanFlags(span));
+    }
+
+    return found? sb.toString(): null;
+  }
+
+  private final static void setCheckpointProperty (
+    SharedPreferences.Editor editor, String key, String value
+  ) {
+    if (value != null) {
+      editor.putString(key, value);
+    } else {
+      editor.remove(key);
+    }
+  }
+
   private final void checkpointFile () {
     synchronized (this) {
       String oldName = prefs.getString(PREF_CHECKPOINT_NAME, null);
@@ -448,11 +527,8 @@ public class EditorActivity extends CommonActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
 
-            if (path != null) {
-              editor.putString(PREF_CHECKPOINT_PATH, path);
-            } else {
-              editor.remove(PREF_CHECKPOINT_PATH);
-            }
+            setCheckpointProperty(editor, PREF_CHECKPOINT_PATH, path);
+            setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, getTextSpans(editArea.getText()));
 
             editor.putInt(PREF_CHECKPOINT_SELECTION_START, editArea.getSelectionStart());
             editor.putInt(PREF_CHECKPOINT_SELECTION_END, editArea.getSelectionEnd());
