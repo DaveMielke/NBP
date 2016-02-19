@@ -301,16 +301,13 @@ public class HostEndpoint extends Endpoint {
   private final static CharacterStyle SPAN_BOLD = Spans.BOLD.getSingleton();
   private final static CharacterStyle SPAN_BOLD_ITALIC = Spans.BOLD_ITALIC.getSingleton();
   private final static CharacterStyle SPAN_ITALIC = Spans.ITALIC.getSingleton();
+  private final static CharacterStyle SPAN_STRIKE = Spans.STRIKE.getSingleton();
   private final static CharacterStyle SPAN_UNDERLINE = Spans.UNDERLINE.getSingleton();
 
   private static CharSequence addSpans (CharSequence text) {
     if (text.length() > 0) {
-      Object[] spans = new Object[2];
+      Object[] spans = new Object[3];
       int count = 0;
-
-      if (ApplicationSettings.TYPING_UNDERLINE) {
-        spans[count++] = SPAN_UNDERLINE;
-      }
 
       if (ApplicationSettings.TYPING_BOLD && ApplicationSettings.TYPING_ITALIC) {
         spans[count++] = SPAN_BOLD_ITALIC;
@@ -318,6 +315,14 @@ public class HostEndpoint extends Endpoint {
         spans[count++] = SPAN_BOLD;
       } else if (ApplicationSettings.TYPING_ITALIC) {
         spans[count++] = SPAN_ITALIC;
+      }
+
+      if (ApplicationSettings.TYPING_STRIKE) {
+        spans[count++] = SPAN_STRIKE;
+      }
+
+      if (ApplicationSettings.TYPING_UNDERLINE) {
+        spans[count++] = SPAN_UNDERLINE;
       }
 
       if (count > 0) {
