@@ -40,6 +40,10 @@ public abstract class Spans {
       return (CharacterStyle)LanguageUtilities.newInstance(constructor, getArgumentValues());
     }
 
+    public boolean isFor (CharacterStyle span) {
+      return LanguageUtilities.canAssign(objectType, span.getClass());
+    }
+
     protected Entry (String identifier, Class<? extends CharacterStyle> type) {
       spanIdentifier = identifier;
       objectType = type;
@@ -63,6 +67,12 @@ public abstract class Spans {
     @Override
     protected Object[] getArgumentValues () {
       return new Integer[] {getStyle()};
+    }
+
+    @Override
+    public boolean isFor (CharacterStyle span) {
+      if (!super.isFor(span)) return false;
+      return ((StyleSpan)span).getStyle() == getStyle();
     }
 
     protected StyleEntry (String identifier) {
@@ -102,6 +112,14 @@ public abstract class Spans {
 
   public final static List<Entry> getEntries () {
     return Arrays.asList(spanEntries);
+  }
+
+  public final static Entry getEntry (CharacterStyle span) {
+    for (Entry entry : getEntries()) {
+      if (entry.isFor(span)) return entry;
+    }
+
+    return null;
   }
 
   public final static Entry getEntry (String identifier) {

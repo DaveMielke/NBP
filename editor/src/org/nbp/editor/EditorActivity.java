@@ -27,16 +27,13 @@ import android.widget.Button;
 
 import android.text.InputFilter;
 
-import org.nbp.common.Spans;
 import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 
+import org.nbp.common.Spans;
 import android.text.style.CharacterStyle;
-import android.text.style.UnderlineSpan;
-import android.text.style.StyleSpan;
-import android.graphics.Typeface;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -455,37 +452,15 @@ public class EditorActivity extends CommonActivity {
     boolean found = false;
 
     for (CharacterStyle span : spans) {
-      String name = null;
-
-      if (span instanceof UnderlineSpan) {
-        name = SPAN_NAME_UNDERLINE;
-      } else if (span instanceof StyleSpan) {
-        switch (((StyleSpan)span).getStyle()) {
-          case Typeface.BOLD:
-            name = SPAN_NAME_BOLD;
-            break;
-
-          case Typeface.BOLD_ITALIC:
-            name = SPAN_NAME_BOLD_ITALIC;
-            break;
-
-          case Typeface.ITALIC:
-            name = SPAN_NAME_ITALIC;
-            break;
-
-          default:
-            continue;
-        }
-      } else {
-        continue;
-      }
+      Spans.Entry entry = Spans.getEntry(span);
+      if (entry == null) continue;
 
       if (found) {
         sb.append(' ');
       } else {
         found = true;
       }
-      sb.append(name);
+      sb.append(entry.getIdentifier());
 
       sb.append(' ');
       sb.append(spanned.getSpanStart(span));
