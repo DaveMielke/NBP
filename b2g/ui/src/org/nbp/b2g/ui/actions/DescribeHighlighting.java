@@ -1,11 +1,9 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import android.text.Spanned;
+import org.nbp.common.Spans;
 import android.text.style.CharacterStyle;
-import android.text.style.UnderlineSpan;
-import android.text.style.StyleSpan;
-import android.graphics.Typeface;
+import android.text.Spanned;
 
 public class DescribeHighlighting extends CursorKeyAction {
   @Override
@@ -21,22 +19,14 @@ public class DescribeHighlighting extends CursorKeyAction {
 
       if (spans != null) {
         for (CharacterStyle span : spans) {
-          if (span instanceof StyleSpan) {
-            switch (((StyleSpan)span).getStyle()) {
-              case Typeface.BOLD:
-                bold = true;
-                break;
-
-              case Typeface.ITALIC:
-                italic = true;
-                break;
-
-              case Typeface.BOLD_ITALIC:
-                bold = true;
-                italic = true;
-                break;
-            }
-          } else if (span instanceof UnderlineSpan) {
+          if (Spans.BOLD.isFor(span)) {
+            bold = true;
+          } else if (Spans.BOLD_ITALIC.isFor(span)) {
+            bold = true;
+            italic = true;
+          } else if (Spans.ITALIC.isFor(span)) {
+            italic = true;
+          } else if (Spans.UNDERLINE.isFor(span)) {
             underline = true;
           }
         }
