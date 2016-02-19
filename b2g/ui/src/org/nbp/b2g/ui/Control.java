@@ -6,9 +6,9 @@ import android.content.SharedPreferences;
 import java.util.Set;
 import java.util.HashSet;
 
+import org.nbp.common.Spans;
+import android.text.style.CharacterStyle;
 import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
-import android.graphics.Typeface;
 
 public abstract class Control {
   protected abstract boolean setNextValue ();
@@ -33,7 +33,7 @@ public abstract class Control {
     return getString(R.string.default_control_previous);
   }
 
-  private final static StyleSpan HEADER_SPAN = new StyleSpan(Typeface.BOLD);
+  private final static CharacterStyle HEADER_SPAN = Spans.BOLD.newInstance();
 
   protected final CharSequence toHeader (int resource) {
     String text = getString(resource);

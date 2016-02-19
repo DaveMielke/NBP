@@ -3,8 +3,9 @@ import org.nbp.b2g.ui.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import org.nbp.common.Spans;
+import android.text.style.CharacterStyle;
 import android.text.SpannableStringBuilder;
-import android.graphics.Typeface;
 
 public enum ScrollDirection {
   FORWARD(
@@ -49,13 +50,15 @@ public enum ScrollDirection {
     return Devices.braille.get().write(getBrailleSymbol(), monitorText);
   }
 
+  private final CharacterStyle SPAN = Spans.ITALIC.newInstance();
+
   private ScrollDirection (int nodeAction, byte[] braille, int text) {
     this.nodeAction = nodeAction;
     brailleSymbol = braille;
 
     {
       SpannableStringBuilder sb = new SpannableStringBuilder(ApplicationContext.getString(text));
-      sb.setSpan(Typeface.ITALIC, 0, sb.length(), 0);
+      sb.setSpan(SPAN, 0, sb.length(), 0);
       monitorText = sb;
     }
   }
