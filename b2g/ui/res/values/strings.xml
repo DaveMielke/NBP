@@ -162,6 +162,7 @@
   <string name="DescribeHighlighting_none">not highlighted</string>
   <string name="DescribeHighlighting_bold">bold</string>
   <string name="DescribeHighlighting_italic">italic</string>
+  <string name="DescribeHighlighting_strike">strike</string>
   <string name="DescribeHighlighting_underline">underline</string>
 
   <string name="DescribeIndicators_battery_label">Battery</string>

@@ -11,6 +11,7 @@ public class DescribeHighlighting extends CursorKeyAction {
     CharSequence text = getEndpoint().getLineText();
     boolean bold = false;
     boolean italic = false;
+    boolean strike = false;
     boolean underline = false;
 
     if (text instanceof Spanned) {
@@ -26,6 +27,8 @@ public class DescribeHighlighting extends CursorKeyAction {
             italic = true;
           } else if (Spans.ITALIC.isFor(span)) {
             italic = true;
+          } else if (Spans.STRIKE.isFor(span)) {
+            strike = true;
           } else if (Spans.UNDERLINE.isFor(span)) {
             underline = true;
           }
@@ -33,11 +36,12 @@ public class DescribeHighlighting extends CursorKeyAction {
       }
     }
 
-    int[] styles = new int[3];
+    int[] styles = new int[4];
     int count = 0;
 
     if (bold) styles[count++] = R.string.DescribeHighlighting_bold;
     if (italic) styles[count++] = R.string.DescribeHighlighting_italic;
+    if (strike) styles[count++] = R.string.DescribeHighlighting_strike;
     if (underline) styles[count++] = R.string.DescribeHighlighting_underline;
 
     if (count == 0) styles[count++] = R.string.DescribeHighlighting_none;

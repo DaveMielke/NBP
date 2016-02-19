@@ -185,9 +185,9 @@ This indicator serves two purposes:
 * If text has been selected then it's superimposed onto all of those characters.
 
 * If text hasn't been selected then it's superimposed onto each character
-  that's highlighted (bold, italic, and/or underlined). You can find out
-  exactly how a character has been highlighted by holding Dot3 while pressing
-  the cursor routing key associated with it.
+  that's highlighted (bold, italic, strike-through, and/or underlined).
+  You can find out exactly how a character has been highlighted
+  by holding Dot3 while pressing the cursor routing key associated with it.
 
 It's default representation is |the selection indicator|.
 This can be changed via `The Settings Screen`_.

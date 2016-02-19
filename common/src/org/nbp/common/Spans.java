@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import android.text.style.CharacterStyle;
+import android.text.style.StrikethroughSpan;
 import android.text.style.UnderlineSpan;
 import android.text.style.StyleSpan;
 import android.graphics.Typeface;
@@ -101,6 +102,7 @@ public abstract class Spans {
     }
   };
 
+  public final static Entry STRIKE = new Entry("S", StrikethroughSpan.class);
   public final static Entry UNDERLINE = new Entry("U", UnderlineSpan.class);
 
   private final static Entry[] spanArray = new Entry[] {
