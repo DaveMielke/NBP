@@ -273,7 +273,6 @@ public abstract class FileFinder {
 
   private final void showPathEditor (File reference) {
     AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setTitle(R.string.FileFinder_action_edit)
       .setView(inflateLayout(R.layout.path_editor));
 
     setDoneButton(builder,
@@ -309,6 +308,7 @@ public abstract class FileFinder {
       }
     );
 
+    setTitle(builder, getString(R.string.FileFinder_action_edit));
     setBackButton(builder);
     setCancelButton(builder);
 
