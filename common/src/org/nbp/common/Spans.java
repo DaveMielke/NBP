@@ -103,7 +103,7 @@ public abstract class Spans {
 
   public final static Entry UNDERLINE = new Entry("U", UnderlineSpan.class);
 
-  private final static Entry[] spanEntries = new Entry[] {
+  private final static Entry[] spanArray = new Entry[] {
     BOLD,
     BOLD_ITALIC,
     ITALIC,
@@ -111,7 +111,7 @@ public abstract class Spans {
   };
 
   public final static List<Entry> getEntries () {
-    return Arrays.asList(spanEntries);
+    return Arrays.asList(spanArray);
   }
 
   public final static Entry getEntry (CharacterStyle span) {

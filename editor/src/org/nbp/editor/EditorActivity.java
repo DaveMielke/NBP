@@ -452,15 +452,18 @@ public class EditorActivity extends CommonActivity {
     boolean found = false;
 
     for (CharacterStyle span : spans) {
-      Spans.Entry entry = Spans.getEntry(span);
-      if (entry == null) continue;
+      {
+        Spans.Entry spanEntry = Spans.getEntry(span);
+        if (spanEntry == null) continue;
 
-      if (found) {
-        sb.append(' ');
-      } else {
-        found = true;
+        if (found) {
+          sb.append(' ');
+        } else {
+          found = true;
+        }
+
+        sb.append(spanEntry.getIdentifier());
       }
-      sb.append(entry.getIdentifier());
 
       sb.append(' ');
       sb.append(spanned.getSpanStart(span));
@@ -488,10 +491,10 @@ public class EditorActivity extends CommonActivity {
       int flags = Integer.valueOf(fields[index++]);
 
       if (verifyTextRange(start, end, length)) {
-        Spans.Entry span = Spans.getEntry(identifier);
+        Spans.Entry spanEntry = Spans.getEntry(identifier);
 
-        if (span != null) {
-          spannable.setSpan(span.newInstance(), start, end, flags);
+        if (spanEntry != null) {
+          spannable.setSpan(spanEntry.newInstance(), start, end, flags);
         }
       }
     }
