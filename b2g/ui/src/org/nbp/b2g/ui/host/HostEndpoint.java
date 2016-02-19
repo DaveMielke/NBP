@@ -17,9 +17,8 @@ import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 
-import android.text.style.UnderlineSpan;
-import android.text.style.StyleSpan;
-import android.graphics.Typeface;
+import org.nbp.common.Spans;
+import android.text.style.CharacterStyle;
 
 public class HostEndpoint extends Endpoint {
   private final static String LOG_TAG = HostEndpoint.class.getName();
@@ -299,10 +298,10 @@ public class HostEndpoint extends Endpoint {
     return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
   }
 
-  private final static UnderlineSpan SPAN_UNDERLINE = new UnderlineSpan();
-  private final static StyleSpan SPAN_BOLD = new StyleSpan(Typeface.BOLD);
-  private final static StyleSpan SPAN_ITALIC = new StyleSpan(Typeface.ITALIC);
-  private final static StyleSpan SPAN_BOLD_ITALIC = new StyleSpan(Typeface.BOLD_ITALIC);
+  private final static CharacterStyle SPAN_BOLD = Spans.BOLD.newInstance();
+  private final static CharacterStyle SPAN_BOLD_ITALIC = Spans.BOLD_ITALIC.newInstance();
+  private final static CharacterStyle SPAN_ITALIC = Spans.ITALIC.newInstance();
+  private final static CharacterStyle SPAN_UNDERLINE = Spans.UNDERLINE.newInstance();
 
   private static CharSequence addSpans (CharSequence text) {
     if (text.length() > 0) {
