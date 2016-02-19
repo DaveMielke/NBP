@@ -47,11 +47,18 @@ public class EditorActivity extends CommonActivity {
   private File filesDirectory;
   private SharedPreferences prefs;
 
-  private final static String PREF_CHECKPOINT_NAME = "checkpoint-name";
-  private final static String PREF_CHECKPOINT_PATH = "checkpoint-path";
-  private final static String PREF_CHECKPOINT_START = "checkpoint-start";
-  private final static String PREF_CHECKPOINT_END = "checkpoint-end";
-  private final static String PREF_CHECKPOINT_SPANS = "checkpoint-spans";
+  private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";
+  private final static String PREF_CHECKPOINT_NAME = PREF_CHECKPOINT_PREFIX + "name";
+  private final static String PREF_CHECKPOINT_PATH = PREF_CHECKPOINT_PREFIX + "path";
+  private final static String PREF_CHECKPOINT_START = PREF_CHECKPOINT_PREFIX + "start";
+  private final static String PREF_CHECKPOINT_END = PREF_CHECKPOINT_PREFIX + "end";
+  private final static String PREF_CHECKPOINT_SPANS = PREF_CHECKPOINT_PREFIX + "spans";
+
+  private final void removePreferenceKeys (SharedPreferences.Editor editor, String keyPrefix) {
+    for (String key : prefs.getAll().keySet()) {
+      if (key.startsWith(keyPrefix)) editor.remove(key);
+    }
+  }
 
   private EditText editArea = null;
   private TextView currentPath = null;
@@ -128,7 +135,9 @@ public class EditorActivity extends CommonActivity {
       public void onPostExecute (Void result) {
         dialog.dismiss();
 
-        showMessage(R.string.alert_file_saved, f.getAbsolutePath(), onSaved);
+        if (!f.getParentFile().equals(filesDirectory)) {
+          showMessage(R.string.alert_file_saved, f.getAbsolutePath(), onSaved);
+        }
       }
     }.execute();
   }
@@ -560,8 +569,9 @@ public class EditorActivity extends CommonActivity {
           @Override
           public void run () {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
+            removePreferenceKeys(editor, PREF_CHECKPOINT_PREFIX);
 
+            editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
             setCheckpointProperty(editor, PREF_CHECKPOINT_PATH, path);
             setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, getTextSpans(editArea.getText()));
 
