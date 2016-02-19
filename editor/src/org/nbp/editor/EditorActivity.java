@@ -3,6 +3,7 @@ package org.nbp.editor;
 import java.io.File;
 
 import org.nbp.common.CommonActivity;
+
 import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
 
@@ -25,6 +26,8 @@ import android.widget.EditText;
 import android.widget.Button;
 
 import android.text.InputFilter;
+
+import org.nbp.common.Spans;
 import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -504,26 +507,17 @@ public class EditorActivity extends CommonActivity {
     int index = 0;
 
     while (index < count) {
-      String name = fields[index++];
+      String identifier = fields[index++];
       int start = Integer.valueOf(fields[index++]);
       int end = Integer.valueOf(fields[index++]);
       int flags = Integer.valueOf(fields[index++]);
-      CharacterStyle span;
-
-      if (name.equals(SPAN_NAME_BOLD)) {
-        span = new StyleSpan(Typeface.BOLD);
-      } else if (name.equals(SPAN_NAME_BOLD_ITALIC)) {
-        span = new StyleSpan(Typeface.BOLD_ITALIC);
-      } else if (name.equals(SPAN_NAME_ITALIC)) {
-        span = new StyleSpan(Typeface.ITALIC);
-      } else if (name.equals(SPAN_NAME_UNDERLINE)) {
-        span = new UnderlineSpan();
-      } else {
-        continue;
-      }
 
       if (verifyTextRange(start, end, length)) {
-        spannable.setSpan(span, start, end, flags);
+        Spans.Entry span = Spans.getEntry(identifier);
+
+        if (span != null) {
+          spannable.setSpan(span.newInstance(), start, end, flags);
+        }
       }
     }
   }

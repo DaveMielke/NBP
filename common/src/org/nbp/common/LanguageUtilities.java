@@ -44,10 +44,12 @@ public abstract class LanguageUtilities {
 
   private static String makeReference (Class container, String name, Class[] arguments) {
     StringBuilder sb = new StringBuilder();
-
     sb.append(container.getName());
-    sb.append('.');
-    sb.append(name);
+
+    if (name != null) {
+      sb.append('.');
+      sb.append(name);
+    }
 
     if (arguments != null) {
       sb.append('(');
@@ -63,6 +65,36 @@ public abstract class LanguageUtilities {
     }
 
     return sb.toString();
+  }
+
+  private static String makeReference (Constructor constructor) {
+    return makeReference(constructor.getDeclaringClass(), null, constructor.getParameterTypes());
+  }
+
+  public static Constructor getConstructor (Class container, Class[] types) {
+    try {
+      return container.getConstructor(types);
+    } catch (NoSuchMethodException exception) {
+      Log.w(LOG_TAG, "cannot find constructor: " + makeReference(container, null, types));
+    }
+
+    return null;
+  }
+
+  public static Object newInstance (Constructor constructor, Object... arguments) {
+    try {
+      return constructor.newInstance(arguments);
+    } catch (InstantiationException exception) {
+      Log.w(LOG_TAG, "cannot instantiate object: " + makeReference(constructor), exception.getCause());
+    } catch (IllegalAccessException exception) {
+      Log.w(LOG_TAG, "cannot access constructor: " + makeReference(constructor));
+    } catch (IllegalArgumentException exception) {
+      Log.w(LOG_TAG, "incorrect constructor arguments: " + makeReference(constructor));
+    } catch (InvocationTargetException exception) {
+      Log.w(LOG_TAG, "object construction failed: " + makeReference(constructor), exception.getCause());
+    }
+
+    return null;
   }
 
   private static String makeReference (Method method) {
@@ -84,6 +116,8 @@ public abstract class LanguageUtilities {
       return method.invoke(instance, arguments);
     } catch (IllegalAccessException exception) {
       Log.w(LOG_TAG, "cannot access method: " + makeReference(method));
+    } catch (IllegalArgumentException exception) {
+      Log.w(LOG_TAG, "incorrect method arguments: " + makeReference(method));
     } catch (InvocationTargetException exception) {
       Log.w(LOG_TAG, "method failed: " + makeReference(method), exception.getCause());
     }
