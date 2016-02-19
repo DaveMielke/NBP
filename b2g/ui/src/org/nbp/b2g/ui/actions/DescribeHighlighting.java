@@ -20,6 +20,8 @@ public class DescribeHighlighting extends CursorKeyAction {
 
       if (spans != null) {
         for (CharacterStyle span : spans) {
+          if (spanned.getSpanStart(span) == spanned.getSpanEnd(span)) continue;
+
           if (Spans.BOLD.isFor(span)) {
             bold = true;
           } else if (Spans.BOLD_ITALIC.isFor(span)) {

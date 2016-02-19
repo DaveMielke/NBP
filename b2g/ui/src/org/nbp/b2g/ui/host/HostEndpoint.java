@@ -298,10 +298,10 @@ public class HostEndpoint extends Endpoint {
     return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
   }
 
-  private final static CharacterStyle SPAN_BOLD = Spans.BOLD.newInstance();
-  private final static CharacterStyle SPAN_BOLD_ITALIC = Spans.BOLD_ITALIC.newInstance();
-  private final static CharacterStyle SPAN_ITALIC = Spans.ITALIC.newInstance();
-  private final static CharacterStyle SPAN_UNDERLINE = Spans.UNDERLINE.newInstance();
+  private final static CharacterStyle SPAN_BOLD = Spans.BOLD.getSingleton();
+  private final static CharacterStyle SPAN_BOLD_ITALIC = Spans.BOLD_ITALIC.getSingleton();
+  private final static CharacterStyle SPAN_ITALIC = Spans.ITALIC.getSingleton();
+  private final static CharacterStyle SPAN_UNDERLINE = Spans.UNDERLINE.getSingleton();
 
   private static CharSequence addSpans (CharSequence text) {
     if (text.length() > 0) {

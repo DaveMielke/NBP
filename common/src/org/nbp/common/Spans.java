@@ -41,6 +41,15 @@ public abstract class Spans {
       return (CharacterStyle)LanguageUtilities.newInstance(constructor, getArgumentValues());
     }
 
+    private CharacterStyle singleton = null;
+
+    public final CharacterStyle getSingleton () {
+      synchronized (this) {
+        if (singleton == null) singleton = newInstance();
+        return singleton;
+      }
+    }
+
     public boolean isFor (CharacterStyle span) {
       return LanguageUtilities.canAssign(objectType, span.getClass());
     }

@@ -55,7 +55,7 @@ public enum ScrollDirection {
     brailleSymbol = braille;
 
     {
-      CharacterStyle span = Spans.ITALIC.newInstance();
+      CharacterStyle span = Spans.ITALIC.getSingleton();
       SpannableStringBuilder sb = new SpannableStringBuilder(ApplicationContext.getString(text));
       int length = sb.length();
 
