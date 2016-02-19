@@ -4,6 +4,8 @@ import org.nbp.b2g.ui.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.LanguageUtilities;
+
 import android.view.accessibility.AccessibilityNodeInfo;
 
 enum ScrollOrientation {

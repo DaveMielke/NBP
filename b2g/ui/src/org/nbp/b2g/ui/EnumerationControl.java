@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import org.nbp.common.LanguageUtilities;
+
 import android.content.SharedPreferences;
 
 public abstract class EnumerationControl<E extends Enum> extends IntegerControl {
