@@ -49,8 +49,8 @@ public class EditorActivity extends CommonActivity {
 
   private final static String PREF_CHECKPOINT_NAME = "checkpoint-name";
   private final static String PREF_CHECKPOINT_PATH = "checkpoint-path";
-  private final static String PREF_CHECKPOINT_SELECTION_START = "checkpoint-selection-start";
-  private final static String PREF_CHECKPOINT_SELECTION_END = "checkpoint-selection-end";
+  private final static String PREF_CHECKPOINT_START = "checkpoint-start";
+  private final static String PREF_CHECKPOINT_END = "checkpoint-end";
   private final static String PREF_CHECKPOINT_SPANS = "checkpoint-spans";
 
   private EditText editArea = null;
@@ -579,8 +579,8 @@ public class EditorActivity extends CommonActivity {
             setCheckpointProperty(editor, PREF_CHECKPOINT_PATH, path);
             setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, getTextSpans(editArea.getText()));
 
-            editor.putInt(PREF_CHECKPOINT_SELECTION_START, editArea.getSelectionStart());
-            editor.putInt(PREF_CHECKPOINT_SELECTION_END, editArea.getSelectionEnd());
+            editor.putInt(PREF_CHECKPOINT_START, editArea.getSelectionStart());
+            editor.putInt(PREF_CHECKPOINT_END, editArea.getSelectionEnd());
 
             if (editor.commit()) {
               if (oldFile != null) {
@@ -621,8 +621,8 @@ public class EditorActivity extends CommonActivity {
               }
 
               {
-                int start = prefs.getInt(PREF_CHECKPOINT_SELECTION_START, -1);
-                int end = prefs.getInt(PREF_CHECKPOINT_SELECTION_END, -1);
+                int start = prefs.getInt(PREF_CHECKPOINT_START, -1);
+                int end = prefs.getInt(PREF_CHECKPOINT_END, -1);
 
                 if (verifyTextRange(start, end, length)) {
                   editArea.setSelection(start, end);
