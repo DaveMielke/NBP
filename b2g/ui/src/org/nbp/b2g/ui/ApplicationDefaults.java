@@ -8,6 +8,7 @@ public abstract class ApplicationDefaults {
   public final static TypingMode TYPING_MODE = TypingMode.TEXT;
   public final static boolean TYPING_BOLD = false;
   public final static boolean TYPING_ITALIC = false;
+  public final static boolean TYPING_STRIKE = false;
   public final static boolean TYPING_UNDERLINE = false;
 
   public final static boolean LITERARY_BRAILLE = true;

@@ -8,6 +8,7 @@ public abstract class ApplicationSettings {
   public static volatile TypingMode TYPING_MODE = ApplicationDefaults.TYPING_MODE;
   public static volatile boolean TYPING_BOLD = ApplicationDefaults.TYPING_BOLD;
   public static volatile boolean TYPING_ITALIC = ApplicationDefaults.TYPING_ITALIC;
+  public static volatile boolean TYPING_STRIKE = ApplicationDefaults.TYPING_STRIKE;
   public static volatile boolean TYPING_UNDERLINE = ApplicationDefaults.TYPING_UNDERLINE;
 
   public static volatile boolean LITERARY_BRAILLE = ApplicationDefaults.LITERARY_BRAILLE;

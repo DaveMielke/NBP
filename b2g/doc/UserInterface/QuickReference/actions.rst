@@ -143,6 +143,8 @@
 .. |TypingModeBraille| replace:: set the typing mode to braille
 .. |TypingModeConfirm| replace:: show the current typing mode
 .. |TypingModeText| replace:: set the typing mode to text
+.. |TypingStrikeOff| replace:: turn strike-through typing off
+.. |TypingStrikeOn| replace:: turn strike-through typing on
 .. |TypingUnderlineOff| replace:: turn underlined typing off
 .. |TypingUnderlineOn| replace:: turn underlined typing on
 .. |UpdateEditor| replace:: update the NBP editor

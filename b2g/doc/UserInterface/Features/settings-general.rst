@@ -9,6 +9,7 @@
   **Typing**            Text     Text, Cells           Change
   Bold                  Off      Off - On
   Italic                Off      Off - On
+  Strike                Off      Off - On
   Underline             Off      Off - On
   **Literary Braille**  On       Off - On
   Code                  UEB G2   UEB/EBAE G2/G1        Change

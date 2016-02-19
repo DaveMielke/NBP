@@ -11,6 +11,7 @@ public abstract class Controls {
   private final static TypingModeControl typingModeControl = new TypingModeControl();
   private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
   private final static TypingItalicControl typingItalicControl = new TypingItalicControl();
+  private final static TypingStrikeControl typingStrikeControl = new TypingStrikeControl();
   private final static TypingUnderlineControl typingUnderlineControl = new TypingUnderlineControl();
 
   private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
@@ -45,6 +46,7 @@ public abstract class Controls {
     typingModeControl,
     typingBoldControl,
     typingItalicControl,
+    typingStrikeControl,
     typingUnderlineControl,
 
     literaryBrailleControl,
@@ -94,6 +96,10 @@ public abstract class Controls {
 
   public static TypingItalicControl getTypingItalicControl () {
     return typingItalicControl;
+  }
+
+  public static TypingStrikeControl getTypingStrikeControl () {
+    return typingStrikeControl;
   }
 
   public static TypingUnderlineControl getTypingUnderlineControl () {
@@ -245,6 +251,7 @@ public abstract class Controls {
   private final static BooleanControl[] highlightedTypingControls = new BooleanControl[] {
     typingBoldControl,
     typingItalicControl,
+    typingStrikeControl,
     typingUnderlineControl
   };
 
