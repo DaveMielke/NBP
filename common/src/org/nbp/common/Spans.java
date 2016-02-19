@@ -40,7 +40,7 @@ public abstract class Spans {
       return (CharacterStyle)LanguageUtilities.newInstance(constructor, getArgumentValues());
     }
 
-    public boolean isFor (CharacterStyle span) {
+    protected boolean isFor (CharacterStyle span) {
       return LanguageUtilities.canAssign(objectType, span.getClass());
     }
 
@@ -70,7 +70,7 @@ public abstract class Spans {
     }
 
     @Override
-    public boolean isFor (CharacterStyle span) {
+    protected boolean isFor (CharacterStyle span) {
       if (!super.isFor(span)) return false;
       return ((StyleSpan)span).getStyle() == getStyle();
     }
