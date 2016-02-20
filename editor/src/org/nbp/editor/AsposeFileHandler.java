@@ -46,13 +46,13 @@ public class AsposeFileHandler extends FileHandler {
   }
 
   @Override
-  public final void read (File file, SpannableStringBuilder sb) {
+  public final void read (File file, SpannableStringBuilder input) {
     if (startAspose()) {
     }
   }
 
   @Override
-  public final void write (File file, CharSequence text) {
+  public final void write (File file, CharSequence output) {
     if (startAspose()) {
     }
   }

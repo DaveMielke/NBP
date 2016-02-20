@@ -15,9 +15,14 @@ public abstract class FileHandler {
     map.put(DEFAULT_EXTENSION, new TextFileHandler());
 
     {
+      FileHandler handler = new BrailleFileHandler();
+      map.put(".brf", handler);
+    }
+
+    {
       FileHandler handler = new AsposeFileHandler();
-      map.put("doc", handler);
-      map.put("docx", handler);
+      map.put(".doc", handler);
+      map.put(".docx", handler);
     }
   }
 
@@ -38,24 +43,24 @@ public abstract class FileHandler {
     String extension = getExtension(file);
 
     if (extension != null) {
-      FileHandler handler = map.get(extension);
+      FileHandler handler = map.get(extension.toLowerCase());
       if (handler != null) return handler;
     }
 
     return map.get(DEFAULT_EXTENSION);
   }
 
-  public abstract void read (File file, SpannableStringBuilder sb);
-  public abstract void write (File file, CharSequence text);
+  public abstract void read (File file, SpannableStringBuilder input);
+  public abstract void write (File file, CharSequence output);
 
   protected FileHandler () {
   }
 
-  public static void readFile (File file, SpannableStringBuilder sb) {
-    get(file).read(file, sb);
+  public static void readFile (File file, SpannableStringBuilder input) {
+    get(file).read(file, input);
   }
 
-  public static void writeFile (File file, CharSequence text) {
-    get(file).write(file, text);
+  public static void writeFile (File file, CharSequence output) {
+    get(file).write(file, output);
   }
 }

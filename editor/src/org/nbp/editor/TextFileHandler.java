@@ -14,20 +14,25 @@ import java.io.IOException;
 public class TextFileHandler extends FileHandler {
   private final static String LOG_TAG = TextFileHandler.class.getName();
 
-  @Override
-  public final void read (File file, final SpannableStringBuilder sb) {
-    new InputProcessor() {
-      @Override
-      protected final boolean handleLine (CharSequence text, int number) {
-        if (sb.length() > 0) sb.append('\n');
-        sb.append(text);
-        return true;
-      }
-    }.processInput(file);
+  protected void postProcessInput (SpannableStringBuilder sb) {
   }
 
   @Override
-  public final void write (File file, final CharSequence content) {
+  public final void read (File file, final SpannableStringBuilder input) {
+    new InputProcessor() {
+      @Override
+      protected final boolean handleLine (CharSequence text, int number) {
+        if (input.length() > 0) input.append('\n');
+        input.append(text);
+        return true;
+      }
+    }.processInput(file);
+
+    postProcessInput(input);
+  }
+
+  @Override
+  public final void write (File file, final CharSequence output) {
     String path = file.getAbsolutePath();
     String newPath = path + ".new";
     File newFile = new File(newPath);
@@ -36,7 +41,7 @@ public class TextFileHandler extends FileHandler {
     FileMaker fileMaker = new FileMaker() {
       @Override
       protected final boolean writeContent (Writer writer) throws IOException {
-        writer.write(content.toString());
+        writer.write(output.toString());
         writer.write('\n');
         return true;
       }

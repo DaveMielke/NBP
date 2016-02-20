@@ -109,7 +109,7 @@ public class EditorActivity extends CommonActivity {
     }
 
     final File f = file;
-    final CharSequence c = content;
+    final CharSequence output = content;
 
     new AsyncTask<Void, Void, Void>() {
       AlertDialog dialog;
@@ -127,7 +127,7 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       public Void doInBackground (Void... arguments) {
-        FileHandler.writeFile(f, c);
+        FileHandler.writeFile(f, output);
         return null;
       }
 
@@ -212,9 +212,9 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected CharSequence doInBackground (Void... arguments) {
-        final SpannableStringBuilder sb = new SpannableStringBuilder();
-        FileHandler.readFile(file, sb);
-        return sb.subSequence(0, sb.length());
+        final SpannableStringBuilder input = new SpannableStringBuilder();
+        FileHandler.readFile(file, input);
+        return input.subSequence(0, input.length());
       }
 
       @Override
