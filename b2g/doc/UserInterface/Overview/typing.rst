@@ -111,6 +111,11 @@ Italics
   * Press Space+Dot8+i (dots 24) to turn it on.
   * Press Space+Dot7+i (dots 24) to turn it off.
 
+Strike-through
+
+  * Press Space+Dot8+s (dots 234) to turn it on.
+  * Press Space+Dot7+s (dots 234) to turn it off.
+
 Underlining
 
   * Press Space+Dot8+u (dots 136) to turn it on.

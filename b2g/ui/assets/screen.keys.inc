@@ -36,8 +36,8 @@ bind Space+Dots2345#t Clock
 bind Space+Dots1246#ed Editor
 bind Space+Dots1456#? Assist
 
-bind Space+Dot8+Dots234#s AddShortcut
-bind Space+Dot7+Dots234#s RemoveShortcut
+bind Space+Dot8+Dots123456#home AddShortcut
+bind Space+Dot7+Dots123456#home RemoveShortcut
 
 bind Space+Dots234#s,Dot1#a AccessibilitySettings
 bind Space+Dots234#s,Dots12#b BluetoothSettings

@@ -23,6 +23,8 @@
   "Space+Dot8+Dots12#b","|TypingBoldOn|"
   "Space+Dot7+Dots24#i","|TypingItalicOff|"
   "Space+Dot8+Dots24#i","|TypingItalicOn|"
+  "Space+Dot7+Dots234#s","|TypingStrikeOff|"
+  "Space+Dot8+Dots234#s","|TypingStrikeOn|"
   "Space+Dot7+Dots136#u","|TypingUnderlineOff|"
   "Space+Dot8+Dots136#u","|TypingUnderlineOn|"
 

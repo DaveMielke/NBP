@@ -66,13 +66,13 @@ To add a shortcut to the home screen:
 1) Go to the home screen.
 2) Click on ``Apps``.
 3) Navigate to the label of the application that you'd like to add.
-4) Press Space+Dot8+s (dots 234).
+4) Press Space+Dot8+home (dots 123456).
 
 To remove a shortcut from the home screen:
 
 1) Go to the home screen.
 2) Navigate to the label of the application that you'd like to remove.
-3) Press Space+Dot7+s (dots 234).
+3) Press Space+Dot7+home (dots 123456).
 
 If you'd rather not search for the application's label then you can
 find an empty line within any input area (see `Input Areas`_) and type it.

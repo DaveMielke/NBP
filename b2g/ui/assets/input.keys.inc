@@ -28,6 +28,8 @@ bind Space+Dot7+Dots12#b TypingBoldOff
 bind Space+Dot8+Dots12#b TypingBoldOn
 bind Space+Dot7+Dots24#i TypingItalicOff
 bind Space+Dot8+Dots24#i TypingItalicOn
+bind Space+Dot7+Dots234#s TypingStrikeOff
+bind Space+Dot8+Dots234#s TypingStrikeOn
 bind Space+Dot7+Dots136#u TypingUnderlineOff
 bind Space+Dot8+Dots136#u TypingUnderlineOn
 
