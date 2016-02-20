@@ -12,7 +12,7 @@ public abstract class FileHandler {
   private final static String DEFAULT_EXTENSION = "";
 
   static {
-    map.put(DEFAULT_EXTENSION, new DefaultFileHandler());
+    map.put(DEFAULT_EXTENSION, new TextFileHandler());
 
     {
       FileHandler handler = new AsposeFileHandler();

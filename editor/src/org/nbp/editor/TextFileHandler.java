@@ -11,8 +11,8 @@ import org.nbp.common.FileMaker;
 import java.io.Writer;
 import java.io.IOException;
 
-public class DefaultFileHandler extends FileHandler {
-  private final static String LOG_TAG = DefaultFileHandler.class.getName();
+public class TextFileHandler extends FileHandler {
+  private final static String LOG_TAG = TextFileHandler.class.getName();
 
   @Override
   public final void read (File file, final SpannableStringBuilder sb) {
@@ -53,7 +53,7 @@ public class DefaultFileHandler extends FileHandler {
     }
   }
 
-  public DefaultFileHandler () {
+  public TextFileHandler () {
     super();
   }
 }
