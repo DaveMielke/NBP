@@ -193,6 +193,10 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     isResumed = false;
   }
 
+  protected final void run (Runnable runnable) {
+    if (runnable != null) runnable.run();
+  }
+
   protected final void showMessage (int message, String detail, final Runnable onCleared) {
     if (isResumed) {
       new AlertDialog
@@ -205,7 +209,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int button)  {
-              if (onCleared != null) onCleared.run();
+              run(onCleared);
             }
           }
         )
@@ -221,7 +225,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
       }
 
       Log.w(LOG_TAG, sb.toString());
-      if (onCleared != null) onCleared.run();
+      run(onCleared);
     }
   }
 
@@ -266,7 +270,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            onConfirmed.run();
+            run(onConfirmed);
           }
         }
       )

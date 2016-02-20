@@ -137,8 +137,8 @@ public class EditorActivity extends CommonActivity {
 
         if (!f.getParentFile().equals(filesDirectory)) {
           showMessage(R.string.alert_file_saved, f.getAbsolutePath(), onSaved);
-        } else if (onSaved != null) {
-          onSaved.run();
+        } else {
+          run(onSaved);
         }
       }
     }.execute();
@@ -179,7 +179,7 @@ public class EditorActivity extends CommonActivity {
       OnDialogClickListener negativeListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
-          onSaved.run();
+          run(onSaved);
         }
       };
 
@@ -191,7 +191,7 @@ public class EditorActivity extends CommonActivity {
                      .setNegativeButton(R.string.changed_button_negative, negativeListener)
                      .show();
     } else {
-      onSaved.run();
+      run(onSaved);
     }
   }
 
@@ -221,7 +221,7 @@ public class EditorActivity extends CommonActivity {
       protected void onPostExecute (CharSequence content) {
         dialog.dismiss();
         setCurrentFile(file, content);
-        if (onLoaded != null) onLoaded.run();
+        run(onLoaded);
       }
     }.execute();
   }
