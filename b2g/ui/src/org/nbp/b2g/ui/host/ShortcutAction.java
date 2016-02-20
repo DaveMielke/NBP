@@ -24,7 +24,7 @@ public abstract class ShortcutAction extends Action {
   }
 
   protected static String getLabel (PackageManager pm, ActivityInfo activity) {
-    return pm.getApplicationLabel(activity.applicationInfo).toString();
+    return activity.loadLabel(pm).toString();
   }
 
   protected static void sendIntent (Intent intent) {
@@ -70,8 +70,8 @@ public abstract class ShortcutAction extends Action {
 
     for (ResolveInfo resolve : activities) {
       ActivityInfo activity = resolve.activityInfo;
-      if (activity.targetActivity != null) continue;
       String label = getLabel(pm, activity);
+      if (label == null) continue;
 
       if (label.toLowerCase().contains(text)) {
         choices.add(activity);
