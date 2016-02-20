@@ -1,9 +1,8 @@
 package org.nbp.b2g.ui;
 
-import android.text.Spanned;
+import org.nbp.common.Spans;
 import android.text.style.CharacterStyle;
-import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
+import android.text.Spanned;
 
 public abstract class Braille {
   public final static char UNICODE_ROW   = 0X2800;
@@ -138,15 +137,11 @@ public abstract class Braille {
 
             if (spans != null) {
               for (CharacterStyle span : spans) {
-                if (span instanceof StyleSpan) {
-                } else if (span instanceof UnderlineSpan) {
-                } else {
-                  continue;
+                if (Spans.getEntry(span) != null) {
+                  int start = spanned.getSpanStart(span);
+                  int end = spanned.getSpanEnd(span);
+                  markCells(cells, endpoint, start, end, brailleIndent);
                 }
-
-                int start = spanned.getSpanStart(span);
-                int end = spanned.getSpanEnd(span);
-                markCells(cells, endpoint, start, end, brailleIndent);
               }
             }
           }
