@@ -137,6 +137,8 @@ public class EditorActivity extends CommonActivity {
 
         if (!f.getParentFile().equals(filesDirectory)) {
           showMessage(R.string.alert_file_saved, f.getAbsolutePath(), onSaved);
+        } else if (onSaved != null) {
+          onSaved.run();
         }
       }
     }.execute();
