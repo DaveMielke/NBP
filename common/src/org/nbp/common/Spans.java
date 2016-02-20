@@ -118,6 +118,7 @@ public abstract class Spans {
     BOLD,
     BOLD_ITALIC,
     ITALIC,
+    STRIKE,
     UNDERLINE
   };
 
