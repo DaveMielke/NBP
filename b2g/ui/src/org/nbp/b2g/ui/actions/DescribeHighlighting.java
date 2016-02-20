@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.Spans;
+import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 import android.text.Spanned;
 
@@ -22,16 +22,16 @@ public class DescribeHighlighting extends CursorKeyAction {
         for (CharacterStyle span : spans) {
           if (spanned.getSpanStart(span) == spanned.getSpanEnd(span)) continue;
 
-          if (Spans.BOLD.isFor(span)) {
+          if (HighlightSpans.BOLD.isFor(span)) {
             bold = true;
-          } else if (Spans.BOLD_ITALIC.isFor(span)) {
+          } else if (HighlightSpans.BOLD_ITALIC.isFor(span)) {
             bold = true;
             italic = true;
-          } else if (Spans.ITALIC.isFor(span)) {
+          } else if (HighlightSpans.ITALIC.isFor(span)) {
             italic = true;
-          } else if (Spans.STRIKE.isFor(span)) {
+          } else if (HighlightSpans.STRIKE.isFor(span)) {
             strike = true;
-          } else if (Spans.UNDERLINE.isFor(span)) {
+          } else if (HighlightSpans.UNDERLINE.isFor(span)) {
             underline = true;
           }
         }

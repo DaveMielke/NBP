@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import org.nbp.common.Spans;
+import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 import android.text.SpannableStringBuilder;
 
@@ -55,7 +55,7 @@ public enum ScrollDirection {
     brailleSymbol = braille;
 
     {
-      CharacterStyle span = Spans.ITALIC.getSingleton();
+      CharacterStyle span = HighlightSpans.ITALIC.getSingleton();
       SpannableStringBuilder sb = new SpannableStringBuilder(ApplicationContext.getString(text));
       int length = sb.length();
 

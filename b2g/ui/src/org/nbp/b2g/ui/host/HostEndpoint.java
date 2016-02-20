@@ -17,7 +17,7 @@ import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 
-import org.nbp.common.Spans;
+import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 
 public class HostEndpoint extends Endpoint {
@@ -298,11 +298,11 @@ public class HostEndpoint extends Endpoint {
     return performNodeAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
   }
 
-  private final static CharacterStyle SPAN_BOLD = Spans.BOLD.getSingleton();
-  private final static CharacterStyle SPAN_BOLD_ITALIC = Spans.BOLD_ITALIC.getSingleton();
-  private final static CharacterStyle SPAN_ITALIC = Spans.ITALIC.getSingleton();
-  private final static CharacterStyle SPAN_STRIKE = Spans.STRIKE.getSingleton();
-  private final static CharacterStyle SPAN_UNDERLINE = Spans.UNDERLINE.getSingleton();
+  private final static CharacterStyle SPAN_BOLD = HighlightSpans.BOLD.getSingleton();
+  private final static CharacterStyle SPAN_BOLD_ITALIC = HighlightSpans.BOLD_ITALIC.getSingleton();
+  private final static CharacterStyle SPAN_ITALIC = HighlightSpans.ITALIC.getSingleton();
+  private final static CharacterStyle SPAN_STRIKE = HighlightSpans.STRIKE.getSingleton();
+  private final static CharacterStyle SPAN_UNDERLINE = HighlightSpans.UNDERLINE.getSingleton();
 
   private static CharSequence addSpans (CharSequence text) {
     if (text.length() > 0) {

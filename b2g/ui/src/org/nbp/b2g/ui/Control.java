@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import java.util.Set;
 import java.util.HashSet;
 
-import org.nbp.common.Spans;
+import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 import android.text.SpannableStringBuilder;
 
@@ -33,7 +33,7 @@ public abstract class Control {
     return getString(R.string.default_control_previous);
   }
 
-  private final static CharacterStyle HEADER_SPAN = Spans.BOLD.getSingleton();
+  private final static CharacterStyle HEADER_SPAN = HighlightSpans.BOLD.getSingleton();
 
   protected final CharSequence toHeader (int resource) {
     String text = getString(resource);

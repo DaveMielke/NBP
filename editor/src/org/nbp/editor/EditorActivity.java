@@ -32,7 +32,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 
-import org.nbp.common.Spans;
+import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 
 import android.view.Menu;
@@ -464,7 +464,7 @@ public class EditorActivity extends CommonActivity {
 
     for (CharacterStyle span : spans) {
       {
-        Spans.Entry spanEntry = Spans.getEntry(span);
+        HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(span);
         if (spanEntry == null) continue;
 
         if (found) {
@@ -510,7 +510,7 @@ public class EditorActivity extends CommonActivity {
       }
 
       if (verifyTextRange(start, end, length)) {
-        Spans.Entry spanEntry = Spans.getEntry(identifier);
+        HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(identifier);
 
         if (spanEntry != null) {
           spannable.setSpan(spanEntry.newInstance(), start, end, flags);

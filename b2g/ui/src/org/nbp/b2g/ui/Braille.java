@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-import org.nbp.common.Spans;
+import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 import android.text.Spanned;
 
@@ -137,7 +137,7 @@ public abstract class Braille {
 
             if (spans != null) {
               for (CharacterStyle span : spans) {
-                if (Spans.getEntry(span) != null) {
+                if (HighlightSpans.getEntry(span) != null) {
                   int start = spanned.getSpanStart(span);
                   int end = spanned.getSpanEnd(span);
                   markCells(cells, endpoint, start, end, brailleIndent);

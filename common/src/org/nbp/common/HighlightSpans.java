@@ -13,7 +13,7 @@ import android.text.style.UnderlineSpan;
 import android.text.style.StyleSpan;
 import android.graphics.Typeface;
 
-public abstract class Spans {
+public abstract class HighlightSpans {
   private final static Map<String, Entry> spanMap = new HashMap<String, Entry>();
 
   public static class Entry {
@@ -140,6 +140,6 @@ public abstract class Spans {
     }
   }
 
-  private Spans () {
+  private HighlightSpans () {
   }
 }
