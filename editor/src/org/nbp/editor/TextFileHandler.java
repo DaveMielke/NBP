@@ -1,20 +1,27 @@
 package org.nbp.editor;
 
+import java.io.IOException;
+import java.io.File;
+import java.io.Writer;
+
 import org.nbp.common.CommonContext;
 import org.nbp.common.CommonUtilities;
-import java.io.File;
 
 import org.nbp.common.InputProcessor;
-import android.text.SpannableStringBuilder;
-
 import org.nbp.common.FileMaker;
-import java.io.Writer;
-import java.io.IOException;
+
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.SpannableStringBuilder;
 
 public class TextFileHandler extends FileHandler {
   private final static String LOG_TAG = TextFileHandler.class.getName();
 
-  protected void postProcessInput (SpannableStringBuilder sb) {
+  protected void postProcessInput (SpannableStringBuilder input) {
+  }
+
+  protected String preprocessOutput (CharSequence output) {
+    return output.toString();
   }
 
   @Override
@@ -31,6 +38,11 @@ public class TextFileHandler extends FileHandler {
     postProcessInput(input);
   }
 
+  protected final Spanned asSpanned (CharSequence string) {
+    if (string instanceof Spanned) return (Spanned)string;
+    return new SpannedString(string);
+  }
+
   @Override
   public final void write (File file, final CharSequence output) {
     String path = file.getAbsolutePath();
@@ -41,7 +53,7 @@ public class TextFileHandler extends FileHandler {
     FileMaker fileMaker = new FileMaker() {
       @Override
       protected final boolean writeContent (Writer writer) throws IOException {
-        writer.write(output.toString());
+        writer.write(preprocessOutput(output));
         writer.write('\n');
         return true;
       }

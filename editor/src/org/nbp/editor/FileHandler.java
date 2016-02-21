@@ -12,11 +12,21 @@ public abstract class FileHandler {
   private final static String DEFAULT_EXTENSION = "";
 
   static {
-    map.put(DEFAULT_EXTENSION, new TextFileHandler());
+    {
+      FileHandler handler = new TextFileHandler();
+      map.put(DEFAULT_EXTENSION, handler);
+      map.put(".txt", handler);
+    }
 
     {
       FileHandler handler = new BrailleFileHandler();
       map.put(".brf", handler);
+    }
+
+    {
+      FileHandler handler = new HtmlFileHandler();
+      map.put(".html", handler);
+      map.put(".htm", handler);
     }
 
     {
