@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 public abstract class LongFieldMap extends NumericFieldMap {
   public final Long getValue (String name) {

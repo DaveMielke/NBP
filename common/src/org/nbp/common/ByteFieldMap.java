@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 public abstract class ByteFieldMap extends NumericFieldMap {
   public final Byte getValue (String name) {

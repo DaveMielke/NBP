@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.UnicodeUtilities;
+
 public class DescribeCharacter extends CursorKeyAction {
   private static String normalizeName (String name) {
     return name.replace('_', ' ').toLowerCase();

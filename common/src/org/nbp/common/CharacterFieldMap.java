@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 public abstract class CharacterFieldMap extends NumericFieldMap {
   public final Character getValue (String name) {

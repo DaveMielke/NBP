@@ -9,6 +9,9 @@ import java.util.HashMap;
 
 import java.util.Locale;
 
+import org.nbp.common.UnicodeUtilities;
+import org.nbp.common.CharacterFieldMap;
+
 import org.nbp.common.InputProcessor;
 import org.nbp.common.DirectiveProcessor;
 

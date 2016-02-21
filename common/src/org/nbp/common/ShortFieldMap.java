@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 public abstract class ShortFieldMap extends NumericFieldMap {
   public final Short getValue (String name) {
