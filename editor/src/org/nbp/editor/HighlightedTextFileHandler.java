@@ -3,7 +3,7 @@ package org.nbp.editor;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 
-public class HtmlFileHandler extends TextFileHandler {
+public class HighlightedTextFileHandler extends TextFileHandler {
   @Override
   protected void postProcessInput (SpannableStringBuilder input) {
     input.replace(0, input.length(), Html.fromHtml(input.toString()));
@@ -14,7 +14,7 @@ public class HtmlFileHandler extends TextFileHandler {
     return Html.toHtml(asSpanned(output));
   }
 
-  public HtmlFileHandler () {
+  public HighlightedTextFileHandler () {
     super();
   }
 }

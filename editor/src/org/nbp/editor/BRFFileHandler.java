@@ -2,7 +2,7 @@ package org.nbp.editor;
 
 import android.text.SpannableStringBuilder;
 
-public class BrailleFileHandler extends TextFileHandler {
+public class BRFFileHandler extends TextFileHandler {
   @Override
   protected void postProcessInput (SpannableStringBuilder input) {
     int length = input.length();
@@ -25,7 +25,7 @@ public class BrailleFileHandler extends TextFileHandler {
     if (start >= 0) input.replace(start, length, sb.toString());
   }
 
-  public BrailleFileHandler () {
+  public BRFFileHandler () {
     super();
   }
 }

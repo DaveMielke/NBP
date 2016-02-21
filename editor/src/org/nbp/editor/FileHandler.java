@@ -11,29 +11,17 @@ public abstract class FileHandler {
   private final static Map<String, FileHandler> map = new HashMap<String, FileHandler>();
   private final static String DEFAULT_EXTENSION = "";
 
+  private static void addHandler (FileHandler handler, String... extensions) {
+    for (String extension : extensions) {
+      map.put(extension, handler);
+    }
+  }
+
   static {
-    {
-      FileHandler handler = new TextFileHandler();
-      map.put(DEFAULT_EXTENSION, handler);
-      map.put(".txt", handler);
-    }
-
-    {
-      FileHandler handler = new BrailleFileHandler();
-      map.put(".brf", handler);
-    }
-
-    {
-      FileHandler handler = new HtmlFileHandler();
-      map.put(".html", handler);
-      map.put(".htm", handler);
-    }
-
-    {
-      FileHandler handler = new AsposeFileHandler();
-      map.put(".doc", handler);
-      map.put(".docx", handler);
-    }
+    addHandler(new TextFileHandler(), ".txt", DEFAULT_EXTENSION);
+    addHandler(new HighlightedTextFileHandler(), ".hl");
+    addHandler(new BRFFileHandler(), ".brf");
+    addHandler(new AsposeFileHandler(), ".doc", ".docx");
   }
 
   private static String getExtension (File file) {
