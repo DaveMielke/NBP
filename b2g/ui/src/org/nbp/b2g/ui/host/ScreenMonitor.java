@@ -86,14 +86,8 @@ public class ScreenMonitor extends AccessibilityService {
   }
 
   private static boolean write (AccessibilityNodeInfo node, boolean force, AccessibilityEvent event) {
-    HostEndpoint endpoint = getHostEndpoint();
-
-    {
-      CharSequence text = getAccessibilityText(node, event);
-      if (text != null) AccessibilityText.set(node, text);
-    }
-
-    return endpoint.write(node, force);
+    AccessibilityText.set(node, getAccessibilityText(node, event));
+    return getHostEndpoint().write(node, force);
   }
 
   private static boolean write (AccessibilityNodeInfo node, boolean force) {
@@ -294,9 +288,7 @@ public class ScreenMonitor extends AccessibilityService {
   }
 
   private static void handleViewAccessibilityFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
-    if (view.isAccessibilityFocused()) {
-      write(view, true, event);
-    }
+    if (view.isAccessibilityFocused()) write(view, true, event);
   }
 
   private static void handleViewInputFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
