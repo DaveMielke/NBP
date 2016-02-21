@@ -282,33 +282,37 @@ public abstract class ScreenUtilities {
     return false;
   }
 
-  public static boolean isSignificant (AccessibilityNodeInfo node) {
-    boolean isDescribed = false;
+  private static boolean hasDescription (AccessibilityNodeInfo node) {
+    CharSequence description = node.getContentDescription();
+    if (description == null) return false;
 
-    {
-      CharSequence description = node.getContentDescription();
+    int length = description.length();
+    if (length == 0) return false;
 
-      if (description != null) {
-        final int length = description.length();
+    do {
+      if (!Character.isWhitespace(description.charAt(--length))) return true;
+    } while (length > 0);
 
-        if (length > 0) {
-          int index = 0;
+    logNavigation(node, "node has a blank description");
+    return false;
+  }
 
-          while (Character.isWhitespace(description.charAt(index))) {
-            if (++index == length) {
-              logNavigation(node, "node has a blank description");
-              return false;
-            }
-          }
+  private final static String[] specialClassNames = new String[] {
+    "org.mozilla.gecko.gfx.LayerView"
+  };
 
-          isDescribed = true;
-        }
-      }
+  private static boolean isSpecial (AccessibilityNodeInfo node) {
+    CharSequence className = node.getClassName();
+
+    for (String name : specialClassNames) {
+      if (name.equals(className)) return true;
     }
 
-    if (isDescribed) {
-      logNavigation(node, "node has description");
-    } else if (node.getText() != null) {
+    return false;
+  }
+
+  public static boolean isSignificant (AccessibilityNodeInfo node) {
+    if (node.getText() != null) {
       logNavigation(node, "node has text");
     } else if (isEditable(node)) {
       logNavigation(node, "node is editable");
@@ -318,6 +322,12 @@ public abstract class ScreenUtilities {
       logNavigation(node, "node is a bar");
     } else if (node.isFocusable() && !isContainer(node)) {
       logNavigation(node, "node is input focusable");
+    } else if (AccessibilityText.get(node) != null) {
+      logNavigation(node, "node has accessibility text");
+    } else if (hasDescription(node)) {
+      logNavigation(node, "node has description");
+    } else if (isSpecial(node)) {
+      logNavigation(node, "node is special");
     } else {
       logNavigation(node, "node is not significant");
       return false;
