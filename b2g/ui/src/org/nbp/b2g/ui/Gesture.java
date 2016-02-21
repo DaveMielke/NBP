@@ -62,14 +62,14 @@ public abstract class Gesture {
   }
 
   public static boolean tap (int x, int y, int count) {
+    if (ApplicationContext.isTouchExplorationActive()) {
+      count += 1;
+    }
+
     if (count < 1) {
       throw new IllegalArgumentException(String.format(
         "count must be greater than 0: %d", count
       ));
-    }
-
-    if (ApplicationContext.isTouchExplorationActive()) {
-      count += 1;
     }
 
     if (ApplicationSettings.LOG_ACTIONS) {
@@ -92,15 +92,19 @@ public abstract class Gesture {
     return tap(x, y, 1);
   }
 
+  public static boolean touch (int x, int y) {
+    return tap(x, y, 0);
+  }
+
   public static boolean swipe (int x1, int y1, int x2, int y2, int fingers) {
+    if (ApplicationContext.isTouchExplorationActive()) {
+      fingers += 1;
+    }
+
     if (fingers < 1) {
       throw new IllegalArgumentException(String.format(
         "fingers must be greater than 0: %d", fingers
       ));
-    }
-
-    if (ApplicationContext.isTouchExplorationActive()) {
-      fingers += 1;
     }
 
     if (ApplicationSettings.LOG_ACTIONS) {
@@ -154,6 +158,10 @@ public abstract class Gesture {
 
   public static boolean swipe (int x1, int y1, int x2, int y2) {
     return swipe(x1, y1, x2, y2, 1);
+  }
+
+  public static boolean slide (int x1, int y1, int x2, int y2) {
+    return swipe(x1, y1, x2, y2, 0);
   }
 
   private Gesture () {
