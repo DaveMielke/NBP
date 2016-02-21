@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import org.nbp.common.LazyInstantiator;
+
 public abstract class Devices {
   public final static LazyInstantiator<BrailleDevice> braille = new
     LazyInstantiator<BrailleDevice>(BrailleDevice.class);

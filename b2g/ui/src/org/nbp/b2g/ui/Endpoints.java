@@ -4,6 +4,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.nbp.common.LazyInstantiator;
+
 import org.nbp.b2g.ui.host.HostEndpoint;
 import org.nbp.b2g.ui.popup.PopupEndpoint;
 import org.nbp.b2g.ui.prompt.FindEndpoint;
