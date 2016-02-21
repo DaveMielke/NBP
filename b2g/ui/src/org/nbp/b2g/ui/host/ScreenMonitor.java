@@ -90,7 +90,7 @@ public class ScreenMonitor extends AccessibilityService {
 
     {
       CharSequence text = getAccessibilityText(node, event);
-      if (text != null) endpoint.setAccessibilityText(node, text);
+      if (text != null) AccessibilityText.set(node, text);
     }
 
     return endpoint.write(node, force);

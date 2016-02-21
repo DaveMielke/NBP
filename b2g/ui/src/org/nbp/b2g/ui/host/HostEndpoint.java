@@ -2,9 +2,6 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.host.actions.*;
 import org.nbp.b2g.ui.*;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import android.util.Log;
 
 import android.os.Bundle;
@@ -48,20 +45,6 @@ public class HostEndpoint extends Endpoint {
       if (currentNode == null) return null;
       return AccessibilityNodeInfo.obtain(currentNode);
     }
-  }
-
-  private final Map<AccessibilityNodeInfo, CharSequence> accessibilityText = new HashMap<AccessibilityNodeInfo, CharSequence>();
-
-  public final void setAccessibilityText (AccessibilityNodeInfo node, CharSequence text) {
-    if (text != null) {
-      accessibilityText.put(AccessibilityNodeInfo.obtain(node), text);
-    } else {
-      accessibilityText.remove(node);
-    }
-  }
-
-  private final CharSequence getAccessibilityText (AccessibilityNodeInfo node) {
-    return accessibilityText.get(node);
   }
 
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
@@ -111,7 +94,7 @@ public class HostEndpoint extends Endpoint {
     }
 
     if ((text = node.getText()) == null) {
-      text = getAccessibilityText(node);
+      text = AccessibilityText.get(node);
     }
 
     if (text != null) {
@@ -222,7 +205,7 @@ public class HostEndpoint extends Endpoint {
         indent = 0;
 
         if (currentNode != null) {
-          setAccessibilityText(currentNode, null);
+        //AccessibilityText.set(currentNode, null);
           ScreenUtilities.setCurrentNode(node);
         }
       }
