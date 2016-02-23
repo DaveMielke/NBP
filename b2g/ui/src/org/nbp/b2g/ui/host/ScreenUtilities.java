@@ -282,14 +282,12 @@ public abstract class ScreenUtilities {
     return false;
   }
 
-  private final static String[] specialClassNames = new String[] {
+  private final static String[] significantClassNames = new String[] {
     "org.mozilla.gecko.gfx.LayerView"
   };
 
-  private static boolean isSpecial (AccessibilityNodeInfo node) {
-    CharSequence className = node.getClassName();
-
-    for (String name : specialClassNames) {
+  private static boolean isSignificantClass (CharSequence className) {
+    for (String name : significantClassNames) {
       if (name.equals(className)) return true;
     }
 
@@ -334,8 +332,8 @@ public abstract class ScreenUtilities {
       logNavigation(node, "node is input focusable");
     } else if (AccessibilityText.get(node) != null) {
       logNavigation(node, "node has accessibility text");
-    } else if (isSpecial(node)) {
-      logNavigation(node, "node is special");
+    } else if (isSignificantClass(node.getClassName())) {
+      logNavigation(node, "node class is significant");
     } else {
       logNavigation(node, "node is not significant");
       return false;
