@@ -1,5 +1,7 @@
 package org.nbp.compass;
 
+import android.util.Log;
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -11,6 +13,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 public class CompassActivity extends Activity implements SensorEventListener {
+  private final static String LOG_TAG = CompassActivity.class.getName();
+
   private SensorManager sensorManager;
   private TextView headingView;
 
@@ -29,7 +33,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
     sensorManager.registerListener(this,
       sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-      SensorManager.SENSOR_DELAY_GAME
+      R.integer.frequency_usecs
     );
   }
 
@@ -44,6 +48,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   public void onSensorChanged (SensorEvent event) {
     int degrees = Math.round(event.values[0]);
 
+Log.d(LOG_TAG, String.format("%f %f %f", event.values[0], event.values[1], event.values[2]));
     headingView.setText(String.format(
       "%d",
       degrees
