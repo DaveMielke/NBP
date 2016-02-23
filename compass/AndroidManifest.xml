@@ -2,8 +2,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="org.nbp.compass"
-  android:versionCode="1"
-  android:versionName="1.0"
+  android:versionCode="@integer/NBP_Compass_version_code"
+  android:versionName="@string/NBP_Compass_version_name"
   >
 
   <application
