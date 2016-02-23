@@ -1,0 +1,1 @@
+applicationPrefix="NBP_Compass"
