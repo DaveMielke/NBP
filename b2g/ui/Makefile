@@ -1,5 +1,5 @@
-include ../../prologue.mk
-include ../../properties.mk
+include ../../app.prologue.mk
+include ../../app.properties.mk
 
 ACTION_SUMMARIES = res/values/actions.xml
 LOCAL_FILES += $(ACTION_SUMMARIES)
@@ -30,4 +30,4 @@ apk::
 clean::
 	$(MAKE) -C ../doc $@
 
-include ../../epilogue.mk
+include ../../app.epilogue.mk
