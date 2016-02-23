@@ -53,7 +53,7 @@
   <string name="recoveryLog_activity_label">Recovery Mode Log</string>
 
   <string name="shortcut_message_none">activity not found</string>
-  <string name="shortcut_message_ambiguous">Select a shortcut by pressing Enter on it:</string>
+  <string name="shortcut_message_ambiguous">Select a shortcut by pressing Center on it:</string>
 
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
