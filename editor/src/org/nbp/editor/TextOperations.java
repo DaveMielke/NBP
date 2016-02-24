@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.io.Reader;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+
 import java.io.Writer;
 import java.io.OutputStreamWriter;
-
-import org.nbp.common.CommonContext;
-import org.nbp.common.CommonUtilities;
-import org.nbp.common.InputProcessor;
 
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -31,44 +31,31 @@ public class TextOperations implements ContentOperations {
   }
 
   @Override
-  public final boolean read (InputStream stream, final SpannableStringBuilder content) {
-    InputProcessor inputProcessor = new InputProcessor() {
-      @Override
-      protected final boolean handleLine (CharSequence text, int number) {
-        if (content.length() > 0) content.append('\n');
-        content.append(text);
-        return true;
+  public final void read (InputStream stream, final SpannableStringBuilder content) throws IOException {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+
+    try {
+      for (String line; ((line = reader.readLine()) != null); ) {
+        content.append(line);
+        content.append('\n');
       }
-    };
 
-    if (inputProcessor.processInput(stream)) {
       postProcessInput(content);
-      return true;
+    } finally {
+      reader.close();
     }
-
-    return false;
   }
 
   @Override
-  public final boolean write (OutputStream stream, CharSequence content) {
+  public final void write (OutputStream stream, CharSequence content) throws IOException {
+    Writer writer = new OutputStreamWriter(stream);
+
     try {
-      Writer writer = new OutputStreamWriter(stream);
-
-      try {
-        writer.write(preprocessOutput(content));
-        writer.write('\n');
-        return true;
-      } finally {
-        writer.close();
-      }
-    } catch (IOException exception) {
-      CommonUtilities.reportError(
-        LOG_TAG, "content write error: %s",
-        exception.getMessage()
-      );
+      writer.write(preprocessOutput(content));
+      writer.write('\n');
+    } finally {
+      writer.close();
     }
-
-    return false;
   }
 
   public TextOperations () {

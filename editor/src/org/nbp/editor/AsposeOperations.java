@@ -48,20 +48,16 @@ public class AsposeOperations implements ContentOperations {
   }
 
   @Override
-  public final boolean read (InputStream stream, SpannableStringBuilder content) {
+  public final void read (InputStream stream, SpannableStringBuilder content) {
     if (startAspose()) {
     //Document doc = new Document(stream);
     }
-
-    return false;
   }
 
   @Override
-  public final boolean write (OutputStream stream, CharSequence content) {
+  public final void write (OutputStream stream, CharSequence content) {
     if (startAspose()) {
     }
-
-    return false;
   }
 
   public AsposeOperations () {

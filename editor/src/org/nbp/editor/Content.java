@@ -66,9 +66,8 @@ public abstract class Content {
       InputStream stream = new FileInputStream(file);
 
       try {
-        if (getOperations(file).read(stream, content)) {
-          return true;
-        }
+        getOperations(file).read(stream, content);
+        return true;
       } finally {
         stream.close();
       }
@@ -92,23 +91,23 @@ public abstract class Content {
       OutputStream stream = new FileOutputStream(newFile);
 
       try {
-        if (getOperations(file).write(stream, content)) {
-          if (newFile.renameTo(file)) {
-            return true;
-          } else {
-            CommonUtilities.reportError(
-              LOG_TAG, "%s: %s -> %s",
-              CommonContext.getString(R.string.alert_rename_failed),
-              newFile.getAbsolutePath(), file.getAbsolutePath()
-            );
-          }
+        getOperations(file).write(stream, content);
+
+        if (!newFile.renameTo(file)) {
+          throw new IOException(String.format(
+            LOG_TAG, "%s: %s -> %s",
+            CommonContext.getString(R.string.alert_rename_failed),
+            newFile.getAbsolutePath(), file.getAbsolutePath()
+          ));
         }
+
+        return true;
       } finally {
         stream.close();
       }
     } catch (IOException exception) {
       CommonUtilities.reportError(
-        LOG_TAG, "file creation error: %s: %s",
+        LOG_TAG, "output file error: %s: %s",
         file.getAbsolutePath(), exception.getMessage()
       );
     }
