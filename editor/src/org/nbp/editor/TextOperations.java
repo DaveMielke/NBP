@@ -53,9 +53,14 @@ public class TextOperations implements ContentOperations {
   public final boolean write (OutputStream stream, CharSequence content) {
     try {
       Writer writer = new OutputStreamWriter(stream);
-      writer.write(preprocessOutput(content));
-      writer.write('\n');
-      return true;
+
+      try {
+        writer.write(preprocessOutput(content));
+        writer.write('\n');
+        return true;
+      } finally {
+        writer.close();
+      }
     } catch (IOException exception) {
       CommonUtilities.reportError(
         LOG_TAG, "content write error: %s",
