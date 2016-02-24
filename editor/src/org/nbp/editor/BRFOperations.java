@@ -2,7 +2,7 @@ package org.nbp.editor;
 
 import android.text.SpannableStringBuilder;
 
-public class BRFFileHandler extends TextFileHandler {
+public class BRFOperations extends TextOperations {
   @Override
   protected void postProcessInput (SpannableStringBuilder input) {
     int length = input.length();
@@ -25,7 +25,7 @@ public class BRFFileHandler extends TextFileHandler {
     if (start >= 0) input.replace(start, length, sb.toString());
   }
 
-  public BRFFileHandler () {
+  public BRFOperations () {
     super();
   }
 }

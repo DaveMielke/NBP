@@ -127,7 +127,7 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       public Void doInBackground (Void... arguments) {
-        FileHandler.writeFile(f, output);
+        Content.writeFile(f, output);
         return null;
       }
 
@@ -213,7 +213,7 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected CharSequence doInBackground (Void... arguments) {
         final SpannableStringBuilder input = new SpannableStringBuilder();
-        FileHandler.readFile(file, input);
+        Content.readFile(file, input);
         return input.subSequence(0, input.length());
       }
 

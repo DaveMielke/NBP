@@ -6,12 +6,13 @@ import org.nbp.common.CommonContext;
 import android.content.Context;
 
 import java.io.File;
+import java.io.FileInputStream;
 import android.text.SpannableStringBuilder;
 
 import com.aspose.words.*;
 
-public class AsposeFileHandler extends FileHandler {
-  private final static String LOG_TAG = AsposeFileHandler.class.getName();
+public class AsposeOperations implements ContentOperations {
+  private final static String LOG_TAG = AsposeOperations.class.getName();
 
   private enum AsposeState {
     UNSTARTED,
@@ -48,6 +49,7 @@ public class AsposeFileHandler extends FileHandler {
   @Override
   public final void read (File file, SpannableStringBuilder input) {
     if (startAspose()) {
+    //Document doc = new Document(new FileInputStream(file));
     }
   }
 
@@ -57,7 +59,7 @@ public class AsposeFileHandler extends FileHandler {
     }
   }
 
-  public AsposeFileHandler () {
+  public AsposeOperations () {
     super();
   }
 }

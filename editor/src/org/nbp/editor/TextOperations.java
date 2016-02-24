@@ -14,8 +14,8 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.SpannableStringBuilder;
 
-public class TextFileHandler extends FileHandler {
-  private final static String LOG_TAG = TextFileHandler.class.getName();
+public class TextOperations implements ContentOperations {
+  private final static String LOG_TAG = TextOperations.class.getName();
 
   protected void postProcessInput (SpannableStringBuilder input) {
   }
@@ -70,7 +70,7 @@ public class TextFileHandler extends FileHandler {
     }
   }
 
-  public TextFileHandler () {
+  public TextOperations () {
     super();
   }
 }
