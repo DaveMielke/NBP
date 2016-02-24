@@ -44,15 +44,31 @@ public class CompassActivity extends Activity implements SensorEventListener {
     sensorManager.unregisterListener(this);
   }
 
+  private final static String[] directions = new String[] {
+    "n", "nne", "ne", "ene", "e", "ese", "se", "sse",
+    "s", "ssw", "sw", "wsw", "w", "wnw", "nw", "nnw"
+  };
+
+  private final static int DIRECTION_COUNT = directions.length;
+  private final static float DIRECTIONS_PER_CIRCLE = (float)DIRECTION_COUNT;
+  private final static float DEGREES_PER_CIRCLE = 360f;
+  private final static float DEGREES_PER_DIRECTION = DEGREES_PER_CIRCLE / DIRECTIONS_PER_CIRCLE;
+
   @Override
   public void onSensorChanged (SensorEvent event) {
-    int degrees = Math.round(event.values[0]);
+    float degrees = event.values[0];
 
-Log.d(LOG_TAG, String.format("%f %f %f", event.values[0], event.values[1], event.values[2]));
-    headingView.setText(String.format(
-      "%d",
-      degrees
-    ));
+    if ((degrees >= 0f) && (degrees < DEGREES_PER_CIRCLE)) {
+      int direction = Math.round(degrees / DEGREES_PER_DIRECTION);
+      direction %= DIRECTION_COUNT;
+
+      headingView.setText(String.format(
+        "%s%+d [%d]",
+        directions[direction],
+        Math.round(degrees - ((float)direction * DEGREES_PER_DIRECTION)),
+        Math.round(degrees)
+      ));
+    }
   }
 
   @Override
