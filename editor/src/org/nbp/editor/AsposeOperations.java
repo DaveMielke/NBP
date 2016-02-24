@@ -1,12 +1,13 @@
 package org.nbp.editor;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import android.util.Log;
 
 import org.nbp.common.CommonContext;
 import android.content.Context;
 
-import java.io.File;
-import java.io.FileInputStream;
 import android.text.SpannableStringBuilder;
 
 import com.aspose.words.*;
@@ -47,16 +48,20 @@ public class AsposeOperations implements ContentOperations {
   }
 
   @Override
-  public final void read (File file, SpannableStringBuilder input) {
+  public final boolean read (InputStream stream, SpannableStringBuilder content) {
     if (startAspose()) {
-    //Document doc = new Document(new FileInputStream(file));
+    //Document doc = new Document(stream);
     }
+
+    return false;
   }
 
   @Override
-  public final void write (File file, CharSequence output) {
+  public final boolean write (OutputStream stream, CharSequence content) {
     if (startAspose()) {
     }
+
+    return false;
   }
 
   public AsposeOperations () {

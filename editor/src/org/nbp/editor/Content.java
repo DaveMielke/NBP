@@ -3,11 +3,24 @@ package org.nbp.editor;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+import org.nbp.common.CommonContext;
+import org.nbp.common.CommonUtilities;
+
+import android.util.Log;
 
 import android.text.SpannableStringBuilder;
 
 public abstract class Content {
+  private final static String LOG_TAG = Content.class.getName();
+
   private final static Map<String, ContentOperations> map = new HashMap<String, ContentOperations>();
   private final static String DEFAULT_EXTENSION = "";
 
@@ -48,12 +61,59 @@ public abstract class Content {
     return map.get(DEFAULT_EXTENSION);
   }
 
-  public static void readFile (File file, SpannableStringBuilder input) {
-    getOperations(file).read(file, input);
+  public static boolean readFile (File file, SpannableStringBuilder content) {
+    try {
+      InputStream stream = new FileInputStream(file);
+
+      try {
+        if (getOperations(file).read(stream, content)) {
+          return true;
+        }
+      } finally {
+        stream.close();
+      }
+    } catch (IOException exception) {
+      CommonUtilities.reportError(
+        LOG_TAG, "input file error: %s: %s",
+        file.getAbsolutePath(), exception.getMessage()
+      );
+    }
+
+    return false;
   }
 
-  public static void writeFile (File file, CharSequence output) {
-    getOperations(file).write(file, output);
+  public static boolean writeFile (File file, CharSequence content) {
+    String path = file.getAbsolutePath();
+    String newPath = path + ".new";
+    File newFile = new File(newPath);
+    newFile.delete();
+
+    try {
+      OutputStream stream = new FileOutputStream(newFile);
+
+      try {
+        if (getOperations(file).write(stream, content)) {
+          if (newFile.renameTo(file)) {
+            return true;
+          } else {
+            CommonUtilities.reportError(
+              LOG_TAG, "%s: %s -> %s",
+              CommonContext.getString(R.string.alert_rename_failed),
+              newFile.getAbsolutePath(), file.getAbsolutePath()
+            );
+          }
+        }
+      } finally {
+        stream.close();
+      }
+    } catch (IOException exception) {
+      CommonUtilities.reportError(
+        LOG_TAG, "file creation error: %s: %s",
+        file.getAbsolutePath(), exception.getMessage()
+      );
+    }
+
+    return false;
   }
 
   protected Content () {

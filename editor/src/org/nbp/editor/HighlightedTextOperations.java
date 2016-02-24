@@ -5,13 +5,13 @@ import android.text.SpannableStringBuilder;
 
 public class HighlightedTextOperations extends TextOperations {
   @Override
-  protected void postProcessInput (SpannableStringBuilder input) {
-    input.replace(0, input.length(), Html.fromHtml(input.toString()));
+  protected void postProcessInput (SpannableStringBuilder content) {
+    content.replace(0, content.length(), Html.fromHtml(content.toString()));
   }
 
   @Override
-  protected String preprocessOutput (CharSequence output) {
-    return Html.toHtml(asSpanned(output));
+  protected String preprocessOutput (CharSequence content) {
+    return Html.toHtml(asSpanned(content));
   }
 
   public HighlightedTextOperations () {
