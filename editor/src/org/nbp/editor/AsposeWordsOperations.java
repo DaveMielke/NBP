@@ -10,6 +10,7 @@ import org.nbp.common.CommonContext;
 import android.content.Context;
 
 import android.text.SpannableStringBuilder;
+import org.nbp.common.HighlightSpans;
 
 import com.aspose.words.*;
 
@@ -44,7 +45,43 @@ public class AsposeWordsOperations extends AsposeWordsApplication implements Con
   @Override
   public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
     try {
-    //Document doc = new Document(stream);
+      Document document = new Document(stream);
+
+      for (Object documentChild : document.getFirstSection().getBody().getChildNodes()) {
+        if (documentChild instanceof Paragraph) {
+          Paragraph paragraph = (Paragraph)documentChild;
+
+          for (Object paragraphChild : paragraph.getChildNodes()) {
+            if (paragraphChild instanceof Run) {
+              Run run = (Run)paragraphChild;
+
+              CharSequence text = run.getText();
+              Font font = run.getFont();
+
+              int start = content.length();
+              content.append(text);
+              int end = content.length();
+              HighlightSpans.Entry spanEntry = null;
+
+              if (font.getBold() && font.getItalic()) {
+                spanEntry = HighlightSpans.BOLD_ITALIC;
+              } else if (font.getBold()) {
+                spanEntry = HighlightSpans.BOLD;
+              } else if (font.getItalic()) {
+                spanEntry = HighlightSpans.ITALIC;
+              } else if (font.getUnderline() != Underline.NONE) {
+                spanEntry = HighlightSpans.UNDERLINE;
+              }
+
+              if (spanEntry != null) {
+                content.setSpan(spanEntry.newInstance(), start, end, content.SPAN_EXCLUSIVE_EXCLUSIVE);
+              }
+            }
+          }
+
+          content.append('\n');
+        }
+      }
     } catch (Exception exception) {
     }
   }
