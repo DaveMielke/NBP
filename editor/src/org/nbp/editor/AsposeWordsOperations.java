@@ -9,8 +9,12 @@ import android.util.Log;
 import org.nbp.common.CommonContext;
 import android.content.Context;
 
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.SpannableStringBuilder;
+
 import org.nbp.common.HighlightSpans;
+import android.text.style.CharacterStyle;
 
 import com.aspose.words.*;
 
@@ -83,10 +87,45 @@ public class AsposeWordsOperations extends AsposeWordsApplication implements Con
         }
       }
     } catch (Exception exception) {
+      throw new IOException("Aspose Words input error", exception);
     }
   }
 
   @Override
-  public final void write (OutputStream stream, CharSequence content) {
+  public final void write (OutputStream stream, CharSequence content) throws IOException {
+    try {
+      DocumentBuilder builder = new DocumentBuilder();
+
+      Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
+      int length = text.length();
+      int start = 0;
+
+      while (start < length) {
+        int end = text.nextSpanTransition(start, length, CharacterStyle.class);
+
+        Font font = builder.getFont();
+        font.clearFormatting();
+
+        for (CharacterStyle span : text.getSpans(start, end, CharacterStyle.class)) {
+          if (HighlightSpans.BOLD_ITALIC.isFor(span)) {
+            font.setBold(true);
+            font.setItalic(true);
+          } else if (HighlightSpans.BOLD.isFor(span)) {
+            font.setBold(true);
+          } else if (HighlightSpans.ITALIC.isFor(span)) {
+            font.setItalic(true);
+          } else if (HighlightSpans.UNDERLINE.isFor(span)) {
+            font.setUnderline(Underline.DASH);
+          }
+        }
+
+        builder.write(text.subSequence(start, end).toString());
+        start = end;
+      }
+
+      builder.getDocument().save(null);
+    } catch (Exception exception) {
+      throw new IOException("Aspose Words output error", exception);
+    }
   }
 }
