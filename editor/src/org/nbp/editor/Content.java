@@ -47,8 +47,10 @@ public abstract class Content {
     addExtensions(BRFOperations.class, ".brf");
     addExtensions(DocOperations.class, ".doc");
     addExtensions(DocXOperations.class, ".docx");
-    addExtensions(RTFOperations.class, ".rtf");
     addExtensions(HTMLOperations.class, ".html", ".htm");
+    addExtensions(PDFOperations.class, ".pdf");
+    addExtensions(PSOperations.class, ".ps");
+    addExtensions(RTFOperations.class, ".rtf");
   }
 
   public static String getExtension (File file) {

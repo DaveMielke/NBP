@@ -46,15 +46,25 @@ public class AsposeWordsOperations implements ContentOperations {
   }
 
   private final int saveFormat;
+  private final int loadFormat;
 
-  public AsposeWordsOperations (int saveFormat) throws IOException {
+  public AsposeWordsOperations (int saveFormat, int loadFormat) throws IOException {
     super();
     this.saveFormat = saveFormat;
+    this.loadFormat = loadFormat;
+  }
+
+  public AsposeWordsOperations (int saveFormat) throws IOException {
+    this(saveFormat, LoadFormat.UNKNOWN);
   }
 
   @Override
   public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
     checkForLicenseProblem();
+
+    if (loadFormat == LoadFormat.UNKNOWN) {
+      throw new IOException("reading not supported");
+    }
 
     try {
       Document document = new Document(stream);
