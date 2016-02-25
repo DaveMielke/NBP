@@ -18,19 +18,23 @@ import android.text.style.CharacterStyle;
 
 import com.aspose.words.*;
 
-public class AsposeWordsOperations extends AsposeWordsApplication implements ContentOperations {
+public class AsposeWordsOperations implements ContentOperations {
   private final static String LOG_TAG = AsposeWordsOperations.class.getName();
 
+  private final static AsposeWordsApplication application = new AsposeWordsApplication();
   private final static License license = new License();
   private static Throwable licenseProblem = null;
 
-  public AsposeWordsOperations () throws IOException {
+  private final int saveFormat;
+
+  public AsposeWordsOperations (int saveFormat) throws IOException {
     super();
+    this.saveFormat = saveFormat;
 
     synchronized (LOG_TAG) {
       if (licenseProblem == null) {
         Context context = CommonContext.getContext();
-        loadLibs(context);
+        application.loadLibs(context);
 
         try {
           license.setLicense(context.getAssets().open("Aspose.Words.lic"));
@@ -130,7 +134,7 @@ public class AsposeWordsOperations extends AsposeWordsApplication implements Con
         start = end;
       }
 
-      builder.getDocument().save(stream, SaveFormat.DOC);
+      builder.getDocument().save(stream, saveFormat);
     } catch (Exception exception) {
       throw new IOException("Aspose Words output error", exception);
     }
