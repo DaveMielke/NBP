@@ -67,7 +67,9 @@ public class AsposeWordsOperations implements ContentOperations {
     }
 
     try {
-      Document document = new Document(stream);
+      LoadOptions options = new LoadOptions();
+      options.setLoadFormat(loadFormat);
+      Document document = new Document(stream, options);
 
       for (Object documentChild : document.getFirstSection().getBody().getChildNodes()) {
         if (documentChild instanceof Paragraph) {

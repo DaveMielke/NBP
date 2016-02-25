@@ -46,6 +46,7 @@ public abstract class Content {
     addExtensions(HighlightedTextOperations.class, ".hl");
     addExtensions(BRFOperations.class, ".brf");
     addExtensions(DocOperations.class, ".doc");
+    addExtensions(DocMOperations.class, ".docm");
     addExtensions(DocXOperations.class, ".docx");
     addExtensions(HTMLOperations.class, ".html", ".htm");
     addExtensions(PDFOperations.class, ".pdf");
