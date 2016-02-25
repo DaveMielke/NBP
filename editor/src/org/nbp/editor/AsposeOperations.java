@@ -1,5 +1,6 @@
 package org.nbp.editor;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -12,55 +13,37 @@ import android.text.SpannableStringBuilder;
 
 import com.aspose.words.*;
 
-public class AsposeOperations implements ContentOperations {
+public class AsposeOperations extends AsposeWordsApplication implements ContentOperations {
   private final static String LOG_TAG = AsposeOperations.class.getName();
 
-  private enum AsposeState {
-    UNSTARTED,
-    READY,
-    FAILED
-  }
+  private final static License license = new License();
+  private static Throwable failure = null;
 
-  private static AsposeState asposeState = AsposeState.UNSTARTED;
+  public AsposeOperations () throws IOException {
+    super();
 
-  private final boolean startAspose () {
-    synchronized (asposeState) {
-      if (asposeState == AsposeState.UNSTARTED) {
-        asposeState = AsposeState.FAILED;
+    Context context = CommonContext.getContext();
+    loadLibs(context);
 
-        Context context = CommonContext.getContext();
-        AsposeWordsApplication app = new AsposeWordsApplication();
-        app.loadLibs(context);
-
-        try {
-          License license = new License();
-          license.setLicense(context.getAssets().open("Aspose.Words.lic"));
-
-          asposeState = AsposeState.READY;
-          Log.d(LOG_TAG, "Aspose Words ready");
-        } catch (Exception exception) {
-          Log.w(LOG_TAG, ("Aspose Words license failure: " + exception.getMessage()));
-        }
-      }
-
-      return asposeState == AsposeState.READY;
+    try {
+      license.setLicense(context.getAssets().open("Aspose.Words.lic"));
+      Log.d(LOG_TAG, "Aspose Words ready");
+    } catch (Throwable throwable) {
+      Log.w(LOG_TAG, ("Aspose Words license failure: " + throwable.getMessage()));
+      failure = throwable;
+      throw new IOException("Aspose Words initialization failed", throwable);
     }
   }
 
   @Override
-  public final void read (InputStream stream, SpannableStringBuilder content) {
-    if (startAspose()) {
-    //Document doc = new Document(stream);
+  public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
+    try {
+      Document doc = new Document(stream);
+    } catch (Exception exception) {
     }
   }
 
   @Override
   public final void write (OutputStream stream, CharSequence content) {
-    if (startAspose()) {
-    }
-  }
-
-  public AsposeOperations () {
-    super();
   }
 }
