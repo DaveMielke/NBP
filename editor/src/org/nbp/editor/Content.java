@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import org.nbp.common.LazyInstantiator;
 import org.nbp.common.CommonContext;
 import org.nbp.common.CommonUtilities;
 
@@ -21,20 +22,30 @@ import android.text.SpannableStringBuilder;
 public abstract class Content {
   private final static String LOG_TAG = Content.class.getName();
 
-  private final static Map<String, ContentOperations> map = new HashMap<String, ContentOperations>();
+  private final static class ContentOperationsInstantiator extends LazyInstantiator<ContentOperations> {
+    private ContentOperationsInstantiator (Class<? extends ContentOperations> type) {
+      super(type);
+    }
+  }
+
+  private final static Map<String, ContentOperationsInstantiator> map
+             = new HashMap<String, ContentOperationsInstantiator>();
+
   private final static String DEFAULT_EXTENSION = "";
 
-  private static void addExtensions (ContentOperations operations, String... extensions) {
+  private static void addExtensions (Class<? extends ContentOperations> type, String... extensions) {
+    ContentOperationsInstantiator instantiator = new ContentOperationsInstantiator(type);
+
     for (String extension : extensions) {
-      map.put(extension, operations);
+      map.put(extension, instantiator);
     }
   }
 
   static {
-    addExtensions(new TextOperations(), ".txt", DEFAULT_EXTENSION);
-    addExtensions(new HighlightedTextOperations(), ".hl");
-    addExtensions(new BRFOperations(), ".brf");
-    addExtensions(new AsposeOperations(), ".doc", ".docx");
+    addExtensions(TextOperations.class, ".txt", DEFAULT_EXTENSION);
+    addExtensions(HighlightedTextOperations.class, ".hl");
+    addExtensions(BRFOperations.class, ".brf");
+    addExtensions(AsposeOperations.class, ".doc", ".docx");
   }
 
   public static String getExtension (File file) {
@@ -50,15 +61,14 @@ public abstract class Content {
     return extension;
   }
 
-  public static ContentOperations getOperations (File file) {
+  public static ContentOperations getContentOperations (File file) {
+    ContentOperationsInstantiator instantiator = null;
+
     String extension = getExtension(file);
+    if (extension != null) instantiator = map.get(extension.toLowerCase());
 
-    if (extension != null) {
-      ContentOperations operations = map.get(extension.toLowerCase());
-      if (operations != null) return operations;
-    }
-
-    return map.get(DEFAULT_EXTENSION);
+    if (instantiator == null) instantiator = map.get(DEFAULT_EXTENSION);
+    return instantiator.get();
   }
 
   public static boolean readFile (File file, SpannableStringBuilder content) {
@@ -66,7 +76,7 @@ public abstract class Content {
       InputStream stream = new FileInputStream(file);
 
       try {
-        getOperations(file).read(stream, content);
+        getContentOperations(file).read(stream, content);
         return true;
       } finally {
         stream.close();
@@ -91,7 +101,7 @@ public abstract class Content {
       OutputStream stream = new FileOutputStream(newFile);
 
       try {
-        getOperations(file).write(stream, content);
+        getContentOperations(file).write(stream, content);
 
         if (!newFile.renameTo(file)) {
           throw new IOException(String.format(

@@ -5,7 +5,7 @@ import android.util.Log;
 public class LazyInstantiator<T> {
   private final static String LOG_TAG = LazyInstantiator.class.getName();
 
-  private final Class<T> objectType;
+  private final Class<? extends T> objectType;
   private T objectReference = null;
 
   public T get () {
@@ -24,7 +24,7 @@ public class LazyInstantiator<T> {
     return objectReference;
   }
 
-  public LazyInstantiator (Class<T> type) {
+  public LazyInstantiator (Class<? extends T> type) {
     objectType = type;
   }
 }
