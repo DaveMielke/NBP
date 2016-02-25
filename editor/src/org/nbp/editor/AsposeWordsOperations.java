@@ -23,35 +23,39 @@ public class AsposeWordsOperations implements ContentOperations {
 
   private final static AsposeWordsApplication application = new AsposeWordsApplication();
   private final static License license = new License();
-  private static Throwable licenseProblem = null;
+  private static Throwable licenseProblem;
+
+  static {
+    Context context = CommonContext.getContext();
+    application.loadLibs(context);
+
+    try {
+      license.setLicense(context.getAssets().open("Aspose.Words.lic"));
+      Log.d(LOG_TAG, "Aspose Words ready");
+      licenseProblem = null;
+    } catch (Throwable problem) {
+      Log.w(LOG_TAG, ("Aspose Words license problem: " + problem.getMessage()));
+      licenseProblem = problem;
+    }
+  }
+
+  private static void checkForLicenseProblem () throws IOException {
+    if (licenseProblem != null) {
+      throw new IOException("Aspose Words license problem", licenseProblem);
+    }
+  }
 
   private final int saveFormat;
 
   public AsposeWordsOperations (int saveFormat) throws IOException {
     super();
     this.saveFormat = saveFormat;
-
-    synchronized (LOG_TAG) {
-      if (licenseProblem == null) {
-        Context context = CommonContext.getContext();
-        application.loadLibs(context);
-
-        try {
-          license.setLicense(context.getAssets().open("Aspose.Words.lic"));
-          Log.d(LOG_TAG, "Aspose Words ready");
-          return;
-        } catch (Throwable problem) {
-          licenseProblem = problem;
-        }
-
-        Log.w(LOG_TAG, ("Aspose Words license problem: " + licenseProblem.getMessage()));
-        throw new IOException("Aspose Words license problem", licenseProblem);
-      }
-    }
   }
 
   @Override
   public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
+    checkForLicenseProblem();
+
     try {
       Document document = new Document(stream);
 
@@ -99,6 +103,8 @@ public class AsposeWordsOperations implements ContentOperations {
 
   @Override
   public final void write (OutputStream stream, CharSequence content) throws IOException {
+    checkForLicenseProblem();
+
     try {
       DocumentBuilder builder = new DocumentBuilder();
 
