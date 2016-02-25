@@ -73,6 +73,8 @@ public class AsposeWordsOperations extends AsposeWordsApplication implements Con
                 spanEntry = HighlightSpans.BOLD;
               } else if (font.getItalic()) {
                 spanEntry = HighlightSpans.ITALIC;
+              } else if (font.getStrikeThrough()) {
+                spanEntry = HighlightSpans.STRIKE;
               } else if (font.getUnderline() != Underline.NONE) {
                 spanEntry = HighlightSpans.UNDERLINE;
               }
@@ -101,21 +103,26 @@ public class AsposeWordsOperations extends AsposeWordsApplication implements Con
       int start = 0;
 
       while (start < length) {
-        int end = text.nextSpanTransition(start, length, CharacterStyle.class);
-
         Font font = builder.getFont();
         font.clearFormatting();
 
-        for (CharacterStyle span : text.getSpans(start, end, CharacterStyle.class)) {
-          if (HighlightSpans.BOLD_ITALIC.isFor(span)) {
-            font.setBold(true);
-            font.setItalic(true);
-          } else if (HighlightSpans.BOLD.isFor(span)) {
-            font.setBold(true);
-          } else if (HighlightSpans.ITALIC.isFor(span)) {
-            font.setItalic(true);
-          } else if (HighlightSpans.UNDERLINE.isFor(span)) {
-            font.setUnderline(Underline.DASH);
+        int end = text.nextSpanTransition(start, length, CharacterStyle.class);
+        CharacterStyle[] spans = text.getSpans(start, end, CharacterStyle.class);
+
+        if (spans != null) {
+          for (CharacterStyle span : spans) {
+            if (HighlightSpans.BOLD_ITALIC.isFor(span)) {
+              font.setBold(true);
+              font.setItalic(true);
+            } else if (HighlightSpans.BOLD.isFor(span)) {
+              font.setBold(true);
+            } else if (HighlightSpans.ITALIC.isFor(span)) {
+              font.setItalic(true);
+            } else if (HighlightSpans.STRIKE.isFor(span)) {
+              font.setStrikeThrough(true);
+            } else if (HighlightSpans.UNDERLINE.isFor(span)) {
+              font.setUnderline(Underline.DASH);
+            }
           }
         }
 
@@ -123,7 +130,7 @@ public class AsposeWordsOperations extends AsposeWordsApplication implements Con
         start = end;
       }
 
-      builder.getDocument().save(null);
+      builder.getDocument().save(stream, SaveFormat.DOC);
     } catch (Exception exception) {
       throw new IOException("Aspose Words output error", exception);
     }
