@@ -45,7 +45,7 @@ public abstract class Content {
     addExtensions(TextOperations.class, ".txt", DEFAULT_EXTENSION);
     addExtensions(HighlightedTextOperations.class, ".hl");
     addExtensions(BRFOperations.class, ".brf");
-    addExtensions(AsposeOperations.class, ".doc", ".docx");
+    addExtensions(AsposeWordsOperations.class, ".doc", ".docx");
   }
 
   public static String getExtension (File file) {

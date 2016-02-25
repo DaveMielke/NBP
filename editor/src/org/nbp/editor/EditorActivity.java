@@ -118,7 +118,7 @@ public class EditorActivity extends CommonActivity {
       protected void onPreExecute () {
         dialog = new AlertDialog.Builder(getActivity())
                                 .setCancelable(false)
-                                .setTitle(R.string.alert_writing_file)
+                                .setTitle(R.string.alert_writing_content)
                                 .setMessage(f.getAbsolutePath())
                                 .create();
 
@@ -203,7 +203,7 @@ public class EditorActivity extends CommonActivity {
       protected void onPreExecute () {
         dialog = new AlertDialog.Builder(getActivity())
                                 .setCancelable(false)
-                                .setTitle(R.string.alert_reading_file)
+                                .setTitle(R.string.alert_reading_content)
                                 .setMessage(file.getAbsolutePath())
                                 .create();
 
