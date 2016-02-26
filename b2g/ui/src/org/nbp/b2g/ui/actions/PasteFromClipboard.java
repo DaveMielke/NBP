@@ -8,7 +8,7 @@ public class PasteFromClipboard extends Action {
 
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
-        String text = Clipboard.getText();
+        CharSequence text = Clipboard.getText();
 
         if (text != null) {
           if (endpoint.insertText(text)) {
