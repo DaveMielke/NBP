@@ -94,31 +94,31 @@ public abstract class HighlightSpans {
     }
   }
 
-  public final static StyleEntry BOLD = new StyleEntry("B") {
+  public final static StyleEntry BOLD = new StyleEntry("BLD") {
     @Override
     protected final int getStyle () {
       return Typeface.BOLD;
     }
   };
 
-  public final static StyleEntry BOLD_ITALIC = new StyleEntry("BI") {
+  public final static StyleEntry BOLD_ITALIC = new StyleEntry("B+I") {
     @Override
     protected final int getStyle () {
       return Typeface.BOLD_ITALIC;
     }
   };
 
-  public final static StyleEntry ITALIC = new StyleEntry("I") {
+  public final static StyleEntry ITALIC = new StyleEntry("ITL") {
     @Override
     protected final int getStyle () {
       return Typeface.ITALIC;
     }
   };
 
-  public final static Entry STRIKE = new Entry("S", StrikethroughSpan.class);
-  public final static Entry SUBSCRIPT = new Entry("L", SubscriptSpan.class);
-  public final static Entry SUPERSCRIPT = new Entry("H", SuperscriptSpan.class);
-  public final static Entry UNDERLINE = new Entry("U", UnderlineSpan.class);
+  public final static Entry STRIKE = new Entry("STK", StrikethroughSpan.class);
+  public final static Entry SUBSCRIPT = new Entry("SUB", SubscriptSpan.class);
+  public final static Entry SUPERSCRIPT = new Entry("SUP", SuperscriptSpan.class);
+  public final static Entry UNDERLINE = new Entry("ULN", UnderlineSpan.class);
 
   private final static Entry[] spanArray = new Entry[] {
     BOLD,
