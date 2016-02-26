@@ -585,11 +585,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final static String SPAN_NAME_BOLD = "B";
-  private final static String SPAN_NAME_BOLD_ITALIC = "BI";
-  private final static String SPAN_NAME_ITALIC = "I";
-  private final static String SPAN_NAME_UNDERLINE = "U";
-
   private final static String getTextSpans (CharSequence text) {
     if (text == null) return null;
 
