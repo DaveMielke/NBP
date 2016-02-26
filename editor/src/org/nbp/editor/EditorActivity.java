@@ -15,6 +15,9 @@ import android.util.Log;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import android.content.ClipboardManager;
+import android.content.ClipData;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +29,7 @@ import android.widget.EditText;
 import android.widget.Button;
 
 import android.text.InputFilter;
+import android.text.Editable;
 
 import android.text.Spanned;
 import android.text.Spannable;
@@ -70,6 +74,18 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void showActivityResultCode (int code) {
+  }
+
+  private final ClipboardManager getClipboard () {
+    return (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+  }
+
+  private final static boolean verifyTextRange (int start, int end, int length) {
+    return (0 <= start) && (start <= end) && (end <= length);
+  }
+
+  private final boolean verifyTextRange (int start, int end) {
+    return verifyTextRange(start, end, editArea.length());
   }
 
   private void setCurrentFile (File file) {
@@ -386,6 +402,34 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
+  private void menuAction_copy (boolean delete) {
+    int start = editArea.getSelectionStart();
+    int end = editArea.getSelectionEnd();
+
+    if (verifyTextRange(start, end)) {
+      Editable text = editArea.getText();
+      ClipData clip = ClipData.newPlainText("NBP Editor", text.subSequence(start, end));
+      getClipboard().setPrimaryClip(clip);
+
+      if (delete) {
+        text.delete(start, end);
+      } else {
+        editArea.setSelection(end);
+      }
+    }
+  }
+
+  private void menuAction_highlight (HighlightSpans.Entry spanEntry) {
+    int start = editArea.getSelectionStart();
+    int end = editArea.getSelectionEnd();
+
+    if (verifyTextRange(start, end)) {
+      Editable text = editArea.getText();
+      text.setSpan(spanEntry.newInstance(), start, end, text.SPAN_EXCLUSIVE_EXCLUSIVE);
+      editArea.setSelection(end);
+    }
+  }
+
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
@@ -411,6 +455,38 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.options_delete:
         menuAction_delete();
+        return true;
+
+      case R.id.edit_copy:
+        menuAction_copy(false);
+        return true;
+
+      case R.id.edit_cut:
+        menuAction_copy(true);
+        return true;
+
+      case R.id.edit_bold:
+        menuAction_highlight(HighlightSpans.BOLD);
+        return true;
+
+      case R.id.edit_italics:
+        menuAction_highlight(HighlightSpans.ITALIC);
+        return true;
+
+      case R.id.edit_strike:
+        menuAction_highlight(HighlightSpans.STRIKE);
+        return true;
+
+      case R.id.edit_subscript:
+        menuAction_highlight(HighlightSpans.SUBSCRIPT);
+        return true;
+
+      case R.id.edit_superscript:
+        menuAction_highlight(HighlightSpans.SUPERSCRIPT);
+        return true;
+
+      case R.id.edit_underline:
+        menuAction_highlight(HighlightSpans.UNDERLINE);
         return true;
 
       default:
@@ -439,10 +515,6 @@ public class EditorActivity extends CommonActivity {
         }
       );
     }
-  }
-
-  private final static boolean verifyTextRange (int start, int end, int length) {
-    return (0 <= start) && (start <= end) && (end <= length);
   }
 
   private final static String SPAN_NAME_BOLD = "B";

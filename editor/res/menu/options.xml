@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:title="@string/menu_options_edit_label">
+    <menu>
+      <item
+        android:id="@+id/edit_copy"
+        android:title="@string/menu_edit_copy_label"
+       />
+
+      <item
+        android:id="@+id/edit_cut"
+        android:title="@string/menu_edit_cut_label"
+       />
+
+      <item
+        android:id="@+id/edit_bold"
+        android:title="@string/menu_edit_bold_label"
+       />
+
+      <item
+        android:id="@+id/edit_italics"
+        android:title="@string/menu_edit_italics_label"
+       />
+
+      <item
+        android:id="@+id/edit_strike"
+        android:title="@string/menu_edit_strike_label"
+       />
+
+      <item
+        android:id="@+id/edit_subscript"
+        android:title="@string/menu_edit_subscript_label"
+       />
+
+      <item
+        android:id="@+id/edit_superscript"
+        android:title="@string/menu_edit_superscript_label"
+       />
+
+      <item
+        android:id="@+id/edit_underline"
+        android:title="@string/menu_edit_underline_label"
+       />
+    </menu>
+  </item>
+
   <item
     android:id="@+id/options_new"
     android:title="@string/menu_options_new_label"

@@ -3,12 +3,22 @@
 <resources>
   <string name="app_name">NBP Editor</string>
 
+  <string name="menu_options_edit_label">Edit</string>
   <string name="menu_options_new_label">New</string>
   <string name="menu_options_open_label">Open</string>
   <string name="menu_options_save_label">Save</string>
   <string name="menu_options_saveAs_label">Save As</string>
   <string name="menu_options_send_label">Send</string>
   <string name="menu_options_delete_label">Delete</string>
+
+  <string name="menu_edit_copy_label">Copy</string>
+  <string name="menu_edit_cut_label">Cut</string>
+  <string name="menu_edit_bold_label">Bold</string>
+  <string name="menu_edit_italics_label">Italics</string>
+  <string name="menu_edit_strike_label">Strike</string>
+  <string name="menu_edit_subscript_label">Subscript</string>
+  <string name="menu_edit_superscript_label">Superscript</string>
+  <string name="menu_edit_underline_label">Underline</string>
 
   <string name="button_menu_label">Menu</string>
 
