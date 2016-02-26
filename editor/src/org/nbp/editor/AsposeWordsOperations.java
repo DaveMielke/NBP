@@ -120,6 +120,10 @@ public class AsposeWordsOperations implements ContentOperations {
   public final void write (OutputStream stream, CharSequence content) throws IOException {
     checkForLicenseProblem();
 
+    if (saveFormat == SaveFormat.UNKNOWN) {
+      throw new IOException("writing not supported");
+    }
+
     try {
       DocumentBuilder builder = new DocumentBuilder();
 

@@ -44,11 +44,14 @@ public abstract class Content {
   static {
     addExtensions(TextOperations.class, ".txt", DEFAULT_EXTENSION);
     addExtensions(HighlightedTextOperations.class, ".hl");
-    addExtensions(BRFOperations.class, ".brf");
+    addExtensions(ASCIIBrailleOperations.class, ".brl", ".brf");
+
     addExtensions(DocOperations.class, ".doc");
     addExtensions(DocMOperations.class, ".docm");
     addExtensions(DocXOperations.class, ".docx");
+    addExtensions(EPubOperations.class, ".epub");
     addExtensions(HTMLOperations.class, ".html", ".htm");
+    addExtensions(MHTMLOperations.class, ".mhtml", ".mht");
     addExtensions(PDFOperations.class, ".pdf");
     addExtensions(PSOperations.class, ".ps");
     addExtensions(RTFOperations.class, ".rtf");

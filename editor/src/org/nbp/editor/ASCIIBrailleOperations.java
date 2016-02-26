@@ -2,7 +2,7 @@ package org.nbp.editor;
 
 import android.text.SpannableStringBuilder;
 
-public class BRFOperations extends TextOperations {
+public class ASCIIBrailleOperations extends TextOperations {
   @Override
   protected void postProcessInput (SpannableStringBuilder content) {
     int length = content.length();
@@ -25,7 +25,7 @@ public class BRFOperations extends TextOperations {
     if (start >= 0) content.replace(start, length, sb.toString());
   }
 
-  public BRFOperations () {
+  public ASCIIBrailleOperations () {
     super();
   }
 }
