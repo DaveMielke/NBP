@@ -12,6 +12,11 @@
           android:id="@+id/edit_paste"
           android:title="@string/menu_edit_paste_label"
          />
+
+        <item
+          android:id="@+id/edit_selectAll"
+          android:title="@string/menu_edit_selectAll_label"
+         />
       </group>
 
       <group android:id="@+id/edit_group_selection">

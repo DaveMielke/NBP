@@ -434,7 +434,7 @@ public class EditorActivity extends CommonActivity {
 
       if (verifyTextRange(start, end)) {
         editArea.getText().replace(start, end, text);
-        editArea.setSelection(end);
+        editArea.setSelection(start + text.length());
       }
     }
   }
@@ -494,19 +494,15 @@ public class EditorActivity extends CommonActivity {
         menuAction_delete();
         return true;
 
-      case R.id.options_edit: {
-        View cursorGroup = findViewById(R.id.edit_group_cursor);
-        View selectionGroup = findViewById(R.id.edit_group_selection);
-
-        if (editArea.getSelectionStart() == editArea.getSelectionEnd()) {
-        } else {
-        }
-
+      case R.id.options_edit:
         return true;
-      }
 
       case R.id.edit_paste:
         menuAction_paste();
+        return true;
+
+      case R.id.edit_selectAll:
+        editArea.selectAll();
         return true;
 
       case R.id.edit_copy:
@@ -544,6 +540,26 @@ public class EditorActivity extends CommonActivity {
       default:
         return false;
     }
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu (Menu menu) {
+    super.onPrepareOptionsMenu(menu);
+
+    Menu editSubmenu = menu.findItem(R.id.options_edit).getSubMenu();
+    boolean showCursorGroup = false;
+    boolean showSelectionGroup = false;
+
+    if (editArea.getSelectionStart() == editArea.getSelectionEnd()) {
+      showCursorGroup = true;
+    } else {
+      showSelectionGroup = true;
+    }
+
+    editSubmenu.setGroupVisible(R.id.edit_group_selection, showCursorGroup);
+    editSubmenu.setGroupVisible(R.id.edit_group_selection, showSelectionGroup);
+
+    return true;
   }
 
   @Override
