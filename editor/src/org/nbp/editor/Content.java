@@ -52,6 +52,7 @@ public abstract class Content {
     addExtensions(EPubOperations.class, ".epub");
     addExtensions(HTMLOperations.class, ".html", ".htm");
     addExtensions(MHTMLOperations.class, ".mhtml", ".mht");
+    addExtensions(ODTOperations.class, ".odt");
     addExtensions(OpenXPSOperations.class, ".oxps");
     addExtensions(PDFOperations.class, ".pdf");
     addExtensions(PSOperations.class, ".ps");
