@@ -8,9 +8,9 @@
 
   <TextView
     android:id="@+id/heading"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:focusable="true"
-    android:text=""
+    android:importantForAccessibility="yes"
    />
 </LinearLayout>
