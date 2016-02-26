@@ -11,6 +11,7 @@
   <string name="menu_options_send_label">Send</string>
   <string name="menu_options_delete_label">Delete</string>
 
+  <string name="menu_edit_paste_label">Paste</string>
   <string name="menu_edit_copy_label">Copy</string>
   <string name="menu_edit_cut_label">Cut</string>
   <string name="menu_edit_bold_label">Bold</string>

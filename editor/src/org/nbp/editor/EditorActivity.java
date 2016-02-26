@@ -80,6 +80,29 @@ public class EditorActivity extends CommonActivity {
     return (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
   }
 
+  public static CharSequence getText (ClipData clip) {
+    int count = clip.getItemCount();
+
+    for (int index=0; index<count; index+=1) {
+      ClipData.Item item = clip.getItemAt(index);
+      if (item == null) continue;
+
+      CharSequence text = item.getText();
+      if (text != null) return text;
+    }
+
+    return null;
+  }
+
+  private static CharSequence getText (ClipboardManager clipboard) {
+    synchronized (clipboard) {
+      ClipData clip = clipboard.getPrimaryClip();
+      if (clip != null) return getText(clip);
+    }
+
+    return null;
+  }
+
   private final static boolean verifyTextRange (int start, int end, int length) {
     return (0 <= start) && (start <= end) && (end <= length);
   }
@@ -402,6 +425,20 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
+  private void menuAction_paste () {
+    CharSequence text = getText(getClipboard());
+
+    if (text != null) {
+      int start = editArea.getSelectionStart();
+      int end = editArea.getSelectionEnd();
+
+      if (verifyTextRange(start, end)) {
+        editArea.getText().replace(start, end, text);
+        editArea.setSelection(end);
+      }
+    }
+  }
+
   private void menuAction_copy (boolean delete) {
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
@@ -455,6 +492,21 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.options_delete:
         menuAction_delete();
+        return true;
+
+      case R.id.options_edit: {
+        View cursorGroup = findViewById(R.id.edit_group_cursor);
+        View selectionGroup = findViewById(R.id.edit_group_selection);
+
+        if (editArea.getSelectionStart() == editArea.getSelectionEnd()) {
+        } else {
+        }
+
+        return true;
+      }
+
+      case R.id.edit_paste:
+        menuAction_paste();
         return true;
 
       case R.id.edit_copy:
