@@ -87,14 +87,17 @@ public class AsposeWordsOperations implements ContentOperations {
               int end = content.length();
               HighlightSpans.Entry spanEntry = null;
 
-              if (font.getBold() && font.getItalic()) {
-                spanEntry = HighlightSpans.BOLD_ITALIC;
-              } else if (font.getBold()) {
-                spanEntry = HighlightSpans.BOLD;
+              if (font.getBold()) {
+                spanEntry = font.getItalic()? HighlightSpans.BOLD_ITALIC:
+                                              HighlightSpans.BOLD;
               } else if (font.getItalic()) {
                 spanEntry = HighlightSpans.ITALIC;
               } else if (font.getStrikeThrough()) {
                 spanEntry = HighlightSpans.STRIKE;
+              } else if (font.getSubscript()) {
+                spanEntry = HighlightSpans.SUBSCRIPT;
+              } else if (font.getSuperscript()) {
+                spanEntry = HighlightSpans.SUPERSCRIPT;
               } else if (font.getUnderline() != Underline.NONE) {
                 spanEntry = HighlightSpans.UNDERLINE;
               }
@@ -142,6 +145,10 @@ public class AsposeWordsOperations implements ContentOperations {
               font.setItalic(true);
             } else if (HighlightSpans.STRIKE.isFor(span)) {
               font.setStrikeThrough(true);
+            } else if (HighlightSpans.SUBSCRIPT.isFor(span)) {
+              font.setSubscript(true);
+            } else if (HighlightSpans.SUPERSCRIPT.isFor(span)) {
+              font.setSuperscript(true);
             } else if (HighlightSpans.UNDERLINE.isFor(span)) {
               font.setUnderline(Underline.DASH);
             }
