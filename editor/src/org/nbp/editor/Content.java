@@ -52,9 +52,11 @@ public abstract class Content {
     addExtensions(EPubOperations.class, ".epub");
     addExtensions(HTMLOperations.class, ".html", ".htm");
     addExtensions(MHTMLOperations.class, ".mhtml", ".mht");
+    addExtensions(OpenXPSOperations.class, ".oxps");
     addExtensions(PDFOperations.class, ".pdf");
     addExtensions(PSOperations.class, ".ps");
     addExtensions(RTFOperations.class, ".rtf");
+    addExtensions(XPSOperations.class, ".xps");
   }
 
   public static String getExtension (File file) {
