@@ -456,6 +456,26 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_uppercase () {
+    int start = editArea.getSelectionStart();
+    int end = editArea.getSelectionEnd();
+
+    if (verifyTextRange(start, end)) {
+      Editable text = editArea.getText();
+      text.replace(start, end, text.subSequence(start, end).toString().toUpperCase());
+    }
+  }
+
+  private void menuAction_lowercase () {
+    int start = editArea.getSelectionStart();
+    int end = editArea.getSelectionEnd();
+
+    if (verifyTextRange(start, end)) {
+      Editable text = editArea.getText();
+      text.replace(start, end, text.subSequence(start, end).toString().toLowerCase());
+    }
+  }
+
   private void menuAction_highlight (HighlightSpans.Entry spanEntry) {
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
@@ -513,6 +533,14 @@ public class EditorActivity extends CommonActivity {
         menuAction_copy(true);
         return true;
 
+      case R.id.edit_uppercase:
+        menuAction_uppercase();
+        return true;
+
+      case R.id.edit_lowercase:
+        menuAction_lowercase();
+        return true;
+
       case R.id.edit_bold:
         menuAction_highlight(HighlightSpans.BOLD);
         return true;
@@ -556,7 +584,7 @@ public class EditorActivity extends CommonActivity {
       showSelectionGroup = true;
     }
 
-    editSubmenu.setGroupVisible(R.id.edit_group_selection, showCursorGroup);
+    editSubmenu.setGroupVisible(R.id.edit_group_cursor, showCursorGroup);
     editSubmenu.setGroupVisible(R.id.edit_group_selection, showSelectionGroup);
 
     return true;
