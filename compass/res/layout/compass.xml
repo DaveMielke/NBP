@@ -1,17 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:columnCount="3"
+  android:rowCount="4"
+  android:keepScreenOn="true"
   >
 
   <TextView
-    android:id="@+id/heading"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true"
-    android:keepScreenOn="true"
-    android:importantForAccessibility="yes"
+    android:layout_row="0"
+    android:layout_column="0"
+    android:text="@string/heading_label"
    />
-</LinearLayout>
+
+  <TextView
+    android:id="@+id/heading_degrees"
+    android:layout_row="0"
+    android:layout_column="1"
+   />
+
+  <TextView
+    android:id="@+id/heading_direction"
+    android:layout_row="0"
+    android:layout_column="2"
+   />
+
+  <TextView
+    android:layout_row="1"
+    android:layout_column="0"
+    android:text="@string/pitch_label"
+   />
+
+  <TextView
+    android:id="@+id/pitch_degrees"
+    android:layout_row="1"
+    android:layout_column="1"
+   />
+
+  <TextView
+    android:layout_row="2"
+    android:layout_column="0"
+    android:text="@string/roll_label"
+   />
+
+  <TextView
+    android:id="@+id/roll_degrees"
+    android:layout_row="2"
+    android:layout_column="1"
+   />
+
+  <TextView
+    android:layout_row="3"
+    android:layout_column="0"
+    android:text="@string/accuracy_label"
+   />
+
+  <TextView
+    android:id="@+id/accuracy_name"
+    android:layout_row="3"
+    android:layout_column="1"
+   />
+</GridLayout>

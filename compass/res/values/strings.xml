@@ -3,10 +3,10 @@
 <resources>
   <string name="app_name">NBP Compass</string>
 
-  <string name="label_heading">Heading</string>
-  <string name="label_pitch">Pitch</string>
-  <string name="label_roll">Roll</string>
-  <string name="label_accuracy">Accuracy</string>
+  <string name="heading_label">Heading</string>
+  <string name="pitch_label">Pitch</string>
+  <string name="roll_label">Roll</string>
+  <string name="accuracy_label">Accuracy</string>
 
   <string name="accuracy_unknown">Unknown</string>
   <string name="accuracy_unreliable">Unreliable</string>

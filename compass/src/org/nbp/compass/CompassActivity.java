@@ -25,7 +25,11 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   private SensorManager sensorManager;
-  private TextView headingView;
+  private TextView headingDegrees;
+  private TextView headingDirection;
+  private TextView pitchDegrees;
+  private TextView rollDegrees;
+  private TextView accuracyName;
 
   @Override
   public void onCreate (Bundle savedInstanceState) {
@@ -33,7 +37,11 @@ public class CompassActivity extends Activity implements SensorEventListener {
     sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 
     setContentView(R.layout.compass);
-    headingView = (TextView)findViewById(R.id.heading);
+    headingDegrees = (TextView)findViewById(R.id.heading_degrees);
+    headingDirection = (TextView)findViewById(R.id.heading_direction);
+    pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
+    rollDegrees = (TextView)findViewById(R.id.roll_degrees);
+    accuracyName = (TextView)findViewById(R.id.accuracy_name);
 
     addAccuracy(SensorManager.SENSOR_STATUS_UNRELIABLE, R.string.accuracy_unreliable);
     addAccuracy(SensorManager.SENSOR_STATUS_ACCURACY_LOW, R.string.accuracy_low);
@@ -81,15 +89,18 @@ public class CompassActivity extends Activity implements SensorEventListener {
       int direction = Math.round(heading / DEGREES_PER_DIRECTION);
       direction %= DIRECTION_COUNT;
 
-      headingView.setText(String.format(
-        "%s: %d° [%s%+d]\n%s: %d°\n%s: %d°\n%s: %s",
-        getString(R.string.label_heading), Math.round(heading),
-        directions[direction],
-        Math.round(heading - ((float)direction * DEGREES_PER_DIRECTION)),
-        getString(R.string.label_pitch), Math.round(pitch),
-        getString(R.string.label_roll), Math.round(roll),
-        getString(R.string.label_accuracy), accuracy
-      ));
+      accuracyName.setText(accuracy);
+      headingDegrees.setText(String.format("%d°", Math.round(heading)));
+      pitchDegrees.setText(String.format("%d°", Math.round(pitch)));
+      rollDegrees.setText(String.format("%d°", Math.round(roll)));
+
+      headingDirection.setText(
+        String.format(
+          "%s%+d°",
+          directions[direction],
+          Math.round(heading - ((float)direction * DEGREES_PER_DIRECTION))
+        )
+      );
     }
   }
 
