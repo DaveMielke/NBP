@@ -2,4 +2,15 @@
 
 <resources>
   <string name="app_name">NBP Compass</string>
+
+  <string name="label_heading">Heading</string>
+  <string name="label_pitch">Pitch</string>
+  <string name="label_roll">Roll</string>
+  <string name="label_accuracy">Accuracy</string>
+
+  <string name="accuracy_unknown">Unknown</string>
+  <string name="accuracy_unreliable">Unreliable</string>
+  <string name="accuracy_low">Low</string>
+  <string name="accuracy_medium">Medium</string>
+  <string name="accuracy_high">High</string>
 </resources>
