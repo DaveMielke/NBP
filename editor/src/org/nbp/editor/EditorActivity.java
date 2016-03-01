@@ -76,6 +76,12 @@ public class EditorActivity extends CommonActivity {
   private final void showActivityResultCode (int code) {
   }
 
+  private final AlertDialog.Builder newAlertDialogBuilder (int title) {
+    return new AlertDialog.Builder(this)
+                          .setTitle(title)
+                          .setCancelable(false);
+  }
+
   private final ClipboardManager getClipboard () {
     return (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
   }
@@ -155,11 +161,9 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected void onPreExecute () {
-        dialog = new AlertDialog.Builder(getActivity())
-                                .setCancelable(false)
-                                .setTitle(R.string.alert_writing_content)
-                                .setMessage(f.getAbsolutePath())
-                                .create();
+        dialog = newAlertDialogBuilder(R.string.title_writing_content)
+          .setMessage(f.getAbsolutePath())
+          .create();
 
         dialog.show();
       }
@@ -222,13 +226,12 @@ public class EditorActivity extends CommonActivity {
         }
       };
 
-      new AlertDialog.Builder(this)
-                     .setTitle(R.string.changed_title)
-                     .setMessage(R.string.changed_message)
-                     .setPositiveButton(R.string.changed_button_positive, positiveListener)
-                     .setNeutralButton(R.string.changed_button_neutral, null)
-                     .setNegativeButton(R.string.changed_button_negative, negativeListener)
-                     .show();
+      newAlertDialogBuilder(R.string.changed_title)
+        .setMessage(R.string.changed_message)
+        .setPositiveButton(R.string.changed_button_positive, positiveListener)
+        .setNeutralButton(R.string.changed_button_neutral, null)
+        .setNegativeButton(R.string.changed_button_negative, negativeListener)
+        .show();
     } else {
       run(onSaved);
     }
@@ -240,11 +243,9 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected void onPreExecute () {
-        dialog = new AlertDialog.Builder(getActivity())
-                                .setCancelable(false)
-                                .setTitle(R.string.alert_reading_content)
-                                .setMessage(file.getAbsolutePath())
-                                .create();
+        dialog = newAlertDialogBuilder(R.string.title_reading_content)
+          .setMessage(file.getAbsolutePath())
+          .create();
 
         dialog.show();
       }
@@ -319,6 +320,85 @@ public class EditorActivity extends CommonActivity {
     builder.find(handler);
   }
 
+  private final void saveAs (Content.FormatDescriptor formatDescriptor) {
+    findFile(true,
+      new FileFinder.FileHandler() {
+        @Override
+        public void handleFile (final File file) {
+          if (file != null) {
+            saveFile(file,
+              new Runnable() {
+                @Override
+                public void run () {
+                  setCurrentFile(file);
+                }
+              }
+            );
+          }
+        }
+      }
+    );
+  }
+
+  private final void selectFormat () {
+    final Content.FormatDescriptor[] formatDescriptors = Content.getFormatDescriptors();
+    String[] items = new String[formatDescriptors.length + 1];
+
+    {
+      int count = 0;
+      items[count++] = getString(R.string.format_unknown);
+
+      for (Content.FormatDescriptor formatDescriptor : formatDescriptors) {
+        items[count++] = formatDescriptor.getSelectorLabel();
+      }
+    }
+
+    DialogInterface.OnClickListener itemListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick (DialogInterface dialog, int index) {
+        saveAs((index == 0)? null: formatDescriptors[index-1]);
+      }
+    };
+
+    newAlertDialogBuilder(R.string.title_select_format)
+      .setItems(items, itemListener)
+      .setNegativeButton(R.string.action_cancel, null)
+      .show();
+  }
+
+  private final void confirmFormat () {
+    final Content.FormatDescriptor formatDescriptor =
+      (currentFile != null)?
+      Content.getFormatDescriptor(currentFile):
+      null;
+
+    String message =
+      (formatDescriptor != null)?
+      formatDescriptor.getSelectorLabel():
+      getString(R.string.format_unknown);
+
+    OnDialogClickListener okListener = new OnDialogClickListener() {
+      @Override
+      public void onClick () {
+        saveAs(formatDescriptor);
+      }
+    };
+
+    OnDialogClickListener changeListener = new OnDialogClickListener() {
+      @Override
+      public void onClick () {
+        selectFormat();
+      }
+    };
+
+    newAlertDialogBuilder(R.string.title_confirm_format)
+      .setMessage(message)
+      .setPositiveButton(R.string.action_ok, okListener)
+      .setNeutralButton(R.string.action_change, changeListener)
+      .setNegativeButton(R.string.action_cancel, null)
+      .show();
+  }
+
   private void menuAction_new () {
     testHasChanged(
       new Runnable() {
@@ -357,23 +437,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_saveAs () {
-    findFile(true,
-      new FileFinder.FileHandler() {
-        @Override
-        public void handleFile (final File file) {
-          if (file != null) {
-            saveFile(file,
-              new Runnable() {
-                @Override
-                public void run () {
-                  setCurrentFile(file);
-                }
-              }
-            );
-          }
-        }
-      }
-    );
+    confirmFormat();
   }
 
   private void menuAction_send () {

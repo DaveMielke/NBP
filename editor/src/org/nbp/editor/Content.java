@@ -72,10 +72,10 @@ public abstract class Content {
     }
 
     private FormatDescriptor (
-      Class<? extends ContentOperations> type,
+      Class<? extends ContentOperations> instantiator,
       int name, String[] extensions
     ) {
-      operationsInstantiator = new OperationsInstantiator(type);
+      operationsInstantiator = new OperationsInstantiator(instantiator);
       formatName = getString(name);
       fileExtensions = extensions;
       selectorLabel = makeSelectorLabel();
@@ -88,33 +88,38 @@ public abstract class Content {
   private final static Map<String, FormatDescriptor> extensionToFormatDescriptor
              = new HashMap<String, FormatDescriptor>();
 
-  private static void addExtensions (Class<? extends ContentOperations> type, int name, String... extensions) {
-    FormatDescriptor formatDescriptor = new FormatDescriptor(type, name, extensions);
+  private static FormatDescriptor addFormat (
+    Class<? extends ContentOperations> instantiator,
+    int name, String... extensions
+  ) {
+    FormatDescriptor formatDescriptor = new FormatDescriptor(instantiator, name, extensions);
     formatDescriptors.add(formatDescriptor);
 
     for (String extension : extensions) {
       extensionToFormatDescriptor.put(extension, formatDescriptor);
     }
+
+    return formatDescriptor;
   }
 
-  private final static String DEFAULT_EXTENSION = "";
+  private final static FormatDescriptor defaultFormatDescriptor;
 
   static {
-    addExtensions(TextOperations.class, R.string.format_name_txt, ".txt", DEFAULT_EXTENSION);
-    addExtensions(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brl", ".brf");
+    defaultFormatDescriptor = addFormat(TextOperations.class, R.string.format_name_txt, ".txt");
+    addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brl", ".brf");
 
-    addExtensions(DocOperations.class, R.string.format_name_doc, ".doc");
-    addExtensions(DocMOperations.class, R.string.format_name_docm, ".docm");
-    addExtensions(DocXOperations.class, R.string.format_name_docx, ".docx");
-    addExtensions(EPubOperations.class, R.string.format_name_epub, ".epub");
-    addExtensions(HTMLOperations.class, R.string.format_name_html, ".html", ".htm");
-    addExtensions(MHTMLOperations.class, R.string.format_name_mhtml, ".mhtml", ".mht");
-    addExtensions(ODTOperations.class, R.string.format_name_odt, ".odt");
-    addExtensions(OXPSOperations.class, R.string.format_name_oxps, ".oxps");
-    addExtensions(PDFOperations.class, R.string.format_name_pdf, ".pdf");
-    addExtensions(PSOperations.class, R.string.format_name_ps, ".ps");
-    addExtensions(RTFOperations.class, R.string.format_name_rtf, ".rtf");
-    addExtensions(XPSOperations.class, R.string.format_name_xps, ".xps");
+    addFormat(DocOperations.class, R.string.format_name_doc, ".doc");
+    addFormat(DocMOperations.class, R.string.format_name_docm, ".docm");
+    addFormat(DocXOperations.class, R.string.format_name_docx, ".docx");
+    addFormat(EPubOperations.class, R.string.format_name_epub, ".epub");
+    addFormat(HTMLOperations.class, R.string.format_name_html, ".html", ".htm");
+    addFormat(MHTMLOperations.class, R.string.format_name_mhtml, ".mhtml", ".mht");
+    addFormat(ODTOperations.class, R.string.format_name_odt, ".odt");
+    addFormat(OXPSOperations.class, R.string.format_name_oxps, ".oxps");
+    addFormat(PDFOperations.class, R.string.format_name_pdf, ".pdf");
+    addFormat(PSOperations.class, R.string.format_name_ps, ".ps");
+    addFormat(RTFOperations.class, R.string.format_name_rtf, ".rtf");
+    addFormat(XPSOperations.class, R.string.format_name_xps, ".xps");
   }
 
   public static FormatDescriptor[] getFormatDescriptors () {
@@ -135,17 +140,15 @@ public abstract class Content {
   }
 
   public static FormatDescriptor getFormatDescriptor (File file) {
-    FormatDescriptor formatDescriptor = null;
-
     String extension = getExtension(file);
-    if (extension != null) formatDescriptor = extensionToFormatDescriptor.get(extension.toLowerCase());
-
-    if (formatDescriptor == null) formatDescriptor = extensionToFormatDescriptor.get(DEFAULT_EXTENSION);
-    return formatDescriptor;
+    if (extension == null) return null;
+    return extensionToFormatDescriptor.get(extension.toLowerCase());
   }
 
   public static ContentOperations getContentOperations (File file) {
-    return getFormatDescriptor(file).getOperations();
+    FormatDescriptor formatDescriptor = getFormatDescriptor(file);
+    if (formatDescriptor == null) formatDescriptor = defaultFormatDescriptor;
+    return formatDescriptor.getOperations();
   }
 
   public static boolean readFile (File file, SpannableStringBuilder content) {

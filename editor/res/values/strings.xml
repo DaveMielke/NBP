@@ -29,10 +29,17 @@
   <string name="menu_edit_underline">Underline</string>
 
   <string name="alert_file_saved">File Saved</string>
-  <string name="alert_reading_content">reading...</string>
   <string name="alert_rename_failed">unable to rename file</string>
   <string name="alert_unsendable_new_file">cannot send new file</string>
-  <string name="alert_writing_content">writing...</string>
+
+  <string name="title_confirm_format">Confirm Format</string>
+  <string name="title_reading_content">Reading...</string>
+  <string name="title_select_format">Select Format</string>
+  <string name="title_writing_content">Writing...</string>
+
+  <string name="action_cancel">Cancel</string>
+  <string name="action_change">Change</string>
+  <string name="action_ok">OK</string>
 
   <string name="changed_title">File Changed</string>
   <string name="changed_message">Save changes?</string>
@@ -43,6 +50,7 @@
   <string name="delete_question">Delete File?</string>
   <string name="delete_failed">unable to delete file</string>
 
+  <string name="format_unknown">unknown format (assuming plain text)</string>
   <string name="format_name_brf">ASCII Braille</string>
   <string name="format_name_doc">Microsoft Word 1997-2007</string>
   <string name="format_name_docm">Microsoft Word 2007+ XML (macro-enabled)</string>
