@@ -306,8 +306,8 @@ public class EditorActivity extends CommonActivity {
 
   private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
     int title = forWriting?
-                R.string.menu_options_saveAs_label:
-                R.string.menu_options_open_label;
+                R.string.menu_options_saveAs:
+                R.string.menu_options_open;
 
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
@@ -395,7 +395,7 @@ public class EditorActivity extends CommonActivity {
   private void menuAction_delete () {
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
-      .setUserTitle(R.string.menu_options_delete_label)
+      .setUserTitle(R.string.menu_options_delete)
       ;
 
     addRootLocations(builder);
@@ -490,78 +490,78 @@ public class EditorActivity extends CommonActivity {
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.options_new:
+      case R.id.menu_options_new:
         menuAction_new();
         return true;
 
-      case R.id.options_open:
+      case R.id.menu_options_open:
         menuAction_open();
         return true;
 
-      case R.id.options_save:
+      case R.id.menu_options_save:
         menuAction_save();
         return true;
 
-      case R.id.options_saveAs:
+      case R.id.menu_options_saveAs:
         menuAction_saveAs();
         return true;
 
-      case R.id.options_send:
+      case R.id.menu_options_send:
         menuAction_send();
         return true;
 
-      case R.id.options_delete:
+      case R.id.menu_options_delete:
         menuAction_delete();
         return true;
 
-      case R.id.options_edit:
+      case R.id.menu_options_edit:
         return true;
 
-      case R.id.edit_paste:
+      case R.id.menu_edit_paste:
         menuAction_paste();
         return true;
 
-      case R.id.edit_selectAll:
+      case R.id.menu_edit_selectAll:
         editArea.selectAll();
         return true;
 
-      case R.id.edit_copy:
+      case R.id.menu_edit_copy:
         menuAction_copy(false);
         return true;
 
-      case R.id.edit_cut:
+      case R.id.menu_edit_cut:
         menuAction_copy(true);
         return true;
 
-      case R.id.edit_uppercase:
+      case R.id.menu_edit_uppercase:
         menuAction_uppercase();
         return true;
 
-      case R.id.edit_lowercase:
+      case R.id.menu_edit_lowercase:
         menuAction_lowercase();
         return true;
 
-      case R.id.edit_bold:
+      case R.id.menu_edit_bold:
         menuAction_highlight(HighlightSpans.BOLD);
         return true;
 
-      case R.id.edit_italics:
+      case R.id.menu_edit_italics:
         menuAction_highlight(HighlightSpans.ITALIC);
         return true;
 
-      case R.id.edit_strike:
+      case R.id.menu_edit_strike:
         menuAction_highlight(HighlightSpans.STRIKE);
         return true;
 
-      case R.id.edit_subscript:
+      case R.id.menu_edit_subscript:
         menuAction_highlight(HighlightSpans.SUBSCRIPT);
         return true;
 
-      case R.id.edit_superscript:
+      case R.id.menu_edit_superscript:
         menuAction_highlight(HighlightSpans.SUPERSCRIPT);
         return true;
 
-      case R.id.edit_underline:
+      case R.id.menu_edit_underline:
         menuAction_highlight(HighlightSpans.UNDERLINE);
         return true;
 
@@ -574,7 +574,7 @@ public class EditorActivity extends CommonActivity {
   public boolean onPrepareOptionsMenu (Menu menu) {
     super.onPrepareOptionsMenu(menu);
 
-    Menu editSubmenu = menu.findItem(R.id.options_edit).getSubMenu();
+    Menu editSubmenu = menu.findItem(R.id.menu_options_edit).getSubMenu();
     boolean showCursorGroup = false;
     boolean showSelectionGroup = false;
 
@@ -584,8 +584,8 @@ public class EditorActivity extends CommonActivity {
       showSelectionGroup = true;
     }
 
-    editSubmenu.setGroupVisible(R.id.edit_group_cursor, showCursorGroup);
-    editSubmenu.setGroupVisible(R.id.edit_group_selection, showSelectionGroup);
+    editSubmenu.setGroupVisible(R.id.menu_group_cursor, showCursorGroup);
+    editSubmenu.setGroupVisible(R.id.menu_group_selection, showSelectionGroup);
 
     return true;
   }

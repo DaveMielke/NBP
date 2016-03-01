@@ -38,6 +38,7 @@ public abstract class Content {
     private final OperationsInstantiator operationsInstantiator;
     private final String formatName;
     private final String[] fileExtensions;
+    private final String selectorLabel;
 
     public final ContentOperations getOperations () {
       return operationsInstantiator.get();
@@ -55,6 +56,21 @@ public abstract class Content {
       return getFileExtensions()[0];
     }
 
+    public final String getSelectorLabel () {
+      return selectorLabel;
+    }
+
+    private final String makeSelectorLabel () {
+      StringBuilder sb = new StringBuilder();
+      sb.append(getFileExtension());
+
+      sb.append(" [");
+      sb.append(getFormatName());
+      sb.append(']');
+
+      return sb.toString();
+    }
+
     private FormatDescriptor (
       Class<? extends ContentOperations> type,
       int name, String[] extensions
@@ -62,6 +78,7 @@ public abstract class Content {
       operationsInstantiator = new OperationsInstantiator(type);
       formatName = getString(name);
       fileExtensions = extensions;
+      selectorLabel = makeSelectorLabel();
     }
   }
 
@@ -100,6 +117,10 @@ public abstract class Content {
     addExtensions(XPSOperations.class, R.string.format_name_xps, ".xps");
   }
 
+  public static FormatDescriptor[] getFormatDescriptors () {
+    return formatDescriptors.toArray(new FormatDescriptor[formatDescriptors.size()]);
+  }
+
   public static String getExtension (File file) {
     String name = file.getName();
     if (name == null) return null;
@@ -113,14 +134,18 @@ public abstract class Content {
     return extension;
   }
 
-  public static ContentOperations getContentOperations (File file) {
+  public static FormatDescriptor getFormatDescriptor (File file) {
     FormatDescriptor formatDescriptor = null;
 
     String extension = getExtension(file);
     if (extension != null) formatDescriptor = extensionToFormatDescriptor.get(extension.toLowerCase());
 
     if (formatDescriptor == null) formatDescriptor = extensionToFormatDescriptor.get(DEFAULT_EXTENSION);
-    return formatDescriptor.getOperations();
+    return formatDescriptor;
+  }
+
+  public static ContentOperations getContentOperations (File file) {
+    return getFormatDescriptor(file).getOperations();
   }
 
   public static boolean readFile (File file, SpannableStringBuilder content) {

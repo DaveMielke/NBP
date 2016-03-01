@@ -2,104 +2,104 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
-    android:id="@+id/options_edit"
-    android:title="@string/menu_options_edit_label"
+    android:id="@+id/menu_options_edit"
+    android:title="@string/menu_options_edit"
     >
 
     <menu>
-      <group android:id="@+id/edit_group_cursor">
+      <group android:id="@+id/menu_group_cursor">
         <item
-          android:id="@+id/edit_paste"
-          android:title="@string/menu_edit_paste_label"
+          android:id="@+id/menu_edit_paste"
+          android:title="@string/menu_edit_paste"
          />
 
         <item
-          android:id="@+id/edit_selectAll"
-          android:title="@string/menu_edit_selectAll_label"
+          android:id="@+id/menu_edit_selectAll"
+          android:title="@string/menu_edit_selectAll"
          />
       </group>
 
-      <group android:id="@+id/edit_group_selection">
+      <group android:id="@+id/menu_group_selection">
         <item
-          android:id="@+id/edit_copy"
-          android:title="@string/menu_edit_copy_label"
+          android:id="@+id/menu_edit_copy"
+          android:title="@string/menu_edit_copy"
          />
 
         <item
-          android:id="@+id/edit_cut"
-          android:title="@string/menu_edit_cut_label"
+          android:id="@+id/menu_edit_cut"
+          android:title="@string/menu_edit_cut"
          />
 
         <item
-          android:id="@+id/edit_uppercase"
-          android:title="@string/menu_edit_uppercase_label"
+          android:id="@+id/menu_edit_uppercase"
+          android:title="@string/menu_edit_uppercase"
          />
 
         <item
-          android:id="@+id/edit_lowercase"
-          android:title="@string/menu_edit_lowercase_label"
+          android:id="@+id/menu_edit_lowercase"
+          android:title="@string/menu_edit_lowercase"
          />
 
         <item
-          android:id="@+id/edit_bold"
-          android:title="@string/menu_edit_bold_label"
+          android:id="@+id/menu_edit_bold"
+          android:title="@string/menu_edit_bold"
          />
 
         <item
-          android:id="@+id/edit_italics"
-          android:title="@string/menu_edit_italics_label"
+          android:id="@+id/menu_edit_italics"
+          android:title="@string/menu_edit_italics"
          />
 
         <item
-          android:id="@+id/edit_strike"
-          android:title="@string/menu_edit_strike_label"
+          android:id="@+id/menu_edit_strike"
+          android:title="@string/menu_edit_strike"
          />
 
         <item
-          android:id="@+id/edit_subscript"
-          android:title="@string/menu_edit_subscript_label"
+          android:id="@+id/menu_edit_subscript"
+          android:title="@string/menu_edit_subscript"
          />
 
         <item
-          android:id="@+id/edit_superscript"
-          android:title="@string/menu_edit_superscript_label"
+          android:id="@+id/menu_edit_superscript"
+          android:title="@string/menu_edit_superscript"
          />
 
         <item
-          android:id="@+id/edit_underline"
-          android:title="@string/menu_edit_underline_label"
+          android:id="@+id/menu_edit_underline"
+          android:title="@string/menu_edit_underline"
          />
       </group>
     </menu>
   </item>
 
   <item
-    android:id="@+id/options_new"
-    android:title="@string/menu_options_new_label"
+    android:id="@+id/menu_options_new"
+    android:title="@string/menu_options_new"
    />
 
   <item
-    android:id="@+id/options_open"
-    android:title="@string/menu_options_open_label"
+    android:id="@+id/menu_options_open"
+    android:title="@string/menu_options_open"
    />
 
   <item
-    android:id="@+id/options_save"
-    android:title="@string/menu_options_save_label"
+    android:id="@+id/menu_options_save"
+    android:title="@string/menu_options_save"
    />
 
   <item
-    android:id="@+id/options_saveAs"
-    android:title="@string/menu_options_saveAs_label"
+    android:id="@+id/menu_options_saveAs"
+    android:title="@string/menu_options_saveAs"
    />
 
   <item
-    android:id="@+id/options_send"
-    android:title="@string/menu_options_send_label"
+    android:id="@+id/menu_options_send"
+    android:title="@string/menu_options_send"
    />
 
   <item
-    android:id="@+id/options_delete"
-    android:title="@string/menu_options_delete_label"
+    android:id="@+id/menu_options_delete"
+    android:title="@string/menu_options_delete"
    />
 </menu>

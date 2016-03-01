@@ -3,37 +3,36 @@
 <resources>
   <string name="app_name">NBP Editor</string>
 
-  <string name="menu_options_edit_label">Edit</string>
-  <string name="menu_options_new_label">New</string>
-  <string name="menu_options_open_label">Open</string>
-  <string name="menu_options_save_label">Save</string>
-  <string name="menu_options_saveAs_label">Save As</string>
-  <string name="menu_options_send_label">Send</string>
-  <string name="menu_options_delete_label">Delete</string>
-
-  <string name="menu_edit_paste_label">Paste</string>
-  <string name="menu_edit_selectAll_label">Select All</string>
-  <string name="menu_edit_copy_label">Copy</string>
-  <string name="menu_edit_cut_label">Cut</string>
-  <string name="menu_edit_uppercase_label">Uppercase</string>
-  <string name="menu_edit_lowercase_label">Lowercase</string>
-  <string name="menu_edit_bold_label">Bold</string>
-  <string name="menu_edit_italics_label">Italics</string>
-  <string name="menu_edit_strike_label">Strike</string>
-  <string name="menu_edit_subscript_label">Subscript</string>
-  <string name="menu_edit_superscript_label">Superscript</string>
-  <string name="menu_edit_underline_label">Underline</string>
-
-  <string name="button_menu_label">Menu</string>
-
-  <string name="hint_edit_area">[edit area - empty file]</string>
+  <string name="button_menu">Menu</string>
   <string name="hint_new_file">[new file - no path]</string>
+  <string name="hint_edit_area">[edit area - empty file]</string>
 
-  <string name="alert_file_saved">file saved</string>
-  <string name="alert_reading_content">reading</string>
-  <string name="alert_rename_failed">rename failed</string>
+  <string name="menu_options_edit">Edit</string>
+  <string name="menu_options_new">New</string>
+  <string name="menu_options_open">Open</string>
+  <string name="menu_options_save">Save</string>
+  <string name="menu_options_saveAs">Save As</string>
+  <string name="menu_options_send">Send</string>
+  <string name="menu_options_delete">Delete</string>
+
+  <string name="menu_edit_paste">Paste</string>
+  <string name="menu_edit_selectAll">Select All</string>
+  <string name="menu_edit_copy">Copy</string>
+  <string name="menu_edit_cut">Cut</string>
+  <string name="menu_edit_uppercase">Uppercase</string>
+  <string name="menu_edit_lowercase">Lowercase</string>
+  <string name="menu_edit_bold">Bold</string>
+  <string name="menu_edit_italics">Italics</string>
+  <string name="menu_edit_strike">Strike</string>
+  <string name="menu_edit_subscript">Subscript</string>
+  <string name="menu_edit_superscript">Superscript</string>
+  <string name="menu_edit_underline">Underline</string>
+
+  <string name="alert_file_saved">File Saved</string>
+  <string name="alert_reading_content">reading...</string>
+  <string name="alert_rename_failed">unable to rename file</string>
   <string name="alert_unsendable_new_file">cannot send new file</string>
-  <string name="alert_writing_content">writing</string>
+  <string name="alert_writing_content">writing...</string>
 
   <string name="changed_title">File Changed</string>
   <string name="changed_message">Save changes?</string>
@@ -45,9 +44,9 @@
   <string name="delete_failed">unable to delete file</string>
 
   <string name="format_name_brf">ASCII Braille</string>
-  <string name="format_name_doc">Microsoft Word 97/2000/2003/XP/2003</string>
-  <string name="format_name_docm"></string>
-  <string name="format_name_docx">Microsoft Word 2007/2010/2013/XML</string>
+  <string name="format_name_doc">Microsoft Word 1997-2007</string>
+  <string name="format_name_docm">Microsoft Word 2007+ XML (macro-enabled)</string>
+  <string name="format_name_docx">Microsoft Word 2007+ XML (macro-free)</string>
   <string name="format_name_epub">Electronic Publication</string>
   <string name="format_name_html">HyperText Markup Language</string>
   <string name="format_name_mhtml">MIME HTML</string>
