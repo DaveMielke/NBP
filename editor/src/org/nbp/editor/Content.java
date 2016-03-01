@@ -1,5 +1,8 @@
 package org.nbp.editor;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -12,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import org.nbp.common.LazyInstantiator;
-import org.nbp.common.CommonContext;
 import org.nbp.common.CommonUtilities;
 
 import android.util.Log;
@@ -22,42 +24,80 @@ import android.text.SpannableStringBuilder;
 public abstract class Content {
   private final static String LOG_TAG = Content.class.getName();
 
-  private final static class ContentOperationsInstantiator extends LazyInstantiator<ContentOperations> {
-    private ContentOperationsInstantiator (Class<? extends ContentOperations> type) {
+  private static String getString (int resource) {
+    return ApplicationContext.getMainActivity().getString(resource);
+  }
+
+  private final static class OperationsInstantiator extends LazyInstantiator<ContentOperations> {
+    private OperationsInstantiator (Class<? extends ContentOperations> type) {
       super(type);
     }
   }
 
-  private final static Map<String, ContentOperationsInstantiator> map
-             = new HashMap<String, ContentOperationsInstantiator>();
+  public final static class FormatDescriptor {
+    private final OperationsInstantiator operationsInstantiator;
+    private final String formatName;
+    private final String[] fileExtensions;
 
-  private final static String DEFAULT_EXTENSION = "";
+    public final ContentOperations getOperations () {
+      return operationsInstantiator.get();
+    }
 
-  private static void addExtensions (Class<? extends ContentOperations> type, String... extensions) {
-    ContentOperationsInstantiator instantiator = new ContentOperationsInstantiator(type);
+    public final String getFormatName () {
+      return formatName;
+    }
 
-    for (String extension : extensions) {
-      map.put(extension, instantiator);
+    public final String[] getFileExtensions () {
+      return fileExtensions;
+    }
+
+    public final String getFileExtension () {
+      return getFileExtensions()[0];
+    }
+
+    private FormatDescriptor (
+      Class<? extends ContentOperations> type,
+      int name, String[] extensions
+    ) {
+      operationsInstantiator = new OperationsInstantiator(type);
+      formatName = getString(name);
+      fileExtensions = extensions;
     }
   }
 
-  static {
-    addExtensions(TextOperations.class, ".txt", DEFAULT_EXTENSION);
-    addExtensions(HighlightedTextOperations.class, ".hl");
-    addExtensions(ASCIIBrailleOperations.class, ".brl", ".brf");
+  private final static List<FormatDescriptor> formatDescriptors
+            = new ArrayList<FormatDescriptor>();
 
-    addExtensions(DocOperations.class, ".doc");
-    addExtensions(DocMOperations.class, ".docm");
-    addExtensions(DocXOperations.class, ".docx");
-    addExtensions(EPubOperations.class, ".epub");
-    addExtensions(HTMLOperations.class, ".html", ".htm");
-    addExtensions(MHTMLOperations.class, ".mhtml", ".mht");
-    addExtensions(ODTOperations.class, ".odt");
-    addExtensions(OpenXPSOperations.class, ".oxps");
-    addExtensions(PDFOperations.class, ".pdf");
-    addExtensions(PSOperations.class, ".ps");
-    addExtensions(RTFOperations.class, ".rtf");
-    addExtensions(XPSOperations.class, ".xps");
+  private final static Map<String, FormatDescriptor> extensionToFormatDescriptor
+             = new HashMap<String, FormatDescriptor>();
+
+  private static void addExtensions (Class<? extends ContentOperations> type, int name, String... extensions) {
+    FormatDescriptor formatDescriptor = new FormatDescriptor(type, name, extensions);
+    formatDescriptors.add(formatDescriptor);
+
+    for (String extension : extensions) {
+      extensionToFormatDescriptor.put(extension, formatDescriptor);
+    }
+  }
+
+  private final static String DEFAULT_EXTENSION = "";
+
+  static {
+    addExtensions(TextOperations.class, R.string.format_name_txt, ".txt", DEFAULT_EXTENSION);
+    addExtensions(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brl", ".brf");
+
+    addExtensions(DocOperations.class, R.string.format_name_doc, ".doc");
+    addExtensions(DocMOperations.class, R.string.format_name_docm, ".docm");
+    addExtensions(DocXOperations.class, R.string.format_name_docx, ".docx");
+    addExtensions(EPubOperations.class, R.string.format_name_epub, ".epub");
+    addExtensions(HTMLOperations.class, R.string.format_name_html, ".html", ".htm");
+    addExtensions(MHTMLOperations.class, R.string.format_name_mhtml, ".mhtml", ".mht");
+    addExtensions(ODTOperations.class, R.string.format_name_odt, ".odt");
+    addExtensions(OXPSOperations.class, R.string.format_name_oxps, ".oxps");
+    addExtensions(PDFOperations.class, R.string.format_name_pdf, ".pdf");
+    addExtensions(PSOperations.class, R.string.format_name_ps, ".ps");
+    addExtensions(RTFOperations.class, R.string.format_name_rtf, ".rtf");
+    addExtensions(XPSOperations.class, R.string.format_name_xps, ".xps");
   }
 
   public static String getExtension (File file) {
@@ -74,13 +114,13 @@ public abstract class Content {
   }
 
   public static ContentOperations getContentOperations (File file) {
-    ContentOperationsInstantiator instantiator = null;
+    FormatDescriptor formatDescriptor = null;
 
     String extension = getExtension(file);
-    if (extension != null) instantiator = map.get(extension.toLowerCase());
+    if (extension != null) formatDescriptor = extensionToFormatDescriptor.get(extension.toLowerCase());
 
-    if (instantiator == null) instantiator = map.get(DEFAULT_EXTENSION);
-    return instantiator.get();
+    if (formatDescriptor == null) formatDescriptor = extensionToFormatDescriptor.get(DEFAULT_EXTENSION);
+    return formatDescriptor.getOperations();
   }
 
   public static boolean readFile (File file, SpannableStringBuilder content) {
@@ -118,7 +158,7 @@ public abstract class Content {
         if (!newFile.renameTo(file)) {
           throw new IOException(String.format(
             LOG_TAG, "%s: %s -> %s",
-            CommonContext.getString(R.string.alert_rename_failed),
+            getString(R.string.alert_rename_failed),
             newFile.getAbsolutePath(), file.getAbsolutePath()
           ));
         }

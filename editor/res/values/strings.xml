@@ -43,4 +43,19 @@
 
   <string name="delete_question">Delete File?</string>
   <string name="delete_failed">unable to delete file</string>
+
+  <string name="format_name_brf">ASCII Braille</string>
+  <string name="format_name_doc">Microsoft Word 97/2000/2003/XP/2003</string>
+  <string name="format_name_docm"></string>
+  <string name="format_name_docx">Microsoft Word 2007/2010/2013/XML</string>
+  <string name="format_name_epub">Electronic Publication</string>
+  <string name="format_name_html">HyperText Markup Language</string>
+  <string name="format_name_mhtml">MIME HTML</string>
+  <string name="format_name_odt">Open Document</string>
+  <string name="format_name_oxps">Open XML Paper Specification</string>
+  <string name="format_name_pdf">Portable Document Format</string>
+  <string name="format_name_ps">PostScript</string>
+  <string name="format_name_rtf">Rich Text</string>
+  <string name="format_name_txt">Plain Text</string>
+  <string name="format_name_xps">XML Paper Specification</string>
 </resources>

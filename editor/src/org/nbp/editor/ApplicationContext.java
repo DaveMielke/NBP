@@ -11,6 +11,10 @@ public abstract class ApplicationContext extends CommonContext {
     mainActivity = activity;
   }
 
+  public static Activity getMainActivity () {
+    return mainActivity;
+  }
+
   private ApplicationContext () {
   }
 }
