@@ -161,7 +161,7 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected void onPreExecute () {
-        dialog = newAlertDialogBuilder(R.string.title_writing_content)
+        dialog = newAlertDialogBuilder(R.string.message_writing_content)
           .setMessage(f.getAbsolutePath())
           .create();
 
@@ -179,7 +179,7 @@ public class EditorActivity extends CommonActivity {
         dialog.dismiss();
 
         if (!f.getParentFile().equals(filesDirectory)) {
-          showMessage(R.string.alert_file_saved, f.getAbsolutePath(), onSaved);
+          showMessage(R.string.message_file_saved, f.getAbsolutePath(), onSaved);
         } else {
           run(onSaved);
         }
@@ -243,7 +243,7 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected void onPreExecute () {
-        dialog = newAlertDialogBuilder(R.string.title_reading_content)
+        dialog = newAlertDialogBuilder(R.string.message_reading_content)
           .setMessage(file.getAbsolutePath())
           .create();
 
@@ -358,7 +358,7 @@ public class EditorActivity extends CommonActivity {
 
     {
       int count = 0;
-      items[count++] = getString(R.string.format_unknown);
+      items[count++] = getString(R.string.format_all);
 
       for (Content.FormatDescriptor formatDescriptor : formatDescriptors) {
         items[count++] = formatDescriptor.getSelectorLabel();
@@ -372,7 +372,7 @@ public class EditorActivity extends CommonActivity {
       }
     };
 
-    newAlertDialogBuilder(R.string.title_select_format)
+    newAlertDialogBuilder(R.string.format_select)
       .setItems(items, itemListener)
       .setNegativeButton(R.string.action_cancel, null)
       .show();
@@ -387,7 +387,7 @@ public class EditorActivity extends CommonActivity {
     String message =
       (formatDescriptor != null)?
       formatDescriptor.getSelectorLabel():
-      getString(R.string.format_unknown);
+      getString(R.string.format_all);
 
     OnDialogClickListener okListener = new OnDialogClickListener() {
       @Override
@@ -403,7 +403,7 @@ public class EditorActivity extends CommonActivity {
       }
     };
 
-    newAlertDialogBuilder(R.string.title_confirm_format)
+    newAlertDialogBuilder(R.string.format_confirm)
       .setMessage(message)
       .setPositiveButton(R.string.action_ok, okListener)
       .setNeutralButton(R.string.action_change, changeListener)
@@ -464,7 +464,7 @@ public class EditorActivity extends CommonActivity {
         }
       }
     } else {
-      showMessage(R.string.alert_unsendable_new_file);
+      showMessage(R.string.message_send_new);
     }
   }
 

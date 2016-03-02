@@ -191,7 +191,7 @@ public abstract class Content {
         if (!newFile.renameTo(file)) {
           throw new IOException(String.format(
             LOG_TAG, "%s: %s -> %s",
-            getString(R.string.alert_rename_failed),
+            getString(R.string.message_rename_failed),
             newFile.getAbsolutePath(), file.getAbsolutePath()
           ));
         }
