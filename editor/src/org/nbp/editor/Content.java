@@ -108,18 +108,23 @@ public abstract class Content {
     defaultFormatDescriptor = addFormat(TextOperations.class, R.string.format_name_txt, ".txt");
     addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brl", ".brf");
 
+    addFormat(ODTOperations.class, R.string.format_name_odt, ".odt");
+    addFormat(RTFOperations.class, R.string.format_name_rtf, ".rtf");
+
     addFormat(DocOperations.class, R.string.format_name_doc, ".doc");
-    addFormat(DocMOperations.class, R.string.format_name_docm, ".docm");
     addFormat(DocXOperations.class, R.string.format_name_docx, ".docx");
-    addFormat(EPubOperations.class, R.string.format_name_epub, ".epub");
+    addFormat(DocMOperations.class, R.string.format_name_docm, ".docm");
+
     addFormat(HTMLOperations.class, R.string.format_name_html, ".html", ".htm");
     addFormat(MHTMLOperations.class, R.string.format_name_mhtml, ".mhtml", ".mht");
-    addFormat(ODTOperations.class, R.string.format_name_odt, ".odt");
-    addFormat(OXPSOperations.class, R.string.format_name_oxps, ".oxps");
+
     addFormat(PDFOperations.class, R.string.format_name_pdf, ".pdf");
     addFormat(PSOperations.class, R.string.format_name_ps, ".ps");
-    addFormat(RTFOperations.class, R.string.format_name_rtf, ".rtf");
+
     addFormat(XPSOperations.class, R.string.format_name_xps, ".xps");
+    addFormat(OXPSOperations.class, R.string.format_name_oxps, ".oxps");
+
+    addFormat(EPubOperations.class, R.string.format_name_epub, ".epub");
   }
 
   public static FormatDescriptor[] getFormatDescriptors () {
