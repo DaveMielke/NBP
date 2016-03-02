@@ -47,9 +47,11 @@
   <string name="delete_question">Delete File?</string>
   <string name="delete_failed">unable to delete file</string>
 
-  <string name="format_confirm">Confirm Format</string>
-  <string name="format_select">Select Format</string>
-  <string name="format_all">all files</string>
+  <string name="format_request_confirm">Confirm Format</string>
+  <string name="format_request_select">Select Format</string>
+  <string name="format_extension_none">no extension</string>
+  <string name="format_extension_unrecognized">unrecognized extension</string>
+  <string name="format_select_all">all files</string>
   <string name="format_name_brf">ASCII Braille</string>
   <string name="format_name_doc">Microsoft Word 1997-2007</string>
   <string name="format_name_docm">Microsoft Word 2007+ XML (macro-enabled)</string>

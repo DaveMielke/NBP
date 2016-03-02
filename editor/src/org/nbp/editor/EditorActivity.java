@@ -358,7 +358,7 @@ public class EditorActivity extends CommonActivity {
 
     {
       int count = 0;
-      items[count++] = getString(R.string.format_all);
+      items[count++] = getString(R.string.format_select_all);
 
       for (Content.FormatDescriptor formatDescriptor : formatDescriptors) {
         items[count++] = formatDescriptor.getSelectorLabel();
@@ -372,22 +372,28 @@ public class EditorActivity extends CommonActivity {
       }
     };
 
-    newAlertDialogBuilder(R.string.format_select)
+    newAlertDialogBuilder(R.string.format_request_select)
       .setItems(items, itemListener)
       .setNegativeButton(R.string.action_cancel, null)
       .show();
   }
 
   private final void confirmFormat () {
+    File file = currentFile;
+    String extension = (file != null)? Content.getExtension(file): null;
+
     final Content.FormatDescriptor formatDescriptor =
-      (currentFile != null)?
-      Content.getFormatDescriptor(currentFile):
+      (extension != null)?
+      Content.getFormatDescriptor(extension):
       null;
 
     String message =
-      (formatDescriptor != null)?
-      formatDescriptor.getSelectorLabel():
-      getString(R.string.format_all);
+      (formatDescriptor != null)? formatDescriptor.getSelectorLabel():
+      (extension == null)? getString(R.string.format_extension_none):
+      String.format("%s (%s)",
+        extension,
+        getString(R.string.format_extension_unrecognized)
+      );
 
     OnDialogClickListener okListener = new OnDialogClickListener() {
       @Override
@@ -403,7 +409,7 @@ public class EditorActivity extends CommonActivity {
       }
     };
 
-    newAlertDialogBuilder(R.string.format_confirm)
+    newAlertDialogBuilder(R.string.format_request_confirm)
       .setMessage(message)
       .setPositiveButton(R.string.action_ok, okListener)
       .setNeutralButton(R.string.action_change, changeListener)

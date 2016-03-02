@@ -144,10 +144,14 @@ public abstract class Content {
     return extension;
   }
 
+  public static FormatDescriptor getFormatDescriptor (String extension) {
+    return extensionToFormatDescriptor.get(extension.toLowerCase());
+  }
+
   public static FormatDescriptor getFormatDescriptor (File file) {
     String extension = getExtension(file);
     if (extension == null) return null;
-    return extensionToFormatDescriptor.get(extension.toLowerCase());
+    return getFormatDescriptor(extension);
   }
 
   public static ContentOperations getContentOperations (File file) {
