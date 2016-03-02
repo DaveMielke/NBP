@@ -85,27 +85,27 @@ public abstract class Content {
   private final static List<FormatDescriptor> formatDescriptors
             = new ArrayList<FormatDescriptor>();
 
-  private final static Map<String, FormatDescriptor> extensionToFormatDescriptor
+  private final static Map<String, FormatDescriptor> extensionToFormat
              = new HashMap<String, FormatDescriptor>();
 
   private static FormatDescriptor addFormat (
     Class<? extends ContentOperations> instantiator,
     int name, String... extensions
   ) {
-    FormatDescriptor formatDescriptor = new FormatDescriptor(instantiator, name, extensions);
-    formatDescriptors.add(formatDescriptor);
+    FormatDescriptor format = new FormatDescriptor(instantiator, name, extensions);
+    formatDescriptors.add(format);
 
     for (String extension : extensions) {
-      extensionToFormatDescriptor.put(extension, formatDescriptor);
+      extensionToFormat.put(extension, format);
     }
 
-    return formatDescriptor;
+    return format;
   }
 
-  private final static FormatDescriptor defaultFormatDescriptor;
+  private final static FormatDescriptor DEFAULT_FORMAT;
 
   static {
-    defaultFormatDescriptor = addFormat(TextOperations.class, R.string.format_name_txt, ".txt");
+    DEFAULT_FORMAT = addFormat(TextOperations.class, R.string.format_name_txt, ".txt");
     addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brf", ".brl");
 
     addFormat(ODTOperations.class, R.string.format_name_odt, ".odt");
@@ -145,7 +145,7 @@ public abstract class Content {
   }
 
   public static FormatDescriptor getFormatDescriptor (String extension) {
-    return extensionToFormatDescriptor.get(extension.toLowerCase());
+    return extensionToFormat.get(extension.toLowerCase());
   }
 
   public static FormatDescriptor getFormatDescriptor (File file) {
@@ -155,9 +155,9 @@ public abstract class Content {
   }
 
   public static ContentOperations getContentOperations (File file) {
-    FormatDescriptor formatDescriptor = getFormatDescriptor(file);
-    if (formatDescriptor == null) formatDescriptor = defaultFormatDescriptor;
-    return formatDescriptor.getOperations();
+    FormatDescriptor format = getFormatDescriptor(file);
+    if (format == null) format = DEFAULT_FORMAT;
+    return format.getOperations();
   }
 
   public static boolean readFile (File file, SpannableStringBuilder content) {

@@ -331,9 +331,9 @@ public class EditorActivity extends CommonActivity {
     builder.find(handler);
   }
 
-  private final void saveAs (Content.FormatDescriptor formatDescriptor) {
+  private final void saveAs (Content.FormatDescriptor format) {
     findFile(true,
-      ((formatDescriptor != null)? formatDescriptor.getFileExtensions(): null),
+      ((format != null)? format.getFileExtensions(): null),
       new FileFinder.FileHandler() {
         @Override
         public void handleFile (final File file) {
@@ -353,22 +353,22 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void selectFormat () {
-    final Content.FormatDescriptor[] formatDescriptors = Content.getFormatDescriptors();
-    String[] items = new String[formatDescriptors.length + 1];
+    final Content.FormatDescriptor[] formats = Content.getFormatDescriptors();
+    String[] items = new String[1 + formats.length];
 
     {
       int count = 0;
       items[count++] = getString(R.string.format_select_all);
 
-      for (Content.FormatDescriptor formatDescriptor : formatDescriptors) {
-        items[count++] = formatDescriptor.getSelectorLabel();
+      for (Content.FormatDescriptor format : formats) {
+        items[count++] = format.getSelectorLabel();
       }
     }
 
     DialogInterface.OnClickListener itemListener = new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int index) {
-        saveAs((index == 0)? null: formatDescriptors[index-1]);
+        saveAs((index == 0)? null: formats[index-1]);
       }
     };
 
@@ -380,41 +380,46 @@ public class EditorActivity extends CommonActivity {
 
   private final void confirmFormat () {
     File file = currentFile;
-    String extension = (file != null)? Content.getExtension(file): null;
 
-    final Content.FormatDescriptor formatDescriptor =
-      (extension != null)?
-      Content.getFormatDescriptor(extension):
-      null;
+    if (file == null) {
+      selectFormat();
+    } else {
+      String extension = Content.getExtension(file);
 
-    String message =
-      (formatDescriptor != null)? formatDescriptor.getSelectorLabel():
-      (extension == null)? getString(R.string.format_extension_none):
-      String.format("%s (%s)",
-        extension,
-        getString(R.string.format_extension_unrecognized)
-      );
+      final Content.FormatDescriptor format =
+        (extension != null)?
+        Content.getFormatDescriptor(extension):
+        null;
 
-    OnDialogClickListener okListener = new OnDialogClickListener() {
-      @Override
-      public void onClick () {
-        saveAs(formatDescriptor);
-      }
-    };
+      String message =
+        (format != null)? format.getSelectorLabel():
+        (extension == null)? getString(R.string.format_extension_none):
+        String.format("%s (%s)",
+          extension,
+          getString(R.string.format_extension_unrecognized)
+        );
 
-    OnDialogClickListener changeListener = new OnDialogClickListener() {
-      @Override
-      public void onClick () {
-        selectFormat();
-      }
-    };
+      OnDialogClickListener okListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          saveAs(format);
+        }
+      };
 
-    newAlertDialogBuilder(R.string.format_request_confirm)
-      .setMessage(message)
-      .setPositiveButton(R.string.action_ok, okListener)
-      .setNeutralButton(R.string.action_change, changeListener)
-      .setNegativeButton(R.string.action_cancel, null)
-      .show();
+      OnDialogClickListener changeListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          selectFormat();
+        }
+      };
+
+      newAlertDialogBuilder(R.string.format_request_confirm)
+        .setMessage(message)
+        .setPositiveButton(R.string.action_ok, okListener)
+        .setNeutralButton(R.string.action_change, changeListener)
+        .setNegativeButton(R.string.action_cancel, null)
+        .show();
+    }
   }
 
   private void menuAction_new () {
