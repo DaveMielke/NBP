@@ -7,14 +7,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-import java.io.IOException;
 import java.io.File;
-import java.io.Reader;
-import java.io.FileReader;
-import java.io.BufferedReader;
 
 import android.util.Log;
-import android.content.Context;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -26,6 +21,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
+
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 
 public abstract class FileFinder {
   private final static String LOG_TAG = FileFinder.class.getName();
@@ -245,8 +244,40 @@ public abstract class FileFinder {
     TextView directoryView = (TextView)dialog.findViewById(R.id.PathEditor_directory);
     directoryView.setText(directory);
 
-    EditText fileView = (EditText)dialog.findViewById(R.id.PathEditor_file);
     final Button doneButton = dialog.getButton(dialog.BUTTON_POSITIVE);
+    EditText fileView = (EditText)dialog.findViewById(R.id.PathEditor_file);
+
+    fileView.setText(file);
+    int nameEnd = fileView.length();
+
+    if (fileExtensions != null) {
+      if (fileExtensions.length > 0) {
+        String extension = fileExtensions[0];
+        final int extensionLength = extension.length();
+
+        Editable text = fileView.getText();
+        text.append(extension);
+
+        text.setSpan(
+          HighlightSpans.BOLD.newInstance(),
+          nameEnd, text.length(),
+          text.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+
+        InputFilter protectExtension = new InputFilter() {
+          @Override
+          public CharSequence filter (
+            CharSequence src, int srcStart, int srcEnd,
+            Spanned dst, int dstStart, int dstEnd
+          ) {
+            if (dstEnd <= (dst.length() - extensionLength)) return null;
+            return dst.subSequence(dstStart, dstEnd);
+          }
+        };
+
+        fileView.setFilters(new InputFilter[] {protectExtension});
+      }
+    }
 
     new OnTextEditedListener(fileView) {
       @Override
@@ -255,8 +286,7 @@ public abstract class FileFinder {
       }
     };
 
-    fileView.setText(file);
-    fileView.setSelection(fileView.length());
+    fileView.setSelection(0, nameEnd);
   }
 
   private final File getEditedPath (DialogInterface dialog) {
