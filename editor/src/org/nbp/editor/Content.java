@@ -106,7 +106,7 @@ public abstract class Content {
 
   static {
     defaultFormatDescriptor = addFormat(TextOperations.class, R.string.format_name_txt, ".txt");
-    addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brl", ".brf");
+    addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brf", ".brl");
 
     addFormat(ODTOperations.class, R.string.format_name_odt, ".odt");
     addFormat(RTFOperations.class, R.string.format_name_rtf, ".rtf");
