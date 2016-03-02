@@ -207,7 +207,7 @@ public class EditorActivity extends CommonActivity {
           if (currentFile != null) {
             saveFile(onSaved);
           } else {
-            findFile(true,
+            findFile(true, null,
               new FileFinder.FileHandler() {
                 @Override
                 public void handleFile (File file) {
@@ -305,7 +305,11 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void findFile (boolean forWriting, FileFinder.FileHandler handler) {
+  private final void findFile (
+    boolean forWriting,
+    String[] extensions,
+    FileFinder.FileHandler handler
+  ) {
     int title = forWriting?
                 R.string.menu_options_saveAs:
                 R.string.menu_options_open;
@@ -316,12 +320,19 @@ public class EditorActivity extends CommonActivity {
       .setForWriting(forWriting)
       ;
 
+    if (extensions != null) {
+      for (String extension : extensions) {
+        builder.addFileExtension(extension);
+      }
+    }
+
     addRootLocations(builder);
     builder.find(handler);
   }
 
   private final void saveAs (Content.FormatDescriptor formatDescriptor) {
     findFile(true,
+      ((formatDescriptor != null)? formatDescriptor.getFileExtensions(): null),
       new FileFinder.FileHandler() {
         @Override
         public void handleFile (final File file) {
@@ -415,7 +426,7 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          findFile(false,
+          findFile(false, null,
             new FileFinder.FileHandler() {
               @Override
               public void handleFile (File file) {

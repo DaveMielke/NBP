@@ -41,7 +41,8 @@ public abstract class FileFinder {
   public final static class Builder {
     private final Activity ownerActivity;
     private String userTitle = null;
-    private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
+    private final Map<String, File> rootLocations = new LinkedHashMap<String, File>();
+    private final Set<String> fileExtensions = new LinkedHashSet<String>();
     private boolean forWriting = false;
 
     private final String getString (int resource) {
@@ -65,8 +66,9 @@ public abstract class FileFinder {
       return setUserTitle(getString(title));
     }
 
-    public final Set<String> getRootLabels () {
-      return rootLocations.keySet();
+    public final String[] getRootLabels () {
+      Set<String> labels = rootLocations.keySet();
+      return labels.toArray(new String[labels.size()]);
     }
 
     public final File getRootLocation (String label) {
@@ -84,6 +86,15 @@ public abstract class FileFinder {
 
     public final Builder addRootLocation (String label) {
       return addRootLocation(label, FileSystems.getMountpoint(label));
+    }
+
+    public final String[] getFileExtensions () {
+      return fileExtensions.toArray(new String[fileExtensions.size()]);
+    }
+
+    public final Builder addFileExtension (String extension) {
+      fileExtensions.add(extension);
+      return this;
     }
 
     public final boolean getForWriting () {
@@ -111,8 +122,9 @@ public abstract class FileFinder {
   private final Activity ownerActivity;
   private final String userTitle;
   private final boolean forWriting;
+  private final String[] fileExtensions;
 
-  private Map<String, File> rootLocations = new LinkedHashMap<String, File>();
+  private final Map<String, File> rootLocations = new LinkedHashMap<String, File>();
 
   private File currentReference = null;
 
@@ -445,6 +457,17 @@ public abstract class FileFinder {
       } else {
         if (!file.isFile()) continue;
 
+      EXTENSION_CHECK:
+        if (fileExtensions != null) {
+          if (fileExtensions.length > 0) {
+            for (String extension : fileExtensions) {
+              if (name.endsWith(extension)) break EXTENSION_CHECK;
+            }
+
+            continue;
+          }
+        }
+
         if (forWriting) {
           if (!file.canWrite()) continue;
         } else {
@@ -495,11 +518,12 @@ public abstract class FileFinder {
     ownerActivity = builder.getOwnerActivity();
     userTitle = builder.getUserTitle();
     forWriting = builder.getForWriting();
+    fileExtensions = builder.getFileExtensions();
 
     {
-      Set<String> labels = builder.getRootLabels();
+      String[] labels = builder.getRootLabels();
 
-      if (labels.isEmpty()) {
+      if (labels.length == 0) {
         for (String label : FileSystems.getAllLabels()) {
           rootLocations.put(label, FileSystems.getMountpoint(label));
         }
