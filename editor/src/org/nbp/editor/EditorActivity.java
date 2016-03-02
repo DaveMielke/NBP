@@ -289,6 +289,7 @@ public class EditorActivity extends CommonActivity {
 
   private final void addRootLocations (FileFinder.Builder builder) {
     if (currentFile != null) {
+      builder.setFileName(currentFile.getName());
       addRootLocation(builder, "current", currentFile.getParentFile());
     }
 

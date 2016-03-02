@@ -42,6 +42,7 @@ public abstract class FileFinder {
     private String userTitle = null;
     private final Map<String, File> rootLocations = new LinkedHashMap<String, File>();
     private final Set<String> fileExtensions = new LinkedHashSet<String>();
+    private String fileName = null;
     private boolean forWriting = false;
 
     private final String getString (int resource) {
@@ -96,6 +97,15 @@ public abstract class FileFinder {
       return this;
     }
 
+    public final String getFileName () {
+      return fileName;
+    }
+
+    public final Builder setFileName (String name) {
+      fileName = name;
+      return this;
+    }
+
     public final boolean getForWriting () {
       return forWriting;
     }
@@ -120,8 +130,9 @@ public abstract class FileFinder {
 
   private final Activity ownerActivity;
   private final String userTitle;
-  private final boolean forWriting;
   private final String[] fileExtensions;
+  private final String fileName;
+  private final boolean forWriting;
 
   private final Map<String, File> rootLocations = new LinkedHashMap<String, File>();
 
@@ -235,7 +246,8 @@ public abstract class FileFinder {
       file = reference.getPath();
     } else if (reference.isDirectory()) {
       directory = reference.getAbsolutePath();
-      file = "";
+      file = fileName;
+      if (file == null) file = "";
     } else {
       directory = reference.getParentFile().getAbsolutePath();
       file = reference.getName();
@@ -246,37 +258,36 @@ public abstract class FileFinder {
 
     final Button doneButton = dialog.getButton(dialog.BUTTON_POSITIVE);
     EditText fileView = (EditText)dialog.findViewById(R.id.PathEditor_file);
+    fileView.setText("");
 
-    fileView.setText(file);
-    int nameEnd = fileView.length();
+    String extension =
+      ((fileExtensions != null) && (fileExtensions.length > 0))?
+      fileExtensions[0]: null;
 
-    if (fileExtensions != null) {
-      if (fileExtensions.length > 0) {
-        String extension = fileExtensions[0];
-        final int extensionLength = extension.length();
+    if (extension != null) {
+      final int extensionLength = extension.length();
 
-        Editable text = fileView.getText();
-        text.append(extension);
+      Editable text = fileView.getText();
+      text.append(extension);
 
-        text.setSpan(
-          HighlightSpans.BOLD.newInstance(),
-          nameEnd, text.length(),
-          text.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
+      text.setSpan(
+        HighlightSpans.BOLD.newInstance(),
+        0, text.length(),
+        text.SPAN_EXCLUSIVE_EXCLUSIVE
+      );
 
-        InputFilter protectExtension = new InputFilter() {
-          @Override
-          public CharSequence filter (
-            CharSequence src, int srcStart, int srcEnd,
-            Spanned dst, int dstStart, int dstEnd
-          ) {
-            if (dstEnd <= (dst.length() - extensionLength)) return null;
-            return dst.subSequence(dstStart, dstEnd);
-          }
-        };
+      InputFilter protectExtension = new InputFilter() {
+        @Override
+        public CharSequence filter (
+          CharSequence src, int srcStart, int srcEnd,
+          Spanned dst, int dstStart, int dstEnd
+        ) {
+          if (dstEnd <= (dst.length() - extensionLength)) return null;
+          return dst.subSequence(dstStart, dstEnd);
+        }
+      };
 
-        fileView.setFilters(new InputFilter[] {protectExtension});
-      }
+      fileView.setFilters(new InputFilter[] {protectExtension});
     }
 
     new OnTextEditedListener(fileView) {
@@ -286,7 +297,18 @@ public abstract class FileFinder {
       }
     };
 
-    fileView.setSelection(0, nameEnd);
+    if (extension != null) {
+      int end = file.lastIndexOf('.');
+
+      if (end > 0) {
+        if (end < (file.length() - 1)) {
+          file = file.substring(0, end);
+        }
+      }
+    }
+
+    fileView.getText().insert(0, file);
+    fileView.setSelection(0, file.length());
   }
 
   private final File getEditedPath (DialogInterface dialog) {
@@ -547,8 +569,9 @@ public abstract class FileFinder {
   private FileFinder (Builder builder) {
     ownerActivity = builder.getOwnerActivity();
     userTitle = builder.getUserTitle();
-    forWriting = builder.getForWriting();
     fileExtensions = builder.getFileExtensions();
+    fileName = builder.getFileName();
+    forWriting = builder.getForWriting();
 
     {
       String[] labels = builder.getRootLabels();
