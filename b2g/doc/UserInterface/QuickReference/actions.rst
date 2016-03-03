@@ -56,6 +56,8 @@
 .. |LogKeyboardOn| replace:: turn the logging of keyboard key events on
 .. |LogNavigationOff| replace:: turn the logging of internal screen navigation operations off
 .. |LogNavigationOn| replace:: turn the logging of internal screen navigation operations on
+.. |LogSpeechOff| replace:: turn the logging of speech events off
+.. |LogSpeechOn| replace:: turn the logging of speech events on
 .. |LogUpdatesOff| replace:: turn the logging of screen updates off
 .. |LogUpdatesOn| replace:: turn the logging of screen updates on
 .. |LogsOff| replace:: turn all of the logging categories off

@@ -20,9 +20,12 @@ bind Space+Dots78+Dots1245#g+LongPress LogGesturesOff
 bind Space+Dots78+Dots12#b LogBrailleOn
 bind Space+Dots78+Dots12#b+LongPress LogBrailleOff
 
-bind Space+Dots78+Dots234#s SaveSettings
-bind Space+Dots78+Dots1235#r RestoreSettings
-bind Space+Dots78+Dots145#d ResetSettings
+bind Space+Dots78+Dots234#s LogSpeechOn
+bind Space+Dots78+Dots234#s+LongPress LogSpeechOff
+
+bind Space+Dots8+Dots135#o SaveSettings
+bind Space+Dots7+Dots135#o RestoreSettings
+bind Space+Dots78+Dots135#o ResetSettings
 
 bind Space+Dots78+Dots1346#x ForceCrash
 
