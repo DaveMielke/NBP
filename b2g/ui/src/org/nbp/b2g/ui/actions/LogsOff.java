@@ -8,7 +8,8 @@ public class LogsOff extends Action {
     Controls.getLogActionsControl(),
     Controls.getLogNavigationControl(),
     Controls.getLogGesturesControl(),
-    Controls.getLogBrailleControl()
+    Controls.getLogBrailleControl(),
+    Controls.getLogSpeechControl()
   };
 
   @Override
