@@ -35,6 +35,7 @@ public abstract class ApplicationDefaults {
   public final static boolean LOG_NAVIGATION = false;
   public final static boolean LOG_GESTURES = false;
   public final static boolean LOG_BRAILLE = false;
+  public final static boolean LOG_SPEECH = false;
 
   private ApplicationDefaults () {
   }

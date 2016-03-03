@@ -99,6 +99,11 @@ public class SpeechDevice {
     synchronized (this) {
       if (isStarted()) {
         if (!ttsObject.isSpeaking()) return true;
+
+        if (ApplicationSettings.LOG_SPEECH) {
+          Log.d(LOG_TAG, "speech: stop");
+        }
+
         if (ttsObject.stop() == OK) return true;
       }
     }
@@ -137,6 +142,10 @@ public class SpeechDevice {
               } else {
                 segment = line;
                 line = "";
+              }
+
+              if (ApplicationSettings.LOG_SPEECH) {
+                Log.d(LOG_TAG, ("speech: say: " + segment));
               }
 
               if (ttsObject.speak(segment, TextToSpeech.QUEUE_ADD, ttsParameters) != OK) return false;

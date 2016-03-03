@@ -35,6 +35,7 @@ public abstract class ApplicationSettings {
   public static volatile boolean LOG_NAVIGATION = ApplicationDefaults.LOG_NAVIGATION;
   public static volatile boolean LOG_GESTURES = ApplicationDefaults.LOG_GESTURES;
   public static volatile boolean LOG_BRAILLE = ApplicationDefaults.LOG_BRAILLE;
+  public static volatile boolean LOG_SPEECH = ApplicationDefaults.LOG_SPEECH;
 
   private ApplicationSettings () {
   }

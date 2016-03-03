@@ -37,6 +37,7 @@ public abstract class Controls {
   private final static LogNavigationControl logNavigationControl = new LogNavigationControl();
   private final static LogGesturesControl logGesturesControl = new LogGesturesControl();
   private final static LogBrailleControl logBrailleControl = new LogBrailleControl();
+  private final static LogSpeechControl logSpeechControl = new LogSpeechControl();
 
   private final static Control[] allControls = new Control[] {
     longPressControl,
@@ -71,7 +72,8 @@ public abstract class Controls {
     logActionsControl,
     logNavigationControl,
     logGesturesControl,
-    logBrailleControl
+    logBrailleControl,
+    logSpeechControl
   };
 
   public static LongPressControl getLongPressControl () {
@@ -184,6 +186,10 @@ public abstract class Controls {
 
   public static LogBrailleControl getLogBrailleControl () {
     return logBrailleControl;
+  }
+
+  public static LogSpeechControl getLogSpeechControl () {
+    return logSpeechControl;
   }
 
   public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {

@@ -9,5 +9,6 @@
   Log Navigation       Off      Off - On
   Log Gestures         Off      Off - On
   Log Braille          Off      Off - On
+  Log Speech           Off      Off - On
   ===================  =======  ========
 

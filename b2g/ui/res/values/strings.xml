@@ -148,6 +148,7 @@
   <string name="LogGestures_control_label">Log Gestures</string>
   <string name="LogKeyboard_control_label">Log Keyboard</string>
   <string name="LogNavigation_control_label">Log Navigation</string>
+  <string name="LogSpeech_control_label">Log Speech</string>
   <string name="LogUpdates_control_label">Log Updates</string>
 
   <string name="ChooseAction_label">Perform an action by pressing Center on it:</string>
