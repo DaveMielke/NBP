@@ -59,7 +59,7 @@
   <string name="format_name_epub">Electronic Publication</string>
   <string name="format_name_html">HyperText Markup Language</string>
   <string name="format_name_mhtml">MIME HTML</string>
-  <string name="format_name_odt">Open Document</string>
+  <string name="format_name_odt">Open Document Text</string>
   <string name="format_name_oxps">Open XML Paper Specification</string>
   <string name="format_name_pdf">Portable Document Format</string>
   <string name="format_name_ps">PostScript</string>
