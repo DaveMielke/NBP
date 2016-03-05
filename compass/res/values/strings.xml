@@ -6,11 +6,4 @@
   <string name="azimuth_label">Heading</string>
   <string name="pitch_label">Pitch</string>
   <string name="roll_label">Roll</string>
-  <string name="accuracy_label">Accuracy</string>
-
-  <string name="accuracy_unknown">Unknown</string>
-  <string name="accuracy_unreliable">Unreliable</string>
-  <string name="accuracy_low">Low</string>
-  <string name="accuracy_medium">Medium</string>
-  <string name="accuracy_high">High</string>
 </resources>

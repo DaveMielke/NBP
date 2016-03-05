@@ -1,7 +1,5 @@
 package org.nbp.compass;
 
-import java.util.Map;
-import java.util.HashMap;
 import static java.lang.Math.toDegrees;
 
 import android.util.Log;
@@ -19,17 +17,10 @@ import android.hardware.SensorManager;
 public class CompassActivity extends Activity implements SensorEventListener {
   private final static String LOG_TAG = CompassActivity.class.getName();
 
-  private final Map<Integer, String> accuracyNames = new HashMap<Integer, String>();
-
-  private final void addAccuracy (int value, int name) {
-    accuracyNames.put(value, getString(name));
-  }
-
   private TextView azimuthDegrees;
   private TextView azimuthDirection;
   private TextView pitchDegrees;
   private TextView rollDegrees;
-  private TextView accuracyName;
 
   private final static int[] sensorTypes = new int[] {
     Sensor.TYPE_ACCELEROMETER,
@@ -53,12 +44,6 @@ public class CompassActivity extends Activity implements SensorEventListener {
     azimuthDirection = (TextView)findViewById(R.id.azimuth_direction);
     pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
     rollDegrees = (TextView)findViewById(R.id.roll_degrees);
-    accuracyName = (TextView)findViewById(R.id.accuracy_name);
-
-    addAccuracy(SensorManager.SENSOR_STATUS_UNRELIABLE, R.string.accuracy_unreliable);
-    addAccuracy(SensorManager.SENSOR_STATUS_ACCURACY_LOW, R.string.accuracy_low);
-    addAccuracy(SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM, R.string.accuracy_medium);
-    addAccuracy(SensorManager.SENSOR_STATUS_ACCURACY_HIGH, R.string.accuracy_high);
 
     sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 
