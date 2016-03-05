@@ -2,6 +2,7 @@ package org.nbp.compass;
 
 import java.util.Map;
 import java.util.HashMap;
+import static java.lang.Math.toDegrees;
 
 import android.util.Log;
 
@@ -24,21 +25,32 @@ public class CompassActivity extends Activity implements SensorEventListener {
     accuracyNames.put(value, getString(name));
   }
 
-  private SensorManager sensorManager;
-  private TextView headingDegrees;
-  private TextView headingDirection;
+  private TextView azimuthDegrees;
+  private TextView azimuthDirection;
   private TextView pitchDegrees;
   private TextView rollDegrees;
   private TextView accuracyName;
 
+  private final static int[] sensorTypes = new int[] {
+    Sensor.TYPE_ACCELEROMETER,
+    Sensor.TYPE_MAGNETIC_FIELD
+  };
+
+  private SensorManager sensorManager;
+  private final Sensor[] sensorArray = new Sensor[sensorTypes.length];
+  private final float[] rotationMatrix = new float[9];
+  private final float[] deviceOrientation = new float[3];
+
+  private float[] gravityVector = null;
+  private float[] geomagneticVector = null;
+
   @Override
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 
     setContentView(R.layout.compass);
-    headingDegrees = (TextView)findViewById(R.id.heading_degrees);
-    headingDirection = (TextView)findViewById(R.id.heading_direction);
+    azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
+    azimuthDirection = (TextView)findViewById(R.id.azimuth_direction);
     pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
     rollDegrees = (TextView)findViewById(R.id.roll_degrees);
     accuracyName = (TextView)findViewById(R.id.accuracy_name);
@@ -47,23 +59,34 @@ public class CompassActivity extends Activity implements SensorEventListener {
     addAccuracy(SensorManager.SENSOR_STATUS_ACCURACY_LOW, R.string.accuracy_low);
     addAccuracy(SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM, R.string.accuracy_medium);
     addAccuracy(SensorManager.SENSOR_STATUS_ACCURACY_HIGH, R.string.accuracy_high);
+
+    sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+
+    {
+      int count = 0;
+
+      for (int type : sensorTypes) {
+        sensorArray[count++] = sensorManager.getDefaultSensor(type);
+      }
+    }
   }
 
   @Override
   protected void onResume () {
     super.onResume();
 
-    sensorManager.registerListener(this,
-      sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-      R.integer.frequency_usecs
-    );
+    for (Sensor sensor : sensorArray) {
+      sensorManager.registerListener(this, sensor, R.integer.frequency_usecs);
+    }
   }
 
   @Override
   protected void onPause () {
     super.onPause();
 
-    sensorManager.unregisterListener(this);
+    for (Sensor sensor : sensorArray) {
+      sensorManager.unregisterListener(this, sensor);
+    }
   }
 
   private final static String[] directions = new String[] {
@@ -78,27 +101,58 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
   @Override
   public void onSensorChanged (SensorEvent event) {
-    float heading = event.values[0];
-    float pitch   = event.values[1];
-    float roll    = event.values[2];
+    {
+      float[] values = event.values;
+      int count = values.length;
 
-    String accuracy = accuracyNames.get(event.accuracy);
-    if (accuracy == null) accuracy = getString(R.string.accuracy_unknown);
+      switch (event.sensor.getType()) {
+        case Sensor.TYPE_ACCELEROMETER: {
+          if (gravityVector == null) {
+            gravityVector = new float[count];
+          }
 
-    if ((heading >= 0f) && (heading < DEGREES_PER_CIRCLE)) {
-      int direction = Math.round(heading / DEGREES_PER_DIRECTION);
-      direction %= DIRECTION_COUNT;
+          System.arraycopy(values, 0, gravityVector, 0, count);
+          break;
+        }
 
-      accuracyName.setText(accuracy);
-      headingDegrees.setText(String.format("%d°", Math.round(heading)));
+        case Sensor.TYPE_MAGNETIC_FIELD: {
+          if (geomagneticVector == null) {
+            geomagneticVector = new float[count];
+          }
+
+          System.arraycopy(values, 0, geomagneticVector, 0, count);
+          break;
+        }
+
+        default:
+          return;
+      }
+    }
+
+    if ((gravityVector != null) && (geomagneticVector != null)) {
+      sensorManager.getRotationMatrix(
+        rotationMatrix, null,
+        gravityVector, geomagneticVector
+      );
+
+      sensorManager.getOrientation(rotationMatrix, deviceOrientation);
+      float azimuth = -(float)toDegrees(deviceOrientation[0]);
+      float pitch   = -(float)toDegrees(deviceOrientation[1]);
+      float roll    = -(float)toDegrees(deviceOrientation[2]);
+
+      azimuthDegrees.setText(String.format("%d°", Math.round(azimuth)));
       pitchDegrees.setText(String.format("%d°", Math.round(pitch)));
       rollDegrees.setText(String.format("%d°", Math.round(roll)));
 
-      headingDirection.setText(
+      int direction = Math.round(azimuth / DEGREES_PER_DIRECTION);
+      direction += DIRECTION_COUNT;
+      direction %= DIRECTION_COUNT;
+
+      azimuthDirection.setText(
         String.format(
           "%s%+d°",
           directions[direction],
-          Math.round(heading - ((float)direction * DEGREES_PER_DIRECTION))
+          Math.round(azimuth - ((float)direction * DEGREES_PER_DIRECTION))
         )
       );
     }

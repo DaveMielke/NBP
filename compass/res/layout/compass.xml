@@ -12,17 +12,17 @@
   <TextView
     android:layout_row="0"
     android:layout_column="0"
-    android:text="@string/heading_label"
+    android:text="@string/azimuth_label"
    />
 
   <TextView
-    android:id="@+id/heading_degrees"
+    android:id="@+id/azimuth_degrees"
     android:layout_row="0"
     android:layout_column="1"
    />
 
   <TextView
-    android:id="@+id/heading_direction"
+    android:id="@+id/azimuth_direction"
     android:layout_row="0"
     android:layout_column="2"
    />
