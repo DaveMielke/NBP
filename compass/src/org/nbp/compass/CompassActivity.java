@@ -132,18 +132,19 @@ public class CompassActivity extends Activity implements SensorEventListener {
       float pitch   = translateValue(pitchMeasurement  , -currentOrientation[1]);
       float roll    = translateValue(rollMeasurement   ,  currentOrientation[2]);
 
+      azimuth += DEGREES_PER_CIRCLE;
+      azimuth %= DEGREES_PER_CIRCLE;
+
       azimuthDegrees.setText(String.format("%d°", Math.round(azimuth)));
       pitchDegrees.setText(String.format("%d°", Math.round(pitch)));
       rollDegrees.setText(String.format("%d°", Math.round(roll)));
 
       int direction = Math.round(azimuth / DEGREES_PER_DIRECTION);
-      direction += DIRECTION_COUNT;
-      direction %= DIRECTION_COUNT;
 
       azimuthDirection.setText(
         String.format(
           "%s%+d°",
-          directions[direction],
+          directions[direction % DIRECTION_COUNT],
           Math.round(azimuth - ((float)direction * DEGREES_PER_DIRECTION))
         )
       );
