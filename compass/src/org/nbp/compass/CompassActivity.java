@@ -1,7 +1,5 @@
 package org.nbp.compass;
 
-import static java.lang.Math.toDegrees;
-
 import android.util.Log;
 
 import android.app.Activity;
@@ -30,10 +28,14 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private SensorManager sensorManager;
   private final Sensor[] sensorArray = new Sensor[sensorTypes.length];
   private final float[] rotationMatrix = new float[9];
-  private final float[] deviceOrientation = new float[3];
+  private final float[] currentOrientation = new float[3];
 
   private float[] gravityVector = null;
   private float[] geomagneticVector = null;
+
+  private final Measurement azimuthMeasurement = new Measurement();
+  private final Measurement pitchMeasurement = new Measurement();
+  private final Measurement rollMeasurement = new Measurement();
 
   @Override
   public void onCreate (Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
     super.onResume();
 
     for (Sensor sensor : sensorArray) {
-      sensorManager.registerListener(this, sensor, R.integer.frequency_usecs);
+      sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
   }
 
@@ -72,6 +74,11 @@ public class CompassActivity extends Activity implements SensorEventListener {
     for (Sensor sensor : sensorArray) {
       sensorManager.unregisterListener(this, sensor);
     }
+  }
+
+  private final float translateValue (Measurement measurement, float value) {
+    measurement.add(value);
+    return (float)Math.toDegrees(measurement.get());
   }
 
   private final static String[] directions = new String[] {
@@ -120,10 +127,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
         gravityVector, geomagneticVector
       );
 
-      sensorManager.getOrientation(rotationMatrix, deviceOrientation);
-      float azimuth = -(float)toDegrees(deviceOrientation[0]);
-      float pitch   = -(float)toDegrees(deviceOrientation[1]);
-      float roll    = -(float)toDegrees(deviceOrientation[2]);
+      sensorManager.getOrientation(rotationMatrix, currentOrientation);
+      float azimuth = translateValue(azimuthMeasurement, -currentOrientation[0]);
+      float pitch   = translateValue(pitchMeasurement  , -currentOrientation[1]);
+      float roll    = translateValue(rollMeasurement   ,  currentOrientation[2]);
 
       azimuthDegrees.setText(String.format("%d°", Math.round(azimuth)));
       pitchDegrees.setText(String.format("%d°", Math.round(pitch)));
