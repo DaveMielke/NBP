@@ -6,4 +6,6 @@
   <string name="azimuth_label">Heading</string>
   <string name="pitch_label">Pitch</string>
   <string name="roll_label">Roll</string>
+  <string name="latitude_label">Latitude</string>
+  <string name="longitude_label">Longitude</string>
 </resources>
