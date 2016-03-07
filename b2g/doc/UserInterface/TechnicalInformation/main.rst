@@ -11,6 +11,13 @@ Technical Information
 
 * Braille Display: Metec, 20 cells, 8 dots per cell
 
+* Headset Jack: 3.5mm OMTP (on left side)
+
+* USB Ports:
+
+  + Standard A (on left side)
+  + Micro B (on back)
+
 * Battery: Lithium Polymer, 4 Volt, 5.6 Amp Hours, not user accessible
 
 * Camera: 5MP, built-in flash
