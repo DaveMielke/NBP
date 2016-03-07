@@ -4,7 +4,7 @@
 .. |recommended file picker| replace:: ES File Explorer
 .. |recommended package downloader| replace:: ES Downloader
 .. |recommended package installer| replace:: Package Installer
-.. |recommended web browser| replace:: Firefox
+.. |recommended web browser| replace:: Chrome
 
 .. |internal memory path| replace:: ``/storage/sdcard0``
 .. |SD card path| replace:: ``/storage/sdcard1``

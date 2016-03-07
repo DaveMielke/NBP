@@ -15,12 +15,13 @@ Pressing Space+Dots78+h (dots 125)
 
   * |uses internet|
 
-  * Not all web browsers present web pages in an accessible way.
-    As of the time that this is being written, it seems that
-    |recommended web browser| may be the only one that does.
+  * Some web browsers are less accessible than others,
+    and some aren't accessible at all.
     If the |user interface| tells you that there's a "web view"
     where you're expecting to find the content of a web page
     then you're using a non-accessible browser.
+    As of the time that this is being written, we recommend
+    that you use the |recommended web browser| browser.
 
 Using an `Action Chooser`_
   * Press Space+Dot8+h (dots 125) for an action chooser

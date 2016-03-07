@@ -40,8 +40,8 @@ The Front
 Two internal speakers (for the left and right stereo channels) are,
 correspondingly, at the left and right ends of the front.
 
-The internal microphone is just behind a very small slit in the middle of 
-the front.
+The internal microphone is just behind a very small slit near the bottom,
+in the middle of the front.
 
 The Left Side
 -------------
@@ -50,12 +50,15 @@ The Left Side
   :align: right
   :alt: [a picture of the left side]
 
-The earphone/microphone jack (3.5mm) is near the front of the left side.
-Standard cell phone earphones can be used.
+The headset jack, a 3.5mm OMTP (Open Mobile Terminal Platform) port,
+is near the front of the left side. Standard OMTP-compatible earphones,
+including those with a microphone, can be used.
 
-The video jack (RCA) is in the middle of the left side. It's for an
-external video monitor. This provides an easy way for a sighted person,
-e.g. a teacher, to offer direct assistance.
+The composite video (RCA) jack is in the middle of the left side.
+It's for connecting an external video monitor or TV,
+and is used for performing diagnostics.
+This capability also provides an easy way
+for a sighted person to offer direct assistance.
 
 A standard USB-A (or host) port is near the back of the left side. USB 
 devices (memory stick, external keyboard, mouse, Ethernet adapter, hub, etc)
@@ -124,9 +127,19 @@ The Bottom
   :align: right
   :alt: [a picture of the bottom]
 
-The camera's lens is the small circle on the bottom that's about 2cm 
-(3/4 of an inch) in from the middle of the right side. The rectangular 
-window that's just a little further in is where the flash LEDs are.
+All refreshable braille displays are fragile.
+Don't ever put the |product name|, upside down, onto a hard surface.
+If you need to turn it over,
+e.g. either to press `The Reset Button`_ or to open `The Removable Cover`_,
+then first place the |product name| onto a protective, cushion-like surface.
+
+There are six rubber foot pads on the bottom - one at each of the four corners,
+one in the middle near the front, and one in the middle near the back.
+
+The camera's lens is within the small, raised circle on the bottom
+that's about 2cm (3/4 of an inch) in from the middle of the right side.
+The sunken, rectangular window that's a little further in
+is where the flash LEDs are.
 
 The Reset Button
 ~~~~~~~~~~~~~~~~
@@ -134,13 +147,14 @@ The Reset Button
 The Reset button is hidden within a very small, round hole on the 
 bottom. If the device is turned over, front to back, the hole is at 
 about the eight o'clock position relative to, and very close to, the foot
-nearest to the Power switch. A thin, round object, like a pin or paperclip, is
-needed.
+nearest to the Power switch. A thin, round, blunt-tipped object,
+like the end of an unbent paperclip, should be used to press it.
 
-Try to keep the object you're using as perpendicular to the bottom as you can.
-You only need to press gently. If it feels like you're pressing against a hard
-surface then you've missed the button. You should feel a soft click. You should
-also hear a long, high-pitched beep.
+To reset the |product name|, slowly insert the paperclip into the hole,
+keeping it almost vertical but leaning slightly toward you.
+You should feel a soft click, and also hear a long, high-pitched beep.
+You only need to press gently. If it feels like you're pressing
+against a hard surface then you've missed the button.
 
 The Removable Cover
 ~~~~~~~~~~~~~~~~~~~
