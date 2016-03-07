@@ -1,7 +1,7 @@
 package org.nbp.compass;
 
 public class Measurement {
-  private final int size = 50;
+  private final int size = Parameters.MEASUREMENT_DAMPING_FACTOR;
   private final float[] values = new float[size];
 
   private int count = 0;

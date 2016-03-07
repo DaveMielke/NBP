@@ -47,11 +47,10 @@ public class CompassActivity extends Activity implements
   };
 
   private final Sensor[] sensorArray = new Sensor[sensorTypes.length];
-  private float[] gravityVector = null;
-  private float[] geomagneticVector = null;
-
   private final float[] rotationMatrix = new float[9];
   private final float[] currentOrientation = new float[3];
+  private float[] gravityVector = null;
+  private float[] geomagneticVector = null;
 
   private final Measurement azimuthMeasurement = new Measurement();
   private final Measurement pitchMeasurement = new Measurement();
@@ -95,7 +94,7 @@ public class CompassActivity extends Activity implements
     super.onResume();
 
     for (Sensor sensor : sensorArray) {
-      sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+      sensorManager.registerListener(this, sensor, Parameters.SENSOR_UPDATE_INTERVAL);
     }
 
     canReceiveLocationUpdates = true;
@@ -258,9 +257,9 @@ public class CompassActivity extends Activity implements
     if (canReceiveLocationUpdates) {
       if (!amReceivingLocationUpdates) {
         LocationRequest request = new LocationRequest()
-          .setInterval(5000)
-          .setFastestInterval(5000)
-          .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+          .setInterval(Parameters.LOCATION_MAXIMUM_INTERVAL)
+          .setFastestInterval(Parameters.LOCATION_MINIMUM_INTERVAL)
+          .setPriority(Parameters.LOCATION_PRIORITY)
           ;
 
         LocationServices.FusedLocationApi.requestLocationUpdates(gapi, request, this);
