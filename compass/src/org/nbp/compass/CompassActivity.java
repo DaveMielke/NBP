@@ -12,14 +12,18 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
-import android.location.LocationManager;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationListener;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.Criteria;
 
-public class CompassActivity
-  extends Activity
-  implements SensorEventListener, LocationListener
+public class CompassActivity extends Activity implements
+  GoogleApiClient.ConnectionCallbacks,
+  GoogleApiClient.OnConnectionFailedListener,
+  LocationListener,
+  SensorEventListener
 {
   private final static String LOG_TAG = CompassActivity.class.getName();
 
@@ -33,7 +37,9 @@ public class CompassActivity
   private TextView longitudeDMS;
 
   private SensorManager sensorManager;
-  private LocationManager locationManager;
+  private GoogleApiClient gapi;
+  private boolean canReceiveLocationUpdates = false;
+  private boolean amReceivingLocationUpdates = false;
 
   private final static int[] sensorTypes = new int[] {
     Sensor.TYPE_ACCELEROMETER,
@@ -66,7 +72,14 @@ public class CompassActivity
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
 
     sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-    locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+
+    gapi = new GoogleApiClient.Builder(this)
+                              .addConnectionCallbacks(this)
+                              .addOnConnectionFailedListener(this)
+                              .addApi(LocationServices.API)
+                              .build();
+
+    gapi.connect();
 
     {
       int count = 0;
@@ -75,8 +88,6 @@ public class CompassActivity
         sensorArray[count++] = sensorManager.getDefaultSensor(type);
       }
     }
-
-    setLocation(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
   }
 
   @Override
@@ -87,20 +98,22 @@ public class CompassActivity
       sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
-    locationManager.requestLocationUpdates(
-      LocationManager.GPS_PROVIDER, 5000, 10f, this
-    );
+    canReceiveLocationUpdates = true;
+    if (gapi.isConnected()) startReceivingLocationUpdates();
   }
 
   @Override
   protected void onPause () {
-    super.onPause();
+    try {
+      for (Sensor sensor : sensorArray) {
+        sensorManager.unregisterListener(this, sensor);
+      }
 
-    for (Sensor sensor : sensorArray) {
-      sensorManager.unregisterListener(this, sensor);
+      canReceiveLocationUpdates = false;
+      if (gapi.isConnected()) stopReceivingLocationUpdates();
+    } finally {
+      super.onPause();
     }
-
-    locationManager.removeUpdates(this);
   }
 
   private final float translateValue (Measurement measurement, float value) {
@@ -241,15 +254,39 @@ public class CompassActivity
     setLocation(location);
   }
 
-  @Override
-  public void onProviderDisabled (String provider) {
+  private final void startReceivingLocationUpdates () {
+    if (canReceiveLocationUpdates) {
+      if (!amReceivingLocationUpdates) {
+        LocationRequest request = new LocationRequest()
+          .setInterval(5000)
+          .setFastestInterval(5000)
+          .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+          ;
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(gapi, request, this);
+        amReceivingLocationUpdates = true;
+      }
+    }
+  }
+
+  private final void stopReceivingLocationUpdates () {
+    if (amReceivingLocationUpdates) {
+      LocationServices.FusedLocationApi.removeLocationUpdates(gapi, this);
+      amReceivingLocationUpdates = false;
+    }
   }
 
   @Override
-  public void onProviderEnabled (String provider) {
+  public void onConnected (Bundle connectionHint) {
+    setLocation(LocationServices.FusedLocationApi.getLastLocation(gapi));
+    startReceivingLocationUpdates();
   }
 
   @Override
-  public void onStatusChanged (String provider, int status, Bundle extras) {
+  public void onConnectionSuspended (int cause) {
+  }
+
+  @Override
+  public void onConnectionFailed (ConnectionResult result) {
   }
 }
