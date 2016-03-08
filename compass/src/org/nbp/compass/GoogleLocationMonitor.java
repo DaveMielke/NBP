@@ -81,6 +81,6 @@ public class GoogleLocationMonitor extends LocationMonitor implements
 
   @Override
   public void onConnectionFailed (ConnectionResult result) {
-    Log.d(LOG_TAG, "connection failed");
+    Log.w(LOG_TAG, ("connection failed: " + result.getErrorCode()));
   }
 }
