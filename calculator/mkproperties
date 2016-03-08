@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+. ./application.sh
+. ../properties.sh
+. ../resources.sh
+
+writeResourcesPrologue
+writeCommonResources
+writeResourcesEpilogue
+
+exit 0
