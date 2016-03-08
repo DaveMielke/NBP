@@ -2,8 +2,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="org.nbp.calculator"
-  android:versionCode="1"
-  android:versionName="1.0"
+  android:versionCode="@integer/NBP_Calculator_version_code"
+  android:versionName="@string/NBP_Calculator_version_name"
   >
 
   <application

@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <project name="custom_rules" default="help">
-  <property file="signing.properties" />
-
-  <exec
-    executable="sed"
-    input="res/values/properties.xml"
-    outputproperty="my.version.code"
-    >
-
-    <arg value="-n" />
-    <arg value="-e" />
-    <arg value="/_version_code/s/^.*> *\([0-9][0-9]*\).*$/\1/p" />
-  </exec>
-
-  <target name="fix-manifest-version-code">
-    <echo>setting manifest version code to ${prop.resources.NBP_Editor_version_code}</echo>
-
-    <exec executable="sed">
-      <arg value="-e" />
-      <arg value="/^ *android:versionCode *=/s/@integer\/[a-zA-Z0-9_]*/${my.version.code}/" />
-      <arg value="-i" />
-      <arg value="${out.manifest.abs.file}" />
-    </exec>
-  </target>
-
-  <target name="-pre-compile" depends="fix-manifest-version-code,android_rules.-pre-compile" />
+  <import file="../nbp_sign.xml" />
+  <import file="../version_code.xml" />
 </project>
