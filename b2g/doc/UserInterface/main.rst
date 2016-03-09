@@ -1,8 +1,8 @@
 .. include:: substitutions.rst
 
-====================
-The |user interface|
-====================
+=======================
+|user interface| Manual
+=======================
 
 .. include:: ../metadata.rst
 

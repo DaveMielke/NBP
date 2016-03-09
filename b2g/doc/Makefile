@@ -1,4 +1,4 @@
-DOCUMENT_NAMES = UserInterface
+DOCUMENT_NAMES = UserInterface QuickStart
 
 all: html txt
 LOCAL_FILES :=
