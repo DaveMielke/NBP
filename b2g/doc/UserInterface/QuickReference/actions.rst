@@ -40,8 +40,6 @@
 .. |FindPrevious| replace:: find the previous occurrence of the same text within the current screen element
 .. |ForceCrash| replace:: force a user interface action crash
 .. |Gallery| replace:: go to the Gallery app
-.. |HelpText| replace:: go to the plain text version of the user interface manual
-.. |HelpHTML| replace:: go to the HTML version of the user interface manual
 .. |Home| replace:: the keyboard Home key
 .. |HomeKey| replace:: the Android Home key
 .. |LiteraryBrailleOff| replace:: select computer braille (eight dots) mode
@@ -90,6 +88,8 @@
 .. |PasteFromClipboard| replace:: paste the current clipboard content
 .. |People| replace:: go to the People (Contacts) app
 .. |PowerOff| replace:: go to the Power Off screen
+.. |QuickStartText| replace:: go to the plain text version of the quick start guide
+.. |QuickStartHTML| replace:: go to the HTML version of the quick start guide
 .. |RecentApps| replace:: go to the Recent Apps screen
 .. |RemoveShortcut| replace:: remove a shortcut from the home screen
 .. |ResetHighlightedTyping| replace:: turn all of the highlighted typing styles off
@@ -150,6 +150,8 @@
 .. |TypingUnderlineOff| replace:: turn underlined typing off
 .. |TypingUnderlineOn| replace:: turn underlined typing on
 .. |UpdateEditor| replace:: update the NBP editor
+.. |UserManualText| replace:: go to the plain text version of the user interface manual
+.. |UserManualHTML| replace:: go to the HTML version of the user interface manual
 .. |VoiceCommand| replace:: initiate an Android voice command
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)

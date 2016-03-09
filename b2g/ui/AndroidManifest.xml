@@ -108,6 +108,12 @@
     </activity>
 
     <activity
+        android:name=".host.QuickStartActivity"
+        android:label="@string/quickStart_activity_label"
+        >
+    </activity>
+
+    <activity
         android:name=".host.RecoveryLogActivity"
         android:label="@string/recoveryLog_activity_label"
         >

@@ -4,6 +4,8 @@
   <string name="uri_ui_apk">http://brltty.com/archive/B2G/B2G_UI.apk</string>
   <string name="uri_ui_manual_html">http://brltty.com/archive/B2G/UserInterface.html</string>
   <string name="uri_ui_manual_text">http://brltty.com/archive/B2G/UserInterface.txt</string>
+  <string name="uri_ui_start_html">http://brltty.com/archive/B2G/QuickStart.html</string>
+  <string name="uri_ui_start_text">http://brltty.com/archive/B2G/QuickStart.txt</string>
 
   <string name="uri_editor_apk">http://brltty.com/archive/B2G/NBP_Editor.apk</string>
 

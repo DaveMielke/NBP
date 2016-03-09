@@ -50,6 +50,8 @@
   <string name="maintenance_VerifySystemUpdate_done">update verified</string>
   <string name="maintenance_ViewRecoveryLog_label">View Recovery Log</string>
 
+  <string name="quickStart_activity_label">B2G Quick Start Guide</string>
+
   <string name="recoveryLog_activity_label">Recovery Mode Log</string>
 
   <string name="shortcut_message_none">activity not found</string>

@@ -23,8 +23,12 @@ bind Space+Dots124#f FindForward
 bind Space+Dot7+Dots124#f FindPrevious
 bind Space+Dot8+Dots124#f FindNext
 
-bind Space+Dots125#h HelpText
-bind Space+Dots78+Dots125#h HelpHTML
+bind Space+Dots12345#q QuickStartText
+bind Space+Dots78+Dots12345#q QuickStartHTML
+
+bind Space+Dots125#h UserManualText
+bind Space+Dots78+Dots125#h UserManualHTML
+
 bind Space+Dot8+Dots125#h DescribeActions
 bind Space+Cursor DescribeCursorKeyActions
 

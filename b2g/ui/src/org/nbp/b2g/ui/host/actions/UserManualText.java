@@ -2,13 +2,13 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-public class HelpText extends InternalActivityAction {
+public class UserManualText extends InternalActivityAction {
   @Override
   protected Class getActivityClass () {
     return UserManualActivity.class;
   }
 
-  public HelpText (Endpoint endpoint) {
+  public UserManualText (Endpoint endpoint) {
     super(endpoint, false);
   }
 }
