@@ -190,5 +190,5 @@ answers to frequently asked questions,
 and, eventually, a forum for customers to share discoveries and ask questions.
 
 We provide customer support for questions that may arise.
-It may be reached by phone at |customer service phone number|.   
+It may be reached by phone at |customer support phone number|.   
 
