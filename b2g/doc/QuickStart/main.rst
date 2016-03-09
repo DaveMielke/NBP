@@ -180,7 +180,7 @@ The braille display will then say "Power off" one more time,
 and then, after a few seconds, you will feel a vibration
 and the |product name| will be shut down.  
 
-Customer Service
+Customer Support
 ================
 
 |organization name| will be regularly adding information to our website
@@ -189,6 +189,6 @@ free apps that you can download,
 answers to frequently asked questions,
 and, eventually, a forum for customers to share discoveries and ask questions.
 
-We provide customer service support for questions that may arise.
+We provide customer support for questions that may arise.
 It may be reached by phone at |customer service phone number|.   
 
