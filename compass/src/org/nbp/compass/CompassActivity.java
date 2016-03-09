@@ -57,7 +57,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
 
     sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-    locationMonitor = new GPSLocationMonitor(this);
+    locationMonitor = new BestLocationMonitor(this);
 
     {
       int count = 0;

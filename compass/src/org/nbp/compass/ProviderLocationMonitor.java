@@ -22,11 +22,18 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
     setLocation(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
   }
 
+  protected final LocationManager getLocationManager () {
+    return locationManager;
+  }
+
   @Override
   public final void start () {
+    String provider = getLocationProvider();
+    Log.d(LOG_TAG, ("location provider: " + provider));
+
     try {
       locationManager.requestLocationUpdates(
-        getLocationProvider(), 10000, 10f, this
+        provider, 10000, 10f, this
       );
 
       amMonitoring = true;
