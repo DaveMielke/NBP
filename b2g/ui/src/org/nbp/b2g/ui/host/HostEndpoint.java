@@ -111,13 +111,7 @@ public class HostEndpoint extends Endpoint {
         }
       }
     } else if ((text = node.getContentDescription()) != null) {
-      int start = sb.length();
-
-      sb.append('[');
       sb.append(text);
-      sb.append(']');
-
-      setSpeechSpan(sb, start, text);
     } else {
       String type = ScreenUtilities.getClassName(node);
       int start = sb.length();

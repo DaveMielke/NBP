@@ -117,12 +117,13 @@ position. For example::
   ⣏⠀⣹ Off
   ⣏⠶⣹ On
 
-If a screen element has no text of its own but its developer has 
-provided a textual description of it, then that description, enclosed 
-within [brackets], is displayed. For example::
+If a screen element has no text of its own,
+but its developer has provided a textual description of it,
+then that description is displayed.
+For example::
 
-  [More options]
-  [Navigate up]
+  More options
+  Navigate up
 
 If meaningful text for a screen element can't be found then it is
 rendered as its widget type enclosed within {braces}. For example::
