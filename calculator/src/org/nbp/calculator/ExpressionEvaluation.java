@@ -313,8 +313,8 @@ public class ExpressionEvaluation {
     return value;
   }
 
-  public final String getResult () {
-    return Double.toString(expressionResult);
+  public final double getResult () {
+    return expressionResult;
   }
 
   public ExpressionEvaluation (String expression) throws ExpressionException {
