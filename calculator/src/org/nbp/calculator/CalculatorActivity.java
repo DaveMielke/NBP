@@ -15,6 +15,24 @@ public class CalculatorActivity extends CommonActivity {
   private TextView resultView;
   private ViewGroup keysView;
 
+  private final void setButtonListener (int button, Button.OnClickListener listener) {
+    ((Button)findViewById(button)).setOnClickListener(listener);
+  }
+
+  private final void addClearListener () {
+    setButtonListener(
+      R.id.button_clear,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          expressionView.setText("");
+          resultView.setText("");
+          expressionView.requestFocus();
+        }
+      }
+    );
+  }
+
   private final void evaluateExpression () {
     String expression = expressionView.getText().toString();
 
@@ -82,7 +100,10 @@ public class CalculatorActivity extends CommonActivity {
     resultView = (TextView)findViewById(R.id.result);
     keysView = (ViewGroup)findViewById(R.id.keys);
 
+    addClearListener();
     addEvaluateListener();
     addKeyListeners();
+
+    expressionView.requestFocus();
   }
 }

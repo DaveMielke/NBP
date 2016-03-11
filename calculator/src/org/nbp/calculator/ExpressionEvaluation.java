@@ -10,6 +10,7 @@ public class ExpressionEvaluation {
   private static enum TokenType {
     NUMBER,
     IDENTIFIER,
+    RESULT,
     OPEN,
     CLOSE,
     ASSIGN,
@@ -69,6 +70,10 @@ public class ExpressionEvaluation {
       TokenType type;
 
       switch (character) {
+        case '?':
+          type = TokenType.RESULT;
+          break;
+
         case '(':
           type = TokenType.OPEN;
           break;

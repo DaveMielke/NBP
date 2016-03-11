@@ -5,6 +5,10 @@
 
   <string name="label_result">Result:</string>
 
+  <string name="hint_expression">type expression</string>
+
+  <string name="button_clear">Clear</string>
+
   <string name="error_function">undefined function</string>
   <string name="error_syntax">syntax error</string>
   <string name="error_term">missing term</string>
