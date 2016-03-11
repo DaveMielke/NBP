@@ -3,6 +3,8 @@ package org.nbp.calculator;
 import java.util.HashMap;
 
 public abstract class Variables {
+  public final static String RESULT = "$RESULT";
+
   private static class VariableMap extends HashMap<String, Double> {
     public VariableMap () {
     }

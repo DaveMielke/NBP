@@ -38,13 +38,10 @@ public class CalculatorActivity extends CommonActivity {
 
     try {
       ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
+      double result = evaluation.getResult();
 
-      resultView.setText(
-        String.format(
-          "%,.12G",
-          evaluation.getResult()
-        )
-      );
+      resultView.setText(String.format("%,.12G", result));
+      Variables.set(Variables.RESULT, result);
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
       expressionView.setSelection(exception.getLocation());

@@ -84,7 +84,7 @@ public class ExpressionEvaluation {
       TokenType type;
 
       switch (character) {
-        case '?':
+        case '$':
           type = TokenType.RESULT;
           break;
 
@@ -202,6 +202,16 @@ public class ExpressionEvaluation {
 
         case OPEN:
           return evaluateSubexpression();
+
+        case RESULT: {
+          Double value = Variables.get(Variables.RESULT);
+          if (value != null) return value;
+
+          throw new ExpressionException(
+            R.string.error_result,
+            getTokenDescriptor().getStart()
+          );
+        }
 
         case NUMBER: {
           double value = Double.valueOf(getTokenText());

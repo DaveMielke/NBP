@@ -293,7 +293,7 @@
     <Button
       android:layout_row="7"
       android:layout_column="4"
-      android:text="\?"
+      android:text="$"
      />
   </GridLayout>
 </LinearLayout>
