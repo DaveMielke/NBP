@@ -15,7 +15,7 @@ public abstract class Functions {
     systemFunctions.put("abs",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.abs(argument);
         }
       }
@@ -24,7 +24,7 @@ public abstract class Functions {
     systemFunctions.put("round",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.rint(argument);
         }
       }
@@ -33,7 +33,7 @@ public abstract class Functions {
     systemFunctions.put("floor",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.floor(argument);
         }
       }
@@ -42,7 +42,7 @@ public abstract class Functions {
     systemFunctions.put("ceil",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.ceil(argument);
         }
       }
@@ -51,7 +51,7 @@ public abstract class Functions {
     systemFunctions.put("sqrt",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.sqrt(argument);
         }
       }
@@ -60,7 +60,7 @@ public abstract class Functions {
     systemFunctions.put("cbrt",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.cbrt(argument);
         }
       }
@@ -69,7 +69,7 @@ public abstract class Functions {
     systemFunctions.put("exp",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.exp(argument);
         }
       }
@@ -78,7 +78,7 @@ public abstract class Functions {
     systemFunctions.put("log",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.log(argument);
         }
       }
@@ -87,25 +87,25 @@ public abstract class Functions {
     systemFunctions.put("log10",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.log10(argument);
         }
       }
     );
 
-    systemFunctions.put("r2d",
+    systemFunctions.put("rad2deg",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.toDegrees(argument);
         }
       }
     );
 
-    systemFunctions.put("d2r",
+    systemFunctions.put("deg2rad",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.toRadians(argument);
         }
       }
@@ -114,7 +114,7 @@ public abstract class Functions {
     systemFunctions.put("sin",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.sin(argument);
         }
       }
@@ -123,7 +123,7 @@ public abstract class Functions {
     systemFunctions.put("cos",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.cos(argument);
         }
       }
@@ -132,7 +132,7 @@ public abstract class Functions {
     systemFunctions.put("tan",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.tan(argument);
         }
       }
@@ -141,7 +141,7 @@ public abstract class Functions {
     systemFunctions.put("asin",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.asin(argument);
         }
       }
@@ -150,7 +150,7 @@ public abstract class Functions {
     systemFunctions.put("acos",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.acos(argument);
         }
       }
@@ -159,7 +159,7 @@ public abstract class Functions {
     systemFunctions.put("atan",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.atan(argument);
         }
       }
@@ -168,7 +168,7 @@ public abstract class Functions {
     systemFunctions.put("sinh",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.sinh(argument);
         }
       }
@@ -177,7 +177,7 @@ public abstract class Functions {
     systemFunctions.put("cosh",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.cosh(argument);
         }
       }
@@ -186,7 +186,7 @@ public abstract class Functions {
     systemFunctions.put("tanh",
       new Function() {
         @Override
-        public double call (double argument) {
+        protected final double evaluate (double argument) {
           return Math.tanh(argument);
         }
       }

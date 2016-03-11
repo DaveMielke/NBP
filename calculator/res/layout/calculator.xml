@@ -59,7 +59,7 @@
     <Button
       android:layout_row="0"
       android:layout_column="0"
-      android:text="d2r()"
+      android:text="deg2rad()"
      />
 
     <Button
@@ -89,7 +89,7 @@
     <Button
       android:layout_row="1"
       android:layout_column="0"
-      android:text="r2d()"
+      android:text="rad2deg()"
      />
 
     <Button

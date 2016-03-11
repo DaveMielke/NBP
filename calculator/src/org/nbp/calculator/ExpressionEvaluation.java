@@ -2,6 +2,8 @@ package org.nbp.calculator;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class ExpressionEvaluation {
   private final String expressionText;
@@ -46,7 +48,19 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final List<TokenDescriptor> tokenDescriptors = new ArrayList<TokenDescriptor>();
+  private final List<TokenDescriptor> tokenDescriptors
+     = new ArrayList<TokenDescriptor>();
+
+  private final static Pattern NUMBER_PATTERN = Pattern.compile(
+    "\\d*(\\.\\d+)?([eE][-+]?\\d+)?"
+  );
+
+  private final int findEndOfNumber (int start, int end) {
+    Matcher matcher = NUMBER_PATTERN.matcher(expressionText);
+    matcher.region(start, end);
+    matcher.lookingAt();
+    return matcher.end();
+  }
 
   private final void parseExpression () throws ExpressionException {
     tokenDescriptors.clear();
@@ -106,6 +120,11 @@ public class ExpressionEvaluation {
           type = TokenType.EXPONENTIATE;
           break;
 
+        case '.':
+          type = TokenType.NUMBER;
+          end = findEndOfNumber(start, length);
+          break;
+
         default:
           if (Character.isLetter(character)) {
             type = TokenType.IDENTIFIER;
@@ -116,11 +135,7 @@ public class ExpressionEvaluation {
             }
           } else if (Character.isDigit(character)) {
             type = TokenType.NUMBER;
-
-            while (end < length) {
-              if (!Character.isDigit(expressionText.charAt(end))) break;
-              end += 1;
-            }
+            end = findEndOfNumber(start, length);
           } else {
             throw new ExpressionException(R.string.error_syntax, start);
           }
@@ -156,6 +171,19 @@ public class ExpressionEvaluation {
     return getTokenText(getTokenDescriptor());
   }
 
+  private final double evaluateSubexpression () throws ExpressionException {
+    int start = getTokenDescriptor().getStart();
+    nextToken();
+    double value = evaluateExpression();
+
+    if (getTokenType() != TokenType.CLOSE) {
+      throw new ExpressionException(R.string.error_unclosed, start);
+    }
+
+    nextToken();
+    return value;
+  }
+
   private final double evaluateTerm () throws ExpressionException {
     while (true) {
       TokenType type = getTokenType();
@@ -169,18 +197,8 @@ public class ExpressionEvaluation {
           nextToken();
           return -evaluateTerm();
 
-        case OPEN: {
-          int start = getTokenDescriptor().getStart();
-          nextToken();
-          double value = evaluateExpression();
-
-          if (getTokenType() != TokenType.CLOSE) {
-            throw new ExpressionException(R.string.error_unclosed, start);
-          }
-
-          nextToken();
-          return value;
-        }
+        case OPEN:
+          return evaluateSubexpression();
 
         case NUMBER: {
           double value = Double.valueOf(getTokenText());
@@ -209,15 +227,7 @@ public class ExpressionEvaluation {
                 throw new ExpressionException(R.string.error_function, token.getStart());
               }
 
-              nextToken();
-              double argument = evaluateExpression();
-
-              if (getTokenType() != TokenType.CLOSE) {
-                throw new ExpressionException(R.string.error_unclosed, token.getStart());
-              }
-
-              nextToken();
-              return function.call(argument);
+              return function.call(evaluateSubexpression());
             }
 
             default: {
