@@ -148,9 +148,11 @@ public class ExpressionEvaluation {
     return expressionText.substring(token.getStart(), token.getEnd());
   }
 
-  private final double evaluateTerm () {
+  private final double evaluateTerm () throws ExpressionException {
     while (true) {
-      switch (getTokenType()) {
+      TokenType type = getTokenType();
+
+      switch (type) {
         case PLUS:
           nextToken();
           return evaluateTerm();
@@ -159,19 +161,37 @@ public class ExpressionEvaluation {
           nextToken();
           return -evaluateTerm();
 
+        case OPEN: {
+          int start = getTokenDescriptor().getStart();
+          nextToken();
+          double value = evaluateExpression();
+
+          if (getTokenType() != TokenType.CLOSE) {
+            throw new ExpressionException(R.string.error_unclosed, start);
+          }
+
+          nextToken();
+          return value;
+        }
+
         case NUMBER: {
           double value = Double.valueOf(getTokenText());
           nextToken();
           return value;
         }
 
-        default:
-          return 0f;
+        default: {
+          int start = (type == TokenType.END)?
+                      expressionText.length():
+                      getTokenDescriptor().getStart();
+
+          throw new ExpressionException(R.string.error_missing, start);
+        }
       }
     }
   }
 
-  private final double evaluateExponentiations () {
+  private final double evaluateExponentiations () throws ExpressionException {
     double value = evaluateTerm();
 
     while (true) {
@@ -187,7 +207,7 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final double evaluateProductsAndQuotients () {
+  private final double evaluateProductsAndQuotients () throws ExpressionException {
     double value = evaluateExponentiations();
 
     while (true) {
@@ -208,7 +228,7 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final double evaluateSumsAndDifferences () {
+  private final double evaluateSumsAndDifferences () throws ExpressionException {
     double value = evaluateProductsAndQuotients();
 
     while (true) {
@@ -229,7 +249,7 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final double evaluateExpression () {
+  private final double evaluateExpression () throws ExpressionException {
     double value = evaluateSumsAndDifferences();
     return value;
   }
@@ -244,5 +264,15 @@ public class ExpressionEvaluation {
 
     tokenCount = tokenDescriptors.size();
     expressionResult = evaluateExpression();
+    TokenDescriptor token = getTokenDescriptor();
+
+    if (token != null) {
+      TokenType type = token.getType();
+      int start = token.getStart();
+
+      if (type == TokenType.CLOSE) {
+        throw new ExpressionException(R.string.error_unopened, start);
+      }
+    }
   }
 }
