@@ -188,17 +188,39 @@ public class ExpressionEvaluation {
           String name = getTokenText(token);
           nextToken();
 
-          if (getTokenType() == TokenType.ASSIGN) {
-            nextToken();
-            double value = evaluateExpression();
+          switch (getTokenType()) {
+            case ASSIGN: {
+              nextToken();
+              double value = evaluateExpression();
 
-            Variables.set(name, value);
-            return value;
-          } else {
-            Double value = Variables.get(name);
-            if (value != null) return value;
+              Variables.set(name, value);
+              return value;
+            }
 
-            throw new ExpressionException(R.string.error_undefined, token.getStart());
+            case OPEN: {
+              Function function = Functions.get(name);
+
+              if (function == null) {
+                throw new ExpressionException(R.string.error_function, token.getStart());
+              }
+
+              nextToken();
+              double argument = evaluateExpression();
+
+              if (getTokenType() != TokenType.CLOSE) {
+                throw new ExpressionException(R.string.error_unclosed, token.getStart());
+              }
+
+              nextToken();
+              return function.call(argument);
+            }
+
+            default: {
+              Double value = Variables.get(name);
+              if (value != null) return value;
+
+              throw new ExpressionException(R.string.error_variable, token.getStart());
+            }
           }
         }
 
@@ -207,7 +229,7 @@ public class ExpressionEvaluation {
                       expressionText.length():
                       getTokenDescriptor().getStart();
 
-          throw new ExpressionException(R.string.error_missing, start);
+          throw new ExpressionException(R.string.error_term, start);
         }
       }
     }

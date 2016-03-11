@@ -5,9 +5,10 @@
 
   <string name="label_result">Result:</string>
 
-  <string name="error_missing">missing term</string>
+  <string name="error_function">undefined function</string>
   <string name="error_syntax">syntax error</string>
+  <string name="error_term">missing term</string>
   <string name="error_unclosed">unclosed bracket</string>
-  <string name="error_undefined">undefined variable</string>
   <string name="error_unopened">unopened bracket</string>
+  <string name="error_variable">undefined variable</string>
 </resources>
