@@ -180,6 +180,21 @@ public class ExpressionEvaluation {
           return value;
         }
 
+        case IDENTIFIER: {
+          String name = getTokenText();
+          Double value = Variables.get(name);
+
+          if (value == null) {
+            throw new ExpressionException(
+              R.string.error_undefined,
+              getTokenDescriptor().getStart()
+            );
+          }
+
+          nextToken();
+          return value;
+        }
+
         default: {
           int start = (type == TokenType.END)?
                       expressionText.length():
