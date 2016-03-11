@@ -59,55 +59,55 @@
     <Button
       android:layout_row="0"
       android:layout_column="0"
-      android:text="deg2rad()"
-     />
-
-    <Button
-      android:layout_row="0"
-      android:layout_column="1"
       android:text="sin()"
      />
 
     <Button
       android:layout_row="0"
-      android:layout_column="2"
+      android:layout_column="1"
       android:text="cos()"
      />
 
     <Button
       android:layout_row="0"
-      android:layout_column="3"
+      android:layout_column="2"
       android:text="tan()"
      />
 
     <Button
       android:layout_row="0"
-      android:layout_column="4"
-      android:text="sqrt()"
+      android:layout_column="3"
+      android:text="deg2rad()"
      />
 
     <Button
-      android:layout_row="1"
-      android:layout_column="0"
+      android:layout_row="0"
+      android:layout_column="4"
       android:text="rad2deg()"
      />
 
     <Button
       android:layout_row="1"
-      android:layout_column="1"
+      android:layout_column="0"
       android:text="asin()"
      />
 
     <Button
       android:layout_row="1"
-      android:layout_column="2"
+      android:layout_column="1"
       android:text="acos()"
      />
 
     <Button
       android:layout_row="1"
-      android:layout_column="3"
+      android:layout_column="2"
       android:text="atan()"
+     />
+
+    <Button
+      android:layout_row="1"
+      android:layout_column="3"
+      android:text="sqrt()"
      />
 
     <Button
@@ -119,61 +119,61 @@
     <Button
       android:layout_row="2"
       android:layout_column="0"
-      android:text="pi"
-     />
-
-    <Button
-      android:layout_row="2"
-      android:layout_column="1"
       android:text="sinh()"
      />
 
     <Button
       android:layout_row="2"
-      android:layout_column="2"
+      android:layout_column="1"
       android:text="cosh()"
      />
 
     <Button
       android:layout_row="2"
-      android:layout_column="3"
+      android:layout_column="2"
       android:text="tanh()"
      />
 
     <Button
       android:layout_row="2"
-      android:layout_column="4"
+      android:layout_column="3"
       android:text="round()"
+     />
+
+    <Button
+      android:layout_row="2"
+      android:layout_column="4"
+      android:text="abs()"
      />
 
     <Button
       android:layout_row="3"
       android:layout_column="0"
-      android:text="e"
-     />
-
-    <Button
-      android:layout_row="3"
-      android:layout_column="1"
-      android:text="exp()"
-     />
-
-    <Button
-      android:layout_row="3"
-      android:layout_column="2"
-      android:text="log()"
-     />
-
-    <Button
-      android:layout_row="3"
-      android:layout_column="3"
       android:text="log10()"
      />
 
     <Button
       android:layout_row="3"
+      android:layout_column="1"
+      android:text="log()"
+     />
+
+    <Button
+      android:layout_row="3"
+      android:layout_column="2"
+      android:text="exp()"
+     />
+
+    <Button
+      android:layout_row="3"
+      android:layout_column="3"
+      android:text="e"
+     />
+
+    <Button
+      android:layout_row="3"
       android:layout_column="4"
-      android:text="abs()"
+      android:text="pi"
      />
 
     <Button
