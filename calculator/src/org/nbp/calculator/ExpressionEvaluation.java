@@ -105,14 +105,17 @@ public class ExpressionEvaluation {
           break;
 
         case '-':
+        case '−':
           type = TokenType.MINUS;
           break;
 
         case '*':
+        case '×':
           type = TokenType.TIMES;
           break;
 
         case '/':
+        case '÷':
           type = TokenType.DIVIDE;
           break;
 

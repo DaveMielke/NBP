@@ -119,7 +119,7 @@
     <Button
       android:layout_row="2"
       android:layout_column="0"
-      android:text="pi()"
+      android:text="pi"
      />
 
     <Button
@@ -197,7 +197,7 @@
     <Button
       android:layout_row="4"
       android:layout_column="3"
-      android:text="/"
+      android:text="÷"
      />
 
     <Button
@@ -227,7 +227,7 @@
     <Button
       android:layout_row="5"
       android:layout_column="3"
-      android:text="*"
+      android:text="×"
      />
 
     <Button
@@ -257,7 +257,7 @@
     <Button
       android:layout_row="6"
       android:layout_column="3"
-      android:text="-"
+      android:text="−"
      />
 
     <Button
@@ -269,13 +269,13 @@
     <Button
       android:layout_row="7"
       android:layout_column="0"
-      android:text="."
+      android:text="0"
      />
 
     <Button
       android:layout_row="7"
       android:layout_column="1"
-      android:text="0"
+      android:text="."
      />
 
     <Button
