@@ -2,4 +2,8 @@
 
 <resources>
   <string name="app_name">NBP Calculator</string>
+
+  <string name="label_result">Result:</string>
+
+  <string name="error_syntax">syntax error</string>
 </resources>
