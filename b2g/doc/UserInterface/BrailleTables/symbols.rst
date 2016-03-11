@@ -20,6 +20,7 @@
   \«     U+00AB  ⡷     123567   Left-pointing Double Angle Quotation Mark
   \»     U+00BB  ⡾     234567   Right-pointing Double Angle Quotation Mark
   \±     U+00B1  ⡬     3467     Plus-Minus Sign
+  \−     U+2212  ⡤     367      Minus Sign
   \×     U+00D7  ⡡     167      Multiplication Sign
   \÷     U+00F7  ⡌     347      Division Sign
   \≠     U+2260  ⡿     1234567  Not-Equal-To Sign
