@@ -143,9 +143,12 @@ public class ExpressionEvaluation {
     return token.getType();
   }
 
-  private final String getTokenText () {
-    TokenDescriptor token = getTokenDescriptor();
+  private final String getTokenText (TokenDescriptor token) {
     return expressionText.substring(token.getStart(), token.getEnd());
+  }
+
+  private final String getTokenText () {
+    return getTokenText(getTokenDescriptor());
   }
 
   private final double evaluateTerm () throws ExpressionException {
@@ -181,18 +184,22 @@ public class ExpressionEvaluation {
         }
 
         case IDENTIFIER: {
-          String name = getTokenText();
-          Double value = Variables.get(name);
-
-          if (value == null) {
-            throw new ExpressionException(
-              R.string.error_undefined,
-              getTokenDescriptor().getStart()
-            );
-          }
-
+          TokenDescriptor token = getTokenDescriptor();
+          String name = getTokenText(token);
           nextToken();
-          return value;
+
+          if (getTokenType() == TokenType.ASSIGN) {
+            nextToken();
+            double value = evaluateExpression();
+
+            Variables.set(name, value);
+            return value;
+          } else {
+            Double value = Variables.get(name);
+            if (value != null) return value;
+
+            throw new ExpressionException(R.string.error_undefined, token.getStart());
+          }
         }
 
         default: {
