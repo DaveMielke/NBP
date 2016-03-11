@@ -66,6 +66,33 @@ public abstract class Functions {
       }
     );
 
+    systemFunctions.put("exp",
+      new Function() {
+        @Override
+        public double call (double argument) {
+          return Math.exp(argument);
+        }
+      }
+    );
+
+    systemFunctions.put("log",
+      new Function() {
+        @Override
+        public double call (double argument) {
+          return Math.log(argument);
+        }
+      }
+    );
+
+    systemFunctions.put("log10",
+      new Function() {
+        @Override
+        public double call (double argument) {
+          return Math.log10(argument);
+        }
+      }
+    );
+
     systemFunctions.put("r2d",
       new Function() {
         @Override
