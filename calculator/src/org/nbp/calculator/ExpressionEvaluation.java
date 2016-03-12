@@ -10,7 +10,8 @@ public class ExpressionEvaluation {
   private final double expressionResult;
 
   private static enum TokenType {
-    NUMBER,
+    DECIMAL,
+    HEXADECIMAL,
     IDENTIFIER,
     RESULT,
     OPEN,
@@ -51,15 +52,27 @@ public class ExpressionEvaluation {
   private final List<TokenDescriptor> tokenDescriptors
      = new ArrayList<TokenDescriptor>();
 
-  private final static Pattern NUMBER_PATTERN = Pattern.compile(
-    "\\d*(\\.\\d+)?([eE][-+]?\\d+)?"
-  );
-
-  private final int findEndOfNumber (int start, int end) {
-    Matcher matcher = NUMBER_PATTERN.matcher(expressionText);
+  private final int findEndOfPattern (Pattern pattern, int start, int end) {
+    Matcher matcher = pattern.matcher(expressionText);
     matcher.region(start, end);
     matcher.lookingAt();
     return matcher.end();
+  }
+
+  private final static Pattern DECIMAL_PATTERN = Pattern.compile(
+    "\\d*(\\.\\d+)?([eE][-+]?\\d+)?"
+  );
+
+  private final int findEndOfDecimal (int start, int end) {
+    return findEndOfPattern(DECIMAL_PATTERN, start, end);
+  }
+
+  private final static Pattern HEXADECIMAL_PATTERN = Pattern.compile(
+    "#[\\da-fA-F]+"
+  );
+
+  private final int findEndOfHexadecimal (int start, int end) {
+    return findEndOfPattern(HEXADECIMAL_PATTERN, start, end);
   }
 
   private final void parseExpression () throws ExpressionException {
@@ -124,8 +137,13 @@ public class ExpressionEvaluation {
           break;
 
         case '.':
-          type = TokenType.NUMBER;
-          end = findEndOfNumber(start, length);
+          type = TokenType.DECIMAL;
+          end = findEndOfDecimal(start, length);
+          break;
+
+        case '#':
+          type = TokenType.HEXADECIMAL;
+          end = findEndOfHexadecimal(start, length);
           break;
 
         default:
@@ -137,8 +155,8 @@ public class ExpressionEvaluation {
               end += 1;
             }
           } else if (Character.isDigit(character)) {
-            type = TokenType.NUMBER;
-            end = findEndOfNumber(start, length);
+            type = TokenType.DECIMAL;
+            end = findEndOfDecimal(start, length);
           } else {
             throw new ExpressionException(R.string.error_syntax, start);
           }
@@ -205,16 +223,29 @@ public class ExpressionEvaluation {
 
         case RESULT: {
           Double value = Variables.get(Variables.RESULT);
-          if (value != null) return value;
 
-          throw new ExpressionException(
-            R.string.error_result,
-            getTokenDescriptor().getStart()
-          );
+          if (value == null) {
+            throw new ExpressionException(
+              R.string.error_result,
+              getTokenDescriptor().getStart()
+            );
+          }
+
+          nextToken();
+          return value;
         }
 
-        case NUMBER: {
+        case DECIMAL: {
           double value = Double.valueOf(getTokenText());
+          nextToken();
+          return value;
+        }
+
+        case HEXADECIMAL: {
+          double value = Double.valueOf(
+            ("0X" + getTokenText().substring(1) + "P0")
+          );
+
           nextToken();
           return value;
         }
@@ -345,6 +376,10 @@ public class ExpressionEvaluation {
       if (type == TokenType.CLOSE) {
         throw new ExpressionException(R.string.error_unopened, start);
       }
+    }
+
+    if (expressionResult == Double.NaN) {
+      throw new ExpressionException(R.string.error_value, expressionText.length());
     }
   }
 }
