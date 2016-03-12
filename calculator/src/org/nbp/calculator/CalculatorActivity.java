@@ -90,10 +90,16 @@ public class CalculatorActivity extends CommonActivity {
 
         if (exponent != 0) {
           sb.append("×10^");
+
+          if (exponent < 0) {
+            if (sign.equals("-")) sb.append('−');
+            exponent = -exponent;
+          }
+
           sb.append(exponent);
         }
 
-        if (sign.equals("-")) sb.insert(0, sign);
+        if (sign.equals("-")) sb.insert(0, '−');
         text = sb.toString();
       }
 
