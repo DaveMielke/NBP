@@ -52,18 +52,18 @@ public class ExpressionEvaluation {
   private final List<TokenDescriptor> tokenDescriptors
      = new ArrayList<TokenDescriptor>();
 
-  private final int findEndOfPattern (Pattern pattern, int start, int end) {
+  private final int findEndOfPattern (Pattern pattern, int start, int end) throws ExpressionException {
     Matcher matcher = pattern.matcher(expressionText);
     matcher.region(start, end);
-    matcher.lookingAt();
-    return matcher.end();
+    if (matcher.lookingAt()) return matcher.end();
+    throw new ExpressionException(R.string.error_value, start);
   }
 
   private final static Pattern DECIMAL_PATTERN = Pattern.compile(
     "\\d*(\\.\\d+)?([eE][-+]?\\d+)?"
   );
 
-  private final int findEndOfDecimal (int start, int end) {
+  private final int findEndOfDecimal (int start, int end) throws ExpressionException {
     return findEndOfPattern(DECIMAL_PATTERN, start, end);
   }
 
@@ -71,7 +71,7 @@ public class ExpressionEvaluation {
     "#[\\da-fA-F]+"
   );
 
-  private final int findEndOfHexadecimal (int start, int end) {
+  private final int findEndOfHexadecimal (int start, int end) throws ExpressionException {
     return findEndOfPattern(HEXADECIMAL_PATTERN, start, end);
   }
 
@@ -378,8 +378,8 @@ public class ExpressionEvaluation {
       }
     }
 
-    if (expressionResult == Double.NaN) {
-      throw new ExpressionException(R.string.error_value, expressionText.length());
+    if (Double.isNaN(expressionResult)) {
+      throw new ExpressionException(R.string.error_undefined, expressionText.length());
     }
   }
 }
