@@ -67,12 +67,28 @@ public class CalculatorActivity extends CommonActivity {
         String exponentValue = getMatch(text, matcher, 5);
 
         if (!exponentSign.equals("-")) exponentSign = "";
+        if (exponentValue.isEmpty()) exponentValue = "0";
         int exponent = Integer.valueOf((exponentSign + exponentValue));
 
         StringBuilder sb = new StringBuilder();
         sb.append(before);
         exponent += before.length();
         sb.append(after);
+
+        {
+          int length = sb.length();
+
+          if (length == 0) {
+            sb.append('0');
+          } else {
+            while (length > 1) {
+              int last = length - 1;
+              if (sb.charAt(last) != '0') break;
+              sb.delete(last, length);
+              length = last;
+            }
+          }
+        }
 
         if ((exponent >= 1) && (exponent <= 12)) {
           if (sb.length() > exponent) {
@@ -109,8 +125,6 @@ public class CalculatorActivity extends CommonActivity {
       resultView.setText(exception.getMessage());
       expressionView.setSelection(exception.getLocation());
     }
-
-    resultView.requestFocus();
   }
 
   private final void addEvaluateListener () {
@@ -137,6 +151,7 @@ public class CalculatorActivity extends CommonActivity {
 
         if (text.equals("=")) {
           evaluateExpression();
+          resultView.requestFocus();
         } else {
           int start = expressionView.getSelectionStart();
           int end = expressionView.getSelectionEnd();
