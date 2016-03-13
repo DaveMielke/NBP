@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="app_name">NBP Phone</string>
+
+  <string name="hint_phone_number">phone number</string>
+</resources>
