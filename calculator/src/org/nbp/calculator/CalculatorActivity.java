@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.KeyEvent;
 
 import android.widget.TextView;
 import android.widget.EditText;
@@ -128,13 +129,22 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void addEvaluateListener () {
-    expressionView.setOnFocusChangeListener(
-      new View.OnFocusChangeListener() {
+    expressionView.setOnEditorActionListener(
+      new TextView.OnEditorActionListener() {
         @Override
-        public void onFocusChange (View view, boolean hasFocus) {
-          if (!hasFocus) {
-            evaluateExpression();
+        public boolean onEditorAction (TextView view, int action, KeyEvent event) {
+          if (event != null) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+              if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                evaluateExpression();
+                resultView.requestFocus();
+              }
+
+              return true;
+            }
           }
+
+          return false;
         }
       }
     );
