@@ -22,7 +22,7 @@ public class PhoneActivity extends Activity {
     String phoneNumber = phoneNumberView.getText().toString();
 
     Intent intent = new Intent(
-      Intent.ACTION_DIAL,
+      Intent.ACTION_CALL,
       Uri.parse(("tel:" + phoneNumber))
     );
 
@@ -78,6 +78,7 @@ public class PhoneActivity extends Activity {
         @Override
         public void onClick (View view) {
           dialPhoneNumber();
+          phoneNumberView.requestFocus();
         }
       }
     );
