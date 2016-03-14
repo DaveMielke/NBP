@@ -10,6 +10,7 @@
   <string name="button_clear">Clear</string>
 
   <string name="error_function">unknown function</string>
+  <string name="error_protected">protected variable</string>
   <string name="error_result">no result yet</string>
   <string name="error_syntax">syntax error</string>
   <string name="error_term">missing term</string>

@@ -2,6 +2,11 @@ package org.nbp.calculator;
 
 import java.util.HashMap;
 
+import org.nbp.common.CommonContext;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public abstract class Variables {
   public final static String RESULT = "$RESULT";
 
@@ -11,21 +16,32 @@ public abstract class Variables {
   }
 
   private final static VariableMap systemVariables = new VariableMap();
-  private final static VariableMap userVariables = new VariableMap();
 
   static {
     systemVariables.put("pi", Math.PI);
     systemVariables.put("e", Math.E);
   }
 
-  public static Double get (String name) {
-    Double value = userVariables.get(name);
-    if (value == null) value = systemVariables.get(name);
-    return value;
+  private static Context getContext () {
+    return CommonContext.getContext();
   }
 
-  public static void set (String name, double value) {
-    userVariables.put(name, value);
+  private static SharedPreferences getUserVariables () {
+    return getContext().getSharedPreferences("variables", Context.MODE_PRIVATE);
+  }
+
+  public static Double get (String name) {
+    SharedPreferences variables = getUserVariables();
+
+    return variables.contains(name)?
+           Double.valueOf(variables.getString(name, "0f")):
+           systemVariables.get(name);
+  }
+
+  public static boolean set (String name, double value) {
+    if (systemVariables.containsKey(name)) return false;
+    getUserVariables().edit().putString(name, Double.toString(value)).apply();
+    return true;
   }
 
   private Variables () {

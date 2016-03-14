@@ -260,7 +260,13 @@ public class ExpressionEvaluation {
               nextToken();
               double value = evaluateExpression();
 
-              Variables.set(name, value);
+              if (!Variables.set(name, value)) {
+                throw new ExpressionException(
+                  R.string.error_protected,
+                  token.getStart()
+                );
+              }
+
               return value;
             }
 
