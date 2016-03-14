@@ -1,5 +1,6 @@
 package org.nbp.calculator;
 
+import java.util.Set;
 import java.util.HashMap;
 
 import org.nbp.common.CommonContext;
@@ -10,26 +11,9 @@ import android.content.SharedPreferences;
 public abstract class Variables {
   public final static String RESULT = "$RESULT";
 
-  public static class SystemVariable {
-    private final double value;
-    private final String description;
-
-    public final double getValue () {
-      return value;
-    }
-
-    public final String getDescription () {
-      return description;
-    }
-
-    public SystemVariable (double value, String description) {
-      this.value = value;
-      this.description = description;
-    }
-  }
-
   private static class SystemVariables extends HashMap<String, SystemVariable> {
     public SystemVariables () {
+      super();
     }
   }
 
@@ -76,6 +60,15 @@ public abstract class Variables {
     );
   }
 
+  public static String[] getSystemVariableNames () {
+    Set<String> names = systemVariables.keySet();
+    return names.toArray(new String[names.size()]);
+  }
+
+  public static SystemVariable getSystemVariable (String name) {
+    return systemVariables.get(name);
+  }
+
   private static Context getContext () {
     return CommonContext.getContext();
   }
@@ -94,7 +87,7 @@ public abstract class Variables {
     }
 
     {
-      SystemVariable variable = systemVariables.get(name);
+      SystemVariable variable = getSystemVariable(name);
       if (variable != null) return variable.getValue();
     }
 
