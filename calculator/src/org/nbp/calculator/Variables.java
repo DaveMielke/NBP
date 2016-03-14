@@ -10,16 +10,70 @@ import android.content.SharedPreferences;
 public abstract class Variables {
   public final static String RESULT = "$RESULT";
 
-  private static class VariableMap extends HashMap<String, Double> {
-    public VariableMap () {
+  public static class SystemVariable {
+    private final double value;
+    private final String description;
+
+    public final double getValue () {
+      return value;
+    }
+
+    public final String getDescription () {
+      return description;
+    }
+
+    public SystemVariable (double value, String description) {
+      this.value = value;
+      this.description = description;
     }
   }
 
-  private final static VariableMap systemVariables = new VariableMap();
+  private static class SystemVariables extends HashMap<String, SystemVariable> {
+    public SystemVariables () {
+    }
+  }
+
+  private final static SystemVariables systemVariables = new SystemVariables();
+
+  private static void defineSystemVariable (String name, double value, String description) {
+    systemVariables.put(name, new SystemVariable(value, description));
+  }
 
   static {
-    systemVariables.put("pi", Math.PI);
-    systemVariables.put("e", Math.E);
+    defineSystemVariable(
+      "pi", Math.PI,
+      "ratio of circumference to diameter"
+    );
+
+    defineSystemVariable(
+      "c", 299792458d,
+      "speed of light in vacuum (m s^-1)"
+    );
+
+    defineSystemVariable(
+      "e", Math.E,
+      "base of natural logarithms"
+    );
+
+    defineSystemVariable(
+      "h", 6.626070040E-34,
+      "Planck constant (J s)"
+    );
+
+    defineSystemVariable(
+      "F", 96485.33289,
+      "Faraday constant (C mol^-1)"
+    );
+
+    defineSystemVariable(
+      "G", 6.67408E-11,
+      "Newtonian constant of gravitation (m^3 kg^-1 s^-2)"
+    );
+
+    defineSystemVariable(
+      "R", 8.3144598,
+      "molar gas constant (J mol^-1 K^-1)"
+    );
   }
 
   private static Context getContext () {
@@ -31,11 +85,20 @@ public abstract class Variables {
   }
 
   public static Double get (String name) {
-    SharedPreferences variables = getUserVariables();
+    {
+      SharedPreferences variables = getUserVariables();
 
-    return variables.contains(name)?
-           Double.valueOf(variables.getString(name, "0f")):
-           systemVariables.get(name);
+      if (variables.contains(name)) {
+        return Double.valueOf(variables.getString(name, "0f"));
+      }
+    }
+
+    {
+      SystemVariable variable = systemVariables.get(name);
+      if (variable != null) return variable.getValue();
+    }
+
+    return null;
   }
 
   public static boolean set (String name, double value) {
