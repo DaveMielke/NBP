@@ -22,16 +22,11 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class CalculatorActivity extends CommonActivity {
-  private EditText expressionView;
-  private TextView resultView;
-  private ViewGroup mainKeypadView;
-  private ViewGroup functionsKeypadView;
-
   private final static Pattern REAL_PATTERN = Pattern.compile(
     "^([-+])?0*(\\d*?)(?:\\.(\\d*?)0*)?(?:[eE]([-+])?0*(\\d+?))?$"
   );
 
-  private final String getMatch (String string, Matcher matcher, int group) {
+  private static String getMatch (String string, Matcher matcher, int group) {
     int start = matcher.start(group);
     if (start < 0) return "";
 
@@ -41,7 +36,7 @@ public class CalculatorActivity extends CommonActivity {
     return string.substring(start, end);
   }
 
-  private final String formatValue (double value) {
+  private static String formatValue (double value) {
     String string = String.format("%.12E", value);
     Matcher matcher = REAL_PATTERN.matcher(string);
 
@@ -115,6 +110,15 @@ public class CalculatorActivity extends CommonActivity {
     setColumn(grid, row, column, view);
   }
 
+  private final void setButtonListener (int button, Button.OnClickListener listener) {
+    ((Button)findViewById(button)).setOnClickListener(listener);
+  }
+
+  private EditText expressionView;
+  private TextView resultView;
+  private ViewGroup mainKeypadView;
+  private ViewGroup functionsKeypadView;
+
   private final void insertExpressionText (String text) {
     int start = expressionView.getSelectionStart();
     int end = expressionView.getSelectionEnd();
@@ -127,10 +131,6 @@ public class CalculatorActivity extends CommonActivity {
 
     expressionView.getText().replace(start, end, text);
     expressionView.setSelection(cursor);
-  }
-
-  private final void setButtonListener (int button, Button.OnClickListener listener) {
-    ((Button)findViewById(button)).setOnClickListener(listener);
   }
 
   private final void showKeypad (ViewGroup keypad) {
@@ -185,6 +185,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           showKeypad(functionsKeypadView);
+          functionsKeypadView.getChildAt(0).requestFocus();
         }
       }
     );

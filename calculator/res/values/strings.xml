@@ -8,10 +8,10 @@
   <string name="hint_expression">type expression</string>
 
   <string name="button_cancel">Cancel</string>
-  <string name="button_clear">Clr</string>
-  <string name="button_delete">Del</string>
-  <string name="button_functions">Fn</string>
-  <string name="button_variables">Var</string>
+  <string name="button_clear">Clear</string>
+  <string name="button_delete">Delete</string>
+  <string name="button_functions">Function</string>
+  <string name="button_variables">Variable</string>
 
   <string name="error_function">unknown function</string>
   <string name="error_protected">protected variable</string>
