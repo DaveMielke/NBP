@@ -1,15 +1,22 @@
 package org.nbp.calculator;
 
 import org.nbp.common.CommonActivity;
+
+import android.app.Activity;
 import android.os.Bundle;
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.KeyEvent;
+
+import android.view.ViewGroup;
+import android.widget.GridLayout;
 
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -19,6 +26,33 @@ public class CalculatorActivity extends CommonActivity {
   private TextView resultView;
   private ViewGroup mainKeypadView;
   private ViewGroup functionsKeypadView;
+
+  private final Activity getActivity () {
+    return this;
+  }
+
+  private final void setColumn (GridLayout grid, int row, int column, View content) {
+    grid.addView(content, new GridLayout.LayoutParams(grid.spec(row), grid.spec(column)));
+  }
+
+  private final void setColumn (GridLayout grid, int row, int column, String content) {
+    TextView view = newTextView(content);
+    setColumn(grid, row, column, view);
+  }
+
+  private final void insertExpressionText (String text) {
+    int start = expressionView.getSelectionStart();
+    int end = expressionView.getSelectionEnd();
+    int cursor = start + text.length();
+
+    if (Functions.get(text) != null) {
+      text += "()";
+      cursor += 1;
+    }
+
+    expressionView.getText().replace(start, end, text);
+    expressionView.setSelection(cursor);
+  }
 
   private final void setButtonListener (int button, Button.OnClickListener listener) {
     ((Button)findViewById(button)).setOnClickListener(listener);
@@ -76,6 +110,53 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           showKeypad(functionsKeypadView);
+        }
+      }
+    );
+  }
+
+  private final void setVariablesButtonListener () {
+    setButtonListener(
+      R.id.button_variables,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          GridLayout listing = (GridLayout)getLayoutInflater().inflate(R.layout.variable_listing, null);
+          int row = 0;
+
+          final AlertDialog dialog = new AlertDialog
+            .Builder(getActivity())
+            .setView(listing)
+            .setNegativeButton(R.string.button_cancel, null)
+            .setCancelable(false)
+            .create();
+
+          Button.OnClickListener listener = new Button.OnClickListener() {
+            @Override
+            public void onClick (View view) {
+              Button button = (Button)view;
+              insertExpressionText(button.getText().toString());
+
+              dialog.dismiss();
+              expressionView.requestFocus();
+            }
+          };
+
+          for (String name : Variables.getUserVariableNames()) {
+            setColumn(listing, row, 0, newButton(name, listener));
+            setColumn(listing, row, 1, Double.toString(Variables.get(name)));
+            row += 1;
+          }
+
+          for (String name : Variables.getSystemVariableNames()) {
+            SystemVariable variable = Variables.getSystemVariable(name);
+            setColumn(listing, row, 0, newButton(name, listener));
+            setColumn(listing, row, 1, Double.toString(variable.getValue()));
+            setColumn(listing, row, 2, variable.getDescription());
+            row += 1;
+          }
+
+          dialog.show();
         }
       }
     );
@@ -207,17 +288,7 @@ public class CalculatorActivity extends CommonActivity {
           evaluateExpression();
           resultView.requestFocus();
         } else {
-          int start = expressionView.getSelectionStart();
-          int end = expressionView.getSelectionEnd();
-          int cursor = start + text.length();
-
-          if (Functions.get(text) != null) {
-            text += "()";
-            cursor += 1;
-          }
-
-          expressionView.getText().replace(start, end, text);
-          expressionView.setSelection(cursor);
+          insertExpressionText(text);
           expressionView.requestFocus();
         }
 
@@ -242,13 +313,15 @@ public class CalculatorActivity extends CommonActivity {
     functionsKeypadView = (ViewGroup)findViewById(R.id.keypad_functions);
 
     setEvaluateListener();
+    expressionView.requestFocus();
+
     setClearButtonListener();
     setDeleteButtonListener();
     setFunctionsButtonListener();
+    setVariablesButtonListener();
+
     setKeypadListeners(mainKeypadView);
     setKeypadListeners(functionsKeypadView);
-
-    expressionView.requestFocus();
     showKeypad(mainKeypadView);
   }
 }

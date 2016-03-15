@@ -11,6 +11,10 @@ import android.content.SharedPreferences;
 public abstract class Variables {
   public final static String RESULT = "$RESULT";
 
+  private static String[] toArray (Set<String> set) {
+    return set.toArray(new String[set.size()]);
+  }
+
   private static class SystemVariables extends HashMap<String, SystemVariable> {
     public SystemVariables () {
       super();
@@ -76,8 +80,7 @@ public abstract class Variables {
   }
 
   public static String[] getSystemVariableNames () {
-    Set<String> names = systemVariables.keySet();
-    return names.toArray(new String[names.size()]);
+    return toArray(systemVariables.keySet());
   }
 
   public static SystemVariable getSystemVariable (String name) {
@@ -90,6 +93,10 @@ public abstract class Variables {
 
   private static SharedPreferences getUserVariables () {
     return getContext().getSharedPreferences("variables", Context.MODE_PRIVATE);
+  }
+
+  public static String[] getUserVariableNames () {
+    return toArray(getUserVariables().getAll().keySet());
   }
 
   public static Double get (String name) {
