@@ -209,12 +209,15 @@ public class CalculatorActivity extends CommonActivity {
         } else {
           int start = expressionView.getSelectionStart();
           int end = expressionView.getSelectionEnd();
-          expressionView.getText().replace(start, end, text);
-
           int cursor = start + text.length();
-          if (text.endsWith("()")) cursor -= 1;
-          expressionView.setSelection(cursor);
 
+          if (Functions.get(text) != null) {
+            text += "()";
+            cursor += 1;
+          }
+
+          expressionView.getText().replace(start, end, text);
+          expressionView.setSelection(cursor);
           expressionView.requestFocus();
         }
 
