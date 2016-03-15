@@ -99,6 +99,14 @@ public abstract class Variables {
     return toArray(getUserVariables().getAll().keySet());
   }
 
+  public static boolean remove (String name) {
+    SharedPreferences variables = getUserVariables();
+    if (!variables.contains(name)) return false;
+
+    variables.edit().remove(name).apply();
+    return true;
+  }
+
   public static Double get (String name) {
     {
       SharedPreferences variables = getUserVariables();

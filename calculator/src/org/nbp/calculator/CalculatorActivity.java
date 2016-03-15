@@ -150,8 +150,10 @@ public class CalculatorActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          expressionView.setText("");
           resultView.setText("");
+          Variables.remove(Variables.RESULT);
+
+          expressionView.setText("");
           expressionView.requestFocus();
         }
       }
