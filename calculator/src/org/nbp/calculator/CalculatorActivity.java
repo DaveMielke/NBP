@@ -27,6 +27,81 @@ public class CalculatorActivity extends CommonActivity {
   private ViewGroup mainKeypadView;
   private ViewGroup functionsKeypadView;
 
+  private final static Pattern REAL_PATTERN = Pattern.compile(
+    "^([-+])?0*(\\d*?)(?:\\.(\\d*?)0*)?(?:[eE]([-+])?0*(\\d+?))?$"
+  );
+
+  private final String getMatch (String string, Matcher matcher, int group) {
+    int start = matcher.start(group);
+    if (start < 0) return "";
+
+    int end = matcher.end(group);
+    if (end < 0) return "";
+
+    return string.substring(start, end);
+  }
+
+  private final String formatValue (double value) {
+    String string = String.format("%.12E", value);
+    Matcher matcher = REAL_PATTERN.matcher(string);
+
+    if (matcher.lookingAt()) {
+      String sign = getMatch(string, matcher, 1);
+      String before = getMatch(string, matcher, 2);
+      String after = getMatch(string, matcher, 3);
+      String exponentSign = getMatch(string, matcher, 4);
+      String exponentValue = getMatch(string, matcher, 5);
+
+      if (!exponentSign.equals("-")) exponentSign = "";
+      if (exponentValue.isEmpty()) exponentValue = "0";
+      int exponent = Integer.valueOf((exponentSign + exponentValue));
+
+      StringBuilder sb = new StringBuilder();
+      sb.append(before);
+      exponent += before.length();
+      sb.append(after);
+
+      {
+        int length = sb.length();
+
+        if (length == 0) {
+          sb.append('0');
+        } else {
+          while (length > 1) {
+            int last = length - 1;
+            if (sb.charAt(last) != '0') break;
+            sb.delete(last, length);
+            length = last;
+          }
+        }
+      }
+
+      if ((exponent >= 1) && (exponent <= 12)) {
+        if (sb.length() > exponent) {
+          sb.insert(exponent, '.');
+        } else {
+          while (sb.length() < exponent) sb.append('0');
+        }
+
+        while ((exponent -= 3) > 0) sb.insert(exponent, ',');
+        exponent = 0;
+      } else {
+        if (sb.length() > 1) sb.insert(1, '.');
+        exponent -= 1;
+      }
+
+      if (exponent != 0) {
+        sb.append("×10^");
+        sb.append(exponent);
+      }
+
+      if (sign.equals("-")) sb.insert(0, '−');
+      string = sb.toString();
+    }
+
+    return string;
+  }
+
   private final Activity getActivity () {
     return this;
   }
@@ -128,7 +203,7 @@ public class CalculatorActivity extends CommonActivity {
             .Builder(getActivity())
             .setView(newVerticalScrollContainer(listing))
             .setNegativeButton(R.string.button_cancel, null)
-            .setCancelable(false)
+            .setCancelable(true)
             .create();
 
           Button.OnClickListener listener = new Button.OnClickListener() {
@@ -144,14 +219,14 @@ public class CalculatorActivity extends CommonActivity {
 
           for (String name : Variables.getUserVariableNames()) {
             setColumn(listing, row, 0, newButton(name, listener));
-            setColumn(listing, row, 1, Double.toString(Variables.get(name)));
+            setColumn(listing, row, 1, formatValue(Variables.get(name)));
             row += 1;
           }
 
           for (String name : Variables.getSystemVariableNames()) {
             SystemVariable variable = Variables.getSystemVariable(name);
             setColumn(listing, row, 0, newButton(name, listener));
-            setColumn(listing, row, 1, Double.toString(variable.getValue()));
+            setColumn(listing, row, 1, formatValue(variable.getValue()));
             setColumn(listing, row, 2, variable.getDescription());
             row += 1;
           }
@@ -162,90 +237,14 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final static Pattern REAL_PATTERN = Pattern.compile(
-    "^([-+])?0*(\\d*?)(?:\\.(\\d*?)0*)?(?:[eE]([-+])?0*(\\d+?))?$"
-  );
-
-  private final String getMatch (String string, Matcher matcher, int group) {
-    int start = matcher.start(group);
-    if (start < 0) return "";
-
-    int end = matcher.end(group);
-    if (end < 0) return "";
-
-    return string.substring(start, end);
-  }
-
   private final void evaluateExpression () {
     String expression = expressionView.getText().toString();
 
     try {
       ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
       double result = evaluation.getResult();
-      String text = String.format("%.12E", evaluation.getResult());
-      Matcher matcher = REAL_PATTERN.matcher(text);
 
-      if (matcher.lookingAt()) {
-        String sign = getMatch(text, matcher, 1);
-        String before = getMatch(text, matcher, 2);
-        String after = getMatch(text, matcher, 3);
-        String exponentSign = getMatch(text, matcher, 4);
-        String exponentValue = getMatch(text, matcher, 5);
-
-        if (!exponentSign.equals("-")) exponentSign = "";
-        if (exponentValue.isEmpty()) exponentValue = "0";
-        int exponent = Integer.valueOf((exponentSign + exponentValue));
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(before);
-        exponent += before.length();
-        sb.append(after);
-
-        {
-          int length = sb.length();
-
-          if (length == 0) {
-            sb.append('0');
-          } else {
-            while (length > 1) {
-              int last = length - 1;
-              if (sb.charAt(last) != '0') break;
-              sb.delete(last, length);
-              length = last;
-            }
-          }
-        }
-
-        if ((exponent >= 1) && (exponent <= 12)) {
-          if (sb.length() > exponent) {
-            sb.insert(exponent, '.');
-          } else {
-            while (sb.length() < exponent) sb.append('0');
-          }
-
-          while ((exponent -= 3) > 0) sb.insert(exponent, ',');
-          exponent = 0;
-        } else {
-          if (sb.length() > 1) sb.insert(1, '.');
-          exponent -= 1;
-        }
-
-        if (exponent != 0) {
-          sb.append("×10^");
-
-          if (exponent < 0) {
-            if (sign.equals("-")) sb.append('−');
-            exponent = -exponent;
-          }
-
-          sb.append(exponent);
-        }
-
-        if (sign.equals("-")) sb.insert(0, '−');
-        text = sb.toString();
-      }
-
-      resultView.setText(text);
+      resultView.setText(formatValue(result));
       Variables.set(Variables.RESULT, result);
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
