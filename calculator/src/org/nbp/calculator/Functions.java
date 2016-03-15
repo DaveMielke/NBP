@@ -93,7 +93,7 @@ public abstract class Functions {
       }
     );
 
-    systemFunctions.put("rad2deg",
+    systemFunctions.put("rd2dg",
       new Function() {
         @Override
         protected final double evaluate (double argument) {
@@ -102,7 +102,7 @@ public abstract class Functions {
       }
     );
 
-    systemFunctions.put("deg2rad",
+    systemFunctions.put("dg2rd",
       new Function() {
         @Override
         protected final double evaluate (double argument) {

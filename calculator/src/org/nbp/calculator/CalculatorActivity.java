@@ -17,13 +17,25 @@ import java.util.regex.Matcher;
 public class CalculatorActivity extends CommonActivity {
   private EditText expressionView;
   private TextView resultView;
-  private ViewGroup keysView;
+  private ViewGroup mainKeypadView;
+  private ViewGroup functionsKeypadView;
 
   private final void setButtonListener (int button, Button.OnClickListener listener) {
     ((Button)findViewById(button)).setOnClickListener(listener);
   }
 
-  private final void addClearListener () {
+  private final void showKeypad (ViewGroup keypad) {
+    ViewGroup[] views = new ViewGroup[] {
+      mainKeypadView,
+      functionsKeypadView
+    };
+
+    for (View view : views) {
+      view.setVisibility((view == keypad)? View.VISIBLE: View.GONE);
+    }
+  }
+
+  private final void setClearButtonListener () {
     setButtonListener(
       R.id.button_clear,
       new Button.OnClickListener() {
@@ -32,6 +44,18 @@ public class CalculatorActivity extends CommonActivity {
           expressionView.setText("");
           resultView.setText("");
           expressionView.requestFocus();
+        }
+      }
+    );
+  }
+
+  private final void setFunctionsButtonListener () {
+    setButtonListener(
+      R.id.button_functions,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          showKeypad(functionsKeypadView);
         }
       }
     );
@@ -150,8 +174,8 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void addKeyListeners () {
-    int count = keysView.getChildCount();
+  private final void addKeypadListeners (final ViewGroup keypad) {
+    int count = keypad.getChildCount();
 
     View.OnClickListener listener = new View.OnClickListener() {
       @Override
@@ -173,11 +197,13 @@ public class CalculatorActivity extends CommonActivity {
 
           expressionView.requestFocus();
         }
+
+        if (keypad != mainKeypadView) showKeypad(mainKeypadView);
       }
     };
 
     for (int index=0; index<count; index+=1) {
-      View view = keysView.getChildAt(index);
+      View view = keypad.getChildAt(index);
       view.setOnClickListener(listener);
     }
   }
@@ -189,11 +215,14 @@ public class CalculatorActivity extends CommonActivity {
     setContentView(R.layout.calculator);
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);
-    keysView = (ViewGroup)findViewById(R.id.keys);
+    mainKeypadView = (ViewGroup)findViewById(R.id.keypad_main);
+    functionsKeypadView = (ViewGroup)findViewById(R.id.keypad_functions);
 
-    addClearListener();
     addEvaluateListener();
-    addKeyListeners();
+    setClearButtonListener();
+    setFunctionsButtonListener();
+    addKeypadListeners(mainKeypadView);
+    addKeypadListeners(functionsKeypadView);
 
     expressionView.requestFocus();
   }
