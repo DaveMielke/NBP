@@ -12,4 +12,18 @@
     android:layout_height="wrap_content"
     android:text="@string/button_recall"
    />
+
+  <Button
+    android:id="@+id/button_store"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/button_store"
+   />
+
+  <Button
+    android:id="@+id/button_forget"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/button_forget"
+   />
 </LinearLayout>

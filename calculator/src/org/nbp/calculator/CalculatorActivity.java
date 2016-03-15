@@ -101,6 +101,17 @@ public class CalculatorActivity extends CommonActivity {
     return this;
   }
 
+  private final AlertDialog.Builder newAlertDialogBuilder (int subtitle) {
+    String title = String.format(
+      "%s - %s", getString(R.string.app_name), getString(subtitle)
+    );
+
+    return new AlertDialog.Builder(this)
+                          .setTitle(title)
+                          .setNegativeButton(R.string.button_cancel, null)
+                          .setCancelable(true);
+  }
+
   private final void setColumn (GridLayout grid, int row, int column, View content) {
     grid.addView(content, new GridLayout.LayoutParams(grid.spec(row), grid.spec(column)));
   }
@@ -144,22 +155,6 @@ public class CalculatorActivity extends CommonActivity {
     }
   }
 
-  private final void setClearButtonListener () {
-    setButtonListener(
-      R.id.button_clear,
-      new Button.OnClickListener() {
-        @Override
-        public void onClick (View view) {
-          resultView.setText("");
-          Variables.removeSystemVariable(Variables.RESULT);
-
-          expressionView.setText("");
-          expressionView.requestFocus();
-        }
-      }
-    );
-  }
-
   private final void setDeleteButtonListener () {
     setButtonListener(
       R.id.button_delete,
@@ -175,6 +170,22 @@ public class CalculatorActivity extends CommonActivity {
             expressionView.setSelection(start);
             expressionView.requestFocus();
           }
+        }
+      }
+    );
+  }
+
+  private final void setClearButtonListener () {
+    setButtonListener(
+      R.id.button_clear,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          resultView.setText("");
+          Variables.removeSystemVariable(Variables.RESULT);
+
+          expressionView.setText("");
+          expressionView.requestFocus();
         }
       }
     );
@@ -202,11 +213,8 @@ public class CalculatorActivity extends CommonActivity {
           GridLayout listing = (GridLayout)getLayoutInflater().inflate(R.layout.variable_listing, null);
           int row = 0;
 
-          final AlertDialog dialog = new AlertDialog
-            .Builder(getActivity())
+          final AlertDialog dialog = newAlertDialogBuilder(R.string.button_recall)
             .setView(newVerticalScrollContainer(listing))
-            .setNegativeButton(R.string.button_cancel, null)
-            .setCancelable(true)
             .create();
 
           Button.OnClickListener listener = new Button.OnClickListener() {
@@ -235,6 +243,28 @@ public class CalculatorActivity extends CommonActivity {
           }
 
           dialog.show();
+        }
+      }
+    );
+  }
+
+  private final void setStoreButtonListener () {
+    setButtonListener(
+      R.id.button_recall,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+        }
+      }
+    );
+  }
+
+  private final void setForgetButtonListener () {
+    setButtonListener(
+      R.id.button_recall,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
         }
       }
     );
@@ -317,10 +347,13 @@ public class CalculatorActivity extends CommonActivity {
     setEvaluateListener();
     expressionView.requestFocus();
 
-    setClearButtonListener();
     setDeleteButtonListener();
+    setClearButtonListener();
     setFunctionButtonListener();
+
     setRecallButtonListener();
+    setStoreButtonListener();
+    setForgetButtonListener();
 
     setKeypadListeners(numericKeypadView);
     setKeypadListeners(functionKeypadView);

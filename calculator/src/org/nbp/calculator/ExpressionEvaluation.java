@@ -198,7 +198,7 @@ public class ExpressionEvaluation {
     double value = evaluateExpression();
 
     if (getTokenType() != TokenType.CLOSE) {
-      throw new ExpressionException(R.string.error_unclosed, start);
+      throw new ExpressionException(R.string.error_unclosed_bracket, start);
     }
 
     nextToken();
@@ -226,7 +226,7 @@ public class ExpressionEvaluation {
 
           if (value == null) {
             throw new ExpressionException(
-              R.string.error_result,
+              R.string.error_no_result,
               getTokenDescriptor().getStart()
             );
           }
@@ -262,7 +262,7 @@ public class ExpressionEvaluation {
 
               if (!Variables.set(name, value)) {
                 throw new ExpressionException(
-                  R.string.error_protected,
+                  R.string.error_protected_variable,
                   token.getStart()
                 );
               }
@@ -274,7 +274,7 @@ public class ExpressionEvaluation {
               Function function = Functions.get(name);
 
               if (function == null) {
-                throw new ExpressionException(R.string.error_function, token.getStart());
+                throw new ExpressionException(R.string.error_unknown_function, token.getStart());
               }
 
               return function.call(evaluateSubexpression());
@@ -284,7 +284,7 @@ public class ExpressionEvaluation {
               Double value = Variables.get(name);
               if (value != null) return value;
 
-              throw new ExpressionException(R.string.error_variable, token.getStart());
+              throw new ExpressionException(R.string.error_unknown_variable, token.getStart());
             }
           }
         }
@@ -294,7 +294,7 @@ public class ExpressionEvaluation {
                       expressionText.length():
                       getTokenDescriptor().getStart();
 
-          throw new ExpressionException(R.string.error_term, start);
+          throw new ExpressionException(R.string.error_missing_term, start);
         }
       }
     }
@@ -380,12 +380,12 @@ public class ExpressionEvaluation {
       int start = token.getStart();
 
       if (type == TokenType.CLOSE) {
-        throw new ExpressionException(R.string.error_unopened, start);
+        throw new ExpressionException(R.string.error_unopened_bracket, start);
       }
     }
 
     if (Double.isNaN(expressionResult)) {
-      throw new ExpressionException(R.string.error_undefined, expressionText.length());
+      throw new ExpressionException(R.string.error_undefined_result, expressionText.length());
     }
   }
 }

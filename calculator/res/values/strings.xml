@@ -11,17 +11,19 @@
   <string name="button_cancel">Cancel</string>
   <string name="button_clear">Clear</string>
   <string name="button_delete">Delete</string>
+  <string name="button_forget">Forget</string>
   <string name="button_function">Function</string>
   <string name="button_recall">Recall</string>
+  <string name="button_store">Store</string>
 
-  <string name="error_function">unknown function</string>
-  <string name="error_protected">protected variable</string>
-  <string name="error_result">no result yet</string>
+  <string name="error_missing_term">missing term</string>
+  <string name="error_no_result">no result</string>
+  <string name="error_protected_variable">protected variable</string>
+  <string name="error_unclosed_bracket">unclosed bracket</string>
+  <string name="error_undefined_result">undefined result</string>
+  <string name="error_unknown_function">unknown function</string>
+  <string name="error_unknown_variable">unknown variable</string>
+  <string name="error_unopened_bracket">unopened bracket</string>
   <string name="error_syntax">syntax error</string>
-  <string name="error_term">missing term</string>
-  <string name="error_unclosed">unclosed bracket</string>
-  <string name="error_undefined">undefined result</string>
-  <string name="error_unopened">unopened bracket</string>
   <string name="error_value">value error</string>
-  <string name="error_variable">unknown variable</string>
 </resources>
