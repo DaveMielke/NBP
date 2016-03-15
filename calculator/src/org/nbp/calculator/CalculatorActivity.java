@@ -151,7 +151,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           resultView.setText("");
-          Variables.remove(Variables.RESULT);
+          Variables.removeSystemVariable(Variables.RESULT);
 
           expressionView.setText("");
           expressionView.requestFocus();
@@ -248,7 +248,7 @@ public class CalculatorActivity extends CommonActivity {
       double result = evaluation.getResult();
 
       resultView.setText(formatValue(result));
-      Variables.set(Variables.RESULT, result);
+      Variables.setSystemVariable(Variables.RESULT, result);
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
       expressionView.setSelection(exception.getLocation());

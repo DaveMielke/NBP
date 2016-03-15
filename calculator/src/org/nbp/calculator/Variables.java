@@ -1,7 +1,7 @@
 package org.nbp.calculator;
 
 import java.util.Set;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.nbp.common.CommonContext;
 
@@ -9,13 +9,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class Variables {
-  public final static String RESULT = "$RESULT";
+  public final static String RESULT = "RESULT";
 
   private static String[] toArray (Set<String> set) {
     return set.toArray(new String[set.size()]);
   }
 
-  private static class SystemVariables extends HashMap<String, SystemVariable> {
+  private static class SystemVariables extends LinkedHashMap<String, SystemVariable> {
     public SystemVariables () {
       super();
     }
@@ -23,59 +23,68 @@ public abstract class Variables {
 
   private final static SystemVariables systemVariables = new SystemVariables();
 
-  private static void defineSystemVariable (String name, double value, String description) {
+  public static void setSystemVariable (String name, double value, String description) {
     systemVariables.put(name, new SystemVariable(value, description));
   }
 
+  public static void setSystemVariable (String name, double value) {
+    setSystemVariable(name, value, "");
+  }
+
   static {
-    defineSystemVariable(
+    setSystemVariable(
+      "gamma", 0.57721566490153286060,
+      "Euler-Mascheroni constant"
+    );
+
+    setSystemVariable(
       "pi", Math.PI,
       "ratio of circumference to diameter"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "sigma", 5.670367E-8,
-      "Stefan-Boltzmann constant (W m^-2 K^-4)"
+      "Stefan-Boltzmann constant [W m^-2 K^-4]"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "c", 299792458d,
-      "speed of light in vacuum (m s^-1)"
+      "speed of light in vacuum [m s^-1]"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "e", Math.E,
       "base of natural logarithms"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "h", 6.626070040E-34,
-      "Planck constant (J s)"
+      "Planck constant [J s]"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "k", 1.38064852E-23,
-      "Boltzmann constant (J K^-1)"
+      "Boltzmann constant [J K^-1]"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "F", 96485.33289,
-      "Faraday constant (C mol^-1)"
+      "Faraday constant [C mol^-1]"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "G", 6.67408E-11,
-      "Newtonian constant of gravitation (m^3 kg^-1 s^-2)"
+      "Newtonian constant of gravitation [m^3 kg^-1 s^-2]"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "L", 6.022140857E23,
-      "Avogadro constant (mol^-1)"
+      "Avogadro constant [mol^-1]"
     );
 
-    defineSystemVariable(
+    setSystemVariable(
       "R", 8.3144598,
-      "molar gas constant (J mol^-1 K^-1)"
+      "molar gas constant [J mol^-1 K^-1]"
     );
   }
 
@@ -85,6 +94,10 @@ public abstract class Variables {
 
   public static SystemVariable getSystemVariable (String name) {
     return systemVariables.get(name);
+  }
+
+  public static boolean removeSystemVariable (String name) {
+    return systemVariables.remove(name) != null;
   }
 
   private static Context getContext () {
@@ -99,7 +112,7 @@ public abstract class Variables {
     return toArray(getUserVariables().getAll().keySet());
   }
 
-  public static boolean remove (String name) {
+  public static boolean removeUserVariable (String name) {
     SharedPreferences variables = getUserVariables();
     if (!variables.contains(name)) return false;
 
