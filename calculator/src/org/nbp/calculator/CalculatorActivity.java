@@ -116,8 +116,8 @@ public class CalculatorActivity extends CommonActivity {
 
   private EditText expressionView;
   private TextView resultView;
-  private ViewGroup mainKeypadView;
-  private ViewGroup functionsKeypadView;
+  private ViewGroup numericKeypadView;
+  private ViewGroup functionKeypadView;
 
   private final void insertExpressionText (String text) {
     int start = expressionView.getSelectionStart();
@@ -135,8 +135,8 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void showKeypad (ViewGroup keypad) {
     ViewGroup[] views = new ViewGroup[] {
-      mainKeypadView,
-      functionsKeypadView
+      numericKeypadView,
+      functionKeypadView
     };
 
     for (View view : views) {
@@ -180,22 +180,22 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setFunctionsButtonListener () {
+  private final void setFunctionButtonListener () {
     setButtonListener(
-      R.id.button_functions,
+      R.id.button_function,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          showKeypad(functionsKeypadView);
-          functionsKeypadView.getChildAt(0).requestFocus();
+          showKeypad(functionKeypadView);
+          functionKeypadView.getChildAt(0).requestFocus();
         }
       }
     );
   }
 
-  private final void setVariablesButtonListener () {
+  private final void setRecallButtonListener () {
     setButtonListener(
-      R.id.button_variables,
+      R.id.button_recall,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -294,7 +294,7 @@ public class CalculatorActivity extends CommonActivity {
           expressionView.requestFocus();
         }
 
-        if (keypad != mainKeypadView) showKeypad(mainKeypadView);
+        if (keypad != numericKeypadView) showKeypad(numericKeypadView);
       }
     };
 
@@ -311,19 +311,19 @@ public class CalculatorActivity extends CommonActivity {
     setContentView(R.layout.calculator);
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);
-    mainKeypadView = (ViewGroup)findViewById(R.id.keypad_main);
-    functionsKeypadView = (ViewGroup)findViewById(R.id.keypad_functions);
+    numericKeypadView = (ViewGroup)findViewById(R.id.keypad_numeric);
+    functionKeypadView = (ViewGroup)findViewById(R.id.keypad_function);
 
     setEvaluateListener();
     expressionView.requestFocus();
 
     setClearButtonListener();
     setDeleteButtonListener();
-    setFunctionsButtonListener();
-    setVariablesButtonListener();
+    setFunctionButtonListener();
+    setRecallButtonListener();
 
-    setKeypadListeners(mainKeypadView);
-    setKeypadListeners(functionsKeypadView);
-    showKeypad(mainKeypadView);
+    setKeypadListeners(numericKeypadView);
+    setKeypadListeners(functionKeypadView);
+    showKeypad(numericKeypadView);
   }
 }

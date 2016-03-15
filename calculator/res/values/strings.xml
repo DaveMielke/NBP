@@ -11,8 +11,8 @@
   <string name="button_cancel">Cancel</string>
   <string name="button_clear">Clear</string>
   <string name="button_delete">Delete</string>
-  <string name="button_functions">Function</string>
-  <string name="button_variables">Variable</string>
+  <string name="button_function">Function</string>
+  <string name="button_recall">Recall</string>
 
   <string name="error_function">unknown function</string>
   <string name="error_protected">protected variable</string>

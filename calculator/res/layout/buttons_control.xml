@@ -21,16 +21,9 @@
    />
 
   <Button
-    android:id="@+id/button_functions"
+    android:id="@+id/button_function"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/button_functions"
-   />
-
-  <Button
-    android:id="@+id/button_variables"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/button_variables"
+    android:text="@string/button_function"
    />
 </LinearLayout>
