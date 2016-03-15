@@ -30,6 +30,11 @@ public abstract class Variables {
     );
 
     defineSystemVariable(
+      "sigma", 5.670367E-8,
+      "Stefan-Boltzmann constant (W m^-2 K^-4)"
+    );
+
+    defineSystemVariable(
       "c", 299792458d,
       "speed of light in vacuum (m s^-1)"
     );
@@ -45,6 +50,11 @@ public abstract class Variables {
     );
 
     defineSystemVariable(
+      "k", 1.38064852E-23,
+      "Boltzmann constant (J K^-1)"
+    );
+
+    defineSystemVariable(
       "F", 96485.33289,
       "Faraday constant (C mol^-1)"
     );
@@ -52,6 +62,11 @@ public abstract class Variables {
     defineSystemVariable(
       "G", 6.67408E-11,
       "Newtonian constant of gravitation (m^3 kg^-1 s^-2)"
+    );
+
+    defineSystemVariable(
+      "L", 6.022140857E23,
+      "Avogadro constant (mol^-1)"
     );
 
     defineSystemVariable(
