@@ -126,7 +126,7 @@ public class CalculatorActivity extends CommonActivity {
 
           final AlertDialog dialog = new AlertDialog
             .Builder(getActivity())
-            .setView(listing)
+            .setView(newVerticalScrollContainer(listing))
             .setNegativeButton(R.string.button_cancel, null)
             .setCancelable(false)
             .create();
