@@ -18,6 +18,7 @@
 
   <string name="error_missing_term">missing term</string>
   <string name="error_no_result">no result</string>
+  <string name="error_no_variables">no variables</string>
   <string name="error_protected_variable">protected variable</string>
   <string name="error_unclosed_bracket">unclosed bracket</string>
   <string name="error_undefined_result">undefined result</string>

@@ -212,12 +212,36 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
+  private final String formatVariable (String name, double value, String description) {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(name);
+    sb.append(" = ");
+    sb.append(formatValue(value));
+
+    if (description != null) {
+      sb.append(" (");
+      sb.append(description);
+      sb.append(')');
+    }
+
+    return sb.toString();
+  }
+
+  private final String formatVariable (String name, double value) {
+    return formatVariable(name, value, null);
+  }
+
+  private final String getVariableName (List<String> variables, int index) {
+    String variable = variables.get(index);
+    return variable.substring(0, variable.indexOf(' '));
+  }
+
   private final List<String> getUserVariables () {
     List<String> variables = new ArrayList<String>();
 
     for (String name : Variables.getUserVariableNames()) {
-      double value = Variables.get(name);
-      variables.add(String.format("%s = %s", name, formatValue(value)));
+      variables.add(formatVariable(name, Variables.get(name)));
     }
 
     return variables;
@@ -229,39 +253,24 @@ public class CalculatorActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          GridLayout listing = (GridLayout)getLayoutInflater().inflate(R.layout.variable_listing, null);
-          int row = 0;
+          final List<String> variables = getUserVariables();
 
-          final AlertDialog dialog = newAlertDialogBuilder(R.string.button_recall)
-            .setView(newVerticalScrollContainer(listing))
-            .create();
+          for (String name : Variables.getSystemVariableNames()) {
+            SystemVariable variable = Variables.getSystemVariable(name);
+            variables.add(formatVariable(name, variable.getValue(), variable.getDescription()));
+          }
 
-          Button.OnClickListener listener = new Button.OnClickListener() {
+          DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
-            public void onClick (View view) {
-              Button button = (Button)view;
-              insertExpressionText(button.getText().toString());
-
-              dialog.dismiss();
+            public void onClick (DialogInterface dialog, int index) {
+              insertExpressionText(getVariableName(variables, index));
               expressionView.requestFocus();
             }
           };
 
-          for (String name : Variables.getUserVariableNames()) {
-            setColumn(listing, row, 0, newButton(name, listener));
-            setColumn(listing, row, 1, formatValue(Variables.get(name)));
-            row += 1;
-          }
-
-          for (String name : Variables.getSystemVariableNames()) {
-            SystemVariable variable = Variables.getSystemVariable(name);
-            setColumn(listing, row, 0, newButton(name, listener));
-            setColumn(listing, row, 1, formatValue(variable.getValue()));
-            setColumn(listing, row, 2, variable.getDescription());
-            row += 1;
-          }
-
-          dialog.show();
+          newAlertDialogBuilder(R.string.button_recall)
+            .setItems(toArray(variables), listener)
+            .show();
         }
       }
     );
@@ -274,16 +283,21 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           final List<String> variables = getUserVariables();
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
 
-          DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialog, int index) {
-            }
-          };
+          if (variables.isEmpty()) {
+            builder.setMessage(R.string.error_no_variables);
+          } else {
+            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int index) {
+              }
+            };
 
-          newAlertDialogBuilder(R.string.button_forget)
-            .setItems(toArray(variables), listener)
-            .show();
+            builder.setItems(toArray(variables), listener);
+          }
+
+          builder.show();
         }
       }
     );
@@ -296,19 +310,22 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           final List<String> variables = getUserVariables();
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
 
-          DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialog, int index) {
-              String item = variables.get(index);
-              String name = item.substring(0, item.indexOf(' '));
-              Variables.removeUserVariable(name);
-            }
-          };
+          if (variables.isEmpty()) {
+            builder.setMessage(R.string.error_no_variables);
+          } else {
+            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int index) {
+                Variables.removeUserVariable(getVariableName(variables, index));
+              }
+            };
 
-          newAlertDialogBuilder(R.string.button_forget)
-            .setItems(toArray(variables), listener)
-            .show();
+            builder.setItems(toArray(variables), listener);
+          }
+
+          builder.show();
         }
       }
     );
