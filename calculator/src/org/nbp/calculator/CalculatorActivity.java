@@ -49,6 +49,26 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
+  private final void setDeleteButtonListener () {
+    setButtonListener(
+      R.id.button_delete,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          int start = expressionView.getSelectionStart();
+          int end = expressionView.getSelectionEnd();
+          if (start == end) start -= 1;
+
+          if (start >= 0) {
+            expressionView.getText().replace(start, end, "");
+            expressionView.setSelection(start);
+            expressionView.requestFocus();
+          }
+        }
+      }
+    );
+  }
+
   private final void setFunctionsButtonListener () {
     setButtonListener(
       R.id.button_functions,
@@ -152,7 +172,7 @@ public class CalculatorActivity extends CommonActivity {
     }
   }
 
-  private final void addEvaluateListener () {
+  private final void setEvaluateListener () {
     expressionView.setOnEditorActionListener(
       new TextView.OnEditorActionListener() {
         @Override
@@ -174,7 +194,7 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void addKeypadListeners (final ViewGroup keypad) {
+  private final void setKeypadListeners (final ViewGroup keypad) {
     int count = keypad.getChildCount();
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -218,12 +238,14 @@ public class CalculatorActivity extends CommonActivity {
     mainKeypadView = (ViewGroup)findViewById(R.id.keypad_main);
     functionsKeypadView = (ViewGroup)findViewById(R.id.keypad_functions);
 
-    addEvaluateListener();
+    setEvaluateListener();
     setClearButtonListener();
+    setDeleteButtonListener();
     setFunctionsButtonListener();
-    addKeypadListeners(mainKeypadView);
-    addKeypadListeners(functionsKeypadView);
+    setKeypadListeners(mainKeypadView);
+    setKeypadListeners(functionsKeypadView);
 
     expressionView.requestFocus();
+    showKeypad(mainKeypadView);
   }
 }
