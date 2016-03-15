@@ -1,5 +1,9 @@
 package org.nbp.calculator;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
+
 import org.nbp.common.CommonActivity;
 
 import android.app.Activity;
@@ -22,6 +26,10 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class CalculatorActivity extends CommonActivity {
+  private static String[] toArray (Collection<String> collection) {
+    return collection.toArray(new String[collection.size()]);
+  }
+
   private final static Pattern REAL_PATTERN = Pattern.compile(
     "^([-+])?0*(\\d*?)(?:\\.(\\d*?)0*)?(?:[eE]([-+])?0*(\\d+?))?$"
   );
@@ -204,6 +212,17 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
+  private final List<String> getUserVariables () {
+    List<String> variables = new ArrayList<String>();
+
+    for (String name : Variables.getUserVariableNames()) {
+      double value = Variables.get(name);
+      variables.add(String.format("%s = %s", name, formatValue(value)));
+    }
+
+    return variables;
+  }
+
   private final void setRecallButtonListener () {
     setButtonListener(
       R.id.button_recall,
@@ -250,10 +269,21 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void setStoreButtonListener () {
     setButtonListener(
-      R.id.button_recall,
+      R.id.button_store,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          final List<String> variables = getUserVariables();
+
+          DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int index) {
+            }
+          };
+
+          newAlertDialogBuilder(R.string.button_forget)
+            .setItems(toArray(variables), listener)
+            .show();
         }
       }
     );
@@ -261,10 +291,24 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void setForgetButtonListener () {
     setButtonListener(
-      R.id.button_recall,
+      R.id.button_forget,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          final List<String> variables = getUserVariables();
+
+          DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int index) {
+              String item = variables.get(index);
+              String name = item.substring(0, item.indexOf(' '));
+              Variables.removeUserVariable(name);
+            }
+          };
+
+          newAlertDialogBuilder(R.string.button_forget)
+            .setItems(toArray(variables), listener)
+            .show();
         }
       }
     );
