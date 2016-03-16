@@ -222,9 +222,9 @@ public class ExpressionEvaluation {
           return evaluateSubexpression();
 
         case RESULT: {
-          Double value = CalculatorSettings.RESULT;
+          double value = SavedSettings.getResult();
 
-          if (value == null) {
+          if (Double.isNaN(value)) {
             throw new ExpressionException(
               R.string.error_no_result,
               getTokenDescriptor().getStart()

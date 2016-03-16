@@ -130,17 +130,25 @@ public class CalculatorActivity extends CommonActivity {
                           .setCancelable(true);
   }
 
-  private final void setButtonListener (int button, Button.OnClickListener listener) {
-    ((Button)findViewById(button)).setOnClickListener(listener);
+  private final void setButtonListener (int id, Button.OnClickListener listener) {
+    Button button = (Button)findViewById(id);
+    button.setOnClickListener(listener);
   }
 
   private final void setCompoundButtonListener (
-    int button, boolean checked,
-    CompoundButton.OnCheckedChangeListener listener
+    int id, final String setting, boolean checked
   ) {
-    CompoundButton cb = (CompoundButton)findViewById(button);
-    cb.setOnCheckedChangeListener(listener);
-    cb.setChecked(checked);
+    CompoundButton button = (CompoundButton)findViewById(id);
+    button.setChecked(SavedSettings.get(setting, checked));
+
+    button.setOnCheckedChangeListener(
+      new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged (CompoundButton button, boolean isChecked) {
+          SavedSettings.set(setting, isChecked);
+        }
+      }
+    );
   }
 
   private EditText expressionView;
@@ -200,7 +208,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           resultView.setText("");
-          CalculatorSettings.RESULT = null;
+          SavedSettings.set(SavedSettings.RESULT, Double.NaN);
 
           expressionView.setText("");
           expressionView.requestFocus();
@@ -225,13 +233,8 @@ public class CalculatorActivity extends CommonActivity {
   private final void setDegreesCheckBoxListener () {
     setCompoundButtonListener(
       R.id.checkbox_degrees,
-      CalculatorSettings.DEGREES,
-      new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged (CompoundButton button, boolean isChecked) {
-          CalculatorSettings.DEGREES = isChecked;
-        }
-      }
+      SavedSettings.DEGREES,
+      DefaultSettings.DEGREES
     );
   }
 
@@ -308,9 +311,9 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
-          final Double result = CalculatorSettings.RESULT;
+          final double result = SavedSettings.getResult();
 
-          if (result == null) {
+          if (Double.isNaN(result)) {
             builder.setMessage(R.string.error_no_result);
           } else {
             final List<String> variables = getUserVariables();
@@ -445,7 +448,7 @@ public class CalculatorActivity extends CommonActivity {
       double result = evaluation.getResult();
 
       resultView.setText(formatValue(result));
-      CalculatorSettings.RESULT = result;
+      SavedSettings.set(SavedSettings.RESULT, result);
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
       expressionView.setSelection(exception.getLocation());
