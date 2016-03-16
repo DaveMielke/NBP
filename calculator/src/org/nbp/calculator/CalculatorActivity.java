@@ -109,13 +109,21 @@ public class CalculatorActivity extends CommonActivity {
     return this;
   }
 
-  private final AlertDialog.Builder newAlertDialogBuilder (int subtitle) {
-    String title = String.format(
-      "%s - %s", getString(R.string.app_name), getString(subtitle)
-    );
+  private final View findView (DialogInterface dialog, int id) {
+    return ((AlertDialog)dialog).findViewById(id);
+  }
+
+  private final AlertDialog.Builder newAlertDialogBuilder (Integer... subtitles) {
+    StringBuilder title = new StringBuilder();
+    title.append(getString(R.string.app_name));
+
+    for (Integer subtitle : subtitles) {
+      title.append(" - ");
+      title.append(getString(subtitle));
+    }
 
     return new AlertDialog.Builder(this)
-                          .setTitle(title)
+                          .setTitle(title.toString())
                           .setNegativeButton(R.string.button_cancel, null)
                           .setCancelable(true);
   }
@@ -253,6 +261,7 @@ public class CalculatorActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_recall);
           final List<String> variables = getUserVariables();
 
           for (String name : Variables.getSystemVariableNames()) {
@@ -260,17 +269,18 @@ public class CalculatorActivity extends CommonActivity {
             variables.add(formatVariable(name, variable.getValue(), variable.getDescription()));
           }
 
-          DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialog, int index) {
-              insertExpressionText(getVariableName(variables, index));
-              expressionView.requestFocus();
+          builder.setItems(
+            toArray(variables),
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int index) {
+                insertExpressionText(getVariableName(variables, index));
+                expressionView.requestFocus();
+              }
             }
-          };
+          );
 
-          newAlertDialogBuilder(R.string.button_recall)
-            .setItems(toArray(variables), listener)
-            .show();
+          builder.show();
         }
       }
     );
@@ -293,15 +303,47 @@ public class CalculatorActivity extends CommonActivity {
             if (variables.isEmpty()) {
               builder.setMessage(R.string.error_no_variables);
             } else {
-              DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick (DialogInterface dialog, int index) {
-                  Variables.set(getVariableName(variables, index), result.getValue());
+              builder.setItems(
+                toArray(variables),
+                new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick (DialogInterface dialog, int index) {
+                    Variables.set(getVariableName(variables, index), result.getValue());
+                  }
                 }
-              };
-
-              builder.setItems(toArray(variables), listener);
+              );
             }
+
+            builder.setPositiveButton(
+              R.string.button_new,
+              new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialog, int button) {
+                  AlertDialog.Builder builder = newAlertDialogBuilder(
+                    R.string.button_store,
+                    R.string.button_new
+                  );
+
+                  builder.setView(
+                    getLayoutInflater().inflate(R.layout.variable_name, null)
+                  );
+
+                  builder.setPositiveButton(
+                    R.string.button_store,
+                    new DialogInterface.OnClickListener() {
+                      @Override
+                      public void onClick (DialogInterface dialog, int button) {
+                        EditText view = (EditText)findView(dialog, R.id.variable);
+                        String name = view.getText().toString();
+                        Variables.set(name, result.getValue());
+                      }
+                    }
+                  );
+
+                  builder.show();
+                }
+              }
+            );
           }
 
           builder.show();
@@ -322,14 +364,15 @@ public class CalculatorActivity extends CommonActivity {
           if (variables.isEmpty()) {
             builder.setMessage(R.string.error_no_variables);
           } else {
-            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick (DialogInterface dialog, int index) {
-                Variables.removeUserVariable(getVariableName(variables, index));
+            builder.setItems(
+              toArray(variables),
+              new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialog, int index) {
+                  Variables.removeUserVariable(getVariableName(variables, index));
+                }
               }
-            };
-
-            builder.setItems(toArray(variables), listener);
+            );
           }
 
           builder.show();

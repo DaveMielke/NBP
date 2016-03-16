@@ -4,15 +4,18 @@
   <string name="app_name">NBP Calculator</string>
 
   <string name="label_result">Result:</string>
+  <string name="label_variable">Variable Name:</string>
 
   <string name="hint_expression">type expression</string>
   <string name="hint_result">no result yet</string>
+  <string name="hint_variable">type variable name</string>
 
   <string name="button_cancel">Cancel</string>
   <string name="button_clear">Clear</string>
   <string name="button_delete">Delete</string>
   <string name="button_forget">Forget</string>
   <string name="button_function">Function</string>
+  <string name="button_new">New</string>
   <string name="button_recall">Recall</string>
   <string name="button_store">Store</string>
 
