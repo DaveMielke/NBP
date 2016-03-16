@@ -112,10 +112,6 @@ public class CalculatorActivity extends CommonActivity {
     return string;
   }
 
-  private final Activity getActivity () {
-    return this;
-  }
-
   private final View findView (DialogInterface dialog, int id) {
     return ((AlertDialog)dialog).findViewById(id);
   }

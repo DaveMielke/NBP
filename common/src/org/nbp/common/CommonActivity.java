@@ -28,6 +28,17 @@ import android.content.ActivityNotFoundException;
 public abstract class CommonActivity extends Activity implements ProblemReporter {
   private final static String LOG_TAG = CommonActivity.class.getName();
 
+  private static Activity activity = null;
+
+  protected CommonActivity () {
+    super();
+    activity = this;
+  }
+
+  public final static Activity getActivity () {
+    return activity;
+  }
+
   protected final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
     for (View view : views) {
       group.addView(view, parameters);

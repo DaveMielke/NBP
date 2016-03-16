@@ -112,7 +112,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("sin",
-      new Function() {
+      new TrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.sin(argument);
@@ -121,7 +121,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("cos",
-      new Function() {
+      new TrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.cos(argument);
@@ -130,7 +130,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("tan",
-      new Function() {
+      new TrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.tan(argument);
@@ -139,7 +139,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("asin",
-      new Function() {
+      new InverseTrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.asin(argument);
@@ -148,7 +148,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("acos",
-      new Function() {
+      new InverseTrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.acos(argument);
@@ -157,7 +157,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("atan",
-      new Function() {
+      new InverseTrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.atan(argument);
@@ -166,7 +166,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("sinh",
-      new Function() {
+      new TrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.sinh(argument);
@@ -175,7 +175,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("cosh",
-      new Function() {
+      new TrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.cosh(argument);
@@ -184,7 +184,7 @@ public abstract class Functions {
     );
 
     systemFunctions.put("tanh",
-      new Function() {
+      new TrigonometricFunction() {
         @Override
         protected final double evaluate (double argument) {
           return Math.tanh(argument);
