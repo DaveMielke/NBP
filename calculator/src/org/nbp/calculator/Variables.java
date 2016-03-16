@@ -9,8 +9,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class Variables {
-  public final static String RESULT = "RESULT";
-
   private static String[] toArray (Set<String> set) {
     return set.toArray(new String[set.size()]);
   }

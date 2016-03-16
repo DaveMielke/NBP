@@ -222,7 +222,7 @@ public class ExpressionEvaluation {
           return evaluateSubexpression();
 
         case RESULT: {
-          Double value = Variables.get(Variables.RESULT);
+          Double value = CalculatorSettings.RESULT;
 
           if (value == null) {
             throw new ExpressionException(

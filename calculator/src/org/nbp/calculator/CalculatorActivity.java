@@ -200,7 +200,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           resultView.setText("");
-          Variables.removeSystemVariable(Variables.RESULT);
+          CalculatorSettings.RESULT = null;
 
           expressionView.setText("");
           expressionView.requestFocus();
@@ -308,7 +308,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
-          final SystemVariable result = Variables.getSystemVariable(Variables.RESULT);
+          final Double result = CalculatorSettings.RESULT;
 
           if (result == null) {
             builder.setMessage(R.string.error_no_result);
@@ -323,7 +323,7 @@ public class CalculatorActivity extends CommonActivity {
                 new DialogInterface.OnClickListener() {
                   @Override
                   public void onClick (DialogInterface dialog, int index) {
-                    Variables.set(getVariableName(variables, index), result.getValue());
+                    Variables.set(getVariableName(variables, index), result);
                   }
                 }
               );
@@ -350,7 +350,7 @@ public class CalculatorActivity extends CommonActivity {
                       public void onClick (DialogInterface dialog, int button) {
                         EditText view = (EditText)findView(dialog, R.id.variable);
                         String name = view.getText().toString();
-                        Variables.set(name, result.getValue());
+                        Variables.set(name, result);
                       }
                     }
                   );
@@ -445,7 +445,7 @@ public class CalculatorActivity extends CommonActivity {
       double result = evaluation.getResult();
 
       resultView.setText(formatValue(result));
-      Variables.setSystemVariable(Variables.RESULT, result);
+      CalculatorSettings.RESULT = result;
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
       expressionView.setSelection(exception.getLocation());
