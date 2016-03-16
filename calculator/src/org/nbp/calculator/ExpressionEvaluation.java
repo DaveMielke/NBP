@@ -195,6 +195,11 @@ public class ExpressionEvaluation {
   private final double evaluateSubexpression () throws ExpressionException {
     int start = getTokenDescriptor().getStart();
     nextToken();
+
+    if (getTokenType() == TokenType.CLOSE) {
+      throw new ExpressionException(R.string.error_missing_subexpression, start);
+    }
+
     double value = evaluateExpression();
 
     if (getTokenType() != TokenType.CLOSE) {
@@ -378,23 +383,23 @@ public class ExpressionEvaluation {
       throw new ExpressionException(R.string.error_no_expression, end);
     }
 
-    expressionResult = evaluateExpression();
-    TokenDescriptor token = getTokenDescriptor();
+    if (getTokenType() != TokenType.CLOSE) {
+      expressionResult = evaluateExpression();
+      TokenDescriptor token = getTokenDescriptor();
 
-    if (token != null) {
-      int start = token.getStart();
+      if (token == null) {
+        if (!Double.isNaN(expressionResult)) return;
+        throw new ExpressionException(R.string.error_undefined_result, end);
+      }
 
-      switch (token.getType()) {
-        case CLOSE:
-          throw new ExpressionException(R.string.error_unopened_bracket, start);
-
-        default:
-          throw new ExpressionException(R.string.error_missing_operator, start);
+      if (token.getType() != TokenType.CLOSE) {
+        throw new ExpressionException(R.string.error_missing_operator, token.getStart());
       }
     }
 
-    if (Double.isNaN(expressionResult)) {
-      throw new ExpressionException(R.string.error_undefined_result, end);
-    }
+    throw new ExpressionException(
+      R.string.error_unopened_bracket,
+      getTokenDescriptor().getStart()
+    );
   }
 }
