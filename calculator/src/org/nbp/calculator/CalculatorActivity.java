@@ -442,6 +442,9 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void evaluateExpression () {
     String expression = expressionView.getText().toString();
+    SavedSettings.set(SavedSettings.EXPRESSION, expression);
+    SavedSettings.set(SavedSettings.START, expressionView.getSelectionStart());
+    SavedSettings.set(SavedSettings.END, expressionView.getSelectionEnd());
 
     try {
       ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
