@@ -3,7 +3,7 @@ package org.nbp.calculator;
 public abstract class InverseTrigonometricFunction extends Function {
   @Override
   protected double postprocessResult (double result) {
-    if (isChecked(R.id.checkbox_degrees)) {
+    if (CalculatorSettings.DEGREES) {
       result = Math.toDegrees(result);
     }
 

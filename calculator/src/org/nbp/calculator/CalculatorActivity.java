@@ -12,14 +12,13 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import android.view.View;
-import android.view.KeyEvent;
-
 import android.view.ViewGroup;
-import android.widget.GridLayout;
+import android.view.KeyEvent;
 
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.CompoundButton;
 
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -131,17 +130,17 @@ public class CalculatorActivity extends CommonActivity {
                           .setCancelable(true);
   }
 
-  private final void setColumn (GridLayout grid, int row, int column, View content) {
-    grid.addView(content, new GridLayout.LayoutParams(grid.spec(row), grid.spec(column)));
-  }
-
-  private final void setColumn (GridLayout grid, int row, int column, String content) {
-    TextView view = newTextView(content);
-    setColumn(grid, row, column, view);
-  }
-
   private final void setButtonListener (int button, Button.OnClickListener listener) {
     ((Button)findViewById(button)).setOnClickListener(listener);
+  }
+
+  private final void setCompoundButtonListener (
+    int button, boolean checked,
+    CompoundButton.OnCheckedChangeListener listener
+  ) {
+    CompoundButton cb = (CompoundButton)findViewById(button);
+    cb.setOnCheckedChangeListener(listener);
+    cb.setChecked(checked);
   }
 
   private EditText expressionView;
@@ -218,6 +217,19 @@ public class CalculatorActivity extends CommonActivity {
         public void onClick (View view) {
           showKeypad(functionKeypadView);
           functionKeypadView.getChildAt(0).requestFocus();
+        }
+      }
+    );
+  }
+
+  private final void setDegreesCheckBoxListener () {
+    setCompoundButtonListener(
+      R.id.checkbox_degrees,
+      CalculatorSettings.DEGREES,
+      new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged (CompoundButton button, boolean isChecked) {
+          CalculatorSettings.DEGREES = isChecked;
         }
       }
     );
@@ -505,6 +517,7 @@ public class CalculatorActivity extends CommonActivity {
     setDeleteButtonListener();
     setClearButtonListener();
     setFunctionButtonListener();
+    setDegreesCheckBoxListener();
 
     setRecallButtonListener();
     setStoreButtonListener();

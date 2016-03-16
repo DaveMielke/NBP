@@ -5,7 +5,7 @@ public abstract class TrigonometricFunction extends Function {
   protected double preprocessArgument (double argument) {
     argument = super.preprocessArgument(argument);
 
-    if (isChecked(R.id.checkbox_degrees)) {
+    if (CalculatorSettings.DEGREES) {
       argument = Math.toRadians(argument);
     }
 
