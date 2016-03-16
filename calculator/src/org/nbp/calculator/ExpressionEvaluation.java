@@ -372,6 +372,12 @@ public class ExpressionEvaluation {
     parseExpression();
 
     tokenCount = tokenDescriptors.size();
+    int end = expressionText.length();
+
+    if (tokenCount == 0) {
+      throw new ExpressionException(R.string.error_no_expression, end);
+    }
+
     expressionResult = evaluateExpression();
     TokenDescriptor token = getTokenDescriptor();
 
@@ -385,7 +391,7 @@ public class ExpressionEvaluation {
     }
 
     if (Double.isNaN(expressionResult)) {
-      throw new ExpressionException(R.string.error_undefined_result, expressionText.length());
+      throw new ExpressionException(R.string.error_undefined_result, end);
     }
   }
 }
