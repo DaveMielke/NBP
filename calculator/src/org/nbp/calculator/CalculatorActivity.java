@@ -282,19 +282,26 @@ public class CalculatorActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          final List<String> variables = getUserVariables();
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
+          final SystemVariable result = Variables.getSystemVariable(Variables.RESULT);
 
-          if (variables.isEmpty()) {
-            builder.setMessage(R.string.error_no_variables);
+          if (result == null) {
+            builder.setMessage(R.string.error_no_result);
           } else {
-            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick (DialogInterface dialog, int index) {
-              }
-            };
+            final List<String> variables = getUserVariables();
 
-            builder.setItems(toArray(variables), listener);
+            if (variables.isEmpty()) {
+              builder.setMessage(R.string.error_no_variables);
+            } else {
+              DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialog, int index) {
+                  Variables.set(getVariableName(variables, index), result.getValue());
+                }
+              };
+
+              builder.setItems(toArray(variables), listener);
+            }
           }
 
           builder.show();
@@ -309,8 +316,8 @@ public class CalculatorActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          final List<String> variables = getUserVariables();
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
+          final List<String> variables = getUserVariables();
 
           if (variables.isEmpty()) {
             builder.setMessage(R.string.error_no_variables);
