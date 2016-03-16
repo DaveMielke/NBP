@@ -21,6 +21,7 @@
 
   <string name="checkbox_degrees">Degrees</string>
 
+  <string name="error_missing_operator">missing operator</string>
   <string name="error_missing_term">missing term</string>
   <string name="error_no_expression">no expression</string>
   <string name="error_no_result">no result</string>

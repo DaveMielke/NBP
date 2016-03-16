@@ -382,11 +382,14 @@ public class ExpressionEvaluation {
     TokenDescriptor token = getTokenDescriptor();
 
     if (token != null) {
-      TokenType type = token.getType();
       int start = token.getStart();
 
-      if (type == TokenType.CLOSE) {
-        throw new ExpressionException(R.string.error_unopened_bracket, start);
+      switch (token.getType()) {
+        case CLOSE:
+          throw new ExpressionException(R.string.error_unopened_bracket, start);
+
+        default:
+          throw new ExpressionException(R.string.error_missing_operator, start);
       }
     }
 
