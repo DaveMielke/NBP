@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import org.nbp.common.CommonActivity;
 
+import android.util.Log;
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -19,6 +21,9 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 
+import android.text.InputFilter;
+import android.text.Spanned;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
@@ -26,6 +31,8 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class CalculatorActivity extends CommonActivity {
+  private final static String LOG_TAG = CalculatorActivity.class.getName();
+
   private static String[] toArray (Collection<String> collection) {
     return collection.toArray(new String[collection.size()]);
   }
@@ -340,7 +347,48 @@ public class CalculatorActivity extends CommonActivity {
                     }
                   );
 
-                  builder.show();
+                  AlertDialog alert = builder.create();
+                  alert.show();
+
+                  EditText variableName = (EditText)findView(alert, R.id.variable);
+                  final Button storeButton = alert.getButton(alert.BUTTON_POSITIVE);
+                  storeButton.setEnabled(false);
+
+                  variableName.setFilters(
+                    new InputFilter[] {
+                      new InputFilter() {
+                        @Override
+                        public CharSequence filter (
+                          CharSequence src, int srcStart, int srcEnd,
+                          Spanned dst, int dstStart, int dstEnd
+                        ) {
+                          int dstIndex = dstStart;
+
+                          for (int srcIndex=srcStart; srcIndex<srcEnd; srcIndex+=1) {
+                            if (!Variables.isNameCharacter(src.charAt(srcIndex), (dstIndex == 0))) return "";
+                            dstIndex += 1;
+                          }
+
+                          boolean isNew = false;
+                          StringBuilder name = new StringBuilder(dst.toString());
+
+                          name.delete(dstStart, dstEnd);
+                          name.insert(dstStart, src.subSequence(srcStart, srcEnd));
+
+                          if (name.length() > 0) {
+                            if (Variables.isNameCharacter(name.charAt(0), true)) {
+                              if (Variables.get(name.toString()) == null) {
+                                isNew = true;
+                              }
+                            }
+                          }
+
+                          storeButton.setEnabled(isNew);
+                          return null;
+                        }
+                      }
+                    }
+                  );
                 }
               }
             );

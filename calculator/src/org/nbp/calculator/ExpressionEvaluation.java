@@ -147,11 +147,11 @@ public class ExpressionEvaluation {
           break;
 
         default:
-          if (Character.isLetter(character)) {
+          if (Variables.isNameCharacter(character, true)) {
             type = TokenType.IDENTIFIER;
 
             while (end < length) {
-              if (!Character.isLetterOrDigit(expressionText.charAt(end))) break;
+              if (!Variables.isNameCharacter(expressionText.charAt(end), false)) break;
               end += 1;
             }
           } else if (Character.isDigit(character)) {

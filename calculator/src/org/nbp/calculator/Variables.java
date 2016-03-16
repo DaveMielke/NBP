@@ -143,6 +143,12 @@ public abstract class Variables {
     return true;
   }
 
+  public static boolean isNameCharacter (char character, boolean first) {
+    if (Character.isLetter(character)) return true;
+    if (first) return false;
+    return Character.isDigit(character);
+  }
+
   private Variables () {
   }
 }
