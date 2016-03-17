@@ -156,6 +156,65 @@ public class CalculatorActivity extends CommonActivity {
   private EditText expressionView;
   private TextView resultView;
 
+  private final void saveExpression () {
+    SavedSettings.set(SavedSettings.EXPRESSION, expressionView.getText().toString());
+    SavedSettings.set(SavedSettings.START, expressionView.getSelectionStart());
+    SavedSettings.set(SavedSettings.END, expressionView.getSelectionEnd());
+  }
+
+  private final void restoreExpression () {
+    String expression = SavedSettings.get(SavedSettings.EXPRESSION, "");
+    expressionView.setText(expression);
+
+    int start = SavedSettings.get(SavedSettings.START, -1);
+    int end = SavedSettings.get(SavedSettings.END, -1);
+    int length = expression.length();
+
+    if ((0 <= start) && (start <= end) && (end <= length)) {
+      expressionView.setSelection(start, end);
+    } else {
+      expressionView.setSelection(-1);
+    }
+  }
+
+  private final void evaluateExpression () {
+    saveExpression();
+    String expression = expressionView.getText().toString();
+
+    try {
+      ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
+      double result = evaluation.getResult();
+
+      resultView.setText(formatValue(result));
+      SavedSettings.set(SavedSettings.RESULT, result);
+    } catch (ExpressionException exception) {
+      resultView.setText(exception.getMessage());
+      expressionView.setSelection(exception.getLocation());
+    }
+  }
+
+  private final void setEvaluateListener () {
+    expressionView.setOnEditorActionListener(
+      new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction (TextView view, int action, KeyEvent event) {
+          if (event != null) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+              if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                evaluateExpression();
+                resultView.requestFocus();
+              }
+
+              return true;
+            }
+          }
+
+          return false;
+        }
+      }
+    );
+  }
+
   private final void insertExpressionText (String text) {
     int start = expressionView.getSelectionStart();
     int end = expressionView.getSelectionEnd();
@@ -186,7 +245,7 @@ public class CalculatorActivity extends CommonActivity {
     showKeypad();
   }
 
-  private final void setKeypadListeners (Integer... ids) {
+  private final void prepareKeypads (Integer... ids) {
     View.OnClickListener listener = new View.OnClickListener() {
       @Override
       public void onClick (View view) {
@@ -256,6 +315,14 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
+  private final void setDegreesCheckBoxListener () {
+    setCompoundButtonListener(
+      R.id.checkbox_degrees,
+      SavedSettings.DEGREES,
+      DefaultSettings.DEGREES
+    );
+  }
+
   private final void setFunctionButtonListener () {
     setButtonListener(
       R.id.button_function,
@@ -270,14 +337,6 @@ public class CalculatorActivity extends CommonActivity {
           keypad.getChildAt(0).requestFocus();
         }
       }
-    );
-  }
-
-  private final void setDegreesCheckBoxListener () {
-    setCompoundButtonListener(
-      R.id.checkbox_degrees,
-      SavedSettings.DEGREES,
-      DefaultSettings.DEGREES
     );
   }
 
@@ -483,46 +542,6 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void evaluateExpression () {
-    String expression = expressionView.getText().toString();
-    SavedSettings.set(SavedSettings.EXPRESSION, expression);
-    SavedSettings.set(SavedSettings.START, expressionView.getSelectionStart());
-    SavedSettings.set(SavedSettings.END, expressionView.getSelectionEnd());
-
-    try {
-      ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
-      double result = evaluation.getResult();
-
-      resultView.setText(formatValue(result));
-      SavedSettings.set(SavedSettings.RESULT, result);
-    } catch (ExpressionException exception) {
-      resultView.setText(exception.getMessage());
-      expressionView.setSelection(exception.getLocation());
-    }
-  }
-
-  private final void setEvaluateListener () {
-    expressionView.setOnEditorActionListener(
-      new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction (TextView view, int action, KeyEvent event) {
-          if (event != null) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-              if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                evaluateExpression();
-                resultView.requestFocus();
-              }
-
-              return true;
-            }
-          }
-
-          return false;
-        }
-      }
-    );
-  }
-
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -532,22 +551,32 @@ public class CalculatorActivity extends CommonActivity {
     resultView = (TextView)findViewById(R.id.result);
 
     setEvaluateListener();
+    restoreExpression();
     expressionView.requestFocus();
 
     setDeleteButtonListener();
     setClearButtonListener();
-    setFunctionButtonListener();
     setDegreesCheckBoxListener();
+    setFunctionButtonListener();
 
     setRecallButtonListener();
     setStoreButtonListener();
     setForgetButtonListener();
 
-    setKeypadListeners(
+    prepareKeypads(
       R.id.keypad_numeric,
       R.id.keypad_function
     );
 
     showKeypad(0);
+  }
+
+  @Override
+  protected void onPause () {
+    try {
+      saveExpression();
+    } finally {
+      super.onPause();
+    }
   }
 }
