@@ -51,6 +51,8 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private static String formatValue (double value) {
+    if (value == 0d) return "0";
+
     String string = String.format("%.12E", value);
     Matcher matcher = REAL_PATTERN.matcher(string);
 
