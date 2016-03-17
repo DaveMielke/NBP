@@ -132,9 +132,14 @@ public class CalculatorActivity extends CommonActivity {
                           .setCancelable(true);
   }
 
-  private final void setButtonListener (int id, Button.OnClickListener listener) {
-    Button button = (Button)findViewById(id);
-    button.setOnClickListener(listener);
+  private final void setClickListener (int id, View.OnClickListener listener) {
+    View view = findViewById(id);
+    view.setOnClickListener(listener);
+  }
+
+  private final void setLongClickListener (int id, View.OnLongClickListener listener) {
+    View view = findViewById(id);
+    view.setOnLongClickListener(listener);
   }
 
   private final void setCompoundButtonListener (
@@ -280,9 +285,9 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setDeleteButtonListener () {
-    setButtonListener(
+    setClickListener(
       R.id.button_delete,
-      new Button.OnClickListener() {
+      new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           int start = expressionView.getSelectionStart();
@@ -297,12 +302,24 @@ public class CalculatorActivity extends CommonActivity {
         }
       }
     );
+
+    setLongClickListener(
+      R.id.button_delete,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          expressionView.setText("");
+          expressionView.requestFocus();
+          return true;
+        }
+      }
+    );
   }
 
   private final void setClearButtonListener () {
-    setButtonListener(
+    setClickListener(
       R.id.button_clear,
-      new Button.OnClickListener() {
+      new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           resultView.setText("");
@@ -324,9 +341,9 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setFunctionButtonListener () {
-    setButtonListener(
+    setClickListener(
       R.id.button_function,
-      new Button.OnClickListener() {
+      new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           currentKeypad += 1;
@@ -376,9 +393,9 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setRecallButtonListener () {
-    setButtonListener(
+    setClickListener(
       R.id.button_recall,
-      new Button.OnClickListener() {
+      new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_recall);
@@ -407,9 +424,9 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setStoreButtonListener () {
-    setButtonListener(
+    setClickListener(
       R.id.button_store,
-      new Button.OnClickListener() {
+      new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
@@ -514,9 +531,9 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setForgetButtonListener () {
-    setButtonListener(
+    setClickListener(
       R.id.button_forget,
-      new Button.OnClickListener() {
+      new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
