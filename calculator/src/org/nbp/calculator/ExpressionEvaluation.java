@@ -10,18 +10,21 @@ public class ExpressionEvaluation {
   private final double expressionResult;
 
   private static enum TokenType {
+    IDENTIFIER,
     DECIMAL,
     HEXADECIMAL,
-    IDENTIFIER,
     RESULT,
+
     OPEN,
     CLOSE,
+
     ASSIGN,
     PLUS,
     MINUS,
     TIMES,
     DIVIDE,
     EXPONENTIATE,
+
     END;
   }
 
@@ -97,6 +100,16 @@ public class ExpressionEvaluation {
       TokenType type;
 
       switch (character) {
+        case '.':
+          type = TokenType.DECIMAL;
+          end = findEndOfDecimal(start, length);
+          break;
+
+        case '#':
+          type = TokenType.HEXADECIMAL;
+          end = findEndOfHexadecimal(start, length);
+          break;
+
         case '$':
           type = TokenType.RESULT;
           break;
@@ -134,16 +147,6 @@ public class ExpressionEvaluation {
 
         case '^':
           type = TokenType.EXPONENTIATE;
-          break;
-
-        case '.':
-          type = TokenType.DECIMAL;
-          end = findEndOfDecimal(start, length);
-          break;
-
-        case '#':
-          type = TokenType.HEXADECIMAL;
-          end = findEndOfHexadecimal(start, length);
           break;
 
         default:
