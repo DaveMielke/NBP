@@ -81,6 +81,7 @@ public class ExpressionEvaluation {
   private final static Pattern HEXADECIMAL_PATTERN = Pattern.compile(
     HEXADECIMAL_DIGIT + "*"
   + "(\\." + HEXADECIMAL_DIGIT + "+)?"
+  + "([pP]?[-+]?" + HEXADECIMAL_DIGIT + "+)?"
   );
 
   private final int findEndOfHexadecimal (int start, int end) throws ExpressionException {
@@ -260,12 +261,11 @@ public class ExpressionEvaluation {
         }
 
         case HEXADECIMAL: {
-          double value = Double.valueOf(
-            ("0X" + getTokenText() + "P0")
-          );
+          String text = "0X" + getTokenText().toUpperCase();
+          if (text.indexOf('P') < 0) text += "P0";
 
           nextToken();
-          return value;
+          return Double.valueOf(text);
         }
 
         case IDENTIFIER: {
