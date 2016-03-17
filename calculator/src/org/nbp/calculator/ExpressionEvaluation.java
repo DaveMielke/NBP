@@ -81,7 +81,7 @@ public class ExpressionEvaluation {
   private final static Pattern HEXADECIMAL_PATTERN = Pattern.compile(
     HEXADECIMAL_DIGIT + "*"
   + "(\\." + HEXADECIMAL_DIGIT + "+)?"
-  + "([pP][-+]?" + HEXADECIMAL_DIGIT + "+)?"
+  + "([pP][-+]?" + DECIMAL_DIGIT + "+)?"
   );
 
   private final int findEndOfHexadecimal (int start, int end) throws ExpressionException {
