@@ -20,17 +20,17 @@
     android:text="@string/button_clear"
    />
 
-  <Button
-    android:id="@+id/button_function"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/button_function"
-   />
-
   <CheckBox
     android:id="@+id/checkbox_degrees"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="@string/checkbox_degrees"
+   />
+
+  <Button
+    android:id="@+id/button_function"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/button_function"
    />
 </LinearLayout>

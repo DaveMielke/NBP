@@ -5,11 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class SavedSettings {
+  public final static String DEGREES = "degrees";
+
+  public final static String RESULT = "result";
   public final static String EXPRESSION = "expression";
   public final static String START = "start";
   public final static String END = "end";
-  public final static String RESULT = "result";
-  public final static String DEGREES = "degrees";
 
   private static Context getContext () {
     return CommonContext.getContext();
@@ -76,16 +77,12 @@ public abstract class SavedSettings {
     return (string != null)? Double.valueOf(string): defaultValue;
   }
 
-  public final static String getExpression () {
-    return get(EXPRESSION, DefaultSettings.EXPRESSION);
+  public final static boolean getDegrees () {
+    return get(DEGREES, DefaultSettings.DEGREES);
   }
 
   public final static double getResult () {
-    return get(RESULT, DefaultSettings.RESULT);
-  }
-
-  public final static boolean getDegrees () {
-    return get(DEGREES, DefaultSettings.DEGREES);
+    return get(RESULT, Double.NaN);
   }
 
   private SavedSettings () {

@@ -155,8 +155,6 @@ public class CalculatorActivity extends CommonActivity {
 
   private EditText expressionView;
   private TextView resultView;
-  private ViewGroup numericKeypadView;
-  private ViewGroup functionKeypadView;
 
   private final void insertExpressionText (String text) {
     int start = expressionView.getSelectionStart();
@@ -172,14 +170,53 @@ public class CalculatorActivity extends CommonActivity {
     expressionView.setSelection(cursor);
   }
 
-  private final void showKeypad (ViewGroup keypad) {
-    ViewGroup[] views = new ViewGroup[] {
-      numericKeypadView,
-      functionKeypadView
+  private ViewGroup[] keypadViews;
+  private int currentKeypad;
+
+  private final void showKeypad () {
+    View keypad = keypadViews[currentKeypad];
+
+    for (View view : keypadViews) {
+      view.setVisibility((view == keypad)? View.VISIBLE: View.GONE);
+    }
+  }
+
+  private final void showKeypad (int index) {
+    currentKeypad = index;
+    showKeypad();
+  }
+
+  private final void setKeypadListeners (Integer... ids) {
+    View.OnClickListener listener = new View.OnClickListener() {
+      @Override
+      public void onClick (View view) {
+        Button button = (Button)view;
+        String text = button.getText().toString();
+
+        if (text.equals("=")) {
+          evaluateExpression();
+          resultView.requestFocus();
+        } else {
+          insertExpressionText(text);
+          expressionView.requestFocus();
+        }
+
+        showKeypad(0);
+      }
     };
 
-    for (View view : views) {
-      view.setVisibility((view == keypad)? View.VISIBLE: View.GONE);
+    keypadViews = new ViewGroup[ids.length];
+    int keypadCount = 0;
+
+    for (int id : ids) {
+      ViewGroup keypad = (ViewGroup)findViewById(id);
+      keypadViews[keypadCount++] = keypad;
+      int keyCount = keypad.getChildCount();
+
+      for (int keyIndex=0; keyIndex<keyCount; keyIndex+=1) {
+        View key = keypad.getChildAt(keyIndex);
+        key.setOnClickListener(listener);
+      }
     }
   }
 
@@ -225,8 +262,12 @@ public class CalculatorActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          showKeypad(functionKeypadView);
-          functionKeypadView.getChildAt(0).requestFocus();
+          currentKeypad += 1;
+          currentKeypad %= keypadViews.length;
+          showKeypad();
+
+          ViewGroup keypad = keypadViews[currentKeypad];
+          keypad.getChildAt(0).requestFocus();
         }
       }
     );
@@ -482,33 +523,6 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setKeypadListeners (final ViewGroup keypad) {
-    int count = keypad.getChildCount();
-
-    View.OnClickListener listener = new View.OnClickListener() {
-      @Override
-      public void onClick (View view) {
-        Button button = (Button)view;
-        String text = button.getText().toString();
-
-        if (text.equals("=")) {
-          evaluateExpression();
-          resultView.requestFocus();
-        } else {
-          insertExpressionText(text);
-          expressionView.requestFocus();
-        }
-
-        if (keypad != numericKeypadView) showKeypad(numericKeypadView);
-      }
-    };
-
-    for (int index=0; index<count; index+=1) {
-      View view = keypad.getChildAt(index);
-      view.setOnClickListener(listener);
-    }
-  }
-
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -516,8 +530,6 @@ public class CalculatorActivity extends CommonActivity {
     setContentView(R.layout.calculator);
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);
-    numericKeypadView = (ViewGroup)findViewById(R.id.keypad_numeric);
-    functionKeypadView = (ViewGroup)findViewById(R.id.keypad_function);
 
     setEvaluateListener();
     expressionView.requestFocus();
@@ -531,8 +543,11 @@ public class CalculatorActivity extends CommonActivity {
     setStoreButtonListener();
     setForgetButtonListener();
 
-    setKeypadListeners(numericKeypadView);
-    setKeypadListeners(functionKeypadView);
-    showKeypad(numericKeypadView);
+    setKeypadListeners(
+      R.id.keypad_numeric,
+      R.id.keypad_function
+    );
+
+    showKeypad(0);
   }
 }
