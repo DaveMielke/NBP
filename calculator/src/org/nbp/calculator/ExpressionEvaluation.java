@@ -67,13 +67,10 @@ public class ExpressionEvaluation {
   }
 
   private final static String DECIMAL_DIGIT = "[0-9]";
-  private final static String DECIMAL_EXPONENT = "[Ee]";
-
   private final static Pattern DECIMAL_PATTERN = Pattern.compile(
-    "(?!" + DECIMAL_EXPONENT + ")"
-  + DECIMAL_DIGIT + "*"
+    DECIMAL_DIGIT + "*"
   + "(\\." + DECIMAL_DIGIT + "+)?"
-  + "(" + DECIMAL_EXPONENT + "[-+]?" + DECIMAL_DIGIT + "+)?"
+  + "((?<!^)[Ee][-+]?" + DECIMAL_DIGIT + "+)?"
   );
 
   private final int findEndOfDecimal (int start, int end) throws ExpressionException {
@@ -81,13 +78,10 @@ public class ExpressionEvaluation {
   }
 
   private final static String HEXADECIMAL_DIGIT = "[0-9A-Fa-f]";
-  private final static String HEXADECIMAL_EXPONENT = "[Pp]";
-
   private final static Pattern HEXADECIMAL_PATTERN = Pattern.compile(
-    "(?!" + HEXADECIMAL_EXPONENT + ")"
-  + HEXADECIMAL_DIGIT + "*"
+    HEXADECIMAL_DIGIT + "*"
   + "(\\." + HEXADECIMAL_DIGIT + "+)?"
-  + "(" + HEXADECIMAL_EXPONENT + "[-+]?" + DECIMAL_DIGIT + "+)?"
+  + "((?<!^)[Pp][-+]?" + DECIMAL_DIGIT + "+)?"
   );
 
   private final int findEndOfHexadecimal (int start, int end) throws ExpressionException {
