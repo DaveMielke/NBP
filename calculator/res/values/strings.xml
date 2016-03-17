@@ -21,6 +21,8 @@
 
   <string name="checkbox_degrees">Degrees</string>
 
+  <string name="error_invalid_decimal">invalid decimal</string>
+  <string name="error_invalid_hexadecimal">invalid hexadecimal</string>
   <string name="error_missing_element">missing element</string>
   <string name="error_missing_operator">missing operator</string>
   <string name="error_missing_subexpression">missing subexpression</string>
@@ -34,5 +36,4 @@
   <string name="error_unknown_function">unknown function</string>
   <string name="error_unknown_variable">unknown variable</string>
   <string name="error_unopened_bracket">unopened bracket</string>
-  <string name="error_value">value error</string>
 </resources>

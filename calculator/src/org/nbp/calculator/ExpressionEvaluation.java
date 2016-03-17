@@ -55,27 +55,36 @@ public class ExpressionEvaluation {
   private final List<TokenDescriptor> tokenDescriptors
      = new ArrayList<TokenDescriptor>();
 
-  private final int findEndOfPattern (Pattern pattern, int start, int end) throws ExpressionException {
+  private final int findEndOfPattern (Pattern pattern, int start, int end, int error) throws ExpressionException {
     Matcher matcher = pattern.matcher(expressionText);
     matcher.region(start, end);
-    if (matcher.lookingAt()) return matcher.end();
-    throw new ExpressionException(R.string.error_value, start);
+    if (matcher.lookingAt()) {
+      end = matcher.end();
+      if (end > start) return end;
+    }
+
+    throw new ExpressionException(error, start);
   }
 
+  private final static String DECIMAL_DIGIT = "[0-9]";
   private final static Pattern DECIMAL_PATTERN = Pattern.compile(
-    "[0-9]*(\\.[0-9]+)?([eE][-+]?[0-9]+)?"
+    DECIMAL_DIGIT + "*"
+  + "(\\." + DECIMAL_DIGIT + "+)?"
+  + "([eE][-+]?" + DECIMAL_DIGIT + "+)?"
   );
 
   private final int findEndOfDecimal (int start, int end) throws ExpressionException {
-    return findEndOfPattern(DECIMAL_PATTERN, start, end);
+    return findEndOfPattern(DECIMAL_PATTERN, start, end, R.string.error_invalid_decimal);
   }
 
+  private final static String HEXADECIMAL_DIGIT = "[0-9A-Fa-f]";
   private final static Pattern HEXADECIMAL_PATTERN = Pattern.compile(
-    "#[0-9A-Fa-f]+"
+    HEXADECIMAL_DIGIT + "*"
+  + "(\\." + HEXADECIMAL_DIGIT + "+)?"
   );
 
   private final int findEndOfHexadecimal (int start, int end) throws ExpressionException {
-    return findEndOfPattern(HEXADECIMAL_PATTERN, start, end);
+    return findEndOfPattern(HEXADECIMAL_PATTERN, start, end, R.string.error_invalid_hexadecimal);
   }
 
   private final void parseExpression () throws ExpressionException {
@@ -107,6 +116,7 @@ public class ExpressionEvaluation {
 
         case '#':
           type = TokenType.HEXADECIMAL;
+          start += 1;
           end = findEndOfHexadecimal(start, length);
           break;
 
@@ -251,7 +261,7 @@ public class ExpressionEvaluation {
 
         case HEXADECIMAL: {
           double value = Double.valueOf(
-            ("0X" + getTokenText().substring(1) + "P0")
+            ("0X" + getTokenText() + "P0")
           );
 
           nextToken();
