@@ -3,6 +3,8 @@ package org.nbp.calculator;
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.nbp.common.CommonActivity;
 
@@ -554,6 +556,55 @@ public class CalculatorActivity extends CommonActivity {
           }
 
           builder.show();
+        }
+      }
+    );
+
+    setLongClickListener(
+      R.id.button_forget,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
+          final List<String> variables = getUserVariables();
+
+          if (variables.isEmpty()) {
+            builder.setMessage(R.string.error_no_variables);
+          } else {
+            final Set<String> names = new HashSet<String>();
+
+            builder.setMultiChoiceItems(
+              toArray(variables),
+              null,
+              new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick (DialogInterface dialog, int index, boolean isChecked) {
+                  String name = getVariableName(variables, index);
+
+                  if (isChecked) {
+                    names.add(name);
+                  } else {
+                    names.remove(name);
+                  }
+                }
+              }
+            );
+
+            builder.setPositiveButton(
+              R.string.button_forget,
+              new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialog, int button) {
+                  for (String name : names) {
+                    Variables.removeUserVariable(name);
+                  }
+                }
+              }
+            );
+          }
+
+          builder.show();
+          return true;
         }
       }
     );
