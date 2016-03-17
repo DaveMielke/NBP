@@ -173,7 +173,7 @@ public class CalculatorActivity extends CommonActivity {
     if ((0 <= start) && (start <= end) && (end <= length)) {
       expressionView.setSelection(start, end);
     } else {
-      expressionView.setSelection(-1);
+      expressionView.setSelection(length);
     }
   }
 
