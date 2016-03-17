@@ -21,18 +21,18 @@
 
   <string name="checkbox_degrees">Degrees</string>
 
+  <string name="error_missing_element">missing element</string>
   <string name="error_missing_operator">missing operator</string>
   <string name="error_missing_subexpression">missing subexpression</string>
-  <string name="error_missing_term">missing term</string>
   <string name="error_no_expression">no expression</string>
   <string name="error_no_result">no result</string>
   <string name="error_no_variables">no variables</string>
   <string name="error_protected_variable">protected variable</string>
   <string name="error_unclosed_bracket">unclosed bracket</string>
   <string name="error_undefined_result">undefined result</string>
+  <string name="error_unexpected_character">unexpected character</string>
   <string name="error_unknown_function">unknown function</string>
   <string name="error_unknown_variable">unknown variable</string>
   <string name="error_unopened_bracket">unopened bracket</string>
-  <string name="error_syntax">syntax error</string>
   <string name="error_value">value error</string>
 </resources>

@@ -63,7 +63,7 @@ public class ExpressionEvaluation {
   }
 
   private final static Pattern DECIMAL_PATTERN = Pattern.compile(
-    "\\d*(\\.\\d+)?([eE][-+]?\\d+)?"
+    "[0-9]*(\\.[0-9]+)?([eE][-+]?[0-9]+)?"
   );
 
   private final int findEndOfDecimal (int start, int end) throws ExpressionException {
@@ -71,7 +71,7 @@ public class ExpressionEvaluation {
   }
 
   private final static Pattern HEXADECIMAL_PATTERN = Pattern.compile(
-    "#[\\da-fA-F]+"
+    "#[0-9A-Fa-f]+"
   );
 
   private final int findEndOfHexadecimal (int start, int end) throws ExpressionException {
@@ -161,7 +161,7 @@ public class ExpressionEvaluation {
             type = TokenType.DECIMAL;
             end = findEndOfDecimal(start, length);
           } else {
-            throw new ExpressionException(R.string.error_syntax, start);
+            throw new ExpressionException(R.string.error_unexpected_character, start);
           }
       }
 
@@ -213,18 +213,18 @@ public class ExpressionEvaluation {
     return value;
   }
 
-  private final double evaluateTerm () throws ExpressionException {
+  private final double evaluateElement () throws ExpressionException {
     while (true) {
       TokenType type = getTokenType();
 
       switch (type) {
         case PLUS:
           nextToken();
-          return evaluateTerm();
+          return evaluateElement();
 
         case MINUS:
           nextToken();
-          return -evaluateTerm();
+          return -evaluateElement();
 
         case OPEN:
           return evaluateSubexpression();
@@ -302,20 +302,20 @@ public class ExpressionEvaluation {
                       expressionText.length():
                       getTokenDescriptor().getStart();
 
-          throw new ExpressionException(R.string.error_missing_term, start);
+          throw new ExpressionException(R.string.error_missing_element, start);
         }
       }
     }
   }
 
   private final double evaluateExponentiations () throws ExpressionException {
-    double value = evaluateTerm();
+    double value = evaluateElement();
 
     while (true) {
       switch (getTokenType()) {
         case EXPONENTIATE:
           nextToken();
-          value = Math.pow(value, evaluateTerm());
+          value = Math.pow(value, evaluateElement());
           break;
 
         default:
