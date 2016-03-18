@@ -141,18 +141,18 @@ public class ExpressionEvaluation {
           type = TokenType.PLUS;
           break;
 
+        case ComplexNumber.SUBTRACTION_SIGN:
         case '-':
-        case '−':
           type = TokenType.MINUS;
           break;
 
+        case ComplexNumber.MULTIPLICATION_SIGN:
         case '*':
-        case '×':
           type = TokenType.TIMES;
           break;
 
+        case ComplexNumber.DIVISION_SIGN:
         case '/':
-        case '÷':
           type = TokenType.DIVIDE;
           break;
 

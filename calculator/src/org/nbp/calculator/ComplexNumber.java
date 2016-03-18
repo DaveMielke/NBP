@@ -19,6 +19,16 @@ public class ComplexNumber {
     this(r, 0);
   }
 
+  public final static ComplexNumber NaN = new ComplexNumber(Double.NaN, Double.NaN);
+
+  public final static boolean isNaN (ComplexNumber number) {
+    return Double.isNaN(number.real) || Double.isNaN(number.imag);
+  }
+
+  public final boolean isNaN () {
+    return isNaN(this);
+  }
+
   public final static ComplexNumber abs (ComplexNumber number) {
     double r = number.real;
     double i = number.imag;
@@ -116,10 +126,13 @@ public class ComplexNumber {
   }
 
   public final static char IMAGINARY_SIGN = 'i';
+  public final static char INFINITY_SIGN = '\u221E';
+  public final static char NaN_SIGN = '?';
+
   public final static char ADDITION_SIGN = '+';
-  public final static char SUBTRACTION_SIGN = '−';
-  public final static char MULTIPLICATION_SIGN = '×';
-  public final static char DIVISION_SIGN = '÷';
+  public final static char SUBTRACTION_SIGN = '\u2212';
+  public final static char MULTIPLICATION_SIGN = '\u00D7';
+  public final static char DIVISION_SIGN = '\u00F7';
   public final static char EXPONENTIATION_SIGN = '^';
 
   private final static String DECIMAL_DIGIT = "[0-9]";
