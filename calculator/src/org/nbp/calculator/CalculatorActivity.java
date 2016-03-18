@@ -28,91 +28,11 @@ import android.text.Spanned;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 public class CalculatorActivity extends CommonActivity {
   private final static String LOG_TAG = CalculatorActivity.class.getName();
 
   private static String[] toArray (Collection<String> collection) {
     return collection.toArray(new String[collection.size()]);
-  }
-
-  private final static Pattern REAL_PATTERN = Pattern.compile(
-    "^([-+])?0*(\\d*?)(?:\\.(\\d*?)0*)?(?:[eE]([-+])?0*(\\d+?))?$"
-  );
-
-  private static String getMatch (String string, Matcher matcher, int group) {
-    int start = matcher.start(group);
-    if (start < 0) return "";
-
-    int end = matcher.end(group);
-    if (end < 0) return "";
-
-    return string.substring(start, end);
-  }
-
-  private static String formatValue (double value) {
-    if (value == 0d) return "0";
-
-    String string = String.format("%.12E", value);
-    Matcher matcher = REAL_PATTERN.matcher(string);
-
-    if (matcher.lookingAt()) {
-      String sign = getMatch(string, matcher, 1);
-      String before = getMatch(string, matcher, 2);
-      String after = getMatch(string, matcher, 3);
-      String exponentSign = getMatch(string, matcher, 4);
-      String exponentValue = getMatch(string, matcher, 5);
-
-      if (!exponentSign.equals("-")) exponentSign = "";
-      if (exponentValue.isEmpty()) exponentValue = "0";
-      int exponent = Integer.valueOf((exponentSign + exponentValue));
-
-      StringBuilder sb = new StringBuilder();
-      sb.append(before);
-      exponent += before.length();
-      sb.append(after);
-
-      {
-        int length = sb.length();
-
-        if (length == 0) {
-          sb.append('0');
-        } else {
-          while (length > 1) {
-            int last = length - 1;
-            if (sb.charAt(last) != '0') break;
-            sb.delete(last, length);
-            length = last;
-          }
-        }
-      }
-
-      if ((exponent >= 1) && (exponent <= 12)) {
-        if (sb.length() > exponent) {
-          sb.insert(exponent, '.');
-        } else {
-          while (sb.length() < exponent) sb.append('0');
-        }
-
-        while ((exponent -= 3) > 0) sb.insert(exponent, ',');
-        exponent = 0;
-      } else {
-        if (sb.length() > 1) sb.insert(1, '.');
-        exponent -= 1;
-      }
-
-      if (exponent != 0) {
-        sb.append("×10^");
-        sb.append(exponent);
-      }
-
-      if (sign.equals("-")) sb.insert(0, '−');
-      string = sb.toString();
-    }
-
-    return string;
   }
 
   private final View findView (DialogInterface dialog, int id) {
@@ -192,7 +112,7 @@ public class CalculatorActivity extends CommonActivity {
       ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
       double result = evaluation.getResult();
 
-      resultView.setText(formatValue(result));
+      resultView.setText(Number.toString(result));
       SavedSettings.set(SavedSettings.RESULT, result);
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
@@ -364,7 +284,7 @@ public class CalculatorActivity extends CommonActivity {
 
     sb.append(name);
     sb.append(" = ");
-    sb.append(formatValue(value));
+    sb.append(Number.toString(value));
 
     if (description != null) {
       sb.append(" (");
