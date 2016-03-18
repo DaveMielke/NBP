@@ -110,12 +110,6 @@ public class Number {
   }
 
   private final static String toString (double value, boolean imaginary) {
-    if (value == 0d) {
-      String string = "0";
-      if (imaginary) string += IMAGINARY_SIGN;
-      return string;
-    }
-
     String string = String.format("%.12E", value);
     Matcher matcher = REAL_PATTERN.matcher(string);
 
@@ -138,19 +132,18 @@ public class Number {
       {
         int length = sb.length();
 
-        if (length == 0) {
-          sb.append('0');
-        } else {
-          while (length > 1) {
-            int last = length - 1;
-            if (sb.charAt(last) != '0') break;
-            sb.delete(last, length);
-            length = last;
-          }
+        while (length > 1) {
+          int last = length - 1;
+          if (sb.charAt(last) != '0') break;
+          sb.delete(last, length);
+          length = last;
         }
       }
 
-      if ((exponent >= 1) && (exponent <= 12)) {
+      if (sb.length() == 0) {
+        sb.append('0');
+        exponent = 0;
+      } else if ((exponent >= 1) && (exponent <= 12)) {
         if (sb.length() > exponent) {
           sb.insert(exponent, DECIMAL_SEPARATOR);
         } else {
@@ -212,11 +205,11 @@ public class Number {
     return sb.toString();
   }
 
-  public final String toString () {
-    return toString(real, imag);
-  }
-
   public final static String toString (double value) {
     return toString(value, 0d);
+  }
+
+  public final String toString () {
+    return toString(real, imag);
   }
 }
