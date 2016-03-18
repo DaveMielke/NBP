@@ -19,27 +19,11 @@ public class ComplexNumber {
     this(r, 0);
   }
 
-  public final static ComplexNumber negate (ComplexNumber number) {
-    return new ComplexNumber(-number.real, -number.imag);
-  }
-
-  public final ComplexNumber negate () {
-    return negate(this);
-  }
-
-  public final static ComplexNumber conjugate (ComplexNumber number) {
-    return new ComplexNumber(number.real, -number.imag);
-  }
-
-  public final ComplexNumber conjugate () {
-    return conjugate(this);
-  }
-
   public final static ComplexNumber abs (ComplexNumber number) {
     double r = number.real;
     double i = number.imag;
-    double a = (i == 0d)? r:
-               (r == 0d)? i:
+    double a = (i == 0d)? Math.abs(r):
+               (r == 0d)? Math.abs(i):
                Math.hypot(r, i);
 
     return new ComplexNumber(a);
@@ -49,7 +33,23 @@ public class ComplexNumber {
     return abs(this);
   }
 
-  public final static ComplexNumber reciprocal (ComplexNumber number) {
+  public final static ComplexNumber neg (ComplexNumber number) {
+    return new ComplexNumber(-number.real, -number.imag);
+  }
+
+  public final ComplexNumber neg () {
+    return neg(this);
+  }
+
+  public final static ComplexNumber con (ComplexNumber number) {
+    return new ComplexNumber(number.real, -number.imag);
+  }
+
+  public final ComplexNumber con () {
+    return con(this);
+  }
+
+  public final static ComplexNumber rec (ComplexNumber number) {
     double r = number.real;
     double i = number.imag;
     double d = (r * r) + (i * i);
@@ -57,8 +57,8 @@ public class ComplexNumber {
     return new ComplexNumber((r / d), (-i / d));
   }
 
-  public final ComplexNumber reciprocal () {
-    return reciprocal(this);
+  public final ComplexNumber rec () {
+    return rec(this);
   }
 
   public final static ComplexNumber add (ComplexNumber augend, ComplexNumber addend) {
@@ -72,34 +72,34 @@ public class ComplexNumber {
     return add(this, addend);
   }
 
-  public final static ComplexNumber subtract (ComplexNumber minuend, ComplexNumber subtrahend) {
+  public final static ComplexNumber sub (ComplexNumber minuend, ComplexNumber subtrahend) {
     return new ComplexNumber(
       minuend.real - subtrahend.real,
       minuend.imag - subtrahend.imag
     );
   }
 
-  public final ComplexNumber subtract (ComplexNumber subtrahend) {
-    return subtract(this, subtrahend);
+  public final ComplexNumber sub (ComplexNumber subtrahend) {
+    return sub(this, subtrahend);
   }
 
-  public final static ComplexNumber multiply (ComplexNumber multiplicand, ComplexNumber multiplier) {
+  public final static ComplexNumber mul (ComplexNumber multiplicand, ComplexNumber multiplier) {
     return new ComplexNumber(
       (multiplicand.real * multiplier.real) - (multiplicand.imag * multiplier.imag),
       (multiplicand.real * multiplier.imag) + (multiplicand.imag * multiplier.real)
     );
   }
 
-  public final ComplexNumber multiply (ComplexNumber multiplier) {
-    return multiply(this, multiplier);
+  public final ComplexNumber mul (ComplexNumber multiplier) {
+    return mul(this, multiplier);
   }
 
-  public final static ComplexNumber divide (ComplexNumber dividend, ComplexNumber divisor) {
-    return dividend.multiply(divisor.reciprocal());
+  public final static ComplexNumber div (ComplexNumber dividend, ComplexNumber divisor) {
+    return dividend.mul(divisor.rec());
   }
 
-  public final ComplexNumber divide (ComplexNumber divisor) {
-    return divide(this, divisor);
+  public final ComplexNumber div (ComplexNumber divisor) {
+    return div(this, divisor);
   }
 
   private final static char DECIMAL_SEPARATOR;
