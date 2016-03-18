@@ -112,7 +112,7 @@ public class CalculatorActivity extends CommonActivity {
       ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
       double result = evaluation.getResult();
 
-      resultView.setText(Number.toString(result));
+      resultView.setText(ComplexNumber.toString(result));
       SavedSettings.set(SavedSettings.RESULT, result);
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
@@ -284,7 +284,7 @@ public class CalculatorActivity extends CommonActivity {
 
     sb.append(name);
     sb.append(" = ");
-    sb.append(Number.toString(value));
+    sb.append(ComplexNumber.toString(value));
 
     if (description != null) {
       sb.append(" (");

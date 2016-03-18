@@ -6,69 +6,69 @@ import java.text.DecimalFormatSymbols;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class Number {
+public class ComplexNumber {
   private final double real;
   private final double imag;
 
-  public Number (double r, double i) {
+  public ComplexNumber (double r, double i) {
     real = r;
     imag = i;
   }
 
-  public Number (double r) {
+  public ComplexNumber (double r) {
     this(r, 0);
   }
 
-  public final static Number reciprocal (Number number) {
+  public final static ComplexNumber reciprocal (ComplexNumber number) {
     double r = number.real;
     double i = number.imag;
     double d = (r * r) + (i * i);
 
-    return new Number((r / d), (-i / d));
+    return new ComplexNumber((r / d), (-i / d));
   }
 
-  public final Number reciprocal () {
+  public final ComplexNumber reciprocal () {
     return reciprocal(this);
   }
 
-  public final static Number add (Number augend, Number addend) {
-    return new Number(
+  public final static ComplexNumber add (ComplexNumber augend, ComplexNumber addend) {
+    return new ComplexNumber(
       augend.real + addend.real,
       augend.imag + addend.imag
     );
   }
 
-  public final Number add (Number addend) {
+  public final ComplexNumber add (ComplexNumber addend) {
     return add(this, addend);
   }
 
-  public final static Number subtract (Number minuend, Number subtrahend) {
-    return new Number(
+  public final static ComplexNumber subtract (ComplexNumber minuend, ComplexNumber subtrahend) {
+    return new ComplexNumber(
       minuend.real - subtrahend.real,
       minuend.imag - subtrahend.imag
     );
   }
 
-  public final Number subtract (Number subtrahend) {
+  public final ComplexNumber subtract (ComplexNumber subtrahend) {
     return subtract(this, subtrahend);
   }
 
-  public final static Number multiply (Number multiplicand, Number multiplier) {
-    return new Number(
+  public final static ComplexNumber multiply (ComplexNumber multiplicand, ComplexNumber multiplier) {
+    return new ComplexNumber(
       (multiplicand.real * multiplier.real) - (multiplicand.imag * multiplier.imag),
       (multiplicand.real * multiplier.imag) + (multiplicand.imag * multiplier.real)
     );
   }
 
-  public final Number multiply (Number multiplier) {
+  public final ComplexNumber multiply (ComplexNumber multiplier) {
     return multiply(this, multiplier);
   }
 
-  public final static Number divide (Number dividend, Number divisor) {
+  public final static ComplexNumber divide (ComplexNumber dividend, ComplexNumber divisor) {
     return dividend.multiply(divisor.reciprocal());
   }
 
-  public final Number divide (Number divisor) {
+  public final ComplexNumber divide (ComplexNumber divisor) {
     return divide(this, divisor);
   }
 
