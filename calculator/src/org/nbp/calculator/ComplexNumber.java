@@ -19,6 +19,36 @@ public class ComplexNumber {
     this(r, 0);
   }
 
+  public final static ComplexNumber negate (ComplexNumber number) {
+    return new ComplexNumber(-number.real, -number.imag);
+  }
+
+  public final ComplexNumber negate () {
+    return negate(this);
+  }
+
+  public final static ComplexNumber conjugate (ComplexNumber number) {
+    return new ComplexNumber(number.real, -number.imag);
+  }
+
+  public final ComplexNumber conjugate () {
+    return conjugate(this);
+  }
+
+  public final static ComplexNumber abs (ComplexNumber number) {
+    double r = number.real;
+    double i = number.imag;
+    double a = (i == 0d)? r:
+               (r == 0d)? i:
+               Math.hypot(r, i);
+
+    return new ComplexNumber(a);
+  }
+
+  public final ComplexNumber abs () {
+    return abs(this);
+  }
+
   public final static ComplexNumber reciprocal (ComplexNumber number) {
     double r = number.real;
     double i = number.imag;
