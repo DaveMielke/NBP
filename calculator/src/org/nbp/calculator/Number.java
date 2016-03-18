@@ -1,5 +1,8 @@
 package org.nbp.calculator;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -93,7 +96,11 @@ public class Number {
     return string.substring(start, end);
   }
 
-  public final static String toString (double value, boolean imaginary) {
+  private final static String toString (double value, boolean imaginary) {
+    DecimalFormat decimalFormat = new DecimalFormat();
+    DecimalFormatSymbols formattingSymbols = decimalFormat.getDecimalFormatSymbols();
+    char decimalSeparator = formattingSymbols.getDecimalSeparator();
+
     if (value == 0d) {
       String string = "0";
       if (imaginary) string += IMAGINARY_SIGN;
@@ -136,15 +143,18 @@ public class Number {
 
       if ((exponent >= 1) && (exponent <= 12)) {
         if (sb.length() > exponent) {
-          sb.insert(exponent, '.');
+          sb.insert(exponent, decimalSeparator);
         } else {
           while (sb.length() < exponent) sb.append('0');
         }
 
-        while ((exponent -= 3) > 0) sb.insert(exponent, ',');
+        int groupingSize = decimalFormat.getGroupingSize();
+        char groupingSeparator = formattingSymbols.getGroupingSeparator();
+
+        while ((exponent -= groupingSize) > 0) sb.insert(exponent, groupingSeparator);
         exponent = 0;
       } else {
-        if (sb.length() > 1) sb.insert(1, '.');
+        if (sb.length() > 1) sb.insert(1, decimalSeparator);
         exponent -= 1;
       }
 
@@ -173,10 +183,6 @@ public class Number {
     return string;
   }
 
-  public final static String toString (double value) {
-    return toString(value, false);
-  }
-
   public final static String toString (double r, double i) {
     if (i == 0d) return toString(r, false);
     if (r == 0d) return toString(i, true);
@@ -199,5 +205,9 @@ public class Number {
 
   public final String toString () {
     return toString(real, imag);
+  }
+
+  public final static String toString (double value) {
+    return toString(value, 0d);
   }
 }
