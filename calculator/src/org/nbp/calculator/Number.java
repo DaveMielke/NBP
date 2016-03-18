@@ -68,6 +68,19 @@ public class Number {
     return divide(this, divisor);
   }
 
+  private final static char DECIMAL_SEPARATOR;
+  private final static char GROUPING_SEPARATOR;
+  private final static int GROUPING_SIZE;
+
+  static {
+    DecimalFormat format = new DecimalFormat();
+    GROUPING_SIZE = format.getGroupingSize();
+
+    DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
+    DECIMAL_SEPARATOR = symbols.getDecimalSeparator();
+    GROUPING_SEPARATOR = symbols.getGroupingSeparator();
+  }
+
   public final static char IMAGINARY_SIGN = 'i';
   public final static char ADDITION_SIGN = '+';
   public final static char SUBTRACTION_SIGN = '−';
@@ -97,10 +110,6 @@ public class Number {
   }
 
   private final static String toString (double value, boolean imaginary) {
-    DecimalFormat decimalFormat = new DecimalFormat();
-    DecimalFormatSymbols formattingSymbols = decimalFormat.getDecimalFormatSymbols();
-    char decimalSeparator = formattingSymbols.getDecimalSeparator();
-
     if (value == 0d) {
       String string = "0";
       if (imaginary) string += IMAGINARY_SIGN;
@@ -143,18 +152,18 @@ public class Number {
 
       if ((exponent >= 1) && (exponent <= 12)) {
         if (sb.length() > exponent) {
-          sb.insert(exponent, decimalSeparator);
+          sb.insert(exponent, DECIMAL_SEPARATOR);
         } else {
           while (sb.length() < exponent) sb.append('0');
         }
 
-        int groupingSize = decimalFormat.getGroupingSize();
-        char groupingSeparator = formattingSymbols.getGroupingSeparator();
+        while ((exponent -= GROUPING_SIZE) > 0) {
+          sb.insert(exponent, GROUPING_SEPARATOR);
+        }
 
-        while ((exponent -= groupingSize) > 0) sb.insert(exponent, groupingSeparator);
         exponent = 0;
       } else {
-        if (sb.length() > 1) sb.insert(1, decimalSeparator);
+        if (sb.length() > 1) sb.insert(1, DECIMAL_SEPARATOR);
         exponent -= 1;
       }
 
