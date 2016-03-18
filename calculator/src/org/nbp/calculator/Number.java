@@ -72,8 +72,15 @@ public class Number {
   public final static char DIVISION_SIGN = '÷';
   public final static char EXPONENTIATION_SIGN = '^';
 
+  private final static String DECIMAL_DIGIT = "[0-9]";
+
   private final static Pattern REAL_PATTERN = Pattern.compile(
-    "^([-+])?0*(\\d*?)(?:\\.(\\d*?)0*)?(?:[eE]([-+])?0*(\\d+?))?$"
+    "^"
+  + "([-+])?"
+  + "0*(" + DECIMAL_DIGIT + "*?)"
+  + "(?:\\.(" + DECIMAL_DIGIT + "*?)0*)?"
+  + "(?:[Ee]([-+])?0*(" + DECIMAL_DIGIT + "+?))?"
+  + "$"
   );
 
   private static String getMatch (String string, Matcher matcher, int group) {
