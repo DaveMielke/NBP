@@ -130,13 +130,11 @@ public class Number {
       sb.append(after);
 
       {
-        int length = sb.length();
+        int end = sb.length();
 
-        while (length > 1) {
-          int last = length - 1;
-          if (sb.charAt(last) != '0') break;
-          sb.delete(last, length);
-          length = last;
+        while (end > 0) {
+          if (sb.charAt(end -= 1) != '0') break;
+          sb.setLength(end);
         }
       }
 
