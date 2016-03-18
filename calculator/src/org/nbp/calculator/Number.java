@@ -20,7 +20,11 @@ public class Number {
   }
 
   public final static Number reciprocal (Number number) {
-    return new Number(0, 0);
+    double r = number.real;
+    double i = number.imag;
+    double d = (r * r) + (i * i);
+
+    return new Number((r / d), (-i / d));
   }
 
   public final Number reciprocal () {
