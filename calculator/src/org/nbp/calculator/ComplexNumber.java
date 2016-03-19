@@ -10,13 +10,23 @@ public class ComplexNumber {
   private final double real;
   private final double imag;
 
+  private final static double ZERO = 0d;
+
   public ComplexNumber (double r, double i) {
     real = r;
     imag = i;
   }
 
   public ComplexNumber (double r) {
-    this(r, 0);
+    this(r, ZERO);
+  }
+
+  public final double real () {
+    return real;
+  }
+
+  public final double imag () {
+    return imag;
   }
 
   public final static ComplexNumber NaN = new ComplexNumber(Double.NaN, Double.NaN);
@@ -32,11 +42,12 @@ public class ComplexNumber {
   public final static ComplexNumber abs (ComplexNumber number) {
     double r = number.real;
     double i = number.imag;
-    double a = (i == 0d)? Math.abs(r):
-               (r == 0d)? Math.abs(i):
-               Math.hypot(r, i);
 
-    return new ComplexNumber(a);
+    return new ComplexNumber(
+      (i == ZERO)? Math.abs(r):
+      (r == ZERO)? Math.abs(i):
+      Math.hypot(r, i)
+    );
   }
 
   public final ComplexNumber abs () {
@@ -231,14 +242,14 @@ public class ComplexNumber {
   }
 
   public final static String toString (double r, double i) {
-    if (i == 0d) return toString(r, false);
-    if (r == 0d) return toString(i, true);
+    if (i == ZERO) return toString(r, false);
+    if (r == ZERO) return toString(i, true);
 
     StringBuilder sb = new StringBuilder();
     sb.append(toString(r, false));
     sb.append(' ');
 
-    if (i < 0d) {
+    if (i < ZERO) {
       sb.append(SUBTRACTION_SIGN);
       i = -i;
     } else {
@@ -251,7 +262,7 @@ public class ComplexNumber {
   }
 
   public final static String toString (double value) {
-    return toString(value, 0d);
+    return toString(value, ZERO);
   }
 
   public final String toString () {
