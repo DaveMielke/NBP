@@ -29,6 +29,14 @@ public class ComplexNumber {
     return imag;
   }
 
+  public final boolean hasReal () {
+    return real != ZERO;
+  }
+
+  public final boolean hasImag () {
+    return imag != ZERO;
+  }
+
   public final static ComplexNumber NaN = new ComplexNumber(Double.NaN, Double.NaN);
 
   public final static boolean isNaN (ComplexNumber number) {
@@ -37,6 +45,16 @@ public class ComplexNumber {
 
   public final boolean isNaN () {
     return isNaN(this);
+  }
+
+  public final static boolean equals (ComplexNumber left, ComplexNumber right) {
+    if (left.isNaN()) return right.isNaN();
+    if (right.isNaN()) return false;
+    return ((left.real == right.real) && (left.imag == right.imag));
+  }
+
+  public final boolean equals (ComplexNumber right) {
+    return equals(this, right);
   }
 
   public final static ComplexNumber abs (ComplexNumber number) {
