@@ -3,10 +3,15 @@ import org.nbp.b2g.ui.*;
 
 import org.nbp.common.LaunchUtilities;
 
+import android.util.Log;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.ActivityNotFoundException;
 
 public abstract class ActivityAction extends Action {
+  private final static String LOG_TAG = ActivityAction.class.getName();
+
   protected abstract Intent getIntent (Context context);
 
   protected final Context getContext () {
@@ -21,8 +26,14 @@ public abstract class ActivityAction extends Action {
     Intent intent = getIntent(context);
     if (intent == null) return false;
 
-    LaunchUtilities.launchActivity(intent);
-    return true;
+    try {
+      LaunchUtilities.launchActivity(intent);
+      return true;
+    } catch (ActivityNotFoundException exception) {
+      Log.w(LOG_TAG, ("activity not found: " + exception.getMessage()));
+    }
+
+    return false;
   }
 
   protected ActivityAction (Endpoint endpoint, boolean isForDevelopers) {
