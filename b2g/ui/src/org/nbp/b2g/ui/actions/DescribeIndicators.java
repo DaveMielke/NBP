@@ -95,15 +95,11 @@ public class DescribeIndicators extends Action {
       startLine(sb, R.string.DescribeIndicators_battery_label);
 
       {
-        boolean present = battery.getBoolean(BatteryManager.EXTRA_PRESENT, true);
-
-        if (present) {
-          int level = battery.getInt(BatteryManager.EXTRA_LEVEL, 0);
-          int scale = battery.getInt(BatteryManager.EXTRA_SCALE, 0);
-
-          if (scale > 0) {
+        if (HostMonitor.haveBattery(battery)) {
+          int percentage = HostMonitor.getBatteryPercentage(battery);
+          if (percentage >= 0) {
             sb.append(' ');
-            sb.append(Integer.toString((level * 100) / scale));
+            sb.append(percentage);
             sb.append('%');
           }
         } else {

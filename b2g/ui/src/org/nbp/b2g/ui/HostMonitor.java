@@ -12,9 +12,27 @@ import android.content.IntentFilter;
 
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.os.BatteryManager;
 
 public class HostMonitor extends BroadcastReceiver {
   private final static String LOG_TAG = HostMonitor.class.getName();
+
+  public static boolean haveBattery (Bundle battery) {
+    return battery.getBoolean(BatteryManager.EXTRA_PRESENT, true);
+  }
+
+  public static int getBatteryPercentage (Bundle battery) {
+    if (haveBattery(battery)) {
+      int scale = battery.getInt(BatteryManager.EXTRA_SCALE, 0);
+
+      if (scale > 0) {
+        int level = battery.getInt(BatteryManager.EXTRA_LEVEL, 0);
+        return (level * 100) / scale;
+      }
+    }
+
+    return -1;
+  }
 
   private final static Map<String, Bundle> intentExtras = new HashMap<String, Bundle>();
 
@@ -95,7 +113,25 @@ public class HostMonitor extends BroadcastReceiver {
         handleMediaAction(intent, MediaAction.REMOVED);
       } else {
         synchronized (intentExtras) {
-          intentExtras.put(action, intent.getExtras());
+          Bundle extras = intent.getExtras();
+
+          if (intentExtras.get(action) == null) {
+            if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
+              int percentage = getBatteryPercentage(extras);
+
+              if (percentage >= 0) {
+                ApplicationUtilities.message(
+                  String.format(
+                    "%s %d%%",
+                    context.getString(R.string.message_battery_percentage),
+                    percentage
+                  )
+                );
+              }
+            }
+          }
+
+          intentExtras.put(action, extras);
         }
       }
     }
