@@ -316,8 +316,8 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private static void handleViewScrolled (AccessibilityEvent event, AccessibilityNodeInfo source) {
-    ScrollContainer container = ScrollContainer.getContainer(source);
+  private static void handleViewScrolled (AccessibilityEvent event, AccessibilityNodeInfo view) {
+    ScrollContainer container = ScrollContainer.getContainer(view);
 
     if (container != null) {
       synchronized (container) {
@@ -326,6 +326,10 @@ public class ScreenMonitor extends AccessibilityService {
         container.setLastItemIndex(event.getToIndex());
         container.onScroll();
       }
+    }
+
+    if (view.isFocused()) {
+      setCurrentNode(event);
     }
   }
 
