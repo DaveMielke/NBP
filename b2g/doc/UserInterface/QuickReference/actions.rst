@@ -31,6 +31,7 @@
 .. |DescribeIndicators| replace:: show the values of important device status indicators
 .. |DeveloperOff| replace:: turn developer mode off
 .. |DeveloperOn| replace:: turn developer mode on
+.. |Dialer| replace:: go to the Dialer (Phone) app
 .. |Editor| replace:: go to the NBP editor
 .. |EMail| replace:: go to the EMail app
 .. |End| replace:: the keyboard End key

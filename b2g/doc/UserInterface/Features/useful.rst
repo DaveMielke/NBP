@@ -118,6 +118,9 @@ Space+s (dots 234)
   c (dots 14)
     Go to the Calendar app.
 
+  d (dots 145)
+    Go to the Dialer (Phone) app.
+
   e (dots 15)
     Go to the EMail app.
 
