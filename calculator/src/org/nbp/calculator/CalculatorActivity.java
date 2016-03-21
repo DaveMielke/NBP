@@ -1,8 +1,11 @@
 package org.nbp.calculator;
 
+import java.util.Collections;
 import java.util.Collection;
+
 import java.util.List;
 import java.util.ArrayList;
+
 import java.util.Set;
 import java.util.HashSet;
 
@@ -311,6 +314,7 @@ public class CalculatorActivity extends CommonActivity {
       variables.add(formatVariable(name, Variables.get(name)));
     }
 
+    Collections.sort(variables);
     return variables;
   }
 
