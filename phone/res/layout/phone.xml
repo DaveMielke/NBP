@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:paddingLeft="@dimen/screen_offset_left"
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
@@ -21,122 +22,7 @@
     android:layout_height="wrap_content"
     >
 
-    <GridLayout
-      android:id="@+id/keypad"
-      android:orientation="vertical"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
-
-      <Button
-        android:layout_row="0"
-        android:layout_column="0"
-        android:text="1"
-       />
-
-      <Button
-        android:layout_row="0"
-        android:layout_column="1"
-        android:text="2"
-       />
-
-      <Button
-        android:layout_row="0"
-        android:layout_column="2"
-        android:text="3"
-       />
-
-      <Button
-        android:layout_row="0"
-        android:layout_column="3"
-        android:text="+"
-       />
-
-      <Button
-        android:layout_row="1"
-        android:layout_column="0"
-        android:text="4"
-       />
-
-      <Button
-        android:layout_row="1"
-        android:layout_column="1"
-        android:text="5"
-       />
-
-      <Button
-        android:layout_row="1"
-        android:layout_column="2"
-        android:text="6"
-       />
-
-      <Button
-        android:layout_row="1"
-        android:layout_column="3"
-        android:text="-"
-       />
-
-      <Button
-        android:layout_row="2"
-        android:layout_column="0"
-        android:text="7"
-       />
-
-      <Button
-        android:layout_row="2"
-        android:layout_column="1"
-        android:text="8"
-       />
-
-      <Button
-        android:layout_row="2"
-        android:layout_column="2"
-        android:text="9"
-       />
-
-      <Button
-        android:layout_row="2"
-        android:layout_column="3"
-        android:text=","
-       />
-
-      <Button
-        android:layout_row="3"
-        android:layout_column="0"
-        android:text="*"
-       />
-
-      <Button
-        android:layout_row="3"
-        android:layout_column="1"
-        android:text="0"
-       />
-
-      <Button
-        android:layout_row="3"
-        android:layout_column="2"
-        android:text="#"
-       />
-
-      <Button
-        android:layout_row="3"
-        android:layout_column="3"
-        android:text=";"
-       />
-    </GridLayout>
-
-    <GridLayout
-      android:orientation="vertical"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
-
-      <Button
-        android:id="@+id/call"
-        android:layout_row="0"
-        android:layout_column="0"
-        android:text="@string/label_call"
-       />
-    </GridLayout>
+    <include layout="@layout/keypad" />
+    <include layout="@layout/buttons" />
   </LinearLayout>
 </LinearLayout>
