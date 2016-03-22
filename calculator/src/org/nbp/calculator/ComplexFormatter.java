@@ -6,12 +6,12 @@ import java.text.DecimalFormatSymbols;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ComplexFormatter {
-  private final static char DECIMAL_SEPARATOR;
-  private final static char GROUPING_SEPARATOR;
-  private final static int GROUPING_SIZE;
+public class ComplexFormatter extends ComplexCommon {
+  private final char DECIMAL_SEPARATOR;
+  private final char GROUPING_SEPARATOR;
+  private final int GROUPING_SIZE;
 
-  static {
+  private ComplexFormatter () {
     DecimalFormat format = new DecimalFormat();
     GROUPING_SIZE = format.getGroupingSize();
 
@@ -41,7 +41,7 @@ public class ComplexFormatter {
   + "$"
   );
 
-  private static String getMatch (String string, Matcher matcher, int group) {
+  private final static String getMatch (String string, Matcher matcher, int group) {
     int start = matcher.start(group);
     if (start < 0) return "";
 
@@ -51,7 +51,7 @@ public class ComplexFormatter {
     return string.substring(start, end);
   }
 
-  private final static String format (double value, boolean imaginary) {
+  private final String format (double value, boolean imaginary) {
     String string = String.format("%.12E", value);
     Matcher matcher = REAL_PATTERN.matcher(string);
 
@@ -125,15 +125,15 @@ public class ComplexFormatter {
     return string;
   }
 
-  public final static String format (double r, double i) {
-    if (i == ComplexNumber.ZERO) return format(r, false);
-    if (r == ComplexNumber.ZERO) return format(i, true);
+  public final String format (double r, double i) {
+    if (i == ZERO) return format(r, false);
+    if (r == ZERO) return format(i, true);
 
     StringBuilder sb = new StringBuilder();
     sb.append(format(r, false));
     sb.append(' ');
 
-    if (i < ComplexNumber.ZERO) {
+    if (i < ZERO) {
       sb.append(SUBTRACTION_SIGN);
       i = -i;
     } else {
@@ -145,11 +145,8 @@ public class ComplexFormatter {
     return sb.toString();
   }
 
-  public final static String format (double value) {
-    return format(value, ComplexNumber.ZERO);
-  }
-
-  private ComplexFormatter () {
+  public final String format (double value) {
+    return format(value, ZERO);
   }
 
   private final static Object INSTANCE_LOCK = new Object();

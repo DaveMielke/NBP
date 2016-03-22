@@ -1,10 +1,8 @@
 package org.nbp.calculator;
 
-public class ComplexNumber {
+public class ComplexNumber extends ComplexCommon {
   private final double real;
   private final double imag;
-
-  public final static double ZERO = 0d;
 
   public ComplexNumber (double r, double i) {
     real = r;
