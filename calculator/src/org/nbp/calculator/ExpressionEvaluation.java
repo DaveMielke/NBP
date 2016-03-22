@@ -357,7 +357,8 @@ public class ExpressionEvaluation {
         case OPEN:
         case RESULT:
         case IDENTIFIER:
-          return value.mul(evaluateElement());
+          value = value.mul(evaluateElement());
+          break;
 
         default:
           return value;
