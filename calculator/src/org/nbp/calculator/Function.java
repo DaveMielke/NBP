@@ -7,22 +7,22 @@ import org.nbp.common.LanguageUtilities;
 public class Function {
   private final Method method;
 
-  private final double evaluate (double argument) {
-    Object result = LanguageUtilities.invokeMethod(method, null, argument);
-    if (result != null) return (Double)result;
-    return Double.NaN;
-  }
-
-  protected double preprocessArgument (double argument) {
+  protected Object preprocessArgument (ComplexNumber argument) {
     return argument;
   }
 
-  protected double postprocessResult (double result) {
-    return result;
+  protected ComplexNumber postprocessResult (Object result) {
+    return (ComplexNumber)result;
   }
 
-  public final double call (double argument) {
-    return postprocessResult(evaluate(preprocessArgument(argument)));
+  public final ComplexNumber call (ComplexNumber argument) {
+    Object methodArgument = preprocessArgument(argument);
+    if (methodArgument == null) return null;
+
+    Object methodResult = LanguageUtilities.invokeMethod(method, null, methodArgument);
+    if (methodResult == null) return null;
+
+    return postprocessResult(methodResult);
   }
 
   public Function (Method method) {

@@ -86,7 +86,7 @@ public abstract class Functions {
   private static void addRealFunction (
     String functionName, MethodMap methodMap, String methodName
   ) {
-    addFunction(functionName, Function.class, methodMap, methodName);
+    addFunction(functionName, RealFunction.class, methodMap, methodName);
   }
 
   private static void addRealFunction (String functionName, MethodMap methodMap) {

@@ -2,7 +2,7 @@ package org.nbp.calculator;
 
 import java.lang.reflect.Method;
 
-public class TrigonometricFunction extends Function {
+public class TrigonometricFunction extends RealFunction {
   @Override
   protected double preprocessArgument (double argument) {
     argument = super.preprocessArgument(argument);

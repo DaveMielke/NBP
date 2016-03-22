@@ -295,7 +295,7 @@ public class ExpressionEvaluation {
                 throw new ExpressionException(R.string.error_unknown_function, token.getStart());
               }
 
-              return function.call(evaluateSubexpression());
+              return function.call(new ComplexNumber(evaluateSubexpression())).real();
             }
 
             default: {
