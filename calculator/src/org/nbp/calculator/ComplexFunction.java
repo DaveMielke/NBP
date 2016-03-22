@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import org.nbp.common.LanguageUtilities;
 
-public class Function {
+public class ComplexFunction {
   private final Method method;
 
   protected Object preprocessArgument (ComplexNumber argument) {
@@ -30,7 +30,7 @@ public class Function {
     return ComplexNumber.NaN;
   }
 
-  public Function (Method method) {
+  public ComplexFunction (Method method) {
     this.method = method;
   }
 }

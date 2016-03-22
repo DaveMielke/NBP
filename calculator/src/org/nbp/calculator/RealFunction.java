@@ -2,7 +2,7 @@ package org.nbp.calculator;
 
 import java.lang.reflect.Method;
 
-public class RealFunction extends Function {
+public class RealFunction extends ComplexFunction {
   protected double preprocessArgument (double argument) {
     return argument;
   }

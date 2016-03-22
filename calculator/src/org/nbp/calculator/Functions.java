@@ -13,7 +13,7 @@ import android.util.Log;
 public abstract class Functions {
   private final static String LOG_TAG = Functions.class.getName();
 
-  private static class FunctionMap extends HashMap<String, Function> {
+  private static class FunctionMap extends HashMap<String, ComplexFunction> {
     public FunctionMap () {
       super();
     }
@@ -47,12 +47,12 @@ public abstract class Functions {
   }
 
   private static void addFunction (
-    String name, Class<? extends Function> type, Method method
+    String name, Class<? extends ComplexFunction> type, Method method
   ) {
     Constructor constructor = LanguageUtilities.getConstructor(type, Method.class);
 
     if (constructor != null) {
-      Function function = (Function)LanguageUtilities.newInstance(constructor, method);
+      ComplexFunction function = (ComplexFunction)LanguageUtilities.newInstance(constructor, method);
 
       if (function != null) {
         systemFunctions.put(name, function);
@@ -64,7 +64,7 @@ public abstract class Functions {
   }
 
   private static void addFunction (
-    String functionName, Class<? extends Function> functionType,
+    String functionName, Class<? extends ComplexFunction> functionType,
     MethodMap methodMap, String methodName
   ) {
     Method method = methodMap.get(methodName);
@@ -77,7 +77,7 @@ public abstract class Functions {
   }
 
   private static void addFunction (
-    String functionName, Class<? extends Function> functionType,
+    String functionName, Class<? extends ComplexFunction> functionType,
     MethodMap methodMap
   ) {
     addFunction(functionName, functionType, methodMap, functionName);
@@ -136,7 +136,7 @@ public abstract class Functions {
     MethodMap map = getMethodMap(type, type);
 
     for (String name : map.keySet()) {
-      addFunction(name, Function.class, map.get(name));
+      addFunction(name, ComplexFunction.class, map.get(name));
     }
   }
 
@@ -147,7 +147,7 @@ public abstract class Functions {
     Log.d(LOG_TAG, "end function definitions");
   }
 
-  public static Function get (String name) {
+  public static ComplexFunction get (String name) {
     return systemFunctions.get(name);
   }
 

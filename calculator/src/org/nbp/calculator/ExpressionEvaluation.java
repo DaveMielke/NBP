@@ -289,7 +289,7 @@ public class ExpressionEvaluation {
             }
 
             case OPEN: {
-              Function function = Functions.get(name);
+              ComplexFunction function = Functions.get(name);
 
               if (function == null) {
                 throw new ExpressionException(R.string.error_unknown_function, token.getStart());
