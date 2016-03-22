@@ -37,6 +37,10 @@ public class ComplexNumber {
     return imag != ZERO;
   }
 
+  private final static boolean isReal (ComplexNumber number1, ComplexNumber number2) {
+    return !(number1.hasImag() || number2.hasImag());
+  }
+
   public final static ComplexNumber NaN = new ComplexNumber(Double.NaN, Double.NaN);
 
   public final static boolean isNaN (ComplexNumber number) {
@@ -91,8 +95,9 @@ public class ComplexNumber {
   public final static ComplexNumber rec (ComplexNumber number) {
     double r = number.real;
     double i = number.imag;
-    double d = (r * r) + (i * i);
+    if (i == ZERO) return new ComplexNumber(1 / r);
 
+    double d = (r * r) + (i * i);
     return new ComplexNumber((r / d), (-i / d));
   }
 
@@ -134,6 +139,10 @@ public class ComplexNumber {
   }
 
   public final static ComplexNumber div (ComplexNumber dividend, ComplexNumber divisor) {
+    if (isReal(dividend, divisor)) {
+      return new ComplexNumber(dividend.real / divisor.real);
+    }
+
     return dividend.mul(divisor.rec());
   }
 
@@ -142,7 +151,11 @@ public class ComplexNumber {
   }
 
   public final static ComplexNumber pow (ComplexNumber value, ComplexNumber exponent) {
-    return new ComplexNumber(Math.pow(value.real(), exponent.real()));
+    if (isReal(value, exponent)) {
+      return new ComplexNumber(Math.pow(value.real, exponent.real));
+    }
+
+    return NaN;
   }
 
   public final ComplexNumber pow (ComplexNumber exponent) {
