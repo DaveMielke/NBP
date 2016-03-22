@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 
 public class ExpressionEvaluation {
   private final String expressionText;
-  private final double expressionResult;
+  private final ComplexNumber expressionResult;
 
   private static enum TokenType {
     IDENTIFIER,
@@ -206,7 +206,7 @@ public class ExpressionEvaluation {
     return getTokenText(getTokenDescriptor());
   }
 
-  private final double evaluateSubexpression () throws ExpressionException {
+  private final ComplexNumber evaluateSubexpression () throws ExpressionException {
     int start = getTokenDescriptor().getStart();
     nextToken();
 
@@ -214,7 +214,7 @@ public class ExpressionEvaluation {
       throw new ExpressionException(R.string.error_missing_subexpression, start);
     }
 
-    double value = evaluateExpression();
+    ComplexNumber value = evaluateExpression();
 
     if (getTokenType() != TokenType.CLOSE) {
       throw new ExpressionException(R.string.error_unclosed_bracket, start);
@@ -224,7 +224,7 @@ public class ExpressionEvaluation {
     return value;
   }
 
-  private final double evaluateElement () throws ExpressionException {
+  private final ComplexNumber evaluateElement () throws ExpressionException {
     while (true) {
       TokenType type = getTokenType();
 
@@ -235,15 +235,15 @@ public class ExpressionEvaluation {
 
         case MINUS:
           nextToken();
-          return -evaluateElement();
+          return evaluateElement().neg();
 
         case OPEN:
           return evaluateSubexpression();
 
         case RESULT: {
-          double value = SavedSettings.getResult();
+          ComplexNumber value = SavedSettings.getResult();
 
-          if (Double.isNaN(value)) {
+          if (value.isNaN()) {
             throw new ExpressionException(
               R.string.error_no_result,
               getTokenDescriptor().getStart()
@@ -257,7 +257,7 @@ public class ExpressionEvaluation {
         case DECIMAL: {
           double value = Double.valueOf(getTokenText());
           nextToken();
-          return value;
+          return new ComplexNumber(value);
         }
 
         case HEXADECIMAL: {
@@ -265,7 +265,7 @@ public class ExpressionEvaluation {
           if (text.indexOf('P') < 0) text += "P0";
 
           nextToken();
-          return Double.valueOf(text);
+          return new ComplexNumber(Double.valueOf(text));
         }
 
         case IDENTIFIER: {
@@ -276,7 +276,7 @@ public class ExpressionEvaluation {
           switch (getTokenType()) {
             case ASSIGN: {
               nextToken();
-              double value = evaluateExpression();
+              ComplexNumber value = evaluateExpression();
 
               if (!Variables.set(name, value)) {
                 throw new ExpressionException(
@@ -295,11 +295,11 @@ public class ExpressionEvaluation {
                 throw new ExpressionException(R.string.error_unknown_function, token.getStart());
               }
 
-              return function.call(new ComplexNumber(evaluateSubexpression())).real();
+              return function.call(evaluateSubexpression());
             }
 
             default: {
-              Double value = Variables.get(name);
+              ComplexNumber value = Variables.get(name);
               if (value != null) return value;
 
               throw new ExpressionException(R.string.error_unknown_variable, token.getStart());
@@ -318,14 +318,14 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final double evaluateExponentiations () throws ExpressionException {
-    double value = evaluateElement();
+  private final ComplexNumber evaluateExponentiations () throws ExpressionException {
+    ComplexNumber value = evaluateElement();
 
     while (true) {
       switch (getTokenType()) {
         case EXPONENTIATE:
           nextToken();
-          value = Math.pow(value, evaluateElement());
+          value = value.pow(evaluateElement());
           break;
 
         default:
@@ -334,19 +334,19 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final double evaluateProductsAndQuotients () throws ExpressionException {
-    double value = evaluateExponentiations();
+  private final ComplexNumber evaluateProductsAndQuotients () throws ExpressionException {
+    ComplexNumber value = evaluateExponentiations();
 
     while (true) {
       switch (getTokenType()) {
         case TIMES:
           nextToken();
-          value *= evaluateExponentiations();
+          value = value.mul(evaluateExponentiations());
           break;
 
         case DIVIDE:
           nextToken();
-          value /= evaluateExponentiations();
+          value = value.div(evaluateExponentiations());
           break;
 
         default:
@@ -355,19 +355,19 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final double evaluateSumsAndDifferences () throws ExpressionException {
-    double value = evaluateProductsAndQuotients();
+  private final ComplexNumber evaluateSumsAndDifferences () throws ExpressionException {
+    ComplexNumber value = evaluateProductsAndQuotients();
 
     while (true) {
       switch (getTokenType()) {
         case PLUS:
           nextToken();
-          value += evaluateProductsAndQuotients();
+          value = value.add(evaluateProductsAndQuotients());
           break;
 
         case MINUS:
           nextToken();
-          value -= evaluateProductsAndQuotients();
+          value = value.sub(evaluateProductsAndQuotients());
           break;
 
         default:
@@ -376,12 +376,12 @@ public class ExpressionEvaluation {
     }
   }
 
-  private final double evaluateExpression () throws ExpressionException {
-    double value = evaluateSumsAndDifferences();
+  private final ComplexNumber evaluateExpression () throws ExpressionException {
+    ComplexNumber value = evaluateSumsAndDifferences();
     return value;
   }
 
-  public final double getResult () {
+  public final ComplexNumber getResult () {
     return expressionResult;
   }
 
@@ -401,7 +401,7 @@ public class ExpressionEvaluation {
       TokenDescriptor token = getTokenDescriptor();
 
       if (token == null) {
-        if (!Double.isNaN(expressionResult)) return;
+        if (!expressionResult.isNaN()) return;
         throw new ExpressionException(R.string.error_undefined_result, end);
       }
 

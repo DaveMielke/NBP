@@ -141,6 +141,14 @@ public class ComplexNumber {
     return div(this, divisor);
   }
 
+  public final static ComplexNumber pow (ComplexNumber value, ComplexNumber exponent) {
+    return new ComplexNumber(Math.pow(value.real(), exponent.real()));
+  }
+
+  public final ComplexNumber pow (ComplexNumber exponent) {
+    return pow(this, exponent);
+  }
+
   private final static char DECIMAL_SEPARATOR;
   private final static char GROUPING_SEPARATOR;
   private final static int GROUPING_SIZE;
@@ -185,7 +193,7 @@ public class ComplexNumber {
     return string.substring(start, end);
   }
 
-  private final static String toString (double value, boolean imaginary) {
+  private final static String format (double value, boolean imaginary) {
     String string = String.format("%.12E", value);
     Matcher matcher = REAL_PATTERN.matcher(string);
 
@@ -259,12 +267,12 @@ public class ComplexNumber {
     return string;
   }
 
-  public final static String toString (double r, double i) {
-    if (i == ZERO) return toString(r, false);
-    if (r == ZERO) return toString(i, true);
+  public final static String format (double r, double i) {
+    if (i == ZERO) return format(r, false);
+    if (r == ZERO) return format(i, true);
 
     StringBuilder sb = new StringBuilder();
-    sb.append(toString(r, false));
+    sb.append(format(r, false));
     sb.append(' ');
 
     if (i < ZERO) {
@@ -275,15 +283,29 @@ public class ComplexNumber {
     }
 
     sb.append(' ');
-    sb.append(toString(i, true));
+    sb.append(format(i, true));
     return sb.toString();
   }
 
-  public final static String toString (double value) {
-    return toString(value, ZERO);
+  public final static String format (double value) {
+    return format(value, ZERO);
   }
 
-  public final String toString () {
-    return toString(real, imag);
+  public final String format () {
+    return format(real, imag);
+  }
+
+  public final String toString() {
+    return (Double.toString(real) + '_' + Double.toString(imag));
+  }
+
+  public final static ComplexNumber valueOf (String string) {
+    int delimiter = string.indexOf('_');
+    if (delimiter < 0) return new ComplexNumber(Double.valueOf(string));
+
+    return new ComplexNumber(
+      Double.valueOf(string.substring(0, delimiter)),
+      Double.valueOf(string.substring(delimiter+1))
+    );
   }
 }

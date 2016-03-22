@@ -21,12 +21,12 @@ public abstract class Variables {
 
   private final static SystemVariables systemVariables = new SystemVariables();
 
-  public static void setSystemVariable (String name, double value, String description) {
+  public static void setSystemVariable (String name, ComplexNumber value, String description) {
     systemVariables.put(name, new SystemVariable(value, description));
   }
 
-  public static void setSystemVariable (String name, double value) {
-    setSystemVariable(name, value, "");
+  public static void setSystemVariable (String name, double value, String description) {
+    setSystemVariable(name, new ComplexNumber(value), description);
   }
 
   static {
@@ -58,6 +58,11 @@ public abstract class Variables {
     setSystemVariable(
       "h", 6.626070040E-34,
       "Planck constant [J s]"
+    );
+
+    setSystemVariable(
+      "i", new ComplexNumber(0, 1),
+      "imaginary unit"
     );
 
     setSystemVariable(
@@ -118,12 +123,13 @@ public abstract class Variables {
     return true;
   }
 
-  public static Double get (String name) {
+  public static ComplexNumber get (String name) {
     {
       SharedPreferences variables = getUserVariables();
 
       if (variables.contains(name)) {
-        return Double.valueOf(variables.getString(name, "0f"));
+        String string = variables.getString(name, null);
+        if (string != null) return ComplexNumber.valueOf(string);
       }
     }
 
@@ -135,9 +141,9 @@ public abstract class Variables {
     return null;
   }
 
-  public static boolean set (String name, double value) {
+  public static boolean set (String name, ComplexNumber value) {
     if (systemVariables.containsKey(name)) return false;
-    getUserVariables().edit().putString(name, Double.toString(value)).apply();
+    getUserVariables().edit().putString(name, value.toString()).apply();
     return true;
   }
 

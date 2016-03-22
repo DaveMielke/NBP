@@ -77,12 +77,22 @@ public abstract class SavedSettings {
     return (string != null)? Double.valueOf(string): defaultValue;
   }
 
+  public final static void set (String name, ComplexNumber value) {
+    getSettings().edit().putString(name, value.toString()).apply();
+  }
+
+  public final static ComplexNumber get (String name, ComplexNumber defaultValue) {
+    String string = getSettings().getString(name, null);
+    if (string == null) return defaultValue;
+    return ComplexNumber.valueOf(string);
+  }
+
   public final static boolean getDegrees () {
     return get(DEGREES, DefaultSettings.DEGREES);
   }
 
-  public final static double getResult () {
-    return get(RESULT, Double.NaN);
+  public final static ComplexNumber getResult () {
+    return get(RESULT, ComplexNumber.NaN);
   }
 
   private SavedSettings () {

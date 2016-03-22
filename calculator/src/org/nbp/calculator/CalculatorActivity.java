@@ -113,9 +113,9 @@ public class CalculatorActivity extends CommonActivity {
 
     try {
       ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
-      double result = evaluation.getResult();
+      ComplexNumber result = evaluation.getResult();
 
-      resultView.setText(ComplexNumber.toString(result));
+      resultView.setText(result.format());
       SavedSettings.set(SavedSettings.RESULT, result);
     } catch (ExpressionException exception) {
       resultView.setText(exception.getMessage());
@@ -282,12 +282,12 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final String formatVariable (String name, double value, String description) {
+  private final String formatVariable (String name, ComplexNumber value, String description) {
     StringBuilder sb = new StringBuilder();
 
     sb.append(name);
     sb.append(" = ");
-    sb.append(ComplexNumber.toString(value));
+    sb.append(value.format());
 
     if (description != null) {
       sb.append(" (");
@@ -298,7 +298,7 @@ public class CalculatorActivity extends CommonActivity {
     return sb.toString();
   }
 
-  private final String formatVariable (String name, double value) {
+  private final String formatVariable (String name, ComplexNumber value) {
     return formatVariable(name, value, null);
   }
 
@@ -356,9 +356,9 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
-          final double result = SavedSettings.getResult();
+          final ComplexNumber result = SavedSettings.getResult();
 
-          if (Double.isNaN(result)) {
+          if (result.isNaN()) {
             builder.setMessage(R.string.error_no_result);
           } else {
             final List<String> variables = getUserVariables();
