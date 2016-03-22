@@ -23,5 +23,15 @@
         <category android:name="android.intent.category.APP_CALCULATOR" />
       </intent-filter>
     </activity>
+
+    <receiver
+      android:name=".HostMonitor"
+      android:exported="false"
+      >
+
+      <intent-filter>
+        <action android:name="android.intent.action.LOCALE_CHANGED" />
+      </intent-filter>
+    </receiver>
   </application>
 </manifest>

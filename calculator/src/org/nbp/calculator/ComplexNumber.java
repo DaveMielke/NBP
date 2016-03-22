@@ -5,6 +5,8 @@ public class ComplexNumber extends ComplexCommon {
   private final double imag;
 
   public ComplexNumber (double r, double i) {
+    super();
+
     real = r;
     imag = i;
   }

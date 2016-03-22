@@ -12,6 +12,8 @@ public class ComplexFormatter extends ComplexCommon {
   private final int GROUPING_SIZE;
 
   private ComplexFormatter () {
+    super();
+
     DecimalFormat format = new DecimalFormat();
     GROUPING_SIZE = format.getGroupingSize();
 
@@ -156,6 +158,12 @@ public class ComplexFormatter extends ComplexCommon {
     synchronized (INSTANCE_LOCK) {
       if (instance == null) instance = new ComplexFormatter();
       return instance;
+    }
+  }
+
+  public final static void resetInstance () {
+    synchronized (INSTANCE_LOCK) {
+      instance = null;
     }
   }
 }
