@@ -1,6 +1,8 @@
 package org.nbp.calculator;
 
-public abstract class TrigonometricFunction extends Function {
+import java.lang.reflect.Method;
+
+public class TrigonometricFunction extends Function {
   @Override
   protected double preprocessArgument (double argument) {
     argument = super.preprocessArgument(argument);
@@ -12,7 +14,7 @@ public abstract class TrigonometricFunction extends Function {
     return argument;
   }
 
-  public TrigonometricFunction () {
-    super();
+  public TrigonometricFunction (Method method) {
+    super(method);
   }
 }

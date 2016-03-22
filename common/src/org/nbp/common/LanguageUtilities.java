@@ -71,7 +71,7 @@ public abstract class LanguageUtilities {
     return makeReference(constructor.getDeclaringClass(), null, constructor.getParameterTypes());
   }
 
-  public static Constructor getConstructor (Class container, Class[] types) {
+  public static Constructor getConstructor (Class container, Class... types) {
     try {
       return container.getConstructor(types);
     } catch (NoSuchMethodException exception) {

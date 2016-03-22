@@ -1,7 +1,17 @@
 package org.nbp.calculator;
 
-public abstract class Function {
-  protected abstract double evaluate (double argument);
+import java.lang.reflect.Method;
+
+import org.nbp.common.LanguageUtilities;
+
+public class Function {
+  private final Method method;
+
+  private final double evaluate (double argument) {
+    Object result = LanguageUtilities.invokeMethod(method, null, argument);
+    if (result != null) return (Double)result;
+    return Double.NaN;
+  }
 
   protected double preprocessArgument (double argument) {
     return argument;
@@ -15,6 +25,7 @@ public abstract class Function {
     return postprocessResult(evaluate(preprocessArgument(argument)));
   }
 
-  public Function () {
+  public Function (Method method) {
+    this.method = method;
   }
 }

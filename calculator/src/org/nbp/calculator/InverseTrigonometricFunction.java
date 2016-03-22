@@ -1,6 +1,8 @@
 package org.nbp.calculator;
 
-public abstract class InverseTrigonometricFunction extends Function {
+import java.lang.reflect.Method;
+
+public class InverseTrigonometricFunction extends Function {
   @Override
   protected double postprocessResult (double result) {
     if (SavedSettings.getDegrees()) {
@@ -10,7 +12,7 @@ public abstract class InverseTrigonometricFunction extends Function {
     return super.postprocessResult(result);
   }
 
-  public InverseTrigonometricFunction () {
-    super();
+  public InverseTrigonometricFunction (Method method) {
+    super(method);
   }
 }
