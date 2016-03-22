@@ -69,10 +69,6 @@ public class EditorActivity extends CommonActivity {
   private File currentFile = null;
   private boolean hasChanged = false;
 
-  protected final Activity getActivity () {
-    return this;
-  }
-
   private final void showActivityResultCode (int code) {
   }
 
