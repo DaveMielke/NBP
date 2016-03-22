@@ -308,12 +308,14 @@ public class ComplexNumber {
     return format(real, imag);
   }
 
+  private final static char STRING_DELIMITER = '_';
+
   public final String toString() {
-    return (Double.toString(real) + '_' + Double.toString(imag));
+    return (Double.toString(real) + STRING_DELIMITER + Double.toString(imag));
   }
 
   public final static ComplexNumber valueOf (String string) {
-    int delimiter = string.indexOf('_');
+    int delimiter = string.indexOf(STRING_DELIMITER);
     if (delimiter < 0) return new ComplexNumber(Double.valueOf(string));
 
     return new ComplexNumber(
