@@ -17,12 +17,17 @@ public class Function {
 
   public final ComplexNumber call (ComplexNumber argument) {
     Object methodArgument = preprocessArgument(argument);
-    if (methodArgument == null) return null;
 
-    Object methodResult = LanguageUtilities.invokeMethod(method, null, methodArgument);
-    if (methodResult == null) return null;
+    if (methodArgument != null) {
+      Object methodResult = LanguageUtilities.invokeMethod(method, null, methodArgument);
 
-    return postprocessResult(methodResult);
+      if (methodResult != null) {
+        ComplexNumber functionResult = postprocessResult(methodResult);
+        if (functionResult != null) return functionResult;
+      }
+    }
+
+    return ComplexNumber.NaN;
   }
 
   public Function (Method method) {

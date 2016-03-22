@@ -27,7 +27,7 @@ public abstract class Functions {
     }
   }
 
-  private static MethodMap getMethods (Class<?> container, Class<?> type) {
+  private static MethodMap getMethodMap (Class<?> container, Class<?> type) {
     MethodMap map = new MethodMap();
 
     for (Method method : container.getDeclaredMethods()) {
@@ -102,39 +102,48 @@ public abstract class Functions {
   }
 
   private static void addRealFunctions () {
-    MethodMap methods = getMethods(Math.class, double.class);
+    MethodMap methodMap = getMethodMap(Math.class, double.class);
 
-    addRealFunction("abs", methods);
-    addRealFunction("round", methods, "rint");
-    addRealFunction("floor", methods);
-    addRealFunction("ceil", methods);
+    addRealFunction("floor", methodMap);
+    addRealFunction("round", methodMap, "rint");
+    addRealFunction("ceil", methodMap);
 
-    addRealFunction("sqrt", methods);
-    addRealFunction("cbrt", methods);
+    addRealFunction("sqrt", methodMap);
+    addRealFunction("cbrt", methodMap);
 
-    addRealFunction("exp", methods);
-    addRealFunction("log", methods);
-    addRealFunction("log10", methods);
+    addRealFunction("exp", methodMap);
+    addRealFunction("log", methodMap);
+    addRealFunction("log10", methodMap);
 
-    addRealFunction("rd2dg", methods, "toDegrees");
-    addRealFunction("dg2rd", methods, "toRadians");
+    addRealFunction("rd2dg", methodMap, "toDegrees");
+    addRealFunction("dg2rd", methodMap, "toRadians");
 
-    addTrigonometricFunction("sin", methods);
-    addTrigonometricFunction("cos", methods);
-    addTrigonometricFunction("tan", methods);
+    addTrigonometricFunction("sin", methodMap);
+    addTrigonometricFunction("cos", methodMap);
+    addTrigonometricFunction("tan", methodMap);
 
-    addInverseTrigonometricFunction("asin", methods);
-    addInverseTrigonometricFunction("acos", methods);
-    addInverseTrigonometricFunction("atan", methods);
+    addInverseTrigonometricFunction("asin", methodMap);
+    addInverseTrigonometricFunction("acos", methodMap);
+    addInverseTrigonometricFunction("atan", methodMap);
 
-    addTrigonometricFunction("sinh", methods);
-    addTrigonometricFunction("cosh", methods);
-    addTrigonometricFunction("tanh", methods);
+    addTrigonometricFunction("sinh", methodMap);
+    addTrigonometricFunction("cosh", methodMap);
+    addTrigonometricFunction("tanh", methodMap);
+  }
+
+  private static void addComplexFunctions () {
+    Class type = ComplexNumber.class;
+    MethodMap map = getMethodMap(type, type);
+
+    for (String name : map.keySet()) {
+      addFunction(name, Function.class, map.get(name));
+    }
   }
 
   static {
     Log.d(LOG_TAG, "begin function definitions");
     addRealFunctions();
+    addComplexFunctions();
     Log.d(LOG_TAG, "end function definitions");
   }
 
