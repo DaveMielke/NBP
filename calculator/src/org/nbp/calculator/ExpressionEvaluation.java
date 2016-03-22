@@ -225,107 +225,112 @@ public class ExpressionEvaluation {
   }
 
   private final ComplexNumber evaluateElement () throws ExpressionException {
-    while (true) {
-      TokenType type = getTokenType();
+    TokenType type = getTokenType();
 
-      switch (type) {
-        case PLUS:
-          nextToken();
-          return evaluateElement();
+    switch (type) {
+      case DECIMAL: {
+        double value = Double.valueOf(getTokenText());
+        nextToken();
+        return new ComplexNumber(value);
+      }
 
-        case MINUS:
-          nextToken();
-          return evaluateElement().neg();
+      case HEXADECIMAL: {
+        String text = "0X" + getTokenText().toUpperCase();
+        if (text.indexOf('P') < 0) text += "P0";
 
-        case OPEN:
-          return evaluateSubexpression();
+        nextToken();
+        return new ComplexNumber(Double.valueOf(text));
+      }
 
-        case RESULT: {
-          ComplexNumber value = SavedSettings.getResult();
+      case OPEN:
+        return evaluateSubexpression();
 
-          if (value.isNaN()) {
-            throw new ExpressionException(
-              R.string.error_no_result,
-              getTokenDescriptor().getStart()
-            );
+      case RESULT: {
+        ComplexNumber value = SavedSettings.getResult();
+
+        if (value.isNaN()) {
+          throw new ExpressionException(
+            R.string.error_no_result,
+            getTokenDescriptor().getStart()
+          );
+        }
+
+        nextToken();
+        return value;
+      }
+
+      case IDENTIFIER: {
+        TokenDescriptor token = getTokenDescriptor();
+        String name = getTokenText(token);
+        nextToken();
+
+        switch (getTokenType()) {
+          case ASSIGN: {
+            nextToken();
+            ComplexNumber value = evaluateExpression();
+
+            if (!Variables.set(name, value)) {
+              throw new ExpressionException(
+                R.string.error_protected_variable,
+                token.getStart()
+              );
+            }
+
+            return value;
           }
 
-          nextToken();
-          return value;
-        }
+          case OPEN: {
+            ComplexFunction function = Functions.get(name);
 
-        case DECIMAL: {
-          double value = Double.valueOf(getTokenText());
-          nextToken();
-          return new ComplexNumber(value);
-        }
-
-        case HEXADECIMAL: {
-          String text = "0X" + getTokenText().toUpperCase();
-          if (text.indexOf('P') < 0) text += "P0";
-
-          nextToken();
-          return new ComplexNumber(Double.valueOf(text));
-        }
-
-        case IDENTIFIER: {
-          TokenDescriptor token = getTokenDescriptor();
-          String name = getTokenText(token);
-          nextToken();
-
-          switch (getTokenType()) {
-            case ASSIGN: {
-              nextToken();
-              ComplexNumber value = evaluateExpression();
-
-              if (!Variables.set(name, value)) {
-                throw new ExpressionException(
-                  R.string.error_protected_variable,
-                  token.getStart()
-                );
-              }
-
-              return value;
+            if (function == null) {
+              throw new ExpressionException(R.string.error_unknown_function, token.getStart());
             }
 
-            case OPEN: {
-              ComplexFunction function = Functions.get(name);
+            return function.call(evaluateSubexpression());
+          }
 
-              if (function == null) {
-                throw new ExpressionException(R.string.error_unknown_function, token.getStart());
-              }
+          default: {
+            ComplexNumber value = Variables.get(name);
+            if (value != null) return value;
 
-              return function.call(evaluateSubexpression());
-            }
-
-            default: {
-              ComplexNumber value = Variables.get(name);
-              if (value != null) return value;
-
-              throw new ExpressionException(R.string.error_unknown_variable, token.getStart());
-            }
+            throw new ExpressionException(R.string.error_unknown_variable, token.getStart());
           }
         }
+      }
 
-        default: {
-          int start = (type == TokenType.END)?
-                      expressionText.length():
-                      getTokenDescriptor().getStart();
+      default: {
+        int start = (type == TokenType.END)?
+                    expressionText.length():
+                    getTokenDescriptor().getStart();
 
-          throw new ExpressionException(R.string.error_missing_element, start);
-        }
+        throw new ExpressionException(R.string.error_missing_element, start);
       }
     }
   }
 
+  private final ComplexNumber evaluatePrimary () throws ExpressionException {
+    switch (getTokenType()) {
+      case PLUS:
+        nextToken();
+        return evaluatePrimary();
+
+      case MINUS:
+        nextToken();
+        return evaluatePrimary().neg();
+
+      default:
+        return evaluateElement();
+    }
+  }
+
   private final ComplexNumber evaluateExponentiations () throws ExpressionException {
-    ComplexNumber value = evaluateElement();
+    ComplexNumber value = evaluatePrimary();
 
     while (true) {
       switch (getTokenType()) {
         case EXPONENTIATE:
           nextToken();
-          value = value.pow(evaluateElement());
+          value = value.pow(evaluatePrimary());
           break;
 
         default:
@@ -348,6 +353,11 @@ public class ExpressionEvaluation {
           nextToken();
           value = value.div(evaluateExponentiations());
           break;
+
+        case OPEN:
+        case RESULT:
+        case IDENTIFIER:
+          return value.mul(evaluateElement());
 
         default:
           return value;
