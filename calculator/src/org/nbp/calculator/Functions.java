@@ -132,8 +132,7 @@ public abstract class Functions {
   }
 
   private static void addComplexFunctions () {
-    Class type = ComplexNumber.class;
-    MethodMap map = getMethodMap(type, type);
+    MethodMap map = getMethodMap(ComplexOperations.class, ComplexNumber.class);
 
     for (String name : map.keySet()) {
       addFunction(name, ComplexFunction.class, map.get(name));
