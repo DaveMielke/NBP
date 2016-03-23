@@ -32,6 +32,7 @@ public abstract class ApplicationContext extends CommonContext {
 
     HostMonitor.monitorEvents(context);
     Clipboard.setClipboard(context);
+    PhoneMonitor.register(context);
 
     Controls.restoreCurrentValues();
     Controls.restoreSaneValues();

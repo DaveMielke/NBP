@@ -20,8 +20,12 @@ import android.net.wifi.WifiInfo;
 public class DescribeIndicators extends Action {
   protected final static String LOG_TAG = DescribeIndicators.class.getName();
 
-  private static void appendString (StringBuilder sb, int resource) {
-    sb.append(ApplicationContext.getString(resource));
+  private static void appendString (StringBuilder sb, String string) {
+    sb.append(string);
+  }
+
+  private static void appendString (StringBuilder sb, int string) {
+    appendString(sb, ApplicationContext.getString(string));
   }
 
   private static void startLine (StringBuilder sb, int label) {
@@ -33,23 +37,27 @@ public class DescribeIndicators extends Action {
   private class IndicatorProperty {
     private final String logLabel;
 
-    private final Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    private final Map<Integer, String> map = new HashMap<Integer, String>();
 
-    public final void report (StringBuilder sb, int value) {
-      Integer text = map.get(value);
-
-      if (text != null) {
-        sb.append(' ');
-        appendString(sb, text);
-      }
-
+    public final boolean report (StringBuilder sb, int value) {
       if (ApplicationSettings.LOG_ACTIONS) {
         Log.v(LOG_TAG, (logLabel + ": " + value));
       }
+
+      String text = map.get(value);
+      if (text == null) return false;
+
+      sb.append(' ');
+      appendString(sb, text);
+      return true;
+    }
+
+    protected final void addValue (int value, String text) {
+      map.put(value, text);
     }
 
     protected final void addValue (int value, int text) {
-      map.put(value, text);
+      map.put(value, ApplicationContext.getString(text));
     }
 
     public IndicatorProperty (String label) {
@@ -154,6 +162,51 @@ public class DescribeIndicators extends Action {
     }
   };
 
+  private final IndicatorProperty phoneType = new IndicatorProperty("phone type") {
+    {
+      addValue(TelephonyManager.PHONE_TYPE_CDMA, "CDMA");
+      addValue(TelephonyManager.PHONE_TYPE_GSM, "GSM");
+      addValue(TelephonyManager.PHONE_TYPE_SIP, "SIP");
+    }
+  };
+
+  private final IndicatorProperty callState = new IndicatorProperty("call state") {
+    {
+      addValue(TelephonyManager.CALL_STATE_IDLE, R.string.DescribeIndicators_sim_call_idle);
+      addValue(TelephonyManager.CALL_STATE_OFFHOOK, R.string.DescribeIndicators_sim_call_offhook);
+      addValue(TelephonyManager.CALL_STATE_RINGING, R.string.DescribeIndicators_sim_call_ringing);
+    }
+  };
+
+  private final IndicatorProperty networkType = new IndicatorProperty("call state") {
+    {
+      addValue(TelephonyManager.NETWORK_TYPE_1xRTT, "1xRTT");
+      addValue(TelephonyManager.NETWORK_TYPE_CDMA, "CDMA");
+      addValue(TelephonyManager.NETWORK_TYPE_EDGE, "EDGE");
+      addValue(TelephonyManager.NETWORK_TYPE_EHRPD, "EHRPD");
+      addValue(TelephonyManager.NETWORK_TYPE_EVDO_0, "EVDO(0)");
+      addValue(TelephonyManager.NETWORK_TYPE_EVDO_A, "EVDO(A)");
+      addValue(TelephonyManager.NETWORK_TYPE_EVDO_B, "EVDO(B)");
+      addValue(TelephonyManager.NETWORK_TYPE_GPRS, "GPRS");
+      addValue(TelephonyManager.NETWORK_TYPE_HSDPA, "HSDPA");
+      addValue(TelephonyManager.NETWORK_TYPE_HSPA, "HSPA");
+      addValue(TelephonyManager.NETWORK_TYPE_HSPAP, "HSPA+");
+      addValue(TelephonyManager.NETWORK_TYPE_HSUPA, "HSUPA");
+      addValue(TelephonyManager.NETWORK_TYPE_IDEN, "IDEN");
+      addValue(TelephonyManager.NETWORK_TYPE_LTE, "LTE");
+      addValue(TelephonyManager.NETWORK_TYPE_UMTS, "UMTS");
+    }
+  };
+
+  private final IndicatorProperty dataState = new IndicatorProperty("call state") {
+    {
+      addValue(TelephonyManager.DATA_CONNECTED, R.string.DescribeIndicators_sim_data_connected);
+      addValue(TelephonyManager.DATA_CONNECTING, R.string.DescribeIndicators_sim_data_connecting);
+      addValue(TelephonyManager.DATA_DISCONNECTED, R.string.DescribeIndicators_sim_data_disconnected);
+      addValue(TelephonyManager.DATA_SUSPENDED, R.string.DescribeIndicators_sim_data_suspended);
+    }
+  };
+
   private void reportTelephonyIndicators (StringBuilder sb) {
     TelephonyManager tel = (TelephonyManager)ApplicationContext.getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -163,11 +216,23 @@ public class DescribeIndicators extends Action {
 
       switch (state) {
         case TelephonyManager.SIM_STATE_READY: {
-          String operator = tel.getSimOperatorName();
+          String operator = tel.getNetworkOperatorName();
 
           if ((operator != null) && !operator.isEmpty()) {
             sb.append(' ');
             sb.append(operator);
+
+            sb.append(' ');
+            sb.append(PhoneMonitor.getSignalStrength());
+            sb.append("dBm");
+
+            phoneType.report(sb, tel.getPhoneType());
+            callState.report(sb, tel.getCallState());
+
+            if (networkType.report(sb, tel.getDataState())) {
+              dataState.report(sb, tel.getDataState());
+            }
+
             break;
           }
         }

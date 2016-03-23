@@ -187,6 +187,13 @@
   <string name="DescribeIndicators_battery_status_not_charging">not charging</string>
 
   <string name="DescribeIndicators_sim_label">SIM</string>
+  <string name="DescribeIndicators_sim_call_idle">idle</string>
+  <string name="DescribeIndicators_sim_call_offhook">off-hook</string>
+  <string name="DescribeIndicators_sim_call_ringing">ringing</string>
+  <string name="DescribeIndicators_sim_data_connected">connected</string>
+  <string name="DescribeIndicators_sim_data_connecting">connecting</string>
+  <string name="DescribeIndicators_sim_data_disconnected">disconnected</string>
+  <string name="DescribeIndicators_sim_data_suspended">suspended</string>
   <string name="DescribeIndicators_sim_state_absent">not installed</string>
   <string name="DescribeIndicators_sim_state_locked_net">locked (need network PIN)</string>
   <string name="DescribeIndicators_sim_state_locked_pin">locked (need user PIN)</string>
