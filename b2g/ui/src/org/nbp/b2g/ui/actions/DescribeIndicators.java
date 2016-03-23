@@ -224,7 +224,7 @@ public class DescribeIndicators extends Action {
 
             sb.append(' ');
             sb.append(PhoneMonitor.getSignalStrength());
-            sb.append("dBm");
+            sb.append('%');
 
             phoneType.report(sb, tel.getPhoneType());
             callState.report(sb, tel.getCallState());

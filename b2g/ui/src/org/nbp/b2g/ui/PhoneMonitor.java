@@ -10,7 +10,7 @@ public class PhoneMonitor extends PhoneStateListener {
   private static TelephonyManager telephonyManager = null;
 
   private final static Object DATA_LOCK = new Object();
-  private static int signalStrength = 99;
+  private static int signalStrength = 0;
 
   public final static int getSignalStrength () {
     synchronized (DATA_LOCK) {
@@ -20,10 +20,15 @@ public class PhoneMonitor extends PhoneStateListener {
 
   @Override
   public void onSignalStrengthsChanged (SignalStrength strength) {
-    if (strength.isGsm()) {
-      synchronized (DATA_LOCK) {
+    synchronized (DATA_LOCK) {
+      if (strength.isGsm()) {
         int asu = strength.getGsmSignalStrength();
-        signalStrength = (asu * 2) - 113;
+
+        if (asu == 99) {
+          signalStrength = 0;
+        } else {
+          signalStrength = (asu * 100) / 31;
+        }
       }
     }
   }
