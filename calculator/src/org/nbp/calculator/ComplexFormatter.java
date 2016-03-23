@@ -127,23 +127,23 @@ public class ComplexFormatter extends ComplexCommon {
     return string;
   }
 
-  public final String format (double r, double i) {
-    if (i == ZERO) return format(r, false);
-    if (r == ZERO) return format(i, true);
+  public final String format (double real, double imag) {
+    if (imag == ZERO) return format(real, false);
+    if (real == ZERO) return format(imag, true);
 
     StringBuilder sb = new StringBuilder();
-    sb.append(format(r, false));
+    sb.append(format(real, false));
     sb.append(' ');
 
-    if (i < ZERO) {
+    if (imag < ZERO) {
       sb.append(SUBTRACTION_SIGN);
-      i = -i;
+      imag = -imag;
     } else {
       sb.append(ADDITION_SIGN);
     }
 
     sb.append(' ');
-    sb.append(format(i, true));
+    sb.append(format(imag, true));
     return sb.toString();
   }
 
