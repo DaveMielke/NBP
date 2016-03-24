@@ -30,6 +30,7 @@ Forward together. This will cause the indicators to be presented within a popup
 (see `Popups`_) that looks something like this::
 
   Battery: 78% charging USB
+  SIM: MyProvider 75% GSM idle EDGE connected
   Wi-Fi: MyNetwork 60% 54Mbps
 
 Identifying the Build
@@ -44,15 +45,15 @@ You can get this information by pressing Space, Backward, and Forward
 together. This will cause details that identify the build to be presented
 within a screen that looks something like this::
 
-  UI Package Version    1.7.74
-  UI Source Revision    git:e6193a401c1a5691
-  UI Build Time         2016-01-21@09:40 UTC
+  UI Package Version    1.11.24
+  UI Source Revision    git:4076b079460da5e1
+  UI Build Time         2016-03-24@01:27 UTC
   Android Version       4.1.2
-  Android Build Name    v4.2.8-beta
-  Android Build Time    2015-12-01@03:09 UTC
+  Android Build Name    v4.3.7
+  Android Build Time    2016-03-21@06:10 UTC
   Android Build Type    eng
   Linux Kernel Version  2.6.37
-  Firmware Version      3.1
+  Firmware Version      4.0
   Metec Driver Version  1.00
 
 Shortcuts
