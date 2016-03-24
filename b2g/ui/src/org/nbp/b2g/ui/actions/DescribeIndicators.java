@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -39,6 +40,15 @@ public class DescribeIndicators extends Action {
     if (sb.length() > 0) sb.append('\n');
     appendString(sb, label);
     sb.append(":");
+  }
+
+  private static boolean isAirplaneModeOn () {
+    int value = Settings.System.getInt(
+      getContext().getContentResolver(),
+      Settings.System.AIRPLANE_MODE_ON, 0
+    );
+
+    return value != 0;
   }
 
   private class IndicatorProperty {
@@ -338,6 +348,12 @@ public class DescribeIndicators extends Action {
   @Override
   public boolean performAction () {
     StringBuilder sb = new StringBuilder();
+
+    if (isAirplaneModeOn()) {
+      startLine(sb, R.string.DescribeIndicators_alert_label);
+      sb.append(' ');
+      appendString(sb, R.string.DescribeIndicators_alert_airplane);
+    }
 
     reportBatteryIndicators(sb);
     reportTelephonyIndicators(sb);

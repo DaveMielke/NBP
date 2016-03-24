@@ -169,6 +169,9 @@
   <string name="DescribeHighlighting_strike">strike</string>
   <string name="DescribeHighlighting_underline">underline</string>
 
+  <string name="DescribeIndicators_alert_label">Alert</string>
+  <string name="DescribeIndicators_alert_airplane">Airplane Mode</string>
+
   <string name="DescribeIndicators_battery_label">Battery</string>
   <string name="DescribeIndicators_battery_health_cold">cold</string>
   <string name="DescribeIndicators_battery_health_dead">dead</string>
