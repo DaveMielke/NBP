@@ -6,9 +6,12 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Build;
+import android.os.Bundle;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 
 import android.os.BatteryManager;
 
@@ -19,6 +22,10 @@ import android.net.wifi.WifiInfo;
 
 public class DescribeIndicators extends Action {
   protected final static String LOG_TAG = DescribeIndicators.class.getName();
+
+  private static Context getContext () {
+    return ApplicationContext.getContext();
+  }
 
   private static void appendString (StringBuilder sb, String string) {
     sb.append(string);
@@ -207,6 +214,31 @@ public class DescribeIndicators extends Action {
     }
   };
 
+  private void appendAccessPointName (StringBuilder sb) {
+    Cursor cursor = getContext().getContentResolver().query(
+      Uri.parse("content://telephony/carriers"),
+      new String[] {"name"},
+      "current=1",
+      null,
+      null
+    );
+
+    if (cursor != null) {
+      try {
+        if (cursor.moveToFirst()) {
+          String name = cursor.getString(0);
+
+          if (!name.isEmpty()) {
+            sb.append(' ');
+            sb.append(name);
+          }
+        }
+      } finally {
+        cursor.close();
+      }
+    }
+  }
+
   private void reportTelephonyIndicators (StringBuilder sb) {
     TelephonyManager tel = (TelephonyManager)ApplicationContext.getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -231,6 +263,7 @@ public class DescribeIndicators extends Action {
 
             if (networkType.report(sb, tel.getDataState())) {
               dataState.report(sb, tel.getDataState());
+              appendAccessPointName(sb);
             }
 
             break;
