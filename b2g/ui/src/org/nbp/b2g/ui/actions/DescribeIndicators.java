@@ -178,7 +178,7 @@ public class DescribeIndicators extends Action {
     }
   };
 
-  private final IndicatorProperty networkType = new IndicatorProperty("call state") {
+  private final IndicatorProperty networkType = new IndicatorProperty("network type") {
     {
       addValue(TelephonyManager.NETWORK_TYPE_1xRTT, "1xRTT");
       addValue(TelephonyManager.NETWORK_TYPE_CDMA, "CDMA");
@@ -198,7 +198,7 @@ public class DescribeIndicators extends Action {
     }
   };
 
-  private final IndicatorProperty dataState = new IndicatorProperty("call state") {
+  private final IndicatorProperty dataState = new IndicatorProperty("data state") {
     {
       addValue(TelephonyManager.DATA_CONNECTED, R.string.DescribeIndicators_sim_data_connected);
       addValue(TelephonyManager.DATA_CONNECTING, R.string.DescribeIndicators_sim_data_connecting);
