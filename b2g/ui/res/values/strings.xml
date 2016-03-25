@@ -26,6 +26,8 @@
 
   <string name="clock_activity_label">B2G Digital Clock</string>
 
+  <string name="answerCall_message_not_ringing">not ringing</string>
+
   <string name="maintenance_activity_label">B2G System Maintenance Operations</string>
   <string name="maintenance_message_operation_succeeded">operation succeeded</string>
   <string name="maintenance_message_operation_cancelled">operation cancelled</string>

@@ -14,10 +14,6 @@ public abstract class ActivityAction extends Action {
 
   protected abstract Intent getIntent (Context context);
 
-  protected final Context getContext () {
-    return ApplicationContext.getContext();
-  }
-
   @Override
   public boolean performAction () {
     Context context = getContext();

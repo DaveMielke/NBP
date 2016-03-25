@@ -15,10 +15,6 @@ import android.content.pm.ActivityInfo;
 public abstract class ShortcutAction extends Action {
   protected abstract Intent getShortcutIntent ();
 
-  protected static Context getContext () {
-    return ApplicationContext.getContext();
-  }
-
   protected static PackageManager getPackageManager () {
     return getContext().getPackageManager();
   }

@@ -4,6 +4,8 @@ import org.nbp.common.LanguageUtilities;
 
 import android.util.Log;
 
+import android.content.Context;
+
 public abstract class Action {
   private final static String LOG_TAG = Action.class.getName();
 
@@ -53,6 +55,10 @@ public abstract class Action {
     if (cursorKeys == null) return false;
     if (cursorKeys.length != 1) return false;
     return performAction(cursorKeys[0]);
+  }
+
+  protected final static Context getContext () {
+    return ApplicationContext.getContext();
   }
 
   protected Integer getConfirmation () {

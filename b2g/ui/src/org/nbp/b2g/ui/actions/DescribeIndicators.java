@@ -24,10 +24,6 @@ import android.net.wifi.WifiInfo;
 public class DescribeIndicators extends Action {
   protected final static String LOG_TAG = DescribeIndicators.class.getName();
 
-  private static Context getContext () {
-    return ApplicationContext.getContext();
-  }
-
   private static void appendString (StringBuilder sb, String string) {
     sb.append(string);
   }
