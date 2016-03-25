@@ -90,6 +90,25 @@ public class ComplexNumber extends ComplexCommon {
     return mul(divisor.rec());
   }
 
+  public final ComplexNumber log () {
+    if (imag == ZERO) return new ComplexNumber(Math.log(real));
+
+    return new ComplexNumber(
+      Math.log(Math.hypot(real, imag)),
+      Math.atan2(imag, real)
+    );
+  }
+
+  public final ComplexNumber exp () {
+    if (imag == ZERO) return new ComplexNumber(Math.exp(real));
+    double multiplicand = Math.exp(real);
+
+    return new ComplexNumber(
+      multiplicand * Math.cos(imag),
+      multiplicand * Math.sin(imag)
+    );
+  }
+
   public final ComplexNumber pow (ComplexNumber exponent) {
     if (isReal(exponent)) return new ComplexNumber(Math.pow(real, exponent.real));
     return NaN;

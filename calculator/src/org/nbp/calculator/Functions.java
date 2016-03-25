@@ -104,6 +104,8 @@ public abstract class Functions {
   private static void addRealFunctions () {
     MethodMap methodMap = getMethodMap(Math.class, double.class);
 
+    addRealFunction("abs", methodMap);
+
     addRealFunction("floor", methodMap);
     addRealFunction("round", methodMap, "rint");
     addRealFunction("ceil", methodMap);

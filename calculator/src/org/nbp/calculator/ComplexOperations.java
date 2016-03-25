@@ -27,4 +27,12 @@ public abstract class ComplexOperations extends ComplexCommon {
   public final static ComplexNumber rec (ComplexNumber number) {
     return number.rec();
   }
+
+  public final static ComplexNumber log (ComplexNumber number) {
+    return number.log();
+  }
+
+  public final static ComplexNumber exp (ComplexNumber number) {
+    return number.exp();
+  }
 }
