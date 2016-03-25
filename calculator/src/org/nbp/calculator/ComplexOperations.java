@@ -35,4 +35,8 @@ public abstract class ComplexOperations extends ComplexCommon {
   public final static ComplexNumber exp (ComplexNumber number) {
     return number.exp();
   }
+
+  public final static ComplexNumber atan2 (ComplexNumber number) {
+    return number.atan2();
+  }
 }
