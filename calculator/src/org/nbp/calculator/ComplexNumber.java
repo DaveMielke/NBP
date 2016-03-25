@@ -111,7 +111,7 @@ public class ComplexNumber extends ComplexCommon {
 
   public final ComplexNumber pow (ComplexNumber exponent) {
     if (isReal(exponent)) return new ComplexNumber(Math.pow(real, exponent.real));
-    return NaN;
+    return exponent.mul(log()).exp();
   }
 
   public final String format () {
