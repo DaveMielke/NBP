@@ -21,6 +21,8 @@ import android.telephony.TelephonyManager;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiInfo;
 
+import android.bluetooth.BluetoothAdapter;
+
 public class DescribeIndicators extends Action {
   protected final static String LOG_TAG = DescribeIndicators.class.getName();
 
@@ -341,6 +343,46 @@ public class DescribeIndicators extends Action {
     }
   }
 
+  private final IndicatorProperty adapterState = new IndicatorProperty("bluetooth adapter state") {
+    {
+      addValue(BluetoothAdapter.STATE_OFF, R.string.DescribeIndicators_bluetooth_adapter_off);
+      addValue(BluetoothAdapter.STATE_ON, R.string.DescribeIndicators_bluetooth_adapter_on);
+      addValue(BluetoothAdapter.STATE_TURNING_OFF, R.string.DescribeIndicators_bluetooth_adapter_turning_off);
+      addValue(BluetoothAdapter.STATE_TURNING_ON, R.string.DescribeIndicators_bluetooth_adapter_turning_on);
+    }
+  };
+
+  private void reportBluetoothIndicators (StringBuilder sb) {
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+
+    if (adapter != null) {
+      startLine(sb, R.string.DescribeIndicators_bluetooth_label);
+
+      int state = adapter.getState();
+      adapterState.report(sb, state);
+
+      if (state == BluetoothAdapter.STATE_ON) {
+        if (adapter.isDiscovering()) {
+          sb.append(' ');
+          appendString(sb, R.string.DescribeIndicators_bluetooth_property_discovering);
+        }
+
+        switch (adapter.getScanMode()) {
+          case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
+            sb.append(' ');
+            appendString(sb, R.string.DescribeIndicators_bluetooth_property_discoverable);
+          case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
+            sb.append(' ');
+            appendString(sb, R.string.DescribeIndicators_bluetooth_property_connectable);
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
+  }
+
   @Override
   public boolean performAction () {
     StringBuilder sb = new StringBuilder();
@@ -354,6 +396,7 @@ public class DescribeIndicators extends Action {
     reportBatteryIndicators(sb);
     reportTelephonyIndicators(sb);
     reportWifiIndicators(sb);
+    reportBluetoothIndicators(sb);
 
     if (sb.length() == 0) return false;
     Endpoints.setPopupEndpoint(sb.toString());

@@ -213,6 +213,15 @@
   <string name="DescribeIndicators_wifi_state_enabling">enabling</string>
   <string name="DescribeIndicators_wifi_state_unknown">unknown</string>
 
+  <string name="DescribeIndicators_bluetooth_label">Bluetooth</string>
+  <string name="DescribeIndicators_bluetooth_adapter_off">off</string>
+  <string name="DescribeIndicators_bluetooth_adapter_on">on</string>
+  <string name="DescribeIndicators_bluetooth_adapter_turning_off">turning off</string>
+  <string name="DescribeIndicators_bluetooth_adapter_turning_on">turning on</string>
+  <string name="DescribeIndicators_bluetooth_property_connectable">connectable</string>
+  <string name="DescribeIndicators_bluetooth_property_discoverable">discoverable</string>
+  <string name="DescribeIndicators_bluetooth_property_discovering">discovering</string>
+
   <string name="message_password_field">password field</string>
 
   <string name="message_scrolling_backward">scrolling backward</string>

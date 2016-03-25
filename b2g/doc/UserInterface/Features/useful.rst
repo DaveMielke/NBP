@@ -33,6 +33,7 @@ Forward together. This will cause the indicators to be presented within a popup
   Battery: 78% charging USB
   SIM: MyProvider 75% GSM idle EDGE connected AccessPointName
   Wi-Fi: MyNetwork 60% 54Mbps
+  Bluetooth: on discovering discoverable connectable
 
 Identifying the Build
 ~~~~~~~~~~~~~~~~~~~~~
