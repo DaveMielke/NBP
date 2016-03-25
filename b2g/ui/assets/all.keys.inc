@@ -42,6 +42,8 @@ bind Forward+Dot6 LongPressOn
 bind Backward+Dot7 OneHandOff
 bind Forward+Dot8 OneHandOn
 
+bind Space+Dots68 AnswerCall
+
 bind Backward+Forward DescribeIndicators
 
 bind Space+Dots12345678 Null
