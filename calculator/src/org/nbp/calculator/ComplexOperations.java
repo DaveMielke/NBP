@@ -43,4 +43,12 @@ public abstract class ComplexOperations extends ComplexCommon {
   public final static ComplexNumber exp (ComplexNumber number) {
     return number.exp();
   }
+
+  public final static ComplexNumber sqrt (ComplexNumber number) {
+    return number.pow(new ComplexNumber(0.5d));
+  }
+
+  public final static ComplexNumber cbrt (ComplexNumber number) {
+    return number.pow(new ComplexNumber(1d / 3d));
+  }
 }
