@@ -24,12 +24,12 @@ public abstract class ComplexOperations extends ComplexCommon {
     return number.neg();
   }
 
-  public final static ComplexNumber con (ComplexNumber number) {
-    return number.con();
+  public final static ComplexNumber cnj (ComplexNumber number) {
+    return number.cnj();
   }
 
-  public final static ComplexNumber rec (ComplexNumber number) {
-    return number.rec();
+  public final static ComplexNumber rcp (ComplexNumber number) {
+    return number.rcp();
   }
 
   public final static ComplexNumber log (ComplexNumber number) {

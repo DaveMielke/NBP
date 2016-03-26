@@ -61,11 +61,11 @@ public class ComplexNumber extends ComplexCommon {
     return new ComplexNumber(-real, -imag);
   }
 
-  public final ComplexNumber con () {
+  public final ComplexNumber cnj () {
     return new ComplexNumber(real, -imag);
   }
 
-  public final ComplexNumber rec () {
+  public final ComplexNumber rcp () {
     if (imag == ZERO) return new ComplexNumber(1d / real);
 
     double denominator = (real * real) + (imag * imag);
@@ -89,7 +89,7 @@ public class ComplexNumber extends ComplexCommon {
 
   public final ComplexNumber div (ComplexNumber divisor) {
     if (isReal(divisor)) return new ComplexNumber(real / divisor.real);
-    return mul(divisor.rec());
+    return mul(divisor.rcp());
   }
 
   public final ComplexNumber log () {
