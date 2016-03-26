@@ -96,6 +96,10 @@ public class ComplexNumber extends ComplexCommon {
     return new ComplexNumber(Math.log(abs()), arg());
   }
 
+  public final ComplexNumber log (double base) {
+    return log().div(new ComplexNumber(Math.log(base)));
+  }
+
   public final ComplexNumber exp () {
     double factor = Math.exp(real);
     if (imag == ZERO) return new ComplexNumber(factor);

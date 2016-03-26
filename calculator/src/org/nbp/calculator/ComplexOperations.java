@@ -36,6 +36,10 @@ public abstract class ComplexOperations extends ComplexCommon {
     return number.log();
   }
 
+  public final static ComplexNumber log10 (ComplexNumber number) {
+    return number.log(10d);
+  }
+
   public final static ComplexNumber exp (ComplexNumber number) {
     return number.exp();
   }
