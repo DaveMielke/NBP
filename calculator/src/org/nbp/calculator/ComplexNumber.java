@@ -23,13 +23,13 @@ public class ComplexNumber extends ComplexCommon {
     return imag;
   }
 
-  public final double radius () {
+  public final double abs () {
     if (imag == ZERO) return Math.abs(real);
     if (real == ZERO) return Math.abs(imag);
     return Math.hypot(real, imag);
   }
 
-  public final double angle () {
+  public final double arg () {
     return Math.atan2(imag, real);
   }
 
@@ -55,14 +55,6 @@ public class ComplexNumber extends ComplexCommon {
     if (isNaN()) return operand.isNaN();
     if (operand.isNaN()) return false;
     return ((real == operand.real) && (imag == operand.imag));
-  }
-
-  public final ComplexNumber abs () {
-    return new ComplexNumber(radius());
-  }
-
-  public final ComplexNumber atan2 () {
-    return new ComplexNumber(angle());
   }
 
   public final ComplexNumber neg () {
@@ -101,16 +93,16 @@ public class ComplexNumber extends ComplexCommon {
   }
 
   public final ComplexNumber log () {
-    return new ComplexNumber(Math.log(radius()), angle());
+    return new ComplexNumber(Math.log(abs()), arg());
   }
 
   public final ComplexNumber exp () {
-    if (imag == ZERO) return new ComplexNumber(Math.exp(real));
-    double multiplicand = Math.exp(real);
+    double factor = Math.exp(real);
+    if (imag == ZERO) return new ComplexNumber(factor);
 
     return new ComplexNumber(
-      multiplicand * Math.cos(imag),
-      multiplicand * Math.sin(imag)
+      factor * Math.cos(imag),
+      factor * Math.sin(imag)
     );
   }
 

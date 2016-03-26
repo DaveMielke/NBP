@@ -13,7 +13,11 @@ public abstract class ComplexOperations extends ComplexCommon {
   }
 
   public final static ComplexNumber abs (ComplexNumber number) {
-    return number.abs();
+    return new ComplexNumber(number.abs());
+  }
+
+  public final static ComplexNumber arg (ComplexNumber number) {
+    return new ComplexNumber(number.arg());
   }
 
   public final static ComplexNumber neg (ComplexNumber number) {
@@ -34,9 +38,5 @@ public abstract class ComplexOperations extends ComplexCommon {
 
   public final static ComplexNumber exp (ComplexNumber number) {
     return number.exp();
-  }
-
-  public final static ComplexNumber atan2 (ComplexNumber number) {
-    return number.atan2();
   }
 }
