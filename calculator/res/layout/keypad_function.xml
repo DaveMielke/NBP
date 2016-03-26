@@ -65,7 +65,7 @@
   <Button
     android:layout_row="1"
     android:layout_column="4"
-    android:text="rcp"
+    android:text="arg"
    />
 
   <Button
