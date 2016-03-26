@@ -36,7 +36,7 @@ public abstract class Variables {
     );
 
     setSystemVariable(
-      "pi", Math.PI,
+      "pi", 3.14159265358979323846,
       "ratio of circumference to diameter"
     );
 
@@ -51,7 +51,7 @@ public abstract class Variables {
     );
 
     setSystemVariable(
-      "e", Math.E,
+      "e", 2.71828182845904523536,
       "base of natural logarithms"
     );
 
