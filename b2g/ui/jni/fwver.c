@@ -10,7 +10,7 @@ MAKE_FILE_LOG_TAG;
 
 #define DEVICE_PATH "/dev/cp430_core"
 
-static unsigned char firmwareVersion[] = {0, 0};
+static unsigned char firmwareVersion[] = {0, 0, 0, 0};
 
 static void
 getFirmwareVersion (void) {
@@ -19,8 +19,12 @@ getFirmwareVersion (void) {
     firmwareVersion[0] = 1;
 
     if ((device = open(DEVICE_PATH, O_RDONLY)) != -1) {
-      if (ioctl(device, CP430_CORE_GET_STATUS, firmwareVersion) == -1) {
-        logSystemError(LOG_TAG, "ioctl[CP430_CORE_GET_STATUS]");
+      if (ioctl(device, CP430_CORE_GET_ALL_FW_VERSIONS, firmwareVersion) == -1) {
+        logSystemError(LOG_TAG, "ioctl[CP430_CORE_GET_ALL_FW_VERSIONS]");
+
+        if (ioctl(device, CP430_CORE_GET_STATUS, firmwareVersion) == -1) {
+          logSystemError(LOG_TAG, "ioctl[CP430_CORE_GET_STATUS]");
+        }
       }
 
       close(device);
@@ -28,8 +32,9 @@ getFirmwareVersion (void) {
       LOG(WARN, "open error: %s: %s", DEVICE_PATH, strerror(errno));
     }
 
-    LOG(INFO, "firmware version: %u.%u",
-        firmwareVersion[0], firmwareVersion[1]);
+    LOG(INFO, "firmware version: %u.%u %u.%u",
+        firmwareVersion[0], firmwareVersion[1],
+        firmwareVersion[2], firmwareVersion[3]);
   }
 }
 
