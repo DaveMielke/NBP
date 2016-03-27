@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import java.util.Set;
 import java.util.HashMap;
 
 import org.nbp.common.LanguageUtilities;
@@ -13,13 +14,17 @@ import android.util.Log;
 public abstract class Functions {
   private final static String LOG_TAG = Functions.class.getName();
 
+  private static String[] toArray (Set<String> set) {
+    return set.toArray(new String[set.size()]);
+  }
+
   private static class FunctionMap extends HashMap<String, ComplexFunction> {
     public FunctionMap () {
       super();
     }
   }
 
-  private final static FunctionMap systemFunctions = new FunctionMap();
+  private final static FunctionMap functionMap = new FunctionMap();
 
   private static void addFunction (
     String name, Class<? extends Function> type, Method method
@@ -30,7 +35,7 @@ public abstract class Functions {
       ComplexFunction function = (ComplexFunction)LanguageUtilities.newInstance(constructor, method);
 
       if (function != null) {
-        systemFunctions.put(name, function);
+        functionMap.put(name, function);
         return;
       }
     }
@@ -65,8 +70,12 @@ public abstract class Functions {
     Log.d(LOG_TAG, "end function definitions");
   }
 
+  public static String[] getNames () {
+    return toArray(functionMap.keySet());
+  }
+
   public static ComplexFunction get (String name) {
-    return systemFunctions.get(name);
+    return functionMap.get(name);
   }
 
   private Functions () {

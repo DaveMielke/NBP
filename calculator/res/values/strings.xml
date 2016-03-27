@@ -10,6 +10,7 @@
   <string name="hint_result">no result yet</string>
   <string name="hint_variable">type variable name</string>
 
+  <string name="button_call">Call</string>
   <string name="button_cancel">Cancel</string>
   <string name="button_clear">Clear</string>
   <string name="button_delete">Delete</string>
@@ -27,6 +28,7 @@
   <string name="error_missing_operator">missing operator</string>
   <string name="error_missing_subexpression">missing subexpression</string>
   <string name="error_no_expression">no expression</string>
+  <string name="error_no_functions">no functions</string>
   <string name="error_no_result">no result</string>
   <string name="error_no_variables">no variables</string>
   <string name="error_protected_variable">protected variable</string>

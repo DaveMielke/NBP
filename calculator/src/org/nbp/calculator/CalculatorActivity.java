@@ -534,6 +534,61 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
+  private final String formatFunction (String name, Function function) {
+    StringBuilder sb = new StringBuilder();
+    String summary = function.getSummary();
+
+    sb.append(name);
+    sb.append('(');
+    sb.append(function.getArgumentName());
+    sb.append(')');
+
+    if (summary != null) {
+      sb.append(": ");
+      sb.append(summary);
+    }
+
+    return sb.toString();
+  }
+
+  private final List<String> getFunctions () {
+    List<String> functions = new ArrayList<String>();
+
+    for (String name : Functions.getNames()) {
+      functions.add(formatFunction(name, Functions.get(name)));
+    }
+
+    Collections.sort(functions);
+    return functions;
+  }
+  private final void setCallButtonListener () {
+    setClickListener(
+      R.id.button_call,
+      new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_call);
+          final List<String> functions = getFunctions();
+
+          if (functions.isEmpty()) {
+            builder.setMessage(R.string.error_no_functions);
+          } else {
+            builder.setItems(
+              toArray(functions),
+              new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialog, int index) {
+                }
+              }
+            );
+          }
+
+          builder.show();
+        }
+      }
+    );
+  }
+
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -554,6 +609,7 @@ public class CalculatorActivity extends CommonActivity {
     setRecallButtonListener();
     setStoreButtonListener();
     setForgetButtonListener();
+    setCallButtonListener();
 
     prepareKeypads(
       R.id.keypad_numeric,

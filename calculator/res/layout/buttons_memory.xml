@@ -26,4 +26,11 @@
     android:layout_height="wrap_content"
     android:text="@string/button_forget"
    />
+
+  <Button
+    android:id="@+id/button_call"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/button_call"
+   />
 </LinearLayout>

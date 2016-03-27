@@ -29,4 +29,9 @@ public class RealFunction extends ComplexFunction {
   public RealFunction (Method method) {
     super(method);
   }
+
+  @Override
+  public String getArgumentName () {
+    return "x";
+  }
 }

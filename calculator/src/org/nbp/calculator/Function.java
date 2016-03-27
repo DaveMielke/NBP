@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import org.nbp.common.LanguageUtilities;
 
 public abstract class Function {
+  public abstract String getArgumentName ();
+
   private final Method functionMethod;
 
   protected Function (Method method) {

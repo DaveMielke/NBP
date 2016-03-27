@@ -29,4 +29,9 @@ public class ComplexFunction extends Function {
   public ComplexFunction (Method method) {
     super(method);
   }
+
+  @Override
+  public String getArgumentName () {
+    return "z";
+  }
 }
