@@ -4,12 +4,12 @@ import java.lang.reflect.Method;
 
 public class InverseTrigonometricFunction extends RealFunction {
   @Override
-  protected double postprocessResult (double result) {
+  protected double postprocessRealResult (double result) {
     if (SavedSettings.getDegrees()) {
       result = Math.toDegrees(result);
     }
 
-    return super.postprocessResult(result);
+    return super.postprocessRealResult(result);
   }
 
   public InverseTrigonometricFunction (Method method) {

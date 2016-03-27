@@ -11,7 +11,7 @@ public abstract class Function {
     functionMethod = method;
   }
 
-  protected final Object callFunctionMethod (Object argument) {
+  protected final Object callMethod (Object argument) {
     return LanguageUtilities.invokeMethod(functionMethod, null, argument);
   }
 

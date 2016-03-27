@@ -3,22 +3,22 @@ package org.nbp.calculator;
 import java.lang.reflect.Method;
 
 public class ComplexFunction extends Function {
-  protected Object preprocessArgument (ComplexNumber argument) {
+  protected Object preprocessComplexArgument (ComplexNumber argument) {
     return argument;
   }
 
-  protected ComplexNumber postprocessResult (Object result) {
+  protected ComplexNumber postprocessComplexResult (Object result) {
     return (ComplexNumber)result;
   }
 
   public final ComplexNumber call (ComplexNumber argument) {
-    Object methodArgument = preprocessArgument(argument);
+    Object methodArgument = preprocessComplexArgument(argument);
 
     if (methodArgument != null) {
-      Object methodResult = callFunctionMethod(methodArgument);
+      Object methodResult = callMethod(methodArgument);
 
       if (methodResult != null) {
-        ComplexNumber functionResult = postprocessResult(methodResult);
+        ComplexNumber functionResult = postprocessComplexResult(methodResult);
         if (functionResult != null) return functionResult;
       }
     }

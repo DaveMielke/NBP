@@ -3,27 +3,27 @@ package org.nbp.calculator;
 import java.lang.reflect.Method;
 
 public class RealFunction extends ComplexFunction {
-  protected double preprocessArgument (double argument) {
+  protected double preprocessRealArgument (double argument) {
     return argument;
   }
 
-  protected double postprocessResult (double result) {
+  protected double postprocessRealResult (double result) {
     return result;
   }
 
   @Override
-  protected Object preprocessArgument (ComplexNumber argument) {
-    argument = (ComplexNumber)super.preprocessArgument(argument);
+  protected Object preprocessComplexArgument (ComplexNumber argument) {
+    argument = (ComplexNumber)super.preprocessComplexArgument(argument);
     if (argument == null) return null;
     if (argument.hasImag()) return null;
-    return (Double)preprocessArgument(argument.real());
+    return (Double)preprocessRealArgument(argument.real());
   }
 
   @Override
-  protected ComplexNumber postprocessResult (Object result) {
+  protected ComplexNumber postprocessComplexResult (Object result) {
     if (result == null) return null;
     if (!(result instanceof Double)) return null;
-    return super.postprocessResult(new ComplexNumber(postprocessResult((double)(Double)result)));
+    return super.postprocessComplexResult(new ComplexNumber(postprocessRealResult((Double)result)));
   }
 
   public RealFunction (Method method) {
