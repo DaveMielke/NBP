@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @Inherited
-@interface Operation {
+@interface FunctionMethod {
   String summary();
 }
 
@@ -18,8 +18,8 @@ public abstract class Operations {
   }
 
   public final static String getSummary (Method method) {
-    Annotation annotation = method.getAnnotation(Operation.class);
+    Annotation annotation = method.getAnnotation(FunctionMethod.class);
     if (annotation == null) return null;
-    return ((Operation)annotation).summary();
+    return ((FunctionMethod)annotation).summary();
   }
 }
