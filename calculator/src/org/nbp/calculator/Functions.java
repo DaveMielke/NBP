@@ -13,33 +13,6 @@ import android.util.Log;
 public abstract class Functions {
   private final static String LOG_TAG = Functions.class.getName();
 
-  private static class MethodMap extends HashMap<String, Method> {
-    public MethodMap () {
-      super();
-    }
-  }
-
-  private static MethodMap getMethodMap (
-    Class<?> containerType, Class<?> argumentType
-  ) {
-    MethodMap map = new MethodMap();
-
-    for (Method method : containerType.getDeclaredMethods()) {
-      int modifiers = method.getModifiers();
-      if ((modifiers & Modifier.PUBLIC) == 0) continue;
-      if ((modifiers & Modifier.STATIC) == 0) continue;
-
-      Class<?>[] parameterTypes = method.getParameterTypes();
-      if (parameterTypes.length != 1) continue;
-      if (parameterTypes[0] != argumentType) continue;
-
-      if (method.getReturnType() != argumentType) continue;
-      map.put(method.getName(), method);
-    }
-
-    return map;
-  }
-
   private static class FunctionMap extends HashMap<String, ComplexFunction> {
     public FunctionMap () {
       super();
@@ -66,94 +39,48 @@ public abstract class Functions {
   }
 
   private static void addFunctions (
-    Class<?> containerType, Class<?> argumentType,
-    Class<? extends ComplexFunction> functionType
+    Class<? extends ComplexFunction> functionType,
+    Class<?> containerType, Class<?> argumentType
   ) {
-    MethodMap map = getMethodMap(containerType, argumentType);
+    for (Method method : containerType.getDeclaredMethods()) {
+      int modifiers = method.getModifiers();
+      if ((modifiers & Modifier.PUBLIC) == 0) continue;
+      if ((modifiers & Modifier.STATIC) == 0) continue;
 
-    for (String name : map.keySet()) {
-      addFunction(name, functionType, map.get(name));
+      Class<?>[] parameterTypes = method.getParameterTypes();
+      if (parameterTypes.length != 1) continue;
+      if (parameterTypes[0] != argumentType) continue;
+
+      if (method.getReturnType() != argumentType) continue;
+      addFunction(method.getName(), functionType, method);
     }
-  }
-
-  private static void addFunction (
-    String functionName, Class<? extends ComplexFunction> functionType,
-    MethodMap methodMap, String methodName
-  ) {
-    Method method = methodMap.get(methodName);
-
-    if (method != null) {
-      addFunction(functionName, functionType, method);
-    } else {
-      Log.w(LOG_TAG, ("method not found: " + methodName));
-    }
-  }
-
-  private static void addFunction (
-    String functionName, Class<? extends ComplexFunction> functionType,
-    MethodMap methodMap
-  ) {
-    addFunction(functionName, functionType, methodMap, functionName);
-  }
-
-  private static void addRealFunction (
-    String functionName, MethodMap methodMap, String methodName
-  ) {
-    addFunction(functionName, RealFunction.class, methodMap, methodName);
-  }
-
-  private static void addRealFunction (String functionName, MethodMap methodMap) {
-    addRealFunction(functionName, methodMap, functionName);
-  }
-
-  private static void addTrigonometricFunction (String functionName, MethodMap methodMap) {
-    addFunction(functionName, TrigonometricFunction.class, methodMap);
-  }
-
-  private static void addInverseTrigonometricFunction (String functionName, MethodMap methodMap) {
-    addFunction(functionName, InverseTrigonometricFunction.class, methodMap);
-  }
-
-  private static void addRealFunctions () {
-    MethodMap methodMap = getMethodMap(Math.class, double.class);
-
-    addRealFunction("abs", methodMap);
-
-    addRealFunction("floor", methodMap);
-    addRealFunction("round", methodMap, "rint");
-    addRealFunction("ceil", methodMap);
-
-    addRealFunction("sqrt", methodMap);
-    addRealFunction("cbrt", methodMap);
-
-    addRealFunction("exp", methodMap);
-    addRealFunction("log", methodMap);
-    addRealFunction("log10", methodMap);
-
-    addRealFunction("rd2dg", methodMap, "toDegrees");
-    addRealFunction("dg2rd", methodMap, "toRadians");
-
-    addTrigonometricFunction("sin", methodMap);
-    addTrigonometricFunction("cos", methodMap);
-    addTrigonometricFunction("tan", methodMap);
-
-    addInverseTrigonometricFunction("asin", methodMap);
-    addInverseTrigonometricFunction("acos", methodMap);
-    addInverseTrigonometricFunction("atan", methodMap);
-
-    addRealFunction("sinh", methodMap);
-    addRealFunction("cosh", methodMap);
-    addRealFunction("tanh", methodMap);
   }
 
   static {
     Log.d(LOG_TAG, "begin function definitions");
-    addRealFunctions();
 
     addFunctions(
+      RealFunction.class,
+      RealOperations.class,
+      double.class
+    );
+
+    addFunctions(
+      TrigonometricFunction.class,
+      TrigonometricOperations.class,
+      double.class
+    );
+
+    addFunctions(
+      InverseTrigonometricFunction.class,
+      InverseTrigonometricOperations.class,
+      double.class
+    );
+
+    addFunctions(
+      ComplexFunction.class,
       ComplexOperations.class,
-      ComplexNumber.class,
-      ComplexFunction.class
+      ComplexNumber.class
     );
 
     Log.d(LOG_TAG, "end function definitions");
