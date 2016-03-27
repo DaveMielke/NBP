@@ -40,12 +40,12 @@ public abstract class RealOperations {
     return Math.log10(x);
   }
 
-  public final static double rd2dg (double x) {
-    return Math.toDegrees(x);
+  public final static double rd2dg (double radians) {
+    return Math.toDegrees(radians);
   }
 
-  public final static double dg2rd (double x) {
-    return Math.toRadians(x);
+  public final static double dg2rd (double degrees) {
+    return Math.toRadians(degrees);
   }
 
   public final static double sinh (double x) {
