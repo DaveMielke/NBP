@@ -22,7 +22,7 @@ public abstract class Functions {
   private final static FunctionMap systemFunctions = new FunctionMap();
 
   private static void addFunction (
-    String name, Class<? extends ComplexFunction> type, Method method
+    String name, Class<? extends Function> type, Method method
   ) {
     Constructor constructor = LanguageUtilities.getConstructor(type, Method.class);
 
@@ -39,7 +39,7 @@ public abstract class Functions {
   }
 
   private static void addFunctions (Operations operations) {
-    Class<? extends ComplexFunction> functionType = operations.getFunctionType();
+    Class<? extends Function> functionType = operations.getFunctionType();
     Class<?> argumentType = operations.getArgumentType();
 
     for (Method method : operations.getClass().getDeclaredMethods()) {

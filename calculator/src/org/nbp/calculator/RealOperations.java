@@ -6,7 +6,7 @@ public class RealOperations extends Operations {
   }
 
   @Override
-  public Class<? extends ComplexFunction> getFunctionType () {
+  public Class<? extends Function> getFunctionType () {
     return RealFunction.class;
   }
 

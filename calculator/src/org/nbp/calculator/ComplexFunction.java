@@ -2,11 +2,7 @@ package org.nbp.calculator;
 
 import java.lang.reflect.Method;
 
-import org.nbp.common.LanguageUtilities;
-
-public class ComplexFunction {
-  private final Method method;
-
+public class ComplexFunction extends Function {
   protected Object preprocessArgument (ComplexNumber argument) {
     return argument;
   }
@@ -19,7 +15,7 @@ public class ComplexFunction {
     Object methodArgument = preprocessArgument(argument);
 
     if (methodArgument != null) {
-      Object methodResult = LanguageUtilities.invokeMethod(method, null, methodArgument);
+      Object methodResult = callFunctionMethod(methodArgument);
 
       if (methodResult != null) {
         ComplexNumber functionResult = postprocessResult(methodResult);
@@ -31,6 +27,6 @@ public class ComplexFunction {
   }
 
   public ComplexFunction (Method method) {
-    this.method = method;
+    super(method);
   }
 }

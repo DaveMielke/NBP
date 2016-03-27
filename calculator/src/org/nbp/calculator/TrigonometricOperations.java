@@ -6,7 +6,7 @@ public class TrigonometricOperations extends RealOperations {
   }
 
   @Override
-  public Class<? extends ComplexFunction> getFunctionType () {
+  public Class<? extends Function> getFunctionType () {
     return TrigonometricFunction.class;
   }
 

@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 }
 
 public abstract class Operations {
-  public abstract Class<? extends ComplexFunction> getFunctionType ();
+  public abstract Class<? extends Function> getFunctionType ();
   public abstract Class<?> getArgumentType ();
 
   protected Operations () {
