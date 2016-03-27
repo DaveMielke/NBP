@@ -52,7 +52,8 @@
   <string name="format_extension_none">no extension</string>
   <string name="format_extension_unrecognized">unrecognized extension</string>
   <string name="format_select_all">all files</string>
-  <string name="format_name_brf">ASCII Braille</string>
+  <string name="format_name_brf">Formatted ASCII Braille</string>
+  <string name="format_name_brl">Unformatted ASCII Braille</string>
   <string name="format_name_doc">Microsoft Word 1997-2007</string>
   <string name="format_name_docm">Microsoft Word 2007+ XML (macro-enabled)</string>
   <string name="format_name_docx">Microsoft Word 2007+ XML (macro-free)</string>
