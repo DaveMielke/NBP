@@ -17,6 +17,14 @@ public abstract class Function {
     return LanguageUtilities.invokeMethod(functionMethod, null, argument);
   }
 
+  public final String getName () {
+    return functionMethod.getName();
+  }
+
+  public final String getCall () {
+    return getName() + '(' + getArgumentName() + ')';
+  }
+
   public final String getSummary () {
     return Operations.getSummary(functionMethod);
   }

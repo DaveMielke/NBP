@@ -148,15 +148,20 @@ public class CalculatorActivity extends CommonActivity {
   private final void insertExpressionText (String text) {
     int start = expressionView.getSelectionStart();
     int end = expressionView.getSelectionEnd();
-    int cursor = start + text.length();
+    expressionView.getText().replace(start, end, text);
 
-    if (Functions.get(text) != null) {
-      text += "()";
-      cursor += 1;
+    int left = text.indexOf('(');
+    int right = text.lastIndexOf(')');
+    int length = text.length();
+
+    if ((0 <= left) && (left < right) && (right < length)) {
+      end = start + right;
+      start += left + 1;
+    } else {
+      end = start += length;
     }
 
-    expressionView.getText().replace(start, end, text);
-    expressionView.setSelection(cursor);
+    expressionView.setSelection(start, end);
   }
 
   private ViewGroup[] keypadViews;
@@ -186,6 +191,9 @@ public class CalculatorActivity extends CommonActivity {
           evaluateExpression();
           resultView.requestFocus();
         } else {
+          Function function = Functions.get(text);
+          if (function != null) text = function.getCall();
+
           insertExpressionText(text);
           expressionView.requestFocus();
         }
@@ -282,7 +290,7 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final String formatVariable (String name, ComplexNumber value, String description) {
+  private final String formatVariableLine (String name, ComplexNumber value, String description) {
     StringBuilder sb = new StringBuilder();
 
     sb.append(name);
@@ -298,8 +306,8 @@ public class CalculatorActivity extends CommonActivity {
     return sb.toString();
   }
 
-  private final String formatVariable (String name, ComplexNumber value) {
-    return formatVariable(name, value, null);
+  private final String formatVariableLine (String name, ComplexNumber value) {
+    return formatVariableLine(name, value, null);
   }
 
   private final String getVariableName (List<String> variables, int index) {
@@ -307,11 +315,11 @@ public class CalculatorActivity extends CommonActivity {
     return variable.substring(0, variable.indexOf(' '));
   }
 
-  private final List<String> getUserVariables () {
+  private final List<String> getUserVariableLines () {
     List<String> variables = new ArrayList<String>();
 
     for (String name : Variables.getUserVariableNames()) {
-      variables.add(formatVariable(name, Variables.get(name)));
+      variables.add(formatVariableLine(name, Variables.get(name)));
     }
 
     Collections.sort(variables);
@@ -325,11 +333,11 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_recall);
-          final List<String> variables = getUserVariables();
+          final List<String> variables = getUserVariableLines();
 
           for (String name : Variables.getSystemVariableNames()) {
             SystemVariable variable = Variables.getSystemVariable(name);
-            variables.add(formatVariable(name, variable.getValue(), variable.getDescription()));
+            variables.add(formatVariableLine(name, variable.getValue(), variable.getDescription()));
           }
 
           builder.setItems(
@@ -361,7 +369,7 @@ public class CalculatorActivity extends CommonActivity {
           if (result.isNaN()) {
             builder.setMessage(R.string.error_no_result);
           } else {
-            final List<String> variables = getUserVariables();
+            final List<String> variables = getUserVariableLines();
 
             if (variables.isEmpty()) {
               builder.setMessage(R.string.error_no_variables);
@@ -463,7 +471,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
-          final List<String> variables = getUserVariables();
+          final List<String> variables = getUserVariableLines();
 
           if (variables.isEmpty()) {
             builder.setMessage(R.string.error_no_variables);
@@ -490,7 +498,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public boolean onLongClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
-          final List<String> variables = getUserVariables();
+          final List<String> variables = getUserVariableLines();
 
           if (variables.isEmpty()) {
             builder.setMessage(R.string.error_no_variables);
@@ -534,28 +542,33 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final String formatFunction (String name, Function function) {
-    StringBuilder sb = new StringBuilder();
+  private final String formatFunctionLine (String name, Function function) {
+    String line = function.getCall();
+
     String summary = function.getSummary();
+    if (summary != null) line += ": " + summary;
 
-    sb.append(name);
-    sb.append('(');
-    sb.append(function.getArgumentName());
-    sb.append(')');
-
-    if (summary != null) {
-      sb.append(": ");
-      sb.append(summary);
-    }
-
-    return sb.toString();
+    return line;
   }
 
-  private final List<String> getFunctions () {
+  private final String getFunctionCall (List<String> functions, int index) {
+    String function = functions.get(index);
+    int end = function.indexOf(')');
+
+    if (end < 0) {
+      end = function.length();
+    } else {
+      end += 1;
+    }
+
+    return function.substring(0, end);
+  }
+
+  private final List<String> getFunctionLines () {
     List<String> functions = new ArrayList<String>();
 
     for (String name : Functions.getNames()) {
-      functions.add(formatFunction(name, Functions.get(name)));
+      functions.add(formatFunctionLine(name, Functions.get(name)));
     }
 
     Collections.sort(functions);
@@ -568,7 +581,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_call);
-          final List<String> functions = getFunctions();
+          final List<String> functions = getFunctionLines();
 
           if (functions.isEmpty()) {
             builder.setMessage(R.string.error_no_functions);
@@ -578,6 +591,8 @@ public class CalculatorActivity extends CommonActivity {
               new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick (DialogInterface dialog, int index) {
+                  insertExpressionText(getFunctionCall(functions, index));
+                  expressionView.requestFocus();
                 }
               }
             );

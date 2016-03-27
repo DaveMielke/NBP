@@ -26,9 +26,8 @@ public abstract class Functions {
 
   private final static FunctionMap functionMap = new FunctionMap();
 
-  private static void addFunction (
-    String name, Class<? extends Function> type, Method method
-  ) {
+  private static void addFunction (Class<? extends Function> type, Method method) {
+    String name = method.getName();
     Constructor constructor = LanguageUtilities.getConstructor(type, Method.class);
 
     if (constructor != null) {
@@ -57,7 +56,7 @@ public abstract class Functions {
       if (parameterTypes[0] != argumentType) continue;
 
       if (method.getReturnType() != argumentType) continue;
-      addFunction(method.getName(), functionType, method);
+      addFunction(functionType, method);
     }
   }
 
