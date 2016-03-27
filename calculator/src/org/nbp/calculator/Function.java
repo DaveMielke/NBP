@@ -5,8 +5,6 @@ import java.lang.reflect.Method;
 import org.nbp.common.LanguageUtilities;
 
 public abstract class Function {
-  public abstract String getArgumentName ();
-
   private final Method functionMethod;
 
   protected Function (Method method) {
@@ -21,8 +19,12 @@ public abstract class Function {
     return functionMethod.getName();
   }
 
+  public abstract String getArgumentName ();
+  public final static char ARGUMENT_PREFIX = '(';
+  public final static char ARGUMENT_SUFFIX = ')';
+
   public final String getCall () {
-    return getName() + '(' + getArgumentName() + ')';
+    return getName() + ARGUMENT_PREFIX + getArgumentName() + ARGUMENT_SUFFIX;
   }
 
   public final String getSummary () {

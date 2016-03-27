@@ -125,11 +125,11 @@ public class ExpressionEvaluation {
           type = TokenType.RESULT;
           break;
 
-        case '(':
+        case Function.ARGUMENT_PREFIX:
           type = TokenType.OPEN;
           break;
 
-        case ')':
+        case Function.ARGUMENT_SUFFIX:
           type = TokenType.CLOSE;
           break;
 

@@ -150,8 +150,8 @@ public class CalculatorActivity extends CommonActivity {
     int end = expressionView.getSelectionEnd();
     expressionView.getText().replace(start, end, text);
 
-    int left = text.indexOf('(');
-    int right = text.lastIndexOf(')');
+    int left = text.indexOf(Function.ARGUMENT_PREFIX);
+    int right = text.lastIndexOf(Function.ARGUMENT_SUFFIX);
     int length = text.length();
 
     if ((0 <= left) && (left < right) && (right < length)) {
@@ -553,15 +553,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private final String getFunctionCall (List<String> functions, int index) {
     String function = functions.get(index);
-    int end = function.indexOf(')');
-
-    if (end < 0) {
-      end = function.length();
-    } else {
-      end += 1;
-    }
-
-    return function.substring(0, end);
+    return function.substring(0, (function.indexOf(Function.ARGUMENT_SUFFIX) + 1));
   }
 
   private final List<String> getFunctionLines () {
