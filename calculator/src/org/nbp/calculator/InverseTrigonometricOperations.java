@@ -10,6 +10,9 @@ public class InverseTrigonometricOperations extends RealOperations {
     return InverseTrigonometricFunction.class;
   }
 
+  @Operation(
+    summary = "trigonometric arc sine"
+  )
   public final static double asin (double x) {
     return Math.asin(x);
   }
