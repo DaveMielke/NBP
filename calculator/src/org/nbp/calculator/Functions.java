@@ -13,6 +13,33 @@ import android.util.Log;
 public abstract class Functions {
   private final static String LOG_TAG = Functions.class.getName();
 
+  private static class MethodMap extends HashMap<String, Method> {
+    public MethodMap () {
+      super();
+    }
+  }
+
+  private static MethodMap getMethodMap (
+    Class<?> containerType, Class<?> argumentType
+  ) {
+    MethodMap map = new MethodMap();
+
+    for (Method method : containerType.getDeclaredMethods()) {
+      int modifiers = method.getModifiers();
+      if ((modifiers & Modifier.PUBLIC) == 0) continue;
+      if ((modifiers & Modifier.STATIC) == 0) continue;
+
+      Class<?>[] parameterTypes = method.getParameterTypes();
+      if (parameterTypes.length != 1) continue;
+      if (parameterTypes[0] != argumentType) continue;
+
+      if (method.getReturnType() != argumentType) continue;
+      map.put(method.getName(), method);
+    }
+
+    return map;
+  }
+
   private static class FunctionMap extends HashMap<String, ComplexFunction> {
     public FunctionMap () {
       super();
@@ -20,31 +47,6 @@ public abstract class Functions {
   }
 
   private final static FunctionMap systemFunctions = new FunctionMap();
-
-  private static class MethodMap extends HashMap<String, Method> {
-    public MethodMap () {
-      super();
-    }
-  }
-
-  private static MethodMap getMethodMap (Class<?> container, Class<?> type) {
-    MethodMap map = new MethodMap();
-
-    for (Method method : container.getDeclaredMethods()) {
-      int modifiers = method.getModifiers();
-      if ((modifiers & Modifier.PUBLIC) == 0) continue;
-      if ((modifiers & Modifier.STATIC) == 0) continue;
-
-      Class<?>[] parameterTypes = method.getParameterTypes();
-      if (parameterTypes.length != 1) continue;
-      if (parameterTypes[0] != type) continue;
-
-      if (method.getReturnType() != type) continue;
-      map.put(method.getName(), method);
-    }
-
-    return map;
-  }
 
   private static void addFunction (
     String name, Class<? extends ComplexFunction> type, Method method
@@ -61,6 +63,17 @@ public abstract class Functions {
     }
 
     Log.w(LOG_TAG, ("method not added: " + name));
+  }
+
+  private static void addFunctions (
+    Class<?> containerType, Class<?> argumentType,
+    Class<? extends ComplexFunction> functionType
+  ) {
+    MethodMap map = getMethodMap(containerType, argumentType);
+
+    for (String name : map.keySet()) {
+      addFunction(name, functionType, map.get(name));
+    }
   }
 
   private static void addFunction (
@@ -128,23 +141,21 @@ public abstract class Functions {
     addInverseTrigonometricFunction("acos", methodMap);
     addInverseTrigonometricFunction("atan", methodMap);
 
-    addTrigonometricFunction("sinh", methodMap);
-    addTrigonometricFunction("cosh", methodMap);
-    addTrigonometricFunction("tanh", methodMap);
-  }
-
-  private static void addComplexFunctions () {
-    MethodMap map = getMethodMap(ComplexOperations.class, ComplexNumber.class);
-
-    for (String name : map.keySet()) {
-      addFunction(name, ComplexFunction.class, map.get(name));
-    }
+    addRealFunction("sinh", methodMap);
+    addRealFunction("cosh", methodMap);
+    addRealFunction("tanh", methodMap);
   }
 
   static {
     Log.d(LOG_TAG, "begin function definitions");
     addRealFunctions();
-    addComplexFunctions();
+
+    addFunctions(
+      ComplexOperations.class,
+      ComplexNumber.class,
+      ComplexFunction.class
+    );
+
     Log.d(LOG_TAG, "end function definitions");
   }
 
