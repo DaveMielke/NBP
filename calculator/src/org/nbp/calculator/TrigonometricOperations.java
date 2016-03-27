@@ -1,7 +1,13 @@
 package org.nbp.calculator;
 
-public abstract class TrigonometricOperations {
-  private TrigonometricOperations () {
+public class TrigonometricOperations extends RealOperations {
+  public TrigonometricOperations () {
+    super();
+  }
+
+  @Override
+  public Class<? extends ComplexFunction> getFunctionType () {
+    return TrigonometricFunction.class;
   }
 
   public final static double sin (double radians) {

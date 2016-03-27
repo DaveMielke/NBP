@@ -1,7 +1,13 @@
 package org.nbp.calculator;
 
-public abstract class InverseTrigonometricOperations {
-  private InverseTrigonometricOperations () {
+public class InverseTrigonometricOperations extends RealOperations {
+  public InverseTrigonometricOperations () {
+    super();
+  }
+
+  @Override
+  public Class<? extends ComplexFunction> getFunctionType () {
+    return InverseTrigonometricFunction.class;
   }
 
   public final static double asin (double x) {

@@ -38,11 +38,11 @@ public abstract class Functions {
     Log.w(LOG_TAG, ("method not added: " + name));
   }
 
-  private static void addFunctions (
-    Class<? extends ComplexFunction> functionType,
-    Class<?> containerType, Class<?> argumentType
-  ) {
-    for (Method method : containerType.getDeclaredMethods()) {
+  private static void addFunctions (Operations operations) {
+    Class<? extends ComplexFunction> functionType = operations.getFunctionType();
+    Class<?> argumentType = operations.getArgumentType();
+
+    for (Method method : operations.getClass().getDeclaredMethods()) {
       int modifiers = method.getModifiers();
       if ((modifiers & Modifier.PUBLIC) == 0) continue;
       if ((modifiers & Modifier.STATIC) == 0) continue;
@@ -58,31 +58,10 @@ public abstract class Functions {
 
   static {
     Log.d(LOG_TAG, "begin function definitions");
-
-    addFunctions(
-      RealFunction.class,
-      RealOperations.class,
-      double.class
-    );
-
-    addFunctions(
-      TrigonometricFunction.class,
-      TrigonometricOperations.class,
-      double.class
-    );
-
-    addFunctions(
-      InverseTrigonometricFunction.class,
-      InverseTrigonometricOperations.class,
-      double.class
-    );
-
-    addFunctions(
-      ComplexFunction.class,
-      ComplexOperations.class,
-      ComplexNumber.class
-    );
-
+    addFunctions(new RealOperations());
+    addFunctions(new TrigonometricOperations());
+    addFunctions(new InverseTrigonometricOperations());
+    addFunctions(new ComplexOperations());
     Log.d(LOG_TAG, "end function definitions");
   }
 

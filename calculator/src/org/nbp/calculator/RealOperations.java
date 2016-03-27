@@ -1,7 +1,18 @@
 package org.nbp.calculator;
 
-public abstract class RealOperations {
-  private RealOperations () {
+public class RealOperations extends Operations {
+  public RealOperations () {
+    super();
+  }
+
+  @Override
+  public Class<? extends ComplexFunction> getFunctionType () {
+    return RealFunction.class;
+  }
+
+  @Override
+  public Class<?> getArgumentType () {
+    return double.class;
   }
 
   public final static double abs (double x) {

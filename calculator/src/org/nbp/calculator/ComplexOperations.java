@@ -1,7 +1,18 @@
 package org.nbp.calculator;
 
-public abstract class ComplexOperations extends ComplexCommon {
-  private ComplexOperations () {
+public class ComplexOperations extends Operations {
+  public ComplexOperations () {
+    super();
+  }
+
+  @Override
+  public Class<? extends ComplexFunction> getFunctionType () {
+    return ComplexFunction.class;
+  }
+
+  @Override
+  public Class<?> getArgumentType () {
+    return ComplexNumber.class;
   }
 
   public final static ComplexNumber real (ComplexNumber number) {
