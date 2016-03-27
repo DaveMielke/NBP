@@ -69,6 +69,6 @@ public abstract class RealOperations {
   }
 
   public final static double coth (double x) {
-    return Math.cosh(x) / Math.sinh(x);
+    return 1d / Math.tanh(x);
   }
 }
