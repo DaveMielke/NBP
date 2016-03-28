@@ -76,8 +76,16 @@ public class ComplexNumber extends ComplexCommon {
     return new ComplexNumber((real + addend.real), (imag + addend.imag));
   }
 
+  public final ComplexNumber add (double addend) {
+    return add(new ComplexNumber(addend));
+  }
+
   public final ComplexNumber sub (ComplexNumber subtrahend) {
     return new ComplexNumber((real - subtrahend.real), (imag - subtrahend.imag));
+  }
+
+  public final ComplexNumber sub (double subtrahend) {
+    return sub(new ComplexNumber(subtrahend));
   }
 
   public final ComplexNumber mul (ComplexNumber multiplier) {
@@ -87,9 +95,17 @@ public class ComplexNumber extends ComplexCommon {
     );
   }
 
+  public final ComplexNumber mul (double multiplier) {
+    return mul(new ComplexNumber(multiplier));
+  }
+
   public final ComplexNumber div (ComplexNumber divisor) {
     if (isReal(divisor)) return new ComplexNumber(real / divisor.real);
     return mul(divisor.rcp());
+  }
+
+  public final ComplexNumber div (double divisor) {
+    return div(new ComplexNumber(divisor));
   }
 
   public final ComplexNumber log () {
@@ -113,6 +129,10 @@ public class ComplexNumber extends ComplexCommon {
   public final ComplexNumber pow (ComplexNumber exponent) {
     if (isReal(exponent)) return new ComplexNumber(Math.pow(real, exponent.real));
     return exponent.mul(log()).exp();
+  }
+
+  public final ComplexNumber pow (double exponent) {
+    return pow(new ComplexNumber(exponent));
   }
 
   public final String format () {
