@@ -13,6 +13,18 @@ bind Dot4+Left BackKey
 bind Dot4+Right RecentApps
 bind Dot4+Center MenuKey
 
+bind Dot5+Center DragFrom
+bind Dot5+Left DragLeft
+bind Dot5+Right DragRight
+bind Dot5+Up DragUp
+bind Dot5+Down DragDown
+
+bind Dot6+Center DropAt
+bind Dot6+Left DropLeft
+bind Dot6+Right DropRight
+bind Dot6+Up DropAbove
+bind Dot6+Down DropBelow
+
 bind Space+Dots1345#n Notifications
 bind Space+Dots123456 HomeKey
 bind Space+Dots1356#z BackKey
