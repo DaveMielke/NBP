@@ -87,10 +87,18 @@ public class BuildDetailsActivity extends ProgrammaticActivity {
     addSystemProperty(R.string.build_activity_label_linux_version, "os.version");
 
     addDetail(
-      R.string.build_activity_label_firmware_version, 
+      R.string.build_activity_label_firmware_main,
       String.format("%d.%d",
-        FirmwareVersion.getMajor(),
-        FirmwareVersion.getMinor()
+        FirmwareVersion.getMainMajor(),
+        FirmwareVersion.getMainMinor()
+      )
+    );
+
+    addDetail(
+      R.string.build_activity_label_firmware_base,
+      String.format("%d.%d",
+        FirmwareVersion.getBaseMajor(),
+        FirmwareVersion.getBaseMinor()
       )
     );
 

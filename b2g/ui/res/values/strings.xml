@@ -15,7 +15,8 @@
   <string name="build_activity_label_android_type">Android Build Type</string>
   <string name="build_activity_label_android_version">Android Version</string>
   <string name="build_activity_label_bootloader_version">Boot Loader Version</string>
-  <string name="build_activity_label_firmware_version">Firmware Version</string>
+  <string name="build_activity_label_firmware_main">Main Firmware</string>
+  <string name="build_activity_label_firmware_base">Base Firmware</string>
   <string name="build_activity_label_hardware_serial">Serial Number</string>
   <string name="build_activity_label_linux_version">Linux Kernel Version</string>
   <string name="build_activity_label_metec_version">Metec Driver Version</string>

@@ -10,7 +10,7 @@ MAKE_FILE_LOG_TAG;
 
 #define DEVICE_PATH "/dev/cp430_core"
 
-static unsigned char firmwareVersion[] = {0, 0, 0, 0};
+static unsigned char firmwareVersion[10] = {0};
 
 static void
 getFirmwareVersion (void) {
@@ -39,15 +39,29 @@ getFirmwareVersion (void) {
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_FirmwareVersion, getMajor, jint
+  org_nbp_b2g_ui_FirmwareVersion, getMainMajor, jint
 ) {
   getFirmwareVersion();
   return firmwareVersion[0];
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_FirmwareVersion, getMinor, jint
+  org_nbp_b2g_ui_FirmwareVersion, getMainMinor, jint
 ) {
   getFirmwareVersion();
   return firmwareVersion[1];
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_FirmwareVersion, getBaseMajor, jint
+) {
+  getFirmwareVersion();
+  return firmwareVersion[2];
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_FirmwareVersion, getBaseMinor, jint
+) {
+  getFirmwareVersion();
+  return firmwareVersion[3];
 }

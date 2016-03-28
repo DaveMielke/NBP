@@ -55,7 +55,8 @@ within a screen that looks something like this::
   Android Build Time    2016-03-21@06:10 UTC
   Android Build Type    eng
   Linux Kernel Version  2.6.37
-  Firmware Version      4.0
+  Main Firmware         4.0
+  Base Firmware         128.0
   Metec Driver Version  1.00
 
 Shortcuts

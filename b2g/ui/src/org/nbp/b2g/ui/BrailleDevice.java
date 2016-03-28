@@ -120,7 +120,7 @@ public class BrailleDevice {
   }
 
   public static boolean canEnableDisable () {
-    return FirmwareVersion.getMajor() >= 3;
+    return FirmwareVersion.getMainMajor() >= 3;
   }
 
   public final boolean enable () {
