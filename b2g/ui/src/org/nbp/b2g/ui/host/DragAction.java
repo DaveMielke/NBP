@@ -53,8 +53,18 @@ public abstract class DragAction extends Action {
     return fromRegion != null;
   }
 
-  private final static boolean dropAt (Point location) {
-    return false;
+  private final static boolean dropAt (Point toLocation) {
+    if (toLocation.x < 0) return false;
+    if (toLocation.y < 0) return false;
+
+    Point fromLocation = getCenter(fromRegion);
+    fromRegion = null;
+
+    return Gesture.swipe(
+      fromLocation.x, fromLocation.y,
+      toLocation.x, toLocation.y,
+      1, true
+    );
   }
 
   protected final static boolean dropAt (Rect region) {
@@ -62,11 +72,15 @@ public abstract class DragAction extends Action {
     return dropAt(getCenter(region));
   }
 
+  private final static int getHorizontalOffset () {
+    return (fromRegion.right - fromRegion.left) / 2;
+  }
+
   protected final static boolean dropLeft (Rect region) {
     if (region == null) return false;
     Point location = getCenter(region);
 
-    location.x = region.left - 1;
+    location.x = region.left - getHorizontalOffset();
     return dropAt(location);
   }
 
@@ -74,15 +88,19 @@ public abstract class DragAction extends Action {
     if (region == null) return false;
     Point location = getCenter(region);
 
-    location.x = region.right;
+    location.x = region.right + getHorizontalOffset();
     return dropAt(location);
+  }
+
+  private final static int getVerticalOffset () {
+    return (fromRegion.bottom - fromRegion.top) / 2;
   }
 
   protected final static boolean dropAbove (Rect region) {
     if (region == null) return false;
     Point location = getCenter(region);
 
-    location.y = region.top - 1;
+    location.y = region.top - getVerticalOffset();
     return dropAt(location);
   }
 
@@ -90,7 +108,7 @@ public abstract class DragAction extends Action {
     if (region == null) return false;
     Point location = getCenter(region);
 
-    location.y = region.bottom;
+    location.y = region.bottom + getVerticalOffset();
     return dropAt(location);
   }
 

@@ -2,6 +2,8 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
+import android.view.ViewConfiguration;
+
 public abstract class Gesture {
   private final static String LOG_TAG = Gesture.class.getName();
 
@@ -62,15 +64,8 @@ public abstract class Gesture {
   }
 
   public static boolean tap (int x, int y, int count) {
-    if (ApplicationContext.isTouchExplorationActive()) {
-      count += 1;
-    }
-
-    if (count < 1) {
-      throw new IllegalArgumentException(String.format(
-        "count must be greater than 0: %d", count
-      ));
-    }
+    if (ApplicationContext.isTouchExplorationActive()) count += 1;
+    if (count < 1) return false;
 
     if (ApplicationSettings.LOG_ACTIONS) {
       Log.v(LOG_TAG, String.format(
@@ -96,16 +91,9 @@ public abstract class Gesture {
     return tap(x, y, 0);
   }
 
-  public static boolean swipe (int x1, int y1, int x2, int y2, int fingers) {
-    if (ApplicationContext.isTouchExplorationActive()) {
-      fingers += 1;
-    }
-
-    if (fingers < 1) {
-      throw new IllegalArgumentException(String.format(
-        "fingers must be greater than 0: %d", fingers
-      ));
-    }
+  public static boolean swipe (int x1, int y1, int x2, int y2, int fingers, boolean drag) {
+    if (ApplicationContext.isTouchExplorationActive()) fingers += 1;
+    if (fingers < 1) return false;
 
     if (ApplicationSettings.LOG_ACTIONS) {
       Log.v(LOG_TAG, String.format(
@@ -128,6 +116,7 @@ public abstract class Gesture {
     double verticalStep = verticalDistance / stepCount;
 
     if (!begin(x1, y1, fingers)) return false;
+    if (drag) sleep(ViewConfiguration.getLongPressTimeout() + 100);
     long stepInterval = ApplicationParameters.SWIPE_STEP_INTERVAL;
 
     while (true) {
@@ -154,6 +143,10 @@ public abstract class Gesture {
     }
 
     return end(x2, y2);
+  }
+
+  public static boolean swipe (int x1, int y1, int x2, int y2, int fingers) {
+    return swipe(x1, y1, x2, y2, fingers, false);
   }
 
   public static boolean swipe (int x1, int y1, int x2, int y2) {
