@@ -149,8 +149,16 @@ public abstract class Gesture {
     return swipe(x1, y1, x2, y2, fingers, false);
   }
 
+  public static boolean swipe (int x1, int y1, int x2, int y2, boolean drag) {
+    return swipe(x1, y1, x2, y2, 1, drag);
+  }
+
   public static boolean swipe (int x1, int y1, int x2, int y2) {
-    return swipe(x1, y1, x2, y2, 1);
+    return swipe(x1, y1, x2, y2, false);
+  }
+
+  public static boolean drag (int x1, int y1, int x2, int y2) {
+    return swipe(x1, y1, x2, y2, true);
   }
 
   public static boolean slide (int x1, int y1, int x2, int y2) {

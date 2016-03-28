@@ -54,16 +54,16 @@ public abstract class DragAction extends Action {
   }
 
   private final static boolean dropAt (Point toLocation) {
-    if (toLocation.x < 0) return false;
-    if (toLocation.y < 0) return false;
+    Point screenSize = ApplicationContext.getScreenSize();
+    Rect screenRegion = new Rect(0, 0, screenSize.x, screenSize.y);
+    if (!screenRegion.contains(toLocation.x, toLocation.y)) return false;
 
     Point fromLocation = getCenter(fromRegion);
     fromRegion = null;
 
-    return Gesture.swipe(
+    return Gesture.drag(
       fromLocation.x, fromLocation.y,
-      toLocation.x, toLocation.y,
-      1, true
+      toLocation.x, toLocation.y
     );
   }
 
