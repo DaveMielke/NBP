@@ -4,6 +4,8 @@
 |product name| Quick Start Guide
 ================================
 
+.. include:: ../metadata.rst
+
 .. contents::
 
 Thank you for purchasing a |product name|.
