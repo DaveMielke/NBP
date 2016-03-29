@@ -58,17 +58,17 @@ bind Space+Dots234#s,Dots3456## Calculator
 bind Space+Dot8+Dots123456#home AddShortcut
 bind Space+Dot7+Dots123456#home RemoveShortcut
 
-bind Dot5+Center DragFrom
 bind Dot5+Left DragLeft
 bind Dot5+Right DragRight
 bind Dot5+Up DragUp
 bind Dot5+Down DragDown
+bind Dot5+Center DragFrom
 
-bind Dot6+Center DropAt
 bind Dot6+Left DropLeft
 bind Dot6+Right DropRight
 bind Dot6+Up DropAbove
 bind Dot6+Down DropBelow
+bind Dot6+Center DropOn
 
 bind Backward+Forward+Space DescribeBuild
 

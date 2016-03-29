@@ -38,9 +38,9 @@
 .. |DragRight| replace:: drag the current screen element to the right
 .. |DragUp| replace:: drag the current screen element upward
 .. |DropAbove| replace:: drag to immediately above the current screen element
-.. |DropAt| replace:: drag to on top of the current screen element
 .. |DropBelow| replace:: drag to immediately below the current screen element
 .. |DropLeft| replace:: drag to immediately left of the current screen element
+.. |DropOn| replace:: drag to on top of the current screen element
 .. |DropRight| replace:: drag to immediately right of the current screen element
 .. |Editor| replace:: go to the |organization acronym| editor
 .. |EMail| replace:: go to the EMail app
