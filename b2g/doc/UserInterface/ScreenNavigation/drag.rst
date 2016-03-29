@@ -2,8 +2,8 @@ Dragging Screen Elements
 ------------------------
 
 Some screens allow their elements to be moved around.
-This, for example, is how most launchers allow users to reorganize their home screens
-(see `Managing the Home Screen`_).
+This, for example, is how `The Standard Android Launcher`_
+allows users to reorganize `The Home Screen`_.
 
 Moving a screen element to a new location is normally done
 by dragging it with a finger or mouse.
