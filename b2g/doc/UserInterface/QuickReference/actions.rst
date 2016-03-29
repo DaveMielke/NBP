@@ -37,11 +37,11 @@
 .. |DragLeft| replace:: drag the current screen element to the left
 .. |DragRight| replace:: drag the current screen element to the right
 .. |DragUp| replace:: drag the current screen element upward
-.. |DropAbove| replace:: x
-.. |DropAt| replace:: x
-.. |DropBelow| replace:: x
-.. |DropLeft| replace:: x
-.. |DropRight| replace:: x
+.. |DropAbove| replace:: drag to immediately above the current screen element
+.. |DropAt| replace:: drag to on top of the current screen element
+.. |DropBelow| replace:: drag to immediately below the current screen element
+.. |DropLeft| replace:: drag to immediately left of the current screen element
+.. |DropRight| replace:: drag to immediately right of the current screen element
 .. |Editor| replace:: go to the NBP editor
 .. |EMail| replace:: go to the EMail app
 .. |End| replace:: the keyboard End key

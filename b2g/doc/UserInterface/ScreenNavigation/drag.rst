@@ -19,10 +19,10 @@ The |user interface| supports a set of simple drag operations.
   one of the five keys on the directional pad:
 
   Left
-    Drag it to the immediate left of the new screen element.
+    Drag it to immediately left of the new screen element.
 
   Right
-    Drag it to the immediate right of the new screen element.
+    Drag it to immediately right of the new screen element.
 
   Up
     Drag it to immediately above the new screen element.

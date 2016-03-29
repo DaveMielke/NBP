@@ -94,7 +94,8 @@ and press Center.
 
 Most launchers allow you to organize your home screen
 by dragging the shortcuts on it to new locations.
-Many, including the one that comes with Android, allow you to:
+Many, including the default launcher that comes with Android,
+allow you to do things like:
 
 * Drag a shortcut on top of another one in order to
   create a folder that contains both of them.
