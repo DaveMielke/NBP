@@ -117,8 +117,11 @@ that allows access to a SIM card slot (for those using the |product name| as a p
 Otherwise, there isn't any reason to open it.
 Opening it exposes the circuit board. 
 
+Operation
+=========
+
 Powering Up
-===========
+-----------
 
 Slide the Power Switch on by pushing it toward the back of the unit.
 You should hear one short beep when the |product name| starts to boot.
@@ -128,6 +131,9 @@ In this case, switch it back off and charge the battery for a while before tryin
 The |product name| takes around a minute to fully boot.
 After about 20 seconds the braille display will say "Starting" for about 10 seconds.
 It will then go blank for about 20 seconds, and eventually say "Home screen 3".
+
+The Home Screen
+---------------
 
 The home screen contains a set of shortcuts to commonly used apps.
 There are a few ways to navigate to them.
@@ -150,7 +156,8 @@ an alphabetically sorted list of all of the apps on the |product name|.
 
 We recommend that you review the text version of the User Interface Manual
 that is in the |product name| by typing Chord-h.
-You can also read an HTML version by typing Chord-h together with dots 7 and 8.
+You can also read an HTML version that's on the web
+by typing Chord-h together with dots 7 and 8.
 
 Don't be afraid to explore.
 You can always type Chord-z to escape back out of any location,
@@ -158,17 +165,16 @@ and you can also type Chord-123456 to go back to the home screen.
 
 When the |product name| is running, then:
 
+Saving Power
+------------
+
 * Turning the Power Switch off (pull toward the front) puts the system to sleep.
   The braille on the display will go down to save power.
 
 * Turning it back on (push toward the back) wakes the system up to where you were before.
 
-Switching the |product name| on while holding
-the Volume Down key (the one toward the front)
-boots the |product name| into its Recovery Mode. 
-
 Powering Down
-=============
+-------------
 
 To shut down the |product name|, type Chord-p.
 You will get a prompt that says "Power off".
@@ -191,4 +197,8 @@ and, eventually, a forum for customers to share discoveries and ask questions.
 
 We provide customer support for questions that may arise.
 It may be reached by phone at |customer support phone number|.   
+
+You can reread this guide right on the |product name| itself.
+Type Chord-q for a text copy that's in the |product name|,
+or type Chord-q together with dots 7 and 8 for an HTML copy that's on the web.
 
