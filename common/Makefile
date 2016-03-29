@@ -1,7 +1,8 @@
-include ../app.prologue.mk
+include ../setup.mk
+include $(TOP)app.prologue.mk
 
 APPLICATION_NAME = NBP_Common
 PACKAGE_PATH = org.nbp.common
 PLATFORM_NAME = armeabi
 
-include ../app.epilogue.mk
+include $(TOP)app.epilogue.mk

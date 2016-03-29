@@ -1,8 +1,9 @@
-include ../app.prologue.mk
-include ../app.properties.mk
+include ../setup.mk
+include $(TOP)app.prologue.mk
+include $(TOP)app.properties.mk
 
 APPLICATION_NAME = NBP_Editor
 PACKAGE_PATH = org.nbp.editor
 PLATFORM_NAME = armeabi
 
-include ../app.epilogue.mk
+include $(TOP)app.epilogue.mk

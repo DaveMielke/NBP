@@ -1,4 +1,5 @@
-include ../../app.prologue.mk
+include ../../setup.mk
+include $(TOP)app.prologue.mk
 
 APPLICATION_NAME = louis
 PACKAGE_PATH = org.liblouis
@@ -19,4 +20,4 @@ NATIVE_SOURCES += log.c
 NATIVE_SOURCES += translation.c
 NATIVE_SOURCES += louis.c
 
-include ../../app.epilogue.mk
+include $(TOP)app.epilogue.mk
