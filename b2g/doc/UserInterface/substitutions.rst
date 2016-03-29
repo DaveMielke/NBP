@@ -1,4 +1,4 @@
-.. |product name| replace:: B2G
+.. include:: ../substitutions.rst
 .. |user interface| replace:: |product name| User Interface
 
 .. |recommended file picker| replace:: ES File Explorer

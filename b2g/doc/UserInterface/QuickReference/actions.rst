@@ -42,7 +42,7 @@
 .. |DropBelow| replace:: drag to immediately below the current screen element
 .. |DropLeft| replace:: drag to immediately left of the current screen element
 .. |DropRight| replace:: drag to immediately right of the current screen element
-.. |Editor| replace:: go to the NBP editor
+.. |Editor| replace:: go to the |organization acronym| editor
 .. |EMail| replace:: go to the EMail app
 .. |End| replace:: the keyboard End key
 .. |Enter| replace:: the keyboard Enter key
@@ -160,7 +160,7 @@
 .. |TypingStrikeOn| replace:: turn strike-through typing on
 .. |TypingUnderlineOff| replace:: turn underlined typing off
 .. |TypingUnderlineOn| replace:: turn underlined typing on
-.. |UpdateEditor| replace:: update the NBP editor
+.. |UpdateEditor| replace:: update the |organization acronym| editor
 .. |UserManualText| replace:: go to the plain text version of the user interface manual
 .. |UserManualHTML| replace:: go to the HTML version of the user interface manual
 .. |VoiceCommand| replace:: initiate an Android voice command
