@@ -1,11 +1,15 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import android.util.Log;
+
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.graphics.Rect;
 import android.graphics.Point;
 
 public abstract class DragAction extends Action {
+  private final static String LOG_TAG = DragAction.class.getName();
+
   private static Rect fromRegion = null;
 
   private final static AccessibilityNodeInfo getNode () {
@@ -50,21 +54,43 @@ public abstract class DragAction extends Action {
   }
 
   protected final static boolean haveFromRegion () {
-    return fromRegion != null;
+    if (fromRegion != null) return true;
+    ApplicationUtilities.message(R.string.message_drag_none);
+    return false;
   }
 
   private final static boolean dropAt (Point toLocation) {
     Point screenSize = ApplicationContext.getScreenSize();
     Rect screenRegion = new Rect(0, 0, screenSize.x, screenSize.y);
-    if (!screenRegion.contains(toLocation.x, toLocation.y)) return false;
-
     Point fromLocation = getCenter(fromRegion);
-    fromRegion = null;
 
-    return Gesture.drag(
-      fromLocation.x, fromLocation.y,
-      toLocation.x, toLocation.y
-    );
+    if (ApplicationSettings.LOG_ACTIONS) {
+      Log.v(LOG_TAG,
+        String.format(
+          "dragging: [%d,%d] -> [%d,%d]",
+          fromLocation.x, fromLocation.y,
+          toLocation.x, toLocation.y
+        )
+      );
+    }
+
+    if (screenRegion.contains(toLocation.x, toLocation.y)) {
+      fromRegion = null;
+
+      boolean dragged = Gesture.drag(
+        fromLocation.x, fromLocation.y,
+        toLocation.x, toLocation.y
+      );
+
+      if (dragged) {
+        ApplicationUtilities.message(R.string.message_drag_end);
+        return true;
+      }
+    } else {
+      ApplicationUtilities.message(R.string.message_drag_edge);
+    }
+
+    return false;
   }
 
   protected final static boolean dropAt (Rect region) {

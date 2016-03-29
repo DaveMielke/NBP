@@ -5,7 +5,12 @@ import org.nbp.b2g.ui.*;
 public class DragFrom extends DragAction {
   @Override
   public boolean performAction () {
-    return setFromRegion();
+    if (setFromRegion()) {
+      ApplicationUtilities.message(R.string.message_drag_begin);
+      return true;
+    }
+    
+    return false;
   }
 
   public DragFrom (Endpoint endpoint) {
