@@ -13,18 +13,6 @@ bind Dot4+Left BackKey
 bind Dot4+Right RecentApps
 bind Dot4+Center MenuKey
 
-bind Dot5+Center DragFrom
-bind Dot5+Left DragLeft
-bind Dot5+Right DragRight
-bind Dot5+Up DragUp
-bind Dot5+Down DragDown
-
-bind Dot6+Center DropAt
-bind Dot6+Left DropLeft
-bind Dot6+Right DropRight
-bind Dot6+Up DropAbove
-bind Dot6+Down DropBelow
-
 bind Space+Dots1345#n Notifications
 bind Space+Dots123456 HomeKey
 bind Space+Dots1356#z BackKey
@@ -52,9 +40,6 @@ bind Space+Dots2345#t Clock
 bind Space+Dots1246#ed Editor
 bind Space+Dots1456#? Assist
 
-bind Space+Dot8+Dots123456#home AddShortcut
-bind Space+Dot7+Dots123456#home RemoveShortcut
-
 bind Space+Dots234#s,Dot1#a AccessibilitySettings
 bind Space+Dots234#s,Dots12#b BluetoothSettings
 bind Space+Dots234#s,Dots14#c Calendar
@@ -69,6 +54,21 @@ bind Space+Dots234#s,Dots2345#t TextMessaging
 bind Space+Dots234#s,Dots1236#v VoiceCommand
 bind Space+Dots234#s,Dots2456#w WifiSettings
 bind Space+Dots234#s,Dots3456## Calculator
+
+bind Space+Dot8+Dots123456#home AddShortcut
+bind Space+Dot7+Dots123456#home RemoveShortcut
+
+bind Dot5+Center DragFrom
+bind Dot5+Left DragLeft
+bind Dot5+Right DragRight
+bind Dot5+Up DragUp
+bind Dot5+Down DragDown
+
+bind Dot6+Center DropAt
+bind Dot6+Left DropLeft
+bind Dot6+Right DropRight
+bind Dot6+Up DropAbove
+bind Dot6+Down DropBelow
 
 bind Backward+Forward+Space DescribeBuild
 

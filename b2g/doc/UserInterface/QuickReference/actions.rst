@@ -32,6 +32,16 @@
 .. |DeveloperOff| replace:: turn developer mode off
 .. |DeveloperOn| replace:: turn developer mode on
 .. |Dialer| replace:: go to the Dialer (Phone) app
+.. |DragDown| replace:: drag the current screen element downward
+.. |DragFrom| replace:: start a drag of the current screen element
+.. |DragLeft| replace:: drag the current screen element to the left
+.. |DragRight| replace:: drag the current screen element to the right
+.. |DragUp| replace:: drag the current screen element upward
+.. |DropAbove| replace:: x
+.. |DropAt| replace:: x
+.. |DropBelow| replace:: x
+.. |DropLeft| replace:: x
+.. |DropRight| replace:: x
 .. |Editor| replace:: go to the NBP editor
 .. |EMail| replace:: go to the EMail app
 .. |End| replace:: the keyboard End key

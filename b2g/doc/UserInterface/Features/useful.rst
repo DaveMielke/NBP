@@ -89,7 +89,22 @@ When you're finished typing, press the key combination for the shortcut action
 that you'd like to perform (see above). If the characters match the labels of
 more than one application then the list will be presented within a popup
 (see `Popups`_).
-If this happens then navigate to the one you'd like to add and press Center.
+If this happens then navigate to the one you'd like to add or remove,
+and press Center.
+
+Most launchers allow you to organize your home screen
+by dragging the shortcuts on it to new locations.
+Many, including the one that comes with Android, allow you to:
+
+* Drag a shortcut on top of another one in order to
+  create a folder that contains both of them.
+
+* Drag a shortcut on top of a folder in order to add it to that folder.
+
+* Drag a shortcut out of a folder.
+
+See `Dragging Screen Elements`_ for instructions on how to do this
+via the |user interface|.
 
 Builtin Shortcuts
 `````````````````

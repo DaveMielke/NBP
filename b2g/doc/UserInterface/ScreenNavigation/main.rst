@@ -30,4 +30,5 @@ To hold (or long click) the current screen element, press Space+Center.
 .. include:: clipboard.rst
 .. include:: slider.rst
 .. include:: find.rst
+.. include:: drag.rst
 .. include:: keyboard.rst
