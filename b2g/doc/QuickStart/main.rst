@@ -191,8 +191,12 @@ and the |product name| will be shut down.
 Customer Support
 ================
 
-|organization name| will be regularly adding information to our website
-that will include
+|organization name| will be regularly adding information
+to our |product name| web site:
+
+.. parsed-literal:: |product URL|
+
+which includes
 free apps that you can download,
 answers to frequently asked questions,
 and, eventually, a forum for customers to share discoveries and ask questions.
