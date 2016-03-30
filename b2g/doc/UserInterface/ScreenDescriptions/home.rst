@@ -49,7 +49,8 @@ and to then click on that app's shortcut within the opened folder.
 Press Back to close an opened folder without launching an app within it.
 
 In addition to the labels for the shrotcuts that it contains,
-an opened folder also has an input area that contains its current name.
+an opened folder also has an input area (see `Input Areas`_)
+that contains its current name.
 Editing the text within this area renames the folder.
 A newly created folder has no name.
 
@@ -60,5 +61,5 @@ Folder-related operations include:
 
 * Drag a shortcut on top of a folder in order to add it to that folder.
 
-* Drag a shortcut out of a folder.
+* Drag a shortcut out of an opened folder.
 
