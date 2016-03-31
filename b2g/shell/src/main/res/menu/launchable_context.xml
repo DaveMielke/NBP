@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/include_on_screens" android:title="@string/include_on_screens"/>
-  <item android:id="@+id/move_up" android:title="@string/move_up"/>
-  <item android:id="@+id/move_down" android:title="@string/move_down"/>
-</menu>
