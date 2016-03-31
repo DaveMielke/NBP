@@ -1,6 +1,12 @@
 The Home Screen
 ---------------
 
+The home screen is the main Android screen from which apps are launched.
+It's the screen that first comes up after Android has booted,
+and you can always get back to it
+eitehr by pressing Space + Dots123456
+or by pressing Down while holding Dot4.
+
 To add a shortcut to the home screen:
 
 1) Go to the home screen.

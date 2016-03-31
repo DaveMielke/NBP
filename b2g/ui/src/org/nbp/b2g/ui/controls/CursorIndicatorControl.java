@@ -1,4 +1,5 @@
-package org.nbp.b2g.ui;
+package org.nbp.b2g.ui.controls;
+import org.nbp.b2g.ui.*;
 
 public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override

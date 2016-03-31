@@ -5,8 +5,5 @@ set -e
 . ../../properties.sh
 . ../../rst.sh
 
-writeSubstitution "package version" "${versionNumber}"
-writeSubstitution "source revision" "${sourceRevision}"
-writeSubstitution "build time" "${buildDate} ${buildTime} ${buildZone}"
-
+writeCommonSubstitutions
 exit 0
