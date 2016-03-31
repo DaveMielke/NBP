@@ -711,7 +711,7 @@ public abstract class Endpoint {
 
   private abstract class Panner {
     protected abstract boolean moveDisplay (int size);
-    protected abstract int getInputLeaveMessage ();
+    protected abstract int getLeaveMessage ();
     protected abstract Class<? extends Action> getLeaveAction ();
 
     public final boolean pan () {
@@ -722,7 +722,7 @@ public abstract class Endpoint {
         if (moveDisplay(size)) return write();
 
         if (hasSoftEdges()) {
-          ApplicationUtilities.message(getInputLeaveMessage());
+          ApplicationUtilities.message(getLeaveMessage());
           return false;
         }
       }
@@ -755,7 +755,7 @@ public abstract class Endpoint {
       }
 
       @Override
-      protected int getInputLeaveMessage () {
+      protected int getLeaveMessage () {
         return isInputArea()?
                R.string.message_start_of_input_area:
                R.string.message_start_of_text_area;
@@ -796,7 +796,7 @@ public abstract class Endpoint {
       }
 
       @Override
-      protected int getInputLeaveMessage () {
+      protected int getLeaveMessage () {
         return isInputArea()?
                R.string.message_end_of_input_area:
                R.string.message_end_of_text_area;
