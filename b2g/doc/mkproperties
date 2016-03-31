@@ -1,9 +1,0 @@
-#!/bin/sh
-set -e
-
-. ../application.sh
-. ../../properties.sh
-. ../../rst.sh
-
-writeCommonSubstitutions
-exit 0

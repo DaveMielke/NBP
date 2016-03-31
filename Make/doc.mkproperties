@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+. "${0%/*}/prologue.sh"
+. "${programDirectory}/properties.sh"
+. "${programDirectory}/rst.sh"
+
+writeCommonSubstitutions
+exit 0

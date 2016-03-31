@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-. ../../resources.sh
+. ../../Make/resources.sh
 writeResourcesPrologue
 
 sed -n \

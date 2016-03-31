@@ -2,5 +2,5 @@ BUILD_PROPERTIES = properties.rst
 LOCAL_FILES += $(BUILD_PROPERTIES)
 properties: $(BUILD_PROPERTIES)
 $(BUILD_PROPERTIES):
-	./mkproperties >$@
+	$(TOP)doc.mkproperties >$@
 
