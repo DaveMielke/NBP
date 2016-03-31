@@ -57,12 +57,15 @@ The Delete key is Space+d (dots 145).
 Panning within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Forward and Backward keys pan through an input area in the expected way,
-but won't leave it. The Forward key pans to the right, and, at the end of each
-line, wraps to the start of the next one. The Backward key pans to the left,
-and, at the start of each line, wraps to the end of the previous one. See
-`Leaving the Current Screen Element`_ for how to move to another screen
-element.
+The Forward and Backward keys pan through an input area in the expected way:
+
+* The Forward key pans to the right, and, at the end of each line,
+  wraps to the start of the next one. At the end of the last line
+  it moves to the start of the next screen element.
+  
+* The Backward key pans to the left, and, at the start of each line,
+  wraps to the end of the previous one. At the start of the first line
+  it moves to the start of the previous screen element.
 
 Pressing Space+Dots17 pans the braille display such that
 its first character corresponds to the cursor's location,

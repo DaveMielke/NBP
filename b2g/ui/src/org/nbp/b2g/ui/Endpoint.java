@@ -455,7 +455,7 @@ public abstract class Endpoint {
   }
 
   public final boolean hasSoftEdges () {
-    return softEdges || isInputArea();
+    return softEdges;
   }
 
   public final CharSequence getLineText () {
@@ -715,21 +715,18 @@ public abstract class Endpoint {
     protected abstract Class<? extends Action> getLeaveAction ();
 
     public final boolean pan () {
-      boolean hasMoved;
-
       int size = Devices.braille.get().getLength();
       if (size == 0) return false;
 
       synchronized (Endpoint.this) {
-        if (!(hasMoved = moveDisplay(size))) {
-          if (hasSoftEdges()) {
-            ApplicationUtilities.message(getInputLeaveMessage());
-            return false;
-          }
+        if (moveDisplay(size)) return write();
+
+        if (hasSoftEdges()) {
+          ApplicationUtilities.message(getInputLeaveMessage());
+          return false;
         }
       }
 
-      if (hasMoved) return write();
       return performAction(getLeaveAction());
     }
   }

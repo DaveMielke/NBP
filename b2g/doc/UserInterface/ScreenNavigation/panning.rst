@@ -35,9 +35,6 @@ start of the next (or previous) screen element:
 
 * Long press Forward (or Backward). See `Long Press Mode`_.
 
-One of these methods must also be used in order to leave an input area (see
-`Input Areas`_).
-
 Reverse Panning Mode
 ~~~~~~~~~~~~~~~~~~~~
 
