@@ -1,8 +1,8 @@
 include ../setup.mk
-include $(TOP)app.prologue.mk
-include $(TOP)app.properties.mk
+include $(BUILD_DIRECTORY)app.prologue.mk
+include $(BUILD_DIRECTORY)app.properties.mk
 
 APPLICATION_NAME = NBP_Editor
 PACKAGE_PATH = org.nbp.editor
 
-include $(TOP)app.epilogue.mk
+include $(BUILD_DIRECTORY)app.epilogue.mk

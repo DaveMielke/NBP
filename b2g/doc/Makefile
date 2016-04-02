@@ -1,8 +1,8 @@
 include ../../setup.mk
-include $(TOP)doc.prologue.mk
-include $(TOP)doc.properties.mk
+include $(BUILD_DIRECTORY)doc.prologue.mk
+include $(BUILD_DIRECTORY)doc.properties.mk
 
 DOCUMENT_NAMES += QuickStart
 DOCUMENT_NAMES += UserInterface
 
-include $(TOP)doc.epilogue.mk
+include $(BUILD_DIRECTORY)doc.epilogue.mk
