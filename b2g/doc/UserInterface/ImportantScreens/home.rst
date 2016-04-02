@@ -27,7 +27,7 @@ the |user interface| supports the following home screen management operations:
      1) Go to the home screen.
      2) Open the ``Apps`` drawer (on the favourites bar).
 
-  2) Navigate to the label of the application that you'd like to add.
+  2) Navigate to the label of the app that you'd like to add.
 
   3) Press Space+Dot8+home (dots 123456).
 
@@ -35,20 +35,20 @@ the |user interface| supports the following home screen management operations:
 
   1) Go to the home screen.
 
-  2) Navigate to the label of the application that you'd like to remove.
+  2) Navigate to the label of the app that you'd like to remove.
 
   3) Press Space+Dot7+home (dots 123456).
 
-If you'd rather not search for the application's label then you can
+If you'd rather not search for the app's label then you can
 find an empty line within any input area (see `Input Areas`_) and type it.
 You only need to type enough characters to uniquely identify it
-among all of the applications that are installed on your |product name|.
+among all of the apps that are currently installed on your |product name|.
 Letters can be in either lower or upper case,
 and the characters don't need to be at the beginning or end of the label.
 
 When you're finished typing, press the key combination for the shortcut action
 that you'd like to perform (see above). If the characters match the labels of
-more than one application then the list will be presented within a popup
+more than one app then the list will be presented within a popup
 (see `Popups`_).
 If this happens then navigate to the one you'd like to add or remove,
 and press Center.
@@ -66,11 +66,11 @@ has a ``Search`` icon at the very top
 and a ``Voice Search`` icon at the very bottom.
 On an actual screen,
 there's an input area at the top that contains the text being searched for,
-and the space between it and the ``Voice Search`` icon at the bottom
+and the space between it and the ``Voice Search`` icon (at the bottom)
 is where the search results appear.
 
 The favourites bar (at the right) is
-a vertically oriented set of shortcuts and/or folders.
+a vertically-oriented set of shortcuts and/or folders.
 It also always contains the ``Apps`` drawer in the middle, which, when clicked,
 brings up an alphabetically sorted list of all of the apps
 that are currently installed on the device.
@@ -87,8 +87,11 @@ A shortcut can also be dragged to, from, or along the favourites bar.
 See `Dragging Screen Elements`_ for instructions on how to do this
 via the |user interface|.
 
+Folders
+```````
+
 In addition to simply moving shortcuts around, you also can create folders
-so that shortcuts can be organized into meaningful groups.
+so that the shortcuts can be organized into meaningful groups.
 In order to launch an app that's within a folder,
 you need to first click on the folder to open it,
 and to then click on that app's shortcut within the opened folder.
@@ -101,12 +104,54 @@ A newly created folder has no name.
 
 Folder-related operations include:
 
-* Drag a shortcut on top of another one in order to
-  create a folder that contains both of them.
+* Dragging a shortcut on top of another one
+  creates a new folder that contains both of them.
 
-* Drag a shortcut on top of a folder in order to add it to that folder.
+* Dragging a shortcut on top of a folder adds it to that folder.
 
-* Drag a shortcut out of an opened folder.
+* Dragging a shortcut within an opened folder reorganizes that folder.
+
+* Dragging a shortcut out of an opened folder removes it from that folder.
+
+Keyboard Navigation
+```````````````````
+
+`The Enter Key`_
+  Launch the current app, open the current folder, etc.
+
+`The Cursor Left Key`_
+  Go to the previous item on the current line.
+  If on the first item of a line
+  then go to the last one on the previous line.
+  If on the first item on a home screen
+  then go to the last one on the previous home screen.
+
+`The Cursor Right Key`_
+  Go to the next item on the current line.
+  If on the last item of a line
+  then go to the first one on the next line.
+  If on the last item on a home screen
+  then go to the first one on the next home screen.
+
+`The Cursor Up Key`_
+  Go to the nearest item on the previous line.
+
+`The Cursor Down Key`_
+  Go to the nearest item on the next line.
+
+`The Page Up Key`_
+  Go to the first item on the nearest previous home screen that isn't empty.
+  If on the first non-empty home screen then go to its first item.
+
+`The Page Down Key`_
+  Go to the first item on the nearest next home screen that isn't empty.
+  If on the last non-empty home screen then go to its last item.
+
+`The Home Key`_
+  Go to the first item on the current home screen.
+
+`The End Key`_
+  Go to the last item on the current home screen.
 
 Initial |product name| Home Screen Content
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
