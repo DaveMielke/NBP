@@ -4,7 +4,7 @@ The Home Screen
 The home screen is the main Android screen from which apps are launched.
 It's the screen that first comes up after Android has booted,
 and you can always get back to it
-eitehr by pressing Space + Dots123456
+either by pressing Space + Dots123456
 or by pressing Down while holding Dot4.
 
 The home screen is managed by a special kind of app known as a launcher.
@@ -12,6 +12,9 @@ The |product name| is initially configured to use
 `The Standard Android Launcher`_ for home screen management.
 This, as is true for most Android capabilities, can be changed
 but that's beyond the scope of this document.
+
+Adding and Removing Shortcuts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Regardless of which launcher is being used,
 the |user interface| supports the following home screen management operations:
@@ -22,7 +25,7 @@ the |user interface| supports the following home screen management operations:
      To do this via `The Standard Android Launcher`_:
 
      1) Go to the home screen.
-     2) Click on ``Apps``.
+     2) Open the ``Apps`` drawer (on the favourites bar).
 
   2) Navigate to the label of the application that you'd like to add.
 
@@ -53,20 +56,45 @@ and press Center.
 The Standard Android Launcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The standard Android launcher allows you to organize your home screen
-by dragging the shortcuts on it to new locations.
+The standard Android launcher allows you to switch between five home screens. 
+Each of them has a search area at the left, a favourites bar at the right,
+and a large, customizable area in the middle.
+The default home screen is the middle one [Home Screen 3].
+
+The search area (at the left), as it's rendered in braille,
+has a ``Search`` icon at the very top
+and a ``Voice Search`` icon at the very bottom.
+On an actual screen,
+there's an input area at the top that contains the text being searched for,
+and the space between it and the ``Voice Search`` icon at the bottom
+is where the search results appear.
+
+The favourites bar (at the right) is
+a vertically oriented set of shortcuts and/or folders.
+It also always contains the ``Apps`` drawer in the middle, which, when clicked,
+brings up an alphabetically sorted list of all of the apps
+that are currently installed on the device.
+Up to two shortcuts and/or folders may be above the ``Apps`` drawer,
+and up to two may be below it.
+The favourites bar should contain your most frequently used apps because,
+although it's customizable, it's the same on all of the home screens.
+
+The customizable area (in the middle) occupies most of each home screen.
+In addition to `Adding and Removing Shortcuts`_,
+you can also reorganize this area
+by dragging the shortcuts within it to new locations.
+A shortcut can also be dragged to, from, or along the favourites bar.
 See `Dragging Screen Elements`_ for instructions on how to do this
 via the |user interface|.
 
-In addition to simply moving shortcuts around, it also allows you
-to create folders so that shrotcuts can be organized into meaningful groups.
+In addition to simply moving shortcuts around, you also can create folders
+so that shortcuts can be organized into meaningful groups.
 In order to launch an app that's within a folder,
 you need to first click on the folder to open it,
 and to then click on that app's shortcut within the opened folder.
 Press Back to close an opened folder without launching an app within it.
 
-In addition to the labels for the shrotcuts that it contains,
-an opened folder also has an input area (see `Input Areas`_)
+An opened folder also has an input area (see `Input Areas`_)
 that contains its current name.
 Editing the text within this area renames the folder.
 A newly created folder has no name.
@@ -79,4 +107,23 @@ Folder-related operations include:
 * Drag a shortcut on top of a folder in order to add it to that folder.
 
 * Drag a shortcut out of an opened folder.
+
+Initial |product name| Home Screen Content
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The favourites bar contains (from top to bottom):
+
+1) The Chrome web browser.
+2) The NBP editor.
+3) The Apps drawer.
+4) The Google People (Contacts) app.
+5) The Google Calendar app.
+
+The customizable area of home screen 3 contains:
+
+* A clock (in the middle at the top).
+* ES File Explorer (toward the left at the bottom).
+* The Android settings app (toward the right at the bottom).
+
+The customizable areas of the other home screens are empty.
 
