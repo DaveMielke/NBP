@@ -1,5 +1,5 @@
 #key.store = /path/to/keystore
-key.store = ../ks/B2G-RevC.jks
+key.store = ../security/B2G-RevC.jks
 
 #key.store.password = password-for-keystore
 
