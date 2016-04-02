@@ -9,7 +9,7 @@ or by pressing Down while holding Dot4.
 
 The home screen is managed by a special kind of app known as a launcher.
 The |product name| is initially configured to use
-`The Standard Android Launcher`_ for home screen management.
+`The Standard Android Launcher`_.
 This, as is true for most Android capabilities, can be changed
 but that's beyond the scope of this document.
 
@@ -27,7 +27,7 @@ the |user interface| supports the following home screen management operations:
      1) Go to the home screen.
      2) Open the ``Apps`` drawer (on the favourites bar).
 
-  2) Navigate to the label of the app that you'd like to add.
+  2) Navigate to the app that you'd like to add.
 
   3) Press Space+Dot8+home (dots 123456).
 
@@ -35,21 +35,21 @@ the |user interface| supports the following home screen management operations:
 
   1) Go to the home screen.
 
-  2) Navigate to the label of the app that you'd like to remove.
+  2) Navigate to the shortcut that you'd like to remove.
 
   3) Press Space+Dot7+home (dots 123456).
 
-If you'd rather not search for the app's label then you can
+If you'd rather not search for the app then
 find an empty line within any input area (see `Input Areas`_) and type it.
 You only need to type enough characters to uniquely identify it
-among all of the apps that are currently installed on your |product name|.
+among all of the apps that are currently installed on the |product name|.
 Letters can be in either lower or upper case,
-and the characters don't need to be at the beginning or end of the label.
+and they don't need to be at the beginning or end of the name.
 
-When you're finished typing, press the key combination for the shortcut action
-that you'd like to perform (see above). If the characters match the labels of
-more than one app then the list will be presented within a popup
-(see `Popups`_).
+When you're finished typing, press the key combination
+for the shortcut action that you'd like to perform (see above).
+If the characters match more than one app
+then the list will be presented within a popup (see `Popups`_).
 If this happens then navigate to the one you'd like to add or remove,
 and press Center.
 
@@ -91,7 +91,7 @@ A shortcut can also be dragged to, from, or along the favourites bar.
 Folders
 ```````
 
-In addition to simply moving shortcuts around, you also can create folders
+In addition to moving shortcuts around, you can also create folders
 so that the shortcuts can be organized into meaningful groups.
 In order to launch an app that's within a folder,
 you need to first click on the folder to open it,
@@ -123,21 +123,22 @@ Keyboard Navigation
 ```````````````````
 
 `The Enter Key`_
-  Launch the current app, open the current folder, etc.
+  If the current item is a shortcut then launch the app.
+  If it's a folder then open it.
 
 `The Cursor Left Key`_
   Go to the previous item on the current line.
   If on the first item of a line
   then go to the last one on the previous line.
-  If on the first item on a home screen
-  then go to the last one on the previous home screen.
+  If on the first item on a home screen then go to the last one
+  on the nearest previous home screen that isn't empty.
 
 `The Cursor Right Key`_
   Go to the next item on the current line.
   If on the last item of a line
   then go to the first one on the next line.
-  If on the last item on a home screen
-  then go to the first one on the next home screen.
+  If on the last item on a home screen then go to the first one
+  on the nearest next home screen that isn't empty.
 
 `The Cursor Up Key`_
   Go to the nearest item on the previous line.
@@ -162,7 +163,7 @@ Keyboard Navigation
 Initial |product name| Home Screen Content
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The favourites bar contains (from top to bottom):
+The favourites bar, from top to bottom, initially contains:
 
 1) The Chrome web browser.
 2) The NBP editor.
@@ -170,11 +171,11 @@ The favourites bar contains (from top to bottom):
 4) The Google People (Contacts) app.
 5) The Google Calendar app.
 
-The customizable area of home screen 3 contains:
+The customizable area of Home Screen 3 initially contains:
 
-* A clock (in the middle at the top).
-* ES File Explorer (toward the left at the bottom).
-* The Android settings app (toward the right at the bottom).
+* A clock (in the middle, at the top).
+* ES File Explorer (toward the left, at the bottom).
+* The Android Settings app (toward the right, at the bottom).
 
-The customizable areas of the other home screens are empty.
+The customizable areas of the other home screens are initially empty.
 
