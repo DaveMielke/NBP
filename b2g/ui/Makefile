@@ -7,8 +7,8 @@ PACKAGE_PATH = org.nbp.b2g.ui
 
 ACTION_SUMMARIES = res/values/actions.xml
 LOCAL_FILES += $(ACTION_SUMMARIES)
-actions: $(ACTION_SUMMARIES)
-$(ACTION_SUMMARIES)::
+action-summaries: $(ACTION_SUMMARIES)
+$(ACTION_SUMMARIES):
 	./mkactions >$@
 
 NATIVE_SOURCES += utils.h
@@ -21,10 +21,11 @@ NATIVE_SOURCES += metec_flat20_ioctl.h
 NATIVE_SOURCES += brldev.c
 
 REQUIRED_TARGETS += documentation
+DOCUMENTATION_DIRECTORY = ../doc
 documentation:
-	$(MAKE) -C ../doc all
+	$(MAKE) -C $(DOCUMENTATION_DIRECTORY) all
 
 clean::
-	$(MAKE) -C ../doc $@
+	$(MAKE) -C $(DOCUMENTATION_DIRECTORY) $@
 
 include $(BUILD_DIRECTORY)app.epilogue.mk
