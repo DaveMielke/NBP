@@ -3,6 +3,11 @@ ANDROID_BUILD_MODE := $(strip $(if $(wildcard $(SIGNING_PROPERTIES_FILE)), relea
 show-build-mode:
 	@echo $(ANDROID_BUILD_MODE)
 
+ifneq ($(words $(PROJECT_LIBRARIES)),0)
+$(PROJECT_LIBRARIES): FORCE
+	$(MAKE) -C $@ local-files native
+endif
+
 ifeq ($(words $(wildcard $(ANDROID_NATIVE_DIRECTORY))),0)
 native:
 	@echo no native code
@@ -18,7 +23,7 @@ local-files: $(LOCAL_FILES)
 
 ANDROID_PROJECT_PACKAGE = $(ANDROID_BINARIES_DIRECTORY)/$(APPLICATION_NAME)-$(ANDROID_BUILD_MODE).apk
 apk:: $(ANDROID_PROJECT_PACKAGE)
-$(ANDROID_PROJECT_PACKAGE): native local-files $(ANDROID_FILES)
+$(ANDROID_PROJECT_PACKAGE): native local-files $(PROJECT_FILES) $(PROJECT_LIBRARIES)
 	ant $(ANDROID_BUILD_MODE)
 
 clean::

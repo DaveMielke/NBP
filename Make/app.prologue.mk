@@ -1,3 +1,5 @@
+PLATFORM_NAME = armeabi
+
 all: apk
 
 ANDROID_NATIVE_DIRECTORY = jni
@@ -11,7 +13,8 @@ ANDROID_LOCAL_PROPERTIES = local.properties
 $(ANDROID_LOCAL_PROPERTIES): FORCE
 	android update project --path .
 
-NATIVE_SOURCES := Android.mk
 LOCAL_FILES := $(ANDROID_LOCAL_PROPERTIES)
-ANDROID_FILES := AndroidManifest.xml build.xml ant.properties project.properties
+PROJECT_FILES := AndroidManifest.xml build.xml ant.properties project.properties
+PROJECT_LIBRARIES := 
+NATIVE_SOURCES := Android.mk
 
