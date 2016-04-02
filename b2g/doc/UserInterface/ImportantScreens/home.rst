@@ -59,7 +59,13 @@ The Standard Android Launcher
 The standard Android launcher allows you to switch between five home screens. 
 Each of them has a search area at the left, a favourites bar at the right,
 and a large, customizable area in the middle.
+
 The default home screen is the middle one [Home Screen 3].
+Pressing Android's home key
+(either Space + Dots123456 or pressing Down while holding Dot4)
+when on any other home screen goes to this one.
+In other words, pressing Android's home key twice
+guarantees that you're on the default home screen.
 
 The search area (at the left), as it's rendered in braille,
 has a ``Search`` icon at the very top
@@ -71,7 +77,7 @@ is where the search results appear.
 
 The favourites bar (at the right) is
 a vertically-oriented set of shortcuts and/or folders.
-It also always contains the ``Apps`` drawer in the middle, which, when clicked,
+It also contains the ``Apps`` drawer which, when clicked,
 brings up an alphabetically sorted list of all of the apps
 that are currently installed on the device.
 Up to two shortcuts and/or folders may be above the ``Apps`` drawer,
@@ -80,6 +86,11 @@ The favourites bar should contain your most frequently used apps because,
 although it's customizable, it's the same on all of the home screens.
 
 The customizable area (in the middle) occupies most of each home screen.
+A new shortcut is added to the customizable area of the home screen
+nearest to the default one that isn't full.
+When there's a choice, preference is given
+to the home screen with the higher number.
+
 In addition to `Adding and Removing Shortcuts`_,
 you can also reorganize this area
 by dragging the shortcuts within it to new locations.
@@ -128,17 +139,13 @@ Keyboard Navigation
 
 `The Cursor Left Key`_
   Go to the previous item on the current line.
-  If on the first item of a line
-  then go to the last one on the previous line.
-  If on the first item on a home screen then go to the last one
-  on the nearest previous home screen that isn't empty.
+  If on the first item of a line then go to the last item on the same line
+  of the nearest previous home screen that isn't empty.
 
 `The Cursor Right Key`_
   Go to the next item on the current line.
-  If on the last item of a line
-  then go to the first one on the next line.
-  If on the last item on a home screen then go to the first one
-  on the nearest next home screen that isn't empty.
+  If on the last item of a line then go to the first item on the same line
+  of the nearest next home screen that isn't empty.
 
 `The Cursor Up Key`_
   Go to the nearest item on the previous line.
