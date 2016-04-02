@@ -83,9 +83,10 @@ The customizable area (in the middle) occupies most of each home screen.
 In addition to `Adding and Removing Shortcuts`_,
 you can also reorganize this area
 by dragging the shortcuts within it to new locations.
-A shortcut can also be dragged to, from, or along the favourites bar.
 See `Dragging Screen Elements`_ for instructions on how to do this
 via the |user interface|.
+
+A shortcut can also be dragged to, from, or along the favourites bar.
 
 Folders
 ```````
@@ -112,6 +113,11 @@ Folder-related operations include:
 * Dragging a shortcut within an opened folder reorganizes that folder.
 
 * Dragging a shortcut out of an opened folder removes it from that folder.
+
+A folder can be dragged within the customizable area,
+as well as to, from, or along the favourites bar.
+
+A folder can only contain shortcuts - it can't contain a folder.
 
 Keyboard Navigation
 ```````````````````
