@@ -35,7 +35,7 @@ runApplicationScript() {
     directory="${directory}/.."
   done
 
-  . "${script}"
+  . "${path}"
 }
 runApplicationScript
 
