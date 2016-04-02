@@ -7,18 +7,34 @@ and you can always get back to it
 eitehr by pressing Space + Dots123456
 or by pressing Down while holding Dot4.
 
-To add a shortcut to the home screen:
+The home screen is managed by a special kind of app known as a launcher.
+The |product name| is initially configured to use
+`The Standard Android Launcher`_ for home screen management.
+This, as is true for most Android capabilities, can be changed
+but that's beyond the scope of this document.
 
-1) Go to the home screen.
-2) Click on ``Apps``.
-3) Navigate to the label of the application that you'd like to add.
-4) Press Space+Dot8+home (dots 123456).
+Regardless of which launcher is being used,
+the |user interface| supports the following home screen management operations:
 
-To remove a shortcut from the home screen:
+* To add a shortcut to the home screen:
 
-1) Go to the home screen.
-2) Navigate to the label of the application that you'd like to remove.
-3) Press Space+Dot7+home (dots 123456).
+  1) Go to a list of all the apps currently installed on the |product name|.
+     To do this via `The Standard Android Launcher`_:
+
+     1) Go to the home screen.
+     2) Click on ``Apps``.
+
+  2) Navigate to the label of the application that you'd like to add.
+
+  3) Press Space+Dot8+home (dots 123456).
+
+* To remove a shortcut from the home screen:
+
+  1) Go to the home screen.
+
+  2) Navigate to the label of the application that you'd like to remove.
+
+  3) Press Space+Dot7+home (dots 123456).
 
 If you'd rather not search for the application's label then you can
 find an empty line within any input area (see `Input Areas`_) and type it.
@@ -36,11 +52,6 @@ and press Center.
 
 The Standard Android Launcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The |user interface| is initially configured to use
-the standard Android launcher for home screen management.
-This, as is true for most Android capabilities, can be changed
-but that's beyond the scope of this document.
 
 The standard Android launcher allows you to organize your home screen
 by dragging the shortcuts on it to new locations.
