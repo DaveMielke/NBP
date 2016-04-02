@@ -1,1 +1,1 @@
-TOP := $(dir $(lastword $(MAKEFILE_LIST)))Make/
+TOP := $(dir $(lastword $(MAKEFILE_LIST)))build/
