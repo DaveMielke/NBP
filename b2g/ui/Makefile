@@ -20,7 +20,8 @@ NATIVE_SOURCES += kbdmon.c
 NATIVE_SOURCES += metec_flat20_ioctl.h
 NATIVE_SOURCES += brldev.c
 
-apk::
+REQUIRED_TARGETS += documentation
+documentation:
 	$(MAKE) -C ../doc all
 
 clean::

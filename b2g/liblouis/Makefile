@@ -3,7 +3,6 @@ include $(BUILD_DIRECTORY)app.prologue.mk
 
 APPLICATION_NAME = louis
 PACKAGE_PATH = org.liblouis
-PLATFORM_NAME = armeabi
 
 NATIVE_SOURCES += config.h
 NATIVE_SOURCES += liblouis.h

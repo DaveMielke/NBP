@@ -3,31 +3,41 @@ ANDROID_BUILD_MODE := $(strip $(if $(wildcard $(SIGNING_PROPERTIES_FILE)), relea
 show-build-mode:
 	@echo $(ANDROID_BUILD_MODE)
 
-PROJECT_LIBRARIES := $(shell sed -n -e 's/^ *android\.library\.reference\.[1-9][0-9]* *= *//p' <project.properties)
-show-library-projects:
-	@echo $(PROJECT_LIBRARIES)
+local-files: $(LOCAL_FILES)
+REQUIRED_TARGETS += local-files
 
-ifneq ($(words $(PROJECT_LIBRARIES)),0)
-$(PROJECT_LIBRARIES): FORCE
-	$(MAKE) -C $@ local-files native
+show-local-files:
+	@echo $(LOCAL_FILES)
+
+LIBRARY_PROJECTS := $(shell sed -n -e 's/^ *android\.library\.reference\.[1-9][0-9]* *= *//p' <project.properties)
+show-library-projects:
+	@echo $(LIBRARY_PROJECTS)
+
+ifneq ($(words $(LIBRARY_PROJECTS)),0)
+library-projects: $(LIBRARY_PROJECTS)
+REQUIRED_TARGETS += library-projects
+
+$(LIBRARY_PROJECTS): FORCE
+	$(MAKE) -C $@ required-targets
 endif
 
-ifeq ($(words $(wildcard $(ANDROID_NATIVE_DIRECTORY))),0)
-native:
-	@echo no native code
-else
-ANDROID_NATIVE_SOURCES := $(NATIVE_SOURCES:%=$(ANDROID_NATIVE_DIRECTORY)/%)
+ifneq ($(words $(wildcard $(ANDROID_NATIVE_DIRECTORY))),0)
 ANDROID_NATIVE_LIBRARY = $(ANDROID_PLATFORM_DIRECTORY)/lib$(APPLICATION_NAME).so
-native: $(ANDROID_NATIVE_LIBRARY)
+native-library: $(ANDROID_NATIVE_LIBRARY)
+REQUIRED_TARGETS += native-library
+
+ANDROID_NATIVE_SOURCES := $(NATIVE_SOURCES:%=$(ANDROID_NATIVE_DIRECTORY)/%)
 $(ANDROID_NATIVE_LIBRARY): $(ANDROID_NATIVE_SOURCES)
 	ndk-build
 endif
 
-local-files: $(LOCAL_FILES)
+required-targets: $(REQUIRED_TARGETS)
+show-required-targets:
+	@echo $(REQUIRED_TARGETS)
 
 ANDROID_PROJECT_PACKAGE = $(ANDROID_BINARIES_DIRECTORY)/$(APPLICATION_NAME)-$(ANDROID_BUILD_MODE).apk
-apk:: $(ANDROID_PROJECT_PACKAGE)
-$(ANDROID_PROJECT_PACKAGE): native local-files $(PROJECT_FILES) $(PROJECT_LIBRARIES)
+apk: $(ANDROID_PROJECT_PACKAGE)
+$(ANDROID_PROJECT_PACKAGE): required-targets $(PROJECT_FILES)
 	ant $(ANDROID_BUILD_MODE)
 
 clean::
