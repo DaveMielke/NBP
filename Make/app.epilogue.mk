@@ -3,6 +3,10 @@ ANDROID_BUILD_MODE := $(strip $(if $(wildcard $(SIGNING_PROPERTIES_FILE)), relea
 show-build-mode:
 	@echo $(ANDROID_BUILD_MODE)
 
+PROJECT_LIBRARIES := $(shell sed -n -e 's/^ *android\.library\.reference\.[1-9][0-9]* *= *//p' <project.properties)
+show-library-projects:
+	@echo $(PROJECT_LIBRARIES)
+
 ifneq ($(words $(PROJECT_LIBRARIES)),0)
 $(PROJECT_LIBRARIES): FORCE
 	$(MAKE) -C $@ local-files native

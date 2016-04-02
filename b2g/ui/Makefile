@@ -11,9 +11,6 @@ actions: $(ACTION_SUMMARIES)
 $(ACTION_SUMMARIES)::
 	./mkactions >$@
 
-PROJECT_LIBRARIES += ../liblouis
-PROJECT_LIBRARIES += ../../common
-
 NATIVE_SOURCES += utils.h
 NATIVE_SOURCES += utils.c
 NATIVE_SOURCES += fwver.c
