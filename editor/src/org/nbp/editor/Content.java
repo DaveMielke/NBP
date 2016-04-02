@@ -106,8 +106,9 @@ public abstract class Content {
 
   static {
     DEFAULT_FORMAT = addFormat(TextOperations.class, R.string.format_name_txt, ".txt");
-    addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brf");
+
     addFormat(ASCIIBrailleOperations.class, R.string.format_name_brl, ".brl");
+    addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brf");
 
     addFormat(ODTOperations.class, R.string.format_name_odt, ".odt");
     addFormat(RTFOperations.class, R.string.format_name_rtf, ".rtf");
