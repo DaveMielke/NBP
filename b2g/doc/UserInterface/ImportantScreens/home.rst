@@ -25,7 +25,7 @@ the |user interface| supports the following home screen management operations:
      To do this via `The Standard Android Launcher`_:
 
      1) Go to the home screen.
-     2) Open the ``Apps`` drawer (on the favourites bar).
+     2) Open the ``Apps`` drawer (on the `favourites bar`_).
 
   2) Navigate to the app that you'd like to add.
 
@@ -57,8 +57,9 @@ The Standard Android Launcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The standard Android launcher allows you to switch between five home screens. 
-Each of them has a search area at the left, a favourites bar at the right,
-and a large, customizable area in the middle.
+Each of them has a `search area`_ at the left,
+a `favourites bar`_ at the right,
+and a large, `customizable area`_ in the middle.
 
 The default home screen is the middle one [Home Screen 3].
 Pressing Android's home key
@@ -67,6 +68,8 @@ when on any other home screen goes to this one.
 In other words, pressing Android's home key twice
 guarantees that you're on the default home screen.
 
+.. _search area:
+
 The search area (at the left), as it's rendered in braille,
 has a ``Search`` icon at the very top
 and a ``Voice Search`` icon at the very bottom.
@@ -74,6 +77,8 @@ On an actual screen,
 there's an input area at the top that contains the text being searched for,
 and the space between it and the ``Voice Search`` icon (at the bottom)
 is where the search results appear.
+
+.. _favourites bar:
 
 The favourites bar (at the right) is
 a vertically-oriented set of shortcuts and/or folders.
@@ -84,6 +89,8 @@ Up to two shortcuts and/or folders may be above the ``Apps`` drawer,
 and up to two may be below it.
 The favourites bar should contain your most frequently used apps because,
 although it's customizable, it's the same on all of the home screens.
+
+.. _customizable area:
 
 The customizable area (in the middle) occupies most of each home screen.
 A new shortcut is added to the customizable area of the home screen
@@ -97,7 +104,7 @@ by dragging the shortcuts within it to new locations.
 See `Dragging Screen Elements`_ for instructions on how to do this
 via the |user interface|.
 
-A shortcut can also be dragged to, from, or along the favourites bar.
+A shortcut can also be dragged to, from, or along the `favourites bar`_.
 
 Folders
 ```````
@@ -125,8 +132,8 @@ Folder-related operations include:
 
 * Dragging a shortcut out of an opened folder removes it from that folder.
 
-A folder can be dragged within the customizable area,
-as well as to, from, or along the favourites bar.
+A folder can be dragged within the `customizable area`_,
+as well as to, from, or along the `favourites bar`_.
 
 A folder can only contain shortcuts - it can't contain a folder.
 
@@ -170,7 +177,7 @@ Keyboard Navigation
 Initial |product name| Home Screen Content
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The favourites bar, from top to bottom, initially contains:
+The `favourites bar`_, from top to bottom, initially contains:
 
 1) The Chrome web browser.
 2) The NBP editor.
@@ -178,7 +185,7 @@ The favourites bar, from top to bottom, initially contains:
 4) The Google People (Contacts) app.
 5) The Google Calendar app.
 
-The customizable area of Home Screen 3 initially contains:
+The `customizable area`_ of Home Screen 3 initially contains:
 
 * A clock (in the middle, at the top).
 * ES File Explorer (toward the left, at the bottom).
