@@ -10,5 +10,5 @@
   "Backward+Dots456","|ScrollBackward|"
   "Backward+Dots568","|ScrollForward|"
   "Backward+Dots48","|SwitchLauncher|"
-  "Space+Dots78+Dots1246#ed","|UpdateEditor|"
+  "Space+Dots78+Dots1246 (ed)","|UpdateEditor|"
 
