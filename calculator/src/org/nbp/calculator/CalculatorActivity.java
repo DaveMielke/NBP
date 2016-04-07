@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 import org.nbp.common.CommonActivity;
+import org.nbp.common.AlertDialogBuilder;
 
 import android.util.Log;
 
@@ -42,19 +43,11 @@ public class CalculatorActivity extends CommonActivity {
     return ((AlertDialog)dialog).findViewById(id);
   }
 
-  private final AlertDialog.Builder newAlertDialogBuilder (Integer... subtitles) {
-    StringBuilder title = new StringBuilder();
-    title.append(getString(R.string.app_name));
-
-    for (Integer subtitle : subtitles) {
-      title.append(" - ");
-      title.append(getString(subtitle));
-    }
-
-    return new AlertDialog.Builder(this)
-                          .setTitle(title.toString())
-                          .setNegativeButton(R.string.button_cancel, null)
-                          .setCancelable(true);
+  private final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
+    return new AlertDialogBuilder(this, subtitles)
+              .setNegativeButton(R.string.button_cancel, null)
+              .setCancelable(true)
+              ;
   }
 
   private final void setClickListener (int id, View.OnClickListener listener) {

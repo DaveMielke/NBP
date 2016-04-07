@@ -3,6 +3,7 @@ package org.nbp.editor;
 import java.io.File;
 
 import org.nbp.common.CommonActivity;
+import org.nbp.common.AlertDialogBuilder;
 
 import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
@@ -72,10 +73,10 @@ public class EditorActivity extends CommonActivity {
   private final void showActivityResultCode (int code) {
   }
 
-  private final AlertDialog.Builder newAlertDialogBuilder (int title) {
-    return new AlertDialog.Builder(this)
-                          .setTitle(title)
-                          .setCancelable(false);
+  private final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
+    return new AlertDialogBuilder(this, subtitles)
+              .setCancelable(false)
+              ;
   }
 
   private final ClipboardManager getClipboard () {
