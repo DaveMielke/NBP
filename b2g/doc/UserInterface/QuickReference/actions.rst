@@ -9,7 +9,6 @@
 .. |BrailleCodePrevious| replace:: select the previous literary braille code
 .. |BrailleOff| replace:: turn the braille display off
 .. |BrailleOn| replace:: turn the braille display on
-.. |BringCursor| replace:: bring the cursor to a specific character
 .. |Calculator| replace:: go to the Calculator app
 .. |Calendar| replace:: go to the Calendar app
 .. |ClearAndroidLog| replace:: clear the Android log
@@ -17,6 +16,7 @@
 .. |Clock| replace:: go to the B2G digital clock
 .. |CopyToClipboard| replace:: copy the selected (or all) text to the clipboard
 .. |CursorDown| replace:: the keyboard Cursor Down key
+.. |CursorKey| replace:: bring the cursor to a specific character or click the current screen element
 .. |CursorLeft| replace:: the keyboard Cursor Left key
 .. |CursorRight| replace:: the keyboard Cursor Right key
 .. |CursorUp| replace:: the keyboard Cursor Up key

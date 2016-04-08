@@ -1,5 +1,3 @@
-bind Cursor BringCursor
-
 bind Dot7 DeletePrevious
 bind Space+Dots145#d DeleteNext
 

@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class BringCursor extends CursorKeyAction {
+public class CursorKey extends CursorKeyAction {
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     if (endpoint.isInputArea()) {
@@ -20,7 +20,7 @@ public class BringCursor extends CursorKeyAction {
     return false;
   }
 
-  public BringCursor (Endpoint endpoint) {
+  public CursorKey (Endpoint endpoint) {
     super(endpoint, true);
   }
 }

@@ -12,6 +12,7 @@
   "Space+Right","|ScrollRight|"
   "Space+Up","|ScrollUp|"
   "Space+Down","|ScrollDown|"
+  "Cursor","|CursorKey|"
   "Dot7+Cursor","|DescribeCharacter|"
   "Dot3+Cursor","|DescribeHighlighting|"
   "Dot8+Cursor","|SetLeft|"

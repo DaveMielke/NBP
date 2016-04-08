@@ -1,7 +1,6 @@
 .. csv-table:: Input Operations
   :header: "Keys", "Description"
 
-  "Cursor","|BringCursor|"
   "Dot7","|DeletePrevious|"
   "Space+Dots145 (d)","|DeleteNext|"
   "Backward+Cursor","|SetSelectionStart|"

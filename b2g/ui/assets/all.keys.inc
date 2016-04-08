@@ -13,6 +13,7 @@ bind Space+Right ScrollRight
 bind Space+Up ScrollUp
 bind Space+Down ScrollDown
 
+bind Cursor CursorKey
 bind Dot7+Cursor DescribeCharacter
 bind Dot3+Cursor DescribeHighlighting
 bind Dot2+Cursor DescribeColor
