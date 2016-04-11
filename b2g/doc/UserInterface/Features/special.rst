@@ -27,8 +27,7 @@ Speech
 ~~~~~~
 
 Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
-it, and pressing Space+VolumeDown disables it. Another (legacy) way to disable
-it is to press VolumeDown and VolumeUp together.
+it, and pressing Space+VolumeDown disables it.
 
 * To interrupt what's currently being spoken, press Backward+VolumeDown.
 

@@ -12,6 +12,5 @@
   "Space+Dots12","|TabBackward|"
   "Space+Dots45","|TabForward|"
   "Space+Dots14 (c)","|SayLine|"
-  "VolumeDown+VolumeUp","|SpeechOff|"
   "Dot8+PowerOn","|OneHandOn|"
 

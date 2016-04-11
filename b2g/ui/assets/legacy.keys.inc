@@ -14,7 +14,6 @@ bind Space+Dots12 TabBackward
 bind Space+Dots45 TabForward
 
 bind Space+Dots14#c SayLine
-bind VolumeDown+VolumeUp SpeechOff
 
 bind Dot8+PowerOn OneHandOn
 
