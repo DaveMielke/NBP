@@ -29,9 +29,9 @@ Speech
 Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
 it, and pressing Space+VolumeDown disables it.
 
-* To interrupt what's currently being spoken, press Backward+VolumeDown.
+* To interrupt what's currently being spoken, press Forward+VolumeDown.
 
-* To speak the current line, press Backward+VolumeUp. Another (legacy) way to
+* To speak the current line, press Forward+VolumeUp. Another (legacy) way to
   do so is to press Space+c (dots 14).
 
 Adjusting the Volume:
@@ -62,8 +62,8 @@ capability is useful when, for example, you'd like to reduce battery drain but
 still be informed when an important asynchronous event, e.g. the arrival of a
 notification, occurs.
 
-This mode is disabled by default. Pressing Forward+VolumeUp enables it, and
-pressing Forward+VolumeDown disables it.
+This mode is disabled by default. Pressing Backward+VolumeUp enables it, and
+pressing Backward+VolumeDown disables it.
 
 Differences from Braille Rendering
 ``````````````````````````````````

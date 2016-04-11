@@ -1,11 +1,11 @@
 bind Space+VolumeDown SpeechOff
 bind Space+VolumeUp SpeechOn
 
-bind Forward+VolumeDown SleepTalkOff
-bind Forward+VolumeUp SleepTalkOn
+bind Forward+VolumeDown StopSpeaking
+bind Forward+VolumeUp SayLine
 
-bind Backward+VolumeDown StopSpeaking
-bind Backward+VolumeUp SayLine
+bind Backward+VolumeDown SleepTalkOff
+bind Backward+VolumeUp SleepTalkOn
 
 bind Dot1+VolumeDown SpeakSofter
 bind Dot1+VolumeUp SpeakLouder
