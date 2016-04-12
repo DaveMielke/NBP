@@ -89,7 +89,6 @@ performAction_start() {
   then
     programMessage "${packageName} already running"
   else
-    sound -q configure
     brltty -E -q
     programMessage "${packageName} started"
   fi

@@ -574,6 +574,7 @@ then
   watchFile "${recoveryLog}" handleRecoveryLogLine
   clearLine
 
+  sound -q configure
   echo "Recovery Mode Menu"
   echo ""
 
