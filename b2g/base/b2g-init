@@ -120,6 +120,25 @@ permitEventDevice() {
   }
 }
 
+buildType="$(getprop ro.build.type)"
+log "build type: ${buildType}"
+
+case "${buildType}"
+in
+  eng)
+    # enable ADB (the Android Debug Bridge)
+    setProperty persist.service.adb.enable 1
+    setField secure adb_enabled 1
+    ;;
+
+  *);;
+esac
+
+recoveryLog="/data/local/tmp/recovery.log"
+log "copying recovery log to: ${recoveryLog}"
+hostCommand cp /cache/recovery/last_log "${recoveryLog}"
+hostCommand chmod 644 "${recoveryLog}"
+
 # enable firmware version querying
 setPermission /dev/cp430_core 644
 
@@ -134,10 +153,6 @@ permitEventDevice twl4030_pwrbutton
 
 # enable keyboard monitoring
 permitEventDevice cp430_keypad
-
-# enable ADB (the Android Debug Bridge)
-setProperty persist.service.adb.enable 1
-setField secure adb_enabled 1
 
 # disable scren locking
 setField secure lockscreen.disabled 1
