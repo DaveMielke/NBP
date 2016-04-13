@@ -138,7 +138,7 @@ public class SpeechDevice {
                 int end = line.lastIndexOf(' ', maximumLength);
                 if (end == -1) end = maximumLength;
                 segment = line.substring(0, end);
-                line = line.substring(end+1);
+                line = line.substring(end);
               } else {
                 segment = line;
                 line = "";
