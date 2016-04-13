@@ -7,10 +7,15 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ComponentName;
+import android.content.res.Resources;
 
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public abstract class ShortcutAction extends Action {
   protected abstract Intent getShortcutIntent ();
@@ -21,6 +26,22 @@ public abstract class ShortcutAction extends Action {
 
   protected static String getLabel (PackageManager pm, ActivityInfo activity) {
     return activity.loadLabel(pm).toString();
+  }
+
+  protected static Bitmap getIcon (PackageManager pm, ActivityInfo activity) {
+    int resource = activity.getIconResource();
+
+    if (resource != 0) {
+      ApplicationInfo application = activity.applicationInfo;
+
+      try {
+        Resources resources = pm.getResourcesForApplication(application);
+        return BitmapFactory.decodeResource(resources, resource);
+      } catch (PackageManager.NameNotFoundException exception) {
+      }
+    }
+
+    return null;
   }
 
   protected static void sendIntent (Intent intent) {
@@ -43,6 +64,9 @@ public abstract class ShortcutAction extends Action {
 
     intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, newActivityIntent(activity));
     intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getLabel(pm, activity));
+
+    Bitmap icon = getIcon(pm, activity);
+    if (icon != null) intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, icon);
 
     sendIntent(intent);
   }
