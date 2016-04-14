@@ -55,7 +55,7 @@ public abstract class DragAction extends Action {
 
   protected final static boolean haveFromRegion () {
     if (fromRegion != null) return true;
-    ApplicationUtilities.message(R.string.message_drag_none);
+    ApplicationUtilities.message(R.string.drag_message_none);
     return false;
   }
 
@@ -83,11 +83,11 @@ public abstract class DragAction extends Action {
       );
 
       if (dragged) {
-        ApplicationUtilities.message(R.string.message_drag_end);
+        ApplicationUtilities.message(R.string.drag_message_end);
         return true;
       }
     } else {
-      ApplicationUtilities.message(R.string.message_drag_edge);
+      ApplicationUtilities.message(R.string.drag_message_edge);
     }
 
     return false;

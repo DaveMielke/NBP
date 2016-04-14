@@ -27,13 +27,6 @@
 
   <string name="clock_activity_label">B2G Digital Clock</string>
 
-  <string name="answerCall_message_not_ringing">not ringing</string>
-
-  <string name="message_drag_begin">dragging item</string>
-  <string name="message_drag_edge">edge of screen</string>
-  <string name="message_drag_end">item dragged</string>
-  <string name="message_drag_none">not dragging an item</string>
-
   <string name="maintenance_activity_label">B2G System Maintenance Operations</string>
   <string name="maintenance_message_operation_succeeded">operation succeeded</string>
   <string name="maintenance_message_operation_cancelled">operation cancelled</string>
@@ -62,12 +55,21 @@
 
   <string name="recoveryLog_activity_label">Recovery Mode Log</string>
 
-  <string name="shortcut_message_none">activity not found</string>
-  <string name="shortcut_message_ambiguous">Select a shortcut by pressing Center on it:</string>
-
   <string name="settings_activity_label">B2G User Interface Settings</string>
 
   <string name="userManual_activity_label">B2G User Interface Manual</string>
+
+  <string name="answerCall_message_not_ringing">not ringing</string>
+
+  <string name="drag_message_begin">dragging item</string>
+  <string name="drag_message_edge">edge of screen</string>
+  <string name="drag_message_end">item dragged</string>
+  <string name="drag_message_none">not dragging an item</string>
+
+  <string name="notification_label">Notification:</string>
+
+  <string name="shortcut_message_none">activity not found</string>
+  <string name="shortcut_message_ambiguous">Select a shortcut by pressing Center on it:</string>
 
   <string name="state_disabled">disabled</string>
 

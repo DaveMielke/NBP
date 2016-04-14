@@ -42,9 +42,16 @@ public class ScreenMonitor extends AccessibilityService {
     return sb.subSequence(0, sb.length());
   }
 
-  private static void showText (Collection<CharSequence> lines) {
+  private static void showText (CharSequence text) {
+    Endpoints.setPopupEndpoint(text.toString());
+  }
+
+  private final void showText (Collection<CharSequence> lines, int label) {
     CharSequence text = toText(lines);
-    if (text != null) Endpoints.setPopupEndpoint(text.toString());
+
+    if (text != null) {
+      showText((getString(label) + '\n' + text));
+    }
   }
 
   private static CharSequence getAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {
@@ -409,7 +416,7 @@ public class ScreenMonitor extends AccessibilityService {
 
           switch (type) {
             case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
-              showText(event.getText());
+              showText(event.getText(), R.string.notification_label);
               break;
 
             default:

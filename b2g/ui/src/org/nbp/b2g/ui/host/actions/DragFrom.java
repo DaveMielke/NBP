@@ -6,7 +6,7 @@ public class DragFrom extends DragAction {
   @Override
   public boolean performAction () {
     if (setFromRegion()) {
-      ApplicationUtilities.message(R.string.message_drag_begin);
+      ApplicationUtilities.message(R.string.drag_message_begin);
       return true;
     }
     
