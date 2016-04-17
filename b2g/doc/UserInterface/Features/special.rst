@@ -51,8 +51,8 @@ Adjusting the Pitch:
   * Press Dot3+VolumeUp for **higher**.
 
 Adjusting the Balance:
-  * Press Dot4+VolumeDown for **more left**.
-  * Press Dot4+VolumeUp for **more right**.
+  * Press Dot7+VolumeDown for **more left**.
+  * Press Dot7+VolumeUp for **more right**.
 
 Sleep Talk Mode
 ```````````````

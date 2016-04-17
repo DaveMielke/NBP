@@ -105,7 +105,7 @@ public abstract class KeyEvents {
     if (action != null) {
       if (ApplicationSettings.REVERSE_PANNING) {
         if (((keys & KeyMask.FORWARD) != 0) != ((keys & KeyMask.BACKWARD) != 0)) {
-          Action reverse = keyBindings.getAction(reversePanningActionMap.get((Class <? extends Action>)action.getClass()));
+          Action reverse = keyBindings.getAction(reversePanningActionMap.get((Class<? extends Action>)action.getClass()));
           if (reverse != null) action = reverse;
         }
       }

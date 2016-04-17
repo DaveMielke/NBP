@@ -13,6 +13,6 @@
   "Dot2+VolumeUp","|SpeakFaster|"
   "Dot3+VolumeDown","|SpeakLower|"
   "Dot3+VolumeUp","|SpeakHigher|"
-  "Dot4+VolumeDown","|SpeakLeft|"
-  "Dot4+VolumeUp","|SpeakRight|"
+  "Dot7+VolumeDown","|SpeakLeft|"
+  "Dot7+VolumeUp","|SpeakRight|"
 

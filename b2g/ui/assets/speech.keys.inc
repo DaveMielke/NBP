@@ -16,6 +16,6 @@ bind Dot2+VolumeUp SpeakFaster
 bind Dot3+VolumeDown SpeakLower
 bind Dot3+VolumeUp SpeakHigher
 
-bind Dot4+VolumeDown SpeakLeft
-bind Dot4+VolumeUp SpeakRight
+bind Dot7+VolumeDown SpeakLeft
+bind Dot7+VolumeUp SpeakRight
 
