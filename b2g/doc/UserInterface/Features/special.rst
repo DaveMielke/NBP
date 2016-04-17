@@ -29,10 +29,18 @@ Speech
 Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
 it, and pressing Space+VolumeDown disables it.
 
-* To interrupt what's currently being spoken, press Forward+VolumeDown.
+* To interrupt what's currently being spoken, press Dot1+Left.
 
-* To speak the current line, press Forward+VolumeUp. Another (legacy) way to
-  do so is to press Space+c (dots 14).
+* To hear all of the current line, press Dot1+Right.
+  Another (legacy) way to do so is to press Space+c (dots 14).
+
+* To hear all of the current screen element, press Dot1+Center.
+
+* To hear just what's before the start of the braille display,
+  press Dot1+Up.
+
+* To hear just what's on and after the braille display,
+  press Dot1+Down.
 
 Adjusting the Volume:
   * Press Dot1+VolumeDown for **softer**.

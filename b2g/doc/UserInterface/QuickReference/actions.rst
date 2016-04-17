@@ -110,7 +110,10 @@
 .. |ReversePanningOn| replace:: turn reverse panning mode on
 .. |SaveSettings| replace:: save the current B2G settings
 .. |SaveScreen| replace:: write the current screen element structure to the Android log
-.. |SayLine| replace:: speak the text on the current line
+.. |SayAfter| replace:: speak from the start of the braille display to the end of the screen element
+.. |SayAll| replace:: speak all of the screen element
+.. |SayBefore| replace:: speak from the start of the screen element to the start of the braille display
+.. |SayLine| replace:: speak all of the current line
 .. |ScrollBackward| replace:: force the screen to scroll backward (up or left)
 .. |ScrollDown| replace:: go to the next page of a list or paragraph of text
 .. |ScrollForward| replace:: force the screen to scroll forward (down or right)

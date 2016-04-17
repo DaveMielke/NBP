@@ -3,8 +3,11 @@
 
   "Space+VolumeDown","|SpeechOff|"
   "Space+VolumeUp","|SpeechOn|"
-  "Forward+VolumeDown","|StopSpeaking|"
-  "Forward+VolumeUp","|SayLine|"
+  "Dot1+Left","|StopSpeaking|"
+  "Dot1+Right","|SayLine|"
+  "Dot1+Up","|SayBefore|"
+  "Dot1+Down","|SayAfter|"
+  "Dot1+Center","|SayAll|"
   "Backward+VolumeDown","|SleepTalkOff|"
   "Backward+VolumeUp","|SleepTalkOn|"
   "Dot1+VolumeDown","|SpeakSofter|"
