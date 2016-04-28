@@ -26,8 +26,9 @@ also reenables it.
 Speech
 ~~~~~~
 
-Speech is supported. It's enabled by default. Pressing Space+VolumeUp enables
-it, and pressing Space+VolumeDown disables it.
+Speech is supported. It's enabled by default.
+Pressing Forward+VolumeUp enables it,
+and pressing Forward+VolumeDown disables it.
 
 * To interrupt what's currently being spoken, press Dot1+Left.
 
