@@ -5,9 +5,11 @@ set -e
 umask 007
 
 mountSystemPartition() {
-  "${systemPartitionMounted}" || {
-    shell mount "${systemPartitionMountpoint}" || exit "${?}"
-    systemPartitionMounted=true
+  [ -e "${systemPartitionMountpoint}/bin/sh" ] || {
+    "${systemPartitionMounted}" || {
+      shell mount "${systemPartitionMountpoint}" || exit "${?}"
+      systemPartitionMounted=true
+    }
   }
 }
 
