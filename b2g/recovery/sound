@@ -5,7 +5,7 @@ set -e
 umask 007
 
 mountSystemPartition() {
-  [ -e "${systemPartitionMountpoint}/bin/sh" ] || {
+  [ -n "$(type -p tinymix)" ] || {
     "${systemPartitionMounted}" || {
       shell mount "${systemPartitionMountpoint}" || exit "${?}"
       systemPartitionMounted=true
