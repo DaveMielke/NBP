@@ -1,5 +1,5 @@
-Notes
-=====
+General Notes
+=============
 
 Several key bindings are described within this document.
 They aren't actually part of the editor itself,
