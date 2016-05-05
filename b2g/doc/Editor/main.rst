@@ -8,9 +8,6 @@ The |organization acronym| Editor
 
 .. contents::
 
-User Guide
-==========
-
 .. include:: Screen/main.rst
 .. include:: Menu/main.rst
 .. include:: Finder/main.rst

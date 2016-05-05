@@ -1,5 +1,5 @@
 The Actions Menu
-----------------
+================
 
 .. |save changes dialog| replace::
   If `The Edit Area`_ contains changes
@@ -13,7 +13,7 @@ The Actions Menu
 Press Android's Back key to leave the menu without selecting an action.
 
 Edit
-~~~~
+----
 
 * If text hasn't been selected:
 
@@ -39,21 +39,21 @@ Edit
     Translate all of the letters within the current text selection to lowercase.
 
 New
-~~~
+---
 
 Start editing a new file.
 `The Edit Area`_ and `The Current Path`_ are both cleared.
 |save changes dialog|
 
 Open
-~~~~
+----
 
 Edit an existing file.
 |save changes dialog|
 `The File Finder`_ is used to locate the file.
 
 Save
-~~~~
+----
 
 Save the current file to persistent storage.
 The content of `The Edit Area`_ is written
@@ -63,10 +63,10 @@ then the `Save As`_ action is automatically performed instead.
 |file saved dialog|
 
 Save As
-~~~~~~~
+-------
 
 |file saved dialog|
 
 Delete
-~~~~~~
+------
 

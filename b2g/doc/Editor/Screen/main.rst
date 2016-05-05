@@ -1,16 +1,16 @@
 The Main Screen
----------------
+===============
 
 The main screen contains the following screen elements:
 
 The Menu Button
-~~~~~~~~~~~~~~~
+---------------
 
 This button goes to `The Actions Menu`_.
 Another way to do this is to press Space+m (dots 134).
 
 The Current Path
-~~~~~~~~~~~~~~~~
+----------------
 
 This region shows the absolute path to the file that's currently being edited.
 If it's a new file (see the `New`_ action)
@@ -19,7 +19,7 @@ then it says::
   [new file - no path]
 
 The Edit Area
-~~~~~~~~~~~~~
+-------------
 
 This region is where the content of the file is loaded and can be modified.
 If the file is empty then it says::
@@ -27,7 +27,7 @@ If the file is empty then it says::
   [edit area - empty file]
 
 Braille Indicators
-``````````````````
+~~~~~~~~~~~~~~~~~~
 
 Dots 78 [⣀] represents the cursor.
 This is the location where new characters are inserted
@@ -38,7 +38,7 @@ either selected text (see `Selecting Text`_)
 or highlighted text (see `Highlighting Text`_).
 
 Navigation Operations
-`````````````````````
+~~~~~~~~~~~~~~~~~~~~~
 
 Many of these operations are for browsing through the text.
 Unless explicitly stated, the cursor isn't moved.
@@ -97,7 +97,7 @@ Any Cursor Routing Key
   Bring the cursor to the corresponding character.
 
 Editing Operations
-``````````````````
+~~~~~~~~~~~~~~~~~~
 
 Typing Any Character
   Insert that character immediately to the left of the cursor,
@@ -133,7 +133,7 @@ Space+d (dots 145)
   If text has been selected then delete all of it.
 
 Selecting Text
-``````````````
+~~~~~~~~~~~~~~
 
 Press Backward together with a cursor routing key
 to mark the start of a text selection.
@@ -149,7 +149,7 @@ Press any cursor routing key (by itself)
 to clear the text selection and set the cursor's location.
 
 Clipboard Operations
-````````````````````
+~~~~~~~~~~~~~~~~~~~~
 
 The editor doesn't have its own clipboard -
 it uses Android's global clipboard.
@@ -167,7 +167,7 @@ Space+v (dots 1236)
   at the cursor's location.
 
 Highlighting Text
-`````````````````
+~~~~~~~~~~~~~~~~~
 
 Press Space + one of the following letters
 together with Dot8 to turn on the corresponding type of highlighting,
