@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="format_name_brf">Formatted ASCII Braille</string>
+  <string name="format_name_brl">Unformatted ASCII Braille</string>
+  <string name="format_name_doc">Microsoft Word 1997-2007</string>
+  <string name="format_name_docm">Microsoft Word 2007+ XML (macro-enabled)</string>
+  <string name="format_name_docx">Microsoft Word 2007+ XML (macro-free)</string>
+  <string name="format_name_epub">Electronic Publication</string>
+  <string name="format_name_html">HyperText Markup Language</string>
+  <string name="format_name_mhtml">MIME HTML</string>
+  <string name="format_name_odt">Open Document Text</string>
+  <string name="format_name_oxps">Open XML Paper Specification</string>
+  <string name="format_name_pdf">Portable Document Format</string>
+  <string name="format_name_ps">PostScript</string>
+  <string name="format_name_rtf">Rich Text</string>
+  <string name="format_name_txt">Plain Text</string>
+  <string name="format_name_xps">Microsoft XML Paper Specification</string>
+</resources>
