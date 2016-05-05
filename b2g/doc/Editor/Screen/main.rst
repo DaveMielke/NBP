@@ -111,11 +111,11 @@ Typing Any Character
   * To type any character by its Unicode value:
 
     1) Press Space+u (dots 136).
-    2) Enter the hexadecimal value of that character's Unicode value.
-    3) Press enter (dot 8).
+    2) Enter the hexadecimal representation of that character's Unicode value.
+    3) Press Enter (dot 8).
 
 Dot8
-  The enter key.
+  The Enter key.
 
   * At the start of a line, insert a blank line above it.
 
@@ -125,10 +125,12 @@ Dot8
     just before the character where the cursor is.
 
 Dot7
+  The Backspace key.
   Delete the character to the left of the cursor.
   If text has been selected then delete all of it.
 
 Space+d (dots 145)
+  The Delete key.
   Delete the character where the cursor is.
   If text has been selected then delete all of it.
 
@@ -182,4 +184,37 @@ is to press Space+h (dots 125) together with Dot7.
 If a character is marked as being highlighted (see `Braille Indicators`_)
 then you can press Dot3 together with the corresponding cursor routing key
 to find out how it has been highlighted.
+
+Finding Text
+~~~~~~~~~~~~
+
+To find text:
+
+1) Press Space+f (dots 124).
+2) Enter the text.
+3) Press Enter (dot 8).
+
+The text is interpreted as a sequence of space-separated words.
+
+* The amount of space between words doesn't matter.
+  Any amount of space within the text
+  matches any amount of space within the file.
+
+* The first word within the text
+  only needs to match the end of a word within the file.
+  Enter a space before it to ensure that it matches a whole word.
+
+* The last word within the text
+  only needs to match the start of a word within the file.
+  Enter a space after it to ensure that it matches a whole word.
+
+A case-insensitive, forward search is performed.
+If the text is found then the braille display is panned
+such that its leftmost cell is where the text starts.
+
+To continue searching forward for the same text without reentering it,
+press Space+Dot8+f (dots 124).
+
+To search backward for the same text without reentering it,
+press Space+Dot7+f (dots 124).
 
