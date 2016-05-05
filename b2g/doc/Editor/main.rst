@@ -6,6 +6,8 @@ The |organization acronym| Editor
 
 .. include:: ../metadata.rst
 
+.. section-numbering::
+
 .. contents::
 
 .. include:: Notes/main.rst

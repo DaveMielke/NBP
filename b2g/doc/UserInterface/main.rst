@@ -6,6 +6,8 @@
 
 .. include:: ../metadata.rst
 
+.. section-numbering::
+
 .. contents::
 
 .. include:: PhysicalDescription/main.rst
