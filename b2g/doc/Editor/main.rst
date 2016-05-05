@@ -13,4 +13,4 @@ The |organization acronym| Editor
 .. include:: Menu/main.rst
 .. include:: Finder/main.rst
 .. include:: Dialogs/main.rst
-.. include:: Appendicies/main.rst
+.. include:: Appendices/main.rst
