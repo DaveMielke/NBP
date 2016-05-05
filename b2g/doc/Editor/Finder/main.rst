@@ -66,6 +66,8 @@ The listing may be further constrained by editor features
   Parent Folder
     Go to the listing for the folder that contains
     the one currently being listed.
+    If currently listing the system root folder
+    then go to the `Location Listing`_.
 
   Cancel
     |return to current file|
@@ -85,4 +87,29 @@ For actions that require write access to the selected file
 
 Path Editor
 -----------
+
+The absolute path of the folder currently being listed
+is shown within a read-only field,
+and the name of the file currently being edited
+is shown within an editable field.
+If the file name extension is being imposed
+(e.g. by the `Select Format`_ dialog)
+then it's shown in bold and can't be edited.
+
+Forward slashes [/] may be appended to and/or inserted into the file name.
+This is how a subfolder (to any depth) can be specified.
+
+Any number of parent folder references [../] may be prepended to the file name
+in order to escape the folder currently being listed.
+
+One of the following actions may be selected:
+
+Done
+  Create the file (including its subfolder if specified), and then select it.
+
+Back
+  Return to the `Folder Listing`_.
+
+Cancel
+  |return to current file|
 
