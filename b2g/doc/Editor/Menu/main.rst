@@ -44,6 +44,24 @@ Perform an action on the text currently being edited.
     within the current text selection
     to lowercase.
 
+  Bold
+    Make the current text selection bold.
+
+  Italics
+    Italicize the current text selection.
+
+  Strike
+    Add a strike through the current text selection.
+
+  Subscript
+    Add subscript highlighting to the current text selection.
+
+  Superscript
+    Add superscript highlighting to the current text selection.
+
+  Underline
+    Add an underline to the current text selection.
+
 New
 ---
 
