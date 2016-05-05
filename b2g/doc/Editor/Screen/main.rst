@@ -51,6 +51,10 @@ Backward
   Pan to the left on the current line.
   At the start of the current line, wrap to the end of the previous line.
 
+Dot8 + any cursor routing key
+  Pan to the right such that the braille display
+  starts with the specified character.
+
 Space+Dot3 (or Left)
   Move the cursor one character to the left.
   At the start of the current line, wrap to the end of the previous line.
@@ -93,7 +97,7 @@ Dots48
   Pan to the end of the current text selection.
   If text hasn't been selected then pan to the cursor.
 
-Any Cursor Routing Key
+any cursor routing key
   Bring the cursor to the corresponding character.
 
 Editing Operations
