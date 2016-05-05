@@ -8,6 +8,7 @@ The |organization acronym| Editor
 
 .. contents::
 
+.. include:: Notes/main.rst
 .. include:: Screen/main.rst
 .. include:: Menu/main.rst
 .. include:: Finder/main.rst

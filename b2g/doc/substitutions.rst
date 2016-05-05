@@ -5,4 +5,5 @@
 .. |product URL| replace:: http://www.nbp.org/ic/nbp/technology/b2g/index.html
 
 .. _Quick Start Guide: http://brltty.com/archive/B2G/QuickStart.html
+.. _User Interface Manual: http://brltty.com/archive/B2G/UserInterface.html
 
