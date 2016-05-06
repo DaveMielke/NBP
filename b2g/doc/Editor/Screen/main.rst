@@ -3,14 +3,14 @@ The Main Screen
 
 The main screen contains the following screen elements:
 
-The Menu Button
----------------
+Menu Button
+-----------
 
 This button goes to `The Actions Menu`_.
 Another way to do this is to press Space+m (dots 134).
 
-The Current Path
-----------------
+Current Path
+------------
 
 This region shows the absolute path to the file that's currently being edited.
 If it's a new file (see the `New`_ action)
@@ -18,8 +18,8 @@ then it says::
 
   [new file - no path]
 
-The Edit Area
--------------
+Edit Area
+---------
 
 This region is where the content of the file is loaded and can be modified.
 If the file is empty then it says::
@@ -37,8 +37,8 @@ Dot 8 [⢀] represents
 either selected text (see `Selecting Text`_)
 or highlighted text (see `Highlighting Text`_).
 
-Navigation Operations
-~~~~~~~~~~~~~~~~~~~~~
+Navigation
+~~~~~~~~~~
 
 Many of these operations are for browsing through the text.
 Unless explicitly stated, the cursor isn't moved.
@@ -100,8 +100,8 @@ Dots48
 any cursor routing key
   Bring the cursor to the corresponding character.
 
-Editing Operations
-~~~~~~~~~~~~~~~~~~
+Editing
+~~~~~~~
 
 Typing Any Character
   Insert that character immediately to the left of the cursor,
@@ -154,8 +154,8 @@ Press Space+a (dot 1) to select all of the text.
 Press any cursor routing key (by itself)
 to clear the text selection and set the cursor's location.
 
-Clipboard Operations
-~~~~~~~~~~~~~~~~~~~~
+Clipboard
+~~~~~~~~~
 
 The editor doesn't have its own clipboard -
 it uses Android's global clipboard.

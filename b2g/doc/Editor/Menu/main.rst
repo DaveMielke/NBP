@@ -2,7 +2,7 @@ The Actions Menu
 ================
 
 .. |save changes dialog| replace::
-  If `The Edit Area`_ contains changes
+  If the `Edit Area`_ contains changes
   then they're first saved (see the `Save Changes`_ dialog).
 
 .. |file saved dialog| replace::
@@ -66,7 +66,7 @@ New
 ---
 
 Start editing a new file.
-`The Edit Area`_ and `The Current Path`_ are both cleared.
+The `Edit Area`_ and the `Current Path`_ are both cleared.
 |save changes dialog|
 
 Open
@@ -80,8 +80,8 @@ Save
 ----
 
 Save the current file to persistent storage.
-The content of `The Edit Area`_ is written
-to the file referenced by `The Current Path`_.
+The content of the `Edit Area`_ is written
+to the file referenced by the `Current Path`_.
 If the path isn't known
 then the `Save As`_ action is automatically performed instead.
 |file saved dialog|

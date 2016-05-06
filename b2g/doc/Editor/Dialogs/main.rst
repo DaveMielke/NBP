@@ -63,7 +63,7 @@ Save Changes
 ------------
 
 This dialog is presented before a new file is edited
-if `The Edit Area`_ contains changes.
+if the `Edit Area`_ contains changes.
 
 One of the following actions may be selected:
 
