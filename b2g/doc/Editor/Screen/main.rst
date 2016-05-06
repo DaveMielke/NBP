@@ -149,7 +149,7 @@ Press Forward together with a cursor routing key
 to mark the end of a text selection.
 If text has already been selected then its end is adjusted.
 
-Press Space+a (dot 1) to select all of the text.
+Press Space+Dot8+a (dot 1) to select all of the text.
 
 Press any cursor routing key (by itself)
 to clear the text selection and set the cursor's location.
@@ -161,14 +161,14 @@ The editor doesn't have its own clipboard -
 it uses Android's global clipboard.
 This means that text can be easily copied between the editor and other apps.
 
-Space+x (dots 1346)
+Space+Dot8+x (dots 1346)
   Cut (copy and then delete) the current text selection to the clipboard.
 
-Space+c (dots 14)
+Space+Dot8+c (dots 14)
   Copy the current text selection to the clipboard.
   If text hasn't been selected then copy all of the text to the clipboard.
 
-Space+v (dots 1236)
+Space+Dot8+v (dots 1236)
   Paste (insert) what's on the clipboard into the text
   at the cursor's location.
 
