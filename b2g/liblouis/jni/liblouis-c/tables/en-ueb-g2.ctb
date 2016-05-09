@@ -913,3 +913,5 @@ pass2 @36-36-36 @36-36
 pass2 @6-236-3456 @3-3456
 pass2 @6-56 @56-6
 
+# Dave Mielke's fixes
+begword revers 1235-15-1236-12456-234 reverse
