@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui;
 
 public abstract class ApplicationSettings {
+  public static volatile boolean WORD_WRAP = ApplicationDefaults.WORD_WRAP;
+
   public static volatile boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
   public static volatile boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
   public static volatile boolean ONE_HAND = ApplicationDefaults.ONE_HAND;

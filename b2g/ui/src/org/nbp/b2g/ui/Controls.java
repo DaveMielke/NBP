@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
+  private final static WordWrapControl wordWrapControl = new WordWrapControl();
+
   private final static LongPressControl longPressControl = new LongPressControl();
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
   private final static OneHandControl oneHandControl = new OneHandControl();
@@ -76,6 +78,10 @@ public abstract class Controls {
     logBrailleControl,
     logSpeechControl
   };
+
+  public static WordWrapControl getWordWrapControl () {
+    return wordWrapControl;
+  }
 
   public static LongPressControl getLongPressControl () {
     return longPressControl;

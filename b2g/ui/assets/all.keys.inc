@@ -31,6 +31,9 @@ bind Space+Dot8+Dots1245#g BrailleCodeNext
 bind Space+Dots235#6 LiteraryBrailleOn
 bind Space+Dots236#8 LiteraryBrailleOff
 
+bind Space+Dot7+Dots2456#w WordWrapOff
+bind Space+Dot8+Dots2456#w WordWrapOn
+
 bind Backward+Dot1 BrailleOff
 bind Forward+Dot4 BrailleOn
 

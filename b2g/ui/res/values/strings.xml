@@ -130,6 +130,7 @@
   <string name="TypingItalic_control_label">Italic</string>
   <string name="TypingStrike_control_label">Strike</string>
   <string name="TypingUnderline_control_label">Underline</string>
+  <string name="WordWrap_control_label">Word Wrap</string>
 
   <string name="SpeechBalance_control_label">Balance</string>
   <string name="SpeechBalance_control_previous">More Left</string>

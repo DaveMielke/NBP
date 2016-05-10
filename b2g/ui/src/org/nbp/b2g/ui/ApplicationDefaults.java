@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui;
 
 public abstract class ApplicationDefaults {
+  public final static boolean WORD_WRAP = false;
+
   public final static boolean LONG_PRESS = true;
   public final static boolean REVERSE_PANNING = false;
   public final static boolean ONE_HAND = false;
