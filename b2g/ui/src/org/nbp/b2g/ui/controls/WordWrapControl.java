@@ -25,6 +25,7 @@ public class WordWrapControl extends BooleanControl {
   @Override
   protected boolean setBooleanValue (boolean value) {
     ApplicationSettings.WORD_WRAP = value;
+    Endpoints.getCurrentEndpoint().refresh();
     return true;
   }
 

@@ -71,17 +71,30 @@ public abstract class Braille {
   }
 
   private static void markCells (
-    byte[] cells, Endpoint endpoint, int from, int to, int indent
+    byte[] cells, Endpoint endpoint,
+    int from, int to,
+    int indent, int count
   ) {
     from = endpoint.findFirstBrailleOffset(from);
     to = endpoint.findEndBrailleOffset(to);
 
     if ((from -= indent) < 0) from = 0;
-    if ((to -= indent) > cells.length) to = cells.length;
+    if ((to -= indent) > count) to = count;
 
     while (from < to) {
       cells[from++] |= ApplicationSettings.SELECTION_INDICATOR.getDots();
     }
+  }
+
+  private static int getLineEnd (Endpoint endpoint, CharSequence text, int indent, int cells) {
+    int end = endpoint.getAdjustedLineOffset(cells, indent);
+    if (!ApplicationSettings.WORD_WRAP) return end;
+
+    if (end == text.length()) return end;
+    if (text.charAt(end) == ' ') return end;
+
+    int index = text.toString().substring(indent, end).lastIndexOf(' ');
+    return (index == -1)? end: (indent + index);
   }
 
   public static CharSequence setCells (byte[] cells, Endpoint endpoint) {
@@ -92,13 +105,15 @@ public abstract class Braille {
       int lineIndent = endpoint.getLineIndent();
       if (lineIndent > lineLength) lineIndent = lineLength;
 
-      CharSequence braille = endpoint.getBrailleCharacters();
-      int brailleIndent = endpoint.findFirstBrailleOffset(lineIndent);
-      braille = braille.subSequence(brailleIndent, braille.length());
-
-      int cellCount = setCells(cells, braille);
-      int lineEnd = endpoint.getAdjustedLineOffset(cellCount, lineIndent);
+      int lineEnd = getLineEnd(endpoint, lineText, lineIndent, cells.length);
       CharSequence text = lineText.subSequence(lineIndent, lineEnd);
+
+      int brailleIndent = endpoint.findFirstBrailleOffset(lineIndent);
+      CharSequence braille = endpoint.getBrailleCharacters().subSequence(
+        brailleIndent,
+        endpoint.findFirstBrailleOffset(lineEnd)
+      );
+      int cellCount = setCells(cells, braille);
 
       if (endpoint.isInputArea()) {
         boolean hasSelection = false;
@@ -115,10 +130,12 @@ public abstract class Braille {
 
           if (from == to) {
             if ((to >= 0) && (to <= lineLength)) {
+              boolean atEnd = to == lineLength;
+
               to = endpoint.getBrailleOffset(to);
               to -= brailleIndent;
 
-              if ((to >= 0) && (to < cells.length)) {
+              if ((to >= 0) && ((to < cellCount) || ((to == cellCount) && atEnd))) {
                 cells[to] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
               }
             }
@@ -126,7 +143,7 @@ public abstract class Braille {
             hasSelection = true;
             if (from < 0) from = 0;
             if (to > lineLength) to = lineLength;
-            markCells(cells, endpoint, from, to, brailleIndent);
+            markCells(cells, endpoint, from, to, brailleIndent, cellCount);
           }
         }
 
@@ -140,7 +157,7 @@ public abstract class Braille {
                 if (HighlightSpans.getEntry(span) != null) {
                   int start = spanned.getSpanStart(span);
                   int end = spanned.getSpanEnd(span);
-                  markCells(cells, endpoint, start, end, brailleIndent);
+                  markCells(cells, endpoint, start, end, brailleIndent, cellCount);
                 }
               }
             }
