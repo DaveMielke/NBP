@@ -94,7 +94,7 @@ public abstract class Braille {
       int lineIndent = endpoint.getLineIndent();
       if (lineIndent > lineLength) lineIndent = lineLength;
 
-      int lineEnd = endpoint.findNextSegment(cells.length);
+      int lineEnd = endpoint.findNextSegment(lineIndent, cells.length);
       CharSequence text = lineText.subSequence(lineIndent, lineEnd);
 
       int brailleIndent = endpoint.findFirstBrailleOffset(lineIndent);
@@ -139,7 +139,7 @@ public abstract class Braille {
         if (!hasSelection) {
           if (lineText instanceof Spanned) {
             Spanned spanned = (Spanned)lineText;
-            CharacterStyle[] spans = spanned.getSpans(0, lineText.length(), CharacterStyle.class);
+            CharacterStyle[] spans = spanned.getSpans(0, lineLength, CharacterStyle.class);
 
             if (spans != null) {
               for (CharacterStyle span : spans) {

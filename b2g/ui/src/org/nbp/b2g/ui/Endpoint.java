@@ -731,6 +731,22 @@ public abstract class Endpoint {
     }
   }
 
+  public final int findPreviousSegment (int indent, int size) {
+    synchronized (this) {
+      if (indent == 0) return 0;
+
+      int segment = getAdjustedLineOffset(-size, indent);
+      if (!ApplicationSettings.WORD_WRAP) return segment;
+      CharSequence text = getLineText();
+
+      for (int index=segment; index<indent; index+=1) {
+        if (text.charAt(index) != ' ') return index;
+      }
+
+      return segment;
+    }
+  }
+
   public final boolean panLeft () {
     Panner panner = new Panner() {
       @Override
@@ -749,7 +765,7 @@ public abstract class Endpoint {
           if (indent > length) indent = length;
         }
 
-        indent = getAdjustedLineOffset(-size, indent);
+        indent = findPreviousSegment(indent, size);
         setLineIndent(indent);
         return true;
       }
@@ -770,18 +786,17 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
-  public final int findNextSegment (int size) {
+  public final int findNextSegment (int indent, int size) {
     synchronized (this) {
-      int indent = getLineIndent();
-      int end = getAdjustedLineOffset(size, indent);
-      if (!ApplicationSettings.WORD_WRAP) return end;
+      int segment = getAdjustedLineOffset(size, indent);
+      if (!ApplicationSettings.WORD_WRAP) return segment;
 
       CharSequence text = getLineText();
-      if (end == text.length()) return end;
-      if (text.charAt(end) == ' ') return end;
+      if (segment == text.length()) return segment;
+      if (text.charAt(segment) == ' ') return segment;
 
-      int index = text.toString().substring(indent, end).lastIndexOf(' ');
-      return (index == -1)? end: (indent + index + 1);
+      int index = text.toString().substring(indent, segment).lastIndexOf(' ');
+      return (index == -1)? segment: (indent + index + 1);
     }
   }
 
@@ -803,7 +818,7 @@ public abstract class Endpoint {
           setLine(offset);
           indent = 0;
         } else {
-          indent = findNextSegment(size);
+          indent = findNextSegment(indent, size);
         }
 
         setLineIndent(indent);
