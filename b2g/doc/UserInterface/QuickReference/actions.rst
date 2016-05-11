@@ -170,5 +170,5 @@
 .. |VolumeDown| replace:: the Android Volume Down key (applies to the current audio stream)
 .. |VolumeUp| replace:: the Android Volume Up key (applies to the current audio stream)
 .. |WifiSettings| replace:: go to the Wi-Fi Settings screen
-.. |WordWrapOff| replace:: turn word wrap off
-.. |WordWrapOn| replace:: turn word wrap on
+.. |WordWrapOff| replace:: turn word wrap mode off
+.. |WordWrapOn| replace:: turn word wrap mode on
