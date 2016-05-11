@@ -86,17 +86,6 @@ public abstract class Braille {
     }
   }
 
-  private static int getLineEnd (Endpoint endpoint, CharSequence text, int indent, int cells) {
-    int end = endpoint.getAdjustedLineOffset(cells, indent);
-    if (!ApplicationSettings.WORD_WRAP) return end;
-
-    if (end == text.length()) return end;
-    if (text.charAt(end) == ' ') return end;
-
-    int index = text.toString().substring(indent, end).lastIndexOf(' ');
-    return (index == -1)? end: (indent + index);
-  }
-
   public static CharSequence setCells (byte[] cells, Endpoint endpoint) {
     synchronized (endpoint) {
       CharSequence lineText = endpoint.getLineText();
@@ -105,7 +94,7 @@ public abstract class Braille {
       int lineIndent = endpoint.getLineIndent();
       if (lineIndent > lineLength) lineIndent = lineLength;
 
-      int lineEnd = getLineEnd(endpoint, lineText, lineIndent, cells.length);
+      int lineEnd = endpoint.findNextSegment(cells.length);
       CharSequence text = lineText.subSequence(lineIndent, lineEnd);
 
       int brailleIndent = endpoint.findFirstBrailleOffset(lineIndent);

@@ -770,6 +770,21 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
+  public final int findNextSegment (int size) {
+    synchronized (this) {
+      int indent = getLineIndent();
+      int end = getAdjustedLineOffset(size, indent);
+      if (!ApplicationSettings.WORD_WRAP) return end;
+
+      CharSequence text = getLineText();
+      if (end == text.length()) return end;
+      if (text.charAt(end) == ' ') return end;
+
+      int index = text.toString().substring(indent, end).lastIndexOf(' ');
+      return (index == -1)? end: (indent + index + 1);
+    }
+  }
+
   public final boolean panRight () {
     Panner panner = new Panner() {
       @Override
@@ -788,7 +803,7 @@ public abstract class Endpoint {
           setLine(offset);
           indent = 0;
         } else {
-          indent = getAdjustedLineOffset(size);
+          indent = findNextSegment(size);
         }
 
         setLineIndent(indent);
