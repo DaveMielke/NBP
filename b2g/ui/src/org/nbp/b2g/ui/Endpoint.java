@@ -709,6 +709,65 @@ public abstract class Endpoint {
     return null;
   }
 
+  private final boolean isWordBreak (char character) {
+    return character == ' ';
+  }
+
+  public final int findPreviousSegment (int indent, int size) {
+    if (!ApplicationSettings.WORD_WRAP) {
+      return getAdjustedLineOffset(-size, indent);
+    }
+
+    synchronized (this) {
+      CharSequence text = getLineText();
+      int length = text.length();
+      if (indent > length) indent = length;
+
+      while (indent > 0) {
+        if (!isWordBreak(text.charAt(--indent))) {
+          indent += 1;
+          break;
+        }
+      }
+
+      if (indent == 0) return 0;
+      int segment = getAdjustedLineOffset(-size, indent);
+      if (segment == 0) return 0;
+
+      if (!isWordBreak(text.charAt(segment-1))) {
+        for (int index=segment; index<indent; index+=1) {
+          if (isWordBreak(text.charAt(index))) {
+            segment = index;
+            break;
+          }
+        }
+      }
+
+      for (int index=segment; index<indent; index+=1) {
+        if (!isWordBreak(text.charAt(index))) return index;
+      }
+
+      return segment;
+    }
+  }
+
+  public final int findNextSegment (int indent, int size) {
+    synchronized (this) {
+      int segment = getAdjustedLineOffset(size, indent);
+      if (!ApplicationSettings.WORD_WRAP) return segment;
+
+      CharSequence text = getLineText();
+      if (segment == text.length()) return segment;
+      if (isWordBreak(text.charAt(segment))) return segment;
+
+      for (int index=segment-1; index>=indent; index-=1) {
+        if (isWordBreak(text.charAt(index))) return index + 1;
+      }
+
+      return segment;
+    }
+  }
+
   private abstract class Panner {
     protected abstract boolean moveDisplay (int size);
     protected abstract int getLeaveMessage ();
@@ -728,22 +787,6 @@ public abstract class Endpoint {
       }
 
       return performAction(getLeaveAction());
-    }
-  }
-
-  public final int findPreviousSegment (int indent, int size) {
-    synchronized (this) {
-      if (indent == 0) return 0;
-
-      int segment = getAdjustedLineOffset(-size, indent);
-      if (!ApplicationSettings.WORD_WRAP) return segment;
-      CharSequence text = getLineText();
-
-      for (int index=segment; index<indent; index+=1) {
-        if (text.charAt(index) != ' ') return index;
-      }
-
-      return segment;
     }
   }
 
@@ -786,20 +829,6 @@ public abstract class Endpoint {
     return panner.pan();
   }
 
-  public final int findNextSegment (int indent, int size) {
-    synchronized (this) {
-      int segment = getAdjustedLineOffset(size, indent);
-      if (!ApplicationSettings.WORD_WRAP) return segment;
-
-      CharSequence text = getLineText();
-      if (segment == text.length()) return segment;
-      if (text.charAt(segment) == ' ') return segment;
-
-      int index = text.toString().substring(indent, segment).lastIndexOf(' ');
-      return (index == -1)? segment: (indent + index + 1);
-    }
-  }
-
   public final boolean panRight () {
     Panner panner = new Panner() {
       @Override
@@ -819,6 +848,15 @@ public abstract class Endpoint {
           indent = 0;
         } else {
           indent = findNextSegment(indent, size);
+
+          if (ApplicationSettings.WORD_WRAP) {
+            CharSequence text = getLineText();
+
+            while (indent < last) {
+              if (!isWordBreak(text.charAt(indent))) break;
+              indent += 1;
+            }
+          }
         }
 
         setLineIndent(indent);

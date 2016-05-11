@@ -43,6 +43,8 @@ public abstract class Controls {
   private final static LogSpeechControl logSpeechControl = new LogSpeechControl();
 
   private final static Control[] allControls = new Control[] {
+    wordWrapControl,
+
     longPressControl,
     reversePanningControl,
     oneHandControl,

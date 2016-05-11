@@ -24,6 +24,8 @@
   "Space+Dot8+Dots1245 (g)","|BrailleCodeNext|"
   "Space+Dots235 (6)","|LiteraryBrailleOn|"
   "Space+Dots236 (8)","|LiteraryBrailleOff|"
+  "Space+Dot7+Dots2456 (w)","WordWrapOff"
+  "Space+Dot8+Dots2456 (w)","WordWrapOn"
   "Backward+Dot1","|BrailleOff|"
   "Forward+Dot4","|BrailleOn|"
   "Backward+Dot2","|ReversePanningOff|"
