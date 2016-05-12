@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.bluetooth;
+package org.nbp.b2g.ui.remote;
 import org.nbp.b2g.ui.*;
 
 public class BaumBrailleDisplay extends BrailleDisplay {
