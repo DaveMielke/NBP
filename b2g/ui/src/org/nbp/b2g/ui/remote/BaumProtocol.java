@@ -15,15 +15,10 @@ public class BaumProtocol extends Protocol {
     ;
   }
 
-  private final byte[] inputBuffer = new byte[0X10];
+  private final byte[] inputBuffer = new byte[0X100];
   private InputState inputState;
   private int inputLength;
   private int inputCount;
-
-  @Override
-  public final void resetInput (boolean timeout) {
-    inputState = InputState.WAITING;
-  }
 
   private final boolean write (Channel channel, byte b) {
     if (b == ESCAPE) {
@@ -49,6 +44,7 @@ public class BaumProtocol extends Protocol {
 
   private final boolean write (byte response, byte[] bytes) {
     Channel channel = begin(response);
+    if (channel == null) return false;
 
     for (byte b : bytes) {
       if (!write(channel, b)) return false;
@@ -70,14 +66,59 @@ public class BaumProtocol extends Protocol {
     return write(response, bytes);
   }
 
+  private final boolean writeDeviceIdentity () {
+    return write((byte)0X84, getString("Conny", 16));
+  }
+
   private final boolean writeSerialNumber () {
     return write((byte)0X8A, getSerialNumber(8));
+  }
+
+  private final boolean writeCellCount () {
+    return write((byte)0X01, new byte[] {(byte)getCellCount()});
+  }
+
+  private final void writeCells () {
+    int count = getCellCount();
+    byte[] cells = new byte[count];
+
+    System.arraycopy(inputBuffer, 1, cells, 0, count);
+    remoteEndpoint.write(Braille.toString(cells));
+  }
+
+  @Override
+  public final boolean resetInput (boolean timeout) {
+    if (timeout) {
+      if (inputState == InputState.STARTED) {
+        if (inputCount > 0) {
+          if (inputBuffer[0] == 0X01) {
+            return writeCellCount();
+          }
+        }
+      }
+    }
+
+    inputState = InputState.WAITING;
+    return true;
   }
 
   private final boolean handleInput () {
     byte request = inputBuffer[0];
 
     switch (request) {
+      case 0X01:
+        if (inputCount == 1) {
+          inputLength += getCellCount();
+          return false;
+        }
+
+        writeCells();
+        break;
+
+      case (byte)0X84:
+        writeDeviceIdentity();
+        break;
+
       case (byte)0X8A:
         writeSerialNumber();
         break;

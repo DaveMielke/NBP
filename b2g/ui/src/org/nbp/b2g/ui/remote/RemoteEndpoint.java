@@ -19,6 +19,7 @@ public class RemoteEndpoint extends Endpoint {
     channel = new BluetoothChannel(this);
     protocol = new BaumProtocol(this);
 
+    write("offline");
     channel.start();
   }
 }

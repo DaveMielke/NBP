@@ -17,7 +17,8 @@ public abstract class Protocol {
     Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
   }
 
-  public void resetInput (boolean timeout) {
+  public boolean resetInput (boolean timeout) {
+    return true;
   }
 
   public boolean handleInput (byte b) {
@@ -31,17 +32,20 @@ public abstract class Protocol {
     return cellCount;
   }
 
+  protected final String getString (String string, int width) {
+    int length = string.length();
+    if (length >= width) return string.substring(length-width);
+
+    StringBuilder sb = new StringBuilder(string);
+    while (sb.length() < width) sb.append(' ');
+    return sb.toString();
+  }
+
   protected final String getSerialNumber () {
     return Build.SERIAL;
   }
 
   protected final String getSerialNumber (int width) {
-    String serialNumber = getSerialNumber();
-    int length = serialNumber.length();
-    if (length >= width) return serialNumber.substring(length-width);
-
-    StringBuilder sb = new StringBuilder(serialNumber);
-    while (sb.length() < width) sb.append(' ');
-    return sb.toString();
+    return getString(getSerialNumber(), width);
   }
 }

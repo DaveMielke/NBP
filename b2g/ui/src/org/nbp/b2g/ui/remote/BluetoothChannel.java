@@ -115,6 +115,7 @@ public class BluetoothChannel extends Channel implements Runnable {
 
     if (adapter != null) {
       while (true) {
+        remoteEndpoint.write("Bluetooth waiting");
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
