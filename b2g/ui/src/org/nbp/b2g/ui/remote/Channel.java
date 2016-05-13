@@ -12,7 +12,7 @@ import android.util.Log;
 public abstract class Channel {
   private final static String LOG_TAG = Channel.class.getName();
 
-  private final RemoteEndpoint remoteEndpoint;
+  protected final RemoteEndpoint remoteEndpoint;
 
   protected Channel (RemoteEndpoint endpoint) {
     remoteEndpoint = endpoint;
@@ -33,11 +33,11 @@ public abstract class Channel {
   }
 
   protected final void resetInput (boolean timeout) {
-    remoteEndpoint.resetInput(timeout);
+    remoteEndpoint.getProtocol().resetInput(timeout);
   }
 
   protected final boolean handleInput (byte b) {
-    return remoteEndpoint.handleInput(b);
+    return remoteEndpoint.getProtocol().handleInput(b);
   }
 
   private Timeout readTimeout = new Timeout(ApplicationParameters.REMOTE_READ_TIMEOUT, "remote-read-timeout") {

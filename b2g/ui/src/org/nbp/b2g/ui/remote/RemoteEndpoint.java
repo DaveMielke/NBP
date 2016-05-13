@@ -5,12 +5,12 @@ public class RemoteEndpoint extends Endpoint {
   private final Channel channel;
   private final Protocol protocol;
 
-  public final void resetInput (boolean timeout) {
-    protocol.resetInput(timeout);
+  public final Channel getChannel () {
+    return channel;
   }
 
-  public final boolean handleInput (byte b) {
-    return protocol.handleInput(b);
+  public final Protocol getProtocol () {
+    return protocol;
   }
 
   public RemoteEndpoint () {
