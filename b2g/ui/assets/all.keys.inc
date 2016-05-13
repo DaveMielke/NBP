@@ -54,3 +54,4 @@ include required.keys.inc
 include legacy.keys.inc
 include developer-all.keys.inc
 include phone.keys.inc
+include remote.keys.inc

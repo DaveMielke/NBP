@@ -5,7 +5,11 @@ public class RemoteEndpoint extends Endpoint {
   private final Channel channel;
   private final Protocol protocol;
 
-  public final boolean onByteReceived (byte b) {
+  public final void resetInput (boolean timeout) {
+    protocol.resetInput(timeout);
+  }
+
+  public final boolean handleInput (byte b) {
     return protocol.handleInput(b);
   }
 
@@ -14,5 +18,7 @@ public class RemoteEndpoint extends Endpoint {
 
     channel = new BluetoothChannel(this);
     protocol = new BaumProtocol(this);
+
+    channel.start();
   }
 }

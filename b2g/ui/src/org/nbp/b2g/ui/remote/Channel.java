@@ -18,6 +18,7 @@ public abstract class Channel {
     remoteEndpoint = endpoint;
   }
 
+  public abstract void start ();
   public abstract boolean write (byte b);
   public abstract boolean flush ();
 
@@ -31,18 +32,19 @@ public abstract class Channel {
     }
   }
 
-  protected final void resetInput (boolean readTimedOut) {
+  protected final void resetInput (boolean timeout) {
+    remoteEndpoint.resetInput(timeout);
   }
 
   protected final boolean handleInput (byte b) {
-    return remoteEndpoint.onByteReceived(b);
+    return remoteEndpoint.handleInput(b);
   }
 
-  private Timeout readTimeout = new Timeout(ApplicationParameters.BLUETOOTH_READ_TIMEOUT, "braille-display-read-timeout") {
+  private Timeout readTimeout = new Timeout(ApplicationParameters.REMOTE_READ_TIMEOUT, "remote-read-timeout") {
     @Override
     public void run () {
       synchronized (this) {
-        Log.w(LOG_TAG, "bluetooth read timeout");
+        Log.w(LOG_TAG, "remote read timeout");
         resetInput(true);
       }
     }
@@ -57,7 +59,7 @@ public abstract class Channel {
       try {
         b = stream.read();
       } catch (IOException exception) {
-        Log.w(LOG_TAG, "bluetooth input error: " + exception.getMessage());
+        Log.w(LOG_TAG, "remote input error: " + exception.getMessage());
         break;
       }
 
@@ -65,7 +67,7 @@ public abstract class Channel {
         readTimeout.cancel();
 
         if (b == -1) {
-          Log.w(LOG_TAG, "bluetooth end of input");
+          Log.w(LOG_TAG, "remote end of input");
           break;
         }
 

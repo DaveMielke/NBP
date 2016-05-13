@@ -28,7 +28,14 @@ public class BluetoothChannel extends Channel implements Runnable {
     "00001101-0000-1000-8000-00805F9B34FB"
   );
 
+  private Thread channelThread = null;
   private OutputStream outputStream = null;
+
+  @Override
+  public final void start () {
+    channelThread = new Thread(this, "bluetooth-braille-display");
+    channelThread.start();
+  }
 
   @Override
   public final boolean write (byte b) {

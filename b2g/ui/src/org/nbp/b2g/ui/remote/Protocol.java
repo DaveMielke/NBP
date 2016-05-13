@@ -16,9 +16,11 @@ public abstract class Protocol {
     Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
   }
 
-  public final boolean handleInput (byte b) {
+  public void resetInput (boolean timeout) {
+  }
+
+  public boolean handleInput (byte b) {
     logIgnoredByte(b);
     return true;
   }
-
 }
