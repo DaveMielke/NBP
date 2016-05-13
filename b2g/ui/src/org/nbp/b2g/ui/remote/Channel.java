@@ -32,8 +32,8 @@ public abstract class Channel {
     }
   }
 
-  protected final void resetInput (boolean timeout) {
-    remoteEndpoint.getProtocol().resetInput(timeout);
+  protected final boolean resetInput (boolean timeout) {
+    return remoteEndpoint.getProtocol().resetInput(timeout);
   }
 
   protected final boolean handleInput (byte b) {

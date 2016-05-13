@@ -8,6 +8,11 @@ public class BaumProtocol extends Protocol {
 
   private final static byte ESCAPE = Characters.CHAR_ESC;
 
+  private final static byte WRITE_CELLS     =       0X01;
+  private final static byte GET_KEYS        =       0X08;
+  private final static byte DEVICE_IDENTITY = (byte)0X84;
+  private final static byte SERIAL_NUMBER   = (byte)0X8A;
+
   private enum InputState {
     WAITING,
     STARTED,
@@ -67,23 +72,23 @@ public class BaumProtocol extends Protocol {
   }
 
   private final boolean writeDeviceIdentity () {
-    return write((byte)0X84, getString("Conny", 16));
+    return write(DEVICE_IDENTITY, getString("Conny", 16));
   }
 
   private final boolean writeSerialNumber () {
-    return write((byte)0X8A, getSerialNumber(8));
+    return write(SERIAL_NUMBER, getSerialNumber(8));
   }
 
   private final boolean writeCellCount () {
-    return write((byte)0X01, new byte[] {(byte)getCellCount()});
+    return write((byte)WRITE_CELLS, new byte[] {(byte)getCellCount()});
   }
 
-  private final void writeCells () {
+  private final boolean writeCells () {
     int count = getCellCount();
     byte[] cells = new byte[count];
 
     System.arraycopy(inputBuffer, 1, cells, 0, count);
-    remoteEndpoint.write(Braille.toString(cells));
+    return remoteEndpoint.write(Braille.toString(cells));
   }
 
   @Override
@@ -91,8 +96,13 @@ public class BaumProtocol extends Protocol {
     if (timeout) {
       if (inputState == InputState.STARTED) {
         if (inputCount > 0) {
-          if (inputBuffer[0] == 0X01) {
-            return writeCellCount();
+          switch (inputBuffer[0]) {
+            case WRITE_CELLS:
+              if (!writeCellCount()) return false;
+              break;
+
+            default:
+              break;
           }
         }
       }
@@ -106,7 +116,7 @@ public class BaumProtocol extends Protocol {
     byte request = inputBuffer[0];
 
     switch (request) {
-      case 0X01:
+      case WRITE_CELLS:
         if (inputCount == 1) {
           inputLength += getCellCount();
           return false;
@@ -115,11 +125,14 @@ public class BaumProtocol extends Protocol {
         writeCells();
         break;
 
-      case (byte)0X84:
+      case GET_KEYS:
+        break;
+
+      case DEVICE_IDENTITY:
         writeDeviceIdentity();
         break;
 
-      case (byte)0X8A:
+      case SERIAL_NUMBER:
         writeSerialNumber();
         break;
 
@@ -163,6 +176,7 @@ public class BaumProtocol extends Protocol {
         return handleInput();
 
       default:
+        Log.w(LOG_TAG, ("unsupported input state: " + inputState.name()));
         break;
     }
 
