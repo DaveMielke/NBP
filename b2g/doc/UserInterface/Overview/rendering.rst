@@ -79,7 +79,7 @@ Identifying an Unrecognized Character
 If you encounter a character that you don't recognize, then you can find out
 what it is by holding Dot7 while pressing the cursor routing key behind that
 character. This will cause a description of the character to be presented
-within a popup (see `Popups`_). For example, the description for the letter
+within a pop-up (see `Pop-ups`_). For example, the description for the letter
 ``s`` is::
 
   latin small letter s

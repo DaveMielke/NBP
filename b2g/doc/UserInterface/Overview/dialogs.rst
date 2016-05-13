@@ -19,10 +19,10 @@ include (but aren't limited to):
 A message is a single-line, read-only dialog. No navigation may be performed
 within it. It remains on the braille display for |message time|.
 
-Popups
-~~~~~~
+Pop-ups
+~~~~~~~
 
-Popups are used to present user-requested data as well as important system
+Pop-ups are used to present user-requested data as well as important system
 information. This includes (but isn't limited to):
 
 * The arrival of an Android notification.
@@ -34,7 +34,7 @@ information. This includes (but isn't limited to):
 
 * An `Action Chooser`_.
 
-A popup is a multi-line, read-only dialog. Normal navigation may be
+A pop-up is a multi-line, read-only dialog. Normal navigation may be
 performed within it. Dismiss it by pressing Enter. It's automatically dismissed
 if no navigation operations have been performed within it for |popup time|.
 
@@ -66,8 +66,8 @@ Text`_) so that it can be easily replaced.
 Action Chooser
 ~~~~~~~~~~~~~~
 
-An action chooser is a special kind of popup (see `Popups`_)
-that presents you with a list of actins
+An action chooser is a special kind of pop-up (see `Pop-ups`_)
+that presents you with a list of actions
 and lets you choose which one to perform.
 For places where it's used, see:
 

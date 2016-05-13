@@ -49,7 +49,7 @@ and they don't need to be at the beginning or end of the name.
 When you're finished typing, press the key combination
 for the shortcut action that you'd like to perform (see above).
 If the characters match more than one app
-then the list will be presented within a popup (see `Popups`_).
+then the list will be presented within a pop-up (see `Pop-ups`_).
 If this happens then navigate to the one you'd like to add or remove,
 and press Center.
 

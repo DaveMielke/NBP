@@ -77,7 +77,7 @@ Updating the User Interface
    to replace the currently-installed version with the new one.
 
 5) You'll be asked to consent that the |user interface|
-   can perform lots of priviletged system operations.
+   can perform lots of privileged system operations.
 
 6) The currently running version will be replaced by the new one.
    This involves restarting the |user interface|, so don't worry

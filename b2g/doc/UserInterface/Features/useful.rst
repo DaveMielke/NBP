@@ -26,8 +26,8 @@ Checking Status Indicators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can check various helpful status indicators by pressing Backward and
-Forward together. This will cause the indicators to be presented within a popup
-(see `Popups`_) that looks something like this::
+Forward together. This will cause the indicators to be presented within a pop-up
+(see `Pop-ups`_) that looks something like this::
 
   Alert: Airplane Mode
   Battery: 78% charging USB
