@@ -1,10 +1,24 @@
 package org.nbp.b2g.ui.remote;
 import org.nbp.b2g.ui.*;
 
-public class Protocol {
-  private final Endpoint endpoint;
+import android.util.Log;
 
-  protected Protocol (Endpoint endpoint) {
-    this.endpoint = endpoint;
+public abstract class Protocol {
+  private final static String LOG_TAG = Protocol.class.getName();
+
+  private final RemoteEndpoint remoteEndpoint;
+
+  protected Protocol (RemoteEndpoint endpoint) {
+    remoteEndpoint = endpoint;
   }
+
+  protected static void logIgnoredByte (byte b) {
+    Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
+  }
+
+  public final boolean handleInput (byte b) {
+    logIgnoredByte(b);
+    return true;
+  }
+
 }

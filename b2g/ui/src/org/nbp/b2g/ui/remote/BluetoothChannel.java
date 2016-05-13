@@ -2,17 +2,14 @@ package org.nbp.b2g.ui.remote;
 import org.nbp.b2g.ui.*;
 
 import java.io.IOException;
-import java.io.Closeable;
 
 import java.io.InputStream;
-import java.io.OutputStream;
-
 import java.io.BufferedInputStream;
+
+import java.io.OutputStream;
 import java.io.BufferedOutputStream;
 
 import java.util.UUID;
-
-import org.nbp.common.Timeout;
 
 import android.util.Log;
 
@@ -20,14 +17,23 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
 import android.bluetooth.BluetoothServerSocket;
 
-public class BluetoothChannel extends Thread {
+public class BluetoothChannel extends Channel implements Runnable {
   private final static String LOG_TAG = BluetoothChannel.class.getName();
+
+  public BluetoothChannel (RemoteEndpoint endpoint) {
+    super(endpoint);
+  }
+
+  private final static UUID SERIAL_PROFILE_UUID = UUID.fromString(
+    "00001101-0000-1000-8000-00805F9B34FB"
+  );
 
   private OutputStream outputStream = null;
 
-  protected boolean write (int b) {
+  @Override
+  public final boolean write (byte b) {
     try {
-      outputStream.write(b);
+      outputStream.write(b & BYTE_MASK);
       return true;
     } catch (IOException exception) {
       Log.w(LOG_TAG, "bluetooth write error: " + exception.getMessage());
@@ -36,7 +42,8 @@ public class BluetoothChannel extends Thread {
     return false;
   }
 
-  protected boolean flush () {
+  @Override
+  public final boolean flush () {
     try {
       outputStream.flush();
       return true;
@@ -46,29 +53,6 @@ public class BluetoothChannel extends Thread {
 
     return false;
   }
-
-  protected void resetInput (boolean readTimedOut) {
-  }
-
-  protected boolean handleInput (int b) {
-    return false;
-  }
-
-  protected static void logIgnoredByte (int b) {
-    Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
-  }
-
-  private static void closeObject (Closeable object, String description) {
-    try {
-      object.close();
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, String.format("%s close error: %s", description, exception.getMessage()), exception);
-    }
-  }
-
-  private final static UUID SERIAL_PROFILE_UUID = UUID.fromString(
-    "00001101-0000-1000-8000-00805F9B34FB"
-  );
 
   private static BluetoothServerSocket getServerSocket (BluetoothAdapter adapter) {
     try {
@@ -117,45 +101,6 @@ public class BluetoothChannel extends Thread {
     return null;
   }
 
-  private Timeout readTimeout = new Timeout(ApplicationParameters.BLUETOOTH_READ_TIMEOUT, "braille-display-read-timeout") {
-    @Override
-    public void run () {
-      synchronized (this) {
-        Log.w(LOG_TAG, "bluetooth read timeout");
-        resetInput(true);
-      }
-    }
-  };
-
-  private void handleInput (InputStream stream) {
-    resetInput(false);
-
-    while (true) {
-      int b;
-
-      try {
-        b = stream.read();
-        readTimeout.cancel();
-      } catch (IOException exception) {
-        Log.w(LOG_TAG, "bluetooth input error: " + exception.getMessage());
-        break;
-      }
-
-      if (b == -1) {
-        Log.w(LOG_TAG, "end of bluetooth input");
-        break;
-      }
-
-      if (!handleInput(b)) {
-        readTimeout.start();
-      } else if (!flush()) {
-        break;
-      }
-    }
-
-    readTimeout.cancel();
-  }
-
   @Override
   public final void run () {
     Log.d(LOG_TAG, "bluetooth server started");
@@ -163,21 +108,21 @@ public class BluetoothChannel extends Thread {
 
     if (adapter != null) {
       while (true) {
-        BluetoothServerSocket serverSocket = getServerSocket(adapter);
+        BluetoothServerSocket server = getServerSocket(adapter);
 
-        if (serverSocket != null) {
+        if (server != null) {
           Log.d(LOG_TAG, "bluetooth server listening");
-          BluetoothSocket sessionSocket = getSessionSocket(serverSocket);
+          BluetoothSocket session = getSessionSocket(server);
 
-          closeObject(serverSocket, "bluetooth server socket");
-          serverSocket = null;
+          closeObject(server, "bluetooth server socket");
+          server = null;
 
-          if (sessionSocket != null) {
+          if (session != null) {
             Log.d(LOG_TAG, "bluetooth server connected");
-            InputStream inputStream = getInputStream(sessionSocket);
+            InputStream inputStream = getInputStream(session);
 
             if (inputStream != null) {
-              if ((outputStream = getOutputStream(sessionSocket)) != null) {
+              if ((outputStream = getOutputStream(session)) != null) {
                 outputStream = new BufferedOutputStream(outputStream);
                 handleInput(new BufferedInputStream(inputStream));
 
@@ -186,10 +131,11 @@ public class BluetoothChannel extends Thread {
               }
 
               closeObject(inputStream, "bluetooth input stream");
+              inputStream = null;
             }
 
-            closeObject(sessionSocket, "bluetooth session socket");
-            sessionSocket = null;
+            closeObject(session, "bluetooth session socket");
+            session = null;
           }
         } else {
           ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
@@ -200,9 +146,5 @@ public class BluetoothChannel extends Thread {
     }
 
     Log.d(LOG_TAG, "bluetooth server stopped");
-  }
-
-  public BluetoothChannel () {
-    super("bluetooth-braille-display");
   }
 }
