@@ -1,21 +1,51 @@
-.. csv-table:: Speech Operations
-  :header: "Keys", "Description"
+Forward+VolumeDown
+  |SpeechOff|
 
-  "Forward+VolumeDown","|SpeechOff|"
-  "Forward+VolumeUp","|SpeechOn|"
-  "Backward+VolumeDown","|SleepTalkOff|"
-  "Backward+VolumeUp","|SleepTalkOn|"
-  "Dot1+Left","|StopSpeaking|"
-  "Dot1+Right","|SayLine|"
-  "Dot1+Up","|SayBefore|"
-  "Dot1+Down","|SayAfter|"
-  "Dot1+Center","|SayAll|"
-  "Dot1+VolumeDown","|SpeakSofter|"
-  "Dot1+VolumeUp","|SpeakLouder|"
-  "Dot2+VolumeDown","|SpeakSlower|"
-  "Dot2+VolumeUp","|SpeakFaster|"
-  "Dot3+VolumeDown","|SpeakLower|"
-  "Dot3+VolumeUp","|SpeakHigher|"
-  "Dot7+VolumeDown","|SpeakLeft|"
-  "Dot7+VolumeUp","|SpeakRight|"
+Forward+VolumeUp
+  |SpeechOn|
+
+Backward+VolumeDown
+  |SleepTalkOff|
+
+Backward+VolumeUp
+  |SleepTalkOn|
+
+Dot1+Left
+  |StopSpeaking|
+
+Dot1+Right
+  |SayLine|
+
+Dot1+Up
+  |SayBefore|
+
+Dot1+Down
+  |SayAfter|
+
+Dot1+Center
+  |SayAll|
+
+Dot1+VolumeDown
+  |SpeakSofter|
+
+Dot1+VolumeUp
+  |SpeakLouder|
+
+Dot2+VolumeDown
+  |SpeakSlower|
+
+Dot2+VolumeUp
+  |SpeakFaster|
+
+Dot3+VolumeDown
+  |SpeakLower|
+
+Dot3+VolumeUp
+  |SpeakHigher|
+
+Dot7+VolumeDown
+  |SpeakLeft|
+
+Dot7+VolumeUp
+  |SpeakRight|
 

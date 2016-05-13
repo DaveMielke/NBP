@@ -1,39 +1,105 @@
-.. csv-table:: Common Operations
-  :header: "Keys", "Description"
+Dot8
+  |Enter|
 
-  "Dot8","|Enter|"
-  "Backward","|PanLeft|"
-  "Forward","|PanRight|"
-  "Left","|MoveLeft|"
-  "Right","|MoveRight|"
-  "Up","|MoveUp|"
-  "Down","|MoveDown|"
-  "Space+Left","|ScrollLeft|"
-  "Space+Right","|ScrollRight|"
-  "Space+Up","|ScrollUp|"
-  "Space+Down","|ScrollDown|"
-  "Cursor","|CursorKey|"
-  "Dot7+Cursor","|DescribeCharacter|"
-  "Dot3+Cursor","|DescribeHighlighting|"
-  "Dot8+Cursor","|SetLeft|"
-  "Space+Dots123","|ToTextStart|"
-  "Space+Dots456","|ToTextEnd|"
-  "Space+Dot8+Dots14 (c)","|CopyToClipboard|"
-  "Space+Dots1245 (g)","|BrailleCodeConfirm|"
-  "Space+Dot7+Dots1245 (g)","|BrailleCodePrevious|"
-  "Space+Dot8+Dots1245 (g)","|BrailleCodeNext|"
-  "Space+Dots235 (6)","|LiteraryBrailleOn|"
-  "Space+Dots236 (8)","|LiteraryBrailleOff|"
-  "Space+Dot7+Dots2456 (w)","WordWrapOff"
-  "Space+Dot8+Dots2456 (w)","WordWrapOn"
-  "Backward+Dot1","|BrailleOff|"
-  "Forward+Dot4","|BrailleOn|"
-  "Backward+Dot2","|ReversePanningOff|"
-  "Forward+Dot5","|ReversePanningOn|"
-  "Backward+Dot3","|LongPressOff|"
-  "Forward+Dot6","|LongPressOn|"
-  "Backward+Dot7","|OneHandOff|"
-  "Forward+Dot8","|OneHandOn|"
-  "Backward+Forward","|DescribeIndicators|"
-  "Space+Dots12345678","|Null|"
+Backward
+  |PanLeft|
+
+Forward
+  |PanRight|
+
+Left
+  |MoveLeft|
+
+Right
+  |MoveRight|
+
+Up
+  |MoveUp|
+
+Down
+  |MoveDown|
+
+Space+Left
+  |ScrollLeft|
+
+Space+Right
+  |ScrollRight|
+
+Space+Up
+  |ScrollUp|
+
+Space+Down
+  |ScrollDown|
+
+Cursor
+  |CursorKey|
+
+Dot7+Cursor
+  |DescribeCharacter|
+
+Dot3+Cursor
+  |DescribeHighlighting|
+
+Dot8+Cursor
+  |SetLeft|
+
+Space+Dots123
+  |ToTextStart|
+
+Space+Dots456
+  |ToTextEnd|
+
+Space+Dot8+Dots14 (c)
+  |CopyToClipboard|
+
+Space+Dots1245 (g)
+  |BrailleCodeConfirm|
+
+Space+Dot7+Dots1245 (g)
+  |BrailleCodePrevious|
+
+Space+Dot8+Dots1245 (g)
+  |BrailleCodeNext|
+
+Space+Dots235 (6)
+  |LiteraryBrailleOn|
+
+Space+Dots236 (8)
+  |LiteraryBrailleOff|
+
+Space+Dot7+Dots2456 (w)
+  WordWrapOff
+
+Space+Dot8+Dots2456 (w)
+  WordWrapOn
+
+Backward+Dot1
+  |BrailleOff|
+
+Forward+Dot4
+  |BrailleOn|
+
+Backward+Dot2
+  |ReversePanningOff|
+
+Forward+Dot5
+  |ReversePanningOn|
+
+Backward+Dot3
+  |LongPressOff|
+
+Forward+Dot6
+  |LongPressOn|
+
+Backward+Dot7
+  |OneHandOff|
+
+Forward+Dot8
+  |OneHandOn|
+
+Backward+Forward
+  |DescribeIndicators|
+
+Space+Dots12345678
+  |Null|
 

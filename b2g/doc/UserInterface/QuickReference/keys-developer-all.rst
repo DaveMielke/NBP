@@ -1,28 +1,72 @@
-.. csv-table:: Common Developer Operations
-  :header: "Keys", "Description"
+Forward+Backward+Dots1245+LongPress
+  |DeveloperOn|
 
-  "Forward+Backward+Dots1245+LongPress","|DeveloperOn|"
-  "Forward+Backward+Dots1245","|DeveloperOff|"
-  "Space+Dots78+Dots136 (u)","|LogUpdatesOn|"
-  "Space+Dots78+Dots136 (u+LongPress)","|LogUpdatesOff|"
-  "Space+Dots78+Dots13 (k)","|LogKeyboardOn|"
-  "Space+Dots78+Dots13 (k+LongPress)","|LogKeyboardOff|"
-  "Space+Dots78+Dot1 (a)","|LogActionsOn|"
-  "Space+Dots78+Dot1 (a+LongPress)","|LogActionsOff|"
-  "Space+Dots78+Dots1345 (n)","|LogNavigationOn|"
-  "Space+Dots78+Dots1345 (n+LongPress)","|LogNavigationOff|"
-  "Space+Dots78+Dots1245 (g)","|LogGesturesOn|"
-  "Space+Dots78+Dots1245 (g+LongPress)","|LogGesturesOff|"
-  "Space+Dots78+Dots12 (b)","|LogBrailleOn|"
-  "Space+Dots78+Dots12 (b+LongPress)","|LogBrailleOff|"
-  "Space+Dots78+Dots234 (s)","|LogSpeechOn|"
-  "Space+Dots78+Dots234 (s+LongPress)","|LogSpeechOff|"
-  "Space+Dots8+Dots135 (o)","|SaveSettings|"
-  "Space+Dots7+Dots135 (o)","|RestoreSettings|"
-  "Space+Dots78+Dots135 (o)","|ResetSettings|"
-  "Space+Dots78+Dots1346 (x)","|ForceCrash|"
-  "Forward+Space+Dot1","|LogsOn|"
-  "Forward+Space+Dot2","|ClearAndroidLog|"
-  "Forward+Space+Dot3","|SendAndroidLog|"
-  "Forward+Space+Dot7","|LogsOff|"
+Forward+Backward+Dots1245
+  |DeveloperOff|
+
+Space+Dots78+Dots136 (u)
+  |LogUpdatesOn|
+
+Space+Dots78+Dots136 (u+LongPress)
+  |LogUpdatesOff|
+
+Space+Dots78+Dots13 (k)
+  |LogKeyboardOn|
+
+Space+Dots78+Dots13 (k+LongPress)
+  |LogKeyboardOff|
+
+Space+Dots78+Dot1 (a)
+  |LogActionsOn|
+
+Space+Dots78+Dot1 (a+LongPress)
+  |LogActionsOff|
+
+Space+Dots78+Dots1345 (n)
+  |LogNavigationOn|
+
+Space+Dots78+Dots1345 (n+LongPress)
+  |LogNavigationOff|
+
+Space+Dots78+Dots1245 (g)
+  |LogGesturesOn|
+
+Space+Dots78+Dots1245 (g+LongPress)
+  |LogGesturesOff|
+
+Space+Dots78+Dots12 (b)
+  |LogBrailleOn|
+
+Space+Dots78+Dots12 (b+LongPress)
+  |LogBrailleOff|
+
+Space+Dots78+Dots234 (s)
+  |LogSpeechOn|
+
+Space+Dots78+Dots234 (s+LongPress)
+  |LogSpeechOff|
+
+Space+Dots8+Dots135 (o)
+  |SaveSettings|
+
+Space+Dots7+Dots135 (o)
+  |RestoreSettings|
+
+Space+Dots78+Dots135 (o)
+  |ResetSettings|
+
+Space+Dots78+Dots1346 (x)
+  |ForceCrash|
+
+Forward+Space+Dot1
+  |LogsOn|
+
+Forward+Space+Dot2
+  |ClearAndroidLog|
+
+Forward+Space+Dot3
+  |SendAndroidLog|
+
+Forward+Space+Dot7
+  |LogsOff|
 
