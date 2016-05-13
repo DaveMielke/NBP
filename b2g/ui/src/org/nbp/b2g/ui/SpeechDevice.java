@@ -309,6 +309,6 @@ public class SpeechDevice {
 
   public SpeechDevice () {
     audioManager = ApplicationContext.getAudioManager();
-    if (ApplicationParameters.ENABLE_SPEECH_DEVICE) ttsStart();
+    ttsStart();
   }
 }

@@ -19,9 +19,6 @@ public abstract class ApplicationParameters extends CommonParameters {
   public final static long MAINTENANCE_REBOOT_DELAY = 1000; // milliseconds
   public final static Louis.LogLevel LIBLOUIS_LOG_LEVEL = Louis.LogLevel.INFO;
 
-  public final static boolean ENABLE_BLUETOOTH_SERVER = false;
-  public final static boolean ENABLE_SPEECH_DEVICE = true;
-
   public final static boolean ENABLE_KEYBOARD_MONITOR = true;
   public final static boolean ENABLE_POWER_BUTTON_MONITOR = true;
   public final static boolean CHORDS_SEND_SYSTEM_KEYS = true;

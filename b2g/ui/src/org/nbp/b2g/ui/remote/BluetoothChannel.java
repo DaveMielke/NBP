@@ -20,8 +20,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
 import android.bluetooth.BluetoothServerSocket;
 
-public abstract class BrailleDisplay extends Thread {
-  private final static String LOG_TAG = BrailleDisplay.class.getName();
+public class BluetoothChannel extends Thread {
+  private final static String LOG_TAG = BluetoothChannel.class.getName();
 
   private OutputStream outputStream = null;
 
@@ -47,8 +47,12 @@ public abstract class BrailleDisplay extends Thread {
     return false;
   }
 
-  protected abstract void resetInput (boolean readTimedOut);
-  protected abstract boolean handleInput (int b);
+  protected void resetInput (boolean readTimedOut) {
+  }
+
+  protected boolean handleInput (int b) {
+    return false;
+  }
 
   protected static void logIgnoredByte (int b) {
     Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
@@ -198,7 +202,7 @@ public abstract class BrailleDisplay extends Thread {
     Log.d(LOG_TAG, "bluetooth server stopped");
   }
 
-  public BrailleDisplay () {
+  public BluetoothChannel () {
     super("bluetooth-braille-display");
   }
 }
