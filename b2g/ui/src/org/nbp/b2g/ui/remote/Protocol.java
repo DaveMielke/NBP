@@ -21,7 +21,10 @@ public abstract class Protocol {
     Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
   }
 
-  public boolean resetInput (boolean timeout) {
+  public void resetInput () {
+  }
+
+  public boolean handleTimeout () {
     return true;
   }
 
@@ -30,9 +33,9 @@ public abstract class Protocol {
     return true;
   }
 
-  private int cellCount = 0;
+  private Integer cellCount = null;
   protected final int getCellCount () {
-    if (cellCount == 0) cellCount = Devices.braille.get().getLength();
+    if (cellCount == null) cellCount = Devices.braille.get().getLength();
     return cellCount;
   }
 

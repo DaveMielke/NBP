@@ -32,8 +32,12 @@ public abstract class Channel {
     }
   }
 
-  protected final boolean resetInput (boolean timeout) {
-    return remoteEndpoint.getProtocol().resetInput(timeout);
+  protected final void resetInput () {
+    remoteEndpoint.getProtocol().resetInput();
+  }
+
+  protected final boolean handleTimeout () {
+    return remoteEndpoint.getProtocol().handleTimeout();
   }
 
   protected final boolean handleInput (byte b) {
@@ -45,13 +49,14 @@ public abstract class Channel {
     public void run () {
       synchronized (this) {
         Log.w(LOG_TAG, "remote read timeout");
-        resetInput(true);
+        handleTimeout();
+        resetInput();
       }
     }
   };
 
   protected final void handleInput (InputStream stream) {
-    resetInput(false);
+    resetInput();
 
     while (true) {
       int b;

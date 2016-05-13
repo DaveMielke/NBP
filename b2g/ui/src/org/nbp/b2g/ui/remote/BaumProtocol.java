@@ -43,6 +43,21 @@ public class BaumProtocol extends Protocol {
     joystick
   };
 
+  private final int getKeyGroupSize (int count) {
+    return (count + 7) / 8;
+  }
+
+  private Integer routingKeysSize = null;
+  private final int getRoutingKeysSize () {
+    if (routingKeysSize == null) {
+      int size = getKeyGroupSize(getCellCount());
+      if ((size > 2) && (size < 5)) size = 5;
+      routingKeysSize = size;
+    }
+
+    return routingKeysSize;
+  }
+
   private final boolean send (Channel channel, byte b) {
     if (b == ESCAPE) {
       if (!channel.send(ESCAPE)) {
@@ -65,18 +80,22 @@ public class BaumProtocol extends Protocol {
     return null;
   }
 
-  private final boolean send (byte response, byte[] bytes) {
+  private final boolean send (byte response, byte[] bytes, int end) {
     if (bytes == null) return true;
-    if (bytes.length == 0) return true;
+    if (end == 0) return true;
 
     Channel channel = begin(response);
     if (channel == null) return false;
 
-    for (byte b : bytes) {
-      if (!send(channel, b)) return false;
+    for (int index=0; index<end; index+=1) {
+      if (!send(channel, bytes[index])) return false;
     }
 
     return true;
+  }
+
+  private final boolean send (byte response, byte[] bytes) {
+    return send(response, bytes, bytes.length);
   }
 
   private final boolean sendCellCount () {
@@ -84,7 +103,7 @@ public class BaumProtocol extends Protocol {
   }
 
   private final boolean sendRoutingKeys () {
-    return send(ROUTING_KEYS, routingKeys);
+    return send(ROUTING_KEYS, routingKeys, getRoutingKeysSize());
   }
 
   private final boolean sendDisplayKeys () {
@@ -143,26 +162,32 @@ public class BaumProtocol extends Protocol {
   }
 
   @Override
-  public final boolean resetInput (boolean timeout) {
-    boolean ok = true;
+  public final void resetInput () {
+    inputState = InputState.WAITING;
+  }
 
-    if (timeout) {
-      if (inputState == InputState.STARTED) {
-        if (inputCount > 0) {
-          switch (inputBuffer[0]) {
-            case WRITE_CELLS:
-              if (!sendCellCount()) ok = false;
-              break;
+  @Override
+  public final boolean handleTimeout () {
+    if (inputState != InputState.WAITING) {
+      if (inputCount > 0) {
+        switch (inputBuffer[0]) {
+          case WRITE_CELLS:
+            if (!sendCellCount()) return false;
+            break;
 
-            default:
-              break;
-          }
+          default:
+            break;
         }
       }
     }
 
-    inputState = InputState.WAITING;
-    return ok;
+    return true;
+  }
+
+  private final void startInput () {
+    inputState = InputState.STARTED;
+    inputLength = 1;
+    inputCount = 0;
   }
 
   private final boolean handleInput () {
@@ -201,7 +226,7 @@ public class BaumProtocol extends Protocol {
         break;
     }
 
-    resetInput(false);
+    resetInput();
     return true;
   }
 
@@ -212,9 +237,7 @@ public class BaumProtocol extends Protocol {
     switch (inputState) {
       case WAITING:
         if (isEscape) {
-          inputState = InputState.STARTED;
-          inputLength = 1;
-          inputCount = 0;
+          startInput();
           return false;
         }
 
@@ -222,6 +245,12 @@ public class BaumProtocol extends Protocol {
         return true;
 
       case ESCAPE:
+        if (!isEscape) {
+          handleTimeout();
+          startInput();
+          return handleInput(b);
+        }
+
         inputState = InputState.STARTED;
         isEscape = false;
 
@@ -240,7 +269,7 @@ public class BaumProtocol extends Protocol {
         break;
     }
 
-    resetInput(false);
+    resetInput();
     return true;
   }
 
