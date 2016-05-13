@@ -2,12 +2,12 @@ Braille-only Dialogs
 --------------------
 
 A number of braille-only dialogs are used in order to directly communicate to
-or interact with the user. They don't appear on an external video monitor.
+or interact with you. They don't appear on an external video monitor.
 
 Messages
 ~~~~~~~~
 
-Messages are used to give feedback to the user for significant events. These
+Messages are used to give you feedback for significant events. These
 include (but aren't limited to):
 
 * The successful changing of a setting.
@@ -41,7 +41,7 @@ if no navigation operations have been performed within it for |popup time|.
 Prompts
 ~~~~~~~
 
-Prompts are used to request information from the user. This includes (but isn't
+Prompts are used to request information from you. This includes (but isn't
 limited to):
 
 * Requesting the value of a Unicode character (see `Indirectly Typing Any

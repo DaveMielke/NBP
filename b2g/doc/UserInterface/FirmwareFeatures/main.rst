@@ -4,7 +4,7 @@ Firmware Features
 Status Alerts
 -------------
 
-A high-pitched beep (|beep frequency|) is used to alert the user to a number of
+A high-pitched beep (|beep frequency|) is used to alert you to a number of
 firmware-detected states.
 
 .. table:: Beep Lengths
