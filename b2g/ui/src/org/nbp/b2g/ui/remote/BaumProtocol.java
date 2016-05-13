@@ -98,6 +98,10 @@ public class BaumProtocol extends Protocol {
     return send(response, bytes, bytes.length);
   }
 
+  private final boolean sendErrorCode (int code) {
+    return send(ERROR_CODE, new byte[] {(byte)code});
+  }
+
   private final boolean sendCellCount () {
     return send(WRITE_CELLS, new byte[] {(byte)getCellCount()});
   }
@@ -142,7 +146,7 @@ public class BaumProtocol extends Protocol {
   }
 
   private final boolean sendDeviceIdentity () {
-    return send(DEVICE_IDENTITY, getString("Conny", 16));
+    return send(DEVICE_IDENTITY, getString("Conny (NBP B2G)", 16));
   }
 
   private final boolean sendSerialNumber () {
@@ -222,7 +226,7 @@ public class BaumProtocol extends Protocol {
 
       default:
         Log.w(LOG_TAG, String.format("unsupported request: %02X", request));
-        ok = true;
+        ok = sendErrorCode(0X14);
         break;
     }
 
