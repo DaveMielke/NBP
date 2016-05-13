@@ -3,6 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import android.util.Log;
 import android.os.Build;
+import android.bluetooth.BluetoothAdapter;
 
 public abstract class Protocol {
   private final static String LOG_TAG = Protocol.class.getName();
@@ -11,6 +12,9 @@ public abstract class Protocol {
 
   protected Protocol (RemoteEndpoint endpoint) {
     remoteEndpoint = endpoint;
+  }
+
+  public void clearKeys () {
   }
 
   protected static void logIgnoredByte (byte b) {
@@ -33,8 +37,11 @@ public abstract class Protocol {
   }
 
   protected final String getString (String string, int width) {
+    if (string == null) return null;
+
     int length = string.length();
-    if (length >= width) return string.substring(length-width);
+    if (length == width) return string;
+    if (length > width) return string.substring(length-width);
 
     StringBuilder sb = new StringBuilder(string);
     while (sb.length() < width) sb.append(' ');
@@ -42,10 +49,23 @@ public abstract class Protocol {
   }
 
   protected final String getSerialNumber () {
-    return Build.SERIAL;
+    String serialNumber = Build.SERIAL;
+    if (serialNumber == null) return null;
+    if (serialNumber.equals(Build.UNKNOWN)) return null;
+    return serialNumber;
   }
 
   protected final String getSerialNumber (int width) {
     return getString(getSerialNumber(), width);
+  }
+
+  protected final String getBluetoothName () {
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+    if (adapter == null) return null;
+    return adapter.getName();
+  }
+
+  protected final String getBluetoothName (int width) {
+    return getString(getBluetoothName(), width);
   }
 }

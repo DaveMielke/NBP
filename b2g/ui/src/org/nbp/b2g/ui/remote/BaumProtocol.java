@@ -10,8 +10,14 @@ public class BaumProtocol extends Protocol {
 
   private final static byte WRITE_CELLS     =       0X01;
   private final static byte GET_KEYS        =       0X08;
+  private final static byte ROUTING_KEYS    =       0X22;
+  private final static byte DISPLAY_KEYS    =       0X24;
+  private final static byte ENTRY_KEYS      =       0X33;
+  private final static byte JOYSTICK        =       0X34;
+  private final static byte ERROR_CODE      =       0X40;
   private final static byte DEVICE_IDENTITY = (byte)0X84;
   private final static byte SERIAL_NUMBER   = (byte)0X8A;
+  private final static byte BLUETOOTH_NAME  = (byte)0X8C;
 
   private enum InputState {
     WAITING,
@@ -25,21 +31,33 @@ public class BaumProtocol extends Protocol {
   private int inputLength;
   private int inputCount;
 
-  private final boolean write (Channel channel, byte b) {
+  private final byte[] routingKeys = new byte[11];
+  private final byte[] displayKeys = new byte[1];
+  private final byte[] entryKeys = new byte[2];
+  private final byte[] joystick = new byte[1];
+
+  private final byte[][] keyGroups = new byte[][] {
+    routingKeys,
+    displayKeys,
+    entryKeys,
+    joystick
+  };
+
+  private final boolean send (Channel channel, byte b) {
     if (b == ESCAPE) {
-      if (!channel.write(ESCAPE)) {
+      if (!channel.send(ESCAPE)) {
         return false;
       }
     }
 
-    return channel.write(b);
+    return channel.send(b);
   }
 
   private final Channel begin (byte response) {
     Channel channel = remoteEndpoint.getChannel();
 
-    if (channel.write(ESCAPE)) {
-      if (write(channel, response)) {
+    if (channel.send(ESCAPE)) {
+      if (send(channel, response)) {
         return channel;
       }
     }
@@ -47,18 +65,51 @@ public class BaumProtocol extends Protocol {
     return null;
   }
 
-  private final boolean write (byte response, byte[] bytes) {
+  private final boolean send (byte response, byte[] bytes) {
+    if (bytes == null) return true;
+    if (bytes.length == 0) return true;
+
     Channel channel = begin(response);
     if (channel == null) return false;
 
     for (byte b : bytes) {
-      if (!write(channel, b)) return false;
+      if (!send(channel, b)) return false;
     }
 
     return true;
   }
 
-  private final boolean write (byte response, String string) {
+  private final boolean sendCellCount () {
+    return send(WRITE_CELLS, new byte[] {(byte)getCellCount()});
+  }
+
+  private final boolean sendRoutingKeys () {
+    return send(ROUTING_KEYS, routingKeys);
+  }
+
+  private final boolean sendDisplayKeys () {
+    return send(DISPLAY_KEYS, displayKeys);
+  }
+
+  private final boolean sendEntryKeys () {
+    return send(ENTRY_KEYS, entryKeys);
+  }
+
+  private final boolean sendJoystick () {
+    return send(JOYSTICK, joystick);
+  }
+
+  private final boolean sendAllKeys () {
+    return sendRoutingKeys()
+        && sendDisplayKeys()
+        && sendEntryKeys()
+        && sendJoystick()
+        ;
+  }
+
+  private final boolean send (byte response, String string) {
+    if (string == null) return true;
+
     int length = string.length();
     byte[] bytes = new byte[length];
 
@@ -68,19 +119,19 @@ public class BaumProtocol extends Protocol {
       bytes[index] = (byte)character;
     }
 
-    return write(response, bytes);
+    return send(response, bytes);
   }
 
-  private final boolean writeDeviceIdentity () {
-    return write(DEVICE_IDENTITY, getString("Conny", 16));
+  private final boolean sendDeviceIdentity () {
+    return send(DEVICE_IDENTITY, getString("Conny", 16));
   }
 
-  private final boolean writeSerialNumber () {
-    return write(SERIAL_NUMBER, getSerialNumber(8));
+  private final boolean sendSerialNumber () {
+    return send(SERIAL_NUMBER, getSerialNumber(8));
   }
 
-  private final boolean writeCellCount () {
-    return write((byte)WRITE_CELLS, new byte[] {(byte)getCellCount()});
+  private final boolean sendBluetoothName () {
+    return send(BLUETOOTH_NAME, getBluetoothName(14));
   }
 
   private final boolean writeCells () {
@@ -93,12 +144,14 @@ public class BaumProtocol extends Protocol {
 
   @Override
   public final boolean resetInput (boolean timeout) {
+    boolean ok = true;
+
     if (timeout) {
       if (inputState == InputState.STARTED) {
         if (inputCount > 0) {
           switch (inputBuffer[0]) {
             case WRITE_CELLS:
-              if (!writeCellCount()) return false;
+              if (!sendCellCount()) ok = false;
               break;
 
             default:
@@ -109,10 +162,11 @@ public class BaumProtocol extends Protocol {
     }
 
     inputState = InputState.WAITING;
-    return true;
+    return ok;
   }
 
   private final boolean handleInput () {
+    boolean ok;
     byte request = inputBuffer[0];
 
     switch (request) {
@@ -122,22 +176,28 @@ public class BaumProtocol extends Protocol {
           return false;
         }
 
-        writeCells();
+        ok = writeCells();
         break;
 
       case GET_KEYS:
+        ok = sendAllKeys();
         break;
 
       case DEVICE_IDENTITY:
-        writeDeviceIdentity();
+        ok = sendDeviceIdentity();
         break;
 
       case SERIAL_NUMBER:
-        writeSerialNumber();
+        ok = sendSerialNumber();
+        break;
+
+      case BLUETOOTH_NAME:
+        ok = sendBluetoothName();
         break;
 
       default:
         Log.w(LOG_TAG, String.format("unsupported request: %02X", request));
+        ok = true;
         break;
     }
 
@@ -182,6 +242,14 @@ public class BaumProtocol extends Protocol {
 
     resetInput(false);
     return true;
+  }
+
+  @Override
+  public void clearKeys () {
+    for (byte[] keys : keyGroups) {
+      int length = keys.length;
+      for (int index=0; index<length; index+=1) keys[index] = 0;
+    }
   }
 
   public BaumProtocol (RemoteEndpoint endpoint) {

@@ -13,6 +13,12 @@ public class RemoteEndpoint extends Endpoint {
     return protocol;
   }
 
+  @Override
+  public void onForeground () {
+    super.onForeground();
+    protocol.clearKeys();
+  }
+
   public RemoteEndpoint () {
     super("remote");
 

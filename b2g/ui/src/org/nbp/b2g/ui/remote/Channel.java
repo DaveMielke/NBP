@@ -19,7 +19,7 @@ public abstract class Channel {
   }
 
   public abstract void start ();
-  public abstract boolean write (byte b);
+  public abstract boolean send (byte b);
   public abstract boolean flush ();
 
   protected final static int BYTE_MASK = 0XFF;
