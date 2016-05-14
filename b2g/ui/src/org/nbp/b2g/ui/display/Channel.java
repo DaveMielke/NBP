@@ -9,17 +9,35 @@ import org.nbp.common.Timeout;
 
 import android.util.Log;
 
-public abstract class Channel {
+public abstract class Channel implements Runnable {
   private final static String LOG_TAG = Channel.class.getName();
 
+  private Thread channelThread = null;
   protected final DisplayEndpoint displayEndpoint;
 
   protected Channel (DisplayEndpoint endpoint) {
     displayEndpoint = endpoint;
   }
 
-  public abstract void start ();
-  public abstract void stop ();
+  public final  boolean start () {
+    synchronized (this) {
+      if (channelThread != null) return false;
+      Log.d(LOG_TAG, "starting channel");
+      channelThread = new Thread(this, "braille-display-channel");
+      channelThread.start();
+      return true;
+    }
+  }
+
+  public final boolean stop () {
+    synchronized (this) {
+      if (channelThread == null) return false;
+      Log.d(LOG_TAG, "stopping channel");
+      channelThread.interrupt();
+      channelThread = null;
+      return true;
+    }
+  }
 
   public abstract boolean send (byte b);
   public abstract boolean flush ();
@@ -60,7 +78,7 @@ public abstract class Channel {
   protected final void handleInput (InputStream stream) {
     resetInput();
 
-    while (true) {
+    while (!Thread.interrupted()) {
       int b;
 
       try {

@@ -17,7 +17,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
 import android.bluetooth.BluetoothServerSocket;
 
-public class BluetoothChannel extends Channel implements Runnable {
+public class BluetoothChannel extends Channel {
   private final static String LOG_TAG = BluetoothChannel.class.getName();
 
   public BluetoothChannel (DisplayEndpoint endpoint) {
@@ -28,18 +28,7 @@ public class BluetoothChannel extends Channel implements Runnable {
     "00001101-0000-1000-8000-00805F9B34FB"
   );
 
-  private Thread channelThread = null;
   private OutputStream outputStream = null;
-
-  @Override
-  public final void start () {
-    channelThread = new Thread(this, "bluetooth-braille-display");
-    channelThread.start();
-  }
-
-  @Override
-  public final void stop () {
-  }
 
   @Override
   public final boolean send (byte b) {
@@ -49,7 +38,7 @@ public class BluetoothChannel extends Channel implements Runnable {
       outputStream.write(b & BYTE_MASK);
       return true;
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "bluetooth write error: " + exception.getMessage());
+      Log.w(LOG_TAG, ("Bluetooth channel write error: " + exception.getMessage()));
     }
 
     return false;
@@ -61,7 +50,7 @@ public class BluetoothChannel extends Channel implements Runnable {
       outputStream.flush();
       return true;
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "bluetooth flush error: " + exception.getMessage());
+      Log.w(LOG_TAG, ("Bluetooth channel flush error: " + exception.getMessage()));
     }
 
     return false;
@@ -78,7 +67,7 @@ public class BluetoothChannel extends Channel implements Runnable {
         return adapter.listenUsingInsecureRfcommWithServiceRecord(name, uuid);
       }
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "bluetooth server socket creation error: " + exception.getMessage());
+      Log.w(LOG_TAG, ("Bluetooth channel server creation error: " + exception.getMessage()));
     }
 
     return null;
@@ -88,7 +77,7 @@ public class BluetoothChannel extends Channel implements Runnable {
     try {
       return server.accept();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "bluetooth sdession socket creation error: " + exception.getMessage());
+      Log.w(LOG_TAG, ("Bluetooth channel sdession creation error: " + exception.getMessage()));
     }
 
     return null;
@@ -98,7 +87,7 @@ public class BluetoothChannel extends Channel implements Runnable {
     try {
       return socket.getInputStream();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "bluetooth input stream creation error: " + exception.getMessage());
+      Log.w(LOG_TAG, ("Bluetooth channel input stream creation error: " + exception.getMessage()));
     }
 
     return null;
@@ -108,7 +97,7 @@ public class BluetoothChannel extends Channel implements Runnable {
     try {
       return socket.getOutputStream();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, "bluetooth output stream creation error: " + exception.getMessage());
+      Log.w(LOG_TAG, ("Bluetooth channel output stream creation error: " + exception.getMessage()));
     }
 
     return null;
@@ -116,23 +105,24 @@ public class BluetoothChannel extends Channel implements Runnable {
 
   @Override
   public final void run () {
-    Log.d(LOG_TAG, "bluetooth server started");
-    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+    Log.d(LOG_TAG, "Bluetooth channel starting");
 
-    if (adapter != null) {
-      while (true) {
+    while (!Thread.interrupted()) {
+      BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+
+      if (adapter != null) {
         displayEndpoint.write("Bluetooth waiting");
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
-          Log.d(LOG_TAG, "bluetooth server listening");
+          Log.d(LOG_TAG, "Bluetooth channel listening");
           BluetoothSocket session = getSessionSocket(server);
 
           closeObject(server, "bluetooth server socket");
           server = null;
 
           if (session != null) {
-            Log.d(LOG_TAG, "bluetooth server connected");
+            Log.d(LOG_TAG, "Bluetooth channel connected");
             InputStream inputStream = getInputStream(session);
 
             if (inputStream != null) {
@@ -154,11 +144,13 @@ public class BluetoothChannel extends Channel implements Runnable {
         } else {
           ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
         }
+      } else {
+        displayEndpoint.write("Bluetooth off");
+        Log.w(LOG_TAG, "no Bluetooth adapter");
       }
-    } else {
-      Log.w(LOG_TAG, "no bluetooth adapter");
     }
 
-    Log.d(LOG_TAG, "bluetooth server stopped");
+    displayEndpoint.write("Bluetooth stopped");
+    Log.d(LOG_TAG, "Bluetooth channel stopped");
   }
 }

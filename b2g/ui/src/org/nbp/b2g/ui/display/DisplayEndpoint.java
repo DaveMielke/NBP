@@ -13,12 +13,12 @@ public class DisplayEndpoint extends Endpoint {
     return currentProtocol;
   }
 
-  public final void start () {
-    currentChannel.start();
+  public final boolean start () {
+    return currentChannel.start();
   }
 
-  public final void stop () {
-    currentChannel.stop();
+  public final boolean stop () {
+    return currentChannel.stop();
   }
 
   @Override
