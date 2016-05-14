@@ -19,6 +19,16 @@ public class RemoteEndpoint extends Endpoint {
     protocol.clearKeys();
   }
 
+  @Override
+  public final int handleNavigationKeys (int keyMask, boolean press) {
+    return protocol.handleNavigationKeys(keyMask, press);
+  }
+
+  @Override
+  public final boolean handleCursorKey (int keyNumber, boolean press) {
+    return protocol.handleCursorKey(keyNumber, press);
+  }
+
   public RemoteEndpoint () {
     super("remote");
 

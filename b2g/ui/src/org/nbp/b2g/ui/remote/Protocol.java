@@ -33,6 +33,14 @@ public abstract class Protocol {
     return true;
   }
 
+  public int handleNavigationKeys (int keyMask, boolean press) {
+    return keyMask;
+  }
+
+  public boolean handleCursorKey (int keyNumber, boolean press) {
+    return false;
+  }
+
   private static Integer cellCount = null;
   protected final static int getCellCount () {
     if (cellCount == null) cellCount = Devices.braille.get().getLength();

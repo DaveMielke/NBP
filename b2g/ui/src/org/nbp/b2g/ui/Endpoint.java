@@ -930,6 +930,14 @@ public abstract class Endpoint {
     return getKeyBindings().getRootKeyBindingMap();
   }
 
+  public int handleNavigationKeys (int keyMask, boolean press) {
+    return keyMask;
+  }
+
+  public boolean handleCursorKey (int keyNumber, boolean press) {
+    return false;
+  }
+
   public Endpoint (String name) {
     keyBindings = new KeyBindings(this, name);
     setText("");

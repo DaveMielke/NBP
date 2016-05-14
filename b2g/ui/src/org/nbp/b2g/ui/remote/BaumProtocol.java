@@ -84,22 +84,73 @@ public class BaumProtocol extends Protocol {
     private final int count;
     private final byte[] bytes;
 
-    public final void clear () {
-      for (int index=0; index<bytes.length; index+=1) bytes[index] = 0;
-    }
-
-    public final boolean send () {
-      return BaumProtocol.this.send(command, bytes);
-    }
-
-    private final int getSize (int count) {
+    private final int getSize () {
       return (count + 7) / 8;
     }
 
     public KeyGroup (byte command, int count) {
       this.command = command;
       this.count = count;
-      bytes = new byte[getSize(count)];
+
+      bytes = new byte[getSize()];
+      clear();
+    }
+
+    public final boolean clear () {
+      boolean changed = false;
+
+      for (int index=0; index<bytes.length; index+=1) {
+        if (bytes[index] != 0) {
+          bytes[index] = 0;
+          changed = true;
+        }
+      }
+
+      return changed;
+    }
+
+    public final boolean send () {
+      return BaumProtocol.this.send(command, bytes);
+    }
+
+    public final boolean reset () {
+      return clear()? send(): true;
+    }
+
+    private final int getIndex (int key) {
+      return key / 8;
+    }
+
+    private final byte getBit (int key) {
+      return (byte)(1 << (key % 8));
+    }
+
+    private final boolean test (int index, byte bit) {
+      return (bytes[index] & bit) != 0;
+    }
+
+    public final boolean test (int key) {
+      int index = getIndex(key);
+      byte bit = getBit(key);
+      return test(index, bit);
+    }
+
+    public final boolean set (int key) {
+      int index = getIndex(key);
+      byte bit = getBit(key);
+
+      if (test(index, bit)) return false;
+      bytes[index] |= bit;
+      return true;
+    }
+
+    public final boolean clear (int key) {
+      int index = getIndex(key);
+      byte bit = getBit(key);
+
+      if (!test(index, bit)) return false;
+      bytes[index] &= ~bit;
+      return true;
     }
   }
 
@@ -278,7 +329,17 @@ public class BaumProtocol extends Protocol {
 
   @Override
   public void clearKeys () {
-    for (KeyGroup group : keyGroups) group.clear();
+    for (KeyGroup group : keyGroups) group.reset();
+  }
+
+  @Override
+  public final int handleNavigationKeys (int keyMask, boolean press) {
+    return keyMask;
+  }
+
+  @Override
+  public final boolean handleCursorKey (int keyNumber, boolean press) {
+    return false;
   }
 
   public BaumProtocol (RemoteEndpoint endpoint) {

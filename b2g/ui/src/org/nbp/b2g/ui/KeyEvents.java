@@ -201,6 +201,7 @@ public abstract class KeyEvents {
 
   private static void handleNavigationKeyPress (int keyMask) {
     onKeyPress();
+    keyMask = Endpoints.getCurrentEndpoint().handleNavigationKeys(keyMask, true);
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
@@ -221,6 +222,8 @@ public abstract class KeyEvents {
   }
 
   private static void handleNavigationKeyRelease (int keyMask) {
+    keyMask = Endpoints.getCurrentEndpoint().handleNavigationKeys(keyMask, false);
+
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
         longPressTimeout.cancel();
@@ -278,6 +281,7 @@ public abstract class KeyEvents {
 
   private static void handleCursorKeyPress (int keyNumber) {
     onKeyPress();
+    if (Endpoints.getCurrentEndpoint().handleCursorKey(keyNumber, true)) return;
 
     if (ApplicationSettings.ONE_HAND) {
       pressedCursorKeys.clear();
@@ -293,6 +297,8 @@ public abstract class KeyEvents {
   }
 
   private static void handleCursorKeyRelease (int keyNumber) {
+    if (Endpoints.getCurrentEndpoint().handleCursorKey(keyNumber, false)) return;
+
     if (!ApplicationSettings.ONE_HAND) {
       pressedCursorKeys.remove(keyNumber);
     }
