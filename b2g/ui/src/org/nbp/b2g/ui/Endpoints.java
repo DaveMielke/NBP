@@ -52,7 +52,7 @@ public abstract class Endpoints {
   private final static LazyInstantiator<UnicodeEndpoint> unicode = new
     LazyInstantiator<UnicodeEndpoint>(UnicodeEndpoint.class);
 
-  private final static LazyInstantiator<DisplayEndpoint> display = new
+  public final static LazyInstantiator<DisplayEndpoint> display = new
     LazyInstantiator<DisplayEndpoint>(DisplayEndpoint.class);
 
   public static void setHostEndpoint () {

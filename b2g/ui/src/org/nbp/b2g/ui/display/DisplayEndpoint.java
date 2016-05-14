@@ -2,21 +2,29 @@ package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
 public class DisplayEndpoint extends Endpoint {
-  private final Channel channel;
-  private final Protocol protocol;
+  private final Channel currentChannel;
+  private final Protocol currentProtocol;
 
   public final Channel getChannel () {
-    return channel;
+    return currentChannel;
   }
 
   public final Protocol getProtocol () {
-    return protocol;
+    return currentProtocol;
+  }
+
+  public final void start () {
+    currentChannel.start();
+  }
+
+  public final void stop () {
+    currentChannel.stop();
   }
 
   @Override
   public void onBackground () {
     try {
-      protocol.resetKeys();
+      currentProtocol.resetKeys();
     } finally {
       super.onBackground();
     }
@@ -24,21 +32,19 @@ public class DisplayEndpoint extends Endpoint {
 
   @Override
   public final int handleNavigationKeys (int keyMask, boolean press) {
-    return protocol.handleNavigationKeys(keyMask, press);
+    return currentProtocol.handleNavigationKeys(keyMask, press);
   }
 
   @Override
   public final boolean handleCursorKey (int keyNumber, boolean press) {
-    return protocol.handleCursorKey(keyNumber, press);
+    return currentProtocol.handleCursorKey(keyNumber, press);
   }
 
   public DisplayEndpoint () {
     super("display");
-
-    channel = new BluetoothChannel(this);
-    protocol = new BaumProtocol(this);
-
     write("offline");
-    channel.start();
+
+    currentChannel = new BluetoothChannel(this);
+    currentProtocol = new BaumProtocol(this);
   }
 }

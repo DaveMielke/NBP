@@ -38,6 +38,10 @@ public class BluetoothChannel extends Channel implements Runnable {
   }
 
   @Override
+  public final void stop () {
+  }
+
+  @Override
   public final boolean send (byte b) {
     if (outputStream == null) return true;
 

@@ -19,6 +19,8 @@ public abstract class Channel {
   }
 
   public abstract void start ();
+  public abstract void stop ();
+
   public abstract boolean send (byte b);
   public abstract boolean flush ();
 

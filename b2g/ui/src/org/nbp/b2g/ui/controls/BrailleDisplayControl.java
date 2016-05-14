@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.b2g.ui.display.DisplayEndpoint;
+
 public class BrailleDisplayControl extends BooleanControl {
   @Override
   public CharSequence getLabel () {
@@ -24,7 +26,14 @@ public class BrailleDisplayControl extends BooleanControl {
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.BRAILLE_DISPLAY = value;
+    DisplayEndpoint endpoint = Endpoints.display.get();
+
+    if ((ApplicationSettings.BRAILLE_DISPLAY = value)) {
+      endpoint.start();
+    } else {
+      endpoint.stop();
+    }
+
     return true;
   }
 
