@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-import org.nbp.common.BitMask;
+import org.nbp.common.BitSet;
 
 import android.util.Log;
 
@@ -84,7 +84,7 @@ public class BaumProtocol extends Protocol {
     return send(WRITE_CELLS, new byte[] {(byte)getCellCount()});
   }
 
-  private class KeyGroup extends BitMask {
+  private class KeyGroup extends BitSet {
     private final byte command;
 
     public KeyGroup (int size, byte command) {
@@ -97,7 +97,7 @@ public class BaumProtocol extends Protocol {
     }
 
     public final boolean reset () {
-      return clear()? send(): true;
+      return empty()? send(): true;
     }
   }
 

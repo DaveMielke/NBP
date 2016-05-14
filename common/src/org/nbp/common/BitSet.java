@@ -1,6 +1,6 @@
 package org.nbp.common;
 
-public class BitMask {
+public class BitSet {
   public final int size;
 
   protected final static int BITS_PER_ELEMENT = 8;
@@ -10,7 +10,7 @@ public class BitMask {
     return (size + (BITS_PER_ELEMENT - 1)) / BITS_PER_ELEMENT;
   }
 
-  public final boolean clear () {
+  public final boolean empty () {
     boolean changed = false;
 
     for (int index=0; index<elements.length; index+=1) {
@@ -23,10 +23,10 @@ public class BitMask {
     return changed;
   }
 
-  public BitMask (int size) {
+  public BitSet (int size) {
     this.size = size;
     elements = new byte[getElementCount()];
-    clear();
+    empty();
   }
 
   private final int getIndex (int member) {
