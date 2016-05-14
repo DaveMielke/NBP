@@ -39,6 +39,8 @@ public class BluetoothChannel extends Channel implements Runnable {
 
   @Override
   public final boolean send (byte b) {
+    if (outputStream == null) return true;
+
     try {
       outputStream.write(b & BYTE_MASK);
       return true;

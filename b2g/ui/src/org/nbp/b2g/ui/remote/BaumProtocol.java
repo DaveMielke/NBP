@@ -1,6 +1,9 @@
 package org.nbp.b2g.ui.remote;
 import org.nbp.b2g.ui.*;
 
+import java.util.Map;
+import java.util.LinkedHashMap;
+
 import android.util.Log;
 
 public class BaumProtocol extends Protocol {
@@ -332,12 +335,57 @@ public class BaumProtocol extends Protocol {
   }
 
   @Override
-  public void clearKeys () {
+  public void resetKeys () {
     for (KeyGroup group : keyGroups) group.reset();
+  }
+
+  private static class KeyReference {
+    public final KeyGroup group;
+    public final int number;
+
+    public KeyReference (KeyGroup group, int number) {
+      this.group = group;
+      this.number = number;
+    }
+  }
+
+  private final Map<Integer, KeyReference> navigationKeys = new LinkedHashMap<Integer, KeyReference>();
+
+  private final void addNavigationKey (int mask, KeyGroup group, int number) {
+    navigationKeys.put(mask, new KeyReference(group, number));
+  }
+
+  private final void addNavigationKeys () {
+    addNavigationKey(KeyMask.BACKWARD, entryKeys,  0);
+    addNavigationKey(KeyMask.FORWARD , entryKeys,  1);
+    addNavigationKey(KeyMask.SPACE   , entryKeys,  2);
+    addNavigationKey(KeyMask.DOT_1   , entryKeys,  8);
+    addNavigationKey(KeyMask.DOT_2   , entryKeys,  9);
+    addNavigationKey(KeyMask.DOT_3   , entryKeys, 10);
+    addNavigationKey(KeyMask.DOT_4   , entryKeys, 11);
+    addNavigationKey(KeyMask.DOT_5   , entryKeys, 12);
+    addNavigationKey(KeyMask.DOT_6   , entryKeys, 13);
+    addNavigationKey(KeyMask.DOT_7   , entryKeys, 14);
+    addNavigationKey(KeyMask.DOT_8   , entryKeys, 15);
+
+    addNavigationKey(KeyMask.DPAD_UP    , joystick, 0);
+    addNavigationKey(KeyMask.DPAD_LEFT  , joystick, 1);
+    addNavigationKey(KeyMask.DPAD_DOWN  , joystick, 2);
+    addNavigationKey(KeyMask.DPAD_RIGHT , joystick, 3);
+    addNavigationKey(KeyMask.DPAD_CENTER, joystick, 4);
   }
 
   @Override
   public final int handleNavigationKeys (int keyMask, boolean press) {
+    for (Integer mask : navigationKeys.keySet()) {
+      if ((keyMask & mask) != 0) {
+        keyMask &= ~mask;
+
+        KeyReference ref = navigationKeys.get(mask);
+        if (ref.group.set(ref.number, press)) ref.group.send();
+      }
+    }
+
     return keyMask;
   }
 
@@ -352,5 +400,7 @@ public class BaumProtocol extends Protocol {
 
   public BaumProtocol (RemoteEndpoint endpoint) {
     super(endpoint);
+
+    addNavigationKeys();
   }
 }

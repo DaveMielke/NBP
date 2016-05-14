@@ -14,9 +14,12 @@ public class RemoteEndpoint extends Endpoint {
   }
 
   @Override
-  public void onForeground () {
-    super.onForeground();
-    protocol.clearKeys();
+  public void onBackground () {
+    try {
+      protocol.resetKeys();
+    } finally {
+      super.onBackground();
+    }
   }
 
   @Override

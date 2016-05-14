@@ -14,7 +14,7 @@ public abstract class Protocol {
     remoteEndpoint = endpoint;
   }
 
-  public void clearKeys () {
+  public void resetKeys () {
   }
 
   protected static void logIgnoredByte (byte b) {
