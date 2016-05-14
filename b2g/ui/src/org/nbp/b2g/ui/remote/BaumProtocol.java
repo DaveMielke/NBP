@@ -10,7 +10,7 @@ public class BaumProtocol extends Protocol {
 
   private final static byte WRITE_CELLS     =       0X01;
   private final static byte GET_KEYS        =       0X08;
-  private final static byte ROUTING_KEYS    =       0X22;
+  private final static byte CURSOR_KEYS     =       0X22;
   private final static byte DISPLAY_KEYS    =       0X24;
   private final static byte ENTRY_KEYS      =       0X33;
   private final static byte JOYSTICK        =       0X34;
@@ -135,7 +135,7 @@ public class BaumProtocol extends Protocol {
       return test(index, bit);
     }
 
-    public final boolean set (int key) {
+    public final boolean press (int key) {
       int index = getIndex(key);
       byte bit = getBit(key);
 
@@ -144,7 +144,7 @@ public class BaumProtocol extends Protocol {
       return true;
     }
 
-    public final boolean clear (int key) {
+    public final boolean release (int key) {
       int index = getIndex(key);
       byte bit = getBit(key);
 
@@ -152,21 +152,25 @@ public class BaumProtocol extends Protocol {
       bytes[index] &= ~bit;
       return true;
     }
+
+    public final boolean set (int key, boolean press) {
+      return press? press(key): release(key);
+    }
   }
 
-  private final static int getRoutingKeyCount () {
+  private final static int getCursorKeyCount () {
     int count = getCellCount();
     if (count <= 16) return count;
     return Math.max(count, 40);
   }
 
-  private final KeyGroup routingKeys = new KeyGroup(ROUTING_KEYS, getRoutingKeyCount());
+  private final KeyGroup cursorKeys = new KeyGroup(CURSOR_KEYS, getCursorKeyCount());
   private final KeyGroup displayKeys = new KeyGroup(DISPLAY_KEYS, 6);
   private final KeyGroup entryKeys = new KeyGroup(ENTRY_KEYS, 16);
   private final KeyGroup joystick = new KeyGroup(JOYSTICK, 5);
 
   private final KeyGroup[] keyGroups = new KeyGroup[] {
-    routingKeys,
+    cursorKeys,
     displayKeys,
     entryKeys,
     joystick
@@ -339,7 +343,11 @@ public class BaumProtocol extends Protocol {
 
   @Override
   public final boolean handleCursorKey (int keyNumber, boolean press) {
-    return false;
+    KeyGroup group = cursorKeys;
+    if (keyNumber >= group.count) return false;
+
+    if (group.set(keyNumber, press)) group.send();
+    return true;
   }
 
   public BaumProtocol (RemoteEndpoint endpoint) {
