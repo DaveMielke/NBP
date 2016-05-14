@@ -4,6 +4,8 @@ import org.nbp.b2g.ui.*;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
+import org.nbp.common.BitMask;
+
 import android.util.Log;
 
 public class BaumProtocol extends Protocol {
@@ -82,16 +84,16 @@ public class BaumProtocol extends Protocol {
     return send(WRITE_CELLS, new byte[] {(byte)getCellCount()});
   }
 
-  private class BaumKeyGroup extends KeyGroup {
-    protected final byte command;
+  private class KeyGroup extends BitMask {
+    private final byte command;
 
-    public BaumKeyGroup (int count, byte command) {
-      super(count);
+    public KeyGroup (int size, byte command) {
+      super(size);
       this.command = command;
     }
 
     public final boolean send () {
-      return BaumProtocol.this.send(command, mask);
+      return BaumProtocol.this.send(command, elements);
     }
 
     public final boolean reset () {
@@ -105,12 +107,12 @@ public class BaumProtocol extends Protocol {
     return Math.max(count, 40);
   }
 
-  private final BaumKeyGroup cursorKeys = new BaumKeyGroup(getCursorKeyCount(), CURSOR_KEYS);
-  private final BaumKeyGroup displayKeys = new BaumKeyGroup(6, DISPLAY_KEYS);
-  private final BaumKeyGroup entryKeys = new BaumKeyGroup(16, ENTRY_KEYS);
-  private final BaumKeyGroup joystick = new BaumKeyGroup(5, JOYSTICK);
+  private final KeyGroup cursorKeys = new KeyGroup(getCursorKeyCount(), CURSOR_KEYS);
+  private final KeyGroup displayKeys = new KeyGroup(6, DISPLAY_KEYS);
+  private final KeyGroup entryKeys = new KeyGroup(16, ENTRY_KEYS);
+  private final KeyGroup joystick = new KeyGroup(5, JOYSTICK);
 
-  private final BaumKeyGroup[] keyGroups = new BaumKeyGroup[] {
+  private final KeyGroup[] keyGroups = new KeyGroup[] {
     cursorKeys,
     displayKeys,
     entryKeys,
@@ -118,7 +120,7 @@ public class BaumProtocol extends Protocol {
   };
 
   private final boolean sendKeys () {
-    for (BaumKeyGroup group : keyGroups) {
+    for (KeyGroup group : keyGroups) {
       if (!group.send()) return false;
     }
 
@@ -274,14 +276,14 @@ public class BaumProtocol extends Protocol {
 
   @Override
   public void resetKeys () {
-    for (BaumKeyGroup group : keyGroups) group.reset();
+    for (KeyGroup group : keyGroups) group.reset();
   }
 
   private static class KeyReference {
-    public final BaumKeyGroup group;
+    public final KeyGroup group;
     public final int number;
 
-    public KeyReference (BaumKeyGroup group, int number) {
+    public KeyReference (KeyGroup group, int number) {
       this.group = group;
       this.number = number;
     }
@@ -289,7 +291,7 @@ public class BaumProtocol extends Protocol {
 
   private final Map<Integer, KeyReference> navigationKeys = new LinkedHashMap<Integer, KeyReference>();
 
-  private final void addNavigationKey (int mask, BaumKeyGroup group, int number) {
+  private final void addNavigationKey (int mask, KeyGroup group, int number) {
     navigationKeys.put(mask, new KeyReference(group, number));
   }
 
@@ -320,7 +322,7 @@ public class BaumProtocol extends Protocol {
         keyMask &= ~mask;
 
         KeyReference ref = navigationKeys.get(mask);
-        if (ref.group.set(ref.number, press)) ref.group.send();
+        if (ref.group.change(ref.number, press)) ref.group.send();
       }
     }
 
@@ -329,10 +331,10 @@ public class BaumProtocol extends Protocol {
 
   @Override
   public final boolean handleCursorKey (int keyNumber, boolean press) {
-    BaumKeyGroup group = cursorKeys;
-    if (keyNumber >= group.count) return false;
+    KeyGroup group = cursorKeys;
+    if (keyNumber >= group.size) return false;
 
-    if (group.set(keyNumber, press)) group.send();
+    if (group.change(keyNumber, press)) group.send();
     return true;
   }
 
