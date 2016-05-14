@@ -85,26 +85,20 @@ public class BaumProtocol extends Protocol {
   private class KeyGroup {
     private final byte command;
     private final int count;
-    private final byte[] bytes;
 
-    private final int getSize () {
-      return (count + 7) / 8;
-    }
+    private final static int KEYS_PER_ELEMENT = 8;
+    private final byte[] mask;
 
-    public KeyGroup (byte command, int count) {
-      this.command = command;
-      this.count = count;
-
-      bytes = new byte[getSize()];
-      clear();
+    private final int getMaskSize () {
+      return (count + (KEYS_PER_ELEMENT - 1)) / KEYS_PER_ELEMENT;
     }
 
     public final boolean clear () {
       boolean changed = false;
 
-      for (int index=0; index<bytes.length; index+=1) {
-        if (bytes[index] != 0) {
-          bytes[index] = 0;
+      for (int index=0; index<mask.length; index+=1) {
+        if (mask[index] != 0) {
+          mask[index] = 0;
           changed = true;
         }
       }
@@ -112,8 +106,16 @@ public class BaumProtocol extends Protocol {
       return changed;
     }
 
+    public KeyGroup (byte command, int count) {
+      this.command = command;
+      this.count = count;
+
+      mask = new byte[getMaskSize()];
+      clear();
+    }
+
     public final boolean send () {
-      return BaumProtocol.this.send(command, bytes);
+      return BaumProtocol.this.send(command, mask);
     }
 
     public final boolean reset () {
@@ -121,15 +123,15 @@ public class BaumProtocol extends Protocol {
     }
 
     private final int getIndex (int key) {
-      return key / 8;
+      return key / KEYS_PER_ELEMENT;
     }
 
     private final byte getBit (int key) {
-      return (byte)(1 << (key % 8));
+      return (byte)(1 << (key % KEYS_PER_ELEMENT));
     }
 
     private final boolean test (int index, byte bit) {
-      return (bytes[index] & bit) != 0;
+      return (mask[index] & bit) != 0;
     }
 
     public final boolean test (int key) {
@@ -143,7 +145,7 @@ public class BaumProtocol extends Protocol {
       byte bit = getBit(key);
 
       if (test(index, bit)) return false;
-      bytes[index] |= bit;
+      mask[index] |= bit;
       return true;
     }
 
@@ -152,7 +154,7 @@ public class BaumProtocol extends Protocol {
       byte bit = getBit(key);
 
       if (!test(index, bit)) return false;
-      bytes[index] &= ~bit;
+      mask[index] &= ~bit;
       return true;
     }
 
