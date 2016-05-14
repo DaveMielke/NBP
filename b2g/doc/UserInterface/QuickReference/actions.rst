@@ -53,8 +53,8 @@
 .. |Gallery| replace:: Go to the Gallery app.
 .. |Home| replace:: `The Home key`_ (on a keyboard).
 .. |HomeKey| replace:: The Android Home key. Go to `the home screen`_.
-.. |LiteraryBrailleOff| replace:: Select computer braille (eight dots) mode.
-.. |LiteraryBrailleOn| replace:: Select literary braille (six dots) mode.
+.. |LiteraryBrailleOff| replace:: Switch to `typing in computer braille`_ (eight dots).
+.. |LiteraryBrailleOn| replace:: Switch to `typing in literary braille`_ (six dots).
 .. |LogActionsOff| replace:: Turn the logging of user interface actions off.
 .. |LogActionsOn| replace:: Turn the logging of user interface actions on.
 .. |LogBrailleOff| replace:: Turn the logging of braille display updates off.
@@ -141,8 +141,8 @@
 .. |StopSpeaking| replace:: Stop speaking immediately (mute).
 .. |Store| replace:: Go to the Store (Market) app.
 .. |SwitchLauncher| replace:: Go to the Android launcher chooser.
-.. |TabBackward| replace:: `The Shift+Tab keys`_ (on a keyboard). Tab backward.
-.. |TabForward| replace:: `The Tab key`_ (on a keyboard). Tab forward.
+.. |TabBackward| replace:: `The Shift+Tab keys`_ (on a keyboard). Cycle backward to the previous control element.
+.. |TabForward| replace:: `The Tab key`_ (on a keyboard). Cycle forward to the next control element.
 .. |TextMessaging| replace:: Go to the Text (Messaging) [SMS, MMS] app.
 .. |ToSelectionEnd| replace:: Go to the end of the text selection (or to the cursor).
 .. |ToSelectionStart| replace:: Go to the start of the text selection (or to the cursor).

@@ -191,5 +191,5 @@ The `customizable area`_ of Home Screen 3 initially contains:
 * ES File Explorer (toward the left, at the bottom).
 * The Android Settings app (toward the right, at the bottom).
 
-The customizable areas of the other home screens are initially empty.
+The `customizable area`_ of the other home screens is initially empty.
 
