@@ -1,5 +1,5 @@
 .. |AccessibilitySettings| replace:: Go to the Accessibility Settings screen.
-.. |AddShortcut| replace:: Add a shortcut to the home screen.
+.. |AddShortcut| replace:: Add a shortcut to `the home screen`_.
 .. |AndroidSettings| replace:: Go to the Android Settings screen.
 .. |Assist| replace:: Go to the current Google Assist app.
 .. |BackKey| replace:: The Android Back key.
@@ -15,11 +15,11 @@
 .. |Click| replace:: Tap (click) the current screen element.
 .. |Clock| replace:: Go to the B2G digital clock.
 .. |CopyToClipboard| replace:: Copy the selected (or all) text to the clipboard.
-.. |CursorDown| replace:: The keyboard Cursor Down key.
+.. |CursorDown| replace:: `The Cursor Down key`_ (on a keyboard).
 .. |CursorKey| replace:: Bring the cursor to a specific character or click the current screen element.
-.. |CursorLeft| replace:: The keyboard Cursor Left key.
-.. |CursorRight| replace:: The keyboard Cursor Right key.
-.. |CursorUp| replace:: The keyboard Cursor Up key.
+.. |CursorLeft| replace:: `The Cursor Left key`_ (on a keyboard).
+.. |CursorRight| replace:: `The Cursor Right key`_ (on a keyboard).
+.. |CursorUp| replace:: `The Cursor Up key`_ (on a keyboard).
 .. |CutToClipboard| replace:: Cut the selected text to the clipboard.
 .. |DeleteNext| replace:: Delete the character that the cursor indicator is on.
 .. |DeletePrevious| replace:: Delete the character to the left of the cursor indicator.
@@ -44,15 +44,15 @@
 .. |DropRight| replace:: Drag to immediately right of the current screen element.
 .. |Editor| replace:: Go to the |organization acronym| editor.
 .. |EMail| replace:: Go to the EMail app.
-.. |End| replace:: The keyboard End key.
-.. |Enter| replace:: The keyboard Enter key.
+.. |End| replace:: `The End key`_ (on a keyboard).
+.. |Enter| replace:: `The Enter key`_ (on a keyboard).
 .. |FindForward| replace:: Find text within the current screen element (forward search).
 .. |FindNext| replace:: Find the next occurrence of the same text within the current screen element.
 .. |FindPrevious| replace:: Find the previous occurrence of the same text within the current screen element.
 .. |ForceCrash| replace:: Force a user interface action crash.
 .. |Gallery| replace:: Go to the Gallery app.
-.. |Home| replace:: The keyboard Home key.
-.. |HomeKey| replace:: The Android Home key.
+.. |Home| replace:: `The Home key`_ (on a keyboard).
+.. |HomeKey| replace:: The Android Home key. Go to `the home screen`_.
 .. |LiteraryBrailleOff| replace:: Select computer braille (eight dots) mode.
 .. |LiteraryBrailleOn| replace:: Select literary braille (six dots) mode.
 .. |LogActionsOff| replace:: Turn the logging of user interface actions off.
@@ -72,8 +72,8 @@
 .. |LogsOff| replace:: Turn all of the logging categories off.
 .. |LogsOn| replace:: Turn the most useful logging categories on.
 .. |LongClick| replace:: Hold (long click) the current screen element.
-.. |LongPressOff| replace:: Turn long key press mode off.
-.. |LongPressOn| replace:: Turn long key press mode on.
+.. |LongPressOff| replace:: Turn `long press mode`_ off.
+.. |LongPressOn| replace:: Turn `long press mode`_ on.
 .. |Maintenance| replace:: Go to the B2G System Maintenance screen.
 .. |MenuKey| replace:: The Android Menu key.
 .. |MoveBackward| replace:: Go to the start of the previous screen element.
@@ -90,10 +90,10 @@
 .. |Music| replace:: Go to the Music app.
 .. |Notifications| replace:: Go to the Notifications screen.
 .. |Null| replace:: Cancel a key combination.
-.. |OneHandOff| replace:: Turn one hand mode off.
-.. |OneHandOn| replace:: Turn one hand mode on.
-.. |PageDown| replace:: The keyboard Page Down key.
-.. |PageUp| replace:: The keyboard Page Up key.
+.. |OneHandOff| replace:: Turn `one hand mode`_ off.
+.. |OneHandOn| replace:: Turn `one hand mode`_ on.
+.. |PageDown| replace:: `The Page Down key`_ (on a keyboard).
+.. |PageUp| replace:: `The Page Up key`_ (on a keyboard).
 .. |PanLeft| replace:: Pan one braille display length to the left (wrapping to the end of the previous line or going to the start of the previous screen element as needed).
 .. |PanRight| replace:: Pan one braille display length to the right (wrapping to the start of the next line or going to the start of the next screen element as needed).
 .. |PasteFromClipboard| replace:: Paste the current clipboard content.
@@ -102,12 +102,12 @@
 .. |QuickStartText| replace:: Go to the plain text version of the quick start guide.
 .. |QuickStartHTML| replace:: Go to the HTML version of the quick start guide.
 .. |RecentApps| replace:: Go to the Recent Apps screen.
-.. |RemoveShortcut| replace:: Remove a shortcut from the home screen.
+.. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
 .. |ResetHighlightedTyping| replace:: Turn all of the highlighted typing styles off.
 .. |ResetSettings| replace:: Reset the B2G settings to their default values.
 .. |RestoreSettings| replace:: Restore the B2G settings to their most recently saved values.
-.. |ReversePanningOff| replace:: Turn reverse panning mode off.
-.. |ReversePanningOn| replace:: Turn reverse panning mode on.
+.. |ReversePanningOff| replace:: Turn `reverse panning mode`_ off.
+.. |ReversePanningOn| replace:: Turn `reverse panning mode`_ on.
 .. |SaveSettings| replace:: Save the current B2G settings.
 .. |SaveScreen| replace:: Write the current screen element structure to the Android log.
 .. |SayAfter| replace:: Speak from the start of the braille display to the end of the screen element.
@@ -141,13 +141,13 @@
 .. |StopSpeaking| replace:: Stop speaking immediately (mute).
 .. |Store| replace:: Go to the Store (Market) app.
 .. |SwitchLauncher| replace:: Go to the Android launcher chooser.
-.. |TabBackward| replace:: The keyboard Shift+Tab keys (tab backward).
-.. |TabForward| replace:: The keyboard Tab key (tab forward).
+.. |TabBackward| replace:: `The Shift+Tab keys`_ (on a keyboard). Tab backward.
+.. |TabForward| replace:: `The Tab key`_ (on a keyboard). Tab forward.
 .. |TextMessaging| replace:: Go to the Text (Messaging) [SMS, MMS] app.
-.. |ToSelectionEnd| replace:: Go to the end of the input area.
-.. |ToSelectionStart| replace:: Go to the start of the input area.
-.. |ToTextEnd| replace:: Go to the end of the text selection (or to the cursor).
-.. |ToTextStart| replace:: Go to the start of the text selection (or to the cursor).
+.. |ToSelectionEnd| replace:: Go to the end of the text selection (or to the cursor).
+.. |ToSelectionStart| replace:: Go to the start of the text selection (or to the cursor).
+.. |ToTextEnd| replace:: `The Control+End keys`_ (on a keyboard). Go to the end of the input area.
+.. |ToTextStart| replace:: `The Control+Home keys`_ (on a keyboard). Go to the start of the input area.
 .. |TypeControl| replace:: The keyboard Control key (applies to the next typed character).
 .. |TypeDot7| replace:: Type the character represented by just dot 7.
 .. |TypeDot8| replace:: Type the character represented by just dot 8.
