@@ -31,33 +31,6 @@ public class BaumProtocol extends Protocol {
   private int inputLength;
   private int inputCount;
 
-  private final byte[] routingKeys = new byte[11];
-  private final byte[] displayKeys = new byte[1];
-  private final byte[] entryKeys = new byte[2];
-  private final byte[] joystick = new byte[1];
-
-  private final byte[][] keyGroups = new byte[][] {
-    routingKeys,
-    displayKeys,
-    entryKeys,
-    joystick
-  };
-
-  private final int getKeyGroupSize (int count) {
-    return (count + 7) / 8;
-  }
-
-  private Integer routingKeysSize = null;
-  private final int getRoutingKeysSize () {
-    if (routingKeysSize == null) {
-      int size = getKeyGroupSize(getCellCount());
-      if ((size > 2) && (size < 5)) size = 5;
-      routingKeysSize = size;
-    }
-
-    return routingKeysSize;
-  }
-
   private final boolean send (Channel channel, byte b) {
     if (b == ESCAPE) {
       if (!channel.send(ESCAPE)) {
@@ -68,11 +41,11 @@ public class BaumProtocol extends Protocol {
     return channel.send(b);
   }
 
-  private final Channel begin (byte response) {
+  private final Channel begin (byte command) {
     Channel channel = remoteEndpoint.getChannel();
 
     if (channel.send(ESCAPE)) {
-      if (send(channel, response)) {
+      if (send(channel, command)) {
         return channel;
       }
     }
@@ -80,11 +53,11 @@ public class BaumProtocol extends Protocol {
     return null;
   }
 
-  private final boolean send (byte response, byte[] bytes, int end) {
+  private final boolean send (byte command, byte[] bytes, int end) {
     if (bytes == null) return true;
     if (end == 0) return true;
 
-    Channel channel = begin(response);
+    Channel channel = begin(command);
     if (channel == null) return false;
 
     for (int index=0; index<end; index+=1) {
@@ -94,8 +67,8 @@ public class BaumProtocol extends Protocol {
     return true;
   }
 
-  private final boolean send (byte response, byte[] bytes) {
-    return send(response, bytes, bytes.length);
+  private final boolean send (byte command, byte[] bytes) {
+    return send(command, bytes, bytes.length);
   }
 
   private final boolean sendErrorCode (int code) {
@@ -106,31 +79,57 @@ public class BaumProtocol extends Protocol {
     return send(WRITE_CELLS, new byte[] {(byte)getCellCount()});
   }
 
-  private final boolean sendRoutingKeys () {
-    return send(ROUTING_KEYS, routingKeys, getRoutingKeysSize());
+  private class KeyGroup {
+    private final byte command;
+    private final int count;
+    private final byte[] bytes;
+
+    public final void clear () {
+      for (int index=0; index<bytes.length; index+=1) bytes[index] = 0;
+    }
+
+    public final boolean send () {
+      return BaumProtocol.this.send(command, bytes);
+    }
+
+    private final int getSize (int count) {
+      return (count + 7) / 8;
+    }
+
+    public KeyGroup (byte command, int count) {
+      this.command = command;
+      this.count = count;
+      bytes = new byte[getSize(count)];
+    }
   }
 
-  private final boolean sendDisplayKeys () {
-    return send(DISPLAY_KEYS, displayKeys);
+  private final static int getRoutingKeyCount () {
+    int count = getCellCount();
+    if (count <= 16) return count;
+    return Math.max(count, 40);
   }
 
-  private final boolean sendEntryKeys () {
-    return send(ENTRY_KEYS, entryKeys);
+  private final KeyGroup routingKeys = new KeyGroup(ROUTING_KEYS, getRoutingKeyCount());
+  private final KeyGroup displayKeys = new KeyGroup(DISPLAY_KEYS, 6);
+  private final KeyGroup entryKeys = new KeyGroup(ENTRY_KEYS, 16);
+  private final KeyGroup joystick = new KeyGroup(JOYSTICK, 5);
+
+  private final KeyGroup[] keyGroups = new KeyGroup[] {
+    routingKeys,
+    displayKeys,
+    entryKeys,
+    joystick
+  };
+
+  private final boolean sendKeys () {
+    for (KeyGroup group : keyGroups) {
+      if (!group.send()) return false;
+    }
+
+    return true;
   }
 
-  private final boolean sendJoystick () {
-    return send(JOYSTICK, joystick);
-  }
-
-  private final boolean sendAllKeys () {
-    return sendRoutingKeys()
-        && sendDisplayKeys()
-        && sendEntryKeys()
-        && sendJoystick()
-        ;
-  }
-
-  private final boolean send (byte response, String string) {
+  private final boolean send (byte command, String string) {
     if (string == null) return true;
 
     int length = string.length();
@@ -142,7 +141,7 @@ public class BaumProtocol extends Protocol {
       bytes[index] = (byte)character;
     }
 
-    return send(response, bytes);
+    return send(command, bytes);
   }
 
   private final boolean sendDeviceIdentity () {
@@ -209,7 +208,7 @@ public class BaumProtocol extends Protocol {
         break;
 
       case GET_KEYS:
-        ok = sendAllKeys();
+        ok = sendKeys();
         break;
 
       case DEVICE_IDENTITY:
@@ -279,10 +278,7 @@ public class BaumProtocol extends Protocol {
 
   @Override
   public void clearKeys () {
-    for (byte[] keys : keyGroups) {
-      int length = keys.length;
-      for (int index=0; index<length; index+=1) keys[index] = 0;
-    }
+    for (KeyGroup group : keyGroups) group.clear();
   }
 
   public BaumProtocol (RemoteEndpoint endpoint) {

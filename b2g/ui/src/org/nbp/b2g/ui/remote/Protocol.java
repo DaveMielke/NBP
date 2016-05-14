@@ -33,8 +33,8 @@ public abstract class Protocol {
     return true;
   }
 
-  private Integer cellCount = null;
-  protected final int getCellCount () {
+  private static Integer cellCount = null;
+  protected final static int getCellCount () {
     if (cellCount == null) cellCount = Devices.braille.get().getLength();
     return cellCount;
   }
