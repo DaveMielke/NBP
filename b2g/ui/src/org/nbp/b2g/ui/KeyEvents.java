@@ -199,15 +199,16 @@ public abstract class KeyEvents {
     }
   }
 
-  private static void handleNavigationKeys (int keyMask, boolean press) {
+  private static int handleNavigationKeys (int keyMask, boolean press) {
     int alreadyPressedKeys = keyMask & pressedNavigationKeys;
-    keyMask = Endpoints.getCurrentEndpoint().handleNavigationKeys((keyMask & ~alreadyPressedKeys), press);
-    keyMask |= alreadyPressedKeys;
+
+    return Endpoints.getCurrentEndpoint().handleNavigationKeys((keyMask & ~alreadyPressedKeys), press)
+         | alreadyPressedKeys;
   }
 
   private static void handleNavigationKeyPress (int keyMask) {
     onKeyPress();
-    handleNavigationKeys(keyMask, true);
+    keyMask = handleNavigationKeys(keyMask, true);
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
@@ -228,7 +229,7 @@ public abstract class KeyEvents {
   }
 
   private static void handleNavigationKeyRelease (int keyMask) {
-    handleNavigationKeys(keyMask, false);
+    keyMask = handleNavigationKeys(keyMask, false);
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
