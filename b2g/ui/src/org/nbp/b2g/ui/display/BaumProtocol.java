@@ -11,6 +11,7 @@ import android.util.Log;
 public class BaumProtocol extends Protocol {
   private final static String LOG_TAG = BaumProtocol.class.getName();
 
+  private final static int INPUT_BUFFER_SIZE = 0X100;
   private final static byte ESCAPE = Characters.CHAR_ESC;
 
   private final static byte WRITE_CELLS     =       0X01;
@@ -31,7 +32,7 @@ public class BaumProtocol extends Protocol {
     ;
   }
 
-  private final byte[] inputBuffer = new byte[0X100];
+  private final byte[] inputBuffer = new byte[INPUT_BUFFER_SIZE];
   private InputState inputState;
   private int inputLength;
   private int inputCount;
@@ -135,7 +136,7 @@ public class BaumProtocol extends Protocol {
 
     for (int index=0; index<length; index+=1) {
       char character = string.charAt(index);
-      if (character > 0XFF) character = '?';
+      if (character > BYTE_MASK) character = '?';
       bytes[index] = (byte)character;
     }
 

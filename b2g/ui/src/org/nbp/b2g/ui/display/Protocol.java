@@ -5,13 +5,11 @@ import android.util.Log;
 import android.os.Build;
 import android.bluetooth.BluetoothAdapter;
 
-public abstract class Protocol {
+public abstract class Protocol extends Component {
   private final static String LOG_TAG = Protocol.class.getName();
 
-  protected final DisplayEndpoint displayEndpoint;
-
   protected Protocol (DisplayEndpoint endpoint) {
-    displayEndpoint = endpoint;
+    super(endpoint);
   }
 
   public void resetKeys () {

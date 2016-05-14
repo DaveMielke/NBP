@@ -9,17 +9,16 @@ import org.nbp.common.Timeout;
 
 import android.util.Log;
 
-public abstract class Channel implements Runnable {
+public abstract class Channel extends Component implements Runnable {
   private final static String LOG_TAG = Channel.class.getName();
 
   private Thread channelThread = null;
-  protected final DisplayEndpoint displayEndpoint;
 
   protected Channel (DisplayEndpoint endpoint) {
-    displayEndpoint = endpoint;
+    super(endpoint);
   }
 
-  public final  boolean start () {
+  public final boolean start () {
     synchronized (this) {
       if (channelThread != null) return false;
       Log.d(LOG_TAG, "starting channel");
@@ -41,8 +40,6 @@ public abstract class Channel implements Runnable {
 
   public abstract boolean send (byte b);
   public abstract boolean flush ();
-
-  protected final static int BYTE_MASK = 0XFF;
 
   protected static void closeObject (Closeable object, String description) {
     try {

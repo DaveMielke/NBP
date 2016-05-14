@@ -111,7 +111,7 @@ public class BluetoothChannel extends Channel {
       BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
       if (adapter != null) {
-        displayEndpoint.write("Bluetooth waiting");
+        write("Bluetooth waiting");
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
@@ -145,12 +145,12 @@ public class BluetoothChannel extends Channel {
           ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
         }
       } else {
-        displayEndpoint.write("Bluetooth off");
+        write("Bluetooth off");
         Log.w(LOG_TAG, "no Bluetooth adapter");
       }
     }
 
-    displayEndpoint.write("Bluetooth stopped");
+    write("Bluetooth stopped");
     Log.d(LOG_TAG, "Bluetooth channel stopped");
   }
 }
