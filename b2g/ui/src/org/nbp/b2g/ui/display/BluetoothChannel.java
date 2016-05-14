@@ -2,6 +2,7 @@ package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
 import java.io.IOException;
+import java.io.Closeable;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
@@ -28,33 +29,10 @@ public class BluetoothChannel extends Channel {
     "00001101-0000-1000-8000-00805F9B34FB"
   );
 
-  private OutputStream outputStream = null;
-
-  @Override
-  public final boolean send (byte b) {
-    if (outputStream == null) return true;
-
-    try {
-      outputStream.write(b & BYTE_MASK);
-      return true;
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, ("Bluetooth channel write error: " + exception.getMessage()));
-    }
-
-    return false;
-  }
-
-  @Override
-  public final boolean flush () {
-    try {
-      outputStream.flush();
-      return true;
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, ("Bluetooth channel flush error: " + exception.getMessage()));
-    }
-
-    return false;
-  }
+  private final static Object LOCK = new Object();
+  private boolean stopFlag;
+  private Closeable currentSocket;
+  private OutputStream outputStream;
 
   private static BluetoothServerSocket getServerSocket (BluetoothAdapter adapter) {
     try {
@@ -67,7 +45,7 @@ public class BluetoothChannel extends Channel {
         return adapter.listenUsingInsecureRfcommWithServiceRecord(name, uuid);
       }
     } catch (IOException exception) {
-      Log.w(LOG_TAG, ("Bluetooth channel server creation error: " + exception.getMessage()));
+      Log.w(LOG_TAG, ("server socket creation error: " + exception.getMessage()));
     }
 
     return null;
@@ -77,7 +55,7 @@ public class BluetoothChannel extends Channel {
     try {
       return server.accept();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, ("Bluetooth channel sdession creation error: " + exception.getMessage()));
+      Log.w(LOG_TAG, ("session socket creation error: " + exception.getMessage()));
     }
 
     return null;
@@ -87,7 +65,7 @@ public class BluetoothChannel extends Channel {
     try {
       return socket.getInputStream();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, ("Bluetooth channel input stream creation error: " + exception.getMessage()));
+      Log.w(LOG_TAG, ("input stream creation error: " + exception.getMessage()));
     }
 
     return null;
@@ -97,15 +75,22 @@ public class BluetoothChannel extends Channel {
     try {
       return socket.getOutputStream();
     } catch (IOException exception) {
-      Log.w(LOG_TAG, ("Bluetooth channel output stream creation error: " + exception.getMessage()));
+      Log.w(LOG_TAG, ("output stream creation error: " + exception.getMessage()));
     }
 
     return null;
   }
 
+  private final boolean setCurrentSocket (Closeable socket) {
+    synchronized (LOCK) {
+      currentSocket = socket;
+      return stopFlag;
+    }
+  }
+
   @Override
   protected final void runChannelThread () {
-    while (!Thread.interrupted()) {
+    while (!setCurrentSocket(null)) {
       BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
       if (adapter != null) {
@@ -113,14 +98,16 @@ public class BluetoothChannel extends Channel {
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
-          Log.d(LOG_TAG, "Bluetooth channel listening");
+          if (setCurrentSocket(server)) break;
+          Log.d(LOG_TAG, "channel listening");
           BluetoothSocket session = getSessionSocket(server);
 
           closeObject(server, "bluetooth server socket");
           server = null;
 
           if (session != null) {
-            Log.d(LOG_TAG, "Bluetooth channel connected");
+            if (setCurrentSocket(session)) break;
+            Log.d(LOG_TAG, "channel connected");
             InputStream inputStream = getInputStream(session);
 
             if (inputStream != null) {
@@ -139,19 +126,63 @@ public class BluetoothChannel extends Channel {
             closeObject(session, "bluetooth session socket");
             session = null;
           }
-        } else {
-          ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
+
+          continue;
         }
       } else {
         write("Bluetooth off");
-        Log.w(LOG_TAG, "no Bluetooth adapter");
+        Log.w(LOG_TAG, "no default adapter");
       }
+
+      if (setCurrentSocket(null)) break;
+      ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
     }
 
     write("Bluetooth stopped");
   }
 
   @Override
-  protected final void stopChannelThread (Thread thread) {
+  protected final void initializeChannelThread () {
+    stopFlag = false;
+    currentSocket = null;
+    outputStream = null;
+  }
+
+  @Override
+  protected final void stopChannelThread () {
+    synchronized (LOCK) {
+      stopFlag = true;
+
+      if (currentSocket != null) {
+        closeObject(currentSocket, "current socket");
+        currentSocket = null;
+      }
+    }
+  }
+
+  @Override
+  public final boolean send (byte b) {
+    if (outputStream == null) return true;
+
+    try {
+      outputStream.write(b & BYTE_MASK);
+      return true;
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, ("channel write error: " + exception.getMessage()));
+    }
+
+    return false;
+  }
+
+  @Override
+  public final boolean flush () {
+    try {
+      outputStream.flush();
+      return true;
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, ("channel flush error: " + exception.getMessage()));
+    }
+
+    return false;
   }
 }

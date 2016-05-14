@@ -18,8 +18,9 @@ public abstract class Channel extends Component implements Runnable {
     super(endpoint);
   }
 
+  protected abstract void initializeChannelThread ();
   protected abstract void runChannelThread ();
-  protected abstract void stopChannelThread (Thread thread);
+  protected abstract void stopChannelThread ();
 
   public abstract boolean send (byte b);
   public abstract boolean flush ();
@@ -36,21 +37,30 @@ public abstract class Channel extends Component implements Runnable {
       if (channelThread != null) return false;
       Log.d(LOG_TAG, "starting channel");
 
+      initializeChannelThread();
       channelThread = new Thread(this, "braille-display-channel");
-      channelThread.start();
-      return true;
     }
+
+    channelThread.start();
+    return true;
   }
 
   public final boolean stop () {
     synchronized (this) {
       if (channelThread == null) return false;
+
       Log.d(LOG_TAG, "stopping channel");
+      stopChannelThread();
 
-      Thread thread = channelThread;
+      while (true) {
+        try {
+          channelThread.join();
+          break;
+        } catch (InterruptedException exception) {
+        }
+      }
+
       channelThread = null;
-
-      stopChannelThread(thread);
       return true;
     }
   }
@@ -79,7 +89,7 @@ public abstract class Channel extends Component implements Runnable {
     @Override
     public void run () {
       synchronized (this) {
-        Log.w(LOG_TAG, "display read timeout");
+        Log.w(LOG_TAG, "channel read timeout");
         handleTimeout();
         resetInput();
       }
@@ -89,13 +99,13 @@ public abstract class Channel extends Component implements Runnable {
   protected final void handleInput (InputStream stream) {
     resetInput();
 
-    while (!Thread.interrupted()) {
+    while (true) {
       int b;
 
       try {
         b = stream.read();
       } catch (IOException exception) {
-        Log.w(LOG_TAG, "display input error: " + exception.getMessage());
+        Log.w(LOG_TAG, ("channel read error: " + exception.getMessage()));
         break;
       }
 
@@ -103,7 +113,7 @@ public abstract class Channel extends Component implements Runnable {
         readTimeout.cancel();
 
         if (b == -1) {
-          Log.w(LOG_TAG, "display end of input");
+          Log.w(LOG_TAG, "channel end of input");
           break;
         }
 
