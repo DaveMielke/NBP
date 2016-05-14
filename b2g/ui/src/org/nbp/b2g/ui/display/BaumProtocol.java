@@ -48,7 +48,7 @@ public class BaumProtocol extends Protocol {
   }
 
   private final Channel begin (byte command) {
-    Channel channel = displayEndpoint.getChannel();
+    Channel channel = getChannel();
 
     if (channel.send(ESCAPE)) {
       if (send(channel, command)) {
@@ -94,7 +94,8 @@ public class BaumProtocol extends Protocol {
     }
 
     public final boolean send () {
-      return BaumProtocol.this.send(command, elements);
+      return BaumProtocol.this.send(command, elements)
+          && flush();
     }
 
     public final boolean reset () {

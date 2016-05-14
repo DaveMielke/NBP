@@ -12,6 +12,14 @@ public abstract class Protocol extends Component {
     super(endpoint);
   }
 
+  protected final Channel getChannel () {
+    return displayEndpoint.getChannel();
+  }
+
+  protected final boolean flush () {
+    return getChannel().flush();
+  }
+
   public void resetKeys () {
   }
 
