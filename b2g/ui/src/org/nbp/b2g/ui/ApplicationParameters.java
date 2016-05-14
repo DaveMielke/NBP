@@ -39,10 +39,10 @@ public abstract class ApplicationParameters extends CommonParameters {
 
   public final static long CLOCK_UPDATE_INTERVAL = 1000; // milliseconds
 
+  public final static long DISPLAY_READ_TIMEOUT = 100; // milliseconds
   public final static String BLUETOOTH_SERVICE_NAME = "Braille Display";
   public final static boolean BLUETOOTH_SECURE_CONNECTION = false;
   public final static long BLUETOOTH_RETRY_INTERVAL = 10000; // milliseconds
-  public final static long REMOTE_READ_TIMEOUT = 100; // milliseconds
 
   public final static long BRAILLE_WRITE_DELAY = 40; // milliseconds
   public final static long BRAILLE_REWRITE_DELAY = 50; // milliseconds

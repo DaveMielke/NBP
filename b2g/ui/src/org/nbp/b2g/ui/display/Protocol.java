@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.remote;
+package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
 import android.util.Log;
@@ -8,10 +8,10 @@ import android.bluetooth.BluetoothAdapter;
 public abstract class Protocol {
   private final static String LOG_TAG = Protocol.class.getName();
 
-  protected final RemoteEndpoint remoteEndpoint;
+  protected final DisplayEndpoint displayEndpoint;
 
-  protected Protocol (RemoteEndpoint endpoint) {
-    remoteEndpoint = endpoint;
+  protected Protocol (DisplayEndpoint endpoint) {
+    displayEndpoint = endpoint;
   }
 
   public void resetKeys () {

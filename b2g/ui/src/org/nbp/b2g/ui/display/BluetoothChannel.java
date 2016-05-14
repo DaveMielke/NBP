@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.remote;
+package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import android.bluetooth.BluetoothServerSocket;
 public class BluetoothChannel extends Channel implements Runnable {
   private final static String LOG_TAG = BluetoothChannel.class.getName();
 
-  public BluetoothChannel (RemoteEndpoint endpoint) {
+  public BluetoothChannel (DisplayEndpoint endpoint) {
     super(endpoint);
   }
 
@@ -117,7 +117,7 @@ public class BluetoothChannel extends Channel implements Runnable {
 
     if (adapter != null) {
       while (true) {
-        remoteEndpoint.write("Bluetooth waiting");
+        displayEndpoint.write("Bluetooth waiting");
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {

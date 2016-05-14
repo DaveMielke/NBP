@@ -26,6 +26,8 @@ public abstract class Controls {
   private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
   private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
 
+  private final static BrailleDisplayControl brailleDisplayControl = new BrailleDisplayControl();
+
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
   private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
   private final static SpeechVolumeControl speechVolumeControl = new SpeechVolumeControl();
@@ -63,6 +65,8 @@ public abstract class Controls {
     selectionIndicatorControl,
     brailleFirmnessControl,
     brailleMonitorControl,
+
+    brailleDisplayControl,
 
     speechEnabledControl,
     sleepTalkControl,
@@ -143,6 +147,10 @@ public abstract class Controls {
 
   public static BrailleMonitorControl getBrailleMonitorControl () {
     return brailleMonitorControl;
+  }
+
+  public static BrailleDisplayControl getBrailleDisplayControl () {
+    return brailleDisplayControl;
   }
 
   public static SpeechEnabledControl getSpeechEnabledControl () {

@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.remote;
+package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
 import java.io.IOException;
@@ -12,10 +12,10 @@ import android.util.Log;
 public abstract class Channel {
   private final static String LOG_TAG = Channel.class.getName();
 
-  protected final RemoteEndpoint remoteEndpoint;
+  protected final DisplayEndpoint displayEndpoint;
 
-  protected Channel (RemoteEndpoint endpoint) {
-    remoteEndpoint = endpoint;
+  protected Channel (DisplayEndpoint endpoint) {
+    displayEndpoint = endpoint;
   }
 
   public abstract void start ();
@@ -33,22 +33,22 @@ public abstract class Channel {
   }
 
   protected final void resetInput () {
-    remoteEndpoint.getProtocol().resetInput();
+    displayEndpoint.getProtocol().resetInput();
   }
 
   protected final boolean handleTimeout () {
-    return remoteEndpoint.getProtocol().handleTimeout();
+    return displayEndpoint.getProtocol().handleTimeout();
   }
 
   protected final boolean handleInput (byte b) {
-    return remoteEndpoint.getProtocol().handleInput(b);
+    return displayEndpoint.getProtocol().handleInput(b);
   }
 
-  private Timeout readTimeout = new Timeout(ApplicationParameters.REMOTE_READ_TIMEOUT, "remote-read-timeout") {
+  private Timeout readTimeout = new Timeout(ApplicationParameters.DISPLAY_READ_TIMEOUT, "display-read-timeout") {
     @Override
     public void run () {
       synchronized (this) {
-        Log.w(LOG_TAG, "remote read timeout");
+        Log.w(LOG_TAG, "display read timeout");
         handleTimeout();
         resetInput();
       }
@@ -64,7 +64,7 @@ public abstract class Channel {
       try {
         b = stream.read();
       } catch (IOException exception) {
-        Log.w(LOG_TAG, "remote input error: " + exception.getMessage());
+        Log.w(LOG_TAG, "display input error: " + exception.getMessage());
         break;
       }
 
@@ -72,7 +72,7 @@ public abstract class Channel {
         readTimeout.cancel();
 
         if (b == -1) {
-          Log.w(LOG_TAG, "remote end of input");
+          Log.w(LOG_TAG, "display end of input");
           break;
         }
 

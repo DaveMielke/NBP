@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.remote;
+package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
 import java.util.Map;
@@ -47,7 +47,7 @@ public class BaumProtocol extends Protocol {
   }
 
   private final Channel begin (byte command) {
-    Channel channel = remoteEndpoint.getChannel();
+    Channel channel = displayEndpoint.getChannel();
 
     if (channel.send(ESCAPE)) {
       if (send(channel, command)) {
@@ -159,7 +159,7 @@ public class BaumProtocol extends Protocol {
     byte[] cells = new byte[count];
 
     System.arraycopy(inputBuffer, 1, cells, 0, count);
-    return remoteEndpoint.write(Braille.toString(cells));
+    return displayEndpoint.write(Braille.toString(cells));
   }
 
   @Override
@@ -338,7 +338,7 @@ public class BaumProtocol extends Protocol {
     return true;
   }
 
-  public BaumProtocol (RemoteEndpoint endpoint) {
+  public BaumProtocol (DisplayEndpoint endpoint) {
     super(endpoint);
 
     addNavigationKeys();

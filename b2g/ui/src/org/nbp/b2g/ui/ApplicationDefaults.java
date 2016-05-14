@@ -23,6 +23,8 @@ public abstract class ApplicationDefaults {
   public final static int BRAILLE_FIRMNESS = 4;
   public final static boolean BRAILLE_MONITOR = false;
 
+  public final static boolean BRAILLE_DISPLAY = false;
+
   public final static boolean SPEECH_ENABLED = true;
   public final static boolean SLEEP_TALK = false;
   public final static float SPEECH_VOLUME = 1.0f;

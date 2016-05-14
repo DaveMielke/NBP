@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class BrailleDisplay extends Action {
   @Override
   public boolean performAction () {
-    Endpoints.setRemoteEndpoint();
+    Endpoints.setDisplayEndpoint();
     return true;
   }
 

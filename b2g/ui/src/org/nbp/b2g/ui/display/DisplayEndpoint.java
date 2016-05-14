@@ -1,7 +1,7 @@
-package org.nbp.b2g.ui.remote;
+package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
-public class RemoteEndpoint extends Endpoint {
+public class DisplayEndpoint extends Endpoint {
   private final Channel channel;
   private final Protocol protocol;
 
@@ -32,8 +32,8 @@ public class RemoteEndpoint extends Endpoint {
     return protocol.handleCursorKey(keyNumber, press);
   }
 
-  public RemoteEndpoint () {
-    super("remote");
+  public DisplayEndpoint () {
+    super("display");
 
     channel = new BluetoothChannel(this);
     protocol = new BaumProtocol(this);
