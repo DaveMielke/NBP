@@ -104,9 +104,7 @@ public class BluetoothChannel extends Channel {
   }
 
   @Override
-  public final void run () {
-    Log.d(LOG_TAG, "Bluetooth channel starting");
-
+  protected final void runChannelThread () {
     while (!Thread.interrupted()) {
       BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -151,6 +149,9 @@ public class BluetoothChannel extends Channel {
     }
 
     write("Bluetooth stopped");
-    Log.d(LOG_TAG, "Bluetooth channel stopped");
+  }
+
+  @Override
+  protected final void stopChannelThread (Thread thread) {
   }
 }

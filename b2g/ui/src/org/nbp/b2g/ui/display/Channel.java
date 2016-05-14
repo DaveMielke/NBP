@@ -18,10 +18,24 @@ public abstract class Channel extends Component implements Runnable {
     super(endpoint);
   }
 
+  protected abstract void runChannelThread ();
+  protected abstract void stopChannelThread (Thread thread);
+
+  public abstract boolean send (byte b);
+  public abstract boolean flush ();
+
+  @Override
+  public final void run () {
+    Log.d(LOG_TAG, "channel thread starting");
+    runChannelThread();
+    Log.d(LOG_TAG, "channel thread stopped");
+  }
+
   public final boolean start () {
     synchronized (this) {
       if (channelThread != null) return false;
       Log.d(LOG_TAG, "starting channel");
+
       channelThread = new Thread(this, "braille-display-channel");
       channelThread.start();
       return true;
@@ -32,14 +46,14 @@ public abstract class Channel extends Component implements Runnable {
     synchronized (this) {
       if (channelThread == null) return false;
       Log.d(LOG_TAG, "stopping channel");
-      channelThread.interrupt();
+
+      Thread thread = channelThread;
       channelThread = null;
+
+      stopChannelThread(thread);
       return true;
     }
   }
-
-  public abstract boolean send (byte b);
-  public abstract boolean flush ();
 
   protected static void closeObject (Closeable object, String description) {
     try {
