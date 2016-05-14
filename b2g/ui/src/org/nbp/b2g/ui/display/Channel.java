@@ -12,11 +12,15 @@ import android.util.Log;
 public abstract class Channel extends Component implements Runnable {
   private final static String LOG_TAG = Channel.class.getName();
 
-  private Thread channelThread = null;
-
   protected Channel (DisplayEndpoint endpoint) {
     super(endpoint);
   }
+
+  protected final Protocol getProtocol () {
+    return displayEndpoint.getProtocol();
+  }
+
+  private Thread channelThread = null;
 
   protected abstract void initializeChannelThread ();
   protected abstract void runChannelThread ();
@@ -74,15 +78,15 @@ public abstract class Channel extends Component implements Runnable {
   }
 
   protected final void resetInput () {
-    displayEndpoint.getProtocol().resetInput();
+    getProtocol().resetInput();
   }
 
   protected final boolean handleTimeout () {
-    return displayEndpoint.getProtocol().handleTimeout();
+    return getProtocol().handleTimeout();
   }
 
   protected final boolean handleInput (byte b) {
-    return displayEndpoint.getProtocol().handleInput(b);
+    return getProtocol().handleInput(b);
   }
 
   private Timeout readTimeout = new Timeout(ApplicationParameters.DISPLAY_READ_TIMEOUT, "display-read-timeout") {

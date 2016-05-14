@@ -9,7 +9,7 @@ public abstract class Component {
     displayEndpoint = endpoint;
   }
 
-  protected final void write (String message) {
-    displayEndpoint.write(message);
+  protected final boolean write (String message) {
+    return displayEndpoint.write(message);
   }
 }

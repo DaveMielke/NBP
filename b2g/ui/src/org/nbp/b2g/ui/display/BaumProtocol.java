@@ -161,7 +161,7 @@ public class BaumProtocol extends Protocol {
     byte[] cells = new byte[count];
 
     System.arraycopy(inputBuffer, 1, cells, 0, count);
-    return displayEndpoint.write(Braille.toString(cells));
+    return write(Braille.toString(cells));
   }
 
   @Override
