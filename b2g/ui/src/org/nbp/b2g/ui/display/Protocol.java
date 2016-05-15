@@ -12,11 +12,33 @@ public abstract class Protocol extends Component {
     super(endpoint);
   }
 
+  private static Integer cellCount = null;
+  protected final static int getCellCount () {
+    if (cellCount == null) cellCount = Devices.braille.get().getLength();
+    return cellCount;
+  }
+
+  protected final boolean write (byte[] cells) {
+    return write(Braille.toString(cells));
+  }
+
+  protected final boolean write (byte[] buffer, int from, int count) {
+    if ((from == 0) && (count == buffer.length)) return write(buffer);
+
+    byte[] cells = new byte[count];
+    System.arraycopy(buffer, from, cells, 0, count);
+    return write(cells);
+  }
+
+  protected final boolean write (byte[] buffer, int from) {
+    return write(buffer, from, getCellCount());
+  }
+
   protected final Channel getChannel () {
     return displayEndpoint.getChannel();
   }
 
-  protected final boolean flush () {
+  protected final boolean flushOutput () {
     return getChannel().flush();
   }
 
@@ -45,12 +67,6 @@ public abstract class Protocol extends Component {
 
   public boolean handleCursorKey (int keyNumber, boolean press) {
     return false;
-  }
-
-  private static Integer cellCount = null;
-  protected final static int getCellCount () {
-    if (cellCount == null) cellCount = Devices.braille.get().getLength();
-    return cellCount;
   }
 
   protected final String getString (String string, int width) {

@@ -86,7 +86,7 @@ public class BaumProtocol extends Protocol {
 
     public final boolean send () {
       return BaumProtocol.this.send(command, elements)
-          && flush();
+          && flushOutput();
     }
 
     public final boolean reset () {
@@ -203,11 +203,7 @@ public class BaumProtocol extends Protocol {
   }
 
   private final boolean writeCells () {
-    int count = getCellCount();
-    byte[] cells = new byte[count];
-
-    System.arraycopy(inputBuffer, 1, cells, 0, count);
-    return write(Braille.toString(cells));
+    return write(inputBuffer, 1);
   }
 
   @Override
