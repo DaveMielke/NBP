@@ -5,17 +5,19 @@ import android.content.Context;
 
 public abstract class Component {
   protected final static int BYTE_MASK = 0XFF;
-  protected final DisplayEndpoint displayEndpoint;
 
-  protected Component (DisplayEndpoint endpoint) {
-    displayEndpoint = endpoint;
+  protected Component () {
   }
 
   protected final Context getContext () {
     return ApplicationContext.getContext();
   }
 
-  protected final boolean write (String message) {
-    return displayEndpoint.write(message);
+  protected final DisplayEndpoint getEndpoint () {
+    return Endpoints.display.get();
+  }
+
+  protected final boolean write (String text) {
+    return getEndpoint().write(text);
   }
 }

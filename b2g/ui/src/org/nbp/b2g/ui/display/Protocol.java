@@ -8,8 +8,8 @@ import android.bluetooth.BluetoothAdapter;
 public abstract class Protocol extends Component {
   private final static String LOG_TAG = Protocol.class.getName();
 
-  protected Protocol (DisplayEndpoint endpoint) {
-    super(endpoint);
+  protected Protocol () {
+    super();
   }
 
   private static Integer cellCount = null;
@@ -35,7 +35,7 @@ public abstract class Protocol extends Component {
   }
 
   protected final Channel getChannel () {
-    return displayEndpoint.getChannel();
+    return getEndpoint().getChannel();
   }
 
   protected final boolean flushOutput () {

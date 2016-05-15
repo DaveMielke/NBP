@@ -381,8 +381,8 @@ public class BaumProtocol extends Protocol {
     return true;
   }
 
-  public BaumProtocol (DisplayEndpoint endpoint) {
-    super(endpoint);
+  public BaumProtocol () {
+    super();
 
     addNavigationKeys();
   }

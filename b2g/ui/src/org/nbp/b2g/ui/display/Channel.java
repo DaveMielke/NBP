@@ -12,12 +12,12 @@ import android.util.Log;
 public abstract class Channel extends Component implements Runnable {
   private final static String LOG_TAG = Channel.class.getName();
 
-  protected Channel (DisplayEndpoint endpoint) {
-    super(endpoint);
+  protected Channel () {
+    super();
   }
 
   protected final Protocol getProtocol () {
-    return displayEndpoint.getProtocol();
+    return getEndpoint().getProtocol();
   }
 
   private Thread channelThread = null;

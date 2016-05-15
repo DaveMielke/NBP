@@ -26,8 +26,8 @@ import android.content.IntentFilter;
 public class BluetoothChannel extends Channel {
   private final static String LOG_TAG = BluetoothChannel.class.getName();
 
-  public BluetoothChannel (DisplayEndpoint endpoint) {
-    super(endpoint);
+  public BluetoothChannel () {
+    super();
   }
 
   private final static Object STOP_LOCK = new Object();

@@ -44,7 +44,7 @@ public class DisplayEndpoint extends Endpoint {
     super("display");
     write("offline");
 
-    currentChannel = new BluetoothChannel(this);
-    currentProtocol = new BaumProtocol(this);
+    currentChannel = new BluetoothChannel();
+    currentProtocol = new BaumProtocol();
   }
 }
