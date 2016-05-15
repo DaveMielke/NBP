@@ -58,6 +58,10 @@ public class BluetoothChannel extends Channel {
     return null;
   }
 
+  private final void closeServerSocket (BluetoothServerSocket socket) {
+    closeObject(socket, "Bluetooth server socket");
+  }
+
   private static BluetoothSocket getSessionSocket (BluetoothServerSocket server) {
     try {
       return server.accept();
@@ -66,6 +70,10 @@ public class BluetoothChannel extends Channel {
     }
 
     return null;
+  }
+
+  private final void closeSessionSocket (BluetoothSocket socket) {
+    closeObject(socket, "Bluetooth session socket");
   }
 
   private static InputStream getInputStream (BluetoothSocket socket) {
@@ -100,15 +108,23 @@ public class BluetoothChannel extends Channel {
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
-          if (!setCurrentSocket(server)) break;
+          if (!setCurrentSocket(server)) {
+            closeServerSocket(server);
+            break;
+          }
+
           Log.d(LOG_TAG, "channel listening");
           BluetoothSocket session = getSessionSocket(server);
 
-          closeObject(server, "bluetooth server socket");
+          closeServerSocket(server);
           server = null;
 
           if (session != null) {
-            if (!setCurrentSocket(session)) break;
+            if (!setCurrentSocket(session)) {
+              closeSessionSocket(session);
+              break;
+            }
+
             Log.d(LOG_TAG, "channel connected");
             InputStream inputStream = getInputStream(session);
 
@@ -117,20 +133,22 @@ public class BluetoothChannel extends Channel {
                 outputStream = new BufferedOutputStream(outputStream);
                 handleInput(new BufferedInputStream(inputStream));
 
-                closeObject(outputStream, "bluetooth output stream");
+                closeObject(outputStream, "Bluetooth output stream");
                 outputStream = null;
               }
 
-              closeObject(inputStream, "bluetooth input stream");
+              closeObject(inputStream, "Bluetooth input stream");
               inputStream = null;
             }
 
-            closeObject(session, "bluetooth session socket");
+            closeSessionSocket(session);
             session = null;
           }
 
           continue;
         }
+
+        write("Bluetooth failure");
       } else {
         write("Bluetooth off");
         Log.w(LOG_TAG, "no default adapter");
@@ -139,8 +157,6 @@ public class BluetoothChannel extends Channel {
       if (!setCurrentSocket(null)) break;
       ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
     }
-
-    write("Bluetooth stopped");
   }
 
   @Override

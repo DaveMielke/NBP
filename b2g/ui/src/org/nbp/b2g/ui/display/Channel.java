@@ -32,7 +32,10 @@ public abstract class Channel extends Component implements Runnable {
   @Override
   public final void run () {
     Log.d(LOG_TAG, "channel thread starting");
+
     runChannelThread();
+    write("channel off");
+
     Log.d(LOG_TAG, "channel thread stopped");
   }
 
