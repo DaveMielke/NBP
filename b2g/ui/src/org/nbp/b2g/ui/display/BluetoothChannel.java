@@ -100,24 +100,19 @@ public class BluetoothChannel extends Channel {
 
   @Override
   protected final void runChannelThread () {
-    final long initialFailureDelay = ApplicationParameters.BRAILLE_MESSAGE_DURATION;
-    long currentFailureDelay = initialFailureDelay;
-
     while (setCurrentSocket(null)) {
       BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
       if (adapter != null) {
-        write("Bluetooth waiting");
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
-          currentFailureDelay = initialFailureDelay;
-
           if (!setCurrentSocket(server)) {
             closeServerSocket(server);
             break;
           }
 
+          write("Bluetooth waiting");
           Log.d(LOG_TAG, "channel listening");
           BluetoothSocket session = getSessionSocket(server);
 
@@ -149,30 +144,19 @@ public class BluetoothChannel extends Channel {
             closeSessionSocket(session);
             session = null;
           }
-        } else {
-          write("Bluetooth failure");
 
-          synchronized (STOP_LOCK) {
-            try {
-              STOP_LOCK.wait(currentFailureDelay);
-            } catch (InterruptedException exception) {
-            }
-
-            currentFailureDelay = Math.min(
-              currentFailureDelay << 1,
-              ApplicationParameters.BLUETOOTH_FAILURE_DELAY
-            );
-          }
+          continue;
         }
       } else {
-        write("Bluetooth off");
         Log.w(LOG_TAG, "no default adapter");
+      }
 
-        synchronized (STOP_LOCK) {
-          try {
-            STOP_LOCK.wait();
-          } catch (InterruptedException exception) {
-          }
+      write("Bluetooth off");
+
+      synchronized (STOP_LOCK) {
+        try {
+          STOP_LOCK.wait();
+        } catch (InterruptedException exception) {
         }
       }
     }
