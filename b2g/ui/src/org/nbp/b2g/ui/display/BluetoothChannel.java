@@ -18,6 +18,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
 import android.bluetooth.BluetoothServerSocket;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+
 public class BluetoothChannel extends Channel {
   private final static String LOG_TAG = BluetoothChannel.class.getName();
 
@@ -42,6 +47,43 @@ public class BluetoothChannel extends Channel {
       closeObject(currentSocket, "current Bluetooth socket");
       currentSocket = null;
     }
+  }
+
+  private final BroadcastReceiver newReceiver () {
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+      @Override
+      public void onReceive (Context context, Intent intent) {
+        synchronized (STOP_LOCK) {
+          if (!stopFlag) {
+            String action = intent.getAction();
+
+            if (action != null) {
+              if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+                int newState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
+                int oldState = intent.getIntExtra(BluetoothAdapter.EXTRA_PREVIOUS_STATE, -1);
+
+                switch (newState) {
+                  case BluetoothAdapter.STATE_ON:
+                    STOP_LOCK.notify();
+                    break;
+
+                  case BluetoothAdapter.STATE_TURNING_OFF:
+                  case BluetoothAdapter.STATE_OFF:
+                    closeCurrentSocket();
+                    break;
+                }
+              }
+            }
+          }
+        }
+      }
+    };
+
+    IntentFilter filter = new IntentFilter();
+    filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+
+    getContext().registerReceiver(receiver, filter);
+    return receiver;
   }
 
   private final static UUID SERIAL_PROFILE_UUID = UUID.fromString(
@@ -107,6 +149,8 @@ public class BluetoothChannel extends Channel {
 
   @Override
   protected final void runChannelThread () {
+    BroadcastReceiver receiver = newReceiver();
+
     while (setCurrentSocket(null)) {
       BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -169,6 +213,8 @@ public class BluetoothChannel extends Channel {
         }
       }
     }
+
+    getContext().unregisterReceiver(receiver);
   }
 
   @Override
@@ -203,6 +249,8 @@ public class BluetoothChannel extends Channel {
 
   @Override
   public final boolean flush () {
+    if (outputStream == null) return true;
+
     try {
       outputStream.flush();
       return true;
