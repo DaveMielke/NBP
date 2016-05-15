@@ -39,14 +39,14 @@ public abstract class Channel extends Component implements Runnable {
   public final boolean start () {
     synchronized (this) {
       if (channelThread != null) return false;
+
       Log.d(LOG_TAG, "starting channel");
+      channelThread = new Thread(this, "braille-display-channel");
 
       initializeChannelThread();
-      channelThread = new Thread(this, "braille-display-channel");
+      channelThread.start();
+      return true;
     }
-
-    channelThread.start();
-    return true;
   }
 
   public final boolean stop () {

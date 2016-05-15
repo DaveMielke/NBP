@@ -25,14 +25,21 @@ public class BluetoothChannel extends Channel {
     super(endpoint);
   }
 
+  private final static Object STOP_LOCK = new Object();
+  private boolean stopFlag;
+  private Closeable currentSocket;
+
+  private final boolean setCurrentSocket (Closeable socket) {
+    synchronized (STOP_LOCK) {
+      if (stopFlag) return false;
+      currentSocket = socket;
+      return true;
+    }
+  }
+
   private final static UUID SERIAL_PROFILE_UUID = UUID.fromString(
     "00001101-0000-1000-8000-00805F9B34FB"
   );
-
-  private final static Object LOCK = new Object();
-  private boolean stopFlag;
-  private Closeable currentSocket;
-  private OutputStream outputStream;
 
   private static BluetoothServerSocket getServerSocket (BluetoothAdapter adapter) {
     try {
@@ -81,16 +88,11 @@ public class BluetoothChannel extends Channel {
     return null;
   }
 
-  private final boolean setCurrentSocket (Closeable socket) {
-    synchronized (LOCK) {
-      currentSocket = socket;
-      return stopFlag;
-    }
-  }
+  private OutputStream outputStream;
 
   @Override
   protected final void runChannelThread () {
-    while (!setCurrentSocket(null)) {
+    while (setCurrentSocket(null)) {
       BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
       if (adapter != null) {
@@ -98,7 +100,7 @@ public class BluetoothChannel extends Channel {
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
-          if (setCurrentSocket(server)) break;
+          if (!setCurrentSocket(server)) break;
           Log.d(LOG_TAG, "channel listening");
           BluetoothSocket session = getSessionSocket(server);
 
@@ -106,7 +108,7 @@ public class BluetoothChannel extends Channel {
           server = null;
 
           if (session != null) {
-            if (setCurrentSocket(session)) break;
+            if (!setCurrentSocket(session)) break;
             Log.d(LOG_TAG, "channel connected");
             InputStream inputStream = getInputStream(session);
 
@@ -134,7 +136,7 @@ public class BluetoothChannel extends Channel {
         Log.w(LOG_TAG, "no default adapter");
       }
 
-      if (setCurrentSocket(null)) break;
+      if (!setCurrentSocket(null)) break;
       ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
     }
 
@@ -150,7 +152,7 @@ public class BluetoothChannel extends Channel {
 
   @Override
   protected final void stopChannelThread () {
-    synchronized (LOCK) {
+    synchronized (STOP_LOCK) {
       stopFlag = true;
 
       if (currentSocket != null) {
