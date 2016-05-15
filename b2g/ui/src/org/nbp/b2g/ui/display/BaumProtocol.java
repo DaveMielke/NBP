@@ -16,11 +16,6 @@ public class BaumProtocol extends Protocol {
 
   private final static byte WRITE_CELLS     =       0X01;
   private final static byte GET_KEYS        =       0X08;
-  private final static byte CURSOR_KEYS     =       0X22;
-  private final static byte DISPLAY_KEYS    =       0X24;
-  private final static byte ENTRY_KEYS      =       0X33;
-  private final static byte JOYSTICK        =       0X34;
-  private final static byte ERROR_CODE      =       0X40;
   private final static byte DEVICE_IDENTITY = (byte)0X84;
   private final static byte SERIAL_NUMBER   = (byte)0X8A;
   private final static byte BLUETOOTH_NAME  = (byte)0X8C;
@@ -47,11 +42,11 @@ public class BaumProtocol extends Protocol {
     return channel.send(b);
   }
 
-  private final Channel begin (byte command) {
+  private final Channel begin (int command) {
     Channel channel = getChannel();
 
     if (channel.send(ESCAPE)) {
-      if (send(channel, command)) {
+      if (send(channel, (byte)command)) {
         return channel;
       }
     }
@@ -59,26 +54,22 @@ public class BaumProtocol extends Protocol {
     return null;
   }
 
-  private final boolean send (byte command, byte[] bytes, int end) {
+  private final boolean send (int command, byte[] bytes) {
     if (bytes == null) return true;
-    if (end == 0) return true;
+    if (bytes.length == 0) return true;
 
     Channel channel = begin(command);
     if (channel == null) return false;
 
-    for (int index=0; index<end; index+=1) {
+    for (int index=0; index<bytes.length; index+=1) {
       if (!send(channel, bytes[index])) return false;
     }
 
     return true;
   }
 
-  private final boolean send (byte command, byte[] bytes) {
-    return send(command, bytes, bytes.length);
-  }
-
   private final boolean sendErrorCode (int code) {
-    return send(ERROR_CODE, new byte[] {(byte)code});
+    return send(0X40, new byte[] {(byte)code});
   }
 
   private final boolean sendCellCount () {
@@ -86,9 +77,9 @@ public class BaumProtocol extends Protocol {
   }
 
   private class KeyGroup extends BitSet {
-    private final byte command;
+    private final int command;
 
-    public KeyGroup (int size, byte command) {
+    public KeyGroup (int size, int command) {
       super(size);
       this.command = command;
     }
@@ -109,16 +100,71 @@ public class BaumProtocol extends Protocol {
     return Math.max(count, 40);
   }
 
-  private final KeyGroup cursorKeys = new KeyGroup(getCursorKeyCount(), CURSOR_KEYS);
-  private final KeyGroup displayKeys = new KeyGroup(6, DISPLAY_KEYS);
-  private final KeyGroup entryKeys = new KeyGroup(16, ENTRY_KEYS);
-  private final KeyGroup joystick = new KeyGroup(5, JOYSTICK);
+  private class CursorKeys extends KeyGroup {
+    public CursorKeys () {
+      super(getCursorKeyCount(), 0X22);
+    }
+  }
+
+  private class DisplayKeys extends KeyGroup {
+    public final static byte D1 = 0;
+    public final static byte D2 = 1;
+    public final static byte D3 = 2;
+    public final static byte D4 = 3;
+    public final static byte D5 = 4;
+    public final static byte D6 = 5;
+
+    public DisplayKeys () {
+      super(6, 0X24);
+    }
+  }
+
+  private class EntryKeys extends KeyGroup {
+    public final static byte B9  =  0;
+    public final static byte B10 =  1;
+    public final static byte B11 =  2;
+
+    public final static byte F1  =  4;
+    public final static byte F2  =  5;
+    public final static byte F3  =  6;
+    public final static byte F4  =  7;
+
+    public final static byte B1  =  8;
+    public final static byte B2  =  9;
+    public final static byte B3  = 10;
+    public final static byte B4  = 11;
+    public final static byte B5  = 12;
+    public final static byte B6  = 13;
+    public final static byte B7  = 14;
+    public final static byte B8  = 15;
+
+    public EntryKeys () {
+      super(16, 0X33);
+    }
+  }
+
+  private class JoystickPositions extends KeyGroup {
+    public final static byte UP    = 0;
+    public final static byte LEFT  = 1;
+    public final static byte DOWN  = 2;
+    public final static byte RIGHT = 3;
+    public final static byte PRESS = 4;
+
+    public JoystickPositions () {
+      super(5, 0X34);
+    }
+  }
+
+  private final KeyGroup cursorKeys = new CursorKeys();
+  private final KeyGroup displayKeys = new DisplayKeys();
+  private final KeyGroup entryKeys = new EntryKeys();
+  private final KeyGroup joystickPositions = new JoystickPositions();
 
   private final KeyGroup[] keyGroups = new KeyGroup[] {
     cursorKeys,
     displayKeys,
     entryKeys,
-    joystick
+    joystickPositions
   };
 
   private final boolean sendKeys () {
@@ -298,23 +344,23 @@ public class BaumProtocol extends Protocol {
   }
 
   private final void addNavigationKeys () {
-    addNavigationKey(KeyMask.BACKWARD, entryKeys,  0);
-    addNavigationKey(KeyMask.FORWARD , entryKeys,  1);
-    addNavigationKey(KeyMask.SPACE   , entryKeys,  2);
-    addNavigationKey(KeyMask.DOT_1   , entryKeys,  8);
-    addNavigationKey(KeyMask.DOT_2   , entryKeys,  9);
-    addNavigationKey(KeyMask.DOT_3   , entryKeys, 10);
-    addNavigationKey(KeyMask.DOT_4   , entryKeys, 11);
-    addNavigationKey(KeyMask.DOT_5   , entryKeys, 12);
-    addNavigationKey(KeyMask.DOT_6   , entryKeys, 13);
-    addNavigationKey(KeyMask.DOT_7   , entryKeys, 14);
-    addNavigationKey(KeyMask.DOT_8   , entryKeys, 15);
+    addNavigationKey(KeyMask.BACKWARD, entryKeys, EntryKeys.B9);
+    addNavigationKey(KeyMask.FORWARD , entryKeys, EntryKeys.B10);
+    addNavigationKey(KeyMask.SPACE   , entryKeys, EntryKeys.B11);
+    addNavigationKey(KeyMask.DOT_1   , entryKeys, EntryKeys.B1);
+    addNavigationKey(KeyMask.DOT_2   , entryKeys, EntryKeys.B2);
+    addNavigationKey(KeyMask.DOT_3   , entryKeys, EntryKeys.B3);
+    addNavigationKey(KeyMask.DOT_4   , entryKeys, EntryKeys.B4);
+    addNavigationKey(KeyMask.DOT_5   , entryKeys, EntryKeys.B5);
+    addNavigationKey(KeyMask.DOT_6   , entryKeys, EntryKeys.B6);
+    addNavigationKey(KeyMask.DOT_7   , entryKeys, EntryKeys.B7);
+    addNavigationKey(KeyMask.DOT_8   , entryKeys, EntryKeys.B8);
 
-    addNavigationKey(KeyMask.DPAD_UP    , joystick, 0);
-    addNavigationKey(KeyMask.DPAD_LEFT  , joystick, 1);
-    addNavigationKey(KeyMask.DPAD_DOWN  , joystick, 2);
-    addNavigationKey(KeyMask.DPAD_RIGHT , joystick, 3);
-    addNavigationKey(KeyMask.DPAD_CENTER, joystick, 4);
+    addNavigationKey(KeyMask.DPAD_UP    , joystickPositions, JoystickPositions.UP);
+    addNavigationKey(KeyMask.DPAD_LEFT  , joystickPositions, JoystickPositions.LEFT);
+    addNavigationKey(KeyMask.DPAD_DOWN  , joystickPositions, JoystickPositions.DOWN);
+    addNavigationKey(KeyMask.DPAD_RIGHT , joystickPositions, JoystickPositions.RIGHT);
+    addNavigationKey(KeyMask.DPAD_CENTER, joystickPositions, JoystickPositions.PRESS);
   }
 
   @Override
