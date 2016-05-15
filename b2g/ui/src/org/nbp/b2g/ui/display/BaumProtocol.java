@@ -11,11 +11,10 @@ import android.util.Log;
 public class BaumProtocol extends Protocol {
   private final static String LOG_TAG = BaumProtocol.class.getName();
 
-  private final static int INPUT_BUFFER_SIZE = 0X100;
   private final static byte ESCAPE = Characters.CHAR_ESC;
 
   private final static byte WRITE_CELLS     =       0X01;
-  private final static byte GET_KEYS        =       0X08;
+  private final static byte CURRENT_KEYS    =       0X08;
   private final static byte DEVICE_IDENTITY = (byte)0X84;
   private final static byte SERIAL_NUMBER   = (byte)0X8A;
   private final static byte BLUETOOTH_NAME  = (byte)0X8C;
@@ -27,7 +26,7 @@ public class BaumProtocol extends Protocol {
     ;
   }
 
-  private final byte[] inputBuffer = new byte[INPUT_BUFFER_SIZE];
+  private final byte[] inputBuffer = new byte[2 + getCellCount()];
   private InputState inputState;
   private int inputLength;
   private int inputCount;
@@ -249,7 +248,7 @@ public class BaumProtocol extends Protocol {
         ok = writeCells();
         break;
 
-      case GET_KEYS:
+      case CURRENT_KEYS:
         ok = sendKeys();
         break;
 
