@@ -37,6 +37,13 @@ public class BluetoothChannel extends Channel {
     }
   }
 
+  private final void closeCurrentSocket () {
+    if (currentSocket != null) {
+      closeObject(currentSocket, "current Bluetooth socket");
+      currentSocket = null;
+    }
+  }
+
   private final static UUID SERIAL_PROFILE_UUID = UUID.fromString(
     "00001101-0000-1000-8000-00805F9B34FB"
   );
@@ -154,6 +161,8 @@ public class BluetoothChannel extends Channel {
       write("Bluetooth off");
 
       synchronized (STOP_LOCK) {
+        if (stopFlag) break;
+
         try {
           STOP_LOCK.wait();
         } catch (InterruptedException exception) {
@@ -173,12 +182,7 @@ public class BluetoothChannel extends Channel {
   protected final void stopChannelThread () {
     synchronized (STOP_LOCK) {
       stopFlag = true;
-
-      if (currentSocket != null) {
-        closeObject(currentSocket, "current socket");
-        currentSocket = null;
-      }
-
+      closeCurrentSocket();
       STOP_LOCK.notify();
     }
   }
