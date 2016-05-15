@@ -100,6 +100,9 @@ public class BluetoothChannel extends Channel {
 
   @Override
   protected final void runChannelThread () {
+    final long initialFailureDelay = ApplicationParameters.BRAILLE_MESSAGE_DURATION;
+    long currentFailureDelay = initialFailureDelay;
+
     while (setCurrentSocket(null)) {
       BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -108,6 +111,8 @@ public class BluetoothChannel extends Channel {
         BluetoothServerSocket server = getServerSocket(adapter);
 
         if (server != null) {
+          currentFailureDelay = initialFailureDelay;
+
           if (!setCurrentSocket(server)) {
             closeServerSocket(server);
             break;
@@ -144,18 +149,32 @@ public class BluetoothChannel extends Channel {
             closeSessionSocket(session);
             session = null;
           }
+        } else {
+          write("Bluetooth failure");
 
-          continue;
+          synchronized (STOP_LOCK) {
+            try {
+              STOP_LOCK.wait(currentFailureDelay);
+            } catch (InterruptedException exception) {
+            }
+
+            currentFailureDelay = Math.min(
+              currentFailureDelay << 1,
+              ApplicationParameters.BLUETOOTH_FAILURE_DELAY
+            );
+          }
         }
-
-        write("Bluetooth failure");
       } else {
         write("Bluetooth off");
         Log.w(LOG_TAG, "no default adapter");
-      }
 
-      if (!setCurrentSocket(null)) break;
-      ApplicationUtilities.sleep(ApplicationParameters.BLUETOOTH_RETRY_INTERVAL);
+        synchronized (STOP_LOCK) {
+          try {
+            STOP_LOCK.wait();
+          } catch (InterruptedException exception) {
+          }
+        }
+      }
     }
   }
 
@@ -175,6 +194,8 @@ public class BluetoothChannel extends Channel {
         closeObject(currentSocket, "current socket");
         currentSocket = null;
       }
+
+      STOP_LOCK.notify();
     }
   }
 
