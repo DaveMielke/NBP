@@ -391,12 +391,9 @@ public class BaumProtocol extends Protocol {
   public final int handleNavigationKeyEvent (int keyMask, boolean press) {
     for (Integer mask : navigationKeys.keySet()) {
       if ((keyMask & mask) != 0) {
-        keyMask &= ~mask;
-        KeyReference reference = navigationKeys.get(mask);
-
-        if (reference != null) {
-          handleKeyEvent(reference.group, reference.number, press);
-        }
+        KeyReference ref = navigationKeys.get(mask);
+        if (ref != null) handleKeyEvent(ref.group, ref.number, press);
+        if ((keyMask &= ~mask) == 0) break;
       }
     }
 
