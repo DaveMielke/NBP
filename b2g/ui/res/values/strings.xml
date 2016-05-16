@@ -124,6 +124,7 @@
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
   <string name="ReversePanning_control_label">Reverse Panning</string>
+  <string name="SecureConnection_control_label">Secure Connection</string>
   <string name="SelectionIndicator_control_label">Selection Indicator</string>
   <string name="SleepTalk_control_label">Sleep Talk</string>
   <string name="SpeechEnabled_control_label">Speech</string>

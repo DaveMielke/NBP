@@ -95,7 +95,7 @@ public class BluetoothChannel extends Channel {
       String name = ApplicationParameters.BLUETOOTH_SERVICE_NAME;
       UUID uuid = SERIAL_PROFILE_UUID;
 
-      if (ApplicationParameters.BLUETOOTH_SECURE_CONNECTION) {
+      if (ApplicationSettings.SECURE_CONNECTION) {
         return adapter.listenUsingRfcommWithServiceRecord(name, uuid);
       } else {
         return adapter.listenUsingInsecureRfcommWithServiceRecord(name, uuid);

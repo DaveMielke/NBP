@@ -24,6 +24,7 @@ public abstract class ApplicationDefaults {
   public final static boolean BRAILLE_MONITOR = false;
 
   public final static boolean BRAILLE_DISPLAY = false;
+  public final static boolean SECURE_CONNECTION = false;
 
   public final static boolean SPEECH_ENABLED = true;
   public final static boolean SLEEP_TALK = false;
