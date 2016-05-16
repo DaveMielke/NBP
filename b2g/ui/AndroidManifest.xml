@@ -47,6 +47,9 @@
   <!-- for applying an OTA update (requires writing to /cache/recovery/command) -->
   <uses-permission android:name="android.permission.ACCESS_CACHE_FILESYSTEM" />
 
+  <!-- for doing a factory reset (wipes data and cache) -->
+  <uses-permission android:name="android.permission.MASTER_CLEAR" />
+
   <!-- for managing the home screen -->
   <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
   <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
