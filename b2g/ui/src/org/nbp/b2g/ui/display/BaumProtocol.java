@@ -400,7 +400,7 @@ public class BaumProtocol extends Protocol {
     if (key != null) {
       handleKeyEvent(key, press);
     } else if (keyMap.containsKey(mask)) {
-      Devices.tone.get().beep();
+      if (press) Devices.tone.get().beep();
     } else {
       return false;
     }
