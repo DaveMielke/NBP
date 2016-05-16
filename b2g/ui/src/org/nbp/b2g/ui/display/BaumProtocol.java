@@ -322,91 +322,103 @@ public class BaumProtocol extends Protocol {
     for (KeyGroup group : keyGroups) group.reset();
   }
 
-  private static class KeyReference {
+  private static class KeyDescriptor {
     public final KeyGroup group;
     public final int number;
 
-    public KeyReference (KeyGroup group, int number) {
+    public KeyDescriptor (KeyGroup group, int number) {
       this.group = group;
       this.number = number;
     }
   }
 
-  private final Map<Integer, KeyReference> navigationKeys = new LinkedHashMap<Integer, KeyReference>();
+  private final Map<Integer, KeyDescriptor> keyMap = new
+      LinkedHashMap<Integer, KeyDescriptor>();
 
-  private final void mapNavigationKey (int mask, KeyReference reference) {
-    navigationKeys.put(mask, reference);
+  private final void mapKey (int mask, KeyDescriptor key) {
+    keyMap.put(mask, key);
   }
 
-  private final void mapNavigationKey (int mask, KeyGroup group, int number) {
-    mapNavigationKey(mask, new KeyReference(group, number));
+  private final void mapKey (int mask, KeyGroup group, int number) {
+    mapKey(mask, new KeyDescriptor(group, number));
   }
 
-  private final void mapNavigationKey (int mask) {
-    mapNavigationKey(mask, null);
+  private final void mapKey (int mask) {
+    mapKey(mask, null);
   }
 
   private final void mapCommonKeys () {
-    mapNavigationKey(KeyMask.BACKWARD, entryKeys, EntryKeys.B9);
-    mapNavigationKey(KeyMask.FORWARD , entryKeys, EntryKeys.B10);
-    mapNavigationKey(KeyMask.SPACE   , entryKeys, EntryKeys.B11);
-
-    mapNavigationKey(KeyMask.DPAD_UP    , joystickPositions, JoystickPositions.UP);
-    mapNavigationKey(KeyMask.DPAD_LEFT  , joystickPositions, JoystickPositions.LEFT);
-    mapNavigationKey(KeyMask.DPAD_DOWN  , joystickPositions, JoystickPositions.DOWN);
-    mapNavigationKey(KeyMask.DPAD_RIGHT , joystickPositions, JoystickPositions.RIGHT);
-    mapNavigationKey(KeyMask.DPAD_CENTER, joystickPositions, JoystickPositions.PRESS);
+    mapKey(KeyMask.DPAD_UP    , joystickPositions, JoystickPositions.UP);
+    mapKey(KeyMask.DPAD_LEFT  , joystickPositions, JoystickPositions.LEFT);
+    mapKey(KeyMask.DPAD_DOWN  , joystickPositions, JoystickPositions.DOWN);
+    mapKey(KeyMask.DPAD_RIGHT , joystickPositions, JoystickPositions.RIGHT);
+    mapKey(KeyMask.DPAD_CENTER, joystickPositions, JoystickPositions.PRESS);
   }
 
   private final void mapDisplayKeys () {
-    mapNavigationKey(KeyMask.DOT_1, displayKeys, DisplayKeys.D1);
-    mapNavigationKey(KeyMask.DOT_2, displayKeys, DisplayKeys.D2);
-    mapNavigationKey(KeyMask.DOT_3, displayKeys, DisplayKeys.D3);
-    mapNavigationKey(KeyMask.DOT_4, displayKeys, DisplayKeys.D4);
-    mapNavigationKey(KeyMask.DOT_5, displayKeys, DisplayKeys.D5);
-    mapNavigationKey(KeyMask.DOT_6, displayKeys, DisplayKeys.D6);
-    mapNavigationKey(KeyMask.DOT_7);
-    mapNavigationKey(KeyMask.DOT_8);
+    mapKey(KeyMask.DOT_1, displayKeys, DisplayKeys.D1);
+    mapKey(KeyMask.DOT_2, displayKeys, DisplayKeys.D2);
+    mapKey(KeyMask.DOT_3, displayKeys, DisplayKeys.D3);
+    mapKey(KeyMask.DOT_4, displayKeys, DisplayKeys.D4);
+    mapKey(KeyMask.DOT_5, displayKeys, DisplayKeys.D5);
+    mapKey(KeyMask.DOT_6, displayKeys, DisplayKeys.D6);
+
+    mapKey(KeyMask.BACKWARD, entryKeys, EntryKeys.F1);
+    mapKey(KeyMask.DOT_7   , entryKeys, EntryKeys.F2);
+    mapKey(KeyMask.DOT_8   , entryKeys, EntryKeys.F3);
+    mapKey(KeyMask.FORWARD , entryKeys, EntryKeys.F4);
+
+    mapKey(KeyMask.SPACE);
   }
 
   private final void mapEntryKeys () {
-    mapNavigationKey(KeyMask.DOT_1, entryKeys, EntryKeys.B1);
-    mapNavigationKey(KeyMask.DOT_2, entryKeys, EntryKeys.B2);
-    mapNavigationKey(KeyMask.DOT_3, entryKeys, EntryKeys.B3);
-    mapNavigationKey(KeyMask.DOT_4, entryKeys, EntryKeys.B4);
-    mapNavigationKey(KeyMask.DOT_5, entryKeys, EntryKeys.B5);
-    mapNavigationKey(KeyMask.DOT_6, entryKeys, EntryKeys.B6);
-    mapNavigationKey(KeyMask.DOT_7, entryKeys, EntryKeys.B7);
-    mapNavigationKey(KeyMask.DOT_8, entryKeys, EntryKeys.B8);
-  }
+    mapKey(KeyMask.DOT_1, entryKeys, EntryKeys.B1);
+    mapKey(KeyMask.DOT_2, entryKeys, EntryKeys.B2);
+    mapKey(KeyMask.DOT_3, entryKeys, EntryKeys.B3);
+    mapKey(KeyMask.DOT_4, entryKeys, EntryKeys.B4);
+    mapKey(KeyMask.DOT_5, entryKeys, EntryKeys.B5);
+    mapKey(KeyMask.DOT_6, entryKeys, EntryKeys.B6);
+    mapKey(KeyMask.DOT_7, entryKeys, EntryKeys.B7);
+    mapKey(KeyMask.DOT_8, entryKeys, EntryKeys.B8);
 
-  private int pressedKeyCount = 0;
-  private boolean wasKeyPress = false;
+    mapKey(KeyMask.BACKWARD, entryKeys, EntryKeys.B9);
+    mapKey(KeyMask.FORWARD , entryKeys, EntryKeys.B10);
+    mapKey(KeyMask.SPACE   , entryKeys, EntryKeys.B11);
+  }
 
   private final void handleKeyEvent (KeyGroup group, int number, boolean press) {
     if (group.set(number, press)) group.send();
   }
 
-  private final void handleKeyEvent (KeyReference key, boolean press) {
+  private final void handleKeyEvent (KeyDescriptor key, boolean press) {
     handleKeyEvent(key.group, key.number, press);
+  }
+
+  private final boolean handleKeyEvent (int mask, boolean press) {
+    KeyDescriptor key = keyMap.get(mask);
+
+    if (key != null) {
+      handleKeyEvent(key, press);
+    } else if (keyMap.containsKey(mask)) {
+      Devices.tone.get().beep();
+    } else {
+      return false;
+    }
+
+    return true;
   }
 
   @Override
   public final int handleNavigationKeyEvent (int keyMask, boolean press) {
-    {
-      KeyReference key = navigationKeys.get(keyMask);
+    if (handleKeyEvent(keyMask, press)) return 0;
 
-      if (key != null) {
-        handleKeyEvent(key, press);
-        return 0;
-      }
-    }
-
-    for (Integer mask : navigationKeys.keySet()) {
+    for (Integer mask : keyMap.keySet()) {
       if ((keyMask & mask) != 0) {
-        KeyReference key = navigationKeys.get(mask);
-        if (key != null) handleKeyEvent(key, press);
-        if ((keyMask &= ~mask) == 0) break;
+        if (handleKeyEvent(mask, press)) {
+          if ((keyMask &= ~mask) == 0) {
+            break;
+          }
+        }
       }
     }
 
