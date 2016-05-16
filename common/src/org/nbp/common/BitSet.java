@@ -47,7 +47,7 @@ public class BitSet {
     return test(index, bit);
   }
 
-  public final boolean set (int member) {
+  public final boolean add (int member) {
     int index = getIndex(member);
     byte bit = getBit(member);
 
@@ -56,7 +56,7 @@ public class BitSet {
     return true;
   }
 
-  public final boolean clear (int member) {
+  public final boolean remove (int member) {
     int index = getIndex(member);
     byte bit = getBit(member);
 
@@ -65,7 +65,7 @@ public class BitSet {
     return true;
   }
 
-  public final boolean change (int member, boolean state) {
-    return state? set(member): clear(member);
+  public final boolean set (int member, boolean state) {
+    return state? add(member): remove(member);
   }
 }

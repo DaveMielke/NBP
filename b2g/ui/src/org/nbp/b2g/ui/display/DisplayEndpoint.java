@@ -31,13 +31,13 @@ public class DisplayEndpoint extends Endpoint {
   }
 
   @Override
-  public final int handleNavigationKeys (int keyMask, boolean press) {
-    return currentProtocol.handleNavigationKeys(keyMask, press);
+  public final int handleNavigationKeyEvent (int keyMask, boolean press) {
+    return currentProtocol.handleNavigationKeyEvent(keyMask, press);
   }
 
   @Override
-  public final boolean handleCursorKey (int keyNumber, boolean press) {
-    return currentProtocol.handleCursorKey(keyNumber, press);
+  public final boolean handleCursorKeyEvent (int keyNumber, boolean press) {
+    return currentProtocol.handleCursorKeyEvent(keyNumber, press);
   }
 
   public DisplayEndpoint () {

@@ -61,11 +61,11 @@ public abstract class Protocol extends Component {
     return true;
   }
 
-  public int handleNavigationKeys (int keyMask, boolean press) {
+  public int handleNavigationKeyEvent (int keyMask, boolean press) {
     return keyMask;
   }
 
-  public boolean handleCursorKey (int keyNumber, boolean press) {
+  public boolean handleCursorKeyEvent (int keyNumber, boolean press) {
     return false;
   }
 

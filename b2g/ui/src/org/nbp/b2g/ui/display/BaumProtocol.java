@@ -377,14 +377,21 @@ public class BaumProtocol extends Protocol {
     mapNavigationKey(KeyMask.DOT_8, entryKeys, EntryKeys.B8);
   }
 
+  private int pressedKeyCount = 0;
+  private boolean wasKeyPress = false;
+
+  private final void handleKeyEvent (KeyGroup group, int number, boolean press) {
+    if (group.set(number, press)) group.send();
+  }
+
   @Override
-  public final int handleNavigationKeys (int keyMask, boolean press) {
+  public final int handleNavigationKeyEvent (int keyMask, boolean press) {
     for (Integer mask : navigationKeys.keySet()) {
       if ((keyMask & mask) != 0) {
         keyMask &= ~mask;
 
         KeyReference ref = navigationKeys.get(mask);
-        if (ref.group.change(ref.number, press)) ref.group.send();
+        handleKeyEvent(ref.group, ref.number, press);
       }
     }
 
@@ -392,11 +399,11 @@ public class BaumProtocol extends Protocol {
   }
 
   @Override
-  public final boolean handleCursorKey (int keyNumber, boolean press) {
+  public final boolean handleCursorKeyEvent (int keyNumber, boolean press) {
     KeyGroup group = cursorKeys;
     if (keyNumber >= group.size) return false;
 
-    if (group.change(keyNumber, press)) group.send();
+    handleKeyEvent(group, keyNumber, press);
     return true;
   }
 
