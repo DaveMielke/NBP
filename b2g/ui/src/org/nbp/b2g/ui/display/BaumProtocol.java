@@ -334,28 +334,47 @@ public class BaumProtocol extends Protocol {
 
   private final Map<Integer, KeyReference> navigationKeys = new LinkedHashMap<Integer, KeyReference>();
 
-  private final void addNavigationKey (int mask, KeyGroup group, int number) {
+  private final void mapNavigationKey (int mask, KeyGroup group, int number) {
     navigationKeys.put(mask, new KeyReference(group, number));
   }
 
-  private final void addNavigationKeys () {
-    addNavigationKey(KeyMask.BACKWARD, entryKeys, EntryKeys.B9);
-    addNavigationKey(KeyMask.FORWARD , entryKeys, EntryKeys.B10);
-    addNavigationKey(KeyMask.SPACE   , entryKeys, EntryKeys.B11);
-    addNavigationKey(KeyMask.DOT_1   , entryKeys, EntryKeys.B1);
-    addNavigationKey(KeyMask.DOT_2   , entryKeys, EntryKeys.B2);
-    addNavigationKey(KeyMask.DOT_3   , entryKeys, EntryKeys.B3);
-    addNavigationKey(KeyMask.DOT_4   , entryKeys, EntryKeys.B4);
-    addNavigationKey(KeyMask.DOT_5   , entryKeys, EntryKeys.B5);
-    addNavigationKey(KeyMask.DOT_6   , entryKeys, EntryKeys.B6);
-    addNavigationKey(KeyMask.DOT_7   , entryKeys, EntryKeys.B7);
-    addNavigationKey(KeyMask.DOT_8   , entryKeys, EntryKeys.B8);
+  private final void unmapNavigationKey (int mask) {
+    navigationKeys.remove(mask);
+  }
 
-    addNavigationKey(KeyMask.DPAD_UP    , joystickPositions, JoystickPositions.UP);
-    addNavigationKey(KeyMask.DPAD_LEFT  , joystickPositions, JoystickPositions.LEFT);
-    addNavigationKey(KeyMask.DPAD_DOWN  , joystickPositions, JoystickPositions.DOWN);
-    addNavigationKey(KeyMask.DPAD_RIGHT , joystickPositions, JoystickPositions.RIGHT);
-    addNavigationKey(KeyMask.DPAD_CENTER, joystickPositions, JoystickPositions.PRESS);
+  private final void mapCommonKeys () {
+    mapNavigationKey(KeyMask.BACKWARD, entryKeys, EntryKeys.B9);
+    mapNavigationKey(KeyMask.FORWARD , entryKeys, EntryKeys.B10);
+    mapNavigationKey(KeyMask.SPACE   , entryKeys, EntryKeys.B11);
+
+    mapNavigationKey(KeyMask.DPAD_UP    , joystickPositions, JoystickPositions.UP);
+    mapNavigationKey(KeyMask.DPAD_LEFT  , joystickPositions, JoystickPositions.LEFT);
+    mapNavigationKey(KeyMask.DPAD_DOWN  , joystickPositions, JoystickPositions.DOWN);
+    mapNavigationKey(KeyMask.DPAD_RIGHT , joystickPositions, JoystickPositions.RIGHT);
+    mapNavigationKey(KeyMask.DPAD_CENTER, joystickPositions, JoystickPositions.PRESS);
+  }
+
+  private final void mapDisplayKeys () {
+    mapNavigationKey(KeyMask.DOT_1, displayKeys, DisplayKeys.D1);
+    mapNavigationKey(KeyMask.DOT_2, displayKeys, DisplayKeys.D2);
+    mapNavigationKey(KeyMask.DOT_3, displayKeys, DisplayKeys.D3);
+    mapNavigationKey(KeyMask.DOT_4, displayKeys, DisplayKeys.D4);
+    mapNavigationKey(KeyMask.DOT_5, displayKeys, DisplayKeys.D5);
+    mapNavigationKey(KeyMask.DOT_6, displayKeys, DisplayKeys.D6);
+
+    unmapNavigationKey(KeyMask.DOT_7);
+    unmapNavigationKey(KeyMask.DOT_8);
+  }
+
+  private final void mapEntryKeys () {
+    mapNavigationKey(KeyMask.DOT_1, entryKeys, EntryKeys.B1);
+    mapNavigationKey(KeyMask.DOT_2, entryKeys, EntryKeys.B2);
+    mapNavigationKey(KeyMask.DOT_3, entryKeys, EntryKeys.B3);
+    mapNavigationKey(KeyMask.DOT_4, entryKeys, EntryKeys.B4);
+    mapNavigationKey(KeyMask.DOT_5, entryKeys, EntryKeys.B5);
+    mapNavigationKey(KeyMask.DOT_6, entryKeys, EntryKeys.B6);
+    mapNavigationKey(KeyMask.DOT_7, entryKeys, EntryKeys.B7);
+    mapNavigationKey(KeyMask.DOT_8, entryKeys, EntryKeys.B8);
   }
 
   @Override
@@ -384,6 +403,7 @@ public class BaumProtocol extends Protocol {
   public BaumProtocol () {
     super();
 
-    addNavigationKeys();
+    mapCommonKeys();
+    mapEntryKeys();
   }
 }
