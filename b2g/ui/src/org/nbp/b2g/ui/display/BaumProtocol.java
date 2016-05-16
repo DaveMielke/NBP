@@ -387,12 +387,25 @@ public class BaumProtocol extends Protocol {
     if (group.set(number, press)) group.send();
   }
 
+  private final void handleKeyEvent (KeyReference key, boolean press) {
+    handleKeyEvent(key.group, key.number, press);
+  }
+
   @Override
   public final int handleNavigationKeyEvent (int keyMask, boolean press) {
+    {
+      KeyReference key = navigationKeys.get(keyMask);
+
+      if (key != null) {
+        handleKeyEvent(key, press);
+        return 0;
+      }
+    }
+
     for (Integer mask : navigationKeys.keySet()) {
       if ((keyMask & mask) != 0) {
-        KeyReference ref = navigationKeys.get(mask);
-        if (ref != null) handleKeyEvent(ref.group, ref.number, press);
+        KeyReference key = navigationKeys.get(mask);
+        if (key != null) handleKeyEvent(key, press);
         if ((keyMask &= ~mask) == 0) break;
       }
     }
