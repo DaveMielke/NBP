@@ -18,7 +18,9 @@ public class DisplayEndpoint extends Endpoint {
   }
 
   public final boolean stop () {
-    return currentChannel.stop();
+    boolean stopped = currentChannel.stop();
+    write("braille display off");
+    return stopped;
   }
 
   @Override
@@ -42,7 +44,6 @@ public class DisplayEndpoint extends Endpoint {
 
   public DisplayEndpoint () {
     super("display");
-    write("offline");
 
     currentChannel = new BluetoothChannel();
     currentProtocol = new BaumProtocol();

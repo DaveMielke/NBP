@@ -334,12 +334,16 @@ public class BaumProtocol extends Protocol {
 
   private final Map<Integer, KeyReference> navigationKeys = new LinkedHashMap<Integer, KeyReference>();
 
-  private final void mapNavigationKey (int mask, KeyGroup group, int number) {
-    navigationKeys.put(mask, new KeyReference(group, number));
+  private final void mapNavigationKey (int mask, KeyReference reference) {
+    navigationKeys.put(mask, reference);
   }
 
-  private final void unmapNavigationKey (int mask) {
-    navigationKeys.remove(mask);
+  private final void mapNavigationKey (int mask, KeyGroup group, int number) {
+    mapNavigationKey(mask, new KeyReference(group, number));
+  }
+
+  private final void mapNavigationKey (int mask) {
+    mapNavigationKey(mask, null);
   }
 
   private final void mapCommonKeys () {
@@ -361,9 +365,8 @@ public class BaumProtocol extends Protocol {
     mapNavigationKey(KeyMask.DOT_4, displayKeys, DisplayKeys.D4);
     mapNavigationKey(KeyMask.DOT_5, displayKeys, DisplayKeys.D5);
     mapNavigationKey(KeyMask.DOT_6, displayKeys, DisplayKeys.D6);
-
-    unmapNavigationKey(KeyMask.DOT_7);
-    unmapNavigationKey(KeyMask.DOT_8);
+    mapNavigationKey(KeyMask.DOT_7);
+    mapNavigationKey(KeyMask.DOT_8);
   }
 
   private final void mapEntryKeys () {
@@ -389,9 +392,11 @@ public class BaumProtocol extends Protocol {
     for (Integer mask : navigationKeys.keySet()) {
       if ((keyMask & mask) != 0) {
         keyMask &= ~mask;
+        KeyReference reference = navigationKeys.get(mask);
 
-        KeyReference ref = navigationKeys.get(mask);
-        handleKeyEvent(ref.group, ref.number, press);
+        if (reference != null) {
+          handleKeyEvent(reference.group, reference.number, press);
+        }
       }
     }
 
