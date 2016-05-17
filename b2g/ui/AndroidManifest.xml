@@ -41,6 +41,9 @@
   <!-- for the braille display endpoint -->
   <uses-permission android:name="android.permission.BLUETOOTH" />
 
+  <!-- for fixing the Bluetooth device name (Braille to Go -> B2G) -->
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
   <!-- for system maintenance operations -->
   <uses-permission android:name="android.permission.REBOOT" />
 

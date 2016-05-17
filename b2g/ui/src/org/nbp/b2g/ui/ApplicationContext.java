@@ -21,11 +21,32 @@ import android.view.inputmethod.InputMethodInfo;
 import org.nbp.b2g.ui.host.ScreenMonitor;
 import org.liblouis.Louis;
 
+import android.bluetooth.BluetoothAdapter;
+
 public abstract class ApplicationContext extends CommonContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
 
+  private static void fixBluetoothName () {
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+
+    if (adapter != null) {
+      String oldName = adapter.getName();
+
+      if (oldName.equals("Braille to Go")) {
+        String newName = "B2G";
+        adapter.setName(newName);
+
+        Log.w(LOG_TAG, String.format(
+          "Bluetooth name changed: %s -> %s", oldName, newName
+        ));
+      }
+    }
+  }
+
   public static boolean setContext (Context context) {
     if (!CommonContext.setContext(context)) return false;
+
+    fixBluetoothName();
 
     Louis.setLogLevel(ApplicationParameters.LIBLOUIS_LOG_LEVEL);
     Louis.initialize(context);
