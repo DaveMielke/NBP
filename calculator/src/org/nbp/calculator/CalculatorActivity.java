@@ -210,49 +210,29 @@ public class CalculatorActivity extends CommonActivity {
     }
   }
 
-  private final void setDeleteButtonListener () {
-    setClickListener(
-      R.id.button_delete,
-      new View.OnClickListener() {
-        @Override
-        public void onClick (View view) {
-          int start = expressionView.getSelectionStart();
-          int end = expressionView.getSelectionEnd();
-          if (start == end) start -= 1;
-
-          if (start >= 0) {
-            expressionView.getText().replace(start, end, "");
-            expressionView.setSelection(start);
-            expressionView.requestFocus();
-          }
-        }
-      }
-    );
-
-    setLongClickListener(
-      R.id.button_delete,
-      new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick (View view) {
-          expressionView.setText("");
-          expressionView.requestFocus();
-          return true;
-        }
-      }
-    );
-  }
-
   private final void setClearButtonListener () {
     setClickListener(
       R.id.button_clear,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
+          expressionView.setText("");
+          expressionView.requestFocus();
+        }
+      }
+    );
+
+    setLongClickListener(
+      R.id.button_clear,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
           resultView.setText("");
           SavedSettings.set(SavedSettings.RESULT, Double.NaN);
 
           expressionView.setText("");
           expressionView.requestFocus();
+          return true;
         }
       }
     );
@@ -601,7 +581,6 @@ public class CalculatorActivity extends CommonActivity {
     restoreExpression();
     expressionView.requestFocus();
 
-    setDeleteButtonListener();
     setClearButtonListener();
     setDegreesCheckBoxListener();
     setFunctionButtonListener();
