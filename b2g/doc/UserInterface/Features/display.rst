@@ -77,8 +77,41 @@ returns full control to the |user interface|.
 Baum Key Emulation
 ~~~~~~~~~~~~~~~~~~
 
-The Baum protocol supports more keys than the |product name| has,
-so the following operational modes are supported:
+The Baum device that the remote braille display emulates
+has the following keys:
+
+* A Cursor routing key immediately behind each of the braille cells.
+
+* Three Display keys at each end of the braille cells.
+  The three on the left, from top to bottom, are D1, D2, and D3.
+  The three on the right, from top to bottom, are D4, D5, and D6.
+
+* An eight-dot braille keyboard is behind the cursor routing keys.
+  The four on the left, from left to right, are dots 7, 3, 2, and 1.
+  The four on the right, from left to right, are dots 4, 5, 6, and 8.
+  These keys are also known as B1 through B8
+  (numbered the same way as the dots).
+
+* A five-position joystick in the middle of the front.
+  Its positions are Left, Right, Up, Down, and Press.
+
+* A button on each side of the joystick.
+  The one on the left is B9, and the one on the right is B10.
+
+* Two concave buttons at each end of the front.
+  The two on the left, from left to right, are F1 and F2.
+  The two on the right, from left to right, are F3 and F4.
+
+* A button in between dots 1 and 4 named B11.
+
+The |product name|'s cursor routing keys are always mapped
+to the Baum cursor routing keys.
+
+The |product name|'s five-key directional pad is always mapped
+to the Baum five-position joystick.
+
+The |product name|'s Dot keys, Backward, Forward, and Space are mapped
+according to one of the following operational modes:
 
 Baum Navigation Mode
 ````````````````````
@@ -87,22 +120,13 @@ Pressing Space while holding Backward switches to navigation mode.
 This is the default.
 In it, the keys are mapped as follows:
 
-==================  ========  =============
-|product name| Key  Baum Key  Also Known As
-------------------  --------  -------------
-Dot1                D1        Display1
-Dot2                D2        Display2
-Dot3                D3        Display3
-Dot4                D4        Display4
-Dot5                D5        Display5
-Dot6                D6        Display6
-Backward            F1        Function1
-Dot7                F2        Function2
-Dot8                F3        Function3
-Forward             F4        Function4
-==================  ========  =============
+* Dots 1 through 6 are mapped to Display keys 1 through 6.
 
-Space isn't mapped.
+* Dots 7 and 8 are mapped to Function keys 3 and 4.
+
+* Backward and Forward are mapped to Function keys 1 and 4.
+
+* Space isn't mapped.
 
 Baum Keyboard Mode
 ``````````````````
@@ -110,19 +134,10 @@ Baum Keyboard Mode
 Pressing Space while holding Forward switches to keyboard mode.
 In it, the keys are mapped as follows:
 
-==================  ========  =============
-|product name| Key  Baum Key  Also Known As
-------------------  --------  -------------
-Dot1                B1        Dot1
-Dot2                B2        Dot2
-Dot3                B3        Dot3
-Dot4                B4        Dot4
-Dot5                B5        Dot5
-Dot6                B6        Dot6
-Dot7                B7        Dot7
-Dot8                B8        Dot8
-Backward            B9
-Forward             B10
-Space               B11
-==================  ========  =============
+* Dots 1 through 8 are mapped to Dots 1 through 8
+  (also known as B1 through B8).
+
+* Backward and Forward are mapped to B9 and B10.
+
+* Space is mapped to B11.
 

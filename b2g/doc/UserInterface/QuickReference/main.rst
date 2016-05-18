@@ -49,6 +49,16 @@ Remote Braille Display Operations
 
 .. include:: keys-display.rst
 
+Baum Navigation Mode Mappings
+`````````````````````````````
+
+.. include:: baum-navigation.rst
+
+Baum Keyboard Mode Mappings
+```````````````````````````
+
+.. include:: baum-keyboard.rst
+
 Developer Operations
 ~~~~~~~~~~~~~~~~~~~~
 
