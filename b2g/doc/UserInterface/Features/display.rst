@@ -100,7 +100,7 @@ has the following keys:
 * A button on each side of the joystick.
   The one on the left is B9, and the one on the right is B10.
 
-* Two concave buttons at each end of the front.
+* Two function buttons at each end of the front.
   The two on the left, from left to right, are F1 and F2.
   The two on the right, from left to right, are F3 and F4.
 
