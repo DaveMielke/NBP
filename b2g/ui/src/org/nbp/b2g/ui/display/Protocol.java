@@ -42,10 +42,7 @@ public abstract class Protocol extends Component {
     return getChannel().flush();
   }
 
-  public void resetKeys () {
-  }
-
-  protected static void logIgnoredByte (byte b) {
+  protected final static void logIgnoredByte (byte b) {
     Log.w(LOG_TAG, String.format("input byte ignored: 0X%02X", b));
   }
 
@@ -67,6 +64,9 @@ public abstract class Protocol extends Component {
 
   public boolean handleCursorKeyEvent (int keyNumber, boolean press) {
     return false;
+  }
+
+  public void resetKeys () {
   }
 
   protected final String getString (String string, int width) {

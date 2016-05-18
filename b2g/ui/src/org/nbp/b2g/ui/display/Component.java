@@ -17,6 +17,10 @@ public abstract class Component {
     return Endpoints.display.get();
   }
 
+  protected final static void message (String text) {
+    ApplicationUtilities.message(text);
+  }
+
   protected final boolean write (String text) {
     return getEndpoint().write(text);
   }

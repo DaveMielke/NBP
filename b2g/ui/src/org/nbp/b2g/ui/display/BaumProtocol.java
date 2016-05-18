@@ -317,11 +317,6 @@ public class BaumProtocol extends Protocol {
     return true;
   }
 
-  @Override
-  public void resetKeys () {
-    for (KeyGroup group : keyGroups) group.reset();
-  }
-
   private static class KeyDescriptor {
     public final KeyGroup group;
     public final int number;
@@ -386,8 +381,70 @@ public class BaumProtocol extends Protocol {
     mapKey(KeyMask.SPACE   , entryKeys, EntryKeys.B11);
   }
 
+  private abstract class PendingSpaceAction {
+    public abstract void performAction ();
+    public abstract String getMessage ();
+  }
+
+  private final Map<Integer, PendingSpaceAction> pendingSpaceActions = new
+      LinkedHashMap<Integer, PendingSpaceAction>();
+
+  private final void mapPendingSpaceAction (int keyMask, PendingSpaceAction action) {
+    pendingSpaceActions.put(keyMask, action);
+  }
+
+  private final void mapPendingSpaceActions () {
+    mapPendingSpaceAction(
+      KeyMask.BACKWARD,
+      new PendingSpaceAction() {
+        @Override
+        public final void performAction () {
+          mapDisplayKeys();
+        }
+
+        @Override
+        public final String getMessage () {
+          return "navigation mode";
+        }
+      }
+    );
+
+    mapPendingSpaceAction(
+      KeyMask.FORWARD,
+      new PendingSpaceAction() {
+        @Override
+        public final void performAction () {
+          mapEntryKeys();
+        }
+
+        @Override
+        public final String getMessage () {
+          return "keyboard mode";
+        }
+      }
+    );
+  }
+
+  private int pressedKeyCount = 0;
+  private KeyDescriptor pendingKeyPress = null;
+  private PendingSpaceAction pendingSpaceAction = null;
+
   private final void handleKeyEvent (KeyGroup group, int number, boolean press) {
-    if (group.set(number, press)) group.send();
+    if (pendingKeyPress != null) {
+      KeyDescriptor key = pendingKeyPress;
+      pendingKeyPress = null;
+      handleKeyEvent(key, true);
+    }
+
+    if (group.set(number, press)) {
+      group.send();
+
+      if (press) {
+        pressedKeyCount += 1;
+      } else {
+        pressedKeyCount -= 1;
+      }
+    }
   }
 
   private final void handleKeyEvent (KeyDescriptor key, boolean press) {
@@ -396,6 +453,26 @@ public class BaumProtocol extends Protocol {
 
   private final boolean handleKeyEvent (int mask, boolean press) {
     KeyDescriptor key = keyMap.get(mask);
+
+    if ((pressedKeyCount == 0) && press) {
+      if (pendingKeyPress == null) {
+        PendingSpaceAction action = pendingSpaceActions.get(mask);
+
+        if (action != null) {
+          pendingSpaceAction = action;
+          pendingKeyPress = key;
+          return true;
+        }
+      } else if (mask == KeyMask.SPACE) {
+        PendingSpaceAction action = pendingSpaceAction;
+        pendingSpaceAction = null;
+        pendingKeyPress = null;
+
+        message(action.getMessage());
+        action.performAction();
+        return true;
+      }
+    }
 
     if (key != null) {
       handleKeyEvent(key, press);
@@ -434,10 +511,20 @@ public class BaumProtocol extends Protocol {
     return true;
   }
 
+  @Override
+  public final void resetKeys () {
+    for (KeyGroup group : keyGroups) group.reset();
+
+    pressedKeyCount = 0;
+    pendingKeyPress = null;
+    pendingSpaceAction = null;
+  }
+
   public BaumProtocol () {
     super();
 
+    mapPendingSpaceActions();
     mapCommonKeys();
-    mapEntryKeys();
+    mapDisplayKeys();
   }
 }
