@@ -5,13 +5,14 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 
 import org.nbp.common.BitSet;
+import org.nbp.common.CharacterUtilities;
 
 import android.util.Log;
 
 public class BaumProtocol extends Protocol {
   private final static String LOG_TAG = BaumProtocol.class.getName();
 
-  private final static byte ESCAPE = Characters.CHAR_ESC;
+  private final static byte ESCAPE = CharacterUtilities.CHAR_ESC;
 
   private final static byte WRITE_CELLS     =       0X01;
   private final static byte CURRENT_KEYS    =       0X08;
