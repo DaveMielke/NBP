@@ -44,6 +44,11 @@ Legacy Bindings
 
 .. include:: keys-legacy.rst
 
+Remote Braille Display Operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. include:: keys-display.rst
+
 Developer Operations
 ~~~~~~~~~~~~~~~~~~~~
 

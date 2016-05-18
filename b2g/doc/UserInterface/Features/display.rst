@@ -80,13 +80,12 @@ Baum Key Emulation
 The Baum protocol supports more keys than the |product name| has,
 so the following operational modes are supported:
 
-* Pressing Space while holding Backward switches to `Navigation Mode`_.
-  This is the default.
+Baum Navigation Mode
+````````````````````
 
-* Pressing Space while holding Forward switches to `Keyboard Mode`_.
-
-Navigation Mode
-```````````````
+Pressing Space while holding Backward switches to navigation mode.
+This is the default.
+In it, the keys are mapped as follows:
 
 ==================  ========  =============
 |product name| Key  Baum Key  Also Known As
@@ -103,8 +102,13 @@ Dot8                F3        Function3
 Forward             F4        Function4
 ==================  ========  =============
 
-Keyboard Mode
-`````````````
+Space isn't mapped.
+
+Baum Keyboard Mode
+``````````````````
+
+Pressing Space while holding Forward switches to keyboard mode.
+In it, the keys are mapped as follows:
 
 ==================  ========  =============
 |product name| Key  Baum Key  Also Known As
@@ -118,7 +122,7 @@ Dot6                B6        Dot6
 Dot7                B7        Dot7
 Dot8                B8        Dot8
 Backward            B9
-Space               B11
 Forward             B10
+Space               B11
 ==================  ========  =============
 

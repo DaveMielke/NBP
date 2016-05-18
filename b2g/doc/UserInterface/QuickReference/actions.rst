@@ -7,6 +7,7 @@
 .. |BrailleCodeConfirm| replace:: Show the current literary braille code.
 .. |BrailleCodeNext| replace:: Select the next literary braille code.
 .. |BrailleCodePrevious| replace:: Select the previous literary braille code.
+.. |BrailleDisplay| replace:: Switch to `the remote braille display`_.
 .. |BrailleOff| replace:: Turn the braille display off.
 .. |BrailleOn| replace:: Turn the braille display on.
 .. |Calculator| replace:: Go to the Calculator app.
