@@ -11,6 +11,7 @@ import java.util.HashSet;
 
 import org.nbp.common.CommonActivity;
 import org.nbp.common.AlertDialogBuilder;
+import org.nbp.common.CharacterUtilities;
 
 import android.util.Log;
 
@@ -155,6 +156,46 @@ public class CalculatorActivity extends CommonActivity {
     }
 
     expressionView.setSelection(start, end);
+  }
+
+  private final void performClick (int view) {
+    findViewById(view).performClick();
+  }
+
+  private final void setExpressionTextFilter () {
+    expressionView.setFilters(
+      new InputFilter[] {
+        new InputFilter() {
+          @Override
+          public CharSequence filter (
+            CharSequence src, int srcStart, int srcEnd,
+            Spanned dst, int dstStart, int dstEnd
+          ) {
+            if ((srcStart + 1) == srcEnd) {
+              switch (src.charAt(srcStart)) {
+                case CharacterUtilities.CHAR_ETX: // control C
+                  performClick(R.id.button_clear);
+                  return "";
+
+                case CharacterUtilities.CHAR_ACK: // control F
+                  performClick(R.id.button_forget);
+                  return "";
+
+                case CharacterUtilities.CHAR_DC2: // control R
+                  performClick(R.id.button_recall);
+                  return "";
+
+                case CharacterUtilities.CHAR_DC3: // control S
+                  performClick(R.id.button_store);
+                  return "";
+              }
+            }
+
+            return null;
+          }
+        }
+      }
+    );
   }
 
   private ViewGroup[] keypadViews;
@@ -578,6 +619,7 @@ public class CalculatorActivity extends CommonActivity {
     resultView = (TextView)findViewById(R.id.result);
 
     setEvaluateListener();
+    setExpressionTextFilter();
     restoreExpression();
     expressionView.requestFocus();
 
