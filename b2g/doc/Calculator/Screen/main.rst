@@ -16,17 +16,14 @@ The Backspace Key
 The Control Buttons
 -------------------
 
-The Delete Button
-~~~~~~~~~~~~~~~~~
-
 The Clear Button
 ~~~~~~~~~~~~~~~~
 
 The Degrees Checkbox
 ~~~~~~~~~~~~~~~~~~~~
 
-The Function Button
-~~~~~~~~~~~~~~~~~~~
+The Alternate Button
+~~~~~~~~~~~~~~~~~~~~
 
 The Keypad
 ----------
@@ -46,6 +43,9 @@ The Recall Button
 The Store Button
 ~~~~~~~~~~~~~~~~
 
-The Forget Button
-~~~~~~~~~~~~~~~~~
+The Erase Button
+~~~~~~~~~~~~~~~~
+
+The Functions Button
+~~~~~~~~~~~~~~~~~~~~
 

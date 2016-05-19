@@ -1,6 +1,9 @@
 Expression Syntax
 =================
 
+Shortcuts
+---------
+
 Elements
 --------
 

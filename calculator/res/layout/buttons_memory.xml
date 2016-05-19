@@ -21,16 +21,16 @@
    />
 
   <Button
-    android:id="@+id/button_forget"
+    android:id="@+id/button_erase"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/button_forget"
+    android:text="@string/button_erase"
    />
 
   <Button
-    android:id="@+id/button_call"
+    android:id="@+id/button_functions"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/button_call"
+    android:text="@string/button_functions"
    />
 </LinearLayout>

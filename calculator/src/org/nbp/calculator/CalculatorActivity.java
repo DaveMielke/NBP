@@ -172,8 +172,12 @@ public class CalculatorActivity extends CommonActivity {
                 performClick(R.id.button_clear);
                 return true;
 
+              case CharacterUtilities.CHAR_ENQ: // control E
+                performClick(R.id.button_erase);
+                return true;
+
               case CharacterUtilities.CHAR_ACK: // control F
-                performClick(R.id.button_forget);
+                performClick(R.id.button_functions);
                 return true;
 
               case CharacterUtilities.CHAR_DC2: // control R
@@ -296,9 +300,9 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setFunctionButtonListener () {
+  private final void setAlternateButtonListener () {
     setClickListener(
-      R.id.button_function,
+      R.id.button_alternate,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -487,13 +491,13 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setForgetButtonListener () {
+  private final void setEraseButtonListener () {
     setClickListener(
-      R.id.button_forget,
+      R.id.button_erase,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_erase);
           final List<String> variables = getUserVariableLines();
 
           if (variables.isEmpty()) {
@@ -516,11 +520,11 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_forget,
+      R.id.button_erase,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_forget);
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_erase);
           final List<String> variables = getUserVariableLines();
 
           if (variables.isEmpty()) {
@@ -546,7 +550,7 @@ public class CalculatorActivity extends CommonActivity {
             );
 
             builder.setPositiveButton(
-              R.string.button_forget,
+              R.string.button_erase,
               new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick (DialogInterface dialog, int button) {
@@ -589,13 +593,13 @@ public class CalculatorActivity extends CommonActivity {
     Collections.sort(functions);
     return functions;
   }
-  private final void setCallButtonListener () {
+  private final void setFunctionsButtonListener () {
     setClickListener(
-      R.id.button_call,
+      R.id.button_functions,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_call);
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_functions);
           final List<String> functions = getFunctionLines();
 
           if (functions.isEmpty()) {
@@ -634,12 +638,12 @@ public class CalculatorActivity extends CommonActivity {
 
     setClearButtonListener();
     setDegreesCheckBoxListener();
-    setFunctionButtonListener();
+    setAlternateButtonListener();
 
     setRecallButtonListener();
     setStoreButtonListener();
-    setForgetButtonListener();
-    setCallButtonListener();
+    setEraseButtonListener();
+    setFunctionsButtonListener();
 
     prepareKeypads(
       R.id.keypad_numeric,
