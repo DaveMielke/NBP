@@ -32,13 +32,15 @@ public abstract class ApplicationContext extends CommonContext {
     if (adapter != null) {
       String oldName = adapter.getName();
 
-      if (oldName.equals("Braille to Go")) {
-        String newName = "B2G";
-        adapter.setName(newName);
+      if (oldName != null) {
+        if (oldName.equals("Braille to Go")) {
+          String newName = "B2G";
+          adapter.setName(newName);
 
-        Log.w(LOG_TAG, String.format(
-          "Bluetooth name changed: %s -> %s", oldName, newName
-        ));
+          Log.w(LOG_TAG, String.format(
+            "Bluetooth name changed: %s -> %s", oldName, newName
+          ));
+        }
       }
     }
   }
