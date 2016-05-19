@@ -166,28 +166,37 @@ public class CalculatorActivity extends CommonActivity {
     expressionView.setFilters(
       new InputFilter[] {
         new InputFilter() {
+          private final boolean handleCharacter (char character) {
+            switch (character) {
+              case CharacterUtilities.CHAR_ETX: // control C
+                performClick(R.id.button_clear);
+                return true;
+
+              case CharacterUtilities.CHAR_ACK: // control F
+                performClick(R.id.button_forget);
+                return true;
+
+              case CharacterUtilities.CHAR_DC2: // control R
+                performClick(R.id.button_recall);
+                return true;
+
+              case CharacterUtilities.CHAR_DC3: // control S
+                performClick(R.id.button_store);
+                return true;
+
+              default:
+                return Character.isISOControl(character);
+            }
+          }
+
           @Override
           public CharSequence filter (
             CharSequence src, int srcStart, int srcEnd,
             Spanned dst, int dstStart, int dstEnd
           ) {
             if ((srcStart + 1) == srcEnd) {
-              switch (src.charAt(srcStart)) {
-                case CharacterUtilities.CHAR_ETX: // control C
-                  performClick(R.id.button_clear);
-                  return "";
-
-                case CharacterUtilities.CHAR_ACK: // control F
-                  performClick(R.id.button_forget);
-                  return "";
-
-                case CharacterUtilities.CHAR_DC2: // control R
-                  performClick(R.id.button_recall);
-                  return "";
-
-                case CharacterUtilities.CHAR_DC3: // control S
-                  performClick(R.id.button_store);
-                  return "";
+              if (handleCharacter(src.charAt(srcStart))) {
+                return "";
               }
             }
 
