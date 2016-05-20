@@ -23,7 +23,7 @@ public abstract class ApplicationSettings {
   public static volatile int BRAILLE_FIRMNESS = ApplicationDefaults.BRAILLE_FIRMNESS;
   public static volatile boolean BRAILLE_MONITOR = ApplicationDefaults.BRAILLE_MONITOR;
 
-  public static volatile boolean BRAILLE_DISPLAY = ApplicationDefaults.BRAILLE_DISPLAY;
+  public static volatile boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
   public static volatile boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
   public static volatile boolean SPEECH_ENABLED = ApplicationDefaults.SPEECH_ENABLED;

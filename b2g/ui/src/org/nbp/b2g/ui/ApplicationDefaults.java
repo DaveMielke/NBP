@@ -23,7 +23,7 @@ public abstract class ApplicationDefaults {
   public final static int BRAILLE_FIRMNESS = 4;
   public final static boolean BRAILLE_MONITOR = false;
 
-  public final static boolean BRAILLE_DISPLAY = false;
+  public final static boolean REMOTE_DISPLAY = false;
   public final static boolean SECURE_CONNECTION = false;
 
   public final static boolean SPEECH_ENABLED = true;

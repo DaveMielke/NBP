@@ -26,7 +26,7 @@ public abstract class Controls {
   private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
   private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
 
-  private final static BrailleDisplayControl brailleDisplayControl = new BrailleDisplayControl();
+  private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
   private final static SecureConnectionControl secureConnectionControl = new SecureConnectionControl();
 
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
@@ -67,7 +67,7 @@ public abstract class Controls {
     brailleFirmnessControl,
     brailleMonitorControl,
 
-    brailleDisplayControl,
+    remoteDisplayControl,
     secureConnectionControl,
 
     speechEnabledControl,
@@ -151,8 +151,8 @@ public abstract class Controls {
     return brailleMonitorControl;
   }
 
-  public static BrailleDisplayControl getBrailleDisplayControl () {
-    return brailleDisplayControl;
+  public static RemoteDisplayControl getRemoteDisplayControl () {
+    return remoteDisplayControl;
   }
 
   public static SecureConnectionControl getSecureConnectionControl () {

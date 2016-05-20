@@ -3,32 +3,32 @@ import org.nbp.b2g.ui.*;
 
 import org.nbp.b2g.ui.display.DisplayEndpoint;
 
-public class BrailleDisplayControl extends BooleanControl {
+public class RemoteDisplayControl extends BooleanControl {
   @Override
   public CharSequence getLabel () {
-    return toHeader(R.string.BrailleDisplay_control_label);
+    return toHeader(R.string.RemoteDisplay_control_label);
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "braille-display";
+    return "remote-display";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationDefaults.BRAILLE_DISPLAY;
+    return ApplicationDefaults.REMOTE_DISPLAY;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.BRAILLE_DISPLAY;
+    return ApplicationSettings.REMOTE_DISPLAY;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
     DisplayEndpoint endpoint = Endpoints.display.get();
 
-    if ((ApplicationSettings.BRAILLE_DISPLAY = value)) {
+    if ((ApplicationSettings.REMOTE_DISPLAY = value)) {
       endpoint.start();
     } else {
       endpoint.stop();
@@ -37,7 +37,7 @@ public class BrailleDisplayControl extends BooleanControl {
     return true;
   }
 
-  public BrailleDisplayControl () {
+  public RemoteDisplayControl () {
     super(false);
   }
 }

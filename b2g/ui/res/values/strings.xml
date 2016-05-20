@@ -116,13 +116,13 @@
   <string name="numeric_control_next">Increase</string>
 
   <string name="BrailleCode_control_label">Code</string>
-  <string name="BrailleDisplay_control_label">Braille Display</string>
   <string name="BrailleEnabled_control_label">Braille</string>
   <string name="BrailleFirmness_control_label">Firmness</string>
   <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>
+  <string name="RemoteDisplay_control_label">Remote Display</string>
   <string name="ReversePanning_control_label">Reverse Panning</string>
   <string name="SecureConnection_control_label">Secure Connection</string>
   <string name="SelectionIndicator_control_label">Selection Indicator</string>

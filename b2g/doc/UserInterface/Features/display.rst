@@ -36,7 +36,7 @@ doesn't support a request to refresh the braille display.
 The remote braille display shows one of the following messages
 when it's not connected to a screen reader:
 
-braille display off
+remote display off
   The remote braille display hasn't been enabled.
 
 Bluetooth off
@@ -62,7 +62,7 @@ Relevant Settings
 The following settings (on `The Settings Screen`_)
 pertain to the remote braille display:
 
-Braille Display
+Remote Display
   A checkbox that enables (checked) and disables (unchecked)
   the remote braille display.
   It's disabled by default.
