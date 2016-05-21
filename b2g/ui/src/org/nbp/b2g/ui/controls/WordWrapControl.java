@@ -30,6 +30,6 @@ public class WordWrapControl extends BooleanControl {
   }
 
   public WordWrapControl () {
-    super(ControlGroup.RENDERING);
+    super(ControlGroup.OPTION);
   }
 }
