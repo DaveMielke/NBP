@@ -29,6 +29,6 @@ public class SpeechEnabledControl extends BooleanControl {
   }
 
   public SpeechEnabledControl () {
-    super(false);
+    super(ControlGroup.SPEECH);
   }
 }

@@ -29,6 +29,6 @@ public class LogSpeechControl extends BooleanControl {
   }
 
   public LogSpeechControl () {
-    super(true);
+    super(ControlGroup.DEVELOPER);
   }
 }

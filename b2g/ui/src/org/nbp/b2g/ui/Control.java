@@ -137,13 +137,13 @@ public abstract class Control {
     return true;
   }
 
-  private final boolean isDeveloperControl;
+  private final ControlGroup controlGroup;
 
   public final boolean isForDevelopers () {
-    return isDeveloperControl;
+    return controlGroup == ControlGroup.DEVELOPER;
   }
 
-  public Control (boolean isForDevelopers) {
-    isDeveloperControl = isForDevelopers;
+  protected Control (ControlGroup group) {
+    controlGroup = group;
   }
 }

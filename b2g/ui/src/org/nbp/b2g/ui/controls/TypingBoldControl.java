@@ -29,6 +29,6 @@ public class TypingBoldControl extends BooleanControl {
   }
 
   public TypingBoldControl () {
-    super(false);
+    super(ControlGroup.TYPING);
   }
 }

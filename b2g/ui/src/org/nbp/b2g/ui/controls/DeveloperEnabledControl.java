@@ -29,6 +29,6 @@ public class DeveloperEnabledControl extends BooleanControl {
   }
 
   public DeveloperEnabledControl () {
-    super(false);
+    super(ControlGroup.OPTION);
   }
 }

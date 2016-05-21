@@ -40,6 +40,6 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
   }
 
   public SpeechPitchControl () {
-    super(false);
+    super(ControlGroup.SPEECH);
   }
 }

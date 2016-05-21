@@ -29,6 +29,6 @@ public class LogGesturesControl extends BooleanControl {
   }
 
   public LogGesturesControl () {
-    super(true);
+    super(ControlGroup.DEVELOPER);
   }
 }

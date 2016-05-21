@@ -29,6 +29,6 @@ public class TypingStrikeControl extends BooleanControl {
   }
 
   public TypingStrikeControl () {
-    super(false);
+    super(ControlGroup.TYPING);
   }
 }

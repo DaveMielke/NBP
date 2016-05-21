@@ -29,6 +29,6 @@ public class LogBrailleControl extends BooleanControl {
   }
 
   public LogBrailleControl () {
-    super(true);
+    super(ControlGroup.DEVELOPER);
   }
 }

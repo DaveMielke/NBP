@@ -29,6 +29,6 @@ public class TypingItalicControl extends BooleanControl {
   }
 
   public TypingItalicControl () {
-    super(false);
+    super(ControlGroup.TYPING);
   }
 }

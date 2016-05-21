@@ -6,10 +6,14 @@ import java.util.Collection;
 
 public abstract class Controls {
   private final static WordWrapControl wordWrapControl = new WordWrapControl();
-
   private final static LongPressControl longPressControl = new LongPressControl();
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
   private final static OneHandControl oneHandControl = new OneHandControl();
+
+  private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
+  private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
+  private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
+  private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
 
   private final static TypingModeControl typingModeControl = new TypingModeControl();
   private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
@@ -17,17 +21,9 @@ public abstract class Controls {
   private final static TypingStrikeControl typingStrikeControl = new TypingStrikeControl();
   private final static TypingUnderlineControl typingUnderlineControl = new TypingUnderlineControl();
 
-  private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
-  private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
-
   private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
-  private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
-  private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
   private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
   private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
-
-  private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
-  private final static SecureConnectionControl secureConnectionControl = new SecureConnectionControl();
 
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
   private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
@@ -35,6 +31,9 @@ public abstract class Controls {
   private final static SpeechBalanceControl speechBalanceControl = new SpeechBalanceControl();
   private final static SpeechRateControl speechRateControl = new SpeechRateControl();
   private final static SpeechPitchControl speechPitchControl = new SpeechPitchControl();
+
+  private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
+  private final static SecureConnectionControl secureConnectionControl = new SecureConnectionControl();
 
   private final static DeveloperEnabledControl developerEnabledControl = new DeveloperEnabledControl();
   private final static LogUpdatesControl logUpdatesControl = new LogUpdatesControl();
@@ -47,10 +46,14 @@ public abstract class Controls {
 
   private final static Control[] allControls = new Control[] {
     wordWrapControl,
-
     longPressControl,
     reversePanningControl,
     oneHandControl,
+
+    literaryBrailleControl,
+    brailleCodeControl,
+    cursorIndicatorControl,
+    selectionIndicatorControl,
 
     typingModeControl,
     typingBoldControl,
@@ -58,17 +61,9 @@ public abstract class Controls {
     typingStrikeControl,
     typingUnderlineControl,
 
-    literaryBrailleControl,
-    brailleCodeControl,
-
     brailleEnabledControl,
-    cursorIndicatorControl,
-    selectionIndicatorControl,
     brailleFirmnessControl,
     brailleMonitorControl,
-
-    remoteDisplayControl,
-    secureConnectionControl,
 
     speechEnabledControl,
     sleepTalkControl,
@@ -76,6 +71,9 @@ public abstract class Controls {
     speechBalanceControl,
     speechRateControl,
     speechPitchControl,
+
+    remoteDisplayControl,
+    secureConnectionControl,
 
     developerEnabledControl,
     logUpdatesControl,
@@ -103,6 +101,22 @@ public abstract class Controls {
     return oneHandControl;
   }
 
+  public static LiteraryBrailleControl getLiteraryBrailleControl () {
+    return literaryBrailleControl;
+  }
+
+  public static BrailleCodeControl getBrailleCodeControl () {
+    return brailleCodeControl;
+  }
+
+  public static CursorIndicatorControl getCursorIndicatorControl () {
+    return cursorIndicatorControl;
+  }
+
+  public static SelectionIndicatorControl getSelectionIndicatorControl () {
+    return selectionIndicatorControl;
+  }
+
   public static TypingModeControl getTypingModeControl () {
     return typingModeControl;
   }
@@ -123,24 +137,8 @@ public abstract class Controls {
     return typingUnderlineControl;
   }
 
-  public static LiteraryBrailleControl getLiteraryBrailleControl () {
-    return literaryBrailleControl;
-  }
-
-  public static BrailleCodeControl getBrailleCodeControl () {
-    return brailleCodeControl;
-  }
-
   public static BrailleEnabledControl getBrailleEnabledControl () {
     return brailleEnabledControl;
-  }
-
-  public static CursorIndicatorControl getCursorIndicatorControl () {
-    return cursorIndicatorControl;
-  }
-
-  public static SelectionIndicatorControl getSelectionIndicatorControl () {
-    return selectionIndicatorControl;
   }
 
   public static BrailleFirmnessControl getBrailleFirmnessControl () {
@@ -149,14 +147,6 @@ public abstract class Controls {
 
   public static BrailleMonitorControl getBrailleMonitorControl () {
     return brailleMonitorControl;
-  }
-
-  public static RemoteDisplayControl getRemoteDisplayControl () {
-    return remoteDisplayControl;
-  }
-
-  public static SecureConnectionControl getSecureConnectionControl () {
-    return secureConnectionControl;
   }
 
   public static SpeechEnabledControl getSpeechEnabledControl () {
@@ -181,6 +171,14 @@ public abstract class Controls {
 
   public static SpeechPitchControl getSpeechPitchControl () {
     return speechPitchControl;
+  }
+
+  public static RemoteDisplayControl getRemoteDisplayControl () {
+    return remoteDisplayControl;
+  }
+
+  public static SecureConnectionControl getSecureConnectionControl () {
+    return secureConnectionControl;
   }
 
   public static DeveloperEnabledControl getDeveloperEnabledControl () {

@@ -30,6 +30,6 @@ public class BrailleFirmnessControl extends IntegerControl {
   }
 
   public BrailleFirmnessControl () {
-    super(false);
+    super(ControlGroup.BRAILLE);
   }
 }

@@ -124,7 +124,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return setEnumerationValue(value);
   }
 
-  protected EnumerationControl (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected EnumerationControl (ControlGroup group) {
+    super(group);
   }
 }

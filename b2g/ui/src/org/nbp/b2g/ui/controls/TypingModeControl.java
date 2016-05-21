@@ -29,6 +29,6 @@ public class TypingModeControl extends EnumerationControl<TypingMode> {
   }
 
   public TypingModeControl () {
-    super(false);
+    super(ControlGroup.TYPING);
   }
 }

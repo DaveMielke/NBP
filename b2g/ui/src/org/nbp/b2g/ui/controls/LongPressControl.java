@@ -29,6 +29,6 @@ public class LongPressControl extends BooleanControl {
   }
 
   public LongPressControl () {
-    super(false);
+    super(ControlGroup.OPTION);
   }
 }

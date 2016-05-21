@@ -29,6 +29,6 @@ public class LogKeyboardControl extends BooleanControl {
   }
 
   public LogKeyboardControl () {
-    super(true);
+    super(ControlGroup.DEVELOPER);
   }
 }

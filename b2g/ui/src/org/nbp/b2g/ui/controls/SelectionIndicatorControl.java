@@ -29,6 +29,6 @@ public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverl
   }
 
   public SelectionIndicatorControl () {
-    super(false);
+    super(ControlGroup.RENDERING);
   }
 }

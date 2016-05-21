@@ -29,6 +29,6 @@ public class SleepTalkControl extends BooleanControl {
   }
 
   public SleepTalkControl () {
-    super(false);
+    super(ControlGroup.SPEECH);
   }
 }

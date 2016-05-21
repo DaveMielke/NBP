@@ -39,6 +39,6 @@ public class LiteraryBrailleControl extends BooleanControl {
   }
 
   public LiteraryBrailleControl () {
-    super(false);
+    super(ControlGroup.RENDERING);
   }
 }

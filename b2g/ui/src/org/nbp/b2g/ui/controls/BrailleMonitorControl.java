@@ -32,6 +32,6 @@ public class BrailleMonitorControl extends BooleanControl {
   }
 
   public BrailleMonitorControl () {
-    super(false);
+    super(ControlGroup.BRAILLE);
   }
 }

@@ -29,6 +29,6 @@ public class TypingUnderlineControl extends BooleanControl {
   }
 
   public TypingUnderlineControl () {
-    super(false);
+    super(ControlGroup.TYPING);
   }
 }

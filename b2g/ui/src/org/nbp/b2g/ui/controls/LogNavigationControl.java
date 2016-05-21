@@ -29,6 +29,6 @@ public class LogNavigationControl extends BooleanControl {
   }
 
   public LogNavigationControl () {
-    super(true);
+    super(ControlGroup.DEVELOPER);
   }
 }

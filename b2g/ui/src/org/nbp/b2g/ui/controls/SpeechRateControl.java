@@ -45,6 +45,6 @@ public class SpeechRateControl extends LogarithmicFloatControl {
   }
 
   public SpeechRateControl () {
-    super(false);
+    super(ControlGroup.SPEECH);
   }
 }

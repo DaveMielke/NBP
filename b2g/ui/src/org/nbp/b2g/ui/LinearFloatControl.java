@@ -6,7 +6,7 @@ public abstract class LinearFloatControl extends FloatControl {
     return 10.0f;
   }
 
-  protected LinearFloatControl (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected LinearFloatControl (ControlGroup group) {
+    super(group);
   }
 }

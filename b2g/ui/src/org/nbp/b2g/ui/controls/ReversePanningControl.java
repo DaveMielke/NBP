@@ -29,6 +29,6 @@ public class ReversePanningControl extends BooleanControl {
   }
 
   public ReversePanningControl () {
-    super(false);
+    super(ControlGroup.OPTION);
   }
 }

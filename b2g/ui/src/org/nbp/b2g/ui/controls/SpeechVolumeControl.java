@@ -40,6 +40,6 @@ public class SpeechVolumeControl extends LinearFloatControl {
   }
 
   public SpeechVolumeControl () {
-    super(false);
+    super(ControlGroup.SPEECH);
   }
 }

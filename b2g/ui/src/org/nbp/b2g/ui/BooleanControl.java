@@ -61,7 +61,7 @@ public abstract class BooleanControl extends Control {
     return setBooleanValue(prefs.getBoolean(key, getBooleanDefault()));
   }
 
-  protected BooleanControl (boolean isForDevelopers) {
-    super(isForDevelopers);
+  protected BooleanControl (ControlGroup group) {
+    super(group);
   }
 }
