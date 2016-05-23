@@ -15,7 +15,7 @@ Please read this document first before doing anything else.
 Unpacking the Box
 =================
 
-In the top layer you will find the wall charger, a short and a long USB charging cable, and ear buds.
+In the top layer you will find the wall charger, a three-foot long USB charging cable, and ear buds.
 When you lift this layer up, you will find the |product name| wedged within a protective foam layer for shipping.
 There are gaps in the foam along the middle of the front and back edges of the |product name| so that your fingers can reach in to pull the |product name| up and out of the foam packing.
 Try to reach under the |product name| on both sides, and not to squeeze the unit, when removing it from the packing.
@@ -59,6 +59,11 @@ The Left Side
 The earphone/microphone port is near the front of the left side.
 It is a standard size 3.5mm OMTP (Open Mobile Terminal Platform) jack.
 
+The zip lock bag that contains the wall charger also contains a small earphone adapter.
+This adapter should be pressed onto the plug at the end of the earbuds cable.
+Remember to pull the adapter off if you ever replace your earbuds
+because it snaps on tightly and is easy to overlook.
+
 A composite video (RCA) jack is in the middle of the left side.
 It is for connecting an external video monitor or TV, and is used for performing diagnostics.
 It also makes it easy for a sighted person to offer direct assistance. 
@@ -84,7 +89,7 @@ The Back Panel
 
 The SD card slot is the long slot in the middle of the back panel.
 
-A Micro-B (or device) USB port is near the left end of the back panel.
+A Micro-USB device port is near the left end of the back panel.
 It is primarily used for charging the battery.
 The battery can be charged either with the supplied wall charger or from a computer's USB port.
 
@@ -199,7 +204,14 @@ to our |product name| web site:
 which includes
 free apps that you can download,
 answers to frequently asked questions,
-and, eventually, a forum for customers to share discoveries and ask questions.
+and, eventually, a forum for customers.
+
+NBP has a YouTube channel that may be helpful for you to listen to.
+It has some videos on how to perform specific tasks.
+More will be added soon.
+Its link is:
+
+.. parsed-literal:: |product YouTube|
 
 We provide customer support for questions that may arise.
 It may be reached by phone at |customer support phone number|.   
