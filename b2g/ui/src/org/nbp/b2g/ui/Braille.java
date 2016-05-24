@@ -124,8 +124,10 @@ public abstract class Braille {
               to = endpoint.getBrailleOffset(to);
               to -= brailleIndent;
 
-              if ((to >= 0) && ((to < cellCount) || ((to == cellCount) && atEnd))) {
-                cells[to] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
+              if ((to >= 0) && (to < cells.length)) {
+                if ((to < cellCount) || ((to == cellCount) && atEnd)) {
+                  cells[to] |= ApplicationSettings.CURSOR_INDICATOR.getDots();
+                }
               }
             }
           } else {
