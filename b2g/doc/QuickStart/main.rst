@@ -60,8 +60,8 @@ The earphone/microphone port is near the front of the left side.
 It is a standard size 3.5mm OMTP (Open Mobile Terminal Platform) jack.
 
 The zip lock bag that contains the wall charger also contains a small earphone adapter.
-This adapter should be pressed onto the plug at the end of the earbuds cable.
-Remember to pull the adapter off if you ever replace your earbuds
+This adapter should be pressed onto the plug at the end of the ear buds cable.
+Remember to pull the adapter off if you ever replace your ear buds
 because it snaps on tightly and is easy to overlook.
 
 A composite video (RCA) jack is in the middle of the left side.
