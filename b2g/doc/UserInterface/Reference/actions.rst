@@ -100,8 +100,8 @@
 .. |PasteFromClipboard| replace:: Paste the current clipboard content.
 .. |People| replace:: Go to the People (Contacts) app.
 .. |PowerOff| replace:: Go to the Power Off screen.
-.. |QuickStartText| replace:: Go to the plain text version of the quick start guide.
-.. |QuickStartHTML| replace:: Go to the HTML version of the quick start guide.
+.. |QuickStartHTML| replace:: Go to the HTML version of the `Quick Start Guide`_.
+.. |QuickStartText| replace:: Go to the plain text version of the `quick Start Guide`_.
 .. |RecentApps| replace:: Go to the Recent Apps screen.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
 .. |ResetHighlightedTyping| replace:: Turn all of the highlighted typing styles off.
@@ -165,11 +165,13 @@
 .. |TypingUnderlineOff| replace:: Turn underlined typing off.
 .. |TypingUnderlineOn| replace:: Turn underlined typing on.
 .. |UpdateEditor| replace:: Update the |organization acronym| editor.
-.. |UserManualText| replace:: Go to the plain text version of the user interface manual.
-.. |UserManualHTML| replace:: Go to the HTML version of the user interface manual.
+.. |UserManualHTML| replace:: Go to the HTML version of the `User Interface Manual`_.
+.. |UserManualText| replace:: Go to the plain text version of the `User Interface Manual`_.
 .. |VoiceCommand| replace:: Initiate an Android voice command.
 .. |VolumeDown| replace:: The Android Volume Down key (applies to the current audio stream).
 .. |VolumeUp| replace:: The Android Volume Up key (applies to the current audio stream).
+.. |WarrantyHTML| replace:: Go to the HTML version of the `Warranty and Return Policy`_.
+.. |WarrantyText| replace:: Go to the plain text version of the `Warranty and Return Policy`_.
 .. |WifiSettings| replace:: Go to the Wi-Fi Settings screen.
 .. |WordWrapOff| replace:: Turn word wrap mode off.
 .. |WordWrapOn| replace:: Turn word wrap mode on.

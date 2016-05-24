@@ -23,6 +23,9 @@ bind Space+Dots124#f FindForward
 bind Space+Dot7+Dots124#f FindPrevious
 bind Space+Dot8+Dots124#f FindNext
 
+bind Space+Dots2456#w WarrantyText
+bind Space+Dots78+Dots2456#w WarrantyHTML
+
 bind Space+Dots12345#q QuickStartText
 bind Space+Dots78+Dots12345#q QuickStartHTML
 

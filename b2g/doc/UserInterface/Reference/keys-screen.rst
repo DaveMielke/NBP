@@ -55,6 +55,12 @@ Space+Dot7+Dots124 (f)
 Space+Dot8+Dots124 (f)
   |FindNext|
 
+Space+Dots2456 (w)
+  |WarrantyText|
+
+Space+Dots78+Dots2456 (w)
+  |WarrantyHTML|
+
 Space+Dots12345 (q)
   |QuickStartText|
 

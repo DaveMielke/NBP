@@ -36,8 +36,3 @@ Using an `Action Chooser`_
   You can perform an action from within the chooser
   by pressing Center while on its line.
 
-The `Quick Start Guide`_ is also available:
-
-* Press Space+q (dots 12345) for an on-device, plain-text copy.
-* Press Space+Dots78+q (dots 12345) for a web-resident copy.
-

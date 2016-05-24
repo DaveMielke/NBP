@@ -138,6 +138,12 @@
     </activity>
 
     <activity
+        android:name=".host.WarrantyActivity"
+        android:label="@string/warranty_activity_label"
+        >
+    </activity>
+
+    <activity
         android:name=".host.FakeLauncher"
         android:enabled="false"
         >

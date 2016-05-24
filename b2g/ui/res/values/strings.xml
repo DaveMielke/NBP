@@ -59,6 +59,8 @@
 
   <string name="userManual_activity_label">B2G User Interface Manual</string>
 
+  <string name="warranty_activity_label">B2G Warranty and Return Policy</string>
+
   <string name="answerCall_message_not_ringing">not ringing</string>
 
   <string name="drag_message_begin">dragging item</string>
