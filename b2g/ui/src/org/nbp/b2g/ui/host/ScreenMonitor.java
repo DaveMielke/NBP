@@ -300,6 +300,34 @@ public class ScreenMonitor extends AccessibilityService {
     return (mostRecentAlert = alert);
   }
 
+  private void handleNotification (AccessibilityEvent event) {
+    Notification notification = (Notification)event.getParcelableData();
+
+    int title;
+    PopupClickHandler clickHandler;
+
+    if ((notification.flags & Notification.FLAG_AUTO_CANCEL) != 0) {
+      title = R.string.popup_type_alert;
+      clickHandler = null;
+    } else {
+      title = R.string.popup_type_notification;
+
+      clickHandler = new PopupClickHandler() {
+        @Override
+        public final boolean handleClick (int index) {
+          if (!performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)) {
+            return false;
+          }
+
+          Endpoints.setHostEndpoint();
+          return true;
+        }
+      };
+    }
+
+    showPopup(event.getText(), clickHandler, getString(title));
+  }
+
   private void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {
     if (view == null) {
       String alert = toAlert(event);
@@ -439,32 +467,9 @@ public class ScreenMonitor extends AccessibilityService {
           logMissingEventComponent("source");
 
           switch (type) {
-            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED: {
-              Notification notification = (Notification)event.getParcelableData();
-              boolean alert = (notification.flags & Notification.FLAG_AUTO_CANCEL) != 0;
-
-              int title = R.string.popup_type_alert;
-              PopupClickHandler clickHandler = null;
-
-              if (!alert) {
-                title = R.string.popup_type_notification;
-
-                clickHandler = new PopupClickHandler() {
-                  @Override
-                  public final boolean handleClick (int index) {
-                    if (!performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)) {
-                      return false;
-                    }
-
-                    Endpoints.setHostEndpoint();
-                    return true;
-                  }
-                };
-              }
-
-              showPopup(event.getText(), clickHandler, getString(title));
+            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
+              handleNotification(event);
               break;
-            }
 
             default:
               break;
