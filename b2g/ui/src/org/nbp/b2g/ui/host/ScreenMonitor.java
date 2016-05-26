@@ -12,6 +12,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityEvent;
 
 import android.content.Intent;
+import android.app.Notification;
 
 import android.text.SpannableStringBuilder;
 
@@ -42,16 +43,39 @@ public class ScreenMonitor extends AccessibilityService {
     return sb.subSequence(0, sb.length());
   }
 
-  private static void showText (CharSequence text) {
-    Endpoints.setPopupEndpoint(text.toString());
+  private static void showPopup (
+    CharSequence text,
+    PopupClickHandler clickHandler,
+    String... labels
+  ) {
+    if (text != null) {
+      if (labels.length > 0) {
+        StringBuilder sb = new StringBuilder();
+
+        for (String label : labels) {
+          if (!label.isEmpty()) {
+            if (sb.length() > 0) sb.append(" - ");
+            sb.append(label);
+          }
+        }
+
+        if (sb.length() > 0) {
+          sb.append('\n');
+          sb.append(text);
+          text = sb;
+        }
+      }
+
+      Endpoints.setPopupEndpoint(text.toString(), clickHandler);
+    }
   }
 
-  private final void showText (Collection<CharSequence> lines, int label) {
-    CharSequence text = toText(lines);
-
-    if (text != null) {
-      showText((getString(label) + '\n' + text));
-    }
+  private final void showPopup (
+    Collection<CharSequence> lines,
+    PopupClickHandler clickHandler,
+    String... labels
+  ) {
+    showPopup(toText(lines), clickHandler, labels);
   }
 
   private static CharSequence getAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {
@@ -415,9 +439,32 @@ public class ScreenMonitor extends AccessibilityService {
           logMissingEventComponent("source");
 
           switch (type) {
-            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
-              showText(event.getText(), R.string.notification_label);
+            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED: {
+              Notification notification = (Notification)event.getParcelableData();
+              boolean alert = (notification.flags & Notification.FLAG_AUTO_CANCEL) != 0;
+
+              int title = R.string.popup_type_alert;
+              PopupClickHandler clickHandler = null;
+
+              if (!alert) {
+                title = R.string.popup_type_notification;
+
+                clickHandler = new PopupClickHandler() {
+                  @Override
+                  public final boolean handleClick (int index) {
+                    if (!performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)) {
+                      return false;
+                    }
+
+                    Endpoints.setHostEndpoint();
+                    return true;
+                  }
+                };
+              }
+
+              showPopup(event.getText(), clickHandler, getString(title));
               break;
+            }
 
             default:
               break;

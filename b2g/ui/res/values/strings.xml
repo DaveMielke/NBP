@@ -68,7 +68,8 @@
   <string name="drag_message_end">item dragged</string>
   <string name="drag_message_none">not dragging an item</string>
 
-  <string name="notification_label">Notification:</string>
+  <string name="popup_type_alert">Alert</string>
+  <string name="popup_type_notification">Notification</string>
 
   <string name="shortcut_message_none">activity not found</string>
   <string name="shortcut_message_ambiguous">Select a shortcut by pressing Center on it:</string>

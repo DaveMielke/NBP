@@ -29,7 +29,7 @@ public class PopupEndpoint extends Endpoint {
     }
   }
 
-  private ValueHandler<Integer> clickHandler = null;
+  private PopupClickHandler clickHandler = null;
 
   private final int getIndex () {
     int index = 0;
@@ -56,7 +56,7 @@ public class PopupEndpoint extends Endpoint {
     return false;
   }
 
-  public final void set (CharSequence text, ValueHandler<Integer> handler) {
+  public final void set (CharSequence text, PopupClickHandler handler) {
     synchronized (this) {
       clickHandler = handler;
       write(text);

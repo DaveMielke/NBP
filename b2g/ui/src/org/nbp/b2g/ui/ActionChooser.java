@@ -37,9 +37,9 @@ public class ActionChooser {
   public static void chooseAction (KeyBindingMap map, final Integer cursorKey) {
     final List<Action> actions = new ArrayList<Action>();
     Endpoints.setPopupEndpoint(makeText(actions, map, cursorKey),
-      new ValueHandler<Integer> () {
+      new PopupClickHandler () {
         @Override
-        public boolean handleValue (Integer index) {
+        public final boolean handleClick (int index) {
           if ((index -= 1) < 0) return true;
           Action action = actions.get(index);
 
