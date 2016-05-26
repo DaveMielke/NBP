@@ -117,3 +117,11 @@ to accurately enter a password in `Literary Braille`_, especially
 when it contains special characters
 and/or when a braille code that defines contractions is being used.
 
+The message (see `Messages`_)::
+
+  password field
+ 
+is displayed whenever you move onto a password field in order to alert you
+that you won't be able to read what you're typing
+and that you need to be `typing in computer braille`_.
+
