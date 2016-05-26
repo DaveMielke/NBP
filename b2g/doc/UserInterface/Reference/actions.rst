@@ -170,8 +170,8 @@
 .. |VoiceCommand| replace:: Initiate an Android voice command.
 .. |VolumeDown| replace:: The Android Volume Down key (applies to the current audio stream).
 .. |VolumeUp| replace:: The Android Volume Up key (applies to the current audio stream).
-.. |WarrantyHTML| replace:: Go to the HTML version of the `Warranty and Return Policy`_.
-.. |WarrantyText| replace:: Go to the plain text version of the `Warranty and Return Policy`_.
+.. |WarrantyHTML| replace:: Go to the HTML version of the `Limited Warranty and Return Policy`_.
+.. |WarrantyText| replace:: Go to the plain text version of the `Limited Warranty and Return Policy`_.
 .. |WifiSettings| replace:: Go to the Wi-Fi Settings screen.
 .. |WordWrapOff| replace:: Turn word wrap mode off.
 .. |WordWrapOn| replace:: Turn word wrap mode on.
