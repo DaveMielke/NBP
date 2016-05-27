@@ -306,7 +306,7 @@ public class ScreenMonitor extends AccessibilityService {
     int title;
     PopupClickHandler clickHandler;
 
-    if ((notification.flags & Notification.FLAG_AUTO_CANCEL) != 0) {
+    if (notification == null) {
       title = R.string.popup_type_alert;
       clickHandler = null;
     } else {
