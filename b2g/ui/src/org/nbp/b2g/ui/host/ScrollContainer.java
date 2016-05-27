@@ -239,7 +239,7 @@ public class ScrollContainer {
       if (Gesture.isEnabled()) {
         if (ScreenUtilities.hasAction(scrollNode, direction.getNodeAction())) {
           if (scrollOrientation != null) {
-            direction.writeBrailleSymbol();
+            direction.writeActionText();
             Rect region = ScreenUtilities.getNodeRegion(scrollNode);
 
             switch (scrollOrientation) {
@@ -302,7 +302,7 @@ public class ScrollContainer {
           }
         }
       } else {
-        direction.writeBrailleSymbol();
+        direction.writeActionText();
         if (scrollNode.performAction(direction.getNodeAction())) scrollStarted = true;
       }
 

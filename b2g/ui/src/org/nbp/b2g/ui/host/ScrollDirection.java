@@ -31,14 +31,14 @@ public enum ScrollDirection {
   );
 
   private final int nodeAction;
-  private final CharSequence brailleText;
+  private final CharSequence actionText;
 
   public final int getNodeAction () {
     return nodeAction;
   }
 
-  public boolean writeBrailleSymbol () {
-    return Devices.braille.get().write(brailleText);
+  public boolean writeActionText () {
+    return Devices.braille.get().write(actionText);
   }
 
   private ScrollDirection (int action, byte[] braille, int text) {
@@ -50,6 +50,6 @@ public enum ScrollDirection {
     sb.append(' ');
     sb.append(ApplicationContext.getString(text));
 
-    brailleText = sb.subSequence(0, sb.length());
+    actionText = sb.subSequence(0, sb.length());
   }
 }
