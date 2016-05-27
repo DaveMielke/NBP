@@ -464,6 +464,53 @@ public class HostEndpoint extends Endpoint {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
+  @Override
+  public boolean handleDots (byte dots) {
+    int action;
+    String element;
+
+    {
+      final int PREVIOUS = KeyMask.DOT_7;
+      final int NEXT = KeyMask.DOT_8;
+      final int MASK = PREVIOUS | NEXT;
+
+      switch (dots & MASK) {
+        case PREVIOUS:
+          action = AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT;
+          break;
+
+        case NEXT:
+          action = AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT;
+          break;
+
+        default:
+          return false;
+      }
+
+      dots &= ~MASK;
+    }
+
+    switch (dots) {
+      // B
+      case KeyMask.DOT_1 | KeyMask.DOT_2:
+        element = "BUTTON";
+        break;
+
+      // L
+      case KeyMask.DOT_1 | KeyMask.DOT_2 | KeyMask.DOT_3:
+        element = "LINK";
+        break;
+
+      default:
+        return false;
+    }
+
+    Bundle arguments = new Bundle();
+    arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_HTML_ELEMENT_STRING, element);
+
+    return performNodeAction(action, arguments);
+  }
+
   public HostEndpoint () {
     super("host");
     resetNode();

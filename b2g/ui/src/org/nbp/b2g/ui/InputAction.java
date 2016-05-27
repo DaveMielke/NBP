@@ -5,8 +5,12 @@ public abstract class InputAction extends Action {
 
   @Override
   public boolean performAction () {
-    if (!getEndpoint().isInputArea()) return false;
-    return performInputAction();
+    if (getEndpoint().isInputArea()) return performInputAction();
+
+    Byte dots = KeyMask.toDots(getNavigationKeys());
+    if (dots == null) return false;
+    if (dots == 0) return false;
+    return getEndpoint().handleDots(dots);
   }
 
   protected InputAction (Endpoint endpoint) {

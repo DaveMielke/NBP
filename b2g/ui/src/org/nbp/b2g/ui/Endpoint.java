@@ -920,6 +920,10 @@ public abstract class Endpoint {
     return performAction(ScrollRight.class);
   }
 
+  public boolean handleDots (byte dots) {
+    return false;
+  }
+
   private final KeyBindings keyBindings;
 
   public final KeyBindings getKeyBindings () {
