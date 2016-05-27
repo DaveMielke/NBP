@@ -111,7 +111,19 @@ public class HostEndpoint extends Endpoint {
         }
       }
     } else if ((text = node.getContentDescription()) != null) {
-      sb.append(text);
+      boolean mark = node.isFocusable() && node.isClickable();
+
+      if (mark) {
+        int start = sb.length();
+
+        sb.append('[');
+        sb.append(text);
+        sb.append(']');
+
+        setSpeechSpan(sb, start, text);
+      } else {
+        sb.append(text);
+      }
     } else {
       String type = ScreenUtilities.getClassName(node);
       int start = sb.length();
