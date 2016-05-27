@@ -11,29 +11,35 @@ import android.graphics.Rect;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import android.text.Spanned;
+
 public abstract class ScreenUtilities {
   private final static String LOG_TAG = ScreenUtilities.class.getName();
 
   public static String toString (AccessibilityNodeInfo node) {
     StringBuilder sb = new StringBuilder();
-    CharSequence characters;
+    CharSequence text = node.getText();
 
     sb.append(getClassName(node));
 
-    if ((characters = node.getText()) != null) {
-      String text = characters.toString();
-      int index = text.indexOf('\n');
-      if (index >= 0) text = text.substring(0, index);
+    if (text != null) {
+      String string = text.toString();
+      int index = string.indexOf('\n');
+      if (index >= 0) string = string.substring(0, index);
 
       sb.append(" \"");
-      sb.append(text);
+      sb.append(string);
       sb.append('"');
     }
 
-    if ((characters = node.getContentDescription()) != null) {
-      sb.append(" (");
-      sb.append(characters);
-      sb.append(')');
+    {
+      CharSequence description = node.getContentDescription();
+
+      if (description != null) {
+        sb.append(" (");
+        sb.append(description);
+        sb.append(')');
+      }
     }
 
     {
@@ -111,6 +117,24 @@ public abstract class ScreenUtilities {
 
     sb.append(" #");
     sb.append(node.hashCode());
+
+    if ((text != null) && (text instanceof Spanned)) {
+      Spanned spanned = (Spanned)text;
+      Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
+
+      if (spans != null) {
+        for (Object span : spans) {
+          sb.append(' ');
+          sb.append(span.getClass().getSimpleName());
+
+          sb.append('(');
+          sb.append(spanned.getSpanStart(span));
+          sb.append(',');
+          sb.append(spanned.getSpanEnd(span));
+          sb.append(')');
+        }
+      }
+    }
 
     return sb.toString();
   }
