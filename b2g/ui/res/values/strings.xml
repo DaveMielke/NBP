@@ -185,6 +185,10 @@
   <string name="DescribeHighlighting_strike">strike</string>
   <string name="DescribeHighlighting_underline">underline</string>
 
+  <string name="DescribeHighlighting_selected">selected</string>
+  <string name="DescribeHighlighting_foreground">foreground</string>
+  <string name="DescribeHighlighting_background">background</string>
+
   <string name="DescribeIndicators_alert_label">Alert</string>
   <string name="DescribeIndicators_alert_airplane">Airplane Mode</string>
 
