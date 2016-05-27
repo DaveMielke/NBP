@@ -3,10 +3,6 @@ import org.nbp.b2g.ui.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import org.nbp.common.HighlightSpans;
-import android.text.style.CharacterStyle;
-import android.text.SpannableStringBuilder;
-
 public enum ScrollDirection {
   FORWARD(
     AccessibilityNodeInfo.ACTION_SCROLL_FORWARD,
@@ -18,7 +14,7 @@ public enum ScrollDirection {
       BrailleDevice.DOT_2 | BrailleDevice.DOT_4
     },
 
-    R.string.message_scrolling_forward
+    R.string.message_scroll_forward
   ),
 
   BACKWARD(
@@ -31,36 +27,29 @@ public enum ScrollDirection {
       BrailleDevice.DOT_3 | BrailleDevice.DOT_8
     },
 
-    R.string.message_scrolling_backward
+    R.string.message_scroll_backward
   );
 
   private final int nodeAction;
-  private final byte[] brailleSymbol;
-  private final CharSequence monitorText;
+  private final CharSequence brailleText;
 
   public final int getNodeAction () {
     return nodeAction;
   }
 
-  public final byte[] getBrailleSymbol () {
-    return brailleSymbol;
-  }
-
   public boolean writeBrailleSymbol () {
-    return Devices.braille.get().write(getBrailleSymbol(), monitorText);
+    return Devices.braille.get().write(brailleText);
   }
 
-  private ScrollDirection (int nodeAction, byte[] braille, int text) {
-    this.nodeAction = nodeAction;
-    brailleSymbol = braille;
+  private ScrollDirection (int action, byte[] braille, int text) {
+    nodeAction = action;
 
-    {
-      CharacterStyle span = HighlightSpans.ITALIC.getSingleton();
-      SpannableStringBuilder sb = new SpannableStringBuilder(ApplicationContext.getString(text));
-      int length = sb.length();
+    StringBuilder sb = new StringBuilder();
+    sb.append(Braille.toString(braille));
 
-      sb.setSpan(span, 0, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
-      monitorText = sb.subSequence(0, length);
-    }
+    sb.append(' ');
+    sb.append(ApplicationContext.getString(text));
+
+    brailleText = sb.subSequence(0, sb.length());
   }
 }

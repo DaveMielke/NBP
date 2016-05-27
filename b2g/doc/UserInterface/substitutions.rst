@@ -33,8 +33,8 @@
 .. |the unchecked checkbox symbol| replace:: dots 123478,0,145678 (⣏⠀⣹)
 .. |the checked checkbox symbol| replace:: dots 123478,2356,145678 (⣏⠶⣹)
 
-.. |the scrolling forward symbol| replace:: dots 15,38,76,24 (⠑⢄⡠⠊)
-.. |the scrolling backward symbol| replace:: dots 76,24,15,38 (⡠⠊⠑⢄)
+.. |forward scroll symbol| replace:: ⠑⢄⡠⠊ (dots 15,38,76,24)
+.. |backward scroll symbol| replace:: ⡠⠊⠑⢄ (dots 76,24,15,38)
 
 .. |beep frequency| replace:: approximately 4KHz
 .. |short beep length| replace:: 100ms

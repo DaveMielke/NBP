@@ -97,10 +97,12 @@ Special Symbols
 If a screen element (list, group of pages, etc) needs to be scrolled, then:
 
 * Scrolling forward (down or to the right) is indicated via
-  |the scrolling forward symbol|.
+  the pictorial symbol |forward scroll symbol|
+  followed by the words ``forward scroll``.
 
 * Scrolling backward (up or to the left) is indicated via
-  |the scrolling backward symbol|.
+  the pictorial symbol |backward scroll symbol|
+  followed by the words ``backward scroll``.
 
 A **checkbox** is rendered as
 either |the unchecked checkbox symbol| (meaning unchecked)
