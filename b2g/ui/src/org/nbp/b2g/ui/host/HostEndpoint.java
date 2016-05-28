@@ -465,7 +465,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean handleDots (byte dots) {
+  public boolean handleDotKeys (int keyMask) {
     int action;
     String element;
 
@@ -474,7 +474,7 @@ public class HostEndpoint extends Endpoint {
       final int NEXT = KeyMask.DOT_8;
       final int MASK = PREVIOUS | NEXT;
 
-      switch (dots & MASK) {
+      switch (keyMask & MASK) {
         case PREVIOUS:
           action = AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT;
           break;
@@ -487,17 +487,18 @@ public class HostEndpoint extends Endpoint {
           return false;
       }
 
-      dots &= ~MASK;
+      keyMask &= ~MASK;
     }
 
-    switch (dots) {
-      // B
-      case KeyMask.DOT_1 | KeyMask.DOT_2:
+    Character character = Characters.getCharacters().toCharacter(keyMask);
+    if (character == null) return false;
+
+    switch (character) {
+      case 'b':
         element = "BUTTON";
         break;
 
-      // L
-      case KeyMask.DOT_1 | KeyMask.DOT_2 | KeyMask.DOT_3:
+      case 'l':
         element = "LINK";
         break;
 

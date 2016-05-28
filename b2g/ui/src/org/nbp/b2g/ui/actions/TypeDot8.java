@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class TypeDot8 extends TypeCharacter {
   @Override
-  protected int getNavigationKeys () {
+  protected final int getNavigationKeys () {
     return KeyMask.DOT_8;
   }
 

@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class TypeUnicode extends InputAction {
   @Override
-  public boolean performInputAction () {
+  protected final boolean performInputAction () {
     Endpoints.setUnicodeEndpoint();
     return true;
   }

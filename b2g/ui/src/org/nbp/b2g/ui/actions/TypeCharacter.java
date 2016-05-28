@@ -84,7 +84,7 @@ public class TypeCharacter extends InputAction {
   }
 
   @Override
-  protected boolean performInputAction () {
+  protected final boolean performInputAction () {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
@@ -141,6 +141,17 @@ public class TypeCharacter extends InputAction {
 
       return typeCharacter(endpoint, character, literaryBraille);
     }
+  }
+
+  @Override
+  protected final boolean performNonInputAction () {
+    int keyMask = getNavigationKeys();
+    if (!KeyMask.isDots(keyMask)) return false;
+
+    keyMask &= ~KeyMask.SPACE;
+    if (keyMask == 0) return false;
+
+    return getEndpoint().handleDotKeys(keyMask);
   }
 
   public TypeCharacter (Endpoint endpoint) {

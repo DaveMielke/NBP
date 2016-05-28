@@ -920,7 +920,7 @@ public abstract class Endpoint {
     return performAction(ScrollRight.class);
   }
 
-  public boolean handleDots (byte dots) {
+  public boolean handleDotKeys (int keyMask) {
     return false;
   }
 

@@ -3,14 +3,15 @@ package org.nbp.b2g.ui;
 public abstract class InputAction extends Action {
   protected abstract boolean performInputAction ();
 
+  protected boolean performNonInputAction () {
+    return false;
+  }
+
   @Override
   public boolean performAction () {
-    if (getEndpoint().isInputArea()) return performInputAction();
-
-    Byte dots = KeyMask.toDots(getNavigationKeys());
-    if (dots == null) return false;
-    if (dots == 0) return false;
-    return getEndpoint().handleDots(dots);
+    return getEndpoint().isInputArea()? 
+           performInputAction():
+           performNonInputAction();
   }
 
   protected InputAction (Endpoint endpoint) {
