@@ -360,15 +360,20 @@ public class HostEndpoint extends Endpoint {
       if (!function.changeText()) return false;
       textChangePending = true;
 
-      while (true) {
+      long startTime = System.currentTimeMillis();
+      long timeout = 3000;
+
+      do {
         try {
-          wait();
+          wait(timeout);
         } catch (InterruptedException exception) {
         }
 
-        if (!textChangePending) break;
-      }
+        if (!textChangePending) return true;
+      } while ((System.currentTimeMillis() - startTime) < timeout);
 
+      Log.w(LOG_TAG, "text change wait timeout");
+      textChangePending = false;
       return true;
     }
   }
