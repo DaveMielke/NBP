@@ -25,6 +25,7 @@ public abstract class ApplicationParameters extends CommonParameters {
 
   public final static long LONG_PRESS_DELAY = 100; // milliseconds
   public final static long VIEW_SCROLL_TIMEOUT = 5000; // milliseconds
+  public final static long TEXT_CHANGE_TIMEOUT = 3000; // milliseconds
 
   public final static long TAP_HOLD_TIME = 45; // milliseconds
   public final static long TAP_WAIT_TIME = 100; // milliseconds

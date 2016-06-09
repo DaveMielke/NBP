@@ -361,7 +361,7 @@ public class HostEndpoint extends Endpoint {
       textChangePending = true;
 
       long startTime = System.currentTimeMillis();
-      long timeout = 3000;
+      long timeout = ApplicationParameters.TEXT_CHANGE_TIMEOUT;
 
       do {
         try {
