@@ -340,32 +340,68 @@ public class HostEndpoint extends Endpoint {
     return text;
   }
 
-  @Override
-  public final boolean replaceText (int start, int end, CharSequence text) {
-    InputConnection connection = getInputConnection();
+  private boolean textChangePending = false;
 
-    if (connection != null) {
-      if (connection.setComposingRegion(start, end)) {
-        if (connection.commitText(addSpans(text), 1)) {
-          return true;
-        }
+  public final void onTextChange () {
+    synchronized (this) {
+      if (textChangePending) {
+        textChangePending = false;
+        notifyAll();
       }
     }
+  }
 
-    return false;
+  private interface TextChangeFunction {
+    public boolean changeText ();
+  }
+
+  private final boolean performTextChangeFunction (TextChangeFunction function) {
+    synchronized (this) {
+      if (!function.changeText()) return false;
+      textChangePending = true;
+
+      while (true) {
+        try {
+          wait();
+        } catch (InterruptedException exception) {
+        }
+
+        if (!textChangePending) break;
+      }
+
+      return true;
+    }
   }
 
   @Override
-  public final boolean insertText (CharSequence text) {
-    InputConnection connection = getInputConnection();
+  public final boolean replaceText (final int start, final int end, final CharSequence text) {
+    final InputConnection connection = getInputConnection();
+    if (connection == null) return false;
 
-    if (connection != null) {
-      if (connection.commitText(addSpans(text), 1)) {
-        return true;
+    TextChangeFunction function = new TextChangeFunction() {
+      @Override
+      public boolean changeText () {
+        return connection.setComposingRegion(start, end)
+            && connection.commitText(addSpans(text), 1);
       }
-    }
+    };
 
-    return false;
+    return performTextChangeFunction(function);
+  }
+
+  @Override
+  public final boolean insertText (final CharSequence text) {
+    final InputConnection connection = getInputConnection();
+    if (connection == null) return false;
+
+    TextChangeFunction function = new TextChangeFunction() {
+      @Override
+      public boolean changeText () {
+        return connection.commitText(addSpans(text), 1);
+      }
+    };
+
+    return performTextChangeFunction(function);
   }
 
   @Override
@@ -465,7 +501,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
-  public boolean handleDotKeys (int keyMask) {
+  public final boolean handleDotKeys (int keyMask) {
     int action;
     String element;
 

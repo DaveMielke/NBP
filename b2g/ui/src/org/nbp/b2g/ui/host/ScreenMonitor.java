@@ -429,7 +429,11 @@ public class ScreenMonitor extends AccessibilityService {
 
                 case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED: {
                   int cursor = event.getFromIndex() + event.getAddedCount();
-                  getHostEndpoint().onTextSelectionChange(source, cursor, cursor);
+
+                  HostEndpoint endpoint = getHostEndpoint();
+                  endpoint.onTextSelectionChange(source, cursor, cursor);
+                  endpoint.onTextChange();
+
                   break;
                 }
 
