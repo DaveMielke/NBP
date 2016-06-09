@@ -426,22 +426,6 @@ public class ScreenMonitor extends AccessibilityService {
                 case AccessibilityEvent.TYPE_VIEW_SCROLLED:
                   handleViewScrolled(event, source);
                   break;
-
-                case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED: {
-                  int cursor = event.getFromIndex() + event.getAddedCount();
-
-                  HostEndpoint endpoint = getHostEndpoint();
-                  endpoint.onTextSelectionChange(source, cursor, cursor);
-                  endpoint.onTextChange();
-
-                  break;
-                }
-
-                case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
-                  getHostEndpoint().onTextSelectionChange(
-                    source, event.getFromIndex(), event.getToIndex()
-                  );
-                  break;
               }
 
               if (node != null) {
@@ -454,6 +438,24 @@ public class ScreenMonitor extends AccessibilityService {
 
                   default:
                     write(node, false, event);
+                    break;
+                }
+
+                switch (type) {
+                  case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED: {
+                    int cursor = event.getFromIndex() + event.getAddedCount();
+
+                    HostEndpoint endpoint = getHostEndpoint();
+                    endpoint.onTextSelectionChange(source, cursor, cursor);
+                    endpoint.onTextChange();
+
+                    break;
+                  }
+
+                  case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
+                    getHostEndpoint().onTextSelectionChange(
+                      source, event.getFromIndex(), event.getToIndex()
+                    );
                     break;
                 }
 
