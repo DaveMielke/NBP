@@ -59,10 +59,6 @@ public class TypeCharacter extends InputAction {
           ));
         }
 
-        if (isCursor && (start == 0) && (endpoint.getBrailleLength() > 0)) {
-          TranslationUtilities.cacheBraille(character);
-        }
-
         CharSequence braille = endpoint.getBrailleCharacters();
         SpannableStringBuilder sb = new SpannableStringBuilder(braille);
         sb.replace(start, end, Character.toString(character));
@@ -89,10 +85,9 @@ public class TypeCharacter extends InputAction {
 
     synchronized (endpoint) {
       TypingMode typingMode = ApplicationSettings.TYPING_MODE;
-      boolean isPasswordField = endpoint.isPasswordField();
       boolean literaryBraille = ApplicationSettings.LITERARY_BRAILLE && (typingMode == TypingMode.TEXT);
 
-      if (isPasswordField) {
+      if (endpoint.isPasswordField()) {
         typingMode = TypingMode.TEXT;
         literaryBraille = false;
       } else if (literaryBraille) {
@@ -135,7 +130,7 @@ public class TypeCharacter extends InputAction {
         }
 
         default:
-          Log.w(LOG_TAG, "unsupported typing mode: " + typingMode.name());
+          Log.w(LOG_TAG, ("unsupported typing mode: " + typingMode.name()));
           return false;
       }
 
