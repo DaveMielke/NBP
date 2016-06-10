@@ -116,8 +116,12 @@ public class ScreenMonitor extends AccessibilityService {
     return null;
   }
 
-  private static boolean write (AccessibilityNodeInfo node, boolean force, AccessibilityEvent event) {
+  private static void setAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {
     AccessibilityText.set(node, getAccessibilityText(node, event));
+  }
+
+  private static boolean write (AccessibilityNodeInfo node, boolean force, AccessibilityEvent event) {
+    setAccessibilityText(node, event);
     return getHostEndpoint().write(node, force);
   }
 
@@ -426,12 +430,6 @@ public class ScreenMonitor extends AccessibilityService {
                 case AccessibilityEvent.TYPE_VIEW_SCROLLED:
                   handleViewScrolled(event, source);
                   break;
-
-                case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
-                  getHostEndpoint().onTextSelectionChange(
-                    source, event.getFromIndex(), event.getToIndex()
-                  );
-                  break;
               }
 
               if (node != null) {
@@ -447,13 +445,31 @@ public class ScreenMonitor extends AccessibilityService {
                     break;
 
                   case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED: {
-                    write(node, false, event);
-
                     HostEndpoint endpoint = getHostEndpoint();
                     int cursor = event.getFromIndex() + event.getAddedCount();
 
-                    endpoint.onTextSelectionChange(source, cursor, cursor);
-                    endpoint.onTextChange();
+                    synchronized (endpoint) {
+                      setAccessibilityText(node, event);
+
+                      boolean write = false;
+                      if (endpoint.onTextChange(node)) write = true;
+                      if (endpoint.onTextSelectionChange(source, cursor, cursor)) write = true;
+                      if (write) endpoint.write();
+                    }
+
+                    break;
+                  }
+
+                  case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED: {
+                    HostEndpoint endpoint = getHostEndpoint();
+                    int from = event.getFromIndex();
+                    int to = event.getToIndex();
+
+                    synchronized (endpoint) {
+                      if (endpoint.onTextSelectionChange(source, from, to)) {
+                        write(node, false, event);
+                      }
+                    }
 
                     break;
                   }

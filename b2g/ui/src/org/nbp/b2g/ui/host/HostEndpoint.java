@@ -230,12 +230,14 @@ public class HostEndpoint extends Endpoint {
     return write();
   }
 
-  public final void onTextSelectionChange (AccessibilityNodeInfo node, int start, int end) {
+  public final boolean onTextSelectionChange (AccessibilityNodeInfo node, int start, int end) {
     synchronized (this) {
       if (node.equals(currentNode)) {
-        changeSelection(start, end);
+        return changeSelection(start, end);
       }
     }
+
+    return false;
   }
 
   public final void onInputSelectionChange (int start, int end) {
@@ -342,12 +344,17 @@ public class HostEndpoint extends Endpoint {
 
   private boolean textChangePending = false;
 
-  public final void onTextChange () {
+  public final boolean onTextChange (AccessibilityNodeInfo node) {
     synchronized (this) {
+      if (!node.equals(currentNode)) return false;
+      setText(toText(node), true);
+
       if (textChangePending) {
         textChangePending = false;
         notifyAll();
       }
+
+      return true;
     }
   }
 
