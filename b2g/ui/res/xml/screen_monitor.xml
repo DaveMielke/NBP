@@ -12,6 +12,6 @@
     android:accessibilityFlags="flagDefault|flagRequestTouchExplorationMode|flagRequestEnhancedWebAccessibility"
     android:accessibilityFeedbackType="feedbackGeneric"
 
-    android:notificationTimeout="25"
+    android:notificationTimeout="70"
     android:settingsActivity=".host.SettingsActivity"
  />
