@@ -1,5 +1,4 @@
 SIM indicators for non-GSM
-first literary braille character when field is empty
 braille and speech not both off
 android.intent.action.master_clear_notification
 typing font selector
