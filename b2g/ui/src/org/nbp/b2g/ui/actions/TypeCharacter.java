@@ -49,12 +49,16 @@ public class TypeCharacter extends InputAction {
         end = endpoint.findEndBrailleOffset(isCursor? start: end);
         start = endpoint.findFirstBrailleOffset(start);
 
-        if (isCursor && atEndOfLine) {
-          int length = endpoint.getBrailleLength();
+        if (isCursor) {
+          int brailleLength = endpoint.getBrailleLength();
 
-          if (end < length) {
-            start = end = length;
+          if (atEndOfLine && (end < brailleLength)) {
+            start = end = brailleLength;
             atStartOfText = false;
+          }
+
+          if (atStartOfText && (brailleLength > 0)) {
+            TranslationUtilities.cacheBraille(character);
           }
         }
 
@@ -62,10 +66,6 @@ public class TypeCharacter extends InputAction {
           Log.v(LOG_TAG, String.format(
             "inserting braille: %c @ [%d:%d]", character, start, end
           ));
-        }
-
-        if (isCursor && atStartOfText && (endpoint.getBrailleLength() > 0)) {
-          TranslationUtilities.cacheBraille(character);
         }
 
         CharSequence braille = endpoint.getBrailleCharacters();
