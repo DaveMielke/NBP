@@ -110,7 +110,16 @@ public class AsposeWordsOperations implements ContentOperations {
       }
     }
 
-    content.append('\n');
+    {
+      int length = content.length();
+
+      if (length > 0) {
+        if (content.charAt(length-1) != '\n') {
+          content.append('\n');
+        }
+      }
+    }
+
     addSpan(content, start, new ParagraphSpan());
   }
 
