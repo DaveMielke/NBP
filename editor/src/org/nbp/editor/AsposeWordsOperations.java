@@ -67,37 +67,46 @@ public class AsposeWordsOperations implements ContentOperations {
   }
 
   private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
-    int start = content.length();
-    CharSequence text = run.getText();
-    content.append(text);
-    Font font = run.getFont();
-
-    if (font.getBold()) {
-      addSpan(content, start,
-              font.getItalic()? HighlightSpans.BOLD_ITALIC: HighlightSpans.BOLD);
-    }
-
-    if (font.getItalic()) {
-      addSpan(content, start, HighlightSpans.ITALIC);
-    }
-
-    if (font.getStrikeThrough()) {
-      addSpan(content, start, HighlightSpans.STRIKE);
-    }
-
-    if (font.getSubscript()) {
-      addSpan(content, start, HighlightSpans.SUBSCRIPT);
-    }
-
-    if (font.getSuperscript()) {
-      addSpan(content, start, HighlightSpans.SUPERSCRIPT);
-    }
-
-    if (font.getUnderline() != Underline.NONE) {
-      addSpan(content, start, HighlightSpans.UNDERLINE);
-    }
-
+    final int start = content.length();
+    content.append(run.getText());
     addSpan(content, start, new RunSpan());
+
+    if (run.isInsertRevision()) {
+      addSpan(content, start, new InsertSpan());
+    }
+
+    if (run.isDeleteRevision()) {
+      addSpan(content, start, new DeleteSpan());
+    }
+
+    {
+      Font font = run.getFont();
+
+      if (font.getBold()) {
+        addSpan(content, start,
+                font.getItalic()? HighlightSpans.BOLD_ITALIC: HighlightSpans.BOLD);
+      }
+
+      if (font.getItalic()) {
+        addSpan(content, start, HighlightSpans.ITALIC);
+      }
+
+      if (font.getStrikeThrough()) {
+        addSpan(content, start, HighlightSpans.STRIKE);
+      }
+
+      if (font.getSubscript()) {
+        addSpan(content, start, HighlightSpans.SUBSCRIPT);
+      }
+
+      if (font.getSuperscript()) {
+        addSpan(content, start, HighlightSpans.SUPERSCRIPT);
+      }
+
+      if (font.getUnderline() != Underline.NONE) {
+        addSpan(content, start, HighlightSpans.UNDERLINE);
+      }
+    }
   }
 
   private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
