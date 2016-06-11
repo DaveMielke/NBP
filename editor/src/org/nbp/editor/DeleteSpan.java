@@ -1,17 +1,17 @@
 package org.nbp.editor;
 
-public class OldRevisionSpan extends RevisionSpan {
+public class DeleteSpan extends RevisionSpan {
   @Override
   public final int getSpanName () {
-    return R.string.span_old_revision;
+    return R.string.span_delete;
   }
 
   @Override
   public final String getSpanIdentifier () {
-    return "old";
+    return "del";
   }
 
-  public OldRevisionSpan () {
+  public DeleteSpan () {
     super();
   }
 }
