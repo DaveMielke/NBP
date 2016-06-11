@@ -6,7 +6,7 @@
   <string name="label_result">Result:</string>
   <string name="label_variable">Variable Name:</string>
 
-  <string name="hint_expression">type expression</string>
+  <string name="hint_expression">[ enter expression ]</string>
   <string name="hint_result">no result yet</string>
   <string name="hint_variable">type variable name</string>
 
