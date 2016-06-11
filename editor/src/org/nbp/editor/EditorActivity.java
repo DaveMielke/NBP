@@ -746,7 +746,16 @@ public class EditorActivity extends CommonActivity {
     return sb.toString();
   }
 
-  private final static void putTextSpans (Spannable spannable, String[] fields) {
+  private final static Object restoreSpan (String identifier) {
+    {
+      HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(identifier);
+      if (spanEntry != null) return spanEntry.newInstance();
+    }
+
+    return null;
+  }
+
+  private final static void restoreSpans (Spannable spannable, String[] fields) {
     int length = spannable.length();
     int count = fields.length;
     int index = 0;
@@ -767,16 +776,14 @@ public class EditorActivity extends CommonActivity {
       }
 
       if (verifyTextRange(start, end, length)) {
-        HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(identifier);
-
-        if (spanEntry != null) {
-          spannable.setSpan(spanEntry.newInstance(), start, end, flags);
-        }
+        Object span = restoreSpan(identifier);
+        if (span == null) continue;
+        spannable.setSpan(span, start, end, flags);
       }
     }
   }
 
-  private final void putTextSpans (String spans) {
+  private final void restoreSpans (String spans) {
     if (spans == null) return;
 
     spans = spans.trim();
@@ -786,10 +793,10 @@ public class EditorActivity extends CommonActivity {
     CharSequence text = editArea.getText();
 
     if (text instanceof Spannable) {
-      putTextSpans((Spannable)text, fields);
+      restoreSpans((Spannable)text, fields);
     } else {
       SpannableString string = new SpannableString(text);
-      putTextSpans(string, fields);
+      restoreSpans(string, fields);
       editArea.setText(string);
     }
   }
@@ -869,7 +876,7 @@ public class EditorActivity extends CommonActivity {
 
               {
                 String spans = prefs.getString(PREF_CHECKPOINT_SPANS, null);
-                putTextSpans(spans);
+                restoreSpans(spans);
               }
 
               {
