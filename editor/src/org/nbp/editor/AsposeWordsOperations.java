@@ -58,39 +58,46 @@ public class AsposeWordsOperations implements ContentOperations {
     this(saveFormat, LoadFormat.UNKNOWN);
   }
 
-  private final void setSpan (SpannableStringBuilder content, int start, Object span) {
+  private final void addSpan (SpannableStringBuilder content, int start, Object span) {
     content.setSpan(span, start, content.length(), content.SPAN_EXCLUSIVE_EXCLUSIVE);
+  }
+
+  private final void addSpan (SpannableStringBuilder content, int start, HighlightSpans.Entry spanEntry) {
+    addSpan(content, start, spanEntry.newInstance());
   }
 
   private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
     int start = content.length();
-
     CharSequence text = run.getText();
+    content.append(text);
     Font font = run.getFont();
 
-    content.append(text);
-    HighlightSpans.Entry spanEntry = null;
-
     if (font.getBold()) {
-      spanEntry = font.getItalic()? HighlightSpans.BOLD_ITALIC:
-                                    HighlightSpans.BOLD;
-    } else if (font.getItalic()) {
-      spanEntry = HighlightSpans.ITALIC;
-    } else if (font.getStrikeThrough()) {
-      spanEntry = HighlightSpans.STRIKE;
-    } else if (font.getSubscript()) {
-      spanEntry = HighlightSpans.SUBSCRIPT;
-    } else if (font.getSuperscript()) {
-      spanEntry = HighlightSpans.SUPERSCRIPT;
-    } else if (font.getUnderline() != Underline.NONE) {
-      spanEntry = HighlightSpans.UNDERLINE;
+      addSpan(content, start,
+              font.getItalic()? HighlightSpans.BOLD_ITALIC: HighlightSpans.BOLD);
     }
 
-    if (spanEntry != null) {
-      setSpan(content, start, spanEntry.newInstance());
+    if (font.getItalic()) {
+      addSpan(content, start, HighlightSpans.ITALIC);
     }
 
-    setSpan(content, start, new RunSpan());
+    if (font.getStrikeThrough()) {
+      addSpan(content, start, HighlightSpans.STRIKE);
+    }
+
+    if (font.getSubscript()) {
+      addSpan(content, start, HighlightSpans.SUBSCRIPT);
+    }
+
+    if (font.getSuperscript()) {
+      addSpan(content, start, HighlightSpans.SUPERSCRIPT);
+    }
+
+    if (font.getUnderline() != Underline.NONE) {
+      addSpan(content, start, HighlightSpans.UNDERLINE);
+    }
+
+    addSpan(content, start, new RunSpan());
   }
 
   private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
@@ -104,7 +111,7 @@ public class AsposeWordsOperations implements ContentOperations {
     }
 
     content.append('\n');
-    setSpan(content, start, new ParagraphSpan());
+    addSpan(content, start, new ParagraphSpan());
   }
 
   private final void addSection (SpannableStringBuilder content, Section section) throws Exception {
@@ -117,7 +124,7 @@ public class AsposeWordsOperations implements ContentOperations {
       }
     }
 
-    setSpan(content, start, new SectionSpan());
+    addSpan(content, start, new SectionSpan());
   }
 
   @Override
