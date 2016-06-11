@@ -1,8 +1,8 @@
 package org.nbp.editor;
 
-public class CommentSpan extends EditorSpan {
+public class CommentSpan extends TextSpan {
   @Override
-  public final int getName () {
+  public final int getSpanName () {
     return R.string.span_comment;
   }
 

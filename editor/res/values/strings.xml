@@ -56,4 +56,7 @@
   <string name="span_comment">comment</string>
   <string name="span_old_revision">old</string>
   <string name="span_new_revision">new</string>
+  <string name="span_section">section</string>
+  <string name="span_paragraph">paragraph</string>
+  <string name="span_run">run</string>
 </resources>

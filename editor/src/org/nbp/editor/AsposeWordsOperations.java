@@ -58,6 +58,68 @@ public class AsposeWordsOperations implements ContentOperations {
     this(saveFormat, LoadFormat.UNKNOWN);
   }
 
+  private final void setSpan (SpannableStringBuilder content, int start, Object span) {
+    content.setSpan(span, start, content.length(), content.SPAN_EXCLUSIVE_EXCLUSIVE);
+  }
+
+  private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
+    int start = content.length();
+
+    CharSequence text = run.getText();
+    Font font = run.getFont();
+
+    content.append(text);
+    HighlightSpans.Entry spanEntry = null;
+
+    if (font.getBold()) {
+      spanEntry = font.getItalic()? HighlightSpans.BOLD_ITALIC:
+                                    HighlightSpans.BOLD;
+    } else if (font.getItalic()) {
+      spanEntry = HighlightSpans.ITALIC;
+    } else if (font.getStrikeThrough()) {
+      spanEntry = HighlightSpans.STRIKE;
+    } else if (font.getSubscript()) {
+      spanEntry = HighlightSpans.SUBSCRIPT;
+    } else if (font.getSuperscript()) {
+      spanEntry = HighlightSpans.SUPERSCRIPT;
+    } else if (font.getUnderline() != Underline.NONE) {
+      spanEntry = HighlightSpans.UNDERLINE;
+    }
+
+    if (spanEntry != null) {
+      setSpan(content, start, spanEntry.newInstance());
+    }
+
+    setSpan(content, start, new RunSpan());
+  }
+
+  private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
+    int start = content.length();
+
+    for (Object child : paragraph.getChildNodes()) {
+      if (child instanceof Run) {
+        Run run = (Run)child;
+        addRun(content, run);
+      }
+    }
+
+    content.append('\n');
+    setSpan(content, start, new ParagraphSpan());
+  }
+
+  private final void addSection (SpannableStringBuilder content, Section section) throws Exception {
+    int start = content.length();
+
+    for (Object child : section.getBody().getChildNodes()) {
+      if (child instanceof Paragraph) {
+        Paragraph paragraph = (Paragraph)child;
+        addParagraph(content, paragraph);
+      }
+    }
+
+    setSpan(content, start, new SectionSpan());
+  }
+
   @Override
   public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
     checkForLicenseProblem();
@@ -69,48 +131,9 @@ public class AsposeWordsOperations implements ContentOperations {
     try {
       LoadOptions options = new LoadOptions();
       options.setLoadFormat(loadFormat);
+
       Document document = new Document(stream, options);
-
-      for (Object documentChild : document.getFirstSection().getBody().getChildNodes()) {
-        if (documentChild instanceof Paragraph) {
-          Paragraph paragraph = (Paragraph)documentChild;
-
-          for (Object paragraphChild : paragraph.getChildNodes()) {
-            if (paragraphChild instanceof Run) {
-              Run run = (Run)paragraphChild;
-
-              CharSequence text = run.getText();
-              Font font = run.getFont();
-
-              int start = content.length();
-              content.append(text);
-              int end = content.length();
-              HighlightSpans.Entry spanEntry = null;
-
-              if (font.getBold()) {
-                spanEntry = font.getItalic()? HighlightSpans.BOLD_ITALIC:
-                                              HighlightSpans.BOLD;
-              } else if (font.getItalic()) {
-                spanEntry = HighlightSpans.ITALIC;
-              } else if (font.getStrikeThrough()) {
-                spanEntry = HighlightSpans.STRIKE;
-              } else if (font.getSubscript()) {
-                spanEntry = HighlightSpans.SUBSCRIPT;
-              } else if (font.getSuperscript()) {
-                spanEntry = HighlightSpans.SUPERSCRIPT;
-              } else if (font.getUnderline() != Underline.NONE) {
-                spanEntry = HighlightSpans.UNDERLINE;
-              }
-
-              if (spanEntry != null) {
-                content.setSpan(spanEntry.newInstance(), start, end, content.SPAN_EXCLUSIVE_EXCLUSIVE);
-              }
-            }
-          }
-
-          content.append('\n');
-        }
-      }
+      addSection(content, document.getFirstSection());
     } catch (Exception exception) {
       throw new IOException("Aspose Words input error", exception);
     }
