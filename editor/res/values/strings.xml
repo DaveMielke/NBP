@@ -52,4 +52,8 @@
   <string name="format_extension_none">no extension</string>
   <string name="format_extension_unrecognized">unrecognized extension</string>
   <string name="format_select_all">all files</string>
+
+  <string name="span_comment">comment</string>
+  <string name="span_old_revision">old</string>
+  <string name="span_new_revision">new</string>
 </resources>
