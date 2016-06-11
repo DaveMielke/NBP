@@ -6,6 +6,11 @@ public class ParagraphSpan extends StructureSpan {
     return R.string.span_paragraph;
   }
 
+  @Override
+  public final String getSpanIdentifier () {
+    return "par";
+  }
+
   public ParagraphSpan () {
     super();
   }

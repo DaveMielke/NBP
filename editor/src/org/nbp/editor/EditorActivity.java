@@ -697,43 +697,53 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final static String getTextSpans (CharSequence text) {
-    if (text == null) return null;
+  private final static void saveSpan (StringBuilder sb, Spanned spanned, Object span, String identifier) {
+    if (sb.length() > 0) sb.append(' ');
+    sb.append(identifier);
 
+    sb.append(' ');
+    sb.append(spanned.getSpanStart(span));
+
+    sb.append(' ');
+    sb.append(spanned.getSpanEnd(span));
+
+    sb.append(' ');
+    sb.append(spanned.getSpanFlags(span));
+  }
+
+  private final static void saveHighlightSpans (StringBuilder sb, Spanned spanned) {
+    CharacterStyle[] spans = spanned.getSpans(0, spanned.length(), CharacterStyle.class);
+
+    if (spans != null) {
+      for (CharacterStyle span : spans) {
+        HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(span);
+        if (spanEntry == null) continue;
+        saveSpan(sb, spanned, span, spanEntry.getIdentifier());
+      }
+    }
+  }
+
+  private final static void saveEditorSpans (StringBuilder sb, Spanned spanned) {
+    EditorSpan[] spans = spanned.getSpans(0, spanned.length(), EditorSpan.class);
+
+    if (spans != null) {
+      for (EditorSpan span : spans) {
+        saveSpan(sb, spanned, span, span.getSpanIdentifier());
+      }
+    }
+  }
+
+  private final static String saveSpans (CharSequence text) {
+    if (text == null) return null;
     if (!(text instanceof Spanned)) return null;
     Spanned spanned = (Spanned)text;
 
-    CharacterStyle[] spans = spanned.getSpans(0, spanned.length(), CharacterStyle.class);
-    if (spans == null) return null;
-
     StringBuilder sb = new StringBuilder();
-    boolean found = false;
+    saveHighlightSpans(sb, spanned);
+    saveEditorSpans(sb, spanned);
 
-    for (CharacterStyle span : spans) {
-      {
-        HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(span);
-        if (spanEntry == null) continue;
-
-        if (found) {
-          sb.append(' ');
-        } else {
-          found = true;
-        }
-
-        sb.append(spanEntry.getIdentifier());
-      }
-
-      sb.append(' ');
-      sb.append(spanned.getSpanStart(span));
-
-      sb.append(' ');
-      sb.append(spanned.getSpanEnd(span));
-
-      sb.append(' ');
-      sb.append(spanned.getSpanFlags(span));
-    }
-
-    return found? sb.toString(): null;
+    if (sb.length() == 0) return null;
+    return sb.toString();
   }
 
   private final static void putTextSpans (Spannable spannable, String[] fields) {
@@ -822,7 +832,7 @@ public class EditorActivity extends CommonActivity {
 
             editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
             setCheckpointProperty(editor, PREF_CHECKPOINT_PATH, path);
-            setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, getTextSpans(editArea.getText()));
+            setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, saveSpans(editArea.getText()));
 
             editor.putInt(PREF_CHECKPOINT_START, editArea.getSelectionStart());
             editor.putInt(PREF_CHECKPOINT_END, editArea.getSelectionEnd());

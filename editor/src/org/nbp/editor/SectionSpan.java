@@ -6,6 +6,11 @@ public class SectionSpan extends StructureSpan {
     return R.string.span_section;
   }
 
+  @Override
+  public final String getSpanIdentifier () {
+    return "sec";
+  }
+
   public SectionSpan () {
     super();
   }

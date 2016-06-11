@@ -6,6 +6,11 @@ public class NewRevisionSpan extends RevisionSpan {
     return R.string.span_new_revision;
   }
 
+  @Override
+  public final String getSpanIdentifier () {
+    return "new";
+  }
+
   public NewRevisionSpan () {
     super();
   }

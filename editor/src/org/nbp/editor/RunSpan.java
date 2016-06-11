@@ -6,6 +6,11 @@ public class RunSpan extends StructureSpan {
     return R.string.span_run;
   }
 
+  @Override
+  public final String getSpanIdentifier () {
+    return "run";
+  }
+
   public RunSpan () {
     super();
   }
