@@ -1,6 +1,10 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.nbp.common.CommonSpan;
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
@@ -44,60 +48,59 @@ public class DescribeHighlighting extends CursorKeyAction {
       }
     }
 
+    Set<Integer> spanNames = new TreeSet<Integer>();
     Integer foregroundColor = null;
     Integer backgroundColor = null;
 
-    {
-      boolean bold = false;
-      boolean italic = false;
-      boolean strike = false;
-      boolean underline = false;
+    if (text instanceof Spanned) {
+      Spanned spanned = (Spanned)text;
+      Object[] spans = spanned.getSpans(offset, offset+1, Object.class);
 
-      if (text instanceof Spanned) {
-        Spanned spanned = (Spanned)text;
-        CharacterStyle[] spans = spanned.getSpans(offset, offset+1, CharacterStyle.class);
+      if (spans != null) {
+        for (Object span : spans) {
+          if (spanned.getSpanStart(span) == spanned.getSpanEnd(span)) continue;
 
-        if (spans != null) {
-          for (CharacterStyle span : spans) {
-            if (spanned.getSpanStart(span) == spanned.getSpanEnd(span)) continue;
+          if (span instanceof CharacterStyle) {
+            CharacterStyle style = (CharacterStyle)span;
 
-            if (HighlightSpans.BOLD.isFor(span)) {
-              bold = true;
-            } else if (HighlightSpans.BOLD_ITALIC.isFor(span)) {
-              bold = true;
-              italic = true;
-            } else if (HighlightSpans.ITALIC.isFor(span)) {
-              italic = true;
-            } else if (HighlightSpans.STRIKE.isFor(span)) {
-              strike = true;
-            } else if (HighlightSpans.UNDERLINE.isFor(span)) {
-              underline = true;
-            } else if (span instanceof ForegroundColorSpan) {
-              foregroundColor = ((ForegroundColorSpan)span).getForegroundColor();
-            } else if (span instanceof BackgroundColorSpan) {
-              backgroundColor = ((BackgroundColorSpan)span).getBackgroundColor();
+            if (HighlightSpans.BOLD.isFor(style)) {
+              spanNames.add(R.string.DescribeHighlighting_bold);
+            } else if (HighlightSpans.BOLD_ITALIC.isFor(style)) {
+              spanNames.add(R.string.DescribeHighlighting_bold);
+              spanNames.add(R.string.DescribeHighlighting_italic);
+            } else if (HighlightSpans.ITALIC.isFor(style)) {
+              spanNames.add(R.string.DescribeHighlighting_italic);
+            } else if (HighlightSpans.STRIKE.isFor(style)) {
+              spanNames.add(R.string.DescribeHighlighting_strike);
+            } else if (HighlightSpans.UNDERLINE.isFor(style)) {
+              spanNames.add(R.string.DescribeHighlighting_underline);
+            } else if (style instanceof ForegroundColorSpan) {
+              foregroundColor = ((ForegroundColorSpan)style).getForegroundColor();
+            } else if (style instanceof BackgroundColorSpan) {
+              backgroundColor = ((BackgroundColorSpan)style).getBackgroundColor();
+            }
+          } else if (span instanceof CommonSpan) {
+            CommonSpan common = (CommonSpan)span;
+
+            if (common.isHighlightSpan()) {
+              spanNames.add(common.getSpanName());
             }
           }
         }
       }
+    }
 
-      int[] styleStrings = new int[4];
-      int count = 0;
-
-      if (bold) styleStrings[count++] = R.string.DescribeHighlighting_bold;
-      if (italic) styleStrings[count++] = R.string.DescribeHighlighting_italic;
-      if (strike) styleStrings[count++] = R.string.DescribeHighlighting_strike;
-      if (underline) styleStrings[count++] = R.string.DescribeHighlighting_underline;
-      if (count == 0) styleStrings[count++] = R.string.DescribeHighlighting_none;
-
-      for (int index=0; index<count; index+=1) {
-        if (sb.length() > 0) sb.append(' ');
-        appendString(sb, styleStrings[index]);
-      }
+    for (Integer name : spanNames) {
+      if (sb.length() > 0) sb.append(' ');
+      appendString(sb, name);
     }
 
     describeColor(sb, foregroundColor, R.string.DescribeHighlighting_foreground);
     describeColor(sb, backgroundColor, R.string.DescribeHighlighting_background);
+
+    if (sb.length() == 0) {
+      appendString(sb, R.string.DescribeHighlighting_none);
+    }
 
     Endpoints.setPopupEndpoint(sb.toString());
     return true;

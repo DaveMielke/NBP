@@ -1,6 +1,7 @@
 package org.nbp.b2g.ui;
 
 import org.nbp.common.HighlightSpans;
+import org.nbp.common.CommonSpan;
 import android.text.style.CharacterStyle;
 import android.text.Spanned;
 
@@ -141,15 +142,21 @@ public abstract class Braille {
         if (!hasSelection) {
           if (lineText instanceof Spanned) {
             Spanned spanned = (Spanned)lineText;
-            CharacterStyle[] spans = spanned.getSpans(0, lineLength, CharacterStyle.class);
+            Object[] spans = spanned.getSpans(0, lineLength, Object.class);
 
             if (spans != null) {
-              for (CharacterStyle span : spans) {
-                if (HighlightSpans.getEntry(span) != null) {
-                  int start = spanned.getSpanStart(span);
-                  int end = spanned.getSpanEnd(span);
-                  markCells(cells, endpoint, start, end, brailleIndent, cellCount);
+              for (Object span : spans) {
+                if (span instanceof CharacterStyle) {
+                  if (HighlightSpans.getEntry((CharacterStyle)span) == null) continue;
+                } else if (span instanceof CommonSpan) {
+                  if (!((CommonSpan)span).isHighlightSpan()) continue;
+                } else {
+                  continue;
                 }
+
+                int start = spanned.getSpanStart(span);
+                int end = spanned.getSpanEnd(span);
+                markCells(cells, endpoint, start, end, brailleIndent, cellCount);
               }
             }
           }

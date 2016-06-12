@@ -1,11 +1,10 @@
 package org.nbp.editor;
 
-import org.nbp.common.CommonSpan;
-
-public abstract class EditorSpan extends CommonSpan {
+public abstract class EditorSpan {
+  public abstract int getSpanName ();
   public abstract String getSpanIdentifier ();
+  public abstract boolean isHighlightSpan ();
 
   protected EditorSpan () {
-    super();
   }
 }

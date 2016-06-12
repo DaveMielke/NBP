@@ -179,7 +179,7 @@
   <string name="DescribeColor_foreground">Foreground</string>
   <string name="DescribeColor_background">Background</string>
 
-  <string name="DescribeHighlighting_none">not highlighted</string>
+  <string name="DescribeHighlighting_none">none</string>
   <string name="DescribeHighlighting_bold">bold</string>
   <string name="DescribeHighlighting_italic">italic</string>
   <string name="DescribeHighlighting_strike">strike</string>
