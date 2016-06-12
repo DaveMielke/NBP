@@ -15,7 +15,7 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.SpannableStringBuilder;
 
-public class TextOperations implements ContentOperations {
+public class TextOperations extends ContentOperations {
   private final static String LOG_TAG = TextOperations.class.getName();
 
   protected final Spanned asSpanned (CharSequence string) {

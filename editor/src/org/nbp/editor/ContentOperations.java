@@ -4,9 +4,55 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.nbp.common.HighlightSpans;
+import android.text.style.CharacterStyle;
+
 import android.text.SpannableStringBuilder;
 
-public interface ContentOperations {
-  public void read (InputStream stream, SpannableStringBuilder content) throws IOException;
-  public void write (OutputStream stream, CharSequence content) throws IOException;
+public abstract class ContentOperations {
+  public abstract void read (InputStream stream, SpannableStringBuilder content) throws IOException;
+  public abstract void write (OutputStream stream, CharSequence content) throws IOException;
+
+  protected ContentOperations () {
+  }
+
+  protected final CharSequence getText (SpannableStringBuilder content, int start) {
+    return content.subSequence(start, content.length());
+  }
+
+  protected final void addSpan (SpannableStringBuilder content, int start, Object span) {
+    content.setSpan(span, start, content.length(), content.SPAN_EXCLUSIVE_EXCLUSIVE);
+  }
+
+  protected final void addSpan (SpannableStringBuilder content, int start, HighlightSpans.Entry spanEntry) {
+    if (start > 0) {
+      CharacterStyle[] spans = content.getSpans(start-1, start, CharacterStyle.class);
+
+      if (spans != null) {
+        for (CharacterStyle span : spans) {
+          if (spanEntry.isFor(span)) {
+            content.setSpan(span, content.getSpanStart(span),
+                            content.length(), content.getSpanFlags(span));
+            return;
+          }
+        }
+      }
+    }
+
+    addSpan(content, start, spanEntry.newInstance());
+  }
+
+  private final void addRevisionSpan (SpannableStringBuilder content, int start, RevisionSpan span) {
+    addSpan(content, start, span);
+    span.addStyle(content);
+  }
+
+
+  protected final void addInsertSpan (SpannableStringBuilder content, int start) {
+    addRevisionSpan(content, start, new InsertSpan(getText(content, start)));
+  }
+
+  protected final void addDeleteSpan (SpannableStringBuilder content, int start) {
+    addRevisionSpan(content, start, new DeleteSpan(getText(content, start)));
+  }
 }

@@ -18,7 +18,7 @@ import android.text.style.CharacterStyle;
 
 import com.aspose.words.*;
 
-public class AsposeWordsOperations implements ContentOperations {
+public class AsposeWordsOperations extends ContentOperations {
   private final static String LOG_TAG = AsposeWordsOperations.class.getName();
 
   private final static AsposeWordsApplication application = new AsposeWordsApplication();
@@ -68,42 +68,16 @@ public class AsposeWordsOperations implements ContentOperations {
     }
   }
 
-  private final CharSequence getText (SpannableStringBuilder content, int start) {
-    return content.subSequence(start, content.length());
-  }
-
-  private final void addSpan (SpannableStringBuilder content, int start, Object span) {
-    content.setSpan(span, start, content.length(), content.SPAN_EXCLUSIVE_EXCLUSIVE);
-  }
-
-  private final void addSpan (SpannableStringBuilder content, int start, HighlightSpans.Entry spanEntry) {
-    if (start > 0) {
-      CharacterStyle[] spans = content.getSpans(start-1, start, CharacterStyle.class);
-
-      if (spans != null) {
-        for (CharacterStyle span : spans) {
-          if (spanEntry.isFor(span)) {
-            content.setSpan(span, content.getSpanStart(span),
-                            content.length(), content.getSpanFlags(span));
-            return;
-          }
-        }
-      }
-    }
-
-    addSpan(content, start, spanEntry.newInstance());
-  }
-
   private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
     final int start = content.length();
     content.append(run.getText());
 
     if (run.isInsertRevision()) {
-      addSpan(content, start, new InsertSpan(getText(content, start)));
+      addInsertSpan(content, start);
     }
 
     if (run.isDeleteRevision()) {
-      addSpan(content, start, new DeleteSpan(getText(content, start)));
+      addDeleteSpan(content, start);
     }
 
     {
