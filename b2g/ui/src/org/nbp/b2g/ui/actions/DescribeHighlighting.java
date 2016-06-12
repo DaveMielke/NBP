@@ -4,7 +4,6 @@ import org.nbp.b2g.ui.*;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.nbp.common.CommonSpan;
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
@@ -78,12 +77,6 @@ public class DescribeHighlighting extends CursorKeyAction {
               foregroundColor = ((ForegroundColorSpan)style).getForegroundColor();
             } else if (style instanceof BackgroundColorSpan) {
               backgroundColor = ((BackgroundColorSpan)style).getBackgroundColor();
-            }
-          } else if (span instanceof CommonSpan) {
-            CommonSpan common = (CommonSpan)span;
-
-            if (common.isHighlightSpan()) {
-              spanNames.add(common.getSpanName());
             }
           }
         }

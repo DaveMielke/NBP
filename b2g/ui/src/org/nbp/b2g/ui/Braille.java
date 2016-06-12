@@ -1,7 +1,6 @@
 package org.nbp.b2g.ui;
 
 import org.nbp.common.HighlightSpans;
-import org.nbp.common.CommonSpan;
 import android.text.style.CharacterStyle;
 import android.text.Spanned;
 
@@ -148,8 +147,6 @@ public abstract class Braille {
               for (Object span : spans) {
                 if (span instanceof CharacterStyle) {
                   if (HighlightSpans.getEntry((CharacterStyle)span) == null) continue;
-                } else if (span instanceof CommonSpan) {
-                  if (!((CommonSpan)span).isHighlightSpan()) continue;
                 } else {
                   continue;
                 }
