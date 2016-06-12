@@ -52,11 +52,4 @@
   <string name="format_extension_none">no extension</string>
   <string name="format_extension_unrecognized">unrecognized extension</string>
   <string name="format_select_all">all files</string>
-
-  <string name="span_comment">comment</string>
-  <string name="span_delete">delete</string>
-  <string name="span_insert">insert</string>
-  <string name="span_section">section</string>
-  <string name="span_paragraph">paragraph</string>
-  <string name="span_run">run</string>
 </resources>

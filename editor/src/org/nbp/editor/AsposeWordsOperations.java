@@ -58,6 +58,16 @@ public class AsposeWordsOperations implements ContentOperations {
     this(saveFormat, LoadFormat.UNKNOWN);
   }
 
+  private final void logUnhandledChildNode (Node parent, Object child) {
+    if (false) {
+      Log.d(LOG_TAG, String.format(
+        "unhandled child node: %s contains %s",
+        parent.getClass().getSimpleName(),
+        child.getClass().getSimpleName()
+      ));
+    }
+  }
+
   private final void addSpan (SpannableStringBuilder content, int start, Object span) {
     content.setSpan(span, start, content.length(), content.SPAN_EXCLUSIVE_EXCLUSIVE);
   }
@@ -69,7 +79,6 @@ public class AsposeWordsOperations implements ContentOperations {
   private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
     final int start = content.length();
     content.append(run.getText());
-    addSpan(content, start, new RunSpan());
 
     if (run.isInsertRevision()) {
       addSpan(content, start, new InsertSpan());
@@ -116,6 +125,8 @@ public class AsposeWordsOperations implements ContentOperations {
       if (child instanceof Run) {
         Run run = (Run)child;
         addRun(content, run);
+      } else {
+        logUnhandledChildNode(paragraph, child);
       }
     }
 
@@ -139,6 +150,8 @@ public class AsposeWordsOperations implements ContentOperations {
       if (child instanceof Paragraph) {
         Paragraph paragraph = (Paragraph)child;
         addParagraph(content, paragraph);
+      } else {
+        logUnhandledChildNode(section, child);
       }
     }
 

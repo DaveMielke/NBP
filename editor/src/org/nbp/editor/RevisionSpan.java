@@ -1,6 +1,6 @@
 package org.nbp.editor;
 
-public abstract class RevisionSpan extends TextSpan {
+public abstract class RevisionSpan extends EditorSpan {
   protected RevisionSpan () {
     super();
   }
