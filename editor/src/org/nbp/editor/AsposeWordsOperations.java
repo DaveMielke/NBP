@@ -68,6 +68,10 @@ public class AsposeWordsOperations implements ContentOperations {
     }
   }
 
+  private final CharSequence getText (SpannableStringBuilder content, int start) {
+    return content.subSequence(start, content.length());
+  }
+
   private final void addSpan (SpannableStringBuilder content, int start, Object span) {
     content.setSpan(span, start, content.length(), content.SPAN_EXCLUSIVE_EXCLUSIVE);
   }
@@ -95,11 +99,11 @@ public class AsposeWordsOperations implements ContentOperations {
     content.append(run.getText());
 
     if (run.isInsertRevision()) {
-      addSpan(content, start, new InsertSpan());
+      addSpan(content, start, new InsertSpan(getText(content, start)));
     }
 
     if (run.isDeleteRevision()) {
-      addSpan(content, start, new DeleteSpan());
+      addSpan(content, start, new DeleteSpan(getText(content, start)));
     }
 
     {

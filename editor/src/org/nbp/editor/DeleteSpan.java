@@ -6,7 +6,7 @@ public class DeleteSpan extends RevisionSpan {
     return "del";
   }
 
-  public DeleteSpan () {
-    super();
+  public DeleteSpan (CharSequence text) {
+    super(text);
   }
 }

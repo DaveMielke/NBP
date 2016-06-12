@@ -6,7 +6,7 @@ public class InsertSpan extends RevisionSpan {
     return "ins";
   }
 
-  public InsertSpan () {
-    super();
+  public InsertSpan (CharSequence text) {
+    super(text);
   }
 }
