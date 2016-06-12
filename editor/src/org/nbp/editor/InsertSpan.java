@@ -1,5 +1,7 @@
 package org.nbp.editor;
 
+import android.text.style.UnderlineSpan;
+
 public class InsertSpan extends RevisionSpan {
   @Override
   public final String getSpanIdentifier () {
@@ -7,6 +9,6 @@ public class InsertSpan extends RevisionSpan {
   }
 
   public InsertSpan (CharSequence text) {
-    super(text);
+    super(text, new UnderlineSpan());
   }
 }
