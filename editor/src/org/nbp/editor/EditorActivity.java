@@ -15,6 +15,7 @@ import android.util.Log;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.Intent;
 
 import android.content.ClipboardManager;
 import android.content.ClipData;
@@ -894,6 +895,10 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private final void editFile (Uri uri, boolean canEdit) {
+    loadFile(new File(uri.getPath()));
+  }
+
   private final void addInputFilters () {
     InputFilter hasChangedMonitor = new InputFilter() {
       @Override
@@ -913,9 +918,7 @@ public class EditorActivity extends CommonActivity {
     editArea.setFilters(inputFilters);
   }
 
-  @Override
-  protected void onCreate (Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  private final void setup () {
     ApplicationContext.setMainActivity(this);
 
     filesDirectory = getFilesDir();
@@ -929,7 +932,36 @@ public class EditorActivity extends CommonActivity {
     showReportedErrors();
     prepareMenuButton();
     addInputFilters();
-    restoreFile();
+  }
+
+  @Override
+  protected void onCreate (Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setup();
+
+    int result = RESULT_CANCELED;
+    Intent intent = getIntent();
+
+    if (intent != null) {
+      String action = intent.getAction();
+
+      if (action != null) {
+        Uri uri = intent.getData();
+
+        if (action.equals(Intent.ACTION_MAIN)) {
+          restoreFile();
+          result = RESULT_OK;
+        } else if (action.equals(Intent.ACTION_VIEW)) {
+          editFile(uri, false);
+          result = RESULT_OK;
+        } else if (action.equals(Intent.ACTION_EDIT)) {
+          editFile(uri, true);
+          result = RESULT_OK;
+        }
+      }
+    }
+
+    setResult(result);
   }
 
   @Override
