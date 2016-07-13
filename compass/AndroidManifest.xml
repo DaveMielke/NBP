@@ -10,7 +10,7 @@
 
   <application
     android:label="@string/app_name"
-    android:icon="@drawable/ic_launcher"
+    android:icon="@drawable/nbp_compass"
     >
 
     <meta-data
