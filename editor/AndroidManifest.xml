@@ -28,18 +28,21 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
 
-        <data android:scheme="file" android:host="" android:pathPattern=".*.brf" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.brl" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.doc" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.docm" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.docx" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.htm" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.html" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.mht" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.mhtml" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.odt" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.rtf" />
-        <data android:scheme="file" android:host="" android:pathPattern=".*.txt" />
+        <data android:scheme="file" />
+        <data android:host="*" />
+
+        <data android:pathPattern=".*\\.brf" />
+        <data android:pathPattern=".*\\.brl" />
+        <data android:pathPattern=".*\\.doc" />
+        <data android:pathPattern=".*\\.docm" />
+        <data android:pathPattern=".*\\.docx" />
+        <data android:pathPattern=".*\\.htm" />
+        <data android:pathPattern=".*\\.html" />
+        <data android:pathPattern=".*\\.mht" />
+        <data android:pathPattern=".*\\.mhtml" />
+        <data android:pathPattern=".*\\.odt" />
+        <data android:pathPattern=".*\\.rtf" />
+        <data android:pathPattern=".*\\.txt" />
       </intent-filter>
     </activity>
 
