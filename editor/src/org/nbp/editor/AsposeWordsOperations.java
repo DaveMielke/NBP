@@ -113,6 +113,11 @@ public class AsposeWordsOperations extends ContentOperations {
   private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
     int start = content.length();
 
+    if (paragraph.isListItem()) {
+      ListLabel label = paragraph.getListLabel();
+      content.append(String.format("[%s] ", label.getLabelString()));
+    }
+
     for (Object child : paragraph.getChildNodes()) {
       if (child instanceof Run) {
         Run run = (Run)child;
@@ -163,6 +168,7 @@ public class AsposeWordsOperations extends ContentOperations {
       options.setLoadFormat(loadFormat);
 
       Document document = new Document(stream, options);
+      document.updateListLabels();
       addSection(content, document.getFirstSection());
     } catch (Exception exception) {
       throw new IOException("Aspose Words input error", exception);
