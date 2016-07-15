@@ -1,5 +1,8 @@
 package org.nbp.editor;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -56,6 +59,13 @@ public class AsposeWordsOperations extends ContentOperations {
 
   public AsposeWordsOperations (int saveFormat) throws IOException {
     this(saveFormat, LoadFormat.UNKNOWN);
+  }
+
+  private final static Map<String, String> listLabelMap =
+               new HashMap<String, String>();
+
+  static {
+    listLabelMap.put("\uF0B7", "\u2022");
   }
 
   private final void logUnhandledChildNode (Node parent, Object child) {
@@ -115,7 +125,12 @@ public class AsposeWordsOperations extends ContentOperations {
 
     if (paragraph.isListItem()) {
       ListLabel label = paragraph.getListLabel();
-      content.append(String.format("[%s] ", label.getLabelString()));
+      String string = label.getLabelString();
+
+      String mapped = listLabelMap.get(string);
+      if (mapped != null) string = mapped;
+
+      content.append(String.format("[%s] ", string));
     }
 
     for (Object child : paragraph.getChildNodes()) {
