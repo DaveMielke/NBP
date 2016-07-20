@@ -19,7 +19,7 @@ public class DisplayEndpoint extends Endpoint {
 
   public final boolean stop () {
     boolean stopped = currentChannel.stop();
-    write("braille display off");
+    write("remote display off");
     return stopped;
   }
 

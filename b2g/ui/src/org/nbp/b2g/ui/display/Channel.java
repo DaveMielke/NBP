@@ -41,7 +41,7 @@ public abstract class Channel extends Component implements Runnable {
       if (channelThread != null) return false;
 
       Log.d(LOG_TAG, "starting channel");
-      channelThread = new Thread(this, "braille-display-channel");
+      channelThread = new Thread(this, "remote-display-channel");
 
       initializeChannelThread();
       channelThread.start();
