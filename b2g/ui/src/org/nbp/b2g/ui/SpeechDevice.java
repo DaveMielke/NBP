@@ -31,7 +31,8 @@ public class SpeechDevice {
 
   private final AudioManager audioManager;
 
-  private final static Map<Integer, String> audioStreams = new LinkedHashMap<Integer, String>() {
+  private final static Map<Integer, String> audioStreams =
+         new LinkedHashMap<Integer, String>() {
     {
       put(AudioManager.STREAM_MUSIC, "music");
       put(AudioManager.STREAM_NOTIFICATION, "notification");
@@ -43,12 +44,15 @@ public class SpeechDevice {
     }
   };
 
-  private final static int OK = TextToSpeech.SUCCESS;
+  private final HashMap<String, String> ttsParameters =
+            new HashMap<String, String>();
 
-  private final HashMap<String, String> ttsParameters = new HashMap<String, String>();
-  private TextToSpeech ttsObject = null;
+  private final static int OK = TextToSpeech.SUCCESS;
   private int ttsStatus = TextToSpeech.ERROR;
+
+  private TextToSpeech ttsObject = null;
   private int maximumLength;
+  private String pendingSayText = null;
 
   private final void setParameter (String parameter, String value) {
     synchronized (ttsParameters) {
@@ -151,6 +155,8 @@ public class SpeechDevice {
               if (ttsObject.speak(segment, TextToSpeech.QUEUE_ADD, ttsParameters) != OK) return false;
             }
           }
+        } else {
+          pendingSayText = text;
         }
       }
     }
@@ -290,6 +296,12 @@ public class SpeechDevice {
                 maximumLength = ttsObject.getMaxSpeechInputLength();
               } else {
                 maximumLength = 4000;
+              }
+
+              if (pendingSayText != null) {
+                String text = pendingSayText;
+                pendingSayText = null;
+                say(text);
               }
             } else {
               Log.d(LOG_TAG, "speech device failed with status " + ttsStatus);
