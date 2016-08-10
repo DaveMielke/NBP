@@ -47,6 +47,7 @@
 .. |EMail| replace:: Go to the EMail app.
 .. |End| replace:: `The End key`_ (on a keyboard).
 .. |Enter| replace:: `The Enter key`_ (on a keyboard).
+.. |FileManager| replace:: Go to the file manager.
 .. |FindForward| replace:: Find text within the current screen element (forward search).
 .. |FindNext| replace:: Find the next occurrence of the same text within the current screen element.
 .. |FindPrevious| replace:: Find the previous occurrence of the same text within the current screen element.

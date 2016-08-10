@@ -96,6 +96,9 @@ Space+s (dots 234)
   e (dots 15)
     Go to the EMail app.
 
+  f (dots 124)
+    Go to the file manager.
+
   g (dots 1245)
     Go to the Gallery app.
 

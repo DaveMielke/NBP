@@ -48,6 +48,7 @@ bind Space+Dots234#s,Dots12#b BluetoothSettings
 bind Space+Dots234#s,Dots14#c Calendar
 bind Space+Dots234#s,Dots145#d Dialer
 bind Space+Dots234#s,Dots15#e EMail
+bind Space+Dots234#s,Dots124#f FileManager
 bind Space+Dots234#s,Dots1245#g Gallery
 bind Space+Dots234#s,Dots134#m Music
 bind Space+Dots234#s,Dots1234#p People
