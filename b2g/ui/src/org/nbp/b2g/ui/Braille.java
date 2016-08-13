@@ -94,7 +94,7 @@ public abstract class Braille {
       int lineIndent = endpoint.getLineIndent();
       if (lineIndent > lineLength) lineIndent = lineLength;
 
-      int lineEnd = endpoint.findNextSegment(lineIndent, cells.length);
+      int lineEnd = endpoint.findNextSegment(cells.length, lineIndent);
       CharSequence text = lineText.subSequence(lineIndent, lineEnd);
 
       int brailleIndent = endpoint.findFirstBrailleOffset(lineIndent);

@@ -594,7 +594,7 @@ public abstract class Endpoint {
     int end = findLastBrailleOffset(offset);
 
     if ((end - start) >= brailleLength) {
-      lineIndent = getAdjustedLineOffset((keep - brailleLength), offset);
+      lineIndent = findPreviousSegment((brailleLength - keep), offset);
     }
   }
 
@@ -709,49 +709,40 @@ public abstract class Endpoint {
     return null;
   }
 
-  private final boolean isWordBreak (char character) {
+  private final static boolean isWordBreak (char character) {
     return character == ' ';
   }
 
-  public final int findPreviousSegment (int indent, int size) {
-    if (!ApplicationSettings.WORD_WRAP) {
-      return getAdjustedLineOffset(-size, indent);
-    }
-
+  public final int findPreviousSegment (int size, int end) {
     synchronized (this) {
       CharSequence text = getLineText();
       int length = text.length();
-      if (indent > length) indent = length;
 
-      while (indent > 0) {
-        if (!isWordBreak(text.charAt(--indent))) {
-          indent += 1;
-          break;
-        }
-      }
+      if (end > length) end = length;
+      if (end == 0) return 0;
 
-      if (indent == 0) return 0;
-      int segment = getAdjustedLineOffset(-size, indent);
-      if (segment == 0) return 0;
+      int start = getAdjustedLineOffset(-size, end);
+      if (!ApplicationSettings.WORD_WRAP) return start;
+      if (start == 0) return 0;
 
-      if (!isWordBreak(text.charAt(segment-1))) {
-        for (int index=segment; index<indent; index+=1) {
+      if (!isWordBreak(text.charAt(start-1))) {
+        for (int index=start; index<end; index+=1) {
           if (isWordBreak(text.charAt(index))) {
-            segment = index;
+            start = index;
             break;
           }
         }
       }
 
-      for (int index=segment; index<indent; index+=1) {
+      for (int index=start; index<end; index+=1) {
         if (!isWordBreak(text.charAt(index))) return index;
       }
 
-      return segment;
+      return start;
     }
   }
 
-  public final int findNextSegment (int indent, int size) {
+  public final int findNextSegment (int size, int indent) {
     synchronized (this) {
       int segment = getAdjustedLineOffset(size, indent);
       if (!ApplicationSettings.WORD_WRAP) return segment;
@@ -808,7 +799,7 @@ public abstract class Endpoint {
           if (indent > length) indent = length;
         }
 
-        indent = findPreviousSegment(indent, size);
+        indent = findPreviousSegment(size, indent);
         setLineIndent(indent);
         return true;
       }
@@ -847,7 +838,7 @@ public abstract class Endpoint {
           setLine(offset);
           indent = 0;
         } else {
-          indent = findNextSegment(indent, size);
+          indent = findNextSegment(size, indent);
 
           if (ApplicationSettings.WORD_WRAP) {
             CharSequence text = getLineText();
