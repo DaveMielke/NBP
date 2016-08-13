@@ -582,6 +582,19 @@ public abstract class Endpoint {
   protected final void adjustLeft (int offset, int keep) {
     if (offset < lineIndent) {
       lineIndent = getAdjustedLineOffset(-keep, offset);
+
+      if (ApplicationSettings.WORD_WRAP) {
+        CharSequence text = getLineText();
+
+        if (!isWordBreak(text.charAt(lineIndent))) {
+          while (lineIndent > 0) {
+            if (isWordBreak(text.charAt(--lineIndent))) {
+              lineIndent += 1;
+              break;
+            }
+          }
+        }
+      }
     }
   }
 
