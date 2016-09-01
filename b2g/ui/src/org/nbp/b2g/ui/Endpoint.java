@@ -586,11 +586,13 @@ public abstract class Endpoint {
       if (ApplicationSettings.WORD_WRAP) {
         CharSequence text = getLineText();
 
-        if (!isWordBreak(text.charAt(lineIndent))) {
-          while (lineIndent > 0) {
-            if (isWordBreak(text.charAt(--lineIndent))) {
-              lineIndent += 1;
-              break;
+        if (lineIndent < text.length()) {
+          if (!isWordBreak(text.charAt(lineIndent))) {
+            while (lineIndent > 0) {
+              if (isWordBreak(text.charAt(--lineIndent))) {
+                lineIndent += 1;
+                break;
+              }
             }
           }
         }
