@@ -1,7 +1,7 @@
 .. |AccessibilitySettings| replace:: Go to the Accessibility Settings screen.
 .. |AddShortcut| replace:: Add a shortcut to `the home screen`_.
-.. |AirplaneModeOff| replace:: Turn Airplane Mode off.
-.. |AirplaneModeOn| replace:: Turn Airplane Mode on.
+.. |AirplaneModeOff| replace:: Turn off Android's airplane mode.
+.. |AirplaneModeOn| replace:: Turn on Android's airplane mode.
 .. |AndroidSettings| replace:: Go to the Android Settings screen.
 .. |Assist| replace:: Go to the current Google Assist app.
 .. |BackKey| replace:: The Android Back key.
@@ -10,13 +10,14 @@
 .. |BrailleCodeNext| replace:: Select the next literary braille code.
 .. |BrailleCodePrevious| replace:: Select the previous literary braille code.
 .. |BrailleDisplay| replace:: Switch to `the remote braille display`_.
-.. |BrailleOff| replace:: Turn the braille display off.
-.. |BrailleOn| replace:: Turn the braille display on.
+.. |BrailleOff| replace:: Turn off the braille display.
+.. |BrailleOn| replace:: Turn on the braille display.
 .. |Calculator| replace:: Go to the Calculator app.
 .. |Calendar| replace:: Go to the Calendar app.
 .. |ClearAndroidLog| replace:: Clear the Android log.
 .. |Click| replace:: Tap (click) the current screen element.
 .. |Clock| replace:: Go to the B2G digital clock.
+.. |ComputerBraille| replace:: Switch to `typing in computer braille`_ (eight dots).
 .. |CopyToClipboard| replace:: Copy the selected (or all) text to the clipboard.
 .. |CursorDown| replace:: `The Cursor Down key`_ (on a keyboard).
 .. |CursorKey| replace:: Bring the cursor to a specific character or click the current screen element.
@@ -32,8 +33,8 @@
 .. |DescribeCursorKeyActions| replace:: Show a list of all the actions that do involve a cursor routing key.
 .. |DescribeHighlighting| replace:: Show how a specific character has been highlighted.
 .. |DescribeIndicators| replace:: Show the values of important device status indicators.
-.. |DeveloperOff| replace:: Turn developer mode off.
-.. |DeveloperOn| replace:: Turn developer mode on.
+.. |DeveloperOff| replace:: Turn off `developer mode`_.
+.. |DeveloperOn| replace:: Turn on `developer mode`_.
 .. |Dialer| replace:: Go to the Dialer (Phone) app.
 .. |DragDown| replace:: Drag the current screen element downward.
 .. |DragFrom| replace:: Start a drag of the current screen element.
@@ -57,27 +58,26 @@
 .. |Gallery| replace:: Go to the Gallery app.
 .. |Home| replace:: `The Home key`_ (on a keyboard).
 .. |HomeKey| replace:: The Android Home key. Go to `the home screen`_.
-.. |LiteraryBrailleOff| replace:: Switch to `typing in computer braille`_ (eight dots).
-.. |LiteraryBrailleOn| replace:: Switch to `typing in literary braille`_ (six dots).
-.. |LogActionsOff| replace:: Turn the logging of user interface actions off.
-.. |LogActionsOn| replace:: Turn the logging of user interface actions on.
-.. |LogBrailleOff| replace:: Turn the logging of braille display updates off.
-.. |LogBrailleOn| replace:: Turn the logging of braille display updates on.
-.. |LogGesturesOff| replace:: Turn the logging of touch screen gestures off.
-.. |LogGesturesOn| replace:: Turn the logging of touch screen gestures on.
-.. |LogKeyboardOff| replace:: Turn the logging of keyboard key events off.
-.. |LogKeyboardOn| replace:: Turn the logging of keyboard key events on.
-.. |LogNavigationOff| replace:: Turn the logging of internal screen navigation operations off.
-.. |LogNavigationOn| replace:: Turn the logging of internal screen navigation operations on.
-.. |LogSpeechOff| replace:: Turn the logging of speech events off.
-.. |LogSpeechOn| replace:: Turn the logging of speech events on.
-.. |LogUpdatesOff| replace:: Turn the logging of screen updates off.
-.. |LogUpdatesOn| replace:: Turn the logging of screen updates on.
-.. |LogsOff| replace:: Turn all of the logging categories off.
-.. |LogsOn| replace:: Turn the most useful logging categories on.
+.. |LiteraryBraille| replace:: Switch to `typing in literary braille`_ (six dots).
+.. |LogActionsOff| replace:: Turn off the logging of user interface actions.
+.. |LogActionsOn| replace:: Turn on the logging of user interface actions.
+.. |LogBrailleOff| replace:: Turn off the logging of braille display updates.
+.. |LogBrailleOn| replace:: Turn on the logging of braille display updates.
+.. |LogGesturesOff| replace:: Turn off the logging of touch screen gestures.
+.. |LogGesturesOn| replace:: Turn on the logging of touch screen gestures.
+.. |LogKeyboardOff| replace:: Turn off the logging of keyboard key events.
+.. |LogKeyboardOn| replace:: Turn on the logging of keyboard key events.
+.. |LogNavigationOff| replace:: Turn off the logging of internal screen navigation operations.
+.. |LogNavigationOn| replace:: Turn on the logging of internal screen navigation operations.
+.. |LogSpeechOff| replace:: Turn off the logging of speech events.
+.. |LogSpeechOn| replace:: Turn on the logging of speech events.
+.. |LogUpdatesOff| replace:: Turn off the logging of screen updates.
+.. |LogUpdatesOn| replace:: Turn on the logging of screen updates.
+.. |LogsOff| replace:: Turn off all of the logging categories.
+.. |LogsOn| replace:: Turn on the most useful logging categories.
 .. |LongClick| replace:: Hold (long click) the current screen element.
-.. |LongPressOff| replace:: Turn `long press mode`_ off.
-.. |LongPressOn| replace:: Turn `long press mode`_ on.
+.. |LongPressOff| replace:: Turn off `long press mode`_.
+.. |LongPressOn| replace:: Turn on `long press mode`_.
 .. |Maintenance| replace:: Go to the B2G System Maintenance screen.
 .. |MenuKey| replace:: The Android Menu key.
 .. |MoveBackward| replace:: Go to the start of the previous screen element.
@@ -94,8 +94,8 @@
 .. |Music| replace:: Go to the Music app.
 .. |Notifications| replace:: Go to the Notifications screen.
 .. |Null| replace:: Cancel a key combination.
-.. |OneHandOff| replace:: Turn `one hand mode`_ off.
-.. |OneHandOn| replace:: Turn `one hand mode`_ on.
+.. |OneHandOff| replace:: Turn off `one hand mode`_.
+.. |OneHandOn| replace:: Turn on `one hand mode`_.
 .. |PageDown| replace:: `The Page Down key`_ (on a keyboard).
 .. |PageUp| replace:: `The Page Up key`_ (on a keyboard).
 .. |PanLeft| replace:: Pan one braille display length to the left (wrapping to the end of the previous line or going to the start of the previous screen element as needed).
@@ -107,11 +107,11 @@
 .. |QuickStartText| replace:: Go to the plain text version of the `quick Start Guide`_.
 .. |RecentApps| replace:: Go to the Recent Apps screen.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
-.. |ResetHighlightedTyping| replace:: Turn all of the highlighted typing styles off.
+.. |ResetHighlightedTyping| replace:: Turn off all of the highlighted typing styles.
 .. |ResetSettings| replace:: Reset the B2G settings to their default values.
 .. |RestoreSettings| replace:: Restore the B2G settings to their most recently saved values.
-.. |ReversePanningOff| replace:: Turn `reverse panning mode`_ off.
-.. |ReversePanningOn| replace:: Turn `reverse panning mode`_ on.
+.. |ReversePanningOff| replace:: Turn off `reverse panning mode`_.
+.. |ReversePanningOn| replace:: Turn on `reverse panning mode`_.
 .. |SaveSettings| replace:: Save the current B2G settings.
 .. |SaveScreen| replace:: Write the current screen element structure to the Android log.
 .. |SayAfter| replace:: Speak from the start of the braille display to the end of the screen element.
@@ -140,8 +140,8 @@
 .. |SpeakRight| replace:: Adjust the speech balance more toward the right.
 .. |SpeakSlower| replace:: Decrease the speech rate.
 .. |SpeakSofter| replace:: Decrease the speech volume.
-.. |SpeechOff| replace:: Turn speech off.
-.. |SpeechOn| replace:: Turn speech on.
+.. |SpeechOff| replace:: Turn off speech.
+.. |SpeechOn| replace:: Turn on speech.
 .. |StopSpeaking| replace:: Stop speaking immediately (mute).
 .. |Store| replace:: Go to the Store (Market) app.
 .. |SwitchLauncher| replace:: Go to the Android launcher chooser.
@@ -156,17 +156,17 @@
 .. |TypeDot7| replace:: Type the character represented by just dot 7.
 .. |TypeDot8| replace:: Type the character represented by just dot 8.
 .. |TypeUnicode| replace:: Prompt for the Unicode value of the character to be typed.
-.. |TypingBoldOff| replace:: Turn bold typing off.
-.. |TypingBoldOn| replace:: Turn bold typing on.
-.. |TypingItalicOff| replace:: Turn italic typing off.
-.. |TypingItalicOn| replace:: Turn italic typing on.
+.. |TypingBoldOff| replace:: Turn off bold typing.
+.. |TypingBoldOn| replace:: Turn on bold typing.
+.. |TypingItalicOff| replace:: Turn off italic typing.
+.. |TypingItalicOn| replace:: Turn on italic typing.
 .. |TypingModeBraille| replace:: Set the typing mode to braille.
 .. |TypingModeConfirm| replace:: Show the current typing mode.
 .. |TypingModeText| replace:: Set the typing mode to text.
-.. |TypingStrikeOff| replace:: Turn strike-through typing off.
-.. |TypingStrikeOn| replace:: Turn strike-through typing on.
-.. |TypingUnderlineOff| replace:: Turn underlined typing off.
-.. |TypingUnderlineOn| replace:: Turn underlined typing on.
+.. |TypingStrikeOff| replace:: Turn off strike-through typing.
+.. |TypingStrikeOn| replace:: Turn on strike-through typing.
+.. |TypingUnderlineOff| replace:: Turn off underlined typing.
+.. |TypingUnderlineOn| replace:: Turn on underlined typing.
 .. |UpdateEditor| replace:: Update the |organization acronym| editor.
 .. |UserManualHTML| replace:: Go to the HTML version of the `User Interface Manual`_.
 .. |UserManualText| replace:: Go to the plain text version of the `User Interface Manual`_.
@@ -176,5 +176,5 @@
 .. |WarrantyHTML| replace:: Go to the HTML version of the `Limited Warranty and Return Policy`_.
 .. |WarrantyText| replace:: Go to the plain text version of the `Limited Warranty and Return Policy`_.
 .. |WifiSettings| replace:: Go to the Wi-Fi Settings screen.
-.. |WordWrapOff| replace:: Turn word wrap mode off.
-.. |WordWrapOn| replace:: Turn word wrap mode on.
+.. |WordWrapOff| replace:: Turn off `word wrap mode`_.
+.. |WordWrapOn| replace:: Turn on `word wrap mode`_.

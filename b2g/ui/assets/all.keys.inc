@@ -27,8 +27,8 @@ bind Space+Dots1245#g BrailleCodeConfirm
 bind Space+Dot7+Dots1245#g BrailleCodePrevious
 bind Space+Dot8+Dots1245#g BrailleCodeNext
 
-bind Space+Dots235#6 LiteraryBrailleOn
-bind Space+Dots236#8 LiteraryBrailleOff
+bind Space+Dots235#6 LiteraryBraille
+bind Space+Dots236#8 ComputerBraille
 
 bind Space+Dot7+Dots2456#w WordWrapOff
 bind Space+Dot8+Dots2456#w WordWrapOn

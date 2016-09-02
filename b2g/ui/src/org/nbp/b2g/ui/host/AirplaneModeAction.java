@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
-public abstract class AirplaneModeAction extends AndroidSettingAction {
+public abstract class AirplaneModeAction extends SystemSettingAction {
   @Override
   protected final String getSettingName () {
     return android.provider.Settings.System.AIRPLANE_MODE_ON;

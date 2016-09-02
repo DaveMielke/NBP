@@ -62,16 +62,16 @@ Space+Dot8+Dots1245 (g)
   |BrailleCodeNext|
 
 Space+Dots235 (6)
-  |LiteraryBrailleOn|
+  |LiteraryBraille|
 
 Space+Dots236 (8)
-  |LiteraryBrailleOff|
+  |ComputerBraille|
 
 Space+Dot7+Dots2456 (w)
-  WordWrapOff
+  |WordWrapOff|
 
 Space+Dot8+Dots2456 (w)
-  WordWrapOn
+  |WordWrapOn|
 
 Backward+Dot1
   |BrailleOff|
