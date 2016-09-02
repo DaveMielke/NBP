@@ -88,6 +88,12 @@ Space+Dots78+Dots134 (m)
 Space+Dots1234 (p)
   |PowerOff|
 
+Space+Dot7+Dots1234 (p)
+  |AirplaneModeOff|
+
+Space+Dot8+Dots1234 (p)
+  |AirplaneModeOn|
+
 Space+Dots2345 (t)
   |Clock|
 

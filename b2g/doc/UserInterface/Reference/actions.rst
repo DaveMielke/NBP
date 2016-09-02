@@ -1,5 +1,7 @@
 .. |AccessibilitySettings| replace:: Go to the Accessibility Settings screen.
 .. |AddShortcut| replace:: Add a shortcut to `the home screen`_.
+.. |AirplaneModeOff| replace:: Turn Airplane Mode off.
+.. |AirplaneModeOn| replace:: Turn Airplane Mode on.
 .. |AndroidSettings| replace:: Go to the Android Settings screen.
 .. |Assist| replace:: Go to the current Google Assist app.
 .. |BackKey| replace:: The Android Back key.

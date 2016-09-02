@@ -169,6 +169,8 @@
   <string name="LogSpeech_control_label">Log Speech</string>
   <string name="LogUpdates_control_label">Log Updates</string>
 
+  <string name="AndroidSetting_AirplaneMode_label">airplane mode</string>
+
   <string name="ChooseAction_label">Perform an action by pressing Center on it:</string>
 
   <string name="DescribeCharacter_label_block">Block</string>
