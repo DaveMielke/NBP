@@ -81,6 +81,14 @@ public abstract class ApplicationContext extends CommonContext {
   public static boolean enableAccessibilityService (Class<? extends AccessibilityService> serviceClass) {
     Context context = getContext();
     if (context == null) return false;
+    ContentResolver resolver = context.getContentResolver();
+
+    try {
+      Settings.Secure.putString(resolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1");
+    } catch (SecurityException exception) {
+      Log.w(LOG_TAG, ("can't enable accessibility services: " + exception.getMessage()));
+      return false;
+    }
 
     Intent intent = new Intent(context, serviceClass);
     ComponentName component = intent.getComponent();
@@ -92,9 +100,7 @@ public abstract class ApplicationContext extends CommonContext {
     String longServiceName = packagePrefix + longClassName;
     String shortServiceName = packagePrefix + shortClassName;
 
-    ContentResolver resolver = context.getContentResolver();
     String serviceNamesKey = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
-
     String serviceNames = Settings.Secure.getString(resolver, serviceNamesKey);
     if (serviceNames == null) serviceNames = "";
 
@@ -113,12 +119,10 @@ public abstract class ApplicationContext extends CommonContext {
 
     try {
       Settings.Secure.putString(resolver, serviceNamesKey, serviceNames);
-      Settings.Secure.putString(resolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1");
-
       Log.i(LOG_TAG, "accessibility service enabled: " + serviceClass.getName());
       return true;
     } catch (SecurityException exception) {
-      Log.w(LOG_TAG, "can't enable accessibility service: " + serviceClass.getName());
+      Log.w(LOG_TAG, ("can't enable accessibility service: " + serviceClass.getName() + ": " + exception.getMessage()));
     }
 
     return false;
