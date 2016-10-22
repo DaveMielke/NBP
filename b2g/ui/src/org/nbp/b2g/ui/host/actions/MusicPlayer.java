@@ -4,13 +4,13 @@ import org.nbp.b2g.ui.*;
 
 import android.content.Intent;
 
-public class Music extends MainActivityAction {
+public class MusicPlayer extends MainActivityAction {
   @Override
   protected String getCategory () {
     return Intent.CATEGORY_APP_MUSIC;
   }
 
-  public Music (Endpoint endpoint) {
+  public MusicPlayer (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

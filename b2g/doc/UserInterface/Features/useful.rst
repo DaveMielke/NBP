@@ -109,7 +109,7 @@ Space+s (dots 234)
     Go to the Gallery app.
 
   m (dots 134)
-    Go to the Music app.
+    Go to the Music player.
 
   p (dots 1234)
     Go to the People (Contacts) app.

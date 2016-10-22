@@ -125,7 +125,7 @@ Space+Dots234,Dots1245 (s g)
   |Gallery|
 
 Space+Dots234,Dots134 (s m)
-  |Music|
+  |MusicPlayer|
 
 Space+Dots234,Dots1234 (s p)
   |People|

@@ -91,7 +91,7 @@
 .. |MoveToPreviousSibling| replace:: Go to and describe the previous sibling node.
 .. |MoveToSelf| replace:: Describe the current node.
 .. |MoveUp| replace:: Go up one line of text or to the start of the previous screen element.
-.. |Music| replace:: Go to the Music app.
+.. |MusicPlayer| replace:: Go to the Music player.
 .. |Notifications| replace:: Go to the Notifications screen.
 .. |Null| replace:: Cancel a key combination.
 .. |OneHandOff| replace:: Turn off `one hand mode`_.
