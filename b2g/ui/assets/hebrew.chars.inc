@@ -1,3 +1,4 @@
+# points
 glyph	U+05B1	26
 glyph	U+05B2	25
 glyph	U+05B3	345
@@ -9,6 +10,7 @@ glyph	U+05B8	126
 glyph	U+05B9	135
 glyph	U+05BB	136
 
+# letters
 glyph	U+05D0	1
 glyph	U+05D1	1236
 glyph	U+05D2	1245
@@ -37,6 +39,7 @@ glyph	U+05E8	1235
 glyph	U+05E9	146
 glyph	U+05EA	1456
 
+# accented letters
 glyph	U+FB1D	35
 glyph	U+FB2A	146
 glyph	U+FB2B	156

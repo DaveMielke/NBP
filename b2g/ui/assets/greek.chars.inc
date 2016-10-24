@@ -1,3 +1,4 @@
+# uppercase letters
 glyph	U+0391	17
 glyph	U+0392	127
 glyph	U+0393	12457
@@ -23,6 +24,7 @@ glyph	U+03A7	1257
 glyph	U+03A8	123467
 glyph	U+03A9	2457
 
+# lowercase letters
 glyph	U+03B1	1
 glyph	U+03B2	12
 glyph	U+03B3	1245
@@ -49,6 +51,7 @@ glyph	U+03C7	125
 glyph	U+03C8	12346
 glyph	U+03C9	245
 
+# uppercase letters with tonos
 glyph	U+0386	178
 glyph	U+0388	1578
 glyph	U+0389	34578
@@ -57,6 +60,7 @@ glyph	U+038C	13578
 glyph	U+038E	1345678
 glyph	U+038F	24578
 
+# lowercase letters with tonos
 glyph	U+03AC	18
 glyph	U+03AD	158
 glyph	U+03AE	3458
