@@ -48,21 +48,39 @@ public abstract class ApplicationContext extends CommonContext {
   public static boolean setContext (Context context) {
     if (!CommonContext.setContext(context)) return false;
 
+    final String logTag = LOG_TAG + ".startup";
+    Log.d(logTag, "begin");
+
+    Log.d(logTag, "fixing Bluetooth name");
     fixBluetoothName();
 
+    Log.d(logTag, "preparing LibLouis");
     Louis.setLogLevel(ApplicationParameters.LIBLOUIS_LOG_LEVEL);
     Louis.initialize(context);
 
-    HostMonitor.monitorEvents(context);
-    Clipboard.setClipboard(context);
-    PhoneMonitor.register(context);
+    Log.d(logTag, "starting host monitor");
+    HostMonitor.start(context);
 
+    Log.d(logTag, "preparing clipboard object");
+    Clipboard.prepare(context);
+
+    Log.d(logTag, "starting phone monitor");
+    PhoneMonitor.start(context);
+
+    Log.d(logTag, "restoring controls");
     Controls.restoreCurrentValues();
     Controls.restoreSaneValues();
 
+    Log.d(logTag, "starting speech");
     Devices.speech.get().say(null);
+
+    Log.d(logTag, "starting event monitors");
     EventMonitors.startEventMonitors();
+
+    Log.d(logTag, "enabling screen monitor");
     enableAccessibilityService(ScreenMonitor.class);
+
+    Log.d(logTag, "end");
     return true;
   }
 
@@ -83,49 +101,63 @@ public abstract class ApplicationContext extends CommonContext {
     if (context == null) return false;
     ContentResolver resolver = context.getContentResolver();
 
+  ADD_SERVICE:
+    {
+      Intent intent = new Intent(context, serviceClass);
+      ComponentName component = intent.getComponent();
+
+      String packageName = component.getPackageName();
+      String longClassName = component.getClassName();
+      String shortClassName = component.getShortClassName();
+
+      String packagePrefix = packageName + '/';
+      String longServiceName = packagePrefix + longClassName;
+      String shortServiceName = packagePrefix + shortClassName;
+
+      String serviceNamesKey = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
+      String serviceNames = Settings.Secure.getString(resolver, serviceNamesKey);
+      if (serviceNames == null) serviceNames = "";
+
+      for (String serviceName : serviceNames.split(":")) {
+        if (serviceName.equals(longServiceName) || serviceName.equals(shortServiceName)) {
+          Log.d(LOG_TAG, "accessibility service already enabled: " + serviceClass.getName());
+          break ADD_SERVICE;
+        }
+      }
+
+      if (serviceNames.length() == 0) {
+        serviceNames = shortServiceName;
+      } else {
+        serviceNames += ":" + shortServiceName;
+      }
+
+      try {
+        Settings.Secure.putString(resolver, serviceNamesKey, serviceNames);
+        Log.i(LOG_TAG, "accessibility service enabled: " + serviceClass.getName());
+        break ADD_SERVICE;
+      } catch (SecurityException exception) {
+        Log.w(LOG_TAG, ("can't enable accessibility service: " + serviceClass.getName() + ": " + exception.getMessage()));
+        return false;
+      }
+    }
+
     try {
-      Settings.Secure.putString(resolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1");
+      final String key = Settings.Secure.ACCESSIBILITY_ENABLED;
+      final String desiredValue = "1";
+      final String actualValue = Settings.Secure.getString(resolver, key);
+
+      if (desiredValue.equals(actualValue)) {
+        Log.d(LOG_TAG, "accessibility services already enabled");
+      } else {
+        Settings.Secure.putString(resolver, key, desiredValue);
+        Log.i(LOG_TAG, "accessibility services enabled");
+      }
     } catch (SecurityException exception) {
       Log.w(LOG_TAG, ("can't enable accessibility services: " + exception.getMessage()));
       return false;
     }
 
-    Intent intent = new Intent(context, serviceClass);
-    ComponentName component = intent.getComponent();
-    String packageName = component.getPackageName();
-    String longClassName = component.getClassName();
-    String shortClassName = component.getShortClassName();
-
-    String packagePrefix = packageName + '/';
-    String longServiceName = packagePrefix + longClassName;
-    String shortServiceName = packagePrefix + shortClassName;
-
-    String serviceNamesKey = Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
-    String serviceNames = Settings.Secure.getString(resolver, serviceNamesKey);
-    if (serviceNames == null) serviceNames = "";
-
-    for (String serviceName : serviceNames.split(":")) {
-      if (serviceName.equals(longServiceName) || serviceName.equals(shortServiceName)) {
-        Log.d(LOG_TAG, "accessibility service already enabled: " + serviceClass.getName());
-        return true;
-      }
-    }
-
-    if (serviceNames.length() == 0) {
-      serviceNames = shortServiceName;
-    } else {
-      serviceNames += ":" + shortServiceName;
-    }
-
-    try {
-      Settings.Secure.putString(resolver, serviceNamesKey, serviceNames);
-      Log.i(LOG_TAG, "accessibility service enabled: " + serviceClass.getName());
-      return true;
-    } catch (SecurityException exception) {
-      Log.w(LOG_TAG, ("can't enable accessibility service: " + serviceClass.getName() + ": " + exception.getMessage()));
-    }
-
-    return false;
+    return true;
   }
 
   public static InputMethodManager getInputMethodManager () {

@@ -137,7 +137,7 @@ public class HostMonitor extends BroadcastReceiver {
     }
   }
 
-  public static void monitorEvents (Context context) {
+  public static void start (Context context) {
     IntentFilter filter = new IntentFilter();
     filter.addAction(Intent.ACTION_BATTERY_CHANGED);
 

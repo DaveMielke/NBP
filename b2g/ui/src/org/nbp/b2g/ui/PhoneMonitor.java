@@ -33,7 +33,7 @@ public class PhoneMonitor extends PhoneStateListener {
     }
   }
 
-  public final static void register (Context context) {
+  public final static void start (Context context) {
     telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 
     telephonyManager.listen(
