@@ -141,7 +141,7 @@ public abstract class ApplicationContext extends CommonContext {
       }
     }
 
-    try {
+    {
       final String key = Settings.Secure.ACCESSIBILITY_ENABLED;
       final String desiredValue = "1";
       final String actualValue = Settings.Secure.getString(resolver, key);
@@ -149,12 +149,14 @@ public abstract class ApplicationContext extends CommonContext {
       if (desiredValue.equals(actualValue)) {
         Log.d(LOG_TAG, "accessibility services already enabled");
       } else {
-        Settings.Secure.putString(resolver, key, desiredValue);
-        Log.i(LOG_TAG, "accessibility services enabled");
+        try {
+          Settings.Secure.putString(resolver, key, desiredValue);
+          Log.i(LOG_TAG, "accessibility services enabled");
+        } catch (SecurityException exception) {
+          Log.w(LOG_TAG, ("can't enable accessibility services: " + exception.getMessage()));
+          return false;
+        }
       }
-    } catch (SecurityException exception) {
-      Log.w(LOG_TAG, ("can't enable accessibility services: " + exception.getMessage()));
-      return false;
     }
 
     return true;
