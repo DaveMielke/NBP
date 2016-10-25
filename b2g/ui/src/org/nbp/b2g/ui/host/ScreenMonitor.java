@@ -21,6 +21,10 @@ public class ScreenMonitor extends AccessibilityService {
 
   private static ScreenMonitor screenMonitor = null;
 
+  public static void start () {
+    ApplicationContext.enableAccessibilityService(ScreenMonitor.class);
+  }
+
   public static ScreenMonitor getScreenMonitor () {
     if (screenMonitor == null) Log.w(LOG_TAG, "screen monitor not runnig");
     return screenMonitor;

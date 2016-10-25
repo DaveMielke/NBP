@@ -10,6 +10,9 @@
   <!-- Android 4.1 (JellyBean) -->
   <uses-sdk android:minSdkVersion="16" />
 
+  <!-- for ensuring that the screen monitor has been started -->
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
   <!-- for waking up the system on key presses -->
   <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -160,6 +163,10 @@
         android:name=".HostMonitor"
         android:exported="false"
         >
+
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+      </intent-filter>
 
       <intent-filter>
         <action android:name="android.intent.action.MEDIA_UNMOUNTABLE" />

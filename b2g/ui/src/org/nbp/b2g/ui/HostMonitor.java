@@ -103,37 +103,44 @@ public class HostMonitor extends BroadcastReceiver {
   @Override
   public void onReceive (Context context, Intent intent) {
     String action = intent.getAction();
+    if (action == null) return;
+    Log.d(LOG_TAG, "host event: " + action);
 
-    if (action != null) {
-      Log.d(LOG_TAG, "host event: " + action);
+    if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+      handleMediaAction(intent, MediaAction.ADDED);
+      return;
+    }
 
-      if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-        handleMediaAction(intent, MediaAction.ADDED);
-      } else if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-        handleMediaAction(intent, MediaAction.REMOVED);
-      } else {
-        synchronized (intentExtras) {
-          Bundle extras = intent.getExtras();
+    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+      handleMediaAction(intent, MediaAction.REMOVED);
+      return;
+    }
 
-          if (intentExtras.get(action) == null) {
-            if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
-              int percentage = getBatteryPercentage(extras);
+    if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+      org.nbp.b2g.ui.host.ScreenMonitor.start();
+      return;
+    }
 
-              if (percentage >= 0) {
-                ApplicationUtilities.message(
-                  String.format(
-                    "%s %d%%",
-                    context.getString(R.string.message_battery_percentage),
-                    percentage
-                  )
-                );
-              }
-            }
+    synchronized (intentExtras) {
+      Bundle extras = intent.getExtras();
+
+      if (intentExtras.get(action) == null) {
+        if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
+          int percentage = getBatteryPercentage(extras);
+
+          if (percentage >= 0) {
+            ApplicationUtilities.message(
+              String.format(
+                "%s %d%%",
+                context.getString(R.string.message_battery_percentage),
+                percentage
+              )
+            );
           }
-
-          intentExtras.put(action, extras);
         }
       }
+
+      intentExtras.put(action, extras);
     }
   }
 

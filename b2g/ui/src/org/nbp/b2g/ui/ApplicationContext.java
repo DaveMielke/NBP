@@ -78,7 +78,7 @@ public abstract class ApplicationContext extends CommonContext {
     EventMonitors.startEventMonitors();
 
     Log.d(logTag, "enabling screen monitor");
-    enableAccessibilityService(ScreenMonitor.class);
+    ScreenMonitor.start();
 
     Log.d(logTag, "end");
     return true;
@@ -144,11 +144,16 @@ public abstract class ApplicationContext extends CommonContext {
     {
       final String key = Settings.Secure.ACCESSIBILITY_ENABLED;
       final String desiredValue = "1";
-      final String actualValue = Settings.Secure.getString(resolver, key);
+      final String currentValue = Settings.Secure.getString(resolver, key);
 
-      if (desiredValue.equals(actualValue)) {
+      if (desiredValue.equals(currentValue)) {
         Log.d(LOG_TAG, "accessibility services already enabled");
       } else {
+        Log.w(LOG_TAG, String.format(
+          "enabling accessibility services: %s: %s -> %s",
+          key, currentValue, desiredValue
+        ));
+
         try {
           Settings.Secure.putString(resolver, key, desiredValue);
           Log.i(LOG_TAG, "accessibility services enabled");
