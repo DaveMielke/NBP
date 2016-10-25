@@ -5,6 +5,8 @@ import org.nbp.b2g.ui.host.HostEndpoint;
 import java.util.Collection;
 import java.util.List;
 
+import org.nbp.common.SettingsUtilities;
+
 import android.util.Log;
 
 import android.accessibilityservice.AccessibilityService;
@@ -22,7 +24,7 @@ public class ScreenMonitor extends AccessibilityService {
   private static ScreenMonitor screenMonitor = null;
 
   public static void start () {
-    ApplicationContext.enableAccessibilityService(ScreenMonitor.class);
+    SettingsUtilities.enableAccessibilityService(ScreenMonitor.class);
   }
 
   public static ScreenMonitor getScreenMonitor () {

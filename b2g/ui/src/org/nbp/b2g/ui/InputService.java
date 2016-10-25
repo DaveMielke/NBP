@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.host.HostEndpoint;
 
+import org.nbp.common.SettingsUtilities;
+
 import android.util.Log;
 import android.os.Bundle;
 
@@ -32,7 +34,7 @@ public class InputService extends InputMethodService {
 
         if (info == null) {
           Log.w(LOG_TAG, "input service not enabled");
-        } else if (!info.getId().equals(ApplicationContext.getSelectedInputMethod())) {
+        } else if (!info.getId().equals(SettingsUtilities.getSelectedInputMethod())) {
           Log.w(LOG_TAG, "input service not selected");
         } else {
           Log.w(LOG_TAG, "input service not running");
