@@ -19,6 +19,26 @@ public enum BrailleCode {
     TranslationTable.EN_US_G2
   ),
 
+  FR_BFU_G2(
+    TranslationTable.FR_BFU_G2
+  ),
+
+  DE_G1(
+    TranslationTable.DE_DE_G1
+  ),
+
+  DE_G2(
+    TranslationTable.DE_DE_G2
+  ),
+
+  HE(
+    TranslationTable.HE
+  ),
+
+  ES_G1(
+    TranslationTable.ES_G1
+  ),
+
   ; // endof enumeration
 
   private final TranslationTable translationTable;
