@@ -20,6 +20,7 @@
   <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
   <!-- for starting the screen monitor (accessibility service) -->
+  <!-- for starting the input service (input method service) -->
   <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
   <!-- for injecting touch screen gestures (tap, swipe, etc) -->
