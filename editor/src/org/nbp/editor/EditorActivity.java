@@ -235,7 +235,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void loadFile (final File file, final Runnable onLoaded) {
+  private final boolean loadFile (final File file, final Runnable onLoaded) {
     new AsyncTask<Void, Void, CharSequence>() {
       AlertDialog dialog;
 
@@ -250,22 +250,37 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected CharSequence doInBackground (Void... arguments) {
-        final SpannableStringBuilder input = new SpannableStringBuilder();
-        Content.readFile(file, input);
-        return input.subSequence(0, input.length());
+        try {
+          final SpannableStringBuilder input = new SpannableStringBuilder();
+          Content.readFile(file, input);
+          return input.subSequence(0, input.length());
+        } catch (OutOfMemoryError error) {
+          System.gc();
+          return null;
+        }
       }
 
       @Override
       protected void onPostExecute (CharSequence content) {
+        if (content != null) {
+          final int maximum = 200000;
+          int length = content.length();
+
+          if (maximum < length) content = content.subSequence(0, maximum);
+          setCurrentFile(file, content);
+
+          run(onLoaded);
+        }
+
         dialog.dismiss();
-        setCurrentFile(file, content);
-        run(onLoaded);
       }
     }.execute();
+
+    return true;
   }
 
-  private final void loadFile (final File file) {
-    loadFile(file, null);
+  private final boolean loadFile (File file) {
+    return loadFile(file, null);
   }
 
   private final File getDocumentsDirectory () {
@@ -426,6 +441,7 @@ public class EditorActivity extends CommonActivity {
         @Override
         public void run () {
           setCurrentFile();
+          checkpointFile();
         }
       }
     );
@@ -440,7 +456,11 @@ public class EditorActivity extends CommonActivity {
             new FileFinder.FileHandler() {
               @Override
               public void handleFile (File file) {
-                if (file != null) loadFile(file);
+                if (file != null) {
+                  if (loadFile(file)) {
+                    checkpointFile();
+                  }
+                }
               }
             }
           );
