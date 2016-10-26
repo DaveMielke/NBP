@@ -17,17 +17,13 @@ public class InputService extends InputMethodService {
   private final static Class CLASS_OBJECT = InputService.class;
   private final static String LOG_TAG = CLASS_OBJECT.getName();
 
-  public static InputMethodInfo getInputMethodInfo () {
-    return ApplicationContext.getInputMethodInfo(InputService.class);
-  }
-
-  private static boolean restartInputService () {
-    return false;
-  }
-
   public final static void start () {
     String id = CLASS_OBJECT.getPackage().getName() + "/." + CLASS_OBJECT.getSimpleName();
     ApplicationContext.getInputMethodManager().setInputMethod(null, id);
+  }
+
+  public static InputMethodInfo getInputMethodInfo () {
+    return ApplicationContext.getInputMethodInfo(InputService.class);
   }
 
   private final static Object inputServiceLock = new Object();
@@ -44,13 +40,6 @@ public class InputService extends InputMethodService {
           Log.w(LOG_TAG, "input service not selected");
         } else {
           Log.w(LOG_TAG, "input service not running");
-
-          if (restartInputService()) {
-            try {
-              inputServiceLock.wait(1000);
-            } catch (InterruptedException exception) {
-            }
-          }
         }
       }
 
