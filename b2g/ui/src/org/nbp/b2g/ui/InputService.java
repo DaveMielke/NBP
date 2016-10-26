@@ -14,7 +14,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 
 public class InputService extends InputMethodService {
-  private final static String LOG_TAG = InputService.class.getName();
+  private final static Class CLASS_OBJECT = InputService.class;
+  private final static String LOG_TAG = CLASS_OBJECT.getName();
 
   public static InputMethodInfo getInputMethodInfo () {
     return ApplicationContext.getInputMethodInfo(InputService.class);
@@ -22,6 +23,11 @@ public class InputService extends InputMethodService {
 
   private static boolean restartInputService () {
     return false;
+  }
+
+  public final static void start () {
+    String id = CLASS_OBJECT.getPackage().getName() + "/." + CLASS_OBJECT.getSimpleName();
+    ApplicationContext.getInputMethodManager().setInputMethod(null, id);
   }
 
   private final static Object inputServiceLock = new Object();

@@ -117,7 +117,12 @@ public class HostMonitor extends BroadcastReceiver {
     }
 
     if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+      Log.d(LOG_TAG, "starting screen monitor");
       org.nbp.b2g.ui.host.ScreenMonitor.start();
+
+      Log.d(LOG_TAG, "starting input service");
+      InputService.start();
+
       return;
     }
 

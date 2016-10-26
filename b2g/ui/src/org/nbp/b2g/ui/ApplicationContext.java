@@ -73,8 +73,11 @@ public abstract class ApplicationContext extends CommonContext {
     Log.d(logTag, "starting event monitors");
     EventMonitors.startEventMonitors();
 
-    Log.d(logTag, "enabling screen monitor");
+    Log.d(logTag, "starting screen monitor");
     ScreenMonitor.start();
+
+    Log.d(logTag, "starting input service");
+    InputService.start();
 
     Log.d(logTag, "end");
     return true;
