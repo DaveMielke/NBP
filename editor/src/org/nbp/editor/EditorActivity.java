@@ -263,7 +263,7 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected void onPostExecute (CharSequence content) {
         if (content != null) {
-          final int maximum = 200000;
+          final int maximum = 150000;
           int length = content.length();
 
           if (maximum < length) content = content.subSequence(0, maximum);
