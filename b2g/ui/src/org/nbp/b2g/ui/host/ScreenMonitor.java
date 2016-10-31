@@ -311,31 +311,33 @@ public class ScreenMonitor extends AccessibilityService {
   }
 
   private void handleNotification (AccessibilityEvent event) {
-    Notification notification = (Notification)event.getParcelableData();
+    if (ApplicationSettings.SHOW_NOTIFICATIONS) {
+      Notification notification = (Notification)event.getParcelableData();
 
-    int title;
-    PopupClickHandler clickHandler;
+      int title;
+      PopupClickHandler clickHandler;
 
-    if (notification == null) {
-      title = R.string.popup_type_alert;
-      clickHandler = null;
-    } else {
-      title = R.string.popup_type_notification;
+      if (notification == null) {
+        title = R.string.popup_type_alert;
+        clickHandler = null;
+      } else {
+        title = R.string.popup_type_notification;
 
-      clickHandler = new PopupClickHandler() {
-        @Override
-        public final boolean handleClick (int index) {
-          if (!performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)) {
-            return false;
+        clickHandler = new PopupClickHandler() {
+          @Override
+          public final boolean handleClick (int index) {
+            if (!performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)) {
+              return false;
+            }
+
+            Endpoints.setHostEndpoint();
+            return true;
           }
+        };
+      }
 
-          Endpoints.setHostEndpoint();
-          return true;
-        }
-      };
+      showPopup(event.getText(), clickHandler, getString(title));
     }
-
-    showPopup(event.getText(), clickHandler, getString(title));
   }
 
   private void handleViewSelected (AccessibilityEvent event, AccessibilityNodeInfo view) {

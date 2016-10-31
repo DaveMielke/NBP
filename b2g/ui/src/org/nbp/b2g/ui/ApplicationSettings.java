@@ -2,6 +2,7 @@ package org.nbp.b2g.ui;
 
 public abstract class ApplicationSettings {
   public static volatile boolean WORD_WRAP = ApplicationDefaults.WORD_WRAP;
+  public static volatile boolean SHOW_NOTIFICATIONS = ApplicationDefaults.SHOW_NOTIFICATIONS;
 
   public static volatile boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
   public static volatile boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;

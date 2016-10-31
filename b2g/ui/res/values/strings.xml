@@ -129,6 +129,7 @@
   <string name="ReversePanning_control_label">Reverse Panning</string>
   <string name="SecureConnection_control_label">Secure Connection</string>
   <string name="SelectionIndicator_control_label">Selection Indicator</string>
+  <string name="ShowNotifications_control_label">Notifications</string>
   <string name="SleepTalk_control_label">Sleep Talk</string>
   <string name="SpeechEnabled_control_label">Speech</string>
   <string name="TypingBold_control_label">Bold</string>

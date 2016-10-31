@@ -6,6 +6,8 @@ import java.util.Collection;
 
 public abstract class Controls {
   private final static WordWrapControl wordWrapControl = new WordWrapControl();
+  private final static ShowNotificationsControl showNotificationsControl = new ShowNotificationsControl();
+
   private final static LongPressControl longPressControl = new LongPressControl();
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
   private final static OneHandControl oneHandControl = new OneHandControl();
@@ -46,6 +48,8 @@ public abstract class Controls {
 
   private final static Control[] allControls = new Control[] {
     wordWrapControl,
+    showNotificationsControl,
+
     longPressControl,
     reversePanningControl,
     oneHandControl,
@@ -87,6 +91,10 @@ public abstract class Controls {
 
   public static WordWrapControl getWordWrapControl () {
     return wordWrapControl;
+  }
+
+  public static ShowNotificationsControl getShowNotificationsControl () {
+    return showNotificationsControl;
   }
 
   public static LongPressControl getLongPressControl () {
