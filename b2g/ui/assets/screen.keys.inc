@@ -14,6 +14,9 @@ bind Dot4+Right RecentApps
 bind Dot4+Center MenuKey
 
 bind Space+Dots1345#n Notifications
+bind Space+Dot7+Dots1345#n ShowNotificationsOff
+bind Space+Dot8+Dots1345#n ShowNotificationsOn
+
 bind Space+Dots123456 HomeKey
 bind Space+Dots1356#z BackKey
 bind Space+Dots1235#r RecentApps

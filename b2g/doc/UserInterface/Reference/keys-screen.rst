@@ -34,6 +34,12 @@ Dot4+Center
 Space+Dots1345 (n)
   |Notifications|
 
+Space+Dot7+Dots1345 (n)
+  |ShowNotificationsOff|
+
+Space+Dot8+Dots1345 (n)
+  |ShowNotificationsOn|
+
 Space+Dots123456
   |HomeKey|
 

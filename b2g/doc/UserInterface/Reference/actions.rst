@@ -130,6 +130,8 @@
 .. |SetSelectionEnd| replace:: Set or change the end of the text selection.
 .. |SetSelectionStart| replace:: Set or change the start of the text selection.
 .. |Settings| replace:: Go to the B2G Settings screen.
+.. |ShowNotificationsOff| replace:: Don't show notifications.
+.. |ShowNotificationsOn| replace:: Show notifications.
 .. |SleepTalkOff| replace:: Speak only when the B2G is awake.
 .. |SleepTalkOn| replace:: Speak even when the B2G is asleep.
 .. |SpeakFaster| replace:: Increase the speech rate.
