@@ -252,7 +252,9 @@ public class HostEndpoint extends Endpoint {
 
   @Override
   public final boolean isInputArea () {
-    return ScreenUtilities.isEditable(currentNode);
+    AccessibilityNodeInfo node = currentNode;
+    if (node == null) return false;
+    return ScreenUtilities.isEditable(node);
   }
 
   @Override
@@ -262,12 +264,16 @@ public class HostEndpoint extends Endpoint {
 
   @Override
   public final boolean isBar () {
-    return ScreenUtilities.isBar(currentNode);
+    AccessibilityNodeInfo node = currentNode;
+    if (node == null) return false;
+    return ScreenUtilities.isBar(node);
   }
 
   @Override
   public final boolean isSlider () {
-    return ScreenUtilities.isSlider(currentNode);
+    AccessibilityNodeInfo node = currentNode;
+    if (node == null) return false;
+    return ScreenUtilities.isSlider(node);
   }
 
   protected boolean performNodeAction (int action, Bundle arguments) {
