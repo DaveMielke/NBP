@@ -182,11 +182,10 @@ public class KeyBindings {
   }
 
   private Class<? extends Action> getActionClass (String name, Object owner) {
-    try {
-      Class type = Class.forName(
-        (owner.getClass().getPackage().getName() + ".actions." + name)
-      );
+    String className = owner.getClass().getPackage().getName() + ".actions." + name;
 
+    try {
+      Class type = Class.forName(className);
       if (LanguageUtilities.canAssign(Action.class, type)) return type;
       Log.w(LOG_TAG, "not an action: " + type.getName());
     } catch (ClassNotFoundException exception) {

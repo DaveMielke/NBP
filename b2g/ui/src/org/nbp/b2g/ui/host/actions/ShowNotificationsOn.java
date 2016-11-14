@@ -1,5 +1,5 @@
-package org.nbp.b2g.ui.hosgt.actions;
-import org.nbp.b2g.ui.hosgt.*;
+package org.nbp.b2g.ui.host.actions;
+import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
 public class ShowNotificationsOn extends NextValueAction {
