@@ -28,12 +28,12 @@ Restart System
 
 Update User Interface
   Upgrade to the latest version of the |user interface|.
-  See `Updating the User Interface`_ for details.
+  See `Updating Applications`_ for details.
   |uses internet|
 
 Update NBP Editor
   Upgrade to the latest version of the NBP Editor.
-  See `Updating the User Interface`_ for details.
+  See `Updating Applications`_ for details.
   |uses internet|
 
 Verify System Update
@@ -63,8 +63,8 @@ Factory Reset
 Boot Loader
   Reboot the |product name| into its `Boot Loader`_.
 
-Updating the User Interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Updating Applications
+~~~~~~~~~~~~~~~~~~~~~
 
 1) You'll be asked to choose a package downloader.
    We recommend |recommended package downloader|.
@@ -81,12 +81,13 @@ Updating the User Interface
 4) You'll be asked to confirm that you really want
    to replace the currently-installed version with the new one.
 
-5) You'll be asked to consent that the |user interface|
-   can perform lots of privileged system operations.
+5) You may be asked to confirm that the application should be allowed
+   to perform various privileged system operations.
 
 6) The currently running version will be replaced by the new one.
-   This involves restarting the |user interface|, so don't worry
-   if the keys stop responding and the display goes blank for a moment.
+   If the application is running then it'll be stopped.
+   If you're updating the |user interface| then it'll be restarted, so don't
+   worry if the keys stop responding and the display goes blank for a moment.
 
 7) Click ``Done`` to clear the confirmation screen.
 
