@@ -25,6 +25,3 @@ Backward+Dots568
 Backward+Dots48
   |SwitchLauncher|
 
-Space+Dots78+Dots1246 (ed)
-  |UpdateEditor|
-

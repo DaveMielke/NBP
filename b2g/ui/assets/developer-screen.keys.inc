@@ -11,4 +11,3 @@ bind Backward+Dots568 ScrollForward
 
 bind Backward+Dots48 SwitchLauncher
 
-bind Space+Dots78+Dots1246#ed UpdateEditor

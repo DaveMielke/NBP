@@ -169,7 +169,6 @@
 .. |TypingStrikeOn| replace:: Turn on strike-through typing.
 .. |TypingUnderlineOff| replace:: Turn off underlined typing.
 .. |TypingUnderlineOn| replace:: Turn on underlined typing.
-.. |UpdateEditor| replace:: Update the |organization acronym| editor.
 .. |UserManualHTML| replace:: Go to the HTML version of the `User Interface Manual`_.
 .. |UserManualText| replace:: Go to the plain text version of the `User Interface Manual`_.
 .. |VoiceCommand| replace:: Initiate an Android voice command.

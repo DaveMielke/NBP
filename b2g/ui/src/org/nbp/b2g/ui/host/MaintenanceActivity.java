@@ -404,6 +404,20 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
+  private View createUpdateEditorButton () {
+    Button button = newButton(
+      R.string.maintenance_UpdateEditor_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          LaunchUtilities.launchViewer(R.string.uri_editor_apk);
+        }
+      }
+    );
+
+    return button;
+  }
+
   @Override
   protected final View createContentView () {
     return createVerticalGroup(
@@ -412,6 +426,8 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       createRestartSystemButton(),
 
       createUpdateUserInterfaceButton(),
+      createUpdateEditorButton(),
+
       createVerifySystemUpdateButton(),
       createUpdateSystemButton(),
 

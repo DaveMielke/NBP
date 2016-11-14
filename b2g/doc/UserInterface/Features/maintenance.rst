@@ -31,6 +31,11 @@ Update User Interface
   See `Updating the User Interface`_ for details.
   |uses internet|
 
+Update NBP Editor
+  Upgrade to the latest version of the NBP Editor.
+  See `Updating the User Interface`_ for details.
+  |uses internet|
+
 Verify System Update
   Verify a `System Update`_ without applying it.
   |uses file picker|
