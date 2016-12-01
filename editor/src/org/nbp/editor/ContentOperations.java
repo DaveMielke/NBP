@@ -10,8 +10,21 @@ import android.text.style.CharacterStyle;
 import android.text.SpannableStringBuilder;
 
 public abstract class ContentOperations {
-  public abstract void read (InputStream stream, SpannableStringBuilder content) throws IOException;
-  public abstract void write (OutputStream stream, CharSequence content) throws IOException;
+  protected final void readingNotSupported () throws IOException {
+    throw new IOException("reading not supported");
+  }
+
+  protected final void writingNotSupported () throws IOException {
+    throw new IOException("writing not supported");
+  }
+
+  public void read (InputStream stream, SpannableStringBuilder content) throws IOException {
+    readingNotSupported();
+  }
+
+  public void write (OutputStream stream, CharSequence content) throws IOException {
+    writingNotSupported();
+  }
 
   protected ContentOperations () {
   }

@@ -8,6 +8,8 @@
   <string name="format_name_docx">Microsoft Word 2007+ XML (macro-free)</string>
   <string name="format_name_epub">Electronic Publication</string>
   <string name="format_name_html">HyperText Markup Language</string>
+  <string name="format_name_kwb">Keysoft Word Braille</string>
+  <string name="format_name_kwt">Keysoft Word Text</string>
   <string name="format_name_mhtml">MIME HTML</string>
   <string name="format_name_odt">Open Document Text</string>
   <string name="format_name_oxps">Open XML Paper Specification</string>

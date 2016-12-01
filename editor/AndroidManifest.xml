@@ -38,6 +38,8 @@
         <data android:pathPattern=".*\\.docx" />
         <data android:pathPattern=".*\\.htm" />
         <data android:pathPattern=".*\\.html" />
+        <data android:pathPattern=".*\\.kwb" />
+        <data android:pathPattern=".*\\.kwt" />
         <data android:pathPattern=".*\\.mht" />
         <data android:pathPattern=".*\\.mhtml" />
         <data android:pathPattern=".*\\.odt" />
@@ -63,6 +65,8 @@
         <data android:pathPattern=".*\\.docx" />
         <data android:pathPattern=".*\\.htm" />
         <data android:pathPattern=".*\\.html" />
+        <data android:pathPattern=".*\\.kwb" />
+        <data android:pathPattern=".*\\.kwt" />
         <data android:pathPattern=".*\\.mht" />
         <data android:pathPattern=".*\\.mhtml" />
         <data android:pathPattern=".*\\.odt" />

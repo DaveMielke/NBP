@@ -1,28 +1,23 @@
 package org.nbp.editor;
 
 import android.text.SpannableStringBuilder;
+import org.nbp.common.BrailleUtilities;
 
-public class ASCIIBrailleOperations extends TextOperations {
+public class ASCIIBrailleOperations extends ByteOperations {
   @Override
-  protected void postProcessInput (SpannableStringBuilder content) {
-    int length = content.length();
-    int start = -1;
-    StringBuilder sb = new StringBuilder();
+  protected int processBytes (SpannableStringBuilder content, byte[] buffer, int count) {
+    for (int index=0; index<count; index+=1) {
+      byte brf = buffer[index];
 
-    for (int index=0; index<length; index+=1) {
-      char character = content.charAt(index);
-
-      if ((character >= 0X40) && (character < 0X5F)) {
-        if (start < 0) start = index;
-        sb.append((char)(character + 0X20));
-      } else if (start >= 0) {
-        content.replace(start, index, sb.toString());
-        sb.delete(0, sb.length());
-        start = -1;
+      if (brf == '\n') {
+        content.append((char)brf);
+      } else {
+        char character = BrailleUtilities.brfToCharacter(brf);
+        if (character != 0) content.append(character);
       }
     }
 
-    if (start >= 0) content.replace(start, length, sb.toString());
+    return super.processBytes(content, buffer, count);
   }
 
   public ASCIIBrailleOperations () {

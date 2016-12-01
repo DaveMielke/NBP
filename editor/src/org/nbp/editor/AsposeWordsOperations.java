@@ -173,10 +173,7 @@ public class AsposeWordsOperations extends ContentOperations {
   @Override
   public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
     checkForLicenseProblem();
-
-    if (loadFormat == LoadFormat.UNKNOWN) {
-      throw new IOException("reading not supported");
-    }
+    if (loadFormat == LoadFormat.UNKNOWN) readingNotSupported();
 
     try {
       LoadOptions options = new LoadOptions();
@@ -193,10 +190,7 @@ public class AsposeWordsOperations extends ContentOperations {
   @Override
   public final void write (OutputStream stream, CharSequence content) throws IOException {
     checkForLicenseProblem();
-
-    if (saveFormat == SaveFormat.UNKNOWN) {
-      throw new IOException("writing not supported");
-    }
+    if (saveFormat == SaveFormat.UNKNOWN) writingNotSupported();
 
     try {
       DocumentBuilder builder = new DocumentBuilder();

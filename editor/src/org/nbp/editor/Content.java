@@ -110,6 +110,9 @@ public abstract class Content {
     addFormat(ASCIIBrailleOperations.class, R.string.format_name_brl, ".brl");
     addFormat(ASCIIBrailleOperations.class, R.string.format_name_brf, ".brf");
 
+    addFormat(BrailleKeysoftOperations.class, R.string.format_name_kwb, ".kwb");
+    addFormat(TextKeysoftOperations.class, R.string.format_name_kwt, ".kwt");
+
     addFormat(ODTOperations.class, R.string.format_name_odt, ".odt");
     addFormat(RTFOperations.class, R.string.format_name_rtf, ".rtf");
 
