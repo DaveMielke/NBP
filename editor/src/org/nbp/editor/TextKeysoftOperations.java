@@ -3,7 +3,6 @@ package org.nbp.editor;
 import android.text.SpannableStringBuilder;
 
 public class TextKeysoftOperations extends ByteOperations {
-  private final static int HEADER_SIZE = 0X26E;
   private int bytesProcessed;
   private boolean done;
   private boolean ignore;
@@ -18,7 +17,7 @@ public class TextKeysoftOperations extends ByteOperations {
 
   @Override
   protected int processBytes (SpannableStringBuilder content, byte[] buffer, int count) {
-    int from = HEADER_SIZE - bytesProcessed;
+    int from = KeysoftDefinitions.HEADER_SIZE - bytesProcessed;
     bytesProcessed += count;
     if (done || (from >= count)) return count;
 
@@ -38,12 +37,12 @@ public class TextKeysoftOperations extends ByteOperations {
         char character = (char)buffer[index];
 
         switch (character) {
-          case 0X1A:
+          case KeysoftDefinitions.END_OF_FILE:
             count = index;
             done = true;
             continue;
 
-          case 0X0D:
+          case KeysoftDefinitions.END_OF_LINE:
             character = '\n';
             break;
 
