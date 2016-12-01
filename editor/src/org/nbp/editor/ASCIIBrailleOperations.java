@@ -1,7 +1,6 @@
 package org.nbp.editor;
 
 import android.text.SpannableStringBuilder;
-import org.nbp.common.BrailleUtilities;
 
 public class ASCIIBrailleOperations extends ByteOperations {
   @Override
@@ -12,7 +11,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
       if (brf == '\n') {
         content.append((char)brf);
       } else {
-        char character = BrailleUtilities.brfToCharacter(brf);
+        char character = ASCIIBraille.toCharacter(brf);
         if (character != 0) content.append(character);
       }
     }

@@ -15,7 +15,7 @@ public class BrailleKeywordOperations extends ASCIIBrailleOperations {
 
   @Override
   protected int processBytes (SpannableStringBuilder content, byte[] buffer, int count) {
-    int from = KeywordDefinitions.HEADER_SIZE - bytesProcessed;
+    int from = BrailleNoteKeyword.HEADER_SIZE - bytesProcessed;
     bytesProcessed += count;
     if (done || (from >= count)) return count;
 
@@ -32,12 +32,12 @@ public class BrailleKeywordOperations extends ASCIIBrailleOperations {
       byte brf = buffer[index];
 
       switch (brf) {
-        case KeywordDefinitions.END_OF_FILE:
+        case BrailleNoteKeyword.END_OF_FILE:
           count = index;
           done = true;
           continue;
 
-        case KeywordDefinitions.END_OF_LINE:
+        case BrailleNoteKeyword.END_OF_LINE:
           brf = '\n';
           break;
 

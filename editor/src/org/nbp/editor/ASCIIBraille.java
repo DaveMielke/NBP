@@ -1,21 +1,12 @@
-package org.nbp.common;
+package org.nbp.editor;
 
-public abstract class BrailleUtilities {
-  public final static char UNICODE_ROW = 0X2800;
+import org.nbp.common.Braille;
 
-  public final static byte DOT_1 =       0X01;
-  public final static byte DOT_2 =       0X02;
-  public final static byte DOT_3 =       0X04;
-  public final static byte DOT_4 =       0X08;
-  public final static byte DOT_5 =       0X10;
-  public final static byte DOT_6 =       0X20;
-  public final static byte DOT_7 =       0X40;
-  public final static byte DOT_8 = (byte)0X80;
+public abstract class ASCIIBraille extends Braille {
+  private final static int ASCII_MINIMUM = 0X20;
+  private final static int ASCII_MAXIMUM = 0X7E;
 
-  private final static int BRF_MINIMUM = 0X20;
-  private final static int BRF_MAXIMUM = 0X7E;
-
-  private final static byte[] brfTable = new byte[] {
+  private final static byte[] asciiToDots = new byte[] {
     /* 20   */ 0,
     /* 21 ! */ DOT_2 | DOT_3 | DOT_4 | DOT_6,
     /* 22 " */ DOT_5,
@@ -82,21 +73,22 @@ public abstract class BrailleUtilities {
     /* 5F _ */ DOT_4 | DOT_5 | DOT_6
   };
 
-  private final static int brfToIndex (byte brf) {
-    if ((brf < BRF_MINIMUM) || (brf > BRF_MAXIMUM)) return -1;
-    if ((brf & 0X40) != 0) brf &= 0X5F;
-    return brf - BRF_MINIMUM;
+  private final static int toIndex (byte ascii) {
+    if ((ascii < ASCII_MINIMUM) || (ascii > ASCII_MAXIMUM)) return -1;
+    if ((ascii & 0X40) != 0) ascii &= 0X5F;
+    return ascii - ASCII_MINIMUM;
   }
 
-  public final static char brfToCharacter (byte brf) {
-    int index = brfToIndex(brf);
+  public final static char toCharacter (byte ascii) {
+    int index = toIndex(ascii);
     if (index < 0) return 0;
 
     char character = UNICODE_ROW;
-    character |= brfTable[index] & 0XFF;
+    character |= asciiToDots[index] & 0XFF;
     return character;
   }
 
-  private BrailleUtilities () {
+  protected ASCIIBraille () {
+    super();
   }
 }

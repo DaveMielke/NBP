@@ -17,7 +17,7 @@ public class TextKeywordOperations extends ByteOperations {
 
   @Override
   protected int processBytes (SpannableStringBuilder content, byte[] buffer, int count) {
-    int from = KeywordDefinitions.HEADER_SIZE - bytesProcessed;
+    int from = BrailleNoteKeyword.HEADER_SIZE - bytesProcessed;
     bytesProcessed += count;
     if (done || (from >= count)) return count;
 
@@ -37,12 +37,12 @@ public class TextKeywordOperations extends ByteOperations {
         char character = (char)buffer[index];
 
         switch (character) {
-          case KeywordDefinitions.END_OF_FILE:
+          case BrailleNoteKeyword.END_OF_FILE:
             count = index;
             done = true;
             continue;
 
-          case KeywordDefinitions.END_OF_LINE:
+          case BrailleNoteKeyword.END_OF_LINE:
             character = '\n';
             break;
 
@@ -51,6 +51,7 @@ public class TextKeywordOperations extends ByteOperations {
             continue;
 
           default:
+            if (Character.isISOControl(character)) character = '?';
             break;
         }
 
