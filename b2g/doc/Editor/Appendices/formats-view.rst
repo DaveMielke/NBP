@@ -3,6 +3,6 @@
 
   ".brf","Formatted ASCII Braille"
   ".brl","Unformatted ASCII Braille"
-  ".kwb","Keysoft Word Braille"
-  ".kwt","Keysoft Word Text"
+  ".kwb","BrailleNote Keyword Braille"
+  ".kwt","BrailleNote Keyword Text"
 

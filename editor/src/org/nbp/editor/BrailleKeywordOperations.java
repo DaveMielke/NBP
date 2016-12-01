@@ -2,22 +2,20 @@ package org.nbp.editor;
 
 import android.text.SpannableStringBuilder;
 
-public class TextKeysoftOperations extends ByteOperations {
+public class BrailleKeywordOperations extends ASCIIBrailleOperations {
   private int bytesProcessed;
   private boolean done;
-  private boolean ignore;
 
   @Override
   protected void beginBytes (SpannableStringBuilder content) {
     super.beginBytes(content);
     bytesProcessed = 0;
     done = false;
-    ignore = false;
   }
 
   @Override
   protected int processBytes (SpannableStringBuilder content, byte[] buffer, int count) {
-    int from = KeysoftDefinitions.HEADER_SIZE - bytesProcessed;
+    int from = KeywordDefinitions.HEADER_SIZE - bytesProcessed;
     bytesProcessed += count;
     if (done || (from >= count)) return count;
 
@@ -31,37 +29,29 @@ public class TextKeysoftOperations extends ByteOperations {
     }
 
     for (int index=0; index<count; index+=1) {
-      if (ignore) {
-        ignore = false;
-      } else {
-        char character = (char)buffer[index];
+      byte brf = buffer[index];
 
-        switch (character) {
-          case KeysoftDefinitions.END_OF_FILE:
-            count = index;
-            done = true;
-            continue;
+      switch (brf) {
+        case KeywordDefinitions.END_OF_FILE:
+          count = index;
+          done = true;
+          continue;
 
-          case KeysoftDefinitions.END_OF_LINE:
-            character = '\n';
-            break;
+        case KeywordDefinitions.END_OF_LINE:
+          brf = '\n';
+          break;
 
-          case 0X02:
-            ignore = true;
-            continue;
-
-          default:
-            break;
-        }
-
-        content.append(character);
+        default:
+          continue;
       }
+
+      buffer[index] = brf;
     }
 
     return super.processBytes(content, buffer, count);
   }
 
-  public TextKeysoftOperations () {
+  public BrailleKeywordOperations () {
     super();
   }
 }
