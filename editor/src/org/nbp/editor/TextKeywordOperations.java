@@ -44,6 +44,7 @@ public class TextKeywordOperations extends ByteOperations {
 
           case BrailleNoteKeyword.END_OF_LINE:
             character = '\n';
+          case '\n':
             break;
 
           case 0X02:
