@@ -107,9 +107,15 @@ public class Translation {
       Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
 
       if (spans != null) {
+        int length = sb.length();
+
         for (Object span : spans) {
           int start = getOutputOffset(spanned.getSpanStart(span));
+          if (start == length) continue;
+
           int end = getOutputOffset(spanned.getSpanEnd(span));
+          if (end == start) continue;
+
           int flags = spanned.getSpanFlags(span);
           sb.setSpan(span, start, end, flags);
         }
