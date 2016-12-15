@@ -258,6 +258,13 @@ public class HostEndpoint extends Endpoint {
   }
 
   @Override
+  public CharSequence getHintText () {
+    InputService service = InputService.getInputService();
+    if (service == null) return null;
+    return service.getHintText();
+  }
+
+  @Override
   public boolean isPasswordField () {
     return currentNode.isPassword();
   }

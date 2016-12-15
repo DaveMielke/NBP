@@ -46,8 +46,8 @@ public class TypeCharacter extends InputAction {
           end -= offset;
         }
 
-        end = endpoint.findEndBrailleOffset(isCursor? start: end);
         start = endpoint.findFirstBrailleOffset(start);
+        end = endpoint.findEndBrailleOffset(end);
 
         if (isCursor) {
           int brailleLength = endpoint.getBrailleLength();
@@ -55,10 +55,6 @@ public class TypeCharacter extends InputAction {
           if (atEndOfLine && (end < brailleLength)) {
             start = end = brailleLength;
             atStartOfText = false;
-          }
-
-          if (atStartOfText && (brailleLength > 0)) {
-            TranslationUtilities.cacheBraille(character);
           }
         }
 
@@ -68,7 +64,13 @@ public class TypeCharacter extends InputAction {
           ));
         }
 
-        CharSequence braille = endpoint.getBrailleCharacters();
+        CharSequence braille = null;
+        if (isCursor && atStartOfText) {
+          CharSequence text = endpoint.getLineText();
+          if (text.equals(endpoint.getHintText())) braille = "";
+        }
+
+        if (braille == null) braille = endpoint.getBrailleCharacters();
         SpannableStringBuilder sb = new SpannableStringBuilder(braille);
         sb.replace(start, end, Character.toString(character));
         return endpoint.setBrailleCharacters(sb.subSequence(0, sb.length()));

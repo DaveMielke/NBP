@@ -90,6 +90,17 @@ public class InputService extends InputMethodService {
     return selectionEnd;
   }
 
+  public final CharSequence getHintText () {
+    EditorInfo info = getCurrentInputEditorInfo();
+
+    if (info != null) {
+      CharSequence text = info.hintText;
+      if (text.length() > 0) return text;
+    }
+
+    return null;
+  }
+
   private static KeyboardMonitor getKeyboardMonitor () {
     return EventMonitors.getKeyboardMonitor();
   }

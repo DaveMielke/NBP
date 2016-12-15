@@ -206,11 +206,19 @@ public abstract class Endpoint {
   }
 
   public final boolean setBrailleCharacters (CharSequence braille) {
-    brailleTranslation = null;
     textTranslation = TranslationUtilities.newTextTranslation(braille);
-
+    brailleTranslation = null;
     CharSequence text = textTranslation.getTextWithSpans();
-    TranslationCache.put(text, textTranslation);
+
+    if (text.length() == 0) {
+      text = braille;
+      brailleTranslation = TranslationUtilities.newBrailleTranslation(text, true);
+      textTranslation = null;
+      TranslationCache.put(text, brailleTranslation);
+    } else {
+      TranslationCache.put(text, textTranslation);
+    }
+
     return replaceLine(text);
   }
 
@@ -306,6 +314,10 @@ public abstract class Endpoint {
 
   public boolean isInputArea () {
     return false;
+  }
+
+  public CharSequence getHintText () {
+    return null;
   }
 
   public boolean isPasswordField () {
