@@ -305,7 +305,38 @@ public class Translation {
         break;
       }
 
-      if (resultValues[RVI_INPUT_LENGTH] == inputLength) break;
+    FIX_END:
+      if (resultValues[RVI_INPUT_LENGTH] == inputLength) {
+        if (backTranslate) {
+          int outLength = resultValues[RVI_OUTPUT_LENGTH];
+
+          while (true) {
+            int inOffset = resultValues[RVI_INPUT_LENGTH];
+            if (inOffset == 0) break;
+
+            if (outOffsets[inOffset -= 1] != outLength) break;
+            resultValues[RVI_INPUT_LENGTH] = inOffset;
+          }
+
+          while (true) {
+            int inOffset = resultValues[RVI_INPUT_LENGTH];
+            if (inOffset == inputLength) break;
+
+            int outOffset = resultValues[RVI_OUTPUT_LENGTH];
+            if (outOffset == outputLength) break FIX_END;
+
+            output[outOffset] = inputString.charAt(inOffset);
+            outOffsets[inOffset] = outOffset;
+            inOffsets[outOffset] = inOffset;
+
+            resultValues[RVI_INPUT_LENGTH] = inOffset + 1;
+            resultValues[RVI_OUTPUT_LENGTH] = outOffset + 1;
+          }
+        }
+
+        break;
+      }
+
       if (!allowLongerOutput) break;
       outputLength <<= 1;
     }
