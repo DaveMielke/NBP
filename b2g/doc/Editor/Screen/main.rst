@@ -16,7 +16,7 @@ This region shows the absolute path to the file that's currently being edited.
 If it's a new file (see the `New`_ action)
 then it says::
 
-  [new file - no path]
+  [new file]
 
 Edit Area
 ---------
@@ -24,7 +24,7 @@ Edit Area
 This region is where the content of the file is loaded and can be modified.
 If the file is empty then it says::
 
-  [edit area - empty file]
+  [empty file]
 
 Braille Indicators
 ~~~~~~~~~~~~~~~~~~
