@@ -157,7 +157,7 @@ public abstract class Endpoint {
     }
   }
 
-  private final boolean replaceLine (CharSequence newText) {
+  private final boolean replaceLine (CharSequence newText, int cursor) {
     CharSequence oldText = getLineText();
     int oldTo = oldText.length();
     int newTo = newText.length();
@@ -168,7 +168,7 @@ public abstract class Endpoint {
       from += 1;
     }
 
-    while ((from < oldTo) && (from < newTo)) {
+    while ((from < oldTo) && (from < newTo) && (newTo > cursor)) {
       int oldLast = oldTo - 1;
       int newLast = newTo - 1;
       if (oldText.charAt(oldLast) != newText.charAt(newLast)) break;
@@ -205,13 +205,13 @@ public abstract class Endpoint {
     return replaceText((start + from), (start + oldTo), newSegment);
   }
 
-  public final boolean setBrailleCharacters (CharSequence braille) {
+  public final boolean setBrailleCharacters (CharSequence braille, int cursor) {
     textTranslation = TranslationUtilities.newTextTranslation(braille);
     brailleTranslation = null;
 
     CharSequence text = textTranslation.getTextWithSpans();
     TranslationCache.put(text, textTranslation);
-    return replaceLine(text);
+    return replaceLine(text, textTranslation.getTextOffset(cursor));
   }
 
   public final CharSequence getBrailleCharacters () {

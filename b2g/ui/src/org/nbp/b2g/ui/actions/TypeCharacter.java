@@ -73,7 +73,7 @@ public class TypeCharacter extends InputAction {
         if (braille == null) braille = endpoint.getBrailleCharacters();
         SpannableStringBuilder sb = new SpannableStringBuilder(braille);
         sb.replace(start, end, Character.toString(character));
-        return endpoint.setBrailleCharacters(sb.subSequence(0, sb.length()));
+        return endpoint.setBrailleCharacters(sb.subSequence(0, sb.length()), (start + 1));
       }
     }
 
