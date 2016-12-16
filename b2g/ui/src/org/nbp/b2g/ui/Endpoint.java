@@ -208,17 +208,9 @@ public abstract class Endpoint {
   public final boolean setBrailleCharacters (CharSequence braille) {
     textTranslation = TranslationUtilities.newTextTranslation(braille);
     brailleTranslation = null;
+
     CharSequence text = textTranslation.getTextWithSpans();
-
-    if (text.length() == 0) {
-      text = braille;
-      brailleTranslation = TranslationUtilities.newBrailleTranslation(text, true);
-      textTranslation = null;
-      TranslationCache.put(text, brailleTranslation);
-    } else {
-      TranslationCache.put(text, textTranslation);
-    }
-
+    TranslationCache.put(text, textTranslation);
     return replaceLine(text);
   }
 
