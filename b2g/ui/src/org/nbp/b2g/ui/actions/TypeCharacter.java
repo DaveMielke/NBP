@@ -56,7 +56,7 @@ public class TypeCharacter extends InputAction {
 
         CharSequence braille = null;
         if (isCursor && atStartOfText) {
-          CharSequence text = endpoint.getLineText();
+          CharSequence text = endpoint.getText();
           if (text.equals(endpoint.getHintText())) braille = "";
         }
 
