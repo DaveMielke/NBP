@@ -38,7 +38,6 @@ public class TypeCharacter extends InputAction {
       if (Endpoint.isSelected(start) && endpoint.isSelected(end)) {
         boolean isCursor = start == end;
         boolean atStartOfText = start == 0;
-        boolean atEndOfLine = end == endpoint.getLineEnd();
 
         {
           int offset = endpoint.getLineStart();
@@ -47,16 +46,7 @@ public class TypeCharacter extends InputAction {
         }
 
         start = endpoint.findFirstBrailleOffset(start);
-        end = endpoint.findEndBrailleOffset(end);
-
-        if (isCursor) {
-          int brailleLength = endpoint.getBrailleLength();
-
-          if (atEndOfLine && (end < brailleLength)) {
-            start = end = brailleLength;
-            atStartOfText = false;
-          }
-        }
+        end = isCursor? start: endpoint.findFirstBrailleOffset(end);
 
         if (ApplicationSettings.LOG_ACTIONS) {
           Log.v(LOG_TAG, String.format(
