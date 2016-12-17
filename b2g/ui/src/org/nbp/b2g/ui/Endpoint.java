@@ -617,8 +617,10 @@ public abstract class Endpoint {
     }
   }
 
-  protected final void adjustScroll (int offset) {
+  public final void adjustScroll (int offset) {
     int keep = ApplicationParameters.BRAILLE_SCROLL_KEEP;
+    offset = setLine(offset);
+
     adjustLeft(offset, keep);
     adjustRight(offset, keep);
   }
@@ -641,7 +643,7 @@ public abstract class Endpoint {
       }
 
       if (isCursor(start, end)) {
-        adjustScroll(setLine(start));
+        adjustScroll(start);
       }
     }
 
