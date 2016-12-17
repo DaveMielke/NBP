@@ -36,9 +36,10 @@ public class TypeCharacter extends InputAction {
       int end = endpoint.getSelectionEnd();
 
       if (Endpoint.isSelected(start) && endpoint.isSelected(end)) {
+        endpoint.adjustScroll(start);
+
         boolean isCursor = start == end;
         boolean atStartOfText = start == 0;
-        endpoint.adjustScroll(start);
 
         {
           int offset = endpoint.getLineStart();

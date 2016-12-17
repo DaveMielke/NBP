@@ -618,8 +618,8 @@ public abstract class Endpoint {
   }
 
   public final void adjustScroll (int offset) {
-    int keep = ApplicationParameters.BRAILLE_SCROLL_KEEP;
     offset = setLine(offset);
+    int keep = ApplicationParameters.BRAILLE_SCROLL_KEEP;
 
     adjustLeft(offset, keep);
     adjustRight(offset, keep);
