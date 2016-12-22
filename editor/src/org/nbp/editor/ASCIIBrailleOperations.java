@@ -8,11 +8,17 @@ public class ASCIIBrailleOperations extends ByteOperations {
     for (int index=0; index<count; index+=1) {
       byte brf = buffer[index];
 
-      if (brf == '\n') {
-        content.append((char)brf);
-      } else {
-        char character = ASCIIBraille.toCharacter(brf);
-        if (character != 0) content.append(character);
+      switch (brf) {
+        case ' ':
+        case '\n':
+          content.append((char)brf);
+          break;
+
+        default: {
+          char character = ASCIIBraille.toCharacter(brf);
+          if (character != 0) content.append(character);
+          break;
+        }
       }
     }
 
