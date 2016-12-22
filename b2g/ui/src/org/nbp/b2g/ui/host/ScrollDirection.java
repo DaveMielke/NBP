@@ -45,7 +45,7 @@ public enum ScrollDirection {
     nodeAction = action;
 
     StringBuilder sb = new StringBuilder();
-    sb.append(Braille.toString(braille));
+    sb.append(BrailleUtilities.toString(braille));
 
     sb.append(' ');
     sb.append(ApplicationContext.getString(text));

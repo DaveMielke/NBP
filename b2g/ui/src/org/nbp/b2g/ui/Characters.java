@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import org.nbp.common.CharacterUtilities;
 import org.nbp.common.UnicodeUtilities;
+import org.nbp.common.Braille;
 
 import org.nbp.common.InputProcessor;
 import org.nbp.common.DirectiveProcessor;

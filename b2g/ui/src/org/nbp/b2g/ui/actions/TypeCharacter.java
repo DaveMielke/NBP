@@ -128,7 +128,7 @@ public class TypeCharacter extends InputAction {
             return false;
           }
 
-          character = Braille.toCharacter(dots);
+          character = BrailleUtilities.toCharacter(dots);
           break;
         }
 

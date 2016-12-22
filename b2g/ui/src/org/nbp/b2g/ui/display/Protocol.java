@@ -19,7 +19,7 @@ public abstract class Protocol extends Component {
   }
 
   protected final boolean write (byte[] cells) {
-    return write(Braille.toString(cells));
+    return write(BrailleUtilities.toString(cells));
   }
 
   protected final boolean write (byte[] buffer, int from, int count) {

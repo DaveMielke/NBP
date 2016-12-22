@@ -88,7 +88,7 @@ public class BrailleDevice {
           Log.d(LOG_TAG, "braille driver version: " + version);
 
           clearCells();
-          Braille.clearCells(brailleCells);
+          BrailleUtilities.clearCells(brailleCells);
           brailleText = "";
           writePending = false;
 
@@ -168,7 +168,7 @@ public class BrailleDevice {
 
   private final void logCells (byte[] cells, String reason, CharSequence text) {
     boolean log = ApplicationSettings.LOG_BRAILLE;
-    String braille = Braille.toString(cells);
+    String braille = BrailleUtilities.toString(cells);
 
     if (log) {
       Log.d(LOG_TAG, String.format(
@@ -197,7 +197,7 @@ public class BrailleDevice {
         final int count = Math.min(suppliedLength, requiredLength);
 
         System.arraycopy(cells, 0, newCells, 0, count);
-        Braille.clearCells(newCells, count);
+        BrailleUtilities.clearCells(newCells, count);
 
         cells = newCells;
       }
@@ -252,7 +252,7 @@ public class BrailleDevice {
 
         {
           byte[] oldCells = getCells();
-          CharSequence text = Braille.setCells(brailleCells, endpoint);
+          CharSequence text = BrailleUtilities.setCells(brailleCells, endpoint);
 
           if (!text.equals(brailleText)) {
             brailleText = text;
@@ -313,10 +313,10 @@ public class BrailleDevice {
 
     if (brl != null) {
       CharSequence braille = brl.getBrailleAsString();
-      int brailleLength = Braille.setCells(cells, braille);
+      int brailleLength = BrailleUtilities.setCells(cells, braille);
       textLength = brl.findFirstTextOffset(brl.getTextOffset(brailleLength));
     } else {
-      textLength = Braille.setCells(cells, text);
+      textLength = BrailleUtilities.setCells(cells, text);
     }
 
     text = text.subSequence(0, textLength);
