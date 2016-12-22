@@ -126,7 +126,10 @@ public abstract class BrailleUtilities {
             hasSelection = true;
             if (from < 0) from = 0;
             if (to > lineLength) to = lineLength;
-            markCells(cells, endpoint, from, to, brailleIndent, cellCount);
+
+            if (from < to) {
+              markCells(cells, endpoint, from, to, brailleIndent, cellCount);
+            }
           }
         }
 
