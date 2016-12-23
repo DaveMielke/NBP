@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.display;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.Braille;
+
 import android.util.Log;
 import android.os.Build;
 import android.bluetooth.BluetoothAdapter;
@@ -18,20 +20,33 @@ public abstract class Protocol extends Component {
     return cellCount;
   }
 
-  protected final boolean write (byte[] cells) {
-    return write(BrailleUtilities.toString(cells));
+  protected byte translateCell (byte cell) {
+    return cell;
   }
 
-  protected final boolean write (byte[] buffer, int from, int count) {
-    if ((from == 0) && (count == buffer.length)) return write(buffer);
+  protected final boolean writeCells (byte[] cells) {
+    int count = cells.length;
+    char[] text = new char[count];
+
+    for (int i=0; i<count; i+=1) {
+      char character = Braille.UNICODE_ROW;
+      character |= translateCell(cells[i]) & 0XFF;
+      text[i] = character;
+    }
+
+    return write(new String(text));
+  }
+
+  protected final boolean writeCells (byte[] buffer, int from, int count) {
+    if ((from == 0) && (count == buffer.length)) return writeCells(buffer);
 
     byte[] cells = new byte[count];
     System.arraycopy(buffer, from, cells, 0, count);
-    return write(cells);
+    return writeCells(cells);
   }
 
-  protected final boolean write (byte[] buffer, int from) {
-    return write(buffer, from, getCellCount());
+  protected final boolean writeCells (byte[] buffer, int from) {
+    return writeCells(buffer, from, getCellCount());
   }
 
   protected final Channel getChannel () {

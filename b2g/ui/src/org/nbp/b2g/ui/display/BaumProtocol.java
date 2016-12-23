@@ -203,7 +203,7 @@ public class BaumProtocol extends Protocol {
   }
 
   private final boolean writeCells () {
-    return write(inputBuffer, 1);
+    return writeCells(inputBuffer, 1);
   }
 
   @Override
