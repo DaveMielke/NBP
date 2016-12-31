@@ -1,0 +1,1003 @@
+include braille-patterns.cti
+
+##########
+# Spaces #
+##########
+
+space	\s	0	space
+space	\t	0	HT, CTRL-I
+space	\v	0	VT, CTRL-V
+space	\f	0	FF, CTRL-L
+space	\r	0	CR, CTRL-M
+space	\x00A0	0	non-trivial blank
+
+##################
+# Greek Alphabet #
+##################
+
+# Αα Alpha
+uplow \x0391\x03B1 1
+
+# Ββ Beta
+uplow \x0392\x03B2 12
+
+# Γγ Gamma
+uplow \x0393\x03B3 1245
+
+# Δδ Delta
+uplow \x0394\x03B4 145
+
+# Εε Epsilon
+uplow \x0395\x03B5 15
+
+# Ζζ Zeta
+uplow \x0396\x03B6 1356
+
+# Ηη Eta
+uplow \x0397\x03B7 345
+
+# Θθ Theta
+uplow \x0398\x03B8 1456
+
+# Ιι Iota
+uplow \x0399\x03B9 24
+
+# Κκ Kappa
+uplow \x039A\x03BA 13
+
+# Λλ Lambda
+uplow \x039B\x03BB 123
+
+# Μμ Mu
+uplow \x039C\x03BC 134
+
+# Νν Nu
+uplow \x039D\x03BD 1345
+
+# Ξξ Xi
+uplow \x039E\x03BE 1346
+
+# Οο Omicron
+uplow \x039F\x03BF 135
+
+# Ππ Pi
+uplow \x03A0\x03C0 1234
+
+# Ρρ Rho
+uplow \x03A1\x03C1 1235
+
+# ς Final Sigma
+lowercase \x03C2 234
+
+# Σσ Sigma
+uplow \x03A3\x03C3 234
+
+# Ττ Tau
+uplow \x03A4\x03C4 2345
+
+# Υυ Upsilon
+uplow \x03A5\x03C5 13456
+
+# Φφ Phi
+uplow \x03A6\x03C6 124
+
+# Χχ Chi
+uplow \x03A7\x03C7 125
+
+# Ψψ Psi
+uplow \x03A8\x03C8 12346
+
+# Ωω Omega
+uplow \x03A9\x03C9 245
+
+#################
+# Greek Accents #
+#################
+
+# ` Grave Accent (Varia)
+sign \x1FEF 4
+
+# ´ Acute Accent (Oxia)
+sign \x1FFD 5
+
+# ῀ Circumflex Accent (Perispomeni)
+sign \x1FC0 6
+
+# ᾿ Smooth Breathing Accent (Psili)
+sign \x1FBF 1
+
+# ῾ Rough Breathing Accent (Dasia)
+sign \x1FFE 1236
+
+# ῍ Smooth and Grave Accent (Psili and Varia)
+sign \x1FCD 23456
+
+# ῎ Smooth and Acute Accent (Psili and Oxia)
+sign \x1FCE 356
+
+# ῏ Smooth and Circumflex Accent (Psili and Perispomeni)
+sign \x1FCF 256
+
+# ῝ Rough and Grave Accent (Dasia and Varia)
+sign \x1FDD 12356
+
+# ῞ Rough and Acute Accent (Dasia and Oxia)
+sign \x1FDE 26
+
+# ῟ Rough and Circumflex Accent (Dasia and Perispomeni)
+sign \x1FDF 235
+
+# ᾳ Alpha with Iota Subscript Accent (Alpha with Ypogegrammeni)
+sign \x1FB3 35
+
+# ῃ Eta with Iota Subscript Accent (Eta with Ypogegrammeni)
+sign \x1FC3 3456
+
+# ῳ Omega with Iota Subscript Accent (Omega with Ypogegrammeni)
+sign \x1FF3 2456
+
+####################
+# English Alphabet #
+####################
+
+noback uplow Aa 6-1,1
+noback uplow Bb 6-12,12
+noback uplow Cc 6-14,14
+noback uplow Dd 6-145,145
+noback uplow Ee 6-15,15
+noback uplow Ff 6-124,124
+noback uplow Gg 6-1245,1245
+noback uplow Hh 6-125,125
+noback uplow Ii 6-24,24
+noback uplow Jj 6-245,245
+noback uplow Kk 6-13,13
+noback uplow Ll 6-123,123
+noback uplow Mm 6-134,134
+noback uplow Nn 6-1345,1345
+noback uplow Oo 6-135,135
+noback uplow Pp 6-1234,1234
+noback uplow Qq 6-12345,12345
+noback uplow Rr 6-1235,1235
+noback uplow Ss 6-234,234
+noback uplow Tt 6-2345,2345
+noback uplow Uu 6-136,136
+noback uplow Vv 6-1236,1236
+noback uplow Ww 6-2456,2456
+noback uplow Xx 6-1346,1346
+noback uplow Yy 6-13456,13456
+noback uplow Zz 6-1356,1356
+
+###############
+# Punctuation #
+###############
+
+# . Full Stop
+punctuation \x002E 256
+
+# , Comma
+punctuation \x002C 2
+
+# · Greek Semicolon (Middle Dot)
+punctuation \x00B7 23
+
+# : Colon
+punctuation \x003A 25
+
+# - Dash (Hyphen, Minus)
+punctuation \x002D 36
+
+# ’ Apostrophe (Right Single Quotation Mark)
+punctuation \x2019 3
+
+# - Quotation Dash
+punctuation - 6-36
+
+# ; Greek Question Mark (Semicolon)
+punctuation \x003B 26
+
+# ? English Question Mark
+punctuation \x003F 236
+
+# ! Exclamation Mark
+punctuation \x0021 235
+
+# … Horizontal Ellipsis
+punctuation \x2026 3-3-3
+
+# ή Or
+punctuation ή 5-345
+
+###########
+# Numbers #
+###########
+
+include digits6Dots.uti
+
+#################
+# Miscellaneous #
+#################
+
+punctuation " 9
+punctuation ( 9
+punctuation ) 9
+punctuation [ 9
+punctuation ] 9
+punctuation { 9
+punctuation } 9
+punctuation \x00AB 9 left-pointing double angle quotation mark
+punctuation \x00BB 9 right-pointing double angle quotation mark
+
+##############
+# Indicators #
+##############
+
+capsign 46
+hyphen - 36
+
+numsign 3456
+decpoint . 46
+
+####################
+# Greek Diphthongs #
+####################
+
+# αι Alpha Iota
+always \x03B1\x03B9 126
+
+# ει Epsilon Iota
+always \x03B5\x03B9 146
+
+# οι Omicron Iota
+always \x03BF\x03B9 246
+
+# αυ Alpha Upsilon
+always \x03B1\x03C5 16
+
+# ευ Epsilon Upsilon
+always \x03B5\x03C5 156
+
+# ηυ Eta Upsilon
+always \x03B7\x03C5 1256
+
+# υι Upsilon Iota
+always \x03C5\x03B9 12456
+
+# ου Omicron Upsilon
+always \X03BF\x03C5 136
+
+# ( Opening Parenthesis
+prepunc \x0028 2356
+
+# ) Closing Parenthesis
+postpunc \x0029 2356
+
+# [ Opening Bracket
+prepunc \x005B 12356
+
+# ] Closing Bracket
+postpunc \x005D 23456
+
+# { Opening Brace
+prepunc \x007B 12346
+
+# } Closing Brace
+postpunc \x007D 13456
+
+# " Opening English Quotation Mark
+prepunc \x0022 126
+
+# " Closing English Quotation Mark
+postpunc \x0022 345
+
+# « Greek Opening Quotation Mark (Left-Pointing Double Angle Quotation Mark)
+prepunc \x00AB 236
+
+# » Greek Closing Quotation Mark (Right-Pointing Double Angle Quotation Mark)
+postpunc \x00BB 356
+
+##########################
+# Greek Accented Letters #
+##########################
+
+# Capital Alpha with Tonos
+replace \x0386 \x0384\x0391
+
+# Capital Epsilon with Tonos
+replace \x0388 \x0384\x0395
+
+# Capital Eta with Tonos
+replace \x0389 \x0384\x0397
+
+# Capital Iota with Tonos
+replace \x038A \x0384\x0399
+
+# Capital Omicron with Tonos
+replace \x038C \x0384\x039F
+
+# Capital Upsilon with Tonos
+replace \x038E \x0384\x03A5
+
+# Capital Omega with Tonos
+replace \x038F \x0384\x03A9
+
+# Small Iota with Dialytika and Tonos
+#replace \x0390 DIALYTIKA\x0384\x03B9
+
+# Capital Iota with Dialytika
+#replace \x03AA DIALYTIKA\x0399
+
+# Capital Upsilon with Dialytika
+#replace \x03AB DIALYTIKA\x03A5
+
+# Small Alpha with Tonos
+replace \x03AC \x0384\x03B1
+
+# Small Epsilon with Tonos
+replace \x03AD \x0384\x03B5
+
+# Small Eta with Tonos
+replace \x03AE \x0384\x03B7
+
+# Small Iota with Tonos
+replace \x03AF \x0384\x03B9
+
+# Small Upsilon with Dialytika and Tonos
+#replace \x03B0 DIALYTIKA\x0384\x03C5
+
+# Small Iota with Dialytika
+#replace \x03CA DIALYTIKA\x03B9
+
+# Small Upsilon with Dialytika
+#replace \x03CB DIALYTIKA\x03C5
+
+# Small Omicron with Tonos
+replace \x03CC \x0384\x03BF
+
+# Small Upsilon with Tonos
+replace \x03CD \x0384\x03C5
+
+# Small Omega with Tonos
+replace \x03CE \x0384\x03C9
+
+# Small Alpha with Psili
+replace \x1F00 \x1FBF\x03B1
+
+# Small Alpha with Dasia
+replace \x1F01 \x1FFE\x03B1
+
+# Small Alpha with Psili and Varia
+replace \x1F02 \x1FBF\x1FEF\x03B1
+
+# Small Alpha with Dasia and Varia
+replace \x1F03 \x1FFE\x1FEF\x03B1
+
+# Small Alpha with Psili and Oxia
+replace \x1F04 \x1FBF\x1FFD\x03B1
+
+# Small Alpha with Dasia and Oxia
+replace \x1F05 \x1FFE\x1FFD\x03B1
+
+# Small Alpha with Psili and Perispomeni
+replace \x1F06 \x1FBF\x1FC0\x03B1
+
+# Small Alpha with Dasia and Perispomeni
+replace \x1F07 \x1FFE\x1FC0\x03B1
+
+# Capital Alpha with Psili
+replace \x1F08 \x1FBF\x0391
+
+# Capital Alpha with Dasia
+replace \x1F09 \x1FFE\x0391
+
+# Capital Alpha with Psili and Varia
+replace \x1F0A \x1FBF\x1FEF\x0391
+
+# Capital Alpha with Dasia and Varia
+replace \x1F0B \x1FFE\x1FEF\x0391
+
+# Capital Alpha with Psili and Oxia
+replace \x1F0C \x1FBF\x1FFD\x0391
+
+# Capital Alpha with Dasia and Oxia
+replace \x1F0D \x1FFE\x1FFD\x0391
+
+# Capital Alpha with Psili and Perispomeni
+replace \x1F0E \x1FBF\x1FC0\x0391
+
+# Capital Alpha with Dasia and Perispomeni
+replace \x1F0F \x1FFE\x1FC0\x0391
+
+# Small Epsilon with Psili
+replace \x1F10 \x1FBF\x03B5
+
+# Small Epsilon with Dasia
+replace \x1F11 \x1FFE\x03B5
+
+# Small Epsilon with Psili and Varia
+replace \x1F12 \x1FBF\x1FEF\x03B5
+
+# Small Epsilon with Dasia and Varia
+replace \x1F13 \x1FFE\x1FEF\x03B5
+
+# Small Epsilon with Psili and Oxia
+replace \x1F14 \x1FBF\x1FFD\x03B5
+
+# Small Epsilon with Dasia and Oxia
+replace \x1F15 \x1FFE\x1FFD\x03B5
+
+# Capital Epsilon with Psili
+replace \x1F18 \x1FBF\x0395
+
+# Capital Epsilon with Dasia
+replace \x1F19 \x1FFE\x0395
+
+# Capital Epsilon with Psili and Varia
+replace \x1F1A \x1FBF\x1FEF\x0395
+
+# Capital Epsilon with Dasia and Varia
+replace \x1F1B \x1FFE\x1FEF\x0395
+
+# Capital Epsilon with Psili and Oxia
+replace \x1F1C \x1FBF\x1FFD\x0395
+
+# Capital Epsilon with Dasia and Oxia
+replace \x1F1D \x1FFE\x1FFD\x0395
+
+# Small Eta with Psili
+replace \x1F20 \x1FBF\x03B7
+
+# Small Eta with Dasia
+replace \x1F21 \x1FFE\x03B7
+
+# Small Eta with Psili and Varia
+replace \x1F22 \x1FBF\x1FEF\x03B7
+
+# Small Eta with Dasia and Varia
+replace \x1F23 \x1FFE\x1FEF\x03B7
+
+# Small Eta with Psili and Oxia
+replace \x1F24 \x1FBF\x1FFD\x03B7
+
+# Small Eta with Dasia and Oxia
+replace \x1F25 \x1FFE\x1FFD\x03B7
+
+# Small Eta with Psili and Perispomeni
+replace \x1F26 \x1FBF\x1FC0\x03B7
+
+# Small Eta with Dasia and Perispomeni
+replace \x1F27 \x1FFE\x1FC0\x03B7
+
+# Capital Eta with Psili
+replace \x1F28 \x1FBF\x0397
+
+# Capital Eta with Dasia
+replace \x1F29 \x1FFE\x0397
+
+# Capital Eta with Psili and Varia
+replace \x1F2A \x1FBF\x1FEF\x0397
+
+# Capital Eta with Dasia and Varia
+replace \x1F2B \x1FFE\x1FEF\x0397
+
+# Capital Eta with Psili and Oxia
+replace \x1F2C \x1FBF\x1FFD\x0397
+
+# Capital Eta with Dasia and Oxia
+replace \x1F2D \x1FFE\x1FFD\x0397
+
+# Capital Eta with Psili and Perispomeni
+replace \x1F2E \x1FBF\x1FC0\x0397
+
+# Capital Eta with Dasia and Perispomeni
+replace \x1F2F \x1FFE\x1FC0\x0397
+
+# Small Iota with Psili
+replace \x1F30 \x1FBF\x03B9
+
+# Small Iota with Dasia
+replace \x1F31 \x1FFE\x03B9
+
+# Small Iota with Psili and Varia
+replace \x1F32 \x1FBF\x1FEF\x03B9
+
+# Small Iota with Dasia and Varia
+replace \x1F33 \x1FFE\x1FEF\x03B9
+
+# Small Iota with Psili and Oxia
+replace \x1F34 \x1FBF\x1FFD\x03B9
+
+# Small Iota with Dasia and Oxia
+replace \x1F35 \x1FFE\x1FFD\x03B9
+
+# Small Iota with Psili and Perispomeni
+replace \x1F36 \x1FBF\x1FC0\x03B9
+
+# Small Iota with Dasia and Perispomeni
+replace \x1F37 \x1FFE\x1FC0\x03B9
+
+# Capital Iota with Psili
+replace \x1F38 \x1FBF\x0399
+
+# Capital Iota with Dasia
+replace \x1F39 \x1FFE\x0399
+
+# Capital Iota with Psili and Varia
+replace \x1F3A \x1FBF\x1FEF\x0399
+
+# Capital Iota with Dasia and Varia
+replace \x1F3B \x1FFE\x1FEF\x0399
+
+# Capital Iota with Psili and Oxia
+replace \x1F3C \x1FBF\x1FFD\x0399
+
+# Capital Iota with Dasia and Oxia
+replace \x1F3D \x1FFE\x1FFD\x0399
+
+# Capital Iota with Psili and Perispomeni
+replace \x1F3E \x1FBF\x1FC0\x0399
+
+# Capital Iota with Dasia and Perispomeni
+replace \x1F3F \x1FFE\x1FC0\x0399
+
+# Small Omicron with Psili
+replace \x1F40 \x1FBF\x03BF
+
+# Small Omicron with Dasia
+replace \x1F41 \x1FFE\x03BF
+
+# Small Omicron with Psili and Varia
+replace \x1F42 \x1FBF\x1FEF\x03BF
+
+# Small Omicron with Dasia and Varia
+replace \x1F43 \x1FFE\x1FEF\x03BF
+
+# Small Omicron with Psili and Oxia
+replace \x1F44 \x1FBF\x1FFD\x03BF
+
+# Small Omicron with Dasia and Oxia
+replace \x1F45 \x1FFE\x1FFD\x03BF
+
+# Capital Omicron with Psili
+replace \x1F48 \x1FBF\x039F
+
+# Capital Omicron with Dasia
+replace \x1F49 \x1FFE\x039F
+
+# Capital Omicron with Psili and Varia
+replace \x1F4A \x1FBF\x1FEF\x039F
+
+# Capital Omicron with Dasia and Varia
+replace \x1F4B \x1FFE\x1FEF\x039F
+
+# Capital Omicron with Psili and Oxia
+replace \x1F4C \x1FBF\x1FFD\x039F
+
+# Capital Omicron with Dasia and Oxia
+replace \x1F4D \x1FFE\x1FFD\x039F
+
+# Small Upsilon with Psili
+replace \x1F50 \x1FBF\x03C5
+
+# Small Upsilon with Dasia
+replace \x1F51 \x1FFE\x03C5
+
+# Small Upsilon with Psili and Varia
+replace \x1F52 \x1FBF\x1FEF\x03C5
+
+# Small Upsilon with Dasia and Varia
+replace \x1F53 \x1FFE\x1FEF\x03C5
+
+# Small Upsilon with Psili and Oxia
+replace \x1F54 \x1FBF\x1FFD\x03C5
+
+# Small Upsilon with Dasia and Oxia
+replace \x1F55 \x1FFE\x1FFD\x03C5
+
+# Small Upsilon with Psili and Perispomeni
+replace \x1F56 \x1FBF\x1FC0\x03C5
+
+# Small Upsilon with Dasia and Perispomeni
+replace \x1F57 \x1FFE\x1FC0\x03C5
+
+# Capital Upsilon with Dasia
+replace \x1F59 \x1FFE\x03A5
+
+# Capital Upsilon with Dasia and Varia
+replace \x1F5B \x1FFE\x1FEF\x03A5
+
+# Capital Upsilon with Dasia and Oxia
+replace \x1F5D \x1FFE\x1FFD\x03A5
+
+# Capital Upsilon with Dasia and Perispomeni
+replace \x1F5F \x1FFE\x1FC0\x03A5
+
+# Small Omega with Psili
+replace \x1F60 \x1FBF\x03C9
+
+# Small Omega with Dasia
+replace \x1F61 \x1FFE\x03C9
+
+# Small Omega with Psili and Varia
+replace \x1F62 \x1FBF\x1FEF\x03C9
+
+# Small Omega with Dasia and Varia
+replace \x1F63 \x1FFE\x1FEF\x03C9
+
+# Small Omega with Psili and Oxia
+replace \x1F64 \x1FBF\x1FFD\x03C9
+
+# Small Omega with Dasia and Oxia
+replace \x1F65 \x1FFE\x1FFD\x03C9
+
+# Small Omega with Psili and Perispomeni
+replace \x1F66 \x1FBF\x1FC0\x03C9
+
+# Small Omega with Dasia and Perispomeni
+replace \x1F67 \x1FFE\x1FC0\x03C9
+
+# Capital Omega with Psili
+replace \x1F68 \x1FBF\x03A9
+
+# Capital Omega with Dasia
+replace \x1F69 \x1FFE\x03A9
+
+# Capital Omega with Psili and Varia
+replace \x1F6A \x1FBF\x1FEF\x03A9
+
+# Capital Omega with Dasia and Varia
+replace \x1F6B \x1FFE\x1FEF\x03A9
+
+# Capital Omega with Psili and Oxia
+replace \x1F6C \x1FBF\x1FFD\x03A9
+
+# Capital Omega with Dasia and Oxia
+replace \x1F6D \x1FFE\x1FFD\x03A9
+
+# Capital Omega with Psili and Perispomeni
+replace \x1F6E \x1FBF\x1FC0\x03A9
+
+# Capital Omega with Dasia and Perispomeni
+replace \x1F6F \x1FFE\x1FC0\x03A9
+
+# Small Alpha with Varia
+replace \x1F70 \x1FEF\x03B1
+
+# Small Alpha with Oxia
+replace \x1F71 \x1FFD\x03B1
+
+# Small Epsilon with Varia
+replace \x1F72 \x1FEF\x03B5
+
+# Small Epsilon with Oxia
+replace \x1F73 \x1FFD\x03B5
+
+# Small Eta with Varia
+replace \x1F74 \x1FEF\x03B7
+
+# Small Eta with Oxia
+replace \x1F75 \x1FFD\x03B7
+
+# Small Iota with Varia
+replace \x1F76 \x1FEF\x03B9
+
+# Small Iota with Oxia
+replace \x1F77 \x1FFD\x03B9
+
+# Small Omicron with Varia
+replace \x1F78 \x1FEF\x03BF
+
+# Small Omicron with Oxia
+replace \x1F79 \x1FFD\x03BF
+
+# Small Upsilon with Varia
+replace \x1F7A \x1FEF\x03C5
+
+# Small Upsilon with Oxia
+replace \x1F7B \x1FFD\x03C5
+
+# Small Omega with Varia
+replace \x1F7C \x1FEF\x03C9
+
+# Small Omega with Oxia
+replace \x1F7D \x1FFD\x03C9
+
+# Small Alpha with Psili and Ypogegrammeni
+replace \x1F80 \x1FBF\x1FB3
+
+# Small Alpha with Dasia and Ypogegrammeni
+replace \x1F81 \x1FFE\x1FB3
+
+# Small Alpha with Psili and Varia and Ypogegrammeni
+replace \x1F82 \x1FBF\x1FEF\x1FB3
+
+# Small Alpha with Dasia and Varia and Ypogegrammeni
+replace \x1F83 \x1FFE\x1FEF\x1FB3
+
+# Small Alpha with Psili and Oxia and Ypogegrammeni
+replace \x1F84 \x1FBF\x1FFD\x1FB3
+
+# Small Alpha with Dasia and Oxia and Ypogegrammeni
+replace \x1F85 \x1FFE\x1FFD\x1FB3
+
+# Small Alpha with Psili and Perispomeni and Ypogegrammeni
+replace \x1F86 \x1FBF\x1FC0\x1FB3
+
+# Small Alpha with Dasia and Perispomeni and Ypogegrammeni
+replace \x1F87 \x1FFE\x1FC0\x1FB3
+
+# Capital Alpha with Psili and Prosgegrammeni
+replace \x1F88 \x1FBF\x1FBE\x0391
+
+# Capital Alpha with Dasia and Prosgegrammeni
+replace \x1F89 \x1FFE\x1FBE\x0391
+
+# Capital Alpha with Psili and Varia and Prosgegrammeni
+replace \x1F8A \x1FBF\x1FEF\x1FBE\x0391
+
+# Capital Alpha with Dasia and Varia and Prosgegrammeni
+replace \x1F8B \x1FFE\x1FEF\x1FBE\x0391
+
+# Capital Alpha with Psili and Oxia and Prosgegrammeni
+replace \x1F8C \x1FBF\x1FFD\x1FBE\x0391
+
+# Capital Alpha with Dasia and Oxia and Prosgegrammeni
+replace \x1F8D \x1FFE\x1FFD\x1FBE\x0391
+
+# Capital Alpha with Psili and Perispomeni and Prosgegrammeni
+replace \x1F8E \x1FBF\x1FC0\x1FBE\x0391
+
+# Capital Alpha with Dasia and Perispomeni and Prosgegrammeni
+replace \x1F8F \x1FFE\x1FC0\x1FBE\x0391
+
+# Small Eta with Psili and Ypogegrammeni
+replace \x1F90 \x1FBF\x1FC3
+
+# Small Eta with Dasia and Ypogegrammeni
+replace \x1F91 \x1FFE\x1FC3
+
+# Small Eta with Psili and Varia and Ypogegrammeni
+replace \x1F92 \x1FBF\x1FEF\x1FC3
+
+# Small Eta with Dasia and Varia and Ypogegrammeni
+replace \x1F93 \x1FFE\x1FEF\x1FC3
+
+# Small Eta with Psili and Oxia and Ypogegrammeni
+replace \x1F94 \x1FBF\x1FFD\x1FC3
+
+# Small Eta with Dasia and Oxia and Ypogegrammeni
+replace \x1F95 \x1FFE\x1FFD\x1FC3
+
+# Small Eta with Psili and Perispomeni and Ypogegrammeni
+replace \x1F96 \x1FBF\x1FC0\x1FC3
+
+# Small Eta with Dasia and Perispomeni and Ypogegrammeni
+replace \x1F97 \x1FFE\x1FC0\x1FC3
+
+# Capital Eta with Psili and Prosgegrammeni
+replace \x1F98 \x1FBF\x1FBE\x0397
+
+# Capital Eta with Dasia and Prosgegrammeni
+replace \x1F99 \x1FFE\x1FBE\x0397
+
+# Capital Eta with Psili and Varia and Prosgegrammeni
+replace \x1F9A \x1FBF\x1FEF\x1FBE\x0397
+
+# Capital Eta with Dasia and Varia and Prosgegrammeni
+replace \x1F9B \x1FFE\x1FEF\x1FBE\x0397
+
+# Capital Eta with Psili and Oxia and Prosgegrammeni
+replace \x1F9C \x1FBF\x1FFD\x1FBE\x0397
+
+# Capital Eta with Dasia and Oxia and Prosgegrammeni
+replace \x1F9D \x1FFE\x1FFD\x1FBE\x0397
+
+# Capital Eta with Psili and Perispomeni and Prosgegrammeni
+replace \x1F9E \x1FBF\x1FC0\x1FBE\x0397
+
+# Capital Eta with Dasia and Perispomeni and Prosgegrammeni
+replace \x1F9F \x1FFE\x1FC0\x1FBE\x0397
+
+# Small Omega with Psili and Ypogegrammeni
+replace \x1FA0 \x1FBF\x1FF3
+
+# Small Omega with Dasia and Ypogegrammeni
+replace \x1FA1 \x1FFE\x1FF3
+
+# Small Omega with Psili and Varia and Ypogegrammeni
+replace \x1FA2 \x1FBF\x1FEF\x1FF3
+
+# Small Omega with Dasia and Varia and Ypogegrammeni
+replace \x1FA3 \x1FFE\x1FEF\x1FF3
+
+# Small Omega with Psili and Oxia and Ypogegrammeni
+replace \x1FA4 \x1FBF\x1FFD\x1FF3
+
+# Small Omega with Dasia and Oxia and Ypogegrammeni
+replace \x1FA5 \x1FFE\x1FFD\x1FF3
+
+# Small Omega with Psili and Perispomeni and Ypogegrammeni
+replace \x1FA6 \x1FBF\x1FC0\x1FF3
+
+# Small Omega with Dasia and Perispomeni and Ypogegrammeni
+replace \x1FA7 \x1FFE\x1FC0\x1FF3
+
+# Capital Omega with Psili and Prosgegrammeni
+replace \x1FA8 \x1FBF\x1FBE\x03A9
+
+# Capital Omega with Dasia and Prosgegrammeni
+replace \x1FA9 \x1FFE\x1FBE\x03A9
+
+# Capital Omega with Psili and Varia and Prosgegrammeni
+replace \x1FAA \x1FBF\x1FEF\x1FBE\x03A9
+
+# Capital Omega with Dasia and Varia and Prosgegrammeni
+replace \x1FAB \x1FFE\x1FEF\x1FBE\x03A9
+
+# Capital Omega with Psili and Oxia and Prosgegrammeni
+replace \x1FAC \x1FBF\x1FFD\x1FBE\x03A9
+
+# Capital Omega with Dasia and Oxia and Prosgegrammeni
+replace \x1FAD \x1FFE\x1FFD\x1FBE\x03A9
+
+# Capital Omega with Psili and Perispomeni and Prosgegrammeni
+replace \x1FAE \x1FBF\x1FC0\x1FBE\x03A9
+
+# Capital Omega with Dasia and Perispomeni and Prosgegrammeni
+replace \x1FAF \x1FFE\x1FC0\x1FBE\x03A9
+
+# Small Alpha with Vrachy
+#replace \x1FB0 VRACHY\x03B1
+
+# Small Alpha with Macron
+replace \x1FB1 \x00AF\x03B1
+
+# Small Alpha with Varia and Ypogegrammeni
+replace \x1FB2 \x1FEF\x1FB3
+
+# Small Alpha with Oxia and Ypogegrammeni
+replace \x1FB4 \x1FFD\x1FB3
+
+# Small Alpha with Perispomeni
+replace \x1FB6 \x1FC0\x03B1
+
+# Small Alpha with Perispomeni and Ypogegrammeni
+replace \x1FB7 \x1FC0\x1FB3
+
+# Capital Alpha with Vrachy
+#replace \x1FB8 VRACHY\x0391
+
+# Capital Alpha with Macron
+replace \x1FB9 \x00AF\x0391
+
+# Capital Alpha with Varia
+replace \x1FBA \x1FEF\x0391
+
+# Capital Alpha with Oxia
+replace \x1FBB \x1FFD\x0391
+
+# Capital Alpha with Prosgegrammeni
+replace \x1FBC \x1FBE\x0391
+
+# Small Eta with Varia and Ypogegrammeni
+replace \x1FC2 \x1FEF\x1FC3
+
+# Small Eta with Oxia and Ypogegrammeni
+replace \x1FC4 \x1FFD\x1FC3
+
+# Small Eta with Perispomeni
+replace \x1FC6 \x1FC0\x03B7
+
+# Small Eta with Perispomeni and Ypogegrammeni
+replace \x1FC7 \x1FC0\x1FC3
+
+# Capital Epsilon with Varia
+replace \x1FC8 \x1FEF\x0395
+
+# Capital Epsilon with Oxia
+replace \x1FC9 \x1FFD\x0395
+
+# Capital Eta with Varia
+replace \x1FCA \x1FEF\x0397
+
+# Capital Eta with Oxia
+replace \x1FCB \x1FFD\x0397
+
+# Capital Eta with Prosgegrammeni
+replace \x1FCC \x1FBE\x0397
+
+# Small Iota with Vrachy
+#replace \x1FD0 VRACHY\x03B9
+
+# Small Iota with Macron
+replace \x1FD1 \x00AF\x03B9
+
+# Small Iota with Dialytika and Varia
+#replace \x1FD2 DIALYTIKA\x1FEF\x03B9
+
+# Small Iota with Dialytika and Oxia
+#replace \x1FD3 DIALYTIKA\x1FFD\x03B9
+
+# Small Iota with Perispomeni
+replace \x1FD6 \x1FC0\x03B9
+
+# Small Iota with Dialytika and Perispomeni
+#replace \x1FD7 DIALYTIKA\x1FC0\x03B9
+
+# Capital Iota with Vrachy
+#replace \x1FD8 VRACHY\x0399
+
+# Capital Iota with Macron
+replace \x1FD9 \x00AF\x0399
+
+# Capital Iota with Varia
+replace \x1FDA \x1FEF\x0399
+
+# Capital Iota with Oxia
+replace \x1FDB \x1FFD\x0399
+
+# Small Upsilon with Vrachy
+#replace \x1FE0 VRACHY\x03C5
+
+# Small Upsilon with Macron
+replace \x1FE1 \x00AF\x03C5
+
+# Small Upsilon with Dialytika and Varia
+#replace \x1FE2 DIALYTIKA\x1FEF\x03C5
+
+# Small Upsilon with Dialytika and Oxia
+#replace \x1FE3 DIALYTIKA\x1FFD\x03C5
+
+# Small Rho with Psili
+replace \x1FE4 \x1FBF\x03C1
+
+# Small Rho with Dasia
+replace \x1FE5 \x1FFE\x03C1
+
+# Small Upsilon with Perispomeni
+replace \x1FE6 \x1FC0\x03C5
+
+# Small Upsilon with Dialytika and Perispomeni
+#replace \x1FE7 DIALYTIKA\x1FC0\x03C5
+
+# Capital Upsilon with Vrachy
+#replace \x1FE8 VRACHY\x03A5
+
+# Capital Upsilon with Macron
+replace \x1FE9 \x00AF\x03A5
+
+# Capital Upsilon with Varia
+replace \x1FEA \x1FEF\x03A5
+
+# Capital Upsilon with Oxia
+replace \x1FEB \x1FFD\x03A5
+
+# Capital Rho with Dasia
+replace \x1FEC \x1FFE\x03A1
+
+# Small Omega with Varia and Ypogegrammeni
+replace \x1FF2 \x1FEF\x1FF3
+
+# Small Omega with Oxia and Ypogegrammeni
+replace \x1FF4 \x1FFD\x1FF3
+
+# Small Omega with Perispomeni
+replace \x1FF6 \x1FC0\x03C9
+
+# Small Omega with Perispomeni and Ypogegrammeni
+replace \x1FF7 \x1FC0\x1FF3
+
+# Capital Omicron with Varia
+replace \x1FF8 \x1FEF\x039F
+
+# Capital Omicron with Oxia
+replace \x1FF9 \x1FFD\x039F
+
+# Capital Omega with Varia
+replace \x1FFA \x1FEF\x03A9
+
+# Capital Omega with Oxia
+replace \x1FFB \x1FFD\x03A9
+
+# Capital Omega with Prosgegrammeni
+replace \x1FFC \x1FBE\x03A9
+
