@@ -106,9 +106,6 @@ sign \x1FC0 6
 # ᾿ Smooth Breathing Accent (Psili)
 sign \x1FBF 1
 
-# ῾ Rough Breathing Accent (Dasia)
-sign \x1FFE 1236
-
 # ῍ Smooth and Grave Accent (Psili and Varia)
 sign \x1FCD 23456
 
@@ -117,6 +114,9 @@ sign \x1FCE 356
 
 # ῏ Smooth and Circumflex Accent (Psili and Perispomeni)
 sign \x1FCF 256
+
+# ῾ Rough Breathing Accent (Dasia)
+sign \x1FFE 1236
 
 # ῝ Rough and Grave Accent (Dasia and Varia)
 sign \x1FDD 12356
@@ -136,43 +136,9 @@ sign \x1FC3 3456
 # ῳ Omega with Iota Subscript Accent (Omega with Ypogegrammeni)
 sign \x1FF3 2456
 
-####################
-# English Alphabet #
-####################
-
-noback uplow Aa 6-1,1
-noback uplow Bb 6-12,12
-noback uplow Cc 6-14,14
-noback uplow Dd 6-145,145
-noback uplow Ee 6-15,15
-noback uplow Ff 6-124,124
-noback uplow Gg 6-1245,1245
-noback uplow Hh 6-125,125
-noback uplow Ii 6-24,24
-noback uplow Jj 6-245,245
-noback uplow Kk 6-13,13
-noback uplow Ll 6-123,123
-noback uplow Mm 6-134,134
-noback uplow Nn 6-1345,1345
-noback uplow Oo 6-135,135
-noback uplow Pp 6-1234,1234
-noback uplow Qq 6-12345,12345
-noback uplow Rr 6-1235,1235
-noback uplow Ss 6-234,234
-noback uplow Tt 6-2345,2345
-noback uplow Uu 6-136,136
-noback uplow Vv 6-1236,1236
-noback uplow Ww 6-2456,2456
-noback uplow Xx 6-1346,1346
-noback uplow Yy 6-13456,13456
-noback uplow Zz 6-1356,1356
-
 ###############
 # Punctuation #
 ###############
-
-# . Full Stop
-punctuation \x002E 256
 
 # , Comma
 punctuation \x002C 2
@@ -183,14 +149,11 @@ punctuation \x00B7 23
 # : Colon
 punctuation \x003A 25
 
-# - Dash (Hyphen, Minus)
-punctuation \x002D 36
+# . Full Stop
+punctuation \x002E 256
 
-# ’ Apostrophe (Right Single Quotation Mark)
-punctuation \x2019 3
-
-# - Quotation Dash
-punctuation - 6-36
+# ! Exclamation Mark
+punctuation \x0021 235
 
 # ; Greek Question Mark (Semicolon)
 punctuation \x003B 26
@@ -198,34 +161,93 @@ punctuation \x003B 26
 # ? English Question Mark
 punctuation \x003F 236
 
-# ! Exclamation Mark
-punctuation \x0021 235
-
 # … Horizontal Ellipsis
 punctuation \x2026 3-3-3
 
+# - Dash (Hyphen, Minus)
+punctuation \x002D 36
+
+# - Quotation Dash
+punctuation - 6-36
+
 # ή Or
 punctuation ή 5-345
+
+# ’ Apostrophe (Right Single Quotation Mark)
+punctuation \x2019 3
+
+# « Greek Opening Quotation Mark (Left-Pointing Double Angle Quotation Mark)
+punctuation \x00AB 23678
+prepunc     \x00AB 236
+
+# » Greek Closing Quotation Mark (Right-Pointing Double Angle Quotation Mark)
+punctuation \x00BB 35678
+postpunc    \x00BB 356
+
+# "" English Quotation Marks
+punctuation " 235678
+prepunc     " 126
+postpunc    " 345
+
+# ( Opening Parenthesis
+punctuation ( 23678
+prepunc     ( 2356
+
+# ) Closing Parenthesis
+punctuation ) 35678
+postpunc    ) 2356
+
+# [ Opening Bracket
+punctuation [ 1235678
+prepunc     [ 12356
+
+# ] Closing Bracket
+punctuation ] 2345678
+postpunc    ] 23456
+
+# { Opening Brace
+punctuation { 1234678
+prepunc     { 12346
+
+# } Closing Brace
+punctuation } 1345678
+postpunc    } 13456
+
+#########
+# Signs #
+#########
+
+sign	*	35-35	# Asterisk
+sign	/	34	# Slash
+sign	_	456	# Underline
+sign	@	4-1	# At Sign
+sign	%	4-356	# Percent Sign
+sign	€	4-15	# Euro Sign
+sign	$	4-234	# Dollar Sign
 
 ###########
 # Numbers #
 ###########
 
 include digits6Dots.uti
+math	,	46	# Decimal Point
+math	.	6	# Digit Grouping
 
-#################
-# Miscellaneous #
-#################
+math	+	346	# Addition
+math	-	36	# Subtraction
+math	*	46-16	# Multiplication
+math	/	46-34	# Division
 
-punctuation " 9
-punctuation ( 9
-punctuation ) 9
-punctuation [ 9
-punctuation ] 9
-punctuation { 9
-punctuation } 9
-punctuation \x00AB 9 left-pointing double angle quotation mark
-punctuation \x00BB 9 right-pointing double angle quotation mark
+math	=	46-13	# Equals
+math	<	5-13	# Less Than
+math	>	46-2	# Greater Than
+
+math	(	12356	# Opening Round Bracket
+math	)	23456	# Closing Round Bracket
+math	[	4-12356	# Opening Square Bracket
+math	]	4-23456	# Closing Square Bracket
+math	{	46-12356	# Opening Curly Bracket
+math	}	46-23456	# Closing Curly Bracket
 
 ##############
 # Indicators #
@@ -264,36 +286,6 @@ always \x03C5\x03B9 12456
 
 # ου Omicron Upsilon
 always \X03BF\x03C5 136
-
-# ( Opening Parenthesis
-prepunc \x0028 2356
-
-# ) Closing Parenthesis
-postpunc \x0029 2356
-
-# [ Opening Bracket
-prepunc \x005B 12356
-
-# ] Closing Bracket
-postpunc \x005D 23456
-
-# { Opening Brace
-prepunc \x007B 12346
-
-# } Closing Brace
-postpunc \x007D 13456
-
-# " Opening English Quotation Mark
-prepunc \x0022 126
-
-# " Closing English Quotation Mark
-postpunc \x0022 345
-
-# « Greek Opening Quotation Mark (Left-Pointing Double Angle Quotation Mark)
-prepunc \x00AB 236
-
-# » Greek Closing Quotation Mark (Right-Pointing Double Angle Quotation Mark)
-postpunc \x00BB 356
 
 ##########################
 # Greek Accented Letters #
@@ -1000,4 +992,38 @@ replace \x1FFB \x1FFD\x03A9
 
 # Capital Omega with Prosgegrammeni
 replace \x1FFC \x1FBE\x03A9
+
+####################
+# English Alphabet #
+####################
+
+noback uplow Aa 6-1,1
+noback uplow Bb 6-12,12
+noback uplow Cc 6-14,14
+noback uplow Dd 6-145,145
+noback uplow Ee 6-15,15
+noback uplow Ff 6-124,124
+noback uplow Gg 6-1245,1245
+noback uplow Hh 6-125,125
+noback uplow Ii 6-24,24
+noback uplow Jj 6-245,245
+noback uplow Kk 6-13,13
+noback uplow Ll 6-123,123
+noback uplow Mm 6-134,134
+noback uplow Nn 6-1345,1345
+noback uplow Oo 6-135,135
+noback uplow Pp 6-1234,1234
+noback uplow Qq 6-12345,12345
+noback uplow Rr 6-1235,1235
+noback uplow Ss 6-234,234
+noback uplow Tt 6-2345,2345
+noback uplow Uu 6-136,136
+noback uplow Vv 6-1236,1236
+noback uplow Ww 6-2456,2456
+noback uplow Xx 6-1346,1346
+noback uplow Yy 6-13456,13456
+noback uplow Zz 6-1356,1356
+
+class englishLetter ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+context _!$l[]%englishLetter @56
 
