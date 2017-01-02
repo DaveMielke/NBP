@@ -60,13 +60,29 @@ sign	\x1FC0	6	# ῀ Circumflex Accent (Perispomeni)
 sign	\x1FBF	1	# ᾿ Smooth Breathing Accent (Psili)
 sign	\x1FFE	1236	# ῾ Rough Breathing Accent (Dasia)
 
-sign	\x1FCD	23456	# ῍ Smooth and Grave Accent (Psili and Varia)
-sign	\x1FCE	356	# ῎ Smooth and Acute Accent (Psili and Oxia)
-sign	\x1FCF	256	# ῏ Smooth and Circumflex Accent (Psili and Perispomeni)
+# ῍ Smooth and Grave Accent (Psili and Varia)
+sign \x1FCD 23456
+always \x1FBF\x1FEF 23456
 
-sign	\x1FDD	12356	# ῝ Rough and Grave Accent (Dasia and Varia)
-sign	\x1FDE	26	# ῞ Rough and Acute Accent (Dasia and Oxia)
-sign	\x1FDF	235	# ῟ Rough and Circumflex Accent (Dasia and Perispomeni)
+# ῎ Smooth and Acute Accent (Psili and Oxia)
+sign \x1FCE 356
+always \x1FBF\x1FFD 356
+
+# ῏ Smooth and Circumflex Accent (Psili and Perispomeni)
+sign \x1FCF 256
+always \x1FBF\x1FC0 256
+
+# ῝ Rough and Grave Accent (Dasia and Varia)
+sign \x1FDD 12356
+always \x1FFE\x1FEF 12356
+
+# ῞ Rough and Acute Accent (Dasia and Oxia)
+sign \x1FDE 26
+always \x1FFE\x1FFD 26
+
+# ῟ Rough and Circumflex Accent (Dasia and Perispomeni)
+sign \x1FDF 235
+always \x1FFE\x1FC0 235
 
 sign	\x1FB3	35	# ᾳ Alpha with Iota Subscript (Alpha with Ypogegrammeni)
 sign	\x1FC3	3456	# ῃ Eta with Iota Subscript (Eta with Ypogegrammeni)
@@ -1120,12 +1136,17 @@ correct "\x1FFB" "\x1FFD\x03A9"
 uppercase \x1FFC 245
 correct "\x1FFC" "\x1FBE\x03A9
 
-correct "\x1FBF\x1FEF" "\x1FCD" # combine Psili and Varia
-correct "\x1FBF\x1FFD" "\x1FCE" # combine Psili and Oxia
-correct "\x1FBF\x1FC0" "\x1FCF" # combine Psili and Perispomeni
-correct "\x1FFE\x1FEF" "\x1FDD" # combine Dasia and Varia
-correct "\x1FFE\x1FFD" "\x1FDE" # combine Dasia and Oxia
-correct "\x1FFE\x1FC0" "\x1FDF" # combine Dasia and Perispomeni
+# The capital sign should be before the accents.
+pass2 @4-46 @46-4 # Varia
+pass2 @5-46 @46-5 # Oxia
+pass2 @6-46 @46-6 # Perispomeni
+pass2 @23456-46 @46-23456 # Psili and Varia
+pass2 @356-46 @46-356 # Psili and Oxia
+pass2 @256-46 @46-256 # Psili and Perispomeni
+pass2 @1236-46 @46-1236 # Dasia
+pass2 @12356-46 @46-12356 # Dasia and Varia
+pass2 @26-46 @46-26 # Dasia and Oxia
+pass2 @235-46 @46-235 # Dasia and Perispomeni
 
 ####################
 # English Alphabet #
