@@ -69,3 +69,25 @@ glyph	U+03CC	1358
 glyph	U+03CD	134568
 glyph	U+03CE	2458
 
+# lowercase letters with Ypogegrammeni
+glyph	U+1FB3	35
+glyph	U+1FC3	3456
+glyph	U+1FF3	2456
+
+# accents
+glyph	U+1FEF	4
+glyph	U+0384	5
+glyph	U+1FFD	5
+glyph	U+1FC0	6
+glyph	U+1FFE	1236
+glyph	U+1FCD	23456
+glyph	U+1FCE	356
+glyph	U+1FCF	256
+glyph	U+1FDD	12356
+glyph	U+1FDE	26
+glyph	U+1FDF	235
+
+# punctuation
+glyph	U+037E	26
+glyph	U+0387	23
+
