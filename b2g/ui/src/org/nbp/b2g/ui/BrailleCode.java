@@ -31,6 +31,10 @@ public enum BrailleCode {
     TranslationTable.DE_DE_G2
   ),
 
+  GR(
+    TranslationTable.GR
+  ),
+
   HE(
     TranslationTable.HE
   ),
