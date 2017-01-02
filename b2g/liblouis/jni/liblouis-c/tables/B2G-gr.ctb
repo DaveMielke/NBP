@@ -48,11 +48,14 @@ uplow	\x03A9\x03C9	245	# Ωω Omega
 #################
 
 sign	\x1FEF	4	# ` Grave Accent (Varia)
-sign	\x0384	5	# ´ Acute Accent (Tonos)
+sign	\x0384	5	# ΄ Acute Accent (Tonos)
 sign	\x1FFD	5	# ´ Acute Accent (Oxia)
 sign	\x1FC0	6	# ῀ Circumflex Accent (Perispomeni)
 sign	\x1FBF	9	# ᾿ Smooth Breathing Accent (Psili)
 sign	\x1FFE	1236	# ῾ Rough Breathing Accent (Dasia)
+sign	\x037A	9	# ͺ Ypogegrammeni
+sign	\x1FBE	9	# ι Prosgegrammeni
+sign	\x00AF	9	# ¯ Macron
 
 # ῍ Smooth and Grave Accent (Psili and Varia)
 sign \x1FCD 23456
@@ -78,9 +81,9 @@ always \x1FFE\x1FFD 26
 sign \x1FDF 235
 always \x1FFE\x1FC0 235
 
-sign	\x1FB3	35	# ᾳ Alpha with Iota Subscript (Alpha with Ypogegrammeni)
-sign	\x1FC3	3456	# ῃ Eta with Iota Subscript (Eta with Ypogegrammeni)
-sign	\x1FF3	2456	# ῳ Omega with Iota Subscript (Omega with Ypogegrammeni)
+lowercase	\x1FB3	35	# ᾳ Alpha with Iota Subscript (Alpha with Ypogegrammeni)
+lowercase	\x1FC3	3456	# ῃ Eta with Iota Subscript (Eta with Ypogegrammeni)
+lowercase	\x1FF3	2456	# ῳ Omega with Iota Subscript (Omega with Ypogegrammeni)
 
 ###############
 # Punctuation #
@@ -143,8 +146,8 @@ include braille-patterns.cti
 ###########
 
 include digits6Dots.uti
-midnum	,	46	# Decimal Point
-midnum	.	3	# Digit Grouping
+midnum	,	2	# Decimal Point
+midnum	.	46	# Digit Grouping
 
 ###################
 # Enclosing Signs #
@@ -261,15 +264,15 @@ correct "\x038F" "\x0384\x03A9"
 
 # Small Iota with Dialytika and Tonos
 lowercase \x0390 24
-#correct "\x0390" "DIALYTIKA\x0384\x03B9"
+correct "\x0390" "\x0384\x03B9"
 
 # Capital Iota with Dialytika
 uppercase \x03AA 24
-#correct "\x03AA" "DIALYTIKA\x0399"
+correct "\x03AA" "\x0399"
 
 # Capital Upsilon with Dialytika
 uppercase \x03AB 13456
-#correct "\x03AB" "DIALYTIKA\x03A5"
+correct "\x03AB" "\x03A5"
 
 # Small Alpha with Tonos
 lowercase \x03AC 1
@@ -289,15 +292,15 @@ correct "\x03AF" "\x0384\x03B9"
 
 # Small Upsilon with Dialytika and Tonos
 lowercase \x03B0 13456
-#correct "\x03B0" "DIALYTIKA\x0384\x03C5"
+correct "\x03B0" "\x0384\x03C5"
 
 # Small Iota with Dialytika
 lowercase \x03CA 24
-#correct "\x03CA" "DIALYTIKA\x03B9"
+correct "\x03CA" "\x03B9"
 
 # Small Upsilon with Dialytika
 lowercase \x03CB 13456
-#correct "\x03CB" "DIALYTIKA\x03C5"
+correct "\x03CB" "\x03C5"
 
 # Small Omicron with Tonos
 lowercase \x03CC 135
@@ -961,7 +964,7 @@ correct "\x1FAF" "\x1FFE\x1FC0\x1FBE\x03A9"
 
 # Small Alpha with Vrachy
 lowercase \x1FB0 1
-#correct "\x1FB0" "VRACHY\x03B1"
+correct "\x1FB0" "\x03B1"
 
 # Small Alpha with Macron
 lowercase \x1FB1 1
@@ -985,7 +988,7 @@ correct "\x1FB7" "\x1FC0\x1FB3"
 
 # Capital Alpha with Vrachy
 uppercase \x1FB8 1
-#correct "\x1FB8" "VRACHY\x0391"
+correct "\x1FB8" "\x0391"
 
 # Capital Alpha with Macron
 uppercase \x1FB9 1
@@ -1041,7 +1044,7 @@ correct "\x1FCC" "\x1FBE\x0397"
 
 # Small Iota with Vrachy
 lowercase \x1FD0 24
-#correct "\x1FD0" "VRACHY\x03B9"
+correct "\x1FD0" "\x03B9"
 
 # Small Iota with Macron
 lowercase \x1FD1 24
@@ -1049,11 +1052,11 @@ correct "\x1FD1" "\x00AF\x03B9"
 
 # Small Iota with Dialytika and Varia
 lowercase \x1FD2 24
-#correct "\x1FD2" "DIALYTIKA\x1FEF\x03B9"
+correct "\x1FD2" "\x1FEF\x03B9"
 
 # Small Iota with Dialytika and Oxia
 lowercase \x1FD3 24
-#correct "\x1FD3" "DIALYTIKA\x1FFD\x03B9"
+correct "\x1FD3" "\x1FFD\x03B9"
 
 # Small Iota with Perispomeni
 lowercase \x1FD6 24
@@ -1061,11 +1064,11 @@ correct "\x1FD6" "\x1FC0\x03B9"
 
 # Small Iota with Dialytika and Perispomeni
 lowercase \x1FD7 24
-#correct "\x1FD7" "DIALYTIKA\x1FC0\x03B9"
+correct "\x1FD7" "\x1FC0\x03B9"
 
 # Capital Iota with Vrachy
 uppercase \x1FD8 24
-#correct "\x1FD8" "VRACHY\x0399"
+correct "\x1FD8" "\x0399"
 
 # Capital Iota with Macron
 uppercase \x1FD9 24
@@ -1081,7 +1084,7 @@ correct "\x1FDB" "\x1FFD\x0399"
 
 # Small Upsilon with Vrachy
 lowercase \x1FE0 13456
-#correct "\x1FE0" "VRACHY\x03C5"
+correct "\x1FE0" "\x03C5"
 
 # Small Upsilon with Macron
 lowercase \x1FE1 13456
@@ -1089,11 +1092,11 @@ correct "\x1FE1" "\x00AF\x03C5"
 
 # Small Upsilon with Dialytika and Varia
 lowercase \x1FE2 13456
-#correct "\x1FE2" "DIALYTIKA\x1FEF\x03C5"
+correct "\x1FE2" "\x1FEF\x03C5"
 
 # Small Upsilon with Dialytika and Oxia
 lowercase \x1FE3 13456
-#correct "\x1FE3" "DIALYTIKA\x1FFD\x03C5"
+correct "\x1FE3" "\x1FFD\x03C5"
 
 # Small Rho with Psili
 lowercase \x1FE4 1235
@@ -1109,11 +1112,11 @@ correct "\x1FE6" "\x1FC0\x03C5"
 
 # Small Upsilon with Dialytika and Perispomeni
 lowercase \x1FE7 13456
-#correct "\x1FE7" "DIALYTIKA\x1FC0\x03C5"
+correct "\x1FE7" "\x1FC0\x03C5"
 
 # Capital Upsilon with Vrachy
 uppercase \x1FE8 13456
-#correct "\x1FE8" "VRACHY\x03A5"
+correct "\x1FE8" "\x03A5"
 
 # Capital Upsilon with Macron
 uppercase \x1FE9 13456
@@ -1169,15 +1172,15 @@ correct "\x1FFC" "\x1FBE\x03A9
 
 # The capital sign should be before the accents.
 pass2 @4-46 @46-4 # Varia
-pass2 @5-46 @46-5 # Oxia
+pass2 @5-46 @46-5 # Tonos or Oxia
 pass2 @6-46 @46-6 # Perispomeni
 pass2 @9[] * # remove non-combined Psili accents
 pass2 @23456-46 @46-23456 # Psili and Varia
-pass2 @356-46 @46-356 # Psili and Oxia
+pass2 @356-46 @46-356 # Psili and Tonos or Oxia
 pass2 @256-46 @46-256 # Psili and Perispomeni
 pass2 @1236-46 @46-1236 # Dasia
 pass2 @12356-46 @46-12356 # Dasia and Varia
-pass2 @26-46 @46-26 # Dasia and Oxia
+pass2 @26-46 @46-26 # Dasia and Tonos or Oxia
 pass2 @235-46 @46-235 # Dasia and Perispomeni
 
 ####################
