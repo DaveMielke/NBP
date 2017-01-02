@@ -109,7 +109,7 @@ public enum TranslationTable {
   ),
 
   EN_UEB_G2(
-    "en-ueb-g2", R.string.louis_ttd_EN_UEB_G2
+    "B2G-en-ueb-g2", R.string.louis_ttd_EN_UEB_G2
   ),
 
   EN_US_COMP6(
@@ -202,6 +202,10 @@ public enum TranslationTable {
 
   GON(
     "gon", R.string.louis_ttd_GON
+  ),
+
+  GR(
+    "B2G-gr", R.string.louis_ttd_GR
   ),
 
   GR_BB(
