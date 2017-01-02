@@ -112,19 +112,9 @@ sign	%	4-356	# Percent Sign
 sign	€	4-15	# Euro Sign
 sign	$	4-234	# Dollar Sign
 
-#################
-# Braille Cells #
-#################
-
-include braille-patterns.cti
-
-###########
-# Numbers #
-###########
-
-include digits6Dots.uti
-midnum	,	46	# Decimal Point
-midnum	.	2	# Digit Grouping
+################
+# Math Symbols #
+################
 
 math	+	346	# Addition
 
@@ -141,12 +131,19 @@ math	=	46-13	# Equals
 math	<	5-13	# Less Than
 math	>	46-2	# Greater Than
 
-math	(	12356	# Opening Round Bracket
-math	)	23456	# Closing Round Bracket
-math	[	4-12356	# Opening Square Bracket
-math	]	4-23456	# Closing Square Bracket
-math	{	46-12356	# Opening Curly Bracket
-math	}	46-23456	# Closing Curly Bracket
+#################
+# Braille Cells #
+#################
+
+include braille-patterns.cti
+
+###########
+# Numbers #
+###########
+
+include digits6Dots.uti
+midnum	,	46	# Decimal Point
+midnum	.	2	# Digit Grouping
 
 ###################
 # Enclosing Signs #
@@ -1193,6 +1190,6 @@ noback uplow Yy 6-13456,13456
 noback uplow Zz 6-1356,1356
 
 class englishLetter ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-context `[%englishLetter] @56*
-context _!$l[%englishLetter] @56*
+context `%englishLetter @56
+context _!$l%englishLetter @56
 
