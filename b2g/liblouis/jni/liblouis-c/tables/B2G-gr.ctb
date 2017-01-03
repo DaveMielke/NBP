@@ -53,10 +53,11 @@ sign	\x1FFD	5	# ´ Acute Accent (Oxia)
 sign	\x1FC0	6	# ῀ Circumflex Accent (Perispomeni)
 sign	\x1FBF	9	# ᾿ Smooth Breathing Accent (Psili)
 sign	\x1FFE	1236	# ῾ Rough Breathing Accent (Dasia)
-sign	\x037A	9	# ͺ Ypogegrammeni Accent
-sign	\x1FBE	9	# ι Prosgegrammeni Accent
+sign	\x037A	9	# ͺ Subscript Iota Accent (Ypogegrammeni)
+sign	\x1FBE	9	# ι Adscript Iota Accent (Prosgegrammeni)
 sign	\x00A8	9	# ¯ Diaeresis Accent (Dialytika)
 sign	\x00AF	9	# ¯ Macron Accent
+sign	\x02D8	9	# ¯ Breve Accent (Vrachy)
 
 # ῍ Smooth and Grave Accent (Psili and Varia)
 sign \x1FCD 23456
@@ -965,7 +966,7 @@ correct "\x1FAF" "\x1FFE\x1FC0\x1FBE\x03A9"
 
 # Small Alpha with Vrachy
 lowercase \x1FB0 1
-correct "\x1FB0" "\x03B1"
+correct "\x1FB0" "\x02D8\x03B1"
 
 # Small Alpha with Macron
 lowercase \x1FB1 1
@@ -989,7 +990,7 @@ correct "\x1FB7" "\x1FC0\x1FB3"
 
 # Capital Alpha with Vrachy
 uppercase \x1FB8 1
-correct "\x1FB8" "\x0391"
+correct "\x1FB8" "\x02D8\x0391"
 
 # Capital Alpha with Macron
 uppercase \x1FB9 1
@@ -1045,7 +1046,7 @@ correct "\x1FCC" "\x1FBE\x0397"
 
 # Small Iota with Vrachy
 lowercase \x1FD0 24
-correct "\x1FD0" "\x03B9"
+correct "\x1FD0" "\x02D8\x03B9"
 
 # Small Iota with Macron
 lowercase \x1FD1 24
@@ -1069,7 +1070,7 @@ correct "\x1FD7" "\x00A8\x1FC0\x03B9"
 
 # Capital Iota with Vrachy
 uppercase \x1FD8 24
-correct "\x1FD8" "\x0399"
+correct "\x1FD8" "\x02D8\x0399"
 
 # Capital Iota with Macron
 uppercase \x1FD9 24
@@ -1085,7 +1086,7 @@ correct "\x1FDB" "\x1FFD\x0399"
 
 # Small Upsilon with Vrachy
 lowercase \x1FE0 13456
-correct "\x1FE0" "\x03C5"
+correct "\x1FE0" "\x02D8\x03C5"
 
 # Small Upsilon with Macron
 lowercase \x1FE1 13456
@@ -1117,7 +1118,7 @@ correct "\x1FE7" "\x00A8\x1FC0\x03C5"
 
 # Capital Upsilon with Vrachy
 uppercase \x1FE8 13456
-correct "\x1FE8" "\x03A5"
+correct "\x1FE8" "\x02D8\x03A5"
 
 # Capital Upsilon with Macron
 uppercase \x1FE9 13456
