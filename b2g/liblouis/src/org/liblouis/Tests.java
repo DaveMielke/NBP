@@ -8,12 +8,26 @@ import java.io.File;
 
 import android.util.Log;
 
-public class Tests {
+public abstract class Tests {
   private final static String LOG_TAG = Tests.class.getName();
 
   private final static char OUT_OF_BOUNDS_CHARACTER = (char)0x28FF;
 
-  public static void logOutputOffsets (Translation translation) {
+  private static void logOffset (
+    CharSequence label,
+    int inputOffset, char inputCharacter,
+    int outputOffset, char outputCharacter
+  ) {
+    Log.d(LOG_TAG, String.format(
+      "%s: %d->%d %c->%c %04X->%04X",
+      label,
+      inputOffset, outputOffset,
+      inputCharacter, outputCharacter,
+      (int)inputCharacter, (int)outputCharacter
+    ));
+  }
+
+  public final static void logOutputOffsets (Translation translation) {
     CharSequence input = translation.getConsumedInput();
     int inputLength = input.length();
 
@@ -26,15 +40,15 @@ public class Tests {
         ((outputOffset >= 0) && (outputOffset < outputLength))?
         output[outputOffset]: OUT_OF_BOUNDS_CHARACTER;
 
-      Log.d(LOG_TAG, String.format(
-        "in->out: %d->%d %c->%c",
-        inputOffset, outputOffset,
-        input.charAt(inputOffset), outputCharacter
-      ));
+      logOffset(
+        "in->out",
+        inputOffset, input.charAt(inputOffset),
+        outputOffset, outputCharacter
+      );
     }
   }
 
-  public static void logInputOffsets (Translation translation) {
+  public final static void logInputOffsets (Translation translation) {
     char[] output = translation.getOutputAsArray();
     int outputLength = output.length;
 
@@ -47,20 +61,20 @@ public class Tests {
         ((inputOffset >= 0) && (inputOffset < inputLength))?
         input.charAt(inputOffset): OUT_OF_BOUNDS_CHARACTER;
 
-      Log.d(LOG_TAG, String.format(
-        "out->in: %d->%d %c->%c",
-        outputOffset, inputOffset,
-        output[outputOffset], inputCharacter
-      ));
+      logOffset(
+        "out->in",
+        outputOffset, output[outputOffset],
+        inputOffset, inputCharacter
+      );
     }
   }
 
-  public static void logOffsets (Translation translation) {
+  public final static void logOffsets (Translation translation) {
     logOutputOffsets(translation);
     logInputOffsets(translation);
   }
 
-  public static void translateText (TranslationTable table, CharSequence text) {
+  public final static void translateText (TranslationTable table, CharSequence text) {
     Log.d(LOG_TAG, ("begin text translation test: " + text));
 
     BrailleTranslation brl = Louis.getBrailleTranslation(table, text);
@@ -76,7 +90,7 @@ public class Tests {
     Log.d(LOG_TAG, "end text translation test");
   }
 
-  public static void translateBraille (TranslationTable table, CharSequence braille) {
+  public final static void translateBraille (TranslationTable table, CharSequence braille) {
     Log.d(LOG_TAG, ("begin braille translation test: " + braille));
 
      TextTranslation txt = Louis.getTextTranslation(table, braille);
@@ -123,5 +137,8 @@ public class Tests {
     }
 
     Log.d(LOG_TAG, "end translation table enumeration audit");
+  }
+
+  protected Tests () {
   }
 }
