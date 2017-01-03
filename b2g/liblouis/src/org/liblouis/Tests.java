@@ -11,34 +11,46 @@ import android.util.Log;
 public class Tests {
   private final static String LOG_TAG = Tests.class.getName();
 
-  public static void logOutputOffsets (Translation translation) {
-    int length = translation.getInputLength();
-    CharSequence input = translation.getConsumedInput();
-    char[] output = translation.getOutputAsArray();
+  private final static char OUT_OF_BOUNDS_CHARACTER = (char)0x28FF;
 
-    for (int from=0; from<length; from+=1) {
-      int to = translation.getOutputOffset(from);
+  public static void logOutputOffsets (Translation translation) {
+    CharSequence input = translation.getConsumedInput();
+    int inputLength = input.length();
+
+    char[] output = translation.getOutputAsArray();
+    int outputLength = output.length;
+
+    for (int inputOffset=0; inputOffset<inputLength; inputOffset+=1) {
+      int outputOffset = translation.getOutputOffset(inputOffset);
+      char outputCharacter =
+        ((outputOffset >= 0) && (outputOffset < outputLength))?
+        output[outputOffset]: OUT_OF_BOUNDS_CHARACTER;
 
       Log.d(LOG_TAG, String.format(
         "in->out: %d->%d %c->%c",
-        from, to,
-        input.charAt(from), output[to]
+        inputOffset, outputOffset,
+        input.charAt(inputOffset), outputCharacter
       ));
     }
   }
 
   public static void logInputOffsets (Translation translation) {
-    int length = translation.getOutputLength();
-    CharSequence input = translation.getConsumedInput();
     char[] output = translation.getOutputAsArray();
+    int outputLength = output.length;
 
-    for (int from=0; from<length; from+=1) {
-      int to = translation.getInputOffset(from);
+    CharSequence input = translation.getConsumedInput();
+    int inputLength = input.length();
+
+    for (int outputOffset=0; outputOffset<outputLength; outputOffset+=1) {
+      int inputOffset = translation.getInputOffset(outputOffset);
+      char inputCharacter =
+        ((inputOffset >= 0) && (inputOffset < inputLength))?
+        input.charAt(inputOffset): OUT_OF_BOUNDS_CHARACTER;
 
       Log.d(LOG_TAG, String.format(
         "out->in: %d->%d %c->%c",
-        from, to,
-        output[from], input.charAt(to)
+        outputOffset, inputOffset,
+        output[outputOffset], inputCharacter
       ));
     }
   }
