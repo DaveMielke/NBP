@@ -262,6 +262,9 @@ public class Translation {
     int[] inOffsets;
     boolean translated;
 
+    int retryCount = 0;
+    int previousConsumed = -1;
+
     while (true) {
       output = new char[outputLength];
       inOffsets = new int[outputLength];
@@ -338,6 +341,16 @@ public class Translation {
       }
 
       if (!allowLongerOutput) break;
+      int currentConsumed = resultValues[RVI_INPUT_LENGTH];
+
+      if (currentConsumed == previousConsumed) {
+        if (++retryCount > 5) break;
+        if ((outputLength - resultValues[RVI_OUTPUT_LENGTH]) > 100) break;
+      } else {
+        retryCount = 0;
+        previousConsumed = currentConsumed;
+      }
+
       outputLength <<= 1;
     }
 
