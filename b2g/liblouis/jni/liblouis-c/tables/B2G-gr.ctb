@@ -228,9 +228,9 @@ lowercase \x1FA5 26-2456 # ᾥ Small Omega with Dasia and Oxia and Ypogegrammeni
 lowercase \x1FA3 12356-2456 # ᾣ Small Omega with Dasia and Varia and Ypogegrammeni
 lowercase \x1FA7 235-2456 # ᾧ Small Omega with Dasia and Perispomeni and Ypogegrammeni
 
-###############
-# Punctuation #
-###############
+#######################
+# General Punctuation #
+#######################
 
 # Hyphen
 sign	-	36
@@ -243,22 +243,6 @@ punctuation	'	3	# ’ Apostrophe
 punctuation	\x0387	23	# · Greek Semicolon
 punctuation	\x2015	6-36	# ― Dialog (Horizontal) Bar
 punctuation	\x2026	3-3-3	# … Horizontal Ellipsis
-
-# ? English Question Mark
-punctuation ? 236
-postpunc ? 236
-
-# . Period
-punctuation	.	256
-postpunc	.	256
-
-# ! Exclamation Mark
-punctuation	!	235
-postpunc	!	235
-
-# ; Greek Question Mark
-punctuation	\x037E	26
-postpunc	\x037E	26
 
 #########
 # Signs #
@@ -297,17 +281,9 @@ math	>	46-2	# Greater Than
 
 include braille-patterns.cti
 
-###########
-# Numbers #
-###########
-
-include digits6Dots.uti
-midnum	,	2	# Decimal Point
-midnum	.	46	# Digit Grouping
-
-###################
-# Enclosing Signs #
-###################
+##########################
+# Positional Punctuation #
+##########################
 
 # « Greek Opening Quotation Mark (Left-Pointing Double Angle Quotation Mark)
 punctuation \x00AB 23678
@@ -345,6 +321,30 @@ prepunc     { 12346
 # } Closing Brace
 punctuation } 1345678
 postpunc    } 13456
+
+# ? English Question Mark
+punctuation ? 236
+postpunc ? 236
+
+# . Period
+punctuation	.	256
+postpunc	.	256
+
+# ! Exclamation Mark
+punctuation	!	235
+postpunc	!	235
+
+# ; Greek Question Mark
+punctuation	\x037E	26
+postpunc	\x037E	26
+
+###########
+# Numbers #
+###########
+
+include digits6Dots.uti
+midnum	,	2	# Decimal Point
+midnum	.	46	# Digit Grouping
 
 ####################
 # Greek Diphthongs #
