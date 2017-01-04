@@ -164,7 +164,7 @@ public final class Louis {
     removeFile(oldLocation);
   }
 
-  private static void updatePackageData () {
+  private static void updatePackageData (final NewTranslationTablesListener newTranslationTablesListener) {
     final SharedPreferences prefs = getSharedPreferences();
     final File file = new File(currentContext.getPackageCodePath());
 
@@ -191,12 +191,16 @@ public final class Louis {
           editor.putLong(prefKey_size, newSize);
           editor.putLong(prefKey_time, newTime);
           editor.commit();
+
+          if (newTranslationTablesListener != null) {
+            newTranslationTablesListener.newTranslationTables();
+          }
         }
       }.start();
     }
   }
 
-  public static void initialize (Context context) {
+  public static void initialize (Context context, NewTranslationTablesListener newTranslationTablesListener) {
     synchronized (INITIALIZATION_LOCK) {
       if (currentContext != null) {
         throw new IllegalStateException("already initialized");
@@ -208,7 +212,11 @@ public final class Louis {
       setDataPath(dataDirectory.getAbsolutePath());
     }
 
-    updatePackageData();
+    updatePackageData(newTranslationTablesListener);
+  }
+
+  public static void initialize (Context context) {
+    initialize(context, null);
   }
 
   public final static boolean compileTranslationTable (File table) {
