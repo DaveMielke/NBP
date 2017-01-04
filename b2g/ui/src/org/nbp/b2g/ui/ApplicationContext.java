@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.host.ScreenMonitor;
 
 import android.util.Log;
 
@@ -14,49 +15,67 @@ import android.view.inputmethod.InputMethodManager;
 import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputMethodInfo;
 
-import org.nbp.b2g.ui.host.ScreenMonitor;
 import org.liblouis.Louis;
+import org.liblouis.NewTranslationTablesListener;
 
 public abstract class ApplicationContext extends CommonContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
 
   public static boolean setContext (Context context) {
     if (!CommonContext.setContext(context)) return false;
+    final Object LOCK = new Object();
 
     final String logTag = LOG_TAG + ".startup";
     Log.d(logTag, "begin");
 
     Log.d(logTag, "preparing LibLouis");
-    Louis.setLogLevel(ApplicationParameters.LIBLOUIS_LOG_LEVEL);
-    Louis.initialize(context);
+    {
+      NewTranslationTablesListener listener = new NewTranslationTablesListener() {
+        @Override
+        public void newTranslationTables () {
+          synchronized (LOCK) {
+            TranslationUtilities.refresh();
 
-    Log.d(logTag, "starting host monitor");
-    HostMonitor.start(context);
+            if (ApplicationSettings.DEVELOPER_ENABLED) {
+              ApplicationUtilities.message(R.string.message_new_literary_tables);
+            }
+          }
+        }
+      };
 
-    Log.d(logTag, "preparing clipboard object");
-    Clipboard.prepare(context);
+      Louis.setLogLevel(ApplicationParameters.LIBLOUIS_LOG_LEVEL);
+      Louis.initialize(context, listener);
+    }
 
-    Log.d(logTag, "starting phone monitor");
-    PhoneMonitor.start(context);
+    synchronized (LOCK) {
+      Log.d(logTag, "starting host monitor");
+      HostMonitor.start(context);
 
-    Log.d(logTag, "restoring controls");
-    Controls.restoreCurrentValues();
-    Controls.restoreSaneValues();
+      Log.d(logTag, "preparing clipboard object");
+      Clipboard.prepare(context);
 
-    Log.d(logTag, "starting speech");
-    Devices.speech.get().say(null);
+      Log.d(logTag, "starting phone monitor");
+      PhoneMonitor.start(context);
 
-    Log.d(logTag, "starting event monitors");
-    EventMonitors.startEventMonitors();
+      Log.d(logTag, "restoring controls");
+      Controls.restoreCurrentValues();
+      Controls.restoreSaneValues();
 
-    Log.d(logTag, "starting screen monitor");
-    ScreenMonitor.start();
+      Log.d(logTag, "starting speech");
+      Devices.speech.get().say(null);
 
-    Log.d(logTag, "starting input service");
-    InputService.start();
+      Log.d(logTag, "starting event monitors");
+      EventMonitors.startEventMonitors();
 
-    Log.d(logTag, "end");
-    return true;
+      Log.d(logTag, "starting screen monitor");
+      ScreenMonitor.start();
+
+      Log.d(logTag, "starting input service");
+      InputService.start();
+
+      Log.d(logTag, "end");
+      return true;
+    }
   }
 
   public static AccessibilityManager getAccessibilityManager () {

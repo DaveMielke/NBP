@@ -150,12 +150,11 @@ public abstract class Endpoint {
   }
 
   private final void refreshBrailleTranslation () {
+    discardTranslation();
+
     if (ApplicationSettings.LITERARY_BRAILLE) {
-      discardTranslation();
       if (retrieveTranslation()) return;
       makeTranslation();
-    } else {
-      discardTranslation();
     }
   }
 

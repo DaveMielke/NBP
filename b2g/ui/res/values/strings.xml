@@ -267,6 +267,7 @@
 
   <string name="message_no_screen_content">no screen content</string>
   <string name="message_no_screen_monitor">no screen monitor</string>
+  <string name="message_new_literary_tables">new literary tables</string>
   <string name="message_battery_percentage">battery</string>
 
   <string name="prompt_find">find</string>

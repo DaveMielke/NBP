@@ -53,6 +53,14 @@ public abstract class TranslationUtilities {
     TranslationCache.put(text, translation);
   }
 
+  public final static void refresh () {
+    TranslationCache.clear();
+
+    if (ApplicationSettings.LITERARY_BRAILLE) {
+      Endpoints.getCurrentEndpoint().refresh();
+    }
+  }
+
   private TranslationUtilities () {
   }
 }
