@@ -2,6 +2,8 @@ package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.actions.*;
 
 import android.util.Log;
+import static org.nbp.common.LogUtilities.log;
+import static org.liblouis.Tests.logOffsets;
 
 import org.liblouis.Translation;
 import org.liblouis.BrailleTranslation;
@@ -211,6 +213,14 @@ public abstract class Endpoint {
 
     CharSequence text = textTranslation.getTextWithSpans();
     TranslationCache.put(text, textTranslation);
+
+    if (false) {
+      log("brl", braille);
+      log("csm", textTranslation.getConsumedInput());
+      log("txt", text);
+      logOffsets(textTranslation);
+    }
+
     return replaceLine(text, textTranslation.getTextOffset(cursor));
   }
 
