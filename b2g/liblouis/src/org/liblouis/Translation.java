@@ -308,6 +308,22 @@ public class Translation {
         break;
       }
 
+      if (backTranslate) {
+        int outStart = 0;
+
+        while (true) {
+          int inOffset = resultValues[RVI_INPUT_LENGTH];
+          if (inOffset == inputLength) break;
+
+          int outOffset = outOffsets[inOffset];
+          if (outOffset < outStart) break;
+          if (outOffset > outputLength) break;
+
+          outStart = outOffset;
+          resultValues[RVI_INPUT_LENGTH] = inOffset + 1;
+        }
+      }
+
     FIX_END:
       if (resultValues[RVI_INPUT_LENGTH] == inputLength) {
         if (backTranslate) {

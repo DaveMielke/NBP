@@ -34,6 +34,9 @@ JAVA_METHOD(
 
   char *spacing = NULL;
 
+  memset(cOutputOffsets, (*inputLength * sizeof(*cOutputOffsets)), 0);
+  memset(cInputOffsets, (*outputLength * sizeof(*cInputOffsets)), 0);
+
   int successful =
     ((backTranslate != JNI_FALSE)? lou_backTranslate: lou_translate)(
       cTableName,
