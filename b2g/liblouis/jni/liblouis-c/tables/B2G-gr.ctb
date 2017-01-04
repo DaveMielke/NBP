@@ -421,4 +421,8 @@ noback uplow Zz 6-1356e,1356e
 
 class englishLetter ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 pass2 %englishLetter. @56*
+pass3 @6@56 @56@6
+pass4 @46@46[@56] *
+pass4 @46[@56] *
+pass4 [%englishLetter]@56 *
 
