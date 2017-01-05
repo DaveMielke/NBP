@@ -106,12 +106,12 @@ public abstract class Tests {
     Log.d(LOG_TAG, "end braille translation test");
   }
 
-  private final static void auditTranslationTableFile (Set<File> notFound, File file) {
-    if (!file.exists()) {
-      Log.d(LOG_TAG, "table file not found: " + file.getAbsolutePath());
+  private final static void auditFile (Set<File> notFound, File file) {
+    if (file.exists()) {
+      notFound.remove(file);
+    } else {
+      Log.d(LOG_TAG, "file not found: " + file.getAbsolutePath());
     }
-
-    notFound.remove(file);
   }
 
   public static void auditTranslationTableEnumeration () {
@@ -129,8 +129,13 @@ public abstract class Tests {
         }
       }
 
-      auditTranslationTableFile(notFound, table.getForwardFileObject());
-      auditTranslationTableFile(notFound, table.getBackwardFileObject());
+      {
+        File forward = table.getForwardFileObject();
+        auditFile(notFound, forward);
+
+        File backward = table.getBackwardFileObject();
+        if (backward != forward) auditFile(notFound, backward);
+      }
     }
 
     for (File file : notFound) {
