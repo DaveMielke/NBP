@@ -226,7 +226,9 @@ public final class Louis {
   }
 
   public final static boolean compileTranslationTable (TranslationTable table) {
-    return compileTranslationTable(table.getFile());
+    return compileTranslationTable(table.getForwardFileObject())
+        && compileTranslationTable(table.getBackwardFileObject())
+        ;
   }
 
   public static BrailleTranslation getBrailleTranslation (

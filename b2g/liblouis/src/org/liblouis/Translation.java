@@ -247,6 +247,11 @@ public class Translation {
     suppliedInput = builder.getInputCharacters();
     inputCursor = builder.getCursorOffset();
 
+    final String tableFile =
+      backTranslate?
+      translationTable.getBackwardFileName():
+      translationTable.getForwardFileName();
+
     final boolean includeHighlighting = builder.getIncludeHighlighting();
     final boolean allowLongerOutput = builder.getAllowLongerOutput();
     int outputLength = builder.getOutputLength();
@@ -280,7 +285,7 @@ public class Translation {
 
       synchronized (Louis.NATIVE_LOCK) {
         translated = translate(
-          translationTable.getFileName(),
+          tableFile,
           inputString, output, typeForm,
           outOffsets, inOffsets, resultValues,
           backTranslate

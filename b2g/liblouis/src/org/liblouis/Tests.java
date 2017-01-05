@@ -106,33 +106,34 @@ public abstract class Tests {
     Log.d(LOG_TAG, "end braille translation test");
   }
 
+  private final static void auditTranslationTableFile (Set<File> notFound, File file) {
+    if (!file.exists()) {
+      Log.d(LOG_TAG, "table file not found: " + file.getAbsolutePath());
+    }
+
+    notFound.remove(file);
+  }
+
   public static void auditTranslationTableEnumeration () {
     Log.d(LOG_TAG, "begin translation table enumeration audit");
 
-    Set<File> unenumeratedTables = new HashSet<File>();
-    Collections.addAll(unenumeratedTables, TranslationTable.getFiles());
+    Set<File> notFound = new HashSet<File>();
+    Collections.addAll(notFound, TranslationTable.getAllTableFiles());
 
     for (TranslationTable table : TranslationTable.values()) {
-      String identifier = table.name();
-      String name = table.getName();
-      File file = table.getFile();
+      {
+        String identifier = table.name();
 
-      if (!identifier.equals(identifier.toUpperCase())) {
-        Log.d(LOG_TAG, "table identifier not all uppercase: " + identifier);
+        if (!identifier.equals(identifier.toUpperCase())) {
+          Log.d(LOG_TAG, "table identifier not all uppercase: " + identifier);
+        }
       }
 
-      if (!identifier.equals(name.toUpperCase().replace('-', '_'))) {
-        Log.d(LOG_TAG, "table identifier doesn't match file name: " + name);
-      }
-
-      if (!file.exists()) {
-        Log.d(LOG_TAG, "table file not found: " + file.getAbsolutePath());
-      }
-
-      unenumeratedTables.remove(file);
+      auditTranslationTableFile(notFound, table.getForwardFileObject());
+      auditTranslationTableFile(notFound, table.getBackwardFileObject());
     }
 
-    for (File file : unenumeratedTables) {
+    for (File file : notFound) {
       Log.d(LOG_TAG, "table file not enumerated: " + file.getAbsolutePath());
     }
 
