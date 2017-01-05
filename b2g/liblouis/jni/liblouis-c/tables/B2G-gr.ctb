@@ -1,5 +1,5 @@
 # LibLouis table for Greek braille - Κώδικας Μπράιγ
-# Author: Dave Mielke <dave@mielke.cc> [http://mielke.cc/]
+# Copyright (C) 2017: Dave Mielke <dave@mielke.cc> [http://mielke.cc/]
 # License: LGPL
 
 ##########
@@ -146,6 +146,7 @@ uplow \x1F69\x1F61 1236-245 # Ὡὡ Omega with Dasia
 uplow \x1F6D\x1F65 26-245 # Ὥὥ Omega with Dasia and Oxia
 uplow \x1F6B\x1F63 12356-245 # Ὣὣ Omega with Dasia and Varia
 uplow \x1F6F\x1F67 235-245 # Ὧὧ Omega with Dasia and Perispomeni
+
 uppercase \x1FBC 35 # ᾼ Capital Alpha with Prosgegrammeni
 uppercase \x1F88 35 # ᾈ Capital Alpha with Psili and Prosgegrammeni
 uppercase \x1F8C 356-35 # ᾌ Capital Alpha with Psili and Oxia and Prosgegrammeni
@@ -173,6 +174,7 @@ uppercase \x1FA9 1236-2456 # ᾩ Capital Omega with Dasia and Prosgegrammeni
 uppercase \x1FAD 26-2456 # ᾭ Capital Omega with Dasia and Oxia and Prosgegrammeni
 uppercase \x1FAB 12356-2456 # ᾫ Capital Omega with Dasia and Varia and Prosgegrammeni
 uppercase \x1FAF 235-2456 # ᾯ Capital Omega with Dasia and Perispomeni and Prosgegrammeni
+
 lowercase \x1FB6 6-1 # ᾶ Small Alpha with Perispomeni
 lowercase \x1FB3 35 # ᾳ Small Alpha with Ypogegrammeni
 lowercase \x1FB4 5-35 # ᾴ Small Alpha with Oxia and Ypogegrammeni
@@ -236,9 +238,12 @@ lowercase \x1FA7 235-2456 # ᾧ Small Omega with Dasia and Perispomeni and Ypoge
 sign	-	36
 hyphen	-	36
 
+punctuation	'	3	# ’ Apostrophe
+always '\x03C2 3-234
+always \x03C3' 234-3
+
 punctuation	,	2	# , Comma
 punctuation	:	25	# : Colon
-punctuation	'	3	# ’ Apostrophe
 
 punctuation	\x0387	23	# · Greek Semicolon
 punctuation	\x2015	6-36	# ― Dialog (Horizontal) Bar
