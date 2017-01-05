@@ -205,7 +205,7 @@ public enum TranslationTable {
   ),
 
   GR(
-    "B2G-gr", R.string.louis_ttd_GR
+    "gr-forward", "gr-backward", R.string.louis_ttd_GR
   ),
 
   GR_BB(
