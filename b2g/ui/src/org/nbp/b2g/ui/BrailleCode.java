@@ -1,57 +1,62 @@
 package org.nbp.b2g.ui;
 
+import org.liblouis.TranslationEnumeration;
 import org.liblouis.TranslationTable;
 
 public enum BrailleCode {
   EN_UEB_G1(
-    TranslationTable.EN_UEB_G1
+    TranslationEnumeration.EN_UEB_G1
   ),
 
   EN_UEB_G2(
-    TranslationTable.EN_UEB_G2
+    TranslationEnumeration.EN_UEB_G2
   ),
 
   EN_EBAE_G1(
-    TranslationTable.EN_US_G1
+    TranslationEnumeration.EN_US_G1
   ),
 
   EN_EBAE_G2(
-    TranslationTable.EN_US_G2
+    TranslationEnumeration.EN_US_G2
   ),
 
   FR_BFU_G2(
-    TranslationTable.FR_BFU_G2
+    TranslationEnumeration.FR_BFU_G2
   ),
 
   DE_G1(
-    TranslationTable.DE_DE_G1
+    TranslationEnumeration.DE_DE_G1
   ),
 
   DE_G2(
-    TranslationTable.DE_DE_G2
+    TranslationEnumeration.DE_DE_G2
   ),
 
   GR(
-    TranslationTable.GR
+    TranslationEnumeration.GR
   ),
 
   HE(
-    TranslationTable.HE
+    TranslationEnumeration.HE
   ),
 
   ES_G1(
-    TranslationTable.ES_G1
+    TranslationEnumeration.ES_G1
   ),
 
   ; // endof enumeration
 
-  private final TranslationTable translationTable;
+  private final TranslationEnumeration translationEnumeration;
 
-  public final TranslationTable getTranslationTable () {
-    return translationTable;
+  BrailleCode (TranslationEnumeration table) {
+    translationEnumeration = table;
   }
 
-  BrailleCode (TranslationTable table) {
-    translationTable = table;
+  public final TranslationEnumeration getTranslationEnumeration () {
+    return translationEnumeration;
+  }
+
+  public final TranslationTable getTranslationTable () {
+    return translationEnumeration.getTranslationTable();
   }
 }
