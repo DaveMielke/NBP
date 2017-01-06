@@ -4,41 +4,9 @@
 
 include gr-common.cti
 
-####################
-# English Alphabet #
-####################
+class englishLetter abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+class englishUpper ABCDEFGHIJKLMNOPQRSTUVWXYZ
 
-noback uplow Aa 6-1e,1e
-noback uplow Bb 6-12e,12e
-noback uplow Cc 6-14e,14e
-noback uplow Dd 6-145e,145e
-noback uplow Ee 6-15e,15e
-noback uplow Ff 6-124e,124e
-noback uplow Gg 6-1245e,1245e
-noback uplow Hh 6-125e,125e
-noback uplow Ii 6-24e,24e
-noback uplow Jj 6-245e,245e
-noback uplow Kk 6-13e,13e
-noback uplow Ll 6-123e,123e
-noback uplow Mm 6-134e,134e
-noback uplow Nn 6-1345e,1345e
-noback uplow Oo 6-135e,135e
-noback uplow Pp 6-1234e,1234e
-noback uplow Qq 6-12345e,12345e
-noback uplow Rr 6-1235e,1235e
-noback uplow Ss 6-234e,234e
-noback uplow Tt 6-2345e,2345e
-noback uplow Uu 6-136e,136e
-noback uplow Vv 6-1236e,1236e
-noback uplow Ww 6-2456e,2456e
-noback uplow Xx 6-1346e,1346e
-noback uplow Yy 6-13456e,13456e
-noback uplow Zz 6-1356e,1356e
-
-class englishLetter ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 pass2 %englishLetter. @56*
-pass3 @6@56 @56@6
-pass4 @46@46[@56] *
-pass4 @46[@56] *
-pass4 [%englishLetter]@56 *
+pass3 %englishUpper @6*
 
