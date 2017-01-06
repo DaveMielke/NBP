@@ -120,9 +120,11 @@ public abstract class Tests {
     Set<File> notFound = new HashSet<File>();
     Collections.addAll(notFound, TranslationTable.getAllTableFiles());
 
-    for (TranslationTable table : TranslationTable.values()) {
+    for (TranslationEnumeration value : TranslationEnumeration.values()) {
+      TranslationTable table = value.getTranslationTable();
+
       {
-        String identifier = table.name();
+        String identifier = value.name();
 
         if (!identifier.equals(identifier.toUpperCase())) {
           Log.d(LOG_TAG, "table identifier not all uppercase: " + identifier);

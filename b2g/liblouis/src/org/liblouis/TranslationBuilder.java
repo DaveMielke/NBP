@@ -1,7 +1,9 @@
 package org.liblouis;
 
 public class TranslationBuilder {
-  private TranslationTable translationTable = TranslationTable.EN_UEB_G2;
+  public final static TranslationEnumeration DEFAULT_TRANSLATION_TABLE = TranslationEnumeration.EN_UEB_G2;
+
+  private TranslationTable translationTable = null;
   private CharSequence inputCharacters = "";
   private int outputLength = 1;
   private Integer cursorOffset = null;
@@ -9,12 +11,28 @@ public class TranslationBuilder {
   private boolean allowLongerOutput = false;
 
   public final TranslationTable getTranslationTable () {
+    if (translationTable == null) {
+      setTranslationTable(DEFAULT_TRANSLATION_TABLE);
+    }
+
     return translationTable;
   }
 
   public final TranslationBuilder setTranslationTable (TranslationTable table) {
     translationTable = table;
     return this;
+  }
+
+  public final TranslationBuilder setTranslationTable (TranslationEnumeration table) {
+    return setTranslationTable(table.getTranslationTable());
+  }
+
+  public final TranslationBuilder setTranslationTable (String name) {
+    return setTranslationTable(new TranslationTable(name));
+  }
+
+  public final TranslationBuilder setTranslationTable (String forward, String backward) {
+    return setTranslationTable(new TranslationTable(forward, backward));
   }
 
   public final CharSequence getInputCharacters () {
