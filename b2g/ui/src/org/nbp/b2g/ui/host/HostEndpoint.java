@@ -2,6 +2,9 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.host.actions.*;
 import org.nbp.b2g.ui.*;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.util.Log;
 
 import android.os.Bundle;
@@ -525,17 +528,60 @@ public class HostEndpoint extends Endpoint {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
+  private final static Map<Character, String> elementTypeMap
+             = new HashMap<Character, String>();
+
+  private final static void addElementType (char character, String type) {
+    elementTypeMap.put(character, type);
+  }
+
+  private final static void addElementTypes () {
+    addElementType('d', "DOCUMENT");
+    addElementType('p', "PARENT");
+    addElementType('s', "SIBLING");
+
+    addElementType('b', "BUTTON");
+    addElementType('c', "COMBOBOX");
+    addElementType('f', "FRAME");
+    addElementType('g', "GRAPHIC");
+    addElementType('h', "HEADING");
+    addElementType('1', "H1");
+    addElementType('2', "H2");
+    addElementType('3', "H3");
+    addElementType('4', "H4");
+    addElementType('5', "H5");
+    addElementType('6', "H6");
+    addElementType('i', "LIST_ITEM");
+    addElementType('l', "LINK");
+    addElementType('o', "LIST");
+    addElementType('r', "RADIO");
+    addElementType('t', "TABLE");
+    addElementType('u', "UNVISITED_LINK");
+    addElementType('v', "VISITED_LINK");
+    addElementType('x', "CHECKBOX");
+  }
+
+  private final static String getElementType (Character character) {
+    synchronized (elementTypeMap) {
+      if (elementTypeMap.size() == 0) addElementTypes();
+      return elementTypeMap.get(character);
+    }
+  }
+
+  private String currentElementType = null;
+
   @Override
   public final boolean handleDotKeys (int keyMask) {
     int action;
+    final int NO_ACTION = -1;
     String element;
 
     {
       final int PREVIOUS = KeyMask.DOT_7;
       final int NEXT = KeyMask.DOT_8;
-      final int MASK = PREVIOUS | NEXT;
+      final int DIRECTION = PREVIOUS | NEXT;
 
-      switch (keyMask & MASK) {
+      switch (keyMask & DIRECTION) {
         case PREVIOUS:
           action = AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT;
           break;
@@ -544,32 +590,35 @@ public class HostEndpoint extends Endpoint {
           action = AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT;
           break;
 
+        case PREVIOUS | NEXT:
+          action = NO_ACTION;
+          break;
+
         default:
           return false;
       }
 
-      keyMask &= ~MASK;
+      keyMask &= ~DIRECTION;
     }
 
-    Character character = Characters.getCharacters().toCharacter(keyMask);
-    if (character == null) return false;
+    if (keyMask == 0) {
+      element = currentElementType;
+    } else {
+      Character character = Characters.getCharacters().toCharacter(keyMask);
+      if (character == null) return false;
+      element = getElementType(character);
+    }
 
-    switch (character) {
-      case 'b':
-        element = "BUTTON";
-        break;
+    if (element == null) return false;
+    currentElementType = element;
 
-      case 'l':
-        element = "LINK";
-        break;
-
-      default:
-        return false;
+    if (action == NO_ACTION) {
+      ApplicationUtilities.message(element.toLowerCase().replace('_', ' '));
+      return true;
     }
 
     Bundle arguments = new Bundle();
     arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_HTML_ELEMENT_STRING, element);
-
     return performNodeAction(action, arguments);
   }
 
