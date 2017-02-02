@@ -536,23 +536,26 @@ public class HostEndpoint extends Endpoint {
   }
 
   private final static void addElementTypes () {
-    addElementType('d', "DOCUMENT");
     addElementType('p', "PARENT");
     addElementType('s', "SIBLING");
 
-    addElementType('b', "BUTTON");
-    addElementType('c', "COMBOBOX");
-    addElementType('f', "FRAME");
-    addElementType('g', "GRAPHIC");
-    addElementType('h', "HEADING");
     addElementType('1', "H1");
     addElementType('2', "H2");
     addElementType('3', "H3");
     addElementType('4', "H4");
     addElementType('5', "H5");
     addElementType('6', "H6");
+
+    addElementType('a', "ARTICLE");
+    addElementType('b', "BUTTON");
+    addElementType('c', "COMBOBOX");
+    addElementType('e', "TEXT_FIELD");
+    addElementType('f', "CONTROL");
+    addElementType('g', "GRAPHIC");
+    addElementType('h', "HEADING");
     addElementType('i', "LIST_ITEM");
     addElementType('l', "LINK");
+    addElementType('m', "MAIN");
     addElementType('o', "LIST");
     addElementType('r', "RADIO");
     addElementType('t', "TABLE");

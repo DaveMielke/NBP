@@ -404,6 +404,19 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
+  private static void handleGranularityMovement (AccessibilityEvent event, AccessibilityNodeInfo view) {
+    HostEndpoint endpoint = getHostEndpoint();
+
+    synchronized (endpoint) {
+      if (view == null) view = endpoint.getCurrentNode();
+
+      if (view != null) {
+        endpoint.write(view, toText(event.getText()));
+        view.recycle();
+      }
+    }
+  }
+
   private final static Object ACCESSIBILITY_EVENT_LOCK = new Object();
 
   private void handleAccessibilityEvent (AccessibilityEvent event) {
@@ -416,6 +429,10 @@ public class ScreenMonitor extends AccessibilityService {
 
       case AccessibilityEvent.TYPE_VIEW_SELECTED:
         handleViewSelected(event, source);
+        break;
+
+      case AccessibilityEvent.TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY:
+        handleGranularityMovement(event, source);
         break;
 
       default:
