@@ -528,56 +528,105 @@ public class HostEndpoint extends Endpoint {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
-  private final static Map<Character, String> elementTypeMap
-             = new HashMap<Character, String>();
+  private static abstract class MovementMap<T> {
+    public abstract int getForwardAction ();
+    public abstract int getBackwardAction ();
+    protected abstract void putAll ();
 
-  private final static void addElementType (char character, String type) {
-    elementTypeMap.put(character, type);
-  }
+    protected final Map<Character, T> map = new HashMap<Character, T>();
 
-  private final static void addElementTypes () {
-    addElementType('p', "PARENT");
-    addElementType('s', "SIBLING");
+    public final T get (Character character) {
+      synchronized (map) {
+        if (map.size() == 0) putAll();
+        return map.get(character);
+      }
+    }
 
-    addElementType('1', "H1");
-    addElementType('2', "H2");
-    addElementType('3', "H3");
-    addElementType('4', "H4");
-    addElementType('5', "H5");
-    addElementType('6', "H6");
-
-    addElementType('a', "ARTICLE");
-    addElementType('b', "BUTTON");
-    addElementType('c', "COMBOBOX");
-    addElementType('e', "TEXT_FIELD");
-    addElementType('f', "CONTROL");
-    addElementType('g', "GRAPHIC");
-    addElementType('h', "HEADING");
-    addElementType('i', "LIST_ITEM");
-    addElementType('l', "LINK");
-    addElementType('m', "MAIN");
-    addElementType('o', "LIST");
-    addElementType('r', "RADIO");
-    addElementType('t', "TABLE");
-    addElementType('u', "UNVISITED_LINK");
-    addElementType('v', "VISITED_LINK");
-    addElementType('x', "CHECKBOX");
-  }
-
-  private final static String getElementType (Character character) {
-    synchronized (elementTypeMap) {
-      if (elementTypeMap.size() == 0) addElementTypes();
-      return elementTypeMap.get(character);
+    protected MovementMap () {
     }
   }
 
+  private static class ElementTypeMap extends MovementMap<String> {
+    @Override
+    public final int getForwardAction () {
+      return AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT;
+    }
+
+    @Override
+    public final int getBackwardAction () {
+      return AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT;
+    }
+
+    @Override
+    protected final void putAll () {
+      map.put('p', "PARENT");
+      map.put('s', "SIBLING");
+
+      map.put('1', "H1");
+      map.put('2', "H2");
+      map.put('3', "H3");
+      map.put('4', "H4");
+      map.put('5', "H5");
+      map.put('6', "H6");
+
+      map.put('a', "ARTICLE");
+      map.put('b', "BUTTON");
+      map.put('c', "COMBOBOX");
+      map.put('e', "TEXT_FIELD");
+      map.put('f', "CONTROL");
+      map.put('g', "GRAPHIC");
+      map.put('h', "HEADING");
+      map.put('i', "LIST_ITEM");
+      map.put('l', "LINK");
+      map.put('m', "MAIN");
+      map.put('o', "LIST");
+      map.put('r', "RADIO");
+      map.put('t', "TABLE");
+      map.put('u', "UNVISITED_LINK");
+      map.put('v', "VISITED_LINK");
+      map.put('x', "CHECKBOX");
+    }
+
+    public ElementTypeMap () {
+      super();
+    }
+  }
+
+  private static class TextGranularityMap extends MovementMap<Integer> {
+    @Override
+    public final int getForwardAction () {
+      return AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY;
+    }
+
+    @Override
+    public final int getBackwardAction () {
+      return AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY;
+    }
+
+    @Override
+    protected final void putAll () {
+      map.put('7', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER);
+      map.put('8', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD);
+      map.put('9', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE);
+      map.put('0', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH);
+      map.put('-', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE);
+    }
+
+    public TextGranularityMap () {
+      super();
+    }
+  }
+
+  private final static ElementTypeMap elementTypeMap = new ElementTypeMap();
+  private final static TextGranularityMap textGranularityMap = new TextGranularityMap();
   private String currentElementType = null;
 
   @Override
   public final boolean handleDotKeys (int keyMask) {
+    String elementType;
+
     int action;
     final int NO_ACTION = -1;
-    String element;
 
     {
       final int PREVIOUS = KeyMask.DOT_7;
@@ -605,23 +654,23 @@ public class HostEndpoint extends Endpoint {
     }
 
     if (keyMask == 0) {
-      element = currentElementType;
+      elementType = currentElementType;
     } else {
       Character character = Characters.getCharacters().toCharacter(keyMask);
       if (character == null) return false;
-      element = getElementType(character);
+      elementType = elementTypeMap.get(character);
     }
 
-    if (element == null) return false;
-    currentElementType = element;
+    if (elementType == null) return false;
+    currentElementType = elementType;
 
     if (action == NO_ACTION) {
-      ApplicationUtilities.message(element.toLowerCase().replace('_', ' '));
+      ApplicationUtilities.message(elementType.toLowerCase().replace('_', ' '));
       return true;
     }
 
     Bundle arguments = new Bundle();
-    arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_HTML_ELEMENT_STRING, element);
+    arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_HTML_ELEMENT_STRING, elementType);
     return performNodeAction(action, arguments);
   }
 
