@@ -578,9 +578,7 @@ public class HostEndpoint extends Endpoint {
             return perform(getBackwardAction());
 
           case SHOW:
-            ApplicationUtilities.message(getActualValue().toString()
-                                                         .toLowerCase()
-                                                         .replace('_', ' '));
+            ApplicationUtilities.message(toString().toLowerCase().replace('_', ' '));
             return true;
         }
 
