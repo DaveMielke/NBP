@@ -528,16 +528,76 @@ public class HostEndpoint extends Endpoint {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
-  private static abstract class MovementMap<T> {
+  private enum MovementAction {
+    FORWARD,
+    BACKWARD,
+    SHOW;
+  }
+
+  private interface Movement {
+    public boolean perform (MovementAction action);
+  }
+
+  private abstract class MovementMap<T> {
     public abstract int getForwardAction ();
     public abstract int getBackwardAction ();
-    protected abstract void putAll ();
+    public abstract String getArgumentName ();
+    public abstract String getString (T value);
 
-    protected final Map<Character, T> map = new HashMap<Character, T>();
+    protected abstract void mapCharacters ();
+    protected abstract void setArgument (Bundle arguments, T value);
 
-    public final T get (Character character) {
+    private class MapValue implements Movement {
+      private final T actualValue;
+
+      public MapValue (T value) {
+        actualValue = value;
+      }
+
+      public final T getActualValue () {
+        return actualValue;
+      }
+
+      public String toString () {
+        return getString(getActualValue());
+      }
+
+      private final boolean perform (int action) {
+        Bundle arguments = new Bundle();
+        setArgument(arguments, getActualValue());
+        return performNodeAction(action, arguments);
+      }
+
+      @Override
+      public boolean perform (MovementAction action) {
+        switch (action) {
+          case FORWARD:
+            return perform(getForwardAction());
+
+          case BACKWARD:
+            return perform(getBackwardAction());
+
+          case SHOW:
+            ApplicationUtilities.message(getActualValue().toString()
+                                                         .toLowerCase()
+                                                         .replace('_', ' '));
+            return true;
+        }
+
+        return false;
+      }
+    }
+
+    private final Map<Character, MapValue> map
+        = new HashMap<Character, MapValue>();
+
+    protected final void mapCharacter (Character character, T value) {
+      map.put(character, new MapValue(value));
+    }
+
+    public final Movement getMovement (Character character) {
       synchronized (map) {
-        if (map.size() == 0) putAll();
+        if (map.size() == 0) mapCharacters();
         return map.get(character);
       }
     }
@@ -546,7 +606,7 @@ public class HostEndpoint extends Endpoint {
     }
   }
 
-  private static class ElementTypeMap extends MovementMap<String> {
+  private class ElementMovementMap extends MovementMap<String> {
     @Override
     public final int getForwardAction () {
       return AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT;
@@ -558,41 +618,56 @@ public class HostEndpoint extends Endpoint {
     }
 
     @Override
-    protected final void putAll () {
-      map.put('p', "PARENT");
-      map.put('s', "SIBLING");
-
-      map.put('1', "H1");
-      map.put('2', "H2");
-      map.put('3', "H3");
-      map.put('4', "H4");
-      map.put('5', "H5");
-      map.put('6', "H6");
-
-      map.put('a', "ARTICLE");
-      map.put('b', "BUTTON");
-      map.put('c', "COMBOBOX");
-      map.put('e', "TEXT_FIELD");
-      map.put('f', "CONTROL");
-      map.put('g', "GRAPHIC");
-      map.put('h', "HEADING");
-      map.put('i', "LIST_ITEM");
-      map.put('l', "LINK");
-      map.put('m', "MAIN");
-      map.put('o', "LIST");
-      map.put('r', "RADIO");
-      map.put('t', "TABLE");
-      map.put('u', "UNVISITED_LINK");
-      map.put('v', "VISITED_LINK");
-      map.put('x', "CHECKBOX");
+    public final String getArgumentName () {
+      return AccessibilityNodeInfo.ACTION_ARGUMENT_HTML_ELEMENT_STRING;
     }
 
-    public ElementTypeMap () {
+    @Override
+    public final String getString (String value) {
+      return value;
+    }
+
+    @Override
+    protected final void mapCharacters () {
+      mapCharacter('p', "PARENT");
+      mapCharacter('s', "SIBLING");
+
+      mapCharacter('1', "H1");
+      mapCharacter('2', "H2");
+      mapCharacter('3', "H3");
+      mapCharacter('4', "H4");
+      mapCharacter('5', "H5");
+      mapCharacter('6', "H6");
+
+      mapCharacter('a', "ARTICLE");
+      mapCharacter('b', "BUTTON");
+      mapCharacter('c', "COMBOBOX");
+      mapCharacter('e', "TEXT_FIELD");
+      mapCharacter('f', "CONTROL");
+      mapCharacter('g', "GRAPHIC");
+      mapCharacter('h', "HEADING");
+      mapCharacter('i', "LIST_ITEM");
+      mapCharacter('l', "LINK");
+      mapCharacter('m', "MAIN");
+      mapCharacter('o', "LIST");
+      mapCharacter('r', "RADIO");
+      mapCharacter('t', "TABLE");
+      mapCharacter('u', "UNVISITED_LINK");
+      mapCharacter('v', "VISITED_LINK");
+      mapCharacter('x', "CHECKBOX");
+    }
+
+    @Override
+    protected final void setArgument (Bundle arguments, String value) {
+      arguments.putString(getArgumentName(), value);
+    }
+
+    public ElementMovementMap () {
       super();
     }
   }
 
-  private static class TextGranularityMap extends MovementMap<Integer> {
+  private class GranularityMovementMap extends MovementMap<Integer> {
     @Override
     public final int getForwardAction () {
       return AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY;
@@ -604,29 +679,62 @@ public class HostEndpoint extends Endpoint {
     }
 
     @Override
-    protected final void putAll () {
-      map.put('7', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER);
-      map.put('8', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD);
-      map.put('9', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE);
-      map.put('0', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH);
-      map.put('-', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE);
+    public final String getArgumentName () {
+      return AccessibilityNodeInfo.ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT;
     }
 
-    public TextGranularityMap () {
+    @Override
+    public final String getString (Integer value) {
+      switch (value) {
+        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER:
+          return "CHARACTER";
+
+        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD:
+          return "WORD";
+
+        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE:
+          return "LINE";
+
+        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH:
+          return "PARAGRAPH";
+
+        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE:
+          return "PAGE";
+
+        default:
+          return value.toString();
+      }
+    }
+
+    @Override
+    protected final void mapCharacters () {
+      mapCharacter('7', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER);
+      mapCharacter('8', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD);
+      mapCharacter('9', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE);
+      mapCharacter('0', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH);
+      mapCharacter('-', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE);
+    }
+
+    @Override
+    protected final void setArgument (Bundle arguments, Integer value) {
+      arguments.putInt(getArgumentName(), value);
+    }
+
+    public GranularityMovementMap () {
       super();
     }
   }
 
-  private final static ElementTypeMap elementTypeMap = new ElementTypeMap();
-  private final static TextGranularityMap textGranularityMap = new TextGranularityMap();
-  private String currentElementType = null;
+  private Movement currentMovement = null;
+  private final MovementMap[] movementMaps = {
+    new ElementMovementMap(),
+    new GranularityMovementMap()
+  };
 
   @Override
   public final boolean handleDotKeys (int keyMask) {
-    String elementType;
-
-    int action;
-    final int NO_ACTION = -1;
+    MovementAction action;
+    Movement movement;
 
     {
       final int PREVIOUS = KeyMask.DOT_7;
@@ -635,15 +743,15 @@ public class HostEndpoint extends Endpoint {
 
       switch (keyMask & DIRECTION) {
         case PREVIOUS:
-          action = AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT;
+          action = MovementAction.BACKWARD;
           break;
 
         case NEXT:
-          action = AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT;
+          action = MovementAction.FORWARD;
           break;
 
         case PREVIOUS | NEXT:
-          action = NO_ACTION;
+          action = MovementAction.SHOW;
           break;
 
         default:
@@ -654,24 +762,21 @@ public class HostEndpoint extends Endpoint {
     }
 
     if (keyMask == 0) {
-      elementType = currentElementType;
+      movement = currentMovement;
     } else {
       Character character = Characters.getCharacters().toCharacter(keyMask);
       if (character == null) return false;
-      elementType = elementTypeMap.get(character);
+      movement = null;
+
+      for (MovementMap map : movementMaps) {
+        movement = map.getMovement(character);
+        if (movement != null) break;
+      }
     }
 
-    if (elementType == null) return false;
-    currentElementType = elementType;
-
-    if (action == NO_ACTION) {
-      ApplicationUtilities.message(elementType.toLowerCase().replace('_', ' '));
-      return true;
-    }
-
-    Bundle arguments = new Bundle();
-    arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_HTML_ELEMENT_STRING, elementType);
-    return performNodeAction(action, arguments);
+    if (movement == null) return false;
+    currentMovement = movement;
+    return movement.perform(action);
   }
 
   public HostEndpoint () {
