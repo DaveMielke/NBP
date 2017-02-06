@@ -542,29 +542,30 @@ public class HostEndpoint extends Endpoint {
     public abstract int getForwardAction ();
     public abstract int getBackwardAction ();
     public abstract String getArgumentName ();
-    public abstract String getString (T value);
 
     protected abstract void mapCharacters ();
-    protected abstract void setArgument (Bundle arguments, T value);
+    protected abstract void setArgument (Bundle arguments, String name, T value);
 
     private class MapValue implements Movement {
-      private final T actualValue;
+      private final T argumentValue;
+      private final String descriptiveText;
 
-      public MapValue (T value) {
-        actualValue = value;
+      public MapValue (T value, String text) {
+        argumentValue = value;
+        descriptiveText = text;
       }
 
-      public final T getActualValue () {
-        return actualValue;
+      public final T getArgumentValue () {
+        return argumentValue;
       }
 
-      public String toString () {
-        return getString(getActualValue());
+      public final String getDescriptiveText () {
+        return descriptiveText;
       }
 
-      private final boolean perform (int action) {
+      private final boolean performAction (int action) {
         Bundle arguments = new Bundle();
-        setArgument(arguments, getActualValue());
+        setArgument(arguments, getArgumentName(), getArgumentValue());
         return performNodeAction(action, arguments);
       }
 
@@ -572,13 +573,13 @@ public class HostEndpoint extends Endpoint {
       public boolean perform (MovementAction action) {
         switch (action) {
           case FORWARD:
-            return perform(getForwardAction());
+            return performAction(getForwardAction());
 
           case BACKWARD:
-            return perform(getBackwardAction());
+            return performAction(getBackwardAction());
 
           case SHOW:
-            ApplicationUtilities.message(toString().toLowerCase().replace('_', ' '));
+            ApplicationUtilities.message(getDescriptiveText());
             return true;
         }
 
@@ -589,8 +590,8 @@ public class HostEndpoint extends Endpoint {
     private final Map<Character, MapValue> map
         = new HashMap<Character, MapValue>();
 
-    protected final void mapCharacter (Character character, T value) {
-      map.put(character, new MapValue(value));
+    protected final void mapCharacter (Character character, T value, String text) {
+      map.put(character, new MapValue(value, text));
     }
 
     public final Movement getMovement (Character character) {
@@ -621,43 +622,39 @@ public class HostEndpoint extends Endpoint {
     }
 
     @Override
-    public final String getString (String value) {
-      return value;
-    }
-
-    @Override
     protected final void mapCharacters () {
-      mapCharacter('p', "PARENT");
-      mapCharacter('s', "SIBLING");
+      mapCharacter('p', "PARENT_FIRST_CHILD", "Parent / First Child");
+      mapCharacter('s', "SIBLING", "Sibling");
 
-      mapCharacter('1', "H1");
-      mapCharacter('2', "H2");
-      mapCharacter('3', "H3");
-      mapCharacter('4', "H4");
-      mapCharacter('5', "H5");
-      mapCharacter('6', "H6");
+      mapCharacter('1', "H1", "Level 1 Heading");
+      mapCharacter('2', "H2", "Level 2 Heading");
+      mapCharacter('3', "H3", "Level 3 Heading");
+      mapCharacter('4', "H4", "Level 4 Heading");
+      mapCharacter('5', "H5", "Level 5 Heading");
+      mapCharacter('6', "H6", "Level 6 Heading");
 
-      mapCharacter('a', "ARTICLE");
-      mapCharacter('b', "BUTTON");
-      mapCharacter('c', "COMBOBOX");
-      mapCharacter('e', "TEXT_FIELD");
-      mapCharacter('f', "CONTROL");
-      mapCharacter('g', "GRAPHIC");
-      mapCharacter('h', "HEADING");
-      mapCharacter('i', "LIST_ITEM");
-      mapCharacter('l', "LINK");
-      mapCharacter('m', "MAIN");
-      mapCharacter('o', "LIST");
-      mapCharacter('r', "RADIO");
-      mapCharacter('t', "TABLE");
-      mapCharacter('u', "UNVISITED_LINK");
-      mapCharacter('v', "VISITED_LINK");
-      mapCharacter('x', "CHECKBOX");
+      mapCharacter('a', "ARTICLE", "Article");
+      mapCharacter('b', "BUTTON", "Button");
+      mapCharacter('c', "COMBOBOX", "Combo Box");
+      mapCharacter('d', "MAIN", "Document");
+      mapCharacter('e', "TEXT_FIELD", "Editable Input");
+      mapCharacter('f', "CONTROL", "Form Field");
+      mapCharacter('g', "GRAPHIC", "Graphic");
+      mapCharacter('h', "HEADING", "Heading");
+      mapCharacter('i', "LIST_ITEM", "List Item");
+      mapCharacter('l', "LINK", "Link");
+      mapCharacter('m', "LANDMARK", "Land Mark");
+      mapCharacter('o', "LIST", "List");
+      mapCharacter('r', "RADIO", "Radio Button");
+      mapCharacter('t', "TABLE", "Table");
+      mapCharacter('u', "UNVISITED_LINK", "Unvisited Link");
+      mapCharacter('v', "VISITED_LINK", "Visited Link");
+      mapCharacter('x', "CHECKBOX", "Check Box");
     }
 
     @Override
-    protected final void setArgument (Bundle arguments, String value) {
-      arguments.putString(getArgumentName(), value);
+    protected final void setArgument (Bundle arguments, String name, String value) {
+      arguments.putString(name, value);
     }
 
     public ElementMovementMap () {
@@ -682,40 +679,17 @@ public class HostEndpoint extends Endpoint {
     }
 
     @Override
-    public final String getString (Integer value) {
-      switch (value) {
-        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER:
-          return "CHARACTER";
-
-        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD:
-          return "WORD";
-
-        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE:
-          return "LINE";
-
-        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH:
-          return "PARAGRAPH";
-
-        case AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE:
-          return "PAGE";
-
-        default:
-          return value.toString();
-      }
-    }
-
-    @Override
     protected final void mapCharacters () {
-      mapCharacter('7', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER);
-      mapCharacter('8', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD);
-      mapCharacter('9', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE);
-      mapCharacter('0', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH);
-      mapCharacter('-', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE);
+      mapCharacter('7', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER, "Character");
+      mapCharacter('8', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD, "Word");
+      mapCharacter('9', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE, "Line");
+      mapCharacter('0', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH, "Paragraph");
+      mapCharacter('-', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE, "Page");
     }
 
     @Override
-    protected final void setArgument (Bundle arguments, Integer value) {
-      arguments.putInt(getArgumentName(), value);
+    protected final void setArgument (Bundle arguments, String name, Integer value) {
+      arguments.putInt(name, value);
     }
 
     public GranularityMovementMap () {
