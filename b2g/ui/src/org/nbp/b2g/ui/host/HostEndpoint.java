@@ -528,185 +528,62 @@ public class HostEndpoint extends Endpoint {
     return InputService.injectKey(KeyEvent.KEYCODE_MOVE_END);
   }
 
-  private enum MovementAction {
-    FORWARD,
-    BACKWARD,
-    SHOW;
+  private final static Map<Character, Movements.Movement> movementMap
+             = new HashMap<Character, Movements.Movement>();
+
+  private final void mapMovementCharacter (char character, Movements.Movement movement) {
+    movementMap.put(character, movement);
   }
 
-  private interface Movement {
-    public boolean perform (MovementAction action);
+  private final void mapMovementCharacters () {
+    mapMovementCharacter('(', Movements.CHARACTER);
+    mapMovementCharacter(')', Movements.WORD);
+    mapMovementCharacter('_', Movements.LINE);
+    mapMovementCharacter('{', Movements.PARAGRAPH);
+    mapMovementCharacter('}', Movements.PAGE);
+
+    mapMovementCharacter('|', Movements.PARENT_OR_FIRST_CHILD);
+    mapMovementCharacter('-', Movements.SIBLING);
+
+    mapMovementCharacter('1', Movements.HEADING_LEVEL_1);
+    mapMovementCharacter('2', Movements.HEADING_LEVEL_2);
+    mapMovementCharacter('3', Movements.HEADING_LEVEL_3);
+    mapMovementCharacter('4', Movements.HEADING_LEVEL_4);
+    mapMovementCharacter('5', Movements.HEADING_LEVEL_5);
+    mapMovementCharacter('6', Movements.HEADING_LEVEL_6);
+
+    mapMovementCharacter('a', Movements.ARTICLE);
+    mapMovementCharacter('b', Movements.BUTTON);
+    mapMovementCharacter('c', Movements.COMBOBOX);
+    mapMovementCharacter('d', Movements.DOCUMENT);
+    mapMovementCharacter('e', Movements.EDITABLE_INPUT);
+    mapMovementCharacter('f', Movements.FORM_FIELD);
+    mapMovementCharacter('g', Movements.GRAPHIC);
+    mapMovementCharacter('h', Movements.HEADING);
+    mapMovementCharacter('i', Movements.LIST_ITEM);
+    mapMovementCharacter('l', Movements.LINK);
+    mapMovementCharacter('m', Movements.LANDMARK);
+    mapMovementCharacter('o', Movements.LIST);
+    mapMovementCharacter('r', Movements.RADIO_BUTTON);
+    mapMovementCharacter('t', Movements.TABLE);
+    mapMovementCharacter('u', Movements.UNVISITED_LINK);
+    mapMovementCharacter('v', Movements.VISITED_LINK);
+    mapMovementCharacter('x', Movements.CHECKBOX);
   }
 
-  private abstract class MovementMap<T> {
-    public abstract int getForwardAction ();
-    public abstract int getBackwardAction ();
-    public abstract String getArgumentName ();
-
-    protected abstract void mapCharacters ();
-    protected abstract void setArgument (Bundle arguments, String name, T value);
-
-    private class MapValue implements Movement {
-      private final T argumentValue;
-      private final String descriptiveText;
-
-      public MapValue (T value, String text) {
-        argumentValue = value;
-        descriptiveText = text;
-      }
-
-      public final T getArgumentValue () {
-        return argumentValue;
-      }
-
-      public final String getDescriptiveText () {
-        return descriptiveText;
-      }
-
-      private final boolean performAction (int action) {
-        Bundle arguments = new Bundle();
-        setArgument(arguments, getArgumentName(), getArgumentValue());
-        return performNodeAction(action, arguments);
-      }
-
-      @Override
-      public boolean perform (MovementAction action) {
-        switch (action) {
-          case FORWARD:
-            return performAction(getForwardAction());
-
-          case BACKWARD:
-            return performAction(getBackwardAction());
-
-          case SHOW:
-            ApplicationUtilities.message(getDescriptiveText());
-            return true;
-        }
-
-        return false;
-      }
-    }
-
-    private final Map<Character, MapValue> map
-        = new HashMap<Character, MapValue>();
-
-    protected final void mapCharacter (Character character, T value, String text) {
-      map.put(character, new MapValue(value, text));
-    }
-
-    public final Movement getMovement (Character character) {
-      synchronized (map) {
-        if (map.size() == 0) mapCharacters();
-        return map.get(character);
-      }
-    }
-
-    protected MovementMap () {
+  private final Movements.Movement getMovement (Character character) {
+    synchronized (movementMap) {
+      if (movementMap.size() == 0) mapMovementCharacters();
+      return movementMap.get(character);
     }
   }
 
-  private class ElementMovementMap extends MovementMap<String> {
-    @Override
-    public final int getForwardAction () {
-      return AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT;
-    }
-
-    @Override
-    public final int getBackwardAction () {
-      return AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT;
-    }
-
-    @Override
-    public final String getArgumentName () {
-      return AccessibilityNodeInfo.ACTION_ARGUMENT_HTML_ELEMENT_STRING;
-    }
-
-    @Override
-    protected final void mapCharacters () {
-      mapCharacter('p', "PARENT_FIRST_CHILD", "Parent / First Child");
-      mapCharacter('s', "SIBLING", "Sibling");
-
-      mapCharacter('1', "H1", "Level 1 Heading");
-      mapCharacter('2', "H2", "Level 2 Heading");
-      mapCharacter('3', "H3", "Level 3 Heading");
-      mapCharacter('4', "H4", "Level 4 Heading");
-      mapCharacter('5', "H5", "Level 5 Heading");
-      mapCharacter('6', "H6", "Level 6 Heading");
-
-      mapCharacter('a', "ARTICLE", "Article");
-      mapCharacter('b', "BUTTON", "Button");
-      mapCharacter('c', "COMBOBOX", "Combo Box");
-      mapCharacter('d', "MAIN", "Document");
-      mapCharacter('e', "TEXT_FIELD", "Editable Input");
-      mapCharacter('f', "CONTROL", "Form Field");
-      mapCharacter('g', "GRAPHIC", "Graphic");
-      mapCharacter('h', "HEADING", "Heading");
-      mapCharacter('i', "LIST_ITEM", "List Item");
-      mapCharacter('l', "LINK", "Link");
-      mapCharacter('m', "LANDMARK", "Land Mark");
-      mapCharacter('o', "LIST", "List");
-      mapCharacter('r', "RADIO", "Radio Button");
-      mapCharacter('t', "TABLE", "Table");
-      mapCharacter('u', "UNVISITED_LINK", "Unvisited Link");
-      mapCharacter('v', "VISITED_LINK", "Visited Link");
-      mapCharacter('x', "CHECKBOX", "Check Box");
-    }
-
-    @Override
-    protected final void setArgument (Bundle arguments, String name, String value) {
-      arguments.putString(name, value);
-    }
-
-    public ElementMovementMap () {
-      super();
-    }
-  }
-
-  private class GranularityMovementMap extends MovementMap<Integer> {
-    @Override
-    public final int getForwardAction () {
-      return AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY;
-    }
-
-    @Override
-    public final int getBackwardAction () {
-      return AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY;
-    }
-
-    @Override
-    public final String getArgumentName () {
-      return AccessibilityNodeInfo.ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT;
-    }
-
-    @Override
-    protected final void mapCharacters () {
-      mapCharacter('7', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER, "Character");
-      mapCharacter('8', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD, "Word");
-      mapCharacter('9', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE, "Line");
-      mapCharacter('0', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH, "Paragraph");
-      mapCharacter('-', AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PAGE, "Page");
-    }
-
-    @Override
-    protected final void setArgument (Bundle arguments, String name, Integer value) {
-      arguments.putInt(name, value);
-    }
-
-    public GranularityMovementMap () {
-      super();
-    }
-  }
-
-  private Movement currentMovement = null;
-  private final MovementMap[] movementMaps = {
-    new ElementMovementMap(),
-    new GranularityMovementMap()
-  };
+  private Movements.Movement currentMovement = null;
 
   @Override
   public final boolean handleDotKeys (int keyMask) {
-    MovementAction action;
-    Movement movement;
+    Movements.Action action;
+    Movements.Movement movement;
 
     {
       final int PREVIOUS = KeyMask.DOT_7;
@@ -715,15 +592,15 @@ public class HostEndpoint extends Endpoint {
 
       switch (keyMask & DIRECTION) {
         case PREVIOUS:
-          action = MovementAction.BACKWARD;
+          action = Movements.Action.BACKWARD;
           break;
 
         case NEXT:
-          action = MovementAction.FORWARD;
+          action = Movements.Action.FORWARD;
           break;
 
         case PREVIOUS | NEXT:
-          action = MovementAction.SHOW;
+          action = Movements.Action.SHOW;
           break;
 
         default:
@@ -738,17 +615,12 @@ public class HostEndpoint extends Endpoint {
     } else {
       Character character = Characters.getCharacters().toCharacter(keyMask);
       if (character == null) return false;
-      movement = null;
-
-      for (MovementMap map : movementMaps) {
-        movement = map.getMovement(character);
-        if (movement != null) break;
-      }
+      movement = getMovement(character);
     }
 
     if (movement == null) return false;
     currentMovement = movement;
-    return movement.perform(action);
+    return movement.perform(getCurrentNode(), action);
   }
 
   public HostEndpoint () {
