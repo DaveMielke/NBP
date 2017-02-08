@@ -42,6 +42,7 @@ public class ScreenMonitor extends AccessibilityService {
     SpannableStringBuilder sb = new SpannableStringBuilder();
 
     for (CharSequence line : lines) {
+      if (line == null) continue;
       if (sb.length() > 0) sb.append('\n');
       sb.append(line);
     }
