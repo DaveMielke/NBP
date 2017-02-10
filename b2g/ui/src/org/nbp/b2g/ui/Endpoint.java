@@ -829,6 +829,17 @@ public abstract class Endpoint {
           if (indent > length) indent = length;
         }
 
+        if (ApplicationSettings.WORD_WRAP) {
+          CharSequence text = getLineText();
+
+          while (indent > 0) {
+            if (!isWordBreak(text.charAt(--indent))) {
+              indent += 1;
+              break;
+            }
+          }
+        }
+
         indent = findPreviousSegment(size, indent);
         setLineIndent(indent);
         return true;
