@@ -618,10 +618,10 @@ public abstract class Endpoint {
     int lineLength = getLineLength();
     if (offset > lineLength) offset = lineLength;
 
-    int start = findFirstBrailleOffset(lineIndent);
-    int end = findLastBrailleOffset(offset);
+    int first = findFirstBrailleOffset(lineIndent);
+    int last = findLastBrailleOffset(offset);
 
-    if ((end - start) >= brailleLength) {
+    if ((last - first) >= brailleLength) {
       lineIndent = findPreviousSegment((brailleLength - keep), offset);
     }
   }
@@ -745,11 +745,13 @@ public abstract class Endpoint {
 
   public final int findPreviousSegment (int size, int end) {
     synchronized (this) {
-      CharSequence text = getLineText();
-      int length = text.length();
+      {
+        int length = text.length();
+        if (end > length) end = length;
+      }
 
-      if (end > length) end = length;
       if (end == 0) return 0;
+      CharSequence text = getLineText();
 
       int start = getAdjustedLineOffset(-size, end);
       if (!ApplicationSettings.WORD_WRAP) return start;
@@ -794,6 +796,15 @@ public abstract class Endpoint {
     protected abstract int getLeaveMessage ();
     protected abstract Class<? extends Action> getLeaveAction ();
 
+    protected final int getCursorLocation () {
+      return hasCursor()? getSelectionStart(): -1;
+    }
+
+    protected final int getCellCount () {
+      return findEndBrailleOffset(getLineLength())
+           - findFirstBrailleOffset(getLineIndent());
+    }
+
     public final boolean pan () {
       int size = Devices.braille.get().getLength();
       if (size == 0) return false;
@@ -820,10 +831,9 @@ public abstract class Endpoint {
         if (indent == 0) {
           int start = getLineStart();
           if (start == 0) return false;
-          setLine(start-1);
 
+          setLine(start-1);
           indent = getLineLength();
-          if (isInputArea()) indent += 1;
         } else {
           int length = getLineLength();
           if (indent > length) indent = length;
@@ -831,9 +841,12 @@ public abstract class Endpoint {
 
         if (ApplicationSettings.WORD_WRAP) {
           CharSequence text = getLineText();
+          int cursor = getCursorLocation();
 
           while (indent > 0) {
-            if (!isWordBreak(text.charAt(--indent))) {
+            indent -= 1;
+
+            if ((indent == cursor) || !isWordBreak(text.charAt(indent))) {
               indent += 1;
               break;
             }
@@ -865,30 +878,40 @@ public abstract class Endpoint {
     Panner panner = new Panner() {
       @Override
       protected boolean moveDisplay (int size) {
-        int indent = getLineIndent();
         int length = getLineLength();
+        int indent = getLineIndent();
 
-        int last = length;
-        if (!isInputArea()) last -= 1;
+        int cellCount = getCellCount();
+        if (isInputArea()) cellCount += 1;
+        boolean wrapToNextLine = cellCount <= size;
 
-        if ((last < 0) ||
-            ((findLastBrailleOffset(last) - findFirstBrailleOffset(indent)) < size)) {
+        if (!wrapToNextLine) {
+          indent = findNextSegment(size, indent);
+
+          if (ApplicationSettings.WORD_WRAP) {
+            CharSequence text = getLineText();
+            int cursor = getCursorLocation();
+
+            while (indent < length) {
+              if (indent == cursor) break;
+              if (!isWordBreak(text.charAt(indent))) break;
+              indent += 1;
+            }
+
+            if (indent == length) {
+              if (indent != cursor) {
+                wrapToNextLine = true;
+              }
+            }
+          }
+        }
+
+        if (wrapToNextLine) {
           int offset = getLineStart() + length + 1;
           if (offset > getTextLength()) return false;
 
           setLine(offset);
           indent = 0;
-        } else {
-          indent = findNextSegment(size, indent);
-
-          if (ApplicationSettings.WORD_WRAP) {
-            CharSequence text = getLineText();
-
-            while (indent < last) {
-              if (!isWordBreak(text.charAt(indent))) break;
-              indent += 1;
-            }
-          }
         }
 
         setLineIndent(indent);
