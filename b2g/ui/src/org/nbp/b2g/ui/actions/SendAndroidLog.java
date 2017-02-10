@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.Writer;
 import java.io.IOException;
 
-import org.nbp.common.OutgoingMessage;
 import org.nbp.common.FileMaker;
 import org.nbp.common.AttachmentMaker;
 
@@ -42,34 +41,32 @@ public class SendAndroidLog extends Action {
     return fileMaker.makeFile("Android.log", this);
   }
 
-  private boolean sendLogFile (File file) {
-    OutgoingMessage message = new OutgoingMessage();
-
-    {
-      String[] recipients = ApplicationContext.getStringArray(R.array.recipients_log);
-
-      if (recipients != null) {
-        for (String recipient : recipients) {
-          message.addPrimaryRecipient(recipient);
-        }
-      }
-    }
-
-    message.addAttachment(file);
-    message.setSubject("Android log sent by user");
-    message.addBodyLine(R.string.email_to_the_user);
-    message.addBodyLine();
-    message.addBodyLine(R.string.email_sending_android_log);
-    message.addBodyLine(R.string.email_sensitive_data_warning);
-
-    return message.send();
-  }
-
   @Override
   public boolean performAction () {
-    File file = makeLogFile();
-    if (file == null) return false;
-    return sendLogFile(file);
+    DeveloperMessage message = new DeveloperMessage() {
+      @Override
+      protected final boolean containsSensitiveData () {
+        return true;
+      }
+
+      @Override
+      protected final String getSubject () {
+        return "Android log sent by user";
+      }
+    };
+
+    if (message.isSendable()) {
+      {
+        File file = makeLogFile();
+        if (file == null) return false;
+        message.addAttachment(file);
+      }
+
+      message.addLine(R.string.email_sending_android_log);
+      if (!message.send()) return false;
+    }
+
+    return true;
   }
 
   public SendAndroidLog (Endpoint endpoint) {

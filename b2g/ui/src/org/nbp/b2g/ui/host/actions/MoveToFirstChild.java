@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class MoveToChild extends ScreenAction {
+public class MoveToFirstChild extends ScreenAction {
   @Override
   public boolean performAction () {
     Boolean moved = false;
@@ -26,7 +26,7 @@ public class MoveToChild extends ScreenAction {
     return moved;
   }
 
-  public MoveToChild (Endpoint endpoint) {
+  public MoveToFirstChild (Endpoint endpoint) {
     super(endpoint, true);
   }
 }

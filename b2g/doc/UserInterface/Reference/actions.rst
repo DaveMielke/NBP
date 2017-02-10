@@ -85,7 +85,7 @@
 .. |MoveForward| replace:: Go to the start of the next screen element.
 .. |MoveLeft| replace:: Go to the previous character of editable text or pan to the left.
 .. |MoveRight| replace:: Go to the next character of editable text or pan to the right.
-.. |MoveToChild| replace:: Go to and describe the first child node.
+.. |MoveToFirstChild| replace:: Go to and describe the first child node.
 .. |MoveToNextSibling| replace:: Go to and describe the next sibling node.
 .. |MoveToParent| replace:: Go to and describe the parent node.
 .. |MoveToPreviousSibling| replace:: Go to and describe the previous sibling node.
@@ -126,6 +126,7 @@
 .. |ScrollUp| replace:: Go to the previous page of a list or paragraph of text.
 .. |SelectAll| replace:: Select all of the text.
 .. |SendAndroidLog| replace:: Send a copy of the Android log to the B2G developers.
+.. |SendScreen| replace:: Send a copy of the screen content to the B2G developers.
 .. |SetLeft| replace:: Pan the braille display a specific amount to the right.
 .. |SetSelectionEnd| replace:: Set or change the end of the text selection.
 .. |SetSelectionStart| replace:: Set or change the start of the text selection.

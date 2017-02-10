@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.Writer;
 import java.io.IOException;
 
-import org.nbp.common.OutgoingMessage;
 import org.nbp.common.FileMaker;
 import org.nbp.common.AttachmentMaker;
 
@@ -92,30 +91,31 @@ public abstract class Crash {
     return fileMaker.makeFile("Java.log", Crash.class);
   }
 
-  private static void reportCrash (Throwable problem, String component, String data) {
-    String[] recipients = ApplicationContext.getStringArray(R.array.recipients_crash);
-
-    if (recipients.length > 0) {
-      OutgoingMessage report = new OutgoingMessage();
-
-      for (String recipient : recipients) {
-        report.addPrimaryRecipient(recipient);
+  private static boolean reportCrash (Throwable problem, String component, String data) {
+    DeveloperMessage message = new DeveloperMessage() {
+      @Override
+      protected final boolean containsSensitiveData () {
+        return false;
       }
 
-      report.setSubject("Java backtrace sent by user");
+      @Override
+      protected final String getSubject () {
+        return "Java backtrace sent by user";
+      }
+    };
 
-      report.addBodyLine(R.string.email_to_the_user);
-      report.addBodyLine();
-      report.addBodyLine(R.string.email_sending_java_backtrace);
-      report.addBodyLine(R.string.email_no_sensitive_data);
-
+    if (message.isSendable()) {
       {
         File file = makeBacktraceFile(problem, component, data);
-        if (file != null) report.addAttachment(file);
+        if (file == null) return false;
+        message.addAttachment(file);
       }
 
-      report.send();
+      message.addLine(R.string.email_sending_java_backtrace);
+      if (!message.send()) return false;
     }
+
+    return true;
   }
 
   private static void handleCrash (Throwable problem, String component, String data) {

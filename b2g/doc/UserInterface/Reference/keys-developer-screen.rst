@@ -1,5 +1,8 @@
-Backward+Dots4568
+Backward+Dots456
   |SaveScreen|
+
+Backward+Dots568
+  |SendScreen|
 
 Backward+Dot4
   |MoveToParent|
@@ -11,15 +14,15 @@ Backward+Dot6
   |MoveToNextSibling|
 
 Backward+Dot8
-  |MoveToChild|
+  |MoveToFirstChild|
 
 Backward+Dots56
   |MoveToSelf|
 
-Backward+Dots456
+Backward+Dots45
   |ScrollBackward|
 
-Backward+Dots568
+Backward+Dots68
   |ScrollForward|
 
 Backward+Dots48
