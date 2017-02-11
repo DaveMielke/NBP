@@ -743,7 +743,7 @@ public abstract class Endpoint {
     return character == ' ';
   }
 
-  public final int findPreviousSegment (int size, int end) {
+  public final int findPreviousSegment (int size, int end, int cursor) {
     synchronized (this) {
       CharSequence text = getLineText();
 
@@ -767,11 +767,16 @@ public abstract class Endpoint {
       }
 
       for (int index=start; index<end; index+=1) {
+        if (index == cursor) return index;
         if (!isWordBreak(text.charAt(index))) return index;
       }
 
       return start;
     }
+  }
+
+  public final int findPreviousSegment (int size, int end) {
+    return findPreviousSegment(size, end, -1);
   }
 
   public final int findNextSegment (int size, int indent) {
@@ -827,6 +832,7 @@ public abstract class Endpoint {
       @Override
       protected boolean moveDisplay (int size) {
         int indent = getLineIndent();
+        int cursor = getCursorLocation();
 
         if (indent == 0) {
           int start = getLineStart();
@@ -841,7 +847,6 @@ public abstract class Endpoint {
 
         if (ApplicationSettings.WORD_WRAP) {
           CharSequence text = getLineText();
-          int cursor = getCursorLocation();
 
           while (indent > 0) {
             indent -= 1;
@@ -853,7 +858,7 @@ public abstract class Endpoint {
           }
         }
 
-        indent = findPreviousSegment(size, indent);
+        indent = findPreviousSegment(size, indent, cursor);
         setLineIndent(indent);
         return true;
       }
