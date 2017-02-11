@@ -59,10 +59,9 @@ public class SendAndroidLog extends Action {
       {
         File file = makeLogFile();
         if (file == null) return false;
-        message.addAttachment(file);
+        message.addAttachment(file, "a copy of your Android system log");
       }
 
-      message.addLine(R.string.email_sending_android_log);
       if (!message.send()) return false;
     }
 

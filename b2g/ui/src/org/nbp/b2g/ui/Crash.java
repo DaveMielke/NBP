@@ -108,10 +108,9 @@ public abstract class Crash {
       {
         File file = makeBacktraceFile(problem, component, data);
         if (file == null) return false;
-        message.addAttachment(file);
+        message.addAttachment(file, "the Java backtrace of a User Interface crash");
       }
 
-      message.addLine(R.string.email_sending_java_backtrace);
       if (!message.send()) return false;
     }
 

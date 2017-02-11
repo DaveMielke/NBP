@@ -745,14 +745,14 @@ public abstract class Endpoint {
 
   public final int findPreviousSegment (int size, int end) {
     synchronized (this) {
+      CharSequence text = getLineText();
+
       {
         int length = text.length();
         if (end > length) end = length;
       }
 
       if (end == 0) return 0;
-      CharSequence text = getLineText();
-
       int start = getAdjustedLineOffset(-size, end);
       if (!ApplicationSettings.WORD_WRAP) return start;
       if (start == 0) return 0;

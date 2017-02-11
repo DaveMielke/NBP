@@ -32,10 +32,9 @@ public class SendScreen extends Action {
       {
         File file = makeLogFile();
         if (file == null) return false;
-        message.addAttachment(file);
+        message.addAttachment(file, "a copy of your screen content");
       }
 
-      message.addLine(R.string.email_sending_screen_content);
       if (!message.send()) return false;
     }
 

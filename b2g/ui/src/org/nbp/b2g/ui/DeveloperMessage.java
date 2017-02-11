@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui;
 
 import java.io.File;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.nbp.common.OutgoingMessage;
 
@@ -9,27 +11,46 @@ public abstract class DeveloperMessage {
   protected abstract String getSubject ();
 
   private OutgoingMessage message = null;
+  private final List<String> attachmentDescriptions = new ArrayList<String>();
 
   public final boolean isSendable () {
     return message != null;
   }
 
-  public final void addLine (int line) {
-    if (isSendable()) message.addBodyLine(line);
+  public final void addAttachment (File file, String description) {
+    if (isSendable()) {
+      message.addAttachment(file);
+      attachmentDescriptions.add(description);
+    }
   }
 
-  public final void addAttachment (File file) {
-    if (isSendable()) message.addAttachment(file);
+  private final void describeAttachments () {
+    String prefix = "This message contains";
+
+    if (attachmentDescriptions.size() == 1) {
+      message.addBodyLine(prefix);
+      message.addBodyLine((attachmentDescriptions.get(0) + '.'));
+    } else {
+      message.addBodyLine((prefix + ':'));
+
+      for (String description : attachmentDescriptions) {
+        message.addBodyLine(("  *  " + description));
+      }
+
+      message.addBodyLine();
+    }
   }
 
   public final boolean send () {
     if (isSendable()) {
-      message.addBodyLine();
-      message.addBodyLine(
-        containsSensitiveData()?
-        R.string.email_sensitive_data_warning:
-        R.string.email_no_sensitive_data
-      );
+      describeAttachments();
+      message.addBodyLine("It's being sent to the B2G developers for their analysis.");
+
+      if (containsSensitiveData()) {
+        message.addBodyLine("If you suspect that it may contain sensitive information that they shouldn't see then DO NOT send it.");
+      } else {
+        message.addBodyLine("It's safe to send it because it doesn't contain any sensitive data.");
+      }
 
       if (!message.send()) return false;
     }
@@ -48,7 +69,7 @@ public abstract class DeveloperMessage {
       }
 
       message.setSubject(getSubject());
-      message.addBodyLine(R.string.email_to_the_user);
+      message.addBodyLine("To the user:");
       message.addBodyLine();
     } else {
       message = null;
