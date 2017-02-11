@@ -73,6 +73,21 @@
         <data android:pathPattern=".*\\.rtf" />
         <data android:pathPattern=".*\\.txt" />
       </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <action android:name="android.intent.action.EDIT" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="file" />
+        <data android:scheme="content" />
+        <data android:host="*" />
+
+        <data android:mimeType="text/plain" />
+        <data android:mimeType="text/html" />
+      </intent-filter>
     </activity>
 
     <activity

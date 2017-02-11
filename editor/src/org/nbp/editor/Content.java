@@ -14,11 +14,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import org.nbp.common.LazyInstantiator;
 import org.nbp.common.CommonUtilities;
+import org.nbp.common.LazyInstantiator;
 
 import android.util.Log;
-
+import android.net.Uri;
 import android.text.SpannableStringBuilder;
 
 public abstract class Content {
@@ -165,9 +165,9 @@ public abstract class Content {
     return format.getOperations();
   }
 
-  public static boolean readFile (File file, SpannableStringBuilder content) {
+  public static boolean readUri (Uri uri, SpannableStringBuilder content) {
     try {
-      InputStream stream = new FileInputStream(file);
+      InputStream stream = ApplicationUtilities.getContext().getContentResolver().openInputStream(uri);
 
       try {
         getContentOperations(file).read(stream, content);
@@ -177,8 +177,8 @@ public abstract class Content {
       }
     } catch (IOException exception) {
       CommonUtilities.reportError(
-        LOG_TAG, "input file error: %s: %s",
-        file.getAbsolutePath(), exception.getMessage()
+        LOG_TAG, "input error: %s: %s",
+        uri.toString(), exception.getMessage()
       );
     }
 

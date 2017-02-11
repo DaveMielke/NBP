@@ -9,7 +9,6 @@ import java.io.OutputStream;
 
 import android.util.Log;
 
-import org.nbp.common.CommonContext;
 import android.content.Context;
 
 import android.text.Spanned;
@@ -29,7 +28,7 @@ public class AsposeWordsOperations extends ContentOperations {
   private static Throwable licenseProblem;
 
   static {
-    Context context = CommonContext.getContext();
+    Context context = ApplicationContext.getContext();
     application.loadLibs(context);
 
     try {
