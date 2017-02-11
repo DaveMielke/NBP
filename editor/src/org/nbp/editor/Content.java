@@ -165,12 +165,16 @@ public abstract class Content {
     return format.getOperations();
   }
 
+  public static ContentOperations getContentOperations (Uri uri) {
+    return getContentOperations(new File(uri.getPath()));
+  }
+
   public static boolean readUri (Uri uri, SpannableStringBuilder content) {
     try {
       InputStream stream = ApplicationContext.getContentResolver().openInputStream(uri);
 
       try {
-        getContentOperations(file).read(stream, content);
+        getContentOperations(uri).read(stream, content);
         return true;
       } finally {
         stream.close();

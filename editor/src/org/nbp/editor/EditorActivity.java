@@ -120,7 +120,7 @@ public class EditorActivity extends CommonActivity {
       String path;
 
       if (uri != null) {
-        path = uri.toString();
+        path = ApplicationUtilities.getString(uri);
       } else {
         path = getString(R.string.hint_new_file);
       }
@@ -245,7 +245,7 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected void onPreExecute () {
         dialog = newAlertDialogBuilder(R.string.message_reading_content)
-          .setMessage(uri.toString())
+          .setMessage(ApplicationUtilities.getString(uri))
           .create();
 
         dialog.show();
@@ -900,10 +900,12 @@ public class EditorActivity extends CommonActivity {
             public void run () {
               int length = editArea.length();
 
-              if (path != null) {
-                setCurrentUri(Uri.parse(path));
+              if ((path == null) || path.isEmpty()) {
+                setCurrentUri(null);
+              } else if (path.charAt(0) == File.separatorChar) {
+                setCurrentUri(Uri.fromFile(new File(path)));
               } else {
-                setCurrentUri();
+                setCurrentUri(Uri.parse(path));
               }
 
               {

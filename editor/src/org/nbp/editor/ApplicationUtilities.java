@@ -16,6 +16,15 @@ public abstract class ApplicationUtilities {
     return null;
   }
 
+  public static String getString (Uri uri) {
+    {
+      File file = getFile(uri);
+      if (file != null) return file.getAbsolutePath();
+    }
+
+    return uri.toString();
+  }
+
   private ApplicationUtilities () {
   }
 }
