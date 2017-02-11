@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.util.Log;
 
 import android.content.Context;
-import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.content.Intent;
 
@@ -116,15 +115,6 @@ public class EditorActivity extends CommonActivity {
     return verifyTextRange(start, end, editArea.length());
   }
 
-  private static File getFile (Uri uri) {
-    String scheme = uri.getScheme();
-    if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-      return new File(uri.getPath());
-    }
-
-    return null;
-  }
-
   private void setCurrentUri (Uri uri) {
     synchronized (this) {
       String path;
@@ -157,7 +147,7 @@ public class EditorActivity extends CommonActivity {
 
     synchronized (this) {
       if (file == null) {
-        file = getFile(currentUri);
+        file = ApplicationUtilities.getFile(currentUri);
       }
 
       content = editArea.getText();
@@ -315,7 +305,7 @@ public class EditorActivity extends CommonActivity {
 
   private final void addRootLocations (FileFinder.Builder builder) {
     if (currentUri != null) {
-      File file = getFile(currentUri);
+      File file = ApplicationUtilities.getFile(currentUri);
 
       if (file != null) {
         addRootLocation(builder, "current", file.getParentFile());
@@ -357,7 +347,7 @@ public class EditorActivity extends CommonActivity {
     }
 
     if (currentUri != null) {
-      File file = getFile(currentUri);
+      File file = ApplicationUtilities.getFile(currentUri);
       if (file != null) builder.setFileName(file.getName());
     }
 
@@ -413,7 +403,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void confirmFormat () {
-    File file = getFile(currentUri);
+    File file = ApplicationUtilities.getFile(currentUri);
 
     if (file == null) {
       selectFormat();
@@ -503,7 +493,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_send () {
-    File file = getFile(currentUri);
+    File file = ApplicationUtilities.getFile(currentUri);
 
     if (currentUri != null) {
       OutgoingMessage message = new OutgoingMessage();

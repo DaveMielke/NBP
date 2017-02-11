@@ -3,6 +3,7 @@ package org.nbp.common;
 import android.util.Log;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.content.pm.PackageManager;
 
@@ -38,6 +39,18 @@ public abstract class CommonContext {
     }
   }
 
+  public static ContentResolver getContentResolver () {
+    Context context = getContext();
+    if (context == null) return null;
+    return context.getContentResolver();
+  }
+
+  public static Resources getResources () {
+    Context context = getContext();
+    if (context == null) return null;
+    return context.getResources();
+  }
+
   public static String getString (int resource) {
     Context context = getContext();
     if (context == null) return null;
@@ -54,12 +67,6 @@ public abstract class CommonContext {
 
     if (resource == 0) return null;
     return getString(resource);
-  }
-
-  public static Resources getResources () {
-    Context context = getContext();
-    if (context == null) return null;
-    return context.getResources();
   }
 
   public static String[] getStringArray (int resource) {

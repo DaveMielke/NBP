@@ -167,7 +167,7 @@ public abstract class Content {
 
   public static boolean readUri (Uri uri, SpannableStringBuilder content) {
     try {
-      InputStream stream = ApplicationUtilities.getContext().getContentResolver().openInputStream(uri);
+      InputStream stream = ApplicationContext.getContentResolver().openInputStream(uri);
 
       try {
         getContentOperations(file).read(stream, content);
