@@ -85,8 +85,14 @@
         <data android:scheme="content" />
         <data android:host="*" />
 
-        <data android:mimeType="text/plain" />
-        <data android:mimeType="text/html" />
+        <data android:mimeType="application/msword" /> <!-- .doc -->
+        <data android:mimeType="application/pdf" /> <!-- .pdf -->
+        <data android:mimeType="application/vnd.oasis.opendocument.text" /> <!-- .odt -->
+        <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" /> <!-- .docx -->
+        <data android:mimeType="application/x-kword" /> <!-- .kwt -->
+        <data android:mimeType="text/html" /> <!-- .html .htm -->
+        <data android:mimeType="text/plain" /> <!-- .txt -->
+        <data android:mimeType="text/rtf" /> <!-- .rtf -->
       </intent-filter>
     </activity>
 

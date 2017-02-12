@@ -73,7 +73,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private EditText editArea = null;
-  private TextView pathView = null;
+  private TextView uriView = null;
   private ContentHandle contentHandle = null;
   private boolean hasChanged = false;
 
@@ -132,7 +132,7 @@ public class EditorActivity extends CommonActivity {
       }
 
       contentHandle = handle;
-      pathView.setText(path);
+      uriView.setText(path);
     }
   }
 
@@ -848,7 +848,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final static void setCheckpointProperty (
+  private final static void putPreference (
     SharedPreferences.Editor editor, String key, String value
   ) {
     if (value != null) {
@@ -886,12 +886,12 @@ public class EditorActivity extends CommonActivity {
             editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
 
             if (handle != null) {
-              setCheckpointProperty(editor, PREF_CHECKPOINT_PATH, handle.getUriString());
-              setCheckpointProperty(editor, PREF_CHECKPOINT_TYPE, handle.getType());
+              putPreference(editor, PREF_CHECKPOINT_PATH, handle.getUriString());
+              putPreference(editor, PREF_CHECKPOINT_TYPE, handle.getType());
               editor.putBoolean(PREF_CHECKPOINT_WRITABLE, handle.canWrite());
             }
 
-            setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, saveSpans(editArea.getText()));
+            putPreference(editor, PREF_CHECKPOINT_SPANS, saveSpans(editArea.getText()));
             editor.putInt(PREF_CHECKPOINT_START, editArea.getSelectionStart());
             editor.putInt(PREF_CHECKPOINT_END, editArea.getSelectionEnd());
 
@@ -979,7 +979,7 @@ public class EditorActivity extends CommonActivity {
     prefs = getSharedPreferences("editor", MODE_PRIVATE);
 
     setContentView(R.layout.editor);
-    pathView = (TextView)findViewById(R.id.current_file);
+    uriView = (TextView)findViewById(R.id.current_uri);
     editArea = (EditText)findViewById(R.id.edit_area);
     setEditorContent();
 

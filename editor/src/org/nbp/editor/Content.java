@@ -19,6 +19,8 @@ import org.nbp.common.LazyInstantiator;
 
 import android.util.Log;
 import android.net.Uri;
+import android.webkit.MimeTypeMap;
+
 import android.text.SpannableStringBuilder;
 
 public abstract class Content {
@@ -26,6 +28,16 @@ public abstract class Content {
 
   private static String getString (int resource) {
     return ApplicationContext.getMainActivity().getString(resource);
+  }
+
+  public static String getMimeType (String url) {
+    String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+    if (extension == null) return null;
+    return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+  }
+
+  public static String getMimeType (Uri uri) {
+    return getMimeType(uri.toString());
   }
 
   private final static class OperationsInstantiator extends LazyInstantiator<ContentOperations> {
