@@ -86,7 +86,6 @@
         <data android:host="*" />
 
         <data android:mimeType="application/msword" /> <!-- .doc -->
-        <data android:mimeType="application/pdf" /> <!-- .pdf -->
         <data android:mimeType="application/vnd.oasis.opendocument.text" /> <!-- .odt -->
         <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" /> <!-- .docx -->
         <data android:mimeType="application/x-kword" /> <!-- .kwt -->
