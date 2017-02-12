@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.net.Uri;
-import android.webkit.MimeTypeMap;
 
 public class OutgoingMessage {
   private final static String LOG_TAG = OutgoingMessage.class.getName();
@@ -173,16 +172,6 @@ public class OutgoingMessage {
     return removeAttachment(Uri.fromFile(file));
   }
 
-  private static String getMimeType (String url) {
-    String extension = MimeTypeMap.getFileExtensionFromUrl(url);
-    if (extension == null) return null;
-    return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-  }
-
-  private static String getMimeType (Uri uri) {
-    return getMimeType(uri.toString());
-  }
-
   public boolean send () {
     Intent sender = new Intent();
 
@@ -226,7 +215,7 @@ public class OutgoingMessage {
         Uri attachment = array.get(0);
         sender.putExtra(Intent.EXTRA_STREAM, attachment);
         sender.setAction(Intent.ACTION_SEND);
-        mimeType = getMimeType(attachment);
+        mimeType = MimeTypes.getMimeType(attachment);
       } else {
         sender.putParcelableArrayListExtra(Intent.EXTRA_STREAM, array);
         sender.setAction(Intent.ACTION_SEND_MULTIPLE);
