@@ -17,7 +17,13 @@ public class ContentHandle {
     contentUri = uri;
     mimeType = type;
     isWritable = writable;
-    contentOperations = Content.getContentOperations(uri);
+
+    {
+      ContentOperations operations = null;
+      if (type != null) operations = Content.getContentOperations(type);
+      if (operations == null) operations = Content.getContentOperations(uri);
+      contentOperations = operations;
+    }
 
     {
       String scheme = uri.getScheme();

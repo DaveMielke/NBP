@@ -427,11 +427,11 @@ public class EditorActivity extends CommonActivity {
     if (file == null) {
       selectFormat();
     } else {
-      String extension = Content.getExtension(file);
+      String extension = Content.getFileExtension(file);
 
       final Content.FormatDescriptor format =
         (extension != null)?
-        Content.getFormatDescriptor(extension):
+        Content.getFormatDescriptorForFileExtension(extension):
         null;
 
       String message =

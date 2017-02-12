@@ -265,7 +265,7 @@ public abstract class Content {
     }
   }
 
-  public static String getExtension (File file) {
+  public static String getFileExtension (File file) {
     String name = file.getName();
     if (name == null) return null;
 
@@ -278,24 +278,34 @@ public abstract class Content {
     return extension;
   }
 
-  public static FormatDescriptor getFormatDescriptor (String extension) {
+  public static FormatDescriptor getFormatDescriptorForFileExtension (String extension) {
     return fileExtensionMap.get(extension.toLowerCase());
   }
 
-  public static FormatDescriptor getFormatDescriptor (File file) {
-    String extension = getExtension(file);
+  public static FormatDescriptor getFormatDescriptorForFileExtension (File file) {
+    String extension = getFileExtension(file);
     if (extension == null) return null;
-    return getFormatDescriptor(extension);
+    return getFormatDescriptorForFileExtension(extension);
+  }
+
+  public static FormatDescriptor getFormatDescriptorForMimeType (String type) {
+    return mimeTypeMap.get(type.toLowerCase());
   }
 
   public static ContentOperations getContentOperations (File file) {
-    FormatDescriptor descriptor = getFormatDescriptor(file);
+    FormatDescriptor descriptor = getFormatDescriptorForFileExtension(file);
     if (descriptor == null) descriptor = DEFAULT_FORMAT_DESCRIPTOR;
     return descriptor.getOperations();
   }
 
   public static ContentOperations getContentOperations (Uri uri) {
     return getContentOperations(new File(uri.getPath()));
+  }
+
+  public static ContentOperations getContentOperations (String type) {
+    FormatDescriptor descriptor = getFormatDescriptorForMimeType(type);
+    if (descriptor == null) return null;
+    return descriptor.getOperations();
   }
 
   public static boolean readContent (ContentHandle handle, SpannableStringBuilder content) {
