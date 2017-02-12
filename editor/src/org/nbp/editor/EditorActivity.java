@@ -67,8 +67,8 @@ public class EditorActivity extends CommonActivity {
   }
 
   private EditText editArea = null;
-  private TextView currentPath = null;
-  private Uri currentUri = null;
+  private TextView pathView = null;
+  private ContentHandle contentHandle = null;
   private boolean hasChanged = false;
 
   private final void showActivityResultCode (int code) {
@@ -115,31 +115,31 @@ public class EditorActivity extends CommonActivity {
     return verifyTextRange(start, end, editArea.length());
   }
 
-  private void setCurrentUri (Uri uri) {
+  private void setCurrentContent (ContentHandle handle) {
     synchronized (this) {
       String path;
 
-      if (uri != null) {
-        path = ApplicationUtilities.getString(uri);
+      if (handle != null) {
+        path = handle.getString();
       } else {
         path = getString(R.string.hint_new_file);
       }
 
-      currentUri = uri;
-      currentPath.setText(path);
+      contentHandle = handle;
+      pathView.setText(path);
     }
   }
 
-  private void setCurrentUri (Uri uri, CharSequence content) {
+  private void setCurrentContent (ContentHandle handle, CharSequence content) {
     synchronized (this) {
-      setCurrentUri(uri);
+      setCurrentContent(handle);
       editArea.setText(content);
       hasChanged = false;
     }
   }
 
-  private void setCurrentUri () {
-    setCurrentUri(null, "");
+  private void setCurrentContent () {
+    setCurrentContent(null, "");
   }
 
   private final void saveFile (File file, final Runnable onSaved) {
@@ -149,10 +149,10 @@ public class EditorActivity extends CommonActivity {
       if (file == null) {
         String detail;
 
-        if (currentUri == null) {
+        if (contentHandle == null) {
           detail = ApplicationContext.getString(R.string.hint_new_file);
-        } else if ((file = ApplicationUtilities.getFile(currentUri)) == null) {
-          detail = ApplicationUtilities.getString(currentUri);
+        } else if ((file = contentHandle.getFile()) == null) {
+          detail = contentHandle.getString();
         } else {
           detail = null;
         }
@@ -218,7 +218,7 @@ public class EditorActivity extends CommonActivity {
       OnDialogClickListener positiveListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
-          if (currentUri != null) {
+          if (contentHandle != null) {
             saveFile(onSaved);
           } else {
             findFile(true, null,
@@ -251,14 +251,14 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final boolean loadUri (final Uri uri, final Runnable onLoaded) {
+  private final boolean loadContent (final ContentHandle handle, final Runnable onLoaded) {
     new AsyncTask<Void, Void, CharSequence>() {
       AlertDialog dialog;
 
       @Override
       protected void onPreExecute () {
         dialog = newAlertDialogBuilder(R.string.message_reading_content)
-          .setMessage(ApplicationUtilities.getString(uri))
+          .setMessage(handle.getString())
           .create();
 
         dialog.show();
@@ -268,7 +268,7 @@ public class EditorActivity extends CommonActivity {
       protected CharSequence doInBackground (Void... arguments) {
         try {
           final SpannableStringBuilder input = new SpannableStringBuilder();
-          Content.readUri(uri, input);
+          Content.readUri(handle.getUri(), input);
           return input.subSequence(0, input.length());
         } catch (OutOfMemoryError error) {
           System.gc();
@@ -283,7 +283,7 @@ public class EditorActivity extends CommonActivity {
           int length = content.length();
 
           if (maximum < length) content = content.subSequence(0, maximum);
-          setCurrentUri(uri, content);
+          setCurrentContent(handle, content);
 
           run(onLoaded);
         }
@@ -295,8 +295,8 @@ public class EditorActivity extends CommonActivity {
     return true;
   }
 
-  private final boolean loadUri (Uri uri) {
-    return loadUri(uri, null);
+  private final boolean loadContent (ContentHandle handle) {
+    return loadContent(handle, null);
   }
 
   private final File getDocumentsDirectory () {
@@ -317,8 +317,8 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void addRootLocations (FileFinder.Builder builder) {
-    if (currentUri != null) {
-      File file = ApplicationUtilities.getFile(currentUri);
+    if (contentHandle != null) {
+      File file = contentHandle.getFile();
 
       if (file != null) {
         addRootLocation(builder, "current", file.getParentFile());
@@ -359,8 +359,8 @@ public class EditorActivity extends CommonActivity {
       }
     }
 
-    if (currentUri != null) {
-      File file = ApplicationUtilities.getFile(currentUri);
+    if (contentHandle != null) {
+      File file = contentHandle.getFile();
       if (file != null) builder.setFileName(file.getName());
     }
 
@@ -379,7 +379,7 @@ public class EditorActivity extends CommonActivity {
               new Runnable() {
                 @Override
                 public void run () {
-                  setCurrentUri(Uri.fromFile(file));
+                  setCurrentContent(new ContentHandle(file, null, true));
                 }
               }
             );
@@ -416,7 +416,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void confirmFormat () {
-    File file = ApplicationUtilities.getFile(currentUri);
+    File file = contentHandle.getFile();
 
     if (file == null) {
       selectFormat();
@@ -464,7 +464,7 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          setCurrentUri();
+          setCurrentContent();
           checkpointFile();
         }
       }
@@ -481,7 +481,7 @@ public class EditorActivity extends CommonActivity {
               @Override
               public void handleFile (File file) {
                 if (file != null) {
-                  if (loadUri(Uri.fromFile(file))) {
+                  if (loadContent(new ContentHandle(file, null, true))) {
                     checkpointFile();
                   }
                 }
@@ -494,7 +494,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_save () {
-    if (currentUri == null) {
+    if (contentHandle == null) {
       menuAction_saveAs();
     } else {
       saveFile();
@@ -506,9 +506,9 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_send () {
-    if (currentUri != null) {
+    if (contentHandle != null) {
       OutgoingMessage message = new OutgoingMessage();
-      message.addAttachment(currentUri);
+      message.addAttachment(contentHandle.getUri());
 
       if (message.send()) {
       }
@@ -869,7 +869,11 @@ public class EditorActivity extends CommonActivity {
 
       final File oldFile = (oldName != null)? new File(filesDirectory, oldName): null;
       final File newFile = new File(filesDirectory, newName);
-      final String path = (currentUri != null)? currentUri.toString(): null;
+
+      final String path =
+        (contentHandle != null)?
+        contentHandle.getUri().toString():
+        null;
 
       saveFile(newFile,
         new Runnable() {
@@ -902,19 +906,19 @@ public class EditorActivity extends CommonActivity {
       final String path = prefs.getString(PREF_CHECKPOINT_PATH, null);
 
       if (name != null) {
-        loadUri(
-          Uri.fromFile(new File(filesDirectory, name)),
+        loadContent(
+          new ContentHandle(new File(filesDirectory, name), null, true),
           new Runnable() {
             @Override
             public void run () {
               int length = editArea.length();
 
               if ((path == null) || path.isEmpty()) {
-                setCurrentUri(null);
+                setCurrentContent(null);
               } else if (path.charAt(0) == File.separatorChar) {
-                setCurrentUri(Uri.fromFile(new File(path)));
+                setCurrentContent(new ContentHandle(new File(path), null, true));
               } else {
-                setCurrentUri(Uri.parse(path));
+                setCurrentContent(new ContentHandle(path, null, true));
               }
 
               {
@@ -937,8 +941,8 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void editUri (Uri uri, boolean canEdit) {
-    loadUri(uri);
+  private final void editContent (ContentHandle handle) {
+    loadContent(handle);
   }
 
   private final void addInputFilters () {
@@ -967,9 +971,9 @@ public class EditorActivity extends CommonActivity {
     prefs = getSharedPreferences("editor", MODE_PRIVATE);
 
     setContentView(R.layout.editor);
-    currentPath = (TextView)findViewById(R.id.current_file);
+    pathView = (TextView)findViewById(R.id.current_file);
     editArea = (EditText)findViewById(R.id.edit_area);
-    setCurrentUri();
+    setCurrentContent();
 
     showReportedErrors();
     prepareMenuButton();
@@ -989,15 +993,16 @@ public class EditorActivity extends CommonActivity {
 
       if (action != null) {
         Uri uri = intent.getData();
+        String type = intent.getType();
 
         if (action.equals(Intent.ACTION_MAIN)) {
           restoreFile();
           result = RESULT_OK;
         } else if (action.equals(Intent.ACTION_VIEW)) {
-          editUri(uri, false);
+          editContent(new ContentHandle(uri, type, false));
           result = RESULT_OK;
         } else if (action.equals(Intent.ACTION_EDIT)) {
-          editUri(uri, true);
+          editContent(new ContentHandle(uri, type, true));
           result = RESULT_OK;
         }
       }
