@@ -147,7 +147,20 @@ public class EditorActivity extends CommonActivity {
 
     synchronized (this) {
       if (file == null) {
-        file = ApplicationUtilities.getFile(currentUri);
+        String detail;
+
+        if (currentUri == null) {
+          detail = ApplicationContext.getString(R.string.hint_new_file);
+        } else if ((file = ApplicationUtilities.getFile(currentUri)) == null) {
+          detail = ApplicationUtilities.getString(currentUri);
+        } else {
+          detail = null;
+        }
+
+        if (detail != null) {
+          showMessage(R.string.message_save_no, detail);
+          return;
+        }
       }
 
       content = editArea.getText();
@@ -493,15 +506,11 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_send () {
-    File file = ApplicationUtilities.getFile(currentUri);
-
     if (currentUri != null) {
       OutgoingMessage message = new OutgoingMessage();
       message.addAttachment(currentUri);
 
-      if (message.getAttachments().length > 0) {
-        if (message.send()) {
-        }
+      if (message.send()) {
       }
     } else {
       showMessage(R.string.message_send_new);
