@@ -182,7 +182,7 @@ public abstract class Content {
     } catch (IOException exception) {
       CommonUtilities.reportError(
         LOG_TAG, "input error: %s: %s",
-        uri.toString(), exception.getMessage()
+        ApplicationUtilities.getString(uri), exception.getMessage()
       );
     }
 
