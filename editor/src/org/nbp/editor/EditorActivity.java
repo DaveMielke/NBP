@@ -1,4 +1,8 @@
 package org.nbp.editor;
+// saveAs
+// confirmFormat
+// menuAction_open
+// restoreFile
 
 import java.io.File;
 
@@ -56,6 +60,8 @@ public class EditorActivity extends CommonActivity {
   private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";
   private final static String PREF_CHECKPOINT_NAME = PREF_CHECKPOINT_PREFIX + "name";
   private final static String PREF_CHECKPOINT_PATH = PREF_CHECKPOINT_PREFIX + "path";
+  private final static String PREF_CHECKPOINT_TYPE = PREF_CHECKPOINT_PREFIX + "type";
+  private final static String PREF_CHECKPOINT_WRITABLE = PREF_CHECKPOINT_PREFIX + "writable";
   private final static String PREF_CHECKPOINT_START = PREF_CHECKPOINT_PREFIX + "start";
   private final static String PREF_CHECKPOINT_END = PREF_CHECKPOINT_PREFIX + "end";
   private final static String PREF_CHECKPOINT_SPANS = PREF_CHECKPOINT_PREFIX + "spans";
@@ -115,12 +121,12 @@ public class EditorActivity extends CommonActivity {
     return verifyTextRange(start, end, editArea.length());
   }
 
-  private void setCurrentContent (ContentHandle handle) {
+  private void setEditorContent (ContentHandle handle) {
     synchronized (this) {
       String path;
 
       if (handle != null) {
-        path = handle.getString();
+        path = handle.getNormalizedString();
       } else {
         path = getString(R.string.hint_new_file);
       }
@@ -130,16 +136,16 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void setCurrentContent (ContentHandle handle, CharSequence content) {
+  private void setEditorContent (ContentHandle handle, CharSequence content) {
     synchronized (this) {
-      setCurrentContent(handle);
+      setEditorContent(handle);
       editArea.setText(content);
       hasChanged = false;
     }
   }
 
-  private void setCurrentContent () {
-    setCurrentContent(null, "");
+  private void setEditorContent () {
+    setEditorContent(null, "");
   }
 
   private final void saveFile (File file, final Runnable onSaved) {
@@ -152,7 +158,7 @@ public class EditorActivity extends CommonActivity {
         if (contentHandle == null) {
           detail = ApplicationContext.getString(R.string.hint_new_file);
         } else if ((file = contentHandle.getFile()) == null) {
-          detail = contentHandle.getString();
+          detail = contentHandle.getNormalizedString();
         } else {
           detail = null;
         }
@@ -258,7 +264,7 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected void onPreExecute () {
         dialog = newAlertDialogBuilder(R.string.message_reading_content)
-          .setMessage(handle.getString())
+          .setMessage(handle.getNormalizedString())
           .create();
 
         dialog.show();
@@ -268,7 +274,7 @@ public class EditorActivity extends CommonActivity {
       protected CharSequence doInBackground (Void... arguments) {
         try {
           final SpannableStringBuilder input = new SpannableStringBuilder();
-          Content.readUri(handle.getUri(), input);
+          Content.readContent(handle, input);
           return input.subSequence(0, input.length());
         } catch (OutOfMemoryError error) {
           System.gc();
@@ -283,7 +289,7 @@ public class EditorActivity extends CommonActivity {
           int length = content.length();
 
           if (maximum < length) content = content.subSequence(0, maximum);
-          setCurrentContent(handle, content);
+          setEditorContent(handle, content);
 
           run(onLoaded);
         }
@@ -379,7 +385,7 @@ public class EditorActivity extends CommonActivity {
               new Runnable() {
                 @Override
                 public void run () {
-                  setCurrentContent(new ContentHandle(file, null, true));
+                  setEditorContent(new ContentHandle(file, null, true));
                 }
               }
             );
@@ -416,7 +422,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void confirmFormat () {
-    File file = contentHandle.getFile();
+    File file = (contentHandle != null)? contentHandle.getFile(): null;
 
     if (file == null) {
       selectFormat();
@@ -464,7 +470,7 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          setCurrentContent();
+          setEditorContent();
           checkpointFile();
         }
       }
@@ -855,7 +861,7 @@ public class EditorActivity extends CommonActivity {
   private final void checkpointFile () {
     synchronized (this) {
       String oldName = prefs.getString(PREF_CHECKPOINT_NAME, null);
-      String newName;
+      final String newName;
 
       if (oldName == null) {
         newName = "checkpoint1";
@@ -869,11 +875,7 @@ public class EditorActivity extends CommonActivity {
 
       final File oldFile = (oldName != null)? new File(filesDirectory, oldName): null;
       final File newFile = new File(filesDirectory, newName);
-
-      final String path =
-        (contentHandle != null)?
-        contentHandle.getUri().toString():
-        null;
+      final ContentHandle handle = contentHandle;
 
       saveFile(newFile,
         new Runnable() {
@@ -881,11 +883,15 @@ public class EditorActivity extends CommonActivity {
           public void run () {
             SharedPreferences.Editor editor = prefs.edit();
             removePreferenceKeys(editor, PREF_CHECKPOINT_PREFIX);
-
             editor.putString(PREF_CHECKPOINT_NAME, newFile.getName());
-            setCheckpointProperty(editor, PREF_CHECKPOINT_PATH, path);
-            setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, saveSpans(editArea.getText()));
 
+            if (handle != null) {
+              setCheckpointProperty(editor, PREF_CHECKPOINT_PATH, handle.getUriString());
+              setCheckpointProperty(editor, PREF_CHECKPOINT_TYPE, handle.getType());
+              editor.putBoolean(PREF_CHECKPOINT_WRITABLE, handle.canWrite());
+            }
+
+            setCheckpointProperty(editor, PREF_CHECKPOINT_SPANS, saveSpans(editArea.getText()));
             editor.putInt(PREF_CHECKPOINT_START, editArea.getSelectionStart());
             editor.putInt(PREF_CHECKPOINT_END, editArea.getSelectionEnd());
 
@@ -912,13 +918,15 @@ public class EditorActivity extends CommonActivity {
             @Override
             public void run () {
               int length = editArea.length();
+              String type = prefs.getString(PREF_CHECKPOINT_TYPE, null);
+              boolean writable = prefs.getBoolean(PREF_CHECKPOINT_WRITABLE, true);
 
               if ((path == null) || path.isEmpty()) {
-                setCurrentContent(null);
+                setEditorContent(null);
               } else if (path.charAt(0) == File.separatorChar) {
-                setCurrentContent(new ContentHandle(new File(path), null, true));
+                setEditorContent(new ContentHandle(new File(path), type, writable));
               } else {
-                setCurrentContent(new ContentHandle(path, null, true));
+                setEditorContent(new ContentHandle(path, type, writable));
               }
 
               {
@@ -973,7 +981,7 @@ public class EditorActivity extends CommonActivity {
     setContentView(R.layout.editor);
     pathView = (TextView)findViewById(R.id.current_file);
     editArea = (EditText)findViewById(R.id.edit_area);
-    setCurrentContent();
+    setEditorContent();
 
     showReportedErrors();
     prepareMenuButton();

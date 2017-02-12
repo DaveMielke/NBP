@@ -169,20 +169,21 @@ public abstract class Content {
     return getContentOperations(new File(uri.getPath()));
   }
 
-  public static boolean readUri (Uri uri, SpannableStringBuilder content) {
+  public static boolean readContent (ContentHandle handle, SpannableStringBuilder content) {
     try {
-      InputStream stream = ApplicationContext.getContentResolver().openInputStream(uri);
+      InputStream stream = ApplicationContext.getContentResolver().openInputStream(handle.getUri());
 
       try {
-        getContentOperations(uri).read(stream, content);
+        handle.getOperations().read(stream, content);
         return true;
       } finally {
         stream.close();
+        stream = null;
       }
     } catch (IOException exception) {
       CommonUtilities.reportError(
         LOG_TAG, "input error: %s: %s",
-        ApplicationUtilities.getString(uri), exception.getMessage()
+        handle.getNormalizedString(), exception.getMessage()
       );
     }
 

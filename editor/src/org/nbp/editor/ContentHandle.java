@@ -9,23 +9,25 @@ public class ContentHandle {
   private final String mimeType;
   private boolean isWritable;
 
-  private final String contentString;
+  private final ContentOperations contentOperations;
+  private final String normalizedString;
   private final File contentFile;
 
   public ContentHandle (Uri uri, String type, boolean writable) {
     contentUri = uri;
     mimeType = type;
     isWritable = writable;
+    contentOperations = Content.getContentOperations(uri);
 
     {
       String scheme = uri.getScheme();
 
       if (ContentResolver.SCHEME_FILE.equals(scheme)) {
         contentFile = new File(uri.getPath());
-        contentString = contentFile.getAbsolutePath();
+        normalizedString = contentFile.getAbsolutePath();
       } else {
         contentFile = null;
-        contentString = uri.toString();
+        normalizedString = uri.toString();
       }
     }
   }
@@ -50,8 +52,16 @@ public class ContentHandle {
     return isWritable;
   }
 
-  public final String getString () {
-    return contentString;
+  public final ContentOperations getOperations () {
+    return contentOperations;
+  }
+
+  public final String getUriString () {
+    return contentUri.toString();
+  }
+
+  public final String getNormalizedString () {
+    return normalizedString;
   }
 
   public final File getFile () {
