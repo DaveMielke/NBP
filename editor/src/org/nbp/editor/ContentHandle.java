@@ -46,29 +46,30 @@ public class ContentHandle {
           providedType = resolver.getType(uri);
 
           Cursor cursor = resolver.query(uri, null, null, null, null);
-          cursor.moveToFirst();
+          String name = null;
+          long size = 0;
 
-          {
-            int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+          if (cursor != null) {
+            try {
+              if (cursor.moveToFirst()) {
+                {
+                  int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                  if (index >= 0) name = cursor.getString(index);
+                }
 
-            if (index >= 0) {
-              providedName = cursor.getString(index);
-            } else {
-              providedName = null;
+                {
+                  int index = cursor.getColumnIndex(OpenableColumns.SIZE);
+                  if (index >= 0) size = cursor.getLong(index);
+                }
+              }
+            } finally {
+              cursor.close();
+              cursor = null;
             }
           }
 
-          {
-            int index = cursor.getColumnIndex(OpenableColumns.SIZE);
-
-            if (index >= 0) {
-              providedSize = cursor.getLong(index);
-            } else {
-              providedSize = 0;
-            }
-          }
-
-          cursor.close();
+          providedName = name;
+          providedSize = size;
         } else {
           providedType = null;
           providedName = null;
