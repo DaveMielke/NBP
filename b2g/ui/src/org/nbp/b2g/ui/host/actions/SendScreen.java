@@ -4,13 +4,12 @@ import org.nbp.b2g.ui.*;
 
 import java.io.File;
 
-import org.nbp.common.FileMaker;
-import org.nbp.common.AttachmentMaker;
+import org.nbp.common.FileLogger;
 
 public class SendScreen extends Action {
-  private File makeLogFile () {
-    FileScreenLogger logger = new FileScreenLogger();
-    logger.logScreen();
+  private final File makeLogFile () {
+    FileLogger logger = new FileLogger("screen.log", new NodeIterator());
+    logger.log();
     return logger.getFile();
   }
 

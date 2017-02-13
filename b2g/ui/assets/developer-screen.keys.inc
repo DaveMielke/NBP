@@ -1,4 +1,4 @@
-bind Backward+Dots456 SaveScreen
+bind Backward+Dots456 LogScreen
 bind Backward+Dots568 SendScreen
 
 bind Backward+Dot4 MoveToParent

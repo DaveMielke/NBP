@@ -101,7 +101,7 @@
   <string name="ResetHighlightedTyping_action_confirmation">Highlighting Off</string>
   <string name="ResetSettings_action_confirmation">Settings Reset</string>
   <string name="RestoreSettings_action_confirmation">Settings Restored</string>
-  <string name="SaveScreen_action_confirmation">Screen Saved</string>
+  <string name="LogScreen_action_confirmation">Screen Logged</string>
   <string name="SaveSettings_action_confirmation">Settings Saved</string>
   <string name="SetCopyStart_action_confirmation">start of copy</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>

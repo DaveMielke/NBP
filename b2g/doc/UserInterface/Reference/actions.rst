@@ -69,6 +69,7 @@
 .. |LogKeyboardOn| replace:: Turn on the logging of keyboard key events.
 .. |LogNavigationOff| replace:: Turn off the logging of internal screen navigation operations.
 .. |LogNavigationOn| replace:: Turn on the logging of internal screen navigation operations.
+.. |LogScreen| replace:: Write the current screen content to the Android log.
 .. |LogSpeechOff| replace:: Turn off the logging of speech events.
 .. |LogSpeechOn| replace:: Turn on the logging of speech events.
 .. |LogUpdatesOff| replace:: Turn off the logging of screen updates.
@@ -113,7 +114,6 @@
 .. |ReversePanningOff| replace:: Turn off `reverse panning mode`_.
 .. |ReversePanningOn| replace:: Turn on `reverse panning mode`_.
 .. |SaveSettings| replace:: Save the current B2G settings.
-.. |SaveScreen| replace:: Write the current screen element structure to the Android log.
 .. |SayAfter| replace:: Speak from the start of the braille display to the end of the screen element.
 .. |SayAll| replace:: Speak all of the screen element.
 .. |SayBefore| replace:: Speak from the start of the screen element to the start of the braille display.
@@ -126,7 +126,7 @@
 .. |ScrollUp| replace:: Go to the previous page of a list or paragraph of text.
 .. |SelectAll| replace:: Select all of the text.
 .. |SendAndroidLog| replace:: Send a copy of the Android log to the B2G developers.
-.. |SendScreen| replace:: Send a copy of the screen content to the B2G developers.
+.. |SendScreen| replace:: Send a copy of the current screen content to the B2G developers.
 .. |SetLeft| replace:: Pan the braille display a specific amount to the right.
 .. |SetSelectionEnd| replace:: Set or change the end of the text selection.
 .. |SetSelectionStart| replace:: Set or change the start of the text selection.

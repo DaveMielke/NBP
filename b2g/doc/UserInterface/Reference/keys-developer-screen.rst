@@ -1,5 +1,5 @@
 Backward+Dots456
-  |SaveScreen|
+  |LogScreen|
 
 Backward+Dots568
   |SendScreen|
