@@ -157,10 +157,20 @@ public class EditorActivity extends CommonActivity {
 
         if (contentHandle == null) {
           detail = ApplicationContext.getString(R.string.hint_new_file);
-        } else if ((file = contentHandle.getFile()) == null) {
-          detail = contentHandle.getNormalizedString();
-        } else {
+        } else if ((file = contentHandle.getFile()) != null) {
           detail = null;
+        } else {
+          String name = contentHandle.getProvidedName();
+
+          if (name != null) {
+            File directory = getDocumentsDirectory();
+
+            if (directory != null) {
+              file = new File(directory, name);
+            }
+          }
+
+          detail = (file != null)? null: contentHandle.getNormalizedString();
         }
 
         if (detail != null) {
