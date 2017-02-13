@@ -28,8 +28,12 @@ public class NodeIterator implements Logger.Iterator {
     }
   }
 
-  public NodeIterator (AccessibilityNodeInfo root) {
-    logTree(root, "root");
+  public NodeIterator (AccessibilityNodeInfo node, String name) {
+    logTree(node, name);
+  }
+
+  public NodeIterator (AccessibilityNodeInfo node) {
+    this(node, "top");
   }
 
   public NodeIterator () {
