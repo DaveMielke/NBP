@@ -88,8 +88,17 @@ public class ContentHandle {
 
     {
       ContentOperations operations = null;
-      if (mimeType != null) operations = Content.getContentOperations(mimeType);
-      if (operations == null) operations = Content.getContentOperations(uri);
+
+      if (contentFile != null) {
+        operations = Content.getContentOperations(contentFile);
+      }
+
+      if (operations == null) {
+        if (mimeType != null) {
+          operations = Content.getContentOperations(mimeType);
+        }
+      }
+
       contentOperations = operations;
     }
   }
