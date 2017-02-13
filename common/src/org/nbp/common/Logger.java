@@ -2,7 +2,7 @@ package org.nbp.common;
 
 public abstract class Logger {
   public interface Iterator {
-    public String get ();
+    public String getText ();
     public boolean next ();
   }
 
@@ -20,14 +20,14 @@ public abstract class Logger {
     return true;
   }
 
-  protected abstract boolean write (String line);
+  protected abstract boolean write (String text);
 
   public final boolean log () {
     if (!begin()) return false;
     boolean ok = true;
 
     while (logIterator.next()) {
-      if (!write(logIterator.get())) {
+      if (!write(logIterator.getText())) {
         ok = false;
         break;
       }

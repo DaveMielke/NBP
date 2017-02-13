@@ -17,8 +17,8 @@ public class LogLogger extends Logger {
   }
 
   @Override
-  protected final boolean write (String line) {
-    Log.println(logLevel, logTag, line);
+  protected final boolean write (String text) {
+    Log.println(logLevel, logTag, text);
     return true;
   }
 

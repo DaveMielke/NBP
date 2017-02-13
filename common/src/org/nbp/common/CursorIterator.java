@@ -17,37 +17,37 @@ public class CursorIterator implements Logger.Iterator {
   private int columnNumber;
 
   @Override
-  public final String get () {
-    StringBuilder sb = new StringBuilder();
+  public final String getText () {
+    StringBuilder text = new StringBuilder();
 
-    sb.append('[');
-    sb.append(cursor.getPosition());
-    sb.append(',');
-    sb.append(columnNumber);
-    sb.append(']');
+    text.append('[');
+    text.append(cursor.getPosition());
+    text.append(',');
+    text.append(columnNumber);
+    text.append(']');
 
-    sb.append(' ');
-    sb.append(columnNames[columnNumber]);
-    sb.append(' ');
+    text.append(' ');
+    text.append(columnNames[columnNumber]);
+    text.append(' ');
     int type = cursor.getType(columnNumber);
 
     switch (type) {
       case Cursor.FIELD_TYPE_NULL:
-        sb.append("null");
+        text.append("null");
         break;
 
       case Cursor.FIELD_TYPE_STRING:
-        sb.append('"');
-        sb.append(cursor.getString(columnNumber));
-        sb.append('"');
+        text.append('"');
+        text.append(cursor.getString(columnNumber));
+        text.append('"');
         break;
 
       case Cursor.FIELD_TYPE_INTEGER:
-        sb.append(cursor.getInt(columnNumber));
+        text.append(cursor.getInt(columnNumber));
         break;
 
       case Cursor.FIELD_TYPE_FLOAT:
-        sb.append(cursor.getFloat(columnNumber));
+        text.append(cursor.getFloat(columnNumber));
         break;
 
       case Cursor.FIELD_TYPE_BLOB: {
@@ -55,20 +55,20 @@ public class CursorIterator implements Logger.Iterator {
         int count = blob.length;
 
         for (int index=0; index<count; index+=1) {
-          if (index > 0) sb.append(' ');
-          sb.append(String.format("%02X", (blob[index] & 0XFF)));
+          if (index > 0) text.append(' ');
+          text.append(String.format("%02X", (blob[index] & 0XFF)));
         }
 
         break;
       }
 
       default:
-        sb.append('?');
-        sb.append(type);
+        text.append('?');
+        text.append(type);
         break;
     }
 
-    return sb.toString();
+    return text.toString();
   }
 
   public final boolean next () {
