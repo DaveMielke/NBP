@@ -26,15 +26,7 @@ public class ContentHandle {
 
   public ContentHandle (Uri uri, String type, boolean writable) {
     contentUri = uri;
-    mimeType = type;
     isWritable = writable;
-
-    {
-      ContentOperations operations = null;
-      if (type != null) operations = Content.getContentOperations(type);
-      if (operations == null) operations = Content.getContentOperations(uri);
-      contentOperations = operations;
-    }
 
     {
       String scheme = uri.getScheme();
@@ -48,7 +40,6 @@ public class ContentHandle {
         providedType = MimeTypes.getMimeType(providedName);
       } else {
         contentFile = null;
-        normalizedString = uri.toString();
 
         if (SCHEME_CONTENT.equals(scheme)) {
           ContentResolver resolver = ApplicationContext.getContentResolver();
@@ -59,17 +50,29 @@ public class ContentHandle {
 
           int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
           providedName = cursor.getString(nameIndex);
+          normalizedString = providedName;
 
           int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
           providedSize = cursor.getLong(sizeIndex);
 
           cursor.close();
         } else {
+          normalizedString = uri.toString();
           providedType = null;
           providedName = null;
           providedSize = 0;
         }
       }
+    }
+
+    if (type == null) type = providedType;
+    mimeType = type;
+
+    {
+      ContentOperations operations = null;
+      if (mimeType != null) operations = Content.getContentOperations(mimeType);
+      if (operations == null) operations = Content.getContentOperations(uri);
+      contentOperations = operations;
     }
   }
 
