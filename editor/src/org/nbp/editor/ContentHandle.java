@@ -4,6 +4,7 @@ import org.nbp.common.MimeTypes;
 
 import android.net.Uri;
 import java.io.File;
+
 import static android.content.ContentResolver.SCHEME_FILE;
 import static android.content.ContentResolver.SCHEME_CONTENT;
 
@@ -45,7 +46,12 @@ public class ContentHandle {
           ContentResolver resolver = ApplicationContext.getContentResolver();
           providedType = resolver.getType(uri);
 
-          Cursor cursor = resolver.query(uri, null, null, null, null);
+          String[] projection = {
+            OpenableColumns.DISPLAY_NAME,
+            OpenableColumns.SIZE
+          };
+
+          Cursor cursor = resolver.query(uri, projection, null, null, null);
           String name = null;
           long size = 0;
 
