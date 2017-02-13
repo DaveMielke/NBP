@@ -48,19 +48,37 @@ public class ContentHandle {
           Cursor cursor = resolver.query(uri, null, null, null, null);
           cursor.moveToFirst();
 
-          int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-          providedName = cursor.getString(nameIndex);
-          normalizedString = providedName;
+          {
+            int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
 
-          int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-          providedSize = cursor.getLong(sizeIndex);
+            if (index >= 0) {
+              providedName = cursor.getString(index);
+            } else {
+              providedName = null;
+            }
+          }
+
+          {
+            int index = cursor.getColumnIndex(OpenableColumns.SIZE);
+
+            if (index >= 0) {
+              providedSize = cursor.getLong(index);
+            } else {
+              providedSize = 0;
+            }
+          }
 
           cursor.close();
         } else {
-          normalizedString = uri.toString();
           providedType = null;
           providedName = null;
           providedSize = 0;
+        }
+
+        if (providedName != null) {
+          normalizedString = providedName;
+        } else {
+          normalizedString = uri.toString();
         }
       }
     }
