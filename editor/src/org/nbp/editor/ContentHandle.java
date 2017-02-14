@@ -2,6 +2,8 @@ package org.nbp.editor;
 
 import org.nbp.common.MimeTypes;
 
+import android.util.Log;
+
 import android.net.Uri;
 import java.io.File;
 
@@ -13,6 +15,8 @@ import android.database.Cursor;
 import android.provider.OpenableColumns;
 
 public class ContentHandle {
+  private final static String LOG_TAG = ContentHandle.class.getName();
+
   private final Uri contentUri;
   private final String mimeType;
   private boolean isWritable;
@@ -46,14 +50,21 @@ public class ContentHandle {
           ContentResolver resolver = ApplicationContext.getContentResolver();
           providedType = resolver.getType(uri);
 
-          String[] projection = {
-            OpenableColumns.DISPLAY_NAME,
-            OpenableColumns.SIZE
-          };
-
-          Cursor cursor = resolver.query(uri, projection, null, null, null);
+          Cursor cursor;
           String name = null;
           long size = 0;
+
+          try {
+            String[] projection = {
+              OpenableColumns.DISPLAY_NAME,
+              OpenableColumns.SIZE
+            };
+
+            cursor = resolver.query(uri, projection, null, null, null);
+          } catch (SecurityException exception) {
+            Log.w(LOG_TAG, ("content URI read error: " + exception.getMessage()));
+            cursor = null;
+          }
 
           if (cursor != null) {
             try {
