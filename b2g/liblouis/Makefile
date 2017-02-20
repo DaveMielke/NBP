@@ -5,14 +5,15 @@ APPLICATION_NAME = louis
 PACKAGE_PATH = org.liblouis
 
 NATIVE_SOURCES += config.h
-NATIVE_SOURCES += liblouis.h
-NATIVE_SOURCES += liblouis-c/liblouis/louis.h
-NATIVE_SOURCES += liblouis-c/liblouis/findTable.h
-NATIVE_SOURCES += liblouis-c/liblouis/compileTranslationTable.c
-NATIVE_SOURCES += liblouis-c/liblouis/lou_translateString.c
-NATIVE_SOURCES += liblouis-c/liblouis/lou_backTranslateString.c
-NATIVE_SOURCES += liblouis-c/liblouis/logging.c
-NATIVE_SOURCES += liblouis-c/liblouis/wrappers.c
+NATIVE_SOURCES += liblouis-location/liblouis/liblouis.h
+NATIVE_SOURCES += liblouis-location/liblouis/louis.h
+NATIVE_SOURCES += liblouis-location/liblouis/findTable.h
+NATIVE_SOURCES += liblouis-location/liblouis/compileTranslationTable.c
+NATIVE_SOURCES += liblouis-location/liblouis/lou_translateString.c
+NATIVE_SOURCES += liblouis-location/liblouis/lou_backTranslateString.c
+NATIVE_SOURCES += liblouis-location/liblouis/pattern.c
+NATIVE_SOURCES += liblouis-location/liblouis/logging.c
+NATIVE_SOURCES += liblouis-location/liblouis/wrappers.c
 
 NATIVE_SOURCES += lljni.h
 NATIVE_SOURCES += log.c
