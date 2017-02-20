@@ -115,3 +115,16 @@ JAVA_METHOD(
   if (number >= emphasisCount) return NO_EMPHASIS;
   return emphasisTable[number];
 }
+
+JAVA_METHOD(
+  org_liblouis_TranslationTable, getEmphasisBit, jshort,
+  jstring jTable, jstring jName
+) {
+  const char *cTable = (*env)->GetStringUTFChars(env, jTable, NULL);
+  const char *cName = (*env)->GetStringUTFChars(env, jName, NULL);
+  formtype bit = lou_getTypeformForEmphClass(cTable, cName);
+
+  (*env)->ReleaseStringUTFChars(env, jTable, cTable);
+  (*env)->ReleaseStringUTFChars(env, jName, cName);
+  return bit;
+}

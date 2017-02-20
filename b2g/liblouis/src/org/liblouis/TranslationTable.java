@@ -104,6 +104,11 @@ public class TranslationTable {
     return getBackwardTable().getFileObject();
   }
 
+  private native static short getEmphasisBit (String table, String name);
+  public final short getEmphasisBit (String name) {
+    return getEmphasisBit(getForwardFileName(), name);
+  }
+
   public final static File[] getAllTableFiles () {
     return getDirectory().listFiles(
       new FileFilter() {
