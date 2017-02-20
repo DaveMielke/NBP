@@ -14,12 +14,6 @@ import android.graphics.Typeface;
 public class Translation {
   private final static String LOG_TAG = Translation.class.getName();
 
-  public native static short getBoldBit ();
-  public native static short getItalicBit ();
-  public native static short getUnderlineBit ();
-  public native static int getEmphasisCount ();
-  public native static short getEmphasisBit (int number);
-
   private native boolean translate (
     String tableName,
     String inputBuffer, char[] outputBuffer, short[] typeForm,
@@ -183,9 +177,9 @@ public class Translation {
     return outputCursor;
   }
 
-  private final static short TYPE_FORM_BOLD = getBoldBit();
-  private final static short TYPE_FORM_ITALIC = getItalicBit();
-  private final static short TYPE_FORM_UNDERLINE = getUnderlineBit();
+  private final static short TYPE_FORM_BOLD = Emphasis.getBoldBit();
+  private final static short TYPE_FORM_ITALIC = Emphasis.getItalicBit();
+  private final static short TYPE_FORM_UNDERLINE = Emphasis.getUnderlineBit();
 
   private static short[] createTypeForm (int length) {
     short[] typeForm = new short[length];
