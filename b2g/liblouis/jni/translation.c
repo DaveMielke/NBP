@@ -9,7 +9,7 @@ typedef enum {
 JAVA_METHOD(
   org_liblouis_Translation, translate, jboolean,
   jstring jTableName,
-  jstring jInputBuffer, jcharArray jOutputBuffer, jbyteArray jTypeForm,
+  jstring jInputBuffer, jcharArray jOutputBuffer, jshortArray jTypeForm,
   jintArray jOutputOffsets, jintArray jInputOffsets,
   jintArray jResultValues, jboolean backTranslate
 ) {
@@ -19,7 +19,7 @@ JAVA_METHOD(
   jchar *cOutputBuffer = (*env)->GetCharArrayElements(env, jOutputBuffer, NULL);
 
   int haveTypeForm = jTypeForm != NULL;
-  jbyte *cTypeForm = haveTypeForm? (*env)->GetByteArrayElements(env, jTypeForm, NULL): NULL;
+  jshort *cTypeForm = haveTypeForm? (*env)->GetShortArrayElements(env, jTypeForm, NULL): NULL;
 
   jint *cOutputOffsets = (*env)->GetIntArrayElements(env, jOutputOffsets, NULL);
   jint *cInputOffsets = (*env)->GetIntArrayElements(env, jInputOffsets, NULL);
@@ -42,7 +42,7 @@ JAVA_METHOD(
       cTableName,
       cInputBuffer, inputLength,
       cOutputBuffer, outputLength,
-      (unsigned char *)cTypeForm, spacing,
+      (uint16_t *)cTypeForm, spacing,
       cOutputOffsets, cInputOffsets,
       cursorOffset, translationMode
     );
@@ -50,7 +50,7 @@ JAVA_METHOD(
   (*env)->ReleaseStringUTFChars(env, jTableName, cTableName);
   (*env)->ReleaseStringChars(env, jInputBuffer, cInputBuffer);
   (*env)->ReleaseCharArrayElements(env, jOutputBuffer, cOutputBuffer, 0);
-  if (haveTypeForm) (*env)->ReleaseByteArrayElements(env, jTypeForm, cTypeForm, 0);
+  if (haveTypeForm) (*env)->ReleaseShortArrayElements(env, jTypeForm, cTypeForm, 0);
   (*env)->ReleaseIntArrayElements(env, jOutputOffsets, cOutputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jInputOffsets, cInputOffsets, 0);
   (*env)->ReleaseIntArrayElements(env, jResultValues, cResultValues, 0);

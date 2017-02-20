@@ -16,7 +16,7 @@ public class Translation {
 
   private native boolean translate (
     String tableName,
-    String inputBuffer, char[] outputBuffer, byte[] typeForm,
+    String inputBuffer, char[] outputBuffer, short[] typeForm,
     int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate
   );
@@ -182,14 +182,14 @@ public class Translation {
   private final static byte TYPE_FORM_BOLD      = 0X4;
   private final static byte TYPE_FORM_COMPUTER  = 0X8;
 
-  private static byte[] createTypeForm (int length) {
-    byte[] typeForm = new byte[length];
-    Arrays.fill(typeForm, (byte)0);
+  private static short[] createTypeForm (int length) {
+    short[] typeForm = new short[length];
+    Arrays.fill(typeForm, (short)0);
     return typeForm;
   }
 
-  private static byte[] createTypeForm (int length, CharSequence text) {
-    byte[] typeForm = null;
+  private static short[] createTypeForm (int length, CharSequence text) {
+    short[] typeForm = null;
 
     if (text instanceof Spanned) {
       Spanned spanned = (Spanned)text;
@@ -283,7 +283,7 @@ public class Translation {
       resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
       int typeFormLength = Math.max(inputLength, outputLength);
-      byte[] typeForm = !includeHighlighting? null:
+      short[] typeForm = !includeHighlighting? null:
                         backTranslate? null:
                         createTypeForm(typeFormLength, input);
 

@@ -4,7 +4,7 @@ include $(BUILD_DIRECTORY)app.prologue.mk
 APPLICATION_NAME = louis
 PACKAGE_PATH = org.liblouis
 
-NATIVE_SOURCES += config.h
+NATIVE_SOURCES += liblouis-location/liblouis/config.h
 NATIVE_SOURCES += liblouis-location/liblouis/liblouis.h
 NATIVE_SOURCES += liblouis-location/liblouis/louis.h
 NATIVE_SOURCES += liblouis-location/liblouis/findTable.h
