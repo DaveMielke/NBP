@@ -32,8 +32,8 @@ public enum BrailleCode {
     TranslationEnumeration.DE_DE_G2
   ),
 
-  GR(
-    TranslationEnumeration.GR
+  EL(
+    TranslationEnumeration.EL
   ),
 
   HE(
