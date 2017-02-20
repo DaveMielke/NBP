@@ -1,0 +1,75 @@
+package org.liblouis;
+
+import java.io.File;
+import java.io.FileFilter;
+
+public class TableFile {
+  private final String tableName;
+
+  public TableFile (String name) {
+    tableName = name;
+  }
+
+  public final String getTableName () {
+    return tableName;
+  }
+
+  public final static String SUBDIRECTORY = "liblouis/tables";
+  public final static String EXTENSION = ".ctb";
+
+  public final static String makeFileName (String name) {
+    return name + EXTENSION;
+  }
+
+  private final static Object STATIC_LOCK = new Object();
+  private static File tablesDirectory = null;
+
+  public static File getDirectory () {
+    synchronized (STATIC_LOCK) {
+      if (tablesDirectory == null) {
+        tablesDirectory = new File(Louis.getDataPath(), SUBDIRECTORY);
+      }
+    }
+
+    return tablesDirectory;
+  }
+
+  private String fileName = null;
+  private File fileObject = null;
+
+  public final String getFileName () {
+    synchronized (this) {
+      if (fileName == null) {
+        fileName = makeFileName(getTableName());
+      }
+    }
+
+    return fileName;
+  }
+
+  public final File getFileObject () {
+    synchronized (this) {
+      if (fileObject == null) {
+        fileObject = new File(getDirectory(), getFileName());
+      }
+    }
+
+    return fileObject;
+  }
+
+  private native short getEmphasisBit (String table, String name);
+  public final short getEmphasisBit (String name) {
+    return getEmphasisBit(getFileName(), name);
+  }
+
+  public final static File[] getAllFiles () {
+    return getDirectory().listFiles(
+      new FileFilter() {
+        @Override
+        public boolean accept (File file) {
+          return file.getName().endsWith(EXTENSION);
+        }
+      }
+    );
+  }
+}

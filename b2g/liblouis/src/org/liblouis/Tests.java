@@ -106,7 +106,9 @@ public abstract class Tests {
     Log.d(LOG_TAG, "end braille translation test");
   }
 
-  private final static void auditFile (Set<File> notFound, File file) {
+  private final static void auditFile (Set<File> notFound, TableFile tableFile) {
+    File file = tableFile.getFileObject();
+
     if (file.exists()) {
       notFound.remove(file);
     } else {
@@ -118,7 +120,7 @@ public abstract class Tests {
     Log.d(LOG_TAG, "begin translation table enumeration audit");
 
     Set<File> notFound = new HashSet<File>();
-    Collections.addAll(notFound, TranslationTable.getAllTableFiles());
+    Collections.addAll(notFound, TableFile.getAllFiles());
 
     for (TranslationEnumeration value : TranslationEnumeration.values()) {
       TranslationTable table = value.getTranslationTable();
@@ -132,10 +134,10 @@ public abstract class Tests {
       }
 
       {
-        File forward = table.getForwardFileObject();
+        TableFile forward = table.getForwardTable();
         auditFile(notFound, forward);
 
-        File backward = table.getBackwardFileObject();
+        TableFile backward = table.getBackwardTable();
         if (backward != forward) auditFile(notFound, backward);
       }
     }
