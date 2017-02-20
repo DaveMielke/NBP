@@ -134,10 +134,10 @@ public abstract class Tests {
       }
 
       {
-        TableFile forward = table.getForwardTable();
+        TableFile forward = table.getForwardTableFile();
         auditFile(notFound, forward);
 
-        TableFile backward = table.getBackwardTable();
+        TableFile backward = table.getBackwardTableFile();
         if (backward != forward) auditFile(notFound, backward);
       }
     }

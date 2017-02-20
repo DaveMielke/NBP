@@ -8,12 +8,12 @@ typedef enum {
 
 JAVA_METHOD(
   org_liblouis_Translation, translate, jboolean,
-  jstring jTableName,
+  jstring jTableFile,
   jstring jInputBuffer, jcharArray jOutputBuffer, jshortArray jTypeForm,
   jintArray jOutputOffsets, jintArray jInputOffsets,
   jintArray jResultValues, jboolean backTranslate
 ) {
-  const char *cTableName = (*env)->GetStringUTFChars(env, jTableName, NULL);
+  const char *cTableFile = (*env)->GetStringUTFChars(env, jTableFile, NULL);
 
   const jchar *cInputBuffer = (*env)->GetStringChars(env, jInputBuffer, NULL);
   jchar *cOutputBuffer = (*env)->GetCharArrayElements(env, jOutputBuffer, NULL);
@@ -39,7 +39,7 @@ JAVA_METHOD(
 
   int successful =
     ((backTranslate != JNI_FALSE)? lou_backTranslate: lou_translate)(
-      cTableName,
+      cTableFile,
       cInputBuffer, inputLength,
       cOutputBuffer, outputLength,
       (uint16_t *)cTypeForm, spacing,
@@ -47,7 +47,7 @@ JAVA_METHOD(
       cursorOffset, translationMode
     );
 
-  (*env)->ReleaseStringUTFChars(env, jTableName, cTableName);
+  (*env)->ReleaseStringUTFChars(env, jTableFile, cTableFile);
   (*env)->ReleaseStringChars(env, jInputBuffer, cInputBuffer);
   (*env)->ReleaseCharArrayElements(env, jOutputBuffer, cOutputBuffer, 0);
   if (haveTypeForm) (*env)->ReleaseShortArrayElements(env, jTypeForm, cTypeForm, 0);
@@ -118,13 +118,26 @@ JAVA_METHOD(
 
 JAVA_METHOD(
   org_liblouis_TableFile, getEmphasisBit, jshort,
-  jstring jTable, jstring jName
+  jstring jTableFile, jstring jEmphasisClass
 ) {
-  const char *cTable = (*env)->GetStringUTFChars(env, jTable, NULL);
-  const char *cName = (*env)->GetStringUTFChars(env, jName, NULL);
-  formtype bit = lou_getTypeformForEmphClass(cTable, cName);
+  const char *cTableFile = (*env)->GetStringUTFChars(env, jTableFile, NULL);
+  const char *cEmphasisClass = (*env)->GetStringUTFChars(env, jEmphasisClass, NULL);
+  formtype bit = lou_getTypeformForEmphClass(cTableFile, cEmphasisClass);
 
-  (*env)->ReleaseStringUTFChars(env, jTable, cTable);
-  (*env)->ReleaseStringUTFChars(env, jName, cName);
+  (*env)->ReleaseStringUTFChars(env, jTableFile, cTableFile);
+  (*env)->ReleaseStringUTFChars(env, jEmphasisClass, cEmphasisClass);
   return bit;
+}
+
+JAVA_METHOD(
+  org_liblouis_TableFile, addRule, jboolean,
+  jstring jTableFile, jstring jRule
+) {
+  const char *cTableFile = (*env)->GetStringUTFChars(env, jTableFile, NULL);
+  const char *cRule = (*env)->GetStringUTFChars(env, jRule, NULL);
+  int successful = lou_compileString(cTableFile, cRule);
+
+  (*env)->ReleaseStringUTFChars(env, jTableFile, cTableFile);
+  (*env)->ReleaseStringUTFChars(env, jRule, cRule);
+  return successful? JNI_TRUE: JNI_FALSE;
 }

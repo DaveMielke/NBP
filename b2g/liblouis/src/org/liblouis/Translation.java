@@ -259,8 +259,8 @@ public class Translation {
 
     final TableFile tableFile =
       backTranslate?
-      translationTable.getBackwardTable():
-      translationTable.getForwardTable();
+      translationTable.getBackwardTableFile():
+      translationTable.getForwardTableFile();
     final String fileName = tableFile.getFileName();
 
     final boolean includeHighlighting = builder.getIncludeHighlighting();

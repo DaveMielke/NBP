@@ -57,9 +57,14 @@ public class TableFile {
     return fileObject;
   }
 
-  private native short getEmphasisBit (String table, String name);
-  public final short getEmphasisBit (String name) {
-    return getEmphasisBit(getFileName(), name);
+  private native short getEmphasisBit (String tableFile, String emphasisClass);
+  public final short getEmphasisBit (String emphasisClass) {
+    return getEmphasisBit(getFileName(), emphasisClass);
+  }
+
+  private native boolean addRule (String tableFile, String rule);
+  public final boolean addRule (String rule) {
+    return addRule(getFileName(), rule);
   }
 
   public final static File[] getAllFiles () {

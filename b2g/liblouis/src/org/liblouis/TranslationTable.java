@@ -16,31 +16,31 @@ public class TranslationTable {
     this(name, name);
   }
 
-  public final TableFile getForwardTable () {
+  public final TableFile getForwardTableFile () {
     return forwardTable;
   }
 
-  public final TableFile getBackwardTable () {
+  public final TableFile getBackwardTableFile () {
     return backwardTable;
   }
 
-  public final TableFile getTable () {
-    return getForwardTable();
+  public final TableFile getTableFile () {
+    return getForwardTableFile();
   }
 
   public final String getTableName () {
-    return getTable().getTableName();
+    return getTableFile().getTableName();
   }
 
   public final String getFileName () {
-    return getTable().getFileName();
+    return getTableFile().getFileName();
   }
 
   public final File getFileObject () {
-    return getTable().getFileObject();
+    return getTableFile().getFileObject();
   }
 
   public final short getEmphasisBit (String name) {
-    return getTable().getEmphasisBit(name);
+    return getTableFile().getEmphasisBit(name);
   }
 }
