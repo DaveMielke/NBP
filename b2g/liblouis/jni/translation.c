@@ -57,3 +57,61 @@ JAVA_METHOD(
 
   return successful? JNI_TRUE: JNI_FALSE;
 }
+
+JAVA_METHOD(
+  org_liblouis_Translation, getBoldBit, jshort
+) {
+  return bold;
+}
+
+JAVA_METHOD(
+  org_liblouis_Translation, getItalicBit, jshort
+) {
+  return italic;
+}
+
+JAVA_METHOD(
+  org_liblouis_Translation, getUnderlineBit, jshort
+) {
+  return underline;
+}
+
+static const formtype emphasisTable[] = {
+  emph_4,
+  emph_5,
+  emph_6,
+  emph_7,
+  emph_8,
+  emph_9,
+  emph_10,
+
+#ifdef comp_emph_1
+comp_emph_1,
+#endif /* comp_emph_1 */
+
+#ifdef comp_emph_2
+comp_emph_2,
+#endif /* comp_emph_2 */
+
+#ifdef comp_emph_3
+comp_emph_3,
+#endif /* comp_emph_3 */
+};
+
+static const uint8_t emphasisCount = sizeof(emphasisTable) / sizeof(emphasisTable[0]);
+static const formtype NO_EMPHASIS = 0;
+
+JAVA_METHOD(
+  org_liblouis_Translation, getEmphasisCount, jint
+) {
+  return emphasisCount;
+}
+
+JAVA_METHOD(
+  org_liblouis_Translation, getEmphasisBit, jshort,
+  jint number
+) {
+  if (number < 0) return NO_EMPHASIS;
+  if (number >= emphasisCount) return NO_EMPHASIS;
+  return emphasisTable[number];
+}

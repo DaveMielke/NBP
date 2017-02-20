@@ -14,6 +14,12 @@ import android.graphics.Typeface;
 public class Translation {
   private final static String LOG_TAG = Translation.class.getName();
 
+  public native static short getBoldBit ();
+  public native static short getItalicBit ();
+  public native static short getUnderlineBit ();
+  public native static int getEmphasisCount ();
+  public native static short getEmphasisBit (int number);
+
   private native boolean translate (
     String tableName,
     String inputBuffer, char[] outputBuffer, short[] typeForm,
@@ -177,10 +183,9 @@ public class Translation {
     return outputCursor;
   }
 
-  private final static byte TYPE_FORM_ITALIC    = 0X1;
-  private final static byte TYPE_FORM_UNDERLINE = 0X2;
-  private final static byte TYPE_FORM_BOLD      = 0X4;
-  private final static byte TYPE_FORM_COMPUTER  = 0X8;
+  private final static short TYPE_FORM_BOLD = getBoldBit();
+  private final static short TYPE_FORM_ITALIC = getItalicBit();
+  private final static short TYPE_FORM_UNDERLINE = getUnderlineBit();
 
   private static short[] createTypeForm (int length) {
     short[] typeForm = new short[length];
@@ -197,22 +202,23 @@ public class Translation {
 
       if (spans != null) {
         for (Object span : spans) {
-          byte flags = 0;
+          short flags = 0;
 
           if (span instanceof UnderlineSpan) {
-            flags = TYPE_FORM_UNDERLINE;
+            flags |= TYPE_FORM_UNDERLINE;
           } else if (span instanceof StyleSpan) {
             switch (((StyleSpan)span).getStyle()) {
               case Typeface.BOLD:
-                flags = TYPE_FORM_BOLD;
+                flags |= TYPE_FORM_BOLD;
                 break;
 
               case Typeface.ITALIC:
-                flags = TYPE_FORM_ITALIC;
+                flags |= TYPE_FORM_ITALIC;
                 break;
 
               case Typeface.BOLD_ITALIC:
-                flags = TYPE_FORM_BOLD | TYPE_FORM_ITALIC;
+                flags |= TYPE_FORM_BOLD;
+                flags |= TYPE_FORM_ITALIC;
                 break;
             }
           }
