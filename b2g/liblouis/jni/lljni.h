@@ -2,11 +2,11 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <string.h>
-#include <liblouis.h>
+#include "liblouis.h"
 #include <jni.h>
 
 extern void logPrint (
-  int level, const char *format, ...
+  logLevels level, const char *format, ...
 ) __attribute__((format(printf, 2, 3)));
 
 #define JAVA_METHOD(object, name, type, ...) \

@@ -3,7 +3,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE := louis
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH) liblouis-c/liblouis
+LOCAL_C_INCLUDES := $(LOCAL_PATH) $(LOCAL_PATH)/liblouis-c/liblouis
 LOCAL_CFLAGS := -Wall -DTABLESDIR=\"liblouis-c/tables\"
 LOCAL_LDLIBS := -llog
 

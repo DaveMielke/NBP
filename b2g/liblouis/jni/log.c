@@ -2,7 +2,7 @@
 #include <android/log.h>
 
 static int
-toAndroidLogPriority (int level) {
+toAndroidLogPriority (logLevels level) {
   switch (level) {
     case LOG_ALL:   return ANDROID_LOG_VERBOSE;
     case LOG_DEBUG: return ANDROID_LOG_DEBUG;
@@ -16,7 +16,7 @@ toAndroidLogPriority (int level) {
 }
 
 void
-logPrint (int level, const char *format, ...) {
+logPrint (logLevels level, const char *format, ...) {
   va_list args;
   va_start(args, format);
   __android_log_vprint(toAndroidLogPriority(level), "liblouis", format, args);
@@ -24,7 +24,7 @@ logPrint (int level, const char *format, ...) {
 }
 
 static void
-logMessage (int level, const char *message) {
+logMessage (logLevels level, const char *message) {
   logPrint(level, "%s", message);
 }
 
