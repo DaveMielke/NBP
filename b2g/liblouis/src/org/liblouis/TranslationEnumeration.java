@@ -110,7 +110,7 @@ public enum TranslationEnumeration {
   ),
 
   EN_UEB_G2(
-    "B2G-en-ueb-g2", R.string.louis_ttd_EN_UEB_G2
+    "en-ueb-g2", R.string.louis_ttd_EN_UEB_G2
   ),
 
   EN_US_COMP6(
