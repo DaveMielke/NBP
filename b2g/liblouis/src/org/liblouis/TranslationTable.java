@@ -54,6 +54,11 @@ public class TranslationTable {
       return fileObject;
     }
 
+    private native short getEmphasisBit (String table, String name);
+    public final short getEmphasisBit (String name) {
+      return getEmphasisBit(getFileName(), name);
+    }
+
     private TableFile (String name) {
       tableName = name;
     }
@@ -104,9 +109,12 @@ public class TranslationTable {
     return getBackwardTable().getFileObject();
   }
 
-  private native static short getEmphasisBit (String table, String name);
-  public final short getEmphasisBit (String name) {
-    return getEmphasisBit(getForwardFileName(), name);
+  public final short getForwardEmphasisBit (String name) {
+    return getForwardTable().getEmphasisBit(name);
+  }
+
+  public final short getBackwardEmphasisBit (String name) {
+    return getBackwardTable().getEmphasisBit(name);
   }
 
   public final static File[] getAllTableFiles () {

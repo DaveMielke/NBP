@@ -117,7 +117,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_liblouis_TranslationTable, getEmphasisBit, jshort,
+  org_liblouis_TranslationTable_TableFile, getEmphasisBit, jshort,
   jstring jTable, jstring jName
 ) {
   const char *cTable = (*env)->GetStringUTFChars(env, jTable, NULL);
