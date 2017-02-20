@@ -81,6 +81,10 @@ public enum TranslationEnumeration {
     "dra", R.string.louis_ttd_DRA
   ),
 
+  EL(
+    "el", R.string.louis_ttd_EL
+  ),
+
   EN_CA(
     "en_CA", R.string.louis_ttd_EN_CA
   ),
@@ -199,10 +203,6 @@ public enum TranslationEnumeration {
 
   GON(
     "gon", R.string.louis_ttd_GON
-  ),
-
-  GR(
-    "gr-forward", "gr-backward", R.string.louis_ttd_GR
   ),
 
   GR_BB(
