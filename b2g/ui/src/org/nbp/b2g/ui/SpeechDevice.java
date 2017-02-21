@@ -54,6 +54,12 @@ public class SpeechDevice {
   private int maximumLength;
   private String pendingSayText = null;
 
+  private final void logSpeechFailure (String action, Exception exception) {
+    Log.w(LOG_TAG, String.format(
+      "speech failure: %s: %s", action, exception.getMessage()
+    ));
+  }
+
   private final void setParameter (String parameter, String value) {
     synchronized (ttsParameters) {
       ttsParameters.put(parameter, value);
@@ -102,13 +108,22 @@ public class SpeechDevice {
   public final boolean stopSpeaking () {
     synchronized (this) {
       if (isStarted()) {
-        if (!ttsObject.isSpeaking()) return true;
+        try {
+          if (!ttsObject.isSpeaking()) return true;
+        } catch (IllegalArgumentException exception) {
+          logSpeechFailure("test speaking", exception);
+          return false;
+        }
 
         if (ApplicationSettings.LOG_SPEECH) {
           Log.d(LOG_TAG, "speech: stop");
         }
 
-        if (ttsObject.stop() == OK) return true;
+        try {
+          if (ttsObject.stop() == OK) return true;
+        } catch (IllegalArgumentException exception) {
+          logSpeechFailure("stop speaking", exception);
+        }
       }
     }
 
@@ -152,7 +167,12 @@ public class SpeechDevice {
                 Log.d(LOG_TAG, ("speech: say: " + segment));
               }
 
-              if (ttsObject.speak(segment, TextToSpeech.QUEUE_ADD, ttsParameters) != OK) return false;
+              try {
+                if (ttsObject.speak(segment, TextToSpeech.QUEUE_ADD, ttsParameters) != OK) return false;
+              } catch (IllegalArgumentException exception) {
+                logSpeechFailure("speak", exception);
+                return false;
+              }
             }
           }
         } else {
@@ -234,8 +254,10 @@ public class SpeechDevice {
     if (verifyRange("rate", rate, MINIMUM_RATE, MAXIMUM_RATE)) {
       synchronized (this) {
         if (isStarted()) {
-          if (ttsObject.setSpeechRate(rate) == OK) {
-            return true;
+          try {
+            if (ttsObject.setSpeechRate(rate) == OK) return true;
+          } catch (IllegalArgumentException exception) {
+            logSpeechFailure("set rate", exception);
           }
         }
       }
@@ -248,8 +270,10 @@ public class SpeechDevice {
     if (verifyRange("pitch", pitch, MINIMUM_PITCH, MAXIMUM_PITCH)) {
       synchronized (this) {
         if (isStarted()) {
-          if (ttsObject.setPitch(pitch) == OK) {
-            return true;
+          try {
+            if (ttsObject.setPitch(pitch) == OK) return true;
+          } catch (IllegalArgumentException exception) {
+            logSpeechFailure("set pitch", exception);
           }
         }
       }
@@ -291,11 +315,14 @@ public class SpeechDevice {
             if (isStarted()) {
               Log.d(LOG_TAG, "speech device started");
               restoreControls();
+              maximumLength = 4000;
 
               if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-                maximumLength = ttsObject.getMaxSpeechInputLength();
-              } else {
-                maximumLength = 4000;
+                try {
+                  maximumLength = ttsObject.getMaxSpeechInputLength();
+                } catch (IllegalArgumentException exception) {
+                  logSpeechFailure("get length", exception);
+                }
               }
 
               if (pendingSayText != null) {
@@ -306,9 +333,13 @@ public class SpeechDevice {
             } else {
               Log.d(LOG_TAG, "speech device failed with status " + ttsStatus);
 
-              ttsObject.shutdown();
-              ttsObject = null;
+              try {
+                ttsObject.shutdown();
+              } catch (IllegalArgumentException exception) {
+                logSpeechFailure("shut down", exception);
+              }
 
+              ttsObject = null;
               ttsRetry.start();
             }
           }
