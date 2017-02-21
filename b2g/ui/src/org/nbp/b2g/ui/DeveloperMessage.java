@@ -52,6 +52,18 @@ public abstract class DeveloperMessage {
         message.addBodyLine("It's safe to send it because it doesn't contain any sensitive data.");
       }
 
+      message.addBodyLine();
+      message.addBodyLine("To the developers:");
+      message.addBodyLine();
+
+      message.addBodyLine("Version");
+      message.addBodyLine(R.string.B2G_UI_version_name);
+      message.addBodyLine("of the B2G UI was being used.");
+
+      message.addBodyLine("Its source revision is");
+      message.addBodyLine(R.string.B2G_UI_source_revision);
+      message.addBodyLine(".");
+
       if (!message.send()) return false;
     }
 
