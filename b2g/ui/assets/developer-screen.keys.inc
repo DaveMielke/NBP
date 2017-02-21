@@ -8,7 +8,7 @@ bind Backward+Dot8 MoveToFirstChild
 bind Backward+Dots56 MoveToSelf
 
 bind Backward+Dots45 ScrollBackward
-bind Backward+Dots56 ScrollForward
+bind Backward+Dots68 ScrollForward
 
 bind Backward+Dots48 SwitchLauncher
 
