@@ -187,15 +187,17 @@ public class EditorActivity extends CommonActivity {
     final CharSequence output = content;
 
     new AsyncTask<Void, Void, Void>() {
-      AlertDialog dialog;
+      AlertDialog dialog = null;
 
       @Override
       protected void onPreExecute () {
-        dialog = newAlertDialogBuilder(R.string.message_writing_content)
-          .setMessage(f.getAbsolutePath())
-          .create();
+        if (haveWindow()) {
+          dialog = newAlertDialogBuilder(R.string.message_writing_content)
+            .setMessage(f.getAbsolutePath())
+            .create();
 
-        dialog.show();
+          dialog.show();
+        }
       }
 
       @Override
@@ -206,7 +208,7 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       public void onPostExecute (Void result) {
-        dialog.dismiss();
+        if (dialog != null) dialog.dismiss();
 
         if (!f.getParentFile().equals(filesDirectory)) {
           showMessage(R.string.message_file_saved, f.getAbsolutePath(), onSaved);
