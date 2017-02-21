@@ -80,8 +80,16 @@ public abstract class ApplicationUtilities {
     message((double)index, (double)count);
   }
 
+  private final static Object LIBRARY_LOCK = new Object();
+  private static boolean libraryLoaded = false;
+
   public static void loadLibrary () {
-    System.loadLibrary("b2g_ui");
+    synchronized (LIBRARY_LOCK) {
+      if (!libraryLoaded) {
+        System.loadLibrary("b2g_ui");
+        libraryLoaded = true;
+      }
+    }
   }
 
   private ApplicationUtilities () {
