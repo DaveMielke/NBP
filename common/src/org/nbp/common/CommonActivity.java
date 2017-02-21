@@ -200,8 +200,15 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
 
   @Override
   protected void onPause () {
-    super.onPause();
-    isResumed = false;
+    try {
+      isResumed = false;
+    } finally {
+      super.onPause();
+    }
+  }
+
+  protected final boolean haveWindow () {
+    return isResumed;
   }
 
   protected final void run (Runnable runnable) {
