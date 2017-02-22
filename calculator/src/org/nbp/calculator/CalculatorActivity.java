@@ -223,8 +223,15 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void showKeypad (int index) {
-    currentKeypad = index;
-    showKeypad();
+    if (index != currentKeypad) {
+      currentKeypad = index;
+      showKeypad();
+    }
+  }
+
+  private final void setFocusToKeypad () {
+    ViewGroup keypad = keypadViews[currentKeypad];
+    keypad.getChildAt(0).requestFocus();
   }
 
   private final void prepareKeypads (Integer... ids) {
@@ -292,28 +299,39 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setDegreesCheckBoxListener () {
-    setCompoundButtonListener(
-      R.id.checkbox_degrees,
-      SavedSettings.DEGREES,
-      DefaultSettings.DEGREES
-    );
-  }
-
-  private final void setAlternateButtonListener () {
+  private final void setShiftButtonListener () {
     setClickListener(
-      R.id.button_alternate,
+      R.id.button_shift,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           currentKeypad += 1;
           currentKeypad %= keypadViews.length;
-          showKeypad();
 
-          ViewGroup keypad = keypadViews[currentKeypad];
-          keypad.getChildAt(0).requestFocus();
+          showKeypad();
+          setFocusToKeypad();
         }
       }
+    );
+
+    setLongClickListener(
+      R.id.button_shift,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          showKeypad(0);
+          setFocusToKeypad();
+          return true;
+        }
+      }
+    );
+  }
+
+  private final void setDegreesCheckBoxListener () {
+    setCompoundButtonListener(
+      R.id.checkbox_degrees,
+      SavedSettings.DEGREES,
+      DefaultSettings.DEGREES
     );
   }
 
@@ -645,8 +663,8 @@ public class CalculatorActivity extends CommonActivity {
     expressionView.requestFocus();
 
     setClearButtonListener();
+    setShiftButtonListener();
     setDegreesCheckBoxListener();
-    setAlternateButtonListener();
 
     setRecallButtonListener();
     setStoreButtonListener();
@@ -658,7 +676,8 @@ public class CalculatorActivity extends CommonActivity {
       R.id.keypad_function
     );
 
-    showKeypad(0);
+    currentKeypad = 0;
+    showKeypad();
   }
 
   @Override

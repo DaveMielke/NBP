@@ -13,17 +13,17 @@
     android:text="@string/button_clear"
    />
 
+  <Button
+    android:id="@+id/button_shift"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/button_shift"
+   />
+
   <CheckBox
     android:id="@+id/checkbox_degrees"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="@string/checkbox_degrees"
-   />
-
-  <Button
-    android:id="@+id/button_alternate"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/button_alternate"
    />
 </LinearLayout>

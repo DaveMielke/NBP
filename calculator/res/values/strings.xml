@@ -10,13 +10,13 @@
   <string name="hint_result">no result yet</string>
   <string name="hint_variable">type variable name</string>
 
-  <string name="button_alternate">Alternate</string>
   <string name="button_cancel">Cancel</string>
   <string name="button_clear">Clear</string>
   <string name="button_erase">Erase</string>
   <string name="button_functions">Functions</string>
   <string name="button_new">New</string>
   <string name="button_recall">Recall</string>
+  <string name="button_shift">Shift</string>
   <string name="button_store">Store</string>
 
   <string name="checkbox_degrees">Degrees</string>
