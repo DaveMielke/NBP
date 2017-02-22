@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import org.nbp.common.ProgrammaticActivity;
+import org.nbp.common.ActivityResultHandler;
 import org.nbp.common.LaunchUtilities;
 
 import android.util.Log;
@@ -107,7 +108,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
   }
 
   @Override
-  protected boolean startRequest (Intent intent, ActivityResultHandler handler) {
+  public boolean startRequest (Intent intent, ActivityResultHandler handler) {
     Endpoints.setHostEndpoint();
     return super.startRequest(intent, handler);
   }

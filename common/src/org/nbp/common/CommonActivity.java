@@ -133,10 +133,6 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return view;
   }
 
-  protected interface ActivityResultHandler {
-    public void handleActivityResult (int code, Intent intent);
-  }
-
   private int requestCode = 0;
   private final Map<Integer, ActivityResultHandler> activityResultHandlers =
     new HashMap<Integer, ActivityResultHandler>();
@@ -156,7 +152,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     }
   }
 
-  protected boolean startRequest (Intent intent, ActivityResultHandler handler) {
+  public boolean startRequest (Intent intent, ActivityResultHandler handler) {
     int code;
 
     synchronized (activityResultHandlers) {
