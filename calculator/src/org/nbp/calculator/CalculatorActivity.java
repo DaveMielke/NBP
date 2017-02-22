@@ -629,7 +629,15 @@ public class CalculatorActivity extends CommonActivity {
 
     setContentView(R.layout.calculator);
     expressionView = (EditText)findViewById(R.id.expression);
-    resultView = (TextView)findViewById(R.id.result);
+    resultView = (TextView)findViewById(R.id.result_value);
+
+    {
+      float size = expressionView.getTextSize();
+      resultView.setTextSize(size);
+
+      TextView resultLabel = (TextView)findViewById(R.id.result_label);
+      resultLabel.setTextSize(size);
+    }
 
     setEvaluateListener();
     setExpressionTextFilter();
