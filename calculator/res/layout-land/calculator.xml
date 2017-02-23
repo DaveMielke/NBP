@@ -9,15 +9,40 @@
 
   <include layout="@layout/expression_area" />
 
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
+  <RelativeLayout
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="right"
     >
 
-    <include layout="@layout/memory_buttons" />
-    <include layout="@layout/navigation_buttons" />
-    <include layout="@layout/control_buttons" />
-    <include layout="@layout/keypads" />
-  </LinearLayout>
+    <include
+      layout="@layout/keypads"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+     />
+
+    <include
+      layout="@layout/navigation_buttons" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/keypads"
+      android:layout_toLeftOf="@+id/keypads"
+     />
+
+    <include
+      layout="@layout/memory_buttons" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/navigation_buttons"
+     />
+
+    <include
+      layout="@layout/control_buttons" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/memory_buttons"
+     />
+  </RelativeLayout>
 </LinearLayout>
