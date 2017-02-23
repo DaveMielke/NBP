@@ -10,6 +10,7 @@
   <string name="menu_options_edit">Edit</string>
   <string name="menu_options_new">New</string>
   <string name="menu_options_open">Open</string>
+  <string name="menu_options_record">Record</string>
   <string name="menu_options_save">Save</string>
   <string name="menu_options_saveAs">Save As</string>
   <string name="menu_options_send">Send</string>

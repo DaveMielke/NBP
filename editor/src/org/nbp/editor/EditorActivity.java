@@ -5,9 +5,11 @@ package org.nbp.editor;
 // restoreFile
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.nbp.common.CommonActivity;
 import org.nbp.common.AlertDialogBuilder;
+import org.nbp.common.SpeechToText;
 
 import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
@@ -523,6 +525,20 @@ public class EditorActivity extends CommonActivity {
     confirmFormat();
   }
 
+  private void menuAction_record () {
+    SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
+      @Override
+      public void handleText (ArrayList<String> text) {
+        for (String line : text) {
+          editArea.append(line);
+        }
+      }
+    };
+
+    new SpeechToText.Builder(this)
+                    .start(handler);
+  }
+
   private void menuAction_send () {
     if (contentHandle != null) {
       OutgoingMessage message = new OutgoingMessage();
@@ -647,6 +663,10 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_options_saveAs:
         menuAction_saveAs();
+        return true;
+
+      case R.id.menu_options_record:
+        menuAction_record();
         return true;
 
       case R.id.menu_options_send:
