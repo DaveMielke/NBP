@@ -17,7 +17,7 @@
 
     <include layout="@layout/memory_buttons" />
     <include layout="@layout/navigation_buttons" />
-    <include layout="@layout/control_vertical" />
+    <include layout="@layout/control_buttons" />
     <include layout="@layout/keypads" />
   </LinearLayout>
 </LinearLayout>

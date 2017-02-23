@@ -12,17 +12,15 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:text="@string/button_clear"
-    android:textSize="14sp"
+    android:textSize="@dimen/textSize_button"
    />
 
-  <Switch
-    android:id="@+id/switch_units"
+  <Button
+    android:id="@+id/button_units"
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:textOff="@string/units_radians"
-    android:textOn="@string/units_degrees"
-    android:textSize="14sp"
+    android:textSize="@dimen/textSize_button"
    />
 
   <Button
@@ -31,6 +29,6 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:text="@string/button_shift"
-    android:textSize="14sp"
+    android:textSize="@dimen/textSize_button"
    />
 </LinearLayout>

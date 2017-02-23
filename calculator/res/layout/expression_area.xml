@@ -13,21 +13,24 @@
     >
 
     <TextView
-      android:id="@+id/result_label"
+      android:id="@+id/units"
       android:layout_width="wrap_content"
       android:layout_height="fill_parent"
-      android:text="@string/label_result"
+      android:layout_gravity="left"
       android:textStyle="bold"
       android:paddingRight="5dp"
      />
 
     <TextView
-      android:id="@+id/result_value"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
+      android:id="@+id/result"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       android:focusable="true"
       android:singleLine="true"
-      android:hint="@string/hint_result"
+      android:fontFamily="monospace"
+      android:hint="0"
+      android:gravity="right"
+      android:textSize="@dimen/textSize_result"
      />
   </LinearLayout>
 
@@ -36,6 +39,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:singleLine="true"
+    android:fontFamily="monospace"
     android:hint="@string/hint_expression"
+    android:gravity="right"
    />
 </LinearLayout>

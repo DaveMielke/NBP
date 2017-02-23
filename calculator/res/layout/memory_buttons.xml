@@ -8,33 +8,37 @@
 
   <Button
     android:id="@+id/button_recall"
+    android:layout_gravity="fill_horizontal"
     android:layout_row="0"
     android:layout_column="0"
     android:text="@string/button_recall"
-    android:textSize="14sp"
+    android:textSize="@dimen/textSize_button"
    />
 
   <Button
     android:id="@+id/button_functions"
+    android:layout_gravity="fill_horizontal"
     android:layout_row="0"
     android:layout_column="1"
     android:text="@string/button_functions"
-    android:textSize="14sp"
+    android:textSize="@dimen/textSize_button"
    />
 
   <Button
     android:id="@+id/button_store"
+    android:layout_gravity="fill_horizontal"
     android:layout_row="1"
     android:layout_column="0"
     android:text="@string/button_store"
-    android:textSize="14sp"
+    android:textSize="@dimen/textSize_button"
    />
 
   <Button
     android:id="@+id/button_erase"
+    android:layout_gravity="fill_horizontal"
     android:layout_row="1"
     android:layout_column="1"
     android:text="@string/button_erase"
-    android:textSize="14sp"
+    android:textSize="@dimen/textSize_button"
    />
 </GridLayout>

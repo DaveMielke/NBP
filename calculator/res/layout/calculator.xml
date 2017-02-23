@@ -19,15 +19,17 @@
       layout="@layout/memory_buttons" 
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
+      android:layout_gravity="left"
      />
 
     <include
       layout="@layout/navigation_buttons" 
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
+      android:layout_gravity="right"
      />
   </LinearLayout>
 
-  <include layout="@layout/control_horizontal" />
+  <include layout="@layout/control_buttons" />
   <include layout="@layout/keypads" />
 </LinearLayout>

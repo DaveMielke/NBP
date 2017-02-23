@@ -62,17 +62,24 @@ public class CalculatorActivity extends CommonActivity {
     view.setOnLongClickListener(listener);
   }
 
-  private final void setCompoundButtonListener (
-    int id, final String setting, boolean checked
+  private final void setToggleButtonListener (
+    int id, final String settingName, final boolean defaultValue,
+    final TextView text, final int off, final int on
   ) {
-    CompoundButton button = (CompoundButton)findViewById(id);
-    button.setChecked(SavedSettings.get(setting, checked));
+    final Button button = (Button)findViewById(id);
+    boolean value = SavedSettings.get(settingName, defaultValue);
+    button.setText(value? off: on);
+    text.setText(value? on: off);
 
-    button.setOnCheckedChangeListener(
-      new CompoundButton.OnCheckedChangeListener() {
+    setClickListener(
+      id,
+      new View.OnClickListener() {
         @Override
-        public void onCheckedChanged (CompoundButton button, boolean isChecked) {
-          SavedSettings.set(setting, isChecked);
+        public void onClick (View view) {
+          boolean value = !SavedSettings.get(settingName, defaultValue);
+          button.setText(value? off: on);
+          text.setText(value? on: off);
+          SavedSettings.set(settingName, value);
         }
       }
     );
@@ -80,6 +87,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private EditText expressionView;
   private TextView resultView;
+  private TextView unitsView;
 
   private final void saveExpression () {
     SavedSettings.set(SavedSettings.EXPRESSION, expressionView.getText().toString());
@@ -335,10 +343,11 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setUnitsSwitchListener () {
-    setCompoundButtonListener(
-      R.id.switch_units,
+    setToggleButtonListener(
+      R.id.button_units,
       SavedSettings.DEGREES,
-      DefaultSettings.DEGREES
+      DefaultSettings.DEGREES,
+      unitsView, R.string.units_radians, R.string.units_degrees
     );
   }
 
@@ -654,7 +663,8 @@ public class CalculatorActivity extends CommonActivity {
 
     setContentView(R.layout.calculator);
     expressionView = (EditText)findViewById(R.id.expression);
-    resultView = (TextView)findViewById(R.id.result_value);
+    resultView = (TextView)findViewById(R.id.result);
+    unitsView = (TextView)findViewById(R.id.units);
 
     setEvaluateListener();
     setExpressionTextFilter();
