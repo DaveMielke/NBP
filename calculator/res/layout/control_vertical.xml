@@ -7,30 +7,24 @@
   >
 
   <Button
-    android:id="@+id/button_recall"
+    android:id="@+id/button_clear"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/button_recall"
+    android:text="@string/button_clear"
    />
 
   <Button
-    android:id="@+id/button_store"
+    android:id="@+id/button_shift"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/button_store"
+    android:text="@string/button_shift"
    />
 
-  <Button
-    android:id="@+id/button_erase"
+  <Switch
+    android:id="@+id/switch_units"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/button_erase"
-   />
-
-  <Button
-    android:id="@+id/button_functions"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/button_functions"
+    android:textOff="@string/units_radians"
+    android:textOn="@string/units_degrees"
    />
 </LinearLayout>

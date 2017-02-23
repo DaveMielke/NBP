@@ -6,6 +6,9 @@
   android:versionName="@string/NBP_Calculator_version_name"
   >
 
+  <!-- Android 4.1 (JellyBean) -->
+  <uses-sdk android:minSdkVersion="16" />
+
   <application
     android:label="@string/app_name"
     android:icon="@drawable/nbp_calculator"

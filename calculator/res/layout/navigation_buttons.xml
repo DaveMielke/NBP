@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  >
+
+  <Button
+    android:id="@+id/button_backspace"
+    android:layout_row="0"
+    android:layout_column="0"
+    android:text="b"
+    android:contentDescription="@string/button_backspace"
+    android:textSize="14sp"
+   />
+
+  <Button
+    android:id="@+id/button_up"
+    android:layout_row="0"
+    android:layout_column="1"
+    android:text="u"
+    android:contentDescription="@string/button_up"
+    android:textSize="14sp"
+   />
+
+  <Button
+    android:id="@+id/button_delete"
+    android:layout_row="0"
+    android:layout_column="2"
+    android:text="d"
+    android:contentDescription="@string/button_delete"
+    android:textSize="14sp"
+   />
+
+  <Button
+    android:id="@+id/button_left"
+    android:layout_row="1"
+    android:layout_column="0"
+    android:text="l"
+    android:contentDescription="@string/button_left"
+    android:textSize="14sp"
+   />
+
+  <Button
+    android:id="@+id/button_down"
+    android:layout_row="1"
+    android:layout_column="1"
+    android:text="d"
+    android:contentDescription="@string/button_down"
+    android:textSize="14sp"
+   />
+
+  <Button
+    android:id="@+id/button_right"
+    android:layout_row="1"
+    android:layout_column="2"
+    android:text="r"
+    android:contentDescription="@string/button_right"
+    android:textSize="14sp"
+   />
+</GridLayout>

@@ -3,50 +3,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:paddingLeft="@dimen/screen_offset_left"
   android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
   >
 
-  <LinearLayout
+  <include layout="@layout/expression_area" />
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
-    <TextView
-      android:id="@+id/result_label"
+    <include
+      layout="@layout/memory_buttons" 
       android:layout_width="wrap_content"
-      android:layout_height="fill_parent"
-      android:text="@string/label_result"
+      android:layout_height="match_parent"
      />
 
-    <TextView
-      android:id="@+id/result_value"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:focusable="true"
-      android:singleLine="true"
-      android:hint="@string/hint_result"
+    <include
+      layout="@layout/navigation_buttons" 
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
      />
   </LinearLayout>
 
-  <EditText
-    android:id="@+id/expression"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:singleLine="true"
-    android:hint="@string/hint_expression"
-   />
-
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    >
-
-    <include layout="@layout/buttons_control" />
-    <include layout="@layout/keypad_numeric" />
-    <include layout="@layout/keypad_function" />
-    <include layout="@layout/buttons_memory" />
-  </LinearLayout>
+  <include layout="@layout/control_horizontal" />
+  <include layout="@layout/keypads" />
 </LinearLayout>

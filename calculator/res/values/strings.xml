@@ -10,16 +10,23 @@
   <string name="hint_result">no result yet</string>
   <string name="hint_variable">type variable name</string>
 
+  <string name="button_backspace">Backspace</string>
   <string name="button_cancel">Cancel</string>
   <string name="button_clear">Clear</string>
+  <string name="button_delete">Delete</string>
+  <string name="button_down">Down</string>
   <string name="button_erase">Erase</string>
   <string name="button_functions">Functions</string>
+  <string name="button_left">Left</string>
   <string name="button_new">New</string>
   <string name="button_recall">Recall</string>
+  <string name="button_right">Right</string>
   <string name="button_shift">Shift</string>
   <string name="button_store">Store</string>
+  <string name="button_up">Up</string>
 
-  <string name="checkbox_degrees">Degrees</string>
+  <string name="units_degrees">DEG</string>
+  <string name="units_radians">RAD</string>
 
   <string name="error_invalid_decimal">invalid decimal</string>
   <string name="error_invalid_hexadecimal">invalid hexadecimal</string>

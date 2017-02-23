@@ -14,6 +14,7 @@ import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.CharacterUtilities;
 
 import android.util.Log;
+import android.util.TypedValue;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -265,8 +266,14 @@ public class CalculatorActivity extends CommonActivity {
       int keyCount = keypad.getChildCount();
 
       for (int keyIndex=0; keyIndex<keyCount; keyIndex+=1) {
-        View key = keypad.getChildAt(keyIndex);
+        TextView key = (TextView)keypad.getChildAt(keyIndex);
+
         key.setOnClickListener(listener);
+        key.setBackgroundColor(0);
+
+        if (id == R.id.keypad_numeric) {
+          key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+        }
       }
     }
   }
@@ -327,9 +334,9 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setDegreesCheckBoxListener () {
+  private final void setUnitsSwitchListener () {
     setCompoundButtonListener(
-      R.id.checkbox_degrees,
+      R.id.switch_units,
       SavedSettings.DEGREES,
       DefaultSettings.DEGREES
     );
@@ -649,14 +656,6 @@ public class CalculatorActivity extends CommonActivity {
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result_value);
 
-    {
-      float size = expressionView.getTextSize();
-      resultView.setTextSize(size);
-
-      TextView resultLabel = (TextView)findViewById(R.id.result_label);
-      resultLabel.setTextSize(size);
-    }
-
     setEvaluateListener();
     setExpressionTextFilter();
     restoreExpression();
@@ -664,7 +663,7 @@ public class CalculatorActivity extends CommonActivity {
 
     setClearButtonListener();
     setShiftButtonListener();
-    setDegreesCheckBoxListener();
+    setUnitsSwitchListener();
 
     setRecallButtonListener();
     setStoreButtonListener();
