@@ -12,6 +12,7 @@ import java.util.HashSet;
 import org.nbp.common.CommonActivity;
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.CharacterUtilities;
+import org.nbp.common.OnTextEditedListener;
 
 import android.util.Log;
 import android.util.TypedValue;
@@ -110,7 +111,7 @@ public class CalculatorActivity extends CommonActivity {
     }
   }
 
-  private final void evaluateExpression () {
+  private final void evaluateExpression (boolean showError) {
     saveExpression();
     String expression = expressionView.getText().toString();
 
@@ -121,8 +122,10 @@ public class CalculatorActivity extends CommonActivity {
       resultView.setText(result.format());
       SavedSettings.set(SavedSettings.RESULT, result);
     } catch (ExpressionException exception) {
-      resultView.setText(exception.getMessage());
-      expressionView.setSelection(exception.getLocation());
+      if (showError) {
+        resultView.setText(exception.getMessage());
+        expressionView.setSelection(exception.getLocation());
+      }
     }
   }
 
@@ -134,7 +137,7 @@ public class CalculatorActivity extends CommonActivity {
           if (event != null) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
               if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                evaluateExpression();
+                evaluateExpression(true);
                 resultView.requestFocus();
               }
 
@@ -171,7 +174,7 @@ public class CalculatorActivity extends CommonActivity {
     findViewById(view).performClick();
   }
 
-  private final void setExpressionTextFilter () {
+  private final void setExpressionMonitor () {
     expressionView.setFilters(
       new InputFilter[] {
         new InputFilter() {
@@ -218,6 +221,13 @@ public class CalculatorActivity extends CommonActivity {
         }
       }
     );
+
+    new OnTextEditedListener(expressionView) {
+      @Override
+      public void onTextEdited (boolean isDifferent) {
+        if (isDifferent) evaluateExpression(false);
+      }
+    };
   }
 
   private ViewGroup[] keypadViews;
@@ -251,7 +261,7 @@ public class CalculatorActivity extends CommonActivity {
         String text = button.getText().toString();
 
         if (text.equals("=")) {
-          evaluateExpression();
+          evaluateExpression(true);
           resultView.requestFocus();
         } else {
           Function function = Functions.get(text);
@@ -667,7 +677,7 @@ public class CalculatorActivity extends CommonActivity {
     unitsView = (TextView)findViewById(R.id.units);
 
     setEvaluateListener();
-    setExpressionTextFilter();
+    setExpressionMonitor();
     restoreExpression();
     expressionView.requestFocus();
 
