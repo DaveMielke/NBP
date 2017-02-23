@@ -90,6 +90,34 @@ public class CalculatorActivity extends CommonActivity {
   private TextView resultView;
   private TextView unitsView;
 
+  private Button leftButton;
+  private Button rightButton;
+  private Button backspaceButton;
+  private Button deleteButton;
+  private Button upButton;
+  private Button downButton;
+
+  private final void setNavigationButtonStates () {
+    int length = expressionView.length();
+    int start = expressionView.getSelectionStart();
+    int end = expressionView.getSelectionEnd();
+
+    {
+      boolean enabled = end > 0;
+      leftButton.setEnabled(enabled);
+      backspaceButton.setEnabled(enabled);
+    }
+
+    {
+      boolean enabled = start < length;
+      rightButton.setEnabled(enabled);
+      deleteButton.setEnabled(enabled);
+    }
+
+    upButton.setEnabled(false);
+    downButton.setEnabled(false);
+  }
+
   private final void saveExpression () {
     SavedSettings.set(SavedSettings.EXPRESSION, expressionView.getText().toString());
     SavedSettings.set(SavedSettings.START, expressionView.getSelectionStart());
@@ -174,7 +202,7 @@ public class CalculatorActivity extends CommonActivity {
     findViewById(view).performClick();
   }
 
-  private final void setExpressionMonitor () {
+  private final void setExpressionListener () {
     expressionView.setFilters(
       new InputFilter[] {
         new InputFilter() {
@@ -225,7 +253,10 @@ public class CalculatorActivity extends CommonActivity {
     new OnTextEditedListener(expressionView) {
       @Override
       public void onTextEdited (boolean isDifferent) {
-        if (isDifferent) evaluateExpression(false);
+        if (isDifferent) {
+          evaluateExpression(false);
+          setNavigationButtonStates();
+        }
       }
     };
   }
@@ -358,6 +389,105 @@ public class CalculatorActivity extends CommonActivity {
       SavedSettings.DEGREES,
       DefaultSettings.DEGREES,
       unitsView, R.string.units_radians, R.string.units_degrees
+    );
+  }
+
+  private final void setLeftButtonListener () {
+    setClickListener(
+      R.id.button_left,
+      new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          int start = expressionView.getSelectionStart();
+
+          if (start > 0) {
+            expressionView.setSelection(start-1);
+            setNavigationButtonStates();
+          }
+        }
+      }
+    );
+  }
+
+  private final void setRightButtonListener () {
+    setClickListener(
+      R.id.button_right,
+      new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          int end = expressionView.getSelectionEnd();
+
+          if (end < expressionView.length()) {
+            expressionView.setSelection(end+1);
+            setNavigationButtonStates();
+          }
+        }
+      }
+    );
+  }
+
+  private final void setBackspaceButtonListener () {
+    setClickListener(
+      R.id.button_backspace,
+      new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          int start = expressionView.getSelectionStart();
+          int end = expressionView.getSelectionEnd();
+
+          if (start == end) {
+            if (start == 0) return;
+            end = start;
+            start -= 1;
+          }
+
+          expressionView.getText().delete(start, end);
+          setNavigationButtonStates();
+        }
+      }
+    );
+  }
+
+  private final void setDeleteButtonListener () {
+    setClickListener(
+      R.id.button_delete,
+      new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          int start = expressionView.getSelectionStart();
+          int end = expressionView.getSelectionEnd();
+
+          if (start == end) {
+            if (end == expressionView.length()) return;
+            end = start + 1;
+          }
+
+          expressionView.getText().delete(start, end);
+          setNavigationButtonStates();
+        }
+      }
+    );
+  }
+
+  private final void setUpButtonListener () {
+    setClickListener(
+      R.id.button_up,
+      new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+        }
+      }
+    );
+  }
+
+  private final void setDownButtonListener () {
+    setClickListener(
+      R.id.button_down,
+      new View.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+        }
+      }
     );
   }
 
@@ -670,16 +800,31 @@ public class CalculatorActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.calculator);
+
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);
     unitsView = (TextView)findViewById(R.id.units);
 
+    leftButton = (Button)findViewById(R.id.button_left);
+    rightButton = (Button)findViewById(R.id.button_right);
+    backspaceButton = (Button)findViewById(R.id.button_backspace);
+    deleteButton = (Button)findViewById(R.id.button_delete);
+    upButton = (Button)findViewById(R.id.button_up);
+    downButton = (Button)findViewById(R.id.button_down);
+
     setEvaluateListener();
-    setExpressionMonitor();
+    setExpressionListener();
     restoreExpression();
     expressionView.requestFocus();
+
+    setLeftButtonListener();
+    setRightButtonListener();
+    setBackspaceButtonListener();
+    setDeleteButtonListener();
+    setUpButtonListener();
+    setDownButtonListener();
+    setNavigationButtonStates();
 
     setClearButtonListener();
     setShiftButtonListener();
