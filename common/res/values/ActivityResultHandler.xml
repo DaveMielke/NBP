@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="ActivityResultHandler_RESULT_OK">OK</string>
+  <string name="ActivityResultHandler_RESULT_CANCELED">request cancelled</string>
+  <string name="ActivityResultHandler_RESULT_UNKNOWN">unknown problem</string>
+</resources>

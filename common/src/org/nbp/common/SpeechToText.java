@@ -14,6 +14,40 @@ public abstract class SpeechToText {
   private SpeechToText () {
   }
 
+  public final static int toResultMessage (int code) {
+    switch (code) {
+      case SpeechRecognizer.ERROR_AUDIO:
+        return R.string.SpeechToText_RESULT_ERROR_AUDIO;
+
+      case SpeechRecognizer.ERROR_CLIENT:
+        return R.string.SpeechToText_RESULT_ERROR_CLIENT;
+
+      case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+        return R.string.SpeechToText_RESULT_ERROR_INSUFFICIENT_PERMISSIONS;
+
+      case SpeechRecognizer.ERROR_NETWORK:
+        return R.string.SpeechToText_RESULT_ERROR_NETWORK;
+
+      case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+        return R.string.SpeechToText_RESULT_ERROR_NETWORK_TIMEOUT;
+
+      case SpeechRecognizer.ERROR_NO_MATCH:
+        return R.string.SpeechToText_RESULT_ERROR_NO_MATCH;
+
+      case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+        return R.string.SpeechToText_RESULT_ERROR_RECOGNIZER_BUSY;
+
+      case SpeechRecognizer.ERROR_SERVER:
+        return R.string.SpeechToText_RESULT_ERROR_SERVER;
+
+      case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+        return R.string.SpeechToText_RESULT_ERROR_SPEECH_TIMEOUT;
+
+      default:
+        return ActivityResultHandler.toResultMessage(code);
+    }
+  }
+
   public static class TextHandler {
     public TextHandler () {
     }
@@ -119,64 +153,12 @@ public abstract class SpeechToText {
       ActivityResultHandler resultHandler = new ActivityResultHandler() {
         @Override
         public void handleActivityResult (int code, Intent intent) {
-          String problem;
-
-          switch (code) {
-            case CommonActivity.RESULT_OK: {
-              if (intent != null) {
-                ArrayList<String> text = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if (text != null) textHandler.handleText(text);
-              }
-             
-              return;
-            }
-
-            case CommonActivity.RESULT_CANCELED:
-              problem = "request cancelled";
-              break;
-
-            case SpeechRecognizer.ERROR_AUDIO:
-              problem = "recording error";
-              break;
-
-            case SpeechRecognizer.ERROR_CLIENT:
-              problem = "client error";
-              break;
-
-            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-              problem = "not permitted";
-              break;
-
-            case SpeechRecognizer.ERROR_NETWORK:
-              problem = "network error";
-              break;
-
-            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-              problem = "network timeout";
-              break;
-
-            case SpeechRecognizer.ERROR_NO_MATCH:
-              problem = "no match";
-              break;
-
-            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-              problem = "service busy";
-              break;
-
-            case SpeechRecognizer.ERROR_SERVER:
-              problem = "server error";
-              break;
-
-            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-              problem = "no input";
-              break;
-
-            default:
-              problem = "unknown problem";
-              break;
+          if (code != CommonActivity.RESULT_OK) {
+            textHandler.reportProblem(mainActivity.getString(toResultMessage(code)));
+          } else if (intent != null) {
+            ArrayList<String> text = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (text != null) textHandler.handleText(text);
           }
-
-          textHandler.reportProblem(problem);
         }
       };
 
