@@ -16,10 +16,11 @@
    />
 
   <Button
-    android:id="@+id/button_units"
+    android:id="@+id/button_angleUnit"
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1"
+    android:text="@string/button_angleUnit"
     android:textSize="@dimen/textSize_button"
    />
 

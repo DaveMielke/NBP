@@ -67,9 +67,8 @@ public class CalculatorActivity extends CommonActivity {
     int id, final String settingName, final boolean defaultValue,
     final TextView text, final int off, final int on
   ) {
-    final Button button = (Button)findViewById(id);
+    Button button = (Button)findViewById(id);
     boolean value = SavedSettings.get(settingName, defaultValue);
-    button.setText(value? off: on);
     text.setText(value? on: off);
 
     setClickListener(
@@ -78,7 +77,6 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           boolean value = !SavedSettings.get(settingName, defaultValue);
-          button.setText(value? off: on);
           text.setText(value? on: off);
           SavedSettings.set(settingName, value);
         }
@@ -88,7 +86,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private EditText expressionView;
   private TextView resultView;
-  private TextView unitsView;
+  private TextView angleUnitView;
 
   private Button leftButton;
   private Button rightButton;
@@ -383,12 +381,12 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setUnitsSwitchListener () {
+  private final void setAngleUnitButtonListener () {
     setToggleButtonListener(
-      R.id.button_units,
+      R.id.button_angleUnit,
       SavedSettings.DEGREES,
       DefaultSettings.DEGREES,
-      unitsView, R.string.units_radians, R.string.units_degrees
+      angleUnitView, R.string.angleUnit_radians, R.string.angleUnit_degrees
     );
   }
 
@@ -804,7 +802,7 @@ public class CalculatorActivity extends CommonActivity {
 
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);
-    unitsView = (TextView)findViewById(R.id.units);
+    angleUnitView = (TextView)findViewById(R.id.angleUnit);
 
     leftButton = (Button)findViewById(R.id.button_left);
     rightButton = (Button)findViewById(R.id.button_right);
@@ -827,8 +825,8 @@ public class CalculatorActivity extends CommonActivity {
     setNavigationButtonStates();
 
     setClearButtonListener();
+    setAngleUnitButtonListener();
     setShiftButtonListener();
-    setUnitsSwitchListener();
 
     setRecallButtonListener();
     setStoreButtonListener();
