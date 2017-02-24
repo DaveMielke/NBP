@@ -5,7 +5,7 @@
   android:visibility="gone"
   >
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="sin"
      />
@@ -23,7 +23,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="asin"
      />
@@ -41,7 +41,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="sinh"
      />
@@ -59,7 +59,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="log10"
      />
@@ -77,7 +77,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="abs"
      />

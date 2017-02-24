@@ -57,6 +57,8 @@
   <string name="description_numeric_decimalPoint">decimal point</string>
   <string name="description_numeric_E">x times 10 to the y</string>
   <string name="description_numeric_i">i</string>
+  <string name="description_numeric_e">e</string>
+  <string name="description_numeric_pi">pi</string>
   <string name="description_numeric_equals">equals</string>
   <string name="description_numeric_plus">plus</string>
   <string name="description_numeric_minus">minus</string>

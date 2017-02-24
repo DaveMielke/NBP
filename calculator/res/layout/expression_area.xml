@@ -2,7 +2,6 @@
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:stretchColumns="1"
-  android:shrinkColumns="1"
   >
 
   <TableRow>
@@ -14,11 +13,12 @@
 
     <TextView
       android:id="@+id/result"
-      android:focusable="true"
       android:singleLine="true"
       android:fontFamily="monospace"
-      android:hint="0"
+      android:gravity="right"
+      android:focusable="true"
       android:textSize="@dimen/textSize_result"
+      android:hint="0"
      />
   </TableRow>
 
@@ -27,7 +27,8 @@
     android:layout_column="1"
     android:singleLine="true"
     android:fontFamily="monospace"
-    android:hint="@string/hint_expression"
+    android:gravity="right"
     android:inputType="none"
+    android:hint="@string/hint_expression"
    />
 </TableLayout>

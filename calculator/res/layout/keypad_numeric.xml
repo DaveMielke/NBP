@@ -4,7 +4,7 @@
   android:id="@+id/keypad_numeric"
   >
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="("
       android:contentDescription="@string/description_numeric_openBracket"
@@ -17,10 +17,12 @@
 
     <Button
       android:text="e"
+      android:contentDescription="@string/description_numeric_e"
      />
 
     <Button
-      android:text="pi"
+      android:text="π"
+      android:contentDescription="@string/description_numeric_pi"
      />
 
     <Button
@@ -30,7 +32,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="7"
       android:contentDescription="@string/description_numeric_seven"
@@ -58,7 +60,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="4"
       android:contentDescription="@string/description_numeric_four"
@@ -80,7 +82,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="1"
       android:contentDescription="@string/description_numeric_one"
@@ -102,7 +104,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:text="."
       android:contentDescription="@string/description_numeric_decimalPoint"
