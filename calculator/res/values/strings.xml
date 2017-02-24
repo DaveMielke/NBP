@@ -8,7 +8,7 @@
   <string name="hint_expression">[ enter expression ]</string>
   <string name="hint_variable">type variable name</string>
 
-  <string name="button_angleUnit">Angle Unit</string>
+  <string name="button_angleUnit">RAD/DEG</string>
   <string name="button_backspace">Backspace</string>
   <string name="button_cancel">Cancel</string>
   <string name="button_clear">Clear</string>
@@ -55,14 +55,14 @@
   <string name="description_numeric_eight">eight</string>
   <string name="description_numeric_nine">nine</string>
   <string name="description_numeric_decimalPoint">decimal point</string>
-  <string name="description_numeric_E">times 10 to the</string>
+  <string name="description_numeric_E">x times 10 to the y</string>
   <string name="description_numeric_i">i</string>
   <string name="description_numeric_equals">equals</string>
   <string name="description_numeric_plus">plus</string>
   <string name="description_numeric_minus">minus</string>
   <string name="description_numeric_times">times</string>
   <string name="description_numeric_divide">divide</string>
-  <string name="description_numeric_exponentiate">to the power of</string>
+  <string name="description_numeric_exponentiate">x to the y</string>
   <string name="description_numeric_openBracket">open bracket</string>
   <string name="description_numeric_closeBracket">close bracket</string>
 </resources>

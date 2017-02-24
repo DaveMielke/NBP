@@ -35,6 +35,11 @@ import android.text.Spanned;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import android.text.SpannableStringBuilder;
+import android.text.style.CharacterStyle;
+import android.text.style.SuperscriptSpan;
+import android.text.style.RelativeSizeSpan;
+
 public class CalculatorActivity extends CommonActivity {
   private final static String LOG_TAG = CalculatorActivity.class.getName();
 
@@ -282,6 +287,11 @@ public class CalculatorActivity extends CommonActivity {
     keypad.getChildAt(0).requestFocus();
   }
 
+  private final static CharacterStyle exponentSpans[] = {
+    new SuperscriptSpan(),
+    new RelativeSizeSpan(0.6f)
+  };
+
   private final void prepareKeypads (Integer... ids) {
     View.OnClickListener listener = new View.OnClickListener() {
       @Override
@@ -293,10 +303,7 @@ public class CalculatorActivity extends CommonActivity {
           evaluateExpression(true);
           resultView.requestFocus();
         } else {
-          Function function = Functions.get(text);
-          if (function != null) text = function.getCall();
-
-          insertExpressionText(text);
+          insertExpressionText(button.getHint().toString());
           expressionView.requestFocus();
         }
 
@@ -320,6 +327,38 @@ public class CalculatorActivity extends CommonActivity {
 
         if (id == R.id.keypad_numeric) {
           key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+        }
+
+        String text = key.getText().toString();
+        CharSequence hint = key.getHint();
+
+        if ((hint == null) || (hint.length() == 0)) {
+          Function function = Functions.get(text);
+
+          if (function != null) {
+            hint = function.getCall();
+          } else {
+            hint = text;
+          }
+
+          key.setHint(hint);
+        }
+
+        {
+          int index = text.indexOf('^');
+
+          if (index >= 0) {
+            SpannableStringBuilder sb = new SpannableStringBuilder();
+            sb.append(text.substring(0, index));
+            sb.append(text.substring(index+1));
+            int length = sb.length();
+
+            for (CharacterStyle span : exponentSpans) {
+              sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            key.setText(sb.subSequence(0, length));
+          }
         }
       }
     }
