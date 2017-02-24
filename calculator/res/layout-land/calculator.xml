@@ -3,46 +3,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:paddingLeft="@dimen/screen_offset_left"
   android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
   >
 
   <include layout="@layout/expression_area" />
 
-  <RelativeLayout
+  <LinearLayout
+    android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="right"
     >
 
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      >
+
+      <include
+        layout="@layout/control_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       />
+
+      <include
+        layout="@layout/memory_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       />
+
+      <include
+        layout="@layout/navigation_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       />
+    </LinearLayout>
+
     <include
       layout="@layout/keypads"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentRight="true"
+      android:layout_height="match_parent"
      />
-
-    <include
-      layout="@layout/navigation_buttons" 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/keypads"
-      android:layout_toLeftOf="@+id/keypads"
-     />
-
-    <include
-      layout="@layout/memory_buttons" 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/navigation_buttons"
-     />
-
-    <include
-      layout="@layout/control_buttons" 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/memory_buttons"
-     />
-  </RelativeLayout>
+  </LinearLayout>
 </LinearLayout>

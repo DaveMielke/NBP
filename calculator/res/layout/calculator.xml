@@ -9,6 +9,12 @@
 
   <include layout="@layout/expression_area" />
 
+  <include
+    layout="@layout/control_buttons" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+   />
+
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -30,6 +36,5 @@
      />
   </LinearLayout>
 
-  <include layout="@layout/control_buttons" />
   <include layout="@layout/keypads" />
 </LinearLayout>
