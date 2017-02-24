@@ -293,20 +293,21 @@ public class CalculatorActivity extends CommonActivity {
   };
 
   private final void prepareKeypads (Integer... ids) {
-    View.OnClickListener listener = new View.OnClickListener() {
+    View.OnClickListener insertListener = new View.OnClickListener() {
       @Override
       public void onClick (View view) {
         Button button = (Button)view;
-        String text = button.getText().toString();
+        insertExpressionText(button.getHint().toString());
+        expressionView.requestFocus();
+        showKeypad(0);
+      }
+    };
 
-        if (text.equals("=")) {
-          evaluateExpression(true);
-          resultView.requestFocus();
-        } else {
-          insertExpressionText(button.getHint().toString());
-          expressionView.requestFocus();
-        }
-
+    View.OnClickListener evaluateListener = new View.OnClickListener() {
+      @Override
+      public void onClick (View view) {
+        evaluateExpression(true);
+        resultView.requestFocus();
         showKeypad(0);
       }
     };
@@ -325,8 +326,6 @@ public class CalculatorActivity extends CommonActivity {
 
         for (int keyIndex=0; keyIndex<keyCount; keyIndex+=1) {
           TextView key = (TextView)row.getChildAt(keyIndex);
-
-          key.setOnClickListener(listener);
           key.setBackgroundColor(0);
 
           if (id == R.id.keypad_numeric) {
@@ -336,32 +335,38 @@ public class CalculatorActivity extends CommonActivity {
           String text = key.getText().toString();
           CharSequence hint = key.getHint();
 
-          if ((hint == null) || (hint.length() == 0)) {
-            Function function = Functions.get(text);
+          if (text.equals("=")) {
+            key.setOnClickListener(evaluateListener);
+          } else {
+            key.setOnClickListener(insertListener);
 
-            if (function != null) {
-              hint = function.getCall();
-            } else {
-              hint = text;
-            }
+            if ((hint == null) || (hint.length() == 0)) {
+              Function function = Functions.get(text);
 
-            key.setHint(hint);
-          }
-
-          {
-            int index = text.indexOf('^');
-
-            if (index >= 0) {
-              SpannableStringBuilder sb = new SpannableStringBuilder();
-              sb.append(text.substring(0, index));
-              sb.append(text.substring(index+1));
-              int length = sb.length();
-
-              for (CharacterStyle span : exponentSpans) {
-                sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+              if (function != null) {
+                hint = function.getCall();
+              } else {
+                hint = text;
               }
 
-              key.setText(sb.subSequence(0, length));
+              key.setHint(hint);
+            }
+
+            {
+              int index = text.indexOf('^');
+
+              if (index >= 0) {
+                SpannableStringBuilder sb = new SpannableStringBuilder();
+                sb.append(text.substring(0, index));
+                sb.append(text.substring(index+1));
+                int length = sb.length();
+
+                for (CharacterStyle span : exponentSpans) {
+                  sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
+                key.setText(sb.subSequence(0, length));
+              }
             }
           }
         }
