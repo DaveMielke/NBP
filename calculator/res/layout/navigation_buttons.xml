@@ -8,22 +8,22 @@
     <Button
       android:id="@+id/button_backspace"
       android:text="␈"
-      android:contentDescription="@string/button_backspace"
       android:textSize="@dimen/textSize_button"
+      android:contentDescription="@string/button_backspace"
      />
 
     <Button
       android:id="@+id/button_up"
       android:text="↑"
-      android:contentDescription="@string/button_up"
       android:textSize="@dimen/textSize_button"
+      android:contentDescription="@string/button_up"
      />
 
     <Button
       android:id="@+id/button_delete"
       android:text="␡"
-      android:contentDescription="@string/button_delete"
       android:textSize="@dimen/textSize_button"
+      android:contentDescription="@string/button_delete"
      />
   </TableRow>
 
@@ -31,22 +31,22 @@
     <Button
       android:id="@+id/button_left"
       android:text="←"
-      android:contentDescription="@string/button_left"
       android:textSize="@dimen/textSize_button"
+      android:contentDescription="@string/button_left"
      />
 
     <Button
       android:id="@+id/button_down"
       android:text="↓"
-      android:contentDescription="@string/button_down"
       android:textSize="@dimen/textSize_button"
+      android:contentDescription="@string/button_down"
      />
 
     <Button
       android:id="@+id/button_right"
       android:text="→"
-      android:contentDescription="@string/button_right"
       android:textSize="@dimen/textSize_button"
+      android:contentDescription="@string/button_right"
      />
   </TableRow>
 </TableLayout>

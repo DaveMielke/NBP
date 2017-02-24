@@ -18,11 +18,11 @@
   <string name="button_functions">Functions</string>
   <string name="button_left">Left</string>
   <string name="button_new">New</string>
-  <string name="button_recall">Recall</string>
   <string name="button_right">Right</string>
   <string name="button_shift">Shift</string>
   <string name="button_store">Store</string>
   <string name="button_up">Up</string>
+  <string name="button_variables">Variables</string>
 
   <string name="angleUnit_degrees">DEG</string>
   <string name="angleUnit_radians">RAD</string>

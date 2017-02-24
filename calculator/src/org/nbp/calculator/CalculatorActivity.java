@@ -224,7 +224,7 @@ public class CalculatorActivity extends CommonActivity {
                 return true;
 
               case CharacterUtilities.CHAR_DC2: // control R
-                performClick(R.id.button_recall);
+                performClick(R.id.button_variables);
                 return true;
 
               case CharacterUtilities.CHAR_DC3: // control S
@@ -454,6 +454,21 @@ public class CalculatorActivity extends CommonActivity {
         }
       }
     );
+
+    setLongClickListener(
+      R.id.button_left,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          if (expressionView.getSelectionStart() > 0) {
+            expressionView.setSelection(0);
+            setNavigationButtonStates();
+          }
+
+          return true;
+        }
+      }
+    );
   }
 
   private final void setRightButtonListener () {
@@ -468,6 +483,23 @@ public class CalculatorActivity extends CommonActivity {
             expressionView.setSelection(end+1);
             setNavigationButtonStates();
           }
+        }
+      }
+    );
+
+    setLongClickListener(
+      R.id.button_left,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          int length = expressionView.length();
+
+          if (expressionView.getSelectionEnd() < length) {
+            expressionView.setSelection(length);
+            setNavigationButtonStates();
+          }
+
+          return true;
         }
       }
     );
@@ -493,6 +525,23 @@ public class CalculatorActivity extends CommonActivity {
         }
       }
     );
+
+    setLongClickListener(
+      R.id.button_left,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          int end = expressionView.getSelectionEnd();
+
+          if (end > 0) {
+            expressionView.getText().delete(0, end);
+            setNavigationButtonStates();
+          }
+
+          return true;
+        }
+      }
+    );
   }
 
   private final void setDeleteButtonListener () {
@@ -514,6 +563,24 @@ public class CalculatorActivity extends CommonActivity {
         }
       }
     );
+
+    setLongClickListener(
+      R.id.button_left,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          int start = expressionView.getSelectionStart();
+          int length = expressionView.length();
+
+          if (start < length) {
+            expressionView.getText().delete(start, length);
+            setNavigationButtonStates();
+          }
+
+          return true;
+        }
+      }
+    );
   }
 
   private final void setUpButtonListener () {
@@ -525,6 +592,16 @@ public class CalculatorActivity extends CommonActivity {
         }
       }
     );
+
+    setLongClickListener(
+      R.id.button_left,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          return true;
+        }
+      }
+    );
   }
 
   private final void setDownButtonListener () {
@@ -533,6 +610,16 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
+        }
+      }
+    );
+
+    setLongClickListener(
+      R.id.button_left,
+      new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick (View view) {
+          return true;
         }
       }
     );
@@ -574,13 +661,13 @@ public class CalculatorActivity extends CommonActivity {
     return variables;
   }
 
-  private final void setRecallButtonListener () {
+  private final void setVariablesButtonListener () {
     setClickListener(
-      R.id.button_recall,
+      R.id.button_variables,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_recall);
+          AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_variables);
           final List<String> variables = getUserVariableLines();
 
           for (String name : Variables.getSystemVariableNames()) {
@@ -814,6 +901,7 @@ public class CalculatorActivity extends CommonActivity {
     Collections.sort(functions);
     return functions;
   }
+
   private final void setFunctionsButtonListener () {
     setClickListener(
       R.id.button_functions,
@@ -877,10 +965,10 @@ public class CalculatorActivity extends CommonActivity {
     setAngleUnitButtonListener();
     setShiftButtonListener();
 
-    setRecallButtonListener();
+    setVariablesButtonListener();
+    setFunctionsButtonListener();
     setStoreButtonListener();
     setEraseButtonListener();
-    setFunctionsButtonListener();
 
     prepareKeypads(
       R.id.keypad_numeric,

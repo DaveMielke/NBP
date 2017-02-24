@@ -6,88 +6,37 @@
   >
 
   <TableRow android:layout_weight="1">
-    <Button
-      android:text="sin"
-     />
-
-    <Button
-      android:text="cos"
-     />
-
-    <Button
-      android:text="tan"
-     />
-
-    <Button
-      android:text="rd2dg"
-     />
+    <Button android:text="sin" />
+    <Button android:text="cos" />
+    <Button android:text="tan" />
+    <Button android:text="rd2dg" />
   </TableRow>
 
   <TableRow android:layout_weight="1">
-    <Button
-      android:text="asin"
-     />
-
-    <Button
-      android:text="acos"
-     />
-
-    <Button
-      android:text="atan"
-     />
-
-    <Button
-      android:text="dg2rd"
-     />
+    <Button android:text="asin" />
+    <Button android:text="acos" />
+    <Button android:text="atan" />
+    <Button android:text="dg2rd" />
   </TableRow>
 
   <TableRow android:layout_weight="1">
-    <Button
-      android:text="sinh"
-     />
-
-    <Button
-      android:text="cosh"
-     />
-
-    <Button
-      android:text="tanh"
-     />
-
-    <Button
-      android:text="sqrt"
-     />
+    <Button android:text="sinh" />
+    <Button android:text="cosh" />
+    <Button android:text="tanh" />
+    <Button android:text="sqrt" />
   </TableRow>
 
   <TableRow android:layout_weight="1">
-    <Button
-      android:text="log10"
-     />
-
-    <Button
-      android:text="log"
-     />
-
-    <Button
-      android:text="exp"
-     />
-
-    <Button
-      android:text="cbrt"
-     />
+    <Button android:text="log10" />
+    <Button android:text="log" />
+    <Button android:text="exp" />
+    <Button android:text="cbrt" />
   </TableRow>
 
   <TableRow android:layout_weight="1">
-    <Button
-      android:text="abs"
-     />
-
-    <Button
-      android:text="arg"
-     />
-
-    <Button
-      android:text="cnj"
-     />
+    <Button android:text="abs" />
+    <Button android:text="arg" />
+    <Button android:text="cnj" />
+    <Button android:text="rcp" />
   </TableRow>
 </TableLayout>

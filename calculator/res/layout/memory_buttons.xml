@@ -6,22 +6,22 @@
 
   <TableRow>
     <Button
-      android:id="@+id/button_recall"
-      android:text="@string/button_recall"
+      android:id="@+id/button_variables"
+      android:text="@string/button_variables"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
-      android:id="@+id/button_functions"
-      android:text="@string/button_functions"
+      android:id="@+id/button_store"
+      android:text="@string/button_store"
       android:textSize="@dimen/textSize_button"
      />
   </TableRow>
 
   <TableRow>
     <Button
-      android:id="@+id/button_store"
-      android:text="@string/button_store"
+      android:id="@+id/button_functions"
+      android:text="@string/button_functions"
       android:textSize="@dimen/textSize_button"
      />
 
