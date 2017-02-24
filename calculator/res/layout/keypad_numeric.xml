@@ -17,7 +17,7 @@
 
     <Button
       android:layout_column="4"
-      android:text="x×10^y"
+      android:text="x10^y"
       android:hint="×10^"
       android:contentDescription="@string/description_numeric_E"
      />
