@@ -1,44 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  >
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
+  <TableRow>
+    <Button
+      android:id="@+id/button_recall"
+      android:text="@string/button_recall"
+      android:textSize="@dimen/textSize_button"
+     />
 
-  <Button
-    android:id="@+id/button_recall"
-    android:layout_gravity="fill_horizontal"
-    android:layout_row="0"
-    android:layout_column="0"
-    android:text="@string/button_recall"
-    android:textSize="@dimen/textSize_button"
-   />
+    <Button
+      android:id="@+id/button_functions"
+      android:text="@string/button_functions"
+      android:textSize="@dimen/textSize_button"
+     />
+  </TableRow>
 
-  <Button
-    android:id="@+id/button_functions"
-    android:layout_gravity="fill_horizontal"
-    android:layout_row="0"
-    android:layout_column="1"
-    android:text="@string/button_functions"
-    android:textSize="@dimen/textSize_button"
-   />
+  <TableRow>
+    <Button
+      android:id="@+id/button_store"
+      android:text="@string/button_store"
+      android:textSize="@dimen/textSize_button"
+     />
 
-  <Button
-    android:id="@+id/button_store"
-    android:layout_gravity="fill_horizontal"
-    android:layout_row="1"
-    android:layout_column="0"
-    android:text="@string/button_store"
-    android:textSize="@dimen/textSize_button"
-   />
-
-  <Button
-    android:id="@+id/button_erase"
-    android:layout_gravity="fill_horizontal"
-    android:layout_row="1"
-    android:layout_column="1"
-    android:text="@string/button_erase"
-    android:textSize="@dimen/textSize_button"
-   />
-</GridLayout>
+    <Button
+      android:id="@+id/button_erase"
+      android:text="@string/button_erase"
+      android:textSize="@dimen/textSize_button"
+     />
+  </TableRow>
+</TableLayout>

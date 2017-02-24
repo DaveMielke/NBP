@@ -1,159 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/keypad_numeric"
-  android:orientation="vertical"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
   >
 
-  <Button
-    android:layout_row="0"
-    android:layout_column="0"
-    android:text="("
-    android:contentDescription="@string/description_numeric_openBracket"
-   />
+  <TableRow>
+    <Button
+      android:text="("
+      android:contentDescription="@string/description_numeric_openBracket"
+     />
 
-  <Button
-    android:layout_row="0"
-    android:layout_column="1"
-    android:text=")"
-    android:contentDescription="@string/description_numeric_closeBracket"
-   />
+    <Button
+      android:text=")"
+      android:contentDescription="@string/description_numeric_closeBracket"
+     />
 
-  <Button
-    android:layout_row="0"
-    android:layout_column="3"
-    android:layout_columnSpan="2"
-    android:text="x×10^y"
-    android:hint="×10^"
-    android:contentDescription="@string/description_numeric_E"
-   />
+    <Button
+      android:layout_column="4"
+      android:text="x×10^y"
+      android:hint="×10^"
+      android:contentDescription="@string/description_numeric_E"
+     />
+  </TableRow>
 
-  <Button
-    android:layout_row="1"
-    android:layout_column="0"
-    android:text="7"
-    android:contentDescription="@string/description_numeric_seven"
-   />
+  <TableRow>
+    <Button
+      android:text="7"
+      android:contentDescription="@string/description_numeric_seven"
+     />
 
-  <Button
-    android:layout_row="1"
-    android:layout_column="1"
-    android:text="8"
-    android:contentDescription="@string/description_numeric_eight"
-   />
+    <Button
+      android:text="8"
+      android:contentDescription="@string/description_numeric_eight"
+     />
 
-  <Button
-    android:layout_row="1"
-    android:layout_column="2"
-    android:text="9"
-    android:contentDescription="@string/description_numeric_nine"
-   />
+    <Button
+      android:text="9"
+      android:contentDescription="@string/description_numeric_nine"
+     />
 
-  <Button
-    android:layout_row="1"
-    android:layout_column="3"
-    android:text="÷"
-    android:contentDescription="@string/description_numeric_divide"
-   />
+    <Button
+      android:text="÷"
+      android:contentDescription="@string/description_numeric_divide"
+     />
 
-  <Button
-    android:layout_row="1"
-    android:layout_column="4"
-    android:text="x^y"
-    android:hint="^"
-    android:contentDescription="@string/description_numeric_exponentiate"
-   />
+    <Button
+      android:text="x^y"
+      android:hint="^"
+      android:contentDescription="@string/description_numeric_exponentiate"
+     />
+  </TableRow>
 
-  <Button
-    android:layout_row="2"
-    android:layout_column="0"
-    android:text="4"
-    android:contentDescription="@string/description_numeric_four"
-   />
+  <TableRow>
+    <Button
+      android:text="4"
+      android:contentDescription="@string/description_numeric_four"
+     />
 
-  <Button
-    android:layout_row="2"
-    android:layout_column="1"
-    android:text="5"
-    android:contentDescription="@string/description_numeric_five"
-   />
+    <Button
+      android:text="5"
+      android:contentDescription="@string/description_numeric_five"
+     />
 
-  <Button
-    android:layout_row="2"
-    android:layout_column="2"
-    android:text="6"
-    android:contentDescription="@string/description_numeric_six"
-   />
+    <Button
+      android:text="6"
+      android:contentDescription="@string/description_numeric_six"
+     />
 
-  <Button
-    android:layout_row="2"
-    android:layout_column="3"
-    android:text="×"
-    android:contentDescription="@string/description_numeric_times"
-   />
+    <Button
+      android:text="×"
+      android:contentDescription="@string/description_numeric_times"
+     />
+  </TableRow>
 
-  <Button
-    android:layout_row="3"
-    android:layout_column="0"
-    android:text="1"
-    android:contentDescription="@string/description_numeric_one"
-   />
+  <TableRow>
+    <Button
+      android:text="1"
+      android:contentDescription="@string/description_numeric_one"
+     />
 
-  <Button
-    android:layout_row="3"
-    android:layout_column="1"
-    android:text="2"
-    android:contentDescription="@string/description_numeric_two"
-   />
+    <Button
+      android:text="2"
+      android:contentDescription="@string/description_numeric_two"
+     />
 
-  <Button
-    android:layout_row="3"
-    android:layout_column="2"
-    android:text="3"
-    android:contentDescription="@string/description_numeric_three"
-   />
+    <Button
+      android:text="3"
+      android:contentDescription="@string/description_numeric_three"
+     />
 
-  <Button
-    android:layout_row="3"
-    android:layout_column="3"
-    android:text="−"
-    android:contentDescription="@string/description_numeric_minus"
-   />
+    <Button
+      android:text="−"
+      android:contentDescription="@string/description_numeric_minus"
+     />
+  </TableRow>
 
-  <Button
-    android:layout_row="4"
-    android:layout_column="0"
-    android:text="."
-    android:contentDescription="@string/description_numeric_decimalPoint"
-   />
+  <TableRow>
+    <Button
+      android:text="."
+      android:contentDescription="@string/description_numeric_decimalPoint"
+     />
 
-  <Button
-    android:layout_row="4"
-    android:layout_column="1"
-    android:text="0"
-    android:contentDescription="@string/description_numeric_zero"
-   />
+    <Button
+      android:text="0"
+      android:contentDescription="@string/description_numeric_zero"
+     />
 
-  <Button
-    android:layout_row="4"
-    android:layout_column="2"
-    android:text="i"
-    android:contentDescription="@string/description_numeric_i"
-   />
+    <Button
+      android:text="i"
+      android:contentDescription="@string/description_numeric_i"
+     />
 
-  <Button
-    android:layout_row="4"
-    android:layout_column="3"
-    android:text="+"
-    android:contentDescription="@string/description_numeric_plus"
-   />
+    <Button
+      android:text="+"
+      android:contentDescription="@string/description_numeric_plus"
+     />
 
-  <Button
-    android:layout_row="4"
-    android:layout_column="4"
-    android:text="="
-    android:contentDescription="@string/description_numeric_equals"
-   />
-</GridLayout>
+    <Button
+      android:text="="
+      android:contentDescription="@string/description_numeric_equals"
+     />
+  </TableRow>
+</TableLayout>

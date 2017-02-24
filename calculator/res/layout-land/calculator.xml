@@ -1,50 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:paddingLeft="@dimen/screen_offset_left"
-  android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   >
 
-  <include layout="@layout/expression_area" />
-
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="right"
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
 
-    <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      >
+    <include layout="@layout/expression_area" />
 
-      <include
-        layout="@layout/control_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       />
+    <TableRow>
+      <TableLayout>
+        <include layout="@layout/control_buttons" />
+        <include layout="@layout/memory_buttons" />
+        <include layout="@layout/navigation_buttons" />
+      </TableLayout>
 
-      <include
-        layout="@layout/memory_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       />
-
-      <include
-        layout="@layout/navigation_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       />
-    </LinearLayout>
-
-    <include
-      layout="@layout/keypads"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-     />
-  </LinearLayout>
-</LinearLayout>
+      <include layout="@layout/keypads" />
+    </TableRow>
+  </TableLayout>
+</FrameLayout>

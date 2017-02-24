@@ -317,47 +317,52 @@ public class CalculatorActivity extends CommonActivity {
     for (int id : ids) {
       ViewGroup keypad = (ViewGroup)findViewById(id);
       keypadViews[keypadCount++] = keypad;
-      int keyCount = keypad.getChildCount();
+      int rowCount = keypad.getChildCount();
 
-      for (int keyIndex=0; keyIndex<keyCount; keyIndex+=1) {
-        TextView key = (TextView)keypad.getChildAt(keyIndex);
+      for (int rowIndex=0; rowIndex<rowCount; rowIndex+=1) {
+        ViewGroup row = (ViewGroup)keypad.getChildAt(rowIndex);
+        int keyCount = row.getChildCount();
 
-        key.setOnClickListener(listener);
-        key.setBackgroundColor(0);
+        for (int keyIndex=0; keyIndex<keyCount; keyIndex+=1) {
+          TextView key = (TextView)row.getChildAt(keyIndex);
 
-        if (id == R.id.keypad_numeric) {
-          key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-        }
+          key.setOnClickListener(listener);
+          key.setBackgroundColor(0);
 
-        String text = key.getText().toString();
-        CharSequence hint = key.getHint();
-
-        if ((hint == null) || (hint.length() == 0)) {
-          Function function = Functions.get(text);
-
-          if (function != null) {
-            hint = function.getCall();
-          } else {
-            hint = text;
+          if (id == R.id.keypad_numeric) {
+            key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
           }
 
-          key.setHint(hint);
-        }
+          String text = key.getText().toString();
+          CharSequence hint = key.getHint();
 
-        {
-          int index = text.indexOf('^');
+          if ((hint == null) || (hint.length() == 0)) {
+            Function function = Functions.get(text);
 
-          if (index >= 0) {
-            SpannableStringBuilder sb = new SpannableStringBuilder();
-            sb.append(text.substring(0, index));
-            sb.append(text.substring(index+1));
-            int length = sb.length();
-
-            for (CharacterStyle span : exponentSpans) {
-              sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (function != null) {
+              hint = function.getCall();
+            } else {
+              hint = text;
             }
 
-            key.setText(sb.subSequence(0, length));
+            key.setHint(hint);
+          }
+
+          {
+            int index = text.indexOf('^');
+
+            if (index >= 0) {
+              SpannableStringBuilder sb = new SpannableStringBuilder();
+              sb.append(text.substring(0, index));
+              sb.append(text.substring(index+1));
+              int length = sb.length();
+
+              for (CharacterStyle span : exponentSpans) {
+                sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+              }
+
+              key.setText(sb.subSequence(0, length));
+            }
           }
         }
       }
