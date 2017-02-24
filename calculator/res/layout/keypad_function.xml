@@ -21,10 +21,6 @@
     <Button
       android:text="rd2dg"
      />
-
-    <Button
-      android:text="abs"
-     />
   </TableRow>
 
   <TableRow>
@@ -42,10 +38,6 @@
 
     <Button
       android:text="dg2rd"
-     />
-
-    <Button
-      android:text="arg"
      />
   </TableRow>
 
@@ -65,10 +57,6 @@
     <Button
       android:text="sqrt"
      />
-
-    <Button
-      android:text="cnj"
-     />
   </TableRow>
 
   <TableRow>
@@ -85,10 +73,21 @@
      />
 
     <Button
-      android:text="pi"
+      android:text="cbrt"
+     />
+  </TableRow>
+
+  <TableRow>
+    <Button
+      android:text="abs"
      />
 
     <Button
+      android:text="arg"
+     />
+
+    <Button
+      android:text="cnj"
      />
   </TableRow>
 </TableLayout>

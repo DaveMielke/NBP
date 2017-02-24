@@ -16,7 +16,14 @@
      />
 
     <Button
-      android:layout_column="4"
+      android:text="e"
+     />
+
+    <Button
+      android:text="pi"
+     />
+
+    <Button
       android:text="x10^y"
       android:hint="×10^"
       android:contentDescription="@string/description_numeric_E"
