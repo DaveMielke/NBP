@@ -42,4 +42,26 @@
   <string name="error_unknown_function">unknown function</string>
   <string name="error_unknown_variable">unknown variable</string>
   <string name="error_unopened_bracket">unopened bracket</string>
+
+  <string name="description_numeric_zero">zero</string>
+  <string name="description_numeric_one">one</string>
+  <string name="description_numeric_two">two</string>
+  <string name="description_numeric_three">three</string>
+  <string name="description_numeric_four">four</string>
+  <string name="description_numeric_five">five</string>
+  <string name="description_numeric_six">six</string>
+  <string name="description_numeric_seven">seven</string>
+  <string name="description_numeric_eight">eight</string>
+  <string name="description_numeric_nine">nine</string>
+  <string name="description_numeric_decimalPoint">decimal point</string>
+  <string name="description_numeric_E">times 10 to the</string>
+  <string name="description_numeric_i">i</string>
+  <string name="description_numeric_equals">equals</string>
+  <string name="description_numeric_plus">plus</string>
+  <string name="description_numeric_minus">minus</string>
+  <string name="description_numeric_times">times</string>
+  <string name="description_numeric_divide">divide</string>
+  <string name="description_numeric_exponentiate">to the power of</string>
+  <string name="description_numeric_openBracket">open bracket</string>
+  <string name="description_numeric_closeBracket">close bracket</string>
 </resources>
