@@ -223,12 +223,12 @@ public class CalculatorActivity extends CommonActivity {
                 performClick(R.id.button_functions);
                 return true;
 
-              case CharacterUtilities.CHAR_DC2: // control R
-                performClick(R.id.button_variables);
-                return true;
-
               case CharacterUtilities.CHAR_DC3: // control S
                 performClick(R.id.button_store);
+                return true;
+
+              case CharacterUtilities.CHAR_SYN: // control V
+                performClick(R.id.button_variables);
                 return true;
 
               default:

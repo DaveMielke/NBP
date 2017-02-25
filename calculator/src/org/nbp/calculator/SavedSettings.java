@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class SavedSettings {
+  public final static String NOTATION = "notation";
+  public final static String ANGLE_UNIT = "angle-unit";
   public final static String DEGREES = "degrees";
 
   public final static String RESULT = "result";
