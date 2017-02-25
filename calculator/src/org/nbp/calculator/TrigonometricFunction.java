@@ -6,11 +6,7 @@ public class TrigonometricFunction extends RealFunction {
   @Override
   protected double preprocessRealArgument (double argument) {
     argument = super.preprocessRealArgument(argument);
-
-    if (SavedSettings.getAngleUnit().equals(AngleUnit.DEGREES)) {
-      argument = Math.toRadians(argument);
-    }
-
+    argument = SavedSettings.getAngleUnit().getConverter().toRadians(argument);
     return argument;
   }
 
