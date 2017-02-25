@@ -9,11 +9,16 @@ import android.view.View;
 import android.widget.Button;
 
 public class EnumerationChangeListener<E extends Enum> {
+  public interface Handler {
+    public void handleEnumerationChange (Enum value);
+  }
+
   private final Class<E> enumerationType;
   private final Enum[] enumerationValues;
   private final Map<String, Enum> enumerationNames = new HashMap<String, Enum>();
 
-  private final Button controlButton;
+  private final Button changeButton;
+  private final Handler changeHandler;
   private final String settingName;
   private final Enum initialValue;
 
@@ -31,10 +36,14 @@ public class EnumerationChangeListener<E extends Enum> {
 
   private final void changeSetting (int index) {
     Enum value = enumerationValues[index];
-    controlButton.setHint(value.name());
-    controlButton.setText(getLabel(index));
-    controlButton.setContentDescription(getDescription(index));
+    changeButton.setHint(value.name());
+    changeButton.setText(getLabel(index));
+    changeButton.setContentDescription(getDescription(index));
     SavedSettings.set(settingName, value);
+
+    if (changeHandler != null) {
+      changeHandler.handleEnumerationChange(value);
+    }
   }
 
   private final void changeSetting (Enum value) {
@@ -46,11 +55,11 @@ public class EnumerationChangeListener<E extends Enum> {
   }
 
   private final void registerCycleListener () {
-    controlButton.setOnClickListener(
+    changeButton.setOnClickListener(
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          String name = controlButton.getHint().toString();
+          String name = changeButton.getHint().toString();
           int index = enumerationNames.get(name).ordinal();
           if ((index += 1) == enumerationValues.length) index = 0;
           changeSetting(index);
@@ -60,7 +69,7 @@ public class EnumerationChangeListener<E extends Enum> {
   }
 
   private final void registerResetListener () {
-    controlButton.setOnLongClickListener(
+    changeButton.setOnLongClickListener(
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
@@ -72,7 +81,7 @@ public class EnumerationChangeListener<E extends Enum> {
   }
 
   public EnumerationChangeListener (
-    Button button, Class<E> type, String setting, E initial
+    Button button, Class<E> type, String setting, E initial, Handler handler
   ) {
     enumerationType = type;
 
@@ -84,7 +93,8 @@ public class EnumerationChangeListener<E extends Enum> {
       enumerationNames.put(value.name(), value);
     }
 
-    controlButton = button;
+    changeButton = button;
+    changeHandler = handler;
     settingName = setting;
     initialValue = initial;
 

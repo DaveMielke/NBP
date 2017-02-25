@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 public class InverseTrigonometricFunction extends RealFunction {
   @Override
   protected double postprocessRealResult (double result) {
-    if (SavedSettings.getDegrees()) {
+    if (SavedSettings.getAngleUnit().equals(AngleUnit.DEGREES.name())) {
       result = Math.toDegrees(result);
     }
 

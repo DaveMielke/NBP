@@ -355,14 +355,28 @@ public class CalculatorActivity extends CommonActivity {
   private final void setNotationButtonListener () {
     new EnumerationChangeListener<Notation>(
       (Button)findViewById(R.id.button_notation), Notation.class,
-      SavedSettings.NOTATION, DefaultSettings.NOTATION
+      SavedSettings.NOTATION, DefaultSettings.NOTATION,
+
+      new EnumerationChangeListener.Handler () {
+        @Override
+        public void handleEnumerationChange (Enum newValue) {
+          evaluateExpression(false);
+        }
+      }
     );
   }
 
   private final void setAngleUnitButtonListener () {
     new EnumerationChangeListener<AngleUnit>(
       (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
-      SavedSettings.ANGLE_UNIT, DefaultSettings.ANGLE_UNIT
+      SavedSettings.ANGLE_UNIT, DefaultSettings.ANGLE_UNIT,
+
+      new EnumerationChangeListener.Handler () {
+        @Override
+        public void handleEnumerationChange (Enum newValue) {
+          evaluateExpression(false);
+        }
+      }
     );
   }
 

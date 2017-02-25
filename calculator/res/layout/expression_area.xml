@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:stretchColumns="1"
+  android:stretchColumns="0"
   >
 
   <TableRow>
-    <Button
-      android:id="@+id/button_notation"
-     />
-
     <TextView
       android:id="@+id/result"
       android:singleLine="true"
@@ -21,13 +17,8 @@
   </TableRow>
 
   <TableRow>
-    <Button
-      android:id="@+id/button_angleUnit"
-     />
-
     <EditText
       android:id="@+id/expression"
-      android:layout_column="1"
       android:singleLine="true"
       android:fontFamily="monospace"
       android:gravity="right"

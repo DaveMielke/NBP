@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 public abstract class SavedSettings {
   public final static String NOTATION = "notation";
   public final static String ANGLE_UNIT = "angle-unit";
-  public final static String DEGREES = "degrees";
 
   public final static String RESULT = "result";
   public final static String EXPRESSION = "expression";
@@ -97,8 +96,12 @@ public abstract class SavedSettings {
     return ComplexNumber.valueOf(string);
   }
 
-  public final static boolean getDegrees () {
-    return get(DEGREES, DefaultSettings.DEGREES);
+  public final static String getNotation () {
+    return get(NOTATION, DefaultSettings.NOTATION);
+  }
+
+  public final static String getAngleUnit () {
+    return get(ANGLE_UNIT, DefaultSettings.ANGLE_UNIT);
   }
 
   public final static ComplexNumber getResult () {
