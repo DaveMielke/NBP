@@ -8,19 +8,19 @@ import org.nbp.common.LanguageUtilities;
 import android.view.View;
 import android.widget.Button;
 
-public class EnumerationChangeListener<E extends Enum> {
+public class EnumerationChangeListener<E extends Enum<E>> {
   public interface Handler {
     public void handleEnumerationChange (Enum value);
   }
 
   private final Class<E> enumerationType;
-  private final Enum[] enumerationValues;
+  private final E[] enumerationValues;
   private final Map<String, Enum> enumerationNames = new HashMap<String, Enum>();
 
   private final Button changeButton;
   private final Handler changeHandler;
   private final String settingName;
-  private final Enum initialValue;
+  private final E initialValue;
 
   private final String getLabel (int index) {
     return (String)LanguageUtilities.invokeInstanceMethod(
@@ -39,7 +39,10 @@ public class EnumerationChangeListener<E extends Enum> {
     changeButton.setHint(value.name());
     changeButton.setText(getLabel(index));
     changeButton.setContentDescription(getDescription(index));
-    SavedSettings.set(settingName, value);
+
+    if (settingName != null) {
+      SavedSettings.set(settingName, value);
+    }
 
     if (changeHandler != null) {
       changeHandler.handleEnumerationChange(value);
@@ -83,7 +86,10 @@ public class EnumerationChangeListener<E extends Enum> {
   public EnumerationChangeListener (
     Button button, Class<E> type, String setting, E initial, Handler handler
   ) {
+    changeButton = button;
+    changeHandler = handler;
     enumerationType = type;
+    settingName = setting;
 
     enumerationValues = (E[])LanguageUtilities.invokeStaticMethod(
       enumerationType, "values"
@@ -93,13 +99,30 @@ public class EnumerationChangeListener<E extends Enum> {
       enumerationNames.put(value.name(), value);
     }
 
-    changeButton = button;
-    changeHandler = handler;
-    settingName = setting;
+    if (initial == null) initial = enumerationValues[0];
     initialValue = initial;
 
-    changeSetting(SavedSettings.get(settingName, initialValue));
+    if (settingName != null) {
+      changeSetting(SavedSettings.get(settingName, type, initialValue));
+    }
+
     registerCycleListener();
     registerResetListener();
+  }
+
+  public EnumerationChangeListener (
+    Button button, Class<E> type, String setting, E initial
+  ) {
+    this(button, type, setting, initial, null);
+  }
+
+  public EnumerationChangeListener (
+    Button button, Class<E> type, String setting
+  ) {
+    this(button, type, setting, null);
+  }
+
+  public EnumerationChangeListener (Button button, Class<E> type) {
+    this(button, type, null);
   }
 }
