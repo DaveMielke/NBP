@@ -7,19 +7,28 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class ComplexFormatter extends ComplexCommon {
-  private final char DECIMAL_SEPARATOR;
-  private final char GROUPING_SEPARATOR;
-  private final int GROUPING_SIZE;
+  private final static Object LOCALE_LOCK = new Object();
+  private static char DECIMAL_SEPARATOR;
+  private static char GROUPING_SEPARATOR;
+  private static int GROUPING_SIZE;
 
-  private ComplexFormatter () {
+  public final static void resetLocaleData () {
+    synchronized (LOCALE_LOCK) {
+      DecimalFormat format = new DecimalFormat();
+      GROUPING_SIZE = format.getGroupingSize();
+
+      DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
+      DECIMAL_SEPARATOR = symbols.getDecimalSeparator();
+      GROUPING_SEPARATOR = symbols.getGroupingSeparator();
+    }
+  }
+
+  static {
+    resetLocaleData();
+  }
+
+  public ComplexFormatter () {
     super();
-
-    DecimalFormat format = new DecimalFormat();
-    GROUPING_SIZE = format.getGroupingSize();
-
-    DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
-    DECIMAL_SEPARATOR = symbols.getDecimalSeparator();
-    GROUPING_SEPARATOR = symbols.getGroupingSeparator();
   }
 
   public final static char IMAGINARY_SIGN = 'i';
@@ -149,21 +158,5 @@ public class ComplexFormatter extends ComplexCommon {
 
   public final String format (double value) {
     return format(value, ZERO);
-  }
-
-  private final static Object INSTANCE_LOCK = new Object();
-  private static ComplexFormatter instance = null;
-
-  public final static ComplexFormatter getInstance () {
-    synchronized (INSTANCE_LOCK) {
-      if (instance == null) instance = new ComplexFormatter();
-      return instance;
-    }
-  }
-
-  public final static void resetInstance () {
-    synchronized (INSTANCE_LOCK) {
-      instance = null;
-    }
   }
 }

@@ -17,7 +17,7 @@ public class HostMonitor extends BroadcastReceiver {
       Log.d(LOG_TAG, "host event: " + action);
 
       if (action.equals(Intent.ACTION_LOCALE_CHANGED)) {
-        ComplexFormatter.resetInstance();
+        ComplexFormatter.resetLocaleData();
       }
     }
   }

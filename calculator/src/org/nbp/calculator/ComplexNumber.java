@@ -136,7 +136,7 @@ public class ComplexNumber extends ComplexCommon {
   }
 
   public final String format () {
-    return ComplexFormatter.getInstance().format(real, imag);
+    return SavedSettings.getNotation().getFormatter().format(real, imag);
   }
 
   private final static char STRING_DELIMITER = '_';
