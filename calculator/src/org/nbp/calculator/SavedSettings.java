@@ -41,8 +41,15 @@ public abstract class SavedSettings {
     getSettings().edit().putString(name, value.name()).apply();
   }
 
-  public final static String get (String name, Enum defaultValue) {
-    return getSettings().getString(name, defaultValue.name());
+  public final static <E extends Enum<E>> E get (String name, Class<E> type, E defaultValue) {
+    String setting = getSettings().getString(name, null);
+
+    if (setting != null) {
+      E value = Enum.valueOf(type, setting);
+      if (value != null) return value;
+    }
+
+    return defaultValue;
   }
 
   public final static void set (String name, boolean value) {
@@ -96,12 +103,12 @@ public abstract class SavedSettings {
     return ComplexNumber.valueOf(string);
   }
 
-  public final static String getNotation () {
-    return get(NOTATION, DefaultSettings.NOTATION);
+  public final static Notation getNotation () {
+    return get(NOTATION, Notation.class, DefaultSettings.NOTATION);
   }
 
-  public final static String getAngleUnit () {
-    return get(ANGLE_UNIT, DefaultSettings.ANGLE_UNIT);
+  public final static AngleUnit getAngleUnit () {
+    return get(ANGLE_UNIT, AngleUnit.class, DefaultSettings.ANGLE_UNIT);
   }
 
   public final static ComplexNumber getResult () {

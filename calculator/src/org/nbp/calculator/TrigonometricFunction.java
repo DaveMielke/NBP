@@ -7,7 +7,7 @@ public class TrigonometricFunction extends RealFunction {
   protected double preprocessRealArgument (double argument) {
     argument = super.preprocessRealArgument(argument);
 
-    if (SavedSettings.getAngleUnit().equals(AngleUnit.DEGREES.name())) {
+    if (SavedSettings.getAngleUnit().equals(AngleUnit.DEGREES)) {
       argument = Math.toRadians(argument);
     }
 
