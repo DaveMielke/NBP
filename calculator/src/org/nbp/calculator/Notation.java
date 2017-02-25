@@ -3,21 +3,24 @@ package org.nbp.calculator;
 public enum Notation {
   SCIENTIFIC("SCI", "Scientific",
     new ComplexFormatter () {
-      {
-        setGroupSeparatorEnabled(false);
-        setMinimumFixedDigits(0);
-        setMaximumFixedDigits(0);
-      }
     }
   ),
 
   ENGINEERING("ENG", "Engineering",
     new ComplexFormatter () {
+      {
+        setDecimalGrouping(3);
+      }
     }
   ),
 
   FIXED("FXD", "Fixed",
     new ComplexFormatter () {
+      {
+        setGroupingSeparatorEnabled(true);
+        setMaximumFixedDigits(12);
+        setMinimumFixedDigits(-2);
+      }
     }
   );
 

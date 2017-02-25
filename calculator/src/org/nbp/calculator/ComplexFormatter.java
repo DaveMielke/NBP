@@ -31,16 +31,17 @@ public class ComplexFormatter extends ComplexCommon {
     super();
   }
 
-  private boolean groupSeparatorEnabled = true;
-  private int minimumFixedDigits = -3;
-  private int maximumFixedDigits = 12;
+  private boolean groupingSeparatorEnabled = false;
+  private int minimumFixedDigits = 1;
+  private int maximumFixedDigits = 0;
+  private int decimalGrouping = 1;
 
-  public final boolean getGroupSeparatorEnabled () {
-    return groupSeparatorEnabled;
+  public final boolean getGroupingSeparatorEnabled () {
+    return groupingSeparatorEnabled;
   }
 
-  public final ComplexFormatter setGroupSeparatorEnabled (boolean enabled) {
-    groupSeparatorEnabled = enabled;
+  public final ComplexFormatter setGroupingSeparatorEnabled (boolean enabled) {
+    groupingSeparatorEnabled = enabled;
     return this;
   }
 
@@ -62,6 +63,16 @@ public class ComplexFormatter extends ComplexCommon {
     return this;
   }
 
+  public final int getDecimalGrouping () {
+    return decimalGrouping;
+  }
+
+  public final ComplexFormatter setDecimalGrouping (int digits) {
+    decimalGrouping = digits;
+    return this;
+  }
+
+  public final static char ZERO_DIGIT = '0';
   public final static char IMAGINARY_SIGN = 'i';
   public final static char INFINITY_SIGN = '\u221E';
   public final static char NaN_SIGN = '?';
@@ -117,24 +128,24 @@ public class ComplexFormatter extends ComplexCommon {
         int end = sb.length();
 
         while (end > 0) {
-          if (sb.charAt(end -= 1) != '0') break;
+          if (sb.charAt(end -= 1) != ZERO_DIGIT) break;
           sb.setLength(end);
         }
       }
 
       if (sb.length() == 0) {
-        sb.append('0');
+        sb.append(ZERO_DIGIT);
         exponent = 0;
-      } else if ((exponent > getMinimumFixedDigits()) &&
+      } else if ((exponent >= getMinimumFixedDigits()) &&
                  (exponent <= getMaximumFixedDigits())) {
         if (exponent > 0) {
           if (sb.length() > exponent) {
             sb.insert(exponent, DECIMAL_SEPARATOR);
           } else {
-            while (sb.length() < exponent) sb.append('0');
+            while (sb.length() < exponent) sb.append(ZERO_DIGIT);
           }
 
-          if (getGroupSeparatorEnabled()) {
+          if (getGroupingSeparatorEnabled()) {
             while ((exponent -= GROUPING_SIZE) > 0) {
               sb.insert(exponent, GROUPING_SEPARATOR);
             }
@@ -143,16 +154,24 @@ public class ComplexFormatter extends ComplexCommon {
           exponent = 0;
         } else {
           while (exponent < 0) {
-            sb.insert(0, '0');
+            sb.insert(0, ZERO_DIGIT);
             exponent += 1;
           }
 
           sb.insert(0, DECIMAL_SEPARATOR);
-          sb.insert(0, '0');
+          sb.insert(0, ZERO_DIGIT);
         }
       } else {
-        if (sb.length() > 1) sb.insert(1, DECIMAL_SEPARATOR);
-        exponent -= 1;
+        int grouping = Math.max(1, getDecimalGrouping());
+
+        int position = (exponent - 1) % grouping;
+        if (position < 0) position += grouping;
+
+        position += 1;
+        exponent -= position;
+
+        while (sb.length() < position) sb.append(ZERO_DIGIT);
+        if (position < sb.length()) sb.insert(position, DECIMAL_SEPARATOR);
       }
 
       if (imaginary) {
