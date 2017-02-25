@@ -134,6 +134,10 @@ public abstract class LanguageUtilities {
     return invokeMethod(method, instance, arguments);
   }
 
+  public static Object invokeInstanceMethod (Object instance, String name) {
+    return invokeInstanceMethod(instance, name, null);
+  }
+
   public static Object invokeStaticMethod (
     Class container, String name,
     Class[] types, Object... arguments

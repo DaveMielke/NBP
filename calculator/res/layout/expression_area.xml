@@ -5,10 +5,8 @@
   >
 
   <TableRow>
-    <TextView
-      android:id="@+id/angleUnit"
-      android:textStyle="bold"
-      android:paddingRight="5dp"
+    <Button
+      android:id="@+id/button_notation"
      />
 
     <TextView
@@ -22,13 +20,19 @@
      />
   </TableRow>
 
-  <EditText
-    android:id="@+id/expression"
-    android:layout_column="1"
-    android:singleLine="true"
-    android:fontFamily="monospace"
-    android:gravity="right"
-    android:inputType="none"
-    android:hint="@string/hint_expression"
-   />
+  <TableRow>
+    <Button
+      android:id="@+id/button_angleUnit"
+     />
+
+    <EditText
+      android:id="@+id/expression"
+      android:layout_column="1"
+      android:singleLine="true"
+      android:fontFamily="monospace"
+      android:gravity="right"
+      android:inputType="none"
+      android:hint="@string/hint_expression"
+     />
+  </TableRow>
 </TableLayout>

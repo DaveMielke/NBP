@@ -5,18 +5,18 @@ public enum AngleUnit {
   DEGREES("DEG", "Degrees");
 
   private final String unitLabel;
-  private final String unitName;
+  private final String unitDescription;
 
   public final String getLabel () {
     return unitLabel;
   }
 
-  public final String getName () {
-    return unitName;
+  public final String getDescription () {
+    return unitDescription;
   }
 
-  private AngleUnit (String label, String name) {
+  private AngleUnit (String label, String description) {
     unitLabel = label;
-    unitName = name;
+    unitDescription = description;
   }
 }

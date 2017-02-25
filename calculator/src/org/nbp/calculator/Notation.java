@@ -6,18 +6,18 @@ public enum Notation {
   FIXED("FXD", "Fixed");
 
   private final String notationLabel;
-  private final String notationName;
+  private final String notationDescription;
 
   public final String getLabel () {
     return notationLabel;
   }
 
-  public final String getName () {
-    return notationName;
+  public final String getDescription () {
+    return notationDescription;
   }
 
-  private Notation (String label, String name) {
+  private Notation (String label, String description) {
     notationLabel = label;
-    notationName = name;
+    notationDescription = description;
   }
 }

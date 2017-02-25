@@ -38,6 +38,14 @@ public abstract class SavedSettings {
     return getSettings().getString(name, defaultValue);
   }
 
+  public final static void set (String name, Enum value) {
+    getSettings().edit().putString(name, value.name()).apply();
+  }
+
+  public final static String get (String name, Enum defaultValue) {
+    return getSettings().getString(name, defaultValue.name());
+  }
+
   public final static void set (String name, boolean value) {
     getSettings().edit().putBoolean(name, value).apply();
   }
