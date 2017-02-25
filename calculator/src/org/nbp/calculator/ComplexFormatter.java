@@ -31,6 +31,37 @@ public class ComplexFormatter extends ComplexCommon {
     super();
   }
 
+  private boolean groupSeparatorEnabled = true;
+  private int minimumFixedDigits = -3;
+  private int maximumFixedDigits = 12;
+
+  public final boolean getGroupSeparatorEnabled () {
+    return groupSeparatorEnabled;
+  }
+
+  public final ComplexFormatter setGroupSeparatorEnabled (boolean enabled) {
+    groupSeparatorEnabled = enabled;
+    return this;
+  }
+
+  public final int getMinimumFixedDigits () {
+    return minimumFixedDigits;
+  }
+
+  public final ComplexFormatter setMinimumFixedDigits (int digits) {
+    minimumFixedDigits = digits;
+    return this;
+  }
+
+  public final int getMaximumFixedDigits () {
+    return maximumFixedDigits;
+  }
+
+  public final ComplexFormatter setMaximumFixedDigits (int digits) {
+    maximumFixedDigits = digits;
+    return this;
+  }
+
   public final static char IMAGINARY_SIGN = 'i';
   public final static char INFINITY_SIGN = '\u221E';
   public final static char NaN_SIGN = '?';
@@ -94,18 +125,31 @@ public class ComplexFormatter extends ComplexCommon {
       if (sb.length() == 0) {
         sb.append('0');
         exponent = 0;
-      } else if ((exponent >= 1) && (exponent <= 12)) {
-        if (sb.length() > exponent) {
-          sb.insert(exponent, DECIMAL_SEPARATOR);
+      } else if ((exponent > getMinimumFixedDigits()) &&
+                 (exponent <= getMaximumFixedDigits())) {
+        if (exponent > 0) {
+          if (sb.length() > exponent) {
+            sb.insert(exponent, DECIMAL_SEPARATOR);
+          } else {
+            while (sb.length() < exponent) sb.append('0');
+          }
+
+          if (getGroupSeparatorEnabled()) {
+            while ((exponent -= GROUPING_SIZE) > 0) {
+              sb.insert(exponent, GROUPING_SEPARATOR);
+            }
+          }
+
+          exponent = 0;
         } else {
-          while (sb.length() < exponent) sb.append('0');
-        }
+          while (exponent < 0) {
+            sb.insert(0, '0');
+            exponent += 1;
+          }
 
-        while ((exponent -= GROUPING_SIZE) > 0) {
-          sb.insert(exponent, GROUPING_SEPARATOR);
+          sb.insert(0, DECIMAL_SEPARATOR);
+          sb.insert(0, '0');
         }
-
-        exponent = 0;
       } else {
         if (sb.length() > 1) sb.insert(1, DECIMAL_SEPARATOR);
         exponent -= 1;

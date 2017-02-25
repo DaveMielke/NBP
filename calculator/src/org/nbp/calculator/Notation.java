@@ -3,6 +3,11 @@ package org.nbp.calculator;
 public enum Notation {
   SCIENTIFIC("SCI", "Scientific",
     new ComplexFormatter () {
+      {
+        setGroupSeparatorEnabled(false);
+        setMinimumFixedDigits(0);
+        setMaximumFixedDigits(0);
+      }
     }
   ),
 
