@@ -1,32 +1,9 @@
 package org.nbp.calculator;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class ComplexFormatter extends ComplexCommon {
-  private final static Object LOCALE_LOCK = new Object();
-  private static char DECIMAL_SEPARATOR;
-  private static char GROUPING_SEPARATOR;
-  private static int GROUPING_SIZE;
-
-  public final static void resetLocaleData () {
-    synchronized (LOCALE_LOCK) {
-      DecimalFormat format = new DecimalFormat();
-      GROUPING_SIZE = format.getGroupingSize();
-
-      DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
-      DECIMAL_SEPARATOR = symbols.getDecimalSeparator();
-      GROUPING_SEPARATOR = symbols.getGroupingSeparator();
-    }
-  }
-
-  static {
-    resetLocaleData();
-  }
-
   public ComplexFormatter () {
     super();
   }
@@ -105,6 +82,16 @@ public class ComplexFormatter extends ComplexCommon {
   }
 
   private final String format (double value, boolean imaginary) {
+    char decimalSeparator;
+    char groupingSeparator;
+    int groupingSize;
+
+    synchronized (LocaleData.LOCK) {
+      decimalSeparator = LocaleData.getDecimalSeparator();
+      groupingSeparator = LocaleData.getGroupingSeparator();
+      groupingSize = LocaleData.getGroupingSize();
+    }
+
     String string = String.format("%.12E", value);
     Matcher matcher = REAL_PATTERN.matcher(string);
 
@@ -140,14 +127,14 @@ public class ComplexFormatter extends ComplexCommon {
                  (exponent <= getMaximumFixedDigits())) {
         if (exponent > 0) {
           if (sb.length() > exponent) {
-            sb.insert(exponent, DECIMAL_SEPARATOR);
+            sb.insert(exponent, decimalSeparator);
           } else {
             while (sb.length() < exponent) sb.append(ZERO_DIGIT);
           }
 
           if (getGroupingSeparatorEnabled()) {
-            while ((exponent -= GROUPING_SIZE) > 0) {
-              sb.insert(exponent, GROUPING_SEPARATOR);
+            while ((exponent -= groupingSize) > 0) {
+              sb.insert(exponent, groupingSeparator);
             }
           }
 
@@ -158,7 +145,7 @@ public class ComplexFormatter extends ComplexCommon {
             exponent += 1;
           }
 
-          sb.insert(0, DECIMAL_SEPARATOR);
+          sb.insert(0, decimalSeparator);
           sb.insert(0, ZERO_DIGIT);
         }
       } else {
@@ -171,7 +158,7 @@ public class ComplexFormatter extends ComplexCommon {
         exponent -= position;
 
         while (sb.length() < position) sb.append(ZERO_DIGIT);
-        if (position < sb.length()) sb.insert(position, DECIMAL_SEPARATOR);
+        if (position < sb.length()) sb.insert(position, decimalSeparator);
       }
 
       if (imaginary) {
