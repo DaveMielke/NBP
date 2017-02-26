@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
+import org.nbp.common.CommonUtilities;
 import org.nbp.common.CommonActivity;
+
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.CharacterUtilities;
 import org.nbp.common.OnTextEditedListener;
@@ -19,6 +21,7 @@ import android.util.TypedValue;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Build;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -977,6 +980,10 @@ public class CalculatorActivity extends CommonActivity {
     setEvaluateListener();
     restoreExpression();
     setFocusToExpression();
+
+    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+      expressionView.setShowSoftInputOnFocus(false);
+    }
 
     setClearButtonListener();
     setNotationButtonListener();

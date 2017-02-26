@@ -2,6 +2,8 @@ package org.nbp.common;
 
 import android.util.Log;
 
+import android.os.Build;
+
 public abstract class CommonUtilities {
   private static ProblemReporter errorReporter = new ProblemReporter() {
     @Override
@@ -47,6 +49,10 @@ public abstract class CommonUtilities {
 
   public static void reportWarning (String tag, int message) {
     reportWarning(tag, CommonContext.getString(message));
+  }
+
+  public static boolean haveAndroidSDK (int sdk) {
+    return sdk >= Build.VERSION.SDK_INT;
   }
 
   protected CommonUtilities () {
