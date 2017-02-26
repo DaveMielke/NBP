@@ -71,6 +71,14 @@ public class CalculatorActivity extends CommonActivity {
   private EditText expressionView;
   private TextView resultView;
 
+  private final void setFocusToExpression () {
+    expressionView.requestFocus();
+  }
+
+  private final void setFocusToResult () {
+    resultView.requestFocus();
+  }
+
   private Button leftButton;
   private Button rightButton;
   private Button backspaceButton;
@@ -150,7 +158,7 @@ public class CalculatorActivity extends CommonActivity {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
               if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 evaluateExpression(true);
-                resultView.requestFocus();
+                setFocusToResult();
               }
 
               return true;
@@ -212,8 +220,16 @@ public class CalculatorActivity extends CommonActivity {
                 performClick(R.id.button_functions);
                 return true;
 
+              case CharacterUtilities.CHAR_VT: // control K
+                setFocusToKeypad();
+                return true;
+
               case CharacterUtilities.CHAR_SO: // control N
                 performLongClick(R.id.button_notation);
+                return true;
+
+              case CharacterUtilities.CHAR_DC2: // control R
+                setFocusToResult();
                 return true;
 
               case CharacterUtilities.CHAR_DC3: // control S
@@ -289,7 +305,7 @@ public class CalculatorActivity extends CommonActivity {
       public void onClick (View view) {
         Button button = (Button)view;
         insertExpressionText(button.getHint().toString());
-        expressionView.requestFocus();
+        setFocusToExpression();
         showKeypad(0);
       }
     };
@@ -298,7 +314,7 @@ public class CalculatorActivity extends CommonActivity {
       @Override
       public void onClick (View view) {
         evaluateExpression(true);
-        resultView.requestFocus();
+        setFocusToResult();
         showKeypad(0);
       }
     };
@@ -400,7 +416,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           expressionView.setText("");
-          expressionView.requestFocus();
+          setFocusToExpression();
         }
       }
     );
@@ -414,7 +430,7 @@ public class CalculatorActivity extends CommonActivity {
           SavedSettings.set(SavedSettings.RESULT, Double.NaN);
 
           expressionView.setText("");
-          expressionView.requestFocus();
+          setFocusToExpression();
           return true;
         }
       }
@@ -691,7 +707,7 @@ public class CalculatorActivity extends CommonActivity {
               @Override
               public void onClick (DialogInterface dialog, int index) {
                 insertExpressionText(getVariableName(variables, index));
-                expressionView.requestFocus();
+                setFocusToExpression();
               }
             }
           );
@@ -930,7 +946,7 @@ public class CalculatorActivity extends CommonActivity {
                 @Override
                 public void onClick (DialogInterface dialog, int index) {
                   insertExpressionText(getFunctionCall(functions, index));
-                  expressionView.requestFocus();
+                  setFocusToExpression();
                 }
               }
             );
@@ -957,10 +973,20 @@ public class CalculatorActivity extends CommonActivity {
     upButton = (Button)findViewById(R.id.button_up);
     downButton = (Button)findViewById(R.id.button_down);
 
-    setEvaluateListener();
     setExpressionListener();
+    setEvaluateListener();
     restoreExpression();
-    expressionView.requestFocus();
+    setFocusToExpression();
+
+    setClearButtonListener();
+    setNotationButtonListener();
+    setAngleUnitButtonListener();
+    setShiftButtonListener();
+
+    setVariablesButtonListener();
+    setFunctionsButtonListener();
+    setStoreButtonListener();
+    setEraseButtonListener();
 
     setLeftButtonListener();
     setRightButtonListener();
@@ -969,17 +995,6 @@ public class CalculatorActivity extends CommonActivity {
     setUpButtonListener();
     setDownButtonListener();
     setNavigationButtonStates();
-
-    setNotationButtonListener();
-    setAngleUnitButtonListener();
-
-    setClearButtonListener();
-    setShiftButtonListener();
-
-    setVariablesButtonListener();
-    setFunctionsButtonListener();
-    setStoreButtonListener();
-    setEraseButtonListener();
 
     prepareKeypads(
       R.id.keypad_numeric,
