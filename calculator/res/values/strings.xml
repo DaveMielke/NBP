@@ -61,6 +61,7 @@
   <string name="description_numeric_times">times</string>
   <string name="description_numeric_divide">divide</string>
   <string name="description_numeric_exponentiate">x to the y</string>
+  <string name="description_numeric_percent">percent</string>
   <string name="description_numeric_openBracket">open bracket</string>
   <string name="description_numeric_closeBracket">close bracket</string>
 

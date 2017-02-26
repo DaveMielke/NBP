@@ -24,6 +24,7 @@ public class ExpressionEvaluation {
     TIMES,
     DIVIDE,
     EXPONENTIATE,
+    PERCENT,
 
     END;
   }
@@ -158,6 +159,10 @@ public class ExpressionEvaluation {
 
         case '^':
           type = TokenType.EXPONENTIATE;
+          break;
+
+        case '%':
+          type = TokenType.PERCENT;
           break;
 
         default:
@@ -368,21 +373,36 @@ public class ExpressionEvaluation {
 
   private final ComplexNumber evaluateSumsAndDifferences () throws ExpressionException {
     ComplexNumber value = evaluateProductsAndQuotients();
+    ComplexNumber operand;
+    boolean add;
 
     while (true) {
       switch (getTokenType()) {
         case PLUS:
           nextToken();
-          value = value.add(evaluateProductsAndQuotients());
+          operand = evaluateProductsAndQuotients();
+          add = true;
           break;
 
         case MINUS:
           nextToken();
-          value = value.sub(evaluateProductsAndQuotients());
+          operand = evaluateProductsAndQuotients();
+          add = false;
           break;
 
         default:
           return value;
+      }
+
+      if (getTokenType() == TokenType.PERCENT) {
+        nextToken();
+        operand = operand.mul(value).div(new ComplexNumber(100));
+      }
+
+      if (add) {
+        value = value.add(operand);
+      } else {
+        value = value.sub(operand);
       }
     }
   }

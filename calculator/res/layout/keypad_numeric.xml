@@ -80,6 +80,11 @@
       android:text="×"
       android:contentDescription="@string/description_numeric_times"
      />
+
+    <Button
+      android:text="%"
+      android:contentDescription="@string/description_numeric_percent"
+     />
   </TableRow>
 
   <TableRow android:layout_weight="1">
