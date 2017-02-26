@@ -11,6 +11,7 @@ public class ComplexFormatter extends ComplexCommon {
   private boolean groupingSeparatorEnabled = false;
   private int minimumFixedDigits = 1;
   private int maximumFixedDigits = 0;
+  private int significantDigits = 10;
   private int decimalGrouping = 1;
 
   public final boolean getGroupingSeparatorEnabled () {
@@ -37,6 +38,15 @@ public class ComplexFormatter extends ComplexCommon {
 
   public final ComplexFormatter setMaximumFixedDigits (int digits) {
     maximumFixedDigits = digits;
+    return this;
+  }
+
+  public final int getSignificantDigits () {
+    return significantDigits;
+  }
+
+  public final ComplexFormatter setSignificantDigits (int digits) {
+    significantDigits = digits;
     return this;
   }
 
@@ -92,7 +102,8 @@ public class ComplexFormatter extends ComplexCommon {
       groupingSize = LocaleData.getGroupingSize();
     }
 
-    String string = String.format("%.12E", value);
+    String format = "%." + (significantDigits - 1) + "E";
+    String string = String.format(format, value);
     Matcher matcher = REAL_PATTERN.matcher(string);
 
     if (matcher.lookingAt()) {
