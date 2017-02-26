@@ -6,6 +6,9 @@
   android:versionName="@string/NBP_Compass_version_name"
   >
 
+  <!-- Android 4.1 (JellyBean) -->
+  <uses-sdk android:minSdkVersion="16" />
+
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
   <application
