@@ -5,6 +5,11 @@ import java.util.HashMap;
 
 import org.nbp.common.LanguageUtilities;
 
+import org.nbp.common.AlertDialogBuilder;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
+import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,21 +22,33 @@ public class EnumerationChangeListener<E extends Enum<E>> {
   private final E[] enumerationValues;
   private final Map<String, Enum> enumerationNames = new HashMap<String, Enum>();
 
+  private final Activity mainActivity;
   private final Button changeButton;
   private final Handler changeHandler;
   private final String settingName;
   private final E initialValue;
 
-  private final String getLabel (int index) {
-    return (String)LanguageUtilities.invokeInstanceMethod(
-      enumerationValues[index], "getLabel"
+  private final <T> T getProperty (int index, String methodName) {
+    return (T)LanguageUtilities.invokeInstanceMethod(
+      enumerationValues[index], methodName
     );
   }
 
+  private final <T> T getProperty (String methodName) {
+    return getProperty(0, methodName);
+  }
+
+  private final int getTitle () {
+    return getProperty("getTitle");
+  }
+
+  private final String getLabel (int index) {
+    return getProperty(index, "getLabel");
+  }
+
   private final String getDescription (int index) {
-    return (String)LanguageUtilities.invokeInstanceMethod(
-      enumerationValues[index], "getDescription"
-    );
+    int description = getProperty(index, "getDescription");
+    return mainActivity.getString(description);
   }
 
   private final void changeSetting (int index) {
@@ -76,7 +93,37 @@ public class EnumerationChangeListener<E extends Enum<E>> {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          changeSetting(initialValue);
+          int title = getTitle();
+          AlertDialog.Builder builder = new AlertDialogBuilder(mainActivity, title);
+
+          {
+            int count = enumerationValues.length;
+            CharSequence[] items = new CharSequence[count];
+
+            for (int index=0; index<count; index+=1) {
+              items[index] = getDescription(index);
+            }
+
+            builder.setItems(items,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int index) {
+                changeSetting(index);
+              }
+            }
+            );
+          }
+
+          builder.setNegativeButton(
+            R.string.button_cancel,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int button) {
+              }
+            }
+          );
+
+          builder.show();
           return true;
         }
       }
@@ -84,8 +131,10 @@ public class EnumerationChangeListener<E extends Enum<E>> {
   }
 
   public EnumerationChangeListener (
-    Button button, Class<E> type, String setting, E initial, Handler handler
+    Activity activity, Button button, Class<E> type,
+    String setting, E initial, Handler handler
   ) {
+    mainActivity = activity;
     changeButton = button;
     changeHandler = handler;
     enumerationType = type;
@@ -111,18 +160,19 @@ public class EnumerationChangeListener<E extends Enum<E>> {
   }
 
   public EnumerationChangeListener (
-    Button button, Class<E> type, String setting, E initial
+    Activity activity, Button button, Class<E> type,
+    String setting, E initial
   ) {
-    this(button, type, setting, initial, null);
+    this(activity, button, type, setting, initial, null);
   }
 
   public EnumerationChangeListener (
-    Button button, Class<E> type, String setting
+    Activity activity, Button button, Class<E> type, String setting
   ) {
-    this(button, type, setting, null);
+    this(activity, button, type, setting, null);
   }
 
-  public EnumerationChangeListener (Button button, Class<E> type) {
-    this(button, type, null);
+  public EnumerationChangeListener (Activity activity, Button button, Class<E> type) {
+    this(activity, button, type, null);
   }
 }

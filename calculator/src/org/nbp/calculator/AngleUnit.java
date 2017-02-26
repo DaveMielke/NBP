@@ -1,7 +1,7 @@
 package org.nbp.calculator;
 
 public enum AngleUnit {
-  DEGREES("DEG", "Degrees",
+  DEGREES("DEG", R.string.description_angleUnit_degrees,
     new Converter() {
       @Override
       public double toRadians (double angle) {
@@ -15,7 +15,7 @@ public enum AngleUnit {
     }
   ),
 
-  RADIANS("RAD", "Radians",
+  RADIANS("RAD", R.string.description_angleUnit_radians,
     new Converter() {
       @Override
       public double toRadians (double angle) {
@@ -34,15 +34,19 @@ public enum AngleUnit {
     public double fromRadians (double angle);
   }
 
+  public final int getTitle () {
+    return R.string.title_angleUnit;
+  }
+
   private final String unitLabel;
-  private final String unitDescription;
+  private final int unitDescription;
   private final Converter unitConverter;
 
   public final String getLabel () {
     return unitLabel;
   }
 
-  public final String getDescription () {
+  public final int getDescription () {
     return unitDescription;
   }
 
@@ -50,7 +54,7 @@ public enum AngleUnit {
     return unitConverter;
   }
 
-  private AngleUnit (String label, String description, Converter converter) {
+  private AngleUnit (String label, int description, Converter converter) {
     unitLabel = label;
     unitDescription = description;
     unitConverter = converter;

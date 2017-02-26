@@ -183,12 +183,20 @@ public class CalculatorActivity extends CommonActivity {
     findViewById(view).performClick();
   }
 
+  private final void performLongClick (int view) {
+    findViewById(view).performLongClick();
+  }
+
   private final void setExpressionListener () {
     expressionView.setFilters(
       new InputFilter[] {
         new InputFilter() {
           private final boolean handleCharacter (char character) {
             switch (character) {
+              case CharacterUtilities.CHAR_SOH: // control A
+                performLongClick(R.id.button_angleUnit);
+                return true;
+
               case CharacterUtilities.CHAR_ETX: // control C
                 performClick(R.id.button_clear);
                 return true;
@@ -199,6 +207,10 @@ public class CalculatorActivity extends CommonActivity {
 
               case CharacterUtilities.CHAR_ACK: // control F
                 performClick(R.id.button_functions);
+                return true;
+
+              case CharacterUtilities.CHAR_SO: // control N
+                performLongClick(R.id.button_notation);
                 return true;
 
               case CharacterUtilities.CHAR_DC3: // control S
@@ -354,7 +366,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void setNotationButtonListener () {
     new EnumerationChangeListener<Notation>(
-      (Button)findViewById(R.id.button_notation), Notation.class,
+      this, (Button)findViewById(R.id.button_notation), Notation.class,
       SavedSettings.NOTATION, DefaultSettings.NOTATION,
 
       new EnumerationChangeListener.Handler () {
@@ -368,7 +380,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void setAngleUnitButtonListener () {
     new EnumerationChangeListener<AngleUnit>(
-      (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
+      this, (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
       SavedSettings.ANGLE_UNIT, DefaultSettings.ANGLE_UNIT,
 
       new EnumerationChangeListener.Handler () {

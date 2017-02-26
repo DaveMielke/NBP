@@ -63,4 +63,13 @@
   <string name="description_numeric_exponentiate">x to the y</string>
   <string name="description_numeric_openBracket">open bracket</string>
   <string name="description_numeric_closeBracket">close bracket</string>
+
+  <string name="title_notation">Notation</string>
+  <string name="description_notation_engineering">Engineering</string>
+  <string name="description_notation_fixed">Fixed</string>
+  <string name="description_notation_scientific">Scientific</string>
+
+  <string name="title_angleUnit">Angle Unit</string>
+  <string name="description_angleUnit_degrees">Degrees</string>
+  <string name="description_angleUnit_radians">Radians</string>
 </resources>
