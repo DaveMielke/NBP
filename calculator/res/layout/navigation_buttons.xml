@@ -7,7 +7,7 @@
   <TableRow>
     <Button
       android:id="@+id/button_backspace"
-      android:text="␈"
+      android:text="⬾"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_backspace"
      />
@@ -21,7 +21,7 @@
 
     <Button
       android:id="@+id/button_delete"
-      android:text="␡"
+      android:text="⥇"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_delete"
      />

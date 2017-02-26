@@ -497,7 +497,7 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_left,
+      R.id.button_right,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
@@ -536,7 +536,7 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_left,
+      R.id.button_backspace,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
@@ -574,7 +574,7 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_left,
+      R.id.button_delete,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
@@ -603,7 +603,7 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_left,
+      R.id.button_up,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
@@ -624,7 +624,7 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_left,
+      R.id.button_down,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
