@@ -404,7 +404,7 @@ public class ExpressionEvaluation {
     int end = expressionText.length();
 
     if (tokenCount == 0) {
-      throw new ExpressionException(R.string.error_no_expression, end);
+      throw new NoExpressionException(end);
     }
 
     if (getTokenType() != TokenType.CLOSE) {

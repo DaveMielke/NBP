@@ -120,18 +120,21 @@ public class CalculatorActivity extends CommonActivity {
     }
   }
 
-  private final void evaluateExpression (boolean showError) {
+  private final void evaluateExpression (boolean done) {
     saveExpression();
     String expression = expressionView.getText().toString();
 
     try {
-      ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
-      ComplexNumber result = evaluation.getResult();
-
-      resultView.setText(result.format());
-      SavedSettings.set(SavedSettings.RESULT, result);
+      try {
+        ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
+        ComplexNumber result = evaluation.getResult();
+        resultView.setText(result.format());
+        SavedSettings.set(SavedSettings.RESULT, result);
+      } catch (NoExpressionException exception) {
+        resultView.setText("");
+      }
     } catch (ExpressionException exception) {
-      if (showError) {
+      if (done) {
         resultView.setText(exception.getMessage());
         expressionView.setSelection(exception.getLocation());
       }
@@ -246,10 +249,8 @@ public class CalculatorActivity extends CommonActivity {
     new OnTextEditedListener(expressionView) {
       @Override
       public void onTextEdited (boolean isDifferent) {
-        if (isDifferent) {
-          evaluateExpression(false);
-          setNavigationButtonStates();
-        }
+        evaluateExpression(false);
+        setNavigationButtonStates();
       }
     };
   }
