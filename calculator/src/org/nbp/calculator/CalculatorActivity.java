@@ -159,6 +159,31 @@ public class CalculatorActivity extends CommonActivity {
     return false;
   }
 
+  private class OnExpressionEditedListener extends OnTextEditedListener {
+    public OnExpressionEditedListener () {
+      super(expressionView);
+    }
+
+    private boolean DO_NOT_EVALUATE = false;
+
+    @Override
+    public void onTextEdited (boolean isDifferent) {
+      if (DO_NOT_EVALUATE) {
+        DO_NOT_EVALUATE = false;
+      } else {
+        evaluateExpression(false);
+        setExpressionNavigationStates();
+      }
+    }
+
+    public final void clearWithoutEvaluating () {
+      DO_NOT_EVALUATE = true;
+      expressionView.setText("");
+    }
+  }
+
+  private OnExpressionEditedListener onExpressionEditedListener = null;
+
   private final void finishExpression () {
     if (evaluateExpression(true)) {
       setFocusToResult();
@@ -167,56 +192,8 @@ public class CalculatorActivity extends CommonActivity {
       History.setLastEntry(expressionView);
       History.addLastEntry();
 
-    //expressionView.setText("");
+      onExpressionEditedListener.clearWithoutEvaluating();
     }
-  }
-
-  private final void setEnterKeyListener () {
-    expressionView.setOnEditorActionListener(
-      new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction (TextView view, int action, KeyEvent event) {
-          if (event != null) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-              if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                finishExpression();
-              }
-
-              return true;
-            }
-          }
-
-          return false;
-        }
-      }
-    );
-  }
-
-  private final void insertExpressionText (String text) {
-    int start = expressionView.getSelectionStart();
-    int end = expressionView.getSelectionEnd();
-    expressionView.getText().replace(start, end, text);
-
-    int left = text.indexOf(Function.ARGUMENT_PREFIX);
-    int right = text.lastIndexOf(Function.ARGUMENT_SUFFIX);
-    int length = text.length();
-
-    if ((0 <= left) && (left < right) && (right < length)) {
-      end = start + right;
-      start += left + 1;
-    } else {
-      end = start += length;
-    }
-
-    expressionView.setSelection(start, end);
-  }
-
-  private final void performClick (int view) {
-    findViewById(view).performClick();
-  }
-
-  private final void performLongClick (int view) {
-    findViewById(view).performLongClick();
   }
 
   private final void setExpressionListener () {
@@ -291,13 +268,55 @@ public class CalculatorActivity extends CommonActivity {
       }
     );
 
-    new OnTextEditedListener(expressionView) {
-      @Override
-      public void onTextEdited (boolean isDifferent) {
-        evaluateExpression(false);
-        setExpressionNavigationStates();
+    onExpressionEditedListener = new OnExpressionEditedListener();
+  }
+
+  private final void setEnterKeyListener () {
+    expressionView.setOnEditorActionListener(
+      new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction (TextView view, int action, KeyEvent event) {
+          if (event != null) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+              if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                finishExpression();
+              }
+
+              return true;
+            }
+          }
+
+          return false;
+        }
       }
-    };
+    );
+  }
+
+  private final void insertExpressionText (String text) {
+    int start = expressionView.getSelectionStart();
+    int end = expressionView.getSelectionEnd();
+    expressionView.getText().replace(start, end, text);
+
+    int left = text.indexOf(Function.ARGUMENT_PREFIX);
+    int right = text.lastIndexOf(Function.ARGUMENT_SUFFIX);
+    int length = text.length();
+
+    if ((0 <= left) && (left < right) && (right < length)) {
+      end = start + right;
+      start += left + 1;
+    } else {
+      end = start += length;
+    }
+
+    expressionView.setSelection(start, end);
+  }
+
+  private final void performClick (int view) {
+    findViewById(view).performClick();
+  }
+
+  private final void performLongClick (int view) {
+    findViewById(view).performLongClick();
   }
 
   private ViewGroup[] keypadViews;
@@ -1046,14 +1065,14 @@ public class CalculatorActivity extends CommonActivity {
     upButton = (Button)findViewById(R.id.button_up);
     downButton = (Button)findViewById(R.id.button_down);
 
+    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+      expressionView.setShowSoftInputOnFocus(false);
+    }
+
     setExpressionListener();
     setEnterKeyListener();
     restoreExpression();
     setFocusToExpression();
-
-    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-      expressionView.setShowSoftInputOnFocus(false);
-    }
 
     setClearButtonListener();
     setNotationButtonListener();
