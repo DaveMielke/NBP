@@ -87,7 +87,7 @@ public class CalculatorActivity extends CommonActivity {
   private Button backspaceButton;
   private Button deleteButton;
 
-  private final void setExpressionNavigationButtonStates () {
+  private final void setExpressionNavigationStates () {
     {
       int end = expressionView.getSelectionEnd();
       boolean enabled = end > 0;
@@ -109,7 +109,7 @@ public class CalculatorActivity extends CommonActivity {
   private Button upButton;
   private Button downButton;
 
-  private final void setHistoryNavigationButtonStates () {
+  private final void setHistoryNavigationStates () {
     upButton.setEnabled(!History.atStart());
     downButton.setEnabled(!History.atEnd());
   }
@@ -163,9 +163,11 @@ public class CalculatorActivity extends CommonActivity {
     if (evaluateExpression(true)) {
       setFocusToResult();
       showKeypad(0);
+
       History.setLastEntry(expressionView);
       History.addLastEntry();
-      expressionView.setText("");
+
+    //expressionView.setText("");
     }
   }
 
@@ -293,7 +295,7 @@ public class CalculatorActivity extends CommonActivity {
       @Override
       public void onTextEdited (boolean isDifferent) {
         evaluateExpression(false);
-        setExpressionNavigationButtonStates();
+        setExpressionNavigationStates();
       }
     };
   }
@@ -500,7 +502,7 @@ public class CalculatorActivity extends CommonActivity {
 
           if (start > 0) {
             expressionView.setSelection(start-1);
-            setExpressionNavigationButtonStates();
+            setExpressionNavigationStates();
           }
         }
       }
@@ -513,7 +515,7 @@ public class CalculatorActivity extends CommonActivity {
         public boolean onLongClick (View view) {
           if (expressionView.getSelectionStart() > 0) {
             expressionView.setSelection(0);
-            setExpressionNavigationButtonStates();
+            setExpressionNavigationStates();
           }
 
           return true;
@@ -532,7 +534,7 @@ public class CalculatorActivity extends CommonActivity {
 
           if (end < expressionView.length()) {
             expressionView.setSelection(end+1);
-            setExpressionNavigationButtonStates();
+            setExpressionNavigationStates();
           }
         }
       }
@@ -547,7 +549,7 @@ public class CalculatorActivity extends CommonActivity {
 
           if (expressionView.getSelectionEnd() < length) {
             expressionView.setSelection(length);
-            setExpressionNavigationButtonStates();
+            setExpressionNavigationStates();
           }
 
           return true;
@@ -572,7 +574,7 @@ public class CalculatorActivity extends CommonActivity {
           }
 
           expressionView.getText().delete(start, end);
-          setExpressionNavigationButtonStates();
+          setExpressionNavigationStates();
         }
       }
     );
@@ -586,7 +588,7 @@ public class CalculatorActivity extends CommonActivity {
 
           if (end > 0) {
             expressionView.getText().delete(0, end);
-            setExpressionNavigationButtonStates();
+            setExpressionNavigationStates();
           }
 
           return true;
@@ -610,7 +612,7 @@ public class CalculatorActivity extends CommonActivity {
           }
 
           expressionView.getText().delete(start, end);
-          setExpressionNavigationButtonStates();
+          setExpressionNavigationStates();
         }
       }
     );
@@ -625,7 +627,7 @@ public class CalculatorActivity extends CommonActivity {
 
           if (start < length) {
             expressionView.getText().delete(start, length);
-            setExpressionNavigationButtonStates();
+            setExpressionNavigationStates();
           }
 
           return true;
@@ -634,13 +636,13 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final boolean canMoveUp () {
+  private final boolean startHistoryNavigationUp () {
     if (History.atStart()) return false;
     if (History.atEnd()) History.setLastEntry(expressionView);
     return true;
   }
 
-  private final boolean canMoveDown () {
+  private final boolean startHistoryNavigationDown () {
     if (History.atEnd()) return false;
     return true;
   }
@@ -651,10 +653,15 @@ public class CalculatorActivity extends CommonActivity {
       History.getLastEntry():
       History.getCurrentEntry();
 
-    expressionView.setText(entry.getText());
-    expressionView.setSelection(entry.getSelectionStart(), entry.getSelectionEnd());
+    CharSequence text = entry.getText();
+    int start = entry.getSelectionStart();
+    int end = entry.getSelectionEnd();
+
+    expressionView.setText(text);
+    expressionView.setSelection(start, end);
+
     evaluateExpression(true);
-    setHistoryNavigationButtonStates();
+    setHistoryNavigationStates();
   }
 
   private final void setUpButtonListener () {
@@ -663,7 +670,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (canMoveUp()) {
+          if (startHistoryNavigationUp()) {
             History.moveToPreviousEntry();
             finishHistoryNavigation();
           }
@@ -676,7 +683,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          if (canMoveUp()) {
+          if (startHistoryNavigationUp()) {
             History.moveToFirstEntry();
             finishHistoryNavigation();
           }
@@ -693,7 +700,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (canMoveDown()) {
+          if (startHistoryNavigationDown()) {
             History.moveToNextEntry();
             finishHistoryNavigation();
           }
@@ -706,7 +713,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          if (canMoveDown()) {
+          if (startHistoryNavigationDown()) {
             History.moveToLastEntry();
             finishHistoryNavigation();
           }
@@ -1062,11 +1069,11 @@ public class CalculatorActivity extends CommonActivity {
     setRightButtonListener();
     setBackspaceButtonListener();
     setDeleteButtonListener();
-    setExpressionNavigationButtonStates();
+    setExpressionNavigationStates();
 
     setUpButtonListener();
     setDownButtonListener();
-    setHistoryNavigationButtonStates();
+    setHistoryNavigationStates();
 
     prepareKeypads(
       R.id.keypad_numeric,

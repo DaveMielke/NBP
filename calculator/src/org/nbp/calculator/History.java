@@ -88,9 +88,13 @@ public abstract class History {
   }
 
   public final static void setLastEntry (TextView view) {
-    lastEntry = new Entry(
-      view.getText(), view.getSelectionStart(), view.getSelectionEnd()
-    );
+    CharSequence text = view.getText();
+    text = text.subSequence(0, text.length());
+
+    int start = view.getSelectionStart();
+    int end = view.getSelectionEnd();
+
+    lastEntry = new Entry(text, start, end);
   }
 
   public final static void addLastEntry () {
