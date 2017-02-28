@@ -234,9 +234,9 @@ public class ExpressionEvaluation {
 
     switch (type) {
       case DECIMAL: {
-        double value = Double.valueOf(getTokenText());
+        String text = getTokenText();
         nextToken();
-        return new ComplexNumber(value);
+        return new ComplexNumber(text);
       }
 
       case HEXADECIMAL: {
@@ -244,7 +244,7 @@ public class ExpressionEvaluation {
         if (text.indexOf('P') < 0) text += "P0";
 
         nextToken();
-        return new ComplexNumber(Double.valueOf(text));
+        return new ComplexNumber(text);
       }
 
       case OPEN:
@@ -396,7 +396,7 @@ public class ExpressionEvaluation {
 
       if (getTokenType() == TokenType.PERCENT) {
         nextToken();
-        operand = operand.mul(value).div(new ComplexNumber(100));
+        operand = operand.mul(value).div(100);
       }
 
       if (add) {

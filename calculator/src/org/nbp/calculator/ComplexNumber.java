@@ -15,6 +15,10 @@ public class ComplexNumber extends ComplexCommon {
     this(r, ZERO);
   }
 
+  public ComplexNumber (String r) {
+    this(Double.valueOf(r));
+  }
+
   public final double real () {
     return real;
   }
