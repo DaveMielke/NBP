@@ -100,6 +100,12 @@ public class ComplexOperations extends Operations {
   )
 
   public final static ComplexNumber sqrt (ComplexNumber number) {
+    if (!number.hasImag()) {
+      double real = number.real();
+      if (real < 0d) return new ComplexNumber(0d, Math.sqrt(-real));
+      return new ComplexNumber(Math.sqrt(real));
+    }
+
     return number.pow(new ComplexNumber(0.5d));
   }
 
@@ -108,6 +114,12 @@ public class ComplexOperations extends Operations {
   )
 
   public final static ComplexNumber cbrt (ComplexNumber number) {
+    if (!number.hasImag()) {
+      double real = number.real();
+      if (real < 0d) return new ComplexNumber(-Math.cbrt(-real));
+      return new ComplexNumber(Math.cbrt(real));
+    }
+
     return number.pow(new ComplexNumber(1d / 3d));
   }
 }
