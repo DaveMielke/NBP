@@ -13,6 +13,7 @@ public class ExpressionEvaluation {
     IDENTIFIER,
     DECIMAL,
     HEXADECIMAL,
+    DEGREES,
     RESULT,
 
     OPEN,
@@ -57,14 +58,26 @@ public class ExpressionEvaluation {
   private final List<TokenDescriptor> tokenDescriptors
      = new ArrayList<TokenDescriptor>();
 
-  private final int findEndOfPattern (Pattern pattern, int start, int end, int error) throws ExpressionException {
+  private interface PatternVerifier {
+    public boolean verifyPattern (Matcher matcher);
+  }
+
+  private final int findEndOfPattern (Pattern pattern, int start, int end, PatternVerifier verifier) {
     Matcher matcher = pattern.matcher(expressionText);
     matcher.region(start, end);
     if (matcher.lookingAt()) {
-      end = matcher.end();
-      if (end > start) return end;
+      if ((end = matcher.end()) > start) {
+        if (verifier == null) return end;
+        if (verifier.verifyPattern(matcher)) return end;
+      }
     }
 
+    return start;
+  }
+
+  private final int findEndOfPattern (Pattern pattern, int start, int end, int error) throws ExpressionException {
+    end = findEndOfPattern(pattern, start, end, null);
+    if (end > start) return end;
     throw new ExpressionException(error, start);
   }
 
@@ -77,6 +90,40 @@ public class ExpressionEvaluation {
 
   private final int findEndOfDecimal (int start, int end) throws ExpressionException {
     return findEndOfPattern(DECIMAL_PATTERN, start, end, R.string.error_invalid_decimal);
+  }
+
+  private final static char DEGREE_MINUTES = '"';
+  private final static char DEGREE_SECONDS = '\'';
+  private final static String DEGREE_FRACTION = "[1-5]?" + DECIMAL_DIGIT;
+
+  private final static Pattern DEGREES_PATTERN = Pattern.compile(
+    "(" + DECIMAL_DIGIT + "+)"
+  + "(\\" + DEGREE_MINUTES + DEGREE_FRACTION + ")?"
+  + "(\\" + DEGREE_SECONDS + DEGREE_FRACTION + ")?"
+  );
+
+  private final int findEndOfDegrees (int start, int end) {
+    return findEndOfPattern(
+      DEGREES_PATTERN, start, end,
+      new PatternVerifier() {
+        int groupCount = 0;
+
+        private final boolean verifyGroup (Matcher matcher, int group) {
+          int start = matcher.start(group);
+          int end = matcher.end(group);
+          if (end == start) return true;
+          groupCount += 1;
+          return (matcher.end(group) - matcher.start(group)) > 1;
+        }
+
+        @Override
+        public boolean verifyPattern (Matcher matcher) {
+          return verifyGroup(matcher, 2)
+              && verifyGroup(matcher, 3)
+              && (groupCount > 0);
+        }
+      }
+    );
   }
 
   private final static String HEXADECIMAL_DIGIT = "[0-9A-Fa-f]";
@@ -179,8 +226,12 @@ public class ExpressionEvaluation {
               end += 1;
             }
           } else if (Character.isDigit(character)) {
-            type = TokenType.DECIMAL;
-            end = findEndOfDecimal(start, length);
+            if ((end = findEndOfDegrees(start, length)) > start) {
+              type = TokenType.DEGREES;
+            } else {
+              type = TokenType.DECIMAL;
+              end = findEndOfDecimal(start, length);
+            }
           } else {
             throw new ExpressionException(R.string.error_unexpected_character, start);
           }
@@ -250,6 +301,36 @@ public class ExpressionEvaluation {
 
         nextToken();
         return new ComplexNumber(text);
+      }
+
+      case DEGREES: {
+        String text = getTokenText();
+        double degrees = 0d;
+
+        {
+          int index = text.indexOf(DEGREE_SECONDS);
+
+          if (index >= 0) {
+            degrees += Double.valueOf(text.substring(index+1)) / 3600d;
+            text = text.substring(0, index);
+          }
+        }
+
+        {
+          int index = text.indexOf(DEGREE_MINUTES);
+
+          if (index >= 0) {
+            degrees += Double.valueOf(text.substring(index+1)) / 60d;
+            text = text.substring(0, index);
+          }
+        }
+
+        if (text.length() > 0) {
+          degrees += Double.valueOf(text);
+        }
+
+        nextToken();
+        return new ComplexNumber(degrees);
       }
 
       case OPEN:
