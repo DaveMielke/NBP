@@ -296,19 +296,7 @@ public class CalculatorActivity extends CommonActivity {
     int start = expressionView.getSelectionStart();
     int end = expressionView.getSelectionEnd();
     expressionView.getText().replace(start, end, text);
-
-    int left = text.indexOf(Function.ARGUMENT_PREFIX);
-    int right = text.lastIndexOf(Function.ARGUMENT_SUFFIX);
-    int length = text.length();
-
-    if ((0 <= left) && (left < right) && (right < length)) {
-      end = start + right;
-      start += left + 1;
-    } else {
-      end = start += length;
-    }
-
-    expressionView.setSelection(start, end);
+    expressionView.setSelection(start+text.length());
   }
 
   private final void performClick (int view) {
@@ -397,7 +385,7 @@ public class CalculatorActivity extends CommonActivity {
               Function function = Functions.get(text);
 
               if (function != null) {
-                hint = function.getCall();
+                hint = function.getName() + Function.ARGUMENT_PREFIX;
               } else {
                 hint = text;
               }

@@ -148,6 +148,21 @@ public class ComplexNumber {
     return pow(new ComplexNumber(exponent));
   }
 
+  public final ComplexNumber sin () {
+    return new ComplexNumber(
+      Math.sin(real) * Math.cosh(imag),
+      Math.cos(real) * Math.sinh(imag)
+    );
+  }
+
+  public final ComplexNumber csc () {
+    return sin().rcp();
+  }
+
+  public final ComplexNumber gamma () {
+    return GammaFunction.gamma(this);
+  }
+
   public final String format () {
     return SavedSettings.getNotation().getFormatter().format(real, imag);
   }

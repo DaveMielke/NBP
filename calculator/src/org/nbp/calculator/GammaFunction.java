@@ -1,5 +1,8 @@
 package org.nbp.calculator;
 
+import static org.nbp.calculator.ComplexNumber.PI;
+import static org.nbp.calculator.ComplexNumber.ONE;
+
 // Cornelius Lanczos 1964 approximation of the Gamma function
 //
 public abstract class GammaFunction {
@@ -21,20 +24,21 @@ public abstract class GammaFunction {
     ComplexNumber result;
 
     if (number.real() < 0.5d) {
-      result = ComplexNumber.ONE;
+      result = PI.div(number.mul(PI).sin().mul(ONE.sub(number).gamma()));
     } else {
       number = number.sub(1d);
       ComplexNumber x = new ComplexNumber(0.99999999999980993d);
+      int coefficientNumber = 0;
 
-      for (int index=0; index<coefficientCount; index+=1) {
-        x = x.add(coefficientArray[index].div(number.add(index+1)));
+      while (coefficientNumber < coefficientCount) {
+        ComplexNumber coefficient = coefficientArray[coefficientNumber];
+        x = x.add(coefficient.div(number.add(++coefficientNumber)));
       }
 
       ComplexNumber t = number.add((double)coefficientCount - 0.5d);
-      result = ComplexOperations.sqrt(ComplexNumber.PI.mul(2d))
-              .mul(t.pow(number.add(0.5d)))
-              .mul(t.neg().exp())
-              .mul(x);
+      result = ComplexOperations.sqrt(PI.mul(2d))
+                                .mul(t.pow(number.add(0.5d)))
+                                .mul(t.neg().exp()).mul(x);
     }
 
     if (Math.abs(result.imag()) < EPSILON) result = new ComplexNumber(result.real());

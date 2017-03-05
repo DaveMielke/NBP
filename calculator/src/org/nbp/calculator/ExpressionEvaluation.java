@@ -334,7 +334,7 @@ public class ExpressionEvaluation {
         while (true) {
           switch (getTokenType()) {
             case FACTORIAL:
-              value = ComplexOperations.gamma(value.add(1d));
+              value = value.add(1d).gamma();
               break;
 
             default:

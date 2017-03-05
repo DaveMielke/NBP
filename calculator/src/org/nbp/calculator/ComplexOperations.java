@@ -128,6 +128,6 @@ public class ComplexOperations extends Operations {
   )
 
   public final static ComplexNumber gamma (ComplexNumber number) {
-    return GammaFunction.gamma(number);
+    return number.gamma();
   }
 }
