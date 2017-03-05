@@ -52,9 +52,6 @@
   <string name="description_numeric_nine">nine</string>
   <string name="description_numeric_decimalPoint">decimal point</string>
   <string name="description_numeric_E">x times 10 to the y</string>
-  <string name="description_numeric_i">i</string>
-  <string name="description_numeric_e">e</string>
-  <string name="description_numeric_pi">pi</string>
   <string name="description_numeric_equals">equals</string>
   <string name="description_numeric_plus">plus</string>
   <string name="description_numeric_minus">minus</string>
@@ -65,6 +62,31 @@
   <string name="description_numeric_percent">percent</string>
   <string name="description_numeric_openBracket">open bracket</string>
   <string name="description_numeric_closeBracket">close bracket</string>
+
+  <string name="description_variable_e">e</string>
+  <string name="description_variable_i">i</string>
+  <string name="description_variable_pi">pi</string>
+
+  <string name="description_function_abs">absolute value</string>
+  <string name="description_function_acos">arc cosine</string>
+  <string name="description_function_arg">arg</string>
+  <string name="description_function_asin">arc sine</string>
+  <string name="description_function_atan">arc tangent</string>
+  <string name="description_function_cbrt">cube root</string>
+  <string name="description_function_cnj">conjugate</string>
+  <string name="description_function_cos">cosine</string>
+  <string name="description_function_cosh">hyperbolic cosine</string>
+  <string name="description_function_d2r">degrees to radians</string>
+  <string name="description_function_exp">e to the x</string>
+  <string name="description_function_log10">log base 10</string>
+  <string name="description_function_log">natural log</string>
+  <string name="description_function_r2d">radians to degrees</string>
+  <string name="description_function_rcp">reciprocal</string>
+  <string name="description_function_sinh">hyperbolic sine</string>
+  <string name="description_function_sin">sine</string>
+  <string name="description_function_sqrt">square root</string>
+  <string name="description_function_tanh">hyperbolic tangent</string>
+  <string name="description_function_tan">tangent</string>
 
   <string name="title_notation">Notation</string>
   <string name="description_notation_engineering">Engineering</string>

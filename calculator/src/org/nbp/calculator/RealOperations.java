@@ -91,7 +91,7 @@ public class RealOperations extends Operations {
     summary = "convert real number from radians to degrees"
   )
 
-  public final static double rd2dg (double radians) {
+  public final static double r2d (double radians) {
     return Math.toDegrees(radians);
   }
 
@@ -99,7 +99,7 @@ public class RealOperations extends Operations {
     summary = "convert real number from degrees to radians"
   )
 
-  public final static double dg2rd (double degrees) {
+  public final static double d2r (double degrees) {
     return Math.toRadians(degrees);
   }
 

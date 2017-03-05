@@ -17,12 +17,13 @@
 
     <Button
       android:text="e"
-      android:contentDescription="@string/description_numeric_e"
+      android:contentDescription="@string/description_variable_e"
      />
 
     <Button
       android:text="π"
-      android:contentDescription="@string/description_numeric_pi"
+      android:hint="pi"
+      android:contentDescription="@string/description_variable_pi"
      />
 
     <Button
@@ -127,7 +128,7 @@
 
     <Button
       android:text="i"
-      android:contentDescription="@string/description_numeric_i"
+      android:contentDescription="@string/description_variable_i"
      />
 
     <Button
