@@ -73,5 +73,6 @@
 
   <string name="title_angleUnit">Angle Unit</string>
   <string name="description_angleUnit_degrees">Degrees</string>
+  <string name="description_angleUnit_grads">Grads</string>
   <string name="description_angleUnit_radians">Radians</string>
 </resources>

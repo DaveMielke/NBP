@@ -15,6 +15,22 @@ public enum AngleUnit {
     }
   ),
 
+  GRADS("GRD", R.string.description_angleUnit_grads,
+    new Converter() {
+      private final double GRADS_PER_DEGREE = 100d / 90d;
+
+      @Override
+      public double toRadians (double angle) {
+        return Math.toRadians(angle / GRADS_PER_DEGREE);
+      }
+
+      @Override
+      public double fromRadians (double angle) {
+        return Math.toDegrees(angle) * GRADS_PER_DEGREE;
+      }
+    }
+  ),
+
   RADIANS("RAD", R.string.description_angleUnit_radians,
     new Converter() {
       @Override
