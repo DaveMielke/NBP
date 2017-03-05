@@ -3,7 +3,7 @@ package org.nbp.calculator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ComplexFormatter extends ComplexCommon {
+public class ComplexFormatter {
   public ComplexFormatter () {
     super();
   }
@@ -59,7 +59,7 @@ public class ComplexFormatter extends ComplexCommon {
     return this;
   }
 
-  public final static char ZERO_DIGIT = '0';
+  public final static char ZERO = '0';
   public final static char IMAGINARY_SIGN = 'i';
   public final static char INFINITY_SIGN = '\u221E';
   public final static char NaN_SIGN = '?';
@@ -126,13 +126,13 @@ public class ComplexFormatter extends ComplexCommon {
         int end = sb.length();
 
         while (end > 0) {
-          if (sb.charAt(end -= 1) != ZERO_DIGIT) break;
+          if (sb.charAt(end -= 1) != ZERO) break;
           sb.setLength(end);
         }
       }
 
       if (sb.length() == 0) {
-        sb.append(ZERO_DIGIT);
+        sb.append(ZERO);
         exponent = 0;
       } else if ((exponent >= getMinimumFixedDigits()) &&
                  (exponent <= getMaximumFixedDigits())) {
@@ -140,7 +140,7 @@ public class ComplexFormatter extends ComplexCommon {
           if (sb.length() > exponent) {
             sb.insert(exponent, decimalSeparator);
           } else {
-            while (sb.length() < exponent) sb.append(ZERO_DIGIT);
+            while (sb.length() < exponent) sb.append(ZERO);
           }
 
           if (getGroupingSeparatorEnabled()) {
@@ -152,12 +152,12 @@ public class ComplexFormatter extends ComplexCommon {
           exponent = 0;
         } else {
           while (exponent < 0) {
-            sb.insert(0, ZERO_DIGIT);
+            sb.insert(0, ZERO);
             exponent += 1;
           }
 
           sb.insert(0, decimalSeparator);
-          sb.insert(0, ZERO_DIGIT);
+          sb.insert(0, ZERO);
         }
       } else {
         int grouping = Math.max(1, getDecimalGrouping());
@@ -168,7 +168,7 @@ public class ComplexFormatter extends ComplexCommon {
         position += 1;
         exponent -= position;
 
-        while (sb.length() < position) sb.append(ZERO_DIGIT);
+        while (sb.length() < position) sb.append(ZERO);
         if (position < sb.length()) sb.insert(position, decimalSeparator);
       }
 
@@ -198,14 +198,14 @@ public class ComplexFormatter extends ComplexCommon {
   }
 
   public final String format (double real, double imag) {
-    if (imag == ZERO) return format(real, false);
-    if (real == ZERO) return format(imag, true);
+    if (imag == 0d) return format(real, false);
+    if (real == 0d) return format(imag, true);
 
     StringBuilder sb = new StringBuilder();
     sb.append(format(real, false));
     sb.append(' ');
 
-    if (imag < ZERO) {
+    if (imag < 0d) {
       sb.append(SUBTRACTION_SIGN);
       imag = -imag;
     } else {
@@ -218,6 +218,6 @@ public class ComplexFormatter extends ComplexCommon {
   }
 
   public final String format (double value) {
-    return format(value, ZERO);
+    return format(value, 0d);
   }
 }

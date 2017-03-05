@@ -1,23 +1,32 @@
 package org.nbp.calculator;
 
-public class ComplexNumber extends ComplexCommon {
+public class ComplexNumber {
   private final double real;
   private final double imag;
 
   public ComplexNumber (double r, double i) {
-    super();
-
     real = r;
     imag = i;
   }
 
   public ComplexNumber (double r) {
-    this(r, ZERO);
+    this(r, 0d);
+  }
+
+  public ComplexNumber () {
+    this(0d);
   }
 
   public ComplexNumber (String r) {
     this(Double.valueOf(r));
   }
+
+  public final static ComplexNumber E = new ComplexNumber(Math.E);
+  public final static ComplexNumber PI = new ComplexNumber(Math.PI);
+
+  public final static ComplexNumber ZERO = new ComplexNumber(0d);
+  public final static ComplexNumber ONE = new ComplexNumber(1d);
+  public final static ComplexNumber I = new ComplexNumber(0d, 1d);
 
   public final double real () {
     return real;
@@ -28,8 +37,8 @@ public class ComplexNumber extends ComplexCommon {
   }
 
   public final double abs () {
-    if (imag == ZERO) return Math.abs(real);
-    if (real == ZERO) return Math.abs(imag);
+    if (!hasImag()) return Math.abs(real);
+    if (!hasReal()) return Math.abs(imag);
     return Math.hypot(real, imag);
   }
 
@@ -38,11 +47,11 @@ public class ComplexNumber extends ComplexCommon {
   }
 
   public final boolean hasReal () {
-    return real != ZERO;
+    return real != 0d;
   }
 
   public final boolean hasImag () {
-    return imag != ZERO;
+    return imag != 0d;
   }
 
   private final boolean isReal (ComplexNumber operand) {
@@ -70,7 +79,7 @@ public class ComplexNumber extends ComplexCommon {
   }
 
   public final ComplexNumber rcp () {
-    if (imag == ZERO) return new ComplexNumber(1d / real);
+    if (!hasImag()) return new ComplexNumber(1d / real);
 
     double denominator = (real * real) + (imag * imag);
     return new ComplexNumber((real / denominator), (-imag / denominator));
@@ -122,7 +131,7 @@ public class ComplexNumber extends ComplexCommon {
 
   public final ComplexNumber exp () {
     double factor = Math.exp(real);
-    if (imag == ZERO) return new ComplexNumber(factor);
+    if (!hasImag()) return new ComplexNumber(factor);
 
     return new ComplexNumber(
       factor * Math.cos(imag),

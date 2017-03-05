@@ -122,4 +122,12 @@ public class ComplexOperations extends Operations {
 
     return number.pow(new ComplexNumber(1d / 3d));
   }
+
+  @FunctionMethod(
+    summary = "gamma function of complex number"
+  )
+
+  public final static ComplexNumber gamma (ComplexNumber number) {
+    return GammaFunction.gamma(number);
+  }
 }

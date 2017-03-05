@@ -3,7 +3,7 @@ package org.nbp.calculator;
 import java.util.Set;
 import java.util.LinkedHashMap;
 
-import org.nbp.common.CommonContext;
+import static org.nbp.common.CommonContext.getContext;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -101,10 +101,6 @@ public abstract class Variables {
 
   public static boolean removeSystemVariable (String name) {
     return systemVariables.remove(name) != null;
-  }
-
-  private static Context getContext () {
-    return CommonContext.getContext();
   }
 
   private static SharedPreferences getUserVariables () {
