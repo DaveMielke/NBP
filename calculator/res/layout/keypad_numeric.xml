@@ -82,8 +82,8 @@
      />
 
     <Button
-      android:text="%"
-      android:contentDescription="@string/description_numeric_percent"
+      android:text="!"
+      android:contentDescription="@string/description_numeric_factorial"
      />
   </TableRow>
 
@@ -109,8 +109,8 @@
      />
 
     <Button
-      android:text="!"
-      android:contentDescription="@string/description_numeric_factorial"
+      android:text="%"
+      android:contentDescription="@string/description_numeric_percent"
      />
   </TableRow>
 
