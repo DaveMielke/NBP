@@ -24,6 +24,7 @@ public class ExpressionEvaluation {
     TIMES,
     DIVIDE,
     EXPONENTIATE,
+    FACTORIAL,
     PERCENT,
 
     END;
@@ -159,6 +160,10 @@ public class ExpressionEvaluation {
 
         case '^':
           type = TokenType.EXPONENTIATE;
+          break;
+
+        case '!':
+          type = TokenType.FACTORIAL;
           break;
 
         case '%':
@@ -323,8 +328,22 @@ public class ExpressionEvaluation {
         nextToken();
         return evaluatePrimary().neg();
 
-      default:
-        return evaluateElement();
+      default: {
+        ComplexNumber value = evaluateElement();
+
+        while (true) {
+          switch (getTokenType()) {
+            case FACTORIAL:
+              value = ComplexOperations.gamma(value.add(1d));
+              break;
+
+            default:
+              return value;
+          }
+
+          nextToken();
+        }
+      }
     }
   }
 

@@ -107,6 +107,11 @@
       android:text="−"
       android:contentDescription="@string/description_numeric_minus"
      />
+
+    <Button
+      android:text="!"
+      android:contentDescription="@string/description_numeric_factorial"
+     />
   </TableRow>
 
   <TableRow android:layout_weight="1">
