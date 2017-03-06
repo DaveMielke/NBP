@@ -16,14 +16,13 @@
      />
 
     <Button
-      android:text="e"
-      android:contentDescription="@string/description_variable_e"
+      android:text="&quot;"
+      android:contentDescription="@string/description_numeric_minutes"
      />
 
     <Button
-      android:text="π"
-      android:hint="pi"
-      android:contentDescription="@string/description_variable_pi"
+      android:text="'"
+      android:contentDescription="@string/description_numeric_seconds"
      />
 
     <Button
@@ -118,7 +117,7 @@
   <TableRow android:layout_weight="1">
     <Button
       android:text="."
-      android:contentDescription="@string/description_numeric_decimalPoint"
+      android:contentDescription="@string/description_numeric_decimal"
      />
 
     <Button

@@ -50,8 +50,10 @@
   <string name="description_numeric_seven">seven</string>
   <string name="description_numeric_eight">eight</string>
   <string name="description_numeric_nine">nine</string>
-  <string name="description_numeric_decimalPoint">decimal point</string>
   <string name="description_numeric_E">x times 10 to the y</string>
+  <string name="description_numeric_decimal">decimal</string>
+  <string name="description_numeric_minutes">minutes</string>
+  <string name="description_numeric_seconds">seconds</string>
   <string name="description_numeric_equals">equals</string>
   <string name="description_numeric_plus">plus</string>
   <string name="description_numeric_minus">minus</string>
@@ -69,7 +71,7 @@
 
   <string name="description_function_abs">absolute value</string>
   <string name="description_function_acos">arc cosine</string>
-  <string name="description_function_arg">arg</string>
+  <string name="description_function_arg">argument</string>
   <string name="description_function_asin">arc sine</string>
   <string name="description_function_atan">arc tangent</string>
   <string name="description_function_cbrt">cube root</string>
