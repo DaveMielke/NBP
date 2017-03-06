@@ -153,6 +153,14 @@ public class CalculatorActivity extends CommonActivity {
       if (showError) {
         resultView.setText(exception.getMessage());
         expressionView.setSelection(exception.getLocation());
+      } else {
+        char indicator = '?';
+        CharSequence text = resultView.getText();
+        int length = text.length();
+
+        if ((length == 0) || (text.charAt(length-1) != indicator)) {
+          resultView.setText(text.toString() + indicator);
+        }
       }
     }
 
