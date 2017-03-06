@@ -175,10 +175,9 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
     }
   }
 
-  private final ComplexNumber evaluateElement () throws ExpressionException {
-    TokenType type = getTokenType();
-
-    switch (type) {
+  @Override
+  protected final ComplexNumber evaluateElement () throws ExpressionException {
+    switch (getTokenType()) {
       case DECIMAL: {
         String text = getTokenText();
         nextToken();
@@ -273,7 +272,7 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
       }
 
       default: {
-        throw new EvaluationException(R.string.error_missing_element);
+        return super.evaluateElement();
       }
     }
   }

@@ -30,6 +30,14 @@ public abstract class ExpressionEvaluation<T> extends ExpressionParser {
     return value;
   }
 
+  protected T evaluateElement () throws ExpressionException {
+    switch (getTokenType()) {
+      default: {
+        throw new EvaluationException(R.string.error_missing_element);
+      }
+    }
+  }
+
   protected ExpressionEvaluation (String expression) throws ExpressionException {
     super(expression);
 
