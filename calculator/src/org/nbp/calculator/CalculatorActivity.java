@@ -141,7 +141,7 @@ public class CalculatorActivity extends CommonActivity {
 
     try {
       try {
-        ExpressionEvaluation evaluation = new ExpressionEvaluation(expression);
+        ComplexEvaluation evaluation = new ComplexEvaluation(expression);
         ComplexNumber result = evaluation.getResult();
         resultView.setText(result.format());
         SavedSettings.set(SavedSettings.RESULT, result);
