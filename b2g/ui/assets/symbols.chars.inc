@@ -17,7 +17,7 @@ char « 123567
 char » 234567
 
 char ± 3467
-char − 367
+glyph − 36
 char × 167
 char ÷ 347
 char ≠ 1234567
