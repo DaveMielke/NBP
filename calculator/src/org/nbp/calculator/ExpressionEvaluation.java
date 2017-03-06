@@ -32,9 +32,11 @@ public abstract class ExpressionEvaluation<T> extends ExpressionParser {
 
   protected T evaluateElement () throws ExpressionException {
     switch (getTokenType()) {
-      default: {
+      case OPEN:
+        return evaluateSubexpression();
+
+      default:
         throw new EvaluationException(R.string.error_missing_element);
-      }
     }
   }
 

@@ -222,9 +222,6 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
         return new ComplexNumber(degrees);
       }
 
-      case OPEN:
-        return evaluateSubexpression();
-
       case RESULT: {
         ComplexNumber value = SavedSettings.getResult();
 
