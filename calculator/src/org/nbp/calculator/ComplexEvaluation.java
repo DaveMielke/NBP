@@ -3,9 +3,14 @@ package org.nbp.calculator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ComplexEvaluation extends ExpressionEvaluation {
+public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
   public ComplexEvaluation (String expression) throws ExpressionException {
     super(expression);
+  }
+
+  @Override
+  protected final boolean verifyValue (ComplexNumber value) {
+    return super.verifyValue(value) && !value.isNaN();
   }
 
   private final static String DECIMAL_DIGIT = "[0-9]";
@@ -233,7 +238,7 @@ public class ComplexEvaluation extends ExpressionEvaluation {
       }
 
       case IDENTIFIER: {
-        TokenDescriptor token = getTokenDescriptor();
+        TokenDescriptor token = getCurrentToken();
         String name = getTokenText(token);
         nextToken();
 
