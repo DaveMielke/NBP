@@ -8,6 +8,7 @@ public class ComplexFunction extends Function {
   }
 
   protected ComplexNumber postprocessComplexResult (Object result) {
+    if (!verifyType(result, ComplexNumber.class)) return null;
     return (ComplexNumber)result;
   }
 
@@ -19,7 +20,7 @@ public class ComplexFunction extends Function {
 
   @Override
   protected final Object postprocessFunctionResult (Object result) {
-    if (!verifyType(result, ComplexNumber.class)) return null;
+    if (result == null) return null;
     return postprocessComplexResult(result);
   }
 
