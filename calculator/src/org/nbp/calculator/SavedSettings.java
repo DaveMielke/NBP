@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class SavedSettings {
+  public final static String CALCULATOR_MODE = "calculator-mode";
   public final static String COMPLEX_NOTATION = "complex-notation";
   public final static String ANGLE_UNIT = "angle-unit";
 
@@ -90,6 +91,10 @@ public abstract class SavedSettings {
   public final static double get (String name, double defaultValue) {
     String string = getSettings().getString(name, null);
     return (string != null)? Double.valueOf(string): defaultValue;
+  }
+
+  public final static CalculatorMode getCalculatorMode () {
+    return get(CALCULATOR_MODE, CalculatorMode.class, DefaultSettings.CALCULATOR_MODE);
   }
 
   public final static ComplexNotation getComplexNotation () {

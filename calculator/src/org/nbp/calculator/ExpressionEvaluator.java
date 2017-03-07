@@ -1,6 +1,6 @@
 package org.nbp.calculator;
 
-public abstract class ExpressionEvaluation<T extends GenericNumber> extends ExpressionParser {
+public abstract class ExpressionEvaluator<T extends GenericNumber> extends ExpressionParser {
   protected abstract T evaluateExpression () throws ExpressionException;
   private final T expressionResult;
 
@@ -75,7 +75,7 @@ public abstract class ExpressionEvaluation<T extends GenericNumber> extends Expr
     }
   }
 
-  protected ExpressionEvaluation (String expression) throws ExpressionException {
+  protected ExpressionEvaluator (String expression) throws ExpressionException {
     super(expression);
 
     int end = expressionText.length();

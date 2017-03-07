@@ -3,8 +3,8 @@ package org.nbp.calculator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
-  public ComplexEvaluation (String expression) throws ExpressionException {
+public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
+  public ComplexEvaluator (String expression) throws ExpressionException {
     super(expression);
   }
 

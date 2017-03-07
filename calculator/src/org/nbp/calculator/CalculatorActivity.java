@@ -142,8 +142,8 @@ public class CalculatorActivity extends CommonActivity {
 
     try {
       try {
-        ExpressionEvaluation evaluation = new ComplexEvaluation(expression);
-        resultValue = evaluation.getResult();
+        ExpressionEvaluator evaluator = SavedSettings.getCalculatorMode().newExpressionEvaluator(expression);
+        resultValue = evaluator.getResult();
         resultView.setText(resultValue.format());
         return true;
       } catch (NoExpressionException exception) {
@@ -152,6 +152,7 @@ public class CalculatorActivity extends CommonActivity {
       }
     } catch (ExpressionException exception) {
       if (showError) {
+        resultValue = null;
         resultView.setText(exception.getMessage());
         expressionView.setSelection(exception.getLocation());
       } else {
