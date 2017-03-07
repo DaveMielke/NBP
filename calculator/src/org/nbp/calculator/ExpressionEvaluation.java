@@ -1,15 +1,11 @@
 package org.nbp.calculator;
 
-public abstract class ExpressionEvaluation<T> extends ExpressionParser {
+public abstract class ExpressionEvaluation<T extends GenericNumber> extends ExpressionParser {
   protected abstract T evaluateExpression () throws ExpressionException;
   private final T expressionResult;
 
   public final T getResult () {
     return expressionResult;
-  }
-
-  protected boolean verifyValue (T value) {
-    return true;
   }
 
   protected final T evaluateSubexpression () throws ExpressionException {
@@ -30,10 +26,49 @@ public abstract class ExpressionEvaluation<T> extends ExpressionParser {
     return value;
   }
 
+  protected final T getVariable (String name) {
+    return (T)Variables.get(name);
+  }
+
   protected T evaluateElement () throws ExpressionException {
     switch (getTokenType()) {
       case OPEN:
         return evaluateSubexpression();
+
+      case IDENTIFIER: {
+        TokenDescriptor token = getCurrentToken();
+        String name = getTokenText(token);
+        nextToken();
+
+        switch (getTokenType()) {
+          case ASSIGN: {
+            nextToken();
+            T value = evaluateExpression();
+
+            if (!Variables.set(name, value)) {
+              throw new EvaluationException(R.string.error_protected_variable, token);
+            }
+
+            return value;
+          }
+
+          case OPEN: {
+            Function function = Functions.get(name);
+
+            if (function == null) {
+              throw new EvaluationException(R.string.error_unknown_function, token);
+            }
+
+            return (T)function.call(evaluateSubexpression());
+          }
+
+          default: {
+            T value = getVariable(name);
+            if (value != null) return value;
+            throw new EvaluationException(R.string.error_unknown_variable, token);
+          }
+        }
+      }
 
       default:
         throw new EvaluationException(R.string.error_missing_element);
@@ -51,7 +86,7 @@ public abstract class ExpressionEvaluation<T> extends ExpressionParser {
       TokenDescriptor token = getCurrentToken();
 
       if (token == null) {
-        if (verifyValue(expressionResult)) return;
+        if ((expressionResult != null) && expressionResult.isValid()) return;
         throw new EvaluationException(R.string.error_undefined_result, end);
       }
 

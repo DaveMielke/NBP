@@ -11,7 +11,7 @@ public abstract class Function {
     functionMethod = method;
   }
 
-  protected final Object callMethod (Object argument) {
+  private final Object callMethod (Object argument) {
     return LanguageUtilities.invokeMethod(functionMethod, null, argument);
   }
 
@@ -29,5 +29,29 @@ public abstract class Function {
 
   public final String getSummary () {
     return Operations.getSummary(functionMethod);
+  }
+
+  protected final boolean verifyType (Object object, Class type) {
+    if (object == null) return false;
+    if (!LanguageUtilities.canAssign(type, object.getClass())) return false;
+    return true;
+  }
+
+  protected abstract Object preprocessFunctionArgument (Object argument);
+  protected abstract Object postprocessFunctionResult (Object result);
+
+  public final Object call (Object functionArgument) {
+    Object methodArgument = preprocessFunctionArgument(functionArgument);
+
+    if (methodArgument != null) {
+      Object methodResult = callMethod(methodArgument);
+
+      if (methodResult != null) {
+        Object functionResult = postprocessFunctionResult(methodResult);
+        if (functionResult != null) return functionResult;
+      }
+    }
+
+    return null;
   }
 }

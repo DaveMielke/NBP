@@ -73,6 +73,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private EditText expressionView;
   private TextView resultView;
+  private GenericNumber resultValue;
 
   private final void setFocusToExpression () {
     expressionView.requestFocus();
@@ -141,10 +142,9 @@ public class CalculatorActivity extends CommonActivity {
 
     try {
       try {
-        ComplexEvaluation evaluation = new ComplexEvaluation(expression);
-        ComplexNumber result = evaluation.getResult();
-        resultView.setText(result.format());
-        SavedSettings.set(SavedSettings.RESULT, result);
+        ExpressionEvaluation evaluation = new ComplexEvaluation(expression);
+        resultValue = evaluation.getResult();
+        resultView.setText(resultValue.format());
         return true;
       } catch (NoExpressionException exception) {
         resultView.setText("");
@@ -469,8 +469,6 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public boolean onLongClick (View view) {
           resultView.setText("");
-          SavedSettings.set(SavedSettings.RESULT, Double.NaN);
-
           expressionView.setText("");
           setFocusToExpression();
           return true;
@@ -739,7 +737,7 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final String formatVariableLine (String name, ComplexNumber value, String description) {
+  private final String formatVariableLine (String name, GenericNumber value, String description) {
     StringBuilder sb = new StringBuilder();
 
     sb.append(name);
@@ -755,7 +753,7 @@ public class CalculatorActivity extends CommonActivity {
     return sb.toString();
   }
 
-  private final String formatVariableLine (String name, ComplexNumber value) {
+  private final String formatVariableLine (String name, GenericNumber value) {
     return formatVariableLine(name, value, null);
   }
 
@@ -813,9 +811,9 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
-          final ComplexNumber result = SavedSettings.getResult();
+          final GenericNumber result = resultValue;
 
-          if (result.isNaN()) {
+          if (result == null) {
             builder.setMessage(R.string.error_no_result);
           } else {
             final List<String> variables = getUserVariableLines();

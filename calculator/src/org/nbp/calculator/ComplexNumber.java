@@ -1,6 +1,6 @@
 package org.nbp.calculator;
 
-public class ComplexNumber {
+public class ComplexNumber extends GenericNumber {
   private final double real;
   private final double imag;
 
@@ -163,13 +163,19 @@ public class ComplexNumber {
     return GammaFunction.gamma(this);
   }
 
+  @Override
+  public final boolean isValid () {
+    return !isNaN();
+  }
+
+  @Override
   public final String format () {
     return SavedSettings.getNotation().getFormatter().format(real, imag);
   }
 
   private final static char STRING_DELIMITER = '_';
 
-  public final String toString() {
+  public final String toString () {
     return (Double.toString(real) + STRING_DELIMITER + Double.toString(imag));
   }
 

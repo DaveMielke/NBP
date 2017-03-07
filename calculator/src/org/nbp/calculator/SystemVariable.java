@@ -1,10 +1,10 @@
 package org.nbp.calculator;
 
 public class SystemVariable {
-  private final ComplexNumber value;
+  private final GenericNumber value;
   private final String description;
 
-  public final ComplexNumber getValue () {
+  public final GenericNumber getValue () {
     return value;
   }
 
@@ -12,7 +12,7 @@ public class SystemVariable {
     return description;
   }
 
-  public SystemVariable (ComplexNumber value, String description) {
+  public SystemVariable (GenericNumber value, String description) {
     this.value = value;
     this.description = description;
   }

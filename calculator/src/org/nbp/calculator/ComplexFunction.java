@@ -11,19 +11,16 @@ public class ComplexFunction extends Function {
     return (ComplexNumber)result;
   }
 
-  public final ComplexNumber call (ComplexNumber argument) {
-    Object methodArgument = preprocessComplexArgument(argument);
+  @Override
+  protected final Object preprocessFunctionArgument (Object argument) {
+    if (!verifyType(argument, ComplexNumber.class)) return null;
+    return preprocessComplexArgument((ComplexNumber)argument);
+  }
 
-    if (methodArgument != null) {
-      Object methodResult = callMethod(methodArgument);
-
-      if (methodResult != null) {
-        ComplexNumber functionResult = postprocessComplexResult(methodResult);
-        if (functionResult != null) return functionResult;
-      }
-    }
-
-    return ComplexNumber.NaN;
+  @Override
+  protected final Object postprocessFunctionResult (Object result) {
+    if (!verifyType(result, ComplexNumber.class)) return null;
+    return postprocessComplexResult(result);
   }
 
   public ComplexFunction (Method method) {

@@ -21,12 +21,16 @@ public abstract class Variables {
 
   private final static SystemVariables systemVariables = new SystemVariables();
 
-  public static void setSystemVariable (String name, ComplexNumber value, String description) {
+  private static void setSystemVariable (String name, GenericNumber value, String description) {
     systemVariables.put(name, new SystemVariable(value, description));
   }
 
-  public static void setSystemVariable (String name, double value, String description) {
-    setSystemVariable(name, new ComplexNumber(value), description);
+  private static void setSystemVariable (String name, double real, double imag, String description) {
+    setSystemVariable(name, new ComplexNumber(real, imag), description);
+  }
+
+  private static void setSystemVariable (String name, double real, String description) {
+    setSystemVariable(name, new ComplexNumber(real), description);
   }
 
   static {
@@ -61,7 +65,7 @@ public abstract class Variables {
     );
 
     setSystemVariable(
-      "i", new ComplexNumber(0, 1),
+      "i", 0d, 1d,
       "imaginary unit"
     );
 
@@ -119,7 +123,7 @@ public abstract class Variables {
     return true;
   }
 
-  public static ComplexNumber get (String name) {
+  public static GenericNumber get (String name) {
     {
       SharedPreferences variables = getUserVariables();
 
@@ -137,7 +141,7 @@ public abstract class Variables {
     return null;
   }
 
-  public static boolean set (String name, ComplexNumber value) {
+  public static boolean set (String name, GenericNumber value) {
     if (systemVariables.containsKey(name)) return false;
     getUserVariables().edit().putString(name, value.toString()).apply();
     return true;

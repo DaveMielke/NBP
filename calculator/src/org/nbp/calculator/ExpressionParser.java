@@ -12,15 +12,15 @@ public abstract class ExpressionParser {
 
   protected static enum TokenType {
     IDENTIFIER,
-    DECIMAL,
-    HEXADECIMAL,
-    DEGREES,
-    RESULT,
+    ASSIGN,
 
     OPEN,
     CLOSE,
 
-    ASSIGN,
+    DECIMAL,
+    HEXADECIMAL,
+    DEGREES,
+
     PLUS,
     MINUS,
     TIMES,

@@ -8,7 +8,6 @@ public abstract class SavedSettings {
   public final static String NOTATION = "notation";
   public final static String ANGLE_UNIT = "angle-unit";
 
-  public final static String RESULT = "result";
   public final static String EXPRESSION = "expression";
   public final static String START = "start";
   public final static String END = "end";
@@ -93,26 +92,12 @@ public abstract class SavedSettings {
     return (string != null)? Double.valueOf(string): defaultValue;
   }
 
-  public final static void set (String name, ComplexNumber value) {
-    getSettings().edit().putString(name, value.toString()).apply();
-  }
-
-  public final static ComplexNumber get (String name, ComplexNumber defaultValue) {
-    String string = getSettings().getString(name, null);
-    if (string == null) return defaultValue;
-    return ComplexNumber.valueOf(string);
-  }
-
   public final static Notation getNotation () {
     return get(NOTATION, Notation.class, DefaultSettings.NOTATION);
   }
 
   public final static AngleUnit getAngleUnit () {
     return get(ANGLE_UNIT, AngleUnit.class, DefaultSettings.ANGLE_UNIT);
-  }
-
-  public final static ComplexNumber getResult () {
-    return get(RESULT, ComplexNumber.NaN);
   }
 
   private SavedSettings () {

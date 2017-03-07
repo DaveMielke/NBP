@@ -12,17 +12,20 @@ public class RealFunction extends ComplexFunction {
   }
 
   @Override
-  protected Object preprocessComplexArgument (ComplexNumber argument) {
-    argument = (ComplexNumber)super.preprocessComplexArgument(argument);
-    if (argument == null) return null;
+  protected final Object preprocessComplexArgument (ComplexNumber argument) {
+    {
+      Object object = super.preprocessComplexArgument(argument);
+      if (!verifyType(object, ComplexNumber.class)) return null;
+      argument = (ComplexNumber)object;
+    }
+
     if (argument.hasImag()) return null;
     return (Double)preprocessRealArgument(argument.real());
   }
 
   @Override
-  protected ComplexNumber postprocessComplexResult (Object result) {
-    if (result == null) return null;
-    if (!(result instanceof Double)) return null;
+  protected final ComplexNumber postprocessComplexResult (Object result) {
+    if (!verifyType(result, Double.class)) return null;
     return super.postprocessComplexResult(new ComplexNumber(postprocessRealResult((Double)result)));
   }
 

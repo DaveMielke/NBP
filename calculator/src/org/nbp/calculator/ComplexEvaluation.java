@@ -8,11 +8,6 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
     super(expression);
   }
 
-  @Override
-  protected final boolean verifyValue (ComplexNumber value) {
-    return super.verifyValue(value) && !value.isNaN();
-  }
-
   private final static String DECIMAL_DIGIT = "[0-9]";
   private final static Pattern DECIMAL_PATTERN = Pattern.compile(
     DECIMAL_DIGIT + "*"
@@ -99,10 +94,6 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
           type = TokenType.HEXADECIMAL;
           start += 1;
           end = findEndOfHexadecimal(start, length);
-          break;
-
-        case '$':
-          type = TokenType.RESULT;
           break;
 
         case Function.ARGUMENT_PREFIX:
@@ -222,52 +213,6 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
         return new ComplexNumber(degrees);
       }
 
-      case RESULT: {
-        ComplexNumber value = SavedSettings.getResult();
-
-        if (value.isNaN()) {
-          throw new EvaluationException(R.string.error_no_result);
-        }
-
-        nextToken();
-        return value;
-      }
-
-      case IDENTIFIER: {
-        TokenDescriptor token = getCurrentToken();
-        String name = getTokenText(token);
-        nextToken();
-
-        switch (getTokenType()) {
-          case ASSIGN: {
-            nextToken();
-            ComplexNumber value = evaluateExpression();
-
-            if (!Variables.set(name, value)) {
-              throw new EvaluationException(R.string.error_protected_variable, token);
-            }
-
-            return value;
-          }
-
-          case OPEN: {
-            ComplexFunction function = Functions.get(name);
-
-            if (function == null) {
-              throw new EvaluationException(R.string.error_unknown_function, token);
-            }
-
-            return function.call(evaluateSubexpression());
-          }
-
-          default: {
-            ComplexNumber value = Variables.get(name);
-            if (value != null) return value;
-            throw new EvaluationException(R.string.error_unknown_variable, token);
-          }
-        }
-      }
-
       default: {
         return super.evaluateElement();
       }
@@ -335,7 +280,6 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
           break;
 
         case OPEN:
-        case RESULT:
         case IDENTIFIER:
           value = value.mul(evaluateElement());
           break;
