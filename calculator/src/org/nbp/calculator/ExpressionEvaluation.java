@@ -13,13 +13,13 @@ public abstract class ExpressionEvaluation<T extends GenericNumber> extends Expr
     nextToken();
 
     if (getTokenType() == TokenType.CLOSE) {
-      throw new EvaluationException(R.string.error_missing_subexpression, start);
+      throw new EvaluateException(R.string.error_missing_subexpression, start);
     }
 
     T value = evaluateExpression();
 
     if (getTokenType() != TokenType.CLOSE) {
-      throw new EvaluationException(R.string.error_unclosed_bracket, start);
+      throw new EvaluateException(R.string.error_unclosed_bracket, start);
     }
 
     nextToken();
@@ -46,7 +46,7 @@ public abstract class ExpressionEvaluation<T extends GenericNumber> extends Expr
             T value = evaluateExpression();
 
             if (!Variables.set(name, value)) {
-              throw new EvaluationException(R.string.error_protected_variable, token);
+              throw new EvaluateException(R.string.error_protected_variable, token);
             }
 
             return value;
@@ -56,7 +56,7 @@ public abstract class ExpressionEvaluation<T extends GenericNumber> extends Expr
             Function function = Functions.get(name);
 
             if (function == null) {
-              throw new EvaluationException(R.string.error_unknown_function, token);
+              throw new EvaluateException(R.string.error_unknown_function, token);
             }
 
             return (T)function.call(evaluateSubexpression());
@@ -65,13 +65,13 @@ public abstract class ExpressionEvaluation<T extends GenericNumber> extends Expr
           default: {
             T value = getVariable(name);
             if (value != null) return value;
-            throw new EvaluationException(R.string.error_unknown_variable, token);
+            throw new EvaluateException(R.string.error_unknown_variable, token);
           }
         }
       }
 
       default:
-        throw new EvaluationException(R.string.error_missing_element);
+        throw new EvaluateException(R.string.error_missing_element);
     }
   }
 
@@ -87,14 +87,14 @@ public abstract class ExpressionEvaluation<T extends GenericNumber> extends Expr
 
       if (token == null) {
         if ((expressionResult != null) && expressionResult.isValid()) return;
-        throw new EvaluationException(R.string.error_undefined_result, end);
+        throw new EvaluateException(R.string.error_undefined_result, end);
       }
 
       if (token.getType() != TokenType.CLOSE) {
-        throw new EvaluationException(R.string.error_missing_operator, token);
+        throw new EvaluateException(R.string.error_missing_operator, token);
       }
     }
 
-    throw new EvaluationException(R.string.error_unopened_bracket);
+    throw new EvaluateException(R.string.error_unopened_bracket);
   }
 }

@@ -133,16 +133,16 @@ public abstract class ExpressionParser {
     return getTokenText(getCurrentToken());
   }
 
-  protected class EvaluationException extends ExpressionException {
-    public EvaluationException (int error, int start) {
+  protected class EvaluateException extends ExpressionException {
+    public EvaluateException (int error, int start) {
       super(error, start);
     }
 
-    public EvaluationException (int error, TokenDescriptor token) {
+    public EvaluateException (int error, TokenDescriptor token) {
       this(error, token.getStart());
     }
 
-    public EvaluationException (int error) {
+    public EvaluateException (int error) {
       this(error, getTokenStart());
     }
   }
