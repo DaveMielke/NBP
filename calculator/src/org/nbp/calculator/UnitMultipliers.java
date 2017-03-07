@@ -3,7 +3,7 @@ package org.nbp.calculator;
 import java.util.Map;
 import java.util.HashMap;
 
-public abstract class Multipliers {
+public abstract class UnitMultipliers {
   private final static Map<String, Double> multipliers =
                new HashMap<String, Double>();
 
@@ -49,6 +49,6 @@ public abstract class Multipliers {
     return multipliers.get(prefix);
   }
 
-  private Multipliers () {
+  private UnitMultipliers () {
   }
 }
