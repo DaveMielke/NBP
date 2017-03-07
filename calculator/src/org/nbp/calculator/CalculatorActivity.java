@@ -147,6 +147,7 @@ public class CalculatorActivity extends CommonActivity {
         resultView.setText(resultValue.format());
         return true;
       } catch (NoExpressionException exception) {
+        resultValue = null;
         resultView.setText("");
       }
     } catch (ExpressionException exception) {
@@ -1051,6 +1052,7 @@ public class CalculatorActivity extends CommonActivity {
 
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);
+    resultValue = null;
 
     leftButton = (Button)findViewById(R.id.button_left);
     rightButton = (Button)findViewById(R.id.button_right);
