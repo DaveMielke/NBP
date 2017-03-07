@@ -90,10 +90,10 @@
   <string name="description_function_tanh">hyperbolic tangent</string>
   <string name="description_function_tan">tangent</string>
 
-  <string name="title_notation">Notation</string>
-  <string name="description_notation_engineering">Engineering</string>
-  <string name="description_notation_fixed">Fixed</string>
-  <string name="description_notation_scientific">Scientific</string>
+  <string name="title_complexNotation">Notation</string>
+  <string name="description_complexNotation_engineering">Engineering</string>
+  <string name="description_complexNotation_fixed">Fixed</string>
+  <string name="description_complexNotation_scientific">Scientific</string>
 
   <string name="title_angleUnit">Angle Unit</string>
   <string name="description_angleUnit_degrees">Degrees</string>

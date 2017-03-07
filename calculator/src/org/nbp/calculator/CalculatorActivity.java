@@ -236,7 +236,7 @@ public class CalculatorActivity extends CommonActivity {
                 return true;
 
               case CharacterUtilities.CHAR_SO: // control N
-                performLongClick(R.id.button_notation);
+                performLongClick(R.id.button_complexNotation);
                 return true;
 
               case CharacterUtilities.CHAR_DC2: // control R
@@ -424,10 +424,10 @@ public class CalculatorActivity extends CommonActivity {
     }
   }
 
-  private final void setNotationButtonListener () {
-    new EnumerationChangeListener<Notation>(
-      this, (Button)findViewById(R.id.button_notation), Notation.class,
-      SavedSettings.NOTATION, DefaultSettings.NOTATION,
+  private final void setComplexNotationButtonListener () {
+    new EnumerationChangeListener<ComplexNotation>(this,
+      (Button)findViewById(R.id.button_complexNotation), ComplexNotation.class,
+      SavedSettings.COMPLEX_NOTATION, DefaultSettings.COMPLEX_NOTATION,
 
       new EnumerationChangeListener.Handler () {
         @Override
@@ -439,8 +439,8 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setAngleUnitButtonListener () {
-    new EnumerationChangeListener<AngleUnit>(
-      this, (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
+    new EnumerationChangeListener<AngleUnit>(this,
+      (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
       SavedSettings.ANGLE_UNIT, DefaultSettings.ANGLE_UNIT,
 
       new EnumerationChangeListener.Handler () {
@@ -1071,7 +1071,7 @@ public class CalculatorActivity extends CommonActivity {
     setFocusToExpression();
 
     setClearButtonListener();
-    setNotationButtonListener();
+    setComplexNotationButtonListener();
     setAngleUnitButtonListener();
     setShiftButtonListener();
 

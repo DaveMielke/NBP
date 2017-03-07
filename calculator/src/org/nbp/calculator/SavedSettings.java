@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class SavedSettings {
-  public final static String NOTATION = "notation";
+  public final static String COMPLEX_NOTATION = "complex-notation";
   public final static String ANGLE_UNIT = "angle-unit";
 
   public final static String EXPRESSION = "expression";
@@ -92,8 +92,8 @@ public abstract class SavedSettings {
     return (string != null)? Double.valueOf(string): defaultValue;
   }
 
-  public final static Notation getNotation () {
-    return get(NOTATION, Notation.class, DefaultSettings.NOTATION);
+  public final static ComplexNotation getComplexNotation () {
+    return get(COMPLEX_NOTATION, ComplexNotation.class, DefaultSettings.COMPLEX_NOTATION);
   }
 
   public final static AngleUnit getAngleUnit () {

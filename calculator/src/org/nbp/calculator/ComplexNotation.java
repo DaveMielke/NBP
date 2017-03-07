@@ -1,12 +1,12 @@
 package org.nbp.calculator;
 
-public enum Notation {
-  SCIENTIFIC("SCI", R.string.description_notation_scientific,
+public enum ComplexNotation {
+  SCIENTIFIC("SCI", R.string.description_complexNotation_scientific,
     new ComplexFormatter () {
     }
   ),
 
-  ENGINEERING("ENG", R.string.description_notation_engineering,
+  ENGINEERING("ENG", R.string.description_complexNotation_engineering,
     new ComplexFormatter () {
       {
         setDecimalGrouping(3);
@@ -14,7 +14,7 @@ public enum Notation {
     }
   ),
 
-  FIXED("FXD", R.string.description_notation_fixed,
+  FIXED("FXD", R.string.description_complexNotation_fixed,
     new ComplexFormatter () {
       {
         setGroupingSeparatorEnabled(true);
@@ -25,7 +25,7 @@ public enum Notation {
   );
 
   public final int getTitle () {
-    return R.string.title_notation;
+    return R.string.title_complexNotation;
   }
 
   private final String notationLabel;
@@ -44,7 +44,7 @@ public enum Notation {
     return notationFormatter;
   }
 
-  private Notation (String label, int description, ComplexFormatter formatter) {
+  private ComplexNotation (String label, int description, ComplexFormatter formatter) {
     notationLabel = label;
     notationDescription = description;
     notationFormatter = formatter;

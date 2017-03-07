@@ -12,7 +12,7 @@
      />
 
     <Button
-      android:id="@+id/button_notation"
+      android:id="@+id/button_complexNotation"
       android:textSize="@dimen/textSize_button"
      />
 
