@@ -15,7 +15,7 @@ public class RealFunction extends ComplexFunction {
   protected final Object preprocessComplexArgument (ComplexNumber argument) {
     {
       Object object = super.preprocessComplexArgument(argument);
-      if (!verifyType(object, ComplexNumber.class)) return null;
+      if (!verifyValue(object, ComplexNumber.class)) return null;
       argument = (ComplexNumber)object;
     }
 
@@ -25,7 +25,7 @@ public class RealFunction extends ComplexFunction {
 
   @Override
   protected final ComplexNumber postprocessComplexResult (Object result) {
-    if (!verifyType(result, Double.class)) return null;
+    if (!verifyValue(result, Double.class)) return null;
     return super.postprocessComplexResult(new ComplexNumber(postprocessRealResult((Double)result)));
   }
 

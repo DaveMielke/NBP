@@ -31,9 +31,14 @@ public abstract class Function {
     return Operations.getSummary(functionMethod);
   }
 
-  protected final boolean verifyType (Object object, Class type) {
-    if (object == null) return false;
-    if (!LanguageUtilities.canAssign(type, object.getClass())) return false;
+  protected final boolean verifyValue (Object value) {
+    if (value == null) return false;
+    return true;
+  }
+
+  protected final boolean verifyValue (Object value, Class type) {
+    if (!verifyValue(value)) return false;
+    if (!LanguageUtilities.canAssign(type, value.getClass())) return false;
     return true;
   }
 

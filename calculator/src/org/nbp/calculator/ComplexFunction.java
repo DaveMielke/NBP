@@ -8,19 +8,19 @@ public class ComplexFunction extends Function {
   }
 
   protected ComplexNumber postprocessComplexResult (Object result) {
-    if (!verifyType(result, ComplexNumber.class)) return null;
+    if (!verifyValue(result, ComplexNumber.class)) return null;
     return (ComplexNumber)result;
   }
 
   @Override
   protected final Object preprocessFunctionArgument (Object argument) {
-    if (!verifyType(argument, ComplexNumber.class)) return null;
+    if (!verifyValue(argument, ComplexNumber.class)) return null;
     return preprocessComplexArgument((ComplexNumber)argument);
   }
 
   @Override
   protected final Object postprocessFunctionResult (Object result) {
-    if (result == null) return null;
+    if (!verifyValue(result)) return null;
     return postprocessComplexResult(result);
   }
 
