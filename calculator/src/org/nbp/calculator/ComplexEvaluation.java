@@ -66,21 +66,14 @@ public class ComplexEvaluation extends ExpressionEvaluation<ComplexNumber> {
 
   @Override
   protected final void parseExpression () throws ExpressionException {
-    int length = expressionText.length();
+    final int length = expressionText.length();
     int end = 0;
 
     while (true) {
-      int start = end;
-      char character;
+      int start = findToken(end, length);
+      if (start == length) return;
 
-      while (true) {
-        if (start == length) return;
-        character = expressionText.charAt(start);
-
-        if (!Character.isWhitespace(character)) break;
-        start += 1;
-      }
-
+      char character = expressionText.charAt(start);
       end = start + 1;
       TokenType type;
 

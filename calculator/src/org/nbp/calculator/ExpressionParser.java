@@ -63,6 +63,15 @@ public abstract class ExpressionParser {
     tokenDescriptors.add(new TokenDescriptor(type, start, end));
   }
 
+  protected final int findToken (int start, int end) {
+    while (start < end) {
+      if (!Character.isWhitespace(expressionText.charAt(start))) break;
+      start += 1;
+    }
+
+    return start;
+  }
+
   protected class ParseException extends ExpressionException {
     public ParseException (int error, int start) {
       super(error, start);
