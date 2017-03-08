@@ -29,6 +29,11 @@ public abstract class ExpressionParser {
     FACTORIAL,
     PERCENT,
 
+    AND,
+    IOR,
+    XOR,
+    NOT,
+
     END;
   }
 

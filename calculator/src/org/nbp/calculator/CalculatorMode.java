@@ -29,7 +29,7 @@ public enum CalculatorMode {
       public ExpressionEvaluator newExpressionEvaluator (
         String expression
       ) throws ExpressionException {
-        return new ComplexEvaluator(expression);
+        return new HexadecimalEvaluator(expression);
       }
     }
   );

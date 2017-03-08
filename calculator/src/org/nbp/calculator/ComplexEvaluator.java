@@ -105,17 +105,17 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
           type = TokenType.PLUS;
           break;
 
-        case ComplexFormatter.SUBTRACTION_SIGN:
+        case GenericFormatter.SUBTRACTION_SIGN:
         case '-':
           type = TokenType.MINUS;
           break;
 
-        case ComplexFormatter.MULTIPLICATION_SIGN:
+        case GenericFormatter.MULTIPLICATION_SIGN:
         case '*':
           type = TokenType.TIMES;
           break;
 
-        case ComplexFormatter.DIVISION_SIGN:
+        case GenericFormatter.DIVISION_SIGN:
         case '/':
           type = TokenType.DIVIDE;
           break;

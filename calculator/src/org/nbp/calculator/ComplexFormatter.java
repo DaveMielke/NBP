@@ -3,7 +3,7 @@ package org.nbp.calculator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ComplexFormatter {
+public class ComplexFormatter extends GenericFormatter {
   public ComplexFormatter () {
     super();
   }
@@ -59,16 +59,9 @@ public class ComplexFormatter {
     return this;
   }
 
-  public final static char ZERO = '0';
   public final static char IMAGINARY_SIGN = 'i';
   public final static char INFINITY_SIGN = '\u221E';
   public final static char NaN_SIGN = '?';
-
-  public final static char ADDITION_SIGN = '+';
-  public final static char SUBTRACTION_SIGN = '\u2212';
-  public final static char MULTIPLICATION_SIGN = '\u00D7';
-  public final static char DIVISION_SIGN = '\u00F7';
-  public final static char EXPONENTIATION_SIGN = '^';
 
   private final static String DECIMAL_DIGIT = "[0-9]";
 
