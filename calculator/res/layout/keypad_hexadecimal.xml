@@ -19,6 +19,16 @@
       android:text="F"
       android:contentDescription="@string/description_digit_F"
      />
+
+    <Button
+      android:text="&lt;"
+      android:contentDescription="@string/description_sign_lsl"
+     />
+
+    <Button
+      android:text="&gt;"
+      android:contentDescription="@string/description_sign_rsl"
+     />
   </TableRow>
 
   <TableRow android:layout_weight="1">
@@ -35,6 +45,11 @@
     <Button
       android:text="C"
       android:contentDescription="@string/description_digit_C"
+     />
+
+    <Button
+      android:text="~"
+      android:contentDescription="@string/description_sign_not"
      />
   </TableRow>
 
@@ -58,6 +73,11 @@
       android:text="÷"
       android:contentDescription="@string/description_sign_divide"
      />
+
+    <Button
+      android:text="^"
+      android:contentDescription="@string/description_sign_xor"
+     />
   </TableRow>
 
   <TableRow android:layout_weight="1">
@@ -80,6 +100,11 @@
       android:text="×"
       android:contentDescription="@string/description_sign_times"
      />
+
+    <Button
+      android:text="|"
+      android:contentDescription="@string/description_sign_ior"
+     />
   </TableRow>
 
   <TableRow android:layout_weight="1">
@@ -101,6 +126,11 @@
     <Button
       android:text="−"
       android:contentDescription="@string/description_sign_minus"
+     />
+
+    <Button
+      android:text="&amp;"
+      android:contentDescription="@string/description_sign_and"
      />
   </TableRow>
 

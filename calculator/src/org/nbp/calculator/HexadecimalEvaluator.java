@@ -54,6 +54,10 @@ public class HexadecimalEvaluator extends ExpressionEvaluator<HexadecimalNumber>
           type = TokenType.DIVIDE;
           break;
 
+        case '~':
+          type = TokenType.NOT;
+          break;
+
         case '&':
           type = TokenType.AND;
           break;
@@ -66,8 +70,12 @@ public class HexadecimalEvaluator extends ExpressionEvaluator<HexadecimalNumber>
           type = TokenType.XOR;
           break;
 
-        case '~':
-          type = TokenType.NOT;
+        case '<':
+          type = TokenType.LSL;
+          break;
+
+        case '>':
+          type = TokenType.RSL;
           break;
 
         default: {
@@ -98,7 +106,131 @@ public class HexadecimalEvaluator extends ExpressionEvaluator<HexadecimalNumber>
   }
 
   @Override
+  protected final HexadecimalNumber evaluateElement () throws ExpressionException {
+    switch (getTokenType()) {
+      case HEXADECIMAL: {
+        String text = getTokenText().toUpperCase();
+        nextToken();
+        return new HexadecimalNumber(text);
+      }
+
+      default: {
+        return super.evaluateElement();
+      }
+    }
+  }
+
+  private final HexadecimalNumber evaluatePrimary () throws ExpressionException {
+    switch (getTokenType()) {
+      case PLUS:
+        nextToken();
+        return evaluatePrimary();
+
+      case MINUS:
+        nextToken();
+        return evaluatePrimary().neg();
+
+      case NOT:
+        nextToken();
+        return evaluatePrimary().not();
+
+      default: {
+        return evaluateElement();
+      }
+    }
+  }
+
+  private final HexadecimalNumber evaluateProductsAndQuotients () throws ExpressionException {
+    HexadecimalNumber value = evaluatePrimary();
+
+    while (true) {
+      switch (getTokenType()) {
+        case TIMES:
+          nextToken();
+          value = value.mul(evaluatePrimary());
+          break;
+
+        case DIVIDE:
+          nextToken();
+          value = value.div(evaluatePrimary());
+          break;
+
+        default:
+          return value;
+      }
+    }
+  }
+
+  private final HexadecimalNumber evaluateSumsAndDifferences () throws ExpressionException {
+    HexadecimalNumber value = evaluateProductsAndQuotients();
+
+    while (true) {
+      switch (getTokenType()) {
+        case PLUS:
+          nextToken();
+          value = value.add(evaluateProductsAndQuotients());
+          break;
+
+        case MINUS:
+          nextToken();
+          value = value.sub(evaluateProductsAndQuotients());
+          break;
+
+        default:
+          return value;
+      }
+    }
+  }
+
+  private final HexadecimalNumber evaluateShiftOperations () throws ExpressionException {
+    HexadecimalNumber value = evaluateSumsAndDifferences();
+
+    while (true) {
+      switch (getTokenType()) {
+        case LSL:
+          nextToken();
+          value = value.lsl(evaluateSumsAndDifferences());
+          break;
+
+        case RSL:
+          nextToken();
+          value = value.rsl(evaluateSumsAndDifferences());
+          break;
+
+        default:
+          return value;
+      }
+    }
+  }
+
+  private final HexadecimalNumber evaluateSetOperations () throws ExpressionException {
+    HexadecimalNumber value = evaluateShiftOperations();
+
+    while (true) {
+      switch (getTokenType()) {
+        case AND:
+          nextToken();
+          value = value.and(evaluateShiftOperations());
+          break;
+
+        case IOR:
+          nextToken();
+          value = value.ior(evaluateShiftOperations());
+          break;
+
+        case XOR:
+          nextToken();
+          value = value.xor(evaluateShiftOperations());
+          break;
+
+        default:
+          return value;
+      }
+    }
+  }
+
+  @Override
   protected final HexadecimalNumber evaluateExpression () throws ExpressionException {
-    return new HexadecimalNumber(0);
+    return evaluateSetOperations();
   }
 }

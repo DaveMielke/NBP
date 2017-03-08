@@ -62,6 +62,8 @@
   <string name="description_sign_minutes">minutes</string>
   <string name="description_sign_seconds">seconds</string>
   <string name="description_sign_equals">equals</string>
+  <string name="description_sign_openBracket">open bracket</string>
+  <string name="description_sign_closeBracket">close bracket</string>
   <string name="description_sign_plus">plus</string>
   <string name="description_sign_minus">minus</string>
   <string name="description_sign_times">times</string>
@@ -69,8 +71,12 @@
   <string name="description_sign_exponentiate">x to the y</string>
   <string name="description_sign_factorial">factorial</string>
   <string name="description_sign_percent">percent</string>
-  <string name="description_sign_openBracket">open bracket</string>
-  <string name="description_sign_closeBracket">close bracket</string>
+  <string name="description_sign_not">complement</string>
+  <string name="description_sign_and">and</string>
+  <string name="description_sign_ior">inclusive or</string>
+  <string name="description_sign_xor">exclusive or</string>
+  <string name="description_sign_lsl">left shift</string>
+  <string name="description_sign_rsl">right shift</string>
 
   <string name="description_variable_e">e</string>
   <string name="description_variable_i">i</string>
