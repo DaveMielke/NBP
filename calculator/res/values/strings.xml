@@ -40,30 +40,37 @@
   <string name="error_unknown_variable">unknown variable</string>
   <string name="error_unopened_bracket">unopened bracket</string>
 
-  <string name="description_numeric_zero">zero</string>
-  <string name="description_numeric_one">one</string>
-  <string name="description_numeric_two">two</string>
-  <string name="description_numeric_three">three</string>
-  <string name="description_numeric_four">four</string>
-  <string name="description_numeric_five">five</string>
-  <string name="description_numeric_six">six</string>
-  <string name="description_numeric_seven">seven</string>
-  <string name="description_numeric_eight">eight</string>
-  <string name="description_numeric_nine">nine</string>
-  <string name="description_numeric_E">x times 10 to the y</string>
-  <string name="description_numeric_decimal">decimal</string>
-  <string name="description_numeric_minutes">minutes</string>
-  <string name="description_numeric_seconds">seconds</string>
-  <string name="description_numeric_equals">equals</string>
-  <string name="description_numeric_plus">plus</string>
-  <string name="description_numeric_minus">minus</string>
-  <string name="description_numeric_times">times</string>
-  <string name="description_numeric_divide">divide</string>
-  <string name="description_numeric_exponentiate">x to the y</string>
-  <string name="description_numeric_factorial">factorial</string>
-  <string name="description_numeric_percent">percent</string>
-  <string name="description_numeric_openBracket">open bracket</string>
-  <string name="description_numeric_closeBracket">close bracket</string>
+  <string name="description_digit_zero">zero</string>
+  <string name="description_digit_one">one</string>
+  <string name="description_digit_two">two</string>
+  <string name="description_digit_three">three</string>
+  <string name="description_digit_four">four</string>
+  <string name="description_digit_five">five</string>
+  <string name="description_digit_six">six</string>
+  <string name="description_digit_seven">seven</string>
+  <string name="description_digit_eight">eight</string>
+  <string name="description_digit_nine">nine</string>
+  <string name="description_digit_A">A</string>
+  <string name="description_digit_B">B</string>
+  <string name="description_digit_C">C</string>
+  <string name="description_digit_D">D</string>
+  <string name="description_digit_E">E</string>
+  <string name="description_digit_F">F</string>
+
+  <string name="description_sign_E">x times 10 to the y</string>
+  <string name="description_sign_decimal">decimal</string>
+  <string name="description_sign_minutes">minutes</string>
+  <string name="description_sign_seconds">seconds</string>
+  <string name="description_sign_equals">equals</string>
+  <string name="description_sign_plus">plus</string>
+  <string name="description_sign_minus">minus</string>
+  <string name="description_sign_times">times</string>
+  <string name="description_sign_divide">divide</string>
+  <string name="description_sign_exponentiate">x to the y</string>
+  <string name="description_sign_factorial">factorial</string>
+  <string name="description_sign_percent">percent</string>
+  <string name="description_sign_openBracket">open bracket</string>
+  <string name="description_sign_closeBracket">close bracket</string>
 
   <string name="description_variable_e">e</string>
   <string name="description_variable_i">i</string>
@@ -90,7 +97,11 @@
   <string name="description_function_tanh">hyperbolic tangent</string>
   <string name="description_function_tan">tangent</string>
 
-  <string name="title_complexNotation">Notation</string>
+  <string name="title_calculatorMode">Calculator Mode</string>
+  <string name="description_calculatorMode_decimal">Decimal</string>
+  <string name="description_calculatorMode_hexadecimal">Hexadecimal</string>
+
+  <string name="title_complexNotation">Complex Notation</string>
   <string name="description_complexNotation_engineering">Engineering</string>
   <string name="description_complexNotation_fixed">Fixed</string>
   <string name="description_complexNotation_scientific">Scientific</string>

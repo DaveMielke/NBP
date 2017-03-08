@@ -7,22 +7,32 @@
   <TableRow>
     <Button
       android:id="@+id/button_clear"
+      android:layout_weight="2"
       android:text="@string/button_clear"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
+      android:id="@+id/button_calculatorMode"
+      android:layout_weight="1"
+      android:textSize="@dimen/textSize_button"
+     />
+
+    <Button
       android:id="@+id/button_complexNotation"
+      android:layout_weight="1"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_angleUnit"
+      android:layout_weight="1"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_shift"
+      android:layout_weight="2"
       android:text="@string/button_shift"
       android:textSize="@dimen/textSize_button"
      />

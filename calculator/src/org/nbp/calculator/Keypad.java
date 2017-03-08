@@ -9,7 +9,8 @@ import android.util.TypedValue;
 
 public enum Keypad {
   DECIMAL(R.id.keypad_decimal, true),
-  FUNCTION(R.id.keypad_function, false);
+  FUNCTION(R.id.keypad_function, false),
+  HEXADECIMAL(R.id.keypad_hexadecimal, true);
 
   private final int keypadIdentifier;
   private final boolean isNumeric;

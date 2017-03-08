@@ -6,4 +6,5 @@
 
   <include layout="@layout/keypad_decimal" />
   <include layout="@layout/keypad_function" />
+  <include layout="@layout/keypad_hexadecimal" />
 </TableLayout>

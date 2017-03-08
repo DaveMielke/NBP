@@ -424,6 +424,22 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
+  private final void setCalculatorModeButtonListener () {
+    new EnumerationChangeListener<CalculatorMode>(this,
+      (Button)findViewById(R.id.button_calculatorMode), CalculatorMode.class,
+      SavedSettings.CALCULATOR_MODE, DefaultSettings.CALCULATOR_MODE,
+
+      new EnumerationChangeListener.Handler () {
+        @Override
+        public void handleEnumerationChange (Enum newValue) {
+          setActiveKeypads();
+          resultValue = null;
+          expressionView.setText("");
+        }
+      }
+    );
+  }
+
   private final void setComplexNotationButtonListener () {
     new EnumerationChangeListener<ComplexNotation>(this,
       (Button)findViewById(R.id.button_complexNotation), ComplexNotation.class,
@@ -1070,15 +1086,8 @@ public class CalculatorActivity extends CommonActivity {
     restoreExpression();
     setFocusToExpression();
 
-    setClearButtonListener();
-    setComplexNotationButtonListener();
-    setAngleUnitButtonListener();
-    setShiftButtonListener();
-
-    setVariablesButtonListener();
-    setFunctionsButtonListener();
-    setStoreButtonListener();
-    setEraseButtonListener();
+    prepareKeypads();
+    setActiveKeypads();
 
     setLeftButtonListener();
     setRightButtonListener();
@@ -1090,8 +1099,16 @@ public class CalculatorActivity extends CommonActivity {
     setDownButtonListener();
     setHistoryNavigationStates();
 
-    prepareKeypads();
-    setActiveKeypads();
+    setClearButtonListener();
+    setCalculatorModeButtonListener();
+    setComplexNotationButtonListener();
+    setAngleUnitButtonListener();
+    setShiftButtonListener();
+
+    setVariablesButtonListener();
+    setFunctionsButtonListener();
+    setStoreButtonListener();
+    setEraseButtonListener();
   }
 
   @Override

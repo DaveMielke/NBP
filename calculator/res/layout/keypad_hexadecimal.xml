@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/keypad_decimal"
+  android:id="@+id/keypad_hexadecimal"
   >
 
   <TableRow android:layout_weight="1">
     <Button
-      android:text="("
-      android:contentDescription="@string/description_sign_openBracket"
+      android:text="D"
+      android:contentDescription="@string/description_digit_D"
      />
 
     <Button
-      android:text=")"
-      android:contentDescription="@string/description_sign_closeBracket"
+      android:text="E"
+      android:contentDescription="@string/description_digit_E"
      />
 
     <Button
-      android:text="&quot;"
-      android:contentDescription="@string/description_sign_minutes"
-     />
-
-    <Button
-      android:text="'"
-      android:contentDescription="@string/description_sign_seconds"
-     />
-
-    <Button
-      android:text="x10^y"
-      android:hint="×10^"
-      android:contentDescription="@string/description_sign_E"
+      android:text="F"
+      android:contentDescription="@string/description_digit_F"
      />
   </TableRow>
 
   <TableRow android:layout_weight="1">
+    <Button
+      android:text="A"
+      android:contentDescription="@string/description_digit_A"
+     />
+
+    <Button
+      android:text="B"
+      android:contentDescription="@string/description_digit_B"
+     />
+
+    <Button
+      android:text="C"
+      android:contentDescription="@string/description_digit_C"
+     />
+  </TableRow>
+
+  <TableRow>
     <Button
       android:text="7"
       android:contentDescription="@string/description_digit_seven"
@@ -51,12 +57,6 @@
     <Button
       android:text="÷"
       android:contentDescription="@string/description_sign_divide"
-     />
-
-    <Button
-      android:text="x^y"
-      android:hint="^"
-      android:contentDescription="@string/description_sign_exponentiate"
      />
   </TableRow>
 
@@ -80,11 +80,6 @@
       android:text="×"
       android:contentDescription="@string/description_sign_times"
      />
-
-    <Button
-      android:text="!"
-      android:contentDescription="@string/description_sign_factorial"
-     />
   </TableRow>
 
   <TableRow android:layout_weight="1">
@@ -107,17 +102,12 @@
       android:text="−"
       android:contentDescription="@string/description_sign_minus"
      />
-
-    <Button
-      android:text="%"
-      android:contentDescription="@string/description_sign_percent"
-     />
   </TableRow>
 
   <TableRow android:layout_weight="1">
     <Button
-      android:text="."
-      android:contentDescription="@string/description_sign_decimal"
+      android:text="("
+      android:contentDescription="@string/description_sign_openBracket"
      />
 
     <Button
@@ -126,8 +116,8 @@
      />
 
     <Button
-      android:text="i"
-      android:contentDescription="@string/description_variable_i"
+      android:text=")"
+      android:contentDescription="@string/description_sign_closeBracket"
      />
 
     <Button
