@@ -2,7 +2,6 @@
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/keypad_function"
-  android:visibility="gone"
   >
 
   <TableRow android:layout_weight="1">

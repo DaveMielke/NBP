@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/keypad_numeric"
+  android:id="@+id/keypad_decimal"
   >
 
   <TableRow android:layout_weight="1">

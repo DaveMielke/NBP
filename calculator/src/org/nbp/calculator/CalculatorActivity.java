@@ -317,15 +317,18 @@ public class CalculatorActivity extends CommonActivity {
     findViewById(view).performLongClick();
   }
 
-  private ViewGroup[] keypadViews;
   private int currentKeypad;
+  private Keypad[] activeKeypads = new Keypad[] {
+    Keypad.DECIMAL,
+    Keypad.FUNCTION
+  };
+
+  private final Keypad getCurrentKeypad () {
+    return activeKeypads[currentKeypad];
+  }
 
   private final void showKeypad () {
-    View keypad = keypadViews[currentKeypad];
-
-    for (View view : keypadViews) {
-      view.setVisibility((view == keypad)? View.VISIBLE: View.GONE);
-    }
+    getCurrentKeypad().show();
   }
 
   private final void showKeypad (int index) {
@@ -336,8 +339,7 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setFocusToKeypad () {
-    ViewGroup keypad = keypadViews[currentKeypad];
-    keypad.getChildAt(0).requestFocus();
+    getCurrentKeypad().focus();
   }
 
   private final static CharacterStyle exponentSpans[] = {
@@ -345,8 +347,10 @@ public class CalculatorActivity extends CommonActivity {
     new RelativeSizeSpan(0.6f)
   };
 
-  private final void prepareKeypads (Integer... ids) {
-    View.OnClickListener insertTextListener = new View.OnClickListener() {
+  private final void prepareKeypads () {
+    Keypad.setKeypadViews(this);
+
+    final View.OnClickListener insertTextListener = new View.OnClickListener() {
       @Override
       public void onClick (View view) {
         Button button = (Button)view;
@@ -356,73 +360,70 @@ public class CalculatorActivity extends CommonActivity {
       }
     };
 
-    View.OnClickListener finishExpressionListener = new View.OnClickListener() {
+    final View.OnClickListener finishExpressionListener = new View.OnClickListener() {
       @Override
       public void onClick (View view) {
         finishExpression();
       }
     };
 
-    keypadViews = new ViewGroup[ids.length];
-    int keypadCount = 0;
+    Keypad.forEachKeypad(
+      new Keypad.KeypadHandler() {
+        @Override
+        public void handleKeypad (final Keypad keypad) {
+          keypad.forEachKey(
+            new Keypad.KeyHandler() {
+              @Override
+              public void handleKey (TextView key) {
+                key.setBackgroundColor(0);
 
-    for (int id : ids) {
-      ViewGroup keypad = (ViewGroup)findViewById(id);
-      keypadViews[keypadCount++] = keypad;
-      int rowCount = keypad.getChildCount();
-
-      for (int rowIndex=0; rowIndex<rowCount; rowIndex+=1) {
-        ViewGroup row = (ViewGroup)keypad.getChildAt(rowIndex);
-        int keyCount = row.getChildCount();
-
-        for (int keyIndex=0; keyIndex<keyCount; keyIndex+=1) {
-          TextView key = (TextView)row.getChildAt(keyIndex);
-          key.setBackgroundColor(0);
-
-          if (id == R.id.keypad_numeric) {
-            key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-          }
-
-          String text = key.getText().toString();
-          CharSequence hint = key.getHint();
-
-          if (text.equals("=")) {
-            key.setOnClickListener(finishExpressionListener);
-          } else {
-            key.setOnClickListener(insertTextListener);
-
-            if ((hint == null) || (hint.length() == 0)) {
-              Function function = Functions.get(text);
-
-              if (function != null) {
-                hint = function.getName() + Function.ARGUMENT_PREFIX;
-              } else {
-                hint = text;
-              }
-
-              key.setHint(hint);
-            }
-
-            {
-              int index = text.indexOf('^');
-
-              if (index >= 0) {
-                SpannableStringBuilder sb = new SpannableStringBuilder();
-                sb.append(text.substring(0, index));
-                sb.append(text.substring(index+1));
-                int length = sb.length();
-
-                for (CharacterStyle span : exponentSpans) {
-                  sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if (keypad == activeKeypads[0]) {
+                  key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
                 }
 
-                key.setText(sb.subSequence(0, length));
+                String text = key.getText().toString();
+                CharSequence hint = key.getHint();
+
+                if (text.equals("=")) {
+                  key.setOnClickListener(finishExpressionListener);
+                } else {
+                  key.setOnClickListener(insertTextListener);
+
+                  if ((hint == null) || (hint.length() == 0)) {
+                    Function function = Functions.get(text);
+
+                    if (function != null) {
+                      hint = function.getName() + Function.ARGUMENT_PREFIX;
+                    } else {
+                      hint = text;
+                    }
+
+                    key.setHint(hint);
+                  }
+
+                  {
+                    int index = text.indexOf('^');
+
+                    if (index >= 0) {
+                      SpannableStringBuilder sb = new SpannableStringBuilder();
+                      sb.append(text.substring(0, index));
+                      sb.append(text.substring(index+1));
+                      int length = sb.length();
+
+                      for (CharacterStyle span : exponentSpans) {
+                        sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+                      }
+
+                      key.setText(sb.subSequence(0, length));
+                    }
+                  }
+                }
               }
             }
-          }
+          );
         }
       }
-    }
+    );
   }
 
   private final void setComplexNotationButtonListener () {
@@ -486,7 +487,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           currentKeypad += 1;
-          currentKeypad %= keypadViews.length;
+          currentKeypad %= activeKeypads.length;
 
           showKeypad();
           setFocusToKeypad();
@@ -1091,11 +1092,7 @@ public class CalculatorActivity extends CommonActivity {
     setDownButtonListener();
     setHistoryNavigationStates();
 
-    prepareKeypads(
-      R.id.keypad_numeric,
-      R.id.keypad_function
-    );
-
+    prepareKeypads();
     currentKeypad = 0;
     showKeypad();
   }
