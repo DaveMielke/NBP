@@ -75,8 +75,9 @@
   <string name="description_sign_and">and</string>
   <string name="description_sign_ior">inclusive or</string>
   <string name="description_sign_xor">exclusive or</string>
-  <string name="description_sign_lsl">left shift</string>
-  <string name="description_sign_rsl">right shift</string>
+  <string name="description_sign_lsl">logical shift left</string>
+  <string name="description_sign_lsr">logical shift right</string>
+  <string name="description_sign_asr">arithmetic shift right</string>
 
   <string name="description_variable_e">e</string>
   <string name="description_variable_i">i</string>

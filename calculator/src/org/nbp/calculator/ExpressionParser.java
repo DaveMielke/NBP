@@ -34,7 +34,8 @@ public abstract class ExpressionParser {
     IOR,
     XOR,
     LSL,
-    RSL,
+    LSR,
+    ASR,
 
     END;
   }

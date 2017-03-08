@@ -27,7 +27,7 @@
 
     <Button
       android:text="&gt;"
-      android:contentDescription="@string/description_sign_rsl"
+      android:contentDescription="@string/description_sign_lsr"
      />
   </TableRow>
 

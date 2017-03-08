@@ -1,5 +1,7 @@
 package org.nbp.calculator;
 
+import java.math.BigInteger;
+
 public abstract class WholeNumber extends GenericNumber {
   protected abstract WholeNumber newWholeNumber (long value);
   protected abstract WholeFormatter newWholeFormatter ();
@@ -11,7 +13,7 @@ public abstract class WholeNumber extends GenericNumber {
   }
 
   public WholeNumber (String number, int radix) {
-    this(Long.valueOf(number, radix));
+    this(new BigInteger(number, radix).longValue());
   }
 
   public final long getValue () {
@@ -38,8 +40,12 @@ public abstract class WholeNumber extends GenericNumber {
     return newWholeNumber(value << number.getValue());
   }
 
-  public final WholeNumber rsl (WholeNumber number) {
+  public final WholeNumber lsr (WholeNumber number) {
     return newWholeNumber(value >>> number.getValue());
+  }
+
+  public final WholeNumber asr (WholeNumber number) {
+    return newWholeNumber(value >> number.getValue());
   }
 
   public final WholeNumber neg () {

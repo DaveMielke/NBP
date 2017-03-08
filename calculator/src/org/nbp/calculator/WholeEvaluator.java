@@ -77,7 +77,7 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           break;
 
         case '>':
-          type = TokenType.RSL;
+          type = TokenType.LSR;
           break;
 
         default: {
@@ -193,9 +193,14 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           value = value.lsl(evaluateSumsAndDifferences());
           break;
 
-        case RSL:
+        case LSR:
           nextToken();
-          value = value.rsl(evaluateSumsAndDifferences());
+          value = value.lsr(evaluateSumsAndDifferences());
+          break;
+
+        case ASR:
+          nextToken();
+          value = value.asr(evaluateSumsAndDifferences());
           break;
 
         default:
