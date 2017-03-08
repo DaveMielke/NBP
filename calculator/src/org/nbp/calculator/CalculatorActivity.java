@@ -317,11 +317,8 @@ public class CalculatorActivity extends CommonActivity {
     findViewById(view).performLongClick();
   }
 
+  private Keypad[] activeKeypads;
   private int currentKeypad;
-  private Keypad[] activeKeypads = new Keypad[] {
-    Keypad.DECIMAL,
-    Keypad.FUNCTION
-  };
 
   private final Keypad getCurrentKeypad () {
     return activeKeypads[currentKeypad];
@@ -336,6 +333,12 @@ public class CalculatorActivity extends CommonActivity {
       currentKeypad = index;
       showKeypad();
     }
+  }
+
+  private void setActiveKeypads () {
+    activeKeypads = SavedSettings.getCalculatorMode().getKeypads();
+    currentKeypad = 0;
+    showKeypad();
   }
 
   private final void setFocusToKeypad () {
@@ -376,10 +379,6 @@ public class CalculatorActivity extends CommonActivity {
               @Override
               public void handleKey (TextView key) {
                 key.setBackgroundColor(0);
-
-                if (keypad == activeKeypads[0]) {
-                  key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-                }
 
                 String text = key.getText().toString();
                 CharSequence hint = key.getHint();
@@ -1093,8 +1092,7 @@ public class CalculatorActivity extends CommonActivity {
     setHistoryNavigationStates();
 
     prepareKeypads();
-    currentKeypad = 0;
-    showKeypad();
+    setActiveKeypads();
   }
 
   @Override
