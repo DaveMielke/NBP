@@ -350,7 +350,7 @@ public class CalculatorActivity extends CommonActivity {
   };
 
   private final void prepareKeypads () {
-    Keypad.setKeypadViews(this);
+    Keypad.prepareKeypads(this);
 
     final View.OnClickListener insertTextListener = new View.OnClickListener() {
       @Override

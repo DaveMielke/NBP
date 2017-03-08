@@ -73,7 +73,7 @@ public enum Keypad {
     keypadView.requestFocus();
   }
 
-  public final static void setKeypadViews (final Activity activity) {
+  public final static void prepareKeypads (final Activity activity) {
     forEachKeypad(
       new KeypadHandler() {
         @Override
