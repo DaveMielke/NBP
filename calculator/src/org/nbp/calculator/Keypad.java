@@ -5,18 +5,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import android.util.TypedValue;
+
 public enum Keypad {
-  DECIMAL(R.id.keypad_decimal),
-  FUNCTION(R.id.keypad_function);
+  DECIMAL(R.id.keypad_decimal, true),
+  FUNCTION(R.id.keypad_function, false);
 
   private final int keypadIdentifier;
+  private final boolean isNumeric;
 
   public final int getIdentifier () {
     return keypadIdentifier;
   }
 
-  private Keypad (int identifier) {
+  private Keypad (int identifier, boolean numeric) {
     keypadIdentifier = identifier;
+    isNumeric = numeric;
   }
 
   private ViewGroup keypadView = null;
@@ -73,8 +77,19 @@ public enum Keypad {
     forEachKeypad(
       new KeypadHandler() {
         @Override
-        public void handleKeypad (Keypad keypad) {
+        public void handleKeypad (final Keypad keypad) {
           keypad.keypadView = (ViewGroup)activity.findViewById(keypad.keypadIdentifier);
+
+          keypad.forEachKey(
+            new KeyHandler() {
+              @Override
+              public void handleKey (TextView key) {
+                if (keypad.isNumeric) {
+                  key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                }
+              }
+            }
+          );
         }
       }
     );

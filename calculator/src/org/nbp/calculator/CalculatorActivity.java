@@ -17,7 +17,6 @@ import org.nbp.common.CharacterUtilities;
 import org.nbp.common.OnTextEditedListener;
 
 import android.util.Log;
-import android.util.TypedValue;
 
 import android.app.Activity;
 import android.os.Bundle;
