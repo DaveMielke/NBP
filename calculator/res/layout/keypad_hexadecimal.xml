@@ -6,18 +6,13 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:text="D"
-      android:contentDescription="@string/description_digit_D"
+      android:text="("
+      android:contentDescription="@string/description_sign_openBracket"
      />
 
     <Button
-      android:text="E"
-      android:contentDescription="@string/description_digit_E"
-     />
-
-    <Button
-      android:text="F"
-      android:contentDescription="@string/description_digit_F"
+      android:text=")"
+      android:contentDescription="@string/description_sign_closeBracket"
      />
 
     <Button
@@ -29,27 +24,10 @@
       android:text="&gt;"
       android:contentDescription="@string/description_sign_lsr"
      />
-  </TableRow>
-
-  <TableRow android:layout_weight="1">
-    <Button
-      android:text="A"
-      android:contentDescription="@string/description_digit_A"
-     />
 
     <Button
-      android:text="B"
-      android:contentDescription="@string/description_digit_B"
-     />
-
-    <Button
-      android:text="C"
-      android:contentDescription="@string/description_digit_C"
-     />
-
-    <Button
-      android:text="~"
-      android:contentDescription="@string/description_sign_not"
+      android:text="^"
+      android:contentDescription="@string/description_sign_xor"
      />
   </TableRow>
 
@@ -70,13 +48,18 @@
      />
 
     <Button
+      android:text="F"
+      android:contentDescription="@string/description_digit_F"
+     />
+
+    <Button
       android:text="÷"
       android:contentDescription="@string/description_sign_divide"
      />
 
     <Button
-      android:text="^"
-      android:contentDescription="@string/description_sign_xor"
+      android:text="|"
+      android:contentDescription="@string/description_sign_or"
      />
   </TableRow>
 
@@ -97,13 +80,18 @@
      />
 
     <Button
+      android:text="E"
+      android:contentDescription="@string/description_digit_E"
+     />
+
+    <Button
       android:text="×"
       android:contentDescription="@string/description_sign_times"
      />
 
     <Button
-      android:text="|"
-      android:contentDescription="@string/description_sign_or"
+      android:text="&amp;"
+      android:contentDescription="@string/description_sign_and"
      />
   </TableRow>
 
@@ -124,30 +112,40 @@
      />
 
     <Button
+      android:text="D"
+      android:contentDescription="@string/description_digit_D"
+     />
+
+    <Button
       android:text="&#x2212;"
       android:contentDescription="@string/description_sign_minus"
      />
 
     <Button
-      android:text="&amp;"
-      android:contentDescription="@string/description_sign_and"
+      android:text="~"
+      android:contentDescription="@string/description_sign_not"
      />
   </TableRow>
 
   <TableRow android:layout_weight="1">
-    <Button
-      android:text="("
-      android:contentDescription="@string/description_sign_openBracket"
-     />
-
     <Button
       android:text="0"
       android:contentDescription="@string/description_digit_zero"
      />
 
     <Button
-      android:text=")"
-      android:contentDescription="@string/description_sign_closeBracket"
+      android:text="A"
+      android:contentDescription="@string/description_digit_A"
+     />
+
+    <Button
+      android:text="B"
+      android:contentDescription="@string/description_digit_B"
+     />
+
+    <Button
+      android:text="C"
+      android:contentDescription="@string/description_digit_C"
      />
 
     <Button

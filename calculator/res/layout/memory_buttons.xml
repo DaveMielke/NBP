@@ -4,7 +4,7 @@
   android:id="@+id/memory"
   >
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:id="@+id/button_variables"
       android:text="@string/button_variables"
@@ -16,7 +16,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:id="@+id/button_functions"
       android:text="@string/button_functions"

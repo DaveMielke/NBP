@@ -4,7 +4,7 @@
   android:id="@+id/navigation"
   >
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:id="@+id/button_backspace"
       android:text="BS"
@@ -24,7 +24,7 @@
      />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:layout_weight="1">
     <Button
       android:id="@+id/button_left"
       android:text="&#x2190;"
