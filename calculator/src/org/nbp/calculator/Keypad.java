@@ -8,20 +8,18 @@ import android.widget.TextView;
 import android.util.TypedValue;
 
 public enum Keypad {
-  DECIMAL(R.id.keypad_decimal, true),
-  FUNCTION(R.id.keypad_function, false),
-  HEXADECIMAL(R.id.keypad_hexadecimal, true);
+  DECIMAL(R.id.keypad_decimal),
+  FUNCTION(R.id.keypad_function),
+  HEXADECIMAL(R.id.keypad_hexadecimal);
 
   private final int keypadIdentifier;
-  private final boolean isNumeric;
 
   public final int getIdentifier () {
     return keypadIdentifier;
   }
 
-  private Keypad (int identifier, boolean numeric) {
+  private Keypad (int identifier) {
     keypadIdentifier = identifier;
-    isNumeric = numeric;
   }
 
   private ViewGroup keypadView = null;
@@ -85,9 +83,6 @@ public enum Keypad {
             new KeyHandler() {
               @Override
               public void handleKey (TextView key) {
-                if (keypad.isNumeric) {
-                  key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                }
               }
             }
           );
