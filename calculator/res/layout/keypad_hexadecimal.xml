@@ -141,7 +141,7 @@
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
       android:text="|"
-      android:contentDescription="@string/description_sign_ior"
+      android:contentDescription="@string/description_sign_or"
      />
   </TableRow>
 
@@ -170,7 +170,7 @@
     <Button
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="−"
+      android:text="&#x2212;"
       android:contentDescription="@string/description_sign_minus"
      />
 

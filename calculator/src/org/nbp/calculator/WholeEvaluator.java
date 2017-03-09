@@ -65,7 +65,7 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           break;
 
         case '|':
-          type = TokenType.IOR;
+          type = TokenType.OR;
           break;
 
         case '^':
@@ -209,7 +209,7 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
     }
   }
 
-  private final WholeNumber evaluateSetOperations () throws ExpressionException {
+  private final WholeNumber evaluateBitwiseOperations () throws ExpressionException {
     WholeNumber value = evaluateShiftOperations();
 
     while (true) {
@@ -219,9 +219,9 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           value = value.and(evaluateShiftOperations());
           break;
 
-        case IOR:
+        case OR:
           nextToken();
-          value = value.ior(evaluateShiftOperations());
+          value = value.or(evaluateShiftOperations());
           break;
 
         case XOR:
@@ -237,6 +237,6 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
 
   @Override
   protected final WholeNumber evaluateExpression () throws ExpressionException {
-    return evaluateSetOperations();
+    return evaluateBitwiseOperations();
   }
 }

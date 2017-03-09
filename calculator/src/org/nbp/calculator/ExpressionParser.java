@@ -31,7 +31,7 @@ public abstract class ExpressionParser {
 
     NOT,
     AND,
-    IOR,
+    OR,
     XOR,
     LSL,
     LSR,

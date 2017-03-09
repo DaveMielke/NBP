@@ -142,7 +142,7 @@
     <Button
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="−"
+      android:text="&#x2212;"
       android:contentDescription="@string/description_sign_minus"
      />
 

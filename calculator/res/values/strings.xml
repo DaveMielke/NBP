@@ -8,9 +8,10 @@
   <string name="hint_expression">[ enter expression ]</string>
   <string name="hint_variable">type variable name</string>
 
+  <string name="button_alternateKeypad">Alternate Keypad</string>
   <string name="button_backspace">Backspace</string>
   <string name="button_cancel">Cancel</string>
-  <string name="button_clear">Clr</string>
+  <string name="button_clear">Clear</string>
   <string name="button_delete">Delete</string>
   <string name="button_down">Down</string>
   <string name="button_erase">Erase</string>
@@ -18,7 +19,6 @@
   <string name="button_left">Left</string>
   <string name="button_new">New</string>
   <string name="button_right">Right</string>
-  <string name="button_shift">Alt</string>
   <string name="button_store">Store</string>
   <string name="button_up">Up</string>
   <string name="button_variables">Variables</string>
@@ -71,10 +71,10 @@
   <string name="description_sign_exponentiate">x to the y</string>
   <string name="description_sign_factorial">factorial</string>
   <string name="description_sign_percent">percent</string>
-  <string name="description_sign_not">complement</string>
-  <string name="description_sign_and">and</string>
-  <string name="description_sign_ior">inclusive or</string>
-  <string name="description_sign_xor">exclusive or</string>
+  <string name="description_sign_not">bitwise complement</string>
+  <string name="description_sign_and">bitwise and</string>
+  <string name="description_sign_or">bitwise or</string>
+  <string name="description_sign_xor">bitwise exclusive or</string>
   <string name="description_sign_lsl">logical shift left</string>
   <string name="description_sign_lsr">logical shift right</string>
   <string name="description_sign_asr">arithmetic shift right</string>

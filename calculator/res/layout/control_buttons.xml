@@ -6,7 +6,8 @@
       android:id="@+id/button_clear"
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="@string/button_clear"
+      android:text="CLR"
+      android:contentDescription="@string/button_clear"
       android:textSize="@dimen/textSize_button"
      />
 
@@ -32,10 +33,11 @@
      />
 
     <Button
-      android:id="@+id/button_shift"
+      android:id="@+id/button_alternateKeypad"
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="@string/button_shift"
+      android:text="ALT"
+      android:contentDescription="@string/button_alternateKeypad"
       android:textSize="@dimen/textSize_button"
      />
   </TableRow>

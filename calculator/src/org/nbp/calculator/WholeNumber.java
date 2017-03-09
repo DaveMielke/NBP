@@ -28,7 +28,7 @@ public abstract class WholeNumber extends GenericNumber {
     return newWholeNumber(value & number.getValue());
   }
 
-  public final WholeNumber ior (WholeNumber number) {
+  public final WholeNumber or (WholeNumber number) {
     return newWholeNumber(value | number.getValue());
   }
 

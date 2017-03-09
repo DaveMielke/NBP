@@ -494,9 +494,9 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setShiftButtonListener () {
+  private final void setAlternateKeypadButtonListener () {
     setClickListener(
-      R.id.button_shift,
+      R.id.button_alternateKeypad,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -510,7 +510,7 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_shift,
+      R.id.button_alternateKeypad,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
@@ -1103,7 +1103,7 @@ public class CalculatorActivity extends CommonActivity {
     setCalculatorModeButtonListener();
     setComplexNotationButtonListener();
     setAngleUnitButtonListener();
-    setShiftButtonListener();
+    setAlternateKeypadButtonListener();
 
     setVariablesButtonListener();
     setFunctionsButtonListener();

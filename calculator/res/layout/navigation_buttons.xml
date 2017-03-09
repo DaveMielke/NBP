@@ -15,7 +15,7 @@
       android:id="@+id/button_up"
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="↑"
+      android:text="&#x2191;"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_up"
      />
@@ -35,7 +35,7 @@
       android:id="@+id/button_left"
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="←"
+      android:text="&#x2190;"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_left"
      />
@@ -44,7 +44,7 @@
       android:id="@+id/button_down"
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="↓"
+      android:text="&#x2193;"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_down"
      />
@@ -53,7 +53,7 @@
       android:id="@+id/button_right"
       android:minHeight="@dimen/button_minHeight"
       android:minWidth="@dimen/button_minWidth"
-      android:text="→"
+      android:text="&#x2192;"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_right"
      />
