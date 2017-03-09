@@ -59,15 +59,12 @@ public class CalculatorConfigurator {
   }
 
   public void configureCalculator () {
-    final float buttonTextSize = SP(BUTTON_TEXT_SIZE);
-
     configureViews(R.id.control,
       new ViewConfigurer() {
         @Override
         public void configureView (View view) {
           if (view instanceof Button) {
             Button button = (Button)view;
-            button.setTextSize(buttonTextSize);
             button.setEms(CONTROL_EMS);
           }
         }
@@ -80,7 +77,7 @@ public class CalculatorConfigurator {
         public void configureView (View view) {
           if (view instanceof Button) {
             Button button = (Button)view;
-            button.setTextSize(buttonTextSize);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, BUTTON_TEXT_SIZE);
           }
         }
       }
@@ -92,7 +89,6 @@ public class CalculatorConfigurator {
         public void configureView (View view) {
           if (view instanceof Button) {
             Button button = (Button)view;
-            button.setTextSize(buttonTextSize);
             button.setEms(CONTROL_EMS);
           }
         }

@@ -6,9 +6,9 @@
 
   <TableRow>
     <include layout="@layout/control_clear" />
+    <include layout="@layout/control_alternate_keypad" />
     <include layout="@layout/control_calculator_mode" />
     <include layout="@layout/control_complex_notation" />
     <include layout="@layout/control_angle_unit" />
-    <include layout="@layout/control_alternate_keypad" />
   </TableRow>
 </TableLayout>

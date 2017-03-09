@@ -14,11 +14,15 @@
     <include layout="@layout/expression_area" />
 
     <TableRow>
-      <TableLayout android:stretchColumns="*">
+      <TableLayout>
         <TableRow>
-          <include layout="@layout/control_clear" />
-          <include layout="@layout/control_calculator_mode" />
-          <include layout="@layout/control_alternate_keypad" />
+          <TableLayout android:layout_span="2">
+            <TableRow>
+              <include layout="@layout/control_clear" />
+              <include layout="@layout/control_calculator_mode" />
+              <include layout="@layout/control_alternate_keypad" />
+            </TableRow>
+          </TableLayout>
         </TableRow>
 
         <TableRow>
@@ -30,7 +34,14 @@
           <include layout="@layout/memory_buttons" />
         </TableRow>
 
-        <include layout="@layout/navigation_buttons" />
+        <TableRow>
+          <include
+            layout="@layout/navigation_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+           />
+        </TableRow>
       </TableLayout>
 
       <include layout="@layout/keypads" />
