@@ -86,7 +86,7 @@ public enum Keypad {
               @Override
               public void handleKey (TextView key) {
                 if (keypad.isNumeric) {
-                  key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                  key.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 }
               }
             }

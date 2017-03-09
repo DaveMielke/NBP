@@ -14,11 +14,31 @@
     <include layout="@layout/expression_area" />
 
     <TableRow>
-      <TableLayout>
-        <include layout="@layout/control_buttons" />
-        <include layout="@layout/memory_buttons" />
-        <include layout="@layout/navigation_buttons" />
-      </TableLayout>
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        >
+
+        <include
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          layout="@layout/control_buttons"
+         />
+
+        <include
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          layout="@layout/memory_buttons"
+         />
+
+        <include
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          layout="@layout/navigation_buttons"
+         />
+      </LinearLayout>
 
       <include layout="@layout/keypads" />
     </TableRow>
