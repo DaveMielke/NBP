@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:paddingLeft="@dimen/screen_offset_left"
+  android:id="@+id/root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   >
@@ -14,31 +14,24 @@
     <include layout="@layout/expression_area" />
 
     <TableRow>
-      <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="right"
-        >
+      <TableLayout android:stretchColumns="*">
+        <TableRow>
+          <include layout="@layout/control_clear" />
+          <include layout="@layout/control_calculator_mode" />
+          <include layout="@layout/control_alternate_keypad" />
+        </TableRow>
 
-        <include
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          layout="@layout/control_buttons"
-         />
+        <TableRow>
+          <TableLayout>
+            <include layout="@layout/control_complex_notation" />
+            <include layout="@layout/control_angle_unit" />
+          </TableLayout>
 
-        <include
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          layout="@layout/memory_buttons"
-         />
+          <include layout="@layout/memory_buttons" />
+        </TableRow>
 
-        <include
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          layout="@layout/navigation_buttons"
-         />
-      </LinearLayout>
+        <include layout="@layout/navigation_buttons" />
+      </TableLayout>
 
       <include layout="@layout/keypads" />
     </TableRow>

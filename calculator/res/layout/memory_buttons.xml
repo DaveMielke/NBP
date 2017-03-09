@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/memory"
+  >
+
   <TableRow>
     <Button
       android:id="@+id/button_variables"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="@string/button_variables"
-      android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_store"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="@string/button_store"
-      android:textSize="@dimen/textSize_button"
      />
   </TableRow>
 
   <TableRow>
     <Button
       android:id="@+id/button_functions"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="@string/button_functions"
-      android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_erase"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="@string/button_erase"
-      android:textSize="@dimen/textSize_button"
      />
   </TableRow>
 </TableLayout>

@@ -1064,7 +1064,9 @@ public class CalculatorActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.calculator);
+    new CalculatorConfigurator(this).configureCalculator();
 
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);

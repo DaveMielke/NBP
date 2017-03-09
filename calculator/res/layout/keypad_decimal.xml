@@ -6,36 +6,26 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="("
       android:contentDescription="@string/description_sign_openBracket"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text=")"
       android:contentDescription="@string/description_sign_closeBracket"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="&quot;"
       android:contentDescription="@string/description_sign_minutes"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="'"
       android:contentDescription="@string/description_sign_seconds"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="x10^y"
       android:hint="×10^"
       android:contentDescription="@string/description_sign_E"
@@ -44,36 +34,26 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="7"
       android:contentDescription="@string/description_digit_seven"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="8"
       android:contentDescription="@string/description_digit_eight"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="9"
       android:contentDescription="@string/description_digit_nine"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="÷"
       android:contentDescription="@string/description_sign_divide"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="x^y"
       android:hint="^"
       android:contentDescription="@string/description_sign_exponentiate"
@@ -82,36 +62,26 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="4"
       android:contentDescription="@string/description_digit_four"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="5"
       android:contentDescription="@string/description_digit_five"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="6"
       android:contentDescription="@string/description_digit_six"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="×"
       android:contentDescription="@string/description_sign_times"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="!"
       android:contentDescription="@string/description_sign_factorial"
      />
@@ -119,36 +89,26 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="1"
       android:contentDescription="@string/description_digit_one"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="2"
       android:contentDescription="@string/description_digit_two"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="3"
       android:contentDescription="@string/description_digit_three"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="&#x2212;"
       android:contentDescription="@string/description_sign_minus"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="%"
       android:contentDescription="@string/description_sign_percent"
      />
@@ -156,36 +116,26 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="."
       android:contentDescription="@string/description_sign_decimal"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="0"
       android:contentDescription="@string/description_digit_zero"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="i"
       android:contentDescription="@string/description_variable_i"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="+"
       android:contentDescription="@string/description_sign_plus"
      />
 
     <Button
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="="
       android:contentDescription="@string/description_sign_equals"
      />

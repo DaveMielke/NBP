@@ -5,8 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import android.util.TypedValue;
-
 public enum Keypad {
   DECIMAL(R.id.keypad_decimal),
   FUNCTION(R.id.keypad_function),

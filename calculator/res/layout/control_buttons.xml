@@ -1,54 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/control"
+  >
+
   <TableRow>
-    <Button
-      android:id="@+id/button_clear"
-      android:layout_height="match_parent"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
-      android:ems="@string/control_ems"
-      android:textSize="@dimen/textSize_button"
-      android:text="CLR"
-      android:contentDescription="@string/button_clear"
-     />
-
-    <Button
-      android:id="@+id/button_calculatorMode"
-      android:layout_height="match_parent"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
-      android:ems="@string/control_ems"
-      android:textSize="@dimen/textSize_button"
-     />
-
-    <Button
-      android:id="@+id/button_complexNotation"
-      android:layout_height="match_parent"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
-      android:ems="@string/control_ems"
-      android:textSize="@dimen/textSize_button"
-     />
-
-    <Button
-      android:id="@+id/button_angleUnit"
-      android:layout_height="match_parent"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
-      android:ems="@string/control_ems"
-      android:textSize="@dimen/textSize_button"
-     />
-
-    <Button
-      android:id="@+id/button_alternateKeypad"
-      android:layout_height="match_parent"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
-      android:ems="@string/control_ems"
-      android:textSize="@dimen/textSize_button"
-      android:text="ALT"
-      android:contentDescription="@string/button_alternateKeypad"
-     />
+    <include layout="@layout/control_clear" />
+    <include layout="@layout/control_calculator_mode" />
+    <include layout="@layout/control_complex_notation" />
+    <include layout="@layout/control_angle_unit" />
+    <include layout="@layout/control_alternate_keypad" />
   </TableRow>
 </TableLayout>

@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/navigation"
+  >
+
   <TableRow>
     <Button
       android:id="@+id/button_backspace"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="BS"
-      android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_backspace"
      />
 
     <Button
       android:id="@+id/button_up"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="&#x2191;"
-      android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_up"
      />
 
     <Button
       android:id="@+id/button_delete"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="DEL"
-      android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_delete"
      />
   </TableRow>
@@ -33,28 +27,19 @@
   <TableRow>
     <Button
       android:id="@+id/button_left"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="&#x2190;"
-      android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_left"
      />
 
     <Button
       android:id="@+id/button_down"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="&#x2193;"
-      android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_down"
      />
 
     <Button
       android:id="@+id/button_right"
-      android:minHeight="@dimen/button_minHeight"
-      android:minWidth="@dimen/button_minWidth"
       android:text="&#x2192;"
-      android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_right"
      />
   </TableRow>
