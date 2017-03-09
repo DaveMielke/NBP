@@ -10,7 +10,7 @@
 
   <string name="button_backspace">Backspace</string>
   <string name="button_cancel">Cancel</string>
-  <string name="button_clear">Clear</string>
+  <string name="button_clear">Clr</string>
   <string name="button_delete">Delete</string>
   <string name="button_down">Down</string>
   <string name="button_erase">Erase</string>
@@ -18,7 +18,7 @@
   <string name="button_left">Left</string>
   <string name="button_new">New</string>
   <string name="button_right">Right</string>
-  <string name="button_shift">Shift</string>
+  <string name="button_shift">Alt</string>
   <string name="button_store">Store</string>
   <string name="button_up">Up</string>
   <string name="button_variables">Variables</string>
@@ -31,7 +31,7 @@
   <string name="error_no_expression">no expression</string>
   <string name="error_no_functions">no functions</string>
   <string name="error_no_result">no result</string>
-  <string name="error_no_variables">no variables</string>
+  <string name="error_no_variables">no user-defined variables</string>
   <string name="error_protected_variable">protected variable</string>
   <string name="error_unclosed_bracket">unclosed bracket</string>
   <string name="error_undefined_result">undefined result</string>

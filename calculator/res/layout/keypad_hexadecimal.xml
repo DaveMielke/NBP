@@ -6,26 +6,36 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="D"
       android:contentDescription="@string/description_digit_D"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="E"
       android:contentDescription="@string/description_digit_E"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="F"
       android:contentDescription="@string/description_digit_F"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="&lt;"
       android:contentDescription="@string/description_sign_lsl"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="&gt;"
       android:contentDescription="@string/description_sign_lsr"
      />
@@ -33,21 +43,29 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="A"
       android:contentDescription="@string/description_digit_A"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="B"
       android:contentDescription="@string/description_digit_B"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="C"
       android:contentDescription="@string/description_digit_C"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="~"
       android:contentDescription="@string/description_sign_not"
      />
@@ -55,26 +73,36 @@
 
   <TableRow>
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="7"
       android:contentDescription="@string/description_digit_seven"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="8"
       android:contentDescription="@string/description_digit_eight"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="9"
       android:contentDescription="@string/description_digit_nine"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="÷"
       android:contentDescription="@string/description_sign_divide"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="^"
       android:contentDescription="@string/description_sign_xor"
      />
@@ -82,26 +110,36 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="4"
       android:contentDescription="@string/description_digit_four"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="5"
       android:contentDescription="@string/description_digit_five"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="6"
       android:contentDescription="@string/description_digit_six"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="×"
       android:contentDescription="@string/description_sign_times"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="|"
       android:contentDescription="@string/description_sign_ior"
      />
@@ -109,26 +147,36 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="1"
       android:contentDescription="@string/description_digit_one"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="2"
       android:contentDescription="@string/description_digit_two"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="3"
       android:contentDescription="@string/description_digit_three"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="−"
       android:contentDescription="@string/description_sign_minus"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="&amp;"
       android:contentDescription="@string/description_sign_and"
      />
@@ -136,26 +184,36 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="("
       android:contentDescription="@string/description_sign_openBracket"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="0"
       android:contentDescription="@string/description_digit_zero"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text=")"
       android:contentDescription="@string/description_sign_closeBracket"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="+"
       android:contentDescription="@string/description_sign_plus"
      />
 
     <Button
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="="
       android:contentDescription="@string/description_sign_equals"
      />

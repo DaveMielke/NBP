@@ -3,4 +3,7 @@
 <resources>
   <dimen name="textSize_result">35.0sp</dimen>
   <dimen name="textSize_button">14.0sp</dimen>
+
+  <dimen name="button_minHeight">20.0dp</dimen>
+  <dimen name="button_minWidth">20.0dp</dimen>
 </resources>

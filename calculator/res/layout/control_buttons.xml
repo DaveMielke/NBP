@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:stretchColumns="*"
-  >
-
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
   <TableRow>
     <Button
       android:id="@+id/button_clear"
-      android:layout_weight="2"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="@string/button_clear"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_calculatorMode"
-      android:layout_weight="1"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_complexNotation"
-      android:layout_weight="1"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_angleUnit"
-      android:layout_weight="1"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:textSize="@dimen/textSize_button"
      />
 
     <Button
       android:id="@+id/button_shift"
-      android:layout_weight="2"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="@string/button_shift"
       android:textSize="@dimen/textSize_button"
      />

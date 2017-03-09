@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:stretchColumns="*"
-  >
-
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
   <TableRow>
     <Button
       android:id="@+id/button_backspace"
-      android:text="⬾"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
+      android:text="BS"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_backspace"
      />
 
     <Button
       android:id="@+id/button_up"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="↑"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_up"
@@ -21,7 +22,9 @@
 
     <Button
       android:id="@+id/button_delete"
-      android:text="⥇"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
+      android:text="DEL"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_delete"
      />
@@ -30,6 +33,8 @@
   <TableRow>
     <Button
       android:id="@+id/button_left"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="←"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_left"
@@ -37,6 +42,8 @@
 
     <Button
       android:id="@+id/button_down"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="↓"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_down"
@@ -44,6 +51,8 @@
 
     <Button
       android:id="@+id/button_right"
+      android:minHeight="@dimen/button_minHeight"
+      android:minWidth="@dimen/button_minWidth"
       android:text="→"
       android:textSize="@dimen/textSize_button"
       android:contentDescription="@string/button_right"
