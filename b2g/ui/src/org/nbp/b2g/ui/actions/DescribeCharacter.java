@@ -20,8 +20,14 @@ public class DescribeCharacter extends CursorKeyAction {
     StringBuilder sb = new StringBuilder();
 
     {
-      String name = Character.getName(character).toLowerCase();
-      if (name == null) name = ApplicationContext.getString(R.string.message_no_character_name);
+      String name = Character.getName(character);
+
+      if (name != null) {
+        name = name.toLowerCase();
+      } else {
+        name = ApplicationContext.getString(R.string.message_no_character_name);
+      }
+
       sb.append(name);
     }
 

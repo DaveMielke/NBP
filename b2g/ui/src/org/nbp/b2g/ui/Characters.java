@@ -72,20 +72,22 @@ public class Characters {
     {
       Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
 
-      if (block.equals(Character.UnicodeBlock.BRAILLE_PATTERNS)) {
-        byte dots = 0;
+      if (block != null) {
+        if (block.equals(Character.UnicodeBlock.BRAILLE_PATTERNS)) {
+          byte dots = 0;
 
-        if ((character & Braille.UNICODE_DOT_1) != 0) dots |= BrailleDevice.DOT_1;
-        if ((character & Braille.UNICODE_DOT_2) != 0) dots |= BrailleDevice.DOT_2;
-        if ((character & Braille.UNICODE_DOT_3) != 0) dots |= BrailleDevice.DOT_3;
-        if ((character & Braille.UNICODE_DOT_4) != 0) dots |= BrailleDevice.DOT_4;
-        if ((character & Braille.UNICODE_DOT_5) != 0) dots |= BrailleDevice.DOT_5;
-        if ((character & Braille.UNICODE_DOT_6) != 0) dots |= BrailleDevice.DOT_6;
-        if ((character & Braille.UNICODE_DOT_7) != 0) dots |= BrailleDevice.DOT_7;
-        if ((character & Braille.UNICODE_DOT_8) != 0) dots |= BrailleDevice.DOT_8;
+          if ((character & Braille.UNICODE_DOT_1) != 0) dots |= BrailleDevice.DOT_1;
+          if ((character & Braille.UNICODE_DOT_2) != 0) dots |= BrailleDevice.DOT_2;
+          if ((character & Braille.UNICODE_DOT_3) != 0) dots |= BrailleDevice.DOT_3;
+          if ((character & Braille.UNICODE_DOT_4) != 0) dots |= BrailleDevice.DOT_4;
+          if ((character & Braille.UNICODE_DOT_5) != 0) dots |= BrailleDevice.DOT_5;
+          if ((character & Braille.UNICODE_DOT_6) != 0) dots |= BrailleDevice.DOT_6;
+          if ((character & Braille.UNICODE_DOT_7) != 0) dots |= BrailleDevice.DOT_7;
+          if ((character & Braille.UNICODE_DOT_8) != 0) dots |= BrailleDevice.DOT_8;
 
-        setDots(character, dots);
-        return dots;
+          setDots(character, dots);
+          return dots;
+        }
       }
     }
 
