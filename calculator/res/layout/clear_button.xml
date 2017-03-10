@@ -3,7 +3,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
   <Button
     android:id="@+id/button_clear"
-    android:layout_height="match_parent"
     android:layout_weight="1"
     android:text="CLR"
     android:contentDescription="@string/button_clear"

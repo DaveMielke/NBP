@@ -6,21 +6,25 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:layout_weight="1"
       android:text="abs"
       android:contentDescription="@string/description_function_abs"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="arg"
       android:contentDescription="@string/description_function_arg"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="cnj"
       android:contentDescription="@string/description_function_cnj"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="rcp"
       android:contentDescription="@string/description_function_rcp"
      />
@@ -28,21 +32,25 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:layout_weight="1"
       android:text="sin"
       android:contentDescription="@string/description_function_sin"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="cos"
       android:contentDescription="@string/description_function_cos"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="tan"
       android:contentDescription="@string/description_function_tan"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="r2d"
       android:contentDescription="@string/description_function_r2d"
      />
@@ -50,21 +58,25 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:layout_weight="1"
       android:text="asin"
       android:contentDescription="@string/description_function_asin"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="acos"
       android:contentDescription="@string/description_function_acos"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="atan"
       android:contentDescription="@string/description_function_atan"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="d2r"
       android:contentDescription="@string/description_function_d2r"
      />
@@ -72,21 +84,25 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:layout_weight="1"
       android:text="sinh"
       android:contentDescription="@string/description_function_sinh"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="cosh"
       android:contentDescription="@string/description_function_cosh"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="tanh"
       android:contentDescription="@string/description_function_tanh"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="sqrt"
       android:contentDescription="@string/description_function_sqrt"
      />
@@ -94,21 +110,25 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:layout_weight="1"
       android:text="exp"
       android:contentDescription="@string/description_function_exp"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="log"
       android:contentDescription="@string/description_function_log"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="log10"
       android:contentDescription="@string/description_function_log10"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="cbrt"
       android:contentDescription="@string/description_function_cbrt"
      />
@@ -116,11 +136,13 @@
 
   <TableRow android:layout_weight="1">
     <Button
+      android:layout_weight="1"
       android:text="e"
       android:contentDescription="@string/description_variable_e"
      />
 
     <Button
+      android:layout_weight="1"
       android:text="π"
       android:hint="pi"
       android:contentDescription="@string/description_variable_pi"

@@ -3,7 +3,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
   <Button
     android:id="@+id/button_angleUnit"
-    android:layout_height="match_parent"
     android:layout_weight="1"
+    android:text="ANG"
    />
 </merge>

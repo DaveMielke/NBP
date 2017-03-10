@@ -14,7 +14,7 @@
     <include layout="@layout/expression_area" />
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
-      <TableRow android:weightSum="5">
+      <TableRow>
         <include layout="@layout/clear_button" />
         <include layout="@layout/alternate_keypad_button" />
         <include layout="@layout/calculator_mode_button" />
