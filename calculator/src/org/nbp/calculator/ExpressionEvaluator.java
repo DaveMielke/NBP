@@ -82,7 +82,14 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
     if (getCurrentToken() == null) throw new NoExpressionException(end);
 
     if (getTokenType() != TokenType.CLOSE) {
-      expressionResult = evaluateExpression();
+      try {
+        expressionResult = evaluateExpression();
+      } catch (ArithmeticException exception) {
+        throw new ExpressionException(
+          exception.getMessage(), expressionText.length()
+        );
+      }
+
       TokenDescriptor token = getCurrentToken();
 
       if (token == null) {

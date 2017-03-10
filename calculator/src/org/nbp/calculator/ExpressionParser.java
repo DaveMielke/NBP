@@ -25,6 +25,7 @@ public abstract class ExpressionParser {
     MINUS,
     TIMES,
     DIVIDE,
+    MODULO,
     EXPONENTIATE,
     FACTORIAL,
     PERCENT,
@@ -129,8 +130,8 @@ public abstract class ExpressionParser {
 
   private final int getTokenStart () {
     TokenDescriptor token = getCurrentToken();
-    if (token != null) return token.getStart();
-    return expressionText.length();
+    if (token == null) return expressionText.length();
+    return token.getStart();
   }
 
   protected final String getTokenText (TokenDescriptor token) {

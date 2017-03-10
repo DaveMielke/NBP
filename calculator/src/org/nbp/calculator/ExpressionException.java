@@ -9,8 +9,12 @@ public class ExpressionException extends Exception {
     return expressionLocation;
   }
 
-  public ExpressionException (int message, int location) {
-    super(CommonContext.getString(message));
+  public ExpressionException (String message, int location) {
+    super(message);
     expressionLocation = location;
+  }
+
+  public ExpressionException (int message, int location) {
+    this(CommonContext.getString(message), location);
   }
 }

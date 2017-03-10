@@ -68,6 +68,7 @@
   <string name="description_sign_minus">minus</string>
   <string name="description_sign_times">times</string>
   <string name="description_sign_divide">divide</string>
+  <string name="description_sign_modulo">remainder</string>
   <string name="description_sign_exponentiate">x to the y</string>
   <string name="description_sign_factorial">factorial</string>
   <string name="description_sign_percent">percent</string>

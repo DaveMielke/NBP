@@ -26,6 +26,11 @@
      />
 
     <Button
+      android:text="%"
+      android:contentDescription="@string/description_sign_modulo"
+     />
+
+    <Button
       android:text="^"
       android:contentDescription="@string/description_sign_xor"
      />

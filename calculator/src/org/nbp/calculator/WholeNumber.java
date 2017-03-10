@@ -68,6 +68,10 @@ public abstract class WholeNumber extends GenericNumber {
     return newWholeNumber(value / number.getValue());
   }
 
+  public final WholeNumber mod (WholeNumber number) {
+    return newWholeNumber(value % number.getValue());
+  }
+
   @Override
   public final boolean isValid () {
     return true;

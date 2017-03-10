@@ -56,6 +56,10 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           type = TokenType.DIVIDE;
           break;
 
+        case '%':
+          type = TokenType.MODULO;
+          break;
+
         case '~':
           type = TokenType.NOT;
           break;
@@ -154,6 +158,11 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
         case DIVIDE:
           nextToken();
           value = value.div(evaluatePrimary());
+          break;
+
+        case MODULO:
+          nextToken();
+          value = value.mod(evaluatePrimary());
           break;
 
         default:
