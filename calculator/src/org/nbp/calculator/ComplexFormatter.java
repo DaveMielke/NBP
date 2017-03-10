@@ -213,4 +213,8 @@ public class ComplexFormatter extends GenericFormatter {
   public final String format (double value) {
     return format(value, 0d);
   }
+
+  public final String format (ComplexNumber value) {
+    return format(value.real(), value.imag());
+  }
 }

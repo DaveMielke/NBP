@@ -170,7 +170,7 @@ public class ComplexNumber extends GenericNumber {
 
   @Override
   public final String format () {
-    return SavedSettings.getComplexNotation().getFormatter().format(real, imag);
+    return SavedSettings.getComplexNotation().getFormatter().format(this);
   }
 
   private final static char STRING_DELIMITER = '_';

@@ -17,7 +17,7 @@ public class OctalNumber extends WholeNumber {
   }
 
   @Override
-  protected final WholeFormatter newWholeFormatter () {
-    return new OctalFormatter();
+  public final String toString () {
+    return Long.toOctalString(value);
   }
 }

@@ -4,9 +4,8 @@ import java.math.BigInteger;
 
 public abstract class WholeNumber extends GenericNumber {
   protected abstract WholeNumber newWholeNumber (long value);
-  protected abstract WholeFormatter newWholeFormatter ();
 
-  private final long value;
+  protected final long value;
 
   public WholeNumber (long number) {
     value = number;
@@ -79,6 +78,6 @@ public abstract class WholeNumber extends GenericNumber {
 
   @Override
   public final String format () {
-    return newWholeFormatter().format(value);
+    return new WholeFormatter().format(this);
   }
 }

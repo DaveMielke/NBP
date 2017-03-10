@@ -1,9 +1,18 @@
 package org.nbp.calculator;
 
-public abstract class WholeFormatter extends GenericFormatter {
+public class WholeFormatter extends GenericFormatter {
   public WholeFormatter () {
     super();
   }
 
-  public abstract String format (long value);
+  public final String format (WholeNumber number) {
+    StringBuilder sb = new StringBuilder(number.toString());
+
+    {
+      int index = sb.length();
+      while ((index -= 4) > 0) sb.insert(index, ' ');
+    }
+
+    return sb.toString();
+  }
 }

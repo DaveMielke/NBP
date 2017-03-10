@@ -17,7 +17,7 @@ public class BinaryNumber extends WholeNumber {
   }
 
   @Override
-  protected final WholeFormatter newWholeFormatter () {
-    return new BinaryFormatter();
+  public final String toString () {
+    return Long.toBinaryString(value);
   }
 }

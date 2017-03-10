@@ -17,7 +17,7 @@ public class HexadecimalNumber extends WholeNumber {
   }
 
   @Override
-  protected final WholeFormatter newWholeFormatter () {
-    return new HexadecimalFormatter();
+  public final String toString () {
+    return Long.toHexString(value).toUpperCase();
   }
 }
