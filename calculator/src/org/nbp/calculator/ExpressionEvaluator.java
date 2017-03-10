@@ -9,69 +9,82 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
   }
 
   protected final T evaluateSubexpression () throws ExpressionException {
-    int start = getCurrentToken().getStart();
+    pushToken("generic subexpression");
     nextToken();
 
-    if (getTokenType() == TokenType.CLOSE) {
-      throw new EvaluateException(R.string.error_missing_subexpression, start);
-    }
-
-    T value = evaluateExpression();
-
-    if (getTokenType() != TokenType.CLOSE) {
-      throw new EvaluateException(R.string.error_unclosed_bracket, start);
-    }
-
-    nextToken();
-    return value;
-  }
-
-  protected final T getVariable (String name) {
-    return (T)Variables.get(name);
-  }
-
-  protected T evaluateElement () throws ExpressionException {
-    switch (getTokenType()) {
-      case OPEN:
-        return evaluateSubexpression();
-
-      case IDENTIFIER: {
-        TokenDescriptor token = getCurrentToken();
-        String name = getTokenText(token);
-        nextToken();
-
-        switch (getTokenType()) {
-          case ASSIGN: {
-            nextToken();
-            T value = evaluateExpression();
-
-            if (!Variables.set(name, value)) {
-              throw new EvaluateException(R.string.error_protected_variable, token);
-            }
-
-            return value;
-          }
-
-          case OPEN: {
-            Function function = Functions.get(name);
-
-            if (function == null) {
-              throw new EvaluateException(R.string.error_unknown_function, token);
-            }
-
-            return (T)function.call(evaluateSubexpression());
-          }
-
-          default: {
-            T value = getVariable(name);
-            if (value != null) return value;
-            throw new EvaluateException(R.string.error_unknown_variable, token);
-          }
-        }
+    try {
+      if (getTokenType() == TokenType.CLOSE) {
+        throw new EvaluateException(R.string.error_missing_subexpression);
       }
 
-      default:
-        throw new EvaluateException(R.string.error_missing_element);
+      T value = evaluateExpression();
+
+      if (getTokenType() != TokenType.CLOSE) {
+        throw new EvaluateException(R.string.error_unclosed_bracket);
+      }
+
+      nextToken();
+      return value;
+    } finally {
+      popToken();
+    }
+  }
+
+  protected final T evaluateElement (Class<T> type) throws ExpressionException {
+    pushToken("generic element");
+
+    try {
+      switch (getTokenType()) {
+        case OPEN:
+          return evaluateSubexpression();
+
+        case IDENTIFIER: {
+          String name = getTokenText();
+          nextToken();
+
+          switch (getTokenType()) {
+            case ASSIGN: {
+              nextToken();
+              T value = evaluateExpression();
+
+              if (!Variables.set(name, value)) {
+                throw new EvaluateException(R.string.error_protected_variable);
+              }
+
+              return value;
+            }
+
+            case OPEN: {
+              Function function = Functions.get(name);
+
+              if (function == null) {
+                throw new EvaluateException(R.string.error_unknown_function);
+              }
+
+              return (T)function.call(evaluateSubexpression());
+            }
+
+            default: {
+              T value = (T)Variables.get(name);
+
+              if (value == null) {
+                throw new EvaluateException(R.string.error_unknown_variable);
+              }
+
+              if (!type.isAssignableFrom(value.getClass())) {
+                throw new EvaluateException(R.string.error_incompatible_variable);
+              }
+
+              return value;
+            }
+          }
+        }
+
+        default:
+          throw new EvaluateException(R.string.error_missing_element);
+      }
+    } finally {
+      popToken();
     }
   }
 
@@ -82,14 +95,7 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
     if (getCurrentToken() == null) throw new NoExpressionException(end);
 
     if (getTokenType() != TokenType.CLOSE) {
-      try {
-        expressionResult = evaluateExpression();
-      } catch (ArithmeticException exception) {
-        throw new ExpressionException(
-          exception.getMessage(), expressionText.length()
-        );
-      }
-
+      expressionResult = evaluateExpression();
       TokenDescriptor token = getCurrentToken();
 
       if (token == null) {
@@ -102,6 +108,6 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
       }
     }
 
-    throw new EvaluateException(R.string.error_unopened_bracket);
+    throw new EvaluateException(R.string.error_unopened_bracket, getCurrentToken());
   }
 }

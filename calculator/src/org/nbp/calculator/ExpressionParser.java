@@ -1,5 +1,6 @@
 package org.nbp.calculator;
 
+import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -128,18 +129,29 @@ public abstract class ExpressionParser {
     return token.getType();
   }
 
-  private final int getTokenStart () {
+  protected final String getTokenText () {
     TokenDescriptor token = getCurrentToken();
-    if (token == null) return expressionText.length();
-    return token.getStart();
-  }
-
-  protected final String getTokenText (TokenDescriptor token) {
     return expressionText.substring(token.getStart(), token.getEnd());
   }
 
-  protected final String getTokenText () {
-    return getTokenText(getCurrentToken());
+  private final Stack<TokenDescriptor> tokenStack
+          = new Stack<TokenDescriptor>();
+
+  protected final void pushToken (String reason) {
+    tokenStack.push(getCurrentToken());
+  }
+
+  protected final void popToken () {
+    tokenStack.pop();
+  }
+
+  private final int getTokenStart () {
+    if (!tokenStack.empty()) {
+      TokenDescriptor token = tokenStack.peek();
+      if (token != null) return token.getStart();
+    }
+
+    return expressionText.length();
   }
 
   protected class EvaluateException extends ExpressionException {
@@ -153,6 +165,10 @@ public abstract class ExpressionParser {
 
     public EvaluateException (int error) {
       this(error, getTokenStart());
+    }
+
+    public EvaluateException (Exception exception) {
+      super(exception.getMessage(), getTokenStart());
     }
   }
 

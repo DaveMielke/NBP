@@ -23,6 +23,8 @@
   <string name="button_up">Up</string>
   <string name="button_variables">Variables</string>
 
+  <string name="error_incompatible_function">incompatible function</string>
+  <string name="error_incompatible_variable">incompatible variable</string>
   <string name="error_invalid_decimal">invalid decimal</string>
   <string name="error_invalid_hexadecimal">invalid hexadecimal</string>
   <string name="error_missing_element">missing element</string>

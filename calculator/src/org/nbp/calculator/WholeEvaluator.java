@@ -111,37 +111,47 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
     }
   }
 
-  @Override
-  protected WholeNumber evaluateElement () throws ExpressionException {
-    switch (getTokenType()) {
-      case HEXADECIMAL: {
-        String text = getTokenText().toUpperCase();
-        nextToken();
-        return new HexadecimalNumber(text);
-      }
+  private WholeNumber evaluateElement () throws ExpressionException {
+    pushToken("whole element");
 
-      default:
-        return super.evaluateElement();
+    try {
+      switch (getTokenType()) {
+        case HEXADECIMAL: {
+          String text = getTokenText().toUpperCase();
+          nextToken();
+          return new HexadecimalNumber(text);
+        }
+
+        default:
+          return evaluateElement(WholeNumber.class);
+      }
+    } finally {
+      popToken();
     }
   }
 
   private final WholeNumber evaluatePrimary () throws ExpressionException {
-    switch (getTokenType()) {
-      case PLUS:
-        nextToken();
-        return evaluatePrimary();
+    pushToken("whole primary");
 
-      case MINUS:
-        nextToken();
-        return evaluatePrimary().neg();
+    try {
+      switch (getTokenType()) {
+        case PLUS:
+          nextToken();
+          return evaluatePrimary();
 
-      case NOT:
-        nextToken();
-        return evaluatePrimary().not();
+        case MINUS:
+          nextToken();
+          return evaluatePrimary().neg();
 
-      default: {
-        return evaluateElement();
+        case NOT:
+          nextToken();
+          return evaluatePrimary().not();
+
+        default:
+          return evaluateElement();
       }
+    } finally {
+      popToken();
     }
   }
 
@@ -149,24 +159,34 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
     WholeNumber value = evaluatePrimary();
 
     while (true) {
-      switch (getTokenType()) {
-        case TIMES:
-          nextToken();
-          value = value.mul(evaluatePrimary());
-          break;
+      pushToken("whole products/quotients");
 
-        case DIVIDE:
-          nextToken();
-          value = value.div(evaluatePrimary());
-          break;
+      try {
+        try {
+          switch (getTokenType()) {
+            case TIMES:
+              nextToken();
+              value = value.mul(evaluatePrimary());
+              break;
 
-        case MODULO:
-          nextToken();
-          value = value.mod(evaluatePrimary());
-          break;
+            case DIVIDE:
+              nextToken();
+              value = value.div(evaluatePrimary());
+              break;
 
-        default:
-          return value;
+            case MODULO:
+              nextToken();
+              value = value.mod(evaluatePrimary());
+              break;
+
+            default:
+              return value;
+          }
+        } catch (ArithmeticException exception) {
+          throw new EvaluateException(exception);
+        }
+      } finally {
+        popToken();
       }
     }
   }
@@ -175,19 +195,25 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
     WholeNumber value = evaluateProductsAndQuotients();
 
     while (true) {
-      switch (getTokenType()) {
-        case PLUS:
-          nextToken();
-          value = value.add(evaluateProductsAndQuotients());
-          break;
+      pushToken("whole sums/differences");
 
-        case MINUS:
-          nextToken();
-          value = value.sub(evaluateProductsAndQuotients());
-          break;
+      try {
+        switch (getTokenType()) {
+          case PLUS:
+            nextToken();
+            value = value.add(evaluateProductsAndQuotients());
+            break;
 
-        default:
-          return value;
+          case MINUS:
+            nextToken();
+            value = value.sub(evaluateProductsAndQuotients());
+            break;
+
+          default:
+            return value;
+        }
+      } finally {
+        popToken();
       }
     }
   }
@@ -196,24 +222,30 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
     WholeNumber value = evaluateSumsAndDifferences();
 
     while (true) {
-      switch (getTokenType()) {
-        case LSL:
-          nextToken();
-          value = value.lsl(evaluateSumsAndDifferences());
-          break;
+      pushToken("whole shifts");
 
-        case LSR:
-          nextToken();
-          value = value.lsr(evaluateSumsAndDifferences());
-          break;
+      try {
+        switch (getTokenType()) {
+          case LSL:
+            nextToken();
+            value = value.lsl(evaluateSumsAndDifferences());
+            break;
 
-        case ASR:
-          nextToken();
-          value = value.asr(evaluateSumsAndDifferences());
-          break;
+          case LSR:
+            nextToken();
+            value = value.lsr(evaluateSumsAndDifferences());
+            break;
 
-        default:
-          return value;
+          case ASR:
+            nextToken();
+            value = value.asr(evaluateSumsAndDifferences());
+            break;
+
+          default:
+            return value;
+        }
+      } finally {
+        popToken();
       }
     }
   }
@@ -222,24 +254,30 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
     WholeNumber value = evaluateShiftOperations();
 
     while (true) {
-      switch (getTokenType()) {
-        case AND:
-          nextToken();
-          value = value.and(evaluateShiftOperations());
-          break;
+      pushToken("whole bitwise");
 
-        case OR:
-          nextToken();
-          value = value.or(evaluateShiftOperations());
-          break;
+      try {
+        switch (getTokenType()) {
+          case AND:
+            nextToken();
+            value = value.and(evaluateShiftOperations());
+            break;
 
-        case XOR:
-          nextToken();
-          value = value.xor(evaluateShiftOperations());
-          break;
+          case OR:
+            nextToken();
+            value = value.or(evaluateShiftOperations());
+            break;
 
-        default:
-          return value;
+          case XOR:
+            nextToken();
+            value = value.xor(evaluateShiftOperations());
+            break;
+
+          default:
+            return value;
+        }
+      } finally {
+        popToken();
       }
     }
   }

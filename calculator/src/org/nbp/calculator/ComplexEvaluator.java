@@ -159,85 +159,101 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
     }
   }
 
-  @Override
-  protected final ComplexNumber evaluateElement () throws ExpressionException {
-    switch (getTokenType()) {
-      case DECIMAL: {
-        String text = getTokenText();
-        nextToken();
-        return new ComplexNumber(text);
-      }
+  private final ComplexNumber evaluateElement () throws ExpressionException {
+    pushToken("complex element");
 
-      case HEXADECIMAL: {
-        String text = "0X" + getTokenText().toUpperCase();
-        if (text.indexOf('P') < 0) text += "P0";
+    try {
+      switch (getTokenType()) {
+        case DECIMAL: {
+          String text = getTokenText();
+          nextToken();
+          return new ComplexNumber(text);
+        }
 
-        nextToken();
-        return new ComplexNumber(text);
-      }
+        case HEXADECIMAL: {
+          String text = "0X" + getTokenText().toUpperCase();
+          if (text.indexOf('P') < 0) text += "P0";
 
-      case DEGREES: {
-        String text = getTokenText();
-        double degrees = 0d;
+          nextToken();
+          return new ComplexNumber(text);
+        }
 
-        {
-          int index = text.indexOf(DEGREE_SECONDS);
+        case DEGREES: {
+          String text = getTokenText();
+          double degrees = 0d;
 
-          if (index >= 0) {
-            degrees += Double.valueOf(text.substring(index+1)) / 3600d;
-            text = text.substring(0, index);
+          {
+            int index = text.indexOf(DEGREE_SECONDS);
+
+            if (index >= 0) {
+              degrees += Double.valueOf(text.substring(index+1)) / 3600d;
+              text = text.substring(0, index);
+            }
           }
-        }
 
-        {
-          int index = text.indexOf(DEGREE_MINUTES);
+          {
+            int index = text.indexOf(DEGREE_MINUTES);
 
-          if (index >= 0) {
-            degrees += Double.valueOf(text.substring(index+1)) / 60d;
-            text = text.substring(0, index);
+            if (index >= 0) {
+              degrees += Double.valueOf(text.substring(index+1)) / 60d;
+              text = text.substring(0, index);
+            }
           }
+
+          if (text.length() > 0) {
+            degrees += Double.valueOf(text);
+          }
+
+          nextToken();
+          return new ComplexNumber(degrees);
         }
 
-        if (text.length() > 0) {
-          degrees += Double.valueOf(text);
-        }
-
-        nextToken();
-        return new ComplexNumber(degrees);
+        default:
+          return evaluateElement(ComplexNumber.class);
       }
-
-      default: {
-        return super.evaluateElement();
-      }
+    } finally {
+      popToken();
     }
   }
 
   private final ComplexNumber evaluatePrimary () throws ExpressionException {
-    switch (getTokenType()) {
-      case PLUS:
-        nextToken();
-        return evaluatePrimary();
+    pushToken("complex primary");
 
-      case MINUS:
-        nextToken();
-        return evaluatePrimary().neg();
-
-      default: {
-        ComplexNumber value = evaluateElement();
-
-        while (true) {
-          switch (getTokenType()) {
-            case FACTORIAL:
-              value = value.add(1d).gamma();
-              break;
-
-            default:
-              return value;
-          }
-
+    try {
+      switch (getTokenType()) {
+        case PLUS:
           nextToken();
+          return evaluatePrimary();
+
+        case MINUS:
+          nextToken();
+          return evaluatePrimary().neg();
+
+        default: {
+          ComplexNumber value = evaluateElement();
+
+          while (true) {
+            pushToken("complex factorial");
+
+            try {
+              switch (getTokenType()) {
+                case FACTORIAL:
+                  value = value.add(1d).gamma();
+                  break;
+
+                default:
+                  return value;
+              }
+
+              nextToken();
+            } finally {
+              popToken();
+            }
+          }
         }
       }
+    } finally {
+      popToken();
     }
   }
 
@@ -245,14 +261,20 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
     ComplexNumber value = evaluatePrimary();
 
     while (true) {
-      switch (getTokenType()) {
-        case EXPONENTIATE:
-          nextToken();
-          value = value.pow(evaluatePrimary());
-          break;
+      pushToken("complex exponentiation");
 
-        default:
-          return value;
+      try {
+        switch (getTokenType()) {
+          case EXPONENTIATE:
+            nextToken();
+            value = value.pow(evaluatePrimary());
+            break;
+
+          default:
+            return value;
+        }
+      } finally {
+        popToken();
       }
     }
   }
@@ -261,67 +283,84 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
     ComplexNumber value = evaluateExponentiations();
 
     while (true) {
-      switch (getTokenType()) {
-        case TIMES:
-          nextToken();
-          value = value.mul(evaluateExponentiations());
-          break;
+      pushToken("complex products/quotients");
 
-        case DIVIDE:
-          nextToken();
-          value = value.div(evaluateExponentiations());
-          break;
+      try {
+        switch (getTokenType()) {
+          case TIMES:
+            nextToken();
+            value = value.mul(evaluateExponentiations());
+            break;
 
-        case OPEN:
-        case IDENTIFIER:
-          value = value.mul(evaluateElement());
-          break;
+          case DIVIDE:
+            nextToken();
+            value = value.div(evaluateExponentiations());
+            break;
 
-        default:
-          return value;
+          case OPEN:
+          case IDENTIFIER:
+            value = value.mul(evaluateElement());
+            break;
+
+          default:
+            return value;
+        }
+      } finally {
+        popToken();
       }
     }
   }
 
   private final ComplexNumber evaluateSumsAndDifferences () throws ExpressionException {
     ComplexNumber value = evaluateProductsAndQuotients();
-    ComplexNumber operand;
-    boolean add;
 
     while (true) {
-      switch (getTokenType()) {
-        case PLUS:
-          nextToken();
-          operand = evaluateProductsAndQuotients();
-          add = true;
-          break;
+      ComplexNumber operand;
+      boolean add;
+      pushToken("complex sums/differences");
 
-        case MINUS:
-          nextToken();
-          operand = evaluateProductsAndQuotients();
-          add = false;
-          break;
+      try {
+        switch (getTokenType()) {
+          case PLUS:
+            nextToken();
+            operand = evaluateProductsAndQuotients();
+            add = true;
+            break;
 
-        default:
-          return value;
-      }
+          case MINUS:
+            nextToken();
+            operand = evaluateProductsAndQuotients();
+            add = false;
+            break;
 
-      if (getTokenType() == TokenType.PERCENT) {
-        nextToken();
-        operand = operand.mul(value).div(100);
-      }
+          default:
+            return value;
+        }
 
-      if (add) {
-        value = value.add(operand);
-      } else {
-        value = value.sub(operand);
+        if (getTokenType() == TokenType.PERCENT) {
+          pushToken("complex percent");
+
+          try {
+            nextToken();
+            operand = operand.mul(value).div(100);
+          } finally {
+            popToken();
+          }
+        }
+
+        if (add) {
+          value = value.add(operand);
+        } else {
+          value = value.sub(operand);
+        }
+      } finally {
+        popToken();
       }
     }
   }
 
   @Override
   protected final ComplexNumber evaluateExpression () throws ExpressionException {
-    ComplexNumber value = evaluateSumsAndDifferences();
-    return value;
+    return evaluateSumsAndDifferences();
   }
 }
