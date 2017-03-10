@@ -7,17 +7,25 @@ public class BinaryNumber extends WholeNumber {
     super(number);
   }
 
+  public BinaryNumber () {
+    this(0);
+  }
+
   public BinaryNumber (String number) {
     super(number, RADIX);
   }
 
-  @Override
-  protected final WholeNumber newWholeNumber (long value) {
+  public final static BinaryNumber valueOf (long value) {
     return new BinaryNumber(value);
   }
 
   @Override
   public final String toString () {
     return Long.toBinaryString(value);
+  }
+
+  @Override
+  protected final WholeNumber newWholeNumber (long value) {
+    return new BinaryNumber(value);
   }
 }

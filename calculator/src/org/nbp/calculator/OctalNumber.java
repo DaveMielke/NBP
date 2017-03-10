@@ -7,17 +7,25 @@ public class OctalNumber extends WholeNumber {
     super(number);
   }
 
+  public OctalNumber () {
+    this(0);
+  }
+
   public OctalNumber (String number) {
     super(number, RADIX);
   }
 
-  @Override
-  protected final WholeNumber newWholeNumber (long value) {
+  public final static OctalNumber valueOf (long value) {
     return new OctalNumber(value);
   }
 
   @Override
   public final String toString () {
     return Long.toOctalString(value);
+  }
+
+  @Override
+  protected final WholeNumber newWholeNumber (long value) {
+    return new OctalNumber(value);
   }
 }

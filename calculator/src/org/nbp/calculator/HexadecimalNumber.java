@@ -7,17 +7,25 @@ public class HexadecimalNumber extends WholeNumber {
     super(number);
   }
 
+  public HexadecimalNumber () {
+    this(0);
+  }
+
   public HexadecimalNumber (String number) {
     super(number, RADIX);
   }
 
-  @Override
-  protected final WholeNumber newWholeNumber (long value) {
+  public final static HexadecimalNumber valueOf (long value) {
     return new HexadecimalNumber(value);
   }
 
   @Override
   public final String toString () {
     return Long.toHexString(value).toUpperCase();
+  }
+
+  @Override
+  protected final WholeNumber newWholeNumber (long value) {
+    return new HexadecimalNumber(value);
   }
 }

@@ -21,12 +21,27 @@ public class ComplexNumber extends GenericNumber {
     this(Double.valueOf(r));
   }
 
-  public final static ComplexNumber E = new ComplexNumber(Math.E);
-  public final static ComplexNumber PI = new ComplexNumber(Math.PI);
+  private final static char STRING_DELIMITER = '_';
 
-  public final static ComplexNumber ZERO = new ComplexNumber(0d);
-  public final static ComplexNumber ONE = new ComplexNumber(1d);
-  public final static ComplexNumber I = new ComplexNumber(0d, 1d);
+  public final static ComplexNumber valueOf (String string) {
+    int delimiter = string.indexOf(STRING_DELIMITER);
+    if (delimiter < 0) return new ComplexNumber(Double.valueOf(string));
+
+    return new ComplexNumber(
+      Double.valueOf(string.substring(0, delimiter)),
+      Double.valueOf(string.substring(delimiter+1))
+    );
+  }
+
+  @Override
+  public final String toString () {
+    return (Double.toString(real) + STRING_DELIMITER + Double.toString(imag));
+  }
+
+  @Override
+  public final String format () {
+    return SavedSettings.getComplexNotation().getFormatter().format(this);
+  }
 
   public final double real () {
     return real;
@@ -34,16 +49,6 @@ public class ComplexNumber extends GenericNumber {
 
   public final double imag () {
     return imag;
-  }
-
-  public final double abs () {
-    if (!hasImag()) return Math.abs(real);
-    if (!hasReal()) return Math.abs(imag);
-    return Math.hypot(real, imag);
-  }
-
-  public final double arg () {
-    return Math.atan2(imag, real);
   }
 
   public final boolean hasReal () {
@@ -64,10 +69,32 @@ public class ComplexNumber extends GenericNumber {
     return Double.isNaN(real) || Double.isNaN(imag);
   }
 
+  @Override
+  public final boolean isValid () {
+    return !isNaN();
+  }
+
   public final boolean equals (ComplexNumber operand) {
     if (isNaN()) return operand.isNaN();
     if (operand.isNaN()) return false;
     return ((real == operand.real) && (imag == operand.imag));
+  }
+
+  public final static ComplexNumber ZERO = new ComplexNumber(0d);
+  public final static ComplexNumber ONE = new ComplexNumber(1d);
+  public final static ComplexNumber I = new ComplexNumber(0d, 1d);
+
+  public final static ComplexNumber E = new ComplexNumber(Math.E);
+  public final static ComplexNumber PI = new ComplexNumber(Math.PI);
+
+  public final double abs () {
+    if (!hasImag()) return Math.abs(real);
+    if (!hasReal()) return Math.abs(imag);
+    return Math.hypot(real, imag);
+  }
+
+  public final double arg () {
+    return Math.atan2(imag, real);
   }
 
   public final ComplexNumber neg () {
@@ -161,31 +188,5 @@ public class ComplexNumber extends GenericNumber {
 
   public final ComplexNumber gamma () {
     return GammaFunction.gamma(this);
-  }
-
-  @Override
-  public final boolean isValid () {
-    return !isNaN();
-  }
-
-  @Override
-  public final String format () {
-    return SavedSettings.getComplexNotation().getFormatter().format(this);
-  }
-
-  private final static char STRING_DELIMITER = '_';
-
-  public final String toString () {
-    return (Double.toString(real) + STRING_DELIMITER + Double.toString(imag));
-  }
-
-  public final static ComplexNumber valueOf (String string) {
-    int delimiter = string.indexOf(STRING_DELIMITER);
-    if (delimiter < 0) return new ComplexNumber(Double.valueOf(string));
-
-    return new ComplexNumber(
-      Double.valueOf(string.substring(0, delimiter)),
-      Double.valueOf(string.substring(delimiter+1))
-    );
   }
 }

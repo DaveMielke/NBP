@@ -19,6 +19,16 @@ public abstract class WholeNumber extends GenericNumber {
     return value;
   }
 
+  @Override
+  public final String format () {
+    return new WholeFormatter().format(this);
+  }
+
+  @Override
+  public final boolean isValid () {
+    return true;
+  }
+
   public final WholeNumber not () {
     return newWholeNumber(~value);
   }
@@ -69,15 +79,5 @@ public abstract class WholeNumber extends GenericNumber {
 
   public final WholeNumber mod (WholeNumber number) {
     return newWholeNumber(value % number.getValue());
-  }
-
-  @Override
-  public final boolean isValid () {
-    return true;
-  }
-
-  @Override
-  public final String format () {
-    return new WholeFormatter().format(this);
   }
 }
