@@ -7,6 +7,7 @@ import android.util.TypedValue;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Button;
 
 public class CalculatorConfigurator {
@@ -59,13 +60,11 @@ public class CalculatorConfigurator {
   }
 
   public void configureCalculator () {
-    configureViews(R.id.control,
+    configureViews(R.id.root,
       new ViewConfigurer() {
         @Override
         public void configureView (View view) {
           if (view instanceof Button) {
-            Button button = (Button)view;
-            button.setEms(CONTROL_EMS);
           }
         }
       }
@@ -78,18 +77,6 @@ public class CalculatorConfigurator {
           if (view instanceof Button) {
             Button button = (Button)view;
             button.setTextSize(TypedValue.COMPLEX_UNIT_SP, BUTTON_TEXT_SIZE);
-          }
-        }
-      }
-    );
-
-    configureViews(R.id.navigation,
-      new ViewConfigurer() {
-        @Override
-        public void configureView (View view) {
-          if (view instanceof Button) {
-            Button button = (Button)view;
-            button.setEms(CONTROL_EMS);
           }
         }
       }

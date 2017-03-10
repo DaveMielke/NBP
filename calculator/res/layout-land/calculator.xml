@@ -19,8 +19,8 @@
           <TableLayout android:layout_span="2">
             <TableRow>
               <include layout="@layout/control_clear" />
-              <include layout="@layout/control_calculator_mode" />
               <include layout="@layout/control_alternate_keypad" />
+              <include layout="@layout/control_calculator_mode" />
             </TableRow>
           </TableLayout>
         </TableRow>

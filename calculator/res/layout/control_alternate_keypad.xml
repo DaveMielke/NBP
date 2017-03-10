@@ -4,6 +4,7 @@
   <Button
     android:id="@+id/button_alternateKeypad"
     android:layout_height="match_parent"
+    android:layout_weight="1"
     android:text="ALT"
     android:contentDescription="@string/button_alternateKeypad"
    />
