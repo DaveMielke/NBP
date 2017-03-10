@@ -338,6 +338,11 @@ public class CalculatorActivity extends CommonActivity {
     activeKeypads = SavedSettings.getCalculatorMode().getKeypads();
     currentKeypad = 0;
     showKeypad();
+
+    {
+      Button button = (Button)findViewById(R.id.button_alternateKeypad);
+      button.setEnabled(activeKeypads.length > 1);
+    }
   }
 
   private final void setFocusToKeypad () {
