@@ -61,11 +61,13 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
                 throw new EvaluateException(R.string.error_unknown_function);
               }
 
-              return (T)function.call(evaluateSubexpression());
+              Object value = function.call(evaluateSubexpression());
+              if (value != null) return (T)value;
+              throw new EvaluateException(R.string.error_incompatible_function);
             }
 
             default: {
-              T value = (T)Variables.get(name);
+              Object value = (T)Variables.get(name);
 
               if (value == null) {
                 throw new EvaluateException(R.string.error_unknown_variable);
@@ -75,7 +77,7 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
                 throw new EvaluateException(R.string.error_incompatible_variable);
               }
 
-              return value;
+              return (T)value;
             }
           }
         }
