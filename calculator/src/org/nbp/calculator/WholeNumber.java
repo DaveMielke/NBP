@@ -22,7 +22,22 @@ public abstract class WholeNumber extends GenericNumber {
 
   protected final static long toLong (String string) {
     int radix = 10;
+    boolean negative = false;
     int start = 0;
+
+    if (start < string.length()) {
+      switch (string.charAt(start++)) {
+        case '-':
+          negative = true;
+          /* fall through */
+        case '+':
+          break;
+
+        default:
+          start -= 1;
+          break;
+      }
+    }
 
     if (start < string.length()) {
       if (string.charAt(start) == '0') {
@@ -49,7 +64,15 @@ public abstract class WholeNumber extends GenericNumber {
       }
     }
 
-    return valueOf(string.substring(start), radix);
+    if (start < string.length()) {
+      if (Character.digit(string.charAt(start), radix) < 0) {
+        throw new NumberFormatException(("invalid long value: " + string));
+      }
+    }
+
+    long value = valueOf(string.substring(start), radix);
+    if (negative) value = -value;
+    return value;
   }
 
   @Override
