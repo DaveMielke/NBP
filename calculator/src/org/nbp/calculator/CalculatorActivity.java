@@ -136,7 +136,6 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final boolean evaluateExpression (boolean showError) {
-    saveExpression();
     String expression = expressionView.getText().toString();
 
     try {
@@ -148,6 +147,8 @@ public class CalculatorActivity extends CommonActivity {
       } catch (NoExpressionException exception) {
         resultValue = null;
         resultView.setText("");
+      } finally {
+        saveExpression();
       }
     } catch (ExpressionException exception) {
       if (showError) {
