@@ -21,7 +21,35 @@ public abstract class WholeNumber extends GenericNumber {
   }
 
   protected final static long toLong (String string) {
-    return Long.decode(string);
+    int radix = 10;
+    int start = 0;
+
+    if (start < string.length()) {
+      if (string.charAt(start) == '0') {
+        radix = 8;
+        start += 1;
+
+        if (start < string.length()) {
+          switch (string.charAt(start++)) {
+            case 'x':
+            case 'X':
+              radix = 16;
+              break;
+
+            case 'b':
+            case 'B':
+              radix = 2;
+              break;
+
+            default:
+              start -= 1;
+              break;
+          }
+        }
+      }
+    }
+
+    return valueOf(string.substring(start), radix);
   }
 
   @Override

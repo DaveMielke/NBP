@@ -22,7 +22,7 @@ public class BinaryNumber extends WholeNumber {
 
   @Override
   public final String toString () {
-    return toPureString();
+    return "0B" + toPureString();
   }
 
   @Override

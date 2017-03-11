@@ -22,7 +22,10 @@ public class OctalNumber extends WholeNumber {
 
   @Override
   public final String toString () {
-    return toPureString();
+    String string = toPureString();
+    char prefix = '0';
+    if (string.charAt(0) != prefix) string = prefix + string;
+    return string;
   }
 
   @Override
