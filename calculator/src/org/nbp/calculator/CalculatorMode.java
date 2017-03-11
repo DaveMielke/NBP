@@ -11,7 +11,12 @@ public enum CalculatorMode {
 
     new Properties() {
       @Override
-      public ExpressionEvaluator newExpressionEvaluator (
+      public GenericNumber newNumber (String string) {
+        return ComplexNumber.valueOf(string);
+      }
+
+      @Override
+      public ExpressionEvaluator newEvaluator (
         String expression
       ) throws ExpressionException {
         return new ComplexEvaluator(expression);
@@ -26,7 +31,12 @@ public enum CalculatorMode {
 
     new Properties() {
       @Override
-      public ExpressionEvaluator newExpressionEvaluator (
+      public GenericNumber newNumber (String string) {
+        return HexadecimalNumber.valueOf(string);
+      }
+
+      @Override
+      public ExpressionEvaluator newEvaluator (
         String expression
       ) throws ExpressionException {
         return new HexadecimalEvaluator(expression);
@@ -35,7 +45,9 @@ public enum CalculatorMode {
   );
 
   private interface Properties {
-    public ExpressionEvaluator newExpressionEvaluator (
+    public GenericNumber newNumber (String string);
+
+    public ExpressionEvaluator newEvaluator (
       String expression
     ) throws ExpressionException;
   }
@@ -61,10 +73,14 @@ public enum CalculatorMode {
     return Arrays.copyOf(modeKeypads, modeKeypads.length);
   }
 
-  public final ExpressionEvaluator newExpressionEvaluator (
+  public final GenericNumber newNumber (String string) {
+    return modeProperties.newNumber(string);
+  }
+
+  public final ExpressionEvaluator newEvaluator (
     String expression
   ) throws ExpressionException {
-    return modeProperties.newExpressionEvaluator(expression);
+    return modeProperties.newEvaluator(expression);
   }
 
   private CalculatorMode (String label, int description, Keypad[] keypads, Properties properties) {

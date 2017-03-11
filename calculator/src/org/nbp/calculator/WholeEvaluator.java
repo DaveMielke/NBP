@@ -119,7 +119,7 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
         case HEXADECIMAL: {
           String text = getTokenText().toUpperCase();
           nextToken();
-          return new HexadecimalNumber(text);
+          return new HexadecimalNumber(WholeNumber.valueOf(text, HexadecimalNumber.RADIX));
         }
 
         default:

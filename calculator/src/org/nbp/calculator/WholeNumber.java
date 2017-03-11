@@ -3,20 +3,25 @@ package org.nbp.calculator;
 import java.math.BigInteger;
 
 public abstract class WholeNumber extends GenericNumber {
+  public abstract String toPureString ();
   protected abstract WholeNumber newWholeNumber (long value);
 
   protected final long value;
 
-  public WholeNumber (long number) {
+  protected WholeNumber (long number) {
     value = number;
-  }
-
-  public WholeNumber (String number, int radix) {
-    this(new BigInteger(number, radix).longValue());
   }
 
   public final long getValue () {
     return value;
+  }
+
+  public final static long valueOf (String string, int radix) {
+    return new BigInteger(string, radix).longValue();
+  }
+
+  protected final static long toLong (String string) {
+    return Long.decode(string);
   }
 
   @Override

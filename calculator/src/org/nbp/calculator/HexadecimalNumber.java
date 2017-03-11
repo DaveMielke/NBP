@@ -11,17 +11,18 @@ public class HexadecimalNumber extends WholeNumber {
     this(0);
   }
 
-  public HexadecimalNumber (String number) {
-    super(number, RADIX);
+  public final static HexadecimalNumber valueOf (String string) {
+    return new HexadecimalNumber(toLong(string));
   }
 
-  public final static HexadecimalNumber valueOf (long value) {
-    return new HexadecimalNumber(value);
+  @Override
+  public final String toPureString () {
+    return Long.toHexString(value).toUpperCase();
   }
 
   @Override
   public final String toString () {
-    return Long.toHexString(value).toUpperCase();
+    return "0X" + toPureString();
   }
 
   @Override

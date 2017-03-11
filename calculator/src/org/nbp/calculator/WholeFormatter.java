@@ -6,7 +6,7 @@ public class WholeFormatter extends GenericFormatter {
   }
 
   public final String format (WholeNumber number) {
-    StringBuilder sb = new StringBuilder(number.toString());
+    StringBuilder sb = new StringBuilder(number.toPureString());
 
     {
       int index = sb.length();

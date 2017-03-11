@@ -17,8 +17,22 @@ public class ComplexNumber extends GenericNumber {
     this(0d);
   }
 
-  public ComplexNumber (String r) {
-    this(Double.valueOf(r));
+  private final static boolean contains (String string, Character character) {
+    return string.indexOf(character) >= 0;
+  }
+
+  private final static double toDouble (String string) {
+    try {
+      return Double.valueOf(string);
+    } catch (NumberFormatException exception) {
+      if (contains(string, 'x') || contains(string, 'X')) {
+        if (!(contains(string, 'p') || contains(string, 'P'))) {
+          return Double.valueOf((string + "P0"));
+        }
+      }
+
+      throw exception;
+    }
   }
 
   public final static ComplexNumber valueOf (String string) {
@@ -62,7 +76,7 @@ public class ComplexNumber extends GenericNumber {
 
     if (i != null) {
       try {
-        return new ComplexNumber(Double.valueOf(r), Double.valueOf(i));
+        return new ComplexNumber(toDouble(r), toDouble(i));
       } catch (NumberFormatException exception) {
       }
     }

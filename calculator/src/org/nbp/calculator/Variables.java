@@ -129,7 +129,7 @@ public abstract class Variables {
 
       if (variables.contains(name)) {
         String string = variables.getString(name, null);
-        if (string != null) return ComplexNumber.valueOf(string);
+        if (string != null) return SavedSettings.getCalculatorMode().newNumber(string);
       }
     }
 

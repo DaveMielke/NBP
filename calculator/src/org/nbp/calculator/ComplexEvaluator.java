@@ -159,6 +159,14 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
     }
   }
 
+  private final static double toDouble (String string) {
+    return Double.valueOf(string);
+  }
+
+  private final static ComplexNumber toComplexNumber (String string) {
+    return new ComplexNumber(toDouble(string));
+  }
+
   private final ComplexNumber evaluateElement () throws ExpressionException {
     pushToken("complex element");
 
@@ -167,7 +175,7 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
         case DECIMAL: {
           String text = getTokenText();
           nextToken();
-          return new ComplexNumber(text);
+          return toComplexNumber(text);
         }
 
         case HEXADECIMAL: {
@@ -175,7 +183,7 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
           if (text.indexOf('P') < 0) text += "P0";
 
           nextToken();
-          return new ComplexNumber(text);
+          return toComplexNumber(text);
         }
 
         case DEGREES: {
@@ -186,7 +194,7 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
             int index = text.indexOf(DEGREE_SECONDS);
 
             if (index >= 0) {
-              degrees += Double.valueOf(text.substring(index+1)) / 3600d;
+              degrees += toDouble(text.substring(index+1)) / 3600d;
               text = text.substring(0, index);
             }
           }
@@ -195,13 +203,13 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
             int index = text.indexOf(DEGREE_MINUTES);
 
             if (index >= 0) {
-              degrees += Double.valueOf(text.substring(index+1)) / 60d;
+              degrees += toDouble(text.substring(index+1)) / 60d;
               text = text.substring(0, index);
             }
           }
 
           if (text.length() > 0) {
-            degrees += Double.valueOf(text);
+            degrees += toDouble(text);
           }
 
           nextToken();

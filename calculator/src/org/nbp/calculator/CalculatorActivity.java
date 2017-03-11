@@ -160,7 +160,7 @@ public class CalculatorActivity extends CommonActivity {
 
       try {
         try {
-          ExpressionEvaluator evaluator = SavedSettings.getCalculatorMode().newExpressionEvaluator(expression);
+          ExpressionEvaluator evaluator = SavedSettings.getCalculatorMode().newEvaluator(expression);
           resultValue = evaluator.getResult();
           resultView.setText(resultValue.format());
           return true;

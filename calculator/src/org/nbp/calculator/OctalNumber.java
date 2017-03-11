@@ -11,17 +11,18 @@ public class OctalNumber extends WholeNumber {
     this(0);
   }
 
-  public OctalNumber (String number) {
-    super(number, RADIX);
+  public final static OctalNumber valueOf (String string) {
+    return new OctalNumber(toLong(string));
   }
 
-  public final static OctalNumber valueOf (long value) {
-    return new OctalNumber(value);
+  @Override
+  public final String toPureString () {
+    return Long.toOctalString(value);
   }
 
   @Override
   public final String toString () {
-    return Long.toOctalString(value);
+    return toPureString();
   }
 
   @Override

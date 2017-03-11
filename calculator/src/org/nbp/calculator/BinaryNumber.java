@@ -11,17 +11,18 @@ public class BinaryNumber extends WholeNumber {
     this(0);
   }
 
-  public BinaryNumber (String number) {
-    super(number, RADIX);
+  public final static BinaryNumber valueOf (String string) {
+    return new BinaryNumber(toLong(string));
   }
 
-  public final static BinaryNumber valueOf (long value) {
-    return new BinaryNumber(value);
+  @Override
+  public final String toPureString () {
+    return Long.toBinaryString(value);
   }
 
   @Override
   public final String toString () {
-    return Long.toBinaryString(value);
+    return toPureString();
   }
 
   @Override
