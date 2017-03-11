@@ -90,21 +90,23 @@ public class CalculatorActivity extends CommonActivity {
   private Button deleteButton;
 
   private final void setExpressionNavigationStates () {
-    {
-      int end = expressionView.getSelectionEnd();
-      boolean enabled = end > 0;
+    synchronized (EXPRESSION_LOCK) {
+      {
+        int end = expressionView.getSelectionEnd();
+        boolean enabled = end > 0;
 
-      leftButton.setEnabled(enabled);
-      backspaceButton.setEnabled(enabled);
-    }
+        leftButton.setEnabled(enabled);
+        backspaceButton.setEnabled(enabled);
+      }
 
-    {
-      int length = expressionView.length();
-      int start = expressionView.getSelectionStart();
-      boolean enabled = start < length;
+      {
+        int length = expressionView.length();
+        int start = expressionView.getSelectionStart();
+        boolean enabled = start < length;
 
-      rightButton.setEnabled(enabled);
-      deleteButton.setEnabled(enabled);
+        rightButton.setEnabled(enabled);
+        deleteButton.setEnabled(enabled);
+      }
     }
   }
 
@@ -152,30 +154,33 @@ public class CalculatorActivity extends CommonActivity {
 
   private final boolean evaluateExpression (boolean showError) {
     expressionSaveDelay.start();
-    String expression = expressionView.getText().toString();
 
-    try {
+    synchronized (EXPRESSION_LOCK) {
+      String expression = expressionView.getText().toString();
+
       try {
-        ExpressionEvaluator evaluator = SavedSettings.getCalculatorMode().newExpressionEvaluator(expression);
-        resultValue = evaluator.getResult();
-        resultView.setText(resultValue.format());
-        return true;
-      } catch (NoExpressionException exception) {
-        resultValue = null;
-        resultView.setText("");
-      }
-    } catch (ExpressionException exception) {
-      if (showError) {
-        resultValue = null;
-        resultView.setText(exception.getMessage());
-        expressionView.setSelection(exception.getLocation());
-      } else {
-        char indicator = '?';
-        CharSequence text = resultView.getText();
-        int length = text.length();
+        try {
+          ExpressionEvaluator evaluator = SavedSettings.getCalculatorMode().newExpressionEvaluator(expression);
+          resultValue = evaluator.getResult();
+          resultView.setText(resultValue.format());
+          return true;
+        } catch (NoExpressionException exception) {
+          resultValue = null;
+          resultView.setText("");
+        }
+      } catch (ExpressionException exception) {
+        if (showError) {
+          resultValue = null;
+          resultView.setText(exception.getMessage());
+          expressionView.setSelection(exception.getLocation());
+        } else {
+          char indicator = '?';
+          CharSequence text = resultView.getText();
+          int length = text.length();
 
-        if ((length == 0) || (text.charAt(length-1) != indicator)) {
-          resultView.setText(text.toString() + indicator);
+          if ((length == 0) || (text.charAt(length-1) != indicator)) {
+            resultView.setText(text.toString() + indicator);
+          }
         }
       }
     }
@@ -201,8 +206,10 @@ public class CalculatorActivity extends CommonActivity {
     }
 
     public final void clearWithoutEvaluating () {
-      DO_NOT_EVALUATE = true;
-      expressionView.setText("");
+      synchronized (EXPRESSION_LOCK) {
+        DO_NOT_EVALUATE = true;
+        expressionView.setText("");
+      }
     }
   }
 
@@ -317,10 +324,13 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void insertExpressionText (String text) {
-    int start = expressionView.getSelectionStart();
-    int end = expressionView.getSelectionEnd();
-    expressionView.getText().replace(start, end, text);
-    expressionView.setSelection(start+text.length());
+    synchronized (EXPRESSION_LOCK) {
+      int start = expressionView.getSelectionStart();
+      int end = expressionView.getSelectionEnd();
+
+      expressionView.getText().replace(start, end, text);
+      expressionView.setSelection(start+text.length());
+    }
   }
 
   private final void performClick (int view) {
@@ -450,8 +460,10 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          expressionView.setText("");
-          setFocusToExpression();
+          synchronized (EXPRESSION_LOCK) {
+            expressionView.setText("");
+            setFocusToExpression();
+          }
         }
       }
     );
@@ -461,9 +473,14 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          resultView.setText("");
-          expressionView.setText("");
-          setFocusToExpression();
+          synchronized (EXPRESSION_LOCK) {
+            resultValue = null;
+            resultView.setText("");
+
+            expressionView.setText("");
+            setFocusToExpression();
+          }
+
           return true;
         }
       }
@@ -507,8 +524,11 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void handleEnumerationChange (Enum newValue) {
           setActiveKeypads();
-          resultValue = null;
-          expressionView.setText("");
+
+          synchronized (EXPRESSION_LOCK) {
+            resultValue = null;
+            expressionView.setText("");
+          }
         }
       }
     );
@@ -548,11 +568,13 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          int start = expressionView.getSelectionStart();
+          synchronized (EXPRESSION_LOCK) {
+            int start = expressionView.getSelectionStart();
 
-          if (start > 0) {
-            expressionView.setSelection(start-1);
-            setExpressionNavigationStates();
+            if (start > 0) {
+              expressionView.setSelection(start-1);
+              setExpressionNavigationStates();
+            }
           }
         }
       }
@@ -563,9 +585,11 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          if (expressionView.getSelectionStart() > 0) {
-            expressionView.setSelection(0);
-            setExpressionNavigationStates();
+          synchronized (EXPRESSION_LOCK) {
+            if (expressionView.getSelectionStart() > 0) {
+              expressionView.setSelection(0);
+              setExpressionNavigationStates();
+            }
           }
 
           return true;
@@ -580,11 +604,13 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          int end = expressionView.getSelectionEnd();
+          synchronized (EXPRESSION_LOCK) {
+            int end = expressionView.getSelectionEnd();
 
-          if (end < expressionView.length()) {
-            expressionView.setSelection(end+1);
-            setExpressionNavigationStates();
+            if (end < expressionView.length()) {
+              expressionView.setSelection(end+1);
+              setExpressionNavigationStates();
+            }
           }
         }
       }
@@ -595,11 +621,13 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          int length = expressionView.length();
+          synchronized (EXPRESSION_LOCK) {
+            int length = expressionView.length();
 
-          if (expressionView.getSelectionEnd() < length) {
-            expressionView.setSelection(length);
-            setExpressionNavigationStates();
+            if (expressionView.getSelectionEnd() < length) {
+              expressionView.setSelection(length);
+              setExpressionNavigationStates();
+            }
           }
 
           return true;
@@ -614,17 +642,19 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          int start = expressionView.getSelectionStart();
-          int end = expressionView.getSelectionEnd();
+          synchronized (EXPRESSION_LOCK) {
+            int start = expressionView.getSelectionStart();
+            int end = expressionView.getSelectionEnd();
 
-          if (start == end) {
-            if (start == 0) return;
-            end = start;
-            start -= 1;
+            if (start == end) {
+              if (start == 0) return;
+              end = start;
+              start -= 1;
+            }
+
+            expressionView.getText().delete(start, end);
+            setExpressionNavigationStates();
           }
-
-          expressionView.getText().delete(start, end);
-          setExpressionNavigationStates();
         }
       }
     );
@@ -634,11 +664,13 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          int end = expressionView.getSelectionEnd();
+          synchronized (EXPRESSION_LOCK) {
+            int end = expressionView.getSelectionEnd();
 
-          if (end > 0) {
-            expressionView.getText().delete(0, end);
-            setExpressionNavigationStates();
+            if (end > 0) {
+              expressionView.getText().delete(0, end);
+              setExpressionNavigationStates();
+            }
           }
 
           return true;
@@ -653,16 +685,18 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          int start = expressionView.getSelectionStart();
-          int end = expressionView.getSelectionEnd();
+          synchronized (EXPRESSION_LOCK) {
+            int start = expressionView.getSelectionStart();
+            int end = expressionView.getSelectionEnd();
 
-          if (start == end) {
-            if (end == expressionView.length()) return;
-            end = start + 1;
+            if (start == end) {
+              if (end == expressionView.length()) return;
+              end = start + 1;
+            }
+
+            expressionView.getText().delete(start, end);
+            setExpressionNavigationStates();
           }
-
-          expressionView.getText().delete(start, end);
-          setExpressionNavigationStates();
         }
       }
     );
@@ -672,12 +706,14 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          int start = expressionView.getSelectionStart();
-          int length = expressionView.length();
+          synchronized (EXPRESSION_LOCK) {
+            int start = expressionView.getSelectionStart();
+            int length = expressionView.length();
 
-          if (start < length) {
-            expressionView.getText().delete(start, length);
-            setExpressionNavigationStates();
+            if (start < length) {
+              expressionView.getText().delete(start, length);
+              setExpressionNavigationStates();
+            }
           }
 
           return true;
@@ -720,9 +756,11 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (startHistoryNavigationUp()) {
-            History.moveToPreviousEntry();
-            finishHistoryNavigation();
+          synchronized (EXPRESSION_LOCK) {
+            if (startHistoryNavigationUp()) {
+              History.moveToPreviousEntry();
+              finishHistoryNavigation();
+            }
           }
         }
       }
@@ -733,9 +771,11 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          if (startHistoryNavigationUp()) {
-            History.moveToFirstEntry();
-            finishHistoryNavigation();
+          synchronized (EXPRESSION_LOCK) {
+            if (startHistoryNavigationUp()) {
+              History.moveToFirstEntry();
+              finishHistoryNavigation();
+            }
           }
 
           return true;
@@ -750,9 +790,11 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (startHistoryNavigationDown()) {
-            History.moveToNextEntry();
-            finishHistoryNavigation();
+          synchronized (EXPRESSION_LOCK) {
+            if (startHistoryNavigationDown()) {
+              History.moveToNextEntry();
+              finishHistoryNavigation();
+            }
           }
         }
       }
@@ -763,9 +805,11 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          if (startHistoryNavigationDown()) {
-            History.moveToLastEntry();
-            finishHistoryNavigation();
+          synchronized (EXPRESSION_LOCK) {
+            if (startHistoryNavigationDown()) {
+              History.moveToLastEntry();
+              finishHistoryNavigation();
+            }
           }
 
           return true;
