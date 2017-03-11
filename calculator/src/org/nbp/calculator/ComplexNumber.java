@@ -21,21 +21,85 @@ public class ComplexNumber extends GenericNumber {
     this(Double.valueOf(r));
   }
 
-  private final static char STRING_DELIMITER = '_';
-
   public final static ComplexNumber valueOf (String string) {
-    int delimiter = string.indexOf(STRING_DELIMITER);
-    if (delimiter < 0) return new ComplexNumber(Double.valueOf(string));
+    String s = string;
+    String r = "0";
+    String i = null;
+    boolean hasI = false;
 
-    return new ComplexNumber(
-      Double.valueOf(string.substring(0, delimiter)),
-      Double.valueOf(string.substring(delimiter+1))
-    );
+    {
+      int length = s.length();
+
+      if (length > 0) {
+        if (s.charAt(--length) == 'i') {
+          s = s.substring(0, length);
+          hasI = true;
+        }
+      }
+    }
+
+    {
+      int index = s.lastIndexOf('+');
+      if (index < 1) index = s.lastIndexOf('-');
+
+      if (index > 0) {
+        r = s.substring(0, index);
+        i = s.substring(index);
+      } else if (hasI) {
+        i = s;
+      } else {
+        r = s;
+      }
+    }
+
+    if (i == null) {
+      i = "0";
+    } else if (!hasI) {
+      i = null;
+    } else if (i.isEmpty() || !Character.isDigit(i.charAt(i.length() - 1))) {
+      i += '1';
+    }
+
+    if (i != null) {
+      try {
+        return new ComplexNumber(Double.valueOf(r), Double.valueOf(i));
+      } catch (NumberFormatException exception) {
+      }
+    }
+
+    throw new NumberFormatException(("invalid complex number: " + string));
+  }
+
+  private final static String toString (double real) {
+    if (Math.rint(real) == real) {
+      boolean negative = real < 0d;
+      if (negative) real = -real;
+
+      if (real <= (double)Long.MAX_VALUE) {
+        long integer = (long)real;
+        if (negative) integer = -integer;
+        return Long.toString(integer);
+      }
+    }
+
+    return Double.toString(real);
   }
 
   @Override
   public final String toString () {
-    return (Double.toString(real) + STRING_DELIMITER + Double.toString(imag));
+    String r = toString(real);
+    if (!hasImag()) return r;
+
+    StringBuilder sb = new StringBuilder(toString(imag));
+    if (Math.abs(imag) == 1d) sb.setLength(sb.length() - 1);
+    sb.append('i');
+
+    if (hasReal()) {
+      if (sb.charAt(0) != '-') sb.insert(0, '+');
+      sb.insert(0, r);
+    }
+
+    return sb.toString();
   }
 
   @Override
