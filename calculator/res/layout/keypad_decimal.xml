@@ -32,7 +32,7 @@
     <Button
       android:layout_weight="1"
       android:text="x10^y"
-      android:hint="×10^"
+      android:tag="×10^"
       android:contentDescription="@string/description_sign_E"
      />
   </TableRow>
@@ -65,7 +65,7 @@
     <Button
       android:layout_weight="1"
       android:text="x^y"
-      android:hint="^"
+      android:tag="^"
       android:contentDescription="@string/description_sign_exponentiate"
      />
   </TableRow>

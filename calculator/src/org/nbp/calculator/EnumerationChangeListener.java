@@ -53,7 +53,7 @@ public class EnumerationChangeListener<E extends Enum<E>> {
 
   private final void changeSetting (int index) {
     Enum value = enumerationValues[index];
-    changeButton.setHint(value.name());
+    changeButton.setTag(value);
     changeButton.setText(getLabel(index));
     changeButton.setContentDescription(getDescription(index));
 
@@ -79,8 +79,8 @@ public class EnumerationChangeListener<E extends Enum<E>> {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          String name = changeButton.getHint().toString();
-          int index = enumerationNames.get(name).ordinal();
+          E value = (E)changeButton.getTag();
+          int index = value.ordinal();
           if ((index += 1) == enumerationValues.length) index = 0;
           changeSetting(index);
         }

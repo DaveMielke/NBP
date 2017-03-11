@@ -361,7 +361,7 @@ public class CalculatorActivity extends CommonActivity {
       @Override
       public void onClick (View view) {
         Button button = (Button)view;
-        insertExpressionText(button.getHint().toString());
+        insertExpressionText(button.getTag().toString());
         setFocusToExpression();
         showKeypad(0);
       }
@@ -385,23 +385,23 @@ public class CalculatorActivity extends CommonActivity {
                 key.setBackgroundColor(0);
 
                 String text = key.getText().toString();
-                CharSequence hint = key.getHint();
+                CharSequence tag = (CharSequence)key.getTag();
 
                 if (text.equals("=")) {
                   key.setOnClickListener(finishExpressionListener);
                 } else {
                   key.setOnClickListener(insertTextListener);
 
-                  if ((hint == null) || (hint.length() == 0)) {
+                  if ((tag == null) || (tag.length() == 0)) {
                     Function function = Functions.get(text);
 
                     if (function != null) {
-                      hint = function.getName() + Function.ARGUMENT_PREFIX;
+                      tag = function.getName() + Function.ARGUMENT_PREFIX;
                     } else {
-                      hint = text;
+                      tag = text;
                     }
 
-                    key.setHint(hint);
+                    key.setTag(tag);
                   }
 
                   {
