@@ -24,8 +24,15 @@
     </TableLayout>
 
     <TableRow>
-      <include layout="@layout/memory_buttons" />
-      <include layout="@layout/navigation_buttons" />
+      <include
+        layout="@layout/memory_buttons"
+        android:layout_weight="1"
+       />
+
+      <include
+        layout="@layout/navigation_buttons"
+        android:layout_weight="1"
+       />
     </TableRow>
 
     <include layout="@layout/keypads" />

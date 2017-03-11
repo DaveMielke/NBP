@@ -235,12 +235,12 @@ public class CalculatorActivity extends CommonActivity {
                 setFocusToKeypad();
                 return true;
 
-              case CharacterUtilities.CHAR_SO: // control N
-                performLongClick(R.id.button_complexNotation);
+              case CharacterUtilities.CHAR_CR: // control M
+                performLongClick(R.id.button_calculatorMode);
                 return true;
 
-              case CharacterUtilities.CHAR_DC2: // control R
-                setFocusToResult();
+              case CharacterUtilities.CHAR_SO: // control N
+                performLongClick(R.id.button_complexNotation);
                 return true;
 
               case CharacterUtilities.CHAR_DC3: // control S
@@ -429,50 +429,6 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setCalculatorModeButtonListener () {
-    new EnumerationChangeListener<CalculatorMode>(this,
-      (Button)findViewById(R.id.button_calculatorMode), CalculatorMode.class,
-      SavedSettings.CALCULATOR_MODE, DefaultSettings.CALCULATOR_MODE,
-
-      new EnumerationChangeListener.Handler () {
-        @Override
-        public void handleEnumerationChange (Enum newValue) {
-          setActiveKeypads();
-          resultValue = null;
-          expressionView.setText("");
-        }
-      }
-    );
-  }
-
-  private final void setComplexNotationButtonListener () {
-    new EnumerationChangeListener<ComplexNotation>(this,
-      (Button)findViewById(R.id.button_complexNotation), ComplexNotation.class,
-      SavedSettings.COMPLEX_NOTATION, DefaultSettings.COMPLEX_NOTATION,
-
-      new EnumerationChangeListener.Handler () {
-        @Override
-        public void handleEnumerationChange (Enum newValue) {
-          evaluateExpression(false);
-        }
-      }
-    );
-  }
-
-  private final void setAngleUnitButtonListener () {
-    new EnumerationChangeListener<AngleUnit>(this,
-      (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
-      SavedSettings.ANGLE_UNIT, DefaultSettings.ANGLE_UNIT,
-
-      new EnumerationChangeListener.Handler () {
-        @Override
-        public void handleEnumerationChange (Enum newValue) {
-          evaluateExpression(false);
-        }
-      }
-    );
-  }
-
   private final void setClearButtonListener () {
     setClickListener(
       R.id.button_clear,
@@ -522,6 +478,50 @@ public class CalculatorActivity extends CommonActivity {
           showKeypad(0);
           setFocusToKeypad();
           return true;
+        }
+      }
+    );
+  }
+
+  private final void setCalculatorModeButtonListener () {
+    new EnumerationChangeListener<CalculatorMode>(this,
+      (Button)findViewById(R.id.button_calculatorMode), CalculatorMode.class,
+      SavedSettings.CALCULATOR_MODE, DefaultSettings.CALCULATOR_MODE,
+
+      new EnumerationChangeListener.Handler () {
+        @Override
+        public void handleEnumerationChange (Enum newValue) {
+          setActiveKeypads();
+          resultValue = null;
+          expressionView.setText("");
+        }
+      }
+    );
+  }
+
+  private final void setComplexNotationButtonListener () {
+    new EnumerationChangeListener<ComplexNotation>(this,
+      (Button)findViewById(R.id.button_complexNotation), ComplexNotation.class,
+      SavedSettings.COMPLEX_NOTATION, DefaultSettings.COMPLEX_NOTATION,
+
+      new EnumerationChangeListener.Handler () {
+        @Override
+        public void handleEnumerationChange (Enum newValue) {
+          evaluateExpression(false);
+        }
+      }
+    );
+  }
+
+  private final void setAngleUnitButtonListener () {
+    new EnumerationChangeListener<AngleUnit>(this,
+      (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
+      SavedSettings.ANGLE_UNIT, DefaultSettings.ANGLE_UNIT,
+
+      new EnumerationChangeListener.Handler () {
+        @Override
+        public void handleEnumerationChange (Enum newValue) {
+          evaluateExpression(false);
         }
       }
     );
@@ -1069,9 +1069,7 @@ public class CalculatorActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.calculator);
-    new CalculatorConfigurator(this).configureCalculator();
 
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);
@@ -1088,13 +1086,17 @@ public class CalculatorActivity extends CommonActivity {
       expressionView.setShowSoftInputOnFocus(false);
     }
 
+    prepareKeypads();
+    setClearButtonListener();
+    setAlternateKeypadButtonListener();
+    setCalculatorModeButtonListener();
+    setComplexNotationButtonListener();
+    setAngleUnitButtonListener();
+
     setExpressionListener();
     setEnterKeyListener();
     restoreExpression();
     setFocusToExpression();
-
-    prepareKeypads();
-    setActiveKeypads();
 
     setLeftButtonListener();
     setRightButtonListener();
@@ -1105,12 +1107,6 @@ public class CalculatorActivity extends CommonActivity {
     setUpButtonListener();
     setDownButtonListener();
     setHistoryNavigationStates();
-
-    setClearButtonListener();
-    setCalculatorModeButtonListener();
-    setComplexNotationButtonListener();
-    setAngleUnitButtonListener();
-    setAlternateKeypadButtonListener();
 
     setVariablesButtonListener();
     setFunctionsButtonListener();

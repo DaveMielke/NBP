@@ -88,7 +88,7 @@ public class EnumerationChangeListener<E extends Enum<E>> {
     );
   }
 
-  private final void registerResetListener () {
+  private final void registerSelectListener () {
     changeButton.setOnLongClickListener(
       new View.OnLongClickListener() {
         @Override
@@ -156,7 +156,7 @@ public class EnumerationChangeListener<E extends Enum<E>> {
     }
 
     registerCycleListener();
-    registerResetListener();
+    registerSelectListener();
   }
 
   public EnumerationChangeListener (
