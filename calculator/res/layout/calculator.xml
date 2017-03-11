@@ -18,7 +18,7 @@
         <include layout="@layout/clear_button" />
         <include layout="@layout/alternate_keypad_button" />
         <include layout="@layout/calculator_mode_button" />
-        <include layout="@layout/complex_notation_button" />
+        <include layout="@layout/decimal_notation_button" />
         <include layout="@layout/angle_unit_button" />
       </TableRow>
     </TableLayout>

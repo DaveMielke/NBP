@@ -111,10 +111,10 @@
   <string name="description_calculatorMode_decimal">Decimal</string>
   <string name="description_calculatorMode_hexadecimal">Hexadecimal</string>
 
-  <string name="title_complexNotation">Complex Notation</string>
-  <string name="description_complexNotation_engineering">Engineering</string>
-  <string name="description_complexNotation_fixed">Fixed</string>
-  <string name="description_complexNotation_scientific">Scientific</string>
+  <string name="title_decimalNotation">Decimal Notation</string>
+  <string name="description_decimalNotation_engineering">Engineering</string>
+  <string name="description_decimalNotation_fixed">Fixed</string>
+  <string name="description_decimalNotation_scientific">Scientific</string>
 
   <string name="title_angleUnit">Angle Unit</string>
   <string name="description_angleUnit_degrees">Degrees</string>

@@ -40,7 +40,7 @@ public class ComplexNumber extends GenericNumber {
 
   @Override
   public final String format () {
-    return SavedSettings.getComplexNotation().getFormatter().format(this);
+    return SavedSettings.getDecimalNotation().getComplexFormatter().format(this);
   }
 
   public final double real () {

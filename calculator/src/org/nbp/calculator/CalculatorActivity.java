@@ -262,7 +262,7 @@ public class CalculatorActivity extends CommonActivity {
                 return true;
 
               case CharacterUtilities.CHAR_SO: // control N
-                performLongClick(R.id.button_complexNotation);
+                performLongClick(R.id.button_decimalNotation);
                 return true;
 
               case CharacterUtilities.CHAR_DC3: // control S
@@ -534,10 +534,10 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final void setComplexNotationButtonListener () {
-    new EnumerationChangeListener<ComplexNotation>(this,
-      (Button)findViewById(R.id.button_complexNotation), ComplexNotation.class,
-      SavedSettings.COMPLEX_NOTATION, DefaultSettings.COMPLEX_NOTATION,
+  private final void setDecimalNotationButtonListener () {
+    new EnumerationChangeListener<DecimalNotation>(this,
+      (Button)findViewById(R.id.button_decimalNotation), DecimalNotation.class,
+      SavedSettings.DECIMAL_NOTATION, DefaultSettings.DECIMAL_NOTATION,
 
       new EnumerationChangeListener.Handler () {
         @Override
@@ -1149,7 +1149,7 @@ public class CalculatorActivity extends CommonActivity {
     setClearButtonListener();
     setAlternateKeypadButtonListener();
     setCalculatorModeButtonListener();
-    setComplexNotationButtonListener();
+    setDecimalNotationButtonListener();
     setAngleUnitButtonListener();
 
     setExpressionListener();
