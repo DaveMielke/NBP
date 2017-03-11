@@ -11,6 +11,7 @@ import java.util.HashSet;
 
 import org.nbp.common.CommonUtilities;
 import org.nbp.common.CommonActivity;
+import org.nbp.common.Timeout;
 
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.CharacterUtilities;
@@ -70,6 +71,7 @@ public class CalculatorActivity extends CommonActivity {
     view.setOnLongClickListener(listener);
   }
 
+  private final static Object EXPRESSION_LOCK = new Object();
   private EditText expressionView;
   private TextView resultView;
   private GenericNumber resultValue;
@@ -115,27 +117,41 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void saveExpression () {
-    SavedSettings.set(SavedSettings.EXPRESSION, expressionView.getText().toString());
-    SavedSettings.set(SavedSettings.START, expressionView.getSelectionStart());
-    SavedSettings.set(SavedSettings.END, expressionView.getSelectionEnd());
+    synchronized (EXPRESSION_LOCK) {
+      SavedSettings.set(SavedSettings.EXPRESSION, expressionView.getText().toString());
+      SavedSettings.set(SavedSettings.START, expressionView.getSelectionStart());
+      SavedSettings.set(SavedSettings.END, expressionView.getSelectionEnd());
+    }
   }
 
+  private final Timeout expressionSaveDelay = new Timeout(1000, "expression-save-delay") {
+    @Override
+    public void run () {
+      saveExpression();
+    }
+  };
+
   private final void restoreExpression () {
-    String expression = SavedSettings.get(SavedSettings.EXPRESSION, "");
-    expressionView.setText(expression);
+    expressionSaveDelay.cancel();
 
-    int start = SavedSettings.get(SavedSettings.START, -1);
-    int end = SavedSettings.get(SavedSettings.END, -1);
-    int length = expression.length();
+    synchronized (EXPRESSION_LOCK) {
+      String expression = SavedSettings.get(SavedSettings.EXPRESSION, "");
+      expressionView.setText(expression);
 
-    if ((0 <= start) && (start <= end) && (end <= length)) {
-      expressionView.setSelection(start, end);
-    } else {
-      expressionView.setSelection(length);
+      int start = SavedSettings.get(SavedSettings.START, -1);
+      int end = SavedSettings.get(SavedSettings.END, -1);
+      int length = expression.length();
+
+      if ((0 <= start) && (start <= end) && (end <= length)) {
+        expressionView.setSelection(start, end);
+      } else {
+        expressionView.setSelection(length);
+      }
     }
   }
 
   private final boolean evaluateExpression (boolean showError) {
+    expressionSaveDelay.start();
     String expression = expressionView.getText().toString();
 
     try {
@@ -147,8 +163,6 @@ public class CalculatorActivity extends CommonActivity {
       } catch (NoExpressionException exception) {
         resultValue = null;
         resultView.setText("");
-      } finally {
-        saveExpression();
       }
     } catch (ExpressionException exception) {
       if (showError) {
