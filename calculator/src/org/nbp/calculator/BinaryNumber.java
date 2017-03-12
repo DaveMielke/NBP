@@ -16,13 +16,13 @@ public class BinaryNumber extends WholeNumber {
   }
 
   @Override
-  public final String toPureString () {
+  public final String toDigits () {
     return Long.toBinaryString(value);
   }
 
   @Override
   public final String toString () {
-    return "0B" + toPureString();
+    return "0B" + toDigits();
   }
 
   @Override

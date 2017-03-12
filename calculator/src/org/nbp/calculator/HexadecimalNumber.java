@@ -16,13 +16,13 @@ public class HexadecimalNumber extends WholeNumber {
   }
 
   @Override
-  public final String toPureString () {
+  public final String toDigits () {
     return Long.toHexString(value).toUpperCase();
   }
 
   @Override
   public final String toString () {
-    return "0X" + toPureString();
+    return "0X" + toDigits();
   }
 
   @Override

@@ -16,16 +16,16 @@ public class OctalNumber extends WholeNumber {
   }
 
   @Override
-  public final String toPureString () {
+  public final String toDigits () {
     return Long.toOctalString(value);
   }
 
   @Override
   public final String toString () {
-    String string = toPureString();
+    String digits = toDigits();
     char prefix = '0';
-    if (string.charAt(0) != prefix) string = prefix + string;
-    return string;
+    if (digits.charAt(0) != prefix) digits = prefix + digits;
+    return digits;
   }
 
   @Override
