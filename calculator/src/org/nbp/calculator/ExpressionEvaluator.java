@@ -67,16 +67,14 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
             }
 
             default: {
-              Object value;
-
-              try {
-                value = (T)Variables.get(name);
-              } catch (NumberFormatException exception) {
-                throw new EvaluateException(R.string.error_incompatible_variable);
+              Variable variable = Variables.get(name);
+              if (variable == null) {
+                throw new EvaluateException(R.string.error_unknown_variable);
               }
 
+              T value = (T)variable.getValue();
               if (value == null) {
-                throw new EvaluateException(R.string.error_unknown_variable);
+                throw new EvaluateException(R.string.error_incompatible_variable);
               }
 
               if (!type.isAssignableFrom(value.getClass())) {

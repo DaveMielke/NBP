@@ -818,24 +818,27 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
-  private final String formatVariableLine (String name, GenericNumber value, String description) {
+  private final String formatVariableLine (Variable variable) {
     StringBuilder sb = new StringBuilder();
-
-    sb.append(name);
+    sb.append(variable.getName());
     sb.append(" = ");
-    sb.append(value.format());
 
-    if (description != null) {
-      sb.append(" (");
-      sb.append(description);
-      sb.append(')');
+    {
+      GenericNumber value = variable.getValue();
+      sb.append((value != null)? value.format(): "?");
+    }
+
+    {
+      String description = variable.getDescription();
+
+      if (description != null) {
+        sb.append(" (");
+        sb.append(description);
+        sb.append(')');
+      }
     }
 
     return sb.toString();
-  }
-
-  private final String formatVariableLine (String name, GenericNumber value) {
-    return formatVariableLine(name, value, null);
   }
 
   private final String getVariableName (List<String> variables, int index) {
@@ -847,7 +850,7 @@ public class CalculatorActivity extends CommonActivity {
     List<String> variables = new ArrayList<String>();
 
     for (String name : Variables.getUserVariableNames()) {
-      variables.add(formatVariableLine(name, Variables.get(name)));
+      variables.add(formatVariableLine(Variables.get(name)));
     }
 
     Collections.sort(variables);
@@ -864,8 +867,7 @@ public class CalculatorActivity extends CommonActivity {
           final List<String> variables = getUserVariableLines();
 
           for (String name : Variables.getSystemVariableNames()) {
-            SystemVariable variable = Variables.getSystemVariable(name);
-            variables.add(formatVariableLine(name, variable.getValue(), variable.getDescription()));
+            variables.add(formatVariableLine(Variables.getSystemVariable(name)));
           }
 
           builder.setItems(

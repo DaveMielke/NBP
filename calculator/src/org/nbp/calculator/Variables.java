@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.LinkedHashMap;
 
 import static org.nbp.common.CommonContext.getContext;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -22,7 +21,7 @@ public abstract class Variables {
   private final static SystemVariables systemVariables = new SystemVariables();
 
   private static void setSystemVariable (String name, GenericNumber value, String description) {
-    systemVariables.put(name, new SystemVariable(value, description));
+    systemVariables.put(name, new SystemVariable(name, value, description));
   }
 
   private static void setSystemVariable (String name, double real, double imag, String description) {
@@ -99,7 +98,7 @@ public abstract class Variables {
     return toArray(systemVariables.keySet());
   }
 
-  public static SystemVariable getSystemVariable (String name) {
+  public static Variable getSystemVariable (String name) {
     return systemVariables.get(name);
   }
 
@@ -123,19 +122,31 @@ public abstract class Variables {
     return true;
   }
 
-  public static GenericNumber get (String name) {
+  public static Variable get (String name) {
     {
       SharedPreferences variables = getUserVariables();
 
       if (variables.contains(name)) {
-        String string = variables.getString(name, null);
-        if (string != null) return SavedSettings.getCalculatorMode().newNumber(string);
+        final String value = variables.getString(name, null);
+
+        if (value != null) {
+          return new Variable(name) {
+            @Override
+            public GenericNumber getValue () {
+              try {
+                return SavedSettings.getCalculatorMode().newNumber(value);
+              } catch (NumberFormatException exception) {
+                return null;
+              }
+            }
+          };
+        }
       }
     }
 
     {
-      SystemVariable variable = getSystemVariable(name);
-      if (variable != null) return variable.getValue();
+      Variable variable = getSystemVariable(name);
+      if (variable != null) return variable;
     }
 
     return null;
