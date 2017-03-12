@@ -13,9 +13,9 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 
-public class EnumerationChangeListener<E extends Enum<E>> {
-  public interface Handler {
-    public void handleEnumerationChange (Enum value);
+public class EnumerationButtonListener<E extends Enum<E>> {
+  public interface ChangeHandler {
+    public void handleChange (Enum value);
   }
 
   private final Class<E> enumerationType;
@@ -24,7 +24,7 @@ public class EnumerationChangeListener<E extends Enum<E>> {
 
   private final Activity mainActivity;
   private final Button changeButton;
-  private final Handler changeHandler;
+  private final ChangeHandler changeHandler;
   private final String settingName;
   private final E initialValue;
 
@@ -62,7 +62,7 @@ public class EnumerationChangeListener<E extends Enum<E>> {
     }
 
     if (changeHandler != null) {
-      changeHandler.handleEnumerationChange(value);
+      changeHandler.handleChange(value);
     }
   }
 
@@ -130,9 +130,9 @@ public class EnumerationChangeListener<E extends Enum<E>> {
     );
   }
 
-  public EnumerationChangeListener (
+  public EnumerationButtonListener (
     Activity activity, Button button, Class<E> type,
-    String setting, E initial, Handler handler
+    String setting, E initial, ChangeHandler handler
   ) {
     mainActivity = activity;
     changeButton = button;
@@ -159,20 +159,20 @@ public class EnumerationChangeListener<E extends Enum<E>> {
     registerSelectListener();
   }
 
-  public EnumerationChangeListener (
+  public EnumerationButtonListener (
     Activity activity, Button button, Class<E> type,
     String setting, E initial
   ) {
     this(activity, button, type, setting, initial, null);
   }
 
-  public EnumerationChangeListener (
+  public EnumerationButtonListener (
     Activity activity, Button button, Class<E> type, String setting
   ) {
     this(activity, button, type, setting, null);
   }
 
-  public EnumerationChangeListener (Activity activity, Button button, Class<E> type) {
+  public EnumerationButtonListener (Activity activity, Button button, Class<E> type) {
     this(activity, button, type, null);
   }
 }

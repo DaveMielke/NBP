@@ -516,13 +516,13 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setCalculatorModeButtonListener () {
-    new EnumerationChangeListener<CalculatorMode>(this,
+    new EnumerationButtonListener<CalculatorMode>(this,
       (Button)findViewById(R.id.button_calculatorMode), CalculatorMode.class,
       SavedSettings.CALCULATOR_MODE, DefaultSettings.CALCULATOR_MODE,
 
-      new EnumerationChangeListener.Handler () {
+      new EnumerationButtonListener.ChangeHandler () {
         @Override
-        public void handleEnumerationChange (Enum newValue) {
+        public void handleChange (Enum newValue) {
           setActiveKeypads();
 
           synchronized (EXPRESSION_LOCK) {
@@ -535,13 +535,13 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setDecimalNotationButtonListener () {
-    new EnumerationChangeListener<DecimalNotation>(this,
+    new EnumerationButtonListener<DecimalNotation>(this,
       (Button)findViewById(R.id.button_decimalNotation), DecimalNotation.class,
       SavedSettings.DECIMAL_NOTATION, DefaultSettings.DECIMAL_NOTATION,
 
-      new EnumerationChangeListener.Handler () {
+      new EnumerationButtonListener.ChangeHandler () {
         @Override
-        public void handleEnumerationChange (Enum newValue) {
+        public void handleChange (Enum newValue) {
           evaluateExpression(false);
         }
       }
@@ -549,13 +549,13 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setAngleUnitButtonListener () {
-    new EnumerationChangeListener<AngleUnit>(this,
+    new EnumerationButtonListener<AngleUnit>(this,
       (Button)findViewById(R.id.button_angleUnit), AngleUnit.class,
       SavedSettings.ANGLE_UNIT, DefaultSettings.ANGLE_UNIT,
 
-      new EnumerationChangeListener.Handler () {
+      new EnumerationButtonListener.ChangeHandler () {
         @Override
-        public void handleEnumerationChange (Enum newValue) {
+        public void handleChange (Enum newValue) {
           evaluateExpression(false);
         }
       }
