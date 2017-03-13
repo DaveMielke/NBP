@@ -68,20 +68,14 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
 
             default: {
               Variable variable = Variables.get(name);
+
               if (variable == null) {
                 throw new EvaluateException(R.string.error_unknown_variable);
               }
 
-              T value = (T)variable.getValue();
-              if (value == null) {
-                throw new EvaluateException(R.string.error_incompatible_variable);
-              }
-
-              if (!type.isAssignableFrom(value.getClass())) {
-                throw new EvaluateException(R.string.error_incompatible_variable);
-              }
-
-              return (T)value;
+              T value = (T)variable.getValue(type);
+              if (value != null) return value;
+              throw new EvaluateException(R.string.error_incompatible_variable);
             }
           }
         }

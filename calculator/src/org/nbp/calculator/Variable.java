@@ -1,5 +1,7 @@
 package org.nbp.calculator;
 
+import org.nbp.common.LanguageUtilities;
+
 public abstract class Variable {
   private final String variableName;
 
@@ -13,6 +15,25 @@ public abstract class Variable {
 
   public String getDescription () {
     return null;
+  }
+
+  public final <T extends GenericNumber> T getValue (Class<T> type) {
+    GenericNumber value = getValue();
+    if (value == null) return null;
+
+    if (!LanguageUtilities.canAssign(type, value)) {
+      try {
+        value = newNumber(value.toString());
+      } catch (NumberFormatException exception) {
+        return null;
+      }
+    }
+
+    return (T)value;
+  }
+
+  protected final GenericNumber newNumber (String value) {
+    return SavedSettings.getCalculatorMode().newNumber(value);
   }
 
   protected abstract GenericNumber getValue ();

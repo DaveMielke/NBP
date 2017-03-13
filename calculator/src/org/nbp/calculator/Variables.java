@@ -134,7 +134,7 @@ public abstract class Variables {
             @Override
             public GenericNumber getValue () {
               try {
-                return SavedSettings.getCalculatorMode().newNumber(value);
+                return newNumber(value);
               } catch (NumberFormatException exception) {
                 return null;
               }

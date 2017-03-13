@@ -38,7 +38,7 @@ public abstract class Function {
 
   protected final boolean verifyValue (Object value, Class type) {
     if (!verifyValue(value)) return false;
-    if (!LanguageUtilities.canAssign(type, value.getClass())) return false;
+    if (!LanguageUtilities.canAssign(type, value)) return false;
     return true;
   }
 

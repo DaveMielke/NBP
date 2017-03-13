@@ -15,6 +15,10 @@ public abstract class LanguageUtilities {
     return to.isAssignableFrom(from);
   }
 
+  public static boolean canAssign (Class to, Object from) {
+    return canAssign(to, from.getClass());
+  }
+
   public static boolean canAssign (Class to, String from) {
     try {
       return canAssign(to, Class.forName(from));
