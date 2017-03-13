@@ -4,8 +4,8 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
-  public ComplexEvaluator (String expression) throws ExpressionException {
-    super(expression);
+  public ComplexEvaluator () {
+    super();
   }
 
   private final static String DECIMAL_DIGIT = "[0-9]";
@@ -15,7 +15,7 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
   + "((?<!^)[Ee][-+]?" + DECIMAL_DIGIT + "+)?"
   );
 
-  private final int findEndOfDecimal (int start, int end) throws ExpressionException {
+  private final int findEndOfDecimal (int start, int end) throws ParseException {
     return findEndOfPattern(DECIMAL_PATTERN, start, end, R.string.error_invalid_decimal);
   }
 
@@ -60,12 +60,12 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
   + "((?<!^)[Pp][-+]?" + DECIMAL_DIGIT + "+)?"
   );
 
-  private final int findEndOfHexadecimal (int start, int end) throws ExpressionException {
+  private final int findEndOfHexadecimal (int start, int end) throws ParseException {
     return findEndOfPattern(HEXADECIMAL_PATTERN, start, end, R.string.error_invalid_hexadecimal);
   }
 
   @Override
-  protected final void parseExpression () throws ExpressionException {
+  protected final void parseExpression () throws ParseException {
     final int length = expressionText.length();
     int end = 0;
 

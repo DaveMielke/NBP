@@ -3,8 +3,8 @@ package org.nbp.calculator;
 public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
   protected abstract int getRadix ();
 
-  public WholeEvaluator (String expression) throws ExpressionException {
-    super(expression);
+  public WholeEvaluator () {
+    super();
   }
 
   private final boolean isDigit (char character) {
@@ -12,7 +12,7 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
   }
 
   @Override
-  protected final void parseExpression () throws ExpressionException {
+  protected final void parseExpression () throws ParseException {
     final int length = expressionText.length();
     int end = 0;
 

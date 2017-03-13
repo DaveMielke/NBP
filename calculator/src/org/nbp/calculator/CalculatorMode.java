@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public enum CalculatorMode {
   DECIMAL("DEC", R.string.description_calculatorMode_decimal,
+    new ComplexEvaluator(),
+
     new Keypad[] {
       Keypad.DECIMAL,
       Keypad.FUNCTION
@@ -14,17 +16,12 @@ public enum CalculatorMode {
       public GenericNumber newNumber (String string) {
         return ComplexNumber.valueOf(string);
       }
-
-      @Override
-      public ExpressionEvaluator newEvaluator (
-        String expression
-      ) throws ExpressionException {
-        return new ComplexEvaluator(expression);
-      }
     }
   ),
 
   HEXADECIMAL("HEX", R.string.description_calculatorMode_hexadecimal,
+    new HexadecimalEvaluator(),
+
     new Keypad[] {
       Keypad.HEXADECIMAL
     },
@@ -34,22 +31,11 @@ public enum CalculatorMode {
       public GenericNumber newNumber (String string) {
         return HexadecimalNumber.valueOf(string);
       }
-
-      @Override
-      public ExpressionEvaluator newEvaluator (
-        String expression
-      ) throws ExpressionException {
-        return new HexadecimalEvaluator(expression);
-      }
     }
   );
 
   private interface Properties {
     public GenericNumber newNumber (String string);
-
-    public ExpressionEvaluator newEvaluator (
-      String expression
-    ) throws ExpressionException;
   }
 
   public final int getTitle () {
@@ -58,7 +44,8 @@ public enum CalculatorMode {
 
   private final String modeLabel;
   private final int modeDescription;
-  private final Keypad[] modeKeypads;
+  private final ExpressionEvaluator expressionEvaluator;
+  private final Keypad[] activeKeypads;
   private final Properties modeProperties;
 
   public final String getLabel () {
@@ -69,24 +56,27 @@ public enum CalculatorMode {
     return modeDescription;
   }
 
-  public final Keypad[] getKeypads () {
-    return Arrays.copyOf(modeKeypads, modeKeypads.length);
+  public final ExpressionEvaluator getEvaluator () {
+    return expressionEvaluator;
+  }
+
+  public final Keypad[] getActiveKeypads () {
+    return Arrays.copyOf(activeKeypads, activeKeypads.length);
   }
 
   public final GenericNumber newNumber (String string) {
     return modeProperties.newNumber(string);
   }
 
-  public final ExpressionEvaluator newEvaluator (
-    String expression
-  ) throws ExpressionException {
-    return modeProperties.newEvaluator(expression);
-  }
-
-  private CalculatorMode (String label, int description, Keypad[] keypads, Properties properties) {
+  private CalculatorMode (
+    String label, int description,
+    ExpressionEvaluator evaluator, Keypad[] keypads,
+    Properties properties
+  ) {
     modeLabel = label;
     modeDescription = description;
-    modeKeypads = keypads;
+    expressionEvaluator = evaluator;
+    activeKeypads = keypads;
     modeProperties = properties;
   }
 }

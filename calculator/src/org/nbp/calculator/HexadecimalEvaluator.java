@@ -1,8 +1,8 @@
 package org.nbp.calculator;
 
 public class HexadecimalEvaluator extends WholeEvaluator {
-  public HexadecimalEvaluator (String expression) throws ExpressionException {
-    super(expression);
+  public HexadecimalEvaluator () {
+    super();
   }
 
   @Override

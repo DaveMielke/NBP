@@ -156,11 +156,12 @@ public class CalculatorActivity extends CommonActivity {
     expressionSaveDelay.start();
 
     synchronized (EXPRESSION_LOCK) {
-      String expression = expressionView.getText().toString();
+      ExpressionEvaluator evaluator = SavedSettings.getCalculatorMode().getEvaluator();
 
       try {
         try {
-          ExpressionEvaluator evaluator = SavedSettings.getCalculatorMode().newEvaluator(expression);
+          String expression = expressionView.getText().toString();
+          evaluator.evaluateExpression(expression);
           resultValue = evaluator.getResult();
           resultView.setText(resultValue.format());
           return true;
@@ -174,13 +175,23 @@ public class CalculatorActivity extends CommonActivity {
           resultView.setText(exception.getMessage());
           expressionView.setSelection(exception.getLocation());
         } else {
-          char indicator = '?';
-          CharSequence text = resultView.getText();
-          int length = text.length();
+          StringBuilder sb = new StringBuilder();
 
-          if ((length == 0) || (text.charAt(length-1) != indicator)) {
-            resultView.setText(text.toString() + indicator);
+          {
+            int level = evaluator.getLevel();
+
+            if (level == 0) {
+              sb.append('?');
+            } else {
+              do {
+                sb.append('(');
+              } while (--level > 0);
+            }
           }
+
+          resultValue = evaluator.getResult();
+          if (resultValue != null) sb.append(resultValue.format());
+          resultView.setText(sb.toString());
         }
       }
     }
@@ -360,7 +371,7 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private void setActiveKeypads () {
-    activeKeypads = SavedSettings.getCalculatorMode().getKeypads();
+    activeKeypads = SavedSettings.getCalculatorMode().getActiveKeypads();
     currentKeypad = 0;
     showKeypad();
 

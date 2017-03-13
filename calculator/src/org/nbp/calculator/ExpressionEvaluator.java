@@ -2,10 +2,21 @@ package org.nbp.calculator;
 
 public abstract class ExpressionEvaluator<T extends GenericNumber> extends ExpressionParser {
   protected abstract T evaluateExpression () throws ExpressionException;
-  private final T expressionResult;
+
+  private T currentResult;
+  private int bracketLevel;
 
   public final T getResult () {
-    return expressionResult;
+    return currentResult;
+  }
+
+  public final int getLevel () {
+    return bracketLevel;
+  }
+
+  private final T evaluateResult () throws ExpressionException {
+    currentResult = null;
+    return currentResult = evaluateExpression();
   }
 
   protected final T evaluateSubexpression () throws ExpressionException {
@@ -17,12 +28,14 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
         throw new EvaluateException(R.string.error_missing_subexpression);
       }
 
-      T value = evaluateExpression();
+      bracketLevel += 1;
+      T value = evaluateResult();
 
       if (getTokenType() != TokenType.CLOSE) {
         throw new EvaluateException(R.string.error_unclosed_bracket);
       }
 
+      bracketLevel -= 1;
       nextToken();
       return value;
     } finally {
@@ -45,7 +58,7 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
           switch (getTokenType()) {
             case ASSIGN: {
               nextToken();
-              T value = evaluateExpression();
+              T value = evaluateResult();
 
               if (!Variables.set(name, value)) {
                 throw new EvaluateException(R.string.error_protected_variable);
@@ -88,18 +101,20 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
     }
   }
 
-  protected ExpressionEvaluator (String expression) throws ExpressionException {
-    super(expression);
+  public final void evaluateExpression (String expression) throws ExpressionException {
+    currentResult = null;
+    bracketLevel = 0;
 
+    parseExpression(expression);
     int end = expressionText.length();
     if (getCurrentToken() == null) throw new NoExpressionException(end);
 
     if (getTokenType() != TokenType.CLOSE) {
-      expressionResult = evaluateExpression();
+      evaluateResult();
       TokenDescriptor token = getCurrentToken();
 
       if (token == null) {
-        if ((expressionResult != null) && expressionResult.isValid()) return;
+        if ((currentResult != null) && currentResult.isValid()) return;
         throw new EvaluateException(R.string.error_undefined_result, end);
       }
 
@@ -109,5 +124,9 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
     }
 
     throw new EvaluateException(R.string.error_unopened_bracket, getCurrentToken());
+  }
+
+  protected ExpressionEvaluator () {
+    super();
   }
 }

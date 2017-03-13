@@ -8,8 +8,17 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public abstract class ExpressionParser {
-  protected abstract void parseExpression () throws ExpressionException;
-  protected final String expressionText;
+  protected ExpressionParser () {
+  }
+
+  protected class ParseException extends ExpressionException {
+    public ParseException (int error, int start) {
+      super(error, start);
+    }
+  }
+
+  protected abstract void parseExpression () throws ParseException;
+  protected String expressionText;
 
   protected static enum TokenType {
     IDENTIFIER,
@@ -82,17 +91,13 @@ public abstract class ExpressionParser {
     return start;
   }
 
-  protected class ParseException extends ExpressionException {
-    public ParseException (int error, int start) {
-      super(error, start);
-    }
-  }
-
   protected interface PatternVerifier {
     public boolean verifyPattern (Matcher matcher);
   }
 
-  protected final int findEndOfPattern (Pattern pattern, int start, int end, PatternVerifier verifier) {
+  protected final int findEndOfPattern (
+    Pattern pattern, int start, int end, PatternVerifier verifier
+  ) {
     Matcher matcher = pattern.matcher(expressionText);
     matcher.region(start, end);
     if (matcher.lookingAt()) {
@@ -105,14 +110,24 @@ public abstract class ExpressionParser {
     return start;
   }
 
-  protected final int findEndOfPattern (Pattern pattern, int start, int end, int error) throws ExpressionException {
+  protected final int findEndOfPattern (
+    Pattern pattern, int start, int end, int error
+  ) throws ParseException {
     end = findEndOfPattern(pattern, start, end, null);
     if (end > start) return end;
     throw new ParseException(error, start);
   }
 
-  private final int tokenCount;
-  private int tokenIndex = 0;
+  private int tokenCount;
+  private int tokenIndex;
+
+  protected final void parseExpression (String expression) throws ParseException {
+    expressionText = expression;
+    tokenDescriptors.clear();
+    parseExpression();
+    tokenCount = tokenDescriptors.size();
+    tokenIndex = 0;
+  }
 
   protected final void nextToken () {
     if (tokenIndex < tokenCount) tokenIndex += 1;
@@ -170,12 +185,5 @@ public abstract class ExpressionParser {
     public EvaluateException (Exception exception) {
       super(exception.getMessage(), getTokenStart());
     }
-  }
-
-  protected ExpressionParser (String expression) throws ExpressionException {
-    expressionText = expression;
-    tokenDescriptors.clear();
-    parseExpression();
-    tokenCount = tokenDescriptors.size();
   }
 }
