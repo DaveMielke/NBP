@@ -180,18 +180,22 @@ public class CalculatorActivity extends CommonActivity {
           {
             int level = evaluator.getLevel();
 
-            if (level == 0) {
-              sb.append('?');
-            } else {
-              do {
-                sb.append('(');
-              } while (--level > 0);
+            while (level > 0) {
+              sb.append('(');
+              level -= 1;
             }
           }
 
           {
             GenericNumber result = evaluator.getResult();
-            if (result == null) result = resultValue;
+
+            if (result == null) {
+              result = resultValue;
+              sb.append('?');
+            } else {
+              resultValue = result;
+            }
+
             if (result != null) sb.append(result.format());
           }
 
