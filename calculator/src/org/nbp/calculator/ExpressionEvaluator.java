@@ -3,10 +3,10 @@ package org.nbp.calculator;
 public abstract class ExpressionEvaluator<T extends GenericNumber> extends ExpressionParser {
   protected abstract T evaluateExpression () throws ExpressionException;
 
-  private T currentResult;
+  private GenericNumber currentResult;
   private int bracketLevel;
 
-  public final T getResult () {
+  public final GenericNumber getResult () {
     return currentResult;
   }
 
@@ -16,7 +16,9 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
 
   private final T evaluateResult () throws ExpressionException {
     currentResult = null;
-    return currentResult = evaluateExpression();
+    T result = evaluateExpression();
+    currentResult = result;
+    return result;
   }
 
   protected final T evaluateSubexpression () throws ExpressionException {
@@ -101,12 +103,14 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
     }
   }
 
-  public final void evaluateExpression (String expression) throws ExpressionException {
-    currentResult = null;
+  public final void evaluateExpression (
+    String expression, GenericNumber result
+  ) throws ExpressionException {
+    currentResult = result;
     bracketLevel = 0;
 
     parseExpression(expression);
-    int end = expressionText.length();
+    int end = getExpressionLength();
     if (getCurrentToken() == null) throw new NoExpressionException(end);
 
     if (getTokenType() != TokenType.CLOSE) {

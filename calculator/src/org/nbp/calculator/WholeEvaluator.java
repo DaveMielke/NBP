@@ -1,26 +1,27 @@
 package org.nbp.calculator;
 
 public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
-  protected abstract int getRadix ();
+  private final int digitRadix;
 
-  public WholeEvaluator () {
+  public WholeEvaluator (int radix) {
     super();
+    digitRadix = radix;
   }
 
   private final boolean isDigit (char character) {
-    return Character.digit(character, getRadix()) >= 0;
+    return Character.digit(character, digitRadix) >= 0;
   }
 
   @Override
   protected final void parseExpression () throws ParseException {
-    final int length = expressionText.length();
+    final int length = getExpressionLength();
     int end = 0;
 
     while (true) {
       int start = findToken(end, length);
       if (start == length) return;
 
-      char character = expressionText.charAt(start);
+      char character = getExpressionCharacter(start);
       end = start + 1;
       TokenType type;
 
@@ -89,14 +90,14 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
             type = TokenType.IDENTIFIER;
 
             while (end < length) {
-              if (!Variables.isNameCharacter(expressionText.charAt(end), false)) break;
+              if (!Variables.isNameCharacter(getExpressionCharacter(end), false)) break;
               end += 1;
             }
           } else if (isDigit(character)) {
             type = TokenType.HEXADECIMAL;
 
             while (end < length) {
-              if (!isDigit(expressionText.charAt(end))) break;
+              if (!isDigit(getExpressionCharacter(end))) break;
               end += 1;
             }
           } else {

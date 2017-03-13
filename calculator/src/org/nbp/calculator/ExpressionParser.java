@@ -18,7 +18,15 @@ public abstract class ExpressionParser {
   }
 
   protected abstract void parseExpression () throws ParseException;
-  protected String expressionText;
+  private String expressionText;
+
+  protected final int getExpressionLength () {
+    return expressionText.length();
+  }
+
+  protected final char getExpressionCharacter (int index) {
+    return expressionText.charAt(index);
+  }
 
   protected static enum TokenType {
     IDENTIFIER,

@@ -161,7 +161,7 @@ public class CalculatorActivity extends CommonActivity {
       try {
         try {
           String expression = expressionView.getText().toString();
-          evaluator.evaluateExpression(expression);
+          evaluator.evaluateExpression(expression, resultValue);
           resultValue = evaluator.getResult();
           resultView.setText(resultValue.format());
           return true;
