@@ -3,7 +3,7 @@ package org.nbp.calculator;
 public abstract class ExpressionEvaluator<T extends GenericNumber> extends ExpressionParser {
   protected abstract T evaluateExpression () throws ExpressionException;
 
-  private GenericNumber currentResult;
+  private T currentResult;
   private int bracketLevel;
 
   public final GenericNumber getResult () {
@@ -15,10 +15,7 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
   }
 
   private final T evaluateResult () throws ExpressionException {
-    currentResult = null;
-    T result = evaluateExpression();
-    currentResult = result;
-    return result;
+    return currentResult = evaluateExpression();
   }
 
   protected final T evaluateSubexpression () throws ExpressionException {
@@ -26,18 +23,22 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
     nextToken();
 
     try {
+      bracketLevel += 1;
+      currentResult = null;
+
       if (getTokenType() == TokenType.CLOSE) {
         throw new EvaluateException(R.string.error_missing_subexpression);
       }
 
-      bracketLevel += 1;
       T value = evaluateResult();
 
       if (getTokenType() != TokenType.CLOSE) {
         throw new EvaluateException(R.string.error_unclosed_bracket);
       }
 
+      currentResult = null;
       bracketLevel -= 1;
+
       nextToken();
       return value;
     } finally {
@@ -103,10 +104,8 @@ public abstract class ExpressionEvaluator<T extends GenericNumber> extends Expre
     }
   }
 
-  public final void evaluateExpression (
-    String expression, GenericNumber result
-  ) throws ExpressionException {
-    currentResult = result;
+  public final void evaluateExpression (String expression) throws ExpressionException {
+    currentResult = null;
     bracketLevel = 0;
 
     parseExpression(expression);

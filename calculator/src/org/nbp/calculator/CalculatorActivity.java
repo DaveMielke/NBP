@@ -161,7 +161,7 @@ public class CalculatorActivity extends CommonActivity {
       try {
         try {
           String expression = expressionView.getText().toString();
-          evaluator.evaluateExpression(expression, resultValue);
+          evaluator.evaluateExpression(expression);
           resultValue = evaluator.getResult();
           resultView.setText(resultValue.format());
           return true;
@@ -189,8 +189,12 @@ public class CalculatorActivity extends CommonActivity {
             }
           }
 
-          resultValue = evaluator.getResult();
-          if (resultValue != null) sb.append(resultValue.format());
+          {
+            GenericNumber result = evaluator.getResult();
+            if (result == null) result = resultValue;
+            if (result != null) sb.append(result.format());
+          }
+
           resultView.setText(sb.toString());
         }
       }
