@@ -35,7 +35,7 @@ public class Conversion {
 
     while (!stack.contains(from)) {
       value -= from.getAdjustment();
-      value /= from.getMultiplier();
+      value *= from.getMultiplier();
       from = from.getReference();
     }
 
@@ -43,7 +43,7 @@ public class Conversion {
 
     while (!stack.empty()) {
       to = stack.pop();
-      value *= to.getMultiplier();
+      value /= to.getMultiplier();
       value += to.getAdjustment();
     }
 

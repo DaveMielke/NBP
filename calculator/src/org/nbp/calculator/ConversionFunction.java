@@ -3,6 +3,7 @@ package org.nbp.calculator;
 import org.nbp.calculator.conversion.*;
 
 public class ConversionFunction extends RealFunction {
+  private final String functionName;
   private final String fromName;
   private final String toName;
   private final Unit fromUnit;
@@ -11,6 +12,8 @@ public class ConversionFunction extends RealFunction {
 
   public ConversionFunction (String name) {
     super("convert");
+
+    functionName = name;
     int index = name.indexOf('2');
 
     if ((index > 0) && (index < (name.length() - 1))) {
@@ -26,13 +29,26 @@ public class ConversionFunction extends RealFunction {
           throw new UnitException("incompatible units");
         }
 
-        functionSummary = "convert from " + fromUnit.getName() + " to " + toUnit.getName();
+        {
+          StringBuilder sb = new StringBuilder();
+          sb.append("convert real number from ");
+          sb.append(fromUnit.getName());
+          sb.append(" to ");
+          sb.append(toUnit.getName());
+          functionSummary = sb.toString();
+        }
+
         return;
       } catch (UnitException exception) {
       }
     }
 
     throw new IllegalArgumentException(("not a unit conversion: " + name));
+  }
+
+  @Override
+  public final String getName () {
+    return functionName;
   }
 
   @Override

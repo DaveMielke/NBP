@@ -36,7 +36,7 @@ public abstract class Function {
     return LanguageUtilities.invokeMethod(functionMethod, this, argument);
   }
 
-  public final String getName () {
+  public String getName () {
     return functionMethod.getName();
   }
 
