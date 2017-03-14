@@ -35,5 +35,6 @@ public abstract class Units {
     return convert(value, Unit.get(from), Unit.get(to));
   }
 
+  public final static UnitType DISTANCE = new Distance();
   public final static UnitType TEMPERATURE = new Temperature();
 }
