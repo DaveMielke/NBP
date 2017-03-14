@@ -1111,7 +1111,8 @@ public class CalculatorActivity extends CommonActivity {
     List<String> functions = new ArrayList<String>();
 
     for (String name : Functions.getNames()) {
-      functions.add(formatFunctionLine(name, Functions.get(name)));
+      Function function = Functions.get(name);
+      if (function != null) functions.add(formatFunctionLine(name, function));
     }
 
     Collections.sort(functions);

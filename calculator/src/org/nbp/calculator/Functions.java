@@ -26,20 +26,21 @@ public abstract class Functions {
 
   private final static FunctionMap functionMap = new FunctionMap();
 
-  private static void addFunction (Class<? extends Function> type, Method method) {
+  private static Function addFunction (String name, Function function) {
+    return functionMap.put(name, function);
+  }
+
+  private static Function addFunction (Class<? extends Function> type, Method method) {
     String name = method.getName();
     Constructor constructor = LanguageUtilities.getConstructor(type, Method.class);
 
     if (constructor != null) {
       Function function = (Function)LanguageUtilities.newInstance(constructor, method);
-
-      if (function != null) {
-        functionMap.put(name, function);
-        return;
-      }
+      if (function != null) return addFunction(name, function);
     }
 
     Log.w(LOG_TAG, ("method not added: " + name));
+    return null;
   }
 
   private static void addFunctions (Operations operations) {
@@ -82,16 +83,12 @@ public abstract class Functions {
     {
       try {
         Function function = new ConversionFunction(name);
-
-        if (function != null) {
-          functionMap.put(name, function);
-          return function;
-        }
+        if (function != null) return addFunction(name, function);
       } catch (IllegalArgumentException exception) {
       }
     }
 
-    return null;
+    return addFunction(name, null);
   }
 
   private Functions () {

@@ -16,13 +16,18 @@ public class ConversionFunction extends RealFunction {
     if ((index > 0) && (index < (name.length() - 1))) {
       fromName = name.substring(0, index);
       toName = name.substring(index+1);
-      functionSummary = "convert " + fromName + " to " + toName;
 
       try {
-        fromUnit = Unit.get(fromName);
-        toUnit = Unit.get(toName);
-        if (fromUnit.getType() == toUnit.getType()) return;
-        throw new UnitException("incompatible units");
+        Conversion conversion = Conversion.getInstance();
+        fromUnit = conversion.getUnit(fromName);
+        toUnit = conversion.getUnit(toName);
+
+        if (fromUnit.getType() != toUnit.getType()) {
+          throw new UnitException("incompatible units");
+        }
+
+        functionSummary = "convert from " + fromUnit.getName() + " to " + toUnit.getName();
+        return;
       } catch (UnitException exception) {
       }
     }
@@ -36,6 +41,6 @@ public class ConversionFunction extends RealFunction {
   }
 
   public final double convert (double argument) {
-    return Units.convert(argument, fromUnit, toUnit);
+    return Conversion.convert(argument, fromUnit, toUnit);
   }
 }

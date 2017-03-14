@@ -2,8 +2,27 @@ package org.nbp.calculator.conversion;
 
 import java.util.Stack;
 
-public abstract class Units {
-  private Units () {
+public class Conversion {
+  private Conversion () {
+  }
+
+  private final static Object LOCK = new Object();
+  private static Conversion instance = null;
+
+  public final static Conversion getInstance () {
+    synchronized (LOCK) {
+      if (instance == null) instance = new Conversion();
+    }
+
+    return instance;
+  }
+
+  public final UnitType getUnitType (String name) {
+    return UnitType.get(name);
+  }
+
+  public final Unit getUnit (String name) {
+    return Unit.get(name);
   }
 
   public final static double convert (double value, Unit from, Unit to) {
@@ -31,10 +50,10 @@ public abstract class Units {
     return value;
   }
 
-  public final static double convert (double value, String from, String to) {
+  public final double convert (double value, String from, String to) {
     return convert(value, Unit.get(from), Unit.get(to));
   }
 
-  public final static UnitType DISTANCE = new Distance();
-  public final static UnitType TEMPERATURE = new Temperature();
+  public final UnitType DISTANCE = new Distance();
+  public final UnitType TEMPERATURE = new Temperature();
 }
