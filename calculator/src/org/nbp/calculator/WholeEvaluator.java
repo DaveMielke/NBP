@@ -42,17 +42,17 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           type = TokenType.PLUS;
           break;
 
-        case GenericFormatter.SUBTRACTION_SIGN:
+        case Formatter.SUBTRACTION_SIGN:
         case '-':
           type = TokenType.MINUS;
           break;
 
-        case GenericFormatter.MULTIPLICATION_SIGN:
+        case Formatter.MULTIPLICATION_SIGN:
         case '*':
           type = TokenType.TIMES;
           break;
 
-        case GenericFormatter.DIVISION_SIGN:
+        case Formatter.DIVISION_SIGN:
         case '/':
           type = TokenType.DIVIDE;
           break;
@@ -86,11 +86,11 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           break;
 
         default: {
-          if (Variables.isNameCharacter(character, true)) {
+          if (isIdentifierCharacter(character, true)) {
             type = TokenType.IDENTIFIER;
 
             while (end < length) {
-              if (!Variables.isNameCharacter(getExpressionCharacter(end), false)) break;
+              if (!isIdentifierCharacter(getExpressionCharacter(end), false)) break;
               end += 1;
             }
           } else if (isDigit(character)) {

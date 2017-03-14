@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class Variables {
+  private Variables () {
+  }
+
   private static String[] toArray (Set<String> set) {
     return set.toArray(new String[set.size()]);
   }
@@ -20,7 +23,7 @@ public abstract class Variables {
 
   private final static SystemVariables systemVariables = new SystemVariables();
 
-  private static void setSystemVariable (String name, GenericNumber value, String description) {
+  private static void setSystemVariable (String name, AbstractNumber value, String description) {
     systemVariables.put(name, new SystemVariable(name, value, description));
   }
 
@@ -132,7 +135,7 @@ public abstract class Variables {
         if (value != null) {
           return new Variable(name) {
             @Override
-            public GenericNumber getValue () {
+            public AbstractNumber getValue () {
               try {
                 return newNumber(value);
               } catch (NumberFormatException exception) {
@@ -152,18 +155,9 @@ public abstract class Variables {
     return null;
   }
 
-  public static boolean set (String name, GenericNumber value) {
+  public static boolean set (String name, AbstractNumber value) {
     if (systemVariables.containsKey(name)) return false;
     getUserVariables().edit().putString(name, value.toString()).apply();
     return true;
-  }
-
-  public static boolean isNameCharacter (char character, boolean first) {
-    if (Character.isLetter(character)) return true;
-    if (first) return false;
-    return Character.isDigit(character);
-  }
-
-  private Variables () {
   }
 }

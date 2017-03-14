@@ -78,6 +78,7 @@ public abstract class Functions {
     {
       Function function = functionMap.get(name);
       if (function != null) return function;
+      if (functionMap.containsKey(name)) return null;
     }
 
     {

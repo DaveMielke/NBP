@@ -3,7 +3,7 @@ package org.nbp.calculator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ComplexFormatter extends GenericFormatter {
+public class ComplexFormatter extends Formatter {
   public ComplexFormatter () {
     super();
   }

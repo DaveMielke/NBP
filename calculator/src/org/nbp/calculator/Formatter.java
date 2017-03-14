@@ -1,7 +1,7 @@
 package org.nbp.calculator;
 
-public class GenericFormatter {
-  public GenericFormatter () {
+public class Formatter {
+  public Formatter () {
   }
 
   public final static char ZERO = '0';

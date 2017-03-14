@@ -17,8 +17,8 @@ public abstract class Variable {
     return null;
   }
 
-  public final <T extends GenericNumber> T getValue (Class<T> type) {
-    GenericNumber value = getValue();
+  public final <T extends AbstractNumber> T getValue (Class<T> type) {
+    AbstractNumber value = getValue();
     if (value == null) return null;
 
     if (!LanguageUtilities.canAssign(type, value)) {
@@ -32,9 +32,9 @@ public abstract class Variable {
     return (T)value;
   }
 
-  protected final GenericNumber newNumber (String value) {
+  protected final AbstractNumber newNumber (String value) {
     return SavedSettings.getCalculatorMode().newNumber(value);
   }
 
-  protected abstract GenericNumber getValue ();
+  protected abstract AbstractNumber getValue ();
 }

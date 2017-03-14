@@ -99,6 +99,12 @@ public abstract class ExpressionParser {
     return start;
   }
 
+  public final static boolean isIdentifierCharacter (char character, boolean first) {
+    if (Character.isLetter(character)) return true;
+    if (first) return false;
+    return Character.isDigit(character);
+  }
+
   protected interface PatternVerifier {
     public boolean verifyPattern (Matcher matcher);
   }

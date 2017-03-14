@@ -2,7 +2,7 @@ package org.nbp.calculator;
 
 import java.math.BigInteger;
 
-public abstract class WholeNumber extends GenericNumber {
+public abstract class WholeNumber extends AbstractNumber {
   public abstract String toDigits ();
   protected abstract WholeNumber newWholeNumber (long value);
 

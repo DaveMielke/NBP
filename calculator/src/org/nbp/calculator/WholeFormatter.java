@@ -1,6 +1,6 @@
 package org.nbp.calculator;
 
-public class WholeFormatter extends GenericFormatter {
+public class WholeFormatter extends Formatter {
   public WholeFormatter () {
     super();
   }

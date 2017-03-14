@@ -1,17 +1,17 @@
 package org.nbp.calculator;
 
 public class SystemVariable extends Variable {
-  private final GenericNumber variableValue;
+  private final AbstractNumber variableValue;
   private final String variableDescription;
 
-  public SystemVariable (String name, GenericNumber value, String description) {
+  public SystemVariable (String name, AbstractNumber value, String description) {
     super(name);
     variableValue = value;
     variableDescription = description;
   }
 
   @Override
-  public final GenericNumber getValue () {
+  public final AbstractNumber getValue () {
     return variableValue;
   }
 

@@ -1,12 +1,12 @@
 package org.nbp.calculator;
 
-public abstract class ExpressionEvaluator<T extends GenericNumber> extends ExpressionParser {
+public abstract class ExpressionEvaluator<T extends AbstractNumber> extends ExpressionParser {
   protected abstract T evaluateExpression () throws ExpressionException;
 
   private T currentResult;
   private int bracketLevel;
 
-  public final GenericNumber getResult () {
+  public final AbstractNumber getResult () {
     return currentResult;
   }
 

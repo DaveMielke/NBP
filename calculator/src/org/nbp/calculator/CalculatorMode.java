@@ -13,7 +13,7 @@ public enum CalculatorMode {
 
     new Properties() {
       @Override
-      public GenericNumber newNumber (String string) {
+      public AbstractNumber newNumber (String string) {
         return ComplexNumber.valueOf(string);
       }
     }
@@ -28,14 +28,14 @@ public enum CalculatorMode {
 
     new Properties() {
       @Override
-      public GenericNumber newNumber (String string) {
+      public AbstractNumber newNumber (String string) {
         return HexadecimalNumber.valueOf(string);
       }
     }
   );
 
   private interface Properties {
-    public GenericNumber newNumber (String string);
+    public AbstractNumber newNumber (String string);
   }
 
   public final int getTitle () {
@@ -64,7 +64,7 @@ public enum CalculatorMode {
     return Arrays.copyOf(activeKeypads, activeKeypads.length);
   }
 
-  public final GenericNumber newNumber (String string) {
+  public final AbstractNumber newNumber (String string) {
     return modeProperties.newNumber(string);
   }
 

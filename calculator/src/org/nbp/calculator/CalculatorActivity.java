@@ -74,7 +74,7 @@ public class CalculatorActivity extends CommonActivity {
   private final static Object EXPRESSION_LOCK = new Object();
   private EditText expressionView;
   private TextView resultView;
-  private GenericNumber resultValue;
+  private AbstractNumber resultValue;
 
   private final void setFocusToExpression () {
     expressionView.requestFocus();
@@ -187,7 +187,7 @@ public class CalculatorActivity extends CommonActivity {
           }
 
           {
-            GenericNumber result = evaluator.getResult();
+            AbstractNumber result = evaluator.getResult();
 
             if (result == null) {
               result = resultValue;
@@ -439,7 +439,7 @@ public class CalculatorActivity extends CommonActivity {
                   if ((tag == null) || (tag.length() == 0)) {
                     tag = text;
 
-                    if (Variables.isNameCharacter(text.charAt(0), true)) {
+                    if (ExpressionParser.isIdentifierCharacter(text.charAt(0), true)) {
                       Function function = Functions.get(text);
 
                       if (function != null) {
@@ -845,7 +845,7 @@ public class CalculatorActivity extends CommonActivity {
     sb.append(" = ");
 
     {
-      GenericNumber value = variable.getValue();
+      AbstractNumber value = variable.getValue();
       sb.append((value != null)? value.format(): "?");
     }
 
@@ -915,7 +915,7 @@ public class CalculatorActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           AlertDialog.Builder builder = newAlertDialogBuilder(R.string.button_store);
-          final GenericNumber result = resultValue;
+          final AbstractNumber result = resultValue;
 
           if (result == null) {
             builder.setMessage(R.string.error_no_result);
@@ -980,7 +980,7 @@ public class CalculatorActivity extends CommonActivity {
                           int dstIndex = dstStart;
 
                           for (int srcIndex=srcStart; srcIndex<srcEnd; srcIndex+=1) {
-                            if (!Variables.isNameCharacter(src.charAt(srcIndex), (dstIndex == 0))) return "";
+                            if (!ExpressionParser.isIdentifierCharacter(src.charAt(srcIndex), (dstIndex == 0))) return "";
                             dstIndex += 1;
                           }
 
@@ -991,7 +991,7 @@ public class CalculatorActivity extends CommonActivity {
                           name.insert(dstStart, src.subSequence(srcStart, srcEnd));
 
                           if (name.length() > 0) {
-                            if (Variables.isNameCharacter(name.charAt(0), true)) {
+                            if (ExpressionParser.isIdentifierCharacter(name.charAt(0), true)) {
                               if (Variables.get(name.toString()) == null) {
                                 isNew = true;
                               }

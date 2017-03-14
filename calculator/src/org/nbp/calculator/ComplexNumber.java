@@ -2,7 +2,7 @@ package org.nbp.calculator;
 
 import org.nbp.calculator.functions.Gamma;
 
-public class ComplexNumber extends GenericNumber {
+public class ComplexNumber extends AbstractNumber {
   private final double real;
   private final double imag;
 
