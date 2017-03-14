@@ -3,6 +3,14 @@ package org.nbp.calculator;
 import java.lang.reflect.Method;
 
 public class RealFunction extends ComplexFunction {
+  public RealFunction (Method method) {
+    super(method);
+  }
+
+  public RealFunction (String methodName) {
+    super(methodName, Double.TYPE);
+  }
+
   protected double preprocessRealArgument (double argument) {
     return argument;
   }
@@ -27,10 +35,6 @@ public class RealFunction extends ComplexFunction {
   protected final ComplexNumber postprocessComplexResult (Object result) {
     if (!verifyValue(result, Double.class)) return null;
     return super.postprocessComplexResult(new ComplexNumber(postprocessRealResult((Double)result)));
-  }
-
-  public RealFunction (Method method) {
-    super(method);
   }
 
   @Override

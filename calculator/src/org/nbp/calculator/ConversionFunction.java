@@ -10,7 +10,7 @@ public class ConversionFunction extends RealFunction {
   private final String functionSummary;
 
   public ConversionFunction (String name) {
-    super(null);
+    super("convert");
     int index = name.indexOf('2');
 
     if ((index > 0) && (index < (name.length() - 1))) {
@@ -33,5 +33,9 @@ public class ConversionFunction extends RealFunction {
   @Override
   public final String getSummary () {
     return functionSummary;
+  }
+
+  public final double convert (double argument) {
+    return Units.convert(argument, fromUnit, toUnit);
   }
 }

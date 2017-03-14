@@ -3,6 +3,18 @@ package org.nbp.calculator;
 import java.lang.reflect.Method;
 
 public class ComplexFunction extends Function {
+  public ComplexFunction (Method method) {
+    super(method);
+  }
+
+  public ComplexFunction (String methodName, Class argumentType) {
+    super(methodName, argumentType);
+  }
+
+  public ComplexFunction (String methodName) {
+    this(methodName, ComplexNumber.class);
+  }
+
   protected Object preprocessComplexArgument (ComplexNumber argument) {
     return argument;
   }
@@ -22,10 +34,6 @@ public class ComplexFunction extends Function {
   protected final Object postprocessFunctionResult (Object result) {
     if (!verifyValue(result)) return null;
     return postprocessComplexResult(result);
-  }
-
-  public ComplexFunction (Method method) {
-    super(method);
   }
 
   @Override

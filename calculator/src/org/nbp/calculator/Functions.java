@@ -74,7 +74,24 @@ public abstract class Functions {
   }
 
   public static Function get (String name) {
-    return functionMap.get(name);
+    {
+      Function function = functionMap.get(name);
+      if (function != null) return function;
+    }
+
+    {
+      try {
+        Function function = new ConversionFunction(name);
+
+        if (function != null) {
+          functionMap.put(name, function);
+          return function;
+        }
+      } catch (IllegalArgumentException exception) {
+      }
+    }
+
+    return null;
   }
 
   private Functions () {

@@ -437,12 +437,14 @@ public class CalculatorActivity extends CommonActivity {
                   key.setOnClickListener(insertTextListener);
 
                   if ((tag == null) || (tag.length() == 0)) {
-                    Function function = Functions.get(text);
+                    tag = text;
 
-                    if (function != null) {
-                      tag = function.getName() + Function.ARGUMENT_PREFIX;
-                    } else {
-                      tag = text;
+                    if (Variables.isNameCharacter(text.charAt(0), true)) {
+                      Function function = Functions.get(text);
+
+                      if (function != null) {
+                        tag = function.getName() + Function.ARGUMENT_PREFIX;
+                      }
                     }
 
                     key.setTag(tag);

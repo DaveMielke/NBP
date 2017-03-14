@@ -1,6 +1,7 @@
 package org.nbp.calculator;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import org.nbp.common.LanguageUtilities;
 
@@ -11,8 +12,28 @@ public abstract class Function {
     functionMethod = method;
   }
 
+  protected Function (String methodName, Class argumentType) {
+    for (Method method : getClass().getDeclaredMethods()) {
+      if (!method.getName().equals(methodName)) continue;
+
+      int modifiers = method.getModifiers();
+      if ((modifiers & Modifier.PUBLIC) == 0) continue;
+      if ((modifiers & Modifier.STATIC) != 0) continue;
+
+      Class<?>[] parameterTypes = method.getParameterTypes();
+      if (parameterTypes.length != 1) continue;
+      if (parameterTypes[0] != argumentType) continue;
+
+      if (method.getReturnType() != argumentType) continue;
+      functionMethod = method;
+      return;
+    }
+
+    throw new RuntimeException(("function method not found: " + methodName));
+  }
+
   private final Object callMethod (Object argument) {
-    return LanguageUtilities.invokeMethod(functionMethod, null, argument);
+    return LanguageUtilities.invokeMethod(functionMethod, this, argument);
   }
 
   public final String getName () {
