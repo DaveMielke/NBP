@@ -1,4 +1,4 @@
-package org.nbp.calculator;
+package org.nbp.calculator.conversion;
 
 import java.util.Map;
 import java.util.HashMap;

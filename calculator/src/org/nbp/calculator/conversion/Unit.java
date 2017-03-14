@@ -1,4 +1,4 @@
-package org.nbp.calculator;
+package org.nbp.calculator.conversion;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -70,5 +70,11 @@ public class Unit {
 
   public final double getAdjustment () {
     return valueAdjustment;
+  }
+
+  public final static Unit get (String name) {
+    Unit unit = units.get(name);
+    if (unit != null) return unit;
+    throw new UnitException(("unknown unit: " + name));
   }
 }

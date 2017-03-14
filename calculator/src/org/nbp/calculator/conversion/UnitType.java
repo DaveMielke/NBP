@@ -1,4 +1,4 @@
-package org.nbp.calculator;
+package org.nbp.calculator.conversion;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -29,7 +29,9 @@ public class UnitType {
     return baseUnit;
   }
 
-  public final static UnitType getType (String name) {
-    return unitTypes.get(name);
+  public final static UnitType get (String name) {
+    UnitType type = unitTypes.get(name);
+    if (type != null) return type;
+    throw new UnitException(("unknown unit type: " + name));
   }
 }
