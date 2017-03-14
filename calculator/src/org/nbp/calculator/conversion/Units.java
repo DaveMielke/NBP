@@ -34,4 +34,6 @@ public abstract class Units {
   public final static double convert (double value, String from, String to) {
     return convert(value, Unit.get(from), Unit.get(to));
   }
+
+  public final static UnitType TEMPERATURE = new Temperature();
 }

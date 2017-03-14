@@ -4,8 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Unit {
-  private final String unitName;
-  private final String[] unitAliases;
+  private final String[] unitNames;
   private final UnitType unitType;
   private final Unit referenceUnit;
   private final double valueMultiplier;
@@ -14,38 +13,40 @@ public class Unit {
   private final static Map<String, Unit> units
              = new HashMap<String, Unit>();
 
-  private Unit (UnitType type, Unit reference, double multiplier, double adjustment, String name, String... aliases) {
-    unitName = name;
-    unitAliases = aliases;
+  private Unit (UnitType type, Unit reference, double multiplier, double adjustment, String... names) {
+    unitNames = names;
     unitType = type;
     referenceUnit = reference;
     valueMultiplier = multiplier;
     valueAdjustment = adjustment;
 
-    if (units.containsKey(unitName)) {
-      throw new UnitException(("duplicate unit: " + unitName));
-    }
-
-    for (String alias : unitAliases) {
-      if (units.containsKey(alias)) {
-        throw new UnitException(("duplicate unit: " + alias));
+    for (String name : unitNames) {
+      if (units.containsKey(name)) {
+        throw new UnitException(("duplicate unit: " + name));
       }
     }
 
-    units.put(unitName, this);
-    for (String alias : unitAliases) units.put(alias, this);
+    for (String name : unitNames) units.put(name, this);
   }
 
-  public Unit (UnitType type, String name, String... aliases) {
-    this(type, null, 0, 0, name, aliases);
+  public Unit (UnitType type, String... names) {
+    this(type, null, 0, 0, names);
   }
 
-  public Unit (Unit reference, double multiplier, double adjustment, String name, String... aliases) {
-    this(reference.getType(), reference, multiplier, adjustment, name, aliases);
+  public Unit (Unit reference, double multiplier, double adjustment, String... names) {
+    this(reference.getType(), reference, multiplier, adjustment, names);
   }
 
-  public Unit (Unit reference, double multiplier, String name, String... aliases) {
-    this(reference, multiplier, 0, name, aliases);
+  public Unit (Unit reference, double multiplier, String... names) {
+    this(reference, multiplier, 0, names);
+  }
+
+  public final String[] getNames () {
+    return unitNames;
+  }
+
+  public final String getName () {
+    return unitNames[0];
   }
 
   public final UnitType getType () {
@@ -54,14 +55,6 @@ public class Unit {
 
   public final Unit getReference () {
     return referenceUnit;
-  }
-
-  public final String getName () {
-    return unitName;
-  }
-
-  public final String[] getAliases () {
-    return unitAliases;
   }
 
   public final double getMultiplier () {

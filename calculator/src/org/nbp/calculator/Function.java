@@ -27,7 +27,7 @@ public abstract class Function {
     return getName() + ARGUMENT_PREFIX + getArgumentName() + ARGUMENT_SUFFIX;
   }
 
-  public final String getSummary () {
+  public String getSummary () {
     return Operations.getSummary(functionMethod);
   }
 

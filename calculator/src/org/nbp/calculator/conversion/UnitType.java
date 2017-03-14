@@ -10,14 +10,13 @@ public class UnitType {
   private final static Map<String, UnitType> unitTypes
              = new HashMap<String, UnitType>();
 
-  public UnitType (String name, String unit, String... aliases) {
-    typeName = name;
-
-    if (unitTypes.containsKey(typeName)) {
-      throw new UnitException(("duplicate unit type: " + typeName));
+  public UnitType (String name, String... unit) {
+    if (unitTypes.containsKey(name)) {
+      throw new UnitException(("duplicate unit type: " + name));
     }
 
-    baseUnit = new Unit(this, unit, aliases);
+    typeName = name;
+    baseUnit = new Unit(this, unit);
     unitTypes.put(typeName, this);
   }
 

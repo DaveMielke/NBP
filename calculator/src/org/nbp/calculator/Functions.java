@@ -18,7 +18,7 @@ public abstract class Functions {
     return set.toArray(new String[set.size()]);
   }
 
-  private static class FunctionMap extends HashMap<String, ComplexFunction> {
+  private static class FunctionMap extends HashMap<String, Function> {
     public FunctionMap () {
       super();
     }
@@ -31,7 +31,7 @@ public abstract class Functions {
     Constructor constructor = LanguageUtilities.getConstructor(type, Method.class);
 
     if (constructor != null) {
-      ComplexFunction function = (ComplexFunction)LanguageUtilities.newInstance(constructor, method);
+      Function function = (Function)LanguageUtilities.newInstance(constructor, method);
 
       if (function != null) {
         functionMap.put(name, function);
@@ -73,7 +73,7 @@ public abstract class Functions {
     return toArray(functionMap.keySet());
   }
 
-  public static ComplexFunction get (String name) {
+  public static Function get (String name) {
     return functionMap.get(name);
   }
 
