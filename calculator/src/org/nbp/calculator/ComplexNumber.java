@@ -1,5 +1,7 @@
 package org.nbp.calculator;
 
+import org.nbp.calculator.functions.Gamma;
+
 public class ComplexNumber extends GenericNumber {
   private final double real;
   private final double imag;
@@ -265,6 +267,6 @@ public class ComplexNumber extends GenericNumber {
   }
 
   public final ComplexNumber gamma () {
-    return GammaFunction.gamma(this);
+    return Gamma.gamma(this);
   }
 }

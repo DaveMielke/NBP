@@ -1,11 +1,13 @@
-package org.nbp.calculator;
+package org.nbp.calculator.functions;
 
-import static org.nbp.calculator.ComplexNumber.PI;
+import org.nbp.calculator.ComplexOperations;
+import org.nbp.calculator.ComplexNumber;
 import static org.nbp.calculator.ComplexNumber.ONE;
+import static org.nbp.calculator.ComplexNumber.PI;
 
 // Cornelius Lanczos 1964 approximation of the Gamma function
 //
-public abstract class GammaFunction {
+public abstract class Gamma {
   private final static ComplexNumber[] coefficientArray = {
     new ComplexNumber(676.5203681218851d),
     new ComplexNumber(-1259.1392167224028d),
@@ -45,6 +47,6 @@ public abstract class GammaFunction {
     return result;
   }
 
-  private GammaFunction () {
+  private Gamma () {
   }
 }
