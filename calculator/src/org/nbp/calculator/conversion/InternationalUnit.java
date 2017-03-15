@@ -12,27 +12,27 @@ public class InternationalUnit extends Unit {
     super(type, names);
   }
 
-  public final Unit YOTTA = newUnit(10E24, "yotta", "Y");
-  public final Unit ZETTA = newUnit(10E21, "zetta", "Z");
-  public final Unit EXA = newUnit(10E18, "exa", "E");
-  public final Unit PETA = newUnit(10E15, "peta", "P");
-  public final Unit TERA = newUnit(10E12, "tera", "T");
-  public final Unit GIGA = newUnit(10E9, "giga", "G");
-  public final Unit MEGA = newUnit(10E6, "mega", "M");
-  public final Unit KILO = newUnit(10E3, "kilo", "k");
-  public final Unit HECTO = newUnit(10E2, "hecto", "h");
-  public final Unit DECA = newUnit(10E1, "deca", "da");
-  public final Unit DEKA = newUnit(10E1, "deka", "dk");
-  public final Unit DECI = newUnit(10E-1, "deci", "d");
-  public final Unit CENTI = newUnit(10E-2, "centi", "c");
-  public final Unit MILLI = newUnit(10E-3, "milli", "m");
-  public final Unit MICRO = newUnit(10E-6, "micro", "u");
-  public final Unit NANO = newUnit(10E-9, "nano", "n");
-  public final Unit PICO = newUnit(10E-12, "pico", "p");
-  public final Unit FEMTO = newUnit(10E-15, "femto", "f");
-  public final Unit ATTO = newUnit(10E-18, "atto", "a");
-  public final Unit ZEPTO = newUnit(10E-21, "zepto", "z");
-  public final Unit YOCTO = newUnit(10E-24, "yocto", "y");
+  public final Unit YOTTA = newUnit(1E24, "yotta", "Y");
+  public final Unit ZETTA = newUnit(1E21, "zetta", "Z");
+  public final Unit EXA = newUnit(1E18, "exa", "E");
+  public final Unit PETA = newUnit(1E15, "peta", "P");
+  public final Unit TERA = newUnit(1E12, "tera", "T");
+  public final Unit GIGA = newUnit(1E9, "giga", "G");
+  public final Unit MEGA = newUnit(1E6, "mega", "M");
+  public final Unit KILO = newUnit(1E3, "kilo", "k");
+  public final Unit HECTO = newUnit(1E2, "hecto", "h");
+  public final Unit DECA = newUnit(1E1, "deca", "da");
+  public final Unit DEKA = newUnit(1E1, "deka", "dk");
+  public final Unit DECI = newUnit(1E-1, "deci", "d");
+  public final Unit CENTI = newUnit(1E-2, "centi", "c");
+  public final Unit MILLI = newUnit(1E-3, "milli", "m");
+  public final Unit MICRO = newUnit(1E-6, "micro", "u");
+  public final Unit NANO = newUnit(1E-9, "nano", "n");
+  public final Unit PICO = newUnit(1E-12, "pico", "p");
+  public final Unit FEMTO = newUnit(1E-15, "femto", "f");
+  public final Unit ATTO = newUnit(1E-18, "atto", "a");
+  public final Unit ZEPTO = newUnit(1E-21, "zepto", "z");
+  public final Unit YOCTO = newUnit(1E-24, "yocto", "y");
 
   public final Unit KIBI = newUnit(0X1P10, "kibi", "Ki");
   public final Unit MEBI = newUnit(0X1P20, "mebi", "Mi");
