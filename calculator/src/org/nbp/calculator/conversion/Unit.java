@@ -1,5 +1,6 @@
 package org.nbp.calculator.conversion;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -10,23 +11,36 @@ public class Unit {
   private final double valueMultiplier;
   private final double valueAdjustment;
 
-  private final static Map<String, Unit> units
-             = new HashMap<String, Unit>();
+  private static class UnitMap extends HashMap<String, Unit> {
+    public UnitMap () {
+      super();
+    }
+  }
+
+  private final static UnitMap units = new UnitMap();
 
   private Unit (UnitType type, Unit reference, double multiplier, double adjustment, String... names) {
-    unitNames = names;
+    unitNames = Arrays.copyOf(names, names.length);
     unitType = type;
     referenceUnit = reference;
     valueMultiplier = multiplier;
     valueAdjustment = adjustment;
 
-    for (String name : unitNames) {
-      if (units.containsKey(name)) {
-        throw new UnitException(("duplicate unit: " + name));
-      }
-    }
+    {
+      UnitMap map = new UnitMap();
 
-    for (String name : unitNames) units.put(name, this);
+      for (String name : unitNames) {
+        if (name != null) {
+          if (units.containsKey(name)) {
+            throw new UnitException(("duplicate unit: " + name));
+          }
+
+          map.put(name, this);
+        }
+      }
+
+      units.putAll(map);
+    }
   }
 
   public Unit (UnitType type, String... names) {
@@ -42,11 +56,15 @@ public class Unit {
   }
 
   public final String[] getNames () {
-    return unitNames;
+    return Arrays.copyOf(unitNames, unitNames.length);
+  }
+
+  public final String getSymbol () {
+    return unitNames[0];
   }
 
   public final String getName () {
-    return unitNames[0];
+    return unitNames[1];
   }
 
   public final UnitType getType () {

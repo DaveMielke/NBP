@@ -10,13 +10,18 @@ public class UnitType {
   private final static Map<String, UnitType> unitTypes
              = new HashMap<String, UnitType>();
 
-  public UnitType (String name, String... unit) {
+  public UnitType (String name, boolean international, String... unit) {
     if (unitTypes.containsKey(name)) {
       throw new UnitException(("duplicate unit type: " + name));
     }
 
+    if (international) {
+      baseUnit = new InternationalUnit(this, unit);
+    } else {
+      baseUnit = new Unit(this, unit);
+    }
+
     typeName = name;
-    baseUnit = new Unit(this, unit);
     unitTypes.put(typeName, this);
   }
 
