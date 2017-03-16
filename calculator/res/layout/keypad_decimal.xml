@@ -31,7 +31,7 @@
 
     <Button
       android:layout_weight="1"
-      android:text="x10^y"
+      android:text="x&#x22C5;10^y"
       android:tag="×10^"
       android:contentDescription="@string/description_sign_E"
      />

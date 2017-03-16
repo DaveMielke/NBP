@@ -1149,10 +1149,32 @@ public class CalculatorActivity extends CommonActivity {
     );
   }
 
+  private final void configureViews (View view) {
+    if (view != null) {
+      if (view instanceof ViewGroup) {
+        ViewGroup group = (ViewGroup)view;
+        int count = group.getChildCount();
+
+        for (int index=0; index<count; index+=1) {
+          configureViews(group.getChildAt(index));
+        }
+      } else if (view instanceof Button) {
+        Button button = (Button)view;
+        button.setAllCaps(false);
+      }
+    }
+  }
+
+  private final void configureViews () {
+    configureViews(findViewById(R.id.root));
+  }
+
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.calculator);
+    configureViews();
 
     expressionView = (EditText)findViewById(R.id.expression);
     resultView = (TextView)findViewById(R.id.result);

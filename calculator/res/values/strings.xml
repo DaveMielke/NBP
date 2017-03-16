@@ -15,13 +15,13 @@
   <string name="button_delete">Delete</string>
   <string name="button_down">Down</string>
   <string name="button_erase">Erase</string>
-  <string name="button_functions">Functions</string>
+  <string name="button_functions">f(x)</string>
   <string name="button_left">Left</string>
   <string name="button_new">New</string>
   <string name="button_right">Right</string>
   <string name="button_store">Store</string>
   <string name="button_up">Up</string>
-  <string name="button_variables">Variables</string>
+  <string name="button_variables">Var</string>
 
   <string name="error_incompatible_function">incompatible function</string>
   <string name="error_incompatible_variable">incompatible variable</string>

@@ -4,7 +4,7 @@
   <Button
     android:id="@+id/button_clear"
     android:layout_weight="1"
-    android:text="CLR"
+    android:text="C"
     android:contentDescription="@string/button_clear"
    />
 </merge>
