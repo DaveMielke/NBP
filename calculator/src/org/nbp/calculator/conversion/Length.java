@@ -1,13 +1,13 @@
 package org.nbp.calculator.conversion;
 
-public class Distance extends UnitType {
-  public Distance () {
-    super("distance", true, "m", "meters", "meter");
+public class Length extends UnitType {
+  public Length () {
+    super("length", true, "m", "meters", "meter");
   }
 
   public final Unit METER = getBaseUnit();
 
-  public final static double METERS_PER_INCH = 1.0 / 39.37;
+  public final static double METERS_PER_INCH = 0.0254;
   public final Unit INCH = new Unit(METER, METERS_PER_INCH, "in", "inches", "inch");
 
   public final static double INCHES_PER_FOOT = 12.0;

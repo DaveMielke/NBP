@@ -54,8 +54,9 @@ public class Conversion {
     return convert(value, Unit.get(from), Unit.get(to));
   }
 
-  public final UnitType DISTANCE = new Distance();
+  public final UnitType LENGTH = new Length();
   public final UnitType AREA = new Area();
   public final UnitType VOLUME = new Volume();
+  public final UnitType TIME = new Time();
   public final UnitType TEMPERATURE = new Temperature();
 }
