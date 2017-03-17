@@ -55,5 +55,7 @@ public class Conversion {
   }
 
   public final UnitType DISTANCE = new Distance();
+  public final UnitType AREA = new Area();
+  public final UnitType VOLUME = new Volume();
   public final UnitType TEMPERATURE = new Temperature();
 }

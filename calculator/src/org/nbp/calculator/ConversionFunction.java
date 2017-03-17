@@ -1,8 +1,11 @@
 package org.nbp.calculator;
-
 import org.nbp.calculator.conversion.*;
 
+import android.util.Log;
+
 public class ConversionFunction extends RealFunction {
+  private final static String LOG_TAG = ConversionFunction.class.getName();
+
   private final String functionName;
   private final String fromName;
   private final String toName;
@@ -40,6 +43,7 @@ public class ConversionFunction extends RealFunction {
 
         return;
       } catch (UnitException exception) {
+        Log.w(LOG_TAG, exception.getMessage());
       }
     }
 
