@@ -105,38 +105,54 @@ public class ConversionListener {
     return "conversion" + conversionIdentifier + "-" + name;
   }
 
-  private final void saveSelectedUnitType () {
-    SavedSettings.set(typeSetting, unitTypeNames.get(selectedUnitType));
+  private final StringTable getUnitSymbols () {
+    return unitSymbols[selectedUnitType];
   }
 
-  private final void saveSelectedFromUnit () {
-    SavedSettings.set(typeSetting, unitSymbols[selectedUnitType].get(selectedFromUnit));
+  private final String getUnitSymbol (int index) {
+    return getUnitSymbols().get(index);
   }
 
-  private final void saveSelectedToUnit () {
-    SavedSettings.set(typeSetting, unitSymbols[selectedUnitType].get(selectedToUnit));
+  private final String getFromUnitSymbol () {
+    return getUnitSymbol(selectedFromUnit);
+  }
+
+  private final String getToUnitSymbol () {
+    return getUnitSymbol(selectedToUnit);
   }
 
   private final int getUnitIndex (String setting) {
-    String name = SavedSettings.get(setting, null);
+    String symbol = SavedSettings.get(setting, null);
 
-    if (name != null) {
-      Integer index = unitSymbols[selectedUnitType].get(name);
+    if (symbol != null) {
+      Integer index = getUnitSymbols().get(symbol);
       if (index != null) return index;
     }
 
     return 0;
   }
 
+  private final void saveUnitType () {
+    SavedSettings.set(typeSetting, unitTypeNames.get(selectedUnitType));
+  }
+
+  private final void saveFromUnit () {
+    SavedSettings.set(fromSetting, getFromUnitSymbol());
+  }
+
+  private final void saveToUnit () {
+    SavedSettings.set(toSetting, getToUnitSymbol());
+  }
+
   private final void setConvertButton () {
-    String from = unitSymbols[selectedUnitType].get(selectedFromUnit);
-    String to = unitSymbols[selectedUnitType].get(selectedToUnit);
+    String from = getFromUnitSymbol();
+    String to = getToUnitSymbol();
     String function = from + '2' + to;
     convertButton.setText(function);
     convertButton.setTag((function + Function.ARGUMENT_PREFIX));
   }
 
-  private final  void setUnitType (int index) {
+  private final void setUnitType (int index) {
     selectedUnitType = index;
     String typeName = unitTypeNames.get(index);
 
@@ -146,17 +162,33 @@ public class ConversionListener {
     toSetting = makeSetting(("to-" + typeName));
     selectedToUnit = getUnitIndex(toSetting);
 
-    saveSelectedUnitType();
-    saveSelectedFromUnit();
-    saveSelectedToUnit();
+    saveUnitType();
+    saveFromUnit();
+    saveToUnit();
     setConvertButton();
   }
 
-  private final void restoreType () {
-    String name = SavedSettings.get(typeSetting, conversion.LENGTH.getName());
-    Integer index = unitTypeNames.get(name);
-    if (index == null) index = 0;
-    setUnitType(index);
+  private final void setUnitType (String name) {
+    setUnitType(unitTypeNames.get(name));
+  }
+
+  private final void setUnitType (UnitType type) {
+    setUnitType(type.getName());
+  }
+
+  private final void restoreUnitType () {
+    String name = SavedSettings.get(typeSetting, null);
+
+    if (name != null) {
+      Integer index = unitTypeNames.get(name);
+
+      if (index != null) {
+        setUnitType(index);
+        return;
+      }
+    }
+
+    setUnitType(conversion.LENGTH);
   }
 
   private final void dismissDialog (DialogInterface dialog) {
@@ -207,7 +239,7 @@ public class ConversionListener {
       public void onClick (DialogInterface dialog, int index) {
         if (index != selectedFromUnit) {
           selectedFromUnit = index;
-          saveSelectedFromUnit();
+          saveFromUnit();
           setConvertButton();
         }
 
@@ -232,7 +264,7 @@ public class ConversionListener {
       public void onClick (DialogInterface dialog, int index) {
         if (index != selectedToUnit) {
           selectedToUnit = index;
-          saveSelectedToUnit();
+          saveToUnit();
           setConvertButton();
         }
 
@@ -261,7 +293,7 @@ public class ConversionListener {
     convertButton = (Button)row.getChildAt(3);
 
     typeSetting = makeSetting("type");
-    restoreType();
+    restoreUnitType();
 
     typeButton.setOnClickListener(unitTypeChangeListener);
     fromButton.setOnClickListener(fromUnitChangeListener);
