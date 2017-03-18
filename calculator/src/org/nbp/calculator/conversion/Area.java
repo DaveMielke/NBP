@@ -26,13 +26,13 @@ public class Area extends UnitType {
   public final Unit SQUARE_ROD = new Unit(SQUARE_YARD, SQUARE_YARDS_PER_SQUARE_ROD, "sqrd", "squarerods", "squarerod");
 
   public final static double SQUARE_RODS_PER_SQUARE_FURLONG = square(Length.RODS_PER_FURLONG);
-  public final Unit SQUARE_FURLONG = new Unit(SQUARE_ROD, SQUARE_RODS_PER_SQUARE_FURLONG, null, "squarefurlongs", "squarefurlong");
+  public final Unit SQUARE_FURLONG = new Unit(SQUARE_ROD, SQUARE_RODS_PER_SQUARE_FURLONG, "sqfl", "squarefurlongs", "squarefurlong");
 
   public final static double SQUARE_FURLONGS_PER_SQUARE_MILE = square(Length.FURLONGS_PER_MILE);
   public final Unit SQUARE_MILE = new Unit(SQUARE_FURLONG, SQUARE_FURLONGS_PER_SQUARE_MILE, "sqmi", "squaremiles", "squaremile");
 
   public final static double SQUARE_MILES_PER_SQUARE_LEAGUE = square(Length.MILES_PER_LEAGUE);
-  public final Unit SQUARE_LEAGUE = new Unit(SQUARE_MILE, SQUARE_MILES_PER_SQUARE_LEAGUE, null, "squareleagues", "squareleague");
+  public final Unit SQUARE_LEAGUE = new Unit(SQUARE_MILE, SQUARE_MILES_PER_SQUARE_LEAGUE, "sqlg", "squareleagues", "squareleague");
 
   public final static double SQUARE_RODS_PER_ROOD = 40.0;
   public final Unit ROOD = new Unit(SQUARE_ROD, SQUARE_RODS_PER_ROOD, "ro", "roods", "rood");

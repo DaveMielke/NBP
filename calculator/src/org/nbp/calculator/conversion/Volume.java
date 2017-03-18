@@ -24,11 +24,11 @@ public class Volume extends UnitType {
   public final Unit CUBIC_ROD = new Unit(CUBIC_YARD, CUBIC_YARDS_PER_CUBIC_ROD, "cbrd", "cubicrods", "cubicrod");
 
   public final static double CUBIC_RODS_PER_CUBIC_FURLONG = cube(Length.RODS_PER_FURLONG);
-  public final Unit CUBIC_FURLONG = new Unit(CUBIC_ROD, CUBIC_RODS_PER_CUBIC_FURLONG, null, "cubicfurlongs", "cubicfurlong");
+  public final Unit CUBIC_FURLONG = new Unit(CUBIC_ROD, CUBIC_RODS_PER_CUBIC_FURLONG, "cbfl", "cubicfurlongs", "cubicfurlong");
 
   public final static double CUBIC_FURLONGS_PER_CUBIC_MILE = cube(Length.FURLONGS_PER_MILE);
   public final Unit CUBIC_MILE = new Unit(CUBIC_FURLONG, CUBIC_FURLONGS_PER_CUBIC_MILE, "cbmi", "cubicmiles", "cubicmile");
 
   public final static double CUBIC_MILES_PER_CUBIC_LEAGUE = cube(Length.MILES_PER_LEAGUE);
-  public final Unit CUBIC_LEAGUE = new Unit(CUBIC_MILE, CUBIC_MILES_PER_CUBIC_LEAGUE, null, "cubicleagues", "cubicleague");
+  public final Unit CUBIC_LEAGUE = new Unit(CUBIC_MILE, CUBIC_MILES_PER_CUBIC_LEAGUE, "cblg", "cubicleagues", "cubicleague");
 }

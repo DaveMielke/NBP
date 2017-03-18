@@ -43,8 +43,10 @@ public class Unit {
       }
 
       unitNameMap.putAll(nameMap);
-      unitSet.add(this);
     }
+
+    unitSet.add(this);
+    unitType.addUnit(this);
   }
 
   public Unit (UnitType type, String... names) {
@@ -87,13 +89,13 @@ public class Unit {
     return valueAdjustment;
   }
 
-  public final static Unit get (String name) {
+  public final static Unit getUnit (String name) {
     Unit unit = unitNameMap.get(name);
     if (unit != null) return unit;
     throw new UnitException(("unknown unit: " + name));
   }
 
-  public final static Unit[] get () {
+  public final static Unit[] getUnits () {
     return unitSet.toArray(new Unit[unitSet.size()]);
   }
 }

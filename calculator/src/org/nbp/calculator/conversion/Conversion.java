@@ -17,12 +17,24 @@ public class Conversion {
     return instance;
   }
 
+  public final UnitType[] getUnitTypes () {
+    return UnitType.getUnitTypes();
+  }
+
   public final UnitType getUnitType (String name) {
-    return UnitType.get(name);
+    return UnitType.getUnitType(name);
+  }
+
+  public final Unit[] getUnits () {
+    return Unit.getUnits();
+  }
+
+  public final Unit[] getUnits (UnitType type) {
+    return type.getUnits();
   }
 
   public final Unit getUnit (String name) {
-    return Unit.get(name);
+    return Unit.getUnit(name);
   }
 
   public final static double convert (double value, Unit from, Unit to) {
@@ -51,7 +63,7 @@ public class Conversion {
   }
 
   public final double convert (double value, String from, String to) {
-    return convert(value, Unit.get(from), Unit.get(to));
+    return convert(value, getUnit(from), getUnit(to));
   }
 
   public final UnitType LENGTH = new Length();

@@ -20,11 +20,11 @@ public class Length extends UnitType {
   public final Unit ROD = new Unit(YARD, YARDS_PER_ROD, "rd", "rods", "rod");
 
   public final static double RODS_PER_FURLONG = 40.0;
-  public final Unit FURLONG = new Unit(ROD, RODS_PER_FURLONG, null, "furlongs", "furlong");
+  public final Unit FURLONG = new Unit(ROD, RODS_PER_FURLONG, "fl", "furlongs", "furlong");
 
   public final static double FURLONGS_PER_MILE = 8.0;
   public final Unit MILE = new Unit(FURLONG, FURLONGS_PER_MILE, "mi", "miles", "mile");
 
   public final static double MILES_PER_LEAGUE = 3.0;
-  public final Unit LEAGUE = new Unit(MILE, MILES_PER_LEAGUE, null, "leagues", "league");
+  public final Unit LEAGUE = new Unit(MILE, MILES_PER_LEAGUE, "lg", "leagues", "league");
 }

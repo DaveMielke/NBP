@@ -2,10 +2,7 @@ package org.nbp.calculator;
 import org.nbp.calculator.conversion.*;
 
 import java.util.Map;
-import java.util.LinkedHashMap;
-
-import java.util.Set;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,38 +13,74 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class ConversionListener {
-  private final static String[] unitTypeNames;
+  private final static Conversion conversion = Conversion.getInstance();
+
+  private static class StringTable {
+    private final String[] stringArray;
+    private final Map<String, Integer> stringMap = new HashMap<String, Integer>();
+
+    public StringTable (int size) {
+      stringArray = new String[size];
+    }
+
+    public final void set (int index, String string) {
+      stringArray[index] = string;
+      stringMap.put(string, index);
+    }
+
+    public final String[] get () {
+      return stringArray;
+    }
+
+    public final String get (int index) {
+      return stringArray[index];
+    }
+
+    public final int get (String string) {
+      return stringMap.get(string);
+    }
+  }
+
+  private final static StringTable unitTypeNames;
+  private final static StringTable[] unitSymbols;
   private final static String[][] unitNames;
 
   static {
-    Conversion conversion = Conversion.getInstance();
-    UnitType[] unitTypes = UnitType.get();
-    Map<UnitType, Set<String>> map = new LinkedHashMap<UnitType, Set<String>>();
+    final UnitType[] unitTypeArray = conversion.getUnitTypes();
 
-    for (UnitType type : unitTypes) {
-      map.put(type, new LinkedHashSet<String>());
-    }
+    final int unitTypeCount = unitTypeArray.length;
+    int unitTypeIndex = 0;
 
-    for (Unit unit : Unit.get()) {
-      String symbol = unit.getSymbol();
-      if (symbol == null) continue;
-
-      StringBuilder sb = new StringBuilder(symbol);
-      sb.append(" [");
-      sb.append(unit.getName());
-      sb.append("]");
-
-      map.get(unit.getType()).add(sb.toString());
-    }
-
-    int unitTypeCount = unitTypes.length;
-    unitTypeNames = new String[unitTypeCount];
+    unitTypeNames = new StringTable(unitTypeCount);
+    unitSymbols = new StringTable[unitTypeCount];
     unitNames = new String[unitTypeCount][];
 
-    for (int unitTypeIndex=0; unitTypeIndex<unitTypeCount; unitTypeIndex+=1) {
-      UnitType type = unitTypes[unitTypeIndex];
-      unitTypeNames[unitTypeIndex] = type.getName();
-      unitNames[unitTypeIndex] = ApplicationUtilities.toArray(map.get(type));
+    for (UnitType type : unitTypeArray) {
+      final Unit[] unitArray = type.getUnits();
+      final int unitCount = unitArray.length;
+      final StringTable symbols = new StringTable(unitCount);
+      final String[] names = new String[unitCount];
+
+      for (int unitIndex=0; unitIndex<unitCount; unitIndex+=1) {
+        final Unit unit = unitArray[unitIndex];
+
+        String symbol = unit.getSymbol();
+        if (symbol == null) continue;
+        if (symbol.isEmpty()) continue;
+        symbols.set(unitIndex, symbol);
+
+        StringBuilder sb = new StringBuilder(symbol);
+        final String name = unit.getName();
+        sb.append(" [");
+        sb.append(name);
+        sb.append("]");
+        names[unitIndex] = sb.toString();
+      }
+
+      unitTypeNames.set(unitTypeIndex, type.getName());
+      unitSymbols[unitTypeIndex] = symbols;
+      unitNames[unitTypeIndex] = names;
+      unitTypeIndex += 1;
     }
   }
 
@@ -59,21 +92,78 @@ public class ConversionListener {
   private final Button toButton;
   private final Button convertButton;
 
-  private final String unitSetting;
-  private final String fromSetting;
-  private final String toSetting;
+  private final String typeSetting;
+  private int selectedUnitType = -1;
+
+  private String fromSetting;
+  private int selectedFromUnit;
+
+  private String toSetting;
+  private int selectedToUnit;
 
   private final String makeSetting (String name) {
     return "conversion" + conversionIdentifier + "-" + name;
   }
 
-  private int selectedUnitType = 0;
+  private final void saveSelectedUnitType () {
+    SavedSettings.set(typeSetting, unitTypeNames.get(selectedUnitType));
+  }
+
+  private final void saveSelectedFromUnit () {
+    SavedSettings.set(typeSetting, unitSymbols[selectedUnitType].get(selectedFromUnit));
+  }
+
+  private final void saveSelectedToUnit () {
+    SavedSettings.set(typeSetting, unitSymbols[selectedUnitType].get(selectedToUnit));
+  }
+
+  private final int getUnitIndex (String setting) {
+    String name = SavedSettings.get(setting, null);
+
+    if (name != null) {
+      Integer index = unitSymbols[selectedUnitType].get(name);
+      if (index != null) return index;
+    }
+
+    return 0;
+  }
+
+  private final void setConvertButton () {
+    String from = unitSymbols[selectedUnitType].get(selectedFromUnit);
+    String to = unitSymbols[selectedUnitType].get(selectedToUnit);
+    String function = from + '2' + to;
+    convertButton.setText(function);
+    convertButton.setTag((function + Function.ARGUMENT_PREFIX));
+  }
+
+  private final  void setUnitType (int index) {
+    selectedUnitType = index;
+    String typeName = unitTypeNames.get(index);
+
+    fromSetting = makeSetting(("from-" + typeName));
+    selectedFromUnit = getUnitIndex(fromSetting);
+
+    toSetting = makeSetting(("to-" + typeName));
+    selectedToUnit = getUnitIndex(toSetting);
+
+    saveSelectedUnitType();
+    saveSelectedFromUnit();
+    saveSelectedToUnit();
+    setConvertButton();
+  }
+
+  private final void restoreType () {
+    String name = SavedSettings.get(typeSetting, conversion.LENGTH.getName());
+    Integer index = unitTypeNames.get(name);
+    if (index == null) index = 0;
+    setUnitType(index);
+  }
 
   private final DialogInterface.OnClickListener typeSelectedListener =
     new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int index) {
-        selectedUnitType = index;
+        if (index != selectedUnitType) setUnitType(index);
       }
     };
 
@@ -85,7 +175,7 @@ public class ConversionListener {
           R.string.title_conversion_type
         );
 
-        builder.setItems(unitTypeNames, typeSelectedListener);
+        builder.setItems(unitTypeNames.get(), typeSelectedListener);
         builder.show();
       }
     };
@@ -94,6 +184,11 @@ public class ConversionListener {
     new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int index) {
+        if (index != selectedFromUnit) {
+          selectedFromUnit = index;
+          saveSelectedFromUnit();
+          setConvertButton();
+        }
       }
     };
 
@@ -114,6 +209,11 @@ public class ConversionListener {
     new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int index) {
+        if (index != selectedToUnit) {
+          selectedToUnit = index;
+          saveSelectedToUnit();
+          setConvertButton();
+        }
       }
     };
 
@@ -139,9 +239,8 @@ public class ConversionListener {
     toButton = (Button)row.getChildAt(2);
     convertButton = (Button)row.getChildAt(3);
 
-    unitSetting = makeSetting("unit");
-    fromSetting = makeSetting("from");
-    toSetting = makeSetting("to");
+    typeSetting = makeSetting("type");
+    restoreType();
 
     typeButton.setOnClickListener(typeChangeListener);
     fromButton.setOnClickListener(fromChangeListener);
