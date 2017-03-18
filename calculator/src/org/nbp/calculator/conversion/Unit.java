@@ -1,6 +1,8 @@
 package org.nbp.calculator.conversion;
 
 import java.util.Arrays;
+import java.util.Set;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -11,13 +13,14 @@ public class Unit {
   private final double valueMultiplier;
   private final double valueAdjustment;
 
-  private static class UnitMap extends HashMap<String, Unit> {
-    public UnitMap () {
+  private static class UnitNameMap extends HashMap<String, Unit> {
+    public UnitNameMap () {
       super();
     }
   }
 
-  private final static UnitMap units = new UnitMap();
+  private final static Set<Unit> unitSet = new LinkedHashSet<Unit>();
+  private final static UnitNameMap unitNameMap = new UnitNameMap();
 
   private Unit (UnitType type, Unit reference, double multiplier, double adjustment, String... names) {
     unitNames = Arrays.copyOf(names, names.length);
@@ -27,19 +30,20 @@ public class Unit {
     valueAdjustment = adjustment;
 
     {
-      UnitMap map = new UnitMap();
+      UnitNameMap nameMap = new UnitNameMap();
 
       for (String name : unitNames) {
         if (name != null) {
-          if (units.containsKey(name)) {
+          if (unitNameMap.containsKey(name)) {
             throw new UnitException(("duplicate unit: " + name));
           }
 
-          map.put(name, this);
+          nameMap.put(name, this);
         }
       }
 
-      units.putAll(map);
+      unitNameMap.putAll(nameMap);
+      unitSet.add(this);
     }
   }
 
@@ -84,8 +88,12 @@ public class Unit {
   }
 
   public final static Unit get (String name) {
-    Unit unit = units.get(name);
+    Unit unit = unitNameMap.get(name);
     if (unit != null) return unit;
     throw new UnitException(("unknown unit: " + name));
+  }
+
+  public final static Unit[] get () {
+    return unitSet.toArray(new Unit[unitSet.size()]);
   }
 }

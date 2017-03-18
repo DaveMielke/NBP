@@ -14,10 +14,6 @@ import android.util.Log;
 public abstract class Functions {
   private final static String LOG_TAG = Functions.class.getName();
 
-  private static String[] toArray (Set<String> set) {
-    return set.toArray(new String[set.size()]);
-  }
-
   private static class FunctionMap extends HashMap<String, Function> {
     public FunctionMap () {
       super();
@@ -71,7 +67,7 @@ public abstract class Functions {
   }
 
   public static String[] getNames () {
-    return toArray(functionMap.keySet());
+    return ApplicationUtilities.toArray(functionMap.keySet());
   }
 
   public static Function get (String name) {

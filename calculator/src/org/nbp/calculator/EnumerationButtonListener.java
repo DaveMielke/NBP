@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import org.nbp.common.LanguageUtilities;
 
-import org.nbp.common.AlertDialogBuilder;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
@@ -93,8 +92,7 @@ public class EnumerationButtonListener<E extends Enum<E>> {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          int title = getTitle();
-          AlertDialog.Builder builder = new AlertDialogBuilder(mainActivity, title);
+          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(getTitle());
 
           {
             int count = enumerationValues.length;

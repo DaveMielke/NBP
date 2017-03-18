@@ -11,10 +11,6 @@ public abstract class Variables {
   private Variables () {
   }
 
-  private static String[] toArray (Set<String> set) {
-    return set.toArray(new String[set.size()]);
-  }
-
   private static class SystemVariables extends LinkedHashMap<String, SystemVariable> {
     public SystemVariables () {
       super();
@@ -98,7 +94,7 @@ public abstract class Variables {
   }
 
   public static String[] getSystemVariableNames () {
-    return toArray(systemVariables.keySet());
+    return ApplicationUtilities.toArray(systemVariables.keySet());
   }
 
   public static Variable getSystemVariable (String name) {
@@ -114,7 +110,7 @@ public abstract class Variables {
   }
 
   public static String[] getUserVariableNames () {
-    return toArray(getUserVariables().getAll().keySet());
+    return ApplicationUtilities.toArray(getUserVariables().getAll().keySet());
   }
 
   public static boolean removeUserVariable (String name) {

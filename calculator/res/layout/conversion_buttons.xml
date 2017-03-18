@@ -7,19 +7,19 @@
   <Button
     android:layout_weight="1"
     android:tag=""
-    android:text="unit"
+    android:text="@string/label_conversion_type"
    />
 
   <Button
     android:layout_weight="1"
     android:tag=""
-    android:text="from"
+    android:text="@string/label_conversion_from"
    />
 
   <Button
     android:layout_weight="1"
     android:tag=""
-    android:text="to"
+    android:text="@string/label_conversion_to"
    />
 
   <Button

@@ -120,4 +120,11 @@
   <string name="description_angleUnit_degrees">Degrees</string>
   <string name="description_angleUnit_grads">Grads</string>
   <string name="description_angleUnit_radians">Radians</string>
+
+  <string name="title_conversion_type">Select Unit Type</string>
+  <string name="title_conversion_from">Select From Unit</string>
+  <string name="title_conversion_to">Select To Unit</string>
+  <string name="label_conversion_type">Type</string>
+  <string name="label_conversion_from">From</string>
+  <string name="label_conversion_to">To</string>
 </resources>

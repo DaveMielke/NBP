@@ -1,5 +1,7 @@
 package org.nbp.calculator.conversion;
 
+import java.util.Set;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -7,11 +9,12 @@ public class UnitType {
   private final String typeName;
   private final Unit baseUnit;
 
-  private final static Map<String, UnitType> unitTypes
+  private final static Set<UnitType> unitTypeSet = new LinkedHashSet<UnitType>();
+  private final static Map<String, UnitType> unitTypeNameMap
              = new HashMap<String, UnitType>();
 
   public UnitType (String name, boolean international, String... unit) {
-    if (unitTypes.containsKey(name)) {
+    if (unitTypeNameMap.containsKey(name)) {
       throw new UnitException(("duplicate unit type: " + name));
     }
 
@@ -22,7 +25,8 @@ public class UnitType {
     }
 
     typeName = name;
-    unitTypes.put(typeName, this);
+    unitTypeNameMap.put(typeName, this);
+    unitTypeSet.add(this);
   }
 
   public final String getName () {
@@ -34,8 +38,12 @@ public class UnitType {
   }
 
   public final static UnitType get (String name) {
-    UnitType type = unitTypes.get(name);
+    UnitType type = unitTypeNameMap.get(name);
     if (type != null) return type;
     throw new UnitException(("unknown unit type: " + name));
+  }
+
+  public final static UnitType[] get () {
+    return unitTypeSet.toArray(new UnitType[unitTypeSet.size()]);
   }
 }
