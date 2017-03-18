@@ -3,5 +3,6 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
   <include layout="@layout/keypad_decimal" />
   <include layout="@layout/keypad_function" />
+  <include layout="@layout/keypad_conversion" />
   <include layout="@layout/keypad_hexadecimal" />
 </TableLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_weight="1"
+  >
+
+  <Button
+    android:layout_weight="1"
+    android:tag=""
+    android:text="unit"
+   />
+
+  <Button
+    android:layout_weight="1"
+    android:tag=""
+    android:text="from"
+   />
+
+  <Button
+    android:layout_weight="1"
+    android:tag=""
+    android:text="to"
+   />
+
+  <Button
+    android:layout_weight="1"
+    android:tag=""
+   />
+</TableRow>

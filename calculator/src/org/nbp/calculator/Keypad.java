@@ -8,6 +8,7 @@ import android.widget.TextView;
 public enum Keypad {
   DECIMAL(R.id.keypad_decimal),
   FUNCTION(R.id.keypad_function),
+  CONVERSION(R.id.keypad_conversion),
   HEXADECIMAL(R.id.keypad_hexadecimal);
 
   private final int keypadIdentifier;

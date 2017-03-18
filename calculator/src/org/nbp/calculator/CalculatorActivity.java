@@ -418,61 +418,71 @@ public class CalculatorActivity extends CommonActivity {
       }
     };
 
-    Keypad.forEachKeypad(
-      new Keypad.KeypadHandler() {
-        @Override
-        public void handleKeypad (final Keypad keypad) {
-          keypad.forEachKey(
-            new Keypad.KeyHandler() {
-              @Override
-              public void handleKey (TextView key) {
-                key.setBackgroundColor(0);
+    final Keypad.KeyHandler keyHandler = new Keypad.KeyHandler() {
+      private final boolean setTag (TextView key, String text) {
+        CharSequence tag = (CharSequence)key.getTag();
 
-                String text = key.getText().toString();
-                CharSequence tag = (CharSequence)key.getTag();
+        if (tag == null) {
+          tag = text;
 
-                if (text.equals("=")) {
-                  key.setOnClickListener(finishExpressionListener);
-                } else {
-                  key.setOnClickListener(insertTextListener);
+          if (text.length() > 0) {
+            if (ExpressionParser.isIdentifierCharacter(text.charAt(0), true)) {
+              Function function = Functions.get(text);
 
-                  if ((tag == null) || (tag.length() == 0)) {
-                    tag = text;
-
-                    if (ExpressionParser.isIdentifierCharacter(text.charAt(0), true)) {
-                      Function function = Functions.get(text);
-
-                      if (function != null) {
-                        tag = function.getName() + Function.ARGUMENT_PREFIX;
-                      }
-                    }
-
-                    key.setTag(tag);
-                  }
-
-                  {
-                    int index = text.indexOf('^');
-
-                    if (index >= 0) {
-                      SpannableStringBuilder sb = new SpannableStringBuilder();
-                      sb.append(text.substring(0, index));
-                      sb.append(text.substring(index+1));
-                      int length = sb.length();
-
-                      for (CharacterStyle span : exponentSpans) {
-                        sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
-                      }
-
-                      key.setText(sb.subSequence(0, length));
-                    }
-                  }
-                }
+              if (function != null) {
+                tag = function.getName() + Function.ARGUMENT_PREFIX;
               }
             }
-          );
+          }
+
+          key.setTag(tag);
+        } else if (tag.length() == 0) {
+          return false;
         }
+
+        return true;
       }
-    );
+
+      @Override
+      public void handleKey (TextView key) {
+        String text = key.getText().toString();
+
+        if (text.equals("=")) {
+          key.setOnClickListener(finishExpressionListener);
+        } else if (setTag(key, text)) {
+          key.setOnClickListener(insertTextListener);
+        }
+
+        {
+          int index = text.indexOf('^');
+
+          if (index >= 0) {
+            SpannableStringBuilder sb = new SpannableStringBuilder();
+            sb.append(text.substring(0, index));
+            sb.append(text.substring(index+1));
+            int length = sb.length();
+
+            for (CharacterStyle span : exponentSpans) {
+              sb.setSpan(span, index, length, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            key.setText(sb.subSequence(0, length));
+          }
+        }
+
+        key.setBackgroundColor(0);
+      }
+    };
+
+    final Keypad.KeypadHandler keypadHandler = new Keypad.KeypadHandler() {
+      @Override
+      public void handleKeypad (final Keypad keypad) {
+        keypad.forEachKey(keyHandler);
+      }
+    };
+
+    Keypad.forEachKeypad(keypadHandler);
+    ConversionListener.register(insertTextListener);
   }
 
   private final void setClearButtonListener () {

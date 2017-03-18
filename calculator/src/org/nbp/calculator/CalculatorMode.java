@@ -8,7 +8,8 @@ public enum CalculatorMode {
 
     new Keypad[] {
       Keypad.DECIMAL,
-      Keypad.FUNCTION
+      Keypad.FUNCTION,
+      Keypad.CONVERSION
     },
 
     new Properties() {
