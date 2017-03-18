@@ -47,7 +47,6 @@ public class ConversionListener {
 
   static {
     final UnitType[] unitTypeArray = conversion.getUnitTypes();
-
     final int unitTypeCount = unitTypeArray.length;
     int unitTypeIndex = 0;
 
@@ -71,9 +70,13 @@ public class ConversionListener {
 
         StringBuilder sb = new StringBuilder(symbol);
         final String name = unit.getName();
-        sb.append(" [");
-        sb.append(name);
-        sb.append("]");
+
+        if ((name != null) && !name.isEmpty()) {
+          sb.append(" [");
+          sb.append(name);
+          sb.append("]");
+        }
+
         names[unitIndex] = sb.toString();
       }
 
@@ -121,17 +124,6 @@ public class ConversionListener {
     return getUnitSymbol(selectedToUnit);
   }
 
-  private final int getUnitIndex (String setting) {
-    String symbol = SavedSettings.get(setting, null);
-
-    if (symbol != null) {
-      Integer index = getUnitSymbols().get(symbol);
-      if (index != null) return index;
-    }
-
-    return 0;
-  }
-
   private final void saveUnitType () {
     SavedSettings.set(typeSetting, unitTypeNames.get(selectedUnitType));
   }
@@ -144,10 +136,22 @@ public class ConversionListener {
     SavedSettings.set(toSetting, getToUnitSymbol());
   }
 
+  private final int getSavedUnit (String setting) {
+    String symbol = SavedSettings.get(setting, null);
+
+    if (symbol != null) {
+      Integer index = getUnitSymbols().get(symbol);
+      if (index != null) return index;
+    }
+
+    return 0;
+  }
+
   private final void setConvertButton () {
     String from = getFromUnitSymbol();
     String to = getToUnitSymbol();
     String function = from + '2' + to;
+
     convertButton.setText(function);
     convertButton.setTag((function + Function.ARGUMENT_PREFIX));
   }
@@ -157,10 +161,10 @@ public class ConversionListener {
     String typeName = unitTypeNames.get(index);
 
     fromSetting = makeSetting(("from-" + typeName));
-    selectedFromUnit = getUnitIndex(fromSetting);
+    selectedFromUnit = getSavedUnit(fromSetting);
 
     toSetting = makeSetting(("to-" + typeName));
-    selectedToUnit = getUnitIndex(toSetting);
+    selectedToUnit = getSavedUnit(toSetting);
 
     saveUnitType();
     saveFromUnit();
