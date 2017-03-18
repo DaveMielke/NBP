@@ -36,7 +36,7 @@ public class ConversionListener {
       return stringArray[index];
     }
 
-    public final int get (String string) {
+    public final Integer get (String string) {
       return stringMap.get(string);
     }
   }
@@ -159,28 +159,49 @@ public class ConversionListener {
     setUnitType(index);
   }
 
-  private final DialogInterface.OnClickListener typeSelectedListener =
+  private final void dismissDialog (DialogInterface dialog) {
+    ((AlertDialog)dialog).dismiss();
+  }
+
+  private final DialogInterface.OnClickListener selectionCancelledListener =
+    new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick (DialogInterface dialog, int index) {
+        dismissDialog(dialog);
+      }
+    };
+
+  private final void showDialog (
+    int subtitle, CharSequence[] items, int selectedItem,
+    DialogInterface.OnClickListener itemSelectedListener
+  ) {
+    ApplicationUtilities.newAlertDialogBuilder(subtitle)
+      .setNegativeButton(R.string.button_cancel, selectionCancelledListener)
+      .setSingleChoiceItems(items, selectedItem, itemSelectedListener)
+      .show();
+  }
+
+  private final DialogInterface.OnClickListener unitTypeSelectedListener =
     new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int index) {
         if (index != selectedUnitType) setUnitType(index);
+        dismissDialog(dialog);
       }
     };
 
-  private final View.OnClickListener typeChangeListener =
+  private final View.OnClickListener unitTypeChangeListener =
     new View.OnClickListener() {
       @Override
       public void onClick (View view) {
-        AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(
-          R.string.title_conversion_type
+        showDialog(
+          R.string.title_conversion_type, unitTypeNames.get(),
+          selectedUnitType, unitTypeSelectedListener
         );
-
-        builder.setItems(unitTypeNames.get(), typeSelectedListener);
-        builder.show();
       }
     };
 
-  private final DialogInterface.OnClickListener fromSelectedListener =
+  private final DialogInterface.OnClickListener fromUnitSelectedListener =
     new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int index) {
@@ -189,23 +210,23 @@ public class ConversionListener {
           saveSelectedFromUnit();
           setConvertButton();
         }
+
+        dismissDialog(dialog);
       }
     };
 
-  private final View.OnClickListener fromChangeListener =
+  private final View.OnClickListener fromUnitChangeListener =
     new View.OnClickListener() {
       @Override
       public void onClick (View view) {
-        AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(
-          R.string.title_conversion_from
+        showDialog(
+          R.string.title_conversion_from, unitNames[selectedUnitType],
+          selectedFromUnit, fromUnitSelectedListener
         );
-
-        builder.setItems(unitNames[selectedUnitType], fromSelectedListener);
-        builder.show();
       }
     };
 
-  private final DialogInterface.OnClickListener toSelectedListener =
+  private final DialogInterface.OnClickListener toUnitSelectedListener =
     new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int index) {
@@ -214,19 +235,19 @@ public class ConversionListener {
           saveSelectedToUnit();
           setConvertButton();
         }
+
+        dismissDialog(dialog);
       }
     };
 
-  private final View.OnClickListener toChangeListener =
+  private final View.OnClickListener toUnitChangeListener =
     new View.OnClickListener() {
       @Override
       public void onClick (View view) {
-        AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(
-          R.string.title_conversion_to
+        showDialog(
+          R.string.title_conversion_to, unitNames[selectedUnitType],
+          selectedToUnit, toUnitSelectedListener
         );
-
-        builder.setItems(unitNames[selectedUnitType], toSelectedListener);
-        builder.show();
       }
     };
 
@@ -242,9 +263,9 @@ public class ConversionListener {
     typeSetting = makeSetting("type");
     restoreType();
 
-    typeButton.setOnClickListener(typeChangeListener);
-    fromButton.setOnClickListener(fromChangeListener);
-    toButton.setOnClickListener(toChangeListener);
+    typeButton.setOnClickListener(unitTypeChangeListener);
+    fromButton.setOnClickListener(fromUnitChangeListener);
+    toButton.setOnClickListener(toUnitChangeListener);
     convertButton.setOnClickListener(convertListener);
   }
 
