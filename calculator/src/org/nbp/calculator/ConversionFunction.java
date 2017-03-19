@@ -6,6 +6,8 @@ import android.util.Log;
 public class ConversionFunction extends RealFunction {
   private final static String LOG_TAG = ConversionFunction.class.getName();
 
+  public final static char SEPARATOR = '2';
+
   private final String functionName;
   private final String fromName;
   private final String toName;
@@ -17,9 +19,9 @@ public class ConversionFunction extends RealFunction {
     super("convert");
 
     functionName = name;
-    int index = name.indexOf('2');
+    int index = name.lastIndexOf(SEPARATOR, (name.length() - 2));
 
-    if ((index > 0) && (index < (name.length() - 1))) {
+    if (index > 0) {
       fromName = name.substring(0, index);
       toName = name.substring(index+1);
 
@@ -47,7 +49,7 @@ public class ConversionFunction extends RealFunction {
       }
     }
 
-    throw new IllegalArgumentException(("not a unit conversion: " + name));
+    throw new IllegalArgumentException(("not a unit conversion function: " + name));
   }
 
   @Override

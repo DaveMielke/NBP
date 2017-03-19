@@ -150,7 +150,7 @@ public class ConversionListener {
   private final void setConvertButton () {
     String from = getFromUnitSymbol();
     String to = getToUnitSymbol();
-    String function = from + '2' + to;
+    String function = from + ConversionFunction.SEPARATOR + to;
 
     convertButton.setText(function);
     convertButton.setTag((function + Function.ARGUMENT_PREFIX));
