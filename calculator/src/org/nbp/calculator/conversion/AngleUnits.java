@@ -34,7 +34,7 @@ public class AngleUnits extends UnitType {
   public final static double DEGREES_PER_SIGN = 30.0;
   public final Unit SIGN = new Unit(DEGREE, DEGREES_PER_SIGN, "sgn", "signs", "sign");
 
-  public final static double DEGREES_PER_POINT = 22.5;
+  public final static double DEGREES_PER_POINT = 11.25;
   public final Unit POINT = new Unit(DEGREE, DEGREES_PER_POINT, "pt", "points", "point");
 
   public final static double DEGREES_PER_HEXACONTADE = 6.0;
