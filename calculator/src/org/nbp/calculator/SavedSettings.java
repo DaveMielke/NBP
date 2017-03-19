@@ -1,10 +1,14 @@
 package org.nbp.calculator;
 
+import android.util.Log;
+
 import org.nbp.common.CommonContext;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 public abstract class SavedSettings {
+  private final static String LOG_TAG = SavedSettings.class.getName();
+
   public final static String CALCULATOR_MODE = "calculator-mode";
   public final static String DECIMAL_NOTATION = "decimal-notation";
   public final static String ANGLE_UNIT = "angle-unit";
@@ -45,8 +49,12 @@ public abstract class SavedSettings {
     String setting = getSettings().getString(name, null);
 
     if (setting != null) {
-      E value = Enum.valueOf(type, setting);
-      if (value != null) return value;
+      try {
+        E value = Enum.valueOf(type, setting);
+        if (value != null) return value;
+      } catch (IllegalArgumentException exception) {
+        Log.w(LOG_TAG, exception.getMessage());
+      }
     }
 
     return defaultValue;

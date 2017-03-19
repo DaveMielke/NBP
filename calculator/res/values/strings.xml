@@ -38,9 +38,9 @@
   <string name="description_decimalNotation_scientific">Scientific</string>
 
   <string name="title_angleUnit">Angle Unit</string>
-  <string name="description_angleUnit_degrees">Degrees</string>
-  <string name="description_angleUnit_grads">Grads</string>
-  <string name="description_angleUnit_radians">Radians</string>
+  <string name="description_angleUnit_degree">Degrees</string>
+  <string name="description_angleUnit_gradian">Gradians</string>
+  <string name="description_angleUnit_radian">Radians</string>
 
   <string name="title_conversion_type">Select Unit Type</string>
   <string name="title_conversion_from">Select From Unit</string>

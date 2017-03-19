@@ -1,7 +1,7 @@
 package org.nbp.calculator;
 
 public enum AngleUnit {
-  DEGREES("DEG", R.string.description_angleUnit_degrees,
+  DEGREE("DEG", R.string.description_angleUnit_degree,
     new Converter() {
       @Override
       public double toRadians (double angle) {
@@ -15,7 +15,7 @@ public enum AngleUnit {
     }
   ),
 
-  GRADS("GRD", R.string.description_angleUnit_grads,
+  GRADIAN("GON", R.string.description_angleUnit_gradian,
     new Converter() {
       private final double GRADS_PER_DEGREE = 100d / 90d;
 
@@ -31,7 +31,7 @@ public enum AngleUnit {
     }
   ),
 
-  RADIANS("RAD", R.string.description_angleUnit_radians,
+  RADIAN("RAD", R.string.description_angleUnit_radian,
     new Converter() {
       @Override
       public double toRadians (double angle) {
