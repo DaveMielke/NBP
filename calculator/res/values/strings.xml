@@ -49,8 +49,8 @@
   <string name="label_conversion_from">From</string>
   <string name="label_conversion_to">To</string>
 
-  <string name="description_key_alternate">Alternate Keypad</string>
-  <string name="description_key_clear">Clear Expression</string>
+  <string name="description_key_alternateKeypad">Alternate Keypad</string>
+  <string name="description_key_clearExpression">Clear Expression</string>
   <string name="description_key_function">f of x</string>
   <string name="description_key_variable">Variable</string>
 

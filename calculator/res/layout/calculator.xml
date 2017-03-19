@@ -15,7 +15,7 @@
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android">
       <TableRow>
-        <include layout="@layout/clear_button" />
+        <include layout="@layout/clear_expression_button" />
         <include layout="@layout/alternate_keypad_button" />
         <include layout="@layout/calculator_mode_button" />
         <include layout="@layout/decimal_notation_button" />

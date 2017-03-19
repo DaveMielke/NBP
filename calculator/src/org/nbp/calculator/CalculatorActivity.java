@@ -245,7 +245,7 @@ public class CalculatorActivity extends CommonActivity {
                 return true;
 
               case CharacterUtilities.CHAR_ETX: // control C
-                performClick(R.id.button_clear);
+                performClick(R.id.button_clearExpression);
                 return true;
 
               case CharacterUtilities.CHAR_EOT: // control D
@@ -473,9 +473,9 @@ public class CalculatorActivity extends CommonActivity {
     ConversionListener.register(insertTextListener);
   }
 
-  private final void setClearButtonListener () {
+  private final void setClearExpressionButtonListener () {
     setClickListener(
-      R.id.button_clear,
+      R.id.button_clearExpression,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -488,7 +488,7 @@ public class CalculatorActivity extends CommonActivity {
     );
 
     setLongClickListener(
-      R.id.button_clear,
+      R.id.button_clearExpression,
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
@@ -876,7 +876,7 @@ public class CalculatorActivity extends CommonActivity {
     return variables;
   }
 
-  private final void setVariablesButtonListener () {
+  private final void setVariableButtonListener () {
     setClickListener(
       R.id.button_variable,
       new View.OnClickListener() {
@@ -1117,7 +1117,7 @@ public class CalculatorActivity extends CommonActivity {
     return functions;
   }
 
-  private final void setFunctionsButtonListener () {
+  private final void setFunctionButtonListener () {
     setClickListener(
       R.id.button_function,
       new View.OnClickListener() {
@@ -1190,7 +1190,7 @@ public class CalculatorActivity extends CommonActivity {
     }
 
     prepareKeypads();
-    setClearButtonListener();
+    setClearExpressionButtonListener();
     setAlternateKeypadButtonListener();
     setCalculatorModeButtonListener();
     setDecimalNotationButtonListener();
@@ -1211,8 +1211,8 @@ public class CalculatorActivity extends CommonActivity {
     setDownButtonListener();
     setHistoryNavigationStates();
 
-    setVariablesButtonListener();
-    setFunctionsButtonListener();
+    setVariableButtonListener();
+    setFunctionButtonListener();
     setStoreButtonListener();
     setEraseButtonListener();
   }
