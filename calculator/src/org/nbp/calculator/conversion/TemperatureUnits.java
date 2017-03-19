@@ -1,7 +1,7 @@
 package org.nbp.calculator.conversion;
 
-public class Temperature extends UnitType {
-  public Temperature () {
+public class TemperatureUnits extends UnitType {
+  public TemperatureUnits () {
     super("temperature", false, "C", "celsius", "centigrade");
   }
 

@@ -1,7 +1,7 @@
 package org.nbp.calculator.conversion;
 
-public class Time extends UnitType {
-  public Time () {
+public class TimeUnits extends UnitType {
+  public TimeUnits () {
     super("time", true, "s", "seconds", "second", "sec");
   }
 

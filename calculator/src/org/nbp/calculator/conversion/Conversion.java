@@ -66,9 +66,9 @@ public class Conversion {
     return convert(value, getUnit(from), getUnit(to));
   }
 
-  public final UnitType LENGTH = new Length();
-  public final UnitType AREA = new Area();
-  public final UnitType VOLUME = new Volume();
-  public final UnitType TIME = new Time();
-  public final UnitType TEMPERATURE = new Temperature();
+  public final UnitType LENGTH = new LengthUnits();
+  public final UnitType AREA = new AreaUnits();
+  public final UnitType VOLUME = new VolumeUnits();
+  public final UnitType TIME = new TimeUnits();
+  public final UnitType TEMPERATURE = new TemperatureUnits();
 }

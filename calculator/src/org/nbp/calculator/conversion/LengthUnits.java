@@ -1,7 +1,7 @@
 package org.nbp.calculator.conversion;
 
-public class Length extends UnitType {
-  public Length () {
+public class LengthUnits extends UnitType {
+  public LengthUnits () {
     super("length", true, "m", "meters", "meter");
   }
 
