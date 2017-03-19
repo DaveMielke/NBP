@@ -13,13 +13,13 @@
   <string name="button_delete">Delete</string>
   <string name="button_down">Down</string>
   <string name="button_erase">Erase</string>
-  <string name="button_functions">f(x)</string>
+  <string name="button_function">f(x)</string>
   <string name="button_left">Left</string>
   <string name="button_new">New</string>
   <string name="button_right">Right</string>
   <string name="button_store">Store</string>
   <string name="button_up">Up</string>
-  <string name="button_variables">Var</string>
+  <string name="button_variable">Var</string>
 
   <string name="title_erase">Erase Variable</string>
   <string name="title_eraseMultiple">Erase Variables</string>
@@ -51,6 +51,8 @@
 
   <string name="description_key_alternate">Alternate Keypad</string>
   <string name="description_key_clear">Clear Expression</string>
+  <string name="description_key_function">f of x</string>
+  <string name="description_key_variable">Variable</string>
 
   <string name="description_digit_zero">zero</string>
   <string name="description_digit_one">one</string>

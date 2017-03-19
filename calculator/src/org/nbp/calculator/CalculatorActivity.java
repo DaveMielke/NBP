@@ -257,7 +257,7 @@ public class CalculatorActivity extends CommonActivity {
                 return true;
 
               case CharacterUtilities.CHAR_ACK: // control F
-                performClick(R.id.button_functions);
+                performClick(R.id.button_function);
                 return true;
 
               case CharacterUtilities.CHAR_VT: // control K
@@ -281,7 +281,7 @@ public class CalculatorActivity extends CommonActivity {
                 return true;
 
               case CharacterUtilities.CHAR_SYN: // control V
-                performClick(R.id.button_variables);
+                performClick(R.id.button_variable);
                 return true;
 
               default:
@@ -878,7 +878,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void setVariablesButtonListener () {
     setClickListener(
-      R.id.button_variables,
+      R.id.button_variable,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -1119,7 +1119,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void setFunctionsButtonListener () {
     setClickListener(
-      R.id.button_functions,
+      R.id.button_function,
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {

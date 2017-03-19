@@ -6,8 +6,9 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:id="@+id/button_variables"
-      android:text="@string/button_variables"
+      android:id="@+id/button_variable"
+      android:text="@string/button_variable"
+      android:contentDescription="@string/description_key_variable"
      />
 
     <Button
@@ -18,8 +19,9 @@
 
   <TableRow android:layout_weight="1">
     <Button
-      android:id="@+id/button_functions"
-      android:text="@string/button_functions"
+      android:id="@+id/button_function"
+      android:text="@string/button_function"
+      android:contentDescription="@string/description_key_function"
      />
 
     <Button
