@@ -76,6 +76,8 @@ public class Conversion {
   public final UnitType LENGTH = new LengthUnits();
   public final UnitType AREA = new AreaUnits();
   public final UnitType VOLUME = new VolumeUnits();
+
+  public final UnitType ANGLE = new AngleUnits();
   public final UnitType TIME = new TimeUnits();
   public final UnitType TEMPERATURE = new TemperatureUnits();
 }
