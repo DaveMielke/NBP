@@ -29,7 +29,7 @@ public class ConversionFunction extends RealFunction {
         Conversion conversion = Conversion.getInstance();
         fromUnit = conversion.getUnit(fromName);
         toUnit = conversion.getUnit(toName);
-        conversion.verifyCompatibleUnits(fromUnit, toUnit);
+        conversion.verifyCompatibility(fromUnit, toUnit);
 
         {
           StringBuilder sb = new StringBuilder();

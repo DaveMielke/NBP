@@ -5,6 +5,6 @@
     android:id="@+id/button_clear"
     android:layout_weight="1"
     android:text="C"
-    android:contentDescription="@string/button_clear"
+    android:contentDescription="@string/description_key_clear"
    />
 </merge>

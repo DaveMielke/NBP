@@ -882,7 +882,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.button_variables);
+          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.title_variable);
           final List<String> variables = getUserVariableLines();
 
           for (String name : Variables.getSystemVariableNames()) {
@@ -912,7 +912,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.button_store);
+          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.title_store);
           final AbstractNumber result = resultValue;
 
           if (result == null) {
@@ -940,7 +940,7 @@ public class CalculatorActivity extends CommonActivity {
                 @Override
                 public void onClick (DialogInterface dialog, int button) {
                   AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(
-                    R.string.button_store,
+                    R.string.title_new,
                     R.string.button_new
                   );
 
@@ -1019,7 +1019,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.button_erase);
+          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.title_erase);
           final List<String> variables = getUserVariableLines();
 
           if (variables.isEmpty()) {
@@ -1046,7 +1046,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.button_erase);
+          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.title_eraseMultiple);
           final List<String> variables = getUserVariableLines();
 
           if (variables.isEmpty()) {
@@ -1123,7 +1123,7 @@ public class CalculatorActivity extends CommonActivity {
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
-          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.button_functions);
+          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(R.string.title_function);
           final List<String> functions = getFunctionLines();
 
           if (functions.isEmpty()) {
