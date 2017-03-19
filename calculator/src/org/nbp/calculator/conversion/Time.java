@@ -8,7 +8,7 @@ public class Time extends UnitType {
   public final InternationalUnit SECOND = (InternationalUnit)getBaseUnit();
 
   public final static double SECONDS_PER_MINUTE = 60.0;
-  public final Unit MINUTE = new Unit(SECOND, SECONDS_PER_MINUTE, "mn", "minutes", "minute", "min");
+  public final Unit MINUTE = new Unit(SECOND, SECONDS_PER_MINUTE, "min", "minutes", "minute");
 
   public final static double MINUTES_PER_HOUR = 60.0;
   public final Unit HOUR = new Unit(MINUTE, MINUTES_PER_HOUR, "hr", "hours", "hour");

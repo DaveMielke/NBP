@@ -21,7 +21,7 @@ public class InternationalUnit extends Unit {
     String[] names = getNames();
     names[0] = symbol + names[0];
     for (int i=1; i<names.length; i+=1) names[i] = name + names[i];
-    return new Unit(this, rescaleMultiplier(multiplier), names);
+    return new SecondaryUnit(this, rescaleMultiplier(multiplier), names);
   }
 
   public InternationalUnit (UnitType type, String... names) {

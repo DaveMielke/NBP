@@ -55,10 +55,29 @@ public class ConversionListener {
     unitNames = new String[unitTypeCount][];
 
     for (UnitType type : unitTypeArray) {
-      final Unit[] unitArray = type.getUnits();
-      final int unitCount = unitArray.length;
-      final StringTable symbols = new StringTable(unitCount);
-      final String[] names = new String[unitCount];
+      Unit[] unitArray = type.getUnits();
+      int unitCount = unitArray.length;
+      StringTable symbols = new StringTable(unitCount);
+      String[] names = new String[unitCount];
+
+      {
+        Unit[] secondaryUnits = null;
+        int secondaryCount = 0;
+        int primaryCount = 0;
+
+        for (Unit unit : unitArray) {
+          if (unit instanceof SecondaryUnit) {
+            if (secondaryUnits == null) secondaryUnits = new Unit[unitCount];
+            secondaryUnits[secondaryCount++] = unit;
+          } else {
+            unitArray[primaryCount++] = unit;
+          }
+        }
+
+        if (secondaryUnits != null) {
+          System.arraycopy(secondaryUnits, 0, unitArray, primaryCount, secondaryCount);
+        }
+      }
 
       for (int unitIndex=0; unitIndex<unitCount; unitIndex+=1) {
         final Unit unit = unitArray[unitIndex];
