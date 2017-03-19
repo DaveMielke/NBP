@@ -41,17 +41,17 @@ public class AngleUnits extends UnitType {
   public final Unit HEXACONTADE = new Unit(DEGREE, DEGREES_PER_HEXACONTADE, "hxct", "hexacontades", "hexacontade");
 
   public final static double DEGREES_PER_ARC_MINUTE = 1.0 / 60.0;
-  public final Unit ARC_MINUTE = new Unit(DEGREE, DEGREES_PER_ARC_MINUTE, "moa", "arcminutes", "arcminute");
+  public final Unit ARC_MINUTE = new Unit(DEGREE, DEGREES_PER_ARC_MINUTE, "dmin", "arcminutes", "arcminute");
 
   public final static double ARC_MINUTES_PER_ARC_SECOND = 1.0 / 60.0;
-  public final Unit ARC_SECOND = new Unit(ARC_MINUTE, ARC_MINUTES_PER_ARC_SECOND, "soa", "arcseconds", "arcsecond");
+  public final Unit ARC_SECOND = new Unit(ARC_MINUTE, ARC_MINUTES_PER_ARC_SECOND, "dsec", "arcseconds", "arcsecond");
 
   public final static double DEGREES_PER_GRADIAN = 0.9;
   public final Unit GRADIAN = new Unit(DEGREE, DEGREES_PER_GRADIAN, "gon", "gradians", "gradian", "grads", "grad");
 
   public final static double GRADIANS_PER_CENTECIMAL_MINUTE = 0.01;
-  public final Unit CENTECIMAL_MINUTE = new Unit(GRADIAN, GRADIANS_PER_CENTECIMAL_MINUTE, "cmin", "centecimalminutes", "centecimalminute");
+  public final Unit CENTECIMAL_MINUTE = new Unit(GRADIAN, GRADIANS_PER_CENTECIMAL_MINUTE, "gmin", "centecimalminutes", "centecimalminute");
 
   public final static double CENTECIMAL_MINUTES_PER_CENTECIMAL_SECOND = 0.01;
-  public final Unit CENTECIMAL_SECOND = new Unit(CENTECIMAL_MINUTE, CENTECIMAL_MINUTES_PER_CENTECIMAL_SECOND, "csec", "centecimalseconds", "centecimalsecond");
+  public final Unit CENTECIMAL_SECOND = new Unit(CENTECIMAL_MINUTE, CENTECIMAL_MINUTES_PER_CENTECIMAL_SECOND, "gsec", "centecimalseconds", "centecimalsecond");
 }

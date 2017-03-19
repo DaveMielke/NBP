@@ -6,7 +6,7 @@ public class VolumeUnits extends UnitType {
   }
 
   public VolumeUnits () {
-    super("volume", true, "m3", "meters3", "meter3");
+    super("volume", true, "m3", "meters^3", "meter^3");
   }
 
   public final InternationalUnit CUBIC_METER = (InternationalUnit)getBaseUnit();

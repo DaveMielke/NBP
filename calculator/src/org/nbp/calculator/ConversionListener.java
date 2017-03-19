@@ -86,14 +86,33 @@ public class ConversionListener {
         if (symbol == null) continue;
         if (symbol.isEmpty()) continue;
         symbols.set(unitIndex, symbol);
-
         StringBuilder sb = new StringBuilder(symbol);
-        final String name = unit.getName();
 
-        if ((name != null) && !name.isEmpty()) {
-          sb.append(" [");
-          sb.append(name);
-          sb.append("]");
+        {
+          final String name = unit.getName();
+
+          if ((name != null) && !name.isEmpty()) {
+            sb.append(" [");
+            sb.append(name);
+            sb.append("]");
+          }
+        }
+
+        {
+          final Unit reference = unit.getReference();
+
+          if (reference != null) {
+            sb.append(" (");
+            sb.append(unit.getMultiplier());
+            String name = reference.getName();
+
+            if ((name != null) && !name.isEmpty()) {
+              sb.append(' ');
+              sb.append(name);
+            }
+
+            sb.append(")");
+          }
         }
 
         names[unitIndex] = sb.toString();

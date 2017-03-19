@@ -6,7 +6,7 @@ public class AreaUnits extends UnitType {
   }
 
   public AreaUnits () {
-    super("area", true, "m2", "meters2", "meter2");
+    super("area", true, "m2", "meters^2", "meter^2");
   }
 
   public final InternationalUnit SQUARE_METER = (InternationalUnit)getBaseUnit();
