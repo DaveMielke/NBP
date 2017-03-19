@@ -9,7 +9,7 @@ public class Area extends UnitType {
     super("area", true, "m2", "meters2", "meter2");
   }
 
-  public final Unit SQUARE_METER = getBaseUnit();
+  public final InternationalUnit SQUARE_METER = (InternationalUnit)getBaseUnit();
   public final Unit ARE = new Unit(SQUARE_METER, 100.0, "a", "are");
   public final Unit HECTARE = new Unit(ARE, 100.0, "ha", "hectare");
 
@@ -26,7 +26,7 @@ public class Area extends UnitType {
   public final Unit SQUARE_ROD = new Unit(SQUARE_YARD, SQUARE_YARDS_PER_SQUARE_ROD, "sqrd", "squarerods", "squarerod");
 
   public final static double SQUARE_RODS_PER_SQUARE_FURLONG = square(Length.RODS_PER_FURLONG);
-  public final Unit SQUARE_FURLONG = new Unit(SQUARE_ROD, SQUARE_RODS_PER_SQUARE_FURLONG, "sqfl", "squarefurlongs", "squarefurlong");
+  public final Unit SQUARE_FURLONG = new Unit(SQUARE_ROD, SQUARE_RODS_PER_SQUARE_FURLONG, "sqfur", "squarefurlongs", "squarefurlong");
 
   public final static double SQUARE_FURLONGS_PER_SQUARE_MILE = square(Length.FURLONGS_PER_MILE);
   public final Unit SQUARE_MILE = new Unit(SQUARE_FURLONG, SQUARE_FURLONGS_PER_SQUARE_MILE, "sqmi", "squaremiles", "squaremile");

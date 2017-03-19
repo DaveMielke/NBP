@@ -48,6 +48,10 @@ public class UnitType {
     return unitTypeSet.toArray(new UnitType[unitTypeSet.size()]);
   }
 
+  public final Unit[] getUnits () {
+    return unitSet.toArray(new Unit[unitSet.size()]);
+  }
+
   final void addUnit (Unit unit) {
     if (unit.getType() != this) {
       throw new UnitException(("incompatible unit: " + unit.getName()));
@@ -56,9 +60,5 @@ public class UnitType {
     if (!unitSet.add(unit)) {
       throw new UnitException(("duplicate unit: " + unit.getName()));
     }
-  }
-
-  public final Unit[] getUnits () {
-    return unitSet.toArray(new Unit[unitSet.size()]);
   }
 }

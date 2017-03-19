@@ -1,7 +1,7 @@
 package org.nbp.calculator.conversion;
 
-public abstract class InternationalPrefix {
-  private InternationalPrefix () {
+public abstract class InternationalMultiplier {
+  private InternationalMultiplier () {
   }
 
   public final static double DECA = 1E1;

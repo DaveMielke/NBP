@@ -5,7 +5,7 @@ public class Time extends UnitType {
     super("time", true, "s", "seconds", "second", "sec");
   }
 
-  public final Unit SECOND = getBaseUnit();
+  public final InternationalUnit SECOND = (InternationalUnit)getBaseUnit();
 
   public final static double SECONDS_PER_MINUTE = 60.0;
   public final Unit MINUTE = new Unit(SECOND, SECONDS_PER_MINUTE, "mn", "minutes", "minute", "min");

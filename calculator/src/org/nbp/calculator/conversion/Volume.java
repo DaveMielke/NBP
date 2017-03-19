@@ -9,7 +9,9 @@ public class Volume extends UnitType {
     super("volume", true, "m3", "meters3", "meter3");
   }
 
-  public final Unit CUBIC_METER = getBaseUnit();
+  public final InternationalUnit CUBIC_METER = (InternationalUnit)getBaseUnit();
+  public final Unit CUBIC_CENTIMETER = new Unit(CUBIC_METER.CENTI, 1.0, "cc", "cubiccentimeters", "cubiccentimeter");
+  public final InternationalUnit LITER = new InternationalUnit(CUBIC_CENTIMETER, 1000.0, "l", "liters", "liter");
 
   public final static double CUBIC_METERS_PER_CUBIC_INCH = cube(Length.METERS_PER_INCH);
   public final Unit CUBIC_INCH = new Unit(CUBIC_METER, CUBIC_METERS_PER_CUBIC_INCH, "cbin", "cubicinches", "cubicinch");
@@ -24,7 +26,7 @@ public class Volume extends UnitType {
   public final Unit CUBIC_ROD = new Unit(CUBIC_YARD, CUBIC_YARDS_PER_CUBIC_ROD, "cbrd", "cubicrods", "cubicrod");
 
   public final static double CUBIC_RODS_PER_CUBIC_FURLONG = cube(Length.RODS_PER_FURLONG);
-  public final Unit CUBIC_FURLONG = new Unit(CUBIC_ROD, CUBIC_RODS_PER_CUBIC_FURLONG, "cbfl", "cubicfurlongs", "cubicfurlong");
+  public final Unit CUBIC_FURLONG = new Unit(CUBIC_ROD, CUBIC_RODS_PER_CUBIC_FURLONG, "cbfur", "cubicfurlongs", "cubicfurlong");
 
   public final static double CUBIC_FURLONGS_PER_CUBIC_MILE = cube(Length.FURLONGS_PER_MILE);
   public final Unit CUBIC_MILE = new Unit(CUBIC_FURLONG, CUBIC_FURLONGS_PER_CUBIC_MILE, "cbmi", "cubicmiles", "cubicmile");
