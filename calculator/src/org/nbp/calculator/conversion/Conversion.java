@@ -37,7 +37,14 @@ public class Conversion {
     return Unit.getUnit(name);
   }
 
+  public final static void verifyCompatibleUnits (Unit unit1, Unit unit2) {
+    if (unit1.getType() != unit2.getType()) {
+      throw new IncompatibleUnitsException(unit1, unit2);
+    }
+  }
+
   public final static double convert (double value, Unit from, Unit to) {
+    verifyCompatibleUnits(from, to);
     Stack<Unit> stack = new Stack<Unit>();
 
     while (to != null) {

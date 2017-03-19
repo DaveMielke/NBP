@@ -29,10 +29,7 @@ public class ConversionFunction extends RealFunction {
         Conversion conversion = Conversion.getInstance();
         fromUnit = conversion.getUnit(fromName);
         toUnit = conversion.getUnit(toName);
-
-        if (fromUnit.getType() != toUnit.getType()) {
-          throw new UnitException("incompatible units");
-        }
+        conversion.verifyCompatibleUnits(fromUnit, toUnit);
 
         {
           StringBuilder sb = new StringBuilder();
@@ -44,7 +41,7 @@ public class ConversionFunction extends RealFunction {
         }
 
         return;
-      } catch (UnitException exception) {
+      } catch (ConversionException exception) {
         Log.w(LOG_TAG, exception.getMessage());
       }
     }

@@ -35,7 +35,7 @@ public class Unit {
       for (String name : unitNames) {
         if (name != null) {
           if (unitNameMap.containsKey(name)) {
-            throw new UnitException(("duplicate unit: " + name));
+            throw new DuplicateUnitException(name);
           }
 
           nameMap.put(name, this);
@@ -92,7 +92,7 @@ public class Unit {
   public final static Unit getUnit (String name) {
     Unit unit = unitNameMap.get(name);
     if (unit != null) return unit;
-    throw new UnitException(("unknown unit: " + name));
+    throw new UnknownUnitException(name);
   }
 
   public final static Unit[] getUnits () {

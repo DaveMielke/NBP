@@ -16,7 +16,7 @@ public class UnitType {
 
   public UnitType (String name, boolean international, String... unit) {
     if (unitTypeNameMap.containsKey(name)) {
-      throw new UnitException(("duplicate unit type: " + name));
+      throw new DuplicateUnitException(name);
     }
 
     if (international) {
@@ -41,7 +41,7 @@ public class UnitType {
   public final static UnitType getUnitType (String name) {
     UnitType type = unitTypeNameMap.get(name);
     if (type != null) return type;
-    throw new UnitException(("unknown unit type: " + name));
+    throw new UnknownUnitException(name);
   }
 
   public final static UnitType[] getUnitTypes () {
@@ -54,11 +54,11 @@ public class UnitType {
 
   final void addUnit (Unit unit) {
     if (unit.getType() != this) {
-      throw new UnitException(("incompatible unit: " + unit.getName()));
+      throw new IncompatibleUnitException(unit, this);
     }
 
     if (!unitSet.add(unit)) {
-      throw new UnitException(("duplicate unit: " + unit.getName()));
+      throw new DuplicateUnitException(unit);
     }
   }
 }
