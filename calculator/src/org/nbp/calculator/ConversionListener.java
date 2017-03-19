@@ -43,7 +43,79 @@ public class ConversionListener {
 
   private final static StringTable unitTypeNames;
   private final static StringTable[] unitSymbols;
-  private final static String[][] unitNames;
+  private final static String[][] unitDescriptions;
+
+  public final static boolean isInteger (double real) {
+    return Math.rint(real) == real;
+  }
+
+  public final static String makeDescription (Unit unit) {
+    StringBuilder sb = new StringBuilder(unit.getSymbol());
+
+    {
+      final String name = unit.getName();
+
+      if ((name != null) && !name.isEmpty()) {
+        sb.append(" [");
+        sb.append(name);
+        sb.append("]");
+      }
+    }
+
+    {
+      final Unit reference = unit.getReference();
+
+      if (reference != null) {
+        sb.append(" (");
+
+        {
+          double value = unit.getMultiplier();
+
+          if (value < 1.0) {
+            double reciprocal = 1.0 / value;
+
+            if (isInteger(reciprocal)) {
+              sb.append("1/");
+              value = reciprocal;
+            } else {
+              double quotient = Math.PI / value;
+
+              if (isInteger(quotient)) {
+                sb.append("pi÷");
+                value = quotient;
+              }
+            }
+          } else if (!isInteger(value)) {
+            double quotient = value / Math.PI;
+
+            if (isInteger(quotient)) {
+              sb.append("pi×");
+              value = quotient;
+            }
+          }
+
+          if (isInteger(value)) {
+            sb.append((long)value);
+          } else {
+            sb.append(value);
+          }
+        }
+
+        {
+          String name = reference.getName();
+
+          if ((name != null) && !name.isEmpty()) {
+            sb.append(' ');
+            sb.append(name);
+          }
+        }
+
+        sb.append(")");
+      }
+    }
+
+    return sb.toString();
+  }
 
   static {
     final UnitType[] unitTypeArray = conversion.getUnitTypes();
@@ -52,13 +124,13 @@ public class ConversionListener {
 
     unitTypeNames = new StringTable(unitTypeCount);
     unitSymbols = new StringTable[unitTypeCount];
-    unitNames = new String[unitTypeCount][];
+    unitDescriptions = new String[unitTypeCount][];
 
     for (UnitType type : unitTypeArray) {
       Unit[] unitArray = type.getUnits();
       int unitCount = unitArray.length;
       StringTable symbols = new StringTable(unitCount);
-      String[] names = new String[unitCount];
+      String[] descriptions = new String[unitCount];
 
       {
         Unit[] secondaryUnits = null;
@@ -81,46 +153,13 @@ public class ConversionListener {
 
       for (int unitIndex=0; unitIndex<unitCount; unitIndex+=1) {
         final Unit unit = unitArray[unitIndex];
-
-        String symbol = unit.getSymbol();
-        if (symbol == null) continue;
-        if (symbol.isEmpty()) continue;
-        symbols.set(unitIndex, symbol);
-        StringBuilder sb = new StringBuilder(symbol);
-
-        {
-          final String name = unit.getName();
-
-          if ((name != null) && !name.isEmpty()) {
-            sb.append(" [");
-            sb.append(name);
-            sb.append("]");
-          }
-        }
-
-        {
-          final Unit reference = unit.getReference();
-
-          if (reference != null) {
-            sb.append(" (");
-            sb.append(unit.getMultiplier());
-            String name = reference.getName();
-
-            if ((name != null) && !name.isEmpty()) {
-              sb.append(' ');
-              sb.append(name);
-            }
-
-            sb.append(")");
-          }
-        }
-
-        names[unitIndex] = sb.toString();
+        symbols.set(unitIndex, unit.getSymbol());
+        descriptions[unitIndex] = makeDescription(unit);
       }
 
       unitTypeNames.set(unitTypeIndex, type.getName());
       unitSymbols[unitTypeIndex] = symbols;
-      unitNames[unitTypeIndex] = names;
+      unitDescriptions[unitTypeIndex] = descriptions;
       unitTypeIndex += 1;
     }
   }
@@ -294,7 +333,7 @@ public class ConversionListener {
       @Override
       public void onClick (View view) {
         showDialog(
-          R.string.title_conversion_from, unitNames[selectedUnitType],
+          R.string.title_conversion_from, unitDescriptions[selectedUnitType],
           selectedFromUnit, fromUnitSelectedListener
         );
       }
@@ -319,7 +358,7 @@ public class ConversionListener {
       @Override
       public void onClick (View view) {
         showDialog(
-          R.string.title_conversion_to, unitNames[selectedUnitType],
+          R.string.title_conversion_to, unitDescriptions[selectedUnitType],
           selectedToUnit, toUnitSelectedListener
         );
       }
