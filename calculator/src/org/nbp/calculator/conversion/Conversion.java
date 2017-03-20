@@ -79,10 +79,97 @@ public class Conversion {
   }
 
   private final static void append (StringBuilder sb, double value) {
-    if (isInteger(value)) {
+    if (value == 0.0) {
+      sb.append('0');
+      return;
+    }
+
+    if (Double.isNaN(value)) {
+      sb.append(Double.toString(value));
+      return;
+    }
+
+    if (value < 0.0) {
+      sb.append('-');
+      value = -value;
+    }
+
+    if (Double.isInfinite(value)) {
+      sb.append(Double.toString(value));
+      return;
+    }
+
+    if ((value < 1.0E3) && isInteger(value)) {
       sb.append((long)value);
+      return;
+    }
+
+    {
+      int exponent = Math.getExponent(value);
+
+      if (Math.scalb(1.0, exponent) == value) {
+        sb.append("2^");
+        sb.append(exponent);
+        return;
+      }
+    }
+
+    String number = String.format("%.6G", value);
+    int decimal = number.indexOf('.');
+    int end = number.indexOf('E');
+    int exponent = 0;
+
+    if (end < 0) {
+      end = number.length();
     } else {
-      sb.append(value);
+      int start = end + 1;
+      int length = number.length();
+      boolean negative = false;
+
+      if (start < length) {
+        switch (number.charAt(start)) {
+          case '-':
+            negative = true;
+            /* fall through */
+          case '+':
+            start += 1;
+            break;
+        }
+
+        while ((start < length) && (number.charAt(start) == '0')) {
+          start += 1;
+        }
+
+        if (start < length) {
+          exponent = Integer.valueOf(number.substring(start));
+          if (negative) exponent = -exponent;
+        }
+      }
+
+      number = number.substring(0, end);
+    }
+
+    if (decimal >= 0) {
+      while (end > 0) {
+        if (number.charAt(--end) != '0') {
+          if (end != decimal) end += 1;
+          number = number.substring(0, end);
+          break;
+        }
+      }
+    }
+
+    boolean isOne = number.equals("1");
+    boolean hasExponent = exponent != 0;
+
+    if (!isOne || !hasExponent) {
+      sb.append(number);
+      if (hasExponent) sb.append('×');
+    }
+
+    if (hasExponent) {
+      sb.append("10^");
+      sb.append(exponent);
     }
   }
 
@@ -103,57 +190,56 @@ public class Conversion {
       if (reference != null) {
         sb.append(" (");
 
-        {
-          double value = unit.getMultiplier();
+        double multiplier = unit.getMultiplier();
+        boolean hasMultiplier = multiplier != 1.0;
 
-          if (value != 1.0) {
-            if (value < 1.0) {
-              double reciprocal = 1.0 / value;
+        double adjustment = unit.getAdjustment();
+        boolean hasAdjustment = adjustment != 0.0;
 
-              if (isInteger(reciprocal)) {
-                sb.append("1/");
-                value = reciprocal;
-              } else {
-                double quotient = Math.PI / value;
+        if (hasMultiplier || !hasAdjustment) {
+          if (multiplier < 1.0) {
+            double reciprocal = 1.0 / multiplier;
 
-                if (isInteger(quotient)) {
-                  sb.append("pi÷");
-                  value = quotient;
-                }
-              }
-            } else if (!isInteger(value)) {
-              double quotient = value / Math.PI;
+            if (isInteger(reciprocal)) {
+              sb.append("1÷");
+              multiplier = reciprocal;
+            } else {
+              double quotient = Math.PI / multiplier;
 
               if (isInteger(quotient)) {
-                sb.append("pi×");
-                value = quotient;
+                sb.append("pi÷");
+                multiplier = quotient;
               }
             }
+          } else if (!isInteger(multiplier)) {
+            double quotient = multiplier / Math.PI;
 
-            append(sb, value);
-            sb.append(' ');
+            if (isInteger(quotient)) {
+              sb.append("pi×");
+              multiplier = quotient;
+            }
           }
+
+          append(sb, multiplier);
+          sb.append(' ');
         }
 
         append(sb, reference.getName());
 
-        {
-          double adjustment = unit.getAdjustment();
+        if (hasAdjustment) {
+          char sign;
 
-          if (adjustment != 0.0) {
-            char sign;
-            if (adjustment > 0.0) {
-              sign = '+';
-            } else {
-              sign = '-';
-              adjustment = -adjustment;
-            }
-
-            sb.append(' ');
-            sb.append(sign);
-            sb.append(' ');
-            append(sb, adjustment);
+          if (adjustment > 0.0) {
+            sign = '+';
+          } else {
+            sign = '-';
+            adjustment = -adjustment;
           }
+
+          sb.append(' ');
+          sb.append(sign);
+          sb.append(' ');
+          append(sb, adjustment);
         }
 
         sb.append(")");

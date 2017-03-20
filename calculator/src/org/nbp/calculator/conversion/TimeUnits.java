@@ -20,10 +20,10 @@ public class TimeUnits extends UnitType {
   public final Unit WEEK = new Unit(DAY, DAYS_PER_WEEK, "wk", "weeks", "week");
 
   public final static double DAYS_PER_SENNIGHT = 7.0;
-  public final Unit SENNIGHT = new Unit(DAY, DAYS_PER_SENNIGHT, "sn", "sennights", "sennight");
+  public final Unit SENNIGHT = new Unit(DAY, DAYS_PER_SENNIGHT, "sen", "sennights", "sennight");
 
   public final static double DAYS_PER_FORTNIGHT = 14.0;
-  public final Unit FORTNIGHT = new Unit(DAY, DAYS_PER_FORTNIGHT, "fn", "fortnights", "fortnight");
+  public final Unit FORTNIGHT = new Unit(DAY, DAYS_PER_FORTNIGHT, "fort", "fortnights", "fortnight");
 
   public final static double DAYS_PER_YEAR = 365.2422;
   public final Unit YEAR = new Unit(DAY, DAYS_PER_YEAR, "yr", "years", "year");
