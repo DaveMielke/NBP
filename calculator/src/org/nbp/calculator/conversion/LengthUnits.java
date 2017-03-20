@@ -27,4 +27,14 @@ public class LengthUnits extends UnitType {
 
   public final static double MILES_PER_LEAGUE = 3.0;
   public final Unit LEAGUE = new Unit(MILE, MILES_PER_LEAGUE, "lg", "leagues", "league");
+
+  @Override
+  public final Unit getDefaultFromUnit () {
+    return MILE;
+  }
+
+  @Override
+  public final Unit getDefaultToUnit () {
+    return METER.KILO;
+  }
 }

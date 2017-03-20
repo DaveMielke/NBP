@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.HashMap;
 
-public class UnitType {
+public abstract class UnitType {
   private final String typeName;
   private final Unit baseUnit;
 
@@ -15,6 +15,8 @@ public class UnitType {
              = new HashMap<String, UnitType>();
 
   public UnitType (String name, boolean international, String... unit) {
+    typeName = name;
+
     if (unitTypeNameMap.containsKey(name)) {
       throw new DuplicateUnitException(name);
     }
@@ -25,7 +27,6 @@ public class UnitType {
       baseUnit = new Unit(this, unit);
     }
 
-    typeName = name;
     unitTypeNameMap.put(typeName, this);
     unitTypeSet.add(this);
   }
@@ -38,20 +39,6 @@ public class UnitType {
     return baseUnit;
   }
 
-  public final static UnitType getUnitType (String name) {
-    UnitType type = unitTypeNameMap.get(name);
-    if (type != null) return type;
-    throw new UnknownUnitException(name);
-  }
-
-  public final static UnitType[] getUnitTypes () {
-    return unitTypeSet.toArray(new UnitType[unitTypeSet.size()]);
-  }
-
-  public final Unit[] getUnits () {
-    return unitSet.toArray(new Unit[unitSet.size()]);
-  }
-
   final void addUnit (Unit unit) {
     if (unit.getType() != this) {
       throw new IncompatibleUnitException(unit, this);
@@ -61,4 +48,21 @@ public class UnitType {
       throw new DuplicateUnitException(unit);
     }
   }
+
+  public final Unit[] getUnits () {
+    return unitSet.toArray(new Unit[unitSet.size()]);
+  }
+
+  public final static UnitType[] getUnitTypes () {
+    return unitTypeSet.toArray(new UnitType[unitTypeSet.size()]);
+  }
+
+  public final static UnitType getUnitType (String name) {
+    UnitType type = unitTypeNameMap.get(name);
+    if (type != null) return type;
+    throw new UnknownUnitException(name);
+  }
+
+  public abstract Unit getDefaultFromUnit ();
+  public abstract Unit getDefaultToUnit ();
 }

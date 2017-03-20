@@ -39,4 +39,14 @@ public class AreaUnits extends UnitType {
 
   public final static double ROODS_PER_ACRE = 4.0;
   public final Unit ACRE = new Unit(ROOD, ROODS_PER_ACRE, "ac", "acres", "acre");
+
+  @Override
+  public final Unit getDefaultFromUnit () {
+    return ACRE;
+  }
+
+  @Override
+  public final Unit getDefaultToUnit () {
+    return HECTARE;
+  }
 }

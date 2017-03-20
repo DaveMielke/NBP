@@ -16,11 +16,11 @@ public class AngleUnits extends UnitType {
   public final static double DEGREES_PER_REVOLUTION = 360.0;
   public final Unit REVOLUTION = new Unit(DEGREE, DEGREES_PER_REVOLUTION, "rev", "revolutions", "revolution", "turns", "turn");
 
-  public final static double DEGREES_PER_CENTI_REVOLUTION = 3.6;
-  public final Unit CENTI_REVOLUTION = new Unit(DEGREE, DEGREES_PER_CENTI_REVOLUTION, "crev", "centirevolutions", "centirevolution", "centiturns", "centiturn");
+  public final static double DEGREES_PER_CENTIREVOLUTION = 3.6;
+  public final Unit CENTIREVOLUTION = new Unit(DEGREE, DEGREES_PER_CENTIREVOLUTION, "crev", "centirevolutions", "centirevolution", "centiturns", "centiturn");
 
-  public final static double CENTI_REVOLUTIONS_PER_MILLI_REVOLUTION = 0.1;
-  public final Unit MILLI_REVOLUTION = new Unit(CENTI_REVOLUTION, CENTI_REVOLUTIONS_PER_MILLI_REVOLUTION, "mrev", "millirevolutions", "millirevolution", "milliturns", "milliturn");
+  public final static double CENTIREVOLUTIONS_PER_MILLIREVOLUTION = 0.1;
+  public final Unit MILLIREVOLUTION = new Unit(CENTIREVOLUTION, CENTIREVOLUTIONS_PER_MILLIREVOLUTION, "mrev", "millirevolutions", "millirevolution", "milliturns", "milliturn");
 
   public final static double DEGREES_PER_QUADRANT = 90.0;
   public final Unit QUADRANT = new Unit(DEGREE, DEGREES_PER_QUADRANT, "quad", "quadrants", "quadrant");
@@ -32,10 +32,10 @@ public class AngleUnits extends UnitType {
   public final Unit OCTANT = new Unit(DEGREE, DEGREES_PER_OCTANT, "oct", "octants", "octant");
 
   public final static double DEGREES_PER_SIGN = 30.0;
-  public final Unit SIGN = new Unit(DEGREE, DEGREES_PER_SIGN, "sgn", "signs", "sign");
+  public final Unit SIGN = new Unit(DEGREE, DEGREES_PER_SIGN, "sign", "signs", "sign");
 
   public final static double DEGREES_PER_POINT = 11.25;
-  public final Unit POINT = new Unit(DEGREE, DEGREES_PER_POINT, "pt", "points", "point");
+  public final Unit POINT = new Unit(DEGREE, DEGREES_PER_POINT, "point", "points", "point");
 
   public final static double DEGREES_PER_HEXACONTADE = 6.0;
   public final Unit HEXACONTADE = new Unit(DEGREE, DEGREES_PER_HEXACONTADE, "hxct", "hexacontades", "hexacontade");
@@ -54,4 +54,14 @@ public class AngleUnits extends UnitType {
 
   public final static double CENTESIMAL_MINUTES_PER_CENTESIMAL_SECOND = 0.01;
   public final Unit CENTESIMAL_SECOND = new Unit(CENTESIMAL_MINUTE, CENTESIMAL_MINUTES_PER_CENTESIMAL_SECOND, "gsec", "centesimal_seconds", "centesimal_second");
+
+  @Override
+  public final Unit getDefaultFromUnit () {
+    return DEGREE;
+  }
+
+  @Override
+  public final Unit getDefaultToUnit () {
+    return RADIAN;
+  }
 }

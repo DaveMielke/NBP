@@ -13,6 +13,27 @@ public class VolumeUnits extends UnitType {
   public final Unit CUBIC_CENTIMETER = new Unit(CUBIC_METER.CENTI, 1.0, "cc", "cubic_centimeters", "cubic_centimeter");
   public final InternationalUnit LITER = new InternationalUnit(CUBIC_CENTIMETER, 1000.0, "l", "liters", "liter");
 
+  public final static double MILLILITERS_PER_TEASPOON = 473.0 / 96.0;
+  public final Unit TEASPOON = new Unit(LITER.MILLI, MILLILITERS_PER_TEASPOON, "tsp", "teaspons", "teaspon");
+
+  public final static double TEASPOONS_PER_TABLESPOON = 3.0;
+  public final Unit TABLESPOON = new Unit(TEASPOON, TEASPOONS_PER_TABLESPOON, "tbsp", "tablespoons", "tablespoon");
+
+  public final static double TABLESPOONS_PER_FLUID_OUNCE = 2.0;
+  public final Unit FLUID_OUNCE = new Unit(TABLESPOON, TABLESPOONS_PER_FLUID_OUNCE, "floz", "fluid_ounces", "fluid_ounce");
+
+  public final static double FLUID_OUNCES_PER_CUP = 8.0;
+  public final Unit CUP = new Unit(FLUID_OUNCE, FLUID_OUNCES_PER_CUP, "cup", "cups", "cup");
+
+  public final static double CUPS_PER_PINT = 2.0;
+  public final Unit PINT = new Unit(CUP, CUPS_PER_PINT, "pt", "pints", "pint");
+
+  public final static double PINTS_PER_QUART = 2.0;
+  public final Unit QUART = new Unit(PINT, PINTS_PER_QUART, "qt", "quarts", "quart");
+
+  public final static double QUARTS_PER_GALLON = 4.0;
+  public final Unit GALLON = new Unit(QUART, QUARTS_PER_GALLON, "gal", "gallons", "gallon");
+
   public final static double CUBIC_METERS_PER_CUBIC_INCH = cube(LengthUnits.METERS_PER_INCH);
   public final Unit CUBIC_INCH = new Unit(CUBIC_METER, CUBIC_METERS_PER_CUBIC_INCH, "cbin", "cubic_inches", "cubic_inch");
 
@@ -33,4 +54,14 @@ public class VolumeUnits extends UnitType {
 
   public final static double CUBIC_MILES_PER_CUBIC_LEAGUE = cube(LengthUnits.MILES_PER_LEAGUE);
   public final Unit CUBIC_LEAGUE = new Unit(CUBIC_MILE, CUBIC_MILES_PER_CUBIC_LEAGUE, "cblg", "cubic_leagues", "cubic_league");
+
+  @Override
+  public final Unit getDefaultFromUnit () {
+    return CUP;
+  }
+
+  @Override
+  public final Unit getDefaultToUnit () {
+    return LITER.MILLI;
+  }
 }

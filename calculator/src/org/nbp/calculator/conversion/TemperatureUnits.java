@@ -16,4 +16,14 @@ public class TemperatureUnits extends UnitType {
   public final Unit ROMER = new Unit(CELSIUS, 100.0/52.5, 7.5, "DRø", "degrees_rømer", "degree_rømer");
   public final Unit DELISLE = new Unit(CELSIUS, -2.0/3.0, 150.0, "DDe", "degrees_delisle", "degree_delisle");
   public final Unit NEWTON = new Unit(CELSIUS, 100.0/33.0, "DN", "degrees_newton", "degree_newton");
+
+  @Override
+  public final Unit getDefaultFromUnit () {
+    return FAHRENHEIT;
+  }
+
+  @Override
+  public final Unit getDefaultToUnit () {
+    return CELSIUS;
+  }
 }

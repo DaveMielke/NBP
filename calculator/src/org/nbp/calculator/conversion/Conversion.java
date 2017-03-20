@@ -259,11 +259,11 @@ public class Conversion {
     return sb.toString();
   }
 
-  public final UnitType LENGTH = new LengthUnits();
-  public final UnitType AREA = new AreaUnits();
-  public final UnitType VOLUME = new VolumeUnits();
+  public final LengthUnits LENGTH = new LengthUnits();
+  public final AreaUnits AREA = new AreaUnits();
+  public final VolumeUnits VOLUME = new VolumeUnits();
 
-  public final UnitType ANGLE = new AngleUnits();
-  public final UnitType TIME = new TimeUnits();
-  public final UnitType TEMPERATURE = new TemperatureUnits();
+  public final AngleUnits ANGLE = new AngleUnits();
+  public final TimeUnits TIME = new TimeUnits();
+  public final TemperatureUnits TEMPERATURE = new TemperatureUnits();
 }

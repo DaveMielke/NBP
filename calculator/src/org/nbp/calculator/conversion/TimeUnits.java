@@ -36,4 +36,14 @@ public class TimeUnits extends UnitType {
 
   public final static double YEARS_PER_MILLENNIUM = 1000.0;
   public final Unit MILLENNIUM = new Unit(YEAR, YEARS_PER_MILLENNIUM, "mil", "millennia", "millennium");
+
+  @Override
+  public final Unit getDefaultFromUnit () {
+    return HOUR;
+  }
+
+  @Override
+  public final Unit getDefaultToUnit () {
+    return SECOND;
+  }
 }

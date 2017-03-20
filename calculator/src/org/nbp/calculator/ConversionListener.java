@@ -15,6 +15,15 @@ import android.content.DialogInterface;
 public class ConversionListener {
   private final static Conversion conversion = Conversion.getInstance();
 
+  private final static UnitType[] defaultUnitTypes = new UnitType[] {
+    conversion.TEMPERATURE,
+    conversion.LENGTH,
+    conversion.AREA,
+    conversion.VOLUME,
+    conversion.ANGLE,
+    conversion.TIME
+  };
+
   private static class StringTable {
     private final String[] stringArray;
     private final Map<String, Integer> stringMap = new HashMap<String, Integer>();
@@ -141,8 +150,14 @@ public class ConversionListener {
     SavedSettings.set(toSetting, getToUnitSymbol());
   }
 
-  private final int getSavedUnit (String setting) {
+  private final int getSavedUnit (String setting, Unit defaultUnit) {
     String symbol = SavedSettings.get(setting, null);
+
+    if (symbol == null) {
+      if (defaultUnit != null) {
+        symbol = defaultUnit.getSymbol();
+      }
+    }
 
     if (symbol != null) {
       Integer index = getUnitSymbols().get(symbol);
@@ -164,12 +179,13 @@ public class ConversionListener {
   private final void setUnitType (int index) {
     selectedUnitType = index;
     String typeName = unitTypeNames.get(index);
+    UnitType type = conversion.getUnitType(typeName);
 
     fromSetting = makeSetting(("from-" + typeName));
-    selectedFromUnit = getSavedUnit(fromSetting);
+    selectedFromUnit = getSavedUnit(fromSetting, type.getDefaultFromUnit());
 
     toSetting = makeSetting(("to-" + typeName));
-    selectedToUnit = getSavedUnit(toSetting);
+    selectedToUnit = getSavedUnit(toSetting, type.getDefaultToUnit());
 
     saveUnitType();
     saveFromUnit();
@@ -186,13 +202,24 @@ public class ConversionListener {
   }
 
   private final void restoreUnitType () {
-    String name = SavedSettings.get(typeSetting, null);
+    {
+      String name = SavedSettings.get(typeSetting, null);
 
-    if (name != null) {
-      Integer index = unitTypeNames.get(name);
+      if (name != null) {
+        Integer index = unitTypeNames.get(name);
 
-      if (index != null) {
-        setUnitType(index);
+        if (index != null) {
+          setUnitType(index);
+          return;
+        }
+      }
+    }
+
+    if (conversionIdentifier < defaultUnitTypes.length) {
+      UnitType defaultUnitType = defaultUnitTypes[conversionIdentifier];
+
+      if (defaultUnitType != null) {
+        setUnitType(defaultUnitType);
         return;
       }
     }
