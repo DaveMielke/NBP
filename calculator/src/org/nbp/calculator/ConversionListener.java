@@ -45,99 +45,6 @@ public class ConversionListener {
   private final static StringTable[] unitSymbols;
   private final static String[][] unitDescriptions;
 
-  public final static boolean isInteger (double real) {
-    return Math.rint(real) == real;
-  }
-
-  public final static String makeDescription (Unit unit) {
-    StringBuilder sb = new StringBuilder(unit.getSymbol());
-
-    {
-      final String name = unit.getName();
-
-      if ((name != null) && !name.isEmpty()) {
-        sb.append(" [");
-        sb.append(name);
-        sb.append("]");
-      }
-    }
-
-    {
-      final Unit reference = unit.getReference();
-
-      if (reference != null) {
-        sb.append(" (");
-
-        {
-          double value = unit.getMultiplier();
-
-          if (value != 1.0) {
-            if (value < 1.0) {
-              double reciprocal = 1.0 / value;
-
-              if (isInteger(reciprocal)) {
-                sb.append("1/");
-                value = reciprocal;
-              } else {
-                double quotient = Math.PI / value;
-
-                if (isInteger(quotient)) {
-                  sb.append("pi÷");
-                  value = quotient;
-                }
-              }
-            } else if (!isInteger(value)) {
-              double quotient = value / Math.PI;
-
-              if (isInteger(quotient)) {
-                sb.append("pi×");
-                value = quotient;
-              }
-            }
-
-            if (isInteger(value)) {
-              sb.append((long)value);
-            } else {
-              sb.append(value);
-            }
-
-            sb.append(' ');
-          }
-        }
-
-        sb.append(reference.getName());
-
-        {
-          double adjustment = unit.getAdjustment();
-
-          if (adjustment != 0.0) {
-            char sign;
-            if (adjustment > 0.0) {
-              sign = '+';
-            } else {
-              sign = '-';
-              adjustment = -adjustment;
-            }
-
-            sb.append(' ');
-            sb.append(sign);
-            sb.append(' ');
-
-            if (isInteger(adjustment)) {
-              sb.append((long)adjustment);
-            } else {
-              sb.append(adjustment);
-            }
-          }
-        }
-
-        sb.append(")");
-      }
-    }
-
-    return sb.toString();
-  }
-
   static {
     final UnitType[] unitTypeArray = conversion.getUnitTypes();
     final int unitTypeCount = unitTypeArray.length;
@@ -175,7 +82,7 @@ public class ConversionListener {
       for (int unitIndex=0; unitIndex<unitCount; unitIndex+=1) {
         final Unit unit = unitArray[unitIndex];
         symbols.set(unitIndex, unit.getSymbol());
-        descriptions[unitIndex] = makeDescription(unit);
+        descriptions[unitIndex] = conversion.makeDescription(unit);
       }
 
       unitTypeNames.set(unitTypeIndex, type.getName());
