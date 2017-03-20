@@ -99,25 +99,21 @@ public class Conversion {
       return;
     }
 
-    if ((value < 1.0E3) && isInteger(value)) {
-      sb.append((long)value);
-      return;
-    }
-
     {
       int exponent = Math.getExponent(value);
 
-      if (Math.scalb(1.0, exponent) == value) {
-        sb.append("2^");
-        sb.append(exponent);
-        return;
+      if (exponent >= 10) {
+        if (Math.scalb(1.0, exponent) == value) {
+          sb.append("2^");
+          sb.append(exponent);
+          return;
+        }
       }
     }
 
     String number = String.format("%.6G", value);
-    int decimal = number.indexOf('.');
-    int end = number.indexOf('E');
     int exponent = 0;
+    int end = number.indexOf('E');
 
     if (end < 0) {
       end = number.length();
@@ -136,7 +132,8 @@ public class Conversion {
             break;
         }
 
-        while ((start < length) && (number.charAt(start) == '0')) {
+        while (start < length) {
+          if (number.charAt(start) != '0') break;
           start += 1;
         }
 
@@ -149,6 +146,8 @@ public class Conversion {
       number = number.substring(0, end);
     }
 
+    int decimal = number.indexOf('.');
+
     if (decimal >= 0) {
       while (end > 0) {
         if (number.charAt(--end) != '0') {
@@ -157,6 +156,11 @@ public class Conversion {
           break;
         }
       }
+    }
+
+    if (number.isEmpty()) {
+      sb.append('0');
+      return;
     }
 
     boolean isOne = number.equals("1");
@@ -201,8 +205,10 @@ public class Conversion {
             double reciprocal = 1.0 / multiplier;
 
             if (isInteger(reciprocal)) {
-              sb.append("1÷");
-              multiplier = reciprocal;
+              if (!isInteger(Math.log10(reciprocal))) {
+                sb.append("1÷");
+                multiplier = reciprocal;
+              }
             } else {
               double quotient = Math.PI / multiplier;
 

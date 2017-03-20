@@ -367,8 +367,8 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private void setActiveKeypads () {
-    activeKeypads = SavedSettings.getCalculatorMode().getActiveKeypads();
     currentKeypad = 0;
+    activeKeypads = SavedSettings.getCalculatorMode().getActiveKeypads();
     showKeypad();
 
     {
