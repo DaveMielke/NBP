@@ -6,6 +6,6 @@ public class DuplicateUnitException extends ConversionException {
   }
 
   public DuplicateUnitException (Unit unit) {
-    this(unit.getName());
+    this(unit.getNameSingular());
   }
 }

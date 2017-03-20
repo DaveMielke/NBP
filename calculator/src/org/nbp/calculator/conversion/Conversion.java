@@ -181,7 +181,7 @@ public class Conversion {
     StringBuilder sb = new StringBuilder(unit.getSymbol());
 
     sb.append(" [");
-    append(sb, unit.getName());
+    append(sb, unit.getNamePlural());
     sb.append("]");
 
     {
@@ -224,7 +224,11 @@ public class Conversion {
           sb.append(' ');
         }
 
-        append(sb, reference.getName());
+        append(sb,
+          hasMultiplier?
+          reference.getNamePlural():
+          reference.getNameSingular()
+        );
 
         if (hasAdjustment) {
           char sign;

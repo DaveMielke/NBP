@@ -34,9 +34,9 @@ public class ConversionFunction extends RealFunction {
         {
           StringBuilder sb = new StringBuilder();
           sb.append("convert real number from ");
-          sb.append(fromUnit.getName());
+          sb.append(fromUnit.getNamePlural());
           sb.append(" to ");
-          sb.append(toUnit.getName());
+          sb.append(toUnit.getNamePlural());
           functionSummary = sb.toString();
         }
 

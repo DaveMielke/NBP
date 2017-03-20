@@ -65,12 +65,22 @@ public class Unit {
     return Arrays.copyOf(unitNames, unitNames.length);
   }
 
-  public final String getSymbol () {
-    return unitNames[0];
+  private final String getName (int index) {
+    int count = unitNames.length;
+    if (index < count) return unitNames[index];
+    return unitNames[count - 1];
   }
 
-  public final String getName () {
-    return unitNames[1];
+  public final String getSymbol () {
+    return getName(0);
+  }
+
+  public final String getNamePlural () {
+    return getName(1);
+  }
+
+  public final String getNameSingular () {
+    return getName(2);
   }
 
   public final UnitType getType () {
