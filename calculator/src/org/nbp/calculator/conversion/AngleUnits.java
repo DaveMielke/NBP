@@ -26,7 +26,7 @@ public class AngleUnits extends UnitType {
   public final Unit QUADRANT = new Unit(DEGREE, DEGREES_PER_QUADRANT, "quad", "quadrants", "quadrant");
 
   public final static double DEGREES_PER_SEXTANT = 60.0;
-  public final Unit SEXTANT = new Unit(DEGREE, DEGREES_PER_SEXTANT, "sex", "sextants", "sextant");
+  public final Unit SEXTANT = new Unit(DEGREE, DEGREES_PER_SEXTANT, "sxt", "sextants", "sextant");
 
   public final static double DEGREES_PER_OCTANT = 45.0;
   public final Unit OCTANT = new Unit(DEGREE, DEGREES_PER_OCTANT, "oct", "octants", "octant");

@@ -13,7 +13,7 @@ public class VolumeUnits extends UnitType {
   public final Unit CUBIC_CENTIMETER = new Unit(CUBIC_METER.CENTI, 1.0, "cc", "cubic_centimeters", "cubic_centimeter");
   public final InternationalUnit LITER = new InternationalUnit(CUBIC_CENTIMETER, 1000.0, "l", "liters", "liter");
 
-  public final static double MILLILITERS_PER_TEASPOON = 473.0 / 96.0;
+  public final static double MILLILITERS_PER_TEASPOON = 236.588 / 48.0;
   public final Unit TEASPOON = new Unit(LITER.MILLI, MILLILITERS_PER_TEASPOON, "tsp", "teaspoons", "teaspoon");
 
   public final static double TEASPOONS_PER_TABLESPOON = 3.0;
