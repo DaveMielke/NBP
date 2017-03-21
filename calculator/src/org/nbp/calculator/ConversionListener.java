@@ -29,6 +29,10 @@ public class ConversionListener {
       stringMap.put(string, index);
     }
 
+    public final int size () {
+      return stringArray.length;
+    }
+
     public final String[] get () {
       return stringArray;
     }
@@ -59,7 +63,6 @@ public class ConversionListener {
       Unit[] unitArray = type.getUnits();
       int unitCount = unitArray.length;
       StringTable symbols = new StringTable(unitCount);
-      String[] descriptions = new String[unitCount];
 
       {
         Unit[] secondaryUnits = null;
@@ -83,12 +86,10 @@ public class ConversionListener {
       for (int unitIndex=0; unitIndex<unitCount; unitIndex+=1) {
         final Unit unit = unitArray[unitIndex];
         symbols.set(unitIndex, unit.getSymbol());
-        descriptions[unitIndex] = conversion.makeDescription(unit);
       }
 
       unitTypeNames.set(unitTypeIndex, type.getName());
       unitSymbols[unitTypeIndex] = symbols;
-      unitDescriptions[unitTypeIndex] = descriptions;
       unitTypeIndex += 1;
     }
   }
@@ -219,6 +220,26 @@ public class ConversionListener {
     setUnitType(conversion.LENGTH);
   }
 
+  private final String[] getUnitDescriptions () {
+    String[] descriptions = unitDescriptions[selectedUnitType];
+
+    if (descriptions == null) {
+      StringTable symbols = unitSymbols[selectedUnitType];
+      int count = symbols.size();
+      descriptions = new String[count];
+
+      for (int index=0; index<count; index+=1) {
+        String symbol = symbols.get(index);
+        Unit unit = conversion.getUnit(symbol);
+        descriptions[index] = conversion.makeDescription(unit);
+      }
+
+      unitDescriptions[selectedUnitType] = descriptions;
+    }
+
+    return descriptions;
+  }
+
   private final void dismissDialog (DialogInterface dialog) {
     ((AlertDialog)dialog).dismiss();
   }
@@ -280,7 +301,7 @@ public class ConversionListener {
       @Override
       public void onClick (View view) {
         showDialog(
-          R.string.title_conversion_from, unitDescriptions[selectedUnitType],
+          R.string.title_conversion_from, getUnitDescriptions(),
           selectedFromUnit, fromUnitSelectedListener
         );
       }
@@ -305,7 +326,7 @@ public class ConversionListener {
       @Override
       public void onClick (View view) {
         showDialog(
-          R.string.title_conversion_to, unitDescriptions[selectedUnitType],
+          R.string.title_conversion_to, getUnitDescriptions(),
           selectedToUnit, toUnitSelectedListener
         );
       }
