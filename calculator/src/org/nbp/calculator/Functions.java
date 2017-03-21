@@ -23,7 +23,8 @@ public abstract class Functions {
   private final static FunctionMap functionMap = new FunctionMap();
 
   private static Function addFunction (String name, Function function) {
-    return functionMap.put(name, function);
+    functionMap.put(name, function);
+    return function;
   }
 
   private static Function addFunction (Class<? extends Function> type, Method method) {
@@ -80,7 +81,7 @@ public abstract class Functions {
     {
       try {
         Function function = new ConversionFunction(name);
-        if (function != null) return addFunction(name, function);
+        return addFunction(name, function);
       } catch (IllegalArgumentException exception) {
       }
     }
