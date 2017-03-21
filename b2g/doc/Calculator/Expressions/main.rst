@@ -1,9 +1,6 @@
 Expression Syntax
 =================
 
-Shortcuts
----------
-
 Elements
 --------
 
@@ -36,4 +33,7 @@ Trigonometric Functions
 
 Hyperbolic Functions
 ~~~~~~~~~~~~~~~~~~~~
+
+Unit Conversion Functions
+~~~~~~~~~~~~~~~~~~~~~~~~~
 

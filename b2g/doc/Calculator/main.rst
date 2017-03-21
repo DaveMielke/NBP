@@ -12,3 +12,4 @@ The |organization acronym| Calculator
 
 .. include:: Screen/main.rst
 .. include:: Expressions/main.rst
+.. include:: Conversion/main.rst

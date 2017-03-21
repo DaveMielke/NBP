@@ -10,35 +10,57 @@ The Expression Line
 The Enter Key
 ~~~~~~~~~~~~~
 
-The Backspace Key
-~~~~~~~~~~~~~~~~~
+Shortcuts
+~~~~~~~~~
 
 The Control Buttons
 -------------------
 
-The Clear Button
+The Clear Expression Button
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Alternate Keypad Button
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Calculator Mode Selector
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Decimal Notation Selector
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Angle Unit Selector
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The Navigation Buttons
+----------------------
+
+.. include:: buttons-navigation.rst
+
+The Left Button
+~~~~~~~~~~~~~~~
+
+The Right Button
 ~~~~~~~~~~~~~~~~
 
-The Degrees Checkbox
+The Backspace Button
 ~~~~~~~~~~~~~~~~~~~~
 
-The Alternate Button
-~~~~~~~~~~~~~~~~~~~~
+The Delete Button
+~~~~~~~~~~~~~~~~~
 
-The Keypad
-----------
+The Up Button
+~~~~~~~~~~~~~
 
-The Numeric Keypad
-~~~~~~~~~~~~~~~~~~
-
-The Function Keypad
-~~~~~~~~~~~~~~~~~~~
+The Down Button
+~~~~~~~~~~~~~~~
 
 The Memory Buttons
 ------------------
 
-The Recall Button
-~~~~~~~~~~~~~~~~~
+.. include:: buttons-memory.rst
+
+The Var Button
+~~~~~~~~~~~~~~
 
 The Store Button
 ~~~~~~~~~~~~~~~~
@@ -46,6 +68,29 @@ The Store Button
 The Erase Button
 ~~~~~~~~~~~~~~~~
 
-The Functions Button
-~~~~~~~~~~~~~~~~~~~~
+The f(x) Button
+~~~~~~~~~~~~~~~
+
+The Keypad
+----------
+
+The Decimal Keypad
+~~~~~~~~~~~~~~~~~~
+
+.. include:: keypad-decimal.rst
+
+The Function Keypad
+~~~~~~~~~~~~~~~~~~~
+
+.. include:: keypad-function.rst
+
+The Unit Conversion Keypad
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. include:: keypad-conversion.rst
+
+The Hexadecimal Keypad
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. include:: keypad-hexadecimal.rst
 
