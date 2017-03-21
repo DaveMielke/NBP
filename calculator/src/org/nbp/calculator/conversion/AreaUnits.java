@@ -13,8 +13,8 @@ public class AreaUnits extends UnitType {
   public final Unit ARE = new Unit(SQUARE_METER, 100.0, "a", "ares", "are");
   public final Unit HECTARE = new Unit(ARE, 100.0, "ha", "hectares", "hectare");
 
-  public final static double SQUARE_METERS_PER_SQUARE_INCH = square(LengthUnits.METERS_PER_INCH);
-  public final Unit SQUARE_INCH = new Unit(SQUARE_METER, SQUARE_METERS_PER_SQUARE_INCH, "sqin", "square_inches", "square_inch");
+  public final static double SQUARE_CENTIMETERS_PER_SQUARE_INCH = square(LengthUnits.CENTIMETERS_PER_INCH);
+  public final Unit SQUARE_INCH = new Unit(SQUARE_METER.CENTI, SQUARE_CENTIMETERS_PER_SQUARE_INCH, "sqin", "square_inches", "square_inch");
 
   public final static double SQUARE_INCHES_PER_SQUARE_FOOT = square(LengthUnits.INCHES_PER_FOOT);
   public final Unit SQUARE_FOOT = new Unit(SQUARE_INCH, SQUARE_INCHES_PER_SQUARE_FOOT, "sqft", "square_feet", "square_foot");

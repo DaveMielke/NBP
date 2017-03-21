@@ -7,8 +7,8 @@ public class LengthUnits extends UnitType {
 
   public final InternationalUnit METER = (InternationalUnit)getBaseUnit();
 
-  public final static double METERS_PER_INCH = 0.0254;
-  public final Unit INCH = new Unit(METER, METERS_PER_INCH, "in", "inches", "inch");
+  public final static double CENTIMETERS_PER_INCH = 2.54;
+  public final Unit INCH = new Unit(METER.CENTI, CENTIMETERS_PER_INCH, "in", "inches", "inch");
 
   public final static double INCHES_PER_FOOT = 12.0;
   public final Unit FOOT = new Unit(INCH, INCHES_PER_FOOT, "ft", "feet", "foot");

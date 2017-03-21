@@ -14,7 +14,7 @@ public class VolumeUnits extends UnitType {
   public final InternationalUnit LITER = new InternationalUnit(CUBIC_CENTIMETER, 1000.0, "l", "liters", "liter");
 
   public final static double MILLILITERS_PER_TEASPOON = 473.0 / 96.0;
-  public final Unit TEASPOON = new Unit(LITER.MILLI, MILLILITERS_PER_TEASPOON, "tsp", "teaspons", "teaspon");
+  public final Unit TEASPOON = new Unit(LITER.MILLI, MILLILITERS_PER_TEASPOON, "tsp", "teaspoons", "teaspoon");
 
   public final static double TEASPOONS_PER_TABLESPOON = 3.0;
   public final Unit TABLESPOON = new Unit(TEASPOON, TEASPOONS_PER_TABLESPOON, "tbsp", "tablespoons", "tablespoon");
@@ -34,8 +34,8 @@ public class VolumeUnits extends UnitType {
   public final static double QUARTS_PER_GALLON = 4.0;
   public final Unit GALLON = new Unit(QUART, QUARTS_PER_GALLON, "gal", "gallons", "gallon");
 
-  public final static double CUBIC_METERS_PER_CUBIC_INCH = cube(LengthUnits.METERS_PER_INCH);
-  public final Unit CUBIC_INCH = new Unit(CUBIC_METER, CUBIC_METERS_PER_CUBIC_INCH, "cbin", "cubic_inches", "cubic_inch");
+  public final static double CUBIC_CENTIMETERS_PER_CUBIC_INCH = cube(LengthUnits.CENTIMETERS_PER_INCH);
+  public final Unit CUBIC_INCH = new Unit(CUBIC_METER.CENTI, CUBIC_CENTIMETERS_PER_CUBIC_INCH, "cbin", "cubic_inches", "cubic_inch");
 
   public final static double CUBIC_INCHES_PER_CUBIC_FOOT = cube(LengthUnits.INCHES_PER_FOOT);
   public final Unit CUBIC_FOOT = new Unit(CUBIC_INCH, CUBIC_INCHES_PER_CUBIC_FOOT, "cbft", "cubic_feet", "cubic_foot");
