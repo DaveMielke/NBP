@@ -14,15 +14,7 @@ import android.content.DialogInterface;
 
 public class ConversionListener {
   private final static Conversion conversion = Conversion.getInstance();
-
-  private final static UnitType[] defaultUnitTypes = new UnitType[] {
-    conversion.TEMPERATURE,
-    conversion.LENGTH,
-    conversion.AREA,
-    conversion.VOLUME,
-    conversion.ANGLE,
-    conversion.TIME
-  };
+  private final static UnitType[] defaultUnitTypes = conversion.getUnitTypes();
 
   private static class StringTable {
     private final String[] stringArray;
