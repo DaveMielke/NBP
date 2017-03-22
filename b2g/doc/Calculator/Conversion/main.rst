@@ -9,6 +9,14 @@ Predefined Variables
 
 .. include:: variables-predefined.rst
 
+Functions
+---------
+
+Predefined Functions
+~~~~~~~~~~~~~~~~~~~~
+
+.. include:: functions-predefined.rst
+
 Supported Units
 ---------------
 

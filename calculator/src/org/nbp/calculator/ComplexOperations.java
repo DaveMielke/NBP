@@ -32,7 +32,7 @@ public class ComplexOperations extends Operations {
   }
 
   @FunctionMethod(
-    summary = "amplitude of complex number"
+    summary = "absolute value (modulus, magnitude) of complex number"
   )
 
   public final static ComplexNumber abs (ComplexNumber number) {
@@ -40,7 +40,7 @@ public class ComplexOperations extends Operations {
   }
 
   @FunctionMethod(
-    summary = "phase of complex number"
+    summary = "arg (amplitude, phase) of complex number"
   )
 
   public final static ComplexNumber arg (ComplexNumber number) {
