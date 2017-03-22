@@ -1,0 +1,21 @@
+.. csv-table:: Angle Units
+  :header: "Symbol", "Name", "Calculation"
+
+  "rad", "radians"
+  "brad", "binary radians", "1÷128 = 0.0078125 radians"
+  "deg", "degrees", "pi÷180 = 0.0174533 radians"
+  "rev", "revolutions", "360 degrees"
+  "crev", "centirevolutions", "360÷100 = 3.6 degrees"
+  "mrev", "millirevolutions", "0.1 centirevolutions"
+  "quad", "quadrants", "360÷4 = 90 degrees"
+  "sxt", "sextants", "360÷6 = 60 degrees"
+  "oct", "octants", "360÷8 = 45 degrees"
+  "sign", "signs", "360÷12 = 30 degrees"
+  "point", "points", "360÷32 = 11.25 degrees"
+  "hxct", "hexacontades", "360÷60 = 6 degrees"
+  "dmin", "arc minutes", "1÷60 = 0.0166667 degrees"
+  "dsec", "arc seconds", "1÷60 = 0.0166667 arc minutes"
+  "gon", "gradians", "0.9 degrees"
+  "gmin", "centesimal minutes", "0.01 gradians"
+  "gsec", "centesimal seconds", "0.01 centesimal minutes"
+

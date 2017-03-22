@@ -1,0 +1,21 @@
+.. csv-table:: Volume Units
+  :header: "Symbol", "Name", "Calculation"
+
+  "m3", "meters^3"
+  "cc", "cubic centimeters", "1 centimeters^3"
+  "l", "liters", "1 cubic centimeter"
+  "tsp", "teaspoons", "4.92892 milliliters"
+  "tbsp", "tablespoons", "3 teaspoons"
+  "floz", "fluid ounces", "2 tablespoons"
+  "cup", "cups", "8 fluid ounces"
+  "pt", "pints", "2 cups"
+  "qt", "quarts", "2 pints"
+  "gal", "gallons", "4 quarts"
+  "cbin", "cubic inches", "2.54^3 = 16.3871 centimeters^3"
+  "cbft", "cubic feet", "12^3 = 1728 cubic inches"
+  "cbyd", "cubic yards", "3^3 = 27 cubic feet"
+  "cbrd", "cubic rods", "5.5^3 = 166.375 cubic yards"
+  "cbfur", "cubic furlongs", "40^3 = 64,000 cubic rods"
+  "cbmi", "cubic miles", "8^3 = 512 cubic furlongs"
+  "cblg", "cubic leagues", "3^3 = 9 cubic miles"
+
