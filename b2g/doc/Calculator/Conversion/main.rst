@@ -1,6 +1,14 @@
 Unit Conversion
 ===============
 
+Variables
+---------
+
+Predefined Variables
+~~~~~~~~~~~~~~~~~~~~
+
+.. include:: variables-predefined.rst
+
 Supported Units
 ---------------
 
