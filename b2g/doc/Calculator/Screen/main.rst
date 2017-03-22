@@ -1,6 +1,10 @@
 The Screen Layout
 =================
 
+.. include:: layout-portrait.rst
+
+.. include:: layout-landscape.rst
+
 The Result Line
 ---------------
 
