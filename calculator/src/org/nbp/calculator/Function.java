@@ -32,10 +32,6 @@ public abstract class Function {
     throw new RuntimeException(("function method not found: " + methodName));
   }
 
-  private final Object callMethod (Object argument) {
-    return LanguageUtilities.invokeMethod(functionMethod, this, argument);
-  }
-
   public String getName () {
     return functionMethod.getName();
   }
@@ -66,6 +62,10 @@ public abstract class Function {
   protected abstract Object preprocessFunctionArgument (Object argument);
   protected abstract Object postprocessFunctionResult (Object result);
 
+  private final Object callMethod (Object argument) {
+    return LanguageUtilities.invokeMethod(functionMethod, this, argument);
+  }
+
   public final Object call (Object functionArgument) {
     Object methodArgument = preprocessFunctionArgument(functionArgument);
 
@@ -79,5 +79,15 @@ public abstract class Function {
     }
 
     return null;
+  }
+
+  private boolean hideFromListing = false;
+
+  public final boolean getHideFromListing () {
+    return hideFromListing;
+  }
+
+  protected final void setHideFromListing (boolean  hide) {
+    hideFromListing = hide;
   }
 }

@@ -17,7 +17,7 @@ Predefined Functions
 
 .. include:: functions-predefined.rst
 
-Supported Units
+Unit Conversion
 ---------------
 
 Angle Units

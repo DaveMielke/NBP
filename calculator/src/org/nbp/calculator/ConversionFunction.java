@@ -17,6 +17,7 @@ public class ConversionFunction extends RealFunction {
 
   public ConversionFunction (String name) {
     super("convert");
+    setHideFromListing(true);
 
     functionName = name;
     int index = name.lastIndexOf(SEPARATOR, (name.length() - 2));

@@ -5,11 +5,11 @@
   +---------------------------------------------------+
   |                             Expression Input Area |
   +-------+-------+-------+---------------------------+
-  | Clear |  Alt  | Mode  |                           |
+  |   C   |  ALT  |  DEC  |                           |
   +-------+-------+-------+                           |
-  |  Not  |  Var  | Store |                           |
+  |  FXD  |  Var  | Store |                           |
   +-------+-------+-------+                           |
-  | Angle | f(x)  | Erase | Currently Selected Keypad |
+  |  DEG  | f(x)  | Erase | Currently Selected Keypad |
   +-------+-------+-------+                           |
   |  BS   |  Up   |  DEL  |                           |
   +-------+-------+-------+                           |

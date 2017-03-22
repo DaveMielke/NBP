@@ -24,7 +24,7 @@
   "gamma(z)", "gamma function of complex number"
   "imag(z)", "imaginary component of complex number"
   "log(z)", "natural log of complex number"
-  "log10(z)", "log base 10 of complex number"
+  "log10(z)", "log\ :sub:`10` of complex number"
   "neg(z)", "negation of complex number"
   "r2d(x)", "convert real number from radians to degrees"
   "rcp(z)", "reciprocal of complex number"

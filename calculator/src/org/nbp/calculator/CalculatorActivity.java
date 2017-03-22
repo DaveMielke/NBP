@@ -1110,7 +1110,9 @@ public class CalculatorActivity extends CommonActivity {
 
     for (String name : Functions.getNames()) {
       Function function = Functions.get(name);
-      if (function != null) functions.add(formatFunctionLine(name, function));
+      if (function == null) continue;
+      if (function.getHideFromListing()) continue;
+      functions.add(formatFunctionLine(name, function));
     }
 
     Collections.sort(functions);
