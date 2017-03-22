@@ -17,11 +17,16 @@ The Enter Key
 Shortcuts
 ~~~~~~~~~
 
+.. include:: expression-shortcuts.rst
+
+Expression History
+~~~~~~~~~~~~~~~~~~
+
 The Control Buttons
 -------------------
 
-The Clear Expression Button
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The Clear Button
+~~~~~~~~~~~~~~~~
 
 The Alternate Keypad Button
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -43,28 +48,52 @@ The Navigation Buttons
 The Left Button
 ~~~~~~~~~~~~~~~
 
+Move the cursor one character to the left.
+A long press moves the cursor all the way to the left.
+This button is disabled when the cursor is to the left of the first character.
+
 The Right Button
 ~~~~~~~~~~~~~~~~
+
+Move the cursor one character to the right.
+A long press moves the cursor all the way to the right.
+This button is disabled when the cursor is to the right of the last character.
 
 The Backspace Button
 ~~~~~~~~~~~~~~~~~~~~
 
+Delete the character that's immediately to the left of the cursor.
+A long press deletes all of the characters that are to the left of the cursor.
+This button is disabled when the cursor is to the left of the first character.
+
 The Delete Button
 ~~~~~~~~~~~~~~~~~
+
+Delete the character that's immediately to the right of the cursor.
+A long press deletes all of the characters that are to the right of the cursor.
+This button is disabled when the cursor is to the right of the last character.
 
 The Up Button
 ~~~~~~~~~~~~~
 
+Move to the previous entry in the `expression history`_.
+A long press moves to the earliest (oldest) entry.
+This button is disabled when on the earliest entry.
+
 The Down Button
 ~~~~~~~~~~~~~~~
+
+Move to the next entry in the `expression history`_.
+A long press moves to the latest (most recent) entry.
+This button is disabled when on the latest entry.
 
 The Memory Buttons
 ------------------
 
 .. include:: buttons-memory.rst
 
-The Var Button
-~~~~~~~~~~~~~~
+The Variable Button
+~~~~~~~~~~~~~~~~~~~
 
 The Store Button
 ~~~~~~~~~~~~~~~~
@@ -72,8 +101,8 @@ The Store Button
 The Erase Button
 ~~~~~~~~~~~~~~~~
 
-The f(x) Button
-~~~~~~~~~~~~~~~
+The Function Button
+~~~~~~~~~~~~~~~~~~~
 
 The Keypad
 ----------
