@@ -7,7 +7,7 @@ but also by blind people using speech and/or a braille device.
 It's easy to use via
 it's own on-screen calculator-style keys,
 a full on-screen keyboard,
-or an externally connected Bluetooth or USB keyboard.
+or an externally-connected Bluetooth or USB keyboard.
 
 It offers the following features:
 
@@ -100,16 +100,56 @@ is entered:
 Expression Line
 ---------------
 
+This input area is where the expression to be evaluated is entered
+(see `Expressions`_ for syntax).
+The expression can be entered
+by touching the calculator-style keys on the screen,
+via a full on-screen keyboard (tap this line to open it),
+or via an external keyboard.
+Additionally, the `navigation buttons`_ can be used to edit the expression.
+
+The result of evaluating the expression is displayed on the `result line`_.
+It's kept up-to-date as the expression is being entered and/or edited.
+
 Enter Key
 ~~~~~~~~~
 
+Typing this key completes the expression.
+The expression is added to the `expression history`_,
+the `expression line`_ is cleared,
+and the final result is displayed on the `result line`_.
+If there's an error
+then the cursor is placed at the error's location
+and the message is displayed on the `result line`_.
+
+Touching the **=** key on any of the `keypads`_ performs this same action.
+
 Shortcuts
 ~~~~~~~~~
+
+the following actions can be performed by typing shortcuts on a keyboard:
 
 .. include:: expression-shortcuts.rst
 
 Expression History
 ~~~~~~~~~~~~~~~~~~
+
+A history of successfully completed expressions is maintained.
+An expression is considered complete
+if there are no syntax errors within it when
+either the **=** key on any of the `keypads`_ is pressed
+or when the `Enter key`_ is typed.
+
+* Pressing the `Up`_ key moves backward through the histry.
+* Pressing the `Down`_ key moves forward through the histry.
+* Long pressing the `Up`_ key moves to the earliest entry in the history.
+* Long pressing the `Down`_ key moves to the most recent entry in the history.
+
+Any history entry can be edited and recompleted,
+although the history entries themselves are never actually changed.
+Edits to an entry are lost when moving away (up or down) from it
+without recompleting it.
+Recompleting a history entry adds it as a new entry.
 
 Control Buttons
 ---------------
@@ -142,7 +182,33 @@ DEC
   Decimal (the default).
   This mode performs real and complex operations
   on IEEE 64-bit floating-point (commonly known as double) values.
-  They consist of a 1-bit sign, an 11-bit exponent, and a 48-bit mantissa.
+  They consist of a 1-bit sign, an 11-bit exponent, and a 52-bit significand.
+  Other than 0 (which is a special case),
+  the smallest absolute value that this representation supports is
+  2\ :sup:`-1074` or approximately 5×10\ :sup:`−324`,
+  and the largest absolute value that it supports is
+  2\ :sup:`1023` or approximately 1.8×10\ :sup:`308`.
+  Calculations are performed with an accuracy of 15 significant digits.
+
+  This mode supports complex numbers.
+  The imaginary component, if nonzero, is displayed as
+  either an addition to or a subtraction from the real component.
+  If a number doesn't have an imaginary component
+  then only its real component is displayed.
+  If it does have an imaginary component but doesn't have a real component
+  then only the imaginary component is displayed.
+  Here are some examples:
+
+  * 0
+  * 1
+  * i
+  * 2i
+  * −3
+  * −4i
+  * 5 + i
+  * −6 + 2i
+  * −7 − 3i
+  * 2.3×10\ :sup:`4` + 5.6×10\ :sup:`7`\ i
 
   The keypads associated wit this mode are:
 
@@ -292,6 +358,15 @@ New
     Assign the value currently shown on the `result line`_ to to the new variable.
     This action is disabled when the name field is empty
     and when it contains the name of an existing variable.
+
+Variables can also be created or updated via the **=** operator within an expression.
+For example:
+
+* x = 1
+* x = y = 2
+* x = 3 + y = 4 + z = 5
+
+To clarify: the last example sets z to 5, y to 9, and x to 12.
 
 Erase
 ~~~~~
