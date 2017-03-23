@@ -229,6 +229,7 @@ public class CalculatorActivity extends CommonActivity {
 
       History.setLastEntry(expressionView);
       History.addLastEntry();
+      setHistoryNavigationStates();
 
       onExpressionEditedListener.clearWithoutEvaluating();
     }
