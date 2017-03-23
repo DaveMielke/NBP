@@ -13,26 +13,11 @@ Monadic Operators
 Diadic Operators
 ~~~~~~~~~~~~~~~~
 
-Variables
----------
+Using Variables
+---------------
 
-User-defined Variables
-~~~~~~~~~~~~~~~~~~~~~~
-
-Predefined Variables
-~~~~~~~~~~~~~~~~~~~~
-
-Functions
----------
-
-Logarithmic Functions
-~~~~~~~~~~~~~~~~~~~~~
-
-Trigonometric Functions
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Hyperbolic Functions
-~~~~~~~~~~~~~~~~~~~~
+using Functions
+---------------
 
 Unit Conversion Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
