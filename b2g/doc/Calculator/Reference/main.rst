@@ -1,5 +1,5 @@
-Reference Tables
-================
+Reference
+=========
 
 Variables
 ---------

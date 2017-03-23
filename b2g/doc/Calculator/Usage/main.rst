@@ -1,7 +1,34 @@
+Usage
+=====
+
 The Screen Layout
-=================
+-----------------
+
+.. topic:: Layout Legend
+
+  * C is `the Clear button`_.
+  * ALT is `the Alternate Keypad selector`_.
+  * DEC is the default setting of `the Calculator Mode selector`_.
+  * FXD is the default setting of `the Decimal Notation selector`_.
+  * DEG is the default setting of `the Angle Unit selector`_.
+  * Var is `the Variable button`_.
+  * Store is `the Store button`_.
+  * Erase is `the Erase button`_.
+  * f(x) is `the Function button`_.
+  * |left| is `the Left button`_.
+  * |right| is `the Right button`_.
+  * BS is `the Backspace button`_.
+  * DEL is `the Delete button`_.
+  * |up| is `the Up button`_.
+  * |down| is `the Down button`_.
+
+Portrait
+~~~~~~~~
 
 .. include:: layout-portrait.rst
+
+Landscape
+~~~~~~~~~
 
 .. include:: layout-landscape.rst
 
@@ -28,8 +55,8 @@ The Control Buttons
 The Clear Button
 ~~~~~~~~~~~~~~~~
 
-The Alternate Keypad Button
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The Alternate Keypad Selector
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Calculator Mode Selector
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

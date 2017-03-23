@@ -12,3 +12,8 @@
 .. |dot| unicode:: U+22C5
   :trim:
 
+.. |left|  unicode:: U+2190
+.. |up|    unicode:: U+2191
+.. |right| unicode:: U+2192
+.. |down|  unicode:: U+2193
+

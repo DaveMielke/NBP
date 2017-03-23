@@ -10,6 +10,6 @@ The |organization acronym| Calculator
 
 .. contents::
 
-.. include:: Screen/main.rst
+.. include:: Usage/main.rst
 .. include:: Expressions/main.rst
 .. include:: Reference/main.rst
