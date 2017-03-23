@@ -16,16 +16,7 @@ DEG
 Var
   The `Variable`_ button.
 
-Store
-  The `Store`_ button.
-
-Erase
-  The `Erase`_ button.
-
-f(x)
-  The `Function`_ button.
-
-left|
+|left|
   The `Left`_ button.
 
 |right|

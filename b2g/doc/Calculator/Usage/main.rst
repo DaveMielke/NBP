@@ -70,9 +70,9 @@ DEC
   Decimal (the default).
   The keypads associated wit this mode are:
 
-  * `Decimal Keypad`_
-  * `Function Keypad`_
-  * `Conversion Keypad`_
+  * `Decimal`_
+  * `Function`_
+  * `Conversion`_
 
 .. _Hexadecimal Calculator Mode:
 
@@ -80,7 +80,7 @@ HEX
   Hexadecimal.
   The keypads associated wit this mode are:
 
-  * `Hexadecimal Keypad`_
+  * `Hexadecimal`_
 
 Decimal Notation
 ~~~~~~~~~~~~~~~~
@@ -93,12 +93,46 @@ The following notations are available:
 
 FXD
   Fixed (the default).
+  If the absolute value of the number
+  is less than 10\ :sup:`13` [``1,000,000,000,000``]
+  and greater than or equal to 10\ :sup:`-3` [``0.001``]
+  then it's displayed with its decimal point in its natural position.
+  Its power of ten multiplier (e.g. ×10\ :sup:`x`) isn't displayed
+  (because it's 0),
+  and digit grouping separators (e.g. 1,000) are displayed
+  (to ease readability).
+  If the number is an integer then the decimal point isn't displayed.
+
+  If the number is outside this range then it's considered to be
+  too difficult to intuitively read in fixed notation,
+  and scientific notation is used instead.
 
 SCI
   Scientific.
+  The number is always displayed such that its absolute value
+  is greater than or equal to 1 and less than 10.
+  In other words, there's always exactly one digit before the decimal point.
+  If the rest of the digits (other than the first one) are 0
+  then the decimal point isn't displayed.
+  If it needs to be multiplied by a power of 10
+  (either positive or negative)
+  then ×10\ :sup:`x` is appended.
 
 ENG
   Engineering.
+  This is identical to scientific notation except that
+  the power of ten is always a multiple of 3
+  and up to 3 digits are displayed before the decimal point.
+
+In all cases, the sign is only displayed if the number is negative.
+This is also true for the power of ten.
+
+.. csv-table:: Comparison of Decimal Notations
+  :header: "Notation", "Number"
+
+  "Fixed", "0.0123"
+  "Scientific", "1.23×10\ :sup:`-2`"
+  "Engineering", "12.3×10\ :sup:`-3`"
 
 Angle Unit
 ~~~~~~~~~~
@@ -233,8 +267,8 @@ It offers the following additional actions:
 Erase
   Remove the definitions of all the variables that have been selected.
 
-Function
-~~~~~~~~
+f(x)
+~~~~
 
 Pressing this button presents a list of the `predefined functions`_.
 Each line contains the name and description of a function.
@@ -246,35 +280,35 @@ The following actions are also available:
 Cancel
   Dismiss the dialog without taking any action.
 
-Keypad
-------
+Keypads
+-------
 
-Decimal Keypad
-~~~~~~~~~~~~~~
+Decimal
+~~~~~~~
 
 This is the primary keypad for the `Decimal calculator mode`_.
 It has the following layout:
 
 .. include:: keypad-decimal.rst
 
-Function Keypad
-~~~~~~~~~~~~~~~
+Function
+~~~~~~~~
 
 This is the second keypad for the `Decimal calculator mode`_.
 It has the following layout:
 
 .. include:: keypad-function.rst
 
-Conversion Keypad
-~~~~~~~~~~~~~~~~~
+Conversion
+~~~~~~~~~~
 
 This is the third keypad for the `Decimal calculator mode`_.
 It has the following layout:
 
 .. include:: keypad-conversion.rst
 
-Hexadecimal Keypad
-~~~~~~~~~~~~~~~~~~
+Hexadecimal
+~~~~~~~~~~~
 
 This is the primary keypad for the `Hexadecimal calculator mode`_.
 It has the following layout:
