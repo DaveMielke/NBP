@@ -11,10 +11,14 @@ Screen Layout
 Portrait
 ~~~~~~~~
 
+The screen has the following layout when in portrait mode:
+
 .. include:: layout-portrait.rst
 
 Landscape
 ~~~~~~~~~
+
+The screen has the following layout when in landscape mode:
 
 .. include:: layout-landscape.rst
 
@@ -38,63 +42,127 @@ Expression History
 Control Buttons
 ---------------
 
-Clear Button
-~~~~~~~~~~~~
+Clear
+~~~~~
 
-Alternate Keypad Selector
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Pressing this button clears the `expression line`_.
 
-Calculator Mode Selector
-~~~~~~~~~~~~~~~~~~~~~~~~
+Alternate Keypad
+~~~~~~~~~~~~~~~~
 
-Decimal Notation Selector
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Repeatedly pressing this button cycles through all of the keypads
+associated with the current `calculator mode`_.
+A long press switches to the mode's primary keypad.
+This button is disabled if the mode only has one keypad.
 
-Angle Unit Selector
-~~~~~~~~~~~~~~~~~~~
+Calculator Mode
+~~~~~~~~~~~~~~~
+
+Repeatedly pressing this button cycles through all of the calculator modes.
+Its label is a three-character abbreviation for the currently selected mode.
+A long press presents a dialog from which the desired mode can be selected.
+
+The following modes are available:
+
+.. _Decimal Calculator Mode:
+
+DEC
+  Decimal (the default).
+  The keypads associated wit this mode are:
+
+  * `Decimal Keypad`_
+  * `Function Keypad`_
+  * `Conversion Keypad`_
+
+.. _Hexadecimal Calculator Mode:
+
+HEX
+  Hexadecimal.
+  The keypads associated wit this mode are:
+
+  * `Hexadecimal Keypad`_
+
+Decimal Notation
+~~~~~~~~~~~~~~~~
+
+Repeatedly pressing this button cycles through all of the decimal number notations.
+Its label is a three-character abbreviation for the currently selected notation.
+A long press presents a dialog from which the desired notation can be selected.
+
+The following notations are available:
+
+FXD
+  Fixed (the default).
+
+SCI
+  Scientific.
+
+ENG
+  Engineering.
+
+Angle Unit
+~~~~~~~~~~
+
+Repeatedly pressing this button cycles through all of the trigonometric angle units.
+Its label is a three-character abbreviation for the currently selected unit.
+A long press presents a dialog from which the desired unit can be selected.
+
+The following units are available:
+
+DEG
+  Degrees (the default).
+  A circle is divided into 360 degrees.
+
+RAD
+  Radians.
+  A circle is divided into 2π radians.
+
+GON
+  Gradians (also known as grads or gons).
+  A circle is divided into 400 gradians.
 
 Navigation Buttons
 ------------------
 
 .. include:: buttons-navigation.rst
 
-Left Button
-~~~~~~~~~~~
+Left
+~~~~
 
 Pressing this button moves the cursor one character to the left.
 A long press moves the cursor all the way to the left.
 This button is disabled when the cursor is to the left of the first character.
 
-Right Button
-~~~~~~~~~~~~
+Right
+~~~~~
 
 Pressing this button moves the cursor one character to the right.
 A long press moves the cursor all the way to the right.
 This button is disabled when the cursor is to the right of the last character.
 
-Backspace Button
-~~~~~~~~~~~~~~~~
+Backspace
+~~~~~~~~~
 
 Pressing this button deletes the character immediately to the left of the cursor.
 A long press deletes all of the characters to the left of the cursor.
 This button is disabled when the cursor is to the left of the first character.
 
-Delete Button
-~~~~~~~~~~~~~
+Delete
+~~~~~~
 
 Pressing this button deletes the character immediately to the right of the cursor.
 A long press deletes all of the characters to the right of the cursor.
 This button is disabled when the cursor is to the right of the last character.
 
-Up Button
-~~~~~~~~~
+Up
+~~
 
 Pressing this button moves to the previous entry in the `expression history`_.
 A long press moves to the earliest (oldest) entry.
 This button is disabled when on the earliest entry.
 
-Down Button
-~~~~~~~~~~~
+Down
+~~~~
 
 Pressing this button moves to the next entry in the `expression history`_.
 A long press moves to the latest (most recent) entry.
@@ -105,8 +173,8 @@ Memory Buttons
 
 .. include:: buttons-memory.rst
 
-Variable Button
-~~~~~~~~~~~~~~~
+Variable
+~~~~~~~~
 
 Pressing this button presents a list of
 the user-defined variables followed by the `predefined variables`_.
@@ -120,8 +188,8 @@ The following actions are also available:
 Cancel
   Dismiss the list without taking any action.
 
-Store Button
-~~~~~~~~~~~~
+Store
+~~~~~
 
 Pressing this button presents a list of the user-defined variables.
 Each line contains the name and current value of a variable.
@@ -146,8 +214,8 @@ New
     This action is disabled when the name field is empty
     and when it contains the name of an existing variable.
 
-Erase Button
-~~~~~~~~~~~~
+Erase
+~~~~~
 
 Pressing this button presents a list of the user-defined variables.
 Each line contains the name and current value of a variable.
@@ -165,8 +233,8 @@ It offers the following additional actions:
 Erase
   Remove the definitions of all the variables that have been selected.
 
-Function Button
-~~~~~~~~~~~~~~~
+Function
+~~~~~~~~
 
 Pressing this button presents a list of the `predefined functions`_.
 Each line contains the name and description of a function.
@@ -184,20 +252,32 @@ Keypad
 Decimal Keypad
 ~~~~~~~~~~~~~~
 
+This is the primary keypad for the `Decimal calculator mode`_.
+It has the following layout:
+
 .. include:: keypad-decimal.rst
 
 Function Keypad
 ~~~~~~~~~~~~~~~
 
+This is the second keypad for the `Decimal calculator mode`_.
+It has the following layout:
+
 .. include:: keypad-function.rst
 
-Unit Conversion Keypad
-~~~~~~~~~~~~~~~~~~~~~~
+Conversion Keypad
+~~~~~~~~~~~~~~~~~
+
+This is the third keypad for the `Decimal calculator mode`_.
+It has the following layout:
 
 .. include:: keypad-conversion.rst
 
 Hexadecimal Keypad
 ~~~~~~~~~~~~~~~~~~
+
+This is the primary keypad for the `Hexadecimal calculator mode`_.
+It has the following layout:
 
 .. include:: keypad-hexadecimal.rst
 

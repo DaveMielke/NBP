@@ -1,45 +1,45 @@
 C
-  The `Clear button`_.
+  The `Clear`_ button.
 
 ALT
-  The `Alternate Keypad selector`_.
+  The `Alternate Keypad`_ selector.
 
 DEC
-  The default setting of the `Calculator Mode selector`_.
+  The default setting of the `Calculator Mode`_ selector.
 
 FXD
-  The default setting of the `Decimal Notation selector`_.
+  The default setting of the `Decimal Notation`_ selector.
 
 DEG
-  The default setting of the `Angle Unit selector`_.
+  The default setting of the `Angle Unit`_ selector.
 
 Var
-  The `Variable button`_.
+  The `Variable`_ button.
 
 Store
-  The `Store button`_.
+  The `Store`_ button.
 
 Erase
-  The `Erase button`_.
+  The `Erase`_ button.
 
 f(x)
-  The `Function button`_.
+  The `Function`_ button.
 
 left|
-  The `Left button`_.
+  The `Left`_ button.
 
 |right|
-  The `Right button`_.
+  The `Right`_ button.
 
 BS
-  The `Backspace button`_.
+  The `Backspace`_ button.
 
 DEL
-  The `Delete button`_.
+  The `Delete`_ button.
 
 |up|
-  The `Up button`_.
+  The `Up`_ button.
 
 |down|
-  The `Down button`_.
+  The `Down`_ button.
 
