@@ -69,7 +69,7 @@ For Positive Powers of Ten
 For Negative Powers of Ten
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: For micro, **u** (rather than **µ**) is used.
+.. note:: **u** (rather than **µ**) is being used for micro.
 
 .. include:: prefix-ten-minus.rst
 
