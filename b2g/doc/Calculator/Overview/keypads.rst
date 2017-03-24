@@ -73,7 +73,7 @@ To
 The rightmost key is for actually performing
 the currently configured unit conversion.
 It's label shows what that conversion is in the form *from*\ 2\ *to*
-(e.g. **sqmi2km**).
+(e.g. **mi2km**).
 This is the name of the predefined function that performs the conversion.
 Just like the keys on the `Function`_ keypad, pressing this key
 enters the name of this function, followed by an open bracket [(],

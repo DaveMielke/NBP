@@ -16,9 +16,6 @@ and moving forward one position allows him/her to easily clear the expression.
 
 .. topic:: Layout Legend
 
-  The `Store`_, `Erase`_, and `f(x)`_ button labels are literal.
-  The rest of the button labels require some explanation:
-
   .. include:: layout-legend.rst
 
 Portrait

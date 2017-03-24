@@ -1,36 +1,18 @@
-C
-  The `Clear`_ button.
+.. csv-table:: Layout Legend
 
-ALT
-  The `Alternate Keypad`_ selector.
-
-DEC
-  The default setting of the `Calculator Mode`_ selector.
-
-FXD
-  The default setting of the `Decimal Notation`_ selector.
-
-DEG
-  The default setting of the `Angle Unit`_ selector.
-
-Var
-  The `Variable`_ button.
-
-|left|
-  The `Left`_ button.
-
-|right|
-  The `Right`_ button.
-
-BS
-  The `Backspace`_ button.
-
-DEL
-  The `Delete`_ button.
-
-|up|
-  The `Up`_ button.
-
-|down|
-  The `Down`_ button.
+  "AltKp", "`Alternate Keypad`_ selector"
+  "AUSel", "`Angle Unit`_ selector"
+  "BkSpc", "`Backspace`_ button"
+  "Clear", "`Clear`_ button"
+  "CMSel", "`Calculator Mode`_ selector"
+  "Del", "`Delete`_ button"
+  "DNSel", "`Decimal Notation`_ selector"
+  "Down", "`Down`_ button"
+  "Erase", "`Erase`_ button"
+  "f(x)", "`f(x)`_ button"
+  "Left", "`Left`_ button"
+  "Right", "`Right`_ button"
+  "Store", "`Store`_ button"
+  "Up", "`Up`_ button"
+  "Var", "`Variable`_ button"
 
