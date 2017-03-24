@@ -15,7 +15,9 @@
   "cbft", "cubic feet", "12\ :sup:`3` = 1728 cubic inches"
   "cbyd", "cubic yards", "3\ :sup:`3` = 27 cubic feet"
   "cbrd", "cubic rods", "5.5\ :sup:`3` = 166.375 cubic yards"
-  "cbfur", "cubic furlongs", "40\ :sup:`3` = 64,000 cubic rods"
+  "cbch", "cubic chains", "4\ :sup:`3` = 64 cubic rods"
+  "cblink", "cubic links", "0.01\ :sup:`3` = 10\ :sup:`−6` cubic rods"
+  "cbfur", "cubic furlongs", "10\ :sup:`3` = 1,000 cubic rods"
   "cbmi", "cubic miles", "8\ :sup:`3` = 512 cubic furlongs"
   "cblg", "cubic leagues", "3\ :sup:`3` = 9 cubic miles"
 

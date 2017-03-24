@@ -6,7 +6,9 @@
   "ft", "feet", "12 inches"
   "yd", "yards", "3 feet"
   "rd", "rods", "5.5 yards"
-  "fur", "furlongs", "40 rods"
+  "ch", "chains", "4 rods"
+  "link", "links", "0.01 chains"
+  "fur", "furlongs", "10 chains"
   "mi", "miles", "8 furlongs"
   "lg", "leagues", "3 miles"
 

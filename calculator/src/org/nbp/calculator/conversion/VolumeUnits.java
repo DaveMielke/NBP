@@ -46,8 +46,14 @@ public class VolumeUnits extends UnitType {
   public final static double CUBIC_YARDS_PER_CUBIC_ROD = cube(LengthUnits.YARDS_PER_ROD);
   public final Unit CUBIC_ROD = new Unit(CUBIC_YARD, CUBIC_YARDS_PER_CUBIC_ROD, "cbrd", "cubic_rods", "cubic_rod");
 
-  public final static double CUBIC_RODS_PER_CUBIC_FURLONG = cube(LengthUnits.RODS_PER_FURLONG);
-  public final Unit CUBIC_FURLONG = new Unit(CUBIC_ROD, CUBIC_RODS_PER_CUBIC_FURLONG, "cbfur", "cubic_furlongs", "cubic_furlong");
+  public final static double CUBIC_RODS_PER_CUBIC_CHAIN = cube(LengthUnits.RODS_PER_CHAIN);
+  public final Unit CUBIC_CHAIN = new Unit(CUBIC_ROD, CUBIC_RODS_PER_CUBIC_CHAIN, "cbch", "cubic_chains", "cubic_chain");
+
+  public final static double CUBIC_CHAINS_PER_CUBIC_LINK = cube(LengthUnits.CHAINS_PER_LINK);
+  public final Unit CUBIC_LINK = new Unit(CUBIC_CHAIN, CUBIC_CHAINS_PER_CUBIC_LINK, "cblink", "cubic_links", "cubic_link");
+
+  public final static double CUBIC_CHAINS_PER_CUBIC_FURLONG = cube(LengthUnits.CHAINS_PER_FURLONG);
+  public final Unit CUBIC_FURLONG = new Unit(CUBIC_CHAIN, CUBIC_CHAINS_PER_CUBIC_FURLONG, "cbfur", "cubic_furlongs", "cubic_furlong");
 
   public final static double CUBIC_FURLONGS_PER_CUBIC_MILE = cube(LengthUnits.FURLONGS_PER_MILE);
   public final Unit CUBIC_MILE = new Unit(CUBIC_FURLONG, CUBIC_FURLONGS_PER_CUBIC_MILE, "cbmi", "cubic_miles", "cubic_mile");

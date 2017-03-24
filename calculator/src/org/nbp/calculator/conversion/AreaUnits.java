@@ -25,8 +25,14 @@ public class AreaUnits extends UnitType {
   public final static double SQUARE_YARDS_PER_SQUARE_ROD = square(LengthUnits.YARDS_PER_ROD);
   public final Unit SQUARE_ROD = new Unit(SQUARE_YARD, SQUARE_YARDS_PER_SQUARE_ROD, "sqrd", "square_rods", "square_rod");
 
-  public final static double SQUARE_RODS_PER_SQUARE_FURLONG = square(LengthUnits.RODS_PER_FURLONG);
-  public final Unit SQUARE_FURLONG = new Unit(SQUARE_ROD, SQUARE_RODS_PER_SQUARE_FURLONG, "sqfur", "square_furlongs", "square_furlong");
+  public final static double SQUARE_RODS_PER_SQUARE_CHAIN = square(LengthUnits.RODS_PER_CHAIN);
+  public final Unit SQUARE_CHAIN = new Unit(SQUARE_ROD, SQUARE_RODS_PER_SQUARE_CHAIN, "sqch", "square_chains", "square_chain");
+
+  public final static double SQUARE_CHAINS_PER_SQUARE_LINK = square(LengthUnits.CHAINS_PER_LINK);
+  public final Unit SQUARE_LINK = new Unit(SQUARE_CHAIN, SQUARE_CHAINS_PER_SQUARE_LINK, "sqlink", "square_links", "square_link");
+
+  public final static double SQUARE_CHAINS_PER_SQUARE_FURLONG = square(LengthUnits.CHAINS_PER_FURLONG);
+  public final Unit SQUARE_FURLONG = new Unit(SQUARE_CHAIN, SQUARE_CHAINS_PER_SQUARE_FURLONG, "sqfur", "square_furlongs", "square_furlong");
 
   public final static double SQUARE_FURLONGS_PER_SQUARE_MILE = square(LengthUnits.FURLONGS_PER_MILE);
   public final Unit SQUARE_MILE = new Unit(SQUARE_FURLONG, SQUARE_FURLONGS_PER_SQUARE_MILE, "sqmi", "square_miles", "square_mile");

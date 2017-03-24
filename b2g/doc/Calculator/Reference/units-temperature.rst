@@ -1,12 +1,12 @@
 .. csv-table:: Temperature Units
   :header: "Symbol", "Name", "Calculation"
 
-  "DC", "degrees celsius"
-  "K", "kelvins", "degrees celsius + 273.15"
-  "DF", "degrees fahrenheit", "degrees celsius × 5 ÷ 9 + 32"
-  "DR", "degrees rankine", "kelvins × 5 ÷ 9"
-  "DRé", "degrees réaumur", "1.25 degrees celsius"
-  "DRø", "degrees rømer", "100÷52.5 = 1.90476 degrees celsius + 7.5"
-  "DDe", "degrees delisle", "−2÷3 = −0.666667 degrees celsius + 150"
-  "DN", "degrees newton", "100÷33 = 3.0303 degrees celsius"
+  "DC", "degrees Celsius"
+  "K", "kelvins", "degrees Celsius + 273.15"
+  "DF", "degrees Fahrenheit", "degrees Celsius × 5 ÷ 9 + 32"
+  "DR", "degrees Rankine", "kelvins × 5 ÷ 9"
+  "DRé", "degrees Réaumur", "1.25 degrees Celsius"
+  "DRø", "degrees Rømer", "100÷52.5 = 1.90476 degrees Celsius + 7.5"
+  "DDe", "degrees Delisle", "−2÷3 = −0.666667 degrees Celsius + 150"
+  "DN", "degrees Newton", "100÷33 = 3.0303 degrees Celsius"
 

@@ -91,7 +91,7 @@ The following notations are available:
 FXD
   Fixed (the default).
   If the absolute value of the number
-  is less than 10\ :sup:`13` [``1,000,000,000,000``]
+  is less than 10\ :sup:`12` [``1,000,000,000,000``]
   and greater than or equal to 10\ :sup:`-3` [``0.001``]
   then it's displayed with its decimal point in its natural position.
   Its power of ten multiplier (e.g. ×10\ :sup:`x`) isn't displayed

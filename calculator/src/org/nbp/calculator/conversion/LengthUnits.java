@@ -19,8 +19,14 @@ public class LengthUnits extends UnitType {
   public final static double YARDS_PER_ROD = 5.5;
   public final Unit ROD = new Unit(YARD, YARDS_PER_ROD, "rd", "rods", "rod");
 
-  public final static double RODS_PER_FURLONG = 40.0;
-  public final Unit FURLONG = new Unit(ROD, RODS_PER_FURLONG, "fur", "furlongs", "furlong");
+  public final static double RODS_PER_CHAIN = 4.0;
+  public final Unit CHAIN = new Unit(ROD, RODS_PER_CHAIN, "ch", "chains", "chain");
+
+  public final static double CHAINS_PER_LINK = 0.01;
+  public final Unit LINK = new Unit(CHAIN, CHAINS_PER_LINK, "link", "links", "link");
+
+  public final static double CHAINS_PER_FURLONG = 10.0;
+  public final Unit FURLONG = new Unit(CHAIN, CHAINS_PER_FURLONG, "fur", "furlongs", "furlong");
 
   public final static double FURLONGS_PER_MILE = 8.0;
   public final Unit MILE = new Unit(FURLONG, FURLONGS_PER_MILE, "mi", "miles", "mile");
