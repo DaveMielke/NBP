@@ -1,7 +1,7 @@
 .. csv-table:: Length Units
   :header: "Symbol", "Name", "Calculation"
 
-  "m", "meters"
+  "m `SI`_", "meters"
   "in", "inches", "2.54 centimeters"
   "ft", "feet", "12 inches"
   "yd", "yards", "3 feet"

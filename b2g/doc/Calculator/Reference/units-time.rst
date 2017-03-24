@@ -1,7 +1,7 @@
 .. csv-table:: Time Units
   :header: "Symbol", "Name", "Calculation"
 
-  "s, sec", "seconds"
+  "s, sec `SI`_", "seconds"
   "min", "minutes", "60 seconds"
   "hr", "hours", "60 minutes"
   "da", "days", "24 hours"

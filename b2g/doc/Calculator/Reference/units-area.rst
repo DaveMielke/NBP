@@ -1,7 +1,7 @@
 .. csv-table:: Area Units
   :header: "Symbol", "Name", "Calculation"
 
-  "m2", "meters\ :sup:`2`"
+  "m2 `SI`_", "meters\ :sup:`2`"
   "a", "ares", "100 meters\ :sup:`2`"
   "ha", "hectares", "100 ares"
   "sqin", "square inches", "2.54\ :sup:`2` = 6.4516 centimeters\ :sup:`2`"

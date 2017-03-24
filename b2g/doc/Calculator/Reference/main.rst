@@ -50,8 +50,16 @@ Volume
 
 .. include:: units-volume.rst
 
-International Prefixes
-----------------------
+.. _SI:
+
+Système International Prefixes
+------------------------------
+
+Any of these symbols may be prepended to the symbol for any metric unit,
+and any of these names may be prepended to the name for any metric unit.
+The metric units within the unit tables
+are flagged with SI [Système International].
+
 
 For Positive Powers of Ten
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,6 +68,8 @@ For Positive Powers of Ten
 
 For Negative Powers of Ten
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note:: For micro, **u** (rather than **µ**) is used.
 
 .. include:: prefix-ten-minus.rst
 

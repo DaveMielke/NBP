@@ -1,9 +1,9 @@
 .. csv-table:: Volume Units
   :header: "Symbol", "Name", "Calculation"
 
-  "m3", "meters\ :sup:`3`"
+  "m3 `SI`_", "meters\ :sup:`3`"
   "cc", "cubic centimeters", "1 centimeters\ :sup:`3`"
-  "l", "liters", "1 cubic centimeter"
+  "l `SI`_", "liters", "1 cubic centimeter"
   "tsp", "teaspoons", "4.92892 milliliters"
   "tbsp", "tablespoons", "3 teaspoons"
   "floz", "fluid ounces", "2 tablespoons"
