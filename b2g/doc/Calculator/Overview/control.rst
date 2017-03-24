@@ -18,8 +18,9 @@ Calculator Mode
 ~~~~~~~~~~~~~~~
 
 Repeatedly pressing this button cycles through all of the calculator modes.
-Its label is a three-character abbreviation for the currently selected mode.
-A long press presents a dialog from which the desired mode can be selected.
+A long press presents a list from which the desired mode can be selected.
+The button's label is a three-letter abbreviation for the current selection.
+The current selection is persistent.
 
 The following modes are available:
 
@@ -81,8 +82,9 @@ Decimal Notation
 ~~~~~~~~~~~~~~~~
 
 Repeatedly pressing this button cycles through all of the decimal notations.
-Its label is a three-character abbreviation for the currently selected notation.
-A long press presents a dialog from which the desired notation can be selected.
+A long press presents a list from which the desired notation can be selected.
+The button's label is a three-letter abbreviation for the current selection.
+The current selection is persistent.
 
 The following notations are available:
 
@@ -138,8 +140,9 @@ Angle Unit
 ~~~~~~~~~~
 
 Repeatedly pressing this button cycles through all of the trigonometric angle units.
-Its label is a three-character abbreviation for the currently selected unit.
-A long press presents a dialog from which the desired unit can be selected.
+A long press presents a list from which the desired unit can be selected.
+The button's label is a three-letter abbreviation for the current selection.
+The current selection is persistent.
 
 The following units are available:
 

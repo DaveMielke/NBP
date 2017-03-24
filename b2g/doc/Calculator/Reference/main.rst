@@ -20,33 +20,33 @@ Predefined Functions
 Unit Conversion
 ---------------
 
-Angle Units
-~~~~~~~~~~~
+Angle
+~~~~~
 
 .. include:: units-angle.rst
 
-Area Units
-~~~~~~~~~~
+Area
+~~~~
 
 .. include:: units-area.rst
 
-Length Units
-~~~~~~~~~~~~
+Length
+~~~~~~
 
 .. include:: units-length.rst
 
-Temperature Units
-~~~~~~~~~~~~~~~~~
+Temperature
+~~~~~~~~~~~
 
 .. include:: units-temperature.rst
 
-Time Units
-~~~~~~~~~~
+Time
+~~~~
 
 .. include:: units-time.rst
 
-Volume Units
-~~~~~~~~~~~~
+Volume
+~~~~~~
 
 .. include:: units-volume.rst
 

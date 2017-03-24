@@ -3,8 +3,10 @@ Expression Line
 
 This input area is where the expression to be evaluated is entered
 (see `Expressions`_ for syntax).
+It's current content is persistent.
+
 The expression can be entered
-by touching the calculator-style keys on the screen,
+by pressing the calculator-style keys on the screen,
 via a full on-screen keyboard (tap this line to open it),
 or via an external keyboard.
 Additionally, the `navigation buttons`_ can be used to edit the expression.
@@ -23,7 +25,7 @@ If there's an error
 then the cursor is placed at the error's location
 and the message is displayed on the `result line`_.
 
-Touching the **=** key on any of the `keypads`_ performs this same action.
+Pressing the **=** key on any of the `keypads`_ performs this same action.
 
 Shortcuts
 ~~~~~~~~~

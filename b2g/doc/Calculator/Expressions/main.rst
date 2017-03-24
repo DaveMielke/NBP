@@ -7,11 +7,14 @@ Elements
 Operators
 ---------
 
-Monadic Operators
-~~~~~~~~~~~~~~~~~
+Infix
+~~~~~
 
-Diadic Operators
-~~~~~~~~~~~~~~~~
+Prefix
+~~~~~~
+
+Postfix
+~~~~~~~
 
 Using Variables
 ---------------
