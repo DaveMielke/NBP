@@ -264,6 +264,7 @@ public class Conversion {
   public final AreaUnits AREA = new AreaUnits();
   public final VolumeUnits VOLUME = new VolumeUnits();
   public final PressureUnits PRESSURE = new PressureUnits();
+  public final MassUnits MASS = new MassUnits();
   public final ForceUnits FORCE = new ForceUnits();
   public final PowerUnits POWER = new PowerUnits();
   public final EnergyUnits ENERGY = new EnergyUnits();

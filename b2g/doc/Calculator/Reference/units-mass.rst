@@ -1,0 +1,20 @@
+.. csv-table:: Mass Units
+  :header: "Symbol", "Name", "Calculation"
+
+  "g `SI`_", "grams"
+  "t", "tonnes", "1 megagram"
+  "Da", "daltons", "1.660539040 yoctograms"
+  "oz", "ounces", "28.34952 grams"
+  "dr", "drams", "1÷16 ounces"
+  "lb", "pounds", "16 ounces"
+  "stone", "stones", "14 pounds"
+  "quarter", "quarters", "2 stone"
+  "hw", "hundredweight", "4 quarters"
+  "tl", "long tons", "20 hundredweight"
+  "ts", "short tons", "2,000 pounds"
+  "ct", "carats", "200 milligrams"
+  "gr", "grains", "64.79891 milligrams"
+  "dwt", "penny weight", "24 grains"
+  "ozt", "troy ounces", "20 penny weight"
+  "lbt", "troy pounds", "12 troy ounces"
+
