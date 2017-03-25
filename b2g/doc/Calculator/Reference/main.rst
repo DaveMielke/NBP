@@ -30,6 +30,11 @@ Area
 
 .. include:: units-area.rst
 
+Energy
+~~~~~~
+
+.. include:: units-energy.rst
+
 Force
 ~~~~~
 

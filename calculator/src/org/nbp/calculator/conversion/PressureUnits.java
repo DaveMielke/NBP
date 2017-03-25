@@ -7,18 +7,18 @@ public class PressureUnits extends UnitType {
 
   public final InternationalUnit PASCAL = (InternationalUnit)getBaseUnit();
 
-  public final Unit AT = new Unit(
+  public final Unit TECHNICAL_ATMOSPHERE = new Unit(
     PASCAL.KILO, 98.0665,
-    "at", "technical atmospheres", "technical atmosphere"
+    "at", "technical_atmospheres", "technical_atmosphere"
   );
 
-  public final Unit ATM = new Unit(
+  public final Unit STANDARD_ATMOSPHERE = new Unit(
     PASCAL, 101325,
-    "atm", "standard atmospheres", "standard atmosphere"
+    "atm", "standard_atmospheres", "standard_atmosphere"
   );
 
   public final Unit TORR = new Unit(
-    ATM, 1.0 / 760.0,
+    STANDARD_ATMOSPHERE, 1.0 / 760.0,
     "Torr", "torrs", "torr"
   );
 
@@ -29,22 +29,22 @@ public class PressureUnits extends UnitType {
 
   public final Unit PSI = new Unit(
     PASCAL.KILO, 6.894757,
-    "psi", "pounds per square inch", "pound per square inch"
+    "psi", "pounds_per_square_inch", "pound_per_square_inch"
   );
 
-  public final Unit MMHG = new Unit(
+  public final Unit MILLIMETERS_OF_MERCURY = new Unit(
     PASCAL, 133.322387415,
-    "mmHg", "millimeters of mercury", "millimeter of mercury"
+    "mmHg", "millimeters_of_mercury", "millimeter_of_mercury"
   );
 
-  public final Unit INHG = new Unit(
-    MMHG, LengthUnits.CENTIMETERS_PER_INCH * 10.0,
-    "inHg", "inches of mercury", "inch of mercury"
+  public final Unit INCHES_OF_MERCURY = new Unit(
+    MILLIMETERS_OF_MERCURY, LengthUnits.CENTIMETERS_PER_INCH * 10.0,
+    "inHg", "inches_of_mercury", "inch_of_mercury"
   );
 
   @Override
   public final Unit getDefaultFromUnit () {
-    return INHG;
+    return INCHES_OF_MERCURY;
   }
 
   @Override

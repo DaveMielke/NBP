@@ -265,6 +265,7 @@ public class Conversion {
   public final VolumeUnits VOLUME = new VolumeUnits();
   public final PressureUnits PRESSURE = new PressureUnits();
   public final ForceUnits FORCE = new ForceUnits();
+  public final EnergyUnits ENERGY = new EnergyUnits();
   public final AngleUnits ANGLE = new AngleUnits();
   public final TimeUnits TIME = new TimeUnits();
 }
