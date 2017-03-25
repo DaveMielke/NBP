@@ -50,6 +50,11 @@ Pressure
 
 .. include:: units-pressure.rst
 
+Power
+~~~~~
+
+.. include:: units-power.rst
+
 Temperature
 ~~~~~~~~~~~
 
