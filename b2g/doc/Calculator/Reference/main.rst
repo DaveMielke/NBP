@@ -50,15 +50,20 @@ Mass
 
 .. include:: units-mass.rst
 
+Power
+~~~~~
+
+.. include:: units-power.rst
+
 Pressure
 ~~~~~~~~
 
 .. include:: units-pressure.rst
 
-Power
+Speed
 ~~~~~
 
-.. include:: units-power.rst
+.. include:: units-speed.rst
 
 Temperature
 ~~~~~~~~~~~

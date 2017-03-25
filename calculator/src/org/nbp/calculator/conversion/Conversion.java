@@ -263,11 +263,12 @@ public class Conversion {
   public final LengthUnits LENGTH = new LengthUnits();
   public final AreaUnits AREA = new AreaUnits();
   public final VolumeUnits VOLUME = new VolumeUnits();
-  public final PressureUnits PRESSURE = new PressureUnits();
   public final MassUnits MASS = new MassUnits();
+  public final TimeUnits TIME = new TimeUnits();
+  public final SpeedUnits SPEED = new SpeedUnits();
   public final ForceUnits FORCE = new ForceUnits();
+  public final PressureUnits PRESSURE = new PressureUnits();
   public final PowerUnits POWER = new PowerUnits();
   public final EnergyUnits ENERGY = new EnergyUnits();
   public final AngleUnits ANGLE = new AngleUnits();
-  public final TimeUnits TIME = new TimeUnits();
 }
