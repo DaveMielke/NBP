@@ -264,6 +264,7 @@ public class Conversion {
   public final AreaUnits AREA = new AreaUnits();
   public final VolumeUnits VOLUME = new VolumeUnits();
   public final PressureUnits PRESSURE = new PressureUnits();
+  public final ForceUnits FORCE = new ForceUnits();
   public final AngleUnits ANGLE = new AngleUnits();
   public final TimeUnits TIME = new TimeUnits();
 }
