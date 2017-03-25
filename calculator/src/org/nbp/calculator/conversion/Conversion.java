@@ -263,6 +263,7 @@ public class Conversion {
   public final LengthUnits LENGTH = new LengthUnits();
   public final AreaUnits AREA = new AreaUnits();
   public final VolumeUnits VOLUME = new VolumeUnits();
+  public final PressureUnits PRESSURE = new PressureUnits();
   public final AngleUnits ANGLE = new AngleUnits();
   public final TimeUnits TIME = new TimeUnits();
 }
