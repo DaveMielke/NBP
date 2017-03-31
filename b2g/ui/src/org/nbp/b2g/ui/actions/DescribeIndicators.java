@@ -1,8 +1,15 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.CommonParameters;
+
 import java.util.Map;
 import java.util.HashMap;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 import android.util.Log;
 
@@ -38,6 +45,48 @@ public class DescribeIndicators extends Action {
     if (sb.length() > 0) sb.append('\n');
     appendString(sb, label);
     sb.append(":");
+  }
+
+  private final static String getProperty (String name) {
+    File file = new File(name);
+
+    try {
+      InputStream stream = new FileInputStream(file);
+
+      try {
+        int size = stream.available();
+        byte[] buffer = new byte[size];
+        int count = stream.read(buffer);
+        String value = new String(buffer, 0, count, CommonParameters.INPUT_ENCODING_NAME);
+
+        {
+          int end = value.indexOf('\n');
+          if (end >= 0) value = value.substring(0, end);
+        }
+
+        return value;
+      } finally {
+        stream.close();
+      }
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, String.format("property read error: %s: %s", name, exception.getMessage()));
+    }
+
+    return null;
+  }
+
+  private final static int getIntegerProperty (String name, int defaultValue) {
+    String value = getProperty(name);
+
+    if (value != null) {
+      try {
+        return Integer.valueOf(value);
+      } catch (NumberFormatException exception) {
+        Log.w(LOG_TAG, String.format("not an integer property: %s: %s", name, value));
+      }
+    }
+
+    return defaultValue;
   }
 
   private static boolean isAirplaneModeOn () {
@@ -136,6 +185,16 @@ public class DescribeIndicators extends Action {
       batteryHealth.report(sb, battery.getInt(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN));
 
       if (ApplicationSettings.DEVELOPER_ENABLED) {
+        {
+          int current = getIntegerProperty("/sys/class/power_supply/battery-0/current_now", -1);
+
+          if (current >= 0) {
+            sb.append(' ');
+            sb.append((float)current / 1000f);
+            sb.append("mA");
+          }
+        }
+
         {
           int voltage = battery.getInt(BatteryManager.EXTRA_VOLTAGE, -1);
 
