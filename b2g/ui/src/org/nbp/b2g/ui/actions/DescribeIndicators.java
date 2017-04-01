@@ -118,12 +118,10 @@ public class DescribeIndicators extends Action {
       startLine(sb, R.string.DescribeIndicators_battery_label);
 
       {
-        int percentage = battery.getPercentFull();
+        Double percentage = battery.getPercentFull();
 
-        if (percentage >= 0) {
-          sb.append(' ');
-          sb.append(percentage);
-          sb.append('%');
+        if (percentage != null) {
+          sb.append(String.format(" %.0f%%", percentage));
         }
       }
 
@@ -139,9 +137,7 @@ public class DescribeIndicators extends Action {
           Double current = battery.getCurrent();
 
           if (current != null) {
-            sb.append(' ');
-            sb.append(String.format("%.3f", (current * 1000d)));
-            sb.append("mA");
+            sb.append(String.format(" %.0fmA", (current * 1000d)));
           }
         }
 
@@ -149,9 +145,7 @@ public class DescribeIndicators extends Action {
           Double voltage = battery.getVoltage();
 
           if (voltage != null) {
-            sb.append(' ');
-            sb.append(String.format("%.3f", voltage));
-            sb.append('V');
+            sb.append(String.format(" %.2fV", voltage));
           }
         }
 
@@ -159,10 +153,7 @@ public class DescribeIndicators extends Action {
           Double temperature = battery.getTemperature();
 
           if (temperature != null) {
-            sb.append(' ');
-            sb.append(String.format("%.1f", temperature));
-            sb.append('°');
-            sb.append('C');
+            sb.append(String.format(" %.1f°C", temperature));
           }
         }
       }

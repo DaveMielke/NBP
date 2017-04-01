@@ -112,12 +112,12 @@ public class HostMonitor extends BroadcastReceiver {
       if (first) {
         if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
           BatteryProperties battery = new BatteryProperties();
-          int percentage = battery.getPercentFull();
+          Double percentage = battery.getPercentFull();
 
-          if (percentage >= 0) {
+          if (percentage != null) {
             ApplicationUtilities.message(
               String.format(
-                "%s %d%%",
+                "%s %.0f%%",
                 context.getString(R.string.message_battery_percentage),
                 percentage
               )

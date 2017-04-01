@@ -111,7 +111,7 @@ When this mode is enabled:
 * Additional key combinations are enabled (see `Developer Operations`_).
 
 * The battery indicators line (see `Checking Status Indicators`_) includes the
-  battery's voltage and temperature.
+  battery's current, voltage, and temperature.
 
 * If a component of the |user interface| crashes, an email containing the Java
   backtrace of that crash is sent to the |product name| developers for
