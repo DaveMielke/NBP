@@ -12,38 +12,16 @@ import android.content.IntentFilter;
 
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.os.BatteryManager;
 
 public class HostMonitor extends BroadcastReceiver {
   private final static String LOG_TAG = HostMonitor.class.getName();
 
-  public static boolean haveBattery (Bundle battery) {
-    return battery.getBoolean(BatteryManager.EXTRA_PRESENT, true);
-  }
-
-  public static int getBatteryPercentage (Bundle battery) {
-    if (haveBattery(battery)) {
-      int scale = battery.getInt(BatteryManager.EXTRA_SCALE, 0);
-
-      if (scale > 0) {
-        int level = battery.getInt(BatteryManager.EXTRA_LEVEL, 0);
-        return (level * 100) / scale;
-      }
-    }
-
-    return -1;
-  }
-
   private final static Map<String, Bundle> intentExtras = new HashMap<String, Bundle>();
 
-  private static Bundle getIntentExtras (String action) {
+  public final static Bundle getIntentExtras (String action) {
     synchronized (intentExtras) {
       return intentExtras.get(action);
     }
-  }
-
-  public static Bundle getBatteryStatus () {
-    return getIntentExtras(Intent.ACTION_BATTERY_CHANGED);
   }
 
   private final static String sdcardPath;
@@ -128,10 +106,13 @@ public class HostMonitor extends BroadcastReceiver {
 
     synchronized (intentExtras) {
       Bundle extras = intent.getExtras();
+      boolean first = intentExtras.get(action) == null;
+      intentExtras.put(action, extras);
 
-      if (intentExtras.get(action) == null) {
+      if (first) {
         if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
-          int percentage = getBatteryPercentage(extras);
+          BatteryProperties battery = new BatteryProperties();
+          int percentage = battery.getPercentFull();
 
           if (percentage >= 0) {
             ApplicationUtilities.message(
@@ -144,8 +125,6 @@ public class HostMonitor extends BroadcastReceiver {
           }
         }
       }
-
-      intentExtras.put(action, extras);
     }
   }
 

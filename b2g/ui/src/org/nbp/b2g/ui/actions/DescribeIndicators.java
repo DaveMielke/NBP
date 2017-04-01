@@ -1,15 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.CommonParameters;
-
 import java.util.Map;
 import java.util.HashMap;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
-import java.io.FileInputStream;
 
 import android.util.Log;
 
@@ -45,48 +38,6 @@ public class DescribeIndicators extends Action {
     if (sb.length() > 0) sb.append('\n');
     appendString(sb, label);
     sb.append(":");
-  }
-
-  private final static String getProperty (String name) {
-    File file = new File(name);
-
-    try {
-      InputStream stream = new FileInputStream(file);
-
-      try {
-        int size = stream.available();
-        byte[] buffer = new byte[size];
-        int count = stream.read(buffer);
-        String value = new String(buffer, 0, count, CommonParameters.INPUT_ENCODING_NAME);
-
-        {
-          int end = value.indexOf('\n');
-          if (end >= 0) value = value.substring(0, end);
-        }
-
-        return value;
-      } finally {
-        stream.close();
-      }
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, String.format("property read error: %s: %s", name, exception.getMessage()));
-    }
-
-    return null;
-  }
-
-  private final static int getIntegerProperty (String name, int defaultValue) {
-    String value = getProperty(name);
-
-    if (value != null) {
-      try {
-        return Integer.valueOf(value);
-      } catch (NumberFormatException exception) {
-        Log.w(LOG_TAG, String.format("not an integer property: %s: %s", name, value));
-      }
-    }
-
-    return defaultValue;
   }
 
   private static boolean isAirplaneModeOn () {
@@ -161,62 +112,55 @@ public class DescribeIndicators extends Action {
   };
 
   private void reportBatteryIndicators (StringBuilder sb) {
-    Bundle battery = HostMonitor.getBatteryStatus();
+    BatteryProperties battery = new BatteryProperties();
 
-    if (battery != null) {
+    if (battery.haveBattery()) {
       startLine(sb, R.string.DescribeIndicators_battery_label);
 
       {
-        if (HostMonitor.haveBattery(battery)) {
-          int percentage = HostMonitor.getBatteryPercentage(battery);
-          if (percentage >= 0) {
-            sb.append(' ');
-            sb.append(percentage);
-            sb.append('%');
-          }
-        } else {
+        int percentage = battery.getPercentFull();
+
+        if (percentage >= 0) {
           sb.append(' ');
-          appendString(sb, R.string.DescribeIndicators_battery_present_no);
+          sb.append(percentage);
+          sb.append('%');
         }
       }
 
-      batteryStatus.report(sb, battery.getInt(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN));
-      batteryPlugged.report(sb, battery.getInt(BatteryManager.EXTRA_PLUGGED, -1));
-      batteryHealth.report(sb, battery.getInt(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN));
+      {
+        Bundle extras = battery.getExtras();
+        batteryStatus.report(sb, extras.getInt(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN));
+        batteryPlugged.report(sb, extras.getInt(BatteryManager.EXTRA_PLUGGED, -1));
+        batteryHealth.report(sb, extras.getInt(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN));
+      }
 
       if (ApplicationSettings.DEVELOPER_ENABLED) {
         {
-          int current = getIntegerProperty("/sys/class/power_supply/battery-0/current_now", -1);
+          Double current = battery.getCurrent();
 
-          if (current >= 0) {
+          if (current != null) {
             sb.append(' ');
-            sb.append((float)current / 1000f);
+            sb.append(String.format("%.3f", (current * 1000d)));
             sb.append("mA");
           }
         }
 
         {
-          int voltage = battery.getInt(BatteryManager.EXTRA_VOLTAGE, -1);
+          Double voltage = battery.getVoltage();
 
-          if (voltage >= 0) {
+          if (voltage != null) {
             sb.append(' ');
-
-            if (voltage < 100) {
-              sb.append(voltage);
-            } else {
-              sb.append((float)voltage / 1000f);
-            }
-
+            sb.append(String.format("%.3f", voltage));
             sb.append('V');
           }
         }
 
         {
-          int temperature = battery.getInt(BatteryManager.EXTRA_TEMPERATURE, -1);
+          Double temperature = battery.getTemperature();
 
-          if (temperature >= 0) {
+          if (temperature != null) {
             sb.append(' ');
-            sb.append((float)temperature / 10f);
+            sb.append(String.format("%.1f", temperature));
             sb.append('°');
             sb.append('C');
           }
