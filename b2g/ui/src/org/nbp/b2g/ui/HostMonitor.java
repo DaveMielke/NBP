@@ -111,6 +111,8 @@ public class HostMonitor extends BroadcastReceiver {
 
       if (first) {
         if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
+          BatteryReport.start();
+
           BatteryProperties battery = new BatteryProperties();
           Double percentage = battery.getPercentFull();
 
