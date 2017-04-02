@@ -42,6 +42,7 @@ public class UnicodeEndpoint extends PromptEndpoint {
     char character = text.charAt(0);
     if (Character.digit(character, RADIX) < 0) return false;
 
+    if (hasSelection()) return true;
     return (getResponseLength() + length) <= 4;
   }
 
