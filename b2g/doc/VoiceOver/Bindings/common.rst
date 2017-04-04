@@ -3,7 +3,8 @@ Common
 
 These bindings are common to all of the braille displays that |voice over| supports.
 They work in both Navigation and Input mode.
-The source for these lists is `Common Braille Commands for VoiceOver`_.
+The source for these lists is the Apple support page
+`Common Braille Commands for VoiceOver`_.
 
 Navigation
 ~~~~~~~~~~
@@ -98,7 +99,7 @@ Control
   "pause/continue speech", "Dots1234 + Space"
   "toggle speech on/off", "Dots134 + Space"
   "App Switcher", "Dots16 + Space"
-  "Help", "Dots13 + Space"
+  "start VoiceOver help", "Dots13 + Space"
   "change item label", "Dots12346 + Space"
   "toggle Quick Nav", "Dots12345 + Space"
   "play/pause music", "Dots156 + Space"
