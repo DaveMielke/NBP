@@ -3,3 +3,4 @@
 .. |apple device| replace:: iPhone
 .. |os name| replace:: iOS
 .. |os release| replace:: 10.3
+.. |voice over| replace:: VoiceOver
