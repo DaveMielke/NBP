@@ -11,3 +11,4 @@ Using the |product name| with |voice over|
 .. contents::
 
 .. include:: Setup/main.rst
+.. include:: Bindings/main.rst

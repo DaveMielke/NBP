@@ -4,3 +4,6 @@
 .. |os name| replace:: iOS
 .. |os release| replace:: 10.3
 .. |voice over| replace:: VoiceOver
+
+.. _Common Braille Commands for VoiceOver: https://support.apple.com/kb/HT202132
+
