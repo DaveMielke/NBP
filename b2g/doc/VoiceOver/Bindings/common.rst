@@ -10,7 +10,7 @@ Navigation
 ~~~~~~~~~~
 
 .. csv-table:: Common Navigation Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "move to previous item", "Dot1 + Space"
   "move to next item", "Dot4 + Space"
@@ -26,7 +26,7 @@ Scrolling
 ~~~~~~~~~
 
 .. csv-table:: Common Scrolling Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "scroll left one page", "Dots246 + Space"
   "scroll right one page", "Dots135 + Space"
@@ -38,7 +38,7 @@ Rotor
 ~~~~~
 
 .. csv-table:: Common Rotor Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "move to previous item using rotor setting", "Dot3 + Space"
   "move to next item using rotor setting", "Dot6 + Space"
@@ -49,12 +49,12 @@ Interaction
 ~~~~~~~~~~~
 
 .. csv-table:: Common Interaction Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "perform simple tap", "Dots36 + Space"
   "activate the Home button", "Dots125 + Space"
   "activate the Volume Up button", "Dots345 + Space"
-  "ctivate the Volume Down button", "Dots126 + Space"
+  "activate the Volume Down button", "Dots126 + Space"
   "activate the Eject key", "Dots146 + Space"
   "3D touch on selected item", "Dots356 + Space"
 
@@ -62,7 +62,7 @@ Reading
 ~~~~~~~
 
 .. csv-table:: Common Reading Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "read page starting at selected item", "Dots1235 + space"
   "read page starting at the top", "Dots2456 + Space"
@@ -71,7 +71,7 @@ Editing
 ~~~~~~~
 
 .. csv-table:: Common Editing Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "Select All", "Dots2356 + Space"
   "Select Left", "Dots235 + Space"
@@ -93,7 +93,7 @@ Control
 ~~~~~~~
 
 .. csv-table:: Common Control Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "toggle screen curtain on/off", "Dots123456 + Space"
   "pause/continue speech", "Dots1234 + Space"
@@ -108,7 +108,7 @@ Braille
 ~~~~~~~
 
 .. csv-table:: Common Braille Bindings
-  :header: "Actiion", "Binding"
+  :header: "Action", "Binding"
 
   "pan braille to the left", "Dot2 + Space"
   "pan braille to the right", "Dot5 + Space"
@@ -121,8 +121,8 @@ Braille
 8-Dot
 ~~~~~
 
-.. csv-table:: Common 8-dot Bindings
-  :header: "Actiion", "Binding"
+.. csv-table:: Common 8-Dot Bindings
+  :header: "Action", "Binding"
 
   "move to previous container", "Dots17 + Space"
   "move to next container", "Dots47 + Space"

@@ -1,10 +1,10 @@
 Model-specific
-~~~~~~~~~~~~~~
+--------------
 
 The source for these lists is the Apple support page
 `Use a Baum VarioUltra Display with VoiceOver`_.
 
-.. csv-table:: Navigation Bindings
+.. csv-table:: Model-specific Navigation Bindings
   :header: "Action", "Binding"
 
   "move to previous item", "Left or Dot1"
@@ -19,7 +19,7 @@ The source for these lists is the Apple support page
 Scrolling
 ~~~~~~~~~
 
-.. csv-table:: Scrolling Bindings
+.. csv-table:: Model-specific Scrolling Bindings
   :header: "Action", "Binding"
 
   "scroll left one page", "Dots246"
@@ -30,7 +30,7 @@ Scrolling
 Rotor
 ~~~~~
 
-.. csv-table:: Rotor Bindings
+.. csv-table:: Model-specific Rotor Bindings
   :header: "Action", "Binding"
 
   "move to previous item using rotor setting", "Up or Dot3"
@@ -41,7 +41,7 @@ Rotor
 Interaction
 ~~~~~~~~~~~
 
-.. csv-table:: Interaction Bindings
+.. csv-table:: Model-specific Interaction Bindings
   :header: "Action", "Binding"
 
   "double-tap item", "cursor routing key"
@@ -56,7 +56,7 @@ Interaction
 Reading
 ~~~~~~~
 
-.. csv-table:: Reading Bindings
+.. csv-table:: Model-specific Reading Bindings
   :header: "Action", "Binding"
 
   "read page starting at selected item", "Dots1235"
@@ -66,7 +66,7 @@ Reading
 Editing
 ~~~~~~~
 
-.. csv-table:: Editing Bindings
+.. csv-table:: Model-specific Editing Bindings
   :header: "Action", "Binding"
 
   "Select All", "Dots2356"
@@ -84,7 +84,7 @@ Editing
 Control
 ~~~~~~~
 
-.. csv-table:: Control Bindings
+.. csv-table:: Model-specific Control Bindings
   :header: "Action", "Binding"
 
   "toggle screen curtain on/off", "Dots123456"
@@ -95,7 +95,7 @@ Control
 Braille
 ~~~~~~~
 
-.. csv-table:: Braille Bindings
+.. csv-table:: Model-specific Braille Bindings
   :header: "Action", "Binding"
 
   "toggle expanded status description", "status routing key"

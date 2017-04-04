@@ -1,5 +1,6 @@
 Key Bindings
 ============
 
-.. include:: common.rst
+.. include:: basic.rst
 .. include:: model.rst
+.. include:: common.rst
