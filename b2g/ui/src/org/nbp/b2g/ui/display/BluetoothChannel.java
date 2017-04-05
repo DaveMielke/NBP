@@ -194,9 +194,9 @@ public class BluetoothChannel extends Channel {
 
             closeSessionSocket(session);
             session = null;
-          }
 
-          continue;
+            continue;
+          }
         }
       } else {
         Log.w(LOG_TAG, "no default adapter");

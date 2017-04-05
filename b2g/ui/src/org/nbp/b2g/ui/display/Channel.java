@@ -65,6 +65,7 @@ public abstract class Channel extends Component implements Runnable {
       }
 
       channelThread = null;
+      Log.d(LOG_TAG, "channel stopped");
       return true;
     }
   }
