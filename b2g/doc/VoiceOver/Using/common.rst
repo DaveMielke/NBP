@@ -87,7 +87,7 @@ Editing
   "redo typing", "Dots2346 + Space"
   "text search", "Dots124 + Space"
   "output text style", "Dots23456 + Space"
-  "start dictation when in text field", "Dots156 + Space"
+  "start dictation (when in text field)", "Dots156 + Space"
 
 Control
 ~~~~~~~
