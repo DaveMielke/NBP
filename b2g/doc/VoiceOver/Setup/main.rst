@@ -134,8 +134,8 @@ To pair your |product name| with your |apple device|:
 
 Just below this line,
 you'll find a list of the braille displays that |voice over| can see.
-For each of them, it'll tell you if it's
-``not paired``, ``paired``, ``selected``, or ``connected``.
+For each of them, it'll tell you if it's been ``selected``, as well as
+if it's currently ``not paired``, ``not connected``, or ``connected``.
 
 Find the line for your |product name|, and tap it.
 |voice over| will tell you that it's pairing with your |product name|,
