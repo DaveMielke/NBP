@@ -1,8 +1,8 @@
-Common
-------
+Common Bindings
+---------------
 
 These bindings are common to all of the braille displays that |voice over| supports.
-They work in both Navigation and Input mode.
+They work in both Navigation and Keyboard mode.
 The source for these lists is the Apple support page
 `Common Braille Commands for VoiceOver`_.
 

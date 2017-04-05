@@ -1,8 +1,16 @@
-Model-specific
---------------
+Model-specific Bindings
+-----------------------
 
+Since the |product name| emulates a Baum Conny
+when used as a remote braille display,
+|voice over| implements the same model-specific bindings for it
+as it does for Baum's Vario Ultra model.
+These bindings work in Navigation mode.
 The source for these lists is the Apple support page
 `Use a Baum VarioUltra Display with VoiceOver`_.
+
+Navigation
+~~~~~~~~~~
 
 .. csv-table:: Model-specific Navigation Bindings
   :header: "Action", "Binding"
