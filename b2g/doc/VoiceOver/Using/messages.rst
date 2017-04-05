@@ -14,4 +14,6 @@ Bluetooth off
 Bluetooth waiting
   This means that the remote braille display is waiting
   for a host to connect to it.
+  This may mean that your |apple device| has gone to sleep as
+  |voice over| drops its connection to the braille display when that happens.
 
