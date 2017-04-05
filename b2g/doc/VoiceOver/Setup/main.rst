@@ -84,9 +84,9 @@ As always, you can always change this to a more secure setting later.
 Now you'll need to make sure that your |product name| actually is visible.
 To do this:
 
-1) Navigate up to ``More Options`` and press Center.
+3) Navigate up to ``More Options`` and press Center.
 
-2) Navigate to ``Visibility Timeout`` and press Center.
+4) Navigate to ``Visibility Timeout`` and press Center.
 
 This screen contains a set of radio buttons.
 Each of them (except for the last one)
