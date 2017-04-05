@@ -2,7 +2,7 @@ Common Bindings
 ---------------
 
 These bindings are common to all of the braille displays that |voice over| supports.
-They work in both Navigation and Keyboard mode.
+They work in both `Navigation`_ and `Keyboard`_ mode.
 The source for these lists is the Apple support page
 `Common Braille Commands for VoiceOver`_.
 
@@ -10,7 +10,7 @@ Navigation
 ~~~~~~~~~~
 
 .. csv-table:: Common Navigation Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "move to previous item", "Dot1 + Space"
   "move to next item", "Dot4 + Space"
@@ -26,7 +26,7 @@ Scrolling
 ~~~~~~~~~
 
 .. csv-table:: Common Scrolling Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "scroll left one page", "Dots246 + Space"
   "scroll right one page", "Dots135 + Space"
@@ -38,7 +38,7 @@ Rotor
 ~~~~~
 
 .. csv-table:: Common Rotor Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "move to previous item using rotor setting", "Dot3 + Space"
   "move to next item using rotor setting", "Dot6 + Space"
@@ -49,7 +49,7 @@ Interaction
 ~~~~~~~~~~~
 
 .. csv-table:: Common Interaction Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "perform simple tap", "Dots36 + Space"
   "activate the Home button", "Dots125 + Space"
@@ -62,7 +62,7 @@ Reading
 ~~~~~~~
 
 .. csv-table:: Common Reading Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "read page starting at selected item", "Dots1235 + space"
   "read page starting at the top", "Dots2456 + Space"
@@ -71,7 +71,7 @@ Editing
 ~~~~~~~
 
 .. csv-table:: Common Editing Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "Select All", "Dots2356 + Space"
   "Select Left", "Dots235 + Space"
@@ -93,7 +93,7 @@ Control
 ~~~~~~~
 
 .. csv-table:: Common Control Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "toggle screen curtain on/off", "Dots123456 + Space"
   "pause/continue speech", "Dots1234 + Space"
@@ -108,7 +108,7 @@ Braille
 ~~~~~~~
 
 .. csv-table:: Common Braille Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "pan braille to the left", "Dot2 + Space"
   "pan braille to the right", "Dot5 + Space"
@@ -122,7 +122,7 @@ Braille
 ~~~~~
 
 .. csv-table:: Common 8-Dot Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "move to previous container", "Dots17 + Space"
   "move to next container", "Dots47 + Space"
@@ -139,7 +139,7 @@ iPad-only
 ~~~~~~~~~
 
 .. csv-table:: Common iPad-only Bindings
-  :header: "Action", "Binding"
+  :header: "|voice over| Action", "|product name| Binding"
 
   "move to left split view app", "Dots35 + Space"
   "move to right split view app", "Dots26 + Space"

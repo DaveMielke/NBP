@@ -32,13 +32,19 @@ Forward + Space
 Backward + Space
   Switch to Navigation Mode.
 
+.. _Navigation:
+
 Navigation Mode is for reading the screen
 without accidentally typing anything.
-It supports both the `common bindings`_ and the `model-specific bindings`_.
-This is the mode that the remote braille display starts in.
+Since the eight dot keys aren't used for input,
+they're used to perform a rich set of screen navigation actions.
+This mode supports both the `common bindings`_ and the `device-specific bindings`_.
+It's the mode that the remote braille display starts in.
 
-Keyboard Mode enables you to type
-but provides somewhat less navigation capability.
+.. _Keyboard:
+
+Keyboard Mode enables you to type, and, therefore,
+provides somewhat less navigation capability.
 Any combination of the eight dot keys, as well as Space by itself,
 type input in the expected way.
 This mode only supports the `common bindings`_.
@@ -53,7 +59,7 @@ These bindings work in both Navigation and Keyboard mode, except that,
 when in Keyboard mode, the dot keys must be combined with Space.
 
 .. csv-table:: Single-key Bindings
-  :header: "Key", "Action"
+  :header: "|product name| Key", "|voice over| Action"
 
   "Backward", "pan to the left"
   "Forward", "pan to the right"
