@@ -111,13 +111,17 @@ public class Translation {
 
         for (Object span : spans) {
           int start = getOutputOffset(spanned.getSpanStart(span));
-          if (start == length) continue;
-
           int end = getOutputOffset(spanned.getSpanEnd(span));
+          int flags = spanned.getSpanFlags(span);
+
+          if (start == length) continue;
           if (end == start) continue;
 
-          int flags = spanned.getSpanFlags(span);
-          sb.setSpan(span, start, end, flags);
+          try {
+            sb.setSpan(span, start, end, flags);
+          } catch (RuntimeException exception) {
+            Log.w(LOG_TAG, ("set span failed: " + exception.getMessage()));
+          }
         }
       }
     }
