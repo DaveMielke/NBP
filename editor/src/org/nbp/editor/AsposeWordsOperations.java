@@ -94,10 +94,10 @@ public class AsposeWordsOperations extends ContentOperations {
 
       if (font.getBold()) {
         addSpan(content, start,
-                font.getItalic()? HighlightSpans.BOLD_ITALIC: HighlightSpans.BOLD);
-      }
-
-      if (font.getItalic()) {
+                font.getItalic()?
+                  HighlightSpans.BOLD_ITALIC:
+                  HighlightSpans.BOLD);
+      } else if (font.getItalic()) {
         addSpan(content, start, HighlightSpans.ITALIC);
       }
 
@@ -139,6 +139,14 @@ public class AsposeWordsOperations extends ContentOperations {
       } else {
         logUnhandledChildNode(paragraph, child);
       }
+    }
+
+    if (paragraph.isInsertRevision()) {
+      addInsertSpan(content, start);
+    }
+
+    if (paragraph.isDeleteRevision()) {
+      addDeleteSpan(content, start);
     }
 
     {
