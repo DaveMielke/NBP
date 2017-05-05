@@ -22,13 +22,21 @@ public abstract class RevisionSpan extends EditorSpan {
     revisionStyle = style;
 
     SpannableStringBuilder sb = new SpannableStringBuilder();
-    sb.append(decorationPrefix);
+    if (decorationPrefix != null) sb.append(decorationPrefix);
     int start = sb.length();
     sb.append(actualText);
     int end = sb.length();
-    sb.append(decorationSuffix);
-    sb.setSpan(revisionStyle, start, end, sb.SPAN_INCLUSIVE_EXCLUSIVE);
+    if (decorationSuffix != null) sb.append(decorationSuffix);
+    if (revisionStyle != null) sb.setSpan(revisionStyle, start, end, sb.SPAN_INCLUSIVE_EXCLUSIVE);
     decoratedText = sb.subSequence(0, sb.length());
+  }
+
+  protected RevisionSpan (CharSequence text, String prefix, String suffix) {
+    this(text, prefix, suffix, null);
+  }
+
+  protected RevisionSpan (CharSequence text, CharacterStyle style) {
+    this(text, null, null, style);
   }
 
   public final CharSequence getActualText () {

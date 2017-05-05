@@ -7,7 +7,7 @@ public class DeleteSpan extends RevisionSpan {
   private final static String decorationSuffix = "⢎⣹";
 
   public DeleteSpan (CharSequence text) {
-    super(text, decorationPrefix, decorationSuffix, new StrikethroughSpan());
+    super(text, decorationPrefix, decorationSuffix);
   }
 
   @Override
