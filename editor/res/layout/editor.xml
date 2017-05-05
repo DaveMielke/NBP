@@ -30,7 +30,7 @@
      />
   </LinearLayout>
 
-  <EditText
+  <org.nbp.editor.EditArea
     android:id="@+id/edit_area"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"

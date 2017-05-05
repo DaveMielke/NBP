@@ -2,33 +2,52 @@ package org.nbp.editor;
 
 import java.util.Date;
 
+import android.text.SpannableStringBuilder;
 import android.text.Spannable;
 import android.text.style.CharacterStyle;
 
 public abstract class RevisionSpan extends EditorSpan {
-  private final CharSequence revisionText;
+  private final CharSequence actualText;
+  private final String decorationPrefix;
+  private final String decorationSuffix;
   private final CharacterStyle revisionStyle;
 
-  protected RevisionSpan (CharSequence text, CharacterStyle style) {
+  private final CharSequence decoratedText;
+
+  protected RevisionSpan (CharSequence text, String prefix, String suffix, CharacterStyle style) {
     super();
-    revisionText = text;
+    actualText = text;
+    decorationPrefix = prefix;
+    decorationSuffix = suffix;
     revisionStyle = style;
+
+    SpannableStringBuilder sb = new SpannableStringBuilder();
+    sb.append(decorationPrefix);
+    int start = sb.length();
+    sb.append(actualText);
+    int end = sb.length();
+    sb.append(decorationSuffix);
+    sb.setSpan(revisionStyle, start, end, sb.SPAN_INCLUSIVE_EXCLUSIVE);
+    decoratedText = sb.subSequence(0, sb.length());
   }
 
-  public final CharSequence getText () {
-    return revisionText;
+  public final CharSequence getActualText () {
+    return actualText;
+  }
+
+  public final CharSequence getDecoratedText () {
+    return decoratedText;
   }
 
   public final CharacterStyle getStyle () {
     return revisionStyle;
   }
 
-  public final void addStyle (Spannable spannable) {
-    spannable.setSpan(
-      getStyle(),
-      spannable.getSpanStart(this),
-      spannable.getSpanEnd(this),
-      spannable.getSpanFlags(this)
+  public final void decorateText (SpannableStringBuilder content) {
+    content.replace(
+      content.getSpanStart(this),
+      content.getSpanEnd(this),
+      decoratedText
     );
   }
 

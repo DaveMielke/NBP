@@ -217,6 +217,7 @@ public class AsposeWordsOperations extends ContentOperations {
       mapRevisions(document);
       addSection(content, document.getFirstSection());
     } catch (Exception exception) {
+      Log.w(LOG_TAG, ("input error: " + exception.getMessage()));
       throw new IOException("Aspose Words input error", exception);
     }
   }
@@ -290,6 +291,7 @@ public class AsposeWordsOperations extends ContentOperations {
       if (oldRevisionSpan != null) document.stopTrackRevisions();
       document.save(stream, saveFormat);
     } catch (Exception exception) {
+      Log.w(LOG_TAG, ("output error: " + exception.getMessage()));
       throw new IOException("Aspose Words output error", exception);
     }
   }

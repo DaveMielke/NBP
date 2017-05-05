@@ -62,7 +62,7 @@ public abstract class ContentOperations {
 
   private final boolean addRevisionSpan (SpannableStringBuilder content, int start, RevisionSpan span) {
     if (!addSpan(content, start, span)) return false;
-    span.addStyle(content);
+    span.decorateText(content);
     return true;
   }
 
