@@ -60,6 +60,31 @@ public class AsposeWordsOperations extends ContentOperations {
     this(saveFormat, LoadFormat.UNKNOWN);
   }
 
+  private final static Map<Node, Revision> nodeRevisionMap =
+               new HashMap<Node, Revision>();
+
+  private final void mapRevisions (Document document) {
+    RevisionCollection revisions = document.getRevisions();
+
+    if (revisions != null) {
+      for (Revision revision : revisions) {
+        Node node = revision.getParentNode();
+        if (node != null) nodeRevisionMap.put(node, revision);
+      }
+    }
+  }
+
+  private final void finishRevisionSpan (RevisionSpan span, Node node) {
+    if (span != null) {
+      Revision revision = nodeRevisionMap.get(node);
+
+      if (revision != null) {
+        span.setAuthor(revision.getAuthor());
+        span.setTimestamp(revision.getDateTime());
+      }
+    }
+  }
+
   private final static Map<String, String> listLabelMap =
                new HashMap<String, String>();
 
@@ -82,11 +107,11 @@ public class AsposeWordsOperations extends ContentOperations {
     content.append(run.getText());
 
     if (run.isInsertRevision()) {
-      addInsertSpan(content, start);
+      finishRevisionSpan(addInsertSpan(content, start), run);
     }
 
     if (run.isDeleteRevision()) {
-      addDeleteSpan(content, start);
+      finishRevisionSpan(addDeleteSpan(content, start), run);
     }
 
     {
@@ -141,14 +166,6 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
-    if (paragraph.isInsertRevision()) {
-      addInsertSpan(content, start);
-    }
-
-    if (paragraph.isDeleteRevision()) {
-      addDeleteSpan(content, start);
-    }
-
     {
       int length = content.length();
 
@@ -157,6 +174,14 @@ public class AsposeWordsOperations extends ContentOperations {
           content.append('\n');
         }
       }
+    }
+
+    if (paragraph.isInsertRevision()) {
+      finishRevisionSpan(addInsertSpan(content, start), paragraph);
+    }
+
+    if (paragraph.isDeleteRevision()) {
+      finishRevisionSpan(addDeleteSpan(content, start), paragraph);
     }
 
     addSpan(content, start, new ParagraphSpan());
@@ -188,6 +213,8 @@ public class AsposeWordsOperations extends ContentOperations {
 
       Document document = new Document(stream, options);
       document.updateListLabels();
+
+      mapRevisions(document);
       addSection(content, document.getFirstSection());
     } catch (Exception exception) {
       throw new IOException("Aspose Words input error", exception);
@@ -201,36 +228,58 @@ public class AsposeWordsOperations extends ContentOperations {
 
     try {
       DocumentBuilder builder = new DocumentBuilder();
+      Document document = builder.getDocument();
 
       Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
       int length = text.length();
       int start = 0;
+      RevisionSpan oldRevisionSpan = null;
 
       while (start < length) {
+        RevisionSpan newRevisionSpan = null;
+
         Font font = builder.getFont();
         font.clearFormatting();
 
         int end = text.nextSpanTransition(start, length, CharacterStyle.class);
-        CharacterStyle[] spans = text.getSpans(start, end, CharacterStyle.class);
+        Object[] spans = text.getSpans(start, end, Object.class);
 
         if (spans != null) {
-          for (CharacterStyle span : spans) {
-            if (HighlightSpans.BOLD_ITALIC.isFor(span)) {
-              font.setBold(true);
-              font.setItalic(true);
-            } else if (HighlightSpans.BOLD.isFor(span)) {
-              font.setBold(true);
-            } else if (HighlightSpans.ITALIC.isFor(span)) {
-              font.setItalic(true);
-            } else if (HighlightSpans.STRIKE.isFor(span)) {
-              font.setStrikeThrough(true);
-            } else if (HighlightSpans.SUBSCRIPT.isFor(span)) {
-              font.setSubscript(true);
-            } else if (HighlightSpans.SUPERSCRIPT.isFor(span)) {
-              font.setSuperscript(true);
-            } else if (HighlightSpans.UNDERLINE.isFor(span)) {
-              font.setUnderline(Underline.DASH);
+          for (Object span : spans) {
+            if (span instanceof CharacterStyle) {
+              CharacterStyle characterStyle = (CharacterStyle)span;
+
+              if (HighlightSpans.BOLD_ITALIC.isFor(characterStyle)) {
+                font.setBold(true);
+                font.setItalic(true);
+              } else if (HighlightSpans.BOLD.isFor(characterStyle)) {
+                font.setBold(true);
+              } else if (HighlightSpans.ITALIC.isFor(characterStyle)) {
+                font.setItalic(true);
+              } else if (HighlightSpans.STRIKE.isFor(characterStyle)) {
+                font.setStrikeThrough(true);
+              } else if (HighlightSpans.SUBSCRIPT.isFor(characterStyle)) {
+                font.setSubscript(true);
+              } else if (HighlightSpans.SUPERSCRIPT.isFor(characterStyle)) {
+                font.setSuperscript(true);
+              } else if (HighlightSpans.UNDERLINE.isFor(characterStyle)) {
+                font.setUnderline(Underline.DASH);
+              }
+            } else if (span instanceof RevisionSpan) {
+              newRevisionSpan = (RevisionSpan)span;
             }
+          }
+        }
+
+        if (newRevisionSpan != oldRevisionSpan) {
+          if (oldRevisionSpan != null) document.stopTrackRevisions();
+          oldRevisionSpan = newRevisionSpan;
+
+          if (newRevisionSpan != null) {
+            document.startTrackRevisions(
+              newRevisionSpan.getAuthor(),
+              newRevisionSpan.getTimestamp()
+            );
           }
         }
 
@@ -238,7 +287,8 @@ public class AsposeWordsOperations extends ContentOperations {
         start = end;
       }
 
-      builder.getDocument().save(stream, saveFormat);
+      if (oldRevisionSpan != null) document.stopTrackRevisions();
+      document.save(stream, saveFormat);
     } catch (Exception exception) {
       throw new IOException("Aspose Words output error", exception);
     }
