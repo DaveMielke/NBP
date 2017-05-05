@@ -7,27 +7,32 @@
   <string name="hint_new_file">[new file]</string>
   <string name="hint_edit_area">[empty file]</string>
 
-  <string name="menu_options_edit">Edit</string>
-  <string name="menu_options_new">New</string>
-  <string name="menu_options_open">Open</string>
-  <string name="menu_options_record">Record</string>
-  <string name="menu_options_save">Save</string>
-  <string name="menu_options_saveAs">Save As</string>
-  <string name="menu_options_send">Send</string>
-  <string name="menu_options_delete">Delete</string>
+  <string name="menu_options_file">File</string>
+  <string name="menu_file_new">New</string>
+  <string name="menu_file_open">Open</string>
+  <string name="menu_file_save">Save</string>
+  <string name="menu_file_saveAs">Save As</string>
+  <string name="menu_file_send">Send</string>
+  <string name="menu_file_delete">Delete</string>
 
-  <string name="menu_edit_paste">Paste</string>
-  <string name="menu_edit_selectAll">Select All</string>
-  <string name="menu_edit_copy">Copy</string>
-  <string name="menu_edit_cut">Cut</string>
-  <string name="menu_edit_uppercase">Uppercase</string>
-  <string name="menu_edit_lowercase">Lowercase</string>
-  <string name="menu_edit_bold">Bold</string>
-  <string name="menu_edit_italics">Italics</string>
-  <string name="menu_edit_strike">Strike</string>
-  <string name="menu_edit_subscript">Subscript</string>
-  <string name="menu_edit_superscript">Superscript</string>
-  <string name="menu_edit_underline">Underline</string>
+  <string name="menu_options_edit">Edit</string>
+  <string name="menu_edit_record">Record</string>
+
+  <string name="menu_options_selection">Selection</string>
+  <string name="menu_selection_paste">Paste</string>
+  <string name="menu_selection_selectAll">Select All</string>
+  <string name="menu_selection_copy">Copy</string>
+  <string name="menu_selection_cut">Cut</string>
+  <string name="menu_selection_uppercase">Uppercase</string>
+  <string name="menu_selection_lowercase">Lowercase</string>
+
+  <string name="menu_options_highlight">Highlight</string>
+  <string name="menu_highlight_bold">Bold</string>
+  <string name="menu_highlight_italics">Italics</string>
+  <string name="menu_highlight_strike">Strike</string>
+  <string name="menu_highlight_subscript">Subscript</string>
+  <string name="menu_highlight_superscript">Superscript</string>
+  <string name="menu_highlight_underline">Underline</string>
 
   <string name="message_file_saved">File Saved</string>
   <string name="message_reading_content">Reading...</string>

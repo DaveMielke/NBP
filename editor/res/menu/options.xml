@@ -2,109 +2,133 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
+    android:id="@+id/menu_options_file"
+    android:title="@string/menu_options_file"
+    >
+
+    <menu>
+      <item
+        android:id="@+id/menu_file_new"
+        android:title="@string/menu_file_new"
+       />
+
+      <item
+        android:id="@+id/menu_file_open"
+        android:title="@string/menu_file_open"
+       />
+
+      <item
+        android:id="@+id/menu_file_save"
+        android:title="@string/menu_file_save"
+       />
+
+      <item
+        android:id="@+id/menu_file_saveAs"
+        android:title="@string/menu_file_saveAs"
+       />
+
+      <item
+        android:id="@+id/menu_file_send"
+        android:title="@string/menu_file_send"
+       />
+
+      <item
+        android:id="@+id/menu_file_delete"
+        android:title="@string/menu_file_delete"
+       />
+    </menu>
+  </item>
+
+  <item
     android:id="@+id/menu_options_edit"
     android:title="@string/menu_options_edit"
     >
 
     <menu>
+      <item
+        android:id="@+id/menu_edit_record"
+        android:title="@string/menu_edit_record"
+       />
+    </menu>
+  </item>
+
+  <item
+    android:id="@+id/menu_options_selection"
+    android:title="@string/menu_options_selection"
+    >
+
+    <menu>
       <group android:id="@+id/menu_group_cursor">
         <item
-          android:id="@+id/menu_edit_paste"
-          android:title="@string/menu_edit_paste"
+          android:id="@+id/menu_selection_paste"
+          android:title="@string/menu_selection_paste"
          />
 
         <item
-          android:id="@+id/menu_edit_selectAll"
-          android:title="@string/menu_edit_selectAll"
+          android:id="@+id/menu_selection_selectAll"
+          android:title="@string/menu_selection_selectAll"
          />
       </group>
 
       <group android:id="@+id/menu_group_selection">
         <item
-          android:id="@+id/menu_edit_copy"
-          android:title="@string/menu_edit_copy"
+          android:id="@+id/menu_selection_copy"
+          android:title="@string/menu_selection_copy"
          />
 
         <item
-          android:id="@+id/menu_edit_cut"
-          android:title="@string/menu_edit_cut"
+          android:id="@+id/menu_selection_cut"
+          android:title="@string/menu_selection_cut"
          />
 
         <item
-          android:id="@+id/menu_edit_uppercase"
-          android:title="@string/menu_edit_uppercase"
+          android:id="@+id/menu_selection_uppercase"
+          android:title="@string/menu_selection_uppercase"
          />
 
         <item
-          android:id="@+id/menu_edit_lowercase"
-          android:title="@string/menu_edit_lowercase"
+          android:id="@+id/menu_selection_lowercase"
+          android:title="@string/menu_selection_lowercase"
          />
 
         <item
-          android:id="@+id/menu_edit_bold"
-          android:title="@string/menu_edit_bold"
-         />
+          android:id="@+id/menu_options_highlight"
+          android:title="@string/menu_options_highlight"
+          >
 
-        <item
-          android:id="@+id/menu_edit_italics"
-          android:title="@string/menu_edit_italics"
-         />
+          <menu>
+            <item
+              android:id="@+id/menu_highlight_bold"
+              android:title="@string/menu_highlight_bold"
+             />
 
-        <item
-          android:id="@+id/menu_edit_strike"
-          android:title="@string/menu_edit_strike"
-         />
+            <item
+              android:id="@+id/menu_highlight_italics"
+              android:title="@string/menu_highlight_italics"
+             />
 
-        <item
-          android:id="@+id/menu_edit_subscript"
-          android:title="@string/menu_edit_subscript"
-         />
+            <item
+              android:id="@+id/menu_highlight_strike"
+              android:title="@string/menu_highlight_strike"
+             />
 
-        <item
-          android:id="@+id/menu_edit_superscript"
-          android:title="@string/menu_edit_superscript"
-         />
+            <item
+              android:id="@+id/menu_highlight_subscript"
+              android:title="@string/menu_highlight_subscript"
+             />
 
-        <item
-          android:id="@+id/menu_edit_underline"
-          android:title="@string/menu_edit_underline"
-         />
+            <item
+              android:id="@+id/menu_highlight_superscript"
+              android:title="@string/menu_highlight_superscript"
+             />
+
+            <item
+              android:id="@+id/menu_highlight_underline"
+              android:title="@string/menu_highlight_underline"
+             />
+          </menu>
+        </item>
       </group>
     </menu>
   </item>
-
-  <item
-    android:id="@+id/menu_options_new"
-    android:title="@string/menu_options_new"
-   />
-
-  <item
-    android:id="@+id/menu_options_open"
-    android:title="@string/menu_options_open"
-   />
-
-  <item
-    android:id="@+id/menu_options_save"
-    android:title="@string/menu_options_save"
-   />
-
-  <item
-    android:id="@+id/menu_options_saveAs"
-    android:title="@string/menu_options_saveAs"
-   />
-
-  <item
-    android:id="@+id/menu_options_record"
-    android:title="@string/menu_options_record"
-   />
-
-  <item
-    android:id="@+id/menu_options_send"
-    android:title="@string/menu_options_send"
-   />
-
-  <item
-    android:id="@+id/menu_options_delete"
-    android:title="@string/menu_options_delete"
-   />
 </menu>

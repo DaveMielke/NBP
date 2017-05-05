@@ -364,8 +364,8 @@ public class EditorActivity extends CommonActivity {
     FileFinder.FileHandler handler
   ) {
     int title = forWriting?
-                R.string.menu_options_saveAs:
-                R.string.menu_options_open;
+                R.string.menu_file_saveAs:
+                R.string.menu_file_open;
 
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
@@ -525,20 +525,6 @@ public class EditorActivity extends CommonActivity {
     confirmFormat();
   }
 
-  private void menuAction_record () {
-    SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
-      @Override
-      public void handleText (ArrayList<String> text) {
-        for (String line : text) {
-          editArea.append(line);
-        }
-      }
-    };
-
-    new SpeechToText.Builder(this)
-                    .start(handler);
-  }
-
   private void menuAction_send () {
     if (contentHandle != null) {
       OutgoingMessage message = new OutgoingMessage();
@@ -554,7 +540,7 @@ public class EditorActivity extends CommonActivity {
   private void menuAction_delete () {
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
-      .setUserTitle(R.string.menu_options_delete)
+      .setUserTitle(R.string.menu_file_delete)
       ;
 
     addRootLocations(builder);
@@ -582,6 +568,20 @@ public class EditorActivity extends CommonActivity {
         }
       }
     );
+  }
+
+  private void menuAction_record () {
+    SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
+      @Override
+      public void handleText (ArrayList<String> text) {
+        for (String line : text) {
+          editArea.append(line);
+        }
+      }
+    };
+
+    new SpeechToText.Builder(this)
+                    .start(handler);
   }
 
   private void menuAction_paste () {
@@ -649,82 +649,91 @@ public class EditorActivity extends CommonActivity {
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.menu_options_new:
+      case R.id.menu_options_file:
+        return true;
+
+      case R.id.menu_file_new:
         menuAction_new();
         return true;
 
-      case R.id.menu_options_open:
+      case R.id.menu_file_open:
         menuAction_open();
         return true;
 
-      case R.id.menu_options_save:
+      case R.id.menu_file_save:
         menuAction_save();
         return true;
 
-      case R.id.menu_options_saveAs:
+      case R.id.menu_file_saveAs:
         menuAction_saveAs();
         return true;
 
-      case R.id.menu_options_record:
-        menuAction_record();
-        return true;
-
-      case R.id.menu_options_send:
+      case R.id.menu_file_send:
         menuAction_send();
         return true;
 
-      case R.id.menu_options_delete:
+      case R.id.menu_file_delete:
         menuAction_delete();
         return true;
 
       case R.id.menu_options_edit:
         return true;
 
-      case R.id.menu_edit_paste:
+      case R.id.menu_edit_record:
+        menuAction_record();
+        return true;
+
+      case R.id.menu_options_selection:
+        return true;
+
+      case R.id.menu_selection_paste:
         menuAction_paste();
         return true;
 
-      case R.id.menu_edit_selectAll:
+      case R.id.menu_selection_selectAll:
         editArea.selectAll();
         return true;
 
-      case R.id.menu_edit_copy:
+      case R.id.menu_selection_copy:
         menuAction_copy(false);
         return true;
 
-      case R.id.menu_edit_cut:
+      case R.id.menu_selection_cut:
         menuAction_copy(true);
         return true;
 
-      case R.id.menu_edit_uppercase:
+      case R.id.menu_selection_uppercase:
         menuAction_uppercase();
         return true;
 
-      case R.id.menu_edit_lowercase:
+      case R.id.menu_selection_lowercase:
         menuAction_lowercase();
         return true;
 
-      case R.id.menu_edit_bold:
+      case R.id.menu_options_highlight:
+        return true;
+
+      case R.id.menu_highlight_bold:
         menuAction_highlight(HighlightSpans.BOLD);
         return true;
 
-      case R.id.menu_edit_italics:
+      case R.id.menu_highlight_italics:
         menuAction_highlight(HighlightSpans.ITALIC);
         return true;
 
-      case R.id.menu_edit_strike:
+      case R.id.menu_highlight_strike:
         menuAction_highlight(HighlightSpans.STRIKE);
         return true;
 
-      case R.id.menu_edit_subscript:
+      case R.id.menu_highlight_subscript:
         menuAction_highlight(HighlightSpans.SUBSCRIPT);
         return true;
 
-      case R.id.menu_edit_superscript:
+      case R.id.menu_highlight_superscript:
         menuAction_highlight(HighlightSpans.SUPERSCRIPT);
         return true;
 
-      case R.id.menu_edit_underline:
+      case R.id.menu_highlight_underline:
         menuAction_highlight(HighlightSpans.UNDERLINE);
         return true;
 
@@ -737,7 +746,7 @@ public class EditorActivity extends CommonActivity {
   public boolean onPrepareOptionsMenu (Menu menu) {
     super.onPrepareOptionsMenu(menu);
 
-    Menu editSubmenu = menu.findItem(R.id.menu_options_edit).getSubMenu();
+    Menu selectionSubmenu = menu.findItem(R.id.menu_options_selection).getSubMenu();
     boolean showCursorGroup = false;
     boolean showSelectionGroup = false;
 
@@ -747,8 +756,8 @@ public class EditorActivity extends CommonActivity {
       showSelectionGroup = true;
     }
 
-    editSubmenu.setGroupVisible(R.id.menu_group_cursor, showCursorGroup);
-    editSubmenu.setGroupVisible(R.id.menu_group_selection, showSelectionGroup);
+    selectionSubmenu.setGroupVisible(R.id.menu_group_cursor, showCursorGroup);
+    selectionSubmenu.setGroupVisible(R.id.menu_group_selection, showSelectionGroup);
 
     return true;
   }
