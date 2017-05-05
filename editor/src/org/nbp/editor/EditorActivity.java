@@ -570,20 +570,6 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
-  private void menuAction_record () {
-    SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
-      @Override
-      public void handleText (ArrayList<String> text) {
-        for (String line : text) {
-          editArea.append(line);
-        }
-      }
-    };
-
-    new SpeechToText.Builder(this)
-                    .start(handler);
-  }
-
   private void menuAction_paste () {
     CharSequence text = getText(getClipboard());
 
@@ -596,6 +582,20 @@ public class EditorActivity extends CommonActivity {
         editArea.setSelection(start + text.length());
       }
     }
+  }
+
+  private void menuAction_record () {
+    SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
+      @Override
+      public void handleText (ArrayList<String> text) {
+        for (String line : text) {
+          editArea.append(line);
+        }
+      }
+    };
+
+    new SpeechToText.Builder(this)
+                    .start(handler);
   }
 
   private void menuAction_copy (boolean delete) {
@@ -679,15 +679,15 @@ public class EditorActivity extends CommonActivity {
       case R.id.menu_options_edit:
         return true;
 
+      case R.id.menu_edit_paste:
+        menuAction_paste();
+        return true;
+
       case R.id.menu_edit_record:
         menuAction_record();
         return true;
 
       case R.id.menu_options_selection:
-        return true;
-
-      case R.id.menu_selection_paste:
-        menuAction_paste();
         return true;
 
       case R.id.menu_selection_selectAll:

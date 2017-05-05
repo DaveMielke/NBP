@@ -46,6 +46,11 @@
 
     <menu>
       <item
+        android:id="@+id/menu_edit_paste"
+        android:title="@string/menu_edit_paste"
+       />
+
+      <item
         android:id="@+id/menu_edit_record"
         android:title="@string/menu_edit_record"
        />
@@ -59,11 +64,6 @@
 
     <menu>
       <group android:id="@+id/menu_group_cursor">
-        <item
-          android:id="@+id/menu_selection_paste"
-          android:title="@string/menu_selection_paste"
-         />
-
         <item
           android:id="@+id/menu_selection_selectAll"
           android:title="@string/menu_selection_selectAll"

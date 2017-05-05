@@ -16,10 +16,10 @@
   <string name="menu_file_delete">Delete</string>
 
   <string name="menu_options_edit">Edit</string>
+  <string name="menu_edit_paste">Paste</string>
   <string name="menu_edit_record">Record</string>
 
   <string name="menu_options_selection">Selection</string>
-  <string name="menu_selection_paste">Paste</string>
   <string name="menu_selection_selectAll">Select All</string>
   <string name="menu_selection_copy">Copy</string>
   <string name="menu_selection_cut">Cut</string>
