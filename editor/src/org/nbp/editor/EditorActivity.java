@@ -74,7 +74,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private EditText editArea = null;
+  private EditArea editArea = null;
   private TextView uriView = null;
   private ContentHandle contentHandle = null;
   private boolean hasChanged = false;
@@ -82,7 +82,7 @@ public class EditorActivity extends CommonActivity {
   private final void showActivityResultCode (int code) {
   }
 
-  private final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
+  public final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
     return new AlertDialogBuilder(this, subtitles)
               .setCancelable(false)
               ;
@@ -598,6 +598,20 @@ public class EditorActivity extends CommonActivity {
                     .start(handler);
   }
 
+  private void menuAction_selection (Menu menu) {
+    boolean showSelectionActions = false;
+    boolean showCursorActions = false;
+
+    if (editArea.hasSelection()) {
+      showSelectionActions = true;
+    } else {
+      showCursorActions = true;
+    }
+
+    menu.setGroupVisible(R.id.menu_group_selection, showSelectionActions);
+    menu.setGroupVisible(R.id.menu_group_cursor, showCursorActions);
+  }
+
   private void menuAction_copy (boolean delete) {
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
@@ -646,6 +660,16 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_showRevision () {
+    RevisionSpan span = editArea.getRevisionSpan();
+
+    if (span != null) {
+      span.show(this);
+    } else {
+      showMessage(R.string.message_no_revision);
+    }
+  }
+
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
@@ -688,6 +712,7 @@ public class EditorActivity extends CommonActivity {
         return true;
 
       case R.id.menu_options_selection:
+        menuAction_selection(item.getSubMenu());
         return true;
 
       case R.id.menu_selection_selectAll:
@@ -737,29 +762,16 @@ public class EditorActivity extends CommonActivity {
         menuAction_highlight(HighlightSpans.UNDERLINE);
         return true;
 
+      case R.id.menu_options_revisions:
+        return true;
+
+      case R.id.menu_revisions_showRevision:
+        menuAction_showRevision();
+        return true;
+
       default:
         return false;
     }
-  }
-
-  @Override
-  public boolean onPrepareOptionsMenu (Menu menu) {
-    super.onPrepareOptionsMenu(menu);
-
-    Menu selectionSubmenu = menu.findItem(R.id.menu_options_selection).getSubMenu();
-    boolean showCursorGroup = false;
-    boolean showSelectionGroup = false;
-
-    if (editArea.getSelectionStart() == editArea.getSelectionEnd()) {
-      showCursorGroup = true;
-    } else {
-      showSelectionGroup = true;
-    }
-
-    selectionSubmenu.setGroupVisible(R.id.menu_group_cursor, showCursorGroup);
-    selectionSubmenu.setGroupVisible(R.id.menu_group_selection, showSelectionGroup);
-
-    return true;
   }
 
   @Override
@@ -1021,7 +1033,7 @@ public class EditorActivity extends CommonActivity {
 
     setContentView(R.layout.editor);
     uriView = (TextView)findViewById(R.id.current_uri);
-    editArea = (EditText)findViewById(R.id.edit_area);
+    editArea = (EditArea)findViewById(R.id.edit_area);
     setEditorContent();
 
     showReportedErrors();

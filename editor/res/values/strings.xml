@@ -34,7 +34,16 @@
   <string name="menu_highlight_superscript">Superscript</string>
   <string name="menu_highlight_underline">Underline</string>
 
+  <string name="menu_options_revisions">Revisions</string>
+  <string name="menu_revisions_showRevision">Show Revision</string>
+
+  <string name="revision_label_author">Author</string>
+  <string name="revision_label_timestamp">Timestamp</string>
+  <string name="revision_action_delete">Delete</string>
+  <string name="revision_action_insert">Insert</string>
+
   <string name="message_file_saved">File Saved</string>
+  <string name="message_no_revision">No Revision</string>
   <string name="message_reading_content">Reading...</string>
   <string name="message_rename_failed">Rename Failed</string>
   <string name="message_save_no">Cannot Save File</string>

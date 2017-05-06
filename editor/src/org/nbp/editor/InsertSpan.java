@@ -14,4 +14,9 @@ public class InsertSpan extends RevisionSpan {
   public final String getSpanIdentifier () {
     return "ins";
   }
+
+  @Override
+  public final int getAction () {
+    return R.string.revision_action_insert;
+  }
 }

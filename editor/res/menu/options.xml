@@ -131,4 +131,17 @@
       </group>
     </menu>
   </item>
+
+  <item
+    android:id="@+id/menu_options_revisions"
+    android:title="@string/menu_options_revisions"
+    >
+
+    <menu>
+      <item
+        android:id="@+id/menu_revisions_showRevision"
+        android:title="@string/menu_revisions_showRevision"
+       />
+    </menu>
+  </item>
 </menu>

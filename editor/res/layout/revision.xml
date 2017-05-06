@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  >
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TableRow>
+      <TextView android:text="@string/revision_label_author" />
+      <TextView android:id="@+id/revision_author" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/revision_label_timestamp" />
+      <TextView android:id="@+id/revision_timestamp" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:id="@+id/revision_action" />
+      <TextView android:id="@+id/revision_text" />
+    </TableRow>
+  </TableLayout>
+</FrameLayout>
