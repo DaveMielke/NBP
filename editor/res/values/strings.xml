@@ -47,6 +47,10 @@
   <string name="revision_action_insert">Insert</string>
 
   <string name="message_file_saved">File Saved</string>
+  <string name="message_first_edit">First Edit</string>
+  <string name="message_first_revision">First Revision</string>
+  <string name="message_last_edit">Last Edit</string>
+  <string name="message_last_revision">Last Revision</string>
   <string name="message_original_text">Original Text</string>
   <string name="message_reading_content">Reading...</string>
   <string name="message_rename_failed">Rename Failed</string>

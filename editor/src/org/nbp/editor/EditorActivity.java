@@ -661,11 +661,15 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_nextEdit () {
-    editArea.moveToNextEdit();
+    if (!editArea.moveToNextEdit()) {
+      showMessage(R.string.message_last_edit);
+    }
   }
 
   private void menuAction_previousEdit () {
-    editArea.moveToPreviousEdit();
+    if (!editArea.moveToPreviousEdit()) {
+      showMessage(R.string.message_first_edit);
+    }
   }
 
   private void menuAction_showRevision () {
@@ -679,11 +683,15 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_nextRevision () {
-    editArea.moveToNextRevision();
+    if (!editArea.moveToNextRevision()) {
+      showMessage(R.string.message_last_revision);
+    }
   }
 
   private void menuAction_previousRevision () {
-    editArea.moveToPreviousRevision();
+    if (!editArea.moveToPreviousRevision()) {
+      showMessage(R.string.message_first_revision);
+    }
   }
 
   @Override
