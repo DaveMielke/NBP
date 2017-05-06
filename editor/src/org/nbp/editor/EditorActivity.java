@@ -666,8 +666,16 @@ public class EditorActivity extends CommonActivity {
     if (span != null) {
       span.show(this);
     } else {
-      showMessage(R.string.message_no_revision);
+      showMessage(R.string.message_original_text);
     }
+  }
+
+  private void menuAction_nextRevision () {
+    editArea.moveToNextRevision();
+  }
+
+  private void menuAction_previousRevision () {
+    editArea.moveToPreviousRevision();
   }
 
   @Override
@@ -767,6 +775,14 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_revisions_showRevision:
         menuAction_showRevision();
+        return true;
+
+      case R.id.menu_revisions_nextRevision:
+        menuAction_nextRevision();
+        return true;
+
+      case R.id.menu_revisions_previousRevision:
+        menuAction_previousRevision();
         return true;
 
       default:

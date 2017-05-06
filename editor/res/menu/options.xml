@@ -142,6 +142,16 @@
         android:id="@+id/menu_revisions_showRevision"
         android:title="@string/menu_revisions_showRevision"
        />
+
+      <item
+        android:id="@+id/menu_revisions_nextRevision"
+        android:title="@string/menu_revisions_nextRevision"
+       />
+
+      <item
+        android:id="@+id/menu_revisions_previousRevision"
+        android:title="@string/menu_revisions_previousRevision"
+       />
     </menu>
   </item>
 </menu>

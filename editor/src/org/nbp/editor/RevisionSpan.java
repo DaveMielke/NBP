@@ -48,12 +48,20 @@ public abstract class RevisionSpan extends EditorSpan {
     return actualText;
   }
 
-  public final CharSequence getDecoratedText () {
-    return decoratedText;
+  public final String getDecorationPrefix () {
+    return decorationPrefix;
+  }
+
+  public final String getDecorationSuffix () {
+    return decorationSuffix;
   }
 
   public final CharacterStyle getStyle () {
     return revisionStyle;
+  }
+
+  public final CharSequence getDecoratedText () {
+    return decoratedText;
   }
 
   public final void decorateText (SpannableStringBuilder content) {
