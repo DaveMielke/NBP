@@ -1,5 +1,7 @@
 package org.nbp.editor;
 
+import java.util.Stack;
+
 import android.content.Context;
 import android.widget.EditText;
 import android.util.AttributeSet;
@@ -92,5 +94,65 @@ public class EditArea extends EditText {
     if (revision == null) return false;
     setSelection(revision);
     return true;
+  }
+
+  public final boolean moveToNextEdit () {
+    int start = getSelectionEnd();
+    if (start != getSelectionStart()) start -= 1;
+
+    Spanned text = getText();
+    int end = text.length();
+
+    while (true) {
+      RevisionSpan span = getRevisionSpan(start);
+      if (span == null) break;
+
+      start = text.nextSpanTransition(start, end, RevisionSpan.class);
+      if (start == end) return false;
+    }
+
+    start = text.nextSpanTransition(start, end, RevisionSpan.class);
+    if (start == end) return false;
+
+    setSelection(getRevisionSpan(start));
+    return true;
+  }
+
+  public final boolean moveToPreviousEdit () {
+    int start = 0;
+    int end = getSelectionStart();
+
+    Spanned text = getText();
+    Stack<RevisionSpan> spans = new Stack<RevisionSpan>();
+
+    while (true) {
+      spans.push(getRevisionSpan(start));
+      start = text.nextSpanTransition(start, end, RevisionSpan.class);
+      if (start == end) break;
+    }
+
+    {
+      RevisionSpan span = getRevisionSpan(end);
+      if (span != spans.peek()) spans.push(span);
+    }
+
+    while (!spans.isEmpty()) {
+      RevisionSpan span = spans.pop();
+
+      if (span == null) {
+        if (spans.isEmpty()) return false;
+
+        do {
+          RevisionSpan next = spans.pop();
+          if (next == null) break;
+          span = next;
+        } while (!spans.isEmpty());
+
+        setSelection(span);
+        return true;
+      }
+    }
+
+    return false;
   }
 }

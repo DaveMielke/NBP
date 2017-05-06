@@ -35,6 +35,8 @@
   <string name="menu_highlight_underline">Underline</string>
 
   <string name="menu_options_revisions">Revisions</string>
+  <string name="menu_revisions_nextEdit">Next Edit</string>
+  <string name="menu_revisions_previousEdit">Previous Edit</string>
   <string name="menu_revisions_showRevision">Show Revision</string>
   <string name="menu_revisions_nextRevision">Next Revision</string>
   <string name="menu_revisions_previousRevision">Previous Revision</string>

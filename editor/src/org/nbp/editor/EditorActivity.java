@@ -660,6 +660,14 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_nextEdit () {
+    editArea.moveToNextEdit();
+  }
+
+  private void menuAction_previousEdit () {
+    editArea.moveToPreviousEdit();
+  }
+
   private void menuAction_showRevision () {
     RevisionSpan span = editArea.getRevisionSpan();
 
@@ -771,6 +779,14 @@ public class EditorActivity extends CommonActivity {
         return true;
 
       case R.id.menu_options_revisions:
+        return true;
+
+      case R.id.menu_revisions_nextEdit:
+        menuAction_nextEdit();
+        return true;
+
+      case R.id.menu_revisions_previousEdit:
+        menuAction_previousEdit();
         return true;
 
       case R.id.menu_revisions_showRevision:

@@ -139,6 +139,16 @@
 
     <menu>
       <item
+        android:id="@+id/menu_revisions_nextEdit"
+        android:title="@string/menu_revisions_nextEdit"
+       />
+
+      <item
+        android:id="@+id/menu_revisions_previousEdit"
+        android:title="@string/menu_revisions_previousEdit"
+       />
+
+      <item
         android:id="@+id/menu_revisions_showRevision"
         android:title="@string/menu_revisions_showRevision"
        />
