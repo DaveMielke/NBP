@@ -1,15 +1,20 @@
 package org.nbp.editor;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.nbp.common.AlertDialogBuilder;
 import android.app.AlertDialog;
 
 import android.widget.TextView;
 
-import android.text.SpannableStringBuilder;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+
 import android.text.style.CharacterStyle;
+import android.text.style.ForegroundColorSpan;
+import android.graphics.Color;
 
 public abstract class RevisionSpan extends EditorSpan {
   private final CharSequence actualText;
@@ -18,6 +23,7 @@ public abstract class RevisionSpan extends EditorSpan {
   private final CharacterStyle revisionStyle;
 
   private final CharSequence decoratedText;
+  private final Object actualTextSpan = new Object();
 
   protected RevisionSpan (CharSequence text, String prefix, String suffix, CharacterStyle style) {
     super();
@@ -32,7 +38,10 @@ public abstract class RevisionSpan extends EditorSpan {
     sb.append(actualText);
     int end = sb.length();
     if (decorationSuffix != null) sb.append(decorationSuffix);
+
+    sb.setSpan(actualTextSpan, start, end, sb.SPAN_INCLUSIVE_EXCLUSIVE);
     if (revisionStyle != null) sb.setSpan(revisionStyle, start, end, sb.SPAN_INCLUSIVE_EXCLUSIVE);
+
     decoratedText = sb.subSequence(0, sb.length());
   }
 
@@ -64,14 +73,6 @@ public abstract class RevisionSpan extends EditorSpan {
     return decoratedText;
   }
 
-  public final void decorateText (SpannableStringBuilder content) {
-    content.replace(
-      content.getSpanStart(this),
-      content.getSpanEnd(this),
-      decoratedText
-    );
-  }
-
   private String revisionAuthor = null;
   private Date revisionTimestamp = null;
 
@@ -95,6 +96,48 @@ public abstract class RevisionSpan extends EditorSpan {
 
   public final RevisionSpan setTimestamp () {
     return setTimestamp(new Date());
+  }
+
+  private final static int[] authorColorArray = new int[] {
+    Color.RED,
+    Color.BLUE
+  };
+
+  private final static Map<String, ForegroundColorSpan> authorColorMap =
+               new HashMap<String, ForegroundColorSpan>();
+
+  public final void setColor (SpannableStringBuilder content) {
+    String author = getAuthor();
+    ForegroundColorSpan newSpan = authorColorMap.get(author);
+
+    if (newSpan == null) {
+      int index = Math.max(authorColorMap.size(), authorColorArray.length-1);
+      newSpan = new ForegroundColorSpan(authorColorArray[index]);
+      authorColorMap.put(author, newSpan);
+    }
+
+    int start = content.getSpanStart(actualTextSpan);
+    int end = content.getSpanEnd(actualTextSpan);
+
+    {
+      Object[] oldSpans = content.getSpans(start, end, newSpan.getClass());
+
+      if (oldSpans != null) {
+        for (Object oldSpan : oldSpans) {
+          content.removeSpan(oldSpan);
+        }
+      }
+    }
+
+    content.setSpan(newSpan, start, end, content.SPAN_INCLUSIVE_EXCLUSIVE);
+  }
+
+  public final void decorateText (SpannableStringBuilder content) {
+    content.replace(
+      content.getSpanStart(this),
+      content.getSpanEnd(this),
+      decoratedText
+    );
   }
 
   public abstract int getAction ();
