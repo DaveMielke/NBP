@@ -103,33 +103,33 @@ public abstract class RevisionSpan extends EditorSpan {
     Color.BLUE
   };
 
-  private final static Map<String, ForegroundColorSpan> authorColorMap =
-               new HashMap<String, ForegroundColorSpan>();
+  private final static Map<String, Integer> authorColorMap =
+               new HashMap<String, Integer>();
 
   public final void setColor (SpannableStringBuilder content) {
     String author = getAuthor();
-    ForegroundColorSpan newSpan = authorColorMap.get(author);
+    Integer color = authorColorMap.get(author);
 
-    if (newSpan == null) {
-      int index = Math.max(authorColorMap.size(), authorColorArray.length-1);
-      newSpan = new ForegroundColorSpan(authorColorArray[index]);
-      authorColorMap.put(author, newSpan);
+    if (color == null) {
+      int index = Math.min(authorColorMap.size(), authorColorArray.length-1);
+      color = authorColorArray[index];
+      authorColorMap.put(author, color);
     }
 
     int start = content.getSpanStart(actualTextSpan);
     int end = content.getSpanEnd(actualTextSpan);
 
     {
-      Object[] oldSpans = content.getSpans(start, end, newSpan.getClass());
+      ForegroundColorSpan[] spans = content.getSpans(start, end, ForegroundColorSpan.class);
 
-      if (oldSpans != null) {
-        for (Object oldSpan : oldSpans) {
-          content.removeSpan(oldSpan);
+      if (spans != null) {
+        for (ForegroundColorSpan span : spans) {
+          content.removeSpan(span);
         }
       }
     }
 
-    content.setSpan(newSpan, start, end, content.SPAN_INCLUSIVE_EXCLUSIVE);
+    content.setSpan(new ForegroundColorSpan(color), start, end, content.SPAN_INCLUSIVE_EXCLUSIVE);
   }
 
   public final void decorateText (SpannableStringBuilder content) {
