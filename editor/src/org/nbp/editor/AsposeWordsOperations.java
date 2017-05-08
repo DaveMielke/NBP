@@ -226,6 +226,76 @@ public class AsposeWordsOperations extends ContentOperations {
     }
   }
 
+  private interface RevisionFinisher {
+    public void finishRevision () throws Exception;
+  }
+
+  private final static void beginRevisionTracking (DocumentBuilder builder, RevisionSpan span) {
+    builder.getDocument().startTrackRevisions(
+      span.getAuthor(), span.getTimestamp()
+    );
+  }
+
+  private final static void endRevisionTracking (DocumentBuilder builder) {
+    builder.getDocument().stopTrackRevisions();
+  }
+
+  private static int bookmarkNumber = 0;
+
+  private final static String newBookmarkName () {
+    return "bookmark" + ++bookmarkNumber;
+  }
+
+  private final static BookmarkStart beginBookmark (DocumentBuilder builder, String name) throws Exception {
+    return builder.startBookmark(name);
+  }
+
+  private final static void endBookmark (DocumentBuilder builder, String name) throws Exception {
+    builder.endBookmark(name);
+  }
+
+  private final static RevisionFinisher beginInsertRevision (
+    final DocumentBuilder builder,
+    final RevisionSpan span
+  ) {
+    beginRevisionTracking(builder, span);
+
+    return new RevisionFinisher() {
+      @Override
+      public void finishRevision () {
+        endRevisionTracking(builder);
+      }
+    };
+  }
+
+  private final static RevisionFinisher beginDeleteRevision (
+    final DocumentBuilder builder,
+    final RevisionSpan span
+  ) throws Exception {
+    final String bookmarkName = newBookmarkName();
+    final BookmarkStart bookmarkStart = beginBookmark(builder, bookmarkName);
+
+    return new RevisionFinisher() {
+      @Override
+      public void finishRevision () throws Exception {
+        endBookmark(builder, bookmarkName);
+        beginRevisionTracking(builder, span);
+        bookmarkStart.getBookmark().setText("");
+        endRevisionTracking(builder);
+      }
+    };
+  }
+
+  private final static RevisionFinisher beginRevision (
+    DocumentBuilder builder,
+    RevisionSpan span
+  ) throws Exception {
+    if (span == null) return null;
+    if (span instanceof InsertSpan) return beginInsertRevision(builder, span);
+    if (span instanceof DeleteSpan) return beginDeleteRevision(builder, span);
+    return null;
+  }
+
   @Override
   public final void write (OutputStream stream, CharSequence content) throws IOException {
     checkForLicenseProblem();
@@ -233,12 +303,13 @@ public class AsposeWordsOperations extends ContentOperations {
 
     try {
       DocumentBuilder builder = new DocumentBuilder();
-      Document document = builder.getDocument();
 
       Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
       int length = text.length();
       int start = 0;
+
       RevisionSpan oldRevisionSpan = null;
+      RevisionFinisher revisionFinisher = null;
 
       while (start < length) {
         boolean isDecoration = false;
@@ -280,15 +351,13 @@ public class AsposeWordsOperations extends ContentOperations {
         }
 
         if (newRevisionSpan != oldRevisionSpan) {
-          if (oldRevisionSpan != null) document.stopTrackRevisions();
-          oldRevisionSpan = newRevisionSpan;
-
-          if (newRevisionSpan != null) {
-            document.startTrackRevisions(
-              newRevisionSpan.getAuthor(),
-              newRevisionSpan.getTimestamp()
-            );
+          if (revisionFinisher != null) {
+            revisionFinisher.finishRevision();
+            revisionFinisher = null;
           }
+
+          oldRevisionSpan = newRevisionSpan;
+          revisionFinisher = beginRevision(builder, newRevisionSpan);
         }
 
         if (!isDecoration) {
@@ -298,8 +367,8 @@ public class AsposeWordsOperations extends ContentOperations {
         start = end;
       }
 
-      if (oldRevisionSpan != null) document.stopTrackRevisions();
-      document.save(stream, saveFormat);
+      if (revisionFinisher != null) revisionFinisher.finishRevision();
+      builder.getDocument().save(stream, saveFormat);
     } catch (Exception exception) {
       Log.w(LOG_TAG, ("output error: " + exception.getMessage()));
       throw new IOException("Aspose Words output error", exception);

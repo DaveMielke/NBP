@@ -141,7 +141,7 @@ public abstract class RevisionSpan extends EditorSpan {
 
   public abstract int getAction ();
 
-  private final void setText (AlertDialog dialog, int id, CharSequence text) {
+  private final static void setText (AlertDialog dialog, int id, CharSequence text) {
     if (text != null) ((TextView)dialog.findViewById(id)).setText(text);
   }
 
