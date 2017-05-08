@@ -662,13 +662,13 @@ public class EditorActivity extends CommonActivity {
 
   private void menuAction_nextEdit () {
     if (!editArea.moveToNextEdit()) {
-      showMessage(R.string.message_last_edit);
+      showMessage(R.string.message_no_next_edit);
     }
   }
 
   private void menuAction_previousEdit () {
     if (!editArea.moveToPreviousEdit()) {
-      showMessage(R.string.message_first_edit);
+      showMessage(R.string.message_no_previous_edit);
     }
   }
 
@@ -684,13 +684,13 @@ public class EditorActivity extends CommonActivity {
 
   private void menuAction_nextRevision () {
     if (!editArea.moveToNextRevision()) {
-      showMessage(R.string.message_last_revision);
+      showMessage(R.string.message_no_next_revision);
     }
   }
 
   private void menuAction_previousRevision () {
     if (!editArea.moveToPreviousRevision()) {
-      showMessage(R.string.message_first_revision);
+      showMessage(R.string.message_no_previous_revision);
     }
   }
 
