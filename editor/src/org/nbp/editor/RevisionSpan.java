@@ -81,6 +81,10 @@ public abstract class RevisionSpan extends EditorSpan {
   private final static Map<String, Integer> authorColorMap =
                new HashMap<String, Integer>();
 
+  public final static void reset () {
+    authorColorMap.clear();
+  }
+
   private final void setColor (SpannableStringBuilder content, int start, int end) {
     String author = getAuthor();
     Integer color = authorColorMap.get(author);

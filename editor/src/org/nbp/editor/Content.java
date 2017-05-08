@@ -313,6 +313,7 @@ public abstract class Content {
       InputStream stream = ApplicationContext.getContentResolver().openInputStream(handle.getUri());
 
       try {
+        RevisionSpan.reset();
         handle.getOperations().read(stream, content);
         return true;
       } finally {
