@@ -74,14 +74,17 @@ public class AsposeWordsOperations extends ContentOperations {
     }
   }
 
-  private final void finishRevisionSpan (SpannableStringBuilder content, RevisionSpan span, Node node) {
-    if (span != null) {
+  private final void addRevisionSpan (
+    SpannableStringBuilder content, int start,
+    RevisionSpan span, Node node
+  ) {
+    if (addSpan(content, start, span)) {
       Revision revision = nodeRevisionMap.get(node);
 
       if (revision != null) {
         span.setAuthor(revision.getAuthor());
         span.setTimestamp(revision.getDateTime());
-        span.setColor(content);
+        span.decorateText(content);
       }
     }
   }
@@ -108,11 +111,11 @@ public class AsposeWordsOperations extends ContentOperations {
     content.append(run.getText());
 
     if (run.isInsertRevision()) {
-      finishRevisionSpan(content, addInsertSpan(content, start), run);
+      addRevisionSpan(content, start, new InsertSpan(), run);
     }
 
     if (run.isDeleteRevision()) {
-      finishRevisionSpan(content, addDeleteSpan(content, start), run);
+      addRevisionSpan(content, start, new DeleteSpan(), run);
     }
 
     {
@@ -178,11 +181,11 @@ public class AsposeWordsOperations extends ContentOperations {
     }
 
     if (paragraph.isInsertRevision()) {
-      finishRevisionSpan(content, addInsertSpan(content, start), paragraph);
+      addRevisionSpan(content, start, new InsertSpan(), paragraph);
     }
 
     if (paragraph.isDeleteRevision()) {
-      finishRevisionSpan(content, addDeleteSpan(content, start), paragraph);
+      addRevisionSpan(content, start, new DeleteSpan(), paragraph);
     }
 
     addSpan(content, start, new ParagraphSpan());

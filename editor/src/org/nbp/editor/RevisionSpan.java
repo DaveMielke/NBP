@@ -17,44 +17,23 @@ import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
 
 public abstract class RevisionSpan extends EditorSpan {
-  private final CharSequence actualText;
   private final String decorationPrefix;
   private final String decorationSuffix;
-  private final CharacterStyle revisionStyle;
+  private final CharacterStyle characterStyle;
 
-  private final CharSequence decoratedText;
-  private final Object actualTextSpan = new Object();
-
-  protected RevisionSpan (CharSequence text, String prefix, String suffix, CharacterStyle style) {
+  protected RevisionSpan (String prefix, String suffix, CharacterStyle style) {
     super();
-    actualText = text;
     decorationPrefix = prefix;
     decorationSuffix = suffix;
-    revisionStyle = style;
-
-    SpannableStringBuilder sb = new SpannableStringBuilder();
-    if (decorationPrefix != null) sb.append(decorationPrefix);
-    int start = sb.length();
-    sb.append(actualText);
-    int end = sb.length();
-    if (decorationSuffix != null) sb.append(decorationSuffix);
-
-    sb.setSpan(actualTextSpan, start, end, sb.SPAN_INCLUSIVE_EXCLUSIVE);
-    if (revisionStyle != null) sb.setSpan(revisionStyle, start, end, sb.SPAN_INCLUSIVE_EXCLUSIVE);
-
-    decoratedText = sb.subSequence(0, sb.length());
+    characterStyle = style;
   }
 
-  protected RevisionSpan (CharSequence text, String prefix, String suffix) {
-    this(text, prefix, suffix, null);
+  protected RevisionSpan (String prefix, String suffix) {
+    this(prefix, suffix, null);
   }
 
-  protected RevisionSpan (CharSequence text, CharacterStyle style) {
-    this(text, null, null, style);
-  }
-
-  public final CharSequence getActualText () {
-    return actualText;
+  protected RevisionSpan (CharacterStyle style) {
+    this(null, null, style);
   }
 
   public final String getDecorationPrefix () {
@@ -65,12 +44,8 @@ public abstract class RevisionSpan extends EditorSpan {
     return decorationSuffix;
   }
 
-  public final CharacterStyle getStyle () {
-    return revisionStyle;
-  }
-
-  public final CharSequence getDecoratedText () {
-    return decoratedText;
+  public final CharacterStyle getCharacterStyle () {
+    return characterStyle;
   }
 
   private String revisionAuthor = null;
@@ -106,7 +81,7 @@ public abstract class RevisionSpan extends EditorSpan {
   private final static Map<String, Integer> authorColorMap =
                new HashMap<String, Integer>();
 
-  public final void setColor (SpannableStringBuilder content) {
+  private final void setColor (SpannableStringBuilder content, int start, int end) {
     String author = getAuthor();
     Integer color = authorColorMap.get(author);
 
@@ -116,28 +91,37 @@ public abstract class RevisionSpan extends EditorSpan {
       authorColorMap.put(author, color);
     }
 
-    int start = content.getSpanStart(actualTextSpan);
-    int end = content.getSpanEnd(actualTextSpan);
-
-    {
-      ForegroundColorSpan[] spans = content.getSpans(start, end, ForegroundColorSpan.class);
-
-      if (spans != null) {
-        for (ForegroundColorSpan span : spans) {
-          content.removeSpan(span);
-        }
-      }
-    }
-
     content.setSpan(new ForegroundColorSpan(color), start, end, content.SPAN_INCLUSIVE_EXCLUSIVE);
   }
 
+  private CharSequence actualText;
+  private CharSequence decoratedText;
+
+  public final CharSequence getActualText () {
+    return actualText;
+  }
+
+  public final CharSequence getDecoratedText () {
+    return decoratedText;
+  }
+
   public final void decorateText (SpannableStringBuilder content) {
-    content.replace(
-      content.getSpanStart(this),
-      content.getSpanEnd(this),
-      decoratedText
-    );
+    int spanStart = content.getSpanStart(this);
+    int spanEnd = content.getSpanEnd(this);
+    actualText = content.subSequence(spanStart, spanEnd);
+
+    SpannableStringBuilder sb = new SpannableStringBuilder();
+    if (decorationPrefix != null) sb.append(decorationPrefix);
+    int textStart = sb.length();
+    sb.append(actualText);
+    int textEnd = sb.length();
+    if (decorationSuffix != null) sb.append(decorationSuffix);
+
+    if (characterStyle != null) sb.setSpan(characterStyle, textStart, textEnd, sb.SPAN_INCLUSIVE_EXCLUSIVE);
+    setColor(sb, textStart, textEnd);
+
+    decoratedText = sb.subSequence(0, sb.length());
+    content.replace(spanStart, spanEnd, decoratedText);
   }
 
   public abstract int getAction ();

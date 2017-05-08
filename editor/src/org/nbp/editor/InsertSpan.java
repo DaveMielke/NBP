@@ -6,8 +6,8 @@ public class InsertSpan extends RevisionSpan {
   private final static String decorationPrefix = "⣏⢎";
   private final static String decorationSuffix = "⡱⣹";
 
-  public InsertSpan (CharSequence text) {
-    super(text, decorationPrefix, decorationSuffix);
+  public InsertSpan () {
+    super(decorationPrefix, decorationSuffix);
   }
 
   @Override
