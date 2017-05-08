@@ -241,6 +241,7 @@ public class AsposeWordsOperations extends ContentOperations {
       RevisionSpan oldRevisionSpan = null;
 
       while (start < length) {
+        boolean isDecoration = false;
         RevisionSpan newRevisionSpan = null;
 
         Font font = builder.getFont();
@@ -272,6 +273,8 @@ public class AsposeWordsOperations extends ContentOperations {
               }
             } else if (span instanceof RevisionSpan) {
               newRevisionSpan = (RevisionSpan)span;
+            } else if (span instanceof DecorationSpan) {
+              isDecoration = true;
             }
           }
         }
@@ -288,7 +291,10 @@ public class AsposeWordsOperations extends ContentOperations {
           }
         }
 
-        builder.write(text.subSequence(start, end).toString());
+        if (!isDecoration) {
+          builder.write(text.subSequence(start, end).toString());
+        }
+
         start = end;
       }
 
