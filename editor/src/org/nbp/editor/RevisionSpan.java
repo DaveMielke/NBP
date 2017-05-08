@@ -105,17 +105,28 @@ public abstract class RevisionSpan extends EditorSpan {
     return decoratedText;
   }
 
+  private final void appendDecoration (SpannableStringBuilder sb, String decoration) {
+    if (decoration != null) {
+      if (!decoration.isEmpty()) {
+        int start = sb.length();
+        sb.append(decoration);
+        int end = sb.length();
+        sb.setSpan(new DecorationSpan(), start, end, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+      }
+    }
+  }
+
   public final void decorateText (SpannableStringBuilder content) {
     int spanStart = content.getSpanStart(this);
     int spanEnd = content.getSpanEnd(this);
     actualText = content.subSequence(spanStart, spanEnd);
 
     SpannableStringBuilder sb = new SpannableStringBuilder();
-    if (decorationPrefix != null) sb.append(decorationPrefix);
+    appendDecoration(sb, decorationPrefix);
     int textStart = sb.length();
     sb.append(actualText);
     int textEnd = sb.length();
-    if (decorationSuffix != null) sb.append(decorationSuffix);
+    appendDecoration(sb, decorationSuffix);
 
     if (characterStyle != null) sb.setSpan(characterStyle, textStart, textEnd, sb.SPAN_INCLUSIVE_EXCLUSIVE);
     setColor(sb, textStart, textEnd);
