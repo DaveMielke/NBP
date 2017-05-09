@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
+import android.text.style.ForegroundColorSpan;
 
 import android.text.Spanned;
 import android.text.Spannable;
@@ -136,6 +137,39 @@ public abstract class Spans {
 
     addRevisionSpanEntry("ins", InsertSpan.class);
     addRevisionSpanEntry("del", DeleteSpan.class);
+
+    addSpanEntry(
+      new SpanEntry () {
+        @Override
+        public final String getIdentifier () {
+          return "fgc";
+        }
+
+        @Override
+        public final Class<?> getType () {
+          return ForegroundColorSpan.class;
+        }
+
+        private String[] properties = new String[] {"color"};
+
+        @Override
+        protected final String[] getPropertyNames () {
+          return properties;
+        }
+
+        @Override
+        public final String getPropertyValue (Object span, int index) {
+          ForegroundColorSpan fgc = (ForegroundColorSpan)span;
+
+          switch (index) {
+            case 0:
+              return Integer.toString(fgc.getForegroundColor());
+          }
+
+          return null;
+        }
+      }
+    );
   }
 
   public final static String saveSpans (CharSequence text) {
