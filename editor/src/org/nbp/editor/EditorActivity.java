@@ -45,7 +45,6 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 
 import org.nbp.common.HighlightSpans;
-import android.text.style.CharacterStyle;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -115,12 +114,8 @@ public class EditorActivity extends CommonActivity {
     return null;
   }
 
-  private final static boolean verifyTextRange (int start, int end, int length) {
-    return (0 <= start) && (start <= end) && (end <= length);
-  }
-
   private final boolean verifyTextRange (int start, int end) {
-    return verifyTextRange(start, end, editArea.length());
+    return ApplicationUtilities.verifyTextRange(start, end, editArea.length());
   }
 
   private void setEditorContent (ContentHandle handle) {
@@ -837,92 +832,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final static void saveSpan (StringBuilder sb, Spanned spanned, Object span, String identifier) {
-    if (sb.length() > 0) sb.append(' ');
-    sb.append(identifier);
-
-    sb.append(' ');
-    sb.append(spanned.getSpanStart(span));
-
-    sb.append(' ');
-    sb.append(spanned.getSpanEnd(span));
-
-    sb.append(' ');
-    sb.append(spanned.getSpanFlags(span));
-  }
-
-  private final static void saveHighlightSpans (StringBuilder sb, Spanned spanned) {
-    CharacterStyle[] spans = spanned.getSpans(0, spanned.length(), CharacterStyle.class);
-
-    if (spans != null) {
-      for (CharacterStyle span : spans) {
-        HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(span);
-        if (spanEntry == null) continue;
-        saveSpan(sb, spanned, span, spanEntry.getIdentifier());
-      }
-    }
-  }
-
-  private final static void saveEditorSpans (StringBuilder sb, Spanned spanned) {
-    EditorSpan[] spans = spanned.getSpans(0, spanned.length(), EditorSpan.class);
-
-    if (spans != null) {
-      for (EditorSpan span : spans) {
-        saveSpan(sb, spanned, span, span.getSpanIdentifier());
-      }
-    }
-  }
-
-  private final static String saveSpans (CharSequence text) {
-    if (text == null) return null;
-    if (!(text instanceof Spanned)) return null;
-    Spanned spanned = (Spanned)text;
-
-    StringBuilder sb = new StringBuilder();
-    saveHighlightSpans(sb, spanned);
-    saveEditorSpans(sb, spanned);
-
-    if (sb.length() == 0) return null;
-    return sb.toString();
-  }
-
-  private final static Object restoreSpan (String identifier) {
-    {
-      HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(identifier);
-      if (spanEntry != null) return spanEntry.newInstance();
-    }
-
-    return null;
-  }
-
-  private final static void restoreSpans (Spannable spannable, String[] fields) {
-    int length = spannable.length();
-    int count = fields.length;
-    int index = 0;
-
-    while (index < count) {
-      String identifier;
-      int start;
-      int end;
-      int flags;
-
-      try {
-        identifier = fields[index++];
-        start = Integer.valueOf(fields[index++]);
-        end = Integer.valueOf(fields[index++]);
-        flags = Integer.valueOf(fields[index++]);
-      } catch (Exception exception) {
-        break;
-      }
-
-      if (verifyTextRange(start, end, length)) {
-        Object span = restoreSpan(identifier);
-        if (span == null) continue;
-        spannable.setSpan(span, start, end, flags);
-      }
-    }
-  }
-
   private final void restoreSpans (String spans) {
     if (spans == null) return;
 
@@ -933,10 +842,10 @@ public class EditorActivity extends CommonActivity {
     CharSequence text = editArea.getText();
 
     if (text instanceof Spannable) {
-      restoreSpans((Spannable)text, fields);
+      Spans.restoreSpans((Spannable)text, fields);
     } else {
       SpannableString string = new SpannableString(text);
-      restoreSpans(string, fields);
+      Spans.restoreSpans(string, fields);
       editArea.setText(string);
     }
   }
@@ -984,7 +893,7 @@ public class EditorActivity extends CommonActivity {
               editor.putBoolean(PREF_CHECKPOINT_WRITABLE, handle.canWrite());
             }
 
-            putPreference(editor, PREF_CHECKPOINT_SPANS, saveSpans(editArea.getText()));
+            putPreference(editor, PREF_CHECKPOINT_SPANS, Spans.saveSpans(editArea.getText()));
             editor.putInt(PREF_CHECKPOINT_START, editArea.getSelectionStart());
             editor.putInt(PREF_CHECKPOINT_END, editArea.getSelectionEnd());
 
@@ -1031,7 +940,7 @@ public class EditorActivity extends CommonActivity {
                 int start = prefs.getInt(PREF_CHECKPOINT_START, -1);
                 int end = prefs.getInt(PREF_CHECKPOINT_END, -1);
 
-                if (verifyTextRange(start, end, length)) {
+                if (ApplicationUtilities.verifyTextRange(start, end, length)) {
                   editArea.setSelection(start, end);
                 }
               }
