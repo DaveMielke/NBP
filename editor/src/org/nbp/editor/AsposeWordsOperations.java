@@ -318,7 +318,7 @@ public class AsposeWordsOperations extends ContentOperations {
         Font font = builder.getFont();
         font.clearFormatting();
 
-        int end = text.nextSpanTransition(start, length, CharacterStyle.class);
+        int end = text.nextSpanTransition(start, length, Object.class);
         Object[] spans = text.getSpans(start, end, Object.class);
 
         if (spans != null) {
