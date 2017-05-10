@@ -381,6 +381,11 @@ public abstract class Spans {
         Object span = restoreSpan(identifier, properties);
         if (span == null) continue;
         text.setSpan(span, start, end, flags);
+
+        if (span instanceof RevisionSpan) {
+          RevisionSpan revision = (RevisionSpan)span;
+          revision.restoreData(text);
+        }
       }
     }
   }

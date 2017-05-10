@@ -139,6 +139,16 @@ public abstract class RevisionSpan extends EditorSpan {
     content.replace(spanStart, spanEnd, decoratedText);
   }
 
+  public final void restoreData (Spannable text) {
+    int start = text.getSpanStart(this);
+    int end = text.getSpanEnd(this);
+    decoratedText = text.subSequence(start, end);
+
+    if (decorationPrefix != null) start += decorationPrefix.length();
+    if (decorationSuffix != null) end -= decorationSuffix.length();
+    actualText = text.subSequence(start, end);
+  }
+
   public abstract int getAction ();
 
   private final static void setText (AlertDialog dialog, int id, CharSequence text) {

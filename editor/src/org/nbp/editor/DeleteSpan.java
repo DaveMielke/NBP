@@ -11,11 +11,6 @@ public class DeleteSpan extends RevisionSpan {
   }
 
   @Override
-  public final String getSpanIdentifier () {
-    return "del";
-  }
-
-  @Override
   public final int getAction () {
     return R.string.revision_action_delete;
   }
