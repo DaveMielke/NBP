@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.LanguageUtilities;
+import java.lang.reflect.Constructor;
+
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
@@ -16,7 +19,8 @@ import android.util.Log;
 public abstract class Spans {
   private final static String LOG_TAG = Spans.class.getName();
 
-  private final static char ESCAPE = '\\';
+  private final static char ESCAPE_CHARACTER = '\\';
+  private final static String PROPERTY_PREFIX = "-";
 
   private Spans () {
   }
@@ -28,6 +32,8 @@ public abstract class Spans {
     public abstract String getIdentifier ();
     public abstract Class<?> getType ();
     protected abstract String[] getPropertyNames ();
+    public abstract String getPropertyValue (Object span, int index);
+    public abstract Object newSpan (String[] properties);
 
     public final int getPropertyCount () {
       String[] names = getPropertyNames();
@@ -38,8 +44,6 @@ public abstract class Spans {
     public final String getPropertyName (int index) {
       return getPropertyNames()[index];
     }
-
-    public abstract String getPropertyValue (Object span, int index);
   }
 
   private final static Map<String, SpanEntry> spanIdentifiers =
@@ -80,6 +84,13 @@ public abstract class Spans {
         @Override
         public final String getPropertyValue (Object span, int index) {
           return null;
+        }
+
+        @Override
+        public final Object newSpan (String[] properties) {
+          Constructor constructor = LanguageUtilities.getConstructor(getType());
+          if (constructor == null) return null;
+          return LanguageUtilities.newInstance(constructor);
         }
       }
     );
@@ -125,6 +136,23 @@ public abstract class Spans {
 
           return null;
         }
+
+        @Override
+        public final Object newSpan (String[] properties) {
+          Constructor constructor = LanguageUtilities.getConstructor(getType());
+          if (constructor == null) return null;
+
+          RevisionSpan span = (RevisionSpan)LanguageUtilities.newInstance(constructor);
+          if (span == null) return null;
+
+          String author = properties[0];
+          String timestamp = properties[1];
+
+          if (author != null) span.setAuthor(author);
+          if (timestamp != null) span.setTimestamp(new Date(Long.valueOf(timestamp)));
+
+          return span;
+        }
       }
     );
   }
@@ -168,6 +196,13 @@ public abstract class Spans {
 
           return null;
         }
+
+        @Override
+        public final Object newSpan (String[] properties) {
+          Constructor constructor = LanguageUtilities.getConstructor(getType(), Integer.TYPE);
+          if (constructor == null) return null;
+          return LanguageUtilities.newInstance(constructor, Integer.valueOf(properties[0]));
+        }
       }
     );
   }
@@ -208,7 +243,8 @@ public abstract class Spans {
           if (value == null) continue;
           if (value.isEmpty()) continue;
 
-          sb.append(" -");
+          sb.append(' ');
+          sb.append(PROPERTY_PREFIX);
           sb.append(entry.getPropertyName(index));
           sb.append(' ');
 
@@ -219,9 +255,9 @@ public abstract class Spans {
           for (char character : characters) {
             if (Character.isWhitespace(character) ||
                 Character.isISOControl(character)) {
-              sb.append(String.format("%cu%04X", ESCAPE, (int)character));
+              sb.append(String.format("%cu%04X", ESCAPE_CHARACTER, (int)character));
             } else {
-              if (character == ESCAPE) sb.append(ESCAPE);
+              if (character == ESCAPE_CHARACTER) sb.append(ESCAPE_CHARACTER);
               sb.append(character);
             }
           }
@@ -242,13 +278,62 @@ public abstract class Spans {
     return sb.toString();
   }
 
-  private final static Object restoreSpan (String identifier) {
-    {
-      HighlightSpans.Entry spanEntry = HighlightSpans.getEntry(identifier);
-      if (spanEntry != null) return spanEntry.newInstance();
+  private static class SpanProperties extends HashMap<String, String> {
+    public SpanProperties () {
+      super();
+    }
+  }
+
+  private final static int parseProperties (SpanProperties properties, String[] fields, int index) {
+    while (index < fields.length) {
+      String name = fields[index];
+      if (!name.startsWith(PROPERTY_PREFIX)) break;
+      name = name.substring(PROPERTY_PREFIX.length());
+
+      if (++index == fields.length) {
+        Log.w(LOG_TAG, "missing property value");
+        break;
+      }
+
+      String value = fields[index++];
+
+      if (name.isEmpty()) {
+        Log.w(LOG_TAG, "missing property name");
+        break;
+      }
+
+      if (properties.get(name) != null) {
+        Log.w(LOG_TAG, ("property defined more than once: " + name));
+        break;
+      }
+
+      properties.put(name, value);
     }
 
-    return null;
+    return index;
+  }
+
+  private final static Object restoreSpan (String identifier, SpanProperties properties) {
+    {
+      HighlightSpans.Entry entry = HighlightSpans.getEntry(identifier);
+      if (entry != null) return entry.newInstance();
+    }
+
+    SpanEntry entry = spanIdentifiers.get(identifier);
+    if (entry == null) return null;
+
+    String[] array = null;
+    int count = entry.getPropertyCount();
+
+    if (count > 0) {
+      array = new String[count];
+
+      for (int index=0; index<count; index+=1) {
+        array[index] = properties.get(entry.getPropertyName(index));
+      }
+    }
+
+    return entry.newSpan(array);
   }
 
   public final static void restoreSpans (Spannable text, String[] fields) {
@@ -257,23 +342,25 @@ public abstract class Spans {
     int index = 0;
 
     while (index < count) {
-      String identifier;
+      String identifier = fields[index++];
+      SpanProperties properties = new SpanProperties();
+      index = parseProperties(properties, fields, index);
+
       int start;
       int end;
       int flags;
 
       try {
-        identifier = fields[index++];
         start = Integer.valueOf(fields[index++]);
         end = Integer.valueOf(fields[index++]);
         flags = Integer.valueOf(fields[index++]);
       } catch (Exception exception) {
-        Log.w(LOG_TAG, ("span restoration error: " + exception.getMessage()));
+        Log.w(LOG_TAG, ("operand error: " + exception.getMessage()));
         break;
       }
 
       if (ApplicationUtilities.verifyTextRange(start, end, length)) {
-        Object span = restoreSpan(identifier);
+        Object span = restoreSpan(identifier, properties);
         if (span == null) continue;
         text.setSpan(span, start, end, flags);
       }
