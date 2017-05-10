@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.Properties;
+import java.io.StringReader;
+import java.io.IOException;
+
 import org.nbp.common.LanguageUtilities;
 import java.lang.reflect.Constructor;
 
@@ -19,10 +23,24 @@ import android.util.Log;
 public abstract class Spans {
   private final static String LOG_TAG = Spans.class.getName();
 
+  private Spans () {
+  }
+
   private final static char ESCAPE_CHARACTER = '\\';
   private final static String PROPERTY_PREFIX = "-";
 
-  private Spans () {
+  private final static String parseEscapedString (String string) {
+    Properties properties = new Properties();
+    String key = "x";
+
+    try {
+      properties.load(new StringReader((key + '=' + string)));
+      return properties.getProperty(key);
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, ("escaped string load error: " + string));
+    }
+
+    return string;
   }
 
   private abstract static class SpanEntry {
@@ -148,7 +166,7 @@ public abstract class Spans {
           String author = properties[0];
           String timestamp = properties[1];
 
-          if (author != null) span.setAuthor(author);
+          if (author != null) span.setAuthor(parseEscapedString(author));
           if (timestamp != null) span.setTimestamp(new Date(Long.valueOf(timestamp)));
 
           return span;
