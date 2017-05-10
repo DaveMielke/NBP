@@ -97,7 +97,7 @@ public class AsposeWordsOperations extends ContentOperations {
   }
 
   private final void logUnhandledChildNode (Node parent, Object child) {
-    if (false) {
+    if (ApplicationParameters.ASPOSE_LOG_UNHANDLED_CHILDREN) {
       Log.d(LOG_TAG, String.format(
         "unhandled child node: %s contains %s",
         parent.getClass().getSimpleName(),

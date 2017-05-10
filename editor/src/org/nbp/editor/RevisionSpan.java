@@ -14,7 +14,6 @@ import android.text.SpannableStringBuilder;
 
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
-import android.graphics.Color;
 
 public abstract class RevisionSpan extends EditorSpan {
   private final String decorationPrefix;
@@ -73,26 +72,22 @@ public abstract class RevisionSpan extends EditorSpan {
     return setTimestamp(new Date());
   }
 
-  private final static int[] authorColorArray = new int[] {
-    Color.RED,
-    Color.BLUE
-  };
-
-  private final static Map<String, Integer> authorColorMap =
+  private final static Map<String, Integer> authorColors =
                new HashMap<String, Integer>();
 
   public final static void reset () {
-    authorColorMap.clear();
+    authorColors.clear();
   }
 
   private final void setColor (SpannableStringBuilder content, int start, int end) {
     String author = getAuthor();
-    Integer color = authorColorMap.get(author);
+    Integer color = authorColors.get(author);
 
     if (color == null) {
-      int index = Math.min(authorColorMap.size(), authorColorArray.length-1);
-      color = authorColorArray[index];
-      authorColorMap.put(author, color);
+      int[] colors = ApplicationParameters.REVISION_AUTHOR_COLORS;
+      int index = Math.min(authorColors.size(), colors.length-1);
+      color = colors[index];
+      authorColors.put(author, color);
     }
 
     content.setSpan(new ForegroundColorSpan(color), start, end, content.SPAN_INCLUSIVE_EXCLUSIVE);
