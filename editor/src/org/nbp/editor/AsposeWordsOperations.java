@@ -23,60 +23,7 @@ import com.aspose.words.*;
 public class AsposeWordsOperations extends ContentOperations {
   private final static String LOG_TAG = AsposeWordsOperations.class.getName();
 
-  private final static AsposeWordsApplication asposeApplication = new AsposeWordsApplication();
-
-  static {
-    Context context = ApplicationContext.getContext();
-    asposeApplication.loadLibs(context);
-  }
-
-  private final static Object licenseLock = new Object();
-  private static License licenseObject = null;
-  private static Throwable licenseProblem = null;
-
-  private final static void activateLicense (final Context context) {
-    final Object threadLock = new Object();
-
-    Thread thread = new Thread() {
-      @Override
-      public void run () {
-        synchronized (licenseLock) {
-          synchronized (threadLock) {
-            threadLock.notify();
-          }
-
-          if (licenseObject == null) {
-            try {
-              licenseObject = new License();
-              licenseObject.setLicense(context.getAssets().open("Aspose.Words.lic"));
-              Log.d(LOG_TAG, "Aspose Words ready");
-            } catch (Throwable problem) {
-              Log.w(LOG_TAG, ("Aspose Words license problem: " + problem.getMessage()));
-              licenseProblem = problem;
-            }
-          }
-        }
-      }
-    };
-
-    synchronized (threadLock) {
-      thread.setDaemon(true);
-      thread.start();
-
-      try {
-        threadLock.wait();
-      } catch (InterruptedException exception) {
-      }
-    }   
-  }
-
-  private static void checkLicense () throws IOException {
-    synchronized (licenseLock) {
-      if (licenseProblem != null) {
-        throw new IOException("Aspose Words license problem", licenseProblem);
-      }
-    }
-  }
+  private final static AsposeWordsLicense asposeLicense = AsposeWordsLicense.singleton();
 
   private final int saveFormat;
   private final int loadFormat;
@@ -86,9 +33,6 @@ public class AsposeWordsOperations extends ContentOperations {
 
     this.saveFormat = saveFormat;
     this.loadFormat = loadFormat;
-
-    Context context = ApplicationContext.getContext();
-    activateLicense(context);
   }
 
   public AsposeWordsOperations (int saveFormat) throws IOException {
@@ -243,7 +187,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
   @Override
   public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
-    checkLicense();
+    asposeLicense.check();
     if (loadFormat == LoadFormat.UNKNOWN) readingNotSupported();
 
     try {
@@ -333,7 +277,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
   @Override
   public final void write (OutputStream stream, CharSequence content) throws IOException {
-    checkLicense();
+    asposeLicense.check();
     if (saveFormat == SaveFormat.UNKNOWN) writingNotSupported();
 
     try {
