@@ -833,20 +833,13 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void restoreSpans (String spans) {
-    if (spans == null) return;
-
-    spans = spans.trim();
-    if (spans.isEmpty()) return;
-
-    String[] fields = spans.split("\\s+");
     CharSequence text = editArea.getText();
 
     if (text instanceof Spannable) {
-      Spans.restoreSpans((Spannable)text, fields);
+      Spans.restoreSpans((Spannable)text, spans);
     } else {
       SpannableString string = new SpannableString(text);
-      Spans.restoreSpans(string, fields);
-      editArea.setText(string);
+      if (Spans.restoreSpans(string, spans)) editArea.setText(string);
     }
   }
 

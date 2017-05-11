@@ -354,7 +354,8 @@ public abstract class Spans {
     return entry.newSpan(array);
   }
 
-  public final static void restoreSpans (Spannable text, String[] fields) {
+  public final static boolean restoreSpans (Spannable text, String[] fields) {
+    boolean added = false;
     int length = text.length();
     int count = fields.length;
     int index = 0;
@@ -380,7 +381,9 @@ public abstract class Spans {
       if (ApplicationUtilities.verifyTextRange(start, end, length)) {
         Object span = restoreSpan(identifier, properties);
         if (span == null) continue;
+
         text.setSpan(span, start, end, flags);
+        added = true;
 
         if (span instanceof RevisionSpan) {
           RevisionSpan revision = (RevisionSpan)span;
@@ -388,5 +391,17 @@ public abstract class Spans {
         }
       }
     }
+
+    return added;
+  }
+
+  public final static boolean restoreSpans (Spannable text, String spans) {
+    if (spans == null) return false;
+
+    spans = spans.trim();
+    if (spans.isEmpty()) return false;
+
+    String[] fields = spans.split("\\s+");
+    return restoreSpans(text, fields);
   }
 }
