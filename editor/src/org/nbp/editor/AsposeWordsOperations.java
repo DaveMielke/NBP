@@ -76,6 +76,61 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
+    private class CommentDescriptor {
+      public CommentDescriptor () {
+      }
+
+      private final SpannableStringBuilder commentContent = new SpannableStringBuilder();
+
+      public final SpannableStringBuilder getContent () {
+        return commentContent;
+      }
+
+      public final static int NO_POSITION = -1;
+      private int commentPosition = NO_POSITION;
+      private int startPosition = NO_POSITION;
+      private int endPosition = NO_POSITION;
+
+      public final int getPosition () {
+        return commentPosition;
+      }
+
+      public final CommentDescriptor setPosition (int position) {
+        commentPosition = position;
+        return this;
+      }
+
+      public final int getStart () {
+        return startPosition;
+      }
+
+      public final CommentDescriptor setStart (int start) {
+        startPosition = start;
+        return this;
+      }
+
+      public final int getEnd () {
+        return endPosition;
+      }
+
+      public final CommentDescriptor setEnd (int end) {
+        endPosition = end;
+        return this;
+      }
+    }
+
+    private final Map<Integer, CommentDescriptor> commentDescriptors =
+          new HashMap<Integer, CommentDescriptor>();
+
+    private final CommentDescriptor getCommentDescriptor (int identifier) {
+      CommentDescriptor comment = commentDescriptors.get(identifier);
+      if (comment != null) return comment;
+
+      comment = new CommentDescriptor();
+      commentDescriptors.put(identifier, comment);
+      return comment;
+    }
+
     private final void logUnhandledChildNode (Node parent, Object child) {
       if (ApplicationParameters.ASPOSE_LOG_UNHANDLED_CHILDREN) {
         Log.d(LOG_TAG, String.format(
@@ -128,6 +183,20 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
+    private final void addComment (SpannableStringBuilder content, Comment comment) throws Exception {
+      int start = content.length();
+
+      for (Object child : comment.getChildNodes()) {
+        if (child instanceof Paragraph) {
+          Paragraph paragraph = (Paragraph)child;
+          addParagraph(content, paragraph);
+          continue;
+        }
+
+        logUnhandledChildNode(comment, child);
+      }
+    }
+
     private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
       int start = content.length();
 
@@ -145,9 +214,30 @@ public class AsposeWordsOperations extends ContentOperations {
         if (child instanceof Run) {
           Run run = (Run)child;
           addRun(content, run);
-        } else {
-          logUnhandledChildNode(paragraph, child);
+          continue;
         }
+
+        if (child instanceof Comment) {
+          Comment comment = (Comment)child;
+          CommentDescriptor descriptor = getCommentDescriptor(comment.getId());
+          descriptor.setPosition(content.length());
+          addComment(descriptor.getContent(), comment);
+          continue;
+        }
+
+        if (child instanceof CommentRangeStart) {
+          CommentRangeStart crs = (CommentRangeStart)child;
+          getCommentDescriptor(crs.getId()).setStart(content.length());
+          continue;
+        }
+
+        if (child instanceof CommentRangeEnd) {
+          CommentRangeEnd cre = (CommentRangeEnd)child;
+          getCommentDescriptor(cre.getId()).setEnd(content.length());
+          continue;
+        }
+
+        logUnhandledChildNode(paragraph, child);
       }
 
       {
@@ -178,9 +268,10 @@ public class AsposeWordsOperations extends ContentOperations {
         if (child instanceof Paragraph) {
           Paragraph paragraph = (Paragraph)child;
           addParagraph(content, paragraph);
-        } else {
-          logUnhandledChildNode(section, child);
+          continue;
         }
+
+        logUnhandledChildNode(section, child);
       }
 
       addSpan(content, start, new SectionSpan());
