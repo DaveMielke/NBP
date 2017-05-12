@@ -833,14 +833,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void restoreSpans (String spans) {
-    CharSequence text = editArea.getText();
-
-    if (text instanceof Spannable) {
-      Spans.restoreSpans((Spannable)text, spans);
-    } else {
-      SpannableString string = new SpannableString(text);
-      if (Spans.restoreSpans(string, spans)) editArea.setText(string);
-    }
+    Spans.restoreSpans((Spannable)editArea.getText(), spans);
   }
 
   private final static void putPreference (
