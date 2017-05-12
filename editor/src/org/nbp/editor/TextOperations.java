@@ -13,7 +13,7 @@ import java.io.OutputStreamWriter;
 
 import android.text.Spanned;
 import android.text.SpannedString;
-import android.text.SpannableStringBuilder;
+import android.text.Editable;
 
 public class TextOperations extends ContentOperations {
   private final static String LOG_TAG = TextOperations.class.getName();
@@ -23,7 +23,7 @@ public class TextOperations extends ContentOperations {
     return new SpannedString(string);
   }
 
-  protected void postProcessInput (SpannableStringBuilder content) {
+  protected void postProcessInput (Editable content) {
   }
 
   protected String preprocessOutput (CharSequence content) {
@@ -31,7 +31,7 @@ public class TextOperations extends ContentOperations {
   }
 
   @Override
-  public final void read (InputStream stream, final SpannableStringBuilder content) throws IOException {
+  public final void read (InputStream stream, final Editable content) throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
     try {

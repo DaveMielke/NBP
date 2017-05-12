@@ -2,6 +2,7 @@ package org.nbp.editor;
 
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Editable;
 
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
@@ -49,13 +50,13 @@ public abstract class RegionSpan extends EditorSpan {
     return decoratedText;
   }
 
-  private final void appendDecoration (SpannableStringBuilder sb, String decoration) {
+  private final void appendDecoration (Editable text, String decoration) {
     if (decoration != null) {
       if (!decoration.isEmpty()) {
-        int start = sb.length();
-        sb.append(decoration);
-        int end = sb.length();
-        sb.setSpan(new DecorationSpan(), start, end, sb.SPAN_EXCLUSIVE_EXCLUSIVE);
+        int start = text.length();
+        text.append(decoration);
+        int end = text.length();
+        text.setSpan(new DecorationSpan(), start, end, text.SPAN_EXCLUSIVE_EXCLUSIVE);
       }
     }
   }
@@ -64,35 +65,35 @@ public abstract class RegionSpan extends EditorSpan {
     return null;
   }
 
-  public final void decorateText (SpannableStringBuilder content) {
+  public final void decorateText (Editable content) {
     int spanStart = content.getSpanStart(this);
     int spanEnd = content.getSpanEnd(this);
     actualText = content.subSequence(spanStart, spanEnd);
 
-    SpannableStringBuilder sb = new SpannableStringBuilder();
-    appendDecoration(sb, decorationPrefix);
-    int textStart = sb.length();
-    sb.append(actualText);
-    int textEnd = sb.length();
-    appendDecoration(sb, decorationSuffix);
+    Editable text = new SpannableStringBuilder();
+    appendDecoration(text, decorationPrefix);
+    int textStart = text.length();
+    text.append(actualText);
+    int textEnd = text.length();
+    appendDecoration(text, decorationSuffix);
 
     if (characterStyle != null) {
-      sb.setSpan(characterStyle, textStart, textEnd, sb.SPAN_INCLUSIVE_EXCLUSIVE);
+      text.setSpan(characterStyle, textStart, textEnd, text.SPAN_INCLUSIVE_EXCLUSIVE);
     }
 
     {
       Integer color = getColor();
 
       if (color != null) {
-        sb.setSpan(
+        text.setSpan(
           new ForegroundColorSpan(color),
           textStart, textEnd,
-          content.SPAN_INCLUSIVE_EXCLUSIVE
+          text.SPAN_INCLUSIVE_EXCLUSIVE
         );
       }
     }
 
-    decoratedText = sb.subSequence(0, sb.length());
+    decoratedText = text.subSequence(0, text.length());
     content.replace(spanStart, spanEnd, decoratedText);
   }
 

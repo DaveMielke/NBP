@@ -14,6 +14,7 @@ import android.content.Context;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.SpannableStringBuilder;
+import android.text.Editable;
 
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
@@ -62,7 +63,7 @@ public class AsposeWordsOperations extends ContentOperations {
     }
 
     private final void addRevisionSpan (
-      SpannableStringBuilder content, int start,
+      Editable content, int start,
       RevisionSpan span, Node node
     ) {
       if (addSpan(content, start, span)) {
@@ -80,9 +81,9 @@ public class AsposeWordsOperations extends ContentOperations {
       public CommentDescriptor () {
       }
 
-      private final SpannableStringBuilder commentContent = new SpannableStringBuilder();
+      private final Editable commentContent = new SpannableStringBuilder();
 
-      public final SpannableStringBuilder getContent () {
+      public final Editable getContent () {
         return commentContent;
       }
 
@@ -141,7 +142,7 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
-    private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
+    private final void addRun (Editable content, Run run) throws Exception {
       final int start = content.length();
       content.append(run.getText());
 
@@ -183,7 +184,7 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
-    private final void addComment (SpannableStringBuilder content, Comment comment) throws Exception {
+    private final void addComment (Editable content, Comment comment) throws Exception {
       int start = content.length();
 
       for (Object child : comment.getChildNodes()) {
@@ -197,7 +198,7 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
-    private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
+    private final void addParagraph (Editable content, Paragraph paragraph) throws Exception {
       int start = content.length();
 
       if (paragraph.isListItem()) {
@@ -261,7 +262,7 @@ public class AsposeWordsOperations extends ContentOperations {
       addSpan(content, start, new ParagraphSpan());
     }
 
-    private final void addSection (SpannableStringBuilder content, Section section) throws Exception {
+    private final void addSection (Editable content, Section section) throws Exception {
       int start = content.length();
 
       for (Object child : section.getBody().getChildNodes()) {
@@ -277,7 +278,7 @@ public class AsposeWordsOperations extends ContentOperations {
       addSpan(content, start, new SectionSpan());
     }
 
-    public ContentReader (InputStream stream, SpannableStringBuilder content) throws Exception {
+    public ContentReader (InputStream stream, Editable content) throws Exception {
       LoadOptions options = new LoadOptions();
       options.setLoadFormat(loadFormat);
 
@@ -290,7 +291,7 @@ public class AsposeWordsOperations extends ContentOperations {
   }
 
   @Override
-  public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
+  public final void read (InputStream stream, Editable content) throws IOException {
     asposeLicense.check();
     if (loadFormat == LoadFormat.UNKNOWN) readingNotSupported();
 

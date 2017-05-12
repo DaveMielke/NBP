@@ -3,21 +3,21 @@ package org.nbp.editor;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.text.SpannableStringBuilder;
+import android.text.Editable;
 
 public class ByteOperations extends ContentOperations {
-  protected void beginBytes (SpannableStringBuilder content) {
+  protected void beginBytes (Editable content) {
   }
 
-  protected int processBytes (SpannableStringBuilder content, byte[] buffer, int count) {
+  protected int processBytes (Editable content, byte[] buffer, int count) {
     return count;
   }
 
-  protected void endBytes (SpannableStringBuilder content) {
+  protected void endBytes (Editable content) {
   }
 
   @Override
-  public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
+  public final void read (InputStream stream, Editable content) throws IOException {
     beginBytes(content);
 
     byte[] buffer = new byte[0X1000];

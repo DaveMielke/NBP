@@ -1,20 +1,20 @@
 package org.nbp.editor;
 
-import android.text.SpannableStringBuilder;
+import android.text.Editable;
 
 public class BrailleKeywordOperations extends ASCIIBrailleOperations {
   private int bytesProcessed;
   private boolean done;
 
   @Override
-  protected void beginBytes (SpannableStringBuilder content) {
+  protected void beginBytes (Editable content) {
     super.beginBytes(content);
     bytesProcessed = 0;
     done = false;
   }
 
   @Override
-  protected int processBytes (SpannableStringBuilder content, byte[] buffer, int count) {
+  protected int processBytes (Editable content, byte[] buffer, int count) {
     int from = BrailleNoteKeyword.HEADER_SIZE - bytesProcessed;
     bytesProcessed += count;
     if (done || (from >= count)) return count;
