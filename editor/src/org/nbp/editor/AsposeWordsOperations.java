@@ -39,35 +39,6 @@ public class AsposeWordsOperations extends ContentOperations {
     this(saveFormat, LoadFormat.UNKNOWN);
   }
 
-  private final static Map<Node, Revision> nodeRevisionMap =
-               new HashMap<Node, Revision>();
-
-  private final void mapRevisions (Document document) {
-    RevisionCollection revisions = document.getRevisions();
-
-    if (revisions != null) {
-      for (Revision revision : revisions) {
-        Node node = revision.getParentNode();
-        if (node != null) nodeRevisionMap.put(node, revision);
-      }
-    }
-  }
-
-  private final void addRevisionSpan (
-    SpannableStringBuilder content, int start,
-    RevisionSpan span, Node node
-  ) {
-    if (addSpan(content, start, span)) {
-      Revision revision = nodeRevisionMap.get(node);
-
-      if (revision != null) {
-        span.setAuthor(revision.getAuthor());
-        span.setTimestamp(revision.getDateTime());
-        span.decorateText(content);
-      }
-    }
-  }
-
   private final static Map<String, String> listLabelMap =
                new HashMap<String, String>();
 
@@ -75,122 +46,147 @@ public class AsposeWordsOperations extends ContentOperations {
     listLabelMap.put("\uF0B7", "\u2022");
   }
 
-  private final void logUnhandledChildNode (Node parent, Object child) {
-    if (ApplicationParameters.ASPOSE_LOG_UNHANDLED_CHILDREN) {
-      Log.d(LOG_TAG, String.format(
-        "unhandled child node: %s contains %s",
-        parent.getClass().getSimpleName(),
-        child.getClass().getSimpleName()
-      ));
-    }
-  }
+  private class ContentReader {
+    private final Map<Node, Revision> nodeRevisionMap =
+                 new HashMap<Node, Revision>();
 
-  private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
-    final int start = content.length();
-    content.append(run.getText());
+    private final void mapRevisions (Document document) {
+      RevisionCollection revisions = document.getRevisions();
 
-    if (run.isInsertRevision()) {
-      addRevisionSpan(content, start, new InsertSpan(), run);
-    }
-
-    if (run.isDeleteRevision()) {
-      addRevisionSpan(content, start, new DeleteSpan(), run);
-    }
-
-    {
-      Font font = run.getFont();
-
-      if (font.getBold()) {
-        addSpan(content, start,
-                font.getItalic()?
-                  HighlightSpans.BOLD_ITALIC:
-                  HighlightSpans.BOLD);
-      } else if (font.getItalic()) {
-        addSpan(content, start, HighlightSpans.ITALIC);
-      }
-
-      if (font.getStrikeThrough()) {
-        addSpan(content, start, HighlightSpans.STRIKE);
-      }
-
-      if (font.getSubscript()) {
-        addSpan(content, start, HighlightSpans.SUBSCRIPT);
-      }
-
-      if (font.getSuperscript()) {
-        addSpan(content, start, HighlightSpans.SUPERSCRIPT);
-      }
-
-      if (font.getUnderline() != Underline.NONE) {
-        addSpan(content, start, HighlightSpans.UNDERLINE);
-      }
-    }
-  }
-
-  private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
-    int start = content.length();
-
-    if (paragraph.isListItem()) {
-      ListLabel label = paragraph.getListLabel();
-      String string = label.getLabelString();
-
-      String mapped = listLabelMap.get(string);
-      if (mapped != null) string = mapped;
-
-      content.append(String.format("[%s] ", string));
-    }
-
-    for (Object child : paragraph.getChildNodes()) {
-      if (child instanceof Run) {
-        Run run = (Run)child;
-        addRun(content, run);
-      } else {
-        logUnhandledChildNode(paragraph, child);
-      }
-    }
-
-    {
-      int length = content.length();
-
-      if (length > 0) {
-        if (content.charAt(length-1) != '\n') {
-          content.append('\n');
+      if (revisions != null) {
+        for (Revision revision : revisions) {
+          Node node = revision.getParentNode();
+          if (node != null) nodeRevisionMap.put(node, revision);
         }
       }
     }
 
-    if (paragraph.isInsertRevision()) {
-      addRevisionSpan(content, start, new InsertSpan(), paragraph);
-    }
+    private final void addRevisionSpan (
+      SpannableStringBuilder content, int start,
+      RevisionSpan span, Node node
+    ) {
+      if (addSpan(content, start, span)) {
+        Revision revision = nodeRevisionMap.get(node);
 
-    if (paragraph.isDeleteRevision()) {
-      addRevisionSpan(content, start, new DeleteSpan(), paragraph);
-    }
-
-    addSpan(content, start, new ParagraphSpan());
-  }
-
-  private final void addSection (SpannableStringBuilder content, Section section) throws Exception {
-    int start = content.length();
-
-    for (Object child : section.getBody().getChildNodes()) {
-      if (child instanceof Paragraph) {
-        Paragraph paragraph = (Paragraph)child;
-        addParagraph(content, paragraph);
-      } else {
-        logUnhandledChildNode(section, child);
+        if (revision != null) {
+          span.setAuthor(revision.getAuthor());
+          span.setTimestamp(revision.getDateTime());
+          span.decorateText(content);
+        }
       }
     }
 
-    addSpan(content, start, new SectionSpan());
-  }
+    private final void logUnhandledChildNode (Node parent, Object child) {
+      if (ApplicationParameters.ASPOSE_LOG_UNHANDLED_CHILDREN) {
+        Log.d(LOG_TAG, String.format(
+          "unhandled child node: %s contains %s",
+          parent.getClass().getSimpleName(),
+          child.getClass().getSimpleName()
+        ));
+      }
+    }
 
-  @Override
-  public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
-    asposeLicense.check();
-    if (loadFormat == LoadFormat.UNKNOWN) readingNotSupported();
+    private final void addRun (SpannableStringBuilder content, Run run) throws Exception {
+      final int start = content.length();
+      content.append(run.getText());
 
-    try {
+      if (run.isInsertRevision()) {
+        addRevisionSpan(content, start, new InsertSpan(), run);
+      }
+
+      if (run.isDeleteRevision()) {
+        addRevisionSpan(content, start, new DeleteSpan(), run);
+      }
+
+      {
+        Font font = run.getFont();
+
+        if (font.getBold()) {
+          addSpan(content, start,
+                  font.getItalic()?
+                    HighlightSpans.BOLD_ITALIC:
+                    HighlightSpans.BOLD);
+        } else if (font.getItalic()) {
+          addSpan(content, start, HighlightSpans.ITALIC);
+        }
+
+        if (font.getStrikeThrough()) {
+          addSpan(content, start, HighlightSpans.STRIKE);
+        }
+
+        if (font.getSubscript()) {
+          addSpan(content, start, HighlightSpans.SUBSCRIPT);
+        }
+
+        if (font.getSuperscript()) {
+          addSpan(content, start, HighlightSpans.SUPERSCRIPT);
+        }
+
+        if (font.getUnderline() != Underline.NONE) {
+          addSpan(content, start, HighlightSpans.UNDERLINE);
+        }
+      }
+    }
+
+    private final void addParagraph (SpannableStringBuilder content, Paragraph paragraph) throws Exception {
+      int start = content.length();
+
+      if (paragraph.isListItem()) {
+        ListLabel label = paragraph.getListLabel();
+        String string = label.getLabelString();
+
+        String mapped = listLabelMap.get(string);
+        if (mapped != null) string = mapped;
+
+        content.append(String.format("[%s] ", string));
+      }
+
+      for (Object child : paragraph.getChildNodes()) {
+        if (child instanceof Run) {
+          Run run = (Run)child;
+          addRun(content, run);
+        } else {
+          logUnhandledChildNode(paragraph, child);
+        }
+      }
+
+      {
+        int length = content.length();
+
+        if (length > 0) {
+          if (content.charAt(length-1) != '\n') {
+            content.append('\n');
+          }
+        }
+      }
+
+      if (paragraph.isInsertRevision()) {
+        addRevisionSpan(content, start, new InsertSpan(), paragraph);
+      }
+
+      if (paragraph.isDeleteRevision()) {
+        addRevisionSpan(content, start, new DeleteSpan(), paragraph);
+      }
+
+      addSpan(content, start, new ParagraphSpan());
+    }
+
+    private final void addSection (SpannableStringBuilder content, Section section) throws Exception {
+      int start = content.length();
+
+      for (Object child : section.getBody().getChildNodes()) {
+        if (child instanceof Paragraph) {
+          Paragraph paragraph = (Paragraph)child;
+          addParagraph(content, paragraph);
+        } else {
+          logUnhandledChildNode(section, child);
+        }
+      }
+
+      addSpan(content, start, new SectionSpan());
+    }
+
+    public ContentReader (InputStream stream, SpannableStringBuilder content) throws Exception {
       LoadOptions options = new LoadOptions();
       options.setLoadFormat(loadFormat);
 
@@ -199,88 +195,94 @@ public class AsposeWordsOperations extends ContentOperations {
 
       mapRevisions(document);
       addSection(content, document.getFirstSection());
+    }
+  }
+
+  @Override
+  public final void read (InputStream stream, SpannableStringBuilder content) throws IOException {
+    asposeLicense.check();
+    if (loadFormat == LoadFormat.UNKNOWN) readingNotSupported();
+
+    try {
+      new ContentReader(stream, content);
     } catch (Exception exception) {
       Log.w(LOG_TAG, ("input error: " + exception.getMessage()));
       throw new IOException("Aspose Words input error", exception);
     }
   }
 
-  private interface RevisionFinisher {
-    public void finishRevision () throws Exception;
-  }
+  private class ContentWriter {
+    private abstract class RevisionFinisher {
+      public abstract void finishRevision () throws Exception;
+    }
 
-  private final static void beginRevisionTracking (DocumentBuilder builder, RevisionSpan span) {
-    builder.getDocument().startTrackRevisions(
-      span.getAuthor(), span.getTimestamp()
-    );
-  }
+    private final void beginRevisionTracking (DocumentBuilder builder, RevisionSpan span) {
+      builder.getDocument().startTrackRevisions(
+        span.getAuthor(), span.getTimestamp()
+      );
+    }
 
-  private final static void endRevisionTracking (DocumentBuilder builder) {
-    builder.getDocument().stopTrackRevisions();
-  }
+    private final void endRevisionTracking (DocumentBuilder builder) {
+      builder.getDocument().stopTrackRevisions();
+    }
 
-  private static int bookmarkNumber = 0;
+    private int bookmarkNumber = 0;
 
-  private final static String newBookmarkName () {
-    return "bookmark" + ++bookmarkNumber;
-  }
+    private final String newBookmarkName () {
+      return "bookmark" + ++bookmarkNumber;
+    }
 
-  private final static BookmarkStart beginBookmark (DocumentBuilder builder, String name) throws Exception {
-    return builder.startBookmark(name);
-  }
+    private final BookmarkStart beginBookmark (DocumentBuilder builder, String name) throws Exception {
+      return builder.startBookmark(name);
+    }
 
-  private final static void endBookmark (DocumentBuilder builder, String name) throws Exception {
-    builder.endBookmark(name);
-  }
+    private final void endBookmark (DocumentBuilder builder, String name) throws Exception {
+      builder.endBookmark(name);
+    }
 
-  private final static RevisionFinisher beginInsertRevision (
-    final DocumentBuilder builder,
-    final RevisionSpan span
-  ) {
-    beginRevisionTracking(builder, span);
+    private final RevisionFinisher beginInsertRevision (
+      final DocumentBuilder builder,
+      final RevisionSpan span
+    ) {
+      beginRevisionTracking(builder, span);
 
-    return new RevisionFinisher() {
-      @Override
-      public void finishRevision () {
-        endRevisionTracking(builder);
-      }
-    };
-  }
+      return new RevisionFinisher() {
+        @Override
+        public void finishRevision () {
+          endRevisionTracking(builder);
+        }
+      };
+    }
 
-  private final static RevisionFinisher beginDeleteRevision (
-    final DocumentBuilder builder,
-    final RevisionSpan span
-  ) throws Exception {
-    final String bookmarkName = newBookmarkName();
-    final BookmarkStart bookmarkStart = beginBookmark(builder, bookmarkName);
+    private final RevisionFinisher beginDeleteRevision (
+      final DocumentBuilder builder,
+      final RevisionSpan span
+    ) throws Exception {
+      final String bookmarkName = newBookmarkName();
+      final BookmarkStart bookmarkStart = beginBookmark(builder, bookmarkName);
 
-    return new RevisionFinisher() {
-      @Override
-      public void finishRevision () throws Exception {
-        endBookmark(builder, bookmarkName);
-        beginRevisionTracking(builder, span);
-        bookmarkStart.getBookmark().setText("");
-        endRevisionTracking(builder);
-      }
-    };
-  }
+      return new RevisionFinisher() {
+        @Override
+        public void finishRevision () throws Exception {
+          endBookmark(builder, bookmarkName);
+          beginRevisionTracking(builder, span);
+          bookmarkStart.getBookmark().setText("");
+          endRevisionTracking(builder);
+        }
+      };
+    }
 
-  private final static RevisionFinisher beginRevision (
-    DocumentBuilder builder,
-    RevisionSpan span
-  ) throws Exception {
-    if (span == null) return null;
-    if (span instanceof InsertSpan) return beginInsertRevision(builder, span);
-    if (span instanceof DeleteSpan) return beginDeleteRevision(builder, span);
-    return null;
-  }
+    private final RevisionFinisher beginRevision (
+      DocumentBuilder builder,
+      RevisionSpan span
+    ) throws Exception {
+      if (span == null) return null;
+      if (span instanceof InsertSpan) return beginInsertRevision(builder, span);
+      if (span instanceof DeleteSpan) return beginDeleteRevision(builder, span);
+      return null;
+    }
 
-  @Override
-  public final void write (OutputStream stream, CharSequence content) throws IOException {
-    asposeLicense.check();
-    if (saveFormat == SaveFormat.UNKNOWN) writingNotSupported();
-
-    try {
+    public ContentWriter (OutputStream stream, CharSequence content) throws Exception {
       DocumentBuilder builder = new DocumentBuilder();
 
       Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
@@ -348,6 +350,16 @@ public class AsposeWordsOperations extends ContentOperations {
 
       if (revisionFinisher != null) revisionFinisher.finishRevision();
       builder.getDocument().save(stream, saveFormat);
+    }
+  }
+
+  @Override
+  public final void write (OutputStream stream, CharSequence content) throws IOException {
+    asposeLicense.check();
+    if (saveFormat == SaveFormat.UNKNOWN) writingNotSupported();
+
+    try {
+      new ContentWriter(stream, content);
     } catch (Exception exception) {
       Log.w(LOG_TAG, ("output error: " + exception.getMessage()));
       throw new IOException("Aspose Words output error", exception);
