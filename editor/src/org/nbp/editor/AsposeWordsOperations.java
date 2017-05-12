@@ -212,18 +212,21 @@ public class AsposeWordsOperations extends ContentOperations {
   }
 
   private class ContentWriter {
+    private final Document document = new Document();
+    private final DocumentBuilder builder = new DocumentBuilder(document);
+
     private abstract class RevisionFinisher {
       public abstract void finishRevision () throws Exception;
     }
 
-    private final void beginRevisionTracking (DocumentBuilder builder, RevisionSpan span) {
-      builder.getDocument().startTrackRevisions(
+    private final void beginRevisionTracking (RevisionSpan span) {
+      document.startTrackRevisions(
         span.getAuthor(), span.getTimestamp()
       );
     }
 
-    private final void endRevisionTracking (DocumentBuilder builder) {
-      builder.getDocument().stopTrackRevisions();
+    private final void endRevisionTracking () {
+      document.stopTrackRevisions();
     }
 
     private int bookmarkNumber = 0;
@@ -232,60 +235,48 @@ public class AsposeWordsOperations extends ContentOperations {
       return "bookmark" + ++bookmarkNumber;
     }
 
-    private final BookmarkStart beginBookmark (DocumentBuilder builder, String name) throws Exception {
+    private final BookmarkStart beginBookmark (String name) throws Exception {
       return builder.startBookmark(name);
     }
 
-    private final void endBookmark (DocumentBuilder builder, String name) throws Exception {
+    private final void endBookmark (String name) throws Exception {
       builder.endBookmark(name);
     }
 
-    private final RevisionFinisher beginInsertRevision (
-      final DocumentBuilder builder,
-      final RevisionSpan span
-    ) {
-      beginRevisionTracking(builder, span);
+    private final RevisionFinisher beginInsertRevision (final RevisionSpan span) {
+      beginRevisionTracking(span);
 
       return new RevisionFinisher() {
         @Override
         public void finishRevision () {
-          endRevisionTracking(builder);
+          endRevisionTracking();
         }
       };
     }
 
-    private final RevisionFinisher beginDeleteRevision (
-      final DocumentBuilder builder,
-      final RevisionSpan span
-    ) throws Exception {
+    private final RevisionFinisher beginDeleteRevision (final RevisionSpan span) throws Exception {
       final String bookmarkName = newBookmarkName();
-      final BookmarkStart bookmarkStart = beginBookmark(builder, bookmarkName);
+      final BookmarkStart bookmarkStart = beginBookmark(bookmarkName);
 
       return new RevisionFinisher() {
         @Override
         public void finishRevision () throws Exception {
-          endBookmark(builder, bookmarkName);
-          beginRevisionTracking(builder, span);
+          endBookmark(bookmarkName);
+          beginRevisionTracking(span);
           bookmarkStart.getBookmark().setText("");
-          endRevisionTracking(builder);
+          endRevisionTracking();
         }
       };
     }
 
-    private final RevisionFinisher beginRevision (
-      DocumentBuilder builder,
-      RevisionSpan span
-    ) throws Exception {
+    private final RevisionFinisher beginRevision (RevisionSpan span) throws Exception {
       if (span == null) return null;
-      if (span instanceof InsertSpan) return beginInsertRevision(builder, span);
-      if (span instanceof DeleteSpan) return beginDeleteRevision(builder, span);
+      if (span instanceof InsertSpan) return beginInsertRevision(span);
+      if (span instanceof DeleteSpan) return beginDeleteRevision(span);
       return null;
     }
 
-    public ContentWriter (OutputStream stream, CharSequence content) throws Exception {
-      DocumentBuilder builder = new DocumentBuilder();
-
-      Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
+    private final void writeText (Spanned text) throws Exception {
       int length = text.length();
       int start = 0;
 
@@ -338,7 +329,7 @@ public class AsposeWordsOperations extends ContentOperations {
           }
 
           oldRevisionSpan = newRevisionSpan;
-          revisionFinisher = beginRevision(builder, newRevisionSpan);
+          revisionFinisher = beginRevision(newRevisionSpan);
         }
 
         if (!isDecoration) {
@@ -349,7 +340,12 @@ public class AsposeWordsOperations extends ContentOperations {
       }
 
       if (revisionFinisher != null) revisionFinisher.finishRevision();
-      builder.getDocument().save(stream, saveFormat);
+    }
+
+    public ContentWriter (OutputStream stream, CharSequence content) throws Exception {
+      Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
+      writeText(text);
+      document.save(stream, saveFormat);
     }
   }
 
