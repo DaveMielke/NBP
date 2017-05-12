@@ -1,7 +1,10 @@
 package org.nbp.editor;
 
-public class CommentSpan extends StructureSpan {
+public class CommentSpan extends RegionSpan {
+  private final static String decorationPrefix = "⣏⣉";
+  private final static String decorationSuffix = "⣉⣹";
+
   public CommentSpan () {
-    super();
+    super(decorationPrefix, decorationSuffix);
   }
 }
