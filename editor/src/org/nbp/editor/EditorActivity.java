@@ -43,6 +43,7 @@ import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Editable;
 
 import org.nbp.common.HighlightSpans;
 
@@ -282,7 +283,7 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected CharSequence doInBackground (Void... arguments) {
         try {
-          final SpannableStringBuilder input = new SpannableStringBuilder();
+          final Editable input = new SpannableStringBuilder();
           Content.readContent(handle, input);
           return input.subSequence(0, input.length());
         } catch (OutOfMemoryError error) {
