@@ -40,6 +40,8 @@
   <string name="menu_revisions_showRevision">Show Revision</string>
   <string name="menu_revisions_nextRevision">Next Revision</string>
   <string name="menu_revisions_previousRevision">Previous Revision</string>
+  <string name="menu_revisions_nextComment">Next Comment</string>
+  <string name="menu_revisions_previousComment">Previous Comment</string>
 
   <string name="revision_label_author">Author</string>
   <string name="revision_label_timestamp">Timestamp</string>
@@ -47,10 +49,12 @@
   <string name="revision_type_insert">Insert</string>
 
   <string name="message_file_saved">File Saved</string>
-  <string name="message_no_previous_edit">no previous edit</string>
-  <string name="message_no_previous_revision">no previous revision</string>
+  <string name="message_no_next_comment">no next comment</string>
   <string name="message_no_next_edit">no next edit</string>
   <string name="message_no_next_revision">no next revision</string>
+  <string name="message_no_previous_comment">no previous comment</string>
+  <string name="message_no_previous_edit">no previous edit</string>
+  <string name="message_no_previous_revision">no previous revision</string>
   <string name="message_original_text">Original Text</string>
   <string name="message_reading_content">Reading...</string>
   <string name="message_rename_failed">Rename Failed</string>

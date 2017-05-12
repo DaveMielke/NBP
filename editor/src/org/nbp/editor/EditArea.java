@@ -26,33 +26,41 @@ public class EditArea extends EditText {
     return getSelectionStart() != getSelectionEnd();
   }
 
-  public final RevisionSpan getRevisionSpan (int start, int end) {
+  public final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int start, int end) {
     if (end == start) end += 1;
 
     Spanned text = getText();
     if (end > text.length()) return null;
 
-    RevisionSpan[] spans = text.getSpans(start, end, RevisionSpan.class);
-    if (spans == null) return null;
-    if (spans.length == 0) return null;
-    return spans[0];
+    RegionSpan[] regions = text.getSpans(start, end, type);
+    if (regions == null) return null;
+    if (regions.length == 0) return null;
+    return regions[0];
   }
 
-  public final RevisionSpan getRevisionSpan (int position) {
-    return getRevisionSpan(position, position);
+  public final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int position) {
+    return getRegionSpan(type, position, position);
+  }
+
+  public final RegionSpan getRegionSpan (Class<? extends RegionSpan> type) {
+    return getRegionSpan(type, getSelectionStart(), getSelectionEnd());
   }
 
   public final RevisionSpan getRevisionSpan () {
-    return getRevisionSpan(getSelectionStart(), getSelectionEnd());
+    return (RevisionSpan)getRegionSpan(RevisionSpan.class);
   }
 
-  public final void setSelection (RevisionSpan span) {
-    String prefix = span.getDecorationPrefix();
+  public final CommentSpan getCommentSpan () {
+    return (CommentSpan)getRegionSpan(CommentSpan.class);
+  }
+
+  public final void setSelection (RegionSpan region) {
+    String prefix = region.getDecorationPrefix();
     int adjustment = (prefix != null)? prefix.length(): 0;
-    setSelection(getText().getSpanStart(span) + adjustment);
+    setSelection(getText().getSpanStart(region) + adjustment);
   }
 
-  public final boolean moveToNextRevision () {
+  private final boolean moveToNextRegion (Class<? extends RegionSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
 
@@ -60,43 +68,59 @@ public class EditArea extends EditText {
     int end = text.length();
 
     while (true) {
-      start = text.nextSpanTransition(start, end, RevisionSpan.class);
+      start = text.nextSpanTransition(start, end, type);
       if (start == end) return false;
-      RevisionSpan span = getRevisionSpan(start);
+      RegionSpan region = getRegionSpan(type, start);
 
-      if (span != null) {
-        setSelection(span);
+      if (region != null) {
+        setSelection(region);
         return true;
       }
     }
   }
 
-  public final boolean moveToPreviousRevision () {
+  public final boolean moveToNextRevision () {
+    return moveToNextRegion(RevisionSpan.class);
+  }
+
+  public final boolean moveToNextComment () {
+    return moveToNextRegion(CommentSpan.class);
+  }
+
+  private final boolean moveToPreviousRegion (Class<? extends RegionSpan> type) {
     int start = 0;
     int end = getSelectionStart();
-
     Spanned text = getText();
-    RevisionSpan revision = getRevisionSpan(end);
 
-    if (revision != null) {
-      end = text.getSpanStart(revision);
-      revision = null;
+    {
+      RegionSpan region = getRegionSpan(type, end);
+      if (region != null) end = text.getSpanStart(region);
     }
+
+    RegionSpan region = null;
 
     while (true) {
-      start = text.nextSpanTransition(start, end, RevisionSpan.class);
+      start = text.nextSpanTransition(start, end, type);
       if (start == end) break;
 
-      RevisionSpan span = getRevisionSpan(start);
-      if (span != null) revision = span;
+      RegionSpan next = getRegionSpan(type, start);
+      if (next != null) region = next;
     }
 
-    if (revision == null) return false;
-    setSelection(revision);
+    if (region == null) return false;
+    setSelection(region);
     return true;
   }
 
-  public final boolean moveToNextEdit () {
+  public final boolean moveToPreviousRevision () {
+    return moveToPreviousRegion(RevisionSpan.class);
+  }
+
+  public final boolean moveToPreviousComment () {
+    return moveToPreviousRegion(CommentSpan.class);
+  }
+
+  private final boolean moveToNextBlock (Class<? extends RegionSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
 
@@ -104,55 +128,63 @@ public class EditArea extends EditText {
     int end = text.length();
 
     while (true) {
-      RevisionSpan span = getRevisionSpan(start);
-      if (span == null) break;
+      RegionSpan region = getRegionSpan(type, start);
+      if (region == null) break;
 
-      start = text.nextSpanTransition(start, end, RevisionSpan.class);
+      start = text.nextSpanTransition(start, end, type);
       if (start == end) return false;
     }
 
-    start = text.nextSpanTransition(start, end, RevisionSpan.class);
+    start = text.nextSpanTransition(start, end, type);
     if (start == end) return false;
 
-    setSelection(getRevisionSpan(start));
+    setSelection(getRegionSpan(type, start));
     return true;
   }
 
-  public final boolean moveToPreviousEdit () {
+  public final boolean moveToNextEdit () {
+    return moveToNextBlock(RevisionSpan.class);
+  }
+
+  private final boolean moveToPreviousBlock (Class<? extends RegionSpan> type) {
     int start = 0;
     int end = getSelectionStart();
 
     Spanned text = getText();
-    Stack<RevisionSpan> spans = new Stack<RevisionSpan>();
+    Stack<RegionSpan> regions = new Stack<RegionSpan>();
 
     while (true) {
-      spans.push(getRevisionSpan(start));
-      start = text.nextSpanTransition(start, end, RevisionSpan.class);
+      regions.push(getRegionSpan(type, start));
+      start = text.nextSpanTransition(start, end, type);
       if (start == end) break;
     }
 
     {
-      RevisionSpan span = getRevisionSpan(end);
-      if (span != spans.peek()) spans.push(span);
+      RegionSpan region = getRegionSpan(type, end);
+      if (region != regions.peek()) regions.push(region);
     }
 
-    while (!spans.isEmpty()) {
-      RevisionSpan span = spans.pop();
+    while (!regions.isEmpty()) {
+      RegionSpan region = regions.pop();
 
-      if (span == null) {
-        if (spans.isEmpty()) return false;
+      if (region == null) {
+        if (regions.isEmpty()) return false;
 
         do {
-          RevisionSpan next = spans.pop();
+          RegionSpan next = regions.pop();
           if (next == null) break;
-          span = next;
-        } while (!spans.isEmpty());
+          region = next;
+        } while (!regions.isEmpty());
 
-        setSelection(span);
+        setSelection(region);
         return true;
       }
     }
 
     return false;
+  }
+
+  public final boolean moveToPreviousEdit () {
+    return moveToPreviousBlock(RevisionSpan.class);
   }
 }

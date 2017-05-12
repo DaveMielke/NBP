@@ -162,6 +162,16 @@
         android:id="@+id/menu_revisions_previousRevision"
         android:title="@string/menu_revisions_previousRevision"
        />
+
+      <item
+        android:id="@+id/menu_revisions_nextComment"
+        android:title="@string/menu_revisions_nextComment"
+       />
+
+      <item
+        android:id="@+id/menu_revisions_previousComment"
+        android:title="@string/menu_revisions_previousComment"
+       />
     </menu>
   </item>
 </menu>

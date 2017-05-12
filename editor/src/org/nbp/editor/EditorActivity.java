@@ -688,6 +688,18 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_nextComment () {
+    if (!editArea.moveToNextComment()) {
+      showMessage(R.string.message_no_next_comment);
+    }
+  }
+
+  private void menuAction_previousComment () {
+    if (!editArea.moveToPreviousComment()) {
+      showMessage(R.string.message_no_previous_comment);
+    }
+  }
+
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
@@ -801,6 +813,14 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_revisions_previousRevision:
         menuAction_previousRevision();
+        return true;
+
+      case R.id.menu_revisions_nextComment:
+        menuAction_nextComment();
+        return true;
+
+      case R.id.menu_revisions_previousComment:
+        menuAction_previousComment();
         return true;
 
       default:
