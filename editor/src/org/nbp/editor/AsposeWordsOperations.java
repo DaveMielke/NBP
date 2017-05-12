@@ -13,8 +13,10 @@ import android.content.Context;
 
 import android.text.Spanned;
 import android.text.SpannedString;
-import android.text.SpannableStringBuilder;
+
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
@@ -81,42 +83,40 @@ public class AsposeWordsOperations extends ContentOperations {
       public CommentDescriptor () {
       }
 
-      private final Editable commentContent = new SpannableStringBuilder();
-
-      public final Editable getContent () {
-        return commentContent;
+      private final void setSpan (Spannable content, Object span) {
+        int position = content.length();
+        content.setSpan(span, position, position, content.SPAN_MARK_MARK);
       }
 
-      public final static int NO_POSITION = -1;
-      private int commentPosition = NO_POSITION;
-      private int startPosition = NO_POSITION;
-      private int endPosition = NO_POSITION;
+      private Comment commentNode = null;
+      private CommentRangeStart startPosition = null;
+      private CommentRangeEnd endPosition = null;
 
-      public final int getPosition () {
-        return commentPosition;
+      public final  Comment getComment () {
+        return commentNode;
       }
 
-      public final CommentDescriptor setPosition (int position) {
-        commentPosition = position;
-        return this;
+      public final void setComment (Spannable content, Comment comment) {
+        commentNode = comment;
+        setSpan(content, comment);
       }
 
-      public final int getStart () {
+      public final CommentRangeStart getStart () {
         return startPosition;
       }
 
-      public final CommentDescriptor setStart (int start) {
+      public final void setStart (Spannable content, CommentRangeStart start) {
         startPosition = start;
-        return this;
+        setSpan(content, start);
       }
 
-      public final int getEnd () {
+      public final CommentRangeEnd getEnd () {
         return endPosition;
       }
 
-      public final CommentDescriptor setEnd (int end) {
+      public final void setEnd (Spannable content, CommentRangeEnd end) {
         endPosition = end;
-        return this;
+        setSpan(content, end);
       }
     }
 
@@ -184,20 +184,6 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
-    private final void addComment (Editable content, Comment comment) throws Exception {
-      int start = content.length();
-
-      for (Object child : comment.getChildNodes()) {
-        if (child instanceof Paragraph) {
-          Paragraph paragraph = (Paragraph)child;
-          addParagraph(content, paragraph);
-          continue;
-        }
-
-        logUnhandledChildNode(comment, child);
-      }
-    }
-
     private final void addParagraph (Editable content, Paragraph paragraph) throws Exception {
       int start = content.length();
 
@@ -220,21 +206,19 @@ public class AsposeWordsOperations extends ContentOperations {
 
         if (child instanceof Comment) {
           Comment comment = (Comment)child;
-          CommentDescriptor descriptor = getCommentDescriptor(comment.getId());
-          descriptor.setPosition(content.length());
-          addComment(descriptor.getContent(), comment);
+          getCommentDescriptor(comment.getId()).setComment(content, comment);
           continue;
         }
 
         if (child instanceof CommentRangeStart) {
           CommentRangeStart crs = (CommentRangeStart)child;
-          getCommentDescriptor(crs.getId()).setStart(content.length());
+          getCommentDescriptor(crs.getId()).setStart(content, crs);
           continue;
         }
 
         if (child instanceof CommentRangeEnd) {
           CommentRangeEnd cre = (CommentRangeEnd)child;
-          getCommentDescriptor(cre.getId()).setEnd(content.length());
+          getCommentDescriptor(cre.getId()).setEnd(content, cre);
           continue;
         }
 
@@ -276,6 +260,20 @@ public class AsposeWordsOperations extends ContentOperations {
       }
 
       addSpan(content, start, new SectionSpan());
+    }
+
+    private final void addComment (Editable content, Comment comment) throws Exception {
+      int start = content.length();
+
+      for (Object child : comment.getChildNodes()) {
+        if (child instanceof Paragraph) {
+          Paragraph paragraph = (Paragraph)child;
+          addParagraph(content, paragraph);
+          continue;
+        }
+
+        logUnhandledChildNode(comment, child);
+      }
     }
 
     public ContentReader (InputStream stream, Editable content) throws Exception {
