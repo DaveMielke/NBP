@@ -385,9 +385,9 @@ public abstract class Spans {
         text.setSpan(span, start, end, flags);
         added = true;
 
-        if (span instanceof RevisionSpan) {
-          RevisionSpan revision = (RevisionSpan)span;
-          revision.restoreData(text);
+        if (span instanceof RegionSpan) {
+          RegionSpan region = (RegionSpan)span;
+          region.restoreData(text);
         }
       }
     }
