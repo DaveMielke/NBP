@@ -19,7 +19,7 @@ import org.nbp.common.LazyInstantiator;
 
 import android.util.Log;
 import android.net.Uri;
-import android.text.SpannableStringBuilder;
+import android.text.Editable;
 
 public abstract class Content {
   private final static String LOG_TAG = Content.class.getName();
@@ -308,7 +308,7 @@ public abstract class Content {
     return descriptor.getOperations();
   }
 
-  public static boolean readContent (ContentHandle handle, SpannableStringBuilder content) {
+  public static boolean readContent (ContentHandle handle, Editable content) {
     try {
       InputStream stream = ApplicationContext.getContentResolver().openInputStream(handle.getUri());
 

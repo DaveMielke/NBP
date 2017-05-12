@@ -6,8 +6,9 @@ import java.io.OutputStream;
 
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
-import android.text.SpannableStringBuilder;
+
 import android.text.Editable;
+import android.text.Spannable;
 
 import android.util.Log;
 
@@ -31,11 +32,7 @@ public abstract class ContentOperations {
   protected ContentOperations () {
   }
 
-  protected final CharSequence getText (SpannableStringBuilder content, int start) {
-    return content.subSequence(start, content.length());
-  }
-
-  protected final boolean addSpan (Editable content, int start, Object span) {
+  protected final boolean addSpan (Spannable content, int start, Object span) {
     int end = content.length();
     if (end == start) return false;
 
@@ -43,7 +40,7 @@ public abstract class ContentOperations {
     return true;
   }
 
-  protected final void addSpan (Editable content, int start, HighlightSpans.Entry spanEntry) {
+  protected final void addSpan (Spannable content, int start, HighlightSpans.Entry spanEntry) {
     if (start > 0) {
       CharacterStyle[] spans = content.getSpans(start-1, start, CharacterStyle.class);
 
