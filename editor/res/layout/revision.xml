@@ -21,7 +21,7 @@
     </TableRow>
 
     <TableRow>
-      <TextView android:id="@+id/revision_action" />
+      <TextView android:id="@+id/revision_type" />
       <TextView android:id="@+id/revision_text" />
     </TableRow>
   </TableLayout>

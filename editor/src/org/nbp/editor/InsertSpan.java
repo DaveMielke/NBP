@@ -9,7 +9,7 @@ public class InsertSpan extends RevisionSpan {
   }
 
   @Override
-  public final int getAction () {
-    return R.string.revision_action_insert;
+  public final int getRevisionType () {
+    return R.string.revision_type_insert;
   }
 }

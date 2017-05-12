@@ -20,7 +20,7 @@ public abstract class RevisionSpan extends AuthorSpan {
     super(style);
   }
 
-  public abstract int getAction ();
+  public abstract int getRevisionType ();
 
   private final static void setText (AlertDialog dialog, int id, CharSequence text) {
     if (text != null) ((TextView)dialog.findViewById(id)).setText(text);
@@ -40,7 +40,7 @@ public abstract class RevisionSpan extends AuthorSpan {
     dialog.show();
 
     setText(dialog, R.id.revision_text, getActualText());
-    setText(dialog, R.id.revision_action, activity.getString(getAction()));
+    setText(dialog, R.id.revision_type, activity.getString(getRevisionType()));
     setText(dialog, R.id.revision_author, getAuthor());
 
     {
