@@ -281,33 +281,41 @@ public class AsposeWordsOperations extends ContentOperations {
       return content.getSpanStart(spans[0]);
     }
 
+    private final void addComment (Editable content, CommentDescriptor descriptor) throws Exception {
+      Comment comment = descriptor.getComment();
+      if (comment == null) return;
+
+      Node startNode = descriptor.getStart();
+      if (startNode == null) startNode = comment;
+
+      Node endNode = descriptor.getEnd();
+      if (endNode == null) endNode = comment;
+
+      int startPosition = getPosition(content, startNode);
+      int endPosition = (endNode == startNode)?
+                        startPosition:
+                        getPosition(content, endNode);
+
+      content.removeSpan(comment);
+      if (startNode != null) content.removeSpan(startNode);
+      if (endNode != null) content.removeSpan(endNode);
+
+      Editable text = new SpannableStringBuilder();
+      addComment(text, comment);
+      if (text.length() == 0) return;
+
+      CommentSpan span = new CommentSpan(text);
+      content.setSpan(span, startPosition, endPosition, content.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+      span.setAuthor(comment.getAuthor());
+      span.setInitials(comment.getInitial());
+      span.setTimestamp(comment.getDateTime());
+      span.decorateText(content);
+    }
+
     private final void addComments (Editable content) throws Exception {
       for (CommentDescriptor descriptor : commentDescriptors.values()) {
-        Comment comment = descriptor.getComment();
-        if (comment == null) continue;
-
-        Node startNode = descriptor.getStart();
-        if (startNode == null) startNode = comment;
-
-        Node endNode = descriptor.getEnd();
-        if (endNode == null) endNode = comment;
-
-        int startPosition = getPosition(content, startNode);
-        int endPosition = (endNode == startNode)?
-                          startPosition:
-                          getPosition(content, endNode);
-
-        content.removeSpan(comment);
-        if (startNode != null) content.removeSpan(startNode);
-        if (endNode != null) content.removeSpan(endNode);
-
-        Editable text = new SpannableStringBuilder();
-        addComment(text, comment);
-        if (text.length() == 0) continue;
-
-        CommentSpan span = new CommentSpan(text);
-        content.setSpan(span, startPosition, endPosition, content.SPAN_EXCLUSIVE_EXCLUSIVE);
-        span.decorateText(content);
+        addComment(content, descriptor);
       }
     }
 
