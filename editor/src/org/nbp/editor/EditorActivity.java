@@ -41,9 +41,7 @@ import android.text.Editable;
 
 import android.text.Spanned;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Editable;
 
 import org.nbp.common.HighlightSpans;
 

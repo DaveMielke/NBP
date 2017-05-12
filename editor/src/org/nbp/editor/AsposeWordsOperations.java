@@ -276,6 +276,41 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
+    private final int getPosition (Spanned content, Object span) {
+      Object[] spans = content.getSpans(0, content.length(), span.getClass());
+      return content.getSpanStart(spans[0]);
+    }
+
+    private final void addComments (Editable content) throws Exception {
+      for (CommentDescriptor descriptor : commentDescriptors.values()) {
+        Comment comment = descriptor.getComment();
+        if (comment == null) continue;
+
+        Node startNode = descriptor.getStart();
+        if (startNode == null) startNode = comment;
+
+        Node endNode = descriptor.getEnd();
+        if (endNode == null) endNode = comment;
+
+        int startPosition = getPosition(content, startNode);
+        int endPosition = (endNode == startNode)?
+                          startPosition:
+                          getPosition(content, endNode);
+
+        content.removeSpan(comment);
+        if (startNode != null) content.removeSpan(startNode);
+        if (endNode != null) content.removeSpan(endNode);
+
+        Editable text = new SpannableStringBuilder();
+        addComment(text, comment);
+        if (text.length() == 0) continue;
+
+        CommentSpan span = new CommentSpan(text);
+        content.setSpan(span, startPosition, endPosition, content.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.decorateText(content);
+      }
+    }
+
     public ContentReader (InputStream stream, Editable content) throws Exception {
       LoadOptions options = new LoadOptions();
       options.setLoadFormat(loadFormat);
@@ -285,6 +320,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
       mapRevisions(document);
       addSection(content, document.getFirstSection());
+      addComments(content);
     }
   }
 
