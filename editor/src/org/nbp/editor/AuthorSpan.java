@@ -59,7 +59,7 @@ public abstract class AuthorSpan extends RegionSpan {
   }
 
   @Override
-  protected final Integer getColor () {
+  protected final Integer getForegroundColor () {
     String author = getAuthor();
     Integer color = authorColors.get(author);
 

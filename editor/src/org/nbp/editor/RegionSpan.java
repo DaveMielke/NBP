@@ -1,8 +1,9 @@
 package org.nbp.editor;
 
+import android.text.Editable;
+import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.Editable;
 
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
@@ -50,20 +51,31 @@ public abstract class RegionSpan extends EditorSpan {
     return decoratedText;
   }
 
-  private final void appendDecoration (Editable text, String decoration) {
+  private final boolean appendDecoration (Editable text, String decoration) {
     if (decoration != null) {
       if (!decoration.isEmpty()) {
         int start = text.length();
         text.append(decoration);
         int end = text.length();
-        text.setSpan(new DecorationSpan(), start, end, text.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        text.setSpan(new DecorationSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return true;
       }
     }
+
+    return false;
   }
 
-  protected Integer getColor () {
+  protected Integer getForegroundColor () {
     return null;
   }
+
+  private final static int[] textFlagsArray = new int[] {
+    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+    Spanned.SPAN_EXCLUSIVE_INCLUSIVE,
+    Spanned.SPAN_INCLUSIVE_EXCLUSIVE,
+    Spanned.SPAN_INCLUSIVE_INCLUSIVE
+  };
 
   public final void decorateText (Editable content) {
     int spanStart = content.getSpanStart(this);
@@ -71,24 +83,26 @@ public abstract class RegionSpan extends EditorSpan {
     actualText = content.subSequence(spanStart, spanEnd);
 
     Editable text = new SpannableStringBuilder();
-    appendDecoration(text, decorationPrefix);
+    int textFlagsIndex = 0;
+
+    if (appendDecoration(text, decorationPrefix)) textFlagsIndex |= 0X2;
     int textStart = text.length();
     text.append(actualText);
     int textEnd = text.length();
-    appendDecoration(text, decorationSuffix);
+    if (appendDecoration(text, decorationSuffix)) textFlagsIndex |= 0X1;
+    int textFlags = textFlagsArray[textFlagsIndex];
 
     if (characterStyle != null) {
-      text.setSpan(characterStyle, textStart, textEnd, text.SPAN_INCLUSIVE_EXCLUSIVE);
+      text.setSpan(characterStyle, textStart, textEnd, textFlags);
     }
 
     {
-      Integer color = getColor();
+      Integer color = getForegroundColor();
 
       if (color != null) {
         text.setSpan(
           new ForegroundColorSpan(color),
-          textStart, textEnd,
-          text.SPAN_INCLUSIVE_EXCLUSIVE
+          textStart, textEnd, textFlags
         );
       }
     }
