@@ -1,10 +1,7 @@
 package org.nbp.editor;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
-
 import android.text.style.CharacterStyle;
+import java.util.Date;
 
 public abstract class AuthorSpan extends RegionSpan {
   protected AuthorSpan (String prefix, String suffix, CharacterStyle style) {
@@ -51,25 +48,8 @@ public abstract class AuthorSpan extends RegionSpan {
     setTimestamp(new Date());
   }
 
-  private final static Map<String, Integer> authorColors =
-               new HashMap<String, Integer>();
-
-  public final static void reset () {
-    authorColors.clear();
-  }
-
   @Override
   protected final Integer getForegroundColor () {
-    String author = getAuthor();
-    Integer color = authorColors.get(author);
-
-    if (color == null) {
-      int[] colors = ApplicationParameters.REVISION_AUTHOR_COLORS;
-      int index = Math.min(authorColors.size(), colors.length-1);
-      color = colors[index];
-      authorColors.put(author, color);
-    }
-
-    return color;
+    return AuthorColors.get(getAuthor());
   }
 }

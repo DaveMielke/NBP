@@ -313,7 +313,7 @@ public abstract class Content {
       InputStream stream = ApplicationContext.getContentResolver().openInputStream(handle.getUri());
 
       try {
-        AuthorSpan.reset();
+        AuthorColors.reset();
         handle.getOperations().read(stream, content);
         return true;
       } finally {
