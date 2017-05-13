@@ -111,7 +111,10 @@ public abstract class RegionSpan extends EditorSpan {
     content.replace(spanStart, spanEnd, decoratedText);
   }
 
-  public final void restoreData (Spannable text) {
+  @Override
+  public void restore (Spannable text) {
+    super.restore(text);
+
     int start = text.getSpanStart(this);
     int end = text.getSpanEnd(this);
     decoratedText = text.subSequence(start, end);
