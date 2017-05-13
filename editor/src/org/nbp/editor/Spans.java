@@ -4,10 +4,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
-import java.util.Properties;
-import java.io.StringReader;
-import java.io.IOException;
-
 import org.nbp.common.LanguageUtilities;
 import java.lang.reflect.Constructor;
 
@@ -16,7 +12,9 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 
 import android.text.Spanned;
+import android.text.Editable;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 
 import android.util.Log;
 
@@ -26,22 +24,7 @@ public abstract class Spans {
   private Spans () {
   }
 
-  private final static char ESCAPE_CHARACTER = '\\';
   private final static String PROPERTY_PREFIX = "-";
-
-  private final static String parseEscapedString (String string) {
-    Properties properties = new Properties();
-    String key = "x";
-
-    try {
-      properties.load(new StringReader((key + '=' + string)));
-      return properties.getProperty(key);
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, ("escaped string load error: " + string));
-    }
-
-    return string;
-  }
 
   private abstract static class SpanEntry {
     protected SpanEntry () {
@@ -166,7 +149,7 @@ public abstract class Spans {
           String author = properties[0];
           String timestamp = properties[1];
 
-          if (author != null) span.setAuthor(parseEscapedString(author));
+          if (author != null) span.setAuthor(author);
           if (timestamp != null) span.setTimestamp(new Date(Long.valueOf(timestamp)));
 
           return span;
@@ -179,10 +162,77 @@ public abstract class Spans {
     addSimpleSpanEntry("dec", DecorationSpan.class);
     addSimpleSpanEntry("sec", SectionSpan.class);
     addSimpleSpanEntry("par", ParagraphSpan.class);
-    addSimpleSpanEntry("com", CommentSpan.class);
 
     addRevisionSpanEntry("ins", InsertSpan.class);
     addRevisionSpanEntry("del", DeleteSpan.class);
+
+    addSpanEntry(
+      new SpanEntry () {
+        @Override
+        public final String getIdentifier () {
+          return "com";
+        }
+
+        @Override
+        public final Class<?> getType () {
+          return CommentSpan.class;
+        }
+
+        private String[] properties = new String[] {"text", "spans", "author", "initials", "time"};
+
+        @Override
+        protected final String[] getPropertyNames () {
+          return properties;
+        }
+
+        @Override
+        public final String getPropertyValue (Object span, int index) {
+          CommentSpan comment = (CommentSpan)span;
+
+          switch (index) {
+            case 0:
+              return comment.getCommentText().toString();
+
+            case 1:
+              return Spans.saveSpans(comment.getCommentText());
+
+            case 2:
+              return comment.getAuthor();
+
+            case 3:
+              return comment.getInitials();
+
+            case 4:
+              return Long.toString(comment.getTimestamp().getTime());
+          }
+
+          return null;
+        }
+
+        @Override
+        public final Object newSpan (String[] properties) {
+          Constructor constructor = LanguageUtilities.getConstructor(getType(), Editable.class);
+          if (constructor == null) return null;
+
+          String text = properties[0];
+          String spans = properties[1];
+          String author = properties[2];
+          String initials = properties[3];
+          String time = properties[4];
+
+          if (text == null) text = "";
+          Editable editable = new SpannableStringBuilder(text);
+          CommentSpan comment = (CommentSpan)LanguageUtilities.newInstance(constructor, editable);
+
+          if (spans != null) Spans.restoreSpans(editable, spans);
+          if (author != null) comment.setAuthor(author);
+          if (initials != null) comment.setInitials(initials);
+          if (time != null) comment.setTimestamp(new Date(Long.valueOf(time)));
+
+          return comment;
+        }
+      }
+    );
 
     addSpanEntry(
       new SpanEntry () {
@@ -264,21 +314,9 @@ public abstract class Spans {
           sb.append(' ');
           sb.append(PROPERTY_PREFIX);
           sb.append(entry.getPropertyName(index));
+
           sb.append(' ');
-
-          int length = value.length();
-          char[] characters = new char[length];
-          value.getChars(0, length, characters, 0);
-
-          for (char character : characters) {
-            if (Character.isWhitespace(character) ||
-                Character.isISOControl(character)) {
-              sb.append(String.format("%cu%04X", ESCAPE_CHARACTER, (int)character));
-            } else {
-              if (character == ESCAPE_CHARACTER) sb.append(ESCAPE_CHARACTER);
-              sb.append(character);
-            }
-          }
+          sb.append(ApplicationUtilities.encodeString(value));
         }
       }
 
@@ -325,7 +363,7 @@ public abstract class Spans {
         break;
       }
 
-      properties.put(name, value);
+      properties.put(name, ApplicationUtilities.decodeString(value));
     }
 
     return index;
