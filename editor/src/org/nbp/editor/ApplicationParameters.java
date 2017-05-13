@@ -11,7 +11,7 @@ public abstract class ApplicationParameters {
     Color.BLUE
   };
 
-  public final static String PROPERTY_ENCODING = "UTF8";
+  public final static String STRING_ENCODING = "UTF8";
 
   public final static String ASPOSE_LICENSE_FILE = "Aspose.Words.lic";
   public final static boolean ASPOSE_LOG_UNHANDLED_CHILDREN = false;
