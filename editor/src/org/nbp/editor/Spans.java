@@ -269,7 +269,11 @@ public abstract class Spans {
         public final Object newSpan (String[] properties) {
           Constructor constructor = LanguageUtilities.getConstructor(getType(), Integer.TYPE);
           if (constructor == null) return null;
-          return LanguageUtilities.newInstance(constructor, Integer.valueOf(properties[0]));
+
+          String color = properties[0];
+          if (color == null) return null;
+
+          return LanguageUtilities.newInstance(constructor, Integer.valueOf(color));
         }
       }
     );
