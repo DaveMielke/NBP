@@ -40,13 +40,20 @@
   <string name="menu_revisions_showRevision">Show Revision</string>
   <string name="menu_revisions_nextRevision">Next Revision</string>
   <string name="menu_revisions_previousRevision">Previous Revision</string>
-  <string name="menu_revisions_nextComment">Next Comment</string>
-  <string name="menu_revisions_previousComment">Previous Comment</string>
+
+  <string name="menu_options_comments">Comments</string>
+  <string name="menu_comments_showComment">Show Comment</string>
+  <string name="menu_comments_nextComment">Next Comment</string>
+  <string name="menu_comments_previousComment">Previous Comment</string>
 
   <string name="revision_label_author">Author</string>
   <string name="revision_label_timestamp">Timestamp</string>
   <string name="revision_type_delete">Delete</string>
   <string name="revision_type_insert">Insert</string>
+
+  <string name="comment_label_author">Author</string>
+  <string name="comment_label_initials">Initials</string>
+  <string name="comment_label_timestamp">Timestamp</string>
 
   <string name="message_file_saved">File Saved</string>
   <string name="message_no_next_comment">no next comment</string>
@@ -55,11 +62,12 @@
   <string name="message_no_previous_comment">no previous comment</string>
   <string name="message_no_previous_edit">no previous edit</string>
   <string name="message_no_previous_revision">no previous revision</string>
-  <string name="message_original_text">Original Text</string>
+  <string name="message_original_text">original text</string>
   <string name="message_reading_content">Reading...</string>
   <string name="message_rename_failed">Rename Failed</string>
   <string name="message_save_no">Cannot Save File</string>
   <string name="message_send_new">Cannot Send New File</string>
+  <string name="message_uncommented_text">uncommented text</string>
   <string name="message_writing_content">Writing...</string>
 
   <string name="action_cancel">Cancel</string>

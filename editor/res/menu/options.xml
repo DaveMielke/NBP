@@ -162,15 +162,28 @@
         android:id="@+id/menu_revisions_previousRevision"
         android:title="@string/menu_revisions_previousRevision"
        />
+    </menu>
+  </item>
 
+  <item
+    android:id="@+id/menu_options_comments"
+    android:title="@string/menu_options_comments"
+    >
+
+    <menu>
       <item
-        android:id="@+id/menu_revisions_nextComment"
-        android:title="@string/menu_revisions_nextComment"
+        android:id="@+id/menu_comments_showComment"
+        android:title="@string/menu_comments_showComment"
        />
 
       <item
-        android:id="@+id/menu_revisions_previousComment"
-        android:title="@string/menu_revisions_previousComment"
+        android:id="@+id/menu_comments_nextComment"
+        android:title="@string/menu_comments_nextComment"
+       />
+
+      <item
+        android:id="@+id/menu_comments_previousComment"
+        android:title="@string/menu_comments_previousComment"
        />
     </menu>
   </item>

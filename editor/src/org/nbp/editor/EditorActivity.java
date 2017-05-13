@@ -92,7 +92,7 @@ public class EditorActivity extends CommonActivity {
     builder.setNeutralButton(R.string.action_ok, null);
     AlertDialog dialog = builder.create();
     dialog.show();
-    finisher.finishDialog(dialog);
+    finisher.finishDialog(new DialogHelper(dialog));
   }
 
   private final ClipboardManager getClipboard () {
@@ -700,6 +700,19 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_showComment () {
+    CommentSpan comment = editArea.getCommentSpan();
+
+    if (comment != null) {
+      showDialog(
+        R.layout.comment, comment,
+        R.string.menu_comments_showComment
+      );
+    } else {
+      showMessage(R.string.message_uncommented_text);
+    }
+  }
+
   private void menuAction_nextComment () {
     if (!editArea.moveToNextComment()) {
       showMessage(R.string.message_no_next_comment);
@@ -827,11 +840,18 @@ public class EditorActivity extends CommonActivity {
         menuAction_previousRevision();
         return true;
 
-      case R.id.menu_revisions_nextComment:
+      case R.id.menu_options_comments:
+        return true;
+
+      case R.id.menu_comments_showComment:
+        menuAction_showComment();
+        return true;
+
+      case R.id.menu_comments_nextComment:
         menuAction_nextComment();
         return true;
 
-      case R.id.menu_revisions_previousComment:
+      case R.id.menu_comments_previousComment:
         menuAction_previousComment();
         return true;
 
