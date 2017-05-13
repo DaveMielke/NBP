@@ -26,7 +26,13 @@ public class EditArea extends EditText {
     return getSelectionStart() != getSelectionEnd();
   }
 
-  public final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int start, int end) {
+  public final void setSelection (RegionSpan region) {
+    String prefix = region.getDecorationPrefix();
+    int adjustment = (prefix != null)? prefix.length(): 0;
+    setSelection(getText().getSpanStart(region) + adjustment);
+  }
+
+  private final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int start, int end) {
     if (end == start) end += 1;
 
     Spanned text = getText();
@@ -38,26 +44,12 @@ public class EditArea extends EditText {
     return regions[0];
   }
 
-  public final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int position) {
+  private final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int position) {
     return getRegionSpan(type, position, position);
   }
 
-  public final RegionSpan getRegionSpan (Class<? extends RegionSpan> type) {
+  private final RegionSpan getRegionSpan (Class<? extends RegionSpan> type) {
     return getRegionSpan(type, getSelectionStart(), getSelectionEnd());
-  }
-
-  public final RevisionSpan getRevisionSpan () {
-    return (RevisionSpan)getRegionSpan(RevisionSpan.class);
-  }
-
-  public final CommentSpan getCommentSpan () {
-    return (CommentSpan)getRegionSpan(CommentSpan.class);
-  }
-
-  public final void setSelection (RegionSpan region) {
-    String prefix = region.getDecorationPrefix();
-    int adjustment = (prefix != null)? prefix.length(): 0;
-    setSelection(getText().getSpanStart(region) + adjustment);
   }
 
   private final boolean moveToNextRegion (Class<? extends RegionSpan> type) {
@@ -77,14 +69,6 @@ public class EditArea extends EditText {
         return true;
       }
     }
-  }
-
-  public final boolean moveToNextRevision () {
-    return moveToNextRegion(RevisionSpan.class);
-  }
-
-  public final boolean moveToNextComment () {
-    return moveToNextRegion(CommentSpan.class);
   }
 
   private final boolean moveToPreviousRegion (Class<? extends RegionSpan> type) {
@@ -112,14 +96,6 @@ public class EditArea extends EditText {
     return true;
   }
 
-  public final boolean moveToPreviousRevision () {
-    return moveToPreviousRegion(RevisionSpan.class);
-  }
-
-  public final boolean moveToPreviousComment () {
-    return moveToPreviousRegion(CommentSpan.class);
-  }
-
   private final boolean moveToNextBlock (Class<? extends RegionSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
@@ -140,10 +116,6 @@ public class EditArea extends EditText {
 
     setSelection(getRegionSpan(type, start));
     return true;
-  }
-
-  public final boolean moveToNextEdit () {
-    return moveToNextBlock(RevisionSpan.class);
   }
 
   private final boolean moveToPreviousBlock (Class<? extends RegionSpan> type) {
@@ -184,7 +156,35 @@ public class EditArea extends EditText {
     return false;
   }
 
+  public final RevisionSpan getRevisionSpan () {
+    return (RevisionSpan)getRegionSpan(RevisionSpan.class);
+  }
+
+  public final boolean moveToNextRevision () {
+    return moveToNextRegion(RevisionSpan.class);
+  }
+
+  public final boolean moveToPreviousRevision () {
+    return moveToPreviousRegion(RevisionSpan.class);
+  }
+
+  public final boolean moveToNextEdit () {
+    return moveToNextBlock(RevisionSpan.class);
+  }
+
   public final boolean moveToPreviousEdit () {
     return moveToPreviousBlock(RevisionSpan.class);
+  }
+
+  public final CommentSpan getCommentSpan () {
+    return (CommentSpan)getRegionSpan(CommentSpan.class);
+  }
+
+  public final boolean moveToNextComment () {
+    return moveToNextRegion(CommentSpan.class);
+  }
+
+  public final boolean moveToPreviousComment () {
+    return moveToPreviousRegion(CommentSpan.class);
   }
 }
