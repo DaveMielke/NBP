@@ -25,8 +25,6 @@
       <TextView android:id="@+id/comment_timestamp" />
     </TableRow>
 
-    <TableRow>
-      <TextView android:id="@+id/comment_text" />
-    </TableRow>
+    <TextView android:id="@+id/comment_text" />
   </TableLayout>
 </FrameLayout>
