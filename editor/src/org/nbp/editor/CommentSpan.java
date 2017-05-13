@@ -16,4 +16,10 @@ public class CommentSpan extends AuthorSpan {
   public final Editable getText () {
     return commentText;
   }
+
+  @Override
+  protected void finishSpan (Editable content) {
+    super.finishSpan(content);
+    finishSpans(commentText);
+  }
 }

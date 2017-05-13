@@ -77,7 +77,10 @@ public abstract class RegionSpan extends EditorSpan {
     Spanned.SPAN_INCLUSIVE_INCLUSIVE
   };
 
-  public final void decorateText (Editable content) {
+  @Override
+  protected void finishSpan (Editable content) {
+    super.finishSpan(content);
+
     int spanStart = content.getSpanStart(this);
     int spanEnd = content.getSpanEnd(this);
     actualText = content.subSequence(spanStart, spanEnd);
@@ -112,15 +115,15 @@ public abstract class RegionSpan extends EditorSpan {
   }
 
   @Override
-  public void restore (Spannable text) {
-    super.restore(text);
+  public void restoreSpan (Spannable content) {
+    super.restoreSpan(content);
 
-    int start = text.getSpanStart(this);
-    int end = text.getSpanEnd(this);
-    decoratedText = text.subSequence(start, end);
+    int start = content.getSpanStart(this);
+    int end = content.getSpanEnd(this);
+    decoratedText = content.subSequence(start, end);
 
     if (decorationPrefix != null) start += decorationPrefix.length();
     if (decorationSuffix != null) end -= decorationSuffix.length();
-    actualText = text.subSequence(start, end);
+    actualText = content.subSequence(start, end);
   }
 }

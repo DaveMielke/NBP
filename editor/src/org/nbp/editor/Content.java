@@ -315,6 +315,7 @@ public abstract class Content {
       try {
         AuthorColors.reset();
         handle.getOperations().read(stream, content);
+        EditorSpan.finishSpans(content);
         return true;
       } finally {
         stream.close();

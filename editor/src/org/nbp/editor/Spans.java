@@ -386,7 +386,7 @@ public abstract class Spans {
         added = true;
 
         if (span instanceof EditorSpan) {
-          ((EditorSpan)span).restore(text);
+          ((EditorSpan)span).restoreSpan(text);
         }
       }
     }

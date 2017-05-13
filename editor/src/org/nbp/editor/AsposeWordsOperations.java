@@ -74,7 +74,6 @@ public class AsposeWordsOperations extends ContentOperations {
         if (revision != null) {
           span.setAuthor(revision.getAuthor());
           span.setTimestamp(revision.getDateTime());
-          span.decorateText(content);
         }
       }
     }
@@ -310,7 +309,6 @@ public class AsposeWordsOperations extends ContentOperations {
       span.setAuthor(comment.getAuthor());
       span.setInitials(comment.getInitial());
       span.setTimestamp(comment.getDateTime());
-      span.decorateText(content);
     }
 
     private final void addComments (Editable content) throws Exception {
