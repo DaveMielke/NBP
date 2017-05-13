@@ -26,6 +26,51 @@ public abstract class Spans {
 
   private final static String PROPERTY_PREFIX = "-";
 
+  private final static void logInvalidSavedValue (String value, String what) {
+    Log.w(LOG_TAG, String.format("invalid saved %s: %s", what, value));
+  }
+
+  private final static Integer newInteger (String string, String what) {
+    if (string != null) {
+      try {
+        return Integer.valueOf(string);
+      } catch (NumberFormatException exception) {
+        logInvalidSavedValue(string, what);
+      }
+    }
+
+    return null;
+  }
+
+  private final static Integer newColor (String string) {
+    return newInteger(string, "color");
+  }
+
+  private final static Long newLong (String string, String what) {
+    if (string != null) {
+      try {
+        return Long.valueOf(string);
+      } catch (NumberFormatException exception) {
+        logInvalidSavedValue(string, what);
+      }
+    }
+
+    return null;
+  }
+
+  private final static Date newTimestamp (String string) {
+    Long timestamp = newLong(string, "timestamp");
+    if (timestamp == null) return null;
+    return new Date(timestamp);
+  }
+
+  private final static Editable newContent (String text, String spans) {
+    if (text == null) return null;
+    Editable content = new SpannableStringBuilder(text);
+    if (spans != null) Spans.restoreSpans(content, spans);
+    return content;
+  }
+
   private abstract static class SpanEntry {
     protected SpanEntry () {
     }
@@ -140,19 +185,18 @@ public abstract class Spans {
 
         @Override
         public final Object newSpan (String[] properties) {
+          String author = properties[0];
+          Date timestamp = newTimestamp(properties[1]);
+
           Constructor constructor = LanguageUtilities.getConstructor(getType());
           if (constructor == null) return null;
 
-          RevisionSpan span = (RevisionSpan)LanguageUtilities.newInstance(constructor);
-          if (span == null) return null;
+          RevisionSpan revision = (RevisionSpan)LanguageUtilities.newInstance(constructor);
+          if (revision == null) return null;
 
-          String author = properties[0];
-          String timestamp = properties[1];
-
-          if (author != null) span.setAuthor(author);
-          if (timestamp != null) span.setTimestamp(new Date(Long.valueOf(timestamp)));
-
-          return span;
+          if (author != null) revision.setAuthor(author);
+          if (timestamp != null) revision.setTimestamp(timestamp);
+          return revision;
         }
       }
     );
@@ -211,24 +255,22 @@ public abstract class Spans {
 
         @Override
         public final Object newSpan (String[] properties) {
+          Editable content = newContent(properties[0], properties[1]);
+          if (content == null) return null;
+
+          String author = properties[2];
+          String initials = properties[3];
+          Date timestamp = newTimestamp(properties[4]);
+
           Constructor constructor = LanguageUtilities.getConstructor(getType(), Editable.class);
           if (constructor == null) return null;
 
-          String text = properties[0];
-          String spans = properties[1];
-          String author = properties[2];
-          String initials = properties[3];
-          String time = properties[4];
+          CommentSpan comment = (CommentSpan)LanguageUtilities.newInstance(constructor, content);
+          if (comment == null) return null;
 
-          if (text == null) text = "";
-          Editable editable = new SpannableStringBuilder(text);
-          CommentSpan comment = (CommentSpan)LanguageUtilities.newInstance(constructor, editable);
-
-          if (spans != null) Spans.restoreSpans(editable, spans);
           if (author != null) comment.setAuthor(author);
           if (initials != null) comment.setInitials(initials);
-          if (time != null) comment.setTimestamp(new Date(Long.valueOf(time)));
-
+          if (timestamp != null) comment.setTimestamp(timestamp);
           return comment;
         }
       }
@@ -267,13 +309,13 @@ public abstract class Spans {
 
         @Override
         public final Object newSpan (String[] properties) {
+          Integer color = newColor(properties[0]);
+          if (color == null) return null;
+
           Constructor constructor = LanguageUtilities.getConstructor(getType(), Integer.TYPE);
           if (constructor == null) return null;
 
-          String color = properties[0];
-          if (color == null) return null;
-
-          return LanguageUtilities.newInstance(constructor, Integer.valueOf(color));
+          return LanguageUtilities.newInstance(constructor, color);
         }
       }
     );
