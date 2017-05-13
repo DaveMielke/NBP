@@ -2,12 +2,11 @@ package org.nbp.editor;
 
 import android.text.style.CharacterStyle;
 
-import org.nbp.common.AlertDialogBuilder;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.widget.TextView;
 import java.util.Date;
 
-public abstract class RevisionSpan extends AuthorSpan {
+public abstract class RevisionSpan extends AuthorSpan implements DialogFinisher {
   protected RevisionSpan (String prefix, String suffix, CharacterStyle style) {
     super(prefix, suffix, style);
   }
@@ -22,25 +21,18 @@ public abstract class RevisionSpan extends AuthorSpan {
 
   public abstract int getRevisionType ();
 
-  private final static void setText (AlertDialog dialog, int id, CharSequence text) {
+  private final static void setText (Dialog dialog, int id, CharSequence text) {
     if (text != null) ((TextView)dialog.findViewById(id)).setText(text);
   }
 
-  public final void show (EditorActivity activity) {
-    AlertDialog.Builder builder = activity.newAlertDialogBuilder(
-      R.string.menu_revisions_showRevision
-    );
+  private final static void setText (Dialog dialog, int id, int text) {
+    setText(dialog, id, dialog.getContext().getString(text));
+  }
 
-    builder.setView(
-      activity.getLayoutInflater().inflate(R.layout.revision, null)
-    );
-
-    builder.setNeutralButton(R.string.action_ok, null);
-    AlertDialog dialog = builder.create();
-    dialog.show();
-
+  @Override
+  public final void finishDialog (Dialog dialog) {
     setText(dialog, R.id.revision_text, getActualText());
-    setText(dialog, R.id.revision_type, activity.getString(getRevisionType()));
+    setText(dialog, R.id.revision_type, getRevisionType());
     setText(dialog, R.id.revision_author, getAuthor());
 
     {

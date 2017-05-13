@@ -86,6 +86,15 @@ public class EditorActivity extends CommonActivity {
               ;
   }
 
+  private final void showDialog (int layout, DialogFinisher finisher, int subtitle) {
+    AlertDialog.Builder builder = newAlertDialogBuilder(subtitle);
+    builder.setView(getLayoutInflater().inflate(layout, null));
+    builder.setNeutralButton(R.string.action_ok, null);
+    AlertDialog dialog = builder.create();
+    dialog.show();
+    finisher.finishDialog(dialog);
+  }
+
   private final ClipboardManager getClipboard () {
     return (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
   }
@@ -667,10 +676,13 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_showRevision () {
-    RevisionSpan span = editArea.getRevisionSpan();
+    RevisionSpan revision = editArea.getRevisionSpan();
 
-    if (span != null) {
-      span.show(this);
+    if (revision != null) {
+      showDialog(
+        R.layout.revision, revision,
+        R.string.menu_revisions_showRevision
+      );
     } else {
       showMessage(R.string.message_original_text);
     }
