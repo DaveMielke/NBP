@@ -9,8 +9,6 @@ import java.io.IOException;
 public class AsposeWordsLicense {
   private final static String LOG_TAG = AsposeWordsLicense.class.getName();
 
-  private final static String LICENSE_FILE = "Aspose.Words.lic";
-
   private final static AsposeWordsApplication asposeApplication = new AsposeWordsApplication();
 
   static {
@@ -39,7 +37,7 @@ public class AsposeWordsLicense {
 
             try {
               licenseObject = new License();
-              licenseObject.setLicense(context.getAssets().open(LICENSE_FILE));
+              licenseObject.setLicense(context.getAssets().open(ApplicationParameters.ASPOSE_LICENSE_FILE));
               Log.d(LOG_TAG, "license ready");
             } catch (Throwable problem) {
               Log.w(LOG_TAG, ("license problem: " + problem.getMessage()));
