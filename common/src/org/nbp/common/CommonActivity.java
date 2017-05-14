@@ -39,6 +39,14 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return activity;
   }
 
+  protected final int getAndroidResourceIdentifier (String name, String type) {
+    return getResources().getIdentifier(name, type, "android");
+  }
+
+  protected final int getAndroidViewIdentifier (String name) {
+    return getAndroidResourceIdentifier(name, "id");
+  }
+
   protected final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
     for (View view : views) {
       group.addView(view, parameters);
@@ -213,7 +221,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
 
   protected final void showMessage (int message, String detail, final Runnable onCleared) {
     if (isResumed) {
-      new AlertDialog
+      AlertDialog dialog = new AlertDialog
         .Builder(this)
         .setTitle((message == 0)? null: getString(message))
         .setMessage(detail)
@@ -228,7 +236,20 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
           }
         )
 
-        .show();
+        .create();
+      dialog.show();
+
+      {
+        int identifier = getAndroidViewIdentifier("alertTitle");
+
+        if (identifier != 0) {
+          View view = dialog.findViewById(identifier);
+
+          if (view != null) {
+            view.setFocusable(true);
+          }
+        }
+      }
     } else {
       StringBuilder sb = new StringBuilder();
       if (message != 0) sb.append(getString(message));
