@@ -20,12 +20,12 @@ public abstract class CommonContext {
   private final static String LOG_TAG = CommonContext.class.getName();
 
   private final static Object CONTEXT_LOCK = new Object();
-  private static Context commonContext = null;
+  private static Context applicationContext = null;
 
   public static boolean setContext (Context context) {
     synchronized (CONTEXT_LOCK) {
-      if (commonContext != null) return false;
-      commonContext = context.getApplicationContext();
+      if (applicationContext != null) return false;
+      applicationContext = context.getApplicationContext();
     }
 
     return true;
@@ -33,7 +33,7 @@ public abstract class CommonContext {
 
   public static Context getContext () {
     synchronized (CONTEXT_LOCK) {
-      Context context = commonContext;
+      Context context = applicationContext;
       if (context == null) Log.w(LOG_TAG, "no application context");
       return context;
     }
@@ -49,6 +49,16 @@ public abstract class CommonContext {
     Context context = getContext();
     if (context == null) return null;
     return context.getResources();
+  }
+
+  public static int getAndroidResourceIdentifier (String name, String type) {
+    Context context = getContext();
+    if (context == null) return 0;
+    return context.getResources().getIdentifier(name, type, "android");
+  }
+
+  public static int getAndroidViewIdentifier (String name) {
+    return getAndroidResourceIdentifier(name, "id");
   }
 
   public static String getString (int resource) {

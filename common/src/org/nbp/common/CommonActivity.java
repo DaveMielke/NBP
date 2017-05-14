@@ -39,14 +39,6 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return activity;
   }
 
-  protected final int getAndroidResourceIdentifier (String name, String type) {
-    return getResources().getIdentifier(name, type, "android");
-  }
-
-  protected final int getAndroidViewIdentifier (String name) {
-    return getAndroidResourceIdentifier(name, "id");
-  }
-
   protected final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
     for (View view : views) {
       group.addView(view, parameters);
@@ -240,7 +232,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
       dialog.show();
 
       {
-        int identifier = getAndroidViewIdentifier("alertTitle");
+        int identifier = CommonContext.getAndroidViewIdentifier("alertTitle");
 
         if (identifier != 0) {
           View view = dialog.findViewById(identifier);
