@@ -8,7 +8,12 @@ public abstract class ApplicationParameters {
 
   public final static int[] REVISION_AUTHOR_COLORS = new int[] {
     Color.RED,
-    Color.BLUE
+    Color.BLUE,
+    Color.GREEN,
+    Color.YELLOW,
+    Color.CYAN,
+    Color.MAGENTA,
+    Color.GRAY
   };
 
   public final static String STRING_ENCODING = "UTF8";

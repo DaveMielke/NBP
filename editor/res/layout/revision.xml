@@ -10,15 +10,8 @@
     android:layout_height="wrap_content"
     >
 
-    <TableRow>
-      <TextView android:text="@string/author_label_name" />
-      <TextView android:id="@+id/author_name" />
-    </TableRow>
-
-    <TableRow>
-      <TextView android:text="@string/author_label_timestamp" />
-      <TextView android:id="@+id/author_timestamp" />
-    </TableRow>
+    <include layout="@layout/author_name" />
+    <include layout="@layout/author_timestamp" />
 
     <TableRow>
       <TextView android:id="@+id/revision_type" android:focusable="true" />
