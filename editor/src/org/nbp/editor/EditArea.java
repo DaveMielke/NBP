@@ -99,7 +99,7 @@ public class EditArea extends EditText {
     return true;
   }
 
-  private final boolean moveToNextBlock (Class<? extends RegionSpan> type) {
+  private final boolean moveToNextGroup (Class<? extends RegionSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
 
@@ -121,7 +121,7 @@ public class EditArea extends EditText {
     return true;
   }
 
-  private final boolean moveToPreviousBlock (Class<? extends RegionSpan> type) {
+  private final boolean moveToPreviousGroup (Class<? extends RegionSpan> type) {
     int start = 0;
     int end = getSelectionStart();
 
@@ -171,12 +171,12 @@ public class EditArea extends EditText {
     return moveToPreviousRegion(RevisionSpan.class);
   }
 
-  public final boolean moveToNextChange () {
-    return moveToNextBlock(RevisionSpan.class);
+  public final boolean moveToNextGroup () {
+    return moveToNextGroup(RevisionSpan.class);
   }
 
-  public final boolean moveToPreviousChange () {
-    return moveToPreviousBlock(RevisionSpan.class);
+  public final boolean moveToPreviousGroup () {
+    return moveToPreviousGroup(RevisionSpan.class);
   }
 
   public final CommentSpan getCommentSpan () {

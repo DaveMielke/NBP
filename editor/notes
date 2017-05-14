@@ -4,6 +4,7 @@ saving when previewing
 accept,preview,restore changes actions
 join contiguous revisions
 restore delete revisions in the right order
+region adnorments shouldn't be saved or restored
 
 add comment
 edit comment

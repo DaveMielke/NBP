@@ -35,8 +35,8 @@
   <string name="menu_highlight_underline">Underline</string>
 
   <string name="menu_options_revisions">Revisions</string>
-  <string name="menu_revisions_nextChange">Next Change</string>
-  <string name="menu_revisions_previousChange">Previous Change</string>
+  <string name="menu_revisions_nextGroup">Next Group</string>
+  <string name="menu_revisions_previousGroup">Previous Group</string>
   <string name="menu_revisions_showRevision">Show Revision</string>
   <string name="menu_revisions_nextRevision">Next Revision</string>
   <string name="menu_revisions_previousRevision">Previous Revision</string>
@@ -54,11 +54,11 @@
   <string name="revision_type_insert">Insert</string>
 
   <string name="message_file_saved">File Saved</string>
-  <string name="message_no_next_change">no next change</string>
   <string name="message_no_next_comment">no next comment</string>
+  <string name="message_no_next_group">no next group</string>
   <string name="message_no_next_revision">no next revision</string>
-  <string name="message_no_previous_change">no previous change</string>
   <string name="message_no_previous_comment">no previous comment</string>
+  <string name="message_no_previous_group">no previous group</string>
   <string name="message_no_previous_revision">no previous revision</string>
   <string name="message_original_text">original text</string>
   <string name="message_reading_content">Reading...</string>
