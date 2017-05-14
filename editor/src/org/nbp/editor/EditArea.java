@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.util.AttributeSet;
 
 import android.text.Spanned;
+import android.text.Spannable;
 import android.text.Editable;
 
 public class EditArea extends EditText {
@@ -190,10 +191,22 @@ public class EditArea extends EditText {
     return moveToPreviousRegion(CommentSpan.class);
   }
 
-  public final void removeRevisions (boolean preview) {
+  private final <T> T[] getSpans (Spanned text, Class<T> type) {
+    return text.getSpans(0, text.length(), type);
+  }
+
+  private final RevisionSpan[] getRevisionSpans (Spanned text) {
+    return getSpans(text, RevisionSpan.class);
+  }
+
+  private final PreviewSpan[] getPreviewSpans (Spanned text) {
+    return getSpans(text, PreviewSpan.class);
+  }
+
+  private final void removeRevisions (boolean preview) {
     Editable text = getText();
 
-    for (RevisionSpan revision : text.getSpans(0, text.length(), RevisionSpan.class)) {
+    for (RevisionSpan revision : getRevisionSpans(text)) {
       int start = text.getSpanStart(revision);
       int end = text.getSpanEnd(revision);
       text.removeSpan(revision);
@@ -214,10 +227,23 @@ public class EditArea extends EditText {
     }
   }
 
+  public final void previewRevisions () {
+    removeRevisions(true);
+  }
+
+  public final void acceptRevisions () {
+    removeRevisions(false);
+    Spannable text = getText();
+
+    for (PreviewSpan preview : getPreviewSpans(text)) {
+      text.removeSpan(preview);
+    }
+  }
+
   public final void restoreRevisions () {
     Editable text = getText();
 
-    for (PreviewSpan preview : text.getSpans(0, text.length(), PreviewSpan.class)) {
+    for (PreviewSpan preview : getPreviewSpans(text)) {
       int start = text.getSpanStart(preview);
       int end = text.getSpanEnd(preview);
       text.removeSpan(preview);
