@@ -7,8 +7,6 @@ import android.widget.EditText;
 import android.util.AttributeSet;
 
 import android.text.Spanned;
-import android.text.Spannable;
-import android.text.Editable;
 
 public class EditArea extends EditText {
   public EditArea (Context context, AttributeSet attributes) {
@@ -189,73 +187,5 @@ public class EditArea extends EditText {
 
   public final boolean moveToPreviousComment () {
     return moveToPreviousRegion(CommentSpan.class);
-  }
-
-  private final <T> T[] getSpans (Spanned text, Class<T> type) {
-    return text.getSpans(0, text.length(), type);
-  }
-
-  private final RevisionSpan[] getRevisionSpans (Spanned text) {
-    return getSpans(text, RevisionSpan.class);
-  }
-
-  private final PreviewSpan[] getPreviewSpans (Spanned text) {
-    return getSpans(text, PreviewSpan.class);
-  }
-
-  private final void removeRevisions (boolean preview) {
-    Editable text = getText();
-
-    for (RevisionSpan revision : getRevisionSpans(text)) {
-      int start = text.getSpanStart(revision);
-      int end = text.getSpanEnd(revision);
-      text.removeSpan(revision);
-
-      CharSequence replacement = revision.getPreviewText();
-      text.replace(start, end, replacement);
-
-      if (preview) {
-        int length = replacement.length();
-        int flags = (length == 0)?
-                    Spanned.SPAN_POINT_POINT:
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
-        text.setSpan(
-          new PreviewSpan(revision), start, (start + length), flags
-        );
-      }
-    }
-  }
-
-  public final void previewRevisions () {
-    removeRevisions(true);
-  }
-
-  public final void acceptRevisions () {
-    removeRevisions(false);
-    Spannable text = getText();
-
-    for (PreviewSpan preview : getPreviewSpans(text)) {
-      text.removeSpan(preview);
-    }
-  }
-
-  public final void restoreRevisions () {
-    Editable text = getText();
-
-    for (PreviewSpan preview : getPreviewSpans(text)) {
-      int start = text.getSpanStart(preview);
-      int end = text.getSpanEnd(preview);
-      text.removeSpan(preview);
-
-      RevisionSpan revision = preview.getRevisionSpan();
-      CharSequence replacement = revision.getDecoratedText();
-      text.replace(start, end, replacement);
-
-      text.setSpan(
-        revision, start, (start + replacement.length()),
-        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-      );
-    }
   }
 }

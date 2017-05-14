@@ -675,6 +675,18 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_markChanges () {
+    Revisions.restoreRevisions(editArea.getText());
+  }
+
+  private void menuAction_previewChanges () {
+    Revisions.previewRevisions(editArea.getText());
+  }
+
+  private void menuAction_acceptChanges () {
+    Revisions.acceptRevisions(editArea.getText());
+  }
+
   private void menuAction_showRevision () {
     RevisionSpan revision = editArea.getRevisionSpan();
 
@@ -826,6 +838,18 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_revisions_previousGroup:
         menuAction_previousGroup();
+        return true;
+
+      case R.id.menu_revisions_markChanges:
+        menuAction_markChanges();
+        return true;
+
+      case R.id.menu_revisions_previewChanges:
+        menuAction_previewChanges();
+        return true;
+
+      case R.id.menu_revisions_acceptChanges:
+        menuAction_acceptChanges();
         return true;
 
       case R.id.menu_revisions_showRevision:

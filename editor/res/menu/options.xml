@@ -149,6 +149,21 @@
        />
 
       <item
+        android:id="@+id/menu_revisions_markChanges"
+        android:title="@string/menu_revisions_markChanges"
+       />
+
+      <item
+        android:id="@+id/menu_revisions_previewChanges"
+        android:title="@string/menu_revisions_previewChanges"
+       />
+
+      <item
+        android:id="@+id/menu_revisions_acceptChanges"
+        android:title="@string/menu_revisions_acceptChanges"
+       />
+
+      <item
         android:id="@+id/menu_revisions_showRevision"
         android:title="@string/menu_revisions_showRevision"
        />

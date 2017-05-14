@@ -37,6 +37,9 @@
   <string name="menu_options_revisions">Revisions</string>
   <string name="menu_revisions_nextGroup">Next Group</string>
   <string name="menu_revisions_previousGroup">Previous Group</string>
+  <string name="menu_revisions_markChanges">Mark Changes</string>
+  <string name="menu_revisions_previewChanges">Preview Changes</string>
+  <string name="menu_revisions_acceptChanges">Accept Changes</string>
   <string name="menu_revisions_showRevision">Show Revision</string>
   <string name="menu_revisions_nextRevision">Next Revision</string>
   <string name="menu_revisions_previousRevision">Previous Revision</string>
