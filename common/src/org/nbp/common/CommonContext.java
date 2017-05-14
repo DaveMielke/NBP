@@ -52,9 +52,9 @@ public abstract class CommonContext {
   }
 
   public static int getAndroidResourceIdentifier (String name, String type) {
-    Context context = getContext();
-    if (context == null) return 0;
-    return context.getResources().getIdentifier(name, type, "android");
+    Resources resources = getResources();
+    if (resources == null) return 0;
+    return resources.getIdentifier(name, type, "android");
   }
 
   public static int getAndroidViewIdentifier (String name) {
