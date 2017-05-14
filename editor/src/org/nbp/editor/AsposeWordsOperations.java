@@ -394,9 +394,13 @@ public class AsposeWordsOperations extends ContentOperations {
         @Override
         public void finishRevision () throws Exception {
           endBookmark(bookmarkName);
+          Bookmark bookmark = bookmarkStart.getBookmark();
+
           beginRevisionTracking(span);
-          bookmarkStart.getBookmark().setText("");
+          bookmark.setText("");
           endRevisionTracking();
+
+          bookmark.remove();
         }
       };
     }
