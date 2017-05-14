@@ -14,4 +14,9 @@ public class DeleteSpan extends RevisionSpan {
   public final int getRevisionType () {
     return R.string.revision_type_delete;
   }
+
+  @Override
+  public final CharSequence getPreviewText () {
+    return "";
+  }
 }

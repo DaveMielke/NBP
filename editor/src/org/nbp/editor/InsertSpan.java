@@ -12,4 +12,9 @@ public class InsertSpan extends RevisionSpan {
   public final int getRevisionType () {
     return R.string.revision_type_insert;
   }
+
+  @Override
+  public final CharSequence getPreviewText () {
+    return getActualText();
+  }
 }

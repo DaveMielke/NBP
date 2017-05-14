@@ -5,7 +5,9 @@ import java.util.Stack;
 import android.content.Context;
 import android.widget.EditText;
 import android.util.AttributeSet;
+
 import android.text.Spanned;
+import android.text.Editable;
 
 public class EditArea extends EditText {
   public EditArea (Context context, AttributeSet attributes) {
@@ -186,5 +188,48 @@ public class EditArea extends EditText {
 
   public final boolean moveToPreviousComment () {
     return moveToPreviousRegion(CommentSpan.class);
+  }
+
+  public final void removeRevisions (boolean preview) {
+    Editable text = getText();
+
+    for (RevisionSpan revision : text.getSpans(0, text.length(), RevisionSpan.class)) {
+      int start = text.getSpanStart(revision);
+      int end = text.getSpanEnd(revision);
+      text.removeSpan(revision);
+
+      CharSequence replacement = revision.getPreviewText();
+      text.replace(start, end, replacement);
+
+      if (preview) {
+        int length = replacement.length();
+        int flags = (length == 0)?
+                    Spanned.SPAN_POINT_POINT:
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
+        text.setSpan(
+          new PreviewSpan(revision), start, (start + length), flags
+        );
+      }
+    }
+  }
+
+  public final void restoreRevisions () {
+    Editable text = getText();
+
+    for (PreviewSpan preview : text.getSpans(0, text.length(), PreviewSpan.class)) {
+      int start = text.getSpanStart(preview);
+      int end = text.getSpanEnd(preview);
+      text.removeSpan(preview);
+
+      RevisionSpan revision = preview.getRevisionSpan();
+      CharSequence replacement = revision.getDecoratedText();
+      text.replace(start, end, replacement);
+
+      text.setSpan(
+        revision, start, (start + replacement.length()),
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+      );
+    }
   }
 }
