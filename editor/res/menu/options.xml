@@ -139,13 +139,13 @@
 
     <menu>
       <item
-        android:id="@+id/menu_revisions_nextEdit"
-        android:title="@string/menu_revisions_nextEdit"
+        android:id="@+id/menu_revisions_nextChange"
+        android:title="@string/menu_revisions_nextChange"
        />
 
       <item
-        android:id="@+id/menu_revisions_previousEdit"
-        android:title="@string/menu_revisions_previousEdit"
+        android:id="@+id/menu_revisions_previousChange"
+        android:title="@string/menu_revisions_previousChange"
        />
 
       <item

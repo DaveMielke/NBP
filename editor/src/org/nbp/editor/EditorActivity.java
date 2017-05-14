@@ -663,15 +663,15 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_nextEdit () {
-    if (!editArea.moveToNextEdit()) {
-      showMessage(R.string.message_no_next_edit);
+  private void menuAction_nextChange () {
+    if (!editArea.moveToNextChange()) {
+      showMessage(R.string.message_no_next_change);
     }
   }
 
-  private void menuAction_previousEdit () {
-    if (!editArea.moveToPreviousEdit()) {
-      showMessage(R.string.message_no_previous_edit);
+  private void menuAction_previousChange () {
+    if (!editArea.moveToPreviousChange()) {
+      showMessage(R.string.message_no_previous_change);
     }
   }
 
@@ -820,12 +820,12 @@ public class EditorActivity extends CommonActivity {
       case R.id.menu_options_revisions:
         return true;
 
-      case R.id.menu_revisions_nextEdit:
-        menuAction_nextEdit();
+      case R.id.menu_revisions_nextChange:
+        menuAction_nextChange();
         return true;
 
-      case R.id.menu_revisions_previousEdit:
-        menuAction_previousEdit();
+      case R.id.menu_revisions_previousChange:
+        menuAction_previousChange();
         return true;
 
       case R.id.menu_revisions_showRevision:

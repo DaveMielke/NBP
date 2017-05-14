@@ -171,11 +171,11 @@ public class EditArea extends EditText {
     return moveToPreviousRegion(RevisionSpan.class);
   }
 
-  public final boolean moveToNextEdit () {
+  public final boolean moveToNextChange () {
     return moveToNextBlock(RevisionSpan.class);
   }
 
-  public final boolean moveToPreviousEdit () {
+  public final boolean moveToPreviousChange () {
     return moveToPreviousBlock(RevisionSpan.class);
   }
 
