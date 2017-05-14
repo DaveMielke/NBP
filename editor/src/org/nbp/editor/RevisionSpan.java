@@ -3,7 +3,7 @@ package org.nbp.editor;
 import android.text.style.CharacterStyle;
 import java.util.Date;
 
-public abstract class RevisionSpan extends AuthorSpan implements DialogFinisher {
+public abstract class RevisionSpan extends AuthorSpan {
   protected RevisionSpan (String prefix, String suffix, CharacterStyle style) {
     super(prefix, suffix, style);
   }
@@ -20,14 +20,9 @@ public abstract class RevisionSpan extends AuthorSpan implements DialogFinisher 
   public abstract CharSequence getPreviewText ();
 
   @Override
-  public final void finishDialog (DialogHelper helper) {
+  public void finishDialog (DialogHelper helper) {
+    super.finishDialog(helper);
     helper.setText(R.id.revision_text, getActualText());
     helper.setText(R.id.revision_type, getRevisionType());
-    helper.setText(R.id.revision_author, getAuthor());
-
-    {
-      Date timestamp = getTimestamp();
-      if (timestamp != null) helper.setText(R.id.revision_timestamp, timestamp.toString());
-    }
   }
 }

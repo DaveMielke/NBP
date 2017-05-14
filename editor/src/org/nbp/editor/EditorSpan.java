@@ -3,7 +3,7 @@ package org.nbp.editor;
 import android.text.Editable;
 import android.text.Spannable;
 
-public abstract class EditorSpan {
+public abstract class EditorSpan implements DialogFinisher {
   protected EditorSpan () {
   }
 
@@ -17,5 +17,9 @@ public abstract class EditorSpan {
   }
 
   public void restoreSpan (Spannable content) {
+  }
+
+  @Override
+  public void finishDialog (DialogHelper helper) {
   }
 }

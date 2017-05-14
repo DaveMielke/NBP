@@ -20,12 +20,12 @@ public abstract class AuthorSpan extends RegionSpan {
   private String authorInitials = null;
   private Date modificationTimestamp = null;
 
-  public final String getAuthor () {
+  public final String getName () {
     return authorName;
   }
 
-  public final void setAuthor (String author) {
-    authorName = author;
+  public final void setName (String name) {
+    authorName = name;
   }
 
   public final String getInitials () {
@@ -50,6 +50,18 @@ public abstract class AuthorSpan extends RegionSpan {
 
   @Override
   protected final Integer getForegroundColor () {
-    return AuthorColors.get(getAuthor());
+    return AuthorColors.get(getName());
+  }
+
+  @Override
+  public void finishDialog (DialogHelper helper) {
+    super.finishDialog(helper);
+    helper.setText(R.id.author_name, getName());
+    helper.setText(R.id.author_initials, getInitials());
+
+    {
+      Date timestamp = getTimestamp();
+      if (timestamp != null) helper.setText(R.id.author_timestamp, timestamp.toString());
+    }
   }
 }

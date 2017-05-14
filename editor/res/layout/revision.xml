@@ -11,13 +11,13 @@
     >
 
     <TableRow>
-      <TextView android:text="@string/revision_label_author" />
-      <TextView android:id="@+id/revision_author" />
+      <TextView android:text="@string/author_label_name" />
+      <TextView android:id="@+id/author_name" />
     </TableRow>
 
     <TableRow>
-      <TextView android:text="@string/revision_label_timestamp" />
-      <TextView android:id="@+id/revision_timestamp" />
+      <TextView android:text="@string/author_label_timestamp" />
+      <TextView android:id="@+id/author_timestamp" />
     </TableRow>
 
     <TableRow>

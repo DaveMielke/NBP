@@ -3,7 +3,7 @@ package org.nbp.editor;
 import android.text.Editable;
 import java.util.Date;
 
-public class CommentSpan extends AuthorSpan implements DialogFinisher {
+public class CommentSpan extends AuthorSpan {
   private final Editable commentText;
 
   private final static String decorationPrefix = "⣏⣉";
@@ -19,15 +19,9 @@ public class CommentSpan extends AuthorSpan implements DialogFinisher {
   }
 
   @Override
-  public final void finishDialog (DialogHelper helper) {
+  public void finishDialog (DialogHelper helper) {
+    super.finishDialog(helper);
     helper.setText(R.id.comment_text, getCommentText());
-    helper.setText(R.id.comment_author, getAuthor());
-    helper.setText(R.id.comment_initials, getInitials());
-
-    {
-      Date timestamp = getTimestamp();
-      if (timestamp != null) helper.setText(R.id.comment_timestamp, timestamp.toString());
-    }
   }
 
   @Override

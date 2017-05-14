@@ -158,7 +158,7 @@ public abstract class Spans {
           return type;
         }
 
-        private String[] properties = new String[] {"author", "time"};
+        private String[] properties = new String[] {"name", "time"};
 
         @Override
         protected final String[] getPropertyNames () {
@@ -171,7 +171,7 @@ public abstract class Spans {
 
           switch (index) {
             case 0:
-              return revision.getAuthor();
+              return revision.getName();
 
             case 1: {
               Date timestamp = revision.getTimestamp();
@@ -185,7 +185,7 @@ public abstract class Spans {
 
         @Override
         public final Object newSpan (String[] properties) {
-          String author = properties[0];
+          String name = properties[0];
           Date timestamp = newTimestamp(properties[1]);
 
           Constructor constructor = LanguageUtilities.getConstructor(getType());
@@ -194,7 +194,7 @@ public abstract class Spans {
           RevisionSpan revision = (RevisionSpan)LanguageUtilities.newInstance(constructor);
           if (revision == null) return null;
 
-          if (author != null) revision.setAuthor(author);
+          if (name != null) revision.setName(name);
           if (timestamp != null) revision.setTimestamp(timestamp);
           return revision;
         }
@@ -222,7 +222,7 @@ public abstract class Spans {
           return CommentSpan.class;
         }
 
-        private String[] properties = new String[] {"text", "spans", "author", "initials", "time"};
+        private String[] properties = new String[] {"text", "spans", "name", "initials", "time"};
 
         @Override
         protected final String[] getPropertyNames () {
@@ -241,7 +241,7 @@ public abstract class Spans {
               return Spans.saveSpans(comment.getCommentText());
 
             case 2:
-              return comment.getAuthor();
+              return comment.getName();
 
             case 3:
               return comment.getInitials();
@@ -258,7 +258,7 @@ public abstract class Spans {
           Editable content = newContent(properties[0], properties[1]);
           if (content == null) return null;
 
-          String author = properties[2];
+          String name = properties[2];
           String initials = properties[3];
           Date timestamp = newTimestamp(properties[4]);
 
@@ -268,7 +268,7 @@ public abstract class Spans {
           CommentSpan comment = (CommentSpan)LanguageUtilities.newInstance(constructor, content);
           if (comment == null) return null;
 
-          if (author != null) comment.setAuthor(author);
+          if (name != null) comment.setName(name);
           if (initials != null) comment.setInitials(initials);
           if (timestamp != null) comment.setTimestamp(timestamp);
           return comment;

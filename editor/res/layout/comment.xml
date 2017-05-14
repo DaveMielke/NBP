@@ -11,18 +11,18 @@
     >
 
     <TableRow>
-      <TextView android:text="@string/comment_label_author" />
-      <TextView android:id="@+id/comment_author" />
+      <TextView android:text="@string/author_label_name" />
+      <TextView android:id="@+id/author_name" />
     </TableRow>
 
     <TableRow>
-      <TextView android:text="@string/comment_label_initials" />
-      <TextView android:id="@+id/comment_initials" />
+      <TextView android:text="@string/author_label_initials" />
+      <TextView android:id="@+id/author_initials" />
     </TableRow>
 
     <TableRow>
-      <TextView android:text="@string/comment_label_timestamp" />
-      <TextView android:id="@+id/comment_timestamp" />
+      <TextView android:text="@string/author_label_timestamp" />
+      <TextView android:id="@+id/author_timestamp" />
     </TableRow>
 
     <TextView android:id="@+id/comment_text" android:focusable="true" />

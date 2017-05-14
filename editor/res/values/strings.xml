@@ -46,14 +46,12 @@
   <string name="menu_comments_nextComment">Next Comment</string>
   <string name="menu_comments_previousComment">Previous Comment</string>
 
-  <string name="revision_label_author">Author</string>
-  <string name="revision_label_timestamp">Timestamp</string>
+  <string name="author_label_name">Author</string>
+  <string name="author_label_initials">Initials</string>
+  <string name="author_label_timestamp">Timestamp</string>
+
   <string name="revision_type_delete">Delete</string>
   <string name="revision_type_insert">Insert</string>
-
-  <string name="comment_label_author">Author</string>
-  <string name="comment_label_initials">Initials</string>
-  <string name="comment_label_timestamp">Timestamp</string>
 
   <string name="message_file_saved">File Saved</string>
   <string name="message_no_next_change">no next change</string>

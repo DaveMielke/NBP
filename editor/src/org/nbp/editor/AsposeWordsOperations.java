@@ -72,7 +72,7 @@ public class AsposeWordsOperations extends ContentOperations {
         Revision revision = nodeRevisionMap.get(node);
 
         if (revision != null) {
-          span.setAuthor(revision.getAuthor());
+          span.setName(revision.getAuthor());
           span.setTimestamp(revision.getDateTime());
         }
       }
@@ -306,7 +306,7 @@ public class AsposeWordsOperations extends ContentOperations {
       CommentSpan span = new CommentSpan(text);
       content.setSpan(span, startPosition, endPosition, content.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-      span.setAuthor(comment.getAuthor());
+      span.setName(comment.getAuthor());
       span.setInitials(comment.getInitial());
       span.setTimestamp(comment.getDateTime());
     }
@@ -353,7 +353,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
     private final void beginRevisionTracking (RevisionSpan span) {
       document.startTrackRevisions(
-        span.getAuthor(), span.getTimestamp()
+        span.getName(), span.getTimestamp()
       );
     }
 
