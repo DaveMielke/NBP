@@ -49,6 +49,7 @@
   <string name="menu_comments_showComment">Show Comment</string>
   <string name="menu_comments_nextComment">Next Comment</string>
   <string name="menu_comments_previousComment">Previous Comment</string>
+  <string name="menu_comments_addComment">Add Comment</string>
   <string name="menu_comments_removeComment">Remove Comment</string>
 
   <string name="author_label_name">Author</string>
@@ -73,6 +74,7 @@
   <string name="message_uncommented_text">uncommented text</string>
   <string name="message_writing_content">Writing...</string>
 
+  <string name="action_add">Add</string>
   <string name="action_cancel">Cancel</string>
   <string name="action_change">Change</string>
   <string name="action_ok">OK</string>

@@ -86,7 +86,7 @@ public class EditorActivity extends CommonActivity {
               ;
   }
 
-  private final void showDialog (int layout, DialogFinisher finisher, int subtitle) {
+  private final void showDialog (int subtitle, int layout, DialogFinisher finisher) {
     AlertDialog.Builder builder = newAlertDialogBuilder(subtitle);
     builder.setView(getLayoutInflater().inflate(layout, null));
     builder.setNeutralButton(R.string.action_ok, null);
@@ -693,8 +693,7 @@ public class EditorActivity extends CommonActivity {
 
     if (revision != null) {
       showDialog(
-        R.layout.revision, revision,
-        R.string.menu_revisions_showRevision
+        R.string.menu_revisions_showRevision, R.layout.revision_show, revision
       );
     } else {
       showMessage(R.string.message_original_text);
@@ -728,8 +727,7 @@ public class EditorActivity extends CommonActivity {
 
     if (comment != null) {
       showDialog(
-        R.layout.comment, comment,
-        R.string.menu_comments_showComment
+        R.string.menu_comments_showComment, R.layout.comment_show, comment
       );
     } else {
       showMessage(R.string.message_uncommented_text);
@@ -746,6 +744,46 @@ public class EditorActivity extends CommonActivity {
     if (!editArea.moveToPreviousComment()) {
       showMessage(R.string.message_no_previous_comment);
     }
+  }
+
+  private void menuAction_addComment () {
+    AlertDialog.Builder builder = newAlertDialogBuilder(R.string.menu_comments_addComment);
+    builder.setView(getLayoutInflater().inflate(R.layout.comment_add, null));
+    builder.setNegativeButton(R.string.action_cancel, null);
+    builder.setPositiveButton(R.string.action_add, null);
+
+    final AlertDialog alert = builder.create();
+    alert.show();
+
+    alert.setButton(
+      DialogInterface.BUTTON_POSITIVE, getString(R.string.action_add),
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+          CommentSpan comment;
+
+          {
+            EditText view = (EditText)alert.findViewById(R.id.comment_text);
+            Editable text = view.getText();
+
+            if (text.toString().trim().isEmpty()) return;
+            comment = new CommentSpan(text);
+          }
+
+          Editable text = editArea.getText();
+          int start = editArea.getSelectionStart();
+          int end = editArea.getSelectionEnd();
+
+          text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
+          comment.finishSpan(text);
+
+          text.setSpan(
+            comment, start, (start + comment.getDecoratedText().length()),
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+          );
+        }
+      }
+    );
   }
 
   private void menuAction_removeComment () {
@@ -902,6 +940,10 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_comments_previousComment:
         menuAction_previousComment();
+        return true;
+
+      case R.id.menu_comments_addComment:
+        menuAction_addComment();
         return true;
 
       case R.id.menu_comments_removeComment:

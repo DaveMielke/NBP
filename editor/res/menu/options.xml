@@ -207,6 +207,11 @@
        />
 
       <item
+        android:id="@+id/menu_comments_addComment"
+        android:title="@string/menu_comments_addComment"
+       />
+
+      <item
         android:id="@+id/menu_comments_removeComment"
         android:title="@string/menu_comments_removeComment"
        />
