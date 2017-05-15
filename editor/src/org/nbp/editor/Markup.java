@@ -19,6 +19,10 @@ public abstract class Markup {
     return getSpans(text, PreviewSpan.class);
   }
 
+  private final static CommentSpan[] getCommentSpans (Spanned text) {
+    return getSpans(text, CommentSpan.class);
+  }
+
   private final static void removeRevisions (Editable text, boolean preview) {
     for (RevisionSpan revision : getRevisionSpans(text)) {
       int start = text.getSpanStart(revision);
@@ -68,5 +72,24 @@ public abstract class Markup {
         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
       );
     }
+  }
+
+  public final static void removeComment (Editable text, CommentSpan comment) {
+    int start = text.getSpanStart(comment);
+    int end = text.getSpanEnd(comment);
+
+    text.removeSpan(comment);
+    text.replace(start, end, comment.getActualText());
+  }
+
+  public final static void removeComments (Editable text) {
+    for (CommentSpan comment : getCommentSpans(text)) {
+      removeComment(text, comment);
+    }
+  }
+
+  public final static void removeMarkup (Editable text) {
+    acceptRevisions(text);
+    removeComments(text);
   }
 }

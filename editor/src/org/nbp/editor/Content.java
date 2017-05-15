@@ -343,7 +343,7 @@ public abstract class Content {
       if (operations.canContainMarkup()) {
         Markup.restoreRevisions(copy);
       } else {
-        Markup.acceptRevisions(copy);
+        Markup.removeMarkup(copy);
       }
 
       content = copy;
