@@ -23,6 +23,14 @@ public abstract class Markup {
     return getSpans(text, CommentSpan.class);
   }
 
+  public final static void removeRevision (Editable text, RevisionSpan revision) {
+    int start = text.getSpanStart(revision);
+    int end = text.getSpanEnd(revision);
+
+    text.removeSpan(revision);
+    text.replace(start, end, revision.getPreviewText());
+  }
+
   private final static void removeRevisions (Editable text, boolean preview) {
     for (RevisionSpan revision : getRevisionSpans(text)) {
       int start = text.getSpanStart(revision);

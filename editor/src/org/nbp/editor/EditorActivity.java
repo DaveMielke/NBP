@@ -713,6 +713,16 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_removeRevision () {
+    RevisionSpan revision = editArea.getRevisionSpan();
+
+    if (revision != null) {
+      Markup.removeRevision(editArea.getText(), revision);
+    } else {
+      showMessage(R.string.message_original_text);
+    }
+  }
+
   private void menuAction_showComment () {
     CommentSpan comment = editArea.getCommentSpan();
 
@@ -735,6 +745,16 @@ public class EditorActivity extends CommonActivity {
   private void menuAction_previousComment () {
     if (!editArea.moveToPreviousComment()) {
       showMessage(R.string.message_no_previous_comment);
+    }
+  }
+
+  private void menuAction_removeComment () {
+    CommentSpan comment = editArea.getCommentSpan();
+
+    if (comment != null) {
+      Markup.removeComment(editArea.getText(), comment);
+    } else {
+      showMessage(R.string.message_uncommented_text);
     }
   }
 
@@ -865,6 +885,10 @@ public class EditorActivity extends CommonActivity {
         menuAction_previousRevision();
         return true;
 
+      case R.id.menu_revisions_removeRevision:
+        menuAction_removeRevision();
+        return true;
+
       case R.id.menu_options_comments:
         return true;
 
@@ -878,6 +902,10 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_comments_previousComment:
         menuAction_previousComment();
+        return true;
+
+      case R.id.menu_comments_removeComment:
+        menuAction_removeComment();
         return true;
 
       default:

@@ -177,6 +177,11 @@
         android:id="@+id/menu_revisions_previousRevision"
         android:title="@string/menu_revisions_previousRevision"
        />
+
+      <item
+        android:id="@+id/menu_revisions_removeRevision"
+        android:title="@string/menu_revisions_removeRevision"
+       />
     </menu>
   </item>
 
@@ -199,6 +204,11 @@
       <item
         android:id="@+id/menu_comments_previousComment"
         android:title="@string/menu_comments_previousComment"
+       />
+
+      <item
+        android:id="@+id/menu_comments_removeComment"
+        android:title="@string/menu_comments_removeComment"
        />
     </menu>
   </item>
