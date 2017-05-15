@@ -19,6 +19,9 @@ import org.nbp.common.LazyInstantiator;
 
 import android.util.Log;
 import android.net.Uri;
+
+import android.text.Spanned;
+import android.text.SpannableStringBuilder;
 import android.text.Editable;
 
 public abstract class Content {
@@ -332,6 +335,20 @@ public abstract class Content {
   }
 
   public static boolean writeFile (File file, CharSequence content) {
+    ContentOperations operations = getContentOperations(file);
+
+    if (content instanceof Spanned) {
+      Editable copy = new SpannableStringBuilder(content);
+
+      if (operations.canContainMarkup()) {
+        Markup.restoreRevisions(copy);
+      } else {
+        Markup.acceptRevisions(copy);
+      }
+
+      content = copy;
+    }
+
     String path = file.getAbsolutePath();
     String newPath = path + ".new";
     File newFile = new File(newPath);
@@ -341,7 +358,7 @@ public abstract class Content {
       OutputStream stream = new FileOutputStream(newFile);
 
       try {
-        getContentOperations(file).write(stream, content);
+        operations.write(stream, content);
 
         if (!newFile.renameTo(file)) {
           throw new IOException(String.format(

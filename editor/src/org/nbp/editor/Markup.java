@@ -3,8 +3,8 @@ package org.nbp.editor;
 import android.text.Editable;
 import android.text.Spanned;
 
-public abstract class Revisions {
-  private Revisions () {
+public abstract class Markup {
+  private Markup () {
   }
 
   private final static <T> T[] getSpans (Spanned text, Class<T> type) {

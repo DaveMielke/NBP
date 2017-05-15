@@ -32,7 +32,7 @@ public class AsposeWordsOperations extends ContentOperations {
   private final int loadFormat;
 
   public AsposeWordsOperations (int saveFormat, int loadFormat) throws IOException {
-    super();
+    super(true);
 
     this.saveFormat = saveFormat;
     this.loadFormat = loadFormat;

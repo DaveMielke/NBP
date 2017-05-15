@@ -41,6 +41,6 @@ public class ByteOperations extends ContentOperations {
   }
 
   public ByteOperations () {
-    super();
+    super(false);
   }
 }

@@ -59,6 +59,6 @@ public class TextOperations extends ContentOperations {
   }
 
   public TextOperations () {
-    super();
+    super(false);
   }
 }

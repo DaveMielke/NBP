@@ -215,10 +215,11 @@ public class EditorActivity extends CommonActivity {
       public void onPostExecute (Void result) {
         if (dialog != null) dialog.dismiss();
 
-        if (!f.getParentFile().equals(filesDirectory)) {
-          showMessage(R.string.message_file_saved, f.getAbsolutePath(), onSaved);
-        } else {
+        if (f.getParentFile().equals(filesDirectory)) {
+          // checkpoint taken - don't present a confirmation dialog
           run(onSaved);
+        } else {
+          showMessage(R.string.message_file_saved, f.getAbsolutePath(), onSaved);
         }
       }
     }.execute();
@@ -676,15 +677,15 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_markChanges () {
-    Revisions.restoreRevisions(editArea.getText());
+    Markup.restoreRevisions(editArea.getText());
   }
 
   private void menuAction_previewChanges () {
-    Revisions.previewRevisions(editArea.getText());
+    Markup.previewRevisions(editArea.getText());
   }
 
   private void menuAction_acceptChanges () {
-    Revisions.acceptRevisions(editArea.getText());
+    Markup.acceptRevisions(editArea.getText());
   }
 
   private void menuAction_showRevision () {
