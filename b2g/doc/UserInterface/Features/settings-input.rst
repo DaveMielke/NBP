@@ -1,12 +1,12 @@
-.. table:: General Settings
+.. table:: Input Settings
 
   ====================  =======  ====================  =====================
   Setting               Default  Choices               Buttons
   --------------------  -------  --------------------  ---------------------
-  Word Wrap             On       Off, On
-  Notifications         On       Off, On
-  Long Press            On       Off, On
-  Reverse Panning       Off      Off, On
-  One Hand              Off      Off, On
+  Typing                Text     Text, Cells           Change
+  Bold                  Off      Off, On
+  Italic                Off      Off, On
+  Strike                Off      Off, On
+  Underline             Off      Off, On
   ====================  =======  ====================  =====================
 

@@ -38,14 +38,35 @@ columns as follows:
 General Settings
 ~~~~~~~~~~~~~~~~
 
-The following settings are presented:
-
 .. include:: settings-general.rst
+
+Rendering Settings
+~~~~~~~~~~~~~~~~~~
+
+.. include:: settings-rendering.rst
+
+Input Settings
+~~~~~~~~~~~~~~
+
+.. include:: settings-input.rst
+
+Braille Settings
+~~~~~~~~~~~~~~~~
+
+.. include:: settings-braille.rst
+
+Speech Settings
+~~~~~~~~~~~~~~~
+
+.. include:: settings-speech.rst
+
+Remote Settings
+~~~~~~~~~~~~~~~
+
+.. include:: settings-remote.rst
 
 Developer Settings
 ~~~~~~~~~~~~~~~~~~
-
-If `Developer Mode`_ is enabled, then these additional settings are presented:
 
 .. include:: settings-developer.rst
 

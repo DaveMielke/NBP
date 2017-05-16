@@ -86,11 +86,11 @@
 
   <string name="control_groups">Main Screen</string>
   <string name="control_group_general">General Settings</string>
-  <string name="control_group_rendering">Braille Rendering</string>
+  <string name="control_group_rendering">Rendering Settings</string>
   <string name="control_group_input">Input Settings</string>
   <string name="control_group_braille">Braille Settings</string>
   <string name="control_group_speech">Speech Settings</string>
-  <string name="control_group_display">Remote Display</string>
+  <string name="control_group_display">Remote Settings</string>
   <string name="control_group_developer">Developer Settings</string>
 
   <string name="TypingMode_control_label">Typing</string>
@@ -128,10 +128,10 @@
   <string name="numeric_control_previous">Decrease</string>
   <string name="numeric_control_next">Increase</string>
 
-  <string name="BrailleCode_control_label">Code</string>
+  <string name="BrailleCode_control_label">Braille Code</string>
   <string name="BrailleEnabled_control_label">Braille Display</string>
-  <string name="BrailleFirmness_control_label">Firmness</string>
-  <string name="BrailleMonitor_control_label">Monitor</string>
+  <string name="BrailleFirmness_control_label">Braille Firmness</string>
+  <string name="BrailleMonitor_control_label">Braille Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>
   <string name="LongPress_control_label">Long Press</string>
   <string name="OneHand_control_label">One Hand</string>

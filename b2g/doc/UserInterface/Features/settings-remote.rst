@@ -1,12 +1,9 @@
-.. table:: General Settings
+.. table:: Remote Settings
 
   ====================  =======  ====================  =====================
   Setting               Default  Choices               Buttons
   --------------------  -------  --------------------  ---------------------
-  Word Wrap             On       Off, On
-  Notifications         On       Off, On
-  Long Press            On       Off, On
-  Reverse Panning       Off      Off, On
-  One Hand              Off      Off, On
+  Remote Display        Off      Off, On
+  Secure Connection     Off      Off, On
   ====================  =======  ====================  =====================
 

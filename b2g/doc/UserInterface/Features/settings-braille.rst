@@ -1,12 +1,10 @@
-.. table:: General Settings
+.. table:: Braille Settings
 
   ====================  =======  ====================  =====================
   Setting               Default  Choices               Buttons
   --------------------  -------  --------------------  ---------------------
-  Word Wrap             On       Off, On
-  Notifications         On       Off, On
-  Long Press            On       Off, On
-  Reverse Panning       Off      Off, On
-  One Hand              Off      Off, On
+  Braille Display       On       Off, On
+  Braille Firmness      4        0 - 7                 Decrease, Increase
+  Braille Monitor       Off      Off, On
   ====================  =======  ====================  =====================
 
