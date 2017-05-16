@@ -269,27 +269,37 @@ public class SettingsActivity extends CommonActivity {
   }
 
   private View createControlView (Control control) {
-    ViewGroup view = new TableRow(this);
-    view.addView(createLabelView(control));
+    ViewGroup group = new TableRow(this);
+    group.addView(createLabelView(control));
 
     if (control instanceof BooleanControl) {
-      view.addView(createBooleanValueView(control));
+      group.addView(createBooleanValueView(control));
     } else {
-      view.addView(createIntegerValueView(control));
+      group.addView(createIntegerValueView(control));
 
       if (control instanceof EnumerationControl) {
-        view.addView(createEnumerationChangeButton(control));
+        group.addView(createEnumerationChangeButton(control));
       } else {
-        view.addView(createPreviousValueButton(control));
-        view.addView(createNextValueButton(control));
+        group.addView(createPreviousValueButton(control));
+        group.addView(createNextValueButton(control));
       }
     }
 
-    return view;
+    return group;
   }
 
   private Fragment createFragment (final View view, final int title) {
     return new Fragment() {
+      private CharSequence titleText = null;
+      private TextView titleView = null;
+
+      @Override
+      public void onCreate (Bundle state) {
+        super.onCreate(state);
+        titleText = getString(title);
+        titleView = (TextView)findViewById(R.id.settings_fragment_title);
+      }
+
       @Override
       public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle state) {
         return view;
@@ -298,9 +308,18 @@ public class SettingsActivity extends CommonActivity {
       @Override
       public void onResume () {
         super.onResume();
-        TextView view = (TextView)findViewById(R.id.settings_fragment_title);
-        view.setText(title);
-        view.requestFocus();
+        titleView.setText(titleText);
+
+        {
+          View view = getView();
+
+          if (view instanceof AdapterView) {
+            View item = ((AdapterView)view).getSelectedView();
+            if (item != null) view = item;
+          }
+
+          view.requestFocus();
+        }
       }
     };
   }
@@ -341,12 +360,13 @@ public class SettingsActivity extends CommonActivity {
     list.setOnItemClickListener(
       new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick (AdapterView adapter, View view, int position, long id) {
-          FragmentTransaction transaction = getFragmentManager().beginTransaction();
-          transaction.add(FRAGMENT_CONTAINER_ID, groupFragments[position])
-                     .remove(groupsFragment)
-                     .addToBackStack(null)
-                     .commit();
+        public void onItemClick (AdapterView list, View item, int position, long id) {
+          list.setSelection(position);
+
+          getFragmentManager().beginTransaction()
+            .replace(FRAGMENT_CONTAINER_ID, groupFragments[position])
+            .addToBackStack(null)
+            .commit();
         }
       }
     );

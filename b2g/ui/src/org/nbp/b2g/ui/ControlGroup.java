@@ -13,11 +13,17 @@ public enum ControlGroup {
   ;
 
   private final int groupLabel;
-  private Control[] groupControls;
+
+  private ControlGroup (int label) {
+    groupLabel = label;
+  }
 
   public final int getLabel () {
     return groupLabel;
   }
+
+  private final static Object CONTROLS_LOCK = new Object();
+  private Control[] groupControls;
 
   private final static void setControls () {
     final ArrayList[] lists = new ArrayList[ControlGroup.values().length];
@@ -49,14 +55,10 @@ public enum ControlGroup {
   }
 
   public final Control[] getControls () {
-    synchronized (GENERAL) {
+    synchronized (CONTROLS_LOCK) {
       if (groupControls == null) setControls();
     }
 
     return groupControls;
-  }
-
-  private ControlGroup (int label) {
-    groupLabel = label;
   }
 }
