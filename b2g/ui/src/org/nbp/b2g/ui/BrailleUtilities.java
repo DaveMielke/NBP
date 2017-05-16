@@ -133,18 +133,15 @@ public abstract class BrailleUtilities {
           }
         }
 
-        if (!hasSelection) {
+        if (!hasSelection && ApplicationSettings.SHOW_HIGHLIGHTED) {
           if (lineText instanceof Spanned) {
             Spanned spanned = (Spanned)lineText;
             Object[] spans = spanned.getSpans(0, lineLength, Object.class);
 
             if (spans != null) {
               for (Object span : spans) {
-                if (span instanceof CharacterStyle) {
-                  if (HighlightSpans.getEntry((CharacterStyle)span) == null) continue;
-                } else {
-                  continue;
-                }
+                if (!(span instanceof CharacterStyle)) continue;
+                if (HighlightSpans.getEntry((CharacterStyle)span) == null) continue;
 
                 int start = spanned.getSpanStart(span);
                 int end = spanned.getSpanEnd(span);

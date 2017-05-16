@@ -16,6 +16,7 @@ public abstract class Controls {
   private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
+  private final static ShowHighlightedControl showHighlightedControl = new ShowHighlightedControl();
 
   private final static TypingModeControl typingModeControl = new TypingModeControl();
   private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
@@ -58,6 +59,7 @@ public abstract class Controls {
     brailleCodeControl,
     cursorIndicatorControl,
     selectionIndicatorControl,
+    showHighlightedControl,
 
     typingModeControl,
     typingBoldControl,
@@ -123,6 +125,10 @@ public abstract class Controls {
 
   public static SelectionIndicatorControl getSelectionIndicatorControl () {
     return selectionIndicatorControl;
+  }
+
+  public static ShowHighlightedControl getShowHighlightedControl () {
+    return showHighlightedControl;
   }
 
   public static TypingModeControl getTypingModeControl () {
