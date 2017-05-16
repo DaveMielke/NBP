@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class ShowHighlightedControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.ShowHighlighted_control_label);
+  public int getLabel () {
+    return R.string.ShowHighlighted_control_label;
   }
 
   @Override

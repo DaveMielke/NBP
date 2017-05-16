@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.SelectionIndicator_control_label);
+  public int getLabel () {
+    return R.string.SelectionIndicator_control_label;
   }
 
   @Override

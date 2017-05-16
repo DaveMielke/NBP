@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class TypingUnderlineControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.TypingUnderline_control_label);
+  public int getLabel () {
+    return R.string.TypingUnderline_control_label;
   }
 
   @Override

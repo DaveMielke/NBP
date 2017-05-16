@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.ListView;
@@ -34,6 +34,8 @@ import android.content.DialogInterface;
 
 public class SettingsActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = SettingsActivity.class.getName();
+
+  private final static int FRAGMENT_CONTAINER_ID = 1;
 
   private void updateWidget (Runnable runnable) {
     runOnUiThread(runnable);
@@ -199,9 +201,17 @@ public class SettingsActivity extends ProgrammaticActivity {
     return button;
   }
 
-  private View createControlLabelView (Control control) {
-    TextView view = newTextView(control.getLabel());
+  private View createLabelView (CharSequence label) {
+    TextView view = newTextView(label);
     return view;
+  }
+
+  private View createLabelView (int label) {
+    return createLabelView(getString(label));
+  }
+
+  private View createLabelView (Control control) {
+    return createLabelView(control.getLabel());
   }
 
   private View createBooleanValueView (final Control control) {
@@ -270,20 +280,26 @@ public class SettingsActivity extends ProgrammaticActivity {
 
   private Fragment createControlGroupListFragment () {
     int groupCount = ControlGroup.values().length;
-    String[] labels = new String[groupCount];
-    final Fragment[] fragments = new Fragment[groupCount];
+    String[] groupLabels = new String[groupCount];
+    final Fragment[] groupFragments = new Fragment[groupCount];
 
     for (ControlGroup group : ControlGroup.values()) {
-      int groupIndex = group.ordinal();
-      labels[groupIndex] = getString(group.getLabel());
-
       TableLayout table = new TableLayout(this);
-      fragments[groupIndex] = createFragment(table);
+
+      {
+        int index = group.ordinal();
+
+        String label = getString(group.getLabel());
+        groupLabels[index] = label;
+
+        View view = createVerticalGroup(createLabelView(label), table);
+        groupFragments[index] = createFragment(view);
+      }
 
       for (Control control : group.getControls()) {
         TableRow row = new TableRow(this);
         table.addView(row);
-        row.addView(createControlLabelView(control));
+        row.addView(createLabelView(control));
 
         if (control instanceof BooleanControl) {
           row.addView(createBooleanValueView(control));
@@ -301,7 +317,7 @@ public class SettingsActivity extends ProgrammaticActivity {
     }
 
     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-      this, android.R.layout.simple_list_item_1, android.R.id.text1, labels
+      this, android.R.layout.simple_list_item_1, android.R.id.text1, groupLabels
     );
 
     ListView list = new ListView(this);
@@ -311,34 +327,30 @@ public class SettingsActivity extends ProgrammaticActivity {
       new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick (AdapterView adapter, View view, int position, long id) {
-          FragmentManager manager = getFragmentManager();
-          Fragment fragment = fragments[position];
-
-          FragmentTransaction transaction = manager.beginTransaction();
-          transaction.replace(1, fragment)
+          FragmentTransaction transaction = getFragmentManager().beginTransaction();
+          transaction.replace(FRAGMENT_CONTAINER_ID, groupFragments[position])
                      .addToBackStack(null)
                      .commit();
         }
       }
     );
 
-    return createFragment(list);
+    return createFragment(createVerticalGroup(createActionsView(), list));
   }
 
   @Override
   protected final View createContentView () {
-    ViewGroup group = createVerticalGroup(
-      createActionsView()
-    );
-
-    group.setId(1);
-    return group;
+    ViewGroup container = new FrameLayout(this);
+    container.setId(FRAGMENT_CONTAINER_ID);
+    return container;
   }
 
   @Override
-  protected void finishContent () {
+  protected void onContentViewSet () {
+    super.onContentViewSet();
+
     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-    transaction.add(1, createControlGroupListFragment());
+    transaction.add(FRAGMENT_CONTAINER_ID, createControlGroupListFragment());
     transaction.commit();
   }
 

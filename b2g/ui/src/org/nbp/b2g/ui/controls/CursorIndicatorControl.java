@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.CursorIndicator_control_label);
+  public int getLabel () {
+    return R.string.CursorIndicator_control_label;
   }
 
   @Override

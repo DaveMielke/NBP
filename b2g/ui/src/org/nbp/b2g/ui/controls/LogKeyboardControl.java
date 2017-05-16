@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class LogKeyboardControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.LogKeyboard_control_label);
+  public int getLabel () {
+    return R.string.LogKeyboard_control_label;
   }
 
   @Override

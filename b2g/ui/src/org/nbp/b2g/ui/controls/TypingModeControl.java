@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class TypingModeControl extends EnumerationControl<TypingMode> {
   @Override
-  public CharSequence getLabel () {
-    return toHeader(R.string.TypingMode_control_label);
+  public int getLabel () {
+    return R.string.TypingMode_control_label;
   }
 
   @Override

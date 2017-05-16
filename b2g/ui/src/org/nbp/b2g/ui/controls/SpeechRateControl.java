@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechRateControl extends LogarithmicFloatControl {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.SpeechRate_control_label);
+  public int getLabel () {
+    return R.string.SpeechRate_control_label;
   }
 
   @Override

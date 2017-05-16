@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class DeveloperEnabledControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return toHeader(R.string.DeveloperEnabled_control_label);
+  public int getLabel () {
+    return R.string.DeveloperEnabled_control_label;
   }
 
   @Override

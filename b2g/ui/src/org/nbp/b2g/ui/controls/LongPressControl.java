@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class LongPressControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.LongPress_control_label);
+  public int getLabel () {
+    return R.string.LongPress_control_label;
   }
 
   @Override

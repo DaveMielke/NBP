@@ -5,8 +5,8 @@ import org.nbp.b2g.ui.display.DisplayEndpoint;
 
 public class RemoteDisplayControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return toHeader(R.string.RemoteDisplay_control_label);
+  public int getLabel () {
+    return R.string.RemoteDisplay_control_label;
   }
 
   @Override

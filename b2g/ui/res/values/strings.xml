@@ -171,7 +171,7 @@
   <string name="SpeechVolume_control_previous">Softer</string>
   <string name="SpeechVolume_control_next">Louder</string>
 
-  <string name="DeveloperEnabled_control_label">Developer</string>
+  <string name="DeveloperEnabled_control_label">Developer Mode</string>
   <string name="LogActions_control_label">Log Actions</string>
   <string name="LogBraille_control_label">Log Braille</string>
   <string name="LogGestures_control_label">Log Gestures</string>

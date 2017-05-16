@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechEnabledControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return toHeader(R.string.SpeechEnabled_control_label);
+  public int getLabel () {
+    return R.string.SpeechEnabled_control_label;
   }
 
   @Override

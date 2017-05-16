@@ -6,10 +6,6 @@ import android.content.SharedPreferences;
 import java.util.Set;
 import java.util.HashSet;
 
-import org.nbp.common.HighlightSpans;
-import android.text.style.CharacterStyle;
-import android.text.SpannableStringBuilder;
-
 public abstract class Control {
   private final ControlGroup controlGroup;
 
@@ -21,15 +17,11 @@ public abstract class Control {
     return controlGroup;
   }
 
-  public final boolean isForDevelopers () {
-    return controlGroup == ControlGroup.DEVELOPER;
-  }
-
   protected abstract boolean setNextValue ();
   protected abstract boolean setPreviousValue ();
   protected abstract boolean setDefaultValue ();
 
-  public abstract CharSequence getLabel ();
+  public abstract int getLabel ();
   public abstract CharSequence getValue ();
 
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
@@ -45,15 +37,6 @@ public abstract class Control {
 
   public CharSequence getPreviousLabel () {
     return getString(R.string.default_control_previous);
-  }
-
-  private final static CharacterStyle HEADER_SPAN = HighlightSpans.BOLD.getSingleton();
-
-  protected final CharSequence toHeader (int resource) {
-    String text = getString(resource);
-    SpannableStringBuilder header = new SpannableStringBuilder(text);
-    header.setSpan(HEADER_SPAN, 0, text.length(), header.SPAN_EXCLUSIVE_EXCLUSIVE);
-    return header;
   }
 
   protected String getPreferenceKey () {
@@ -92,7 +75,7 @@ public abstract class Control {
   }
 
   protected String getConfirmation () {
-    return getLabel() + " " + getValue();
+    return getString(getLabel()) + " " + getValue();
   }
 
   public final void confirmValue () {

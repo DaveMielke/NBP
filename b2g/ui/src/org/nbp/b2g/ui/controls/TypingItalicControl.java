@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class TypingItalicControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return getString(R.string.TypingItalic_control_label);
+  public int getLabel () {
+    return R.string.TypingItalic_control_label;
   }
 
   @Override

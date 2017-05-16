@@ -3,8 +3,8 @@ import org.nbp.b2g.ui.*;
 
 public class LiteraryBrailleControl extends BooleanControl {
   @Override
-  public CharSequence getLabel () {
-    return toHeader(R.string.LiteraryBraille_control_label);
+  public int getLabel () {
+    return R.string.LiteraryBraille_control_label;
   }
 
   @Override
