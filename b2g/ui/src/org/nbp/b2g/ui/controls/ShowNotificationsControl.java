@@ -29,6 +29,6 @@ public class ShowNotificationsControl extends BooleanControl {
   }
 
   public ShowNotificationsControl () {
-    super(ControlGroup.OPTION);
+    super(ControlGroup.GENERAL);
   }
 }

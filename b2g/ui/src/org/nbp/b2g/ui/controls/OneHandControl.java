@@ -29,6 +29,6 @@ public class OneHandControl extends BooleanControl {
   }
 
   public OneHandControl () {
-    super(ControlGroup.OPTION);
+    super(ControlGroup.GENERAL);
   }
 }

@@ -11,6 +11,20 @@ import android.text.style.CharacterStyle;
 import android.text.SpannableStringBuilder;
 
 public abstract class Control {
+  private final ControlGroup controlGroup;
+
+  protected Control (ControlGroup group) {
+    controlGroup = group;
+  }
+
+  public final ControlGroup getGroup () {
+    return controlGroup;
+  }
+
+  public final boolean isForDevelopers () {
+    return controlGroup == ControlGroup.DEVELOPER;
+  }
+
   protected abstract boolean setNextValue ();
   protected abstract boolean setPreviousValue ();
   protected abstract boolean setDefaultValue ();
@@ -135,15 +149,5 @@ public abstract class Control {
     if (!setPreviousValue()) return false;
     reportValue(true);
     return true;
-  }
-
-  private final ControlGroup controlGroup;
-
-  public final boolean isForDevelopers () {
-    return controlGroup == ControlGroup.DEVELOPER;
-  }
-
-  protected Control (ControlGroup group) {
-    controlGroup = group;
   }
 }

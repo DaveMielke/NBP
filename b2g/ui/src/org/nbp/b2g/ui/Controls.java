@@ -5,29 +5,33 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
+  // general settings
   private final static WordWrapControl wordWrapControl = new WordWrapControl();
   private final static ShowNotificationsControl showNotificationsControl = new ShowNotificationsControl();
-
   private final static LongPressControl longPressControl = new LongPressControl();
   private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
   private final static OneHandControl oneHandControl = new OneHandControl();
 
+  // braille rendering
   private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
   private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
   private final static ShowHighlightedControl showHighlightedControl = new ShowHighlightedControl();
 
+  // input settings
   private final static TypingModeControl typingModeControl = new TypingModeControl();
   private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
   private final static TypingItalicControl typingItalicControl = new TypingItalicControl();
   private final static TypingStrikeControl typingStrikeControl = new TypingStrikeControl();
   private final static TypingUnderlineControl typingUnderlineControl = new TypingUnderlineControl();
 
+  // braille settings
   private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
   private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
   private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
 
+  // speech settings
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
   private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
   private final static SpeechVolumeControl speechVolumeControl = new SpeechVolumeControl();
@@ -35,9 +39,11 @@ public abstract class Controls {
   private final static SpeechRateControl speechRateControl = new SpeechRateControl();
   private final static SpeechPitchControl speechPitchControl = new SpeechPitchControl();
 
+  // remote display
   private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
   private final static SecureConnectionControl secureConnectionControl = new SecureConnectionControl();
 
+  // developer settings
   private final static DeveloperEnabledControl developerEnabledControl = new DeveloperEnabledControl();
   private final static LogUpdatesControl logUpdatesControl = new LogUpdatesControl();
   private final static LogKeyboardControl logKeyboardControl = new LogKeyboardControl();
@@ -48,29 +54,33 @@ public abstract class Controls {
   private final static LogSpeechControl logSpeechControl = new LogSpeechControl();
 
   private final static Control[] allControls = new Control[] {
+    // general settings
     wordWrapControl,
     showNotificationsControl,
-
     longPressControl,
     reversePanningControl,
     oneHandControl,
 
+    // braille rendering
     literaryBrailleControl,
     brailleCodeControl,
     cursorIndicatorControl,
     selectionIndicatorControl,
     showHighlightedControl,
 
+    // input settings
     typingModeControl,
     typingBoldControl,
     typingItalicControl,
     typingStrikeControl,
     typingUnderlineControl,
 
+    // braille settings
     brailleEnabledControl,
     brailleFirmnessControl,
     brailleMonitorControl,
 
+    // speech settings
     speechEnabledControl,
     sleepTalkControl,
     speechVolumeControl,
@@ -78,9 +88,11 @@ public abstract class Controls {
     speechRateControl,
     speechPitchControl,
 
+    // remote display
     remoteDisplayControl,
     secureConnectionControl,
 
+    // developer settings
     developerEnabledControl,
     logUpdatesControl,
     logKeyboardControl,
