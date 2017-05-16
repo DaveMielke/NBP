@@ -755,35 +755,35 @@ public class EditorActivity extends CommonActivity {
     final AlertDialog alert = builder.create();
     alert.show();
 
-    alert.setButton(
-      DialogInterface.BUTTON_POSITIVE, getString(R.string.action_add),
-      new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick (DialogInterface dialog, int button) {
-          CommentSpan comment;
+    DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick (DialogInterface dialog, int button) {
+        CommentSpan comment;
 
-          {
-            EditText view = (EditText)alert.findViewById(R.id.comment_text);
-            Editable text = view.getText();
+        {
+          EditText view = (EditText)alert.findViewById(R.id.comment_text);
+          Editable text = view.getText();
 
-            if (text.toString().trim().isEmpty()) return;
-            comment = new CommentSpan(text);
-          }
-
-          Editable text = editArea.getText();
-          int start = editArea.getSelectionStart();
-          int end = editArea.getSelectionEnd();
-
-          text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
-          comment.finishSpan(text);
-
-          text.setSpan(
-            comment, start, (start + comment.getDecoratedText().length()),
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-          );
+          if (text.toString().trim().isEmpty()) return;
+          comment = new CommentSpan(text);
         }
+
+        Editable text = editArea.getText();
+        int start = editArea.getSelectionStart();
+        int end = editArea.getSelectionEnd();
+
+        text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
+        comment.finishSpan(text);
+
+        text.setSpan(
+          comment, start, (start + comment.getDecoratedText().length()),
+          Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
       }
-    );
+    };
+
+    int button = DialogInterface.BUTTON_POSITIVE;
+    alert.setButton(button, alert.getButton(button).getText(), listener);
   }
 
   private void menuAction_removeComment () {
