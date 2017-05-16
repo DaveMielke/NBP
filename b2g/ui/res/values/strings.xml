@@ -84,6 +84,7 @@
   <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
   <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
 
+  <string name="control_groups">Main Screen</string>
   <string name="control_group_general">General Settings</string>
   <string name="control_group_rendering">Braille Rendering</string>
   <string name="control_group_input">Input Settings</string>
@@ -128,7 +129,7 @@
   <string name="numeric_control_next">Increase</string>
 
   <string name="BrailleCode_control_label">Code</string>
-  <string name="BrailleEnabled_control_label">Braille</string>
+  <string name="BrailleEnabled_control_label">Braille Display</string>
   <string name="BrailleFirmness_control_label">Firmness</string>
   <string name="BrailleMonitor_control_label">Monitor</string>
   <string name="CursorIndicator_control_label">Cursor Indicator</string>

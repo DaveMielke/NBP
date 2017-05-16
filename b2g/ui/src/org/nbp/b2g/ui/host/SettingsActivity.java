@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.nbp.common.ProgrammaticActivity;
+import org.nbp.common.CommonActivity;
 import org.nbp.common.LaunchUtilities;
 
 import android.util.Log;
@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 
-import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.ListView;
@@ -32,10 +31,10 @@ import android.widget.Switch;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-public class SettingsActivity extends ProgrammaticActivity {
+public class SettingsActivity extends CommonActivity {
   private final static String LOG_TAG = SettingsActivity.class.getName();
 
-  private final static int FRAGMENT_CONTAINER_ID = 1;
+  private final static int FRAGMENT_CONTAINER_ID = R.id.settings_fragment_container;
 
   private void updateWidget (Runnable runnable) {
     runOnUiThread(runnable);
@@ -269,16 +268,44 @@ public class SettingsActivity extends ProgrammaticActivity {
     return view;
   }
 
-  private Fragment createFragment (final View view) {
+  private View createControlView (Control control) {
+    ViewGroup view = new TableRow(this);
+    view.addView(createLabelView(control));
+
+    if (control instanceof BooleanControl) {
+      view.addView(createBooleanValueView(control));
+    } else {
+      view.addView(createIntegerValueView(control));
+
+      if (control instanceof EnumerationControl) {
+        view.addView(createEnumerationChangeButton(control));
+      } else {
+        view.addView(createPreviousValueButton(control));
+        view.addView(createNextValueButton(control));
+      }
+    }
+
+    return view;
+  }
+
+  private Fragment createFragment (final View view, final int title) {
     return new Fragment() {
       @Override
       public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle state) {
         return view;
       }
+
+      @Override
+      public void onResume () {
+        super.onResume();
+        TextView view = (TextView)findViewById(R.id.settings_fragment_title);
+        view.setText(title);
+        view.requestFocus();
+      }
     };
   }
 
-  private Fragment createControlGroupListFragment () {
+  private Fragment createControlGroupsFragment () {
     int groupCount = ControlGroup.values().length;
     String[] groupLabels = new String[groupCount];
     final Fragment[] groupFragments = new Fragment[groupCount];
@@ -288,31 +315,14 @@ public class SettingsActivity extends ProgrammaticActivity {
 
       {
         int index = group.ordinal();
+        int label = group.getLabel();
 
-        String label = getString(group.getLabel());
-        groupLabels[index] = label;
-
-        View view = createVerticalGroup(createLabelView(label), table);
-        groupFragments[index] = createFragment(view);
+        groupLabels[index] = getString(label);
+        groupFragments[index] = createFragment(table, label);
       }
 
       for (Control control : group.getControls()) {
-        TableRow row = new TableRow(this);
-        table.addView(row);
-        row.addView(createLabelView(control));
-
-        if (control instanceof BooleanControl) {
-          row.addView(createBooleanValueView(control));
-        } else {
-          row.addView(createIntegerValueView(control));
-
-          if (control instanceof EnumerationControl) {
-            row.addView(createEnumerationChangeButton(control));
-          } else {
-            row.addView(createPreviousValueButton(control));
-            row.addView(createNextValueButton(control));
-          }
-        }
+        table.addView(createControlView(control));
       }
     }
 
@@ -323,35 +333,25 @@ public class SettingsActivity extends ProgrammaticActivity {
     ListView list = new ListView(this);
     list.setAdapter(adapter);
 
+    final Fragment groupsFragment = createFragment(
+      createVerticalGroup(createActionsView(), list),
+      R.string.control_groups
+    );
+
     list.setOnItemClickListener(
       new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick (AdapterView adapter, View view, int position, long id) {
           FragmentTransaction transaction = getFragmentManager().beginTransaction();
-          transaction.replace(FRAGMENT_CONTAINER_ID, groupFragments[position])
+          transaction.add(FRAGMENT_CONTAINER_ID, groupFragments[position])
+                     .remove(groupsFragment)
                      .addToBackStack(null)
                      .commit();
         }
       }
     );
 
-    return createFragment(createVerticalGroup(createActionsView(), list));
-  }
-
-  @Override
-  protected final View createContentView () {
-    ViewGroup container = new FrameLayout(this);
-    container.setId(FRAGMENT_CONTAINER_ID);
-    return container;
-  }
-
-  @Override
-  protected void onContentViewSet () {
-    super.onContentViewSet();
-
-    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-    transaction.add(FRAGMENT_CONTAINER_ID, createControlGroupListFragment());
-    transaction.commit();
+    return groupsFragment;
   }
 
   @Override
@@ -363,6 +363,17 @@ public class SettingsActivity extends ProgrammaticActivity {
     } else {
       super.onBackPressed();
     }
+  }
+
+  @Override
+  public void onCreate (Bundle state) {
+    super.onCreate(state);
+    setContentView(R.layout.settings);
+
+ViewGroup container = (ViewGroup)findViewById(R.id.settings_fragment_container);
+    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+    transaction.add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment());
+    transaction.commit();
   }
 
   @Override
