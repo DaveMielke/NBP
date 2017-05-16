@@ -292,6 +292,7 @@ public class SettingsActivity extends CommonActivity {
     return new Fragment() {
       private CharSequence titleText = null;
       private TextView titleView = null;
+      private View focusedView = null;
 
       @Override
       public void onCreate (Bundle state) {
@@ -310,15 +311,23 @@ public class SettingsActivity extends CommonActivity {
         super.onResume();
         titleView.setText(titleText);
 
-        {
-          View view = getView();
-
-          if (view instanceof AdapterView) {
-            View item = ((AdapterView)view).getSelectedView();
-            if (item != null) view = item;
-          }
-
+        if (focusedView != null) {
+          focusedView.requestFocus();
+        } else {
           view.requestFocus();
+        }
+      }
+
+      @Override
+      public void onPause () {
+        try {
+          if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup)view;
+            View focused = group.findFocus();
+            if (focused != null) focusedView = focused;
+          }
+        } finally {
+          super.onPause();
         }
       }
     };
