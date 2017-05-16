@@ -1,10 +1,16 @@
 package org.nbp.common;
 
 import android.util.Log;
-
 import android.os.Build;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.view.View;
+
 public abstract class CommonUtilities {
+  protected CommonUtilities () {
+  }
+
   private static ProblemReporter errorReporter = new ProblemReporter() {
     @Override
     public final void reportProblem (String tag, String message) {
@@ -51,10 +57,11 @@ public abstract class CommonUtilities {
     reportWarning(tag, CommonContext.getString(message));
   }
 
-  public static boolean haveAndroidSDK (int sdk) {
-    return sdk >= Build.VERSION.SDK_INT;
+  public final static View findView (DialogInterface dialog, int identifier) {
+    return ((Dialog)dialog).findViewById(identifier);
   }
 
-  protected CommonUtilities () {
+  public static boolean haveAndroidSDK (int sdk) {
+    return sdk >= Build.VERSION.SDK_INT;
   }
 }

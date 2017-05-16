@@ -7,6 +7,7 @@ package org.nbp.editor;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.nbp.common.CommonUtilities;
 import org.nbp.common.CommonActivity;
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.SpeechToText;
@@ -752,8 +753,8 @@ public class EditorActivity extends CommonActivity {
     builder.setNegativeButton(R.string.action_cancel, null);
     builder.setPositiveButton(R.string.action_add, null);
 
-    final AlertDialog alert = builder.create();
-    alert.show();
+    AlertDialog dialog = builder.create();
+    dialog.show();
 
     DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
       @Override
@@ -761,7 +762,7 @@ public class EditorActivity extends CommonActivity {
         CommentSpan comment;
 
         {
-          EditText view = (EditText)alert.findViewById(R.id.comment_text);
+          EditText view = (EditText)CommonUtilities.findView(dialog, R.id.comment_text);
           Editable text = view.getText();
 
           if (text.toString().trim().isEmpty()) return;
@@ -783,7 +784,7 @@ public class EditorActivity extends CommonActivity {
     };
 
     int button = DialogInterface.BUTTON_POSITIVE;
-    alert.setButton(button, alert.getButton(button).getText(), listener);
+    dialog.setButton(button, dialog.getButton(button).getText(), listener);
   }
 
   private void menuAction_removeComment () {
