@@ -8,16 +8,24 @@ import org.nbp.common.ProgrammaticActivity;
 import org.nbp.common.LaunchUtilities;
 
 import android.util.Log;
+import android.os.Bundle;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.LayoutInflater;
 
 import android.widget.LinearLayout;
-import android.widget.GridLayout;
-
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Button;
-
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -54,39 +62,6 @@ public class SettingsActivity extends ProgrammaticActivity {
     }
 
     controlValueChangedListeners.clear();
-  }
-
-  private final List<View> developerViews = new ArrayList<View>();
-
-  private void setDeveloperViewVisibility (boolean visible) {
-    int visibility = visible? View.VISIBLE: View.GONE;
-
-    for (View view : developerViews) {
-      view.setVisibility(visibility);
-    }
-  }
-
-  private void setDeveloperViewVisibility (Control control) {
-    setDeveloperViewVisibility(((BooleanControl)control).getBooleanValue());
-  }
-
-  private void addDeveloperEnabledControlListener () {
-    Control control = Controls.getDeveloperEnabledControl();
-    setDeveloperViewVisibility(control);
-
-    addControlValueChangedListener(control,
-      new Control.OnValueChangedListener() {
-        @Override
-        public void onValueChanged (final Control control) {
-          updateWidget(new Runnable() {
-            @Override
-            public void run () {
-              setDeveloperViewVisibility(control);
-            }
-          });
-        }
-      }
-    );
   }
 
   private static void setChecked (CompoundButton button, Control control) {
@@ -284,54 +259,98 @@ public class SettingsActivity extends ProgrammaticActivity {
     return view;
   }
 
-  private View createControlsView () {
-    final GridLayout view = new GridLayout(this);
-    view.setOrientation(view.VERTICAL);
-
-    Controls.forEachControl(new ControlProcessor() {
-      private boolean isForDevelopers;
-
-      private void setColumn (int row, int column, View content) {
-        view.addView(content, new GridLayout.LayoutParams(view.spec(row), view.spec(column)));
-        if (isForDevelopers) developerViews.add(content);
+  private Fragment createFragment (final View view) {
+    return new Fragment() {
+      @Override
+      public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle state) {
+        return view;
       }
+    };
+  }
 
-      private void setRow (int row, Control control) {
-        isForDevelopers = control.isForDevelopers();
-        setColumn(row, 0, createControlLabelView(control));
+  private Fragment createControlGroupListFragment () {
+    int groupCount = ControlGroup.values().length;
+    String[] labels = new String[groupCount];
+    final Fragment[] fragments = new Fragment[groupCount];
+
+    for (ControlGroup group : ControlGroup.values()) {
+      int groupIndex = group.ordinal();
+      labels[groupIndex] = getString(group.getLabel());
+
+      TableLayout table = new TableLayout(this);
+      fragments[groupIndex] = createFragment(table);
+
+      for (Control control : group.getControls()) {
+        TableRow row = new TableRow(this);
+        table.addView(row);
+        row.addView(createControlLabelView(control));
 
         if (control instanceof BooleanControl) {
-          setColumn(row, 1, createBooleanValueView(control));
+          row.addView(createBooleanValueView(control));
         } else {
-          setColumn(row, 1, createIntegerValueView(control));
+          row.addView(createIntegerValueView(control));
 
           if (control instanceof EnumerationControl) {
-            setColumn(row, 2, createEnumerationChangeButton(control));
+            row.addView(createEnumerationChangeButton(control));
           } else {
-            setColumn(row, 2, createPreviousValueButton(control));
-            setColumn(row, 3, createNextValueButton(control));
+            row.addView(createPreviousValueButton(control));
+            row.addView(createNextValueButton(control));
           }
         }
       }
+    }
 
-      @Override
-      public boolean processControl (Control control) {
-        int row = view.getRowCount();
-        setRow(row, control);
-        return true;
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+      this, android.R.layout.simple_list_item_1, android.R.id.text1, labels
+    );
+
+    ListView list = new ListView(this);
+    list.setAdapter(adapter);
+
+    list.setOnItemClickListener(
+      new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick (AdapterView adapter, View view, int position, long id) {
+          FragmentManager manager = getFragmentManager();
+          Fragment fragment = fragments[position];
+
+          FragmentTransaction transaction = manager.beginTransaction();
+          transaction.replace(1, fragment)
+                     .addToBackStack(null)
+                     .commit();
+        }
       }
-    });
+    );
 
-    addDeveloperEnabledControlListener();
-    return newVerticalScrollContainer(view);
+    return createFragment(list);
   }
 
   @Override
   protected final View createContentView () {
-    return createVerticalGroup(
-      createActionsView(),
-      createControlsView()
+    ViewGroup group = createVerticalGroup(
+      createActionsView()
     );
+
+    group.setId(1);
+    return group;
+  }
+
+  @Override
+  protected void finishContent () {
+    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+    transaction.add(1, createControlGroupListFragment());
+    transaction.commit();
+  }
+
+  @Override
+  public void onBackPressed () {
+    FragmentManager fm = getFragmentManager();
+
+    if (fm.getBackStackEntryCount() > 0) {
+      fm.popBackStack();
+    } else {
+      super.onBackPressed();
+    }
   }
 
   @Override
