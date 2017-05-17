@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.display;
+package org.nbp.b2g.ui.remote;
 import org.nbp.b2g.ui.*;
 
 import android.content.Context;
@@ -13,8 +13,8 @@ public abstract class Component {
     return ApplicationContext.getContext();
   }
 
-  protected final DisplayEndpoint getEndpoint () {
-    return Endpoints.display.get();
+  protected final RemoteEndpoint getEndpoint () {
+    return Endpoints.remote.get();
   }
 
   protected final static void message (String text) {

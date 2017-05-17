@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.b2g.ui.display.DisplayEndpoint;
+import org.nbp.b2g.ui.remote.RemoteEndpoint;
 
 public class RemoteDisplayControl extends BooleanControl {
   @Override
@@ -26,7 +26,7 @@ public class RemoteDisplayControl extends BooleanControl {
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    DisplayEndpoint endpoint = Endpoints.display.get();
+    RemoteEndpoint endpoint = Endpoints.remote.get();
 
     if ((ApplicationSettings.REMOTE_DISPLAY = value)) {
       endpoint.start();

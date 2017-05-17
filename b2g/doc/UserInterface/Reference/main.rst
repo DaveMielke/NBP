@@ -47,7 +47,7 @@ Legacy Bindings
 Remote Braille Display Operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. include:: keys-display.rst
+.. include:: keys-remote.rst
 
 Baum Navigation Mode Mappings
 `````````````````````````````

@@ -1,4 +1,5 @@
-package org.nbp.b2g.ui.actions;
+package org.nbp.b2g.ui.remote.actions;
+import org.nbp.b2g.ui.remote.*;
 import org.nbp.b2g.ui.*;
 
 public class Offline extends Action {

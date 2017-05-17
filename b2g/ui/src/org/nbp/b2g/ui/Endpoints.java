@@ -10,7 +10,7 @@ import org.nbp.b2g.ui.host.HostEndpoint;
 import org.nbp.b2g.ui.popup.PopupEndpoint;
 import org.nbp.b2g.ui.prompt.FindEndpoint;
 import org.nbp.b2g.ui.prompt.UnicodeEndpoint;
-import org.nbp.b2g.ui.display.DisplayEndpoint;
+import org.nbp.b2g.ui.remote.RemoteEndpoint;
 
 public abstract class Endpoints {
   private final static ReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
@@ -52,8 +52,8 @@ public abstract class Endpoints {
   private final static LazyInstantiator<UnicodeEndpoint> unicode = new
     LazyInstantiator<UnicodeEndpoint>(UnicodeEndpoint.class);
 
-  public final static LazyInstantiator<DisplayEndpoint> display = new
-    LazyInstantiator<DisplayEndpoint>(DisplayEndpoint.class);
+  public final static LazyInstantiator<RemoteEndpoint> remote = new
+    LazyInstantiator<RemoteEndpoint>(RemoteEndpoint.class);
 
   public static void setHostEndpoint () {
     setCurrentEndpoint(host.get());
@@ -77,8 +77,8 @@ public abstract class Endpoints {
     setCurrentEndpoint(unicode.get());
   }
 
-  public static void setDisplayEndpoint () {
-    setCurrentEndpoint(display.get());
+  public static void setRemoteEndpoint () {
+    setCurrentEndpoint(remote.get());
   }
 
   private Endpoints () {

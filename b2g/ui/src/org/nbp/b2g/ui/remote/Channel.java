@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.display;
+package org.nbp.b2g.ui.remote;
 import org.nbp.b2g.ui.*;
 
 import java.io.IOException;
@@ -90,7 +90,7 @@ public abstract class Channel extends Component implements Runnable {
     return getProtocol().handleInput(b);
   }
 
-  private Timeout readTimeout = new Timeout(ApplicationParameters.DISPLAY_READ_TIMEOUT, "display-read-timeout") {
+  private Timeout readTimeout = new Timeout(ApplicationParameters.REMOTE_DISPLAY_READ_TIMEOUT, "remote-display-read-timeout") {
     @Override
     public void run () {
       synchronized (this) {

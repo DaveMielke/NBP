@@ -1,5 +1,5 @@
 Space+Dots78
-  |BrailleDisplay|
+  |RemoteDisplay|
 
 Backward+Space
   Switch to `Baum Navigation Mode`_.

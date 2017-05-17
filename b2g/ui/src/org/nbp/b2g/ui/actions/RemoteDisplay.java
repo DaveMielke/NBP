@@ -1,14 +1,14 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class BrailleDisplay extends Action {
+public class RemoteDisplay extends Action {
   @Override
   public boolean performAction () {
-    Endpoints.setDisplayEndpoint();
+    Endpoints.setRemoteEndpoint();
     return true;
   }
 
-  public BrailleDisplay (Endpoint endpoint) {
+  public RemoteDisplay (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

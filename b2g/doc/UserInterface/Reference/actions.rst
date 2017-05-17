@@ -9,7 +9,6 @@
 .. |BrailleCodeConfirm| replace:: Show the current literary braille code.
 .. |BrailleCodeNext| replace:: Select the next literary braille code.
 .. |BrailleCodePrevious| replace:: Select the previous literary braille code.
-.. |BrailleDisplay| replace:: Switch to `the remote braille display`_.
 .. |BrailleOff| replace:: Turn off the braille display.
 .. |BrailleOn| replace:: Turn on the braille display.
 .. |Calculator| replace:: Go to the Calculator app.
@@ -107,6 +106,7 @@
 .. |QuickStartHTML| replace:: Go to the HTML version of the `Quick Start Guide`_.
 .. |QuickStartText| replace:: Go to the plain text version of the `quick Start Guide`_.
 .. |RecentApps| replace:: Go to the Recent Apps screen.
+.. |RemoteDisplay| replace:: Switch to `the remote braille display`_.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
 .. |ResetHighlightedTyping| replace:: Turn off all of the highlighted typing styles.
 .. |ResetSettings| replace:: Reset the B2G settings to their default values.

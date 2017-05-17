@@ -52,5 +52,5 @@ bind Space+Dots12345678 Null
 include required.keys.inc
 include legacy.keys.inc
 include developer-all.keys.inc
-include display.keys.inc
+include remote.keys.inc
 include phone.keys.inc

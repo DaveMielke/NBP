@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui.display;
+package org.nbp.b2g.ui.remote;
 import org.nbp.b2g.ui.*;
 
 import java.io.IOException;
