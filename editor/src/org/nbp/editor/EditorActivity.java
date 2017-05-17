@@ -1,10 +1,7 @@
 package org.nbp.editor;
-// saveAs
-// confirmFormat
-// menuAction_open
-// restoreFile
 
 import java.io.File;
+import java.util.Date;
 import java.util.ArrayList;
 
 import org.nbp.common.CommonUtilities;
@@ -804,6 +801,7 @@ public class EditorActivity extends CommonActivity {
 
           if (text.toString().trim().isEmpty()) return;
           comment = new CommentSpan(text);
+          comment.setTimestamp(new Date());
         }
 
         Editable text = editArea.getText();
@@ -812,6 +810,7 @@ public class EditorActivity extends CommonActivity {
 
         text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
         comment.finishSpan(text);
+        editArea.setSelection(comment);
 
         text.setSpan(
           comment, start, (start + comment.getDecoratedText().length()),
