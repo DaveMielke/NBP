@@ -283,6 +283,7 @@ public abstract class FileFinder {
           Spanned dst, int dstStart, int dstEnd
         ) {
           if (dstEnd <= (dst.length() - extensionLength)) return null;
+          Tones.beep();
           return dst.subSequence(dstStart, dstEnd);
         }
       };
