@@ -4,7 +4,7 @@ The Settings Screen
 Pressing Space+o (dots 135) takes you to the Settings screen for the
 |user interface|.
 
-The top line contains the following buttons:
+The first line contains the following buttons:
 
 Save Settings
   Save the current settings for later restoration. This is a good way
@@ -21,8 +21,11 @@ Reset to Defaults
 System Maintenance
   Go to `The System Maintenance Screen`_.
 
-Each subsequent line contains a setting that can be changed, and is laid out in
-columns as follows:
+Each subsequent line contains the name of a settings category.
+Pressing Center on any of them goes to a screen that contains
+the settings belonging to the corresponding category.
+Each line on that screen contains a setting that can be changed
+which is laid out in columns as follows:
 
 1) This column contains the name of the setting.
 
@@ -34,6 +37,8 @@ columns as follows:
    that brings up a dialog from which the desired value can be selected.
 
 4) For numeric settings, this column contains a button that increases its value.
+
+The settings categories are as follows:
 
 General Settings
 ~~~~~~~~~~~~~~~~
