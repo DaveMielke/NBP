@@ -37,9 +37,9 @@ The ``Remote Display`` feature of your |product name| needs to be enabled.
 To do this:
 
 1) Press Space+o (dots 135) to go to the ``Options`` screen.
-2) Repeatedly press Space+Dot4 to go down to the ``Remote Display`` setting.
-3) Press Space+Dot6 to go right to the checkbox.
-4) If the box isn't checked then press Center.
+2) Go to ``Remote Settings``, and press Center to open it.
+3) Ensure that ``Remote Display`` is on.
+4) Ensure that ``Secure Connection`` is off.
 
 Turn Bluetooth On
 -----------------
