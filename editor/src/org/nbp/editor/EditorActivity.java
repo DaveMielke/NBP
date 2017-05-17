@@ -180,14 +180,15 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void saveFile (
-    final File file, final CharSequence content, final Runnable onSaved
+    final File file, final CharSequence content,
+    final boolean confirm, final Runnable onSaved
   ) {
     new AsyncTask<Void, Void, Void>() {
       AlertDialog dialog = null;
 
       @Override
       protected void onPreExecute () {
-        if (haveWindow()) {
+        if (confirm) {
           dialog = newAlertDialogBuilder(R.string.message_writing_content)
             .setMessage(file.getAbsolutePath())
             .create();
@@ -206,11 +207,10 @@ public class EditorActivity extends CommonActivity {
       public void onPostExecute (Void result) {
         if (dialog != null) dialog.dismiss();
 
-        if (file.getParentFile().equals(filesDirectory)) {
-          // checkpoint taken - don't present a confirmation dialog
-          run(onSaved);
-        } else {
+        if (confirm) {
           showMessage(R.string.message_file_saved, file.getAbsolutePath(), onSaved);
+        } else {
+          run(onSaved);
         }
       }
     }.execute();
@@ -251,7 +251,7 @@ public class EditorActivity extends CommonActivity {
       hasChanged = false;
     }
 
-    saveFile(file, content, onSaved);
+    saveFile(file, content, true, onSaved);
   }
 
   private final void saveFile (Runnable onSaved) {
@@ -1061,7 +1061,7 @@ public class EditorActivity extends CommonActivity {
       final Editable content = new SpannableStringBuilder(editArea.getText());
       Markup.restoreRevisions(content);
 
-      saveFile(newFile, content.toString(),
+      saveFile(newFile, content.toString(), false,
         new Runnable() {
           @Override
           public void run () {
