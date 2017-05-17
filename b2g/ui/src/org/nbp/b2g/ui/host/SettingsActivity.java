@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.nbp.common.CommonActivity;
 import org.nbp.common.LaunchUtilities;
+import org.nbp.common.Tones;
 
 import android.util.Log;
 import android.os.Bundle;
@@ -174,9 +175,7 @@ public class SettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (!control.previousValue()) {
-            Devices.tone.get().beep();
-          }
+          if (!control.previousValue()) Tones.beep();
         }
       }
     );
@@ -190,9 +189,7 @@ public class SettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          if (!control.nextValue()) {
-            Devices.tone.get().beep();
-          }
+          if (!control.nextValue()) Tones.beep();
         }
       }
     );

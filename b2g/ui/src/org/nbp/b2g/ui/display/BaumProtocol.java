@@ -4,6 +4,7 @@ import org.nbp.b2g.ui.*;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
+import org.nbp.common.Tones;
 import org.nbp.common.BitSet;
 import org.nbp.common.CharacterUtilities;
 
@@ -478,7 +479,7 @@ public class BaumProtocol extends Protocol {
     if (key != null) {
       handleKeyEvent(key, press);
     } else if (keyMap.containsKey(mask)) {
-      if (press) Devices.tone.get().beep();
+      if (press) Tones.beep();
     } else {
       return false;
     }

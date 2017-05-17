@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import org.nbp.common.Timeout;
+import org.nbp.common.Tones;
 
 import android.util.Log;
 
@@ -133,7 +134,7 @@ public abstract class KeyEvents {
         }
       }
 
-      if (!performed) Devices.tone.get().beep();
+      if (!performed) Tones.beep();
       return performed;
     } finally {
       activeNavigationKeys = 0;

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.Writer;
 import java.io.IOException;
 
+import org.nbp.common.Tones;
 import org.nbp.common.FileMaker;
 import org.nbp.common.AttachmentMaker;
 
@@ -118,7 +119,7 @@ public abstract class Crash {
   }
 
   private static void handleCrash (Throwable problem, String component, String data) {
-    Devices.tone.get().alert();
+    Tones.alert();
     logCrash(problem, component, data);
 
     if (ApplicationSettings.DEVELOPER_ENABLED) {

@@ -34,10 +34,6 @@ public abstract class ApplicationParameters extends CommonParameters {
   public final static long SWIPE_STEP_INTERVAL = 10; // milliseconds
   public final static long SWIPE_HOLD_DURATION = 100; // milliseconds
 
-  public final static int TONE_VOLUME = 100; // percentage
-  public final static int BEEP_DURATION = 100; // milliseconds
-  public final static int ALERT_DURATION = 300; // milliseconds
-
   public final static long CLOCK_UPDATE_INTERVAL = 1000; // milliseconds
   public final static long BATTERY_REPORT_INTERVAL = (28 * 60 * 1000); // milliseconds
 
