@@ -40,11 +40,10 @@ import android.widget.Button;
 import android.text.InputFilter;
 import android.text.Editable;
 
+import org.nbp.common.HighlightSpans;
 import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-
-import org.nbp.common.HighlightSpans;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,13 +86,39 @@ public class EditorActivity extends CommonActivity {
               ;
   }
 
-  private final void showDialog (int subtitle, int layout, DialogFinisher finisher) {
+  private final void showDialog (
+    int subtitle, int layout, DialogFinisher finisher,
+    int action, DialogInterface.OnClickListener listener
+  ) {
     AlertDialog.Builder builder = newAlertDialogBuilder(subtitle);
     builder.setView(getLayoutInflater().inflate(layout, null));
-    builder.setNeutralButton(R.string.action_ok, null);
+
+    if (listener != null) {
+      builder.setPositiveButton(action, listener);
+      builder.setNegativeButton(R.string.action_cancel, null);
+    } else {
+      builder.setNeutralButton(action, null);
+    }
+
     AlertDialog dialog = builder.create();
     dialog.show();
-    finisher.finishDialog(new DialogHelper(dialog));
+    if (finisher != null) finisher.finishDialog(new DialogHelper(dialog));
+  }
+
+  private final void showDialog (
+    int subtitle, int layout, DialogFinisher finisher, int action
+  ) {
+    showDialog(subtitle, layout, finisher, action, null);
+  }
+
+  private final void showDialog (
+    int subtitle, int layout, DialogFinisher finisher
+  ) {
+    showDialog(subtitle, layout, finisher, R.string.action_ok);
+  }
+
+  private final void showDialog ( int subtitle, int layout) {
+    showDialog(subtitle, layout, null);
   }
 
   private final ClipboardManager getClipboard () {
@@ -717,10 +742,19 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_removeRevision () {
-    RevisionSpan revision = editArea.getRevisionSpan();
+    final RevisionSpan revision = editArea.getRevisionSpan();
 
     if (revision != null) {
-      Markup.removeRevision(editArea.getText(), revision);
+      showDialog(
+        R.string.menu_revisions_removeRevision, R.layout.revision_show,
+        revision, R.string.action_remove,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int button) {
+            Markup.removeRevision(editArea.getText(), revision);
+          }
+        }
+      );
     } else {
       showMessage(R.string.message_original_text);
     }
@@ -791,10 +825,19 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_removeComment () {
-    CommentSpan comment = editArea.getCommentSpan();
+    final CommentSpan comment = editArea.getCommentSpan();
 
     if (comment != null) {
-      Markup.removeComment(editArea.getText(), comment);
+      showDialog(
+        R.string.menu_comments_removeComment, R.layout.comment_show,
+        comment, R.string.action_remove,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int button) {
+            Markup.removeComment(editArea.getText(), comment);
+          }
+        }
+      );
     } else {
       showMessage(R.string.message_uncommented_text);
     }

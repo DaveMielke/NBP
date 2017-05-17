@@ -78,6 +78,7 @@
   <string name="action_cancel">Cancel</string>
   <string name="action_change">Change</string>
   <string name="action_ok">OK</string>
+  <string name="action_remove">Remove</string>
 
   <string name="changed_title">File Changed</string>
   <string name="changed_message">Save changes?</string>
