@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
-import org.nbp.common.CommonUtilities;
 import org.nbp.common.CommonActivity;
+import org.nbp.common.CommonUtilities;
 import org.nbp.common.Timeout;
+import org.nbp.common.Tones;
 
 import org.nbp.common.CharacterUtilities;
 import org.nbp.common.OnTextEditedListener;
@@ -286,8 +287,12 @@ public class CalculatorActivity extends CommonActivity {
                 return true;
 
               default:
-                return Character.isISOControl(character);
+                if (!Character.isISOControl(character)) return false;
+                break;
             }
+
+            Tones.beep();
+            return true;
           }
 
           @Override
@@ -979,7 +984,11 @@ public class CalculatorActivity extends CommonActivity {
                           int dstIndex = dstStart;
 
                           for (int srcIndex=srcStart; srcIndex<srcEnd; srcIndex+=1) {
-                            if (!ExpressionParser.isIdentifierCharacter(src.charAt(srcIndex), (dstIndex == 0))) return "";
+                            if (!ExpressionParser.isIdentifierCharacter(src.charAt(srcIndex), (dstIndex == 0))) {
+                              Tones.beep();
+                              return "";
+                            }
+
                             dstIndex += 1;
                           }
 
