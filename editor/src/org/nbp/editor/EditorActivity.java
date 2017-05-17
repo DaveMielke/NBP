@@ -154,7 +154,44 @@ public class EditorActivity extends CommonActivity {
     setEditorContent(null, "");
   }
 
-  private final void saveFile (File file, final Runnable onSaved) {
+  private final void saveFile (
+    final File file, final CharSequence content, final Runnable onSaved
+  ) {
+    new AsyncTask<Void, Void, Void>() {
+      AlertDialog dialog = null;
+
+      @Override
+      protected void onPreExecute () {
+        if (haveWindow()) {
+          dialog = newAlertDialogBuilder(R.string.message_writing_content)
+            .setMessage(file.getAbsolutePath())
+            .create();
+
+          dialog.show();
+        }
+      }
+
+      @Override
+      public Void doInBackground (Void... arguments) {
+        Content.writeFile(file, content);
+        return null;
+      }
+
+      @Override
+      public void onPostExecute (Void result) {
+        if (dialog != null) dialog.dismiss();
+
+        if (file.getParentFile().equals(filesDirectory)) {
+          // checkpoint taken - don't present a confirmation dialog
+          run(onSaved);
+        } else {
+          showMessage(R.string.message_file_saved, file.getAbsolutePath(), onSaved);
+        }
+      }
+    }.execute();
+  }
+
+  private final void saveFile (File file, Runnable onSaved) {
     CharSequence content;
 
     synchronized (this) {
@@ -189,41 +226,7 @@ public class EditorActivity extends CommonActivity {
       hasChanged = false;
     }
 
-    final File f = file;
-    final CharSequence output = content;
-
-    new AsyncTask<Void, Void, Void>() {
-      AlertDialog dialog = null;
-
-      @Override
-      protected void onPreExecute () {
-        if (haveWindow()) {
-          dialog = newAlertDialogBuilder(R.string.message_writing_content)
-            .setMessage(f.getAbsolutePath())
-            .create();
-
-          dialog.show();
-        }
-      }
-
-      @Override
-      public Void doInBackground (Void... arguments) {
-        Content.writeFile(f, output);
-        return null;
-      }
-
-      @Override
-      public void onPostExecute (Void result) {
-        if (dialog != null) dialog.dismiss();
-
-        if (f.getParentFile().equals(filesDirectory)) {
-          // checkpoint taken - don't present a confirmation dialog
-          run(onSaved);
-        } else {
-          showMessage(R.string.message_file_saved, f.getAbsolutePath(), onSaved);
-        }
-      }
-    }.execute();
+    saveFile(file, content, onSaved);
   }
 
   private final void saveFile (Runnable onSaved) {
@@ -1012,7 +1015,10 @@ public class EditorActivity extends CommonActivity {
       final File newFile = new File(filesDirectory, newName);
       final ContentHandle handle = contentHandle;
 
-      saveFile(newFile,
+      final Editable content = new SpannableStringBuilder(editArea.getText());
+      Markup.restoreRevisions(content);
+
+      saveFile(newFile, content.toString(),
         new Runnable() {
           @Override
           public void run () {
@@ -1026,7 +1032,10 @@ public class EditorActivity extends CommonActivity {
               editor.putBoolean(PREF_CHECKPOINT_WRITABLE, handle.canWrite());
             }
 
-            putPreference(editor, PREF_CHECKPOINT_SPANS, Spans.saveSpans(editArea.getText()));
+            putPreference(
+              editor, PREF_CHECKPOINT_SPANS, Spans.saveSpans(content)
+            );
+
             editor.putInt(PREF_CHECKPOINT_START, editArea.getSelectionStart());
             editor.putInt(PREF_CHECKPOINT_END, editArea.getSelectionEnd());
 
