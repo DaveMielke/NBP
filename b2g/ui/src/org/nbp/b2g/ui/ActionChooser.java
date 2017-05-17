@@ -17,7 +17,7 @@ public class ActionChooser {
 
       Action action = map.get(keys);
       if (action.isHidden()) continue;
-      if (action.isForDevelopers() && !ApplicationSettings.DEVELOPER_ENABLED) continue;
+      if (action.isForDevelopers() && !ApplicationSettings.DEVELOPER_MODE) continue;
 
       sb.append('\n');
       sb.append(Wordify.get(action.getName()));

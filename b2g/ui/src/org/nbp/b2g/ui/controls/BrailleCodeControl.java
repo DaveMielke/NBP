@@ -35,6 +35,6 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   }
 
   public BrailleCodeControl () {
-    super(ControlGroup.RENDERING);
+    super(ControlGroup.GENERAL);
   }
 }

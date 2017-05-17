@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public enum ControlGroup {
   GENERAL(R.string.control_group_general),
-  RENDERING(R.string.control_group_rendering),
   INPUT(R.string.control_group_input),
+  RENDERING(R.string.control_group_rendering),
+  KEYBOARD(R.string.control_group_keyboard),
   BRAILLE(R.string.control_group_braille),
   SPEECH(R.string.control_group_speech),
-  DISPLAY(R.string.control_group_display),
+  REMOTE(R.string.control_group_remote),
   DEVELOPER(R.string.control_group_developer),
   ;
 

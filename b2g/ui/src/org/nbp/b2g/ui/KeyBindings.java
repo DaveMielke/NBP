@@ -113,7 +113,7 @@ public class KeyBindings {
     if (reset) resetKeyBindings();
     if (action == null) return null;
     if (!action.isForDevelopers()) return action;
-    if (ApplicationSettings.DEVELOPER_ENABLED) return action;
+    if (ApplicationSettings.DEVELOPER_MODE) return action;
     return null;
   }
 

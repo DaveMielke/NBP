@@ -122,7 +122,7 @@ public abstract class Crash {
     Tones.alert();
     logCrash(problem, component, data);
 
-    if (ApplicationSettings.DEVELOPER_ENABLED) {
+    if (ApplicationSettings.DEVELOPER_MODE) {
       reportCrash(problem, component, data);
     }
   }

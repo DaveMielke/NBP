@@ -5,33 +5,32 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Controls {
-  // general settings
-  private final static WordWrapControl wordWrapControl = new WordWrapControl();
-  private final static ShowNotificationsControl showNotificationsControl = new ShowNotificationsControl();
-  private final static LongPressControl longPressControl = new LongPressControl();
-  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
-  private final static OneHandControl oneHandControl = new OneHandControl();
+  private Controls () {
+  }
 
-  // braille rendering
   private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
   private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
-  private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
-  private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
-  private final static ShowHighlightedControl showHighlightedControl = new ShowHighlightedControl();
+  private final static WordWrapControl wordWrapControl = new WordWrapControl();
+  private final static ShowNotificationsControl showNotificationsControl = new ShowNotificationsControl();
 
-  // input settings
   private final static TypingModeControl typingModeControl = new TypingModeControl();
   private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
   private final static TypingItalicControl typingItalicControl = new TypingItalicControl();
   private final static TypingStrikeControl typingStrikeControl = new TypingStrikeControl();
   private final static TypingUnderlineControl typingUnderlineControl = new TypingUnderlineControl();
 
-  // braille settings
+  private final static ShowHighlightedControl showHighlightedControl = new ShowHighlightedControl();
+  private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
+  private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
+
+  private final static LongPressControl longPressControl = new LongPressControl();
+  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
+  private final static OneHandControl oneHandControl = new OneHandControl();
+
   private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
   private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
   private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
 
-  // speech settings
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
   private final static SpeechVolumeControl speechVolumeControl = new SpeechVolumeControl();
   private final static SpeechRateControl speechRateControl = new SpeechRateControl();
@@ -39,12 +38,10 @@ public abstract class Controls {
   private final static SpeechBalanceControl speechBalanceControl = new SpeechBalanceControl();
   private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
 
-  // remote display
   private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
   private final static SecureConnectionControl secureConnectionControl = new SecureConnectionControl();
 
-  // developer settings
-  private final static DeveloperEnabledControl developerEnabledControl = new DeveloperEnabledControl();
+  private final static DeveloperModeControl developerModeControl = new DeveloperModeControl();
   private final static LogUpdatesControl logUpdatesControl = new LogUpdatesControl();
   private final static LogKeyboardControl logKeyboardControl = new LogKeyboardControl();
   private final static LogActionsControl logActionsControl = new LogActionsControl();
@@ -54,33 +51,29 @@ public abstract class Controls {
   private final static LogSpeechControl logSpeechControl = new LogSpeechControl();
 
   private final static Control[] allControls = new Control[] {
-    // general settings
-    wordWrapControl,
-    showNotificationsControl,
-    longPressControl,
-    reversePanningControl,
-    oneHandControl,
-
-    // braille rendering
     literaryBrailleControl,
     brailleCodeControl,
-    cursorIndicatorControl,
-    selectionIndicatorControl,
-    showHighlightedControl,
+    wordWrapControl,
+    showNotificationsControl,
 
-    // input settings
     typingModeControl,
     typingBoldControl,
     typingItalicControl,
     typingStrikeControl,
     typingUnderlineControl,
 
-    // braille settings
+    showHighlightedControl,
+    selectionIndicatorControl,
+    cursorIndicatorControl,
+
+    longPressControl,
+    reversePanningControl,
+    oneHandControl,
+
     brailleEnabledControl,
     brailleFirmnessControl,
     brailleMonitorControl,
 
-    // speech settings
     speechEnabledControl,
     speechVolumeControl,
     speechRateControl,
@@ -88,12 +81,10 @@ public abstract class Controls {
     speechBalanceControl,
     sleepTalkControl,
 
-    // remote display
     remoteDisplayControl,
     secureConnectionControl,
 
-    // developer settings
-    developerEnabledControl,
+    developerModeControl,
     logUpdatesControl,
     logKeyboardControl,
     logActionsControl,
@@ -103,26 +94,6 @@ public abstract class Controls {
     logSpeechControl
   };
 
-  public static WordWrapControl getWordWrapControl () {
-    return wordWrapControl;
-  }
-
-  public static ShowNotificationsControl getShowNotificationsControl () {
-    return showNotificationsControl;
-  }
-
-  public static LongPressControl getLongPressControl () {
-    return longPressControl;
-  }
-
-  public static ReversePanningControl getReversePanningControl () {
-    return reversePanningControl;
-  }
-
-  public static OneHandControl getOneHandControl () {
-    return oneHandControl;
-  }
-
   public static LiteraryBrailleControl getLiteraryBrailleControl () {
     return literaryBrailleControl;
   }
@@ -131,16 +102,24 @@ public abstract class Controls {
     return brailleCodeControl;
   }
 
-  public static CursorIndicatorControl getCursorIndicatorControl () {
-    return cursorIndicatorControl;
+  public static WordWrapControl getWordWrapControl () {
+    return wordWrapControl;
+  }
+
+  public static ShowNotificationsControl getShowNotificationsControl () {
+    return showNotificationsControl;
+  }
+
+  public static ShowHighlightedControl getShowHighlightedControl () {
+    return showHighlightedControl;
   }
 
   public static SelectionIndicatorControl getSelectionIndicatorControl () {
     return selectionIndicatorControl;
   }
 
-  public static ShowHighlightedControl getShowHighlightedControl () {
-    return showHighlightedControl;
+  public static CursorIndicatorControl getCursorIndicatorControl () {
+    return cursorIndicatorControl;
   }
 
   public static TypingModeControl getTypingModeControl () {
@@ -161,6 +140,18 @@ public abstract class Controls {
 
   public static TypingUnderlineControl getTypingUnderlineControl () {
     return typingUnderlineControl;
+  }
+
+  public static LongPressControl getLongPressControl () {
+    return longPressControl;
+  }
+
+  public static ReversePanningControl getReversePanningControl () {
+    return reversePanningControl;
+  }
+
+  public static OneHandControl getOneHandControl () {
+    return oneHandControl;
   }
 
   public static BrailleEnabledControl getBrailleEnabledControl () {
@@ -207,8 +198,8 @@ public abstract class Controls {
     return secureConnectionControl;
   }
 
-  public static DeveloperEnabledControl getDeveloperEnabledControl () {
-    return developerEnabledControl;
+  public static DeveloperModeControl getDeveloperModeControl () {
+    return developerModeControl;
   }
 
   public static LogUpdatesControl getLogUpdatesControl () {
@@ -319,8 +310,5 @@ public abstract class Controls {
     resetHighlightedTyping();
     oneHandControl.setValue(false);
     brailleEnabledControl.setValue(true);
-  }
-
-  private Controls () {
   }
 }

@@ -45,15 +45,20 @@ General Settings
 
 .. include:: settings-general.rst
 
+Input Settings
+~~~~~~~~~~~~~~
+
+.. include:: settings-input.rst
+
 Rendering Settings
 ~~~~~~~~~~~~~~~~~~
 
 .. include:: settings-rendering.rst
 
-Input Settings
-~~~~~~~~~~~~~~
+Keyboard Settings
+~~~~~~~~~~~~~~~~~
 
-.. include:: settings-input.rst
+.. include:: settings-keyboard.rst
 
 Braille Settings
 ~~~~~~~~~~~~~~~~

@@ -29,6 +29,6 @@ public class SecureConnectionControl extends BooleanControl {
   }
 
   public SecureConnectionControl () {
-    super(ControlGroup.DISPLAY);
+    super(ControlGroup.REMOTE);
   }
 }

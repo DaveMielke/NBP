@@ -38,6 +38,6 @@ public class RemoteDisplayControl extends BooleanControl {
   }
 
   public RemoteDisplayControl () {
-    super(ControlGroup.DISPLAY);
+    super(ControlGroup.REMOTE);
   }
 }
