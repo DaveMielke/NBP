@@ -33,11 +33,11 @@ public abstract class Controls {
 
   // speech settings
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
-  private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
   private final static SpeechVolumeControl speechVolumeControl = new SpeechVolumeControl();
-  private final static SpeechBalanceControl speechBalanceControl = new SpeechBalanceControl();
   private final static SpeechRateControl speechRateControl = new SpeechRateControl();
   private final static SpeechPitchControl speechPitchControl = new SpeechPitchControl();
+  private final static SpeechBalanceControl speechBalanceControl = new SpeechBalanceControl();
+  private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
 
   // remote display
   private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
@@ -82,11 +82,11 @@ public abstract class Controls {
 
     // speech settings
     speechEnabledControl,
-    sleepTalkControl,
     speechVolumeControl,
-    speechBalanceControl,
     speechRateControl,
     speechPitchControl,
+    speechBalanceControl,
+    sleepTalkControl,
 
     // remote display
     remoteDisplayControl,
@@ -179,16 +179,8 @@ public abstract class Controls {
     return speechEnabledControl;
   }
 
-  public static SleepTalkControl getSleepTalkControl () {
-    return sleepTalkControl;
-  }
-
   public static SpeechVolumeControl getSpeechVolumeControl () {
     return speechVolumeControl;
-  }
-
-  public static SpeechBalanceControl getSpeechBalanceControl () {
-    return speechBalanceControl;
   }
 
   public static SpeechRateControl getSpeechRateControl () {
@@ -197,6 +189,14 @@ public abstract class Controls {
 
   public static SpeechPitchControl getSpeechPitchControl () {
     return speechPitchControl;
+  }
+
+  public static SpeechBalanceControl getSpeechBalanceControl () {
+    return speechBalanceControl;
+  }
+
+  public static SleepTalkControl getSleepTalkControl () {
+    return sleepTalkControl;
   }
 
   public static RemoteDisplayControl getRemoteDisplayControl () {
