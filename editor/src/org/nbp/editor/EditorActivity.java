@@ -806,11 +806,6 @@ public class EditorActivity extends CommonActivity {
           text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
           comment.finishSpan(text);
           editArea.setSelection(comment);
-
-          text.setSpan(
-            comment, start, (start + comment.getDecoratedText().length()),
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-          );
         }
       }
     );

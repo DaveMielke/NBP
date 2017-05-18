@@ -83,6 +83,8 @@ public abstract class RegionSpan extends EditorSpan {
 
     int spanStart = content.getSpanStart(this);
     int spanEnd = content.getSpanEnd(this);
+
+    content.removeSpan(this);
     actualText = content.subSequence(spanStart, spanEnd);
 
     Editable text = new SpannableStringBuilder();
@@ -112,6 +114,11 @@ public abstract class RegionSpan extends EditorSpan {
 
     decoratedText = text.subSequence(0, text.length());
     content.replace(spanStart, spanEnd, decoratedText);
+
+    content.setSpan(
+      this, spanStart, (spanStart + decoratedText.length()),
+      Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+    );
   }
 
   @Override
