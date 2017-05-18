@@ -782,45 +782,38 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_addComment () {
-    AlertDialog.Builder builder = newAlertDialogBuilder(R.string.menu_comments_addComment);
-    builder.setView(getLayoutInflater().inflate(R.layout.comment_add, null));
-    builder.setNegativeButton(R.string.action_cancel, null);
-    builder.setPositiveButton(R.string.action_add, null);
+    showDialog(
+      R.string.menu_comments_addComment, R.layout.comment_add,
+      null, R.string.action_add,
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+          CommentSpan comment;
 
-    AlertDialog dialog = builder.create();
-    dialog.show();
+          {
+            EditText view = (EditText)CommonUtilities.findView(dialog, R.id.comment_text);
+            Editable text = view.getText();
 
-    DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int button) {
-        CommentSpan comment;
+            if (text.toString().trim().isEmpty()) return;
+            comment = new CommentSpan(text);
+            comment.setTimestamp(new Date());
+          }
 
-        {
-          EditText view = (EditText)CommonUtilities.findView(dialog, R.id.comment_text);
-          Editable text = view.getText();
+          Editable text = editArea.getText();
+          int start = editArea.getSelectionStart();
+          int end = editArea.getSelectionEnd();
 
-          if (text.toString().trim().isEmpty()) return;
-          comment = new CommentSpan(text);
-          comment.setTimestamp(new Date());
+          text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
+          comment.finishSpan(text);
+          editArea.setSelection(comment);
+
+          text.setSpan(
+            comment, start, (start + comment.getDecoratedText().length()),
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+          );
         }
-
-        Editable text = editArea.getText();
-        int start = editArea.getSelectionStart();
-        int end = editArea.getSelectionEnd();
-
-        text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
-        comment.finishSpan(text);
-        editArea.setSelection(comment);
-
-        text.setSpan(
-          comment, start, (start + comment.getDecoratedText().length()),
-          Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
       }
-    };
-
-    int button = DialogInterface.BUTTON_POSITIVE;
-    dialog.setButton(button, dialog.getButton(button).getText(), listener);
+    );
   }
 
   private void menuAction_removeComment () {
