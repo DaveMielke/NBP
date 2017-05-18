@@ -11,7 +11,7 @@ public class CommentSpan extends AuthorSpan {
 
   public CommentSpan (Editable text) {
     super(decorationPrefix, decorationSuffix);
-    setProtected(false);
+    setContainsProtectedText(false);
     commentText = text;
   }
 

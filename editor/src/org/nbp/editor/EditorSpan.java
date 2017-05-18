@@ -7,14 +7,14 @@ public abstract class EditorSpan implements DialogFinisher {
   protected EditorSpan () {
   }
 
-  private boolean contentProtected = true;
+  private boolean containsProtectedText = true;
 
-  public final boolean getProtected () {
-    return contentProtected;
+  public final boolean getContainsProtectedText () {
+    return containsProtectedText;
   }
 
-  protected final void setProtected (boolean yes) {
-    contentProtected = yes;
+  protected final void setContainsProtectedText (boolean yes) {
+    containsProtectedText = yes;
   }
 
   protected void finishSpan (Editable content) {
