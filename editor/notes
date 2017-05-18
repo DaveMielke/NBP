@@ -1,11 +1,9 @@
-revisions shouldn't be editable
 saving comments
 join contiguous revisions
 restore delete revisions in the right order
-region adnorments shouldn't be saved or restored
 full support for paragraph labels
 next,previous group,revision when previewing
 revision summary
 
-edit comment
+set comment author and initials
 comment summary

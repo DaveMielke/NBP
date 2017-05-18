@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.ArrayList;
 
-import org.nbp.common.CommonUtilities;
 import org.nbp.common.CommonActivity;
+import org.nbp.common.CommonUtilities;
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.SpeechToText;
 
@@ -1137,6 +1137,20 @@ public class EditorActivity extends CommonActivity {
         CharSequence src, int srcStart, int srcEnd,
         Spanned dst, int dstStart, int dstEnd
       ) {
+        EditorSpan[] spans = dst.getSpans(dstStart, dstEnd, EditorSpan.class);
+
+        if (spans != null) {
+          for (EditorSpan span : spans) {
+            if (span.getProtected()) {
+              if (dst.getSpanStart(span) >= dstEnd) continue;
+              if (dst.getSpanEnd(span) <= dstStart) continue;
+
+              showMessage(R.string.message_protected_text);
+              return dst.subSequence(dstStart, dstEnd);
+            }
+          }
+        }
+
         hasChanged = true;
         return null;
       }
