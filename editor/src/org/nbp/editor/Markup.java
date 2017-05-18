@@ -23,12 +23,16 @@ public abstract class Markup {
     return getSpans(text, CommentSpan.class);
   }
 
-  public final static void removeRevision (Editable text, RevisionSpan revision) {
-    int start = text.getSpanStart(revision);
-    int end = text.getSpanEnd(revision);
+  private final static void removeRegion (Editable text, RegionSpan region, CharSequence replacement) {
+    int start = text.getSpanStart(region);
+    int end = text.getSpanEnd(region);
 
-    text.removeSpan(revision);
-    text.replace(start, end, revision.getPreviewText());
+    text.removeSpan(region);
+    text.replace(start, end, replacement);
+  }
+
+  public final static void removeRevision (Editable text, RevisionSpan revision) {
+    removeRegion(text, revision, revision.getPreviewText());
   }
 
   private final static void removeRevisions (Editable text, boolean preview) {
@@ -83,11 +87,7 @@ public abstract class Markup {
   }
 
   public final static void removeComment (Editable text, CommentSpan comment) {
-    int start = text.getSpanStart(comment);
-    int end = text.getSpanEnd(comment);
-
-    text.removeSpan(comment);
-    text.replace(start, end, comment.getActualText());
+    removeRegion(text, comment, comment.getActualText());
   }
 
   public final static void removeComments (Editable text) {
