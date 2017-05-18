@@ -92,13 +92,13 @@ public class InputService extends InputMethodService {
 
   public final CharSequence getHintText () {
     EditorInfo info = getCurrentInputEditorInfo();
+    if (info == null) return null;
 
-    if (info != null) {
-      CharSequence text = info.hintText;
-      if (text.length() > 0) return text;
-    }
+    CharSequence text = info.hintText;
+    if (text == null) return null;
 
-    return null;
+    if (text.length() == 0) return null;
+    return text;
   }
 
   private static KeyboardMonitor getKeyboardMonitor () {
