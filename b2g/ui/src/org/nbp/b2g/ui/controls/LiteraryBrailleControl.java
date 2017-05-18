@@ -11,8 +11,8 @@ public class LiteraryBrailleControl extends BooleanControl {
   public String getConfirmation () {
     return getString(
              getBooleanValue()?
-               R.string.LiteraryBraille_control_on:
-               R.string.LiteraryBraille_control_off
+               R.string.control_value_LiteraryBraille_on:
+               R.string.control_value_LiteraryBraille_off
            );
   }
 

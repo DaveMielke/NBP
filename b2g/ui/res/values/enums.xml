@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="enum_IndicatorOverlay_DOTS_78">Dots 78</string>
+  <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
+  <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
+
+  <string name="enum_TypingMode_TEXT">Regular Text</string>
+  <string name="enum_TypingMode_BRAILLE">Actual Cells</string>
+</resources>

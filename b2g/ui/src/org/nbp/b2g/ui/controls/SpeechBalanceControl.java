@@ -20,16 +20,16 @@ public class SpeechBalanceControl extends LinearFloatControl {
   @Override
   public CharSequence getValue () {
     float value = getFloatValue();
-    if (value == 0.0f) return getString(R.string.SpeechBalance_control_center);
+    if (value == 0.0f) return getString(R.string.control_value_SpeechBalance_center);
 
     StringBuilder sb = new StringBuilder();
     float maximum = SpeechDevice.MAXIMUM_BALANCE;
 
     if (value < 0.0f) {
-      sb.append(getString(R.string.SpeechBalance_control_left));
+      sb.append(getString(R.string.control_value_SpeechBalance_left));
       value = -value;
     } else {
-      sb.append(getString(R.string.SpeechBalance_control_right));
+      sb.append(getString(R.string.control_value_SpeechBalance_right));
     }
 
     sb.append(' ');

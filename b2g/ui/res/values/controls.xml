@@ -74,17 +74,10 @@
   <string name="control_previous_SpeechBalance">More Left</string>
   <string name="control_next_SpeechBalance">More Right</string>
 
-  <string name="enum_IndicatorOverlay_DOTS_78">Dots 78</string>
-  <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
-  <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
+  <string name="control_value_SpeechBalance_center">Center</string>
+  <string name="control_value_SpeechBalance_left">Left</string>
+  <string name="control_value_SpeechBalance_right">Right</string>
 
-  <string name="enum_TypingMode_BRAILLE">Actual Cells</string>
-  <string name="enum_TypingMode_TEXT">Regular Text</string>
-
-  <string name="SpeechBalance_control_center">Center</string>
-  <string name="SpeechBalance_control_left">Left</string>
-  <string name="SpeechBalance_control_right">Right</string>
-
-  <string name="LiteraryBraille_control_off">computer braille</string>
-  <string name="LiteraryBraille_control_on">literary braille</string>
+  <string name="control_value_LiteraryBraille_off">computer braille</string>
+  <string name="control_value_LiteraryBraille_on">literary braille</string>
 </resources>
