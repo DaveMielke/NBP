@@ -103,15 +103,16 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void showDialog (
-    int subtitle, int layout, DialogFinisher finisher, int action
+    int subtitle, int layout, int action,
+    DialogInterface.OnClickListener listener
   ) {
-    showDialog(subtitle, layout, finisher, action, null);
+    showDialog(subtitle, layout, null, action, listener);
   }
 
   private final void showDialog (
     int subtitle, int layout, DialogFinisher finisher
   ) {
-    showDialog(subtitle, layout, finisher, R.string.action_ok);
+    showDialog(subtitle, layout, finisher, R.string.action_ok, null);
   }
 
   private final void showDialog ( int subtitle, int layout) {
@@ -783,8 +784,8 @@ public class EditorActivity extends CommonActivity {
 
   private void menuAction_addComment () {
     showDialog(
-      R.string.menu_comments_addComment, R.layout.comment_add,
-      null, R.string.action_add,
+      R.string.menu_comments_addComment,
+      R.layout.comment_add, R.string.action_add,
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
