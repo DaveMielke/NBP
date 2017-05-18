@@ -133,4 +133,17 @@ public abstract class RegionSpan extends EditorSpan {
     if (decorationSuffix != null) end -= decorationSuffix.length();
     actualText = content.subSequence(start, end);
   }
+
+  public CharSequence getReplacementText () {
+    return getActualText();
+  }
+
+  public final int removeSpan (Editable content) {
+    int start = content.getSpanStart(this);
+    int end = content.getSpanEnd(this);
+
+    content.removeSpan(this);
+    content.replace(start, end, getReplacementText());
+    return start;
+  }
 }

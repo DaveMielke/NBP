@@ -17,7 +17,6 @@ public abstract class RevisionSpan extends AuthorSpan {
   }
 
   public abstract int getRevisionType ();
-  public abstract CharSequence getPreviewText ();
 
   @Override
   public void finishDialog (DialogHelper helper) {

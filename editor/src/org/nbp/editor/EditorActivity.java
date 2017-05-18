@@ -749,7 +749,8 @@ public class EditorActivity extends CommonActivity {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            Markup.removeRevision(editArea.getText(), revision);
+            int position = revision.removeSpan(editArea.getText());
+            editArea.setSelection(position);
           }
         }
       );
@@ -822,7 +823,8 @@ public class EditorActivity extends CommonActivity {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            Markup.removeComment(editArea.getText(), comment);
+            int position = comment.removeSpan(editArea.getText());
+            editArea.setSelection(position);
           }
         }
       );
