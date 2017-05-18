@@ -7,30 +7,30 @@ public abstract class Markup {
   private Markup () {
   }
 
-  private final static <T> T[] getSpans (Spanned text, Class<T> type) {
-    return text.getSpans(0, text.length(), type);
+  private final static <T> T[] getSpans (Spanned content, Class<T> type) {
+    return content.getSpans(0, content.length(), type);
   }
 
-  private final static RevisionSpan[] getRevisionSpans (Spanned text) {
-    return getSpans(text, RevisionSpan.class);
+  private final static RevisionSpan[] getRevisionSpans (Spanned content) {
+    return getSpans(content, RevisionSpan.class);
   }
 
-  private final static PreviewSpan[] getPreviewSpans (Spanned text) {
-    return getSpans(text, PreviewSpan.class);
+  private final static PreviewSpan[] getPreviewSpans (Spanned content) {
+    return getSpans(content, PreviewSpan.class);
   }
 
-  private final static CommentSpan[] getCommentSpans (Spanned text) {
-    return getSpans(text, CommentSpan.class);
+  private final static CommentSpan[] getCommentSpans (Spanned content) {
+    return getSpans(content, CommentSpan.class);
   }
 
-  private final static void removeRevisions (Editable text, boolean preview) {
-    for (RevisionSpan revision : getRevisionSpans(text)) {
-      int start = text.getSpanStart(revision);
-      int end = text.getSpanEnd(revision);
-      text.removeSpan(revision);
+  private final static void removeRevisions (Editable content, boolean preview) {
+    for (RevisionSpan revision : getRevisionSpans(content)) {
+      int start = content.getSpanStart(revision);
+      int end = content.getSpanEnd(revision);
+      content.removeSpan(revision);
 
       CharSequence replacement = revision.getReplacementText();
-      text.replace(start, end, replacement);
+      content.replace(start, end, replacement);
 
       if (preview) {
         int length = replacement.length();
@@ -38,50 +38,50 @@ public abstract class Markup {
                     Spanned.SPAN_POINT_POINT:
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
-        text.setSpan(
+        content.setSpan(
           new PreviewSpan(revision), start, (start + length), flags
         );
       }
     }
   }
 
-  public final static void previewRevisions (Editable text) {
-    removeRevisions(text, true);
+  public final static void previewRevisions (Editable content) {
+    removeRevisions(content, true);
   }
 
-  public final static void acceptRevisions (Editable text) {
-    removeRevisions(text, false);
+  public final static void acceptRevisions (Editable content) {
+    removeRevisions(content, false);
 
-    for (PreviewSpan preview : getPreviewSpans(text)) {
-      text.removeSpan(preview);
+    for (PreviewSpan preview : getPreviewSpans(content)) {
+      content.removeSpan(preview);
     }
   }
 
-  public final static void restoreRevisions (Editable text) {
-    for (PreviewSpan preview : getPreviewSpans(text)) {
-      int start = text.getSpanStart(preview);
-      int end = text.getSpanEnd(preview);
-      text.removeSpan(preview);
+  public final static void restoreRevisions (Editable content) {
+    for (PreviewSpan preview : getPreviewSpans(content)) {
+      int start = content.getSpanStart(preview);
+      int end = content.getSpanEnd(preview);
+      content.removeSpan(preview);
 
       RevisionSpan revision = preview.getRevisionSpan();
       CharSequence replacement = revision.getDecoratedText();
-      text.replace(start, end, replacement);
+      content.replace(start, end, replacement);
 
-      text.setSpan(
+      content.setSpan(
         revision, start, (start + replacement.length()),
         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
       );
     }
   }
 
-  public final static void removeComments (Editable text) {
-    for (CommentSpan comment : getCommentSpans(text)) {
-      comment.removeSpan(text);
+  public final static void removeComments (Editable content) {
+    for (CommentSpan comment : getCommentSpans(content)) {
+      comment.removeSpan(content);
     }
   }
 
-  public final static void removeMarkup (Editable text) {
-    acceptRevisions(text);
-    removeComments(text);
+  public final static void removeMarkup (Editable content) {
+    acceptRevisions(content);
+    removeComments(content);
   }
 }
