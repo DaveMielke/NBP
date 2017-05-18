@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   @Override
   public int getLabel () {
-    return R.string.BrailleCode_control_label;
+    return R.string.control_label_BrailleCode;
   }
 
   @Override

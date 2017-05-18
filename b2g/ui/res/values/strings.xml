@@ -80,14 +80,6 @@
   <string name="checkbox_off">not checked</string>
   <string name="checkbox_on">checked</string>
 
-  <string name="enum_IndicatorOverlay_DOTS_78">Dots 78</string>
-  <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
-  <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
-
-  <string name="TypingMode_control_label">Typing</string>
-  <string name="enum_TypingMode_BRAILLE">Actual Cells</string>
-  <string name="enum_TypingMode_TEXT">Regular Text</string>
-
   <string name="ResetSettings_action_label">Reset to Defaults</string>
   <string name="RestoreSettings_action_label">Restore Settings</string>
   <string name="SaveSettings_action_label">Save Settings</string>
@@ -109,68 +101,6 @@
 
   <string name="button_settings_change">Change</string>
   <string name="button_dialog_cancel">Cancel</string>
-
-  <string name="default_control_previous">Previous</string>
-  <string name="default_control_next">Next</string>
-
-  <string name="boolean_control_previous">Off</string>
-  <string name="boolean_control_next">On</string>
-
-  <string name="numeric_control_previous">Decrease</string>
-  <string name="numeric_control_next">Increase</string>
-
-  <string name="BrailleCode_control_label">Braille Code</string>
-  <string name="BrailleEnabled_control_label">Braille Display</string>
-  <string name="BrailleFirmness_control_label">Braille Firmness</string>
-  <string name="BrailleMonitor_control_label">Braille Monitor</string>
-  <string name="CursorIndicator_control_label">Cursor Indicator</string>
-  <string name="LongPress_control_label">Long Press</string>
-  <string name="OneHand_control_label">One Hand</string>
-  <string name="RemoteDisplay_control_label">Remote Display</string>
-  <string name="ReversePanning_control_label">Reverse Panning</string>
-  <string name="SecureConnection_control_label">Secure Connection</string>
-  <string name="SelectionIndicator_control_label">Selection Indicator</string>
-  <string name="ShowHighlighted_control_label">Show Highlighted</string>
-  <string name="ShowNotifications_control_label">Notifications</string>
-  <string name="SleepTalk_control_label">Sleep Talk</string>
-  <string name="SpeechEnabled_control_label">Speech</string>
-  <string name="TypingBold_control_label">Bold</string>
-  <string name="TypingItalic_control_label">Italic</string>
-  <string name="TypingStrike_control_label">Strike</string>
-  <string name="TypingUnderline_control_label">Underline</string>
-  <string name="WordWrap_control_label">Word Wrap</string>
-
-  <string name="SpeechBalance_control_label">Balance</string>
-  <string name="SpeechBalance_control_previous">More Left</string>
-  <string name="SpeechBalance_control_next">More Right</string>
-  <string name="SpeechBalance_control_center">Center</string>
-  <string name="SpeechBalance_control_left">Left</string>
-  <string name="SpeechBalance_control_right">Right</string>
-
-  <string name="LiteraryBraille_control_label">Literary Braille</string>
-  <string name="LiteraryBraille_control_off">computer braille</string>
-  <string name="LiteraryBraille_control_on">literary braille</string>
-
-  <string name="SpeechPitch_control_label">Pitch</string>
-  <string name="SpeechPitch_control_previous">Lower</string>
-  <string name="SpeechPitch_control_next">Higher</string>
-
-  <string name="SpeechRate_control_label">Rate</string>
-  <string name="SpeechRate_control_previous">Slower</string>
-  <string name="SpeechRate_control_next">Faster</string>
-
-  <string name="SpeechVolume_control_label">Volume</string>
-  <string name="SpeechVolume_control_previous">Softer</string>
-  <string name="SpeechVolume_control_next">Louder</string>
-
-  <string name="DeveloperMode_control_label">Developer Mode</string>
-  <string name="LogActions_control_label">Log Actions</string>
-  <string name="LogBraille_control_label">Log Braille</string>
-  <string name="LogGestures_control_label">Log Gestures</string>
-  <string name="LogKeyboard_control_label">Log Keyboard</string>
-  <string name="LogNavigation_control_label">Log Navigation</string>
-  <string name="LogSpeech_control_label">Log Speech</string>
-  <string name="LogUpdates_control_label">Log Updates</string>
 
   <string name="AndroidSetting_AirplaneMode_label">Airplane Mode</string>
 

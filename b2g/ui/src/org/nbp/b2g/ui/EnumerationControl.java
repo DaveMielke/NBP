@@ -95,12 +95,12 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
 
   @Override
   public CharSequence getNextLabel () {
-    return getLabel(1, R.string.default_control_next);
+    return getLabel(1, R.string.control_next_default);
   }
 
   @Override
   public CharSequence getPreviousLabel () {
-    return getLabel(0, R.string.default_control_previous);
+    return getLabel(0, R.string.control_previous_default);
   }
 
   @Override

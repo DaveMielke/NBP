@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class LogNavigationControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.LogNavigation_control_label;
+    return R.string.control_label_LogNavigation;
   }
 
   @Override

@@ -13,8 +13,8 @@ public abstract class SystemSettingAction extends Action {
 
   protected abstract int getSettingLabel ();
   protected abstract int getSettingDescription ();
-  protected final static int OFF = R.string.boolean_control_previous;
-  protected final static int ON = R.string.boolean_control_next;
+  protected final static int OFF = R.string.control_previous_boolean;
+  protected final static int ON = R.string.control_next_boolean;
 
   protected final ContentResolver getContentResolver () {
     return getContext().getContentResolver();

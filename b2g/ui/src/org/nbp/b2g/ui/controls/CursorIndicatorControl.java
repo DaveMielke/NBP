@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
   public int getLabel () {
-    return R.string.CursorIndicator_control_label;
+    return R.string.control_label_CursorIndicator;
   }
 
   @Override

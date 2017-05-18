@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class BrailleFirmnessControl extends IntegerControl {
   @Override
   public int getLabel () {
-    return R.string.BrailleFirmness_control_label;
+    return R.string.control_label_BrailleFirmness;
   }
 
   @Override

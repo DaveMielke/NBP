@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class TypingItalicControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.TypingItalic_control_label;
+    return R.string.control_label_TypingItalic;
   }
 
   @Override

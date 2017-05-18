@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class LiteraryBrailleControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.LiteraryBraille_control_label;
+    return R.string.control_label_LiteraryBraille;
   }
 
   @Override

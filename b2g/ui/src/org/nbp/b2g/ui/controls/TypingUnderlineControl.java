@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class TypingUnderlineControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.TypingUnderline_control_label;
+    return R.string.control_label_TypingUnderline;
   }
 
   @Override

@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class SecureConnectionControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.SecureConnection_control_label;
+    return R.string.control_label_SecureConnection;
   }
 
   @Override

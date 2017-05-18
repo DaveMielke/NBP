@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class WordWrapControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.WordWrap_control_label;
+    return R.string.control_label_WordWrap;
   }
 
   @Override

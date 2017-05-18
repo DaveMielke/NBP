@@ -32,11 +32,11 @@ public abstract class Control {
   }
 
   public CharSequence getNextLabel () {
-    return getString(R.string.default_control_next);
+    return getString(R.string.control_next_default);
   }
 
   public CharSequence getPreviousLabel () {
-    return getString(R.string.default_control_previous);
+    return getString(R.string.control_previous_default);
   }
 
   protected String getPreferenceKey () {

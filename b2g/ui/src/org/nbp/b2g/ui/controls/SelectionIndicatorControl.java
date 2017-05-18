@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
   public int getLabel () {
-    return R.string.SelectionIndicator_control_label;
+    return R.string.control_label_SelectionIndicator;
   }
 
   @Override

@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class LogBrailleControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.LogBraille_control_label;
+    return R.string.control_label_LogBraille;
   }
 
   @Override

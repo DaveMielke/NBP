@@ -6,7 +6,7 @@ import org.nbp.b2g.ui.remote.RemoteEndpoint;
 public class RemoteDisplayControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.RemoteDisplay_control_label;
+    return R.string.control_label_RemoteDisplay;
   }
 
   @Override

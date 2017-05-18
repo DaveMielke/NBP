@@ -2,13 +2,89 @@
 
 <resources>
   <string name="control_groups">Main Screen</string>
-  <string name="control_group_general">General Settings</string>
-  <string name="control_group_input">Input Settings</string>
-  <string name="control_group_rendering">Rendering Settings</string>
-  <string name="control_group_keyboard">Keyboard Settings</string>
-  <string name="control_group_braille">Braille Settings</string>
-  <string name="control_group_speech">Speech Settings</string>
-  <string name="control_group_remote">Remote Settings</string>
-  <string name="control_group_developer">Developer Settings</string>
 
+  <string name="control_group_general">General Settings</string>
+  <string name="control_label_LiteraryBraille">Literary Braille</string>
+  <string name="control_label_BrailleCode">Braille Code</string>
+  <string name="control_label_WordWrap">Word Wrap</string>
+  <string name="control_label_ShowNotifications">Notifications</string>
+
+  <string name="control_group_input">Input Settings</string>
+  <string name="control_label_TypingMode">Typing</string>
+  <string name="control_label_TypingBold">Bold</string>
+  <string name="control_label_TypingItalic">Italic</string>
+  <string name="control_label_TypingStrike">Strike</string>
+  <string name="control_label_TypingUnderline">Underline</string>
+
+  <string name="control_group_rendering">Rendering Settings</string>
+  <string name="control_label_ShowHighlighted">Show Highlighted</string>
+  <string name="control_label_SelectionIndicator">Selection Indicator</string>
+  <string name="control_label_CursorIndicator">Cursor Indicator</string>
+
+  <string name="control_group_keyboard">Keyboard Settings</string>
+  <string name="control_label_LongPress">Long Press</string>
+  <string name="control_label_ReversePanning">Reverse Panning</string>
+  <string name="control_label_OneHand">One Hand</string>
+
+  <string name="control_group_braille">Braille Settings</string>
+  <string name="control_label_BrailleEnabled">Braille Display</string>
+  <string name="control_label_BrailleFirmness">Braille Firmness</string>
+  <string name="control_label_BrailleMonitor">Braille Monitor</string>
+
+  <string name="control_group_speech">Speech Settings</string>
+  <string name="control_label_SpeechEnabled">Speech</string>
+  <string name="control_label_SpeechVolume">Volume</string>
+  <string name="control_label_SpeechRate">Rate</string>
+  <string name="control_label_SpeechPitch">Pitch</string>
+  <string name="control_label_SpeechBalance">Balance</string>
+  <string name="control_label_SleepTalk">Sleep Talk</string>
+
+  <string name="control_group_remote">Remote Settings</string>
+  <string name="control_label_RemoteDisplay">Remote Display</string>
+  <string name="control_label_SecureConnection">Secure Connection</string>
+
+  <string name="control_group_developer">Developer Settings</string>
+  <string name="control_label_DeveloperMode">Developer Mode</string>
+  <string name="control_label_LogUpdates">Log Updates</string>
+  <string name="control_label_LogKeyboard">Log Keyboard</string>
+  <string name="control_label_LogActions">Log Actions</string>
+  <string name="control_label_LogNavigation">Log Navigation</string>
+  <string name="control_label_LogGestures">Log Gestures</string>
+  <string name="control_label_LogBraille">Log Braille</string>
+  <string name="control_label_LogSpeech">Log Speech</string>
+
+  <string name="control_previous_default">Previous</string>
+  <string name="control_next_default">Next</string>
+
+  <string name="control_previous_boolean">Off</string>
+  <string name="control_next_boolean">On</string>
+
+  <string name="control_previous_numeric">Decrease</string>
+  <string name="control_next_numeric">Increase</string>
+
+  <string name="control_previous_SpeechVolume">Softer</string>
+  <string name="control_next_SpeechVolume">Louder</string>
+
+  <string name="control_previous_SpeechRate">Slower</string>
+  <string name="control_next_SpeechRate">Faster</string>
+
+  <string name="control_previous_SpeechPitch">Lower</string>
+  <string name="control_next_SpeechPitch">Higher</string>
+
+  <string name="control_previous_SpeechBalance">More Left</string>
+  <string name="control_next_SpeechBalance">More Right</string>
+
+  <string name="enum_IndicatorOverlay_DOTS_78">Dots 78</string>
+  <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
+  <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
+
+  <string name="enum_TypingMode_BRAILLE">Actual Cells</string>
+  <string name="enum_TypingMode_TEXT">Regular Text</string>
+
+  <string name="SpeechBalance_control_center">Center</string>
+  <string name="SpeechBalance_control_left">Left</string>
+  <string name="SpeechBalance_control_right">Right</string>
+
+  <string name="LiteraryBraille_control_off">computer braille</string>
+  <string name="LiteraryBraille_control_on">literary braille</string>
 </resources>

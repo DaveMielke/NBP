@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class LogSpeechControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.LogSpeech_control_label;
+    return R.string.control_label_LogSpeech;
   }
 
   @Override
