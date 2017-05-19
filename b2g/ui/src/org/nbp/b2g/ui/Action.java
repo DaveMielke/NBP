@@ -10,14 +10,14 @@ public abstract class Action {
   private final static String LOG_TAG = Action.class.getName();
 
   private final Endpoint endpoint;
-  private final boolean isDeveloperAction;
+  private final boolean isAdvancedAction;
 
   public final Endpoint getEndpoint () {
     return endpoint;
   }
 
-  public final boolean isForDevelopers () {
-    return isDeveloperAction;
+  public final boolean isAdvanced () {
+    return isAdvancedAction;
   }
 
   public final String getName () {
@@ -81,8 +81,8 @@ public abstract class Action {
     return (getNavigationKeys() & KeyMask.SPACE) != 0;
   }
 
-  protected Action (Endpoint endpoint, boolean isForDevelopers) {
-    isDeveloperAction = isForDevelopers;
+  protected Action (Endpoint endpoint, boolean isAdvanced) {
+    isAdvancedAction = isAdvanced;
     this.endpoint = endpoint;
   }
 }

@@ -14,7 +14,7 @@ public abstract class SystemActivityAction extends ActivityAction {
     return intent;
   }
 
-  protected SystemActivityAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected SystemActivityAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

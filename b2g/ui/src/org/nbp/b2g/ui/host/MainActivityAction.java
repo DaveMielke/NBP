@@ -14,7 +14,7 @@ public abstract class MainActivityAction extends ActivityAction {
     return intent;
   }
 
-  protected MainActivityAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected MainActivityAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

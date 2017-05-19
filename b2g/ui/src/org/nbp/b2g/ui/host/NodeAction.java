@@ -32,7 +32,7 @@ public abstract class NodeAction extends HostAction {
     return false;
   }
 
-  protected NodeAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected NodeAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

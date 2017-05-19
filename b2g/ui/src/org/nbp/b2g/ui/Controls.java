@@ -40,8 +40,9 @@ public abstract class Controls {
   public final static RemoteDisplayControl remoteDisplay = new RemoteDisplayControl();
   public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
 
-  public final static DeveloperModeControl developerMode = new DeveloperModeControl();
   public final static CrashEmailsControl crashEmails = new CrashEmailsControl();
+  public final static AdvancedActionsControl advancedActions = new AdvancedActionsControl();
+  public final static ExtraIndicatorsControl extraIndicators = new ExtraIndicatorsControl();
   public final static EventMessagesControl eventMessages = new EventMessagesControl();
   public final static LogUpdatesControl logUpdates = new LogUpdatesControl();
   public final static LogKeyboardControl logKeyboard = new LogKeyboardControl();
@@ -84,8 +85,9 @@ public abstract class Controls {
     remoteDisplay,
     secureConnection,
 
-    developerMode,
     crashEmails,
+    advancedActions,
+    extraIndicators,
     eventMessages,
     logUpdates,
     logKeyboard,

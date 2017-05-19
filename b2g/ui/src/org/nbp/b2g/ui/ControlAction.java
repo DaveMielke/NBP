@@ -7,8 +7,8 @@ public abstract class ControlAction<C extends Control> extends Action {
     return control;
   }
 
-  protected ControlAction (Endpoint endpoint, C control, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected ControlAction (Endpoint endpoint, C control, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
     this.control = control;
   }
 }

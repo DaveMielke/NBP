@@ -32,7 +32,7 @@ public abstract class ActivityAction extends Action {
     return false;
   }
 
-  protected ActivityAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected ActivityAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

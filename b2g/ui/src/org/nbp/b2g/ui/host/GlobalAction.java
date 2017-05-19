@@ -27,7 +27,7 @@ public abstract class GlobalAction extends HostAction {
     return super.performAction();
   }
 
-  protected GlobalAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected GlobalAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

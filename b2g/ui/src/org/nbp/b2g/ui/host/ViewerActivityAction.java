@@ -17,7 +17,7 @@ public abstract class ViewerActivityAction extends ActivityAction {
     return new Intent(Intent.ACTION_VIEW, getUri());
   }
 
-  protected ViewerActivityAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected ViewerActivityAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

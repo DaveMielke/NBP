@@ -48,7 +48,7 @@ public abstract class KeyCodeAction extends KeyAction {
     return super.performAction();
   }
 
-  protected KeyCodeAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected KeyCodeAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

@@ -68,7 +68,7 @@ public abstract class ScrollAction extends ScreenAction {
     return false;
   }
 
-  protected ScrollAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected ScrollAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

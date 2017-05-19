@@ -6,7 +6,7 @@ public abstract class NextValueAction extends ControlAction<Control> {
     return getControl().nextValue();
   }
 
-  protected NextValueAction (Endpoint endpoint, Control control, boolean isForDevelopers) {
-    super(endpoint, control, isForDevelopers);
+  protected NextValueAction (Endpoint endpoint, Control control, boolean isAdvanced) {
+    super(endpoint, control, isAdvanced);
   }
 }

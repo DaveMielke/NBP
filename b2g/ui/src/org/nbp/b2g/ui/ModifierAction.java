@@ -57,8 +57,8 @@ public abstract class ModifierAction extends Action {
     return true;
   }
 
-  protected ModifierAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected ModifierAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
 
     synchronized (modifierActions) {
       modifierActions.add(this);

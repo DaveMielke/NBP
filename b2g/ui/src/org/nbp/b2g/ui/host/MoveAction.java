@@ -128,7 +128,7 @@ public abstract class MoveAction extends ScreenAction {
     return moved;
   }
 
-  protected MoveAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected MoveAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

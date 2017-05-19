@@ -54,7 +54,7 @@ public abstract class KeyAction extends Action {
     }
   }
 
-  protected KeyAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected KeyAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

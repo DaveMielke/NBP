@@ -12,7 +12,7 @@ public abstract class SystemAction extends GlobalAction {
     return getSystemKeyCode();
   }
 
-  protected SystemAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected SystemAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

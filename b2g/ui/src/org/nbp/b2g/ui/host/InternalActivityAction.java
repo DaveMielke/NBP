@@ -14,7 +14,7 @@ public abstract class InternalActivityAction extends ActivityAction {
     return LaunchUtilities.toIntent(getActivityClass());
   }
 
-  protected InternalActivityAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected InternalActivityAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

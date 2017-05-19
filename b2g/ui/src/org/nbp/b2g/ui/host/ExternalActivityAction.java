@@ -13,7 +13,7 @@ public abstract class ExternalActivityAction extends ActivityAction {
     return context.getPackageManager().getLaunchIntentForPackage(getPackageName());
   }
 
-  protected ExternalActivityAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected ExternalActivityAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

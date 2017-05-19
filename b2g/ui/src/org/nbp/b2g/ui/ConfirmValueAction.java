@@ -7,7 +7,7 @@ public abstract class ConfirmValueAction extends ControlAction<Control> {
     return true;
   }
 
-  protected ConfirmValueAction (Endpoint endpoint, Control control, boolean isForDevelopers) {
-    super(endpoint, control, isForDevelopers);
+  protected ConfirmValueAction (Endpoint endpoint, Control control, boolean isAdvanced) {
+    super(endpoint, control, isAdvanced);
   }
 }

@@ -94,7 +94,7 @@ public abstract class DirectionalAction extends Action {
     return Devices.braille.get().getLength();
   }
 
-  protected DirectionalAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected DirectionalAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

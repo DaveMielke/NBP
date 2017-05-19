@@ -36,8 +36,8 @@ public abstract class ApplicationSettings {
   public static volatile boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
   public static volatile boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
-  public static volatile boolean DEVELOPER_MODE = ApplicationDefaults.DEVELOPER_MODE;
   public static volatile boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
+  public static volatile boolean ADVANCED_ACTIONS = ApplicationDefaults.ADVANCED_ACTIONS;
   public static volatile boolean EXTRA_INDICATORS = ApplicationDefaults.EXTRA_INDICATORS;
   public static volatile boolean EVENT_MESSAGES = ApplicationDefaults.EVENT_MESSAGES;
   public static volatile boolean LOG_UPDATES = ApplicationDefaults.LOG_UPDATES;

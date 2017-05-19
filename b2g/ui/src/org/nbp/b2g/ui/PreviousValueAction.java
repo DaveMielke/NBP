@@ -6,7 +6,7 @@ public abstract class PreviousValueAction extends ControlAction<Control> {
     return getControl().previousValue();
   }
 
-  protected PreviousValueAction (Endpoint endpoint, Control control, boolean isForDevelopers) {
-    super(endpoint, control, isForDevelopers);
+  protected PreviousValueAction (Endpoint endpoint, Control control, boolean isAdvanced) {
+    super(endpoint, control, isAdvanced);
   }
 }

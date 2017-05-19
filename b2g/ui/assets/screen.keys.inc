@@ -85,4 +85,4 @@ bind Dot6+Center DropOn
 
 bind Backward+Forward+Space DescribeBuild
 
-include developer-screen.keys.inc
+include advanced-screen.keys.inc

@@ -1,9 +1,3 @@
-Forward+Backward+Dots1245+LongPress
-  |DeveloperOn|
-
-Forward+Backward+Dots1245
-  |DeveloperOff|
-
 Space+Dots78+Dots136 (u)
   |LogUpdatesOn|
 

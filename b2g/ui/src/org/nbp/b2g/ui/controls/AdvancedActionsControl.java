@@ -1,34 +1,34 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-public class DeveloperModeControl extends BooleanControl {
+public class AdvancedActionsControl extends BooleanControl {
   @Override
   public int getLabel () {
-    return R.string.control_label_DeveloperMode;
+    return R.string.control_label_AdvancedActions;
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "developer-mode";
+    return "advanced-actions";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationDefaults.DEVELOPER_MODE;
+    return ApplicationDefaults.ADVANCED_ACTIONS;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.DEVELOPER_MODE;
+    return ApplicationSettings.ADVANCED_ACTIONS;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.DEVELOPER_MODE = value;
+    ApplicationSettings.ADVANCED_ACTIONS = value;
     return true;
   }
 
-  public DeveloperModeControl () {
+  public AdvancedActionsControl () {
     super(ControlGroup.DEVELOPER);
   }
 }

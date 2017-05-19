@@ -1,7 +1,3 @@
-# make this one very hard to type by accident
-bind Backward+Forward+Dots1245+LongPress DeveloperOn
-bind Backward+Forward+Dots1245 DeveloperOff
-
 bind Space+Dots78+Dots136#u LogUpdatesOn
 bind Space+Dots78+Dots136#u+LongPress LogUpdatesOff
 

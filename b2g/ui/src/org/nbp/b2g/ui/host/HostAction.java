@@ -142,7 +142,7 @@ public abstract class HostAction extends ScanCodeAction {
     return performNodeAction(node, action, null);
   }
 
-  protected HostAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected HostAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }

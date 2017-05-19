@@ -3,8 +3,8 @@
   ====================  =======  ====================  =====================
   Setting               Default  Choices               Buttons
   --------------------  -------  --------------------  ---------------------
-  Developer Mode        Off      Off, On
   Crash Emails          Off      Off, On
+  Advanced Actions      Off      Off, On
   Extra Indicators      Off      Off, On
   Event Messages        Off      Off, On
   Log Updates           Off      Off, On

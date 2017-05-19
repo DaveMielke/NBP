@@ -32,8 +32,6 @@
 .. |DescribeCursorKeyActions| replace:: Show a list of all the actions that do involve a cursor routing key.
 .. |DescribeHighlighting| replace:: Show how a specific character has been highlighted.
 .. |DescribeIndicators| replace:: Show the values of important device status indicators.
-.. |DeveloperOff| replace:: Turn off `developer mode`_.
-.. |DeveloperOn| replace:: Turn on `developer mode`_.
 .. |Dialer| replace:: Go to the Dialer (Phone) app.
 .. |DragDown| replace:: Drag the current screen element downward.
 .. |DragFrom| replace:: Start a drag of the current screen element.

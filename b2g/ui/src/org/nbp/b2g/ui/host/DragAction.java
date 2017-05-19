@@ -138,7 +138,7 @@ public abstract class DragAction extends Action {
     return dropAt(location);
   }
 
-  protected DragAction (Endpoint endpoint, boolean isForDevelopers) {
-    super(endpoint, isForDevelopers);
+  protected DragAction (Endpoint endpoint, boolean isAdvanced) {
+    super(endpoint, isAdvanced);
   }
 }
