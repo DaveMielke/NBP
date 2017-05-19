@@ -41,6 +41,8 @@ public abstract class Controls {
   public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
 
   public final static DeveloperModeControl developerMode = new DeveloperModeControl();
+  public final static CrashEmailsControl crashEmails = new CrashEmailsControl();
+  public final static EventMessagesControl eventMessages = new EventMessagesControl();
   public final static LogUpdatesControl logUpdates = new LogUpdatesControl();
   public final static LogKeyboardControl logKeyboard = new LogKeyboardControl();
   public final static LogActionsControl logActions = new LogActionsControl();
@@ -83,6 +85,8 @@ public abstract class Controls {
     secureConnection,
 
     developerMode,
+    crashEmails,
+    eventMessages,
     logUpdates,
     logKeyboard,
     logActions,

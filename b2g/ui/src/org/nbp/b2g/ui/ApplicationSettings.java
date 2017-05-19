@@ -37,6 +37,8 @@ public abstract class ApplicationSettings {
   public static volatile boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
   public static volatile boolean DEVELOPER_MODE = ApplicationDefaults.DEVELOPER_MODE;
+  public static volatile boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
+  public static volatile boolean EVENT_MESSAGES = ApplicationDefaults.EVENT_MESSAGES;
   public static volatile boolean LOG_UPDATES = ApplicationDefaults.LOG_UPDATES;
   public static volatile boolean LOG_KEYBOARD = ApplicationDefaults.LOG_KEYBOARD;
   public static volatile boolean LOG_ACTIONS = ApplicationDefaults.LOG_ACTIONS;

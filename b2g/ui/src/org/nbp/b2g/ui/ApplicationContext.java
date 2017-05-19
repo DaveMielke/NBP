@@ -36,7 +36,7 @@ public abstract class ApplicationContext extends CommonContext {
           synchronized (LOCK) {
             TranslationUtilities.refresh();
 
-            if (ApplicationSettings.DEVELOPER_MODE) {
+            if (ApplicationSettings.EVENT_MESSAGES) {
               ApplicationUtilities.message(R.string.message_new_literary_tables);
             }
           }
