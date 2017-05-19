@@ -132,7 +132,7 @@ public class DescribeIndicators extends Action {
         batteryHealth.report(sb, extras.getInt(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN));
       }
 
-      if (ApplicationSettings.DEVELOPER_MODE) {
+      if (ApplicationSettings.EXTRA_INDICATORS) {
         {
           Double current = battery.getCurrent();
 

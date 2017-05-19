@@ -38,6 +38,7 @@ public abstract class ApplicationSettings {
 
   public static volatile boolean DEVELOPER_MODE = ApplicationDefaults.DEVELOPER_MODE;
   public static volatile boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
+  public static volatile boolean EXTRA_INDICATORS = ApplicationDefaults.EXTRA_INDICATORS;
   public static volatile boolean EVENT_MESSAGES = ApplicationDefaults.EVENT_MESSAGES;
   public static volatile boolean LOG_UPDATES = ApplicationDefaults.LOG_UPDATES;
   public static volatile boolean LOG_KEYBOARD = ApplicationDefaults.LOG_KEYBOARD;

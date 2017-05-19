@@ -5,6 +5,7 @@
   --------------------  -------  --------------------  ---------------------
   Developer Mode        Off      Off, On
   Crash Emails          Off      Off, On
+  Extra Indicators      Off      Off, On
   Event Messages        Off      Off, On
   Log Updates           Off      Off, On
   Log Keyboard          Off      Off, On

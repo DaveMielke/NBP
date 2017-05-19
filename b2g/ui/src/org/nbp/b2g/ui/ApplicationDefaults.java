@@ -38,6 +38,7 @@ public abstract class ApplicationDefaults {
 
   public final static boolean DEVELOPER_MODE = false;
   public final static boolean CRASH_EMAILS = false;
+  public final static boolean EXTRA_INDICATORS = false;
   public final static boolean EVENT_MESSAGES = false;
   public final static boolean LOG_UPDATES = false;
   public final static boolean LOG_KEYBOARD = false;
