@@ -9,13 +9,11 @@ There are a number of ways to boot the |product name| into Recovery Mode:
 
        Space + o (dots 135)
 
-  2) Ensure that `Developer Mode`_ is enabled.
-
-  3) Go to `The System Maintenance Screen`_::
+  2) Go to `The System Maintenance Screen`_::
 
        Space + Dots78 + m (dots 134)
 
-  4) Click on ``Recovery Mode``.
+  3) Click on ``Recovery Mode``.
 
 * When the |product name| is fully shut down:
 

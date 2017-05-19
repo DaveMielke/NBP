@@ -94,26 +94,3 @@ Speech is rendered differently than braille is in the following ways:
 * The state of a checkbox (or switch) is spoken as either ``checked`` or
   ``not checked``.
 
-Developer Mode
-~~~~~~~~~~~~~~
-
-A very intentionally difficult-to-press key combination has been defined for
-enabling and disabling Developer Mode::
-
-  Backward + Forward + Dot1 + Dot2 + Dot4 + Dot5
-
-A long press enables it, and a short press disables it. Note that
-this mode can't be enabled unless `Long Press Mode`_ is enabled (another
-accident prevention scheme).
-
-When this mode is enabled:
-
-* Additional key combinations are enabled (see `Developer Operations`_).
-
-* The battery indicators line (see `Checking Status Indicators`_) includes the
-  battery's current, voltage, and temperature.
-
-* If a component of the |user interface| crashes, an email containing the Java
-  backtrace of that crash is sent to the |product name| developers for
-  analysis. The email doesn't contain any sensitive information.
-

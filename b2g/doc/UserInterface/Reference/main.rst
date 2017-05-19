@@ -59,16 +59,16 @@ Baum Keyboard Mode Mappings
 
 .. include:: baum-keyboard.rst
 
-Developer Operations
-~~~~~~~~~~~~~~~~~~~~
+Advanced Operations
+~~~~~~~~~~~~~~~~~~~
 
 Common Actions
 ``````````````
 
-.. include:: keys-developer-all.rst
+.. include:: keys-advanced-all.rst
 
 Screen Actions
 ``````````````
 
-.. include:: keys-developer-screen.rst
+.. include:: keys-advanced-screen.rst
 
