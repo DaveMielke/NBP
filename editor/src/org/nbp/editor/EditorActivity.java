@@ -749,8 +749,15 @@ public class EditorActivity extends CommonActivity {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            int position = revision.removeSpan(editArea.getText());
-            editArea.setSelection(position);
+            boolean wasEnforced = editArea.getEnforceTextProtection();
+            editArea.setEnforceTextProtection(false);
+
+            try {
+              int position = revision.removeSpan(editArea.getText());
+              editArea.setSelection(position);
+            } finally {
+              editArea.setEnforceTextProtection(wasEnforced);
+            }
           }
         }
       );
@@ -823,8 +830,15 @@ public class EditorActivity extends CommonActivity {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            int position = comment.removeSpan(editArea.getText());
-            editArea.setSelection(position);
+            boolean wasEnforced = editArea.getEnforceTextProtection();
+            editArea.setEnforceTextProtection(false);
+
+            try {
+              int position = comment.removeSpan(editArea.getText());
+              editArea.setSelection(position);
+            } finally {
+              editArea.setEnforceTextProtection(wasEnforced);
+            }
           }
         }
       );

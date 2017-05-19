@@ -13,15 +13,27 @@ public class EditArea extends EditText {
     super(context, attributes);
   }
 
-  public final static boolean containsProtectedText (Spanned text, int start, int end) {
+  private boolean enforceTextProtection = true;
+
+  public final boolean getEnforceTextProtection () {
+    return enforceTextProtection;
+  }
+
+  public final void setEnforceTextProtection (boolean yes) {
+    enforceTextProtection = yes;
+  }
+
+  public final boolean containsProtectedText (Spanned text, int start, int end) {
     EditorSpan[] spans = text.getSpans(start, end, EditorSpan.class);
 
-    if (spans != null) {
-      for (EditorSpan span : spans) {
-        if (!span.getContainsProtectedText()) continue;
-        if (text.getSpanStart(span) >= end) continue;
-        if (text.getSpanEnd(span) <= start) continue;
-        return true;
+    if (enforceTextProtection) {
+      if (spans != null) {
+        for (EditorSpan span : spans) {
+          if (!span.getContainsProtectedText()) continue;
+          if (text.getSpanStart(span) >= end) continue;
+          if (text.getSpanEnd(span) <= start) continue;
+          return true;
+        }
       }
     }
 
