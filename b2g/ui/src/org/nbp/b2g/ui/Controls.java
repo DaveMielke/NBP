@@ -22,14 +22,9 @@ public abstract class Controls {
   private final static ShowHighlightedControl showHighlightedControl = new ShowHighlightedControl();
   private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
   private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
-
-  private final static LongPressControl longPressControl = new LongPressControl();
-  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
-  private final static OneHandControl oneHandControl = new OneHandControl();
-
-  private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
   private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
   private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
+  private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
 
   private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
   private final static SpeechVolumeControl speechVolumeControl = new SpeechVolumeControl();
@@ -37,6 +32,10 @@ public abstract class Controls {
   private final static SpeechPitchControl speechPitchControl = new SpeechPitchControl();
   private final static SpeechBalanceControl speechBalanceControl = new SpeechBalanceControl();
   private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
+
+  private final static LongPressControl longPressControl = new LongPressControl();
+  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
+  private final static OneHandControl oneHandControl = new OneHandControl();
 
   private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
   private final static SecureConnectionControl secureConnectionControl = new SecureConnectionControl();
@@ -65,14 +64,9 @@ public abstract class Controls {
     showHighlightedControl,
     selectionIndicatorControl,
     cursorIndicatorControl,
-
-    longPressControl,
-    reversePanningControl,
-    oneHandControl,
-
-    brailleEnabledControl,
     brailleFirmnessControl,
     brailleMonitorControl,
+    brailleEnabledControl,
 
     speechEnabledControl,
     speechVolumeControl,
@@ -80,6 +74,10 @@ public abstract class Controls {
     speechPitchControl,
     speechBalanceControl,
     sleepTalkControl,
+
+    longPressControl,
+    reversePanningControl,
+    oneHandControl,
 
     remoteDisplayControl,
     secureConnectionControl,
@@ -110,18 +108,6 @@ public abstract class Controls {
     return showNotificationsControl;
   }
 
-  public static ShowHighlightedControl getShowHighlightedControl () {
-    return showHighlightedControl;
-  }
-
-  public static SelectionIndicatorControl getSelectionIndicatorControl () {
-    return selectionIndicatorControl;
-  }
-
-  public static CursorIndicatorControl getCursorIndicatorControl () {
-    return cursorIndicatorControl;
-  }
-
   public static TypingModeControl getTypingModeControl () {
     return typingModeControl;
   }
@@ -142,20 +128,16 @@ public abstract class Controls {
     return typingUnderlineControl;
   }
 
-  public static LongPressControl getLongPressControl () {
-    return longPressControl;
+  public static ShowHighlightedControl getShowHighlightedControl () {
+    return showHighlightedControl;
   }
 
-  public static ReversePanningControl getReversePanningControl () {
-    return reversePanningControl;
+  public static SelectionIndicatorControl getSelectionIndicatorControl () {
+    return selectionIndicatorControl;
   }
 
-  public static OneHandControl getOneHandControl () {
-    return oneHandControl;
-  }
-
-  public static BrailleEnabledControl getBrailleEnabledControl () {
-    return brailleEnabledControl;
+  public static CursorIndicatorControl getCursorIndicatorControl () {
+    return cursorIndicatorControl;
   }
 
   public static BrailleFirmnessControl getBrailleFirmnessControl () {
@@ -164,6 +146,10 @@ public abstract class Controls {
 
   public static BrailleMonitorControl getBrailleMonitorControl () {
     return brailleMonitorControl;
+  }
+
+  public static BrailleEnabledControl getBrailleEnabledControl () {
+    return brailleEnabledControl;
   }
 
   public static SpeechEnabledControl getSpeechEnabledControl () {
@@ -188,6 +174,18 @@ public abstract class Controls {
 
   public static SleepTalkControl getSleepTalkControl () {
     return sleepTalkControl;
+  }
+
+  public static LongPressControl getLongPressControl () {
+    return longPressControl;
+  }
+
+  public static ReversePanningControl getReversePanningControl () {
+    return reversePanningControl;
+  }
+
+  public static OneHandControl getOneHandControl () {
+    return oneHandControl;
   }
 
   public static RemoteDisplayControl getRemoteDisplayControl () {

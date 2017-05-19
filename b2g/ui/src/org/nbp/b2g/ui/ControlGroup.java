@@ -5,10 +5,9 @@ import java.util.ArrayList;
 public enum ControlGroup {
   GENERAL(R.string.control_group_general),
   INPUT(R.string.control_group_input),
-  RENDERING(R.string.control_group_rendering),
-  KEYBOARD(R.string.control_group_keyboard),
   BRAILLE(R.string.control_group_braille),
   SPEECH(R.string.control_group_speech),
+  KEYBOARD(R.string.control_group_keyboard),
   REMOTE(R.string.control_group_remote),
   DEVELOPER(R.string.control_group_developer),
   ;

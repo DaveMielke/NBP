@@ -50,16 +50,6 @@ Input Settings
 
 .. include:: settings-input.rst
 
-Rendering Settings
-~~~~~~~~~~~~~~~~~~
-
-.. include:: settings-rendering.rst
-
-Keyboard Settings
-~~~~~~~~~~~~~~~~~
-
-.. include:: settings-keyboard.rst
-
 Braille Settings
 ~~~~~~~~~~~~~~~~
 
@@ -69,6 +59,11 @@ Speech Settings
 ~~~~~~~~~~~~~~~
 
 .. include:: settings-speech.rst
+
+Keyboard Settings
+~~~~~~~~~~~~~~~~~
+
+.. include:: settings-keyboard.rst
 
 Remote Settings
 ~~~~~~~~~~~~~~~

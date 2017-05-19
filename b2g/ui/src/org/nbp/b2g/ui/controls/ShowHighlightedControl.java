@@ -29,6 +29,6 @@ public class ShowHighlightedControl extends BooleanControl {
   }
 
   public ShowHighlightedControl () {
-    super(ControlGroup.RENDERING);
+    super(ControlGroup.BRAILLE);
   }
 }

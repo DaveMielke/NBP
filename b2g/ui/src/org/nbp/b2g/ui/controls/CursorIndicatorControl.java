@@ -29,6 +29,6 @@ public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay>
   }
 
   public CursorIndicatorControl () {
-    super(ControlGroup.RENDERING);
+    super(ControlGroup.BRAILLE);
   }
 }
