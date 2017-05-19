@@ -1,7 +1,12 @@
 package org.nbp.editor;
 
+import java.util.Date;
+
 import java.util.Map;
 import java.util.HashMap;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +54,7 @@ public class AsposeWordsOperations extends ContentOperations {
     listLabelMap.put("\uF0B7", "\u2022");
   }
 
-  private class ContentReader {
+  private class DocumentReader {
     private final Map<Node, Revision> nodeRevisionMap =
                  new HashMap<Node, Revision>();
 
@@ -317,7 +322,7 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
-    public ContentReader (InputStream stream, Editable content) throws Exception {
+    public DocumentReader (InputStream stream, Editable content) throws Exception {
       LoadOptions options = new LoadOptions();
       options.setLoadFormat(loadFormat);
 
@@ -336,19 +341,20 @@ public class AsposeWordsOperations extends ContentOperations {
     if (loadFormat == LoadFormat.UNKNOWN) readingNotSupported();
 
     try {
-      new ContentReader(stream, content);
+      new DocumentReader(stream, content);
     } catch (Exception exception) {
       Log.w(LOG_TAG, ("input error: " + exception.getMessage()));
       throw new IOException("Aspose Words input error", exception);
     }
   }
 
-  private class ContentWriter {
+  private class DocumentWriter {
     private final Document document = new Document();
     private final DocumentBuilder builder = new DocumentBuilder(document);
+    private int bookmarkNumber = 0;
 
-    private abstract class RevisionFinisher {
-      public abstract void finishRevision () throws Exception;
+    private final String newBookmarkName () {
+      return "bookmark" + ++bookmarkNumber;
     }
 
     private final void beginRevisionTracking (RevisionSpan span) {
@@ -361,126 +367,202 @@ public class AsposeWordsOperations extends ContentOperations {
       document.stopTrackRevisions();
     }
 
-    private int bookmarkNumber = 0;
-
-    private final String newBookmarkName () {
-      return "bookmark" + ++bookmarkNumber;
+    private final void appendSibling (Node node) {
+      builder.getCurrentParagraph().appendChild(node);
     }
 
-    private final BookmarkStart beginBookmark (String name) throws Exception {
-      return builder.startBookmark(name);
+    private final void appendSibling (Node node, Node reference) {
+      reference.getParentNode().insertAfter(node, reference);
     }
 
-    private final void endBookmark (String name) throws Exception {
-      builder.endBookmark(name);
-    }
-
-    private final RevisionFinisher beginInsertRevision (final RevisionSpan span) {
-      beginRevisionTracking(span);
-
-      return new RevisionFinisher() {
-        @Override
-        public void finishRevision () {
-          endRevisionTracking();
-        }
-      };
-    }
-
-    private final RevisionFinisher beginDeleteRevision (final RevisionSpan span) throws Exception {
-      final String bookmarkName = newBookmarkName();
-      final BookmarkStart bookmarkStart = beginBookmark(bookmarkName);
-
-      return new RevisionFinisher() {
-        @Override
-        public void finishRevision () throws Exception {
-          endBookmark(bookmarkName);
-          Bookmark bookmark = bookmarkStart.getBookmark();
-
-          beginRevisionTracking(span);
-          bookmark.setText("");
-          endRevisionTracking();
-
-          bookmark.remove();
-        }
-      };
-    }
-
-    private final RevisionFinisher beginRevision (RevisionSpan span) throws Exception {
-      if (span == null) return null;
-      if (span instanceof InsertSpan) return beginInsertRevision(span);
-      if (span instanceof DeleteSpan) return beginDeleteRevision(span);
-      return null;
-    }
-
-    private final void writeText (Spanned text) throws Exception {
-      int length = text.length();
-      int start = 0;
-
-      RevisionSpan oldRevisionSpan = null;
-      RevisionFinisher revisionFinisher = null;
-
-      while (start < length) {
-        boolean isDecoration = false;
-        RevisionSpan newRevisionSpan = null;
-
-        Font font = builder.getFont();
-        font.clearFormatting();
-
-        int end = text.nextSpanTransition(start, length, Object.class);
-        Object[] spans = text.getSpans(start, end, Object.class);
-
-        if (spans != null) {
-          for (Object span : spans) {
-            if (span instanceof CharacterStyle) {
-              CharacterStyle characterStyle = (CharacterStyle)span;
-
-              if (HighlightSpans.BOLD_ITALIC.isFor(characterStyle)) {
-                font.setBold(true);
-                font.setItalic(true);
-              } else if (HighlightSpans.BOLD.isFor(characterStyle)) {
-                font.setBold(true);
-              } else if (HighlightSpans.ITALIC.isFor(characterStyle)) {
-                font.setItalic(true);
-              } else if (HighlightSpans.STRIKE.isFor(characterStyle)) {
-                font.setStrikeThrough(true);
-              } else if (HighlightSpans.SUBSCRIPT.isFor(characterStyle)) {
-                font.setSubscript(true);
-              } else if (HighlightSpans.SUPERSCRIPT.isFor(characterStyle)) {
-                font.setSuperscript(true);
-              } else if (HighlightSpans.UNDERLINE.isFor(characterStyle)) {
-                font.setUnderline(Underline.DASH);
-              }
-            } else if (span instanceof RevisionSpan) {
-              newRevisionSpan = (RevisionSpan)span;
-            } else if (span instanceof DecorationSpan) {
-              isDecoration = true;
-            }
-          }
-        }
-
-        if (newRevisionSpan != oldRevisionSpan) {
-          if (revisionFinisher != null) {
-            revisionFinisher.finishRevision();
-            revisionFinisher = null;
-          }
-
-          oldRevisionSpan = newRevisionSpan;
-          revisionFinisher = beginRevision(newRevisionSpan);
-        }
-
-        if (!isDecoration) {
-          builder.write(text.subSequence(start, end).toString());
-        }
-
-        start = end;
+    private class TextWriter {
+      private abstract class SpanFinisher {
+        public abstract void finishSpan () throws Exception;
       }
 
-      if (revisionFinisher != null) revisionFinisher.finishRevision();
+      private final Map<Integer, List<SpanFinisher>> spanFinishers =
+            new HashMap<Integer, List<SpanFinisher>>();
+
+      private final List<SpanFinisher> getSpanFinishers (int position) {
+        return spanFinishers.get(position);
+      }
+
+      private final void addSpanFinisher (int position, SpanFinisher finisher) {
+        if (finisher == null) return;
+        List<SpanFinisher> finishers = getSpanFinishers(position);
+
+        if (finishers == null) {
+          finishers = new ArrayList();
+          spanFinishers.put(position, finishers);
+        }
+
+        finishers.add(finisher);
+      }
+
+      private final void finishSpans (int position) throws Exception {
+        List<SpanFinisher> finishers = getSpanFinishers(position);
+
+        if (finishers != null) {
+          for (SpanFinisher finisher : finishers) {
+            finisher.finishSpan();
+          }
+
+          spanFinishers.remove(position);
+        }
+      }
+
+      private final SpanFinisher beginInsertRevision (final RevisionSpan span) {
+        beginRevisionTracking(span);
+
+        return new SpanFinisher() {
+          @Override
+          public void finishSpan () {
+            endRevisionTracking();
+          }
+        };
+      }
+
+      private final SpanFinisher beginDeleteRevision (final RevisionSpan span) throws Exception {
+        final String bookmarkName = newBookmarkName();
+        final BookmarkStart bookmarkStart = builder.startBookmark(bookmarkName);
+
+        return new SpanFinisher() {
+          @Override
+          public void finishSpan () throws Exception {
+            builder.endBookmark(bookmarkName);
+            Bookmark bookmark = bookmarkStart.getBookmark();
+
+            beginRevisionTracking(span);
+            bookmark.setText("");
+            endRevisionTracking();
+
+            bookmark.remove();
+          }
+        };
+      }
+
+      private final SpanFinisher beginRevision (RevisionSpan span) throws Exception {
+        if (span == null) return null;
+        if (span instanceof InsertSpan) return beginInsertRevision(span);
+        if (span instanceof DeleteSpan) return beginDeleteRevision(span);
+        return null;
+      }
+
+      private final SpanFinisher beginComment (final CommentSpan span) throws Exception {
+        final Comment comment = new Comment(document);
+        appendSibling(comment);
+
+        final Paragraph paragraph = new Paragraph(document);
+        comment.getParagraphs().add(paragraph);
+
+        {
+          String author = span.getName();
+          if (author != null) comment.setAuthor(author);
+        }
+
+        {
+          String initials = span.getInitials();
+          if (initials != null) comment.setInitial(initials);
+        }
+
+        {
+          Date timestamp = span.getTimestamp();
+          if (timestamp != null) comment.setDateTime(timestamp);
+        }
+
+        return new SpanFinisher() {
+          @Override
+          public void finishSpan () throws Exception {
+            {
+              int identifier = comment.getId();
+
+              CommentRangeStart start = new CommentRangeStart(document, identifier);
+              appendSibling(start, comment);
+
+              CommentRangeEnd end = new CommentRangeEnd(document, identifier);
+              appendSibling(end);
+            }
+
+            {
+              String name = "comment";
+              BookmarkStart start = builder.startBookmark(name);
+              BookmarkEnd end = builder.endBookmark(name);
+
+              builder.moveTo(paragraph);
+              new TextWriter(span.getCommentText());
+
+              builder.moveToBookmark(name);
+              start.getBookmark().remove();
+            }
+          }
+        };
+      }
+
+      public TextWriter (Spanned text) throws Exception {
+        int length = text.length();
+        int start = 0;
+
+        while (start < length) {
+          int end = text.nextSpanTransition(start, length, Object.class);
+          finishSpans(end);
+
+          Font font = builder.getFont();
+          font.clearFormatting();
+
+          boolean isDecoration = false;
+          Object[] spans = text.getSpans(start, end, Object.class);
+
+          if (spans != null) {
+            for (Object span : spans) {
+              boolean isStart = text.getSpanStart(span) == start;
+              boolean isEnd = text.getSpanEnd(span) == end;
+
+              if (span instanceof CharacterStyle) {
+                CharacterStyle characterStyle = (CharacterStyle)span;
+
+                if (HighlightSpans.BOLD_ITALIC.isFor(characterStyle)) {
+                  font.setBold(true);
+                  font.setItalic(true);
+                } else if (HighlightSpans.BOLD.isFor(characterStyle)) {
+                  font.setBold(true);
+                } else if (HighlightSpans.ITALIC.isFor(characterStyle)) {
+                  font.setItalic(true);
+                } else if (HighlightSpans.STRIKE.isFor(characterStyle)) {
+                  font.setStrikeThrough(true);
+                } else if (HighlightSpans.SUBSCRIPT.isFor(characterStyle)) {
+                  font.setSubscript(true);
+                } else if (HighlightSpans.SUPERSCRIPT.isFor(characterStyle)) {
+                  font.setSuperscript(true);
+                } else if (HighlightSpans.UNDERLINE.isFor(characterStyle)) {
+                  font.setUnderline(Underline.DASH);
+                }
+              } else if (span instanceof DecorationSpan) {
+                isDecoration = true;
+              } else if (span instanceof RevisionSpan) {
+                if (isStart) {
+                  addSpanFinisher(end, beginRevision((RevisionSpan)span));
+                }
+              } else if (span instanceof CommentSpan) {
+                if (isStart) {
+                  addSpanFinisher(end, beginComment((CommentSpan)span));
+                }
+              }
+            }
+          }
+
+          if (!isDecoration) {
+            builder.write(text.subSequence(start, end).toString());
+          }
+
+          finishSpans(start);
+          start = end;
+        }
+      }
     }
 
-    public ContentWriter (OutputStream stream, CharSequence content) throws Exception {
+    public DocumentWriter (OutputStream stream, CharSequence content) throws Exception {
       Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
-      writeText(text);
+      new TextWriter(text);
       document.save(stream, saveFormat);
     }
   }
@@ -491,7 +573,7 @@ public class AsposeWordsOperations extends ContentOperations {
     if (saveFormat == SaveFormat.UNKNOWN) writingNotSupported();
 
     try {
-      new ContentWriter(stream, content);
+      new DocumentWriter(stream, content);
     } catch (Exception exception) {
       Log.w(LOG_TAG, ("output error: " + exception.getMessage()));
       throw new IOException("Aspose Words output error", exception);
