@@ -309,7 +309,12 @@ public class AsposeWordsOperations extends ContentOperations {
       if (text.length() == 0) return;
 
       CommentSpan span = new CommentSpan(text);
-      content.setSpan(span, startPosition, endPosition, content.SPAN_EXCLUSIVE_EXCLUSIVE);
+      content.setSpan(
+        span, startPosition, endPosition, 
+        (startPosition == endPosition)?
+          Spanned.SPAN_POINT_POINT:
+          Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+      );
 
       span.setName(comment.getAuthor());
       span.setInitials(comment.getInitial());
@@ -376,6 +381,13 @@ public class AsposeWordsOperations extends ContentOperations {
     }
 
     private class TextWriter {
+      private int documentPosition = 0;
+
+      private final void writeText (CharSequence text) throws Exception {
+        builder.write(text.toString());
+        documentPosition += text.length();
+      }
+
       private abstract class SpanFinisher {
         public abstract void finishSpan () throws Exception;
       }
@@ -449,6 +461,8 @@ public class AsposeWordsOperations extends ContentOperations {
       }
 
       private final SpanFinisher beginComment (final CommentSpan span) throws Exception {
+        final int position = documentPosition;
+
         final Comment comment = new Comment(document);
         appendSibling(comment);
 
@@ -473,7 +487,7 @@ public class AsposeWordsOperations extends ContentOperations {
         return new SpanFinisher() {
           @Override
           public void finishSpan () throws Exception {
-            {
+            if (documentPosition != position) {
               int identifier = comment.getId();
 
               CommentRangeStart start = new CommentRangeStart(document, identifier);
@@ -551,7 +565,7 @@ public class AsposeWordsOperations extends ContentOperations {
           }
 
           if (!isDecoration) {
-            builder.write(text.subSequence(start, end).toString());
+            writeText(text.subSequence(start, end));
           }
 
           finishSpans(start);
