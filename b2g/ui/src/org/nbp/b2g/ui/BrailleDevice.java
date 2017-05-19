@@ -62,8 +62,8 @@ public class BrailleDevice {
 
   public final void restoreControls () {
     Control[] controls = new Control[] {
-      Controls.getBrailleEnabledControl(),
-      Controls.getBrailleFirmnessControl()
+      Controls.brailleEnabled,
+      Controls.brailleFirmness
     };
 
     Controls.forEachControl(controls, Controls.restoreCurrentValue);

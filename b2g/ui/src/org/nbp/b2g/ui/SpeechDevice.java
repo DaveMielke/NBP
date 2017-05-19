@@ -284,10 +284,10 @@ public class SpeechDevice {
 
   public final void restoreControls () {
     Control[] controls = new Control[] {
-      Controls.getSpeechVolumeControl(),
-      Controls.getSpeechBalanceControl(),
-      Controls.getSpeechRateControl(),
-      Controls.getSpeechPitchControl()
+      Controls.speechVolume,
+      Controls.speechRate,
+      Controls.speechPitch,
+      Controls.speechBalance
     };
 
     Controls.forEachControl(controls, Controls.restoreCurrentValue);

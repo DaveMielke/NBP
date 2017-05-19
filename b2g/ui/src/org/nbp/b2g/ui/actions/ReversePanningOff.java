@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class ReversePanningOff extends PreviousValueAction {
   public ReversePanningOff (Endpoint endpoint) {
-    super(endpoint, Controls.getReversePanningControl(), false);
+    super(endpoint, Controls.reversePanning, false);
   }
 }

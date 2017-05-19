@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class TypingModeText extends PreviousValueAction {
   public TypingModeText (Endpoint endpoint) {
-    super(endpoint, Controls.getTypingModeControl(), false);
+    super(endpoint, Controls.typingMode, false);
   }
 }

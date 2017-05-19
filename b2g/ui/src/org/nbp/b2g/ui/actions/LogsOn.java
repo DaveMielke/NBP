@@ -3,10 +3,10 @@ import org.nbp.b2g.ui.*;
 
 public class LogsOn extends Action {
   private final static BooleanControl[] controls = new BooleanControl[] {
-    Controls.getLogUpdatesControl(),
-    Controls.getLogActionsControl(),
-    Controls.getLogNavigationControl(),
-    Controls.getLogBrailleControl()
+    Controls.logUpdates,
+    Controls.logActions,
+    Controls.logNavigation,
+    Controls.logBraille
   };
 
   @Override

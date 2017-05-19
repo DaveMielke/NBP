@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class LogNavigationOff extends PreviousValueAction {
   public LogNavigationOff (Endpoint endpoint) {
-    super(endpoint, Controls.getLogNavigationControl(), true);
+    super(endpoint, Controls.logNavigation, true);
   }
 }

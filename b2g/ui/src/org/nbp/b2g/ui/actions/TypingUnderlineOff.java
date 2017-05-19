@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class TypingUnderlineOff extends PreviousValueAction {
   public TypingUnderlineOff (Endpoint endpoint) {
-    super(endpoint, Controls.getTypingUnderlineControl(), false);
+    super(endpoint, Controls.typingUnderline, false);
   }
 }

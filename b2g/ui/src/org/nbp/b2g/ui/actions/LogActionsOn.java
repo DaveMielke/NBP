@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class LogActionsOn extends NextValueAction {
   public LogActionsOn (Endpoint endpoint) {
-    super(endpoint, Controls.getLogActionsControl(), true);
+    super(endpoint, Controls.logActions, true);
   }
 }

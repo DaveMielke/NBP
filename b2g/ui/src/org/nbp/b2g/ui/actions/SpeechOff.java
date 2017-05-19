@@ -9,6 +9,6 @@ public class SpeechOff extends PreviousValueAction {
   }
 
   public SpeechOff (Endpoint endpoint) {
-    super(endpoint, Controls.getSpeechEnabledControl(), false);
+    super(endpoint, Controls.speechEnabled, false);
   }
 }

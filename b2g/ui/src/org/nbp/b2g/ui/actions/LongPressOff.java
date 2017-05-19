@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class LongPressOff extends PreviousValueAction {
   public LongPressOff (Endpoint endpoint) {
-    super(endpoint, Controls.getLongPressControl(), false);
+    super(endpoint, Controls.longPress, false);
   }
 }

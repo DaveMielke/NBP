@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class TypingStrikeOff extends PreviousValueAction {
   public TypingStrikeOff (Endpoint endpoint) {
-    super(endpoint, Controls.getTypingStrikeControl(), false);
+    super(endpoint, Controls.typingStrike, false);
   }
 }

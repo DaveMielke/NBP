@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class TypingBoldOn extends NextValueAction {
   public TypingBoldOn (Endpoint endpoint) {
-    super(endpoint, Controls.getTypingBoldControl(), false);
+    super(endpoint, Controls.typingBold, false);
   }
 }

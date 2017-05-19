@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class WordWrapOn extends NextValueAction {
   public WordWrapOn (Endpoint endpoint) {
-    super(endpoint, Controls.getWordWrapControl(), false);
+    super(endpoint, Controls.wordWrap, false);
   }
 }

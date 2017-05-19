@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class ComputerBraille extends PreviousValueAction {
   public ComputerBraille (Endpoint endpoint) {
-    super(endpoint, Controls.getLiteraryBrailleControl(), false);
+    super(endpoint, Controls.literaryBraille, false);
   }
 }

@@ -8,225 +8,89 @@ public abstract class Controls {
   private Controls () {
   }
 
-  private final static LiteraryBrailleControl literaryBrailleControl = new LiteraryBrailleControl();
-  private final static BrailleCodeControl brailleCodeControl = new BrailleCodeControl();
-  private final static WordWrapControl wordWrapControl = new WordWrapControl();
-  private final static ShowNotificationsControl showNotificationsControl = new ShowNotificationsControl();
+  public final static LiteraryBrailleControl literaryBraille = new LiteraryBrailleControl();
+  public final static BrailleCodeControl brailleCode = new BrailleCodeControl();
+  public final static WordWrapControl wordWrap = new WordWrapControl();
+  public final static ShowNotificationsControl showNotifications = new ShowNotificationsControl();
 
-  private final static TypingModeControl typingModeControl = new TypingModeControl();
-  private final static TypingBoldControl typingBoldControl = new TypingBoldControl();
-  private final static TypingItalicControl typingItalicControl = new TypingItalicControl();
-  private final static TypingStrikeControl typingStrikeControl = new TypingStrikeControl();
-  private final static TypingUnderlineControl typingUnderlineControl = new TypingUnderlineControl();
+  public final static TypingModeControl typingMode = new TypingModeControl();
+  public final static TypingBoldControl typingBold = new TypingBoldControl();
+  public final static TypingItalicControl typingItalic = new TypingItalicControl();
+  public final static TypingStrikeControl typingStrike = new TypingStrikeControl();
+  public final static TypingUnderlineControl typingUnderline = new TypingUnderlineControl();
 
-  private final static ShowHighlightedControl showHighlightedControl = new ShowHighlightedControl();
-  private final static SelectionIndicatorControl selectionIndicatorControl = new SelectionIndicatorControl();
-  private final static CursorIndicatorControl cursorIndicatorControl = new CursorIndicatorControl();
-  private final static BrailleFirmnessControl brailleFirmnessControl = new BrailleFirmnessControl();
-  private final static BrailleMonitorControl brailleMonitorControl = new BrailleMonitorControl();
-  private final static BrailleEnabledControl brailleEnabledControl = new BrailleEnabledControl();
+  public final static ShowHighlightedControl showHighlighted = new ShowHighlightedControl();
+  public final static SelectionIndicatorControl selectionIndicator = new SelectionIndicatorControl();
+  public final static CursorIndicatorControl cursorIndicator = new CursorIndicatorControl();
+  public final static BrailleFirmnessControl brailleFirmness = new BrailleFirmnessControl();
+  public final static BrailleMonitorControl brailleMonitor = new BrailleMonitorControl();
+  public final static BrailleEnabledControl brailleEnabled = new BrailleEnabledControl();
 
-  private final static SpeechEnabledControl speechEnabledControl = new SpeechEnabledControl();
-  private final static SpeechVolumeControl speechVolumeControl = new SpeechVolumeControl();
-  private final static SpeechRateControl speechRateControl = new SpeechRateControl();
-  private final static SpeechPitchControl speechPitchControl = new SpeechPitchControl();
-  private final static SpeechBalanceControl speechBalanceControl = new SpeechBalanceControl();
-  private final static SleepTalkControl sleepTalkControl = new SleepTalkControl();
+  public final static SpeechEnabledControl speechEnabled = new SpeechEnabledControl();
+  public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
+  public final static SpeechRateControl speechRate = new SpeechRateControl();
+  public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
+  public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
+  public final static SleepTalkControl sleepTalk = new SleepTalkControl();
 
-  private final static LongPressControl longPressControl = new LongPressControl();
-  private final static ReversePanningControl reversePanningControl = new ReversePanningControl();
-  private final static OneHandControl oneHandControl = new OneHandControl();
+  public final static LongPressControl longPress = new LongPressControl();
+  public final static ReversePanningControl reversePanning = new ReversePanningControl();
+  public final static OneHandControl oneHand = new OneHandControl();
 
-  private final static RemoteDisplayControl remoteDisplayControl = new RemoteDisplayControl();
-  private final static SecureConnectionControl secureConnectionControl = new SecureConnectionControl();
+  public final static RemoteDisplayControl remoteDisplay = new RemoteDisplayControl();
+  public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
 
-  private final static DeveloperModeControl developerModeControl = new DeveloperModeControl();
-  private final static LogUpdatesControl logUpdatesControl = new LogUpdatesControl();
-  private final static LogKeyboardControl logKeyboardControl = new LogKeyboardControl();
-  private final static LogActionsControl logActionsControl = new LogActionsControl();
-  private final static LogNavigationControl logNavigationControl = new LogNavigationControl();
-  private final static LogGesturesControl logGesturesControl = new LogGesturesControl();
-  private final static LogBrailleControl logBrailleControl = new LogBrailleControl();
-  private final static LogSpeechControl logSpeechControl = new LogSpeechControl();
+  public final static DeveloperModeControl developerMode = new DeveloperModeControl();
+  public final static LogUpdatesControl logUpdates = new LogUpdatesControl();
+  public final static LogKeyboardControl logKeyboard = new LogKeyboardControl();
+  public final static LogActionsControl logActions = new LogActionsControl();
+  public final static LogNavigationControl logNavigation = new LogNavigationControl();
+  public final static LogGesturesControl logGestures = new LogGesturesControl();
+  public final static LogBrailleControl logBraille = new LogBrailleControl();
+  public final static LogSpeechControl logSpeech = new LogSpeechControl();
 
   private final static Control[] allControls = new Control[] {
-    literaryBrailleControl,
-    brailleCodeControl,
-    wordWrapControl,
-    showNotificationsControl,
+    literaryBraille,
+    brailleCode,
+    wordWrap,
+    showNotifications,
 
-    typingModeControl,
-    typingBoldControl,
-    typingItalicControl,
-    typingStrikeControl,
-    typingUnderlineControl,
+    typingMode,
+    typingBold,
+    typingItalic,
+    typingStrike,
+    typingUnderline,
 
-    showHighlightedControl,
-    selectionIndicatorControl,
-    cursorIndicatorControl,
-    brailleFirmnessControl,
-    brailleMonitorControl,
-    brailleEnabledControl,
+    showHighlighted,
+    selectionIndicator,
+    cursorIndicator,
+    brailleFirmness,
+    brailleMonitor,
+    brailleEnabled,
 
-    speechEnabledControl,
-    speechVolumeControl,
-    speechRateControl,
-    speechPitchControl,
-    speechBalanceControl,
-    sleepTalkControl,
+    speechEnabled,
+    speechVolume,
+    speechRate,
+    speechPitch,
+    speechBalance,
+    sleepTalk,
 
-    longPressControl,
-    reversePanningControl,
-    oneHandControl,
+    longPress,
+    reversePanning,
+    oneHand,
 
-    remoteDisplayControl,
-    secureConnectionControl,
+    remoteDisplay,
+    secureConnection,
 
-    developerModeControl,
-    logUpdatesControl,
-    logKeyboardControl,
-    logActionsControl,
-    logNavigationControl,
-    logGesturesControl,
-    logBrailleControl,
-    logSpeechControl
+    developerMode,
+    logUpdates,
+    logKeyboard,
+    logActions,
+    logNavigation,
+    logGestures,
+    logBraille,
+    logSpeech
   };
-
-  public static LiteraryBrailleControl getLiteraryBrailleControl () {
-    return literaryBrailleControl;
-  }
-
-  public static BrailleCodeControl getBrailleCodeControl () {
-    return brailleCodeControl;
-  }
-
-  public static WordWrapControl getWordWrapControl () {
-    return wordWrapControl;
-  }
-
-  public static ShowNotificationsControl getShowNotificationsControl () {
-    return showNotificationsControl;
-  }
-
-  public static TypingModeControl getTypingModeControl () {
-    return typingModeControl;
-  }
-
-  public static TypingBoldControl getTypingBoldControl () {
-    return typingBoldControl;
-  }
-
-  public static TypingItalicControl getTypingItalicControl () {
-    return typingItalicControl;
-  }
-
-  public static TypingStrikeControl getTypingStrikeControl () {
-    return typingStrikeControl;
-  }
-
-  public static TypingUnderlineControl getTypingUnderlineControl () {
-    return typingUnderlineControl;
-  }
-
-  public static ShowHighlightedControl getShowHighlightedControl () {
-    return showHighlightedControl;
-  }
-
-  public static SelectionIndicatorControl getSelectionIndicatorControl () {
-    return selectionIndicatorControl;
-  }
-
-  public static CursorIndicatorControl getCursorIndicatorControl () {
-    return cursorIndicatorControl;
-  }
-
-  public static BrailleFirmnessControl getBrailleFirmnessControl () {
-    return brailleFirmnessControl;
-  }
-
-  public static BrailleMonitorControl getBrailleMonitorControl () {
-    return brailleMonitorControl;
-  }
-
-  public static BrailleEnabledControl getBrailleEnabledControl () {
-    return brailleEnabledControl;
-  }
-
-  public static SpeechEnabledControl getSpeechEnabledControl () {
-    return speechEnabledControl;
-  }
-
-  public static SpeechVolumeControl getSpeechVolumeControl () {
-    return speechVolumeControl;
-  }
-
-  public static SpeechRateControl getSpeechRateControl () {
-    return speechRateControl;
-  }
-
-  public static SpeechPitchControl getSpeechPitchControl () {
-    return speechPitchControl;
-  }
-
-  public static SpeechBalanceControl getSpeechBalanceControl () {
-    return speechBalanceControl;
-  }
-
-  public static SleepTalkControl getSleepTalkControl () {
-    return sleepTalkControl;
-  }
-
-  public static LongPressControl getLongPressControl () {
-    return longPressControl;
-  }
-
-  public static ReversePanningControl getReversePanningControl () {
-    return reversePanningControl;
-  }
-
-  public static OneHandControl getOneHandControl () {
-    return oneHandControl;
-  }
-
-  public static RemoteDisplayControl getRemoteDisplayControl () {
-    return remoteDisplayControl;
-  }
-
-  public static SecureConnectionControl getSecureConnectionControl () {
-    return secureConnectionControl;
-  }
-
-  public static DeveloperModeControl getDeveloperModeControl () {
-    return developerModeControl;
-  }
-
-  public static LogUpdatesControl getLogUpdatesControl () {
-    return logUpdatesControl;
-  }
-
-  public static LogKeyboardControl getLogKeyboardControl () {
-    return logKeyboardControl;
-  }
-
-  public static LogActionsControl getLogActionsControl () {
-    return logActionsControl;
-  }
-
-  public static LogNavigationControl getLogNavigationControl () {
-    return logNavigationControl;
-  }
-
-  public static LogGesturesControl getLogGesturesControl () {
-    return logGesturesControl;
-  }
-
-  public static LogBrailleControl getLogBrailleControl () {
-    return logBrailleControl;
-  }
-
-  public static LogSpeechControl getLogSpeechControl () {
-    return logSpeechControl;
-  }
 
   public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {
     for (Control control : controls) {
@@ -291,10 +155,10 @@ public abstract class Controls {
   }
 
   private final static BooleanControl[] highlightedTypingControls = new BooleanControl[] {
-    typingBoldControl,
-    typingItalicControl,
-    typingStrikeControl,
-    typingUnderlineControl
+    typingBold,
+    typingItalic,
+    typingStrike,
+    typingUnderline
   };
 
   public static void resetHighlightedTyping () {
@@ -304,9 +168,9 @@ public abstract class Controls {
   }
 
   public static void restoreSaneValues () {
-    typingModeControl.setValue(TypingMode.TEXT);
+    typingMode.setValue(TypingMode.TEXT);
     resetHighlightedTyping();
-    oneHandControl.setValue(false);
-    brailleEnabledControl.setValue(true);
+    oneHand.setValue(false);
+    brailleEnabled.setValue(true);
   }
 }

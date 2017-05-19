@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class SpeakSlower extends PreviousValueAction {
   public SpeakSlower (Endpoint endpoint) {
-    super(endpoint, Controls.getSpeechRateControl(), false);
+    super(endpoint, Controls.speechRate, false);
   }
 }

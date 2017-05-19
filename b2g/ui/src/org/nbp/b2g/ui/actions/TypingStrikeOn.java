@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class TypingStrikeOn extends NextValueAction {
   public TypingStrikeOn (Endpoint endpoint) {
-    super(endpoint, Controls.getTypingStrikeControl(), false);
+    super(endpoint, Controls.typingStrike, false);
   }
 }

@@ -4,6 +4,6 @@ import org.nbp.b2g.ui.*;
 
 public class ShowNotificationsOff extends PreviousValueAction {
   public ShowNotificationsOff (Endpoint endpoint) {
-    super(endpoint, Controls.getShowNotificationsControl(), false);
+    super(endpoint, Controls.showNotifications, false);
   }
 }

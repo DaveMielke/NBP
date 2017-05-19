@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class BrailleOff extends PreviousValueAction {
   public BrailleOff (Endpoint endpoint) {
-    super(endpoint, Controls.getBrailleEnabledControl(), false);
+    super(endpoint, Controls.brailleEnabled, false);
   }
 }

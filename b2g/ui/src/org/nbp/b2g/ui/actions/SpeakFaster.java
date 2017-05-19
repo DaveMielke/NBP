@@ -3,6 +3,6 @@ import org.nbp.b2g.ui.*;
 
 public class SpeakFaster extends NextValueAction {
   public SpeakFaster (Endpoint endpoint) {
-    super(endpoint, Controls.getSpeechRateControl(), false);
+    super(endpoint, Controls.speechRate, false);
   }
 }
