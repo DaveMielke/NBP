@@ -741,7 +741,7 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          Markup.acceptRevisions(editArea.getText());
+          if (Markup.acceptRevisions(editArea.getText())) hasChanged = true;
         }
       }
     );
@@ -787,6 +787,7 @@ public class EditorActivity extends CommonActivity {
                 public void run () {
                   int position = revision.removeSpan(editArea.getText());
                   editArea.setSelection(position);
+                  hasChanged = true;
                 }
               }
             );
@@ -847,6 +848,7 @@ public class EditorActivity extends CommonActivity {
           text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
           comment.finishSpan(text);
           editArea.setSelection(comment);
+          hasChanged = true;
         }
       }
     );
@@ -868,6 +870,7 @@ public class EditorActivity extends CommonActivity {
                 public void run () {
                   int position = comment.removeSpan(editArea.getText());
                   editArea.setSelection(position);
+                  hasChanged = true;
                 }
               }
             );

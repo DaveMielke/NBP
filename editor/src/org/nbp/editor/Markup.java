@@ -23,14 +23,17 @@ public abstract class Markup {
     return getSpans(content, CommentSpan.class);
   }
 
-  private final static void removeRevisions (Editable content, boolean preview) {
+  private final static boolean removeRevisions (Editable content, boolean preview) {
+    boolean removed = false;
+
     for (RevisionSpan revision : getRevisionSpans(content)) {
       int start = content.getSpanStart(revision);
       int end = content.getSpanEnd(revision);
-      content.removeSpan(revision);
-
       CharSequence replacement = revision.getReplacementText();
+
+      content.removeSpan(revision);
       content.replace(start, end, replacement);
+      removed = true;
 
       if (preview) {
         int length = replacement.length();
@@ -43,21 +46,28 @@ public abstract class Markup {
         );
       }
     }
+
+    return removed;
   }
 
-  public final static void previewRevisions (Editable content) {
-    removeRevisions(content, true);
+  public final static boolean previewRevisions (Editable content) {
+    return removeRevisions(content, true);
   }
 
-  public final static void acceptRevisions (Editable content) {
-    removeRevisions(content, false);
+  public final static boolean acceptRevisions (Editable content) {
+    boolean removed = removeRevisions(content, false);
 
     for (PreviewSpan preview : getPreviewSpans(content)) {
       content.removeSpan(preview);
+      removed = true;
     }
+
+    return removed;
   }
 
-  public final static void restoreRevisions (Editable content) {
+  public final static boolean restoreRevisions (Editable content) {
+    boolean restored = false;
+
     for (PreviewSpan preview : getPreviewSpans(content)) {
       int start = content.getSpanStart(preview);
       int end = content.getSpanEnd(preview);
@@ -71,7 +81,11 @@ public abstract class Markup {
         revision, start, (start + replacement.length()),
         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
       );
+
+      restored = true;
     }
+
+    return restored;
   }
 
   public final static void removeComments (Editable content) {
