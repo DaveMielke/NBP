@@ -177,6 +177,17 @@ public class EditorActivity extends CommonActivity {
     setEditorContent(null, "");
   }
 
+  private final void runProtectedOperation (Runnable operation) {
+    boolean wasEnforced = editArea.getEnforceTextProtection();
+    editArea.setEnforceTextProtection(false);
+
+    try {
+      operation.run();
+    } finally {
+      editArea.setEnforceTextProtection(wasEnforced);
+    }
+  }
+
   private final void saveFile (
     final File file, final CharSequence content,
     final boolean confirm, final Runnable onSaved
@@ -704,15 +715,36 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_markChanges () {
-    Markup.restoreRevisions(editArea.getText());
+    runProtectedOperation(
+      new Runnable() {
+        @Override
+        public void run () {
+          Markup.restoreRevisions(editArea.getText());
+        }
+      }
+    );
   }
 
   private void menuAction_previewChanges () {
-    Markup.previewRevisions(editArea.getText());
+    runProtectedOperation(
+      new Runnable() {
+        @Override
+        public void run () {
+          Markup.previewRevisions(editArea.getText());
+        }
+      }
+    );
   }
 
   private void menuAction_acceptChanges () {
-    Markup.acceptRevisions(editArea.getText());
+    runProtectedOperation(
+      new Runnable() {
+        @Override
+        public void run () {
+          Markup.acceptRevisions(editArea.getText());
+        }
+      }
+    );
   }
 
   private void menuAction_showRevision () {
@@ -749,15 +781,15 @@ public class EditorActivity extends CommonActivity {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            boolean wasEnforced = editArea.getEnforceTextProtection();
-            editArea.setEnforceTextProtection(false);
-
-            try {
-              int position = revision.removeSpan(editArea.getText());
-              editArea.setSelection(position);
-            } finally {
-              editArea.setEnforceTextProtection(wasEnforced);
-            }
+            runProtectedOperation(
+              new Runnable() {
+                @Override
+                public void run () {
+                  int position = revision.removeSpan(editArea.getText());
+                  editArea.setSelection(position);
+                }
+              }
+            );
           }
         }
       );
@@ -830,15 +862,15 @@ public class EditorActivity extends CommonActivity {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            boolean wasEnforced = editArea.getEnforceTextProtection();
-            editArea.setEnforceTextProtection(false);
-
-            try {
-              int position = comment.removeSpan(editArea.getText());
-              editArea.setSelection(position);
-            } finally {
-              editArea.setEnforceTextProtection(wasEnforced);
-            }
+            runProtectedOperation(
+              new Runnable() {
+                @Override
+                public void run () {
+                  int position = comment.removeSpan(editArea.getText());
+                  editArea.setSelection(position);
+                }
+              }
+            );
           }
         }
       );
