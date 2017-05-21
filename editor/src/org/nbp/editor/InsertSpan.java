@@ -1,11 +1,11 @@
 package org.nbp.editor;
 
 public class InsertSpan extends RevisionSpan {
-  private final static String decorationPrefix = "⣏⢎";
-  private final static String decorationSuffix = "⡱⣹";
+  private final static String prefixDecoration = "⣏⢎";
+  private final static String suffixDecoration = "⡱⣹";
 
   public InsertSpan () {
-    super(decorationPrefix, decorationSuffix);
+    super(prefixDecoration, suffixDecoration);
   }
 
   @Override

@@ -6,11 +6,11 @@ import java.util.Date;
 public class CommentSpan extends AuthorSpan {
   private final Editable commentText;
 
-  private final static String decorationPrefix = "⣏⣉";
-  private final static String decorationSuffix = "⣉⣹";
+  private final static String prefixDecoration = "⣏⣉";
+  private final static String suffixDecoration = "⣉⣹";
 
   public CommentSpan (Editable text) {
-    super(decorationPrefix, decorationSuffix);
+    super(prefixDecoration, suffixDecoration);
     setContainsProtectedText(false);
     commentText = text;
   }

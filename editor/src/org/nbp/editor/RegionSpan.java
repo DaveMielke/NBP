@@ -9,14 +9,14 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 
 public abstract class RegionSpan extends EditorSpan {
-  private final String decorationPrefix;
-  private final String decorationSuffix;
+  private final String prefixDecoration;
+  private final String suffixDecoration;
   private final CharacterStyle characterStyle;
 
   protected RegionSpan (String prefix, String suffix, CharacterStyle style) {
     super();
-    decorationPrefix = prefix;
-    decorationSuffix = suffix;
+    prefixDecoration = prefix;
+    suffixDecoration = suffix;
     characterStyle = style;
   }
 
@@ -28,12 +28,12 @@ public abstract class RegionSpan extends EditorSpan {
     this(null, null, style);
   }
 
-  public final String getDecorationPrefix () {
-    return decorationPrefix;
+  public final String getPrefixDecoration () {
+    return prefixDecoration;
   }
 
-  public final String getDecorationSuffix () {
-    return decorationSuffix;
+  public final String getSuffixDecoration () {
+    return suffixDecoration;
   }
 
   public final CharacterStyle getCharacterStyle () {
@@ -90,11 +90,11 @@ public abstract class RegionSpan extends EditorSpan {
     Editable text = new SpannableStringBuilder();
     int textFlagsIndex = 0;
 
-    if (appendDecoration(text, decorationPrefix)) textFlagsIndex |= 0X2;
+    if (appendDecoration(text, prefixDecoration)) textFlagsIndex |= 0X2;
     int textStart = text.length();
     text.append(actualText);
     int textEnd = text.length();
-    if (appendDecoration(text, decorationSuffix)) textFlagsIndex |= 0X1;
+    if (appendDecoration(text, suffixDecoration)) textFlagsIndex |= 0X1;
     int textFlags = textFlagsArray[textFlagsIndex];
 
     if (characterStyle != null) {
@@ -129,8 +129,8 @@ public abstract class RegionSpan extends EditorSpan {
     int end = content.getSpanEnd(this);
     decoratedText = content.subSequence(start, end);
 
-    if (decorationPrefix != null) start += decorationPrefix.length();
-    if (decorationSuffix != null) end -= decorationSuffix.length();
+    if (prefixDecoration != null) start += prefixDecoration.length();
+    if (suffixDecoration != null) end -= suffixDecoration.length();
     actualText = content.subSequence(start, end);
   }
 

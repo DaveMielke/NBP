@@ -59,7 +59,7 @@ public class EditArea extends EditText {
   }
 
   public final void setSelection (RegionSpan region) {
-    String prefix = region.getDecorationPrefix();
+    String prefix = region.getPrefixDecoration();
     int adjustment = (prefix != null)? prefix.length(): 0;
     setSelection(getText().getSpanStart(region) + adjustment);
   }

@@ -3,11 +3,11 @@ package org.nbp.editor;
 import android.text.style.StrikethroughSpan;
 
 public class DeleteSpan extends RevisionSpan {
-  private final static String decorationPrefix = "⣏⡱";
-  private final static String decorationSuffix = "⢎⣹";
+  private final static String prefixDecoration = "⣏⡱";
+  private final static String suffixDecoration = "⢎⣹";
 
   public DeleteSpan () {
-    super(decorationPrefix, decorationSuffix);
+    super(prefixDecoration, suffixDecoration);
   }
 
   @Override

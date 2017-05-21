@@ -84,12 +84,12 @@ public abstract class EditorSpan implements DialogFinisher {
             int to = nextStart;
 
             {
-              CharSequence decoration = previousRevision.getDecorationSuffix();
+              CharSequence decoration = previousRevision.getSuffixDecoration();
               if (decoration != null) from -= decoration.length();
             }
 
             {
-              CharSequence decoration = nextRevision.getDecorationPrefix();
+              CharSequence decoration = nextRevision.getPrefixDecoration();
               if (decoration != null) to += decoration.length();
             }
 
