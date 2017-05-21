@@ -524,11 +524,8 @@ public class EditorActivity extends CommonActivity {
   private void menuAction_summary () {
     ContentSummary summary = new ContentSummary(editArea.getText());
     summary.setContentURI(uriView.getText());
+    summary.setContentHandle(contentHandle);
     summary.setHasChanged(hasChanged);
-
-    if (contentHandle != null) {
-      summary.setContentType(contentHandle.getType());
-    }
 
     showDialog(
       R.string.menu_file_summary, R.layout.file_summary, summary

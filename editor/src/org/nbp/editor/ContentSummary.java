@@ -42,7 +42,7 @@ public class ContentSummary implements DialogFinisher {
   }
 
   private CharSequence contentURI = null;
-  private String contentType = null;
+  private ContentHandle contentHandle = null;
   private boolean hasChanged = false;
 
   public final CharSequence getContentURI () {
@@ -53,12 +53,12 @@ public class ContentSummary implements DialogFinisher {
     contentURI = uri;
   }
 
-  public final String getContentType () {
-    return contentType;
+  public final ContentHandle getContentHandle () {
+    return contentHandle;
   }
 
-  public final void setContentType (String type) {
-    contentType = type;
+  public final void setContentHandle (ContentHandle handle) {
+    contentHandle = handle;
   }
 
   public final boolean getHasChanged () {
