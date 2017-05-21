@@ -303,7 +303,6 @@ public class AsposeWordsOperations extends ContentOperations {
       Editable text = new SpannableStringBuilder();
       addComment(text, comment);
       if (text.length() == 0) return;
-      EditorSpan.finishSpans(text);
 
       CommentSpan span = new CommentSpan(text);
       span.setName(comment.getAuthor());

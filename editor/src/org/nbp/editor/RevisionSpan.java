@@ -1,7 +1,6 @@
 package org.nbp.editor;
 
 import android.text.style.CharacterStyle;
-import java.util.Date;
 
 public abstract class RevisionSpan extends AuthorSpan {
   protected RevisionSpan (String prefix, String suffix, CharacterStyle style) {
