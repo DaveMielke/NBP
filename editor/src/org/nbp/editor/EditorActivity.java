@@ -521,6 +521,16 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_summarize () {
+    ContentSummary summary = new ContentSummary(editArea.getText());
+    summary.setContentURI(uriView.getText());
+    summary.setHasChanged(hasChanged);
+
+    showDialog(
+      R.string.menu_file_summarize, R.layout.file_summary, summary
+    );
+  }
+
   private void menuAction_new () {
     testHasChanged(
       new Runnable() {
@@ -914,6 +924,10 @@ public class EditorActivity extends CommonActivity {
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
       case R.id.menu_options_file:
+        return true;
+
+      case R.id.menu_file_summarize:
+        menuAction_summarize();
         return true;
 
       case R.id.menu_file_new:

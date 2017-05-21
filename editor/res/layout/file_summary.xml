@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  >
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView android:id="@+id/file_summary_contentURI" android:focusable="true" />
+
+    <TableRow>
+      <TextView android:text="@string/file_summary_hasChanged" />
+      <TextView android:id="@+id/file_summary_hasChanged" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/file_summary_revisionCount" />
+      <TextView android:id="@+id/file_summary_revisionCount" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/file_summary_insertCount" />
+      <TextView android:id="@+id/file_summary_insertCount" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/file_summary_deleteCount" />
+      <TextView android:id="@+id/file_summary_deleteCount" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/file_summary_commentCount" />
+      <TextView android:id="@+id/file_summary_commentCount" />
+    </TableRow>
+  </TableLayout>
+</FrameLayout>

@@ -7,12 +7,21 @@
   <string name="hint_new_file">[new file]</string>
   <string name="hint_edit_area">[empty file]</string>
 
+  <string name="value_boolean_true">Yes</string>
+  <string name="value_boolean_false">No</string>
+
+  <string name="file_summary_hasChanged">Unsaved Changes</string>
+  <string name="file_summary_revisionCount">Total Revisions</string>
+  <string name="file_summary_insertCount">Insert Revisions</string>
+  <string name="file_summary_deleteCount">Delete Revisions</string>
+  <string name="file_summary_commentCount">Comments</string>
+
   <string name="author_label_name">Author</string>
   <string name="author_label_initials">Initials</string>
   <string name="author_label_timestamp">Timestamp</string>
 
-  <string name="revision_type_delete">Delete</string>
   <string name="revision_type_insert">Insert</string>
+  <string name="revision_type_delete">Delete</string>
 
   <string name="comment_hint_text">Type comment</string>
 
