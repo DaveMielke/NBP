@@ -179,8 +179,13 @@
        />
 
       <item
-        android:id="@+id/menu_revisions_removeRevision"
-        android:title="@string/menu_revisions_removeRevision"
+        android:id="@+id/menu_revisions_acceptRevision"
+        android:title="@string/menu_revisions_acceptRevision"
+       />
+
+      <item
+        android:id="@+id/menu_revisions_rejectRevision"
+        android:title="@string/menu_revisions_rejectRevision"
        />
     </menu>
   </item>

@@ -27,12 +27,12 @@ public abstract class Markup {
     return getSpans(content, CommentSpan.class);
   }
 
-  private final static void applyRevision (
-    Editable content, RevisionSpan revision, PreviewSpan preview
+  private final static int removeRevision (
+    Editable content, RevisionSpan revision,
+    CharSequence replacement, PreviewSpan preview
   ) {
     int start = content.getSpanStart(revision);
     int end = content.getSpanEnd(revision);
-    CharSequence replacement = revision.getReplacementText();
 
     content.removeSpan(revision);
     content.replace(start, end, replacement);
@@ -45,6 +45,22 @@ public abstract class Markup {
 
       content.setSpan(preview, start, (start + length), flags);
     }
+
+    return start;
+  }
+
+  private final static int acceptRevision (
+    Editable content, RevisionSpan revision, PreviewSpan preview
+  ) {
+    return removeRevision(content, revision, revision.getAcceptText(), preview);
+  }
+
+  public final static int acceptRevision (Editable content, RevisionSpan revision) {
+    return acceptRevision(content, revision, null);
+  }
+
+  public final static int rejectRevision (Editable content, RevisionSpan revision) {
+    return removeRevision(content, revision, revision.getRejectText(), null);
   }
 
   public final static boolean previewRevisions (Editable content) {
@@ -65,7 +81,7 @@ public abstract class Markup {
     }
 
     for (int index=0; index<count; index+=1) {
-      applyRevision(content, revisions[index], previews[index]);
+      acceptRevision(content, revisions[index], previews[index]);
     }
 
     return true;
@@ -75,7 +91,7 @@ public abstract class Markup {
     boolean accepted = false;
 
     for (RevisionSpan revision : getRevisionSpans(content)) {
-      applyRevision(content, revision, null);
+      acceptRevision(content, revision);
       accepted = true;
     }
 

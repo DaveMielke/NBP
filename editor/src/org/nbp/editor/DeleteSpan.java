@@ -16,7 +16,7 @@ public class DeleteSpan extends RevisionSpan {
   }
 
   @Override
-  public CharSequence getReplacementText () {
+  public CharSequence getAcceptText () {
     return "";
   }
 }

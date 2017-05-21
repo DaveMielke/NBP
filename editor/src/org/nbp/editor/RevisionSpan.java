@@ -17,6 +17,14 @@ public abstract class RevisionSpan extends AuthorSpan {
 
   public abstract int getRevisionType ();
 
+  public CharSequence getAcceptText () {
+    return getActualText();
+  }
+
+  public CharSequence getRejectText () {
+    return getActualText();
+  }
+
   @Override
   public void finishDialog (DialogHelper helper) {
     super.finishDialog(helper);

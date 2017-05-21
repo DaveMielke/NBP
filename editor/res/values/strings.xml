@@ -43,7 +43,8 @@
   <string name="menu_revisions_showRevision">Show Revision</string>
   <string name="menu_revisions_nextRevision">Next Revision</string>
   <string name="menu_revisions_previousRevision">Previous Revision</string>
-  <string name="menu_revisions_removeRevision">Remove Revision</string>
+  <string name="menu_revisions_acceptRevision">Accept Revision</string>
+  <string name="menu_revisions_rejectRevision">Reject Revision</string>
 
   <string name="menu_options_comments">Comments</string>
   <string name="menu_comments_showComment">Show Comment</string>
@@ -75,10 +76,12 @@
   <string name="message_uncommented_text">uncommented text</string>
   <string name="message_writing_content">Writing...</string>
 
+  <string name="action_accept">Accept</string>
   <string name="action_add">Add</string>
   <string name="action_cancel">Cancel</string>
   <string name="action_change">Change</string>
   <string name="action_ok">OK</string>
+  <string name="action_reject">Reject</string>
   <string name="action_remove">Remove</string>
 
   <string name="changed_title">File Changed</string>

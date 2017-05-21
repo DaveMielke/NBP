@@ -771,13 +771,13 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_removeRevision () {
+  private void menuAction_acceptRevision () {
     final RevisionSpan revision = editArea.getRevisionSpan();
 
     if (revision != null) {
       showDialog(
-        R.string.menu_revisions_removeRevision, R.layout.revision_show,
-        revision, R.string.action_remove,
+        R.string.menu_revisions_acceptRevision, R.layout.revision_show,
+        revision, R.string.action_accept,
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
@@ -785,7 +785,35 @@ public class EditorActivity extends CommonActivity {
               new Runnable() {
                 @Override
                 public void run () {
-                  int position = revision.removeSpan(editArea.getText());
+                  int position = Markup.acceptRevision(editArea.getText(), revision);
+                  editArea.setSelection(position);
+                  hasChanged = true;
+                }
+              }
+            );
+          }
+        }
+      );
+    } else {
+      showMessage(R.string.message_original_text);
+    }
+  }
+
+  private void menuAction_rejectRevision () {
+    final RevisionSpan revision = editArea.getRevisionSpan();
+
+    if (revision != null) {
+      showDialog(
+        R.string.menu_revisions_rejectRevision, R.layout.revision_show,
+        revision, R.string.action_reject,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int button) {
+            runProtectedOperation(
+              new Runnable() {
+                @Override
+                public void run () {
+                  int position = Markup.rejectRevision(editArea.getText(), revision);
                   editArea.setSelection(position);
                   hasChanged = true;
                 }
@@ -1009,8 +1037,12 @@ public class EditorActivity extends CommonActivity {
         menuAction_previousRevision();
         return true;
 
-      case R.id.menu_revisions_removeRevision:
-        menuAction_removeRevision();
+      case R.id.menu_revisions_acceptRevision:
+        menuAction_acceptRevision();
+        return true;
+
+      case R.id.menu_revisions_rejectRevision:
+        menuAction_rejectRevision();
         return true;
 
       case R.id.menu_options_comments:
