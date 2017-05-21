@@ -150,10 +150,10 @@ public class AsposeWordsOperations extends ContentOperations {
       final int start = content.length();
       content.append(run.getText());
 
-      if (run.isInsertRevision()) {
-        addRevisionSpan(content, start, new InsertSpan(), run);
-      } else if (run.isDeleteRevision()) {
+      if (run.isDeleteRevision()) {
         addRevisionSpan(content, start, new DeleteSpan(), run);
+      } else if (run.isInsertRevision()) {
+        addRevisionSpan(content, start, new InsertSpan(), run);
       }
 
       {
@@ -237,10 +237,10 @@ public class AsposeWordsOperations extends ContentOperations {
         }
       }
 
-      if (paragraph.isInsertRevision()) {
-        addRevisionSpan(content, start, new InsertSpan(), paragraph);
-      } else if (paragraph.isDeleteRevision()) {
+      if (paragraph.isDeleteRevision()) {
         addRevisionSpan(content, start, new DeleteSpan(), paragraph);
+      } else if (paragraph.isInsertRevision()) {
+        addRevisionSpan(content, start, new InsertSpan(), paragraph);
       }
 
       addSpan(content, start, new ParagraphSpan());
