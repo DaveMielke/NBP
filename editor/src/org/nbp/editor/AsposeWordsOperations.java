@@ -307,18 +307,19 @@ public class AsposeWordsOperations extends ContentOperations {
       Editable text = new SpannableStringBuilder();
       addComment(text, comment);
       if (text.length() == 0) return;
+      EditorSpan.finishSpans(text);
 
       CommentSpan span = new CommentSpan(text);
+      span.setName(comment.getAuthor());
+      span.setInitials(comment.getInitial());
+      span.setTimestamp(comment.getDateTime());
+
       content.setSpan(
         span, startPosition, endPosition, 
         (startPosition == endPosition)?
           Spanned.SPAN_POINT_POINT:
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
       );
-
-      span.setName(comment.getAuthor());
-      span.setInitials(comment.getInitial());
-      span.setTimestamp(comment.getDateTime());
     }
 
     private final void addComments (Editable content) throws Exception {

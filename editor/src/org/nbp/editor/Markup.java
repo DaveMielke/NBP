@@ -27,7 +27,7 @@ public abstract class Markup {
     return getSpans(content, CommentSpan.class);
   }
 
-  private final static void removeRevision (
+  private final static void applyRevision (
     Editable content, RevisionSpan revision, PreviewSpan preview
   ) {
     int start = content.getSpanStart(revision);
@@ -65,7 +65,7 @@ public abstract class Markup {
     }
 
     for (int index=0; index<count; index+=1) {
-      removeRevision(content, revisions[index], previews[index]);
+      applyRevision(content, revisions[index], previews[index]);
     }
 
     return true;
@@ -75,7 +75,7 @@ public abstract class Markup {
     boolean accepted = false;
 
     for (RevisionSpan revision : getRevisionSpans(content)) {
-      removeRevision(content, revision, null);
+      applyRevision(content, revision, null);
       accepted = true;
     }
 
