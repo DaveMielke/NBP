@@ -1,8 +1,5 @@
 join contiguous revisions
-restore delete revisions in the right order
-full support for paragraph labels
 next,previous group,revision when previewing
-revision summary
-
 set comment author and initials
-comment summary
+full support for paragraph labels
+revision, preview, comment summary

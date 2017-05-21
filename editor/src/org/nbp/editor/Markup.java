@@ -1,5 +1,7 @@
 package org.nbp.editor;
 
+import java.util.Arrays;
+
 import android.text.Editable;
 import android.text.Spanned;
 
@@ -16,53 +18,73 @@ public abstract class Markup {
   }
 
   private final static PreviewSpan[] getPreviewSpans (Spanned content) {
-    return getSpans(content, PreviewSpan.class);
+    PreviewSpan[] spans = getSpans(content, PreviewSpan.class);
+    Arrays.sort(spans);
+    return spans;
   }
 
   private final static CommentSpan[] getCommentSpans (Spanned content) {
     return getSpans(content, CommentSpan.class);
   }
 
-  private final static boolean removeRevisions (Editable content, boolean preview) {
-    boolean removed = false;
+  private final static void removeRevision (
+    Editable content, RevisionSpan revision, PreviewSpan preview
+  ) {
+    int start = content.getSpanStart(revision);
+    int end = content.getSpanEnd(revision);
+    CharSequence replacement = revision.getReplacementText();
 
-    for (RevisionSpan revision : getRevisionSpans(content)) {
-      int start = content.getSpanStart(revision);
-      int end = content.getSpanEnd(revision);
-      CharSequence replacement = revision.getReplacementText();
+    content.removeSpan(revision);
+    content.replace(start, end, replacement);
 
-      content.removeSpan(revision);
-      content.replace(start, end, replacement);
-      removed = true;
+    if (preview != null) {
+      int length = replacement.length();
+      int flags = (length == 0)?
+                  Spanned.SPAN_POINT_POINT:
+                  Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
-      if (preview) {
-        int length = replacement.length();
-        int flags = (length == 0)?
-                    Spanned.SPAN_POINT_POINT:
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
-        content.setSpan(
-          new PreviewSpan(revision), start, (start + length), flags
-        );
-      }
+      content.setSpan(preview, start, (start + length), flags);
     }
-
-    return removed;
   }
 
   public final static boolean previewRevisions (Editable content) {
-    return removeRevisions(content, true);
+    RevisionSpan[] revisions = getRevisionSpans(content);
+    int count = revisions.length;
+    if (count == 0) return false;
+
+    PreviewSpan[] previews = new PreviewSpan[count];
+
+    for (int index=0; index<count; index+=1) {
+      RevisionSpan revision = revisions[index];
+
+      previews[index] = new PreviewSpan(
+        revision,
+        content.getSpanStart(revision),
+        content.getSpanEnd(revision)
+      );
+    }
+
+    for (int index=0; index<count; index+=1) {
+      removeRevision(content, revisions[index], previews[index]);
+    }
+
+    return true;
   }
 
   public final static boolean acceptRevisions (Editable content) {
-    boolean removed = removeRevisions(content, false);
+    boolean accepted = false;
+
+    for (RevisionSpan revision : getRevisionSpans(content)) {
+      removeRevision(content, revision, null);
+      accepted = true;
+    }
 
     for (PreviewSpan preview : getPreviewSpans(content)) {
       content.removeSpan(preview);
-      removed = true;
+      accepted = true;
     }
 
-    return removed;
+    return accepted;
   }
 
   public final static boolean restoreRevisions (Editable content) {
