@@ -140,11 +140,18 @@ public abstract class Content {
 
     {
       FormatDescriptor descriptor = addFormat(
+        ASCIIBrailleOperations.class, R.string.format_name_brf
+      );
+
+      addFileExtension(descriptor, ".brf");
+    }
+
+    {
+      FormatDescriptor descriptor = addFormat(
         ASCIIBrailleOperations.class, R.string.format_name_brl
       );
 
       addFileExtension(descriptor, ".brl");
-      addFileExtension(descriptor, ".brf");
     }
 
     {
