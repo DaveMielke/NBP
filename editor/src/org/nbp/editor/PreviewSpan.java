@@ -16,11 +16,13 @@ public class PreviewSpan extends EditorSpan implements Comparable<PreviewSpan> {
 
   @Override
   public final int compareTo (PreviewSpan reference) {
+    if (reference == null) throw new NullPointerException();
     return sortOrder.compareTo(reference.sortOrder);
   }
 
   @Override
   public final boolean equals (Object reference) {
+    if (reference == null) return false;
     return compareTo((PreviewSpan)reference) == 0;
   }
 }
