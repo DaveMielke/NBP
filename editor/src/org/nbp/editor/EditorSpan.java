@@ -58,7 +58,7 @@ public abstract class EditorSpan implements DialogFinisher {
             if (previousTimestamp == null) break TEST_JOINABILITY;
 
             long timeDifference = nextTimestamp.getTime() - previousTimestamp.getTime();
-            if (Math.abs(timeDifference) > 600000) break TEST_JOINABILITY;
+            if (Math.abs(timeDifference) > ApplicationParameters.REVISION_JOIN_MILLISECONDS) break TEST_JOINABILITY;
           }
 
           isJoinable = true;
