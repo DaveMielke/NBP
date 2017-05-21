@@ -13,6 +13,11 @@
     <TextView android:id="@+id/file_summary_contentURI" android:focusable="true" />
 
     <TableRow>
+      <TextView android:text="@string/file_summary_contentType" />
+      <TextView android:id="@+id/file_summary_contentType" />
+    </TableRow>
+
+    <TableRow>
       <TextView android:text="@string/file_summary_hasChanged" />
       <TextView android:id="@+id/file_summary_hasChanged" />
     </TableRow>

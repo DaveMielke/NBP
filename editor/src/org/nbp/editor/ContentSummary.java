@@ -42,6 +42,7 @@ public class ContentSummary implements DialogFinisher {
   }
 
   private CharSequence contentURI = null;
+  private String contentType = null;
   private boolean hasChanged = false;
 
   public final CharSequence getContentURI () {
@@ -50,6 +51,14 @@ public class ContentSummary implements DialogFinisher {
 
   public final void setContentURI (CharSequence uri) {
     contentURI = uri;
+  }
+
+  public final String getContentType () {
+    return contentType;
+  }
+
+  public final void setContentType (String type) {
+    contentType = type;
   }
 
   public final boolean getHasChanged () {
@@ -78,14 +87,8 @@ public class ContentSummary implements DialogFinisher {
 
   @Override
   public void finishDialog (DialogHelper helper) {
-    {
-      CharSequence uri = getContentURI();
-
-      if (uri != null) {
-        helper.setText(R.id.file_summary_contentURI, getContentURI());
-      }
-    }
-
+    helper.setText(R.id.file_summary_contentURI, getContentURI());
+    helper.setText(R.id.file_summary_contentType, getContentType());
     helper.setValue(R.id.file_summary_hasChanged, getHasChanged());
     helper.setValue(R.id.file_summary_revisionCount, getRevisionCount());
     helper.setValue(R.id.file_summary_insertCount, getInsertCount());

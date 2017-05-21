@@ -526,6 +526,10 @@ public class EditorActivity extends CommonActivity {
     summary.setContentURI(uriView.getText());
     summary.setHasChanged(hasChanged);
 
+    if (contentHandle != null) {
+      summary.setContentType(contentHandle.getType());
+    }
+
     showDialog(
       R.string.menu_file_summarize, R.layout.file_summary, summary
     );
