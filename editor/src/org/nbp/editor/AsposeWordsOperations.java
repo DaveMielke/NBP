@@ -152,9 +152,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
       if (run.isInsertRevision()) {
         addRevisionSpan(content, start, new InsertSpan(), run);
-      }
-
-      if (run.isDeleteRevision()) {
+      } else if (run.isDeleteRevision()) {
         addRevisionSpan(content, start, new DeleteSpan(), run);
       }
 
@@ -241,9 +239,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
       if (paragraph.isInsertRevision()) {
         addRevisionSpan(content, start, new InsertSpan(), paragraph);
-      }
-
-      if (paragraph.isDeleteRevision()) {
+      } else if (paragraph.isDeleteRevision()) {
         addRevisionSpan(content, start, new DeleteSpan(), paragraph);
       }
 
