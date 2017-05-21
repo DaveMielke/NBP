@@ -79,23 +79,6 @@ public abstract class EditorSpan implements DialogFinisher {
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
           );
 
-          {
-            int from = previousEnd;
-            int to = nextStart;
-
-            {
-              CharSequence decoration = previousRevision.getSuffixDecoration();
-              if (decoration != null) from -= decoration.length();
-            }
-
-            {
-              CharSequence decoration = nextRevision.getPrefixDecoration();
-              if (decoration != null) to += decoration.length();
-            }
-
-            if (from != to) content.delete(from, to);
-          }
-
           previousEnd = content.getSpanEnd(previousRevision);
         } else {
           previousRevision = nextRevision;
@@ -116,11 +99,11 @@ public abstract class EditorSpan implements DialogFinisher {
   }
 
   public final static void finishSpans (Editable content) {
+    joinRevisions(content);
+
     for (EditorSpan span : content.getSpans(0, content.length(), EditorSpan.class)) {
       span.finishSpan(content);
     }
-
-    joinRevisions(content);
   }
 
   public void restoreSpan (Spannable content) {
