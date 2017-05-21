@@ -14,6 +14,8 @@
   <string name="revision_type_delete">Delete</string>
   <string name="revision_type_insert">Insert</string>
 
+  <string name="comment_hint_text">Type comment</string>
+
   <string name="message_file_saved">File Saved</string>
   <string name="message_no_next_comment">no next comment</string>
   <string name="message_no_next_group">no next group</string>

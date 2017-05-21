@@ -10,6 +10,10 @@
     android:layout_height="wrap_content"
     >
 
-    <EditText android:id="@+id/comment_text" android:focusable="true" />
+    <EditText
+      android:id="@+id/comment_text"
+      android:hint="@string/comment_hint_text"
+      android:focusable="true"
+     />
   </TableLayout>
 </FrameLayout>
