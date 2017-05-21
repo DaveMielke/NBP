@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="menu_options_file">File</string>
+  <string name="menu_file_new">New</string>
+  <string name="menu_file_open">Open</string>
+  <string name="menu_file_save">Save</string>
+  <string name="menu_file_saveAs">Save As</string>
+  <string name="menu_file_send">Send</string>
+  <string name="menu_file_delete">Delete</string>
+
+  <string name="menu_options_edit">Edit</string>
+  <string name="menu_edit_paste">Paste</string>
+  <string name="menu_edit_record">Record</string>
+
+  <string name="menu_options_selection">Selection</string>
+  <string name="menu_selection_selectAll">Select All</string>
+  <string name="menu_selection_copy">Copy</string>
+  <string name="menu_selection_cut">Cut</string>
+  <string name="menu_selection_uppercase">Uppercase</string>
+  <string name="menu_selection_lowercase">Lowercase</string>
+
+  <string name="menu_options_highlight">Highlight</string>
+  <string name="menu_highlight_bold">Bold</string>
+  <string name="menu_highlight_italics">Italics</string>
+  <string name="menu_highlight_strike">Strike</string>
+  <string name="menu_highlight_subscript">Subscript</string>
+  <string name="menu_highlight_superscript">Superscript</string>
+  <string name="menu_highlight_underline">Underline</string>
+
+  <string name="menu_options_revisions">Revisions</string>
+  <string name="menu_revisions_nextGroup">Next Group</string>
+  <string name="menu_revisions_previousGroup">Previous Group</string>
+  <string name="menu_revisions_markChanges">Mark Changes</string>
+  <string name="menu_revisions_previewChanges">Preview Changes</string>
+  <string name="menu_revisions_acceptChanges">Accept Changes</string>
+  <string name="menu_revisions_showRevision">Show Revision</string>
+  <string name="menu_revisions_nextRevision">Next Revision</string>
+  <string name="menu_revisions_previousRevision">Previous Revision</string>
+  <string name="menu_revisions_acceptRevision">Accept Revision</string>
+  <string name="menu_revisions_rejectRevision">Reject Revision</string>
+
+  <string name="menu_options_comments">Comments</string>
+  <string name="menu_comments_showComment">Show Comment</string>
+  <string name="menu_comments_nextComment">Next Comment</string>
+  <string name="menu_comments_previousComment">Previous Comment</string>
+  <string name="menu_comments_addComment">Add Comment</string>
+  <string name="menu_comments_removeComment">Remove Comment</string>
+</resources>
