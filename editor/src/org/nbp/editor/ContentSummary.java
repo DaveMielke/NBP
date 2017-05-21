@@ -88,7 +88,6 @@ public class ContentSummary implements DialogFinisher {
   @Override
   public void finishDialog (DialogHelper helper) {
     helper.setText(R.id.file_summary_contentURI, getContentURI());
-    helper.setText(R.id.file_summary_contentType, getContentType());
     helper.setValue(R.id.file_summary_hasChanged, getHasChanged());
     helper.setValue(R.id.file_summary_revisionCount, getRevisionCount());
     helper.setValue(R.id.file_summary_insertCount, getInsertCount());

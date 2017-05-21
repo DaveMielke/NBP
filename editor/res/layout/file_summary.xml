@@ -10,12 +10,10 @@
     android:layout_height="wrap_content"
     >
 
-    <TextView android:id="@+id/file_summary_contentURI" android:focusable="true" />
-
-    <TableRow>
-      <TextView android:text="@string/file_summary_contentType" />
-      <TextView android:id="@+id/file_summary_contentType" />
-    </TableRow>
+    <TextView
+      android:id="@+id/file_summary_contentURI"
+      android:focusable="true"
+     />
 
     <TableRow>
       <TextView android:text="@string/file_summary_hasChanged" />

@@ -521,7 +521,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_summarize () {
+  private void menuAction_summary () {
     ContentSummary summary = new ContentSummary(editArea.getText());
     summary.setContentURI(uriView.getText());
     summary.setHasChanged(hasChanged);
@@ -531,7 +531,7 @@ public class EditorActivity extends CommonActivity {
     }
 
     showDialog(
-      R.string.menu_file_summarize, R.layout.file_summary, summary
+      R.string.menu_file_summary, R.layout.file_summary, summary
     );
   }
 
@@ -930,8 +930,8 @@ public class EditorActivity extends CommonActivity {
       case R.id.menu_options_file:
         return true;
 
-      case R.id.menu_file_summarize:
-        menuAction_summarize();
+      case R.id.menu_file_summary:
+        menuAction_summary();
         return true;
 
       case R.id.menu_file_new:

@@ -8,8 +8,8 @@
 
     <menu>
       <item
-        android:id="@+id/menu_file_summarize"
-        android:title="@string/menu_file_summarize"
+        android:id="@+id/menu_file_summary"
+        android:title="@string/menu_file_summary"
        />
 
       <item
