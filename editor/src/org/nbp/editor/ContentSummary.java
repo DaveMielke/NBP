@@ -1,5 +1,8 @@
 package org.nbp.editor;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.text.Spanned;
 
 public class ContentSummary implements DialogFinisher {
@@ -8,22 +11,72 @@ public class ContentSummary implements DialogFinisher {
   private int deleteCount = 0;
   private int commentCount = 0;
 
-  private final void includeSpan (Object span) {
-    if (span instanceof RevisionSpan) {
-      revisionCount += 1;
+  private interface SpanHandler {
+    public void handleSpan (Object span);
+  }
 
-      if (span instanceof InsertSpan) {
-        insertCount += 1;
-      } else if (span instanceof DeleteSpan) {
-        deleteCount += 1;
+  private final Map<Class, SpanHandler> spanHandlers =
+        new HashMap<Class, SpanHandler>();
+
+  private final void addSpanHandler (Class type, SpanHandler handler) {
+    spanHandlers.put(type, handler);
+  }
+
+  private final void addSpanHandlers () {
+    addSpanHandler(RevisionSpan.class,
+      new SpanHandler() {
+        @Override
+        public final void handleSpan (Object span) {
+          revisionCount += 1;
+        }
       }
-    } else if (span instanceof PreviewSpan) {
-      PreviewSpan preview = (PreviewSpan)span;
-      includeSpan(preview.getRevisionSpan());
-    } else if (span instanceof CommentSpan) {
-      commentCount += 1;
-      CommentSpan comment = (CommentSpan)span;
-      includeContent(comment.getCommentText());
+    );
+
+    addSpanHandler(InsertSpan.class,
+      new SpanHandler() {
+        @Override
+        public final void handleSpan (Object span) {
+          insertCount += 1;
+        }
+      }
+    );
+
+    addSpanHandler(DeleteSpan.class,
+      new SpanHandler() {
+        @Override
+        public final void handleSpan (Object span) {
+          deleteCount += 1;
+        }
+      }
+    );
+
+    addSpanHandler(PreviewSpan.class,
+      new SpanHandler() {
+        @Override
+        public final void handleSpan (Object span) {
+          PreviewSpan preview = (PreviewSpan)span;
+          includeSpan(preview.getRevisionSpan());
+        }
+      }
+    );
+
+    addSpanHandler(CommentSpan.class,
+      new SpanHandler() {
+        @Override
+        public final void handleSpan (Object span) {
+          commentCount += 1;
+          CommentSpan comment = (CommentSpan)span;
+          includeContent(comment.getCommentText());
+        }
+      }
+    );
+  }
+
+  private final void includeSpan (Object span) {
+    for (Class type : spanHandlers.keySet()) {
+      if (type.isAssignableFrom(span.getClass())) {
+        spanHandlers.get(type).handleSpan(span);
+      }
     }
   }
 
@@ -38,6 +91,7 @@ public class ContentSummary implements DialogFinisher {
   }
 
   public ContentSummary (Spanned content) {
+    addSpanHandlers();
     includeContent(content);
   }
 
