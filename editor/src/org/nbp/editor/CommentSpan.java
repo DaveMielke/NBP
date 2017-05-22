@@ -3,7 +3,7 @@ package org.nbp.editor;
 import android.text.Editable;
 import java.util.Date;
 
-public class CommentSpan extends AuthorSpan {
+public class CommentSpan extends ReviewSpan {
   private final Editable commentText;
 
   private final static String prefixDecoration = "⣏⣉";

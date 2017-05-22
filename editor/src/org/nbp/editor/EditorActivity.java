@@ -877,7 +877,7 @@ public class EditorActivity extends CommonActivity {
 
             if (text.toString().trim().isEmpty()) return;
             comment = new CommentSpan(text);
-            comment.setTimestamp(new Date());
+            comment.setReviewTimestamp(new Date());
           }
 
           Editable text = editArea.getText();

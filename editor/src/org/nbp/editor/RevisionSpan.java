@@ -2,7 +2,7 @@ package org.nbp.editor;
 
 import android.text.style.CharacterStyle;
 
-public abstract class RevisionSpan extends AuthorSpan {
+public abstract class RevisionSpan extends ReviewSpan {
   protected RevisionSpan (String prefix, String suffix, CharacterStyle style) {
     super(prefix, suffix, style);
   }

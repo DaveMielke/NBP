@@ -208,10 +208,10 @@ public abstract class Spans {
 
           switch (index) {
             case 0:
-              return revision.getName();
+              return revision.getReviewerName();
 
             case 1: {
-              Date timestamp = revision.getTimestamp();
+              Date timestamp = revision.getReviewTimestamp();
               if (timestamp == null) break;
               return Long.toString(timestamp.getTime());
             }
@@ -231,8 +231,8 @@ public abstract class Spans {
           RevisionSpan revision = (RevisionSpan)LanguageUtilities.newInstance(constructor);
           if (revision == null) return null;
 
-          if (name != null) revision.setName(name);
-          if (timestamp != null) revision.setTimestamp(timestamp);
+          if (name != null) revision.setReviewerName(name);
+          if (timestamp != null) revision.setReviewTimestamp(timestamp);
           return revision;
         }
       }
@@ -278,13 +278,13 @@ public abstract class Spans {
               return Spans.saveSpans(comment.getCommentText());
 
             case 2:
-              return comment.getName();
+              return comment.getReviewerName();
 
             case 3:
-              return comment.getInitials();
+              return comment.getReviewerInitials();
 
             case 4:
-              return Long.toString(comment.getTimestamp().getTime());
+              return Long.toString(comment.getReviewTimestamp().getTime());
           }
 
           return null;
@@ -305,9 +305,9 @@ public abstract class Spans {
           CommentSpan comment = (CommentSpan)LanguageUtilities.newInstance(constructor, content);
           if (comment == null) return null;
 
-          if (name != null) comment.setName(name);
-          if (initials != null) comment.setInitials(initials);
-          if (timestamp != null) comment.setTimestamp(timestamp);
+          if (name != null) comment.setReviewerName(name);
+          if (initials != null) comment.setReviewerInitials(initials);
+          if (timestamp != null) comment.setReviewTimestamp(timestamp);
           return comment;
         }
       }

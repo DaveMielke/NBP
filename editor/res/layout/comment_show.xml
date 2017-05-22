@@ -10,9 +10,9 @@
     android:layout_height="wrap_content"
     >
 
-    <include layout="@layout/author_name" />
-    <include layout="@layout/author_initials" />
-    <include layout="@layout/author_timestamp" />
+    <include layout="@layout/review_name" />
+    <include layout="@layout/review_initials" />
+    <include layout="@layout/review_timestamp" />
     <TextView android:id="@+id/comment_text" android:focusable="true" />
   </TableLayout>
 </FrameLayout>

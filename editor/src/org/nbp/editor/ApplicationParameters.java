@@ -6,7 +6,7 @@ public abstract class ApplicationParameters {
   private ApplicationParameters () {
   }
 
-  public final static int[] REVISION_AUTHOR_COLORS = new int[] {
+  public final static int[] REVIEWER_COLORS = new int[] {
     Color.RED,
     Color.BLUE,
     Color.GREEN,

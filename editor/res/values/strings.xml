@@ -16,9 +16,9 @@
   <string name="file_summary_deletionCount">Delete Revisions</string>
   <string name="file_summary_commentCount">Comments</string>
 
-  <string name="author_label_name">Author</string>
-  <string name="author_label_initials">Initials</string>
-  <string name="author_label_timestamp">Timestamp</string>
+  <string name="review_name">Reviewer</string>
+  <string name="review_initials">Initials</string>
+  <string name="review_timestamp">Timestamp</string>
 
   <string name="revision_type_insert">Insert</string>
   <string name="revision_type_delete">Delete</string>

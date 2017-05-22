@@ -45,16 +45,16 @@ public abstract class EditorSpan implements DialogFinisher {
           if (nextRevision.getClass() != previousRevision.getClass()) break TEST_JOINABILITY;
 
           {
-            String name = nextRevision.getName();
+            String name = nextRevision.getReviewerName();
             if (name == null) break TEST_JOINABILITY;
-            if (!name.equals(previousRevision.getName())) break TEST_JOINABILITY;
+            if (!name.equals(previousRevision.getReviewerName())) break TEST_JOINABILITY;
           }
 
           {
-            Date nextTimestamp = nextRevision.getTimestamp();
+            Date nextTimestamp = nextRevision.getReviewTimestamp();
             if (nextTimestamp == null) break TEST_JOINABILITY;
 
-            Date previousTimestamp = previousRevision.getTimestamp();
+            Date previousTimestamp = previousRevision.getReviewTimestamp();
             if (previousTimestamp == null) break TEST_JOINABILITY;
 
             long timeDifference = nextTimestamp.getTime() - previousTimestamp.getTime();
@@ -66,10 +66,10 @@ public abstract class EditorSpan implements DialogFinisher {
 
         if (isJoinable) {
           {
-            Date timestamp = nextRevision.getTimestamp();
+            Date timestamp = nextRevision.getReviewTimestamp();
 
-            if (previousRevision.getTimestamp().compareTo(timestamp) < 0) {
-              previousRevision.setTimestamp(timestamp);
+            if (previousRevision.getReviewTimestamp().compareTo(timestamp) < 0) {
+              previousRevision.setReviewTimestamp(timestamp);
             }
           }
 

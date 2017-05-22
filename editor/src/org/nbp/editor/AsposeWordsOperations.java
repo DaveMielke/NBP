@@ -77,8 +77,8 @@ public class AsposeWordsOperations extends ContentOperations {
         Revision revision = nodeRevisionMap.get(node);
 
         if (revision != null) {
-          span.setName(revision.getAuthor());
-          span.setTimestamp(revision.getDateTime());
+          span.setReviewerName(revision.getAuthor());
+          span.setReviewTimestamp(revision.getDateTime());
         }
       }
     }
@@ -305,9 +305,9 @@ public class AsposeWordsOperations extends ContentOperations {
       if (text.length() == 0) return;
 
       CommentSpan span = new CommentSpan(text);
-      span.setName(comment.getAuthor());
-      span.setInitials(comment.getInitial());
-      span.setTimestamp(comment.getDateTime());
+      span.setReviewerName(comment.getAuthor());
+      span.setReviewerInitials(comment.getInitial());
+      span.setReviewTimestamp(comment.getDateTime());
 
       content.setSpan(
         span, startPosition, endPosition, 
@@ -360,7 +360,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
     private final void beginRevisionTracking (RevisionSpan span) {
       document.startTrackRevisions(
-        span.getName(), span.getTimestamp()
+        span.getReviewerName(), span.getReviewTimestamp()
       );
     }
 
@@ -466,17 +466,17 @@ public class AsposeWordsOperations extends ContentOperations {
         comment.getParagraphs().add(paragraph);
 
         {
-          String author = span.getName();
-          if (author != null) comment.setAuthor(author);
+          String name = span.getReviewerName();
+          if (name != null) comment.setAuthor(name);
         }
 
         {
-          String initials = span.getInitials();
+          String initials = span.getReviewerInitials();
           if (initials != null) comment.setInitial(initials);
         }
 
         {
-          Date timestamp = span.getTimestamp();
+          Date timestamp = span.getReviewTimestamp();
           if (timestamp != null) comment.setDateTime(timestamp);
         }
 
