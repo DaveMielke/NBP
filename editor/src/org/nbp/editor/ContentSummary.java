@@ -7,8 +7,8 @@ import android.text.Spanned;
 
 public class ContentSummary implements DialogFinisher {
   private int revisionCount = 0;
-  private int insertCount = 0;
-  private int deleteCount = 0;
+  private int insertionCount = 0;
+  private int deletionCount = 0;
   private int commentCount = 0;
 
   private interface SpanHandler {
@@ -32,20 +32,20 @@ public class ContentSummary implements DialogFinisher {
       }
     );
 
-    addSpanHandler(InsertSpan.class,
+    addSpanHandler(InsertionSpan.class,
       new SpanHandler() {
         @Override
         public final void handleSpan (Object span) {
-          insertCount += 1;
+          insertionCount += 1;
         }
       }
     );
 
-    addSpanHandler(DeleteSpan.class,
+    addSpanHandler(DeletionSpan.class,
       new SpanHandler() {
         @Override
         public final void handleSpan (Object span) {
-          deleteCount += 1;
+          deletionCount += 1;
         }
       }
     );
@@ -127,12 +127,12 @@ public class ContentSummary implements DialogFinisher {
     return revisionCount;
   }
 
-  public final int getInsertCount () {
-    return insertCount;
+  public final int getInsertionCount () {
+    return insertionCount;
   }
 
-  public final int getDeleteCount () {
-    return deleteCount;
+  public final int getDeletionCount () {
+    return deletionCount;
   }
 
   public final int getCommentCount () {
@@ -144,8 +144,8 @@ public class ContentSummary implements DialogFinisher {
     helper.setText(R.id.file_summary_contentURI, getContentURI());
     helper.setValue(R.id.file_summary_hasChanged, getHasChanged());
     helper.setValue(R.id.file_summary_revisionCount, getRevisionCount());
-    helper.setValue(R.id.file_summary_insertCount, getInsertCount());
-    helper.setValue(R.id.file_summary_deleteCount, getDeleteCount());
+    helper.setValue(R.id.file_summary_insertionCount, getInsertionCount());
+    helper.setValue(R.id.file_summary_deletionCount, getDeletionCount());
     helper.setValue(R.id.file_summary_commentCount, getCommentCount());
   }
 }

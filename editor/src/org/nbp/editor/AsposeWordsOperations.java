@@ -151,9 +151,9 @@ public class AsposeWordsOperations extends ContentOperations {
       content.append(run.getText());
 
       if (run.isDeleteRevision()) {
-        addRevisionSpan(content, start, new DeleteSpan(), run);
+        addRevisionSpan(content, start, new DeletionSpan(), run);
       } else if (run.isInsertRevision()) {
-        addRevisionSpan(content, start, new InsertSpan(), run);
+        addRevisionSpan(content, start, new InsertionSpan(), run);
       }
 
       {
@@ -238,9 +238,9 @@ public class AsposeWordsOperations extends ContentOperations {
       }
 
       if (paragraph.isDeleteRevision()) {
-        addRevisionSpan(content, start, new DeleteSpan(), paragraph);
+        addRevisionSpan(content, start, new DeletionSpan(), paragraph);
       } else if (paragraph.isInsertRevision()) {
-        addRevisionSpan(content, start, new InsertSpan(), paragraph);
+        addRevisionSpan(content, start, new InsertionSpan(), paragraph);
       }
 
       addSpan(content, start, new ParagraphSpan());
@@ -419,7 +419,7 @@ public class AsposeWordsOperations extends ContentOperations {
         }
       }
 
-      private final SpanFinisher beginInsertRevision (final RevisionSpan span) {
+      private final SpanFinisher beginInsertion (final RevisionSpan span) {
         beginRevisionTracking(span);
 
         return new SpanFinisher() {
@@ -430,7 +430,7 @@ public class AsposeWordsOperations extends ContentOperations {
         };
       }
 
-      private final SpanFinisher beginDeleteRevision (final RevisionSpan span) throws Exception {
+      private final SpanFinisher beginDeletion (final RevisionSpan span) throws Exception {
         final String bookmarkName = newBookmarkName();
         final BookmarkStart bookmarkStart = builder.startBookmark(bookmarkName);
 
@@ -451,8 +451,8 @@ public class AsposeWordsOperations extends ContentOperations {
 
       private final SpanFinisher beginRevision (RevisionSpan span) throws Exception {
         if (span == null) return null;
-        if (span instanceof InsertSpan) return beginInsertRevision(span);
-        if (span instanceof DeleteSpan) return beginDeleteRevision(span);
+        if (span instanceof InsertionSpan) return beginInsertion(span);
+        if (span instanceof DeletionSpan) return beginDeletion(span);
         return null;
       }
 

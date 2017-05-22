@@ -26,13 +26,13 @@
     </TableRow>
 
     <TableRow>
-      <TextView android:text="@string/file_summary_insertCount" />
-      <TextView android:id="@+id/file_summary_insertCount" />
+      <TextView android:text="@string/file_summary_insertionCount" />
+      <TextView android:id="@+id/file_summary_insertionCount" />
     </TableRow>
 
     <TableRow>
-      <TextView android:text="@string/file_summary_deleteCount" />
-      <TextView android:id="@+id/file_summary_deleteCount" />
+      <TextView android:text="@string/file_summary_deletionCount" />
+      <TextView android:id="@+id/file_summary_deletionCount" />
     </TableRow>
 
     <TableRow>

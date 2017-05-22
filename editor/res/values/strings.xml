@@ -12,8 +12,8 @@
 
   <string name="file_summary_hasChanged">Unsaved Changes</string>
   <string name="file_summary_revisionCount">Total Revisions</string>
-  <string name="file_summary_insertCount">Insert Revisions</string>
-  <string name="file_summary_deleteCount">Delete Revisions</string>
+  <string name="file_summary_insertionCount">Insert Revisions</string>
+  <string name="file_summary_deletionCount">Delete Revisions</string>
   <string name="file_summary_commentCount">Comments</string>
 
   <string name="author_label_name">Author</string>

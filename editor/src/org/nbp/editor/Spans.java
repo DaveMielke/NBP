@@ -244,8 +244,8 @@ public abstract class Spans {
     addSimpleSpanEntry("sec", SectionSpan.class);
     addSimpleSpanEntry("par", ParagraphSpan.class);
 
-    addRevisionSpanEntry("ins", InsertSpan.class);
-    addRevisionSpanEntry("del", DeleteSpan.class);
+    addRevisionSpanEntry("ins", InsertionSpan.class);
+    addRevisionSpanEntry("del", DeletionSpan.class);
 
     addSpanEntry(
       new SpanEntry () {
