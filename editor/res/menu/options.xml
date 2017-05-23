@@ -139,59 +139,83 @@
 
     <menu>
       <item
-        android:id="@+id/menu_options_revisions"
-        android:title="@string/menu_options_revisions"
+        android:id="@+id/menu_options_changes"
+        android:title="@string/menu_options_changes"
         >
 
         <menu>
           <item
-            android:id="@+id/menu_revisions_nextGroup"
-            android:title="@string/menu_revisions_nextGroup"
-           />
+            android:id="@+id/menu_options_moveTo"
+            android:title="@string/menu_options_moveTo"
+            >
+
+            <menu>
+              <item
+                android:id="@+id/menu_moveTo_nextGroup"
+                android:title="@string/menu_moveTo_nextGroup"
+               />
+
+              <item
+                android:id="@+id/menu_moveTo_previousGroup"
+                android:title="@string/menu_moveTo_previousGroup"
+               />
+
+              <item
+                android:id="@+id/menu_moveTo_nextRevision"
+                android:title="@string/menu_moveTo_nextRevision"
+               />
+
+              <item
+                android:id="@+id/menu_moveTo_previousRevision"
+                android:title="@string/menu_moveTo_previousRevision"
+               />
+            </menu>
+          </item>
 
           <item
-            android:id="@+id/menu_revisions_previousGroup"
-            android:title="@string/menu_revisions_previousGroup"
-           />
+            android:id="@+id/menu_options_currentRevision"
+            android:title="@string/menu_options_currentRevision"
+            >
+
+            <menu>
+              <item
+                android:id="@+id/menu_currentRevision_showRevision"
+                android:title="@string/menu_currentRevision_showRevision"
+               />
+
+              <item
+                android:id="@+id/menu_currentRevision_acceptRevision"
+                android:title="@string/menu_currentRevision_acceptRevision"
+               />
+
+              <item
+                android:id="@+id/menu_currentRevision_rejectRevision"
+                android:title="@string/menu_currentRevision_rejectRevision"
+               />
+            </menu>
+          </item>
 
           <item
-            android:id="@+id/menu_revisions_markChanges"
-            android:title="@string/menu_revisions_markChanges"
-           />
+            android:id="@+id/menu_options_markup"
+            android:title="@string/menu_options_markup"
+            >
+
+            <menu>
+              <item
+                android:id="@+id/menu_markup_allMarkup"
+                android:title="@string/menu_markup_allMarkup"
+               />
+
+              <item
+                android:id="@+id/menu_markup_noMarkup"
+                android:title="@string/menu_markup_noMarkup"
+               />
+            </menu>
+          </item>
 
           <item
-            android:id="@+id/menu_revisions_previewChanges"
-            android:title="@string/menu_revisions_previewChanges"
-           />
-
-          <item
-            android:id="@+id/menu_revisions_acceptChanges"
-            android:title="@string/menu_revisions_acceptChanges"
-           />
-
-          <item
-            android:id="@+id/menu_revisions_showRevision"
-            android:title="@string/menu_revisions_showRevision"
-           />
-
-          <item
-            android:id="@+id/menu_revisions_nextRevision"
-            android:title="@string/menu_revisions_nextRevision"
-           />
-
-          <item
-            android:id="@+id/menu_revisions_previousRevision"
-            android:title="@string/menu_revisions_previousRevision"
-           />
-
-          <item
-            android:id="@+id/menu_revisions_acceptRevision"
-            android:title="@string/menu_revisions_acceptRevision"
-           />
-
-          <item
-            android:id="@+id/menu_revisions_rejectRevision"
-            android:title="@string/menu_revisions_rejectRevision"
+            android:id="@+id/menu_changes_acceptChanges"
+            android:title="@string/menu_changes_acceptChanges"
            />
         </menu>
       </item>

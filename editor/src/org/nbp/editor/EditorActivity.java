@@ -769,6 +769,86 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_nextRevision () {
+    if (!editArea.moveToNextRevision()) {
+      showMessage(R.string.message_no_next_revision);
+    }
+  }
+
+  private void menuAction_previousRevision () {
+    if (!editArea.moveToPreviousRevision()) {
+      showMessage(R.string.message_no_previous_revision);
+    }
+  }
+
+  private void menuAction_showRevision () {
+    RevisionSpan revision = editArea.getRevisionSpan();
+
+    if (revision != null) {
+      showDialog(
+        R.string.menu_currentRevision_showRevision, R.layout.revision_show, revision
+      );
+    } else {
+      showMessage(R.string.message_original_text);
+    }
+  }
+
+  private void menuAction_acceptRevision () {
+    final RevisionSpan revision = editArea.getRevisionSpan();
+
+    if (revision != null) {
+      showDialog(
+        R.string.menu_currentRevision_acceptRevision, R.layout.revision_show,
+        revision, R.string.action_accept,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int button) {
+            runProtectedOperation(
+              new Runnable() {
+                @Override
+                public void run () {
+                  int position = Markup.acceptRevision(editArea.getText(), revision);
+                  editArea.setSelection(position);
+                  hasChanged = true;
+                }
+              }
+            );
+          }
+        }
+      );
+    } else {
+      showMessage(R.string.message_original_text);
+    }
+  }
+
+  private void menuAction_rejectRevision () {
+    final RevisionSpan revision = editArea.getRevisionSpan();
+
+    if (revision != null) {
+      showDialog(
+        R.string.menu_currentRevision_rejectRevision, R.layout.revision_show,
+        revision, R.string.action_reject,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int button) {
+            runProtectedOperation(
+              new Runnable() {
+                @Override
+                public void run () {
+                  int position = Markup.rejectRevision(editArea.getText(), revision);
+                  editArea.setSelection(position);
+                  hasChanged = true;
+                }
+              }
+            );
+          }
+        }
+      );
+    } else {
+      showMessage(R.string.message_original_text);
+    }
+  }
+
   private void menuAction_markChanges () {
     runProtectedOperation(
       new Runnable() {
@@ -800,86 +880,6 @@ public class EditorActivity extends CommonActivity {
         }
       }
     );
-  }
-
-  private void menuAction_showRevision () {
-    RevisionSpan revision = editArea.getRevisionSpan();
-
-    if (revision != null) {
-      showDialog(
-        R.string.menu_revisions_showRevision, R.layout.revision_show, revision
-      );
-    } else {
-      showMessage(R.string.message_original_text);
-    }
-  }
-
-  private void menuAction_nextRevision () {
-    if (!editArea.moveToNextRevision()) {
-      showMessage(R.string.message_no_next_revision);
-    }
-  }
-
-  private void menuAction_previousRevision () {
-    if (!editArea.moveToPreviousRevision()) {
-      showMessage(R.string.message_no_previous_revision);
-    }
-  }
-
-  private void menuAction_acceptRevision () {
-    final RevisionSpan revision = editArea.getRevisionSpan();
-
-    if (revision != null) {
-      showDialog(
-        R.string.menu_revisions_acceptRevision, R.layout.revision_show,
-        revision, R.string.action_accept,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int button) {
-            runProtectedOperation(
-              new Runnable() {
-                @Override
-                public void run () {
-                  int position = Markup.acceptRevision(editArea.getText(), revision);
-                  editArea.setSelection(position);
-                  hasChanged = true;
-                }
-              }
-            );
-          }
-        }
-      );
-    } else {
-      showMessage(R.string.message_original_text);
-    }
-  }
-
-  private void menuAction_rejectRevision () {
-    final RevisionSpan revision = editArea.getRevisionSpan();
-
-    if (revision != null) {
-      showDialog(
-        R.string.menu_revisions_rejectRevision, R.layout.revision_show,
-        revision, R.string.action_reject,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int button) {
-            runProtectedOperation(
-              new Runnable() {
-                @Override
-                public void run () {
-                  int position = Markup.rejectRevision(editArea.getText(), revision);
-                  editArea.setSelection(position);
-                  hasChanged = true;
-                }
-              }
-            );
-          }
-        }
-      );
-    } else {
-      showMessage(R.string.message_original_text);
-    }
   }
 
   private void menuAction_showComment () {
@@ -1069,47 +1069,56 @@ public class EditorActivity extends CommonActivity {
       case R.id.menu_options_review:
         return true;
 
-      case R.id.menu_options_revisions:
+      case R.id.menu_options_changes:
         return true;
 
-      case R.id.menu_revisions_nextGroup:
+      case R.id.menu_options_moveTo:
+        return true;
+
+      case R.id.menu_moveTo_nextGroup:
         menuAction_nextGroup();
         return true;
 
-      case R.id.menu_revisions_previousGroup:
+      case R.id.menu_moveTo_previousGroup:
         menuAction_previousGroup();
         return true;
 
-      case R.id.menu_revisions_markChanges:
-        menuAction_markChanges();
-        return true;
-
-      case R.id.menu_revisions_previewChanges:
-        menuAction_previewChanges();
-        return true;
-
-      case R.id.menu_revisions_acceptChanges:
-        menuAction_acceptChanges();
-        return true;
-
-      case R.id.menu_revisions_showRevision:
-        menuAction_showRevision();
-        return true;
-
-      case R.id.menu_revisions_nextRevision:
+      case R.id.menu_moveTo_nextRevision:
         menuAction_nextRevision();
         return true;
 
-      case R.id.menu_revisions_previousRevision:
+      case R.id.menu_moveTo_previousRevision:
         menuAction_previousRevision();
         return true;
 
-      case R.id.menu_revisions_acceptRevision:
+      case R.id.menu_options_currentRevision:
+        return true;
+
+      case R.id.menu_currentRevision_showRevision:
+        menuAction_showRevision();
+        return true;
+
+      case R.id.menu_currentRevision_acceptRevision:
         menuAction_acceptRevision();
         return true;
 
-      case R.id.menu_revisions_rejectRevision:
+      case R.id.menu_currentRevision_rejectRevision:
         menuAction_rejectRevision();
+        return true;
+
+      case R.id.menu_options_markup:
+        return true;
+
+      case R.id.menu_markup_allMarkup:
+        menuAction_markChanges();
+        return true;
+
+      case R.id.menu_markup_noMarkup:
+        menuAction_previewChanges();
+        return true;
+
+      case R.id.menu_changes_acceptChanges:
+        menuAction_acceptChanges();
         return true;
 
       case R.id.menu_options_comments:
