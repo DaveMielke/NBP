@@ -7,7 +7,7 @@ writeResourcesPrologue
 sed -n \
     -e 's/^\.\.  *|\([a-zA-Z]*\)|  *replace::  *\(.*\)$/\1 \2/p' \
     -e 's/ *$//' \
-    <../doc/UserInterface/QuickReference/actions.rst |
+    <../doc/UserInterface/Reference/actions.rst |
   while read action description
   do
     writeSimpleResource string "action_summary_${action}" "${description}"
