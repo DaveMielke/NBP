@@ -521,17 +521,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_summary () {
-    ContentSummary summary = new ContentSummary(editArea.getText());
-    summary.setContentURI(uriView.getText());
-    summary.setContentHandle(contentHandle);
-    summary.setHasChanged(hasChanged);
-
-    showDialog(
-      R.string.menu_file_summary, R.layout.file_summary, summary
-    );
-  }
-
   private void menuAction_new () {
     testHasChanged(
       new Runnable() {
@@ -576,6 +565,17 @@ public class EditorActivity extends CommonActivity {
 
   private void menuAction_saveAs () {
     confirmFormat();
+  }
+
+  private void menuAction_summary () {
+    ContentSummary summary = new ContentSummary(editArea.getText());
+    summary.setContentURI(uriView.getText());
+    summary.setContentHandle(contentHandle);
+    summary.setHasChanged(hasChanged);
+
+    showDialog(
+      R.string.menu_file_summary, R.layout.file_summary, summary
+    );
   }
 
   private void menuAction_send () {
@@ -965,10 +965,6 @@ public class EditorActivity extends CommonActivity {
       case R.id.menu_options_file:
         return true;
 
-      case R.id.menu_file_summary:
-        menuAction_summary();
-        return true;
-
       case R.id.menu_file_new:
         menuAction_new();
         return true;
@@ -983,6 +979,10 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_file_saveAs:
         menuAction_saveAs();
+        return true;
+
+      case R.id.menu_file_summary:
+        menuAction_summary();
         return true;
 
       case R.id.menu_file_send:

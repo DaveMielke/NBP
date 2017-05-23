@@ -8,11 +8,6 @@
 
     <menu>
       <item
-        android:id="@+id/menu_file_summary"
-        android:title="@string/menu_file_summary"
-       />
-
-      <item
         android:id="@+id/menu_file_new"
         android:title="@string/menu_file_new"
        />
@@ -30,6 +25,11 @@
       <item
         android:id="@+id/menu_file_saveAs"
         android:title="@string/menu_file_saveAs"
+       />
+
+      <item
+        android:id="@+id/menu_file_summary"
+        android:title="@string/menu_file_summary"
        />
 
       <item
