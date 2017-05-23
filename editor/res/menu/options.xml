@@ -28,11 +28,6 @@
        />
 
       <item
-        android:id="@+id/menu_file_summary"
-        android:title="@string/menu_file_summary"
-       />
-
-      <item
         android:id="@+id/menu_file_send"
         android:title="@string/menu_file_send"
        />
@@ -138,92 +133,105 @@
   </item>
 
   <item
-    android:id="@+id/menu_options_revisions"
-    android:title="@string/menu_options_revisions"
+    android:id="@+id/menu_options_review"
+    android:title="@string/menu_options_review"
     >
 
     <menu>
       <item
-        android:id="@+id/menu_revisions_nextGroup"
-        android:title="@string/menu_revisions_nextGroup"
-       />
+        android:id="@+id/menu_options_revisions"
+        android:title="@string/menu_options_revisions"
+        >
+
+        <menu>
+          <item
+            android:id="@+id/menu_revisions_nextGroup"
+            android:title="@string/menu_revisions_nextGroup"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_previousGroup"
+            android:title="@string/menu_revisions_previousGroup"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_markChanges"
+            android:title="@string/menu_revisions_markChanges"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_previewChanges"
+            android:title="@string/menu_revisions_previewChanges"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_acceptChanges"
+            android:title="@string/menu_revisions_acceptChanges"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_showRevision"
+            android:title="@string/menu_revisions_showRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_nextRevision"
+            android:title="@string/menu_revisions_nextRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_previousRevision"
+            android:title="@string/menu_revisions_previousRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_acceptRevision"
+            android:title="@string/menu_revisions_acceptRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_rejectRevision"
+            android:title="@string/menu_revisions_rejectRevision"
+           />
+        </menu>
+      </item>
 
       <item
-        android:id="@+id/menu_revisions_previousGroup"
-        android:title="@string/menu_revisions_previousGroup"
-       />
+        android:id="@+id/menu_options_comments"
+        android:title="@string/menu_options_comments"
+        >
+
+        <menu>
+          <item
+            android:id="@+id/menu_comments_showComment"
+            android:title="@string/menu_comments_showComment"
+           />
+
+          <item
+            android:id="@+id/menu_comments_nextComment"
+            android:title="@string/menu_comments_nextComment"
+           />
+
+          <item
+            android:id="@+id/menu_comments_previousComment"
+            android:title="@string/menu_comments_previousComment"
+           />
+
+          <item
+            android:id="@+id/menu_comments_newComment"
+            android:title="@string/menu_comments_newComment"
+           />
+
+          <item
+            android:id="@+id/menu_comments_removeComment"
+            android:title="@string/menu_comments_removeComment"
+           />
+        </menu>
+      </item>
 
       <item
-        android:id="@+id/menu_revisions_markChanges"
-        android:title="@string/menu_revisions_markChanges"
-       />
-
-      <item
-        android:id="@+id/menu_revisions_previewChanges"
-        android:title="@string/menu_revisions_previewChanges"
-       />
-
-      <item
-        android:id="@+id/menu_revisions_acceptChanges"
-        android:title="@string/menu_revisions_acceptChanges"
-       />
-
-      <item
-        android:id="@+id/menu_revisions_showRevision"
-        android:title="@string/menu_revisions_showRevision"
-       />
-
-      <item
-        android:id="@+id/menu_revisions_nextRevision"
-        android:title="@string/menu_revisions_nextRevision"
-       />
-
-      <item
-        android:id="@+id/menu_revisions_previousRevision"
-        android:title="@string/menu_revisions_previousRevision"
-       />
-
-      <item
-        android:id="@+id/menu_revisions_acceptRevision"
-        android:title="@string/menu_revisions_acceptRevision"
-       />
-
-      <item
-        android:id="@+id/menu_revisions_rejectRevision"
-        android:title="@string/menu_revisions_rejectRevision"
-       />
-    </menu>
-  </item>
-
-  <item
-    android:id="@+id/menu_options_comments"
-    android:title="@string/menu_options_comments"
-    >
-
-    <menu>
-      <item
-        android:id="@+id/menu_comments_showComment"
-        android:title="@string/menu_comments_showComment"
-       />
-
-      <item
-        android:id="@+id/menu_comments_nextComment"
-        android:title="@string/menu_comments_nextComment"
-       />
-
-      <item
-        android:id="@+id/menu_comments_previousComment"
-        android:title="@string/menu_comments_previousComment"
-       />
-
-      <item
-        android:id="@+id/menu_comments_addComment"
-        android:title="@string/menu_comments_addComment"
-       />
-
-      <item
-        android:id="@+id/menu_comments_removeComment"
-        android:title="@string/menu_comments_removeComment"
+        android:id="@+id/menu_review_summary"
+        android:title="@string/menu_review_summary"
        />
     </menu>
   </item>

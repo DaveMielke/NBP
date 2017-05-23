@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import android.text.Spanned;
 
-public class ContentSummary implements DialogFinisher {
+public class ReviewSummary implements DialogFinisher {
   private int revisionCount = 0;
   private int insertionCount = 0;
   private int deletionCount = 0;
@@ -90,14 +90,12 @@ public class ContentSummary implements DialogFinisher {
     }
   }
 
-  public ContentSummary (Spanned content) {
+  public ReviewSummary (Spanned content) {
     addSpanHandlers();
     includeContent(content);
   }
 
   private CharSequence contentURI = null;
-  private ContentHandle contentHandle = null;
-  private boolean hasChanged = false;
 
   public final CharSequence getContentURI () {
     return contentURI;
@@ -105,22 +103,6 @@ public class ContentSummary implements DialogFinisher {
 
   public final void setContentURI (CharSequence uri) {
     contentURI = uri;
-  }
-
-  public final ContentHandle getContentHandle () {
-    return contentHandle;
-  }
-
-  public final void setContentHandle (ContentHandle handle) {
-    contentHandle = handle;
-  }
-
-  public final boolean getHasChanged () {
-    return hasChanged;
-  }
-
-  public final void setHasChanged (boolean yes) {
-    hasChanged = yes;
   }
 
   public final int getRevisionCount () {
@@ -141,11 +123,10 @@ public class ContentSummary implements DialogFinisher {
 
   @Override
   public void finishDialog (DialogHelper helper) {
-    helper.setText(R.id.file_summary_contentURI, getContentURI());
-    helper.setValue(R.id.file_summary_hasChanged, getHasChanged());
-    helper.setValue(R.id.file_summary_revisionCount, getRevisionCount());
-    helper.setValue(R.id.file_summary_insertionCount, getInsertionCount());
-    helper.setValue(R.id.file_summary_deletionCount, getDeletionCount());
-    helper.setValue(R.id.file_summary_commentCount, getCommentCount());
+    helper.setText(R.id.review_summary_contentURI, getContentURI());
+    helper.setValue(R.id.review_summary_revisionCount, getRevisionCount());
+    helper.setValue(R.id.review_summary_insertionCount, getInsertionCount());
+    helper.setValue(R.id.review_summary_deletionCount, getDeletionCount());
+    helper.setValue(R.id.review_summary_commentCount, getCommentCount());
   }
 }

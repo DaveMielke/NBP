@@ -576,17 +576,6 @@ public class EditorActivity extends CommonActivity {
     confirmFormat();
   }
 
-  private void menuAction_summary () {
-    ContentSummary summary = new ContentSummary(editArea.getText());
-    summary.setContentURI(uriView.getText());
-    summary.setContentHandle(contentHandle);
-    summary.setHasChanged(hasChanged);
-
-    showDialog(
-      R.string.menu_file_summary, R.layout.file_summary, summary
-    );
-  }
-
   private void menuAction_send () {
     if (contentHandle != null) {
       OutgoingMessage message = new OutgoingMessage();
@@ -917,10 +906,10 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_addComment () {
+  private void menuAction_newComment () {
     showDialog(
-      R.string.menu_comments_addComment,
-      R.layout.comment_add, R.string.action_add,
+      R.string.menu_comments_newComment,
+      R.layout.comment_new, R.string.action_add,
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
@@ -976,6 +965,15 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private void menuAction_summary () {
+    ReviewSummary summary = new ReviewSummary(editArea.getText());
+    summary.setContentURI(uriView.getText());
+
+    showDialog(
+      R.string.menu_review_summary, R.layout.review_summary, summary
+    );
+  }
+
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
@@ -996,10 +994,6 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_file_saveAs:
         menuAction_saveAs();
-        return true;
-
-      case R.id.menu_file_summary:
-        menuAction_summary();
         return true;
 
       case R.id.menu_file_send:
@@ -1072,6 +1066,9 @@ public class EditorActivity extends CommonActivity {
         menuAction_highlight(HighlightSpans.UNDERLINE);
         return true;
 
+      case R.id.menu_options_review:
+        return true;
+
       case R.id.menu_options_revisions:
         return true;
 
@@ -1130,12 +1127,16 @@ public class EditorActivity extends CommonActivity {
         menuAction_previousComment();
         return true;
 
-      case R.id.menu_comments_addComment:
-        menuAction_addComment();
+      case R.id.menu_comments_newComment:
+        menuAction_newComment();
         return true;
 
       case R.id.menu_comments_removeComment:
         menuAction_removeComment();
+        return true;
+
+      case R.id.menu_review_summary:
+        menuAction_summary();
         return true;
 
       default:
