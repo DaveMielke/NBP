@@ -97,7 +97,7 @@ public abstract class ViewerActivity extends ProgrammaticActivity {
 
   @Override
   protected final View createContentView () {
-    return createVerticalGroup(
+    return newVerticalGroup(
       createDocumentView()
     );
   }

@@ -22,6 +22,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Switch;
 
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 
@@ -45,7 +48,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     }
   }
 
-  protected ViewGroup createVerticalGroup (View... views) {
+  protected ViewGroup newVerticalGroup (View... views) {
     LinearLayout group = new LinearLayout(this);
     group.setOrientation(group.VERTICAL);
 
@@ -58,7 +61,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return group;
   }
 
-  protected ViewGroup createHorizontalGroup (View... views) {
+  protected ViewGroup newHorizontalGroup (View... views) {
     LinearLayout group = new LinearLayout(this);
     group.setOrientation(group.HORIZONTAL);
 
@@ -105,6 +108,12 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return view;
   }
 
+  protected TextView newTextView (int text) {
+    TextView view = newTextView();
+    view.setText(text);
+    return view;
+  }
+
   protected Button newButton (CharSequence label, Button.OnClickListener listener) {
     Button button = new Button(this);
     button.setText(label);
@@ -131,6 +140,16 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     Switch view = new Switch(this);
     view.setOnCheckedChangeListener(listener);
     return view;
+  }
+
+  protected final ListView newListView (String[] values) {
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+      this, android.R.layout.simple_list_item_1, android.R.id.text1, values
+    );
+
+    ListView list = new ListView(this);
+    list.setAdapter(adapter);
+    return list;
   }
 
   private int requestCode = 0;

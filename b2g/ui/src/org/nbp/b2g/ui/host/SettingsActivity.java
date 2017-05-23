@@ -21,9 +21,10 @@ import android.view.LayoutInflater;
 
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
+
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -130,7 +131,7 @@ public class SettingsActivity extends CommonActivity {
   }
 
   private View createActionsView () {
-    return createHorizontalGroup(
+    return newHorizontalGroup(
       createSaveControlsButton(),
       createRestoreControlsButton(),
       createResetControlsButton(),
@@ -351,15 +352,10 @@ public class SettingsActivity extends CommonActivity {
       }
     }
 
-    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-      this, android.R.layout.simple_list_item_1, android.R.id.text1, groupLabels
-    );
-
-    ListView list = new ListView(this);
-    list.setAdapter(adapter);
+    ListView list = newListView(groupLabels);
 
     final Fragment groupsFragment = createFragment(
-      createVerticalGroup(createActionsView(), list),
+      newVerticalGroup(createActionsView(), list),
       R.string.control_groups
     );
 

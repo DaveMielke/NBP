@@ -110,7 +110,7 @@ public class BuildDetailsActivity extends ProgrammaticActivity {
     addAndroidBuildField(R.string.build_activity_label_radio_version, Build.getRadioVersion());
     addAndroidBuildField(R.string.build_activity_label_bootloader_version, Build.BOOTLOADER);
 
-    return createVerticalGroup(
+    return newVerticalGroup(
       buildDetails
     );
   }

@@ -421,7 +421,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   @Override
   protected final View createContentView () {
-    return createVerticalGroup(
+    return newVerticalGroup(
       (messageView = newTextView()),
 
       createRestartSystemButton(),
