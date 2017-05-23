@@ -638,17 +638,55 @@ public class EditorActivity extends CommonActivity {
   }
 
   private void menuAction_record () {
-    SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
-      @Override
-      public void handleText (ArrayList<String> text) {
-        for (String line : text) {
-          editArea.append(line);
-        }
-      }
-    };
+    final int start = editArea.getSelectionStart();
+    final int end = editArea.getSelectionEnd();
 
-    new SpeechToText.Builder(this)
-                    .start(handler);
+    if (editArea.containsProtectedText(start, end)) {
+      showMessage(R.string.message_protected_text);
+    } else {
+      SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
+        @Override
+        public void handleText (ArrayList<String> text) {
+          final String content;
+
+          {
+            StringBuilder builder = new StringBuilder();
+
+            for (String chunk : text) {
+              builder.append(chunk);
+            }
+
+            content = builder.toString().trim();
+          }
+
+          if (!content.isEmpty()) {
+            DialogFinisher finisher = new DialogFinisher() {
+              @Override
+              public void finishDialog (DialogHelper helper) {
+                helper.setText(R.id.record_text, content);
+              }
+            };
+
+            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int button) {
+                EditText view = (EditText)CommonUtilities.findView(dialog, R.id.record_text);
+                CharSequence text = view.getText();
+                editArea.getText().replace(start, end, text);
+              }
+            };
+
+            showDialog(
+              R.string.menu_edit_record, R.layout.record_verify,
+              finisher, R.string.action_accept, listener
+            );
+          }
+        }
+      };
+
+      new SpeechToText.Builder(this)
+                      .start(handler);
+    }
   }
 
   private void menuAction_selection (Menu menu) {
