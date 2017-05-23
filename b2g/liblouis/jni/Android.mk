@@ -9,6 +9,7 @@ LOCAL_LDLIBS := -llog
 
 LOCAL_SRC_FILES := \
    liblouis-location/liblouis/compileTranslationTable.c \
+   liblouis-location/liblouis/commonTranslationFunctions.c \
    liblouis-location/liblouis/lou_translateString.c \
    liblouis-location/liblouis/lou_backTranslateString.c \
    liblouis-location/liblouis/pattern.c \

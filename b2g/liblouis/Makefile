@@ -9,6 +9,7 @@ NATIVE_SOURCES += liblouis-location/liblouis/liblouis.h
 NATIVE_SOURCES += liblouis-location/liblouis/louis.h
 NATIVE_SOURCES += liblouis-location/liblouis/findTable.h
 NATIVE_SOURCES += liblouis-location/liblouis/compileTranslationTable.c
+NATIVE_SOURCES += liblouis-location/liblouis/commonTranslationFunctions.c
 NATIVE_SOURCES += liblouis-location/liblouis/lou_translateString.c
 NATIVE_SOURCES += liblouis-location/liblouis/lou_backTranslateString.c
 NATIVE_SOURCES += liblouis-location/liblouis/pattern.c
