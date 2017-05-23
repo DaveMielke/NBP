@@ -52,7 +52,7 @@ public abstract class SpeechToText {
     public TextHandler () {
     }
 
-    public void handleText (ArrayList<String> text) {
+    public void handleText (String[] choices) {
     }
 
     public void reportProblem (String problem) {
@@ -66,12 +66,12 @@ public abstract class SpeechToText {
 
     private final String languageModel;
 
-    public final String getValue () {
-      return languageModel;
-    }
-
     private LanguageModel (String model) {
       languageModel = model;
+    }
+
+    public final String getValue () {
+      return languageModel;
     }
   }
 
@@ -156,8 +156,11 @@ public abstract class SpeechToText {
           if (code != CommonActivity.RESULT_OK) {
             textHandler.reportProblem(mainActivity.getString(toResultMessage(code)));
           } else if (intent != null) {
-            ArrayList<String> text = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            if (text != null) textHandler.handleText(text);
+            ArrayList<String> choices = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+            if (choices != null) {
+              textHandler.handleText(choices.toArray(new String[choices.size()]));
+            }
           }
         }
       };

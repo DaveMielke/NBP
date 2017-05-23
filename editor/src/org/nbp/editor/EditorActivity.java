@@ -83,6 +83,16 @@ public class EditorActivity extends CommonActivity {
               ;
   }
 
+  private final void showChooser (
+    int subtitle, CharSequence[] choices,
+    DialogInterface.OnClickListener listener
+  ) {
+    newAlertDialogBuilder(subtitle)
+      .setItems(choices, listener)
+      .setNegativeButton(R.string.action_cancel, null)
+      .show();
+  }
+
   private final void showDialog (
     int subtitle, int layout, DialogFinisher finisher,
     int action, DialogInterface.OnClickListener listener
@@ -97,8 +107,7 @@ public class EditorActivity extends CommonActivity {
       builder.setNeutralButton(action, null);
     }
 
-    AlertDialog dialog = builder.create();
-    dialog.show();
+    AlertDialog dialog = builder.show();
     if (finisher != null) finisher.finishDialog(new DialogHelper(dialog));
   }
 
@@ -637,50 +646,58 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_record () {
-    final int start = editArea.getSelectionStart();
-    final int end = editArea.getSelectionEnd();
+  private final void verifyRecording (final String text) {
+    if (!text.isEmpty()) {
+      DialogFinisher finisher = new DialogFinisher() {
+        @Override
+        public void finishDialog (DialogHelper helper) {
+          helper.setText(R.id.record_text, text);
+        }
+      };
 
-    if (editArea.containsProtectedText(start, end)) {
+      DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+          EditText view = (EditText)CommonUtilities.findView(dialog, R.id.record_text);
+          editArea.replaceSelection(view.getText());
+        }
+      };
+
+      showDialog(
+        R.string.menu_edit_record, R.layout.record_verify,
+        finisher, R.string.action_accept, listener
+      );
+    }
+  }
+
+  private final void verifyRecording (final String[] choices) {
+    int count = choices.length;
+
+    if (count != 0) {
+      if (count == 1) {
+        verifyRecording(choices[0]);
+      } else {
+        showChooser(
+          R.string.menu_edit_record, choices,
+          new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int item) {
+              verifyRecording(choices[item]);
+            }
+          }
+        );
+      }
+    }
+  }
+
+  private void menuAction_record () {
+    if (editArea.containsProtectedText()) {
       showMessage(R.string.message_protected_text);
     } else {
       SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
         @Override
-        public void handleText (ArrayList<String> text) {
-          final String content;
-
-          {
-            StringBuilder builder = new StringBuilder();
-
-            for (String chunk : text) {
-              builder.append(chunk);
-            }
-
-            content = builder.toString().trim();
-          }
-
-          if (!content.isEmpty()) {
-            DialogFinisher finisher = new DialogFinisher() {
-              @Override
-              public void finishDialog (DialogHelper helper) {
-                helper.setText(R.id.record_text, content);
-              }
-            };
-
-            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick (DialogInterface dialog, int button) {
-                EditText view = (EditText)CommonUtilities.findView(dialog, R.id.record_text);
-                CharSequence text = view.getText();
-                editArea.getText().replace(start, end, text);
-              }
-            };
-
-            showDialog(
-              R.string.menu_edit_record, R.layout.record_verify,
-              finisher, R.string.action_accept, listener
-            );
-          }
+        public void handleText (String[] choices) {
+          verifyRecording(choices);
         }
       };
 

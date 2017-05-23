@@ -44,6 +44,14 @@ public class EditArea extends EditText {
     return containsProtectedText(getText(), start, end);
   }
 
+  public final boolean containsProtectedText () {
+    return containsProtectedText(getSelectionStart(), getSelectionEnd());
+  }
+
+  public final void replaceSelection (CharSequence text) {
+    getText().replace(getSelectionStart(), getSelectionEnd(), text);
+  }
+
   @Override
   public void onSelectionChanged (int start, int end) {
     super.onSelectionChanged(start, end);
