@@ -354,6 +354,10 @@ public class EditorActivity extends CommonActivity {
     return loadContent(handle, null);
   }
 
+  private final boolean loadContent (File file) {
+    return loadContent(new ContentHandle(file));
+  }
+
   private final File getDocumentsDirectory () {
     File directory = Environment.getExternalStoragePublicDirectory("Documents");
 
@@ -393,20 +397,24 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  private final FileFinder.Builder newFileFinderBuilder (boolean forWriting) {
+    int title = forWriting?
+                R.string.menu_file_saveAs:
+                R.string.menu_file_open;
+
+    return new FileFinder
+          .Builder(this)
+          .setUserTitle(getString(title))
+          .setForWriting(forWriting)
+          ;
+  }
+
   private final void findFile (
     boolean forWriting,
     String[] extensions,
     FileFinder.FileHandler handler
   ) {
-    int title = forWriting?
-                R.string.menu_file_saveAs:
-                R.string.menu_file_open;
-
-    FileFinder.Builder builder = new FileFinder
-      .Builder(this)
-      .setUserTitle(getString(title))
-      .setForWriting(forWriting)
-      ;
+    FileFinder.Builder builder = newFileFinderBuilder(forWriting);
 
     if (extensions != null) {
       for (String extension : extensions) {
@@ -548,7 +556,7 @@ public class EditorActivity extends CommonActivity {
                 @Override
                 public void onClick (View vie) {
                   dialog.dismiss();
-                  loadContent(new ContentHandle(file));
+                  loadContent(file);
                 }
               }
             );
@@ -559,6 +567,17 @@ public class EditorActivity extends CommonActivity {
                 @Override
                 public void onClick (View vie) {
                   dialog.dismiss();
+                  FileFinder.Builder builder = newFileFinderBuilder(false);
+                  builder.addRootLocation(parent);
+
+                  builder.find(
+                    new FileFinder.FileHandler() {
+                      @Override
+                      public void handleFile (File file) {
+                        if (file != null) loadContent(file);
+                      }
+                    }
+                  );
                 }
               }
             );
@@ -597,7 +616,7 @@ public class EditorActivity extends CommonActivity {
               @Override
               public void handleFile (File file) {
                 if (file != null) {
-                  if (loadContent(new ContentHandle(file, null, true))) {
+                  if (loadContent(file)) {
                     checkpointFile();
                   }
                 }
