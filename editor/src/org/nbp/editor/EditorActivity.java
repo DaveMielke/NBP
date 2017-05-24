@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import java.util.Set;
 import java.util.LinkedHashSet;
 
@@ -15,6 +18,9 @@ import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
 import org.nbp.common.SpeechToText;
+
+import org.nbp.common.LanguageUtilities;
+import java.lang.reflect.Constructor;
 
 import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
@@ -103,7 +109,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private EditArea editArea = null;
+  public EditArea editArea = null;
   private TextView uriView = null;
   private ContentHandle contentHandle = null;
   private boolean hasChanged = false;
@@ -755,20 +761,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_selection (Menu menu) {
-    boolean showSelectionActions = false;
-    boolean showCursorActions = false;
-
-    if (editArea.hasSelection()) {
-      showSelectionActions = true;
-    } else {
-      showCursorActions = true;
-    }
-
-    menu.setGroupVisible(R.id.menu_group_selection, showSelectionActions);
-    menu.setGroupVisible(R.id.menu_group_cursor, showCursorActions);
-  }
-
   private void menuAction_copy (boolean delete) {
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
@@ -1034,12 +1026,45 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
+  private final Map<Integer, EditorAction> editorActions =
+        new HashMap<Integer, EditorAction>();
+
+  private final EditorAction getEditorAction (int identifier) {
+    EditorAction action = editorActions.get(identifier);
+    if (action != null) return action;
+
+    String name = getResources().getResourceEntryName(identifier);
+    if (name == null) return null;
+
+    name = name.replace('_', '.');
+    name = getClass().getPackage().getName() + '.' + name;
+    Class type;
+
+    try {
+      type = Class.forName(name);
+    } catch (ClassNotFoundException exception) {
+      return null;
+    }
+
+    if (!EditorAction.class.isAssignableFrom(type)) return null;
+    Constructor constructor = LanguageUtilities.getConstructor(type);
+    if (constructor == null) return null;
+
+    action = (EditorAction)LanguageUtilities.newInstance(constructor);
+    editorActions.put(identifier, action);
+    return action;
+  }
+
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.menu_file_Submenu:
-        return true;
+    EditorAction action = getEditorAction(item.getItemId());
 
+    if (action != null) {
+      action.performAction(this, item);
+      return true;
+    }
+
+    switch (item.getItemId()) {
       case R.id.menu_file_New:
         menuAction_new();
         return true;
@@ -1068,19 +1093,12 @@ public class EditorActivity extends CommonActivity {
         menuAction_delete();
         return true;
 
-      case R.id.menu_edit_Submenu:
-        return true;
-
       case R.id.menu_edit_Paste:
         menuAction_paste();
         return true;
 
       case R.id.menu_edit_Record:
         menuAction_record();
-        return true;
-
-      case R.id.menu_selection_Submenu:
-        menuAction_selection(item.getSubMenu());
         return true;
 
       case R.id.menu_selection_SelectAll:
@@ -1101,9 +1119,6 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_selection_Lowercase:
         menuAction_lowercase();
-        return true;
-
-      case R.id.menu_highlight_Submenu:
         return true;
 
       case R.id.menu_highlight_Bold:
@@ -1130,15 +1145,6 @@ public class EditorActivity extends CommonActivity {
         menuAction_highlight(HighlightSpans.UNDERLINE);
         return true;
 
-      case R.id.menu_review_Submenu:
-        return true;
-
-      case R.id.menu_changes_Submenu:
-        return true;
-
-      case R.id.menu_move_Submenu:
-        return true;
-
       case R.id.menu_move_NextGroup:
         menuAction_nextGroup();
         return true;
@@ -1155,9 +1161,6 @@ public class EditorActivity extends CommonActivity {
         menuAction_previousRevision();
         return true;
 
-      case R.id.menu_revision_Submenu:
-        return true;
-
       case R.id.menu_revision_ShowRevision:
         menuAction_showRevision();
         return true;
@@ -1170,9 +1173,6 @@ public class EditorActivity extends CommonActivity {
         menuAction_rejectRevision();
         return true;
 
-      case R.id.menu_markup_Submenu:
-        return true;
-
       case R.id.menu_markup_AllMarkup:
         menuAction_markChanges();
         return true;
@@ -1183,9 +1183,6 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_changes_AcceptChanges:
         menuAction_acceptChanges();
-        return true;
-
-      case R.id.menu_comments_Submenu:
         return true;
 
       case R.id.menu_comments_ShowComment:
