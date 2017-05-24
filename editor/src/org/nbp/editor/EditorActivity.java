@@ -588,7 +588,7 @@ public class EditorActivity extends CommonActivity {
                 @Override
                 public void onClick (View view) {
                   dialog.dismiss();
-                  loadContent(new ContentHandle(uri, null, false));
+                  loadContent(new ContentHandle(uri));
                 }
               }
             );

@@ -137,6 +137,14 @@ public class ContentHandle {
     this(Uri.parse(uri), type, writable);
   }
 
+  public ContentHandle (String uri, String type) {
+    this(uri, type, false);
+  }
+
+  public ContentHandle (String uri) {
+    this(uri, null);
+  }
+
   public final Uri getUri () {
     return contentUri;
   }
