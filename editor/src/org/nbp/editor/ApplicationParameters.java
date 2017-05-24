@@ -17,6 +17,7 @@ public abstract class ApplicationParameters {
   };
 
   public final static String STRING_ENCODING = "UTF8";
+  public final static int RECENT_URI_LIMIT = 10;
   public final static long REVISION_JOIN_MILLISECONDS = 600000;
 
   public final static String ASPOSE_LICENSE_FILE = "Aspose.Words.lic";

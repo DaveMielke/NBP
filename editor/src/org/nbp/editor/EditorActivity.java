@@ -2,7 +2,12 @@ package org.nbp.editor;
 
 import java.io.File;
 import java.util.Date;
+
+import java.util.List;
 import java.util.ArrayList;
+
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
@@ -34,6 +39,9 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 
+import android.widget.TableLayout;
+import android.widget.TableRow;
+
 import android.text.InputFilter;
 import android.text.Editable;
 
@@ -53,6 +61,27 @@ public class EditorActivity extends CommonActivity {
 
   private File filesDirectory;
   private SharedPreferences prefs;
+
+  private ArrayList<String> recentURIs = new ArrayList<String>();
+  private final static String PREF_RECENT_URIS = "recent-URIs";
+
+  private final void restoreRecentURIs () {
+    Set<String> uris = prefs.getStringSet(PREF_RECENT_URIS, null);
+    if (uris != null) recentURIs.addAll(uris);
+  }
+
+  private final void saveRecentURI (String uri) {
+    recentURIs.remove(uri);
+
+    while (recentURIs.size() >= ApplicationParameters.RECENT_URI_LIMIT) {
+      recentURIs.remove(0);
+    }
+
+    recentURIs.add(uri);
+    prefs.edit()
+         .putStringSet(PREF_RECENT_URIS, new LinkedHashSet<String>(recentURIs))
+         .commit();
+  }
 
   private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";
   private final static String PREF_CHECKPOINT_NAME = PREF_CHECKPOINT_PREFIX + "name";
@@ -165,6 +194,7 @@ public class EditorActivity extends CommonActivity {
 
       if (handle != null) {
         path = handle.getNormalizedString();
+        saveRecentURI(path);
       } else {
         path = getString(R.string.hint_new_file);
       }
@@ -540,6 +570,27 @@ public class EditorActivity extends CommonActivity {
         }
       }
     );
+  }
+
+  private void menuAction_recent () {
+    DialogFinisher finisher = new DialogFinisher() {
+      @Override
+      public void finishDialog (DialogHelper helper) {
+        TableLayout table = (TableLayout)helper.findViewById(R.id.recent_table);
+        int uriIndex = recentURIs.size();
+
+        while (uriIndex > 0) {
+          String uri = recentURIs.get(--uriIndex);
+          final View view;
+
+          view = newTextView(uri);
+
+          table.addView(view);
+        }
+      }
+    };
+
+    showDialog(R.string.menu_file_recent, R.layout.recent_list, finisher);
   }
 
   private void menuAction_open () {
@@ -984,6 +1035,10 @@ public class EditorActivity extends CommonActivity {
         menuAction_new();
         return true;
 
+      case R.id.menu_file_recent:
+        menuAction_recent();
+        return true;
+
       case R.id.menu_file_open:
         menuAction_open();
         return true;
@@ -1320,6 +1375,8 @@ public class EditorActivity extends CommonActivity {
 
     filesDirectory = getFilesDir();
     prefs = getSharedPreferences("editor", MODE_PRIVATE);
+
+    restoreRecentURIs();
 
     setContentView(R.layout.editor);
     uriView = (TextView)findViewById(R.id.current_uri);

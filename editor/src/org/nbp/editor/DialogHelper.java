@@ -1,6 +1,7 @@
 package org.nbp.editor;
 
 import android.app.Dialog;
+import android.view.View;
 import android.widget.TextView;
 
 public class DialogHelper {
@@ -14,8 +15,12 @@ public class DialogHelper {
     return dialog;
   }
 
+  public final View findViewById (int view) {
+    return getDialog().findViewById(view);
+  }
+
   public final void setText (int view, CharSequence text) {
-    if (text != null) ((TextView)dialog.findViewById(view)).setText(text);
+    if (text != null) ((TextView)findViewById(view)).setText(text);
   }
 
   public final void setText (int view, int text) {

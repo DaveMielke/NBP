@@ -13,6 +13,11 @@
        />
 
       <item
+        android:id="@+id/menu_file_recent"
+        android:title="@string/menu_file_recent"
+       />
+
+      <item
         android:id="@+id/menu_file_open"
         android:title="@string/menu_file_open"
        />

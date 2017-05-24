@@ -3,6 +3,7 @@
 <resources>
   <string name="menu_options_file">File</string>
   <string name="menu_file_new">New</string>
+  <string name="menu_file_recent">Recent</string>
   <string name="menu_file_open">Open</string>
   <string name="menu_file_save">Save</string>
   <string name="menu_file_saveAs">Save As</string>
