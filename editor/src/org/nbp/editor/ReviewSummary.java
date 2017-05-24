@@ -3,12 +3,16 @@ package org.nbp.editor;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.Set;
+import java.util.HashSet;
+
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
 
 import android.text.Spanned;
 
 public class ReviewSummary implements DialogFinisher {
+  private final Set<String> reviewerNames = new HashSet<String>();
   private int revisionCount = 0;
   private int insertionCount = 0;
   private int deletionCount = 0;
@@ -26,6 +30,18 @@ public class ReviewSummary implements DialogFinisher {
   }
 
   private final void addSpanHandlers () {
+    addSpanHandler(ReviewSpan.class,
+      new SpanHandler() {
+        @Override
+        public final void handleSpan (Object span) {
+          ReviewSpan review = (ReviewSpan)span;
+          String name = review.getReviewerName();
+          if (name == null) name = "";
+          reviewerNames.add(name);
+        }
+      }
+    );
+
     addSpanHandler(RevisionSpan.class,
       new SpanHandler() {
         @Override
@@ -108,6 +124,10 @@ public class ReviewSummary implements DialogFinisher {
     contentURI = uri;
   }
 
+  public final int getReviewerCount () {
+    return reviewerNames.size();
+  }
+
   public final int getRevisionCount () {
     return revisionCount;
   }
@@ -127,6 +147,7 @@ public class ReviewSummary implements DialogFinisher {
   @Override
   public void finishDialog (DialogHelper helper) {
     helper.setText(R.id.review_summary_contentURI, getContentURI());
+    helper.setValue(R.id.review_summary_reviewerCount, getReviewerCount());
     helper.setValue(R.id.review_summary_revisionCount, getRevisionCount());
     helper.setValue(R.id.review_summary_insertionCount, getInsertionCount());
     helper.setValue(R.id.review_summary_deletionCount, getDeletionCount());

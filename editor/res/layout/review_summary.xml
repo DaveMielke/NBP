@@ -16,6 +16,11 @@
      />
 
     <TableRow>
+      <TextView android:text="@string/review_summary_reviewerCount" />
+      <TextView android:id="@+id/review_summary_reviewerCount" />
+    </TableRow>
+
+    <TableRow>
       <TextView android:text="@string/review_summary_revisionCount" />
       <TextView android:id="@+id/review_summary_revisionCount" />
     </TableRow>
