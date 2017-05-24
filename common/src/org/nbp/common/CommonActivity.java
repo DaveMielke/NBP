@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.HorizontalScrollView;
+
+import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import android.widget.TextView;
@@ -97,9 +99,14 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return container;
   }
 
+  protected ViewGroup newTable () {
+    TableLayout table = new TableLayout(this);
+    return table;
+  }
+
   protected ViewGroup newTableRow () {
-    TableRow container = new TableRow(this);
-    return container;
+    TableRow row = new TableRow(this);
+    return row;
   }
 
   protected TextView newTextView () {
