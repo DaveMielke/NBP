@@ -584,7 +584,7 @@ public class EditorActivity extends CommonActivity {
       }
     };
 
-    showDialog(R.string.menu_file_recent, R.layout.recent_list, finisher);
+    showDialog(R.string.menu_file_recent, R.layout.recent_list, finisher, false);
   }
 
   private void menuAction_open () {

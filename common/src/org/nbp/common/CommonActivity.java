@@ -200,9 +200,18 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
   }
 
   protected final void showDialog (
+    int subtitle, int layout, DialogFinisher finisher, boolean positive
+  ) {
+    showDialog(
+      subtitle, layout, finisher,
+      (positive? android.R.string.yes: android.R.string.no), null
+    );
+  }
+
+  protected final void showDialog (
     int subtitle, int layout, DialogFinisher finisher
   ) {
-    showDialog(subtitle, layout, finisher, android.R.string.yes, null);
+    showDialog(subtitle, layout, finisher, true);
   }
 
   protected final void showDialog (int subtitle, int layout) {
