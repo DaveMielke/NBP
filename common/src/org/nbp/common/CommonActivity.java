@@ -51,6 +51,12 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     }
   }
 
+  protected final void addViews (ViewGroup group, View... views) {
+    for (View view : views) {
+      group.addView(view);
+    }
+  }
+
   protected ViewGroup newVerticalGroup (View... views) {
     LinearLayout group = new LinearLayout(this);
     group.setOrientation(group.VERTICAL);
@@ -99,13 +105,15 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return container;
   }
 
-  protected ViewGroup newTable () {
+  protected ViewGroup newTable (View... rows) {
     TableLayout table = new TableLayout(this);
+    addViews(table, rows);
     return table;
   }
 
-  protected ViewGroup newTableRow () {
+  protected ViewGroup newTableRow (View... cells) {
     TableRow row = new TableRow(this);
+    addViews(row, cells);
     return row;
   }
 

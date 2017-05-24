@@ -543,7 +543,7 @@ public class EditorActivity extends CommonActivity {
 
         while (uriIndex > 0) {
           final String uri = recentURIs.get(--uriIndex);
-          final View item;
+          final View row;
 
           if (uri.charAt(0) == File.separatorChar) {
             final File file = new File(uri);
@@ -581,12 +581,9 @@ public class EditorActivity extends CommonActivity {
               }
             );
 
-            ViewGroup row = newTableRow();
-            row.addView(name);
-            row.addView(folder);
-            item = row;
+            row = newTableRow(name, folder);
           } else {
-            item = newButton(uri,
+            row = newButton(uri,
               new Button.OnClickListener() {
                 @Override
                 public void onClick (View view) {
@@ -597,7 +594,7 @@ public class EditorActivity extends CommonActivity {
             );
           }
 
-          table.addView(item);
+          table.addView(row);
         }
       }
     };
