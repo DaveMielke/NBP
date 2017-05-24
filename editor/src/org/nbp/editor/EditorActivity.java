@@ -35,6 +35,8 @@ import android.os.Environment;
 import android.os.AsyncTask;
 
 import android.view.View;
+import android.view.ViewGroup;
+
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
@@ -352,17 +354,17 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final boolean loadContent (final ContentHandle handle, final Runnable onLoaded) {
+  private final boolean loadContent (
+    final ContentHandle handle, final Runnable onLoaded
+  ) {
     new AsyncTask<Void, Void, CharSequence>() {
-      AlertDialog dialog;
+      AlertDialog dialog = null;
 
       @Override
       protected void onPreExecute () {
         dialog = newAlertDialogBuilder(R.string.message_reading_content)
           .setMessage(handle.getNormalizedString())
-          .create();
-
-        dialog.show();
+          .show();
       }
 
       @Override
@@ -389,7 +391,7 @@ public class EditorActivity extends CommonActivity {
           run(onLoaded);
         }
 
-        dialog.dismiss();
+        if (dialog != null) dialog.dismiss();
       }
     }.execute();
 
@@ -580,12 +582,48 @@ public class EditorActivity extends CommonActivity {
         int uriIndex = recentURIs.size();
 
         while (uriIndex > 0) {
-          String uri = recentURIs.get(--uriIndex);
-          final View view;
+          final String uri = recentURIs.get(--uriIndex);
+          final View item;
 
-          view = newTextView(uri);
+          if (uri.charAt(0) == File.separatorChar) {
+            final File file = new File(uri);
+            final File parent = file.getParentFile();
 
-          table.addView(view);
+            View name = newButton(
+              file.getName(),
+              new Button.OnClickListener() {
+                @Override
+                public void onClick (View vie) {
+                  loadContent(new ContentHandle(file));
+                }
+              }
+            );
+
+            View folder = newButton(
+              parent.getAbsolutePath(),
+              new Button.OnClickListener() {
+                @Override
+                public void onClick (View vie) {
+                }
+              }
+            );
+
+            ViewGroup row = new TableRow(getApplicationContext());
+            row.addView(name);
+            row.addView(folder);
+            item = row;
+          } else {
+            item = newButton(uri,
+              new Button.OnClickListener() {
+                @Override
+                public void onClick (View view) {
+                  loadContent(new ContentHandle(uri, null, false));
+                }
+              }
+            );
+          }
+
+          table.addView(item);
         }
       }
     };

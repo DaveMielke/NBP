@@ -125,6 +125,14 @@ public class ContentHandle {
     this(Uri.fromFile(file), type, writable);
   }
 
+  public ContentHandle (File file, String type) {
+    this(file, type, file.canWrite());
+  }
+
+  public ContentHandle (File file) {
+    this(file, null);
+  }
+
   public ContentHandle (String uri, String type, boolean writable) {
     this(Uri.parse(uri), type, writable);
   }
