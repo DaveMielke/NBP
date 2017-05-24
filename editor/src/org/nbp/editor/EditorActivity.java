@@ -1057,14 +1057,15 @@ public class EditorActivity extends CommonActivity {
 
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
-    EditorAction action = getEditorAction(item.getItemId());
+    int identifier = item.getItemId();
+    EditorAction action = getEditorAction(identifier);
 
     if (action != null) {
       action.performAction(this, item);
       return true;
     }
 
-    switch (item.getItemId()) {
+    switch (identifier) {
       case R.id.menu_file_New:
         menuAction_new();
         return true;
@@ -1208,10 +1209,15 @@ public class EditorActivity extends CommonActivity {
       case R.id.menu_review_Summary:
         menuAction_summary();
         return true;
-
-      default:
-        return false;
     }
+
+    if (ApplicationParameters.LOG_UNHANDLED_ACTIONS) {
+      String name = getResources().getResourceEntryName(identifier);
+      if (name == null) name = Integer.toString(identifier);
+      Log.w(LOG_TAG, ("unhandled action: " + name));
+    }
+
+    return false;
   }
 
   @Override
