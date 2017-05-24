@@ -12,6 +12,8 @@ import java.util.LinkedHashSet;
 import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
 import org.nbp.common.AlertDialogBuilder;
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
 import org.nbp.common.SpeechToText;
 
 import org.nbp.common.FileFinder;
@@ -106,57 +108,6 @@ public class EditorActivity extends CommonActivity {
   private boolean hasChanged = false;
 
   private final void showActivityResultCode (int code) {
-  }
-
-  public final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
-    return new AlertDialogBuilder(this, subtitles)
-              .setCancelable(false)
-              ;
-  }
-
-  private final void showChooser (
-    int subtitle, CharSequence[] choices,
-    DialogInterface.OnClickListener listener
-  ) {
-    newAlertDialogBuilder(subtitle)
-      .setItems(choices, listener)
-      .setNegativeButton(R.string.action_cancel, null)
-      .show();
-  }
-
-  private final void showDialog (
-    int subtitle, int layout, DialogFinisher finisher,
-    int action, DialogInterface.OnClickListener listener
-  ) {
-    AlertDialog.Builder builder = newAlertDialogBuilder(subtitle);
-    builder.setView(getLayoutInflater().inflate(layout, null));
-
-    if (listener != null) {
-      builder.setPositiveButton(action, listener);
-      builder.setNegativeButton(R.string.action_cancel, null);
-    } else {
-      builder.setNeutralButton(action, null);
-    }
-
-    AlertDialog dialog = builder.show();
-    if (finisher != null) finisher.finishDialog(new DialogHelper(dialog));
-  }
-
-  private final void showDialog (
-    int subtitle, int layout, int action,
-    DialogInterface.OnClickListener listener
-  ) {
-    showDialog(subtitle, layout, null, action, listener);
-  }
-
-  private final void showDialog (
-    int subtitle, int layout, DialogFinisher finisher
-  ) {
-    showDialog(subtitle, layout, finisher, R.string.action_ok, null);
-  }
-
-  private final void showDialog ( int subtitle, int layout) {
-    showDialog(subtitle, layout, null);
   }
 
   private final ClipboardManager getClipboard () {
@@ -608,7 +559,7 @@ public class EditorActivity extends CommonActivity {
               }
             );
 
-            ViewGroup row = new TableRow(getApplicationContext());
+            ViewGroup row = newTableRow();
             row.addView(name);
             row.addView(folder);
             item = row;

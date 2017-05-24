@@ -1,4 +1,4 @@
-package org.nbp.editor;
+package org.nbp.common;
 
 import android.app.Dialog;
 import android.view.View;
@@ -29,9 +29,5 @@ public class DialogHelper {
 
   public final void setValue (int view, int value) {
     setText(view, Integer.toString(value));
-  }
-
-  public final void setValue (int view, boolean value) {
-    setText(view, (value? R.string.value_boolean_true: R.string.value_boolean_false));
   }
 }

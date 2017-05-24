@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.HorizontalScrollView;
+import android.widget.TableRow;
 
 import android.widget.TextView;
 import android.widget.Button;
@@ -96,6 +97,11 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return container;
   }
 
+  protected ViewGroup newTableRow () {
+    TableRow container = new TableRow(this);
+    return container;
+  }
+
   protected TextView newTextView () {
     TextView view = new TextView(this);
     view.setFocusable(true);
@@ -150,6 +156,57 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     ListView list = new ListView(this);
     list.setAdapter(adapter);
     return list;
+  }
+
+  protected final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
+    return new AlertDialogBuilder(this, subtitles)
+              .setCancelable(false)
+              ;
+  }
+
+  protected final void showChooser (
+    int subtitle, CharSequence[] choices,
+    DialogInterface.OnClickListener listener
+  ) {
+    newAlertDialogBuilder(subtitle)
+      .setItems(choices, listener)
+      .setNegativeButton(android.R.string.no, null)
+      .show();
+  }
+
+  protected final void showDialog (
+    int subtitle, int layout, DialogFinisher finisher,
+    int action, DialogInterface.OnClickListener listener
+  ) {
+    AlertDialog.Builder builder = newAlertDialogBuilder(subtitle);
+    builder.setView(getLayoutInflater().inflate(layout, null));
+
+    if (listener != null) {
+      builder.setPositiveButton(action, listener);
+      builder.setNegativeButton(android.R.string.no, null);
+    } else {
+      builder.setNeutralButton(action, null);
+    }
+
+    AlertDialog dialog = builder.show();
+    if (finisher != null) finisher.finishDialog(new DialogHelper(dialog));
+  }
+
+  protected final void showDialog (
+    int subtitle, int layout, int action,
+    DialogInterface.OnClickListener listener
+  ) {
+    showDialog(subtitle, layout, null, action, listener);
+  }
+
+  protected final void showDialog (
+    int subtitle, int layout, DialogFinisher finisher
+  ) {
+    showDialog(subtitle, layout, finisher, android.R.string.yes, null);
+  }
+
+  protected final void showDialog (int subtitle, int layout) {
+    showDialog(subtitle, layout, null);
   }
 
   private int requestCode = 0;
@@ -238,7 +295,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
         .setMessage(detail)
 
         .setNeutralButton(
-          R.string.showMessage_message_neutral,
+          android.R.string.yes,
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int button)  {

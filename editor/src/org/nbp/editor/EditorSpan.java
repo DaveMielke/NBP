@@ -2,6 +2,9 @@ package org.nbp.editor;
 
 import java.util.Date;
 
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
+
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.Spanned;

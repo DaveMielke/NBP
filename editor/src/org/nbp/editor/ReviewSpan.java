@@ -1,5 +1,8 @@
 package org.nbp.editor;
 
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
+
 import android.text.style.CharacterStyle;
 import java.util.Date;
 

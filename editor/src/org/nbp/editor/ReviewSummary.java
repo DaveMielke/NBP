@@ -3,6 +3,9 @@ package org.nbp.editor;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
+
 import android.text.Spanned;
 
 public class ReviewSummary implements DialogFinisher {
