@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="menu_options_file">File</string>
-  <string name="menu_file_new">New</string>
-  <string name="menu_file_recent">Recent</string>
-  <string name="menu_file_open">Open</string>
-  <string name="menu_file_save">Save</string>
-  <string name="menu_file_saveAs">Save As</string>
-  <string name="menu_file_send">Send</string>
-  <string name="menu_file_delete">Delete</string>
+  <string name="menu_file_Submenu">File</string>
+  <string name="menu_file_New">New</string>
+  <string name="menu_file_Recent">Recent</string>
+  <string name="menu_file_Open">Open</string>
+  <string name="menu_file_Save">Save</string>
+  <string name="menu_file_SaveAs">Save As</string>
+  <string name="menu_file_Send">Send</string>
+  <string name="menu_file_Delete">Delete</string>
 
-  <string name="menu_options_edit">Edit</string>
-  <string name="menu_edit_paste">Paste</string>
-  <string name="menu_edit_record">Record</string>
+  <string name="menu_edit_Submenu">Edit</string>
+  <string name="menu_edit_Paste">Paste</string>
+  <string name="menu_edit_Record">Record</string>
 
-  <string name="menu_options_selection">Selection</string>
-  <string name="menu_selection_selectAll">Select All</string>
-  <string name="menu_selection_copy">Copy</string>
-  <string name="menu_selection_cut">Cut</string>
-  <string name="menu_selection_uppercase">Uppercase</string>
-  <string name="menu_selection_lowercase">Lowercase</string>
+  <string name="menu_selection_Submenu">Selection</string>
+  <string name="menu_selection_SelectAll">Select All</string>
+  <string name="menu_selection_Copy">Copy</string>
+  <string name="menu_selection_Cut">Cut</string>
+  <string name="menu_selection_Uppercase">Uppercase</string>
+  <string name="menu_selection_Lowercase">Lowercase</string>
 
-  <string name="menu_options_highlight">Highlight</string>
-  <string name="menu_highlight_bold">Bold</string>
-  <string name="menu_highlight_italics">Italics</string>
-  <string name="menu_highlight_strike">Strike</string>
-  <string name="menu_highlight_subscript">Subscript</string>
-  <string name="menu_highlight_superscript">Superscript</string>
-  <string name="menu_highlight_underline">Underline</string>
+  <string name="menu_highlight_Submenu">Highlight</string>
+  <string name="menu_highlight_Bold">Bold</string>
+  <string name="menu_highlight_Italics">Italics</string>
+  <string name="menu_highlight_Strike">Strike</string>
+  <string name="menu_highlight_Subscript">Subscript</string>
+  <string name="menu_highlight_Superscript">Superscript</string>
+  <string name="menu_highlight_Underline">Underline</string>
 
-  <string name="menu_options_review">Review</string>
-  <string name="menu_review_summary">Summary</string>
+  <string name="menu_review_Submenu">Review</string>
+  <string name="menu_review_Summary">Summary</string>
 
-  <string name="menu_options_changes">Changes</string>
-  <string name="menu_changes_acceptChanges">Accept Changes</string>
+  <string name="menu_changes_Submenu">Changes</string>
+  <string name="menu_changes_AcceptChanges">Accept Changes</string>
 
-  <string name="menu_options_moveTo">Move To</string>
-  <string name="menu_moveTo_nextGroup">Next Group</string>
-  <string name="menu_moveTo_previousGroup">Previous Group</string>
-  <string name="menu_moveTo_nextRevision">Next Revision</string>
-  <string name="menu_moveTo_previousRevision">Previous Revision</string>
+  <string name="menu_move_Submenu">Move To</string>
+  <string name="menu_move_NextGroup">Next Group</string>
+  <string name="menu_move_PreviousGroup">Previous Group</string>
+  <string name="menu_move_NextRevision">Next Revision</string>
+  <string name="menu_move_PreviousRevision">Previous Revision</string>
 
-  <string name="menu_options_currentRevision">Current Revision</string>
-  <string name="menu_currentRevision_showRevision">Show Revision</string>
-  <string name="menu_currentRevision_acceptRevision">Accept Revision</string>
-  <string name="menu_currentRevision_rejectRevision">Reject Revision</string>
+  <string name="menu_revision_Submenu">Current Revision</string>
+  <string name="menu_revision_ShowRevision">Show Revision</string>
+  <string name="menu_revision_AcceptRevision">Accept Revision</string>
+  <string name="menu_revision_RejectRevision">Reject Revision</string>
 
-  <string name="menu_options_markup">Markup</string>
-  <string name="menu_markup_allMarkup">All Markup</string>
-  <string name="menu_markup_noMarkup">No Markup</string>
+  <string name="menu_markup_Submenu">Markup</string>
+  <string name="menu_markup_AllMarkup">All Markup</string>
+  <string name="menu_markup_NoMarkup">No Markup</string>
 
-  <string name="menu_options_comments">Comments</string>
-  <string name="menu_comments_showComment">Show Comment</string>
-  <string name="menu_comments_nextComment">Next Comment</string>
-  <string name="menu_comments_previousComment">Previous Comment</string>
-  <string name="menu_comments_newComment">New Comment</string>
-  <string name="menu_comments_removeComment">Remove Comment</string>
+  <string name="menu_comments_Submenu">Comments</string>
+  <string name="menu_comments_ShowComment">Show Comment</string>
+  <string name="menu_comments_NextComment">Next Comment</string>
+  <string name="menu_comments_PreviousComment">Previous Comment</string>
+  <string name="menu_comments_NewComment">New Comment</string>
+  <string name="menu_comments_RemoveComment">Remove Comment</string>
 </resources>

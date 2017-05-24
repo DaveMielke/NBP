@@ -398,8 +398,8 @@ public class EditorActivity extends CommonActivity {
 
   private final FileFinder.Builder newFileFinderBuilder (boolean forWriting) {
     int title = forWriting?
-                R.string.menu_file_saveAs:
-                R.string.menu_file_open;
+                R.string.menu_file_SaveAs:
+                R.string.menu_file_Open;
 
     return new FileFinder
           .Builder(this)
@@ -599,7 +599,7 @@ public class EditorActivity extends CommonActivity {
       }
     };
 
-    showDialog(R.string.menu_file_recent, R.layout.recent_list, finisher, false);
+    showDialog(R.string.menu_file_Recent, R.layout.recent_list, finisher, false);
   }
 
   private void menuAction_open () {
@@ -651,7 +651,7 @@ public class EditorActivity extends CommonActivity {
   private void menuAction_delete () {
     FileFinder.Builder builder = new FileFinder
       .Builder(this)
-      .setUserTitle(R.string.menu_file_delete)
+      .setUserTitle(R.string.menu_file_Delete)
       ;
 
     addRootLocations(builder);
@@ -713,7 +713,7 @@ public class EditorActivity extends CommonActivity {
       };
 
       showDialog(
-        R.string.menu_edit_record, R.layout.record_verify,
+        R.string.menu_edit_Record, R.layout.record_verify,
         finisher, R.string.action_accept, listener
       );
     }
@@ -727,7 +727,7 @@ public class EditorActivity extends CommonActivity {
         verifyRecording(choices[0]);
       } else {
         showChooser(
-          R.string.menu_edit_record, choices,
+          R.string.menu_edit_Record, choices,
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int item) {
@@ -846,7 +846,7 @@ public class EditorActivity extends CommonActivity {
 
     if (revision != null) {
       showDialog(
-        R.string.menu_currentRevision_showRevision, R.layout.revision_show, revision
+        R.string.menu_revision_ShowRevision, R.layout.revision_show, revision
       );
     } else {
       showMessage(R.string.message_original_text);
@@ -858,7 +858,7 @@ public class EditorActivity extends CommonActivity {
 
     if (revision != null) {
       showDialog(
-        R.string.menu_currentRevision_acceptRevision, R.layout.revision_show,
+        R.string.menu_revision_AcceptRevision, R.layout.revision_show,
         revision, R.string.action_accept,
         new DialogInterface.OnClickListener() {
           @Override
@@ -886,7 +886,7 @@ public class EditorActivity extends CommonActivity {
 
     if (revision != null) {
       showDialog(
-        R.string.menu_currentRevision_rejectRevision, R.layout.revision_show,
+        R.string.menu_revision_RejectRevision, R.layout.revision_show,
         revision, R.string.action_reject,
         new DialogInterface.OnClickListener() {
           @Override
@@ -947,7 +947,7 @@ public class EditorActivity extends CommonActivity {
 
     if (comment != null) {
       showDialog(
-        R.string.menu_comments_showComment, R.layout.comment_show, comment
+        R.string.menu_comments_ShowComment, R.layout.comment_show, comment
       );
     } else {
       showMessage(R.string.message_uncommented_text);
@@ -968,7 +968,7 @@ public class EditorActivity extends CommonActivity {
 
   private void menuAction_newComment () {
     showDialog(
-      R.string.menu_comments_newComment,
+      R.string.menu_comments_NewComment,
       R.layout.comment_new, R.string.action_add,
       new DialogInterface.OnClickListener() {
         @Override
@@ -1002,7 +1002,7 @@ public class EditorActivity extends CommonActivity {
 
     if (comment != null) {
       showDialog(
-        R.string.menu_comments_removeComment, R.layout.comment_show,
+        R.string.menu_comments_RemoveComment, R.layout.comment_show,
         comment, R.string.action_remove,
         new DialogInterface.OnClickListener() {
           @Override
@@ -1030,185 +1030,185 @@ public class EditorActivity extends CommonActivity {
     summary.setContentURI(uriView.getText());
 
     showDialog(
-      R.string.menu_review_summary, R.layout.review_summary, summary
+      R.string.menu_review_Summary, R.layout.review_summary, summary
     );
   }
 
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.menu_options_file:
+      case R.id.menu_file_Submenu:
         return true;
 
-      case R.id.menu_file_new:
+      case R.id.menu_file_New:
         menuAction_new();
         return true;
 
-      case R.id.menu_file_recent:
+      case R.id.menu_file_Recent:
         menuAction_recent();
         return true;
 
-      case R.id.menu_file_open:
+      case R.id.menu_file_Open:
         menuAction_open();
         return true;
 
-      case R.id.menu_file_save:
+      case R.id.menu_file_Save:
         menuAction_save();
         return true;
 
-      case R.id.menu_file_saveAs:
+      case R.id.menu_file_SaveAs:
         menuAction_saveAs();
         return true;
 
-      case R.id.menu_file_send:
+      case R.id.menu_file_Send:
         menuAction_send();
         return true;
 
-      case R.id.menu_file_delete:
+      case R.id.menu_file_Delete:
         menuAction_delete();
         return true;
 
-      case R.id.menu_options_edit:
+      case R.id.menu_edit_Submenu:
         return true;
 
-      case R.id.menu_edit_paste:
+      case R.id.menu_edit_Paste:
         menuAction_paste();
         return true;
 
-      case R.id.menu_edit_record:
+      case R.id.menu_edit_Record:
         menuAction_record();
         return true;
 
-      case R.id.menu_options_selection:
+      case R.id.menu_selection_Submenu:
         menuAction_selection(item.getSubMenu());
         return true;
 
-      case R.id.menu_selection_selectAll:
+      case R.id.menu_selection_SelectAll:
         editArea.selectAll();
         return true;
 
-      case R.id.menu_selection_copy:
+      case R.id.menu_selection_Copy:
         menuAction_copy(false);
         return true;
 
-      case R.id.menu_selection_cut:
+      case R.id.menu_selection_Cut:
         menuAction_copy(true);
         return true;
 
-      case R.id.menu_selection_uppercase:
+      case R.id.menu_selection_Uppercase:
         menuAction_uppercase();
         return true;
 
-      case R.id.menu_selection_lowercase:
+      case R.id.menu_selection_Lowercase:
         menuAction_lowercase();
         return true;
 
-      case R.id.menu_options_highlight:
+      case R.id.menu_highlight_Submenu:
         return true;
 
-      case R.id.menu_highlight_bold:
+      case R.id.menu_highlight_Bold:
         menuAction_highlight(HighlightSpans.BOLD);
         return true;
 
-      case R.id.menu_highlight_italics:
+      case R.id.menu_highlight_Italics:
         menuAction_highlight(HighlightSpans.ITALIC);
         return true;
 
-      case R.id.menu_highlight_strike:
+      case R.id.menu_highlight_Strike:
         menuAction_highlight(HighlightSpans.STRIKE);
         return true;
 
-      case R.id.menu_highlight_subscript:
+      case R.id.menu_highlight_Subscript:
         menuAction_highlight(HighlightSpans.SUBSCRIPT);
         return true;
 
-      case R.id.menu_highlight_superscript:
+      case R.id.menu_highlight_Superscript:
         menuAction_highlight(HighlightSpans.SUPERSCRIPT);
         return true;
 
-      case R.id.menu_highlight_underline:
+      case R.id.menu_highlight_Underline:
         menuAction_highlight(HighlightSpans.UNDERLINE);
         return true;
 
-      case R.id.menu_options_review:
+      case R.id.menu_review_Submenu:
         return true;
 
-      case R.id.menu_options_changes:
+      case R.id.menu_changes_Submenu:
         return true;
 
-      case R.id.menu_options_moveTo:
+      case R.id.menu_move_Submenu:
         return true;
 
-      case R.id.menu_moveTo_nextGroup:
+      case R.id.menu_move_NextGroup:
         menuAction_nextGroup();
         return true;
 
-      case R.id.menu_moveTo_previousGroup:
+      case R.id.menu_move_PreviousGroup:
         menuAction_previousGroup();
         return true;
 
-      case R.id.menu_moveTo_nextRevision:
+      case R.id.menu_move_NextRevision:
         menuAction_nextRevision();
         return true;
 
-      case R.id.menu_moveTo_previousRevision:
+      case R.id.menu_move_PreviousRevision:
         menuAction_previousRevision();
         return true;
 
-      case R.id.menu_options_currentRevision:
+      case R.id.menu_revision_Submenu:
         return true;
 
-      case R.id.menu_currentRevision_showRevision:
+      case R.id.menu_revision_ShowRevision:
         menuAction_showRevision();
         return true;
 
-      case R.id.menu_currentRevision_acceptRevision:
+      case R.id.menu_revision_AcceptRevision:
         menuAction_acceptRevision();
         return true;
 
-      case R.id.menu_currentRevision_rejectRevision:
+      case R.id.menu_revision_RejectRevision:
         menuAction_rejectRevision();
         return true;
 
-      case R.id.menu_options_markup:
+      case R.id.menu_markup_Submenu:
         return true;
 
-      case R.id.menu_markup_allMarkup:
+      case R.id.menu_markup_AllMarkup:
         menuAction_markChanges();
         return true;
 
-      case R.id.menu_markup_noMarkup:
+      case R.id.menu_markup_NoMarkup:
         menuAction_previewChanges();
         return true;
 
-      case R.id.menu_changes_acceptChanges:
+      case R.id.menu_changes_AcceptChanges:
         menuAction_acceptChanges();
         return true;
 
-      case R.id.menu_options_comments:
+      case R.id.menu_comments_Submenu:
         return true;
 
-      case R.id.menu_comments_showComment:
+      case R.id.menu_comments_ShowComment:
         menuAction_showComment();
         return true;
 
-      case R.id.menu_comments_nextComment:
+      case R.id.menu_comments_NextComment:
         menuAction_nextComment();
         return true;
 
-      case R.id.menu_comments_previousComment:
+      case R.id.menu_comments_PreviousComment:
         menuAction_previousComment();
         return true;
 
-      case R.id.menu_comments_newComment:
+      case R.id.menu_comments_NewComment:
         menuAction_newComment();
         return true;
 
-      case R.id.menu_comments_removeComment:
+      case R.id.menu_comments_RemoveComment:
         menuAction_removeComment();
         return true;
 
-      case R.id.menu_review_summary:
+      case R.id.menu_review_Summary:
         menuAction_summary();
         return true;
 

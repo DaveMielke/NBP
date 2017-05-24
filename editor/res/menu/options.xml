@@ -2,134 +2,134 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
-    android:id="@+id/menu_options_file"
-    android:title="@string/menu_options_file"
+    android:id="@+id/menu_file_Submenu"
+    android:title="@string/menu_file_Submenu"
     >
 
     <menu>
       <item
-        android:id="@+id/menu_file_new"
-        android:title="@string/menu_file_new"
+        android:id="@+id/menu_file_New"
+        android:title="@string/menu_file_New"
        />
 
       <item
-        android:id="@+id/menu_file_recent"
-        android:title="@string/menu_file_recent"
+        android:id="@+id/menu_file_Recent"
+        android:title="@string/menu_file_Recent"
        />
 
       <item
-        android:id="@+id/menu_file_open"
-        android:title="@string/menu_file_open"
+        android:id="@+id/menu_file_Open"
+        android:title="@string/menu_file_Open"
        />
 
       <item
-        android:id="@+id/menu_file_save"
-        android:title="@string/menu_file_save"
+        android:id="@+id/menu_file_Save"
+        android:title="@string/menu_file_Save"
        />
 
       <item
-        android:id="@+id/menu_file_saveAs"
-        android:title="@string/menu_file_saveAs"
+        android:id="@+id/menu_file_SaveAs"
+        android:title="@string/menu_file_SaveAs"
        />
 
       <item
-        android:id="@+id/menu_file_send"
-        android:title="@string/menu_file_send"
+        android:id="@+id/menu_file_Send"
+        android:title="@string/menu_file_Send"
        />
 
       <item
-        android:id="@+id/menu_file_delete"
-        android:title="@string/menu_file_delete"
+        android:id="@+id/menu_file_Delete"
+        android:title="@string/menu_file_Delete"
        />
     </menu>
   </item>
 
   <item
-    android:id="@+id/menu_options_edit"
-    android:title="@string/menu_options_edit"
+    android:id="@+id/menu_edit_Submenu"
+    android:title="@string/menu_edit_Submenu"
     >
 
     <menu>
       <item
-        android:id="@+id/menu_edit_paste"
-        android:title="@string/menu_edit_paste"
+        android:id="@+id/menu_edit_Paste"
+        android:title="@string/menu_edit_Paste"
        />
 
       <item
-        android:id="@+id/menu_edit_record"
-        android:title="@string/menu_edit_record"
+        android:id="@+id/menu_edit_Record"
+        android:title="@string/menu_edit_Record"
        />
     </menu>
   </item>
 
   <item
-    android:id="@+id/menu_options_selection"
-    android:title="@string/menu_options_selection"
+    android:id="@+id/menu_selection_Submenu"
+    android:title="@string/menu_selection_Submenu"
     >
 
     <menu>
       <group android:id="@+id/menu_group_cursor">
         <item
-          android:id="@+id/menu_selection_selectAll"
-          android:title="@string/menu_selection_selectAll"
+          android:id="@+id/menu_selection_SelectAll"
+          android:title="@string/menu_selection_SelectAll"
          />
       </group>
 
       <group android:id="@+id/menu_group_selection">
         <item
-          android:id="@+id/menu_selection_copy"
-          android:title="@string/menu_selection_copy"
+          android:id="@+id/menu_selection_Copy"
+          android:title="@string/menu_selection_Copy"
          />
 
         <item
-          android:id="@+id/menu_selection_cut"
-          android:title="@string/menu_selection_cut"
+          android:id="@+id/menu_selection_Cut"
+          android:title="@string/menu_selection_Cut"
          />
 
         <item
-          android:id="@+id/menu_selection_uppercase"
-          android:title="@string/menu_selection_uppercase"
+          android:id="@+id/menu_selection_Uppercase"
+          android:title="@string/menu_selection_Uppercase"
          />
 
         <item
-          android:id="@+id/menu_selection_lowercase"
-          android:title="@string/menu_selection_lowercase"
+          android:id="@+id/menu_selection_Lowercase"
+          android:title="@string/menu_selection_Lowercase"
          />
 
         <item
-          android:id="@+id/menu_options_highlight"
-          android:title="@string/menu_options_highlight"
+          android:id="@+id/menu_highlight_Submenu"
+          android:title="@string/menu_highlight_Submenu"
           >
 
           <menu>
             <item
-              android:id="@+id/menu_highlight_bold"
-              android:title="@string/menu_highlight_bold"
+              android:id="@+id/menu_highlight_Bold"
+              android:title="@string/menu_highlight_Bold"
              />
 
             <item
-              android:id="@+id/menu_highlight_italics"
-              android:title="@string/menu_highlight_italics"
+              android:id="@+id/menu_highlight_Italics"
+              android:title="@string/menu_highlight_Italics"
              />
 
             <item
-              android:id="@+id/menu_highlight_strike"
-              android:title="@string/menu_highlight_strike"
+              android:id="@+id/menu_highlight_Strike"
+              android:title="@string/menu_highlight_Strike"
              />
 
             <item
-              android:id="@+id/menu_highlight_subscript"
-              android:title="@string/menu_highlight_subscript"
+              android:id="@+id/menu_highlight_Subscript"
+              android:title="@string/menu_highlight_Subscript"
              />
 
             <item
-              android:id="@+id/menu_highlight_superscript"
-              android:title="@string/menu_highlight_superscript"
+              android:id="@+id/menu_highlight_Superscript"
+              android:title="@string/menu_highlight_Superscript"
              />
 
             <item
-              android:id="@+id/menu_highlight_underline"
-              android:title="@string/menu_highlight_underline"
+              android:id="@+id/menu_highlight_Underline"
+              android:title="@string/menu_highlight_Underline"
              />
           </menu>
         </item>
@@ -138,129 +138,129 @@
   </item>
 
   <item
-    android:id="@+id/menu_options_review"
-    android:title="@string/menu_options_review"
+    android:id="@+id/menu_review_Submenu"
+    android:title="@string/menu_review_Submenu"
     >
 
     <menu>
       <item
-        android:id="@+id/menu_options_changes"
-        android:title="@string/menu_options_changes"
+        android:id="@+id/menu_changes_Submenu"
+        android:title="@string/menu_changes_Submenu"
         >
 
         <menu>
           <item
-            android:id="@+id/menu_options_moveTo"
-            android:title="@string/menu_options_moveTo"
+            android:id="@+id/menu_move_Submenu"
+            android:title="@string/menu_move_Submenu"
             >
 
             <menu>
               <item
-                android:id="@+id/menu_moveTo_nextGroup"
-                android:title="@string/menu_moveTo_nextGroup"
+                android:id="@+id/menu_move_NextGroup"
+                android:title="@string/menu_move_NextGroup"
                />
 
               <item
-                android:id="@+id/menu_moveTo_previousGroup"
-                android:title="@string/menu_moveTo_previousGroup"
+                android:id="@+id/menu_move_PreviousGroup"
+                android:title="@string/menu_move_PreviousGroup"
                />
 
               <item
-                android:id="@+id/menu_moveTo_nextRevision"
-                android:title="@string/menu_moveTo_nextRevision"
+                android:id="@+id/menu_move_NextRevision"
+                android:title="@string/menu_move_NextRevision"
                />
 
               <item
-                android:id="@+id/menu_moveTo_previousRevision"
-                android:title="@string/menu_moveTo_previousRevision"
+                android:id="@+id/menu_move_PreviousRevision"
+                android:title="@string/menu_move_PreviousRevision"
                />
             </menu>
           </item>
 
           <item
-            android:id="@+id/menu_options_currentRevision"
-            android:title="@string/menu_options_currentRevision"
+            android:id="@+id/menu_revision_Submenu"
+            android:title="@string/menu_revision_Submenu"
             >
 
             <menu>
               <item
-                android:id="@+id/menu_currentRevision_showRevision"
-                android:title="@string/menu_currentRevision_showRevision"
+                android:id="@+id/menu_revision_ShowRevision"
+                android:title="@string/menu_revision_ShowRevision"
                />
 
               <item
-                android:id="@+id/menu_currentRevision_acceptRevision"
-                android:title="@string/menu_currentRevision_acceptRevision"
+                android:id="@+id/menu_revision_AcceptRevision"
+                android:title="@string/menu_revision_AcceptRevision"
                />
 
               <item
-                android:id="@+id/menu_currentRevision_rejectRevision"
-                android:title="@string/menu_currentRevision_rejectRevision"
+                android:id="@+id/menu_revision_RejectRevision"
+                android:title="@string/menu_revision_RejectRevision"
                />
             </menu>
           </item>
 
           <item
-            android:id="@+id/menu_options_markup"
-            android:title="@string/menu_options_markup"
+            android:id="@+id/menu_markup_Submenu"
+            android:title="@string/menu_markup_Submenu"
             >
 
             <menu>
               <item
-                android:id="@+id/menu_markup_allMarkup"
-                android:title="@string/menu_markup_allMarkup"
+                android:id="@+id/menu_markup_AllMarkup"
+                android:title="@string/menu_markup_AllMarkup"
                />
 
               <item
-                android:id="@+id/menu_markup_noMarkup"
-                android:title="@string/menu_markup_noMarkup"
+                android:id="@+id/menu_markup_NoMarkup"
+                android:title="@string/menu_markup_NoMarkup"
                />
             </menu>
           </item>
 
           <item
-            android:id="@+id/menu_changes_acceptChanges"
-            android:title="@string/menu_changes_acceptChanges"
+            android:id="@+id/menu_changes_AcceptChanges"
+            android:title="@string/menu_changes_AcceptChanges"
            />
         </menu>
       </item>
 
       <item
-        android:id="@+id/menu_options_comments"
-        android:title="@string/menu_options_comments"
+        android:id="@+id/menu_comments_Submenu"
+        android:title="@string/menu_comments_Submenu"
         >
 
         <menu>
           <item
-            android:id="@+id/menu_comments_showComment"
-            android:title="@string/menu_comments_showComment"
+            android:id="@+id/menu_comments_ShowComment"
+            android:title="@string/menu_comments_ShowComment"
            />
 
           <item
-            android:id="@+id/menu_comments_nextComment"
-            android:title="@string/menu_comments_nextComment"
+            android:id="@+id/menu_comments_NextComment"
+            android:title="@string/menu_comments_NextComment"
            />
 
           <item
-            android:id="@+id/menu_comments_previousComment"
-            android:title="@string/menu_comments_previousComment"
+            android:id="@+id/menu_comments_PreviousComment"
+            android:title="@string/menu_comments_PreviousComment"
            />
 
           <item
-            android:id="@+id/menu_comments_newComment"
-            android:title="@string/menu_comments_newComment"
+            android:id="@+id/menu_comments_NewComment"
+            android:title="@string/menu_comments_NewComment"
            />
 
           <item
-            android:id="@+id/menu_comments_removeComment"
-            android:title="@string/menu_comments_removeComment"
+            android:id="@+id/menu_comments_RemoveComment"
+            android:title="@string/menu_comments_RemoveComment"
            />
         </menu>
       </item>
 
       <item
-        android:id="@+id/menu_review_summary"
-        android:title="@string/menu_review_summary"
+        android:id="@+id/menu_review_Summary"
+        android:title="@string/menu_review_Summary"
        />
     </menu>
   </item>
