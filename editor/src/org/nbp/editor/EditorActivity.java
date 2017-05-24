@@ -148,7 +148,6 @@ public class EditorActivity extends CommonActivity {
 
       if (handle != null) {
         path = handle.getNormalizedString();
-        saveRecentURI(path);
       } else {
         path = getString(R.string.hint_new_file);
       }
@@ -336,10 +335,9 @@ public class EditorActivity extends CommonActivity {
         if (content != null) {
           final int maximum = 150000;
           int length = content.length();
-
           if (maximum < length) content = content.subSequence(0, maximum);
-          setEditorContent(handle, content);
 
+          setEditorContent(handle, content);
           run(onLoaded);
         }
 
@@ -351,6 +349,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final boolean loadContent (ContentHandle handle) {
+    saveRecentURI(handle.getNormalizedString());
     return loadContent(handle, null);
   }
 

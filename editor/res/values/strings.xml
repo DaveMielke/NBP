@@ -7,9 +7,6 @@
   <string name="hint_new_file">[new file]</string>
   <string name="hint_edit_area">[empty file]</string>
 
-  <string name="value_boolean_true">Yes</string>
-  <string name="value_boolean_false">No</string>
-
   <string name="review_summary_revisionCount">Total Revisions</string>
   <string name="review_summary_insertionCount">Insert Revisions</string>
   <string name="review_summary_deletionCount">Delete Revisions</string>
