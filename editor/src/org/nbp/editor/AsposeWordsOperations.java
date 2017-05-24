@@ -329,6 +329,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
       Document document = new Document(stream, options);
       document.updateListLabels();
+      document.joinRunsWithSameFormatting();
 
       mapRevisions(document);
       addSection(content, document.getFirstSection());
@@ -573,6 +574,8 @@ public class AsposeWordsOperations extends ContentOperations {
     public DocumentWriter (OutputStream stream, CharSequence content) throws Exception {
       Spanned text = (content instanceof Spanned)? (Spanned)content: new SpannedString(content);
       new TextWriter(text);
+
+      document.joinRunsWithSameFormatting();
       document.save(stream, saveFormat);
     }
   }
