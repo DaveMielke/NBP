@@ -57,6 +57,7 @@ import android.text.SpannableStringBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.app.Dialog;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
@@ -529,6 +530,7 @@ public class EditorActivity extends CommonActivity {
     DialogFinisher finisher = new DialogFinisher() {
       @Override
       public void finishDialog (DialogHelper helper) {
+        final Dialog dialog = helper.getDialog();
         TableLayout table = (TableLayout)helper.findViewById(R.id.recent_table);
         int uriIndex = recentURIs.size();
 
@@ -545,6 +547,7 @@ public class EditorActivity extends CommonActivity {
               new Button.OnClickListener() {
                 @Override
                 public void onClick (View vie) {
+                  dialog.dismiss();
                   loadContent(new ContentHandle(file));
                 }
               }
@@ -555,6 +558,7 @@ public class EditorActivity extends CommonActivity {
               new Button.OnClickListener() {
                 @Override
                 public void onClick (View vie) {
+                  dialog.dismiss();
                 }
               }
             );
@@ -568,6 +572,7 @@ public class EditorActivity extends CommonActivity {
               new Button.OnClickListener() {
                 @Override
                 public void onClick (View view) {
+                  dialog.dismiss();
                   loadContent(new ContentHandle(uri, null, false));
                 }
               }
