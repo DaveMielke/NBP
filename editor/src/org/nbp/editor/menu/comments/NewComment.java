@@ -36,7 +36,7 @@ public class NewComment extends EditorAction {
 
             if (text.toString().trim().isEmpty()) return;
             comment = new CommentSpan(text);
-            comment.setReviewTimestamp(new Date());
+            comment.setReviewTime(new Date());
           }
 
           Editable text = editArea.getText();

@@ -11,7 +11,7 @@
     >
 
     <include layout="@layout/review_name" />
-    <include layout="@layout/review_timestamp" />
+    <include layout="@layout/review_time" />
 
     <TableRow>
       <TextView android:id="@+id/revision_type" android:focusable="true" />

@@ -12,7 +12,7 @@
 
     <include layout="@layout/review_name" />
     <include layout="@layout/review_initials" />
-    <include layout="@layout/review_timestamp" />
+    <include layout="@layout/review_time" />
     <TextView android:id="@+id/comment_text" android:focusable="true" />
   </TableLayout>
 </FrameLayout>

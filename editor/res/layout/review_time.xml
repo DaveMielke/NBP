@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android">
-  <TextView android:text="@string/review_timestamp" />
-  <TextView android:id="@+id/review_timestamp" />
+  <TextView android:text="@string/review_time" />
+  <TextView android:id="@+id/review_time" />
 </TableRow>

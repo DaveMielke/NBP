@@ -21,7 +21,7 @@ public abstract class ReviewSpan extends RegionSpan {
 
   private String reviewerName = null;
   private String reviewerInitials = null;
-  private Date reviewTimestamp = null;
+  private Date reviewTime = null;
 
   public final String getReviewerName () {
     return reviewerName;
@@ -39,16 +39,16 @@ public abstract class ReviewSpan extends RegionSpan {
     reviewerInitials = initials;
   }
 
-  public final Date getReviewTimestamp () {
-    return reviewTimestamp;
+  public final Date getReviewTime () {
+    return reviewTime;
   }
 
-  public final void setReviewTimestamp (Date timestamp) {
-    reviewTimestamp = timestamp;
+  public final void setReviewTime (Date time) {
+    reviewTime = time;
   }
 
-  public final void setReviewTimestamp () {
-    setReviewTimestamp(new Date());
+  public final void setReviewTime () {
+    setReviewTime(new Date());
   }
 
   @Override
@@ -63,8 +63,8 @@ public abstract class ReviewSpan extends RegionSpan {
     helper.setText(R.id.review_initials, getReviewerInitials());
 
     {
-      Date timestamp = getReviewTimestamp();
-      if (timestamp != null) helper.setText(R.id.review_timestamp, timestamp.toString());
+      Date time = getReviewTime();
+      if (time != null) helper.setText(R.id.review_time, time.toString());
     }
   }
 }

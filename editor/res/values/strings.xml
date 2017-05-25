@@ -15,7 +15,7 @@
 
   <string name="review_name">Reviewer</string>
   <string name="review_initials">Initials</string>
-  <string name="review_timestamp">Timestamp</string>
+  <string name="review_time">Time</string>
 
   <string name="revision_type_insert">Insert</string>
   <string name="revision_type_delete">Delete</string>

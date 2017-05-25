@@ -95,10 +95,10 @@ public abstract class Spans {
     return null;
   }
 
-  private final static Date newTimestamp (String string) {
-    Long timestamp = newLong(string, "timestamp");
-    if (timestamp == null) return null;
-    return new Date(timestamp);
+  private final static Date newTime (String string) {
+    Long time = newLong(string, "time");
+    if (time == null) return null;
+    return new Date(time);
   }
 
   private final static Editable newContent (String text, String spans) {
@@ -211,9 +211,9 @@ public abstract class Spans {
               return revision.getReviewerName();
 
             case 1: {
-              Date timestamp = revision.getReviewTimestamp();
-              if (timestamp == null) break;
-              return Long.toString(timestamp.getTime());
+              Date time = revision.getReviewTime();
+              if (time == null) break;
+              return Long.toString(time.getTime());
             }
           }
 
@@ -223,7 +223,7 @@ public abstract class Spans {
         @Override
         public final Object newSpan (String[] properties) {
           String name = properties[0];
-          Date timestamp = newTimestamp(properties[1]);
+          Date time = newTime(properties[1]);
 
           Constructor constructor = LanguageUtilities.getConstructor(getType());
           if (constructor == null) return null;
@@ -232,7 +232,7 @@ public abstract class Spans {
           if (revision == null) return null;
 
           if (name != null) revision.setReviewerName(name);
-          if (timestamp != null) revision.setReviewTimestamp(timestamp);
+          if (time != null) revision.setReviewTime(time);
           return revision;
         }
       }
@@ -284,7 +284,7 @@ public abstract class Spans {
               return comment.getReviewerInitials();
 
             case 4:
-              return Long.toString(comment.getReviewTimestamp().getTime());
+              return Long.toString(comment.getReviewTime().getTime());
           }
 
           return null;
@@ -297,7 +297,7 @@ public abstract class Spans {
 
           String name = properties[2];
           String initials = properties[3];
-          Date timestamp = newTimestamp(properties[4]);
+          Date time = newTime(properties[4]);
 
           Constructor constructor = LanguageUtilities.getConstructor(getType(), Editable.class);
           if (constructor == null) return null;
@@ -307,7 +307,7 @@ public abstract class Spans {
 
           if (name != null) comment.setReviewerName(name);
           if (initials != null) comment.setReviewerInitials(initials);
-          if (timestamp != null) comment.setReviewTimestamp(timestamp);
+          if (time != null) comment.setReviewTime(time);
           return comment;
         }
       }

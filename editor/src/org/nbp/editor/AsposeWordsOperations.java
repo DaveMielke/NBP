@@ -78,7 +78,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
         if (revision != null) {
           span.setReviewerName(revision.getAuthor());
-          span.setReviewTimestamp(revision.getDateTime());
+          span.setReviewTime(revision.getDateTime());
         }
       }
     }
@@ -307,7 +307,7 @@ public class AsposeWordsOperations extends ContentOperations {
       CommentSpan span = new CommentSpan(text);
       span.setReviewerName(comment.getAuthor());
       span.setReviewerInitials(comment.getInitial());
-      span.setReviewTimestamp(comment.getDateTime());
+      span.setReviewTime(comment.getDateTime());
 
       content.setSpan(
         span, startPosition, endPosition, 
@@ -361,7 +361,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
     private final void beginRevisionTracking (RevisionSpan span) {
       document.startTrackRevisions(
-        span.getReviewerName(), span.getReviewTimestamp()
+        span.getReviewerName(), span.getReviewTime()
       );
     }
 
@@ -477,8 +477,8 @@ public class AsposeWordsOperations extends ContentOperations {
         }
 
         {
-          Date timestamp = span.getReviewTimestamp();
-          if (timestamp != null) comment.setDateTime(timestamp);
+          Date time = span.getReviewTime();
+          if (time != null) comment.setDateTime(time);
         }
 
         return new SpanFinisher() {
