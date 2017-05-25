@@ -50,7 +50,6 @@ import android.widget.TableRow;
 import android.text.InputFilter;
 import android.text.Editable;
 
-import org.nbp.common.HighlightSpans;
 import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -503,17 +502,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_highlight (HighlightSpans.Entry spanEntry) {
-    int start = editArea.getSelectionStart();
-    int end = editArea.getSelectionEnd();
-
-    if (verifyTextRange(start, end)) {
-      Editable text = editArea.getText();
-      text.setSpan(spanEntry.newInstance(), start, end, text.SPAN_EXCLUSIVE_EXCLUSIVE);
-      editArea.setSelection(end);
-    }
-  }
-
   private void menuAction_nextGroup () {
     if (!editArea.moveToNextGroup()) {
       showMessage(R.string.message_no_next_group);
@@ -771,30 +759,6 @@ public class EditorActivity extends CommonActivity {
     }
 
     switch (identifier) {
-      case R.id.menu_highlight_Bold:
-        menuAction_highlight(HighlightSpans.BOLD);
-        return true;
-
-      case R.id.menu_highlight_Italics:
-        menuAction_highlight(HighlightSpans.ITALIC);
-        return true;
-
-      case R.id.menu_highlight_Strike:
-        menuAction_highlight(HighlightSpans.STRIKE);
-        return true;
-
-      case R.id.menu_highlight_Subscript:
-        menuAction_highlight(HighlightSpans.SUBSCRIPT);
-        return true;
-
-      case R.id.menu_highlight_Superscript:
-        menuAction_highlight(HighlightSpans.SUPERSCRIPT);
-        return true;
-
-      case R.id.menu_highlight_Underline:
-        menuAction_highlight(HighlightSpans.UNDERLINE);
-        return true;
-
       case R.id.menu_move_NextGroup:
         menuAction_nextGroup();
         return true;
