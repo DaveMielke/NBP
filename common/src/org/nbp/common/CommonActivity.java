@@ -45,19 +45,19 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return activity;
   }
 
-  protected final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
+  public final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
     for (View view : views) {
       group.addView(view, parameters);
     }
   }
 
-  protected final void addViews (ViewGroup group, View... views) {
+  public final void addViews (ViewGroup group, View... views) {
     for (View view : views) {
       group.addView(view);
     }
   }
 
-  protected ViewGroup newVerticalGroup (View... views) {
+  public ViewGroup newVerticalGroup (View... views) {
     LinearLayout group = new LinearLayout(this);
     group.setOrientation(group.VERTICAL);
 
@@ -70,7 +70,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return group;
   }
 
-  protected ViewGroup newHorizontalGroup (View... views) {
+  public ViewGroup newHorizontalGroup (View... views) {
     LinearLayout group = new LinearLayout(this);
     group.setOrientation(group.HORIZONTAL);
 
@@ -83,87 +83,87 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return group;
   }
 
-  protected ViewGroup newVerticalScrollContainer () {
+  public ViewGroup newVerticalScrollContainer () {
     ScrollView container = new ScrollView(this);
     return container;
   }
 
-  protected ViewGroup newVerticalScrollContainer (View content) {
+  public ViewGroup newVerticalScrollContainer (View content) {
     ViewGroup container = newVerticalScrollContainer();
     container.addView(content);
     return container;
   }
 
-  protected ViewGroup newHorizontalScrollContainer () {
+  public ViewGroup newHorizontalScrollContainer () {
     HorizontalScrollView container = new HorizontalScrollView(this);
     return container;
   }
 
-  protected ViewGroup newHorizontalScrollContainer (View content) {
+  public ViewGroup newHorizontalScrollContainer (View content) {
     ViewGroup container = newHorizontalScrollContainer();
     container.addView(content);
     return container;
   }
 
-  protected ViewGroup newTable (View... rows) {
+  public ViewGroup newTable (View... rows) {
     TableLayout table = new TableLayout(this);
     addViews(table, rows);
     return table;
   }
 
-  protected ViewGroup newTableRow (View... cells) {
+  public ViewGroup newTableRow (View... cells) {
     TableRow row = new TableRow(this);
     addViews(row, cells);
     return row;
   }
 
-  protected TextView newTextView () {
+  public TextView newTextView () {
     TextView view = new TextView(this);
     view.setFocusable(true);
     return view;
   }
 
-  protected TextView newTextView (CharSequence text) {
+  public TextView newTextView (CharSequence text) {
     TextView view = newTextView();
     view.setText(text);
     return view;
   }
 
-  protected TextView newTextView (int text) {
+  public TextView newTextView (int text) {
     TextView view = newTextView();
     view.setText(text);
     return view;
   }
 
-  protected Button newButton (CharSequence label, Button.OnClickListener listener) {
+  public Button newButton (CharSequence label, Button.OnClickListener listener) {
     Button button = new Button(this);
     button.setText(label);
     button.setOnClickListener(listener);
     return button;
   }
 
-  protected Button newButton (int label, Button.OnClickListener listener) {
+  public Button newButton (int label, Button.OnClickListener listener) {
     return newButton(getString(label), listener);
   }
 
-  protected CheckBox newCheckBox (CharSequence label, CheckBox.OnCheckedChangeListener listener) {
+  public CheckBox newCheckBox (CharSequence label, CheckBox.OnCheckedChangeListener listener) {
     CheckBox checkBox = new CheckBox(this);
     checkBox.setText(label);
     checkBox.setOnCheckedChangeListener(listener);
     return checkBox;
   }
 
-  protected CheckBox newCheckBox (int label, CheckBox.OnCheckedChangeListener listener) {
+  public CheckBox newCheckBox (int label, CheckBox.OnCheckedChangeListener listener) {
     return newCheckBox(getString(label), listener);
   }
 
-  protected Switch newSwitch (Switch.OnCheckedChangeListener listener) {
+  public Switch newSwitch (Switch.OnCheckedChangeListener listener) {
     Switch view = new Switch(this);
     view.setOnCheckedChangeListener(listener);
     return view;
   }
 
-  protected final ListView newListView (String[] values) {
+  public final ListView newListView (String[] values) {
     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
       this, android.R.layout.simple_list_item_1, android.R.id.text1, values
     );
@@ -173,13 +173,13 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return list;
   }
 
-  protected final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
+  public final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
     return new AlertDialogBuilder(this, subtitles)
               .setCancelable(false)
               ;
   }
 
-  protected final void showChooser (
+  public final void showChooser (
     int subtitle, CharSequence[] choices,
     DialogInterface.OnClickListener listener
   ) {
@@ -189,7 +189,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
       .show();
   }
 
-  protected final void showDialog (
+  public final void showDialog (
     int subtitle, int layout, DialogFinisher finisher,
     int action, DialogInterface.OnClickListener listener
   ) {
@@ -207,14 +207,14 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     if (finisher != null) finisher.finishDialog(new DialogHelper(dialog));
   }
 
-  protected final void showDialog (
+  public final void showDialog (
     int subtitle, int layout, int action,
     DialogInterface.OnClickListener listener
   ) {
     showDialog(subtitle, layout, null, action, listener);
   }
 
-  protected final void showDialog (
+  public final void showDialog (
     int subtitle, int layout, DialogFinisher finisher, boolean positive
   ) {
     showDialog(
@@ -223,13 +223,13 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     );
   }
 
-  protected final void showDialog (
+  public final void showDialog (
     int subtitle, int layout, DialogFinisher finisher
   ) {
     showDialog(subtitle, layout, finisher, true);
   }
 
-  protected final void showDialog (int subtitle, int layout) {
+  public final void showDialog (int subtitle, int layout) {
     showDialog(subtitle, layout, null);
   }
 
@@ -311,7 +311,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     if (runnable != null) runnable.run();
   }
 
-  protected final void showMessage (int message, String detail, final Runnable onCleared) {
+  public final void showMessage (int message, String detail, final Runnable onCleared) {
     if (isResumed) {
       AlertDialog dialog = new AlertDialog
         .Builder(this)
@@ -356,11 +356,11 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     }
   }
 
-  protected final void showMessage (int message, String detail) {
+  public final void showMessage (int message, String detail) {
     showMessage(message, detail, null);
   }
 
-  protected final void showMessage (int message) {
+  public final void showMessage (int message) {
     showMessage(message, null);
   }
 
@@ -384,7 +384,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     CommonUtilities.setWarningReporter(this);
   }
 
-  protected final void confirmAction (
+  public final void confirmAction (
     String question, String detail, final Runnable onConfirmed
   ) {
     new AlertDialog
@@ -406,7 +406,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
       .show();
   }
 
-  protected final void confirmAction (int question, String detail, Runnable onConfirmed) {
+  public final void confirmAction (int question, String detail, Runnable onConfirmed) {
     confirmAction(getString(question), detail, onConfirmed);
   }
 }

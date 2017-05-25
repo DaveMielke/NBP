@@ -25,7 +25,6 @@ import java.lang.reflect.Constructor;
 import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
 
-import org.nbp.common.OutgoingMessage;
 import android.net.Uri;
 
 import android.util.Log;
@@ -73,7 +72,7 @@ public class EditorActivity extends CommonActivity {
   private File filesDirectory;
   private SharedPreferences prefs;
 
-  private ArrayList<String> recentURIs = new ArrayList<String>();
+  public ArrayList<String> recentURIs = new ArrayList<String>();
   private final static String PREF_RECENT_URIS = "recent-URIs";
 
   private final void restoreRecentURIs () {
@@ -109,10 +108,18 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  public EditArea editArea = null;
+  private EditArea editArea = null;
   private TextView uriView = null;
   private ContentHandle contentHandle = null;
   private boolean hasChanged = false;
+
+  public final EditArea getEditArea () {
+    return editArea;
+  }
+
+  public final ContentHandle getContentHandle () {
+    return contentHandle;
+  }
 
   private final void showActivityResultCode (int code) {
   }
@@ -171,7 +178,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void setEditorContent () {
+  public void setEditorContent () {
     setEditorContent(null, "");
   }
 
@@ -269,11 +276,11 @@ public class EditorActivity extends CommonActivity {
     saveFile(file, null);
   }
 
-  private final void saveFile () {
+  public final void saveFile () {
     saveFile(null, null);
   }
 
-  private final void testHasChanged (final Runnable onSaved) {
+  public final void testHasChanged (final Runnable onSaved) {
     if (hasChanged) {
       OnDialogClickListener positiveListener = new OnDialogClickListener() {
         @Override
@@ -354,12 +361,12 @@ public class EditorActivity extends CommonActivity {
     return true;
   }
 
-  private final boolean loadContent (ContentHandle handle) {
+  public final boolean loadContent (ContentHandle handle) {
     saveRecentURI(handle.getNormalizedString());
     return loadContent(handle, null);
   }
 
-  private final boolean loadContent (File file) {
+  public final boolean loadContent (File file) {
     return loadContent(new ContentHandle(file));
   }
 
@@ -380,7 +387,7 @@ public class EditorActivity extends CommonActivity {
     builder.addRootLocation(FileSystems.makeLabel(name, location), location);
   }
 
-  private final void addRootLocations (FileFinder.Builder builder) {
+  public final void addRootLocations (FileFinder.Builder builder) {
     if (contentHandle != null) {
       File file = contentHandle.getFile();
 
@@ -402,7 +409,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final FileFinder.Builder newFileFinderBuilder (boolean forWriting) {
+  public final FileFinder.Builder newFileFinderBuilder (boolean forWriting) {
     int title = forWriting?
                 R.string.menu_file_SaveAs:
                 R.string.menu_file_Open;
@@ -414,7 +421,7 @@ public class EditorActivity extends CommonActivity {
           ;
   }
 
-  private final void findFile (
+  public final void findFile (
     boolean forWriting,
     String[] extensions,
     FileFinder.FileHandler handler
@@ -483,7 +490,7 @@ public class EditorActivity extends CommonActivity {
       .show();
   }
 
-  private final void confirmFormat () {
+  public final void confirmFormat () {
     File file = (contentHandle != null)? contentHandle.getFile(): null;
 
     if (file == null) {
@@ -525,166 +532,6 @@ public class EditorActivity extends CommonActivity {
         .setNegativeButton(R.string.action_cancel, null)
         .show();
     }
-  }
-
-  private void menuAction_new () {
-    testHasChanged(
-      new Runnable() {
-        @Override
-        public void run () {
-          setEditorContent();
-          checkpointFile();
-        }
-      }
-    );
-  }
-
-  private void menuAction_recent () {
-    DialogFinisher finisher = new DialogFinisher() {
-      @Override
-      public void finishDialog (DialogHelper helper) {
-        final Dialog dialog = helper.getDialog();
-        TableLayout table = (TableLayout)helper.findViewById(R.id.recent_table);
-        int uriIndex = recentURIs.size();
-
-        while (uriIndex > 0) {
-          final String uri = recentURIs.get(--uriIndex);
-          final View row;
-
-          if (uri.charAt(0) == File.separatorChar) {
-            final File file = new File(uri);
-            final File parent = file.getParentFile();
-
-            View name = newButton(
-              file.getName(),
-              new Button.OnClickListener() {
-                @Override
-                public void onClick (View vie) {
-                  dialog.dismiss();
-                  loadContent(file);
-                }
-              }
-            );
-
-            View folder = newButton(
-              parent.getAbsolutePath(),
-              new Button.OnClickListener() {
-                @Override
-                public void onClick (View vie) {
-                  dialog.dismiss();
-                  FileFinder.Builder builder = newFileFinderBuilder(false);
-                  builder.addRootLocation(parent);
-
-                  builder.find(
-                    new FileFinder.FileHandler() {
-                      @Override
-                      public void handleFile (File file) {
-                        if (file != null) loadContent(file);
-                      }
-                    }
-                  );
-                }
-              }
-            );
-
-            row = newTableRow(name, folder);
-          } else {
-            row = newButton(uri,
-              new Button.OnClickListener() {
-                @Override
-                public void onClick (View view) {
-                  dialog.dismiss();
-                  loadContent(new ContentHandle(uri));
-                }
-              }
-            );
-          }
-
-          table.addView(row);
-        }
-      }
-    };
-
-    showDialog(R.string.menu_file_Recent, R.layout.recent_list, finisher, false);
-  }
-
-  private void menuAction_open () {
-    testHasChanged(
-      new Runnable() {
-        @Override
-        public void run () {
-          findFile(false, null,
-            new FileFinder.FileHandler() {
-              @Override
-              public void handleFile (File file) {
-                if (file != null) {
-                  if (loadContent(file)) {
-                    checkpointFile();
-                  }
-                }
-              }
-            }
-          );
-        }
-      }
-    );
-  }
-
-  private void menuAction_save () {
-    if (contentHandle == null) {
-      menuAction_saveAs();
-    } else {
-      saveFile();
-    }
-  }
-
-  private void menuAction_saveAs () {
-    confirmFormat();
-  }
-
-  private void menuAction_send () {
-    if (contentHandle != null) {
-      OutgoingMessage message = new OutgoingMessage();
-      message.addAttachment(contentHandle.getUri());
-
-      if (message.send()) {
-      }
-    } else {
-      showMessage(R.string.message_send_new);
-    }
-  }
-
-  private void menuAction_delete () {
-    FileFinder.Builder builder = new FileFinder
-      .Builder(this)
-      .setUserTitle(R.string.menu_file_Delete)
-      ;
-
-    addRootLocations(builder);
-
-    builder.find(
-      new FileFinder.FileHandler() {
-        @Override
-        public void handleFile (final File file) {
-          if (file != null) {
-            final String path = file.getAbsolutePath();
-
-            confirmAction(
-              R.string.delete_question,
-              path,
-              new Runnable() {
-                @Override
-                public void run () {
-                  if (!file.delete()) {
-                    showMessage(R.string.delete_failed, path);
-                  }
-                }
-              }
-            );
-          }
-        }
-      }
-    );
   }
 
   private void menuAction_paste () {
@@ -1066,34 +913,6 @@ public class EditorActivity extends CommonActivity {
     }
 
     switch (identifier) {
-      case R.id.menu_file_New:
-        menuAction_new();
-        return true;
-
-      case R.id.menu_file_Recent:
-        menuAction_recent();
-        return true;
-
-      case R.id.menu_file_Open:
-        menuAction_open();
-        return true;
-
-      case R.id.menu_file_Save:
-        menuAction_save();
-        return true;
-
-      case R.id.menu_file_SaveAs:
-        menuAction_saveAs();
-        return true;
-
-      case R.id.menu_file_Send:
-        menuAction_send();
-        return true;
-
-      case R.id.menu_file_Delete:
-        menuAction_delete();
-        return true;
-
       case R.id.menu_edit_Paste:
         menuAction_paste();
         return true;
@@ -1257,7 +1076,7 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void checkpointFile () {
+  public final void checkpointFile () {
     synchronized (this) {
       String oldName = prefs.getString(PREF_CHECKPOINT_NAME, null);
       final String newName;
