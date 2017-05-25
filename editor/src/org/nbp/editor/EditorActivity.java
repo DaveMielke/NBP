@@ -546,7 +546,7 @@ public class EditorActivity extends CommonActivity {
 
     String name = getResources().getResourceEntryName(identifier);
     if (name == null) name = Integer.toString(identifier);
-    Log.w(LOG_TAG, ("unhandled action: " + name));
+    Log.w(LOG_TAG, ("unhandled menu action: " + name));
 
     return false;
   }
