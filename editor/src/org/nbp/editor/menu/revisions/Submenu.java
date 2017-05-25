@@ -1,6 +1,5 @@
-package org.nbp.editor.menu.markup;
-import org.nbp.editor.menu.*;;
-import org.nbp.editor.*;;
+package org.nbp.editor.menu.revision;
+import org.nbp.editor.*;
 
 import android.view.MenuItem;
 

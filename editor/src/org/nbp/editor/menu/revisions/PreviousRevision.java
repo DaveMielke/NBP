@@ -1,6 +1,5 @@
-package org.nbp.editor.menu.move;
-import org.nbp.editor.menu.*;;
-import org.nbp.editor.*;;
+package org.nbp.editor.menu.revisions;
+import org.nbp.editor.*;
 
 import android.view.MenuItem;
 

@@ -505,7 +505,7 @@ public class EditorActivity extends CommonActivity {
 
     if (revision != null) {
       showDialog(
-        R.string.menu_revision_ShowRevision, R.layout.revision_show, revision
+        R.string.menu_revisions_ShowRevision, R.layout.revision_show, revision
       );
     } else {
       showMessage(R.string.message_original_text);
@@ -517,7 +517,7 @@ public class EditorActivity extends CommonActivity {
 
     if (revision != null) {
       showDialog(
-        R.string.menu_revision_AcceptRevision, R.layout.revision_show,
+        R.string.menu_revisions_AcceptRevision, R.layout.revision_show,
         revision, R.string.action_accept,
         new DialogInterface.OnClickListener() {
           @Override
@@ -545,7 +545,7 @@ public class EditorActivity extends CommonActivity {
 
     if (revision != null) {
       showDialog(
-        R.string.menu_revision_RejectRevision, R.layout.revision_show,
+        R.string.menu_revisions_RejectRevision, R.layout.revision_show,
         revision, R.string.action_reject,
         new DialogInterface.OnClickListener() {
           @Override
@@ -652,27 +652,27 @@ public class EditorActivity extends CommonActivity {
     }
 
     switch (identifier) {
-      case R.id.menu_revision_ShowRevision:
+      case R.id.menu_revisions_ShowRevision:
         menuAction_showRevision();
         return true;
 
-      case R.id.menu_revision_AcceptRevision:
+      case R.id.menu_revisions_AcceptRevision:
         menuAction_acceptRevision();
         return true;
 
-      case R.id.menu_revision_RejectRevision:
+      case R.id.menu_revisions_RejectRevision:
         menuAction_rejectRevision();
         return true;
 
-      case R.id.menu_markup_AllMarkup:
+      case R.id.menu_changes_AllMarkup:
         menuAction_markChanges();
         return true;
 
-      case R.id.menu_markup_NoMarkup:
+      case R.id.menu_changes_NoMarkup:
         menuAction_previewChanges();
         return true;
 
-      case R.id.menu_changes_AcceptChanges:
+      case R.id.menu_review_AcceptChanges:
         menuAction_acceptChanges();
         return true;
 

@@ -31,24 +31,20 @@
 
   <string name="menu_review_Submenu">Review</string>
   <string name="menu_review_Summary">Summary</string>
+  <string name="menu_review_AcceptChanges">Accept Changes</string>
 
   <string name="menu_changes_Submenu">Changes</string>
-  <string name="menu_changes_AcceptChanges">Accept Changes</string>
+  <string name="menu_changes_NextGroup">Next Group</string>
+  <string name="menu_changes_PreviousGroup">Previous Group</string>
+  <string name="menu_changes_AllMarkup">All Markup</string>
+  <string name="menu_changes_NoMarkup">No Markup</string>
 
-  <string name="menu_move_Submenu">Move To</string>
-  <string name="menu_move_NextGroup">Next Group</string>
-  <string name="menu_move_PreviousGroup">Previous Group</string>
-  <string name="menu_move_NextRevision">Next Revision</string>
-  <string name="menu_move_PreviousRevision">Previous Revision</string>
-
-  <string name="menu_revision_Submenu">Current Revision</string>
-  <string name="menu_revision_ShowRevision">Show Revision</string>
-  <string name="menu_revision_AcceptRevision">Accept Revision</string>
-  <string name="menu_revision_RejectRevision">Reject Revision</string>
-
-  <string name="menu_markup_Submenu">Markup</string>
-  <string name="menu_markup_AllMarkup">All Markup</string>
-  <string name="menu_markup_NoMarkup">No Markup</string>
+  <string name="menu_revisions_Submenu">Revisions</string>
+  <string name="menu_revisions_ShowRevision">Show Revision</string>
+  <string name="menu_revisions_NextRevision">Next Revision</string>
+  <string name="menu_revisions_PreviousRevision">Previous Revision</string>
+  <string name="menu_revisions_AcceptRevision">Accept Revision</string>
+  <string name="menu_revisions_RejectRevision">Reject Revision</string>
 
   <string name="menu_comments_Submenu">Comments</string>
   <string name="menu_comments_ShowComment">Show Comment</string>

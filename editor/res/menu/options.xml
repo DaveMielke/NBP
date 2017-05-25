@@ -150,77 +150,56 @@
 
         <menu>
           <item
-            android:id="@+id/menu_move_Submenu"
-            android:title="@string/menu_move_Submenu"
-            >
-
-            <menu>
-              <item
-                android:id="@+id/menu_move_NextGroup"
-                android:title="@string/menu_move_NextGroup"
-               />
-
-              <item
-                android:id="@+id/menu_move_PreviousGroup"
-                android:title="@string/menu_move_PreviousGroup"
-               />
-
-              <item
-                android:id="@+id/menu_move_NextRevision"
-                android:title="@string/menu_move_NextRevision"
-               />
-
-              <item
-                android:id="@+id/menu_move_PreviousRevision"
-                android:title="@string/menu_move_PreviousRevision"
-               />
-            </menu>
-          </item>
+            android:id="@+id/menu_changes_NextGroup"
+            android:title="@string/menu_changes_NextGroup"
+           />
 
           <item
-            android:id="@+id/menu_revision_Submenu"
-            android:title="@string/menu_revision_Submenu"
-            >
-
-            <menu>
-              <item
-                android:id="@+id/menu_revision_ShowRevision"
-                android:title="@string/menu_revision_ShowRevision"
-               />
-
-              <item
-                android:id="@+id/menu_revision_AcceptRevision"
-                android:title="@string/menu_revision_AcceptRevision"
-               />
-
-              <item
-                android:id="@+id/menu_revision_RejectRevision"
-                android:title="@string/menu_revision_RejectRevision"
-               />
-            </menu>
-          </item>
+            android:id="@+id/menu_changes_PreviousGroup"
+            android:title="@string/menu_changes_PreviousGroup"
+           />
 
           <item
-            android:id="@+id/menu_markup_Submenu"
-            android:title="@string/menu_markup_Submenu"
-            >
-
-            <menu>
-              <item
-                android:id="@+id/menu_markup_AllMarkup"
-                android:title="@string/menu_markup_AllMarkup"
-               />
-
-              <item
-                android:id="@+id/menu_markup_NoMarkup"
-                android:title="@string/menu_markup_NoMarkup"
-               />
-            </menu>
-          </item>
+            android:id="@+id/menu_changes_AllMarkup"
+            android:title="@string/menu_changes_AllMarkup"
+           />
 
           <item
-            android:id="@+id/menu_changes_AcceptChanges"
-            android:title="@string/menu_changes_AcceptChanges"
+            android:id="@+id/menu_changes_NoMarkup"
+            android:title="@string/menu_changes_NoMarkup"
+           />
+        </menu>
+      </item>
+
+      <item
+        android:id="@+id/menu_revisions_Submenu"
+        android:title="@string/menu_revisions_Submenu"
+        >
+
+        <menu>
+          <item
+            android:id="@+id/menu_revisions_ShowRevision"
+            android:title="@string/menu_revisions_ShowRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_NextRevision"
+            android:title="@string/menu_revisions_NextRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_PreviousRevision"
+            android:title="@string/menu_revisions_PreviousRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_AcceptRevision"
+            android:title="@string/menu_revisions_AcceptRevision"
+           />
+
+          <item
+            android:id="@+id/menu_revisions_RejectRevision"
+            android:title="@string/menu_revisions_RejectRevision"
            />
         </menu>
       </item>
@@ -261,6 +240,11 @@
       <item
         android:id="@+id/menu_review_Summary"
         android:title="@string/menu_review_Summary"
+       />
+
+      <item
+        android:id="@+id/menu_review_AcceptChanges"
+        android:title="@string/menu_review_AcceptChanges"
        />
     </menu>
   </item>

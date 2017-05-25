@@ -1,6 +1,5 @@
 package org.nbp.editor.menu.file;
-import org.nbp.editor.menu.*;;
-import org.nbp.editor.*;;
+import org.nbp.editor.*;
 
 import android.view.MenuItem;
 import org.nbp.common.FileFinder;
