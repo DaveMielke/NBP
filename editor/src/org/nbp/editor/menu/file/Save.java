@@ -10,7 +10,7 @@ public class Save extends SaveAs {
 
   @Override
   public void performAction (EditorActivity editor, MenuItem item) {
-    if (editor.getContentHandle() == null) {
+    if (editor.getEditArea().getContentHandle() == null) {
       super.performAction(editor, item);
     } else {
       editor.saveFile();

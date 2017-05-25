@@ -13,7 +13,7 @@ public class Summary extends EditorAction {
     EditArea editArea = editor.getEditArea();
     ReviewSummary summary = new ReviewSummary(editArea.getText());
 
-    ContentHandle contentHandle = editor.getContentHandle();
+    ContentHandle contentHandle = editArea.getContentHandle();
     summary.setContentURI(contentHandle.getNormalizedString());
 
     editor.showDialog(

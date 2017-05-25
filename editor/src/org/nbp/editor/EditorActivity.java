@@ -104,14 +104,9 @@ public class EditorActivity extends CommonActivity {
 
   private EditArea editArea = null;
   private TextView uriView = null;
-  private ContentHandle contentHandle = null;
 
   public final EditArea getEditArea () {
     return editArea;
-  }
-
-  public final ContentHandle getContentHandle () {
-    return contentHandle;
   }
 
   private final void showActivityResultCode (int code) {
@@ -131,7 +126,7 @@ public class EditorActivity extends CommonActivity {
         path = getString(R.string.hint_new_file);
       }
 
-      contentHandle = handle;
+      editArea.setContentHandle(handle);
       uriView.setText(path);
     }
   }
@@ -201,14 +196,15 @@ public class EditorActivity extends CommonActivity {
 
     synchronized (this) {
       if (file == null) {
+        ContentHandle handle = editArea.getContentHandle();
         String detail;
 
-        if (contentHandle == null) {
+        if (handle == null) {
           detail = ApplicationContext.getString(R.string.hint_new_file);
-        } else if ((file = contentHandle.getFile()) != null) {
+        } else if ((file = handle.getFile()) != null) {
           detail = null;
         } else {
-          String name = contentHandle.getProvidedName();
+          String name = handle.getProvidedName();
 
           if (name != null) {
             File directory = getDocumentsDirectory();
@@ -218,7 +214,7 @@ public class EditorActivity extends CommonActivity {
             }
           }
 
-          detail = (file != null)? null: contentHandle.getNormalizedString();
+          detail = (file != null)? null: handle.getNormalizedString();
         }
 
         if (detail != null) {
@@ -251,7 +247,7 @@ public class EditorActivity extends CommonActivity {
       OnDialogClickListener positiveListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
-          if (contentHandle != null) {
+          if (editArea.getContentHandle() != null) {
             saveFile(onSaved);
           } else {
             findFile(true, null,
@@ -354,11 +350,15 @@ public class EditorActivity extends CommonActivity {
   }
 
   public final void addRootLocations (FileFinder.Builder builder) {
-    if (contentHandle != null) {
-      File file = contentHandle.getFile();
+    {
+      ContentHandle content = editArea.getContentHandle();
 
-      if (file != null) {
-        addRootLocation(builder, "current", file.getParentFile());
+      if (content != null) {
+        File file = content.getFile();
+
+        if (file != null) {
+          addRootLocation(builder, "current", file.getParentFile());
+        }
       }
     }
 
@@ -400,9 +400,13 @@ public class EditorActivity extends CommonActivity {
       }
     }
 
-    if (contentHandle != null) {
-      File file = contentHandle.getFile();
-      if (file != null) builder.setFileName(file.getName());
+    {
+      ContentHandle handle = editArea.getContentHandle();
+
+      if (handle != null) {
+        File file = handle.getFile();
+        if (file != null) builder.setFileName(file.getName());
+      }
     }
 
     addRootLocations(builder);
@@ -457,7 +461,8 @@ public class EditorActivity extends CommonActivity {
   }
 
   public final void confirmFormat () {
-    File file = (contentHandle != null)? contentHandle.getFile(): null;
+    ContentHandle handle = editArea.getContentHandle();
+    File file = (handle != null)? handle.getFile(): null;
 
     if (file == null) {
       selectFormat();
@@ -600,7 +605,7 @@ public class EditorActivity extends CommonActivity {
 
       final File oldFile = (oldName != null)? new File(filesDirectory, oldName): null;
       final File newFile = new File(filesDirectory, newName);
-      final ContentHandle handle = contentHandle;
+      final ContentHandle handle = editArea.getContentHandle();
 
       final Editable content = new SpannableStringBuilder(editArea.getText());
       Markup.restoreRevisions(content);

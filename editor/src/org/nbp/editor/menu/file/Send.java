@@ -11,9 +11,11 @@ public class Send extends EditorAction {
 
   @Override
   public void performAction (EditorActivity editor, MenuItem item) {
-    if (editor.getContentHandle() != null) {
+    ContentHandle contentHandle = editor.getEditArea().getContentHandle();
+
+    if (contentHandle != null) {
       OutgoingMessage message = new OutgoingMessage();
-      message.addAttachment(editor.getContentHandle().getUri());
+      message.addAttachment(contentHandle.getUri());
 
       if (message.send()) {
       }
