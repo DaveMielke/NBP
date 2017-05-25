@@ -98,7 +98,7 @@ public abstract class EditorSpan implements DialogFinisher {
     }
   }
 
-  protected void finishSpan (Editable content) {
+  public void finishSpan (Editable content) {
   }
 
   public final static void finishSpans (Editable content) {

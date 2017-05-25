@@ -1,7 +1,6 @@
 package org.nbp.editor;
 
 import java.io.File;
-import java.util.Date;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -106,7 +105,6 @@ public class EditorActivity extends CommonActivity {
   private EditArea editArea = null;
   private TextView uriView = null;
   private ContentHandle contentHandle = null;
-  private boolean hasChanged = false;
 
   public final EditArea getEditArea () {
     return editArea;
@@ -142,7 +140,7 @@ public class EditorActivity extends CommonActivity {
     synchronized (this) {
       setEditorContent(handle);
       editArea.setText(content);
-      hasChanged = false;
+      editArea.setHasChanged(false);
     }
   }
 
@@ -150,7 +148,7 @@ public class EditorActivity extends CommonActivity {
     setEditorContent(null, "");
   }
 
-  private final void runProtectedOperation (Runnable operation) {
+  public final void runProtectedOperation (Runnable operation) {
     boolean wasEnforced = editArea.getEnforceTextProtection();
     editArea.setEnforceTextProtection(false);
 
@@ -230,7 +228,7 @@ public class EditorActivity extends CommonActivity {
       }
 
       content = editArea.getText();
-      hasChanged = false;
+      editArea.setHasChanged(false);
     }
 
     saveFile(file, content, true, onSaved);
@@ -249,7 +247,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   public final void testHasChanged (final Runnable onSaved) {
-    if (hasChanged) {
+    if (editArea.getHasChanged()) {
       OnDialogClickListener positiveListener = new OnDialogClickListener() {
         @Override
         public void onClick () {
@@ -502,30 +500,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_nextGroup () {
-    if (!editArea.moveToNextGroup()) {
-      showMessage(R.string.message_no_next_group);
-    }
-  }
-
-  private void menuAction_previousGroup () {
-    if (!editArea.moveToPreviousGroup()) {
-      showMessage(R.string.message_no_previous_group);
-    }
-  }
-
-  private void menuAction_nextRevision () {
-    if (!editArea.moveToNextRevision()) {
-      showMessage(R.string.message_no_next_revision);
-    }
-  }
-
-  private void menuAction_previousRevision () {
-    if (!editArea.moveToPreviousRevision()) {
-      showMessage(R.string.message_no_previous_revision);
-    }
-  }
-
   private void menuAction_showRevision () {
     RevisionSpan revision = editArea.getRevisionSpan();
 
@@ -554,7 +528,7 @@ public class EditorActivity extends CommonActivity {
                 public void run () {
                   int position = Markup.acceptRevision(editArea.getText(), revision);
                   editArea.setSelection(position);
-                  hasChanged = true;
+                  editArea.setHasChanged(true);
                 }
               }
             );
@@ -582,7 +556,7 @@ public class EditorActivity extends CommonActivity {
                 public void run () {
                   int position = Markup.rejectRevision(editArea.getText(), revision);
                   editArea.setSelection(position);
-                  hasChanged = true;
+                  editArea.setHasChanged(true);
                 }
               }
             );
@@ -621,93 +595,12 @@ public class EditorActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          if (Markup.acceptRevisions(editArea.getText())) hasChanged = true;
+          if (Markup.acceptRevisions(editArea.getText())) {
+            editArea.setHasChanged(true);
+          }
         }
       }
     );
-  }
-
-  private void menuAction_showComment () {
-    CommentSpan comment = editArea.getCommentSpan();
-
-    if (comment != null) {
-      showDialog(
-        R.string.menu_comments_ShowComment, R.layout.comment_show, comment
-      );
-    } else {
-      showMessage(R.string.message_uncommented_text);
-    }
-  }
-
-  private void menuAction_nextComment () {
-    if (!editArea.moveToNextComment()) {
-      showMessage(R.string.message_no_next_comment);
-    }
-  }
-
-  private void menuAction_previousComment () {
-    if (!editArea.moveToPreviousComment()) {
-      showMessage(R.string.message_no_previous_comment);
-    }
-  }
-
-  private void menuAction_newComment () {
-    showDialog(
-      R.string.menu_comments_NewComment,
-      R.layout.comment_new, R.string.action_add,
-      new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick (DialogInterface dialog, int button) {
-          CommentSpan comment;
-
-          {
-            EditText view = (EditText)CommonUtilities.findView(dialog, R.id.comment_text);
-            Editable text = view.getText();
-
-            if (text.toString().trim().isEmpty()) return;
-            comment = new CommentSpan(text);
-            comment.setReviewTimestamp(new Date());
-          }
-
-          Editable text = editArea.getText();
-          int start = editArea.getSelectionStart();
-          int end = editArea.getSelectionEnd();
-
-          text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
-          comment.finishSpan(text);
-          editArea.setSelection(comment);
-          hasChanged = true;
-        }
-      }
-    );
-  }
-
-  private void menuAction_removeComment () {
-    final CommentSpan comment = editArea.getCommentSpan();
-
-    if (comment != null) {
-      showDialog(
-        R.string.menu_comments_RemoveComment, R.layout.comment_show,
-        comment, R.string.action_remove,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int button) {
-            runProtectedOperation(
-              new Runnable() {
-                @Override
-                public void run () {
-                  int position = comment.removeSpan(editArea.getText());
-                  editArea.setSelection(position);
-                  hasChanged = true;
-                }
-              }
-            );
-          }
-        }
-      );
-    } else {
-      showMessage(R.string.message_uncommented_text);
-    }
   }
 
   private void menuAction_summary () {
@@ -759,22 +652,6 @@ public class EditorActivity extends CommonActivity {
     }
 
     switch (identifier) {
-      case R.id.menu_move_NextGroup:
-        menuAction_nextGroup();
-        return true;
-
-      case R.id.menu_move_PreviousGroup:
-        menuAction_previousGroup();
-        return true;
-
-      case R.id.menu_move_NextRevision:
-        menuAction_nextRevision();
-        return true;
-
-      case R.id.menu_move_PreviousRevision:
-        menuAction_previousRevision();
-        return true;
-
       case R.id.menu_revision_ShowRevision:
         menuAction_showRevision();
         return true;
@@ -797,26 +674,6 @@ public class EditorActivity extends CommonActivity {
 
       case R.id.menu_changes_AcceptChanges:
         menuAction_acceptChanges();
-        return true;
-
-      case R.id.menu_comments_ShowComment:
-        menuAction_showComment();
-        return true;
-
-      case R.id.menu_comments_NextComment:
-        menuAction_nextComment();
-        return true;
-
-      case R.id.menu_comments_PreviousComment:
-        menuAction_previousComment();
-        return true;
-
-      case R.id.menu_comments_NewComment:
-        menuAction_newComment();
-        return true;
-
-      case R.id.menu_comments_RemoveComment:
-        menuAction_removeComment();
         return true;
 
       case R.id.menu_review_Summary:
@@ -983,7 +840,7 @@ public class EditorActivity extends CommonActivity {
           return dst.subSequence(dstStart, dstEnd);
         }
 
-        hasChanged = true;
+        editArea.setHasChanged(true);
         return null;
       }
     };

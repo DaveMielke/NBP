@@ -29,7 +29,7 @@ public class CommentSpan extends ReviewSpan {
   }
 
   @Override
-  protected void finishSpan (Editable content) {
+  public void finishSpan (Editable content) {
     super.finishSpan(content);
     finishSpans(getCommentText());
   }

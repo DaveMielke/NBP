@@ -13,7 +13,20 @@ public class EditArea extends EditText {
     super(context, attributes);
   }
 
+  private boolean hasChanged = false;
   private boolean enforceTextProtection = true;
+
+  public final boolean getHasChanged () {
+    return hasChanged;
+  }
+
+  public final void setHasChanged (boolean yes) {
+    hasChanged = yes;
+  }
+
+  public final void setHasChanged () {
+    setHasChanged(true);
+  }
 
   public final boolean getEnforceTextProtection () {
     return enforceTextProtection;

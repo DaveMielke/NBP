@@ -78,7 +78,7 @@ public abstract class RegionSpan extends EditorSpan {
   };
 
   @Override
-  protected void finishSpan (Editable content) {
+  public void finishSpan (Editable content) {
     super.finishSpan(content);
 
     int spanStart = content.getSpanStart(this);
