@@ -15,7 +15,7 @@ public class Submenu extends EditorAction {
     boolean showSelectionActions = false;
     boolean showCursorActions = false;
 
-    if (editor.editArea.hasSelection()) {
+    if (editor.getEditArea().hasSelection()) {
       showSelectionActions = true;
     } else {
       showCursorActions = true;

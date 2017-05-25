@@ -17,7 +17,6 @@ import org.nbp.common.CommonUtilities;
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
-import org.nbp.common.SpeechToText;
 
 import org.nbp.common.LanguageUtilities;
 import java.lang.reflect.Constructor;
@@ -32,9 +31,6 @@ import android.util.Log;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.Intent;
-
-import android.content.ClipboardManager;
-import android.content.ClipData;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -122,33 +118,6 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void showActivityResultCode (int code) {
-  }
-
-  private final ClipboardManager getClipboard () {
-    return (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-  }
-
-  public static CharSequence getText (ClipData clip) {
-    int count = clip.getItemCount();
-
-    for (int index=0; index<count; index+=1) {
-      ClipData.Item item = clip.getItemAt(index);
-      if (item == null) continue;
-
-      CharSequence text = item.getText();
-      if (text != null) return text;
-    }
-
-    return null;
-  }
-
-  private static CharSequence getText (ClipboardManager clipboard) {
-    synchronized (clipboard) {
-      ClipData clip = clipboard.getPrimaryClip();
-      if (clip != null) return getText(clip);
-    }
-
-    return null;
   }
 
   private final boolean verifyTextRange (int start, int end) {
@@ -534,117 +503,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_paste () {
-    CharSequence text = getText(getClipboard());
-
-    if (text != null) {
-      int start = editArea.getSelectionStart();
-      int end = editArea.getSelectionEnd();
-
-      if (verifyTextRange(start, end)) {
-        editArea.getText().replace(start, end, text);
-        editArea.setSelection(start + text.length());
-      }
-    }
-  }
-
-  private final void verifyRecording (final String text) {
-    if (!text.isEmpty()) {
-      DialogFinisher finisher = new DialogFinisher() {
-        @Override
-        public void finishDialog (DialogHelper helper) {
-          helper.setText(R.id.record_text, text);
-        }
-      };
-
-      DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick (DialogInterface dialog, int button) {
-          EditText view = (EditText)CommonUtilities.findView(dialog, R.id.record_text);
-          editArea.replaceSelection(view.getText());
-        }
-      };
-
-      showDialog(
-        R.string.menu_edit_Record, R.layout.record_verify,
-        finisher, R.string.action_accept, listener
-      );
-    }
-  }
-
-  private final void verifyRecording (final String[] choices) {
-    int count = choices.length;
-
-    if (count != 0) {
-      if (count == 1) {
-        verifyRecording(choices[0]);
-      } else {
-        showChooser(
-          R.string.menu_edit_Record, choices,
-          new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialog, int item) {
-              verifyRecording(choices[item]);
-            }
-          }
-        );
-      }
-    }
-  }
-
-  private void menuAction_record () {
-    if (editArea.containsProtectedText()) {
-      showMessage(R.string.message_protected_text);
-    } else {
-      SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
-        @Override
-        public void handleText (String[] choices) {
-          verifyRecording(choices);
-        }
-      };
-
-      new SpeechToText.Builder(this)
-                      .start(handler);
-    }
-  }
-
-  private void menuAction_copy (boolean delete) {
-    int start = editArea.getSelectionStart();
-    int end = editArea.getSelectionEnd();
-
-    if (verifyTextRange(start, end)) {
-      Editable text = editArea.getText();
-      ClipData clip = ClipData.newPlainText("NBP Editor", text.subSequence(start, end));
-      getClipboard().setPrimaryClip(clip);
-
-      if (delete) {
-        text.delete(start, end);
-      } else {
-        editArea.setSelection(end);
-      }
-    }
-  }
-
-  private void menuAction_uppercase () {
-    int start = editArea.getSelectionStart();
-    int end = editArea.getSelectionEnd();
-
-    if (verifyTextRange(start, end)) {
-      Editable text = editArea.getText();
-      text.replace(start, end, text.subSequence(start, end).toString().toUpperCase());
-    }
-  }
-
-  private void menuAction_lowercase () {
-    int start = editArea.getSelectionStart();
-    int end = editArea.getSelectionEnd();
-
-    if (verifyTextRange(start, end)) {
-      Editable text = editArea.getText();
-      text.replace(start, end, text.subSequence(start, end).toString().toLowerCase());
-    }
-  }
-
   private void menuAction_highlight (HighlightSpans.Entry spanEntry) {
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
@@ -913,34 +771,6 @@ public class EditorActivity extends CommonActivity {
     }
 
     switch (identifier) {
-      case R.id.menu_edit_Paste:
-        menuAction_paste();
-        return true;
-
-      case R.id.menu_edit_Record:
-        menuAction_record();
-        return true;
-
-      case R.id.menu_selection_SelectAll:
-        editArea.selectAll();
-        return true;
-
-      case R.id.menu_selection_Copy:
-        menuAction_copy(false);
-        return true;
-
-      case R.id.menu_selection_Cut:
-        menuAction_copy(true);
-        return true;
-
-      case R.id.menu_selection_Uppercase:
-        menuAction_uppercase();
-        return true;
-
-      case R.id.menu_selection_Lowercase:
-        menuAction_lowercase();
-        return true;
-
       case R.id.menu_highlight_Bold:
         menuAction_highlight(HighlightSpans.BOLD);
         return true;
