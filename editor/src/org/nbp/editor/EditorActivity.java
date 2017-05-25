@@ -500,118 +500,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void menuAction_showRevision () {
-    RevisionSpan revision = editArea.getRevisionSpan();
-
-    if (revision != null) {
-      showDialog(
-        R.string.menu_revisions_ShowRevision, R.layout.revision_show, revision
-      );
-    } else {
-      showMessage(R.string.message_original_text);
-    }
-  }
-
-  private void menuAction_acceptRevision () {
-    final RevisionSpan revision = editArea.getRevisionSpan();
-
-    if (revision != null) {
-      showDialog(
-        R.string.menu_revisions_AcceptRevision, R.layout.revision_show,
-        revision, R.string.action_accept,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int button) {
-            runProtectedOperation(
-              new Runnable() {
-                @Override
-                public void run () {
-                  int position = Markup.acceptRevision(editArea.getText(), revision);
-                  editArea.setSelection(position);
-                  editArea.setHasChanged(true);
-                }
-              }
-            );
-          }
-        }
-      );
-    } else {
-      showMessage(R.string.message_original_text);
-    }
-  }
-
-  private void menuAction_rejectRevision () {
-    final RevisionSpan revision = editArea.getRevisionSpan();
-
-    if (revision != null) {
-      showDialog(
-        R.string.menu_revisions_RejectRevision, R.layout.revision_show,
-        revision, R.string.action_reject,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int button) {
-            runProtectedOperation(
-              new Runnable() {
-                @Override
-                public void run () {
-                  int position = Markup.rejectRevision(editArea.getText(), revision);
-                  editArea.setSelection(position);
-                  editArea.setHasChanged(true);
-                }
-              }
-            );
-          }
-        }
-      );
-    } else {
-      showMessage(R.string.message_original_text);
-    }
-  }
-
-  private void menuAction_markChanges () {
-    runProtectedOperation(
-      new Runnable() {
-        @Override
-        public void run () {
-          Markup.restoreRevisions(editArea.getText());
-        }
-      }
-    );
-  }
-
-  private void menuAction_previewChanges () {
-    runProtectedOperation(
-      new Runnable() {
-        @Override
-        public void run () {
-          Markup.previewRevisions(editArea.getText());
-        }
-      }
-    );
-  }
-
-  private void menuAction_acceptChanges () {
-    runProtectedOperation(
-      new Runnable() {
-        @Override
-        public void run () {
-          if (Markup.acceptRevisions(editArea.getText())) {
-            editArea.setHasChanged(true);
-          }
-        }
-      }
-    );
-  }
-
-  private void menuAction_summary () {
-    ReviewSummary summary = new ReviewSummary(editArea.getText());
-    summary.setContentURI(uriView.getText());
-
-    showDialog(
-      R.string.menu_review_Summary, R.layout.review_summary, summary
-    );
-  }
-
   private final Map<Integer, EditorAction> editorActions =
         new HashMap<Integer, EditorAction>();
 
@@ -651,41 +539,9 @@ public class EditorActivity extends CommonActivity {
       return true;
     }
 
-    switch (identifier) {
-      case R.id.menu_revisions_ShowRevision:
-        menuAction_showRevision();
-        return true;
-
-      case R.id.menu_revisions_AcceptRevision:
-        menuAction_acceptRevision();
-        return true;
-
-      case R.id.menu_revisions_RejectRevision:
-        menuAction_rejectRevision();
-        return true;
-
-      case R.id.menu_changes_AllMarkup:
-        menuAction_markChanges();
-        return true;
-
-      case R.id.menu_changes_NoMarkup:
-        menuAction_previewChanges();
-        return true;
-
-      case R.id.menu_review_AcceptChanges:
-        menuAction_acceptChanges();
-        return true;
-
-      case R.id.menu_review_Summary:
-        menuAction_summary();
-        return true;
-    }
-
-    if (ApplicationParameters.LOG_UNHANDLED_ACTIONS) {
-      String name = getResources().getResourceEntryName(identifier);
-      if (name == null) name = Integer.toString(identifier);
-      Log.w(LOG_TAG, ("unhandled action: " + name));
-    }
+    String name = getResources().getResourceEntryName(identifier);
+    if (name == null) name = Integer.toString(identifier);
+    Log.w(LOG_TAG, ("unhandled action: " + name));
 
     return false;
   }

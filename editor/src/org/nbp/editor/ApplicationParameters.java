@@ -17,7 +17,6 @@ public abstract class ApplicationParameters {
   };
 
   public final static String STRING_ENCODING = "UTF8";
-  public final static boolean LOG_UNHANDLED_ACTIONS = true;
   public final static int RECENT_URI_LIMIT = 10;
   public final static long REVISION_JOIN_MILLISECONDS = 600000;
 
