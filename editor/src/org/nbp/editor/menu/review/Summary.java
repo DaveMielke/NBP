@@ -13,8 +13,17 @@ public class Summary extends EditorAction {
     EditArea editArea = editor.getEditArea();
     ReviewSummary summary = new ReviewSummary(editArea.getText());
 
-    ContentHandle contentHandle = editArea.getContentHandle();
-    summary.setContentURI(contentHandle.getNormalizedString());
+    {
+      String uri = null;
+      ContentHandle handle = editArea.getContentHandle();
+
+      if (handle != null) {
+        uri = handle.getNormalizedString();
+      }
+
+      if (uri == null) uri = editor.getString(R.string.hint_new_file);
+      summary.setContentURI(uri);
+    }
 
     editor.showDialog(
       R.string.menu_review_Summary, R.layout.review_summary, summary

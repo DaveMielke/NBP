@@ -74,7 +74,8 @@ public class EditorActivity extends CommonActivity {
     if (uris != null) recentURIs.addAll(uris);
   }
 
-  private final void saveRecentURI (String uri) {
+  private final void saveRecentURI (ContentHandle handle) {
+    String uri = handle.getNormalizedString();
     recentURIs.remove(uri);
 
     while (recentURIs.size() >= ApplicationParameters.RECENT_URI_LIMIT) {
@@ -324,7 +325,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   public final boolean loadContent (ContentHandle handle) {
-    saveRecentURI(handle.getNormalizedString());
+    saveRecentURI(handle);
     return loadContent(handle, null);
   }
 
@@ -424,7 +425,9 @@ public class EditorActivity extends CommonActivity {
               new Runnable() {
                 @Override
                 public void run () {
-                  setEditorContent(new ContentHandle(file, null, true));
+                  ContentHandle handle = new ContentHandle(file);
+                  setEditorContent(handle);
+                  saveRecentURI(handle);
                 }
               }
             );
