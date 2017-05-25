@@ -311,6 +311,18 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     if (runnable != null) runnable.run();
   }
 
+  protected final void makeTitleFocusable (AlertDialog dialog) {
+    int identifier = CommonContext.getAndroidViewIdentifier("alertTitle");
+
+    if (identifier != 0) {
+      View view = dialog.findViewById(identifier);
+
+      if (view != null) {
+        view.setFocusable(true);
+      }
+    }
+  }
+
   public final void showMessage (int message, String detail, final Runnable onCleared) {
     if (isResumed) {
       AlertDialog dialog = new AlertDialog
@@ -328,20 +340,9 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
           }
         )
 
-        .create();
-      dialog.show();
+        .show();
 
-      {
-        int identifier = CommonContext.getAndroidViewIdentifier("alertTitle");
-
-        if (identifier != 0) {
-          View view = dialog.findViewById(identifier);
-
-          if (view != null) {
-            view.setFocusable(true);
-          }
-        }
-      }
+      makeTitleFocusable(dialog);
     } else {
       StringBuilder sb = new StringBuilder();
       if (message != 0) sb.append(getString(message));
@@ -387,13 +388,12 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
   public final void confirmAction (
     String question, String detail, final Runnable onConfirmed
   ) {
-    new AlertDialog
+    AlertDialog dialog = new AlertDialog
       .Builder(this)
       .setTitle(question)
       .setMessage(detail)
 
-      .setPositiveButton(
-        R.string.confirmAction_button_positive,
+      .setPositiveButton(android.R.string.yes,
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
@@ -402,8 +402,10 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
         }
       )
 
-      .setNegativeButton(R.string.confirmAction_button_negative, null)
+      .setNegativeButton(android.R.string.no, null)
       .show();
+
+    makeTitleFocusable(dialog);
   }
 
   public final void confirmAction (int question, String detail, Runnable onConfirmed) {

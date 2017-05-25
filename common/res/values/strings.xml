@@ -2,7 +2,4 @@
 
 <resources>
   <string name="app_name">NBP Common Object Library</string>
-
-  <string name="confirmAction_button_positive">Yes</string>
-  <string name="confirmAction_button_negative">No</string>
 </resources>
