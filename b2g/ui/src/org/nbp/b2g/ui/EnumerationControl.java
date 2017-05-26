@@ -1,5 +1,8 @@
 package org.nbp.b2g.ui;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import org.nbp.common.LanguageUtilities;
 
 import android.content.SharedPreferences;
@@ -35,10 +38,24 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueArray()[ordinal];
   }
 
+  private final Map<E, String> valueLabels =
+        new HashMap<E, String>();
+
   protected CharSequence getValueLabel (E value) {
-    String label = EnumerationLabels.getLabel(value);
+    String label = valueLabels.get(value);
     if (label != null) return label;
-    return value.name().replace('_', ' ').toLowerCase();
+
+    String resource = "enum_"
+                    + value.getClass().getSimpleName()
+                    + '_'
+                    + value.name()
+                    ;
+
+    label = ApplicationContext.getString(resource);
+    if (label == null) label = value.name().replace('_', ' ').toLowerCase();
+
+    valueLabels.put(value, label);
+    return label;
   }
 
   private CharSequence getValueLabel (int ordinal) {
