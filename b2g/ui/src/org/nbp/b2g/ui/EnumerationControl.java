@@ -1,8 +1,5 @@
 package org.nbp.b2g.ui;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import org.nbp.common.LanguageUtilities;
 
 import android.content.SharedPreferences;
@@ -38,24 +35,35 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueArray()[ordinal];
   }
 
-  private final Map<E, String> valueLabels =
-        new HashMap<E, String>();
+  private String[] labelArray = null;
+
+  private final String[] getLabelArray () {
+    synchronized (this) {
+      if (labelArray == null) labelArray = new String[getValueCount()];
+      return labelArray;
+    }
+  }
 
   protected CharSequence getValueLabel (E value) {
-    String label = valueLabels.get(value);
-    if (label != null) return label;
+    String labels[] = getLabelArray();
 
-    String resource = "enum_"
-                    + value.getClass().getSimpleName()
-                    + '_'
-                    + value.name()
-                    ;
+    synchronized (labels) {
+      int ordinal = value.ordinal();
 
-    label = ApplicationContext.getString(resource);
-    if (label == null) label = value.name().replace('_', ' ').toLowerCase();
+      String label = labels[ordinal];
+      if (label != null) return label;
 
-    valueLabels.put(value, label);
-    return label;
+      String resource = "enum_"
+                      + value.getClass().getSimpleName()
+                      + '_'
+                      + value.name()
+                      ;
+
+      label = ApplicationContext.getString(resource);
+      if (label == null) label = value.name().replace('_', ' ').toLowerCase();
+
+      return labelArray[ordinal] = label;
+    }
   }
 
   private CharSequence getValueLabel (int ordinal) {
