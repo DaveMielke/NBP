@@ -3,18 +3,18 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechPitchControl extends LogarithmicFloatControl {
   @Override
-  public int getLabel () {
+  protected int getResourceForLabel () {
     return R.string.control_label_SpeechPitch;
   }
 
   @Override
-  public CharSequence getNextLabel () {
-    return getString(R.string.control_next_SpeechPitch);
+  protected int getResourceForNext () {
+    return R.string.control_next_SpeechPitch;
   }
 
   @Override
-  public CharSequence getPreviousLabel () {
-    return getString(R.string.control_previous_SpeechPitch);
+  protected int getResourceForPrevious () {
+    return R.string.control_previous_SpeechPitch;
   }
 
   @Override

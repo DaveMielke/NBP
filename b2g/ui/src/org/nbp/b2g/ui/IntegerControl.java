@@ -38,13 +38,13 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
-  public CharSequence getNextLabel () {
-    return getString(R.string.control_next_numeric);
+  protected int getResourceForNext () {
+    return R.string.control_next_numeric;
   }
 
   @Override
-  public CharSequence getPreviousLabel () {
-    return getString(R.string.control_previous_numeric);
+  protected int getResourceForPrevious () {
+    return R.string.control_previous_numeric;
   }
 
   @Override

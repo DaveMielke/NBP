@@ -4,11 +4,12 @@ import java.util.Map;
 import java.util.HashMap;
 
 import android.util.Log;
-import android.content.DialogInterface;
-import android.app.AlertDialog;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import android.content.Intent;
+import android.content.ActivityNotFoundException;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +21,17 @@ import android.widget.HorizontalScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Switch;
 
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
-
-import android.content.Intent;
-import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.app.Dialog;
+import android.app.AlertDialog;
 
 public abstract class CommonActivity extends Activity implements ProblemReporter {
   private final static String LOG_TAG = CommonActivity.class.getName();
@@ -311,16 +313,18 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     if (runnable != null) runnable.run();
   }
 
-  protected final void makeTitleFocusable (AlertDialog dialog) {
-    int identifier = CommonContext.getAndroidViewIdentifier("alertTitle");
+  protected final void setViewFocusable (Dialog dialog, int identifier) {
+    View view = dialog.findViewById(identifier);
+    if (view != null) view.setFocusable(true);
+  }
 
-    if (identifier != 0) {
-      View view = dialog.findViewById(identifier);
+  protected final void setViewFocusable (Dialog dialog, String name) {
+    int identifier = CommonContext.getAndroidViewIdentifier(name);
+    if (identifier != 0) setViewFocusable(dialog, identifier);
+  }
 
-      if (view != null) {
-        view.setFocusable(true);
-      }
-    }
+  protected final void setTitleFocusable (AlertDialog dialog) {
+    setViewFocusable(dialog, "alertTitle");
   }
 
   public final void showMessage (int message, String detail, final Runnable onCleared) {
@@ -342,7 +346,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
 
         .show();
 
-      makeTitleFocusable(dialog);
+      setTitleFocusable(dialog);
     } else {
       StringBuilder sb = new StringBuilder();
       if (message != 0) sb.append(getString(message));
@@ -405,7 +409,7 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
       .setNegativeButton(android.R.string.no, null)
       .show();
 
-    makeTitleFocusable(dialog);
+    setTitleFocusable(dialog);
   }
 
   public final void confirmAction (int question, String detail, Runnable onConfirmed) {

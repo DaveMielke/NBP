@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class ShowHighlightedControl extends BooleanControl {
   @Override
-  public int getLabel () {
+  protected int getResourceForLabel () {
     return R.string.control_label_ShowHighlighted;
   }
 

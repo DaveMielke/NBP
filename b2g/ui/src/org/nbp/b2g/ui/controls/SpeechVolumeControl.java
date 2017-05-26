@@ -3,18 +3,18 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechVolumeControl extends LinearFloatControl {
   @Override
-  public int getLabel () {
+  protected int getResourceForLabel () {
     return R.string.control_label_SpeechVolume;
   }
 
   @Override
-  public CharSequence getNextLabel () {
-    return getString(R.string.control_next_SpeechVolume);
+  protected int getResourceForNext () {
+    return R.string.control_next_SpeechVolume;
   }
 
   @Override
-  public CharSequence getPreviousLabel () {
-    return getString(R.string.control_previous_SpeechVolume);
+  protected int getResourceForPrevious () {
+    return R.string.control_previous_SpeechVolume;
   }
 
   @Override

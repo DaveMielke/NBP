@@ -17,12 +17,12 @@ public abstract class Control {
     return controlGroup;
   }
 
+  protected abstract int getResourceForLabel ();
+  public abstract CharSequence getValue ();
+
   protected abstract boolean setNextValue ();
   protected abstract boolean setPreviousValue ();
   protected abstract boolean setDefaultValue ();
-
-  public abstract int getLabel ();
-  public abstract CharSequence getValue ();
 
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
@@ -31,12 +31,24 @@ public abstract class Control {
     return ApplicationContext.getString(resource);
   }
 
-  public CharSequence getNextLabel () {
-    return getString(R.string.control_next_default);
+  public final String getLabel () {
+    return getString(getResourceForLabel());
   }
 
-  public CharSequence getPreviousLabel () {
-    return getString(R.string.control_previous_default);
+  protected int getResourceForNext () {
+    return R.string.control_next_default;
+  }
+
+  public String getLabelForNext () {
+    return getString(getResourceForNext());
+  }
+
+  protected int getResourceForPrevious () {
+    return R.string.control_previous_default;
+  }
+
+  public String getLabelForPrevious () {
+    return getString(getResourceForPrevious());
   }
 
   protected String getPreferenceKey () {
@@ -75,7 +87,7 @@ public abstract class Control {
   }
 
   protected String getConfirmation () {
-    return getString(getLabel()) + " " + getValue();
+    return getLabel() + " " + getValue();
   }
 
   public final void confirmValue () {

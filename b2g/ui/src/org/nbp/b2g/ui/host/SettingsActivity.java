@@ -172,7 +172,7 @@ public class SettingsActivity extends CommonActivity {
 
   private View createPreviousValueButton (final Control control) {
     Button button = newButton(
-      control.getPreviousLabel(),
+      control.getLabelForPrevious(),
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -186,7 +186,7 @@ public class SettingsActivity extends CommonActivity {
 
   private View createNextValueButton (final Control control) {
     Button button = newButton(
-      control.getNextLabel(),
+      control.getLabelForNext(),
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
@@ -225,8 +225,8 @@ public class SettingsActivity extends CommonActivity {
       }
     );
 
-    view.setTextOff(control.getPreviousLabel());
-    view.setTextOn(control.getNextLabel());
+    view.setTextOff(control.getLabelForPrevious());
+    view.setTextOn(control.getLabelForNext());
     setChecked(view, control);
 
     addControlValueChangedListener(control,

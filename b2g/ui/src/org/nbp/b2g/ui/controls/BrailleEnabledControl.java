@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class BrailleEnabledControl extends BooleanControl {
   @Override
-  public int getLabel () {
+  protected int getResourceForLabel () {
     return R.string.control_label_BrailleEnabled;
   }
 

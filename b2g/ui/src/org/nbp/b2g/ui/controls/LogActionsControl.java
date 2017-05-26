@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class LogActionsControl extends BooleanControl {
   @Override
-  public int getLabel () {
+  protected int getResourceForLabel () {
     return R.string.control_label_LogActions;
   }
 

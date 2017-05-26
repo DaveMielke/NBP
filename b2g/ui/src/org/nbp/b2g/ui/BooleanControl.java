@@ -38,17 +38,17 @@ public abstract class BooleanControl extends Control {
 
   @Override
   public CharSequence getValue () {
-    return getBooleanValue()? getNextLabel(): getPreviousLabel();
+    return getBooleanValue()? getLabelForNext(): getLabelForPrevious();
   }
 
   @Override
-  public CharSequence getNextLabel () {
-    return getString(R.string.control_next_boolean);
+  protected int getResourceForNext () {
+    return R.string.control_next_boolean;
   }
 
   @Override
-  public CharSequence getPreviousLabel () {
-    return getString(R.string.control_previous_boolean);
+  protected int getResourceForPrevious () {
+    return R.string.control_previous_boolean;
   }
 
   @Override

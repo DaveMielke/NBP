@@ -3,18 +3,18 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechBalanceControl extends LinearFloatControl {
   @Override
-  public int getLabel () {
+  protected int getResourceForLabel () {
     return R.string.control_label_SpeechBalance;
   }
 
   @Override
-  public CharSequence getNextLabel () {
-    return getString(R.string.control_next_SpeechBalance);
+  protected int getResourceForNext () {
+    return R.string.control_next_SpeechBalance;
   }
 
   @Override
-  public CharSequence getPreviousLabel () {
-    return getString(R.string.control_previous_SpeechBalance);
+  protected int getResourceForPrevious () {
+    return R.string.control_previous_SpeechBalance;
   }
 
   @Override

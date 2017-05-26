@@ -9,7 +9,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   public abstract E getEnumerationValue ();
   protected abstract boolean setEnumerationValue (E value);
 
-  private Class getEnumerationClass () {
+  private final Class getEnumerationClass () {
     return getEnumerationDefault().getClass();
   }
 
@@ -27,11 +27,11 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     }
   }
 
-  private int getValueCount () {
+  private final int getValueCount () {
     return getValueArray().length;
   }
 
-  private E getValue (int ordinal) {
+  private final E getValue (int ordinal) {
     return getValueArray()[ordinal];
   }
 
@@ -44,7 +44,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     }
   }
 
-  protected CharSequence getValueLabel (E value) {
+  protected String getValueLabel (E value) {
     String labels[] = getLabelArray();
 
     synchronized (labels) {
@@ -66,14 +66,14 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     }
   }
 
-  private CharSequence getValueLabel (int ordinal) {
+  private final String getValueLabel (int ordinal) {
     return getValueLabel(getValue(ordinal));
   }
 
-  public final CharSequence[] getValueLabels () {
+  public final String[] getValueLabels () {
     E[] values = getValueArray();
     int count = values.length;
-    CharSequence[] labels = new CharSequence[count];
+    String[] labels = new String[count];
 
     for (int index=0; index<count; index+=1) {
       labels[index] = getValueLabel(values[index]);
@@ -111,7 +111,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueLabel(getEnumerationValue());
   }
 
-  private CharSequence getLabel (int ordinal, int resource) {
+  private String getLabel (int ordinal, int resource) {
     E[] values = getValueArray();
     if (values.length < 2) return null;
     if (values.length == 2) return getValueLabel(ordinal);
@@ -119,12 +119,22 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   @Override
-  public CharSequence getNextLabel () {
+  protected int getResourceForNext () {
+    return 0;
+  }
+
+  @Override
+  public String getLabelForNext () {
     return getLabel(1, R.string.control_next_default);
   }
 
   @Override
-  public CharSequence getPreviousLabel () {
+  protected int getResourceForPrevious () {
+    return 0;
+  }
+
+  @Override
+  public String getLabelForPrevious () {
     return getLabel(0, R.string.control_previous_default);
   }
 
