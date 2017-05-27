@@ -4,6 +4,11 @@ import org.nbp.b2g.ui.*;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Map;
+import java.util.LinkedHashMap;
+
+import java.util.Set;
+
 import org.nbp.common.CommonActivity;
 import org.nbp.common.LaunchUtilities;
 import org.nbp.common.Tones;
@@ -18,9 +23,6 @@ import android.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
-
-import android.widget.TableLayout;
-import android.widget.TableRow;
 
 import android.widget.ListView;
 import android.widget.AdapterView;
@@ -267,7 +269,7 @@ public class SettingsActivity extends CommonActivity {
   }
 
   private View createControlView (Control control) {
-    ViewGroup group = new TableRow(this);
+    ViewGroup group = newTableRow();
     group.addView(createLabelView(control));
 
     if (control instanceof BooleanControl) {
@@ -286,16 +288,14 @@ public class SettingsActivity extends CommonActivity {
     return group;
   }
 
-  private Fragment createFragment (final View view, final int title) {
+  private Fragment createFragment (final View view, final String title) {
     return new Fragment() {
-      private CharSequence titleText = null;
       private TextView titleView = null;
       private View focusedView = null;
 
       @Override
       public void onCreate (Bundle state) {
         super.onCreate(state);
-        titleText = getString(title);
         titleView = (TextView)findViewById(R.id.settings_fragment_title);
       }
 
@@ -307,7 +307,7 @@ public class SettingsActivity extends CommonActivity {
       @Override
       public void onResume () {
         super.onResume();
-        titleView.setText(titleText);
+        titleView.setText(title);
 
         if (focusedView != null) {
           focusedView.requestFocus();
@@ -331,42 +331,65 @@ public class SettingsActivity extends CommonActivity {
     };
   }
 
+  private Fragment createFragment (final View view, int title) {
+    return createFragment(view, getString(title));
+  }
+
   private Fragment createControlGroupsFragment () {
-    int groupCount = ControlGroup.values().length;
-    String[] groupLabels = new String[groupCount];
-    final Fragment[] groupFragments = new Fragment[groupCount];
+    class Group {
+      public ViewGroup table;
+      public Fragment fragment;
+    }
 
-    for (ControlGroup group : ControlGroup.values()) {
-      TableLayout table = new TableLayout(this);
+    final Map<String, Group> groupMap = new LinkedHashMap<String, Group>();
 
-      {
-        int index = group.ordinal();
-        int label = group.getLabel();
+    Controls.forEachControl(
+      new ControlProcessor() {
+        @Override
+        public boolean processControl (Control control) {
+          String label = control.getGroup();
+          Group group = groupMap.get(label);
 
-        groupLabels[index] = getString(label);
-        groupFragments[index] = createFragment(table, label);
+          if (group == null) {
+            group = new Group();
+            group.table = newTable();
+            group.fragment = createFragment(group.table, label);
+            groupMap.put(label, group);
+          }
+
+          group.table.addView(createControlView(control));
+          return true;
+        }
       }
+    );
 
-      for (Control control : group.getControls()) {
-        table.addView(createControlView(control));
+    Set<String> labelSet = groupMap.keySet();
+    ListView labelList = newListView(labelSet);
+
+    int labelCount = labelSet.size();
+    final Fragment[] fragmentArray = new Fragment[labelCount];
+
+    {
+      int index = 0;
+
+      for (String label : labelSet) {
+        fragmentArray[index++] = groupMap.get(label).fragment;
       }
     }
 
-    ListView list = newListView(groupLabels);
-
     final Fragment groupsFragment = createFragment(
-      newVerticalGroup(createActionsView(), list),
+      newVerticalGroup(createActionsView(), labelList),
       R.string.control_groups
     );
 
-    list.setOnItemClickListener(
+    labelList.setOnItemClickListener(
       new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick (AdapterView list, View item, int position, long id) {
           list.setSelection(position);
 
           getFragmentManager().beginTransaction()
-            .replace(FRAGMENT_CONTAINER_ID, groupFragments[position])
+            .replace(FRAGMENT_CONTAINER_ID, fragmentArray[position])
             .addToBackStack(null)
             .commit();
         }

@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class TypingUnderlineControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_input;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_TypingUnderline;
   }
@@ -29,6 +34,6 @@ public class TypingUnderlineControl extends BooleanControl {
   }
 
   public TypingUnderlineControl () {
-    super(ControlGroup.INPUT);
+    super();
   }
 }

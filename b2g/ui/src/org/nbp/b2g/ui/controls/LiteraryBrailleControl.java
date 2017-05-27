@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class LiteraryBrailleControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_LiteraryBraille;
   }
@@ -39,6 +44,6 @@ public class LiteraryBrailleControl extends BooleanControl {
   }
 
   public LiteraryBrailleControl () {
-    super(ControlGroup.GENERAL);
+    super();
   }
 }

@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class SecureConnectionControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_remote;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SecureConnection;
   }
@@ -29,6 +34,6 @@ public class SecureConnectionControl extends BooleanControl {
   }
 
   public SecureConnectionControl () {
-    super(ControlGroup.REMOTE);
+    super();
   }
 }

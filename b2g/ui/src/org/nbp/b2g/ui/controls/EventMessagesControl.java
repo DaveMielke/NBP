@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class EventMessagesControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_developer;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_EventMessages;
   }
@@ -29,6 +34,6 @@ public class EventMessagesControl extends BooleanControl {
   }
 
   public EventMessagesControl () {
-    super(ControlGroup.DEVELOPER);
+    super();
   }
 }

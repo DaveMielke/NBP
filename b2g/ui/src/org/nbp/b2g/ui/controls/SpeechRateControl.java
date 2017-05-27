@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechRateControl extends LogarithmicFloatControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_speech;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SpeechRate;
   }
@@ -45,6 +50,6 @@ public class SpeechRateControl extends LogarithmicFloatControl {
   }
 
   public SpeechRateControl () {
-    super(ControlGroup.SPEECH);
+    super();
   }
 }

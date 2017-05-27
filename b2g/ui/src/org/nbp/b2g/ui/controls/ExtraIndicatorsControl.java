@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class ExtraIndicatorsControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_developer;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_ExtraIndicators;
   }
@@ -29,6 +34,6 @@ public class ExtraIndicatorsControl extends BooleanControl {
   }
 
   public ExtraIndicatorsControl () {
-    super(ControlGroup.DEVELOPER);
+    super();
   }
 }

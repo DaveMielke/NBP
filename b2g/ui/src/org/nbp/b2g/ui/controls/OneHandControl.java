@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class OneHandControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_keyboard;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_OneHand;
   }
@@ -29,6 +34,6 @@ public class OneHandControl extends BooleanControl {
   }
 
   public OneHandControl () {
-    super(ControlGroup.KEYBOARD);
+    super();
   }
 }

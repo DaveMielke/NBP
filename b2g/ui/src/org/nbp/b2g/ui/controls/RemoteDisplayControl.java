@@ -5,6 +5,11 @@ import org.nbp.b2g.ui.remote.RemoteEndpoint;
 
 public class RemoteDisplayControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_remote;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_RemoteDisplay;
   }
@@ -38,6 +43,6 @@ public class RemoteDisplayControl extends BooleanControl {
   }
 
   public RemoteDisplayControl () {
-    super(ControlGroup.REMOTE);
+    super();
   }
 }

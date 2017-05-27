@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechEnabledControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_speech;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SpeechEnabled;
   }
@@ -29,6 +34,6 @@ public class SpeechEnabledControl extends BooleanControl {
   }
 
   public SpeechEnabledControl () {
-    super(ControlGroup.SPEECH);
+    super();
   }
 }

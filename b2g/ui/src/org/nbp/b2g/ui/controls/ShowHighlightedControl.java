@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class ShowHighlightedControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_ShowHighlighted;
   }
@@ -29,6 +34,6 @@ public class ShowHighlightedControl extends BooleanControl {
   }
 
   public ShowHighlightedControl () {
-    super(ControlGroup.BRAILLE);
+    super();
   }
 }

@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_CursorIndicator;
   }
@@ -29,6 +34,6 @@ public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay>
   }
 
   public CursorIndicatorControl () {
-    super(ControlGroup.BRAILLE);
+    super();
   }
 }

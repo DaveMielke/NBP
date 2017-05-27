@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class LongPressControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_keyboard;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_LongPress;
   }
@@ -29,6 +34,6 @@ public class LongPressControl extends BooleanControl {
   }
 
   public LongPressControl () {
-    super(ControlGroup.KEYBOARD);
+    super();
   }
 }

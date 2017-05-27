@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class WordWrapControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_WordWrap;
   }
@@ -30,6 +35,6 @@ public class WordWrapControl extends BooleanControl {
   }
 
   public WordWrapControl () {
-    super(ControlGroup.GENERAL);
+    super();
   }
 }

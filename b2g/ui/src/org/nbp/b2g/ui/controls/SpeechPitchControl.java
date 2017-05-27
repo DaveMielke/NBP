@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class SpeechPitchControl extends LogarithmicFloatControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_speech;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SpeechPitch;
   }
@@ -40,6 +45,6 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
   }
 
   public SpeechPitchControl () {
-    super(ControlGroup.SPEECH);
+    super();
   }
 }

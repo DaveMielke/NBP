@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SelectionIndicator;
   }
@@ -29,6 +34,6 @@ public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverl
   }
 
   public SelectionIndicatorControl () {
-    super(ControlGroup.BRAILLE);
+    super();
   }
 }

@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class LogActionsControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_developer;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_LogActions;
   }
@@ -29,6 +34,6 @@ public class LogActionsControl extends BooleanControl {
   }
 
   public LogActionsControl () {
-    super(ControlGroup.DEVELOPER);
+    super();
   }
 }

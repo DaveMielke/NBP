@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class BrailleFirmnessControl extends IntegerControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_BrailleFirmness;
   }
@@ -30,6 +35,6 @@ public class BrailleFirmnessControl extends IntegerControl {
   }
 
   public BrailleFirmnessControl () {
-    super(ControlGroup.BRAILLE);
+    super();
   }
 }

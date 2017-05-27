@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_BrailleCode;
   }
@@ -35,6 +40,6 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   }
 
   public BrailleCodeControl () {
-    super(ControlGroup.GENERAL);
+    super();
   }
 }

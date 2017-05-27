@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class ShowNotificationsControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_ShowNotifications;
   }
@@ -29,6 +34,6 @@ public class ShowNotificationsControl extends BooleanControl {
   }
 
   public ShowNotificationsControl () {
-    super(ControlGroup.GENERAL);
+    super();
   }
 }

@@ -7,28 +7,26 @@ import java.util.Set;
 import java.util.HashSet;
 
 public abstract class Control {
-  private final ControlGroup controlGroup;
-
-  protected Control (ControlGroup group) {
-    controlGroup = group;
+  protected Control () {
   }
 
-  public final ControlGroup getGroup () {
-    return controlGroup;
-  }
-
+  protected abstract int getResourceForGroup ();
   protected abstract int getResourceForLabel ();
-  public abstract CharSequence getValue ();
 
+  public abstract CharSequence getValue ();
+  protected abstract boolean setDefaultValue ();
   protected abstract boolean setNextValue ();
   protected abstract boolean setPreviousValue ();
-  protected abstract boolean setDefaultValue ();
 
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
 
   protected final String getString (int resource) {
     return ApplicationContext.getString(resource);
+  }
+
+  public final String getGroup () {
+    return getString(getResourceForGroup());
   }
 
   public final String getLabel () {

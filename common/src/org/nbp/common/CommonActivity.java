@@ -1,5 +1,6 @@
 package org.nbp.common;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -173,6 +174,10 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     ListView list = new ListView(this);
     list.setAdapter(adapter);
     return list;
+  }
+
+  public final ListView newListView (Collection<String> values) {
+    return newListView(values.toArray(new String[values.size()]));
   }
 
   public final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {

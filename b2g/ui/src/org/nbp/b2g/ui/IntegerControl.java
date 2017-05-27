@@ -57,7 +57,7 @@ public abstract class IntegerControl extends Control {
     return setIntegerValue(prefs.getInt(key, getIntegerDefault()));
   }
 
-  protected IntegerControl (ControlGroup group) {
-    super(group);
+  protected IntegerControl () {
+    super();
   }
 }

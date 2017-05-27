@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class ReversePanningControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_keyboard;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_ReversePanning;
   }
@@ -29,6 +34,6 @@ public class ReversePanningControl extends BooleanControl {
   }
 
   public ReversePanningControl () {
-    super(ControlGroup.KEYBOARD);
+    super();
   }
 }

@@ -159,7 +159,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return setEnumerationValue(value);
   }
 
-  protected EnumerationControl (ControlGroup group) {
-    super(group);
+  protected EnumerationControl () {
+    super();
   }
 }

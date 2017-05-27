@@ -3,6 +3,11 @@ import org.nbp.b2g.ui.*;
 
 public class TypingItalicControl extends BooleanControl {
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_input;
+  }
+
+  @Override
   protected int getResourceForLabel () {
     return R.string.control_label_TypingItalic;
   }
@@ -29,6 +34,6 @@ public class TypingItalicControl extends BooleanControl {
   }
 
   public TypingItalicControl () {
-    super(ControlGroup.INPUT);
+    super();
   }
 }
