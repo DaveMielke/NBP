@@ -72,7 +72,8 @@ public abstract class Control {
     public abstract void onValueChanged (Control control);
   }
 
-  private final Set<OnValueChangedListener> onValueChangedListeners = new HashSet<OnValueChangedListener>();
+  private final Set<OnValueChangedListener> onValueChangedListeners =
+        new HashSet<OnValueChangedListener>();
 
   public final boolean addOnValueChangedListener (OnValueChangedListener listener) {
     return onValueChangedListeners.add(listener);

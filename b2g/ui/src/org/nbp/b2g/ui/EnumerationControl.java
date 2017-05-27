@@ -120,22 +120,22 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
 
   @Override
   protected int getResourceForNext () {
-    return 0;
+    return R.string.control_next_default;
   }
 
   @Override
   public String getLabelForNext () {
-    return getLabel(1, R.string.control_next_default);
+    return getLabel(1, getResourceForNext());
   }
 
   @Override
   protected int getResourceForPrevious () {
-    return 0;
+    return R.string.control_previous_default;
   }
 
   @Override
   public String getLabelForPrevious () {
-    return getLabel(0, R.string.control_previous_default);
+    return getLabel(0, getResourceForPrevious());
   }
 
   @Override
