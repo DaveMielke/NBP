@@ -12,3 +12,4 @@ Screen Navigation
 .. include:: find.rst
 .. include:: drag.rst
 .. include:: keyboard.rst
+.. include:: chrome.rst
