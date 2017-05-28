@@ -119,5 +119,10 @@
         <data android:mimeType="file/*" />
       </intent-filter>
     </activity>
+
+    <activity
+      android:name=".SettingsActivity"
+      android:label="@string/settings_activity_label"
+     />
   </application>
 </manifest>

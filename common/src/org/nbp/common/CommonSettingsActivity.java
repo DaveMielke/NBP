@@ -34,6 +34,10 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
   private final Control[] settingControls;
 
+  protected CommonSettingsActivity () {
+    settingControls = null;
+  }
+
   protected CommonSettingsActivity (Control[] controls) {
     super();
 
@@ -381,7 +385,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
     final Fragment groupsFragment = createFragment(
       newVerticalGroup(createActionsView(), labelList),
-      R.string.control_groups
+      R.string.settings_main_label
     );
 
     labelList.setOnItemClickListener(
@@ -417,10 +421,14 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     super.onCreate(state);
     setContentView(R.layout.common_settings);
 
-ViewGroup container = (ViewGroup)findViewById(R.id.settings_fragment_container);
-    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-    transaction.add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment());
-    transaction.commit();
+    if (settingControls != null) {
+      FragmentTransaction transaction = getFragmentManager().beginTransaction();
+      transaction.add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment());
+      transaction.commit();
+    } else {
+      ViewGroup container = (ViewGroup)findViewById(FRAGMENT_CONTAINER_ID);
+      container.addView(newTextView(R.string.settings_main_none));
+    }
   }
 
   @Override

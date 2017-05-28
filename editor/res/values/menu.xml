@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <string name="menu_main_Settings">Settings</string>
+
   <string name="menu_file_Submenu">File</string>
   <string name="menu_file_New">New</string>
   <string name="menu_file_Recent">Recent</string>
