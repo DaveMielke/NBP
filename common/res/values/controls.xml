@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <string name="control_groups">Main Screen</string>
+
+  <string name="control_save_label">Save Settings</string>
+  <string name="control_save_confirmation">Settings Saved</string>
+
+  <string name="control_restore_label">Restore Settings</string>
+  <string name="control_restore_confirmation">Settings Restored</string>
+
+  <string name="control_reset_label">Reset to Defaults</string>
+  <string name="control_reset_confirmation">Settings Reset</string>
+
+  <string name="control_change_label">Change</string>
+
   <string name="control_next_default">Next</string>
   <string name="control_previous_default">Previous</string>
 

@@ -10,7 +10,7 @@ public class ResetSettings extends Action {
 
   @Override
   protected Integer getConfirmation () {
-    return R.string.ResetSettings_action_confirmation;
+    return R.string.control_reset_confirmation;
   }
 
   public ResetSettings (Endpoint endpoint) {

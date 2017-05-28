@@ -12,10 +12,10 @@ public abstract class Controls {
   }
 
   static {
-    Control.setValueConfirmationListener(
-      new Control.ValueConfirmationListener() {
+    Control.setConfirmationListener(
+      new Control.ConfirmationListener() {
         @Override
-        public void confirmValue (String confirmation) {
+        public void confirm (String confirmation) {
           ApplicationUtilities.message(confirmation);
         }
       }
@@ -112,6 +112,13 @@ public abstract class Controls {
     logSpeech
   };
 
+  public final static Control[] getAllControls () {
+    int count = allControls.length;
+    Control[] controls = new Control[count];
+    System.arraycopy(allControls, 0, controls, 0, count);
+    return controls;
+  }
+
   public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {
     for (Control control : controls) {
       if (!processor.processControl(control)) break;
@@ -126,40 +133,16 @@ public abstract class Controls {
     forEachControl(allControls, processor);
   }
 
-  public final static ControlProcessor saveValue = new ControlProcessor() {
-    @Override
-    public boolean processControl (Control control) {
-      control.saveValue();
-      return true;
-    }
-  };
-
   public static void saveValues () {
-    forEachControl(saveValue);
+    Control.save(allControls);
   }
-
-  public final static ControlProcessor restoreDefaultValue = new ControlProcessor() {
-    @Override
-    public boolean processControl (Control control) {
-      control.restoreDefaultValue();
-      return true;
-    }
-  };
-
-  public static void restoreDefaultValues () {
-    forEachControl(restoreDefaultValue);
-  }
-
-  public final static ControlProcessor restoreSavedValue = new ControlProcessor() {
-    @Override
-    public boolean processControl (Control control) {
-      control.restoreSavedValue();
-      return true;
-    }
-  };
 
   public static void restoreSavedValues () {
-    forEachControl(restoreSavedValue);
+    Control.restore(allControls);
+  }
+
+  public static void restoreDefaultValues () {
+    Control.reset(allControls);
   }
 
   public final static ControlProcessor restoreCurrentValue = new ControlProcessor() {

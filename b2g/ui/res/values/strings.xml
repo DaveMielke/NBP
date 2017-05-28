@@ -80,9 +80,6 @@
   <string name="checkbox_off">not checked</string>
   <string name="checkbox_on">checked</string>
 
-  <string name="ResetSettings_action_label">Reset to Defaults</string>
-  <string name="RestoreSettings_action_label">Restore Settings</string>
-  <string name="SaveSettings_action_label">Save Settings</string>
   <string name="SystemMaintenance_action_label">System Maintenance</string>
 
   <string name="ClearAndroidLog_action_confirmation">Android log cleared</string>
@@ -91,10 +88,7 @@
   <string name="LogsOff_action_confirmation">Logs Off</string>
   <string name="LogsOn_action_confirmation">Logs On</string>
   <string name="ResetHighlightedTyping_action_confirmation">Highlighting Off</string>
-  <string name="ResetSettings_action_confirmation">Settings Reset</string>
-  <string name="RestoreSettings_action_confirmation">Settings Restored</string>
   <string name="LogScreen_action_confirmation">Screen Logged</string>
-  <string name="SaveSettings_action_confirmation">Settings Saved</string>
   <string name="SetCopyStart_action_confirmation">start of copy</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
   <string name="TypeControl_action_confirmation">control</string>

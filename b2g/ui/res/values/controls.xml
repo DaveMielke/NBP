@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="control_groups">Main Screen</string>
-
   <string name="control_group_general">General Settings</string>
   <string name="control_label_LiteraryBraille">Literary Braille</string>
   <string name="control_label_BrailleCode">Braille Code</string>

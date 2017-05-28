@@ -10,7 +10,7 @@ public class RestoreSettings extends Action {
 
   @Override
   protected Integer getConfirmation () {
-    return R.string.RestoreSettings_action_confirmation;
+    return R.string.control_restore_confirmation;
   }
 
   public RestoreSettings (Endpoint endpoint) {

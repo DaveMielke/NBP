@@ -10,7 +10,7 @@ public class SaveSettings extends Action {
 
   @Override
   protected Integer getConfirmation () {
-    return R.string.SaveSettings_action_confirmation;
+    return R.string.control_save_confirmation;
   }
 
   public SaveSettings (Endpoint endpoint) {

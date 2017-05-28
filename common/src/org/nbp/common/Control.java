@@ -21,7 +21,7 @@ public abstract class Control {
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
 
-  protected final String getString (int resource) {
+  protected final static String getString (int resource) {
     return CommonContext.getString(resource);
   }
 
@@ -49,18 +49,28 @@ public abstract class Control {
     return getString(getResourceForPrevious());
   }
 
-  public interface ValueConfirmationListener {
-    public abstract void confirmValue (String confirmation);
+  public interface ConfirmationListener {
+    public abstract void confirm (String confirmation);
   }
 
-  private static ValueConfirmationListener valueConfirmationListener = null;
+  private static ConfirmationListener confirmationListener = null;
 
-  public final static ValueConfirmationListener getValueConfirmationListener () {
-    return valueConfirmationListener;
+  public final static ConfirmationListener getConfirmationListener () {
+    return confirmationListener;
   }
 
-  public final static void setValueConfirmationListener (ValueConfirmationListener listener) {
-    valueConfirmationListener = listener;
+  public final static void setConfirmationListener (ConfirmationListener listener) {
+    confirmationListener = listener;
+  }
+
+  public final static void confirm (String confirmation) {
+    if (confirmationListener != null) {
+      confirmationListener.confirm(confirmation);
+    }
+  }
+
+  public final static void confirm (int confirmation) {
+    confirm(getString(confirmation));
   }
 
   protected String getValueConfirmation () {
@@ -68,9 +78,7 @@ public abstract class Control {
   }
 
   public final void confirmValue () {
-    if (valueConfirmationListener != null) {
-      valueConfirmationListener.confirmValue(getValueConfirmation());
-    }
+    confirm(getValueConfirmation());
   }
 
   public interface OnValueChangedListener {
@@ -159,5 +167,23 @@ public abstract class Control {
     if (!setPreviousValue()) return false;
     reportValue(true);
     return true;
+  }
+
+  public final static void save (Control[] controls) {
+    for (Control control : controls) {
+      control.saveValue();
+    }
+  }
+
+  public final static void restore (Control[] controls) {
+    for (Control control : controls) {
+      control.restoreSavedValue();
+    }
+  }
+
+  public final static void reset (Control[] controls) {
+    for (Control control : controls) {
+      control.restoreDefaultValue();
+    }
   }
 }
