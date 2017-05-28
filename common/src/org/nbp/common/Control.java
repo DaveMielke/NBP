@@ -50,16 +50,16 @@ public abstract class Control {
   }
 
   public interface ValueConfirmationListener {
-    public abstract void confirmValue (String message);
+    public abstract void confirmValue (String confirmation);
   }
 
-  private ValueConfirmationListener valueConfirmationListener = null;
+  private static ValueConfirmationListener valueConfirmationListener = null;
 
-  public final ValueConfirmationListener getValueConfirmationListener () {
+  public final static ValueConfirmationListener getValueConfirmationListener () {
     return valueConfirmationListener;
   }
 
-  public final void setValueConfirmationListener (ValueConfirmationListener listener) {
+  public final static void setValueConfirmationListener (ValueConfirmationListener listener) {
     valueConfirmationListener = listener;
   }
 

@@ -11,6 +11,17 @@ public abstract class Controls {
   private Controls () {
   }
 
+  static {
+    Control.setValueConfirmationListener(
+      new Control.ValueConfirmationListener() {
+        @Override
+        public void confirmValue (String confirmation) {
+          ApplicationUtilities.message(confirmation);
+        }
+      }
+    );
+  }
+
   public final static LiteraryBrailleControl literaryBraille = new LiteraryBrailleControl();
   public final static BrailleCodeControl brailleCode = new BrailleCodeControl();
   public final static WordWrapControl wordWrap = new WordWrapControl();
@@ -113,25 +124,6 @@ public abstract class Controls {
 
   public static void forEachControl (ControlProcessor processor) {
     forEachControl(allControls, processor);
-  }
-
-  static {
-    final Control.ValueConfirmationListener listener = new Control.ValueConfirmationListener() {
-      @Override
-      public void confirmValue (String message) {
-        ApplicationUtilities.message(message);
-      }
-    };
-
-    forEachControl(
-      new ControlProcessor() {
-        @Override
-        public boolean processControl (Control control) {
-          control.setValueConfirmationListener(listener);
-          return true;
-        }
-      }
-    );
   }
 
   public final static ControlProcessor saveValue = new ControlProcessor() {
