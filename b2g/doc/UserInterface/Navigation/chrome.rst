@@ -10,14 +10,14 @@ and adding dot 8 means to move to the next element of that type.
 The following table lists the characters
 and the element types that they correspond to:
 
-=====  ====  =======  ===================
+=====  ====  =======  =====================
 Char-  Bra-  Dot      Element
-acter  ille  Numbers  Type     
------  ----  -------  -------------------
+acter  ille  Numbers  Type
+-----  ----  -------  ---------------------
   a     ⠁    1        Article
   b     ⠃    12       Button
   c     ⠉    14       Combo Box
-  d     ⠙    145      Document
+  d     ⠙    145      Start/End of Document
   e     ⠑    15       Editable Input
   f     ⠋    124      Form Field
   g     ⠛    1245     Graphic
@@ -37,5 +37,5 @@ acter  ille  Numbers  Type
   4     ⠲    256      Level 4 Heading
   5     ⠢    26       Level 5 Heading
   6     ⠖    235      Level 6 Heading
-=====  ====  =======  ===================
+=====  ====  =======  =====================
 
