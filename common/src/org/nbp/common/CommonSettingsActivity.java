@@ -143,12 +143,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
     {
       View[] views = getExtraMainScreenActions();
-
-      if (views != null) {
-        for (View view : views) {
-          container.addView(view);
-        }
-      }
+      if (views != null) addViews(container, views);
     }
 
     return container;
