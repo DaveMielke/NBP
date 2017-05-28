@@ -119,20 +119,6 @@ public abstract class Controls {
     return controls;
   }
 
-  public static void forEachControl (Collection<Control> controls, ControlProcessor processor) {
-    for (Control control : controls) {
-      if (!processor.processControl(control)) break;
-    }
-  }
-
-  public static void forEachControl (Control[] controls, ControlProcessor processor) {
-    forEachControl(Arrays.asList(controls), processor);
-  }
-
-  public static void forEachControl (ControlProcessor processor) {
-    forEachControl(allControls, processor);
-  }
-
   public static void saveValues () {
     Control.saveValues(allControls);
   }
