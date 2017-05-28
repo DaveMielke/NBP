@@ -130,12 +130,28 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return button;
   }
 
+  protected View[] getExtraMainScreenActions () {
+    return null;
+  }
+
   private View createActionsView () {
-    return newHorizontalGroup(
+    ViewGroup container = newHorizontalGroup(
       createSaveControlsButton(),
       createRestoreControlsButton(),
       createResetControlsButton()
     );
+
+    {
+      View[] views = getExtraMainScreenActions();
+
+      if (views != null) {
+        for (View view : views) {
+          container.addView(view);
+        }
+      }
+    }
+
+    return container;
   }
 
   private View createEnumerationChangeButton (final Control control) {

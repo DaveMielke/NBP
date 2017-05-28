@@ -27,4 +27,11 @@ public class SettingsActivity extends CommonSettingsActivity {
 
     return button;
   }
+
+  @Override
+  protected final View[] getExtraMainScreenActions () {
+    return new View[] {
+      createSystemMaintenanceButton()
+    };
+  }
 }
