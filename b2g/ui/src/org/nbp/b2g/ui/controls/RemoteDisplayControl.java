@@ -3,6 +3,8 @@ import org.nbp.b2g.ui.*;
 
 import org.nbp.b2g.ui.remote.RemoteEndpoint;
 
+import org.nbp.common.BooleanControl;
+
 public class RemoteDisplayControl extends BooleanControl {
   @Override
   protected int getResourceForGroup () {

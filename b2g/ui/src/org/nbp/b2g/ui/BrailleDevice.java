@@ -3,6 +3,7 @@ package org.nbp.b2g.ui;
 import java.util.Arrays;
 
 import org.nbp.common.Timeout;
+import org.nbp.common.Control;
 
 import android.util.Log;
 import android.content.Context;

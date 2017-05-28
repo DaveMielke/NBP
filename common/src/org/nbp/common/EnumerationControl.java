@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 import org.nbp.common.LanguageUtilities;
 
@@ -59,7 +59,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
                       + value.name()
                       ;
 
-      label = ApplicationContext.getString(resource);
+      label = CommonContext.getString(resource);
       if (label == null) label = value.name().replace('_', ' ').toLowerCase();
 
       return labelArray[ordinal] = label;

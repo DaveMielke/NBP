@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.BooleanControl;
+
 public class ShowNotificationsControl extends BooleanControl {
   @Override
   protected int getResourceForGroup () {

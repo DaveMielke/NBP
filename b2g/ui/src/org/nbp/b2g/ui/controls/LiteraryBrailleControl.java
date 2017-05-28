@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.BooleanControl;
+
 public class LiteraryBrailleControl extends BooleanControl {
   @Override
   protected int getResourceForGroup () {
@@ -13,12 +15,12 @@ public class LiteraryBrailleControl extends BooleanControl {
   }
 
   @Override
-  public String getConfirmation () {
+  public String getValueConfirmation () {
     return getString(
-             getBooleanValue()?
-               R.string.control_value_LiteraryBraille_on:
-               R.string.control_value_LiteraryBraille_off
-           );
+      getBooleanValue()?
+        R.string.control_value_LiteraryBraille_on:
+        R.string.control_value_LiteraryBraille_off
+    );
   }
 
   @Override

@@ -54,15 +54,6 @@
   <string name="control_label_LogBraille">Log Braille</string>
   <string name="control_label_LogSpeech">Log Speech</string>
 
-  <string name="control_next_default">Next</string>
-  <string name="control_previous_default">Previous</string>
-
-  <string name="control_next_boolean">On</string>
-  <string name="control_previous_boolean">Off</string>
-
-  <string name="control_next_numeric">Increase</string>
-  <string name="control_previous_numeric">Decrease</string>
-
   <string name="control_next_SpeechVolume">Louder</string>
   <string name="control_previous_SpeechVolume">Softer</string>
 

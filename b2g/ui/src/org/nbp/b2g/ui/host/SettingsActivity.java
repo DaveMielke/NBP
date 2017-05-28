@@ -13,6 +13,10 @@ import org.nbp.common.CommonActivity;
 import org.nbp.common.LaunchUtilities;
 import org.nbp.common.Tones;
 
+import org.nbp.common.Control;
+import org.nbp.common.BooleanControl;
+import org.nbp.common.EnumerationControl;
+
 import android.util.Log;
 import android.os.Bundle;
 

@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.BooleanControl;
+
 public class LogsOff extends Action {
   private final static BooleanControl[] controls = new BooleanControl[] {
     Controls.logUpdates,

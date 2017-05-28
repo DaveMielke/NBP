@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="control_next_default">Next</string>
+  <string name="control_previous_default">Previous</string>
+
+  <string name="control_next_boolean">On</string>
+  <string name="control_previous_boolean">Off</string>
+
+  <string name="control_next_numeric">Increase</string>
+  <string name="control_previous_numeric">Decrease</string>
+</resources>

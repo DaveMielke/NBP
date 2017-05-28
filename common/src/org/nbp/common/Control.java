@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,7 +22,7 @@ public abstract class Control {
   protected abstract boolean restoreValue (SharedPreferences prefs, String key);
 
   protected final String getString (int resource) {
-    return ApplicationContext.getString(resource);
+    return CommonContext.getString(resource);
   }
 
   public final String getGroup () {
@@ -49,21 +49,28 @@ public abstract class Control {
     return getString(getResourceForPrevious());
   }
 
-  protected String getPreferenceKey () {
-    return null;
+  public interface ValueConfirmationListener {
+    public abstract void confirmValue (String message);
   }
 
-  private final static SharedPreferences getSettings (String name) {
-    return ApplicationContext.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+  private ValueConfirmationListener valueConfirmationListener = null;
+
+  public final ValueConfirmationListener getValueConfirmationListener () {
+    return valueConfirmationListener;
   }
 
-  private final boolean saveValue (SharedPreferences prefs) {
-    String key = getPreferenceKey();
-    if (key == null) return true;
+  public final void setValueConfirmationListener (ValueConfirmationListener listener) {
+    valueConfirmationListener = listener;
+  }
 
-    SharedPreferences.Editor editor = prefs.edit();
-    saveValue(editor, key);
-    return editor.commit();
+  protected String getValueConfirmation () {
+    return getLabel() + " " + getValue();
+  }
+
+  public final void confirmValue () {
+    if (valueConfirmationListener != null) {
+      valueConfirmationListener.confirmValue(getValueConfirmation());
+    }
   }
 
   public interface OnValueChangedListener {
@@ -81,16 +88,25 @@ public abstract class Control {
     return onValueChangedListeners.remove(listener);
   }
 
+  protected String getPreferenceKey () {
+    return null;
+  }
+
+  private final static SharedPreferences getSettings (String name) {
+    return CommonContext.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+  }
+
+  private final boolean saveValue (SharedPreferences prefs) {
+    String key = getPreferenceKey();
+    if (key == null) return true;
+
+    SharedPreferences.Editor editor = prefs.edit();
+    saveValue(editor, key);
+    return editor.commit();
+  }
+
   private final static SharedPreferences getCurrentSettings () {
     return getSettings("current-settings");
-  }
-
-  protected String getConfirmation () {
-    return getLabel() + " " + getValue();
-  }
-
-  public final void confirmValue () {
-    ApplicationUtilities.message(getConfirmation());
   }
 
   protected final void reportValue (boolean confirm) {

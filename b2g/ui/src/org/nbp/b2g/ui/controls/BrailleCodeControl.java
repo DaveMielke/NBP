@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.EnumerationControl;
+
 public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   @Override
   protected int getResourceForGroup () {

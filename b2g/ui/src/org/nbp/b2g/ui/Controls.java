@@ -1,6 +1,9 @@
 package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.controls.*;
 
+import org.nbp.common.Control;
+import org.nbp.common.BooleanControl;
+
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -110,6 +113,25 @@ public abstract class Controls {
 
   public static void forEachControl (ControlProcessor processor) {
     forEachControl(allControls, processor);
+  }
+
+  static {
+    final Control.ValueConfirmationListener listener = new Control.ValueConfirmationListener() {
+      @Override
+      public void confirmValue (String message) {
+        ApplicationUtilities.message(message);
+      }
+    };
+
+    forEachControl(
+      new ControlProcessor() {
+        @Override
+        public boolean processControl (Control control) {
+          control.setValueConfirmationListener(listener);
+          return true;
+        }
+      }
+    );
   }
 
   public final static ControlProcessor saveValue = new ControlProcessor() {

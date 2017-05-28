@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.LinearFloatControl;
+
 public class SpeechBalanceControl extends LinearFloatControl {
   @Override
   protected int getResourceForGroup () {

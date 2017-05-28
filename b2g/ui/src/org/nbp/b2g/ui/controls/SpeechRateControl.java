@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.LogarithmicFloatControl;
+
 public class SpeechRateControl extends LogarithmicFloatControl {
   @Override
   protected int getResourceForGroup () {

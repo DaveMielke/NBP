@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import org.nbp.common.Control;
+
 public abstract class NextValueAction extends ControlAction<Control> {
   @Override
   public boolean performAction () {
