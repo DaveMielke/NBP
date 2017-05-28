@@ -91,7 +91,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.save(settingControls);
+          Control.saveValues(settingControls);
           Control.confirm(R.string.control_save_confirmation);
         }
       }
@@ -106,7 +106,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.restore(settingControls);
+          Control.restoreSavedValues(settingControls);
           Control.confirm(R.string.control_restore_confirmation);
         }
       }
@@ -121,7 +121,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.reset(settingControls);
+          Control.restoreDefaultValues(settingControls);
           Control.confirm(R.string.control_reset_confirmation);
         }
       }

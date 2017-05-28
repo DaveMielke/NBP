@@ -96,12 +96,20 @@ public abstract class Control {
     return onValueChangedListeners.remove(listener);
   }
 
-  protected String getPreferenceKey () {
-    return null;
-  }
-
   private final static SharedPreferences getSettings (String name) {
     return CommonContext.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+  }
+
+  private final static SharedPreferences getCurrentSettings () {
+    return getSettings("current-settings");
+  }
+
+  private final static SharedPreferences getSavedSettings () {
+    return getSettings("saved-settings");
+  }
+
+  protected String getPreferenceKey () {
+    return null;
   }
 
   private final boolean saveValue (SharedPreferences prefs) {
@@ -111,10 +119,6 @@ public abstract class Control {
     SharedPreferences.Editor editor = prefs.edit();
     saveValue(editor, key);
     return editor.commit();
-  }
-
-  private final static SharedPreferences getCurrentSettings () {
-    return getSettings("current-settings");
   }
 
   protected final void reportValue (boolean confirm) {
@@ -132,6 +136,12 @@ public abstract class Control {
     return true;
   }
 
+  public final static void restoreDefaultValues (Control[] controls) {
+    for (Control control : controls) {
+      control.restoreDefaultValue();
+    }
+  }
+
   private final boolean restoreValue (SharedPreferences prefs) {
     String key = getPreferenceKey();
     if (key == null) return restoreDefaultValue();
@@ -139,22 +149,6 @@ public abstract class Control {
     if (!restoreValue(prefs, key)) return false;
     reportValue(false);
     return true;
-  }
-
-  public final boolean restoreCurrentValue () {
-    return restoreValue(getCurrentSettings());
-  }
-
-  private final static SharedPreferences getSavedSettings () {
-    return getSettings("saved-settings");
-  }
-
-  public final boolean saveValue () {
-    return saveValue(getSavedSettings());
-  }
-
-  public final boolean restoreSavedValue () {
-    return restoreValue(getSavedSettings());
   }
 
   public final boolean nextValue () {
@@ -169,21 +163,33 @@ public abstract class Control {
     return true;
   }
 
-  public final static void save (Control[] controls) {
+  public final boolean restoreCurrentValue () {
+    return restoreValue(getCurrentSettings());
+  }
+
+  public final static void restoreCurrentValues (Control[] controls) {
+    for (Control control : controls) {
+      control.restoreCurrentValue();
+    }
+  }
+
+  public final boolean saveValue () {
+    return saveValue(getSavedSettings());
+  }
+
+  public final static void saveValues (Control[] controls) {
     for (Control control : controls) {
       control.saveValue();
     }
   }
 
-  public final static void restore (Control[] controls) {
-    for (Control control : controls) {
-      control.restoreSavedValue();
-    }
+  public final boolean restoreSavedValue () {
+    return restoreValue(getSavedSettings());
   }
 
-  public final static void reset (Control[] controls) {
+  public final static void restoreSavedValues (Control[] controls) {
     for (Control control : controls) {
-      control.restoreDefaultValue();
+      control.restoreSavedValue();
     }
   }
 }

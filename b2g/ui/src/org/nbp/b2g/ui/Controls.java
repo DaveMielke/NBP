@@ -134,27 +134,19 @@ public abstract class Controls {
   }
 
   public static void saveValues () {
-    Control.save(allControls);
+    Control.saveValues(allControls);
   }
 
   public static void restoreSavedValues () {
-    Control.restore(allControls);
+    Control.restoreSavedValues(allControls);
   }
 
   public static void restoreDefaultValues () {
-    Control.reset(allControls);
+    Control.restoreDefaultValues(allControls);
   }
 
-  public final static ControlProcessor restoreCurrentValue = new ControlProcessor() {
-    @Override
-    public boolean processControl (Control control) {
-      control.restoreCurrentValue();
-      return true;
-    }
-  };
-
   public static void restoreCurrentValues () {
-    forEachControl(restoreCurrentValue);
+    Control.restoreCurrentValues(allControls);
   }
 
   private final static BooleanControl[] highlightedTypingControls = new BooleanControl[] {

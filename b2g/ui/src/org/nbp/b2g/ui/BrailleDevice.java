@@ -67,7 +67,7 @@ public class BrailleDevice {
       Controls.brailleFirmness
     };
 
-    Controls.forEachControl(controls, Controls.restoreCurrentValue);
+    Control.restoreCurrentValues(controls);
   }
 
   private final boolean isOpen () {

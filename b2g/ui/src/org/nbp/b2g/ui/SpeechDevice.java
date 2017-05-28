@@ -291,7 +291,7 @@ public class SpeechDevice {
       Controls.speechBalance
     };
 
-    Controls.forEachControl(controls, Controls.restoreCurrentValue);
+    Control.restoreCurrentValues(controls);
   }
 
   private final Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY, "speech-device-retry-delay") {
