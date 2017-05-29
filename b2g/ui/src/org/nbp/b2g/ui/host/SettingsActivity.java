@@ -11,7 +11,7 @@ public class SettingsActivity extends CommonSettingsActivity {
   private final static String LOG_TAG = SettingsActivity.class.getName();
 
   public SettingsActivity () {
-    super(Controls.getAllControls());
+    super(Controls.ALL);
   }
 
   private View createSystemMaintenanceButton () {

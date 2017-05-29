@@ -5,7 +5,9 @@ import org.nbp.common.Control;
 import org.nbp.common.BooleanControl;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Collection;
+import java.util.ArrayList;
 
 public abstract class Controls {
   private Controls () {
@@ -112,11 +114,16 @@ public abstract class Controls {
     logSpeech
   };
 
-  public final static Control[] getAllControls () {
-    int count = allControls.length;
-    Control[] controls = new Control[count];
-    System.arraycopy(allControls, 0, controls, 0, count);
-    return controls;
+  public final static Collection<Control> ALL;
+  static {
+    ArrayList<Control> list = new ArrayList<Control>(allControls.length);
+
+    for (Control control : allControls) {
+      list.add(control);
+    }
+
+    list.trimToSize();
+    ALL = Collections.unmodifiableCollection(list);
   }
 
   public static void saveValues () {
