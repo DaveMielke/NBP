@@ -375,11 +375,11 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       groupTables.remove(label);
     }
 
-    Set<String> labelSet = groupTables.keySet();
-    int labelCount = labelSet.size();
     ViewGroup mainContainer = newVerticalGroup(createActionsView());
 
-    if (labelCount > 0) {
+    if (!groupTables.isEmpty()) {
+      Set<String> labelSet = groupTables.keySet();
+      int labelCount = labelSet.size();
       final Fragment[] fragmentArray = new Fragment[labelCount];
 
       {
@@ -399,7 +399,8 @@ public abstract class CommonSettingsActivity extends CommonActivity {
           public void onItemClick (AdapterView list, View item, int position, long id) {
             list.setSelection(position);
 
-            getFragmentManager().beginTransaction()
+            getFragmentManager()
+              .beginTransaction()
               .replace(FRAGMENT_CONTAINER_ID, fragmentArray[position])
               .addToBackStack(null)
               .commit();
@@ -408,7 +409,10 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       );
     }
 
-    if (mainTable != null) mainContainer.addView(mainTable);
+    if (mainTable != null) {
+      mainContainer.addView(newVerticalScrollContainer(mainTable));
+    }
+
     return createFragment(mainContainer, R.string.control_group_main);
   }
 
