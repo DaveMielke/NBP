@@ -348,61 +348,68 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   private Fragment createControlGroupsFragment () {
-    class Group {
-      public ViewGroup table;
-      public Fragment fragment;
-    }
-
-    Map<String, Group> groupMap = new LinkedHashMap<String, Group>();
+    Map<String, ViewGroup> groupTables = new LinkedHashMap<String, ViewGroup>();
 
     for (Control control : settingControls) {
       String label = control.getGroup();
-      Group group = groupMap.get(label);
+      ViewGroup table = groupTables.get(label);
 
-      if (group == null) {
-        group = new Group();
-        group.table = newTable();
-        group.fragment = createFragment(group.table, label);
-        groupMap.put(label, group);
+      if (table == null) {
+        table = newTable();
+        groupTables.put(label, table);
       }
 
-      group.table.addView(createControlView(control));
+      table.addView(createControlView(control));
     }
 
-    Set<String> labelSet = groupMap.keySet();
-    ListView labelList = newListView(labelSet);
+    String mainLabel = getString(R.string.control_group_main);
+    ViewGroup mainTable = groupTables.get(mainLabel);
 
+    if (mainTable != null) {
+      groupTables.remove(mainLabel);
+    } else if (groupTables.size() == 1) {
+      String[] labels = new String[1];
+      String label = groupTables.keySet().toArray(labels)[0];
+
+      mainTable = groupTables.get(label);
+      groupTables.remove(label);
+    }
+
+    Set<String> labelSet = groupTables.keySet();
     int labelCount = labelSet.size();
-    final Fragment[] fragmentArray = new Fragment[labelCount];
+    ViewGroup mainContainer = newVerticalGroup(createActionsView());
 
-    {
-      int index = 0;
+    if (labelCount > 0) {
+      final Fragment[] fragmentArray = new Fragment[labelCount];
 
-      for (String label : labelSet) {
-        fragmentArray[index++] = groupMap.get(label).fragment;
-      }
-    }
+      {
+        int index = 0;
 
-    final Fragment groupsFragment = createFragment(
-      newVerticalGroup(createActionsView(), labelList),
-      R.string.settings_main_label
-    );
-
-    labelList.setOnItemClickListener(
-      new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick (AdapterView list, View item, int position, long id) {
-          list.setSelection(position);
-
-          getFragmentManager().beginTransaction()
-            .replace(FRAGMENT_CONTAINER_ID, fragmentArray[position])
-            .addToBackStack(null)
-            .commit();
+        for (String label : labelSet) {
+          fragmentArray[index++] = createFragment(groupTables.get(label), label);
         }
       }
-    );
 
-    return groupsFragment;
+      ListView labelList = newListView(labelSet);
+      mainContainer.addView(labelList);
+
+      labelList.setOnItemClickListener(
+        new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick (AdapterView list, View item, int position, long id) {
+            list.setSelection(position);
+
+            getFragmentManager().beginTransaction()
+              .replace(FRAGMENT_CONTAINER_ID, fragmentArray[position])
+              .addToBackStack(null)
+              .commit();
+          }
+        }
+      );
+    }
+
+    if (mainTable != null) mainContainer.addView(mainTable);
+    return createFragment(mainContainer, R.string.control_group_main);
   }
 
   @Override

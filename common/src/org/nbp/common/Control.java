@@ -10,7 +10,6 @@ public abstract class Control {
   protected Control () {
   }
 
-  protected abstract int getResourceForGroup ();
   protected abstract int getResourceForLabel ();
 
   public abstract CharSequence getValue ();
@@ -25,12 +24,18 @@ public abstract class Control {
     return CommonContext.getString(resource);
   }
 
-  public final String getGroup () {
-    return getString(getResourceForGroup());
-  }
-
   public final String getLabel () {
     return getString(getResourceForLabel());
+  }
+
+  protected int getResourceForGroup () {
+    return 0;
+  }
+
+  public final String getGroup () {
+    int resource = getResourceForGroup();
+    if (resource == 0) resource = R.string.control_group_main;
+    return getString(resource);
   }
 
   protected int getResourceForNext () {

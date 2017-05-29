@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="settings_main_label">Main Screen</string>
+  <string name="control_group_main">Main Screen</string>
   <string name="settings_main_none">no settings yet</string>
 
   <string name="control_save_label">Save Settings</string>
