@@ -3,8 +3,8 @@ package org.nbp.editor;
 import org.nbp.common.Braille;
 
 public abstract class ASCIIBraille extends Braille {
-  private final static int ASCII_MINIMUM = 0X20;
-  private final static int ASCII_MAXIMUM = 0X7E;
+  private final static byte ASCII_MINIMUM = 0X20;
+  private final static byte ASCII_MAXIMUM = 0X7E;
 
   private final static byte[] asciiToDots = new byte[] {
     /* 20   */ 0,
@@ -86,6 +86,28 @@ public abstract class ASCIIBraille extends Braille {
     char character = UNICODE_ROW;
     character |= asciiToDots[index] & 0XFF;
     return character;
+  }
+
+  private final static byte[] dotsToAscii = new byte[0X40];
+
+  static {
+    int count = asciiToDots.length;
+
+    for (byte index=0; index<count; index+=1) {
+      dotsToAscii[asciiToDots[index]] = index;
+    }
+  }
+
+  public final static byte toAscii (char character) {
+    if (isBraillePattern(character)) {
+      return (byte)(dotsToAscii[character & 0X3F] + ASCII_MINIMUM);
+    }
+
+    if ((character >= ASCII_MINIMUM) && (character <= ASCII_MAXIMUM)) {
+      return (byte)character;
+    }
+
+    return 0;
   }
 
   protected ASCIIBraille () {
