@@ -1,6 +1,8 @@
 .. csv-table:: Editable Formats
   :header: "Extension", "Description"
 
+  ".brf","Formatted ASCII Braille"
+  ".brl","Unformatted ASCII Braille"
   ".doc","Microsoft Word 1997-2007"
   ".docm","Microsoft Word 2007+ XML (macro-enabled)"
   ".docx","Microsoft Word 2007+ XML (macro-free)"
