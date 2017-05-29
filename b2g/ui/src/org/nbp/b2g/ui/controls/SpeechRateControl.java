@@ -5,13 +5,13 @@ import org.nbp.common.LogarithmicFloatControl;
 
 public class SpeechRateControl extends LogarithmicFloatControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_speech;
+  protected int getResourceForLabel () {
+    return R.string.control_label_SpeechRate;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_SpeechRate;
+  protected int getResourceForGroup () {
+    return R.string.control_group_speech;
   }
 
   @Override

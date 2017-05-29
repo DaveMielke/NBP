@@ -5,13 +5,13 @@ import org.nbp.common.EnumerationControl;
 
 public class TypingModeControl extends EnumerationControl<TypingMode> {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_input;
+  protected int getResourceForLabel () {
+    return R.string.control_label_TypingMode;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_TypingMode;
+  protected int getResourceForGroup () {
+    return R.string.control_group_input;
   }
 
   @Override

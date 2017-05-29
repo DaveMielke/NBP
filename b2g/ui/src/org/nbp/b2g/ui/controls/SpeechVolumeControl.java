@@ -5,13 +5,13 @@ import org.nbp.common.LinearFloatControl;
 
 public class SpeechVolumeControl extends LinearFloatControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_speech;
+  protected int getResourceForLabel () {
+    return R.string.control_label_SpeechVolume;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_SpeechVolume;
+  protected int getResourceForGroup () {
+    return R.string.control_group_speech;
   }
 
   @Override

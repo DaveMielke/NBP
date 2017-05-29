@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class WordWrapControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_general;
+  protected int getResourceForLabel () {
+    return R.string.control_label_WordWrap;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_WordWrap;
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
   }
 
   @Override

@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class SecureConnectionControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_remote;
+  protected int getResourceForLabel () {
+    return R.string.control_label_SecureConnection;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_SecureConnection;
+  protected int getResourceForGroup () {
+    return R.string.control_group_remote;
   }
 
   @Override

@@ -5,13 +5,13 @@ import org.nbp.common.IntegerControl;
 
 public class BrailleFirmnessControl extends IntegerControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_braille;
+  protected int getResourceForLabel () {
+    return R.string.control_label_BrailleFirmness;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_BrailleFirmness;
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
   }
 
   @Override

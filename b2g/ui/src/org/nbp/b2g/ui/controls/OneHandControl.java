@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class OneHandControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_keyboard;
+  protected int getResourceForLabel () {
+    return R.string.control_label_OneHand;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_OneHand;
+  protected int getResourceForGroup () {
+    return R.string.control_group_keyboard;
   }
 
   @Override

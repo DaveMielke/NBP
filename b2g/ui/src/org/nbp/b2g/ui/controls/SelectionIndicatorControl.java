@@ -5,13 +5,13 @@ import org.nbp.common.EnumerationControl;
 
 public class SelectionIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_braille;
+  protected int getResourceForLabel () {
+    return R.string.control_label_SelectionIndicator;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_SelectionIndicator;
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
   }
 
   @Override

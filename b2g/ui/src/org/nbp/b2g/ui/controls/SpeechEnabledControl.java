@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class SpeechEnabledControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_speech;
+  protected int getResourceForLabel () {
+    return R.string.control_label_SpeechEnabled;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_SpeechEnabled;
+  protected int getResourceForGroup () {
+    return R.string.control_group_speech;
   }
 
   @Override

@@ -5,13 +5,13 @@ import org.nbp.common.EnumerationControl;
 
 public class CursorIndicatorControl extends EnumerationControl<IndicatorOverlay> {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_braille;
+  protected int getResourceForLabel () {
+    return R.string.control_label_CursorIndicator;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_CursorIndicator;
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
   }
 
   @Override

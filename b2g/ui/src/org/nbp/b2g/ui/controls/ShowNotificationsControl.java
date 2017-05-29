@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class ShowNotificationsControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_general;
+  protected int getResourceForLabel () {
+    return R.string.control_label_ShowNotifications;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_ShowNotifications;
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
   }
 
   @Override

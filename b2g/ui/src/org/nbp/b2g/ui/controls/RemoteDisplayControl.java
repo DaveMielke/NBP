@@ -7,13 +7,13 @@ import org.nbp.common.BooleanControl;
 
 public class RemoteDisplayControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_remote;
+  protected int getResourceForLabel () {
+    return R.string.control_label_RemoteDisplay;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_RemoteDisplay;
+  protected int getResourceForGroup () {
+    return R.string.control_group_remote;
   }
 
   @Override

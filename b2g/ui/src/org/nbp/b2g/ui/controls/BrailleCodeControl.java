@@ -5,13 +5,13 @@ import org.nbp.common.EnumerationControl;
 
 public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_general;
+  protected int getResourceForLabel () {
+    return R.string.control_label_BrailleCode;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_BrailleCode;
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
   }
 
   @Override

@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class LiteraryBrailleControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_general;
+  protected int getResourceForLabel () {
+    return R.string.control_label_LiteraryBraille;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_LiteraryBraille;
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
   }
 
   @Override

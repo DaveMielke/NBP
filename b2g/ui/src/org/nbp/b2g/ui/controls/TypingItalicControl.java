@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class TypingItalicControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_input;
+  protected int getResourceForLabel () {
+    return R.string.control_label_TypingItalic;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_TypingItalic;
+  protected int getResourceForGroup () {
+    return R.string.control_group_input;
   }
 
   @Override

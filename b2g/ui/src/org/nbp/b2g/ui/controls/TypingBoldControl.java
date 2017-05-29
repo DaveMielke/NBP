@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class TypingBoldControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_input;
+  protected int getResourceForLabel () {
+    return R.string.control_label_TypingBold;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_TypingBold;
+  protected int getResourceForGroup () {
+    return R.string.control_group_input;
   }
 
   @Override

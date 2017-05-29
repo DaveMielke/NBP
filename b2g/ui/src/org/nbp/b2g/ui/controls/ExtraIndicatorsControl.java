@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class ExtraIndicatorsControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_developer;
+  protected int getResourceForLabel () {
+    return R.string.control_label_ExtraIndicators;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_ExtraIndicators;
+  protected int getResourceForGroup () {
+    return R.string.control_group_developer;
   }
 
   @Override

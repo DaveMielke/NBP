@@ -5,13 +5,13 @@ import org.nbp.common.BooleanControl;
 
 public class LogGesturesControl extends BooleanControl {
   @Override
-  protected int getResourceForGroup () {
-    return R.string.control_group_developer;
+  protected int getResourceForLabel () {
+    return R.string.control_label_LogGestures;
   }
 
   @Override
-  protected int getResourceForLabel () {
-    return R.string.control_label_LogGestures;
+  protected int getResourceForGroup () {
+    return R.string.control_group_developer;
   }
 
   @Override
