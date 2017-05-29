@@ -51,8 +51,13 @@ public class TextOperations extends ContentOperations {
     Writer writer = new OutputStreamWriter(stream);
 
     try {
-      writer.write(preprocessOutput(content));
-      writer.write('\n');
+      String output = preprocessOutput(content);
+      writer.write(output);
+
+      if (!output.isEmpty()) {
+        String trailer = "\n";
+        if (!output.endsWith(trailer)) writer.write(trailer);
+      }
     } finally {
       writer.close();
     }
