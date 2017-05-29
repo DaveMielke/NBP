@@ -167,7 +167,11 @@ public class BluetoothChannel extends Channel {
           Log.d(LOG_TAG, "channel listening");
           BluetoothSocket session = getSessionSocket(server);
 
-          closeServerSocket(server);
+          synchronized (STOP_LOCK) {
+            if (setCurrentSocket(null)) {
+              closeServerSocket(server);
+            }
+          }
           server = null;
 
           if (session != null) {
@@ -192,9 +196,13 @@ public class BluetoothChannel extends Channel {
               inputStream = null;
             }
 
-            closeSessionSocket(session);
-            session = null;
+            synchronized (STOP_LOCK) {
+              if (setCurrentSocket(null)) {
+                closeSessionSocket(session);
+              }
+            }
 
+            session = null;
             continue;
           }
         }
