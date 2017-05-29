@@ -23,21 +23,23 @@
 
   <string name="comment_hint_text">Type comment</string>
 
-  <string name="message_file_saved">File Saved</string>
+  <string name="message_file_saved">file saved</string>
   <string name="message_no_next_comment">no next comment</string>
   <string name="message_no_next_group">no next group</string>
   <string name="message_no_next_revision">no next revision</string>
   <string name="message_no_previous_comment">no previous comment</string>
   <string name="message_no_previous_group">no previous group</string>
   <string name="message_no_previous_revision">no previous revision</string>
+  <string name="message_not_file">not a file</string>
+  <string name="message_not_writable">file not writable</string>
   <string name="message_original_text">original text</string>
-  <string name="message_protected_text">Protected text</string>
-  <string name="message_reading_content">Reading...</string>
-  <string name="message_rename_failed">Rename Failed</string>
-  <string name="message_save_no">Cannot Save File</string>
-  <string name="message_send_new">Cannot Send New File</string>
+  <string name="message_protected_text">protected text</string>
+  <string name="message_reading_content">reading...</string>
+  <string name="message_rename_failed">rename failed</string>
+  <string name="message_save_no">save not supported</string>
+  <string name="message_send_new">cannot send new file</string>
   <string name="message_uncommented_text">uncommented text</string>
-  <string name="message_writing_content">Writing...</string>
+  <string name="message_writing_content">writing...</string>
 
   <string name="action_accept">Accept</string>
   <string name="action_add">Add</string>

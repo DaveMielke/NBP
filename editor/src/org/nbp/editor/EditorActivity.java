@@ -224,6 +224,21 @@ public class EditorActivity extends CommonActivity {
         }
       }
 
+      if (file.exists()) {
+        int problem = 0;
+
+        if (!file.isFile()) {
+          problem = R.string.message_not_file;
+        } else if (!file.canWrite()) {
+          problem = R.string.message_not_writable;
+        }
+
+        if (problem != 0) {
+          showMessage(problem, file.getAbsolutePath());
+          return;
+        }
+      }
+
       content = editArea.getText();
       editArea.setHasChanged(false);
     }
