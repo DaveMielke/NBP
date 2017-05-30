@@ -8,6 +8,7 @@ import static org.liblouis.Tests.logOffsets;
 import org.liblouis.Translation;
 import org.liblouis.BrailleTranslation;
 import org.liblouis.TextTranslation;
+import org.nbp.common.Braille;
 
 public abstract class Endpoint {
   private final static String LOG_TAG = Endpoint.class.getName();
@@ -592,6 +593,20 @@ public abstract class Endpoint {
     return ((lineOffset >= 0) && (lineOffset <= getLineLength()));
   }
 
+  private final static boolean isWordBreak (char character) {
+    return Character.isWhitespace(character);
+  }
+
+  private final boolean isWordBreak (int textOffset) {
+    if (!isWordBreak(getLineText().charAt(textOffset))) return false;
+
+    CharSequence brailleCharacters = getBrailleCharacters();
+    int brailleOffset = getBrailleOffset(textOffset);
+
+    if (brailleOffset == brailleCharacters.length()) return true;
+    return brailleCharacters.charAt(brailleOffset) == Braille.UNICODE_ROW;
+  }
+
   protected final void adjustLeft (int offset, int keep) {
     if (offset < lineIndent) {
       lineIndent = getAdjustedLineOffset(-keep, offset);
@@ -600,9 +615,9 @@ public abstract class Endpoint {
         CharSequence text = getLineText();
 
         if (lineIndent < text.length()) {
-          if (!isWordBreak(text.charAt(lineIndent))) {
+          if (!isWordBreak(lineIndent)) {
             while (lineIndent > 0) {
-              if (isWordBreak(text.charAt(--lineIndent))) {
+              if (isWordBreak(--lineIndent)) {
                 lineIndent += 1;
                 break;
               }
@@ -739,10 +754,6 @@ public abstract class Endpoint {
     return null;
   }
 
-  private final static boolean isWordBreak (char character) {
-    return character == ' ';
-  }
-
   public final int findPreviousSegment (int size, int end, int cursor) {
     synchronized (this) {
       CharSequence text = getLineText();
@@ -757,9 +768,9 @@ public abstract class Endpoint {
       if (!ApplicationSettings.WORD_WRAP) return start;
       if (start == 0) return 0;
 
-      if (!isWordBreak(text.charAt(start-1))) {
+      if (!isWordBreak(start-1)) {
         for (int index=start; index<end; index+=1) {
-          if (isWordBreak(text.charAt(index))) {
+          if (isWordBreak(index)) {
             start = index;
             break;
           }
@@ -768,7 +779,7 @@ public abstract class Endpoint {
 
       for (int index=start; index<end; index+=1) {
         if (index == cursor) return index;
-        if (!isWordBreak(text.charAt(index))) return index;
+        if (!isWordBreak(index)) return index;
       }
 
       return start;
@@ -786,10 +797,10 @@ public abstract class Endpoint {
 
       CharSequence text = getLineText();
       if (segment == text.length()) return segment;
-      if (isWordBreak(text.charAt(segment))) return segment;
+      if (isWordBreak(segment)) return segment;
 
       for (int index=segment-1; index>=indent; index-=1) {
-        if (isWordBreak(text.charAt(index))) return index + 1;
+        if (isWordBreak(index)) return index + 1;
       }
 
       return segment;
@@ -846,12 +857,10 @@ public abstract class Endpoint {
         }
 
         if (ApplicationSettings.WORD_WRAP) {
-          CharSequence text = getLineText();
-
           while (indent > 0) {
             indent -= 1;
 
-            if ((indent == cursor) || !isWordBreak(text.charAt(indent))) {
+            if ((indent == cursor) || !isWordBreak(indent)) {
               indent += 1;
               break;
             }
@@ -894,12 +903,11 @@ public abstract class Endpoint {
           indent = findNextSegment(size, indent);
 
           if (ApplicationSettings.WORD_WRAP) {
-            CharSequence text = getLineText();
             int cursor = getCursorLocation();
 
             while (indent < length) {
               if (indent == cursor) break;
-              if (!isWordBreak(text.charAt(indent))) break;
+              if (!isWordBreak(indent)) break;
               indent += 1;
             }
 
