@@ -326,6 +326,16 @@ public abstract class Content {
         ReviewerColors.reset();
         handle.getOperations().read(stream, content);
         EditorSpan.finishSpans(content);
+
+        {
+          int end = content.length();
+
+          if (end > 0) {
+            int start = end - 1;
+            if (content.charAt(start) == '\n') content.delete(start, end);
+          }
+        }
+
         return true;
       } finally {
         stream.close();
@@ -344,13 +354,25 @@ public abstract class Content {
   public static boolean writeFile (File file, CharSequence content) {
     ContentOperations operations = getContentOperations(file);
 
-    if (content instanceof Spanned) {
+    {
       Editable copy = new SpannableStringBuilder(content);
 
-      if (operations.canContainMarkup()) {
-        Markup.restoreRevisions(copy);
-      } else {
-        Markup.removeMarkup(copy);
+      {
+        int length = copy.length();
+
+        if (length > 0) {
+          if (copy.charAt(length-1) != '\n') {
+            copy.append('\n');
+          }
+        }
+      }
+
+      if (content instanceof Spanned) {
+        if (operations.canContainMarkup()) {
+          Markup.restoreRevisions(copy);
+        } else {
+          Markup.removeMarkup(copy);
+        }
       }
 
       content = copy;
