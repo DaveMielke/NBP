@@ -46,17 +46,17 @@ public class EditArea extends EditText {
   }
 
   public final boolean containsProtectedText (Spanned text, int start, int end) {
-    EditorSpan[] spans = text.getSpans(start, end, EditorSpan.class);
+    if (ApplicationSettings.PROTECT_TEXT) return true;
+    if (!enforceTextProtection) return false;
 
-    if (enforceTextProtection) {
-      if (spans != null) {
-        for (EditorSpan span : spans) {
-          if (!span.getContainsProtectedText()) continue;
-          if (text.getSpanStart(span) >= end) continue;
-          if (text.getSpanEnd(span) <= start) continue;
-          return true;
-        }
-      }
+    EditorSpan[] spans = text.getSpans(start, end, EditorSpan.class);
+    if (spans == null) return false;
+
+    for (EditorSpan span : spans) {
+      if (!span.getContainsProtectedText()) continue;
+      if (text.getSpanStart(span) >= end) continue;
+      if (text.getSpanEnd(span) <= start) continue;
+      return true;
     }
 
     return false;
