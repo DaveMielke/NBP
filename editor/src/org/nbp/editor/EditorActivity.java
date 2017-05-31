@@ -155,6 +155,31 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  public final boolean verifyWritableText () {
+    if (!ApplicationSettings.PROTECT_TEXT) return true;
+    showMessage(R.string.message_protected_text);
+    return false;
+  }
+
+  public final boolean verifyWritableRegion (Spanned text, int start, int end) {
+    if (verifyWritableText()) {
+      if (!editArea.containsProtectedText(text, start, end)) return true;
+      showMessage(R.string.message_protected_region);
+    }
+
+    return false;
+  }
+
+  public final boolean verifyWritableRegion (int start, int end) {
+    return verifyWritableRegion(editArea.getText(), start, end);
+  }
+
+  public final boolean verifyWritableRegion () {
+    return verifyWritableRegion(
+      editArea.getSelectionStart(), editArea.getSelectionEnd()
+    );
+  }
+
   private final void saveFile (
     final File file, final CharSequence content,
     final boolean confirm, final Runnable onSaved
@@ -714,12 +739,11 @@ public class EditorActivity extends CommonActivity {
         CharSequence src, int srcStart, int srcEnd,
         Spanned dst, int dstStart, int dstEnd
       ) {
-        if (editArea.containsProtectedText(dst, dstStart, dstEnd)) {
-          showMessage(R.string.message_protected_text);
+        if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
           return dst.subSequence(dstStart, dstEnd);
         }
 
-        editArea.setHasChanged(true);
+        editArea.setHasChanged();
         return null;
       }
     };

@@ -10,7 +10,9 @@ public class Paste extends ClipboardAction {
 
   @Override
   public void performAction (EditorActivity editor, MenuItem item) {
-    CharSequence text = getText(getClipboard(editor));
-    if (text != null) editor.getEditArea().replaceSelection(text);
+    if (editor.verifyWritableRegion()) {
+      CharSequence text = getText(getClipboard(editor));
+      if (text != null) editor.getEditArea().replaceSelection(text);
+    }
   }
 }

@@ -67,9 +67,7 @@ public class Record extends EditorAction {
 
   @Override
   public void performAction (final EditorActivity editor, MenuItem item) {
-    if (editor.getEditArea().containsProtectedText()) {
-      editor.showMessage(R.string.message_protected_text);
-    } else {
+    if (editor.verifyWritableRegion()) {
       SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
         @Override
         public void handleText (String[] choices) {

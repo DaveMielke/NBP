@@ -1,5 +1,4 @@
-join contiguous revisions
 next,previous group,revision when previewing
-set comment author and initials
+saving an insert+delete revision
+set added comment author and initials
 full support for paragraph labels
-revision, preview, comment summary

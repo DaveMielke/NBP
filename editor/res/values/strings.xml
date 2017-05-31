@@ -33,7 +33,8 @@
   <string name="message_not_file">not a file</string>
   <string name="message_not_writable">file not writable</string>
   <string name="message_original_text">original text</string>
-  <string name="message_protected_text">protected text</string>
+  <string name="message_protected_region">protected region</string>
+  <string name="message_protected_text">text protection on</string>
   <string name="message_reading_content">reading...</string>
   <string name="message_rename_failed">rename failed</string>
   <string name="message_save_no">save not supported</string>
