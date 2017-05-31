@@ -76,16 +76,20 @@ public class EditorActivity extends CommonActivity {
 
   private final void saveRecentURI (ContentHandle handle) {
     String uri = handle.getNormalizedString();
-    recentURIs.remove(uri);
+    boolean resave = !recentURIs.remove(uri);
 
     while (recentURIs.size() >= ApplicationParameters.RECENT_URI_LIMIT) {
       recentURIs.remove(0);
+      resave = true;
     }
 
     recentURIs.add(uri);
-    prefs.edit()
-         .putStringSet(PREF_RECENT_URIS, new LinkedHashSet<String>(recentURIs))
-         .commit();
+
+    if (resave) {
+      prefs.edit()
+           .putStringSet(PREF_RECENT_URIS, new LinkedHashSet<String>(recentURIs))
+           .commit();
+    }
   }
 
   private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";
