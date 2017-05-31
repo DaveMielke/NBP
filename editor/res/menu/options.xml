@@ -87,16 +87,6 @@
          />
 
         <item
-          android:id="@+id/menu_selection_Uppercase"
-          android:title="@string/menu_selection_Uppercase"
-         />
-
-        <item
-          android:id="@+id/menu_selection_Lowercase"
-          android:title="@string/menu_selection_Lowercase"
-         />
-
-        <item
           android:id="@+id/menu_highlight_Submenu"
           android:title="@string/menu_highlight_Submenu"
           >
@@ -133,6 +123,16 @@
              />
           </menu>
         </item>
+
+        <item
+          android:id="@+id/menu_selection_Uppercase"
+          android:title="@string/menu_selection_Uppercase"
+         />
+
+        <item
+          android:id="@+id/menu_selection_Lowercase"
+          android:title="@string/menu_selection_Lowercase"
+         />
       </group>
     </menu>
   </item>
