@@ -10,15 +10,17 @@ public class AllMarkup extends EditorAction {
 
   @Override
   public void performAction (EditorActivity editor, MenuItem item) {
-    final EditArea editArea = editor.getEditArea();
+    if (editor.verifyWritableText()) {
+      final EditArea editArea = editor.getEditArea();
 
-    editor.runProtectedOperation(
-      new Runnable() {
-        @Override
-        public void run () {
-          Markup.restoreRevisions(editArea.getText());
+      editor.runProtectedOperation(
+        new Runnable() {
+          @Override
+          public void run () {
+            Markup.restoreRevisions(editArea.getText());
+          }
         }
-      }
-    );
+      );
+    }
   }
 }

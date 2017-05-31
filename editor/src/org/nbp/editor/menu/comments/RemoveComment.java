@@ -14,7 +14,9 @@ public class RemoveComment extends EditorAction {
     final EditArea editArea = editor.getEditArea();
     final CommentSpan comment = editArea.getCommentSpan();
 
-    if (comment != null) {
+    if (comment == null) {
+      editor.showMessage(R.string.message_uncommented_text);
+    } else if (editor.verifyWritableText()) {
       editor.showDialog(
         R.string.menu_comments_RemoveComment, R.layout.comment_show,
         comment, R.string.action_remove,
@@ -34,8 +36,6 @@ public class RemoveComment extends EditorAction {
           }
         }
       );
-    } else {
-      editor.showMessage(R.string.message_uncommented_text);
     }
   }
 }

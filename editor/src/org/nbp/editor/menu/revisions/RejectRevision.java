@@ -14,7 +14,9 @@ public class RejectRevision extends EditorAction {
     final EditArea editArea = editor.getEditArea();
     final RevisionSpan revision = editArea.getRevisionSpan();
 
-    if (revision != null) {
+    if (revision == null) {
+    } else if (editor.verifyWritableText()) {
+      editor.showMessage(R.string.message_original_text);
       editor.showDialog(
         R.string.menu_revisions_RejectRevision, R.layout.revision_show,
         revision, R.string.action_reject,
@@ -34,8 +36,6 @@ public class RejectRevision extends EditorAction {
           }
         }
       );
-    } else {
-      editor.showMessage(R.string.message_original_text);
     }
   }
 }
