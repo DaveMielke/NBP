@@ -69,6 +69,29 @@ public abstract class Markup {
     return replaceRevision(content, revision, revision.getRejectText(), null);
   }
 
+  public final static boolean restoreRevisions (Editable content) {
+    boolean restored = false;
+
+    for (PreviewSpan preview : getPreviewSpans(content)) {
+      int start = content.getSpanStart(preview);
+      int end = content.getSpanEnd(preview);
+      content.removeSpan(preview);
+
+      RevisionSpan revision = preview.getRevisionSpan();
+      CharSequence replacement = revision.getDecoratedText();
+      content.replace(start, end, replacement);
+
+      content.setSpan(
+        revision, start, (start + replacement.length()),
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+      );
+
+      restored = true;
+    }
+
+    return restored;
+  }
+
   private interface RevisionPreviewer {
     public void previewRevision (Editable content, RevisionSpan revision, PreviewSpan preview);
   }
@@ -76,6 +99,7 @@ public abstract class Markup {
   private final static boolean previewRevisions (
     Editable content, RevisionPreviewer revisionPreviewer
   ) {
+    restoreRevisions(content);
     RevisionSpan[] revisions = getRevisionSpans(content);
 
     int count = revisions.length;
@@ -121,32 +145,9 @@ public abstract class Markup {
     );
   }
 
-  public final static boolean restoreRevisions (Editable content) {
-    boolean restored = false;
-
-    for (PreviewSpan preview : getPreviewSpans(content)) {
-      int start = content.getSpanStart(preview);
-      int end = content.getSpanEnd(preview);
-      content.removeSpan(preview);
-
-      RevisionSpan revision = preview.getRevisionSpan();
-      CharSequence replacement = revision.getDecoratedText();
-      content.replace(start, end, replacement);
-
-      content.setSpan(
-        revision, start, (start + replacement.length()),
-        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-      );
-
-      restored = true;
-    }
-
-    return restored;
-  }
-
   public final static boolean acceptRevisions (Editable content) {
-    boolean accepted = false;
     restoreRevisions(content);
+    boolean accepted = false;
 
     for (RevisionSpan revision : getRevisionSpans(content)) {
       acceptRevision(content, revision);
