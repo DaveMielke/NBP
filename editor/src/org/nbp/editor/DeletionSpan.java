@@ -13,6 +13,10 @@ public class DeletionSpan extends RevisionSpan {
     insertionRevision = insertion;
   }
 
+  public DeletionSpan () {
+    this(null);
+  }
+
   public final InsertionSpan getInsertion () {
     return insertionRevision;
   }
