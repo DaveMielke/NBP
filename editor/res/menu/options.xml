@@ -168,6 +168,11 @@
             android:id="@+id/menu_changes_NoMarkup"
             android:title="@string/menu_changes_NoMarkup"
            />
+
+          <item
+            android:id="@+id/menu_changes_Original"
+            android:title="@string/menu_changes_Original"
+           />
         </menu>
       </item>
 

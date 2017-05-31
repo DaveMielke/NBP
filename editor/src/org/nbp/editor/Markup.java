@@ -49,58 +49,24 @@ public abstract class Markup {
     return start;
   }
 
-  private final static int acceptRevision (
+  private final static int applyRevision (
     Editable content, RevisionSpan revision, PreviewSpan preview
   ) {
     return removeRevision(content, revision, revision.getAcceptText(), preview);
   }
 
+  private final static int revertRevision (
+    Editable content, RevisionSpan revision, PreviewSpan preview
+  ) {
+    return removeRevision(content, revision, revision.getOriginalText(), preview);
+  }
+
   public final static int acceptRevision (Editable content, RevisionSpan revision) {
-    return acceptRevision(content, revision, null);
+    return applyRevision(content, revision, null);
   }
 
   public final static int rejectRevision (Editable content, RevisionSpan revision) {
     return removeRevision(content, revision, revision.getRejectText(), null);
-  }
-
-  public final static boolean previewRevisions (Editable content) {
-    RevisionSpan[] revisions = getRevisionSpans(content);
-    int count = revisions.length;
-    if (count == 0) return false;
-
-    PreviewSpan[] previews = new PreviewSpan[count];
-
-    for (int index=0; index<count; index+=1) {
-      RevisionSpan revision = revisions[index];
-
-      previews[index] = new PreviewSpan(
-        revision,
-        content.getSpanStart(revision),
-        content.getSpanEnd(revision)
-      );
-    }
-
-    for (int index=0; index<count; index+=1) {
-      acceptRevision(content, revisions[index], previews[index]);
-    }
-
-    return true;
-  }
-
-  public final static boolean acceptRevisions (Editable content) {
-    boolean accepted = false;
-
-    for (RevisionSpan revision : getRevisionSpans(content)) {
-      acceptRevision(content, revision);
-      accepted = true;
-    }
-
-    for (PreviewSpan preview : getPreviewSpans(content)) {
-      content.removeSpan(preview);
-      accepted = true;
-    }
-
-    return accepted;
   }
 
   public final static boolean restoreRevisions (Editable content) {
@@ -124,6 +90,70 @@ public abstract class Markup {
     }
 
     return restored;
+  }
+
+  public final static boolean applyRevisions (Editable content) {
+    RevisionSpan[] revisions = getRevisionSpans(content);
+
+    int count = revisions.length;
+    if (count == 0) return false;
+    PreviewSpan[] previews = new PreviewSpan[count];
+
+    for (int index=0; index<count; index+=1) {
+      RevisionSpan revision = revisions[index];
+
+      previews[index] = new PreviewSpan(
+        revision,
+        content.getSpanStart(revision),
+        content.getSpanEnd(revision)
+      );
+    }
+
+    for (int index=0; index<count; index+=1) {
+      applyRevision(content, revisions[index], previews[index]);
+    }
+
+    return true;
+  }
+
+  public final static boolean revertRevisions (Editable content) {
+    RevisionSpan[] revisions = getRevisionSpans(content);
+
+    int count = revisions.length;
+    if (count == 0) return false;
+    PreviewSpan[] previews = new PreviewSpan[count];
+
+    for (int index=0; index<count; index+=1) {
+      RevisionSpan revision = revisions[index];
+
+      previews[index] = new PreviewSpan(
+        revision,
+        content.getSpanStart(revision),
+        content.getSpanEnd(revision)
+      );
+    }
+
+    for (int index=0; index<count; index+=1) {
+      revertRevision(content, revisions[index], previews[index]);
+    }
+
+    return true;
+  }
+
+  public final static boolean acceptRevisions (Editable content) {
+    boolean accepted = false;
+
+    for (RevisionSpan revision : getRevisionSpans(content)) {
+      acceptRevision(content, revision);
+      accepted = true;
+    }
+
+    for (PreviewSpan preview : getPreviewSpans(content)) {
+      content.removeSpan(preview);
+      accepted = true;
+    }
+
+    return accepted;
   }
 
   public final static void removeComments (Editable content) {
