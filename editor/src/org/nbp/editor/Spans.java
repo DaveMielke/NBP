@@ -179,20 +179,21 @@ public abstract class Spans {
     );
   }
 
-  private final static void addRevisionSpanEntry (
-    final String identifier,
-    final Class<? extends RevisionSpan> type
-  ) {
+  static {
+    addSimpleSpanEntry("dec", DecorationSpan.class);
+    addSimpleSpanEntry("sec", SectionSpan.class);
+    addSimpleSpanEntry("par", ParagraphSpan.class);
+
     addSpanEntry(
       new SpanEntry () {
         @Override
         public final String getIdentifier () {
-          return identifier;
+          return "ins";
         }
 
         @Override
         public final Class<?> getType () {
-          return type;
+          return InsertionSpan.class;
         }
 
         private String[] properties = new String[] {"name", "time"};
@@ -204,14 +205,14 @@ public abstract class Spans {
 
         @Override
         public final String getPropertyValue (Object span, int index) {
-          RevisionSpan revision = (RevisionSpan)span;
+          InsertionSpan insertion = (InsertionSpan)span;
 
           switch (index) {
             case 0:
-              return revision.getReviewerName();
+              return insertion.getReviewerName();
 
             case 1: {
-              Date time = revision.getReviewTime();
+              Date time = insertion.getReviewTime();
               if (time == null) break;
               return Long.toString(time.getTime());
             }
@@ -228,24 +229,95 @@ public abstract class Spans {
           Constructor constructor = LanguageUtilities.getConstructor(getType());
           if (constructor == null) return null;
 
-          RevisionSpan revision = (RevisionSpan)LanguageUtilities.newInstance(constructor);
-          if (revision == null) return null;
+          InsertionSpan insertion = (InsertionSpan)LanguageUtilities.newInstance(constructor);
+          if (insertion == null) return null;
 
-          if (name != null) revision.setReviewerName(name);
-          if (time != null) revision.setReviewTime(time);
-          return revision;
+          if (name != null) insertion.setReviewerName(name);
+          if (time != null) insertion.setReviewTime(time);
+          return insertion;
         }
       }
     );
-  }
 
-  static {
-    addSimpleSpanEntry("dec", DecorationSpan.class);
-    addSimpleSpanEntry("sec", SectionSpan.class);
-    addSimpleSpanEntry("par", ParagraphSpan.class);
+    addSpanEntry(
+      new SpanEntry () {
+        @Override
+        public final String getIdentifier () {
+          return "del";
+        }
 
-    addRevisionSpanEntry("ins", InsertionSpan.class);
-    addRevisionSpanEntry("del", DeletionSpan.class);
+        @Override
+        public final Class<?> getType () {
+          return DeletionSpan.class;
+        }
+
+        private String[] properties = new String[] {"name", "time", "iname", "itime"};
+
+        @Override
+        protected final String[] getPropertyNames () {
+          return properties;
+        }
+
+        @Override
+        public final String getPropertyValue (Object span, int index) {
+          DeletionSpan deletion = (DeletionSpan)span;
+
+          switch (index) {
+            case 0:
+              return deletion.getReviewerName();
+
+            case 1: {
+              Date time = deletion.getReviewTime();
+              if (time == null) break;
+              return Long.toString(time.getTime());
+            }
+
+            case 2: {
+              InsertionSpan insertion = deletion.getInsertion();
+              if (insertion == null) break;
+              return insertion.getReviewerName();
+            }
+
+            case 3: {
+              InsertionSpan insertion = deletion.getInsertion();
+              if (insertion == null) break;
+              Date time = insertion.getReviewTime();
+              if (time == null) break;
+              return Long.toString(time.getTime());
+            }
+          }
+
+          return null;
+        }
+
+        @Override
+        public final Object newSpan (String[] properties) {
+          String name = properties[0];
+          Date time = newTime(properties[1]);
+          String iname = properties[2];
+          Date itime = newTime(properties[3]);
+
+          Constructor constructor = LanguageUtilities.getConstructor(getType(), InsertionSpan.class);
+          if (constructor == null) return null;
+          InsertionSpan insertion;
+
+          if (itime == null) {
+            insertion = null;
+          } else {
+            insertion = new InsertionSpan();
+            if (iname != null) insertion.setReviewerName(iname);
+            if (itime != null) insertion.setReviewTime(itime);
+          }
+
+          DeletionSpan deletion = (DeletionSpan)LanguageUtilities.newInstance(constructor, insertion);
+          if (deletion == null) return null;
+
+          if (name != null) deletion.setReviewerName(name);
+          if (time != null) deletion.setReviewTime(time);
+          return deletion;
+        }
+      }
+    );
 
     addSpanEntry(
       new SpanEntry () {
