@@ -6,18 +6,15 @@ public class DeletionSpan extends RevisionSpan {
   private final static String prefixDecoration = "⣏⡱";
   private final static String suffixDecoration = "⢎⣹";
 
-  public DeletionSpan () {
+  private final InsertionSpan insertionRevision;
+
+  public DeletionSpan (InsertionSpan insertion) {
     super(prefixDecoration, suffixDecoration);
+    insertionRevision = insertion;
   }
 
-  private boolean wasInsertion = false;
-
-  public final boolean getWasInsertion () {
-    return wasInsertion;
-  }
-
-  public final void setWasInsertion (boolean yes) {
-    wasInsertion = yes;
+  public final InsertionSpan getInsertion () {
+    return insertionRevision;
   }
 
   @Override
@@ -37,6 +34,6 @@ public class DeletionSpan extends RevisionSpan {
 
   @Override
   public final CharSequence getOriginalText () {
-    return wasInsertion? getAcceptText(): getRejectText();
+    return (insertionRevision != null)? getAcceptText(): getRejectText();
   }
 }

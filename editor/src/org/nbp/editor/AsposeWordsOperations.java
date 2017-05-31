@@ -55,8 +55,14 @@ public class AsposeWordsOperations extends ContentOperations {
   }
 
   private class DocumentReader {
-    private final Map<Node, Revision> nodeRevisionMap =
-                 new HashMap<Node, Revision>();
+    private class RevisionMap extends HashMap<Node, Revision> {
+      public RevisionMap () {
+        super();
+      }
+    }
+
+    private final RevisionMap insertionMap = new RevisionMap();
+    private final RevisionMap deletionMap = new RevisionMap();
 
     private final void mapRevisions (Document document) {
       RevisionCollection revisions = document.getRevisions();
@@ -64,7 +70,30 @@ public class AsposeWordsOperations extends ContentOperations {
       if (revisions != null) {
         for (Revision revision : revisions) {
           Node node = revision.getParentNode();
-          if (node != null) nodeRevisionMap.put(node, revision);
+          if (node == null) continue;
+
+          switch (revision.getRevisionType()) {
+            case RevisionType.INSERTION:
+              insertionMap.put(node, revision);
+              break;
+
+            case RevisionType.DELETION:
+              deletionMap.put(node, revision);
+              break;
+          }
+        }
+      }
+    }
+
+    private final void setReviewProperties (
+      ReviewSpan review, RevisionMap revisionMap, Node node
+    ) {
+      if (review != null) {
+        Revision revision = revisionMap.get(node);
+
+        if (revision != null) {
+          review.setReviewerName(revision.getAuthor());
+          review.setReviewTime(revision.getDateTime());
         }
       }
     }
@@ -73,24 +102,16 @@ public class AsposeWordsOperations extends ContentOperations {
       Editable content, int start, Node node,
       boolean isInsertion, boolean isDeletion
     ) {
-      RevisionSpan span;
+      InsertionSpan insertion = isInsertion? new InsertionSpan(): null;
+      DeletionSpan deletion = isDeletion? new DeletionSpan(insertion): null;
 
-      if (isDeletion) {
-        DeletionSpan deletion = new DeletionSpan();
-        deletion.setWasInsertion(isInsertion);
-        span = deletion;
-      } else if (isInsertion) {
-        span = new InsertionSpan();
-      } else {
-        return;
-      }
+      RevisionSpan revision = deletion;
+      if (revision == null) revision = insertion;
 
-      if (addSpan(content, start, span)) {
-        Revision revision = nodeRevisionMap.get(node);
-
-        if (revision != null) {
-          span.setReviewerName(revision.getAuthor());
-          span.setReviewTime(revision.getDateTime());
+      if (revision != null) {
+        if (addSpan(content, start, revision)) {
+          setReviewProperties(insertion, insertionMap, node);
+          setReviewProperties(deletion, deletionMap, node);
         }
       }
     }
