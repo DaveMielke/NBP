@@ -704,12 +704,19 @@ public class EditorActivity extends CommonActivity {
               String type = prefs.getString(PREF_CHECKPOINT_TYPE, null);
               boolean writable = prefs.getBoolean(PREF_CHECKPOINT_WRITABLE, true);
 
-              if ((path == null) || path.isEmpty()) {
-                setEditorContent(null);
-              } else if (path.charAt(0) == File.separatorChar) {
-                setEditorContent(new ContentHandle(new File(path), type, writable));
-              } else {
-                setEditorContent(new ContentHandle(path, type, writable));
+              {
+                ContentHandle handle;
+
+                if ((path == null) || path.isEmpty()) {
+                  handle = null;
+                } else if (path.charAt(0) == File.separatorChar) {
+                  handle = new ContentHandle(new File(path), type, writable);
+                } else {
+                  handle = new ContentHandle(path, type, writable);
+                }
+
+                setEditorContent(handle);
+                if (handle != null) saveRecentURI(handle);
               }
 
               {
