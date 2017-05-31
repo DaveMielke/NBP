@@ -453,8 +453,8 @@ public class AsposeWordsOperations extends ContentOperations {
         }
       }
 
-      private final SpanFinisher beginInsertion (final RevisionSpan span) {
-        beginRevisionTracking(span);
+      private final SpanFinisher beginInsertion (final InsertionSpan insertion) {
+        beginRevisionTracking(insertion);
 
         return new SpanFinisher() {
           @Override
@@ -464,7 +464,12 @@ public class AsposeWordsOperations extends ContentOperations {
         };
       }
 
-      private final SpanFinisher beginDeletion (final RevisionSpan span) throws Exception {
+      private final SpanFinisher beginDeletion (final DeletionSpan deletion) throws Exception {
+        {
+          InsertionSpan insertion = deletion.getInsertion();
+          if (insertion != null) beginRevisionTracking(insertion);
+        }
+
         final String bookmarkName = newBookmarkName();
         final BookmarkStart bookmarkStart = builder.startBookmark(bookmarkName);
 
@@ -474,20 +479,13 @@ public class AsposeWordsOperations extends ContentOperations {
             builder.endBookmark(bookmarkName);
             Bookmark bookmark = bookmarkStart.getBookmark();
 
-            beginRevisionTracking(span);
+            beginRevisionTracking(deletion);
             bookmark.setText("");
             endRevisionTracking();
 
             bookmark.remove();
           }
         };
-      }
-
-      private final SpanFinisher beginRevision (RevisionSpan span) throws Exception {
-        if (span == null) return null;
-        if (span instanceof InsertionSpan) return beginInsertion(span);
-        if (span instanceof DeletionSpan) return beginDeletion(span);
-        return null;
       }
 
       private final SpanFinisher beginComment (final CommentSpan span) throws Exception {
@@ -582,9 +580,13 @@ public class AsposeWordsOperations extends ContentOperations {
                 }
               } else if (span instanceof DecorationSpan) {
                 isDecoration = true;
-              } else if (span instanceof RevisionSpan) {
+              } else if (span instanceof InsertionSpan) {
                 if (isStart) {
-                  addSpanFinisher(end, beginRevision((RevisionSpan)span));
+                  addSpanFinisher(end, beginInsertion((InsertionSpan)span));
+                }
+              } else if (span instanceof DeletionSpan) {
+                if (isStart) {
+                  addSpanFinisher(end, beginDeletion((DeletionSpan)span));
                 }
               } else if (span instanceof CommentSpan) {
                 if (isStart) {
