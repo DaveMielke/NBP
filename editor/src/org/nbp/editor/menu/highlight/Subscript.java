@@ -2,6 +2,7 @@ package org.nbp.editor.menu.highlight;
 import org.nbp.editor.*;
 
 import android.view.MenuItem;
+import android.text.style.CharacterStyle;
 import android.text.style.SubscriptSpan;
 
 public class Subscript extends HighlightAction {
@@ -10,7 +11,7 @@ public class Subscript extends HighlightAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
-    addStyle(editor, new SubscriptSpan());
+  public CharacterStyle getCharacterStyle () {
+    return new SubscriptSpan();
   }
 }

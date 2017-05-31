@@ -1,7 +1,6 @@
 package org.nbp.editor;
 
 import android.view.MenuItem;
-
 import android.text.Editable;
 import android.text.Spanned;
 import android.text.style.CharacterStyle;
@@ -11,16 +10,20 @@ public abstract class HighlightAction extends EditorAction {
     super();
   }
 
-  protected final void addStyle (EditorActivity editor, CharacterStyle style) {
+  protected abstract CharacterStyle getCharacterStyle ();
+
+  @Override
+  public void performAction (EditorActivity editor, MenuItem item) {
     EditArea editArea = editor.getEditArea();
     Editable text = editArea.getText();
-
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
 
-    if (end > start) {
-      text.setSpan(style, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-      editArea.setSelection(end);
+    if (editor.verifyWritableRegion(text, start, end)) {
+      if (end > start) {
+        text.setSpan(getCharacterStyle(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editArea.setSelection(end);
+      }
     }
   }
 }

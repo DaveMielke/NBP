@@ -18,21 +18,23 @@ public abstract class CharacterAction extends EditorAction {
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
 
-    StringBuilder replacement = new StringBuilder();
-    replacement.append(' ');
+    if (editor.verifyWritableRegion(text, start, end)) {
+      StringBuilder replacement = new StringBuilder();
+      replacement.append(' ');
 
-    while (start < end) {
-      char character = text.charAt(start);
-      int next = start + 1;
+      while (start < end) {
+        char character = text.charAt(start);
+        int next = start + 1;
 
-      if (testCharacter(character)) {
-        replacement.setCharAt(0, translateCharacter(character));
-        text.replace(start, next, replacement);
+        if (testCharacter(character)) {
+          replacement.setCharAt(0, translateCharacter(character));
+          text.replace(start, next, replacement);
+        }
+
+        start = next;
       }
 
-      start = next;
+      editor.getEditArea().setSelection(end);
     }
-
-    editor.getEditArea().setSelection(end);
   }
 }
