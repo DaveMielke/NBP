@@ -33,7 +33,7 @@ public class DeletionSpan extends RevisionSpan {
   }
 
   @Override
-  public final CharSequence getOriginalText () {
+  public final CharSequence getRevertText () {
     return (insertionRevision != null)? getAcceptText(): getRejectText();
   }
 }

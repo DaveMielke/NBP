@@ -24,7 +24,7 @@ public class InsertionSpan extends RevisionSpan {
   }
 
   @Override
-  public final CharSequence getOriginalText () {
+  public final CharSequence getRevertText () {
     return getRejectText();
   }
 }
