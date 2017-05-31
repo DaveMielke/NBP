@@ -144,17 +144,6 @@ public class EditorActivity extends CommonActivity {
     setEditorContent(null, "");
   }
 
-  public final void runProtectedOperation (Runnable operation) {
-    boolean wasEnforced = editArea.getEnforceTextProtection();
-    editArea.setEnforceTextProtection(false);
-
-    try {
-      operation.run();
-    } finally {
-      editArea.setEnforceTextProtection(wasEnforced);
-    }
-  }
-
   public final boolean verifyWritableText () {
     if (!ApplicationSettings.PROTECT_TEXT) return true;
     showMessage(R.string.message_protected_text);
@@ -178,6 +167,17 @@ public class EditorActivity extends CommonActivity {
     return verifyWritableRegion(
       editArea.getSelectionStart(), editArea.getSelectionEnd()
     );
+  }
+
+  public final void performWithoutRegionProtection (Runnable operation) {
+    boolean wasEnforced = editArea.getEnforceTextProtection();
+    editArea.setEnforceTextProtection(false);
+
+    try {
+      operation.run();
+    } finally {
+      editArea.setEnforceTextProtection(wasEnforced);
+    }
   }
 
   private final void saveFile (

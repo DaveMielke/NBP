@@ -23,7 +23,7 @@ public class RejectRevision extends EditorAction {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            editor.runProtectedOperation(
+            editor.performWithoutRegionProtection(
               new Runnable() {
                 @Override
                 public void run () {

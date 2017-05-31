@@ -13,7 +13,7 @@ public class AllMarkup extends EditorAction {
     if (editor.verifyWritableText()) {
       final EditArea editArea = editor.getEditArea();
 
-      editor.runProtectedOperation(
+      editor.performWithoutRegionProtection(
         new Runnable() {
           @Override
           public void run () {
