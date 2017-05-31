@@ -15,8 +15,8 @@ public class RejectRevision extends EditorAction {
     final RevisionSpan revision = editArea.getRevisionSpan();
 
     if (revision == null) {
-    } else if (editor.verifyWritableText()) {
       editor.showMessage(R.string.message_original_text);
+    } else if (editor.verifyWritableText()) {
       editor.showDialog(
         R.string.menu_revisions_RejectRevision, R.layout.revision_show,
         revision, R.string.action_reject,
