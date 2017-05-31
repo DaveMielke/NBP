@@ -14,7 +14,17 @@ public class InsertionSpan extends RevisionSpan {
   }
 
   @Override
-  public CharSequence getRejectText () {
+  public final CharSequence getAcceptText () {
+    return getActualText();
+  }
+
+  @Override
+  public final CharSequence getRejectText () {
     return "";
+  }
+
+  @Override
+  public final CharSequence getOriginalText () {
+    return getRejectText();
   }
 }

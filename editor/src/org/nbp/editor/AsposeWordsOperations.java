@@ -69,10 +69,22 @@ public class AsposeWordsOperations extends ContentOperations {
       }
     }
 
-    private final void addRevisionSpan (
-      Editable content, int start,
-      RevisionSpan span, Node node
+    private final void handleRevisionFlags (
+      Editable content, int start, Node node,
+      boolean isInsertion, boolean isDeletion
     ) {
+      RevisionSpan span;
+
+      if (isDeletion) {
+        DeletionSpan deletion = new DeletionSpan();
+        deletion.setWasInsertion(isInsertion);
+        span = deletion;
+      } else if (isInsertion) {
+        span = new InsertionSpan();
+      } else {
+        return;
+      }
+
       if (addSpan(content, start, span)) {
         Revision revision = nodeRevisionMap.get(node);
 
@@ -150,11 +162,11 @@ public class AsposeWordsOperations extends ContentOperations {
       final int start = content.length();
       content.append(run.getText());
 
-      if (run.isDeleteRevision()) {
-        addRevisionSpan(content, start, new DeletionSpan(), run);
-      } else if (run.isInsertRevision()) {
-        addRevisionSpan(content, start, new InsertionSpan(), run);
-      }
+      handleRevisionFlags(
+        content, start, run,
+        run.isInsertRevision(),
+        run.isDeleteRevision()
+      );
 
       {
         Font font = run.getFont();
@@ -237,11 +249,11 @@ public class AsposeWordsOperations extends ContentOperations {
         }
       }
 
-      if (paragraph.isDeleteRevision()) {
-        addRevisionSpan(content, start, new DeletionSpan(), paragraph);
-      } else if (paragraph.isInsertRevision()) {
-        addRevisionSpan(content, start, new InsertionSpan(), paragraph);
-      }
+      handleRevisionFlags(
+        content, start, paragraph,
+        paragraph.isInsertRevision(),
+        paragraph.isDeleteRevision()
+      );
 
       addSpan(content, start, new ParagraphSpan());
     }

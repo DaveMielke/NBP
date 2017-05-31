@@ -19,14 +19,9 @@ public abstract class RevisionSpan extends ReviewSpan {
   }
 
   public abstract int getRevisionType ();
-
-  public CharSequence getAcceptText () {
-    return getActualText();
-  }
-
-  public CharSequence getRejectText () {
-    return getActualText();
-  }
+  public abstract CharSequence getAcceptText ();
+  public abstract CharSequence getRejectText ();
+  public abstract CharSequence getOriginalText ();
 
   @Override
   public void finishDialog (DialogHelper helper) {
