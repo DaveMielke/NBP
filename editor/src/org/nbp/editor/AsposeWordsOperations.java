@@ -226,10 +226,13 @@ public class AsposeWordsOperations extends ContentOperations {
         ListLabel label = paragraph.getListLabel();
         String string = label.getLabelString();
 
-        String mapped = listLabelMap.get(string);
-        if (mapped != null) string = mapped;
+        {
+          String mapped = listLabelMap.get(string);
+          if (mapped != null) string = mapped;
+        }
 
         content.append(String.format("[%s] ", string));
+        addSpan(content, start, new DecorationSpan());
       }
 
       for (Object child : paragraph.getChildNodes()) {

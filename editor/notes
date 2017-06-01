@@ -1,4 +1,4 @@
 next,previous group,revision when previewing
 set added comment author and initials
-full support for paragraph labels
 paragraph revisions containing run revisions
+improve highlight editing
