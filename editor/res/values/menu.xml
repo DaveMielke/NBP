@@ -4,22 +4,22 @@
   <string name="menu_main_Settings">Settings</string>
 
   <string name="menu_file_Submenu">File</string>
-  <string name="menu_file_New">New</string>
-  <string name="menu_file_Recent">Recent</string>
-  <string name="menu_file_Open">Open</string>
-  <string name="menu_file_Save">Save</string>
-  <string name="menu_file_SaveAs">Save As</string>
-  <string name="menu_file_Send">Send</string>
-  <string name="menu_file_Delete">Delete</string>
+  <string name="menu_file_New">New File</string>
+  <string name="menu_file_Recent">Recent Files</string>
+  <string name="menu_file_Open">Open Existing File</string>
+  <string name="menu_file_Save">Save Current File</string>
+  <string name="menu_file_SaveAs">Save As Another File</string>
+  <string name="menu_file_Send">Send Current File</string>
+  <string name="menu_file_Delete">Delete File</string>
 
   <string name="menu_edit_Submenu">Edit</string>
-  <string name="menu_edit_Paste">Paste</string>
-  <string name="menu_edit_Record">Record</string>
+  <string name="menu_edit_Paste">Paste from Clipboard</string>
+  <string name="menu_edit_Record">Record Input</string>
 
   <string name="menu_selection_Submenu">Selection</string>
-  <string name="menu_selection_SelectAll">Select All</string>
-  <string name="menu_selection_Copy">Copy</string>
-  <string name="menu_selection_Cut">Cut</string>
+  <string name="menu_selection_SelectAll">Select All Text</string>
+  <string name="menu_selection_Copy">Copy to Clipboard</string>
+  <string name="menu_selection_Cut">Cut to Clipboard</string>
   <string name="menu_selection_Uppercase">Uppercase</string>
   <string name="menu_selection_Lowercase">Lowercase</string>
 
