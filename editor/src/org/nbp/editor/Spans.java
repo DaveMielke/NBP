@@ -24,11 +24,11 @@ public abstract class Spans {
   private Spans () {
   }
 
-  public final static void logSpans (Spanned content, int start, int end) {
+  public final static void logSpans (CharSequence text, int start, int end) {
     StringBuilder sb = new StringBuilder("spans:");
 
     sb.append(' ');
-    sb.append(content.getClass().getName());
+    sb.append(text.getClass().getName());
 
     sb.append(' ');
     sb.append(start);
@@ -37,28 +37,32 @@ public abstract class Spans {
 
     sb.append(' ');
     sb.append('"');
-    sb.append(content.subSequence(start, end));
+    sb.append(text.subSequence(start, end));
     sb.append('"');
 
-    Object[] spans = content.getSpans(start, end, Object.class);
-    sb.append(' ');
-    sb.append(spans.length);
+    if (text instanceof Spanned) {
+      Spanned content = (Spanned)text;
 
-    for (Object span : spans) {
+      Object[] spans = content.getSpans(start, end, Object.class);
       sb.append(' ');
-      sb.append(span.getClass().getName());
+      sb.append(spans.length);
 
-      sb.append(' ');
-      sb.append(content.getSpanStart(span));
-      sb.append("..");
-      sb.append(content.getSpanEnd(span));
+      for (Object span : spans) {
+        sb.append(' ');
+        sb.append(span.getClass().getName());
+
+        sb.append(' ');
+        sb.append(content.getSpanStart(span));
+        sb.append("..");
+        sb.append(content.getSpanEnd(span));
+      }
     }
 
     Log.d(LOG_TAG, sb.toString());
   }
 
-  public final static void logSpans (Spanned content) {
-    logSpans(content, 0, content.length());
+  public final static void logSpans (CharSequence text) {
+    logSpans(text, 0, text.length());
   }
 
   private final static String PROPERTY_PREFIX = "-";

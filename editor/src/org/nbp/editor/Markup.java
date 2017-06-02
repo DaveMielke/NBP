@@ -34,8 +34,8 @@ public abstract class Markup {
     int start = content.getSpanStart(revision);
     int end = content.getSpanEnd(revision);
 
-    content.removeSpan(revision);
     content.replace(start, end, replacement);
+    content.removeSpan(revision);
 
     if (preview != null) {
       int length = replacement.length();
