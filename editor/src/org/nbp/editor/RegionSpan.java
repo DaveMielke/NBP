@@ -28,6 +28,10 @@ public abstract class RegionSpan extends EditorSpan {
     this(null, null, style);
   }
 
+  protected RegionSpan () {
+    this(null);
+  }
+
   public final String getPrefixDecoration () {
     return prefixDecoration;
   }
@@ -38,6 +42,13 @@ public abstract class RegionSpan extends EditorSpan {
 
   public final CharacterStyle getCharacterStyle () {
     return characterStyle;
+  }
+
+  @Override
+  public int getPosition (Spanned content) {
+    int position = super.getPosition(content);
+    if (prefixDecoration != null) position += prefixDecoration.length();
+    return position;
   }
 
   private CharSequence actualText;

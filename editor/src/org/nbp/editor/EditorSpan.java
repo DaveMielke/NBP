@@ -23,6 +23,10 @@ public abstract class EditorSpan implements DialogFinisher {
     containsProtectedText = yes;
   }
 
+  public int getPosition (Spanned content) {
+    return content.getSpanStart(this);
+  }
+
   private final static void joinRevisions (Editable content) {
     int length = content.length();
     int start = 0;

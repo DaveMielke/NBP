@@ -87,33 +87,31 @@ public class EditArea extends EditText {
     return getSelectionStart() != getSelectionEnd();
   }
 
-  public final void setSelection (RegionSpan region) {
-    String prefix = region.getPrefixDecoration();
-    int adjustment = (prefix != null)? prefix.length(): 0;
-    setSelection(getText().getSpanStart(region) + adjustment);
+  public final void setSelection (EditorSpan span) {
+    setSelection(span.getPosition(getText()));
   }
 
-  private final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int start, int end) {
+  private final <T> T getSpan (Class<T> type, int start, int end) {
     if (end == start) end += 1;
 
     Spanned text = getText();
     if (end > text.length()) return null;
 
-    RegionSpan[] regions = text.getSpans(start, end, type);
-    if (regions == null) return null;
-    if (regions.length == 0) return null;
-    return regions[0];
+    T[] spans = text.getSpans(start, end, type);
+    if (spans == null) return null;
+    if (spans.length == 0) return null;
+    return spans[0];
   }
 
-  private final RegionSpan getRegionSpan (Class<? extends RegionSpan> type, int position) {
-    return getRegionSpan(type, position, position);
+  private final <T> T getSpan (Class<T> type, int position) {
+    return getSpan(type, position, position);
   }
 
-  private final RegionSpan getRegionSpan (Class<? extends RegionSpan> type) {
-    return getRegionSpan(type, getSelectionStart(), getSelectionEnd());
+  private final <T> T getSpan (Class<T> type) {
+    return getSpan(type, getSelectionStart(), getSelectionEnd());
   }
 
-  private final boolean moveToNextRegion (Class<? extends RegionSpan> type) {
+  private final boolean moveToNextSpan (Class<? extends EditorSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
 
@@ -123,41 +121,43 @@ public class EditArea extends EditText {
     while (true) {
       start = text.nextSpanTransition(start, end, type);
       if (start == end) return false;
-      RegionSpan region = getRegionSpan(type, start);
+      EditorSpan span = getSpan(type, start);
 
-      if (region != null) {
-        setSelection(region);
+      if (span != null) {
+        setSelection(span);
         return true;
       }
     }
   }
 
-  private final boolean moveToPreviousRegion (Class<? extends RegionSpan> type) {
+  private final boolean moveToPreviousSpan (Class<? extends EditorSpan> type) {
     int start = 0;
     int end = getSelectionStart();
     Spanned text = getText();
 
     {
-      RegionSpan region = getRegionSpan(type, end);
-      if (region != null) end = text.getSpanStart(region);
+      EditorSpan span = getSpan(type, end);
+      if (span != null) end = text.getSpanStart(span);
     }
 
-    RegionSpan region = null;
+    EditorSpan span = null;
 
     while (true) {
+      {
+        EditorSpan next = getSpan(type, start);
+        if (next != null) span = next;
+      }
+
       start = text.nextSpanTransition(start, end, type);
       if (start == end) break;
-
-      RegionSpan next = getRegionSpan(type, start);
-      if (next != null) region = next;
     }
 
-    if (region == null) return false;
-    setSelection(region);
+    if (span == null) return false;
+    setSelection(span);
     return true;
   }
 
-  private final boolean moveToNextGroup (Class<? extends RegionSpan> type) {
+  private final boolean moveToNextSpanSequence (Class<? extends EditorSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
 
@@ -165,8 +165,8 @@ public class EditArea extends EditText {
     int end = text.length();
 
     while (true) {
-      RegionSpan region = getRegionSpan(type, start);
-      if (region == null) break;
+      EditorSpan span = getSpan(type, start);
+      if (span == null) break;
 
       start = text.nextSpanTransition(start, end, type);
       if (start == end) return false;
@@ -175,41 +175,41 @@ public class EditArea extends EditText {
     start = text.nextSpanTransition(start, end, type);
     if (start == end) return false;
 
-    setSelection(getRegionSpan(type, start));
+    setSelection(getSpan(type, start));
     return true;
   }
 
-  private final boolean moveToPreviousGroup (Class<? extends RegionSpan> type) {
+  private final boolean moveToPreviousSpanSequence (Class<? extends EditorSpan> type) {
     int start = 0;
     int end = getSelectionStart();
 
     Spanned text = getText();
-    Stack<RegionSpan> regions = new Stack<RegionSpan>();
+    Stack<EditorSpan> spans = new Stack<EditorSpan>();
 
     while (true) {
-      regions.push(getRegionSpan(type, start));
+      spans.push(getSpan(type, start));
       start = text.nextSpanTransition(start, end, type);
       if (start == end) break;
     }
 
     {
-      RegionSpan region = getRegionSpan(type, end);
-      if (region != regions.peek()) regions.push(region);
+      EditorSpan span = getSpan(type, end);
+      if (span != spans.peek()) spans.push(span);
     }
 
-    while (!regions.isEmpty()) {
-      RegionSpan region = regions.pop();
+    while (!spans.isEmpty()) {
+      EditorSpan span = spans.pop();
 
-      if (region == null) {
-        if (regions.isEmpty()) return false;
+      if (span == null) {
+        if (spans.isEmpty()) return false;
 
         do {
-          RegionSpan next = regions.pop();
+          EditorSpan next = spans.pop();
           if (next == null) break;
-          region = next;
-        } while (!regions.isEmpty());
+          span = next;
+        } while (!spans.isEmpty());
 
-        setSelection(region);
+        setSelection(span);
         return true;
       }
     }
@@ -218,34 +218,34 @@ public class EditArea extends EditText {
   }
 
   public final RevisionSpan getRevisionSpan () {
-    return (RevisionSpan)getRegionSpan(RevisionSpan.class);
+    return getSpan(RevisionSpan.class);
   }
 
   public final boolean moveToNextRevision () {
-    return moveToNextRegion(RevisionSpan.class);
+    return moveToNextSpan(RevisionSpan.class);
   }
 
   public final boolean moveToPreviousRevision () {
-    return moveToPreviousRegion(RevisionSpan.class);
+    return moveToPreviousSpan(RevisionSpan.class);
   }
 
   public final boolean moveToNextGroup () {
-    return moveToNextGroup(RevisionSpan.class);
+    return moveToNextSpanSequence(RevisionSpan.class);
   }
 
   public final boolean moveToPreviousGroup () {
-    return moveToPreviousGroup(RevisionSpan.class);
+    return moveToPreviousSpanSequence(RevisionSpan.class);
   }
 
   public final CommentSpan getCommentSpan () {
-    return (CommentSpan)getRegionSpan(CommentSpan.class);
+    return getSpan(CommentSpan.class);
   }
 
   public final boolean moveToNextComment () {
-    return moveToNextRegion(CommentSpan.class);
+    return moveToNextSpan(CommentSpan.class);
   }
 
   public final boolean moveToPreviousComment () {
-    return moveToPreviousRegion(CommentSpan.class);
+    return moveToPreviousSpan(CommentSpan.class);
   }
 }
