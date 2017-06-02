@@ -136,13 +136,34 @@ public abstract class RegionSpan extends EditorSpan {
   public void restoreSpan (Spannable content) {
     super.restoreSpan(content);
 
-    int start = content.getSpanStart(this);
-    int end = content.getSpanEnd(this);
-    decoratedText = content.subSequence(start, end);
+    {
+      int start = content.getSpanStart(this);
+      int end = content.getSpanEnd(this);
 
-    if (prefixDecoration != null) start += prefixDecoration.length();
-    if (suffixDecoration != null) end -= suffixDecoration.length();
-    actualText = content.subSequence(start, end);
+      Spannable text = (Spannable)content.subSequence(start, end);
+      int length = text.length();
+      Object[] spans = text.getSpans(0, length, Object.class);
+
+      if (spans != null) {
+        for (Object span : spans) {
+          if ((text.getSpanStart(span) == 0) && (text.getSpanEnd(span) == length)) {
+            text.removeSpan(span);
+          }
+        }
+      }
+
+      decoratedText = text;
+    }
+
+    {
+      int start = 0;
+      int end = decoratedText.length();
+
+      if (prefixDecoration != null) start += prefixDecoration.length();
+      if (suffixDecoration != null) end -= suffixDecoration.length();
+
+      actualText = decoratedText.subSequence(start, end);
+    }
   }
 
   public final int removeSpan (Editable content) {
