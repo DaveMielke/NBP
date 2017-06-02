@@ -111,7 +111,9 @@ public class EditArea extends EditText {
     return getSpan(type, getSelectionStart(), getSelectionEnd());
   }
 
-  private final boolean moveToNextSpan (Class<? extends EditorSpan> type) {
+  private final static int NO_POSITION = -1;
+
+  private final int findNextSpan (Class<? extends EditorSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
 
@@ -120,17 +122,14 @@ public class EditArea extends EditText {
 
     while (true) {
       start = text.nextSpanTransition(start, end, type);
-      if (start == end) return false;
-      EditorSpan span = getSpan(type, start);
+      if (start == end) return NO_POSITION;
 
-      if (span != null) {
-        setSelection(span);
-        return true;
-      }
+      EditorSpan span = getSpan(type, start);
+      if (span != null) return span.getPosition(text);
     }
   }
 
-  private final boolean moveToPreviousSpan (Class<? extends EditorSpan> type) {
+  private final int findPreviousSpan (Class<? extends EditorSpan> type) {
     int start = 0;
     int end = getSelectionStart();
     Spanned text = getText();
@@ -152,12 +151,10 @@ public class EditArea extends EditText {
       if (start == end) break;
     }
 
-    if (span == null) return false;
-    setSelection(span);
-    return true;
+    return (span != null)? span.getPosition(text): NO_POSITION;
   }
 
-  private final boolean moveToNextSpanSequence (Class<? extends EditorSpan> type) {
+  private final int findNextSpanSequence (Class<? extends EditorSpan> type) {
     int start = getSelectionEnd();
     if (start != getSelectionStart()) start -= 1;
 
@@ -169,17 +166,15 @@ public class EditArea extends EditText {
       if (span == null) break;
 
       start = text.nextSpanTransition(start, end, type);
-      if (start == end) return false;
+      if (start == end) return NO_POSITION;
     }
 
     start = text.nextSpanTransition(start, end, type);
-    if (start == end) return false;
-
-    setSelection(getSpan(type, start));
-    return true;
+    if (start == end) return NO_POSITION;
+    return getSpan(type, start).getPosition(text);
   }
 
-  private final boolean moveToPreviousSpanSequence (Class<? extends EditorSpan> type) {
+  private final int findPreviousSpanSequence (Class<? extends EditorSpan> type) {
     int start = 0;
     int end = getSelectionStart();
 
@@ -201,7 +196,7 @@ public class EditArea extends EditText {
       EditorSpan span = spans.pop();
 
       if (span == null) {
-        if (spans.isEmpty()) return false;
+        if (spans.isEmpty()) return NO_POSITION;
 
         do {
           EditorSpan next = spans.pop();
@@ -209,12 +204,43 @@ public class EditArea extends EditText {
           span = next;
         } while (!spans.isEmpty());
 
-        setSelection(span);
-        return true;
+        return span.getPosition(text);
       }
     }
 
-    return false;
+    return NO_POSITION;
+  }
+
+  private final boolean moveToNextPosition (int... positions) {
+    int nearest = NO_POSITION;
+
+    for (int position : positions) {
+      if (position != NO_POSITION) {
+        if ((nearest == NO_POSITION) || (nearest > position)) {
+          nearest = position;
+        }
+      }
+    }
+
+    if (nearest == NO_POSITION) return false;
+    setSelection(nearest);
+    return true;
+  }
+
+  private final boolean moveToPreviousPosition (int... positions) {
+    int nearest = NO_POSITION;
+
+    for (int position : positions) {
+      if (position != NO_POSITION) {
+        if ((nearest == NO_POSITION) || (nearest < position)) {
+          nearest = position;
+        }
+      }
+    }
+
+    if (nearest == NO_POSITION) return false;
+    setSelection(nearest);
+    return true;
   }
 
   public final RevisionSpan getRevisionSpan () {
@@ -222,19 +248,31 @@ public class EditArea extends EditText {
   }
 
   public final boolean moveToNextRevision () {
-    return moveToNextSpan(RevisionSpan.class);
+    return moveToNextPosition(
+      findNextSpan(PreviewSpan.class),
+      findNextSpan(RevisionSpan.class)
+    );
   }
 
   public final boolean moveToPreviousRevision () {
-    return moveToPreviousSpan(RevisionSpan.class);
+    return moveToPreviousPosition(
+      findPreviousSpan(PreviewSpan.class),
+      findPreviousSpan(RevisionSpan.class)
+    );
   }
 
   public final boolean moveToNextGroup () {
-    return moveToNextSpanSequence(RevisionSpan.class);
+    return moveToNextPosition(
+      findNextSpanSequence(PreviewSpan.class),
+      findNextSpanSequence(RevisionSpan.class)
+    );
   }
 
   public final boolean moveToPreviousGroup () {
-    return moveToPreviousSpanSequence(RevisionSpan.class);
+    return moveToPreviousPosition(
+      findPreviousSpanSequence(PreviewSpan.class),
+      findPreviousSpanSequence(RevisionSpan.class)
+    );
   }
 
   public final CommentSpan getCommentSpan () {
@@ -242,10 +280,14 @@ public class EditArea extends EditText {
   }
 
   public final boolean moveToNextComment () {
-    return moveToNextSpan(CommentSpan.class);
+    return moveToNextPosition(
+      findNextSpan(CommentSpan.class)
+    );
   }
 
   public final boolean moveToPreviousComment () {
-    return moveToPreviousSpan(CommentSpan.class);
+    return moveToPreviousPosition(
+      findPreviousSpan(CommentSpan.class)
+    );
   }
 }
