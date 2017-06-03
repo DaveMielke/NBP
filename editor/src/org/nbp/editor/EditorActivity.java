@@ -757,14 +757,14 @@ public class EditorActivity extends CommonActivity {
         CharSequence src, int srcStart, int srcEnd,
         Spanned dst, int dstStart, int dstEnd
       ) {
-        if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
-          return dst.subSequence(dstStart, dstEnd);
-        }
-
         if ((srcStart + 1) == srcEnd) {
           if (handleCharacter(src.charAt(srcStart))) {
             return "";
           }
+        }
+
+        if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
+          return dst.subSequence(dstStart, dstEnd);
         }
 
         editArea.setHasChanged();
