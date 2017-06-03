@@ -47,7 +47,7 @@ public abstract class DeveloperMessage {
       message.addBodyLine("It's being sent to the B2G developers for their analysis.");
 
       if (containsSensitiveData()) {
-        message.addBodyLine("If you suspect that it may contain sensitive information that they shouldn't see then DO NOT send it.");
+        message.addBodyLine("If you suspect that it may contain sensitive information that you wouldn't want them to see then DO NOT send it.");
       } else {
         message.addBodyLine("It's safe to send it because it doesn't contain any sensitive data.");
       }
@@ -61,8 +61,7 @@ public abstract class DeveloperMessage {
       message.addBodyLine("of the B2G UI was being used.");
 
       message.addBodyLine("Its source revision is");
-      message.addBodyLine(R.string.B2G_UI_source_revision);
-      message.addBodyLine(".");
+      message.addBodyLine(ApplicationContext.getString(R.string.B2G_UI_source_revision) + '.');
 
       if (!message.send()) return false;
     }
