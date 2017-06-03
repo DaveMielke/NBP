@@ -621,10 +621,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void restoreSpans (String spans) {
-    Spans.restoreSpans((Spannable)editArea.getText(), spans);
-  }
-
   private final static void putPreference (
     SharedPreferences.Editor editor, String key, String value
   ) {
@@ -719,10 +715,10 @@ public class EditorActivity extends CommonActivity {
                 if (handle != null) saveRecentURI(handle);
               }
 
-              {
-                String spans = prefs.getString(PREF_CHECKPOINT_SPANS, null);
-                restoreSpans(spans);
-              }
+              Spans.restoreSpans(
+                editArea.getText(),
+                prefs.getString(PREF_CHECKPOINT_SPANS, null)
+              );
 
               {
                 int start = prefs.getInt(PREF_CHECKPOINT_START, -1);

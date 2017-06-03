@@ -133,8 +133,8 @@ public abstract class RegionSpan extends EditorSpan {
   }
 
   @Override
-  public void restoreSpan (Spannable content) {
-    super.restoreSpan(content);
+  public void onSpanRestored (Spannable content) {
+    super.onSpanRestored(content);
 
     {
       int start = content.getSpanStart(this);

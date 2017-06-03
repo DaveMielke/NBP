@@ -38,7 +38,7 @@ public abstract class EditorSpan implements DialogFinisher {
     }
   }
 
-  public void restoreSpan (Spannable content) {
+  public void onSpanRestored (Spannable content) {
   }
 
   @Override
