@@ -13,6 +13,8 @@ import java.util.LinkedHashSet;
 
 import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
+import org.nbp.common.Tones;
+
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
@@ -741,6 +743,21 @@ public class EditorActivity extends CommonActivity {
 
   private final void addInputFilters () {
     InputFilter hasChangedMonitor = new InputFilter() {
+      private final boolean handleCharacter (char character) {
+        switch (character) {
+          case '\t':
+          case '\n':
+            return false;
+
+          default:
+            if (!Character.isISOControl(character)) return false;
+            break;
+        }
+
+        Tones.beep();
+        return true;
+      }
+
       @Override
       public CharSequence filter (
         CharSequence src, int srcStart, int srcEnd,
@@ -748,6 +765,12 @@ public class EditorActivity extends CommonActivity {
       ) {
         if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
           return dst.subSequence(dstStart, dstEnd);
+        }
+
+        if ((srcStart + 1) == srcEnd) {
+          if (handleCharacter(src.charAt(srcStart))) {
+            return "";
+          }
         }
 
         editArea.setHasChanged();
