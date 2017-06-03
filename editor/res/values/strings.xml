@@ -9,9 +9,9 @@
   <string name="hint_edit_area">[empty file]</string>
 
   <string name="review_summary_reviewerCount">Reviewers</string>
-  <string name="review_summary_revisionCount">Total Revisions</string>
-  <string name="review_summary_insertionCount">Insert Revisions</string>
-  <string name="review_summary_deletionCount">Delete Revisions</string>
+  <string name="review_summary_revisionCount">Revisions</string>
+  <string name="review_summary_insertionCount">Insertions</string>
+  <string name="review_summary_deletionCount">Deletions</string>
   <string name="review_summary_commentCount">Comments</string>
 
   <string name="review_name">Reviewer</string>
