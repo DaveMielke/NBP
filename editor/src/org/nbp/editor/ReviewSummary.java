@@ -65,10 +65,12 @@ public class ReviewSummary implements DialogFinisher {
         @Override
         public final void handleSpan (Object span) {
           deletionCount += 1;
-
           DeletionSpan deletion = (DeletionSpan)span;
-          InsertionSpan insertion = deletion.getInsertion();
-          if (insertion != null) includeSpan(insertion);
+
+          {
+            InsertionSpan insertion = deletion.getInsertion();
+            if (insertion != null) includeSpan(insertion);
+          }
         }
       }
     );
