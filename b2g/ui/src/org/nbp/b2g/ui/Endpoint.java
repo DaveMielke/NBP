@@ -602,9 +602,13 @@ public abstract class Endpoint {
 
     CharSequence brailleCharacters = getBrailleCharacters();
     int brailleOffset = getBrailleOffset(textOffset);
-
     if (brailleOffset == brailleCharacters.length()) return true;
-    return brailleCharacters.charAt(brailleOffset) == Braille.UNICODE_ROW;
+
+    if (brailleCharacters.charAt(brailleOffset) != Braille.UNICODE_ROW) {
+      return true;
+    }
+
+    return true;
   }
 
   protected final void adjustLeft (int offset, int keep) {
