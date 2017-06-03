@@ -744,15 +744,9 @@ public class EditorActivity extends CommonActivity {
   private final void addInputFilters () {
     InputFilter hasChangedMonitor = new InputFilter() {
       private final boolean handleCharacter (char character) {
-        switch (character) {
-          case '\t':
-          case '\n':
-            return false;
-
-          default:
-            if (!Character.isISOControl(character)) return false;
-            break;
-        }
+        if (!Character.isISOControl(character)) return false;
+        if (character == '\n') return false;
+        if (character == '\t') return false;
 
         Tones.beep();
         return true;
