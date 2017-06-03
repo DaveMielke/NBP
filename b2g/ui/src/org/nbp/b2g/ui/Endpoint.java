@@ -2,7 +2,7 @@ package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.actions.*;
 
 import android.util.Log;
-import static org.nbp.common.LogUtilities.log;
+import static org.nbp.common.LogUtilities.logText;
 import static org.liblouis.Tests.logOffsets;
 
 import org.liblouis.Translation;
@@ -215,9 +215,9 @@ public abstract class Endpoint {
     TranslationCache.put(text, textTranslation);
 
     if (false) {
-      log("brl", braille);
-      log("csm", textTranslation.getConsumedInput());
-      log("txt", text);
+      logText("brl", braille);
+      logText("csm", textTranslation.getConsumedInput());
+      logText("txt", text);
       logOffsets(textTranslation);
     }
 
@@ -600,11 +600,13 @@ public abstract class Endpoint {
   private final boolean isWordBreak (int textOffset) {
     if (!isWordBreak(getLineText().charAt(textOffset))) return false;
 
+    // handle "joined" contractions - e.g. EBAE's "to" and "by" contractions
     CharSequence brailleCharacters = getBrailleCharacters();
     int brailleOffset = getBrailleOffset(textOffset);
     if (brailleOffset == brailleCharacters.length()) return true;
 
     if (brailleCharacters.charAt(brailleOffset) != Braille.UNICODE_ROW) {
+      // should return false but LibLouis's offsets need to be fixed first
       return true;
     }
 
