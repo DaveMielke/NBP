@@ -749,7 +749,7 @@ public class EditorActivity extends CommonActivity {
     InputFilter hasChangedMonitor = new InputFilter() {
       private final boolean handleAction (char character) {
         if (character < 0X20) {
-          Menu menu = currentMenu;
+          final Menu menu = currentMenu;
 
           if (menu != null) {
             int count = menu.size();
@@ -758,10 +758,20 @@ public class EditorActivity extends CommonActivity {
             letter |= 0X60;
 
             for (int index=0; index<count; index+=1) {
-              MenuItem item = menu.getItem(index);
+              final MenuItem item = menu.getItem(index);
 
               if (letter == item.getAlphabeticShortcut()) {
-                if (!menu.performIdentifierAction(item.getItemId(), 0)) Tones.beep();
+                editArea.post(
+                  new Runnable() {
+                    @Override
+                    public void run () {
+                      if (!menu.performIdentifierAction(item.getItemId(), 0)) {
+                        Tones.beep();
+                      }
+                    }
+                  }
+                );
+
                 return true;
               }
             }
