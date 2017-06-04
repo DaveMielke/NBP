@@ -1,8 +1,6 @@
 package org.nbp.editor.menu.input;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 import org.nbp.common.CommonUtilities;
 import org.nbp.common.SpeechToText;
 
@@ -66,7 +64,7 @@ public class Record extends EditorAction {
   }
 
   @Override
-  public void performAction (final EditorActivity editor, MenuItem item) {
+  public void performAction (final EditorActivity editor) {
     if (editor.verifyWritableRegion()) {
       SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
         @Override

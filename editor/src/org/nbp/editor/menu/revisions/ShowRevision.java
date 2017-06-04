@@ -1,15 +1,13 @@
 package org.nbp.editor.menu.revisions;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 public class ShowRevision extends EditorAction {
   public ShowRevision () {
     super();
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     RevisionSpan revision = editor.getEditArea().getRevisionSpan();
 
     if (revision != null) {

@@ -1,7 +1,6 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
 import org.nbp.common.FileFinder;
 import java.io.File;
 
@@ -11,7 +10,7 @@ public class Open extends EditorAction {
   }
 
   @Override
-  public void performAction (final EditorActivity editor, MenuItem item) {
+  public void performAction (final EditorActivity editor) {
     editor.testHasChanged(
       new Runnable() {
         @Override

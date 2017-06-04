@@ -1,15 +1,13 @@
 package org.nbp.editor.menu.inspect;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 public class NextGroup extends EditorAction {
   public NextGroup () {
     super();
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     if (!editor.getEditArea().moveToNextGroup()) {
       editor.showMessage(R.string.message_no_next_group);
     }

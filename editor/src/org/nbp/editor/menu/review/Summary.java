@@ -1,15 +1,13 @@
 package org.nbp.editor.menu.review;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 public class Summary extends EditorAction {
   public Summary () {
     super();
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     EditArea editArea = editor.getEditArea();
     ReviewSummary summary = new ReviewSummary(editArea.getText());
 

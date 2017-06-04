@@ -1,8 +1,6 @@
 package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 import org.nbp.common.CommonUtilities;
 import java.util.Date;
 
@@ -18,7 +16,7 @@ public class AddComment extends EditorAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     if (editor.verifyWritableText()) {
       final EditArea editArea = editor.getEditArea();
 

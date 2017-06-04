@@ -1,7 +1,6 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
 import org.nbp.common.OutgoingMessage;
 
 public class Send extends EditorAction {
@@ -10,7 +9,7 @@ public class Send extends EditorAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     ContentHandle contentHandle = editor.getEditArea().getContentHandle();
 
     if (contentHandle != null) {

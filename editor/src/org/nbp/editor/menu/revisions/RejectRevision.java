@@ -1,7 +1,6 @@
 package org.nbp.editor.menu.revisions;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
 import android.content.DialogInterface;
 
 public class RejectRevision extends EditorAction {
@@ -10,7 +9,7 @@ public class RejectRevision extends EditorAction {
   }
 
   @Override
-  public void performAction (final EditorActivity editor, MenuItem item) {
+  public void performAction (final EditorActivity editor) {
     final EditArea editArea = editor.getEditArea();
     final RevisionSpan revision = editArea.getRevisionSpan();
 

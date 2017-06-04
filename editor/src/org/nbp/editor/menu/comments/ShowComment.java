@@ -1,15 +1,13 @@
 package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 public class ShowComment extends EditorAction {
   public ShowComment () {
     super();
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     CommentSpan comment = editor.getEditArea().getCommentSpan();
 
     if (comment != null) {

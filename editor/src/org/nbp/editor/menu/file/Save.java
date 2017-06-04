@@ -1,17 +1,15 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 public class Save extends SaveAs {
   public Save () {
     super();
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     if (editor.getEditArea().getContentHandle() == null) {
-      super.performAction(editor, item);
+      super.performAction(editor);
     } else {
       editor.saveFile();
     }

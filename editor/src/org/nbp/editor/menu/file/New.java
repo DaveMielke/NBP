@@ -1,15 +1,13 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 public class New extends EditorAction {
   public New () {
     super();
   }
 
   @Override
-  public void performAction (final EditorActivity editor, MenuItem item) {
+  public void performAction (final EditorActivity editor) {
     editor.testHasChanged(
       new Runnable() {
         @Override

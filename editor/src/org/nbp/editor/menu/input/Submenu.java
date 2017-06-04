@@ -1,7 +1,6 @@
 package org.nbp.inputor.menu.edit;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
 import android.view.Menu;
 
 public class Submenu extends MenuAction {

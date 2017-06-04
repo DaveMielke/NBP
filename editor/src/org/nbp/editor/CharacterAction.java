@@ -1,6 +1,5 @@
 package org.nbp.editor;
 
-import android.view.MenuItem;
 import android.text.Editable;
 
 public abstract class CharacterAction extends EditorAction {
@@ -12,7 +11,7 @@ public abstract class CharacterAction extends EditorAction {
   protected abstract char translateCharacter (char character);
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     EditArea editArea = editor.getEditArea();
     Editable text = editArea.getText();
     int start = editArea.getSelectionStart();

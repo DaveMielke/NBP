@@ -1,8 +1,6 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 import org.nbp.common.FileFinder;
 import java.io.File;
 
@@ -12,7 +10,7 @@ public class Delete extends EditorAction {
   }
 
   @Override
-  public void performAction (final EditorActivity editor, MenuItem item) {
+  public void performAction (final EditorActivity editor) {
     FileFinder.Builder builder = new FileFinder
       .Builder(editor)
       .setUserTitle(R.string.menu_file_Delete)

@@ -1,15 +1,13 @@
 package org.nbp.editor.menu.review;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 public class AcceptChanges extends EditorAction {
   public AcceptChanges () {
     super();
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     if (editor.verifyWritableText()) {
       final EditArea editArea = editor.getEditArea();
 

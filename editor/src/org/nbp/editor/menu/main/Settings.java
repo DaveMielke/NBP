@@ -1,7 +1,6 @@
 package org.nbp.editor.menu.main;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
 import org.nbp.common.LaunchUtilities;
 
 public class Settings extends EditorAction {
@@ -10,7 +9,7 @@ public class Settings extends EditorAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     LaunchUtilities.launchActivity(SettingsActivity.class);
   }
 }

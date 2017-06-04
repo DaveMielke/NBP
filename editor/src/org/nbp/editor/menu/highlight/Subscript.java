@@ -1,7 +1,6 @@
 package org.nbp.editor.menu.highlight;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
 import android.text.style.CharacterStyle;
 import android.text.style.SubscriptSpan;
 

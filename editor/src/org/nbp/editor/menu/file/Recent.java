@@ -1,8 +1,6 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-import android.view.MenuItem;
-
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
 import android.app.Dialog;
@@ -12,7 +10,6 @@ import java.io.File;
 
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 
 public class Recent extends EditorAction {
@@ -21,7 +18,7 @@ public class Recent extends EditorAction {
   }
 
   @Override
-  public void performAction (final EditorActivity editor, MenuItem item) {
+  public void performAction (final EditorActivity editor) {
     DialogFinisher finisher = new DialogFinisher() {
       @Override
       public void finishDialog (DialogHelper helper) {

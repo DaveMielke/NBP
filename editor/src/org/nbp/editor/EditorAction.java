@@ -6,5 +6,10 @@ public abstract class EditorAction {
   protected EditorAction () {
   }
 
-  public abstract void performAction (EditorActivity editor, MenuItem item);
+  public void performAction (EditorActivity editor) {
+  }
+
+  public void performAction (EditorActivity editor, MenuItem item) {
+    performAction(editor);
+  }
 }

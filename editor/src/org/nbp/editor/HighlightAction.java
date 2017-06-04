@@ -1,6 +1,5 @@
 package org.nbp.editor;
 
-import android.view.MenuItem;
 import android.text.Editable;
 import android.text.Spanned;
 import android.text.style.CharacterStyle;
@@ -13,7 +12,7 @@ public abstract class HighlightAction extends EditorAction {
   protected abstract CharacterStyle getCharacterStyle ();
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void performAction (EditorActivity editor) {
     EditArea editArea = editor.getEditArea();
     Editable text = editArea.getText();
     int start = editArea.getSelectionStart();
