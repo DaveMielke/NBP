@@ -1,8 +1,8 @@
-package org.nbp.editor.menu.inspect;
+package org.nbp.editor.menu.proofread;
 import org.nbp.editor.*;
 
-public class NoMarkup extends EditorAction {
-  public NoMarkup () {
+public class DraftVersion extends EditorAction {
+  public DraftVersion () {
     super();
   }
 

@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.inspect;
+package org.nbp.editor.menu.proofread;
 import org.nbp.editor.*;
 
 import android.view.Menu;

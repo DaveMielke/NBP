@@ -166,39 +166,39 @@
 
     <menu>
       <item
-        android:id="@+id/menu_inspect_Submenu"
-        android:title="@string/menu_inspect_Submenu"
-        android:alphabeticShortcut="i"
+        android:id="@+id/menu_proofread_Submenu"
+        android:title="@string/menu_proofread_Submenu"
+        android:alphabeticShortcut="p"
         >
 
         <menu>
           <item
-            android:id="@+id/menu_inspect_NextGroup"
-            android:title="@string/menu_inspect_NextGroup"
+            android:id="@+id/menu_proofread_NextChange"
+            android:title="@string/menu_proofread_NextChange"
             android:alphabeticShortcut="n"
            />
 
           <item
-            android:id="@+id/menu_inspect_PreviousGroup"
-            android:title="@string/menu_inspect_PreviousGroup"
+            android:id="@+id/menu_proofread_PreviousChange"
+            android:title="@string/menu_proofread_PreviousChange"
             android:alphabeticShortcut="p"
            />
 
           <item
-            android:id="@+id/menu_inspect_AllMarkup"
-            android:title="@string/menu_inspect_AllMarkup"
+            android:id="@+id/menu_proofread_MarkupVersion"
+            android:title="@string/menu_proofread_MarkupVersion"
             android:alphabeticShortcut="m"
            />
 
           <item
-            android:id="@+id/menu_inspect_NoMarkup"
-            android:title="@string/menu_inspect_NoMarkup"
-            android:alphabeticShortcut="f"
+            android:id="@+id/menu_proofread_DraftVersion"
+            android:title="@string/menu_proofread_DraftVersion"
+            android:alphabeticShortcut="d"
            />
 
           <item
-            android:id="@+id/menu_inspect_Original"
-            android:title="@string/menu_inspect_Original"
+            android:id="@+id/menu_proofread_OriginalVersion"
+            android:title="@string/menu_proofread_OriginalVersion"
             android:alphabeticShortcut="o"
            />
         </menu>

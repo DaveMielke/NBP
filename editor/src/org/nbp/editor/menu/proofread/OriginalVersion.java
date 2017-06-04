@@ -1,8 +1,8 @@
-package org.nbp.editor.menu.inspect;
+package org.nbp.editor.menu.proofread;
 import org.nbp.editor.*;
 
-public class AllMarkup extends EditorAction {
-  public AllMarkup () {
+public class OriginalVersion extends EditorAction {
+  public OriginalVersion () {
     super();
   }
 
@@ -15,7 +15,7 @@ public class AllMarkup extends EditorAction {
         new Runnable() {
           @Override
           public void run () {
-            Markup.restoreRevisions(editArea.getText());
+            Markup.revertRevisions(editArea.getText());
           }
         }
       );

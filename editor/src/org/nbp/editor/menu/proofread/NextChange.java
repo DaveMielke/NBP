@@ -1,15 +1,15 @@
-package org.nbp.editor.menu.inspect;
+package org.nbp.editor.menu.proofread;
 import org.nbp.editor.*;
 
-public class NextGroup extends EditorAction {
-  public NextGroup () {
+public class NextChange extends EditorAction {
+  public NextChange () {
     super();
   }
 
   @Override
   public void performAction (EditorActivity editor) {
     if (!editor.getEditArea().moveToNextGroup()) {
-      editor.showMessage(R.string.message_no_next_group);
+      editor.showMessage(R.string.message_no_next_change);
     }
   }
 }

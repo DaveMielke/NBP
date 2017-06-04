@@ -24,11 +24,11 @@
   <string name="comment_hint_text">Type comment</string>
 
   <string name="message_file_saved">file saved</string>
+  <string name="message_no_next_change">no next change</string>
   <string name="message_no_next_comment">no next comment</string>
-  <string name="message_no_next_group">no next group</string>
   <string name="message_no_next_revision">no next revision</string>
+  <string name="message_no_previous_change">no previous change</string>
   <string name="message_no_previous_comment">no previous comment</string>
-  <string name="message_no_previous_group">no previous group</string>
   <string name="message_no_previous_revision">no previous revision</string>
   <string name="message_not_file">not a file</string>
   <string name="message_not_writable">file not writable</string>
