@@ -747,11 +747,7 @@ public class EditorActivity extends CommonActivity {
 
   private final void addInputFilters () {
     InputFilter hasChangedMonitor = new InputFilter() {
-      private final boolean handleCharacter (char character) {
-        if (!Character.isISOControl(character)) return false;
-        if (character == '\n') return false;
-        if (character == '\t') return false;
-
+      private final boolean handleAction (char character) {
         if (character < 0X20) {
           Menu menu = currentMenu;
 
@@ -772,7 +768,15 @@ public class EditorActivity extends CommonActivity {
           }
         }
 
-        Tones.beep();
+        return false;
+      }
+
+      private final boolean handleCharacter (char character) {
+        if (!Character.isISOControl(character)) return false;
+        if (character == '\n') return false;
+        if (character == '\t') return false;
+
+        if (!handleAction(character)) Tones.beep();
         return true;
       }
 
@@ -781,16 +785,23 @@ public class EditorActivity extends CommonActivity {
         CharSequence src, int srcStart, int srcEnd,
         Spanned dst, int dstStart, int dstEnd
       ) {
-        if ((srcStart + 1) == srcEnd) {
-          if (handleCharacter(src.charAt(srcStart))) {
-            return "";
+        boolean handled = false;
+
+        if (!handled) {
+          if ((srcStart + 1) == srcEnd) {
+            if (handleCharacter(src.charAt(srcStart))) {
+              handled = true;
+            }
           }
         }
 
-        if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
-          return dst.subSequence(dstStart, dstEnd);
+        if (!handled) {
+          if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
+            handled = true;
+          }
         }
 
+        if (handled) return dst.subSequence(dstStart, dstEnd);
         editArea.setHasChanged();
         return null;
       }
