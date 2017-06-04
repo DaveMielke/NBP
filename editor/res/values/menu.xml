@@ -53,6 +53,6 @@
   <string name="menu_comments_ShowComment">Show Comment</string>
   <string name="menu_comments_NextComment">Next Comment</string>
   <string name="menu_comments_PreviousComment">Previous Comment</string>
-  <string name="menu_comments_NewComment">New Comment</string>
+  <string name="menu_comments_AddComment">Add Comment</string>
   <string name="menu_comments_RemoveComment">Remove Comment</string>
 </resources>

@@ -600,9 +600,13 @@ public class EditorActivity extends CommonActivity {
     return false;
   }
 
+  private Menu optionsMenu = null;
+  public Menu currentMenu = null;
+
   @Override
   public boolean onCreateOptionsMenu (Menu menu) {
     getMenuInflater().inflate(R.menu.options, menu);
+    optionsMenu = menu;
     return true;
   }
 
@@ -747,6 +751,26 @@ public class EditorActivity extends CommonActivity {
         if (!Character.isISOControl(character)) return false;
         if (character == '\n') return false;
         if (character == '\t') return false;
+
+        if (character < 0X20) {
+          Menu menu = currentMenu;
+
+          if (menu != null) {
+            int count = menu.size();
+
+            char letter = character;
+            letter |= 0X60;
+
+            for (int index=0; index<count; index+=1) {
+              MenuItem item = menu.getItem(index);
+
+              if (letter == item.getAlphabeticShortcut()) {
+                if (!menu.performIdentifierAction(item.getItemId(), 0)) Tones.beep();
+                return true;
+              }
+            }
+          }
+        }
 
         Tones.beep();
         return true;

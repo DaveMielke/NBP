@@ -185,26 +185,31 @@
           <item
             android:id="@+id/menu_revisions_ShowRevision"
             android:title="@string/menu_revisions_ShowRevision"
+            android:alphabeticShortcut="s"
            />
 
           <item
             android:id="@+id/menu_revisions_NextRevision"
             android:title="@string/menu_revisions_NextRevision"
+            android:alphabeticShortcut="n"
            />
 
           <item
             android:id="@+id/menu_revisions_PreviousRevision"
             android:title="@string/menu_revisions_PreviousRevision"
+            android:alphabeticShortcut="p"
            />
 
           <item
             android:id="@+id/menu_revisions_AcceptRevision"
             android:title="@string/menu_revisions_AcceptRevision"
+            android:alphabeticShortcut="a"
            />
 
           <item
             android:id="@+id/menu_revisions_RejectRevision"
             android:title="@string/menu_revisions_RejectRevision"
+            android:alphabeticShortcut="r"
            />
         </menu>
       </item>
@@ -218,26 +223,31 @@
           <item
             android:id="@+id/menu_comments_ShowComment"
             android:title="@string/menu_comments_ShowComment"
+            android:alphabeticShortcut="s"
            />
 
           <item
             android:id="@+id/menu_comments_NextComment"
             android:title="@string/menu_comments_NextComment"
+            android:alphabeticShortcut="n"
            />
 
           <item
             android:id="@+id/menu_comments_PreviousComment"
             android:title="@string/menu_comments_PreviousComment"
+            android:alphabeticShortcut="p"
            />
 
           <item
-            android:id="@+id/menu_comments_NewComment"
-            android:title="@string/menu_comments_NewComment"
+            android:id="@+id/menu_comments_AddComment"
+            android:title="@string/menu_comments_AddComment"
+            android:alphabeticShortcut="a"
            />
 
           <item
             android:id="@+id/menu_comments_RemoveComment"
             android:title="@string/menu_comments_RemoveComment"
+            android:alphabeticShortcut="r"
            />
         </menu>
       </item>

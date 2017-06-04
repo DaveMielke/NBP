@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.text.Editable;
 import android.text.Spanned;
 
-public class NewComment extends EditorAction {
-  public NewComment () {
+public class AddComment extends EditorAction {
+  public AddComment () {
     super();
   }
 
@@ -23,8 +23,8 @@ public class NewComment extends EditorAction {
       final EditArea editArea = editor.getEditArea();
 
       editor.showDialog(
-        R.string.menu_comments_NewComment,
-        R.layout.comment_new, R.string.action_add,
+        R.string.menu_comments_AddComment,
+        R.layout.comment_add, R.string.action_add,
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {

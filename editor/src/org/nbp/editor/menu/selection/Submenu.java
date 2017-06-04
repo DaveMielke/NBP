@@ -4,13 +4,15 @@ import org.nbp.editor.*;
 import android.view.MenuItem;
 import android.view.Menu;
 
-public class Submenu extends EditorAction {
+public class Submenu extends MenuAction {
   public Submenu () {
     super();
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
+  public void prepareMenu (EditorActivity editor, Menu menu) {
+    super.prepareMenu(editor, menu);
+
     boolean showSelectionActions = false;
     boolean showCursorActions = false;
 
@@ -20,7 +22,6 @@ public class Submenu extends EditorAction {
       showCursorActions = true;
     }
 
-    Menu menu = item.getSubMenu();
     menu.setGroupVisible(R.id.menu_group_selection, showSelectionActions);
     menu.setGroupVisible(R.id.menu_group_cursor, showCursorActions);
   }
