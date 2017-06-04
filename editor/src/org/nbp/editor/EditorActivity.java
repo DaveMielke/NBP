@@ -747,7 +747,7 @@ public class EditorActivity extends CommonActivity {
 
   private final void addInputFilters () {
     InputFilter hasChangedMonitor = new InputFilter() {
-      private final boolean handleAction (char character) {
+      private final Runnable getMenuAction (char character) {
         if (character < 0X20) {
           final Menu menu = currentMenu;
 
@@ -761,24 +761,21 @@ public class EditorActivity extends CommonActivity {
               final MenuItem item = menu.getItem(index);
 
               if (letter == item.getAlphabeticShortcut()) {
-                editArea.post(
-                  new Runnable() {
-                    @Override
-                    public void run () {
-                      if (!menu.performIdentifierAction(item.getItemId(), 0)) {
-                        Tones.beep();
-                      }
-                    }
+                return new Runnable() {
+                  @Override
+                  public void run () {
+                    editArea.beginBatchEdit();
+                    boolean performed = menu.performIdentifierAction(item.getItemId(), 0);
+                    editArea.endBatchEdit();
+                    if (!performed)  Tones.beep();
                   }
-                );
-
-                return true;
+                };
               }
             }
           }
         }
 
-        return false;
+        return null;
       }
 
       private final boolean handleCharacter (char character) {
@@ -786,7 +783,7 @@ public class EditorActivity extends CommonActivity {
         if (character == '\n') return false;
         if (character == '\t') return false;
 
-        if (!handleAction(character)) Tones.beep();
+        Tones.beep();
         return true;
       }
 
@@ -796,12 +793,16 @@ public class EditorActivity extends CommonActivity {
         Spanned dst, int dstStart, int dstEnd
       ) {
         boolean handled = false;
+        Runnable menuAction = null;
 
-        if (!handled) {
-          if ((srcStart + 1) == srcEnd) {
-            if (handleCharacter(src.charAt(srcStart))) {
-              handled = true;
-            }
+        if ((srcStart + 1) == srcEnd) {
+          char character = src.charAt(srcStart);
+          menuAction = getMenuAction(character);
+
+          if (menuAction != null) {
+            handled = true;
+          } else if (handleCharacter(character)) {
+            handled = true;
           }
         }
 
@@ -811,9 +812,27 @@ public class EditorActivity extends CommonActivity {
           }
         }
 
-        if (handled) return dst.subSequence(dstStart, dstEnd);
-        editArea.setHasChanged();
-        return null;
+        if (!handled) {
+          editArea.setHasChanged();
+          return null;
+        }
+
+        {
+          final int start = editArea.getSelectionStart();
+          final int end = editArea.getSelectionEnd();
+
+          editArea.post(
+            new Runnable() {
+              @Override
+              public void run () {
+                editArea.setSelection(start, end);
+              }
+            }
+          );
+        }
+
+        if (menuAction != null) editArea.post(menuAction);
+        return dst.subSequence(dstStart, dstEnd);
       }
     };
 

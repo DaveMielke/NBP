@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.proofread;
+package org.nbp.editor.menu.browse;
 import org.nbp.editor.*;
 
 public class PreviousChange extends EditorAction {
@@ -8,7 +8,7 @@ public class PreviousChange extends EditorAction {
 
   @Override
   public void performAction (EditorActivity editor) {
-    if (!editor.getEditArea().moveToPreviousGroup()) {
+    if (!editor.getEditArea().moveToPreviousChange()) {
       editor.showMessage(R.string.message_no_previous_change);
     }
   }

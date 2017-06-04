@@ -166,39 +166,39 @@
 
     <menu>
       <item
-        android:id="@+id/menu_proofread_Submenu"
-        android:title="@string/menu_proofread_Submenu"
-        android:alphabeticShortcut="p"
+        android:id="@+id/menu_browse_Submenu"
+        android:title="@string/menu_browse_Submenu"
+        android:alphabeticShortcut="b"
         >
 
         <menu>
           <item
-            android:id="@+id/menu_proofread_NextChange"
-            android:title="@string/menu_proofread_NextChange"
+            android:id="@+id/menu_browse_NextChange"
+            android:title="@string/menu_browse_NextChange"
             android:alphabeticShortcut="n"
            />
 
           <item
-            android:id="@+id/menu_proofread_PreviousChange"
-            android:title="@string/menu_proofread_PreviousChange"
+            android:id="@+id/menu_browse_PreviousChange"
+            android:title="@string/menu_browse_PreviousChange"
             android:alphabeticShortcut="p"
            />
 
           <item
-            android:id="@+id/menu_proofread_MarkupVersion"
-            android:title="@string/menu_proofread_MarkupVersion"
+            android:id="@+id/menu_browse_MarkupVersion"
+            android:title="@string/menu_browse_MarkupVersion"
             android:alphabeticShortcut="m"
            />
 
           <item
-            android:id="@+id/menu_proofread_DraftVersion"
-            android:title="@string/menu_proofread_DraftVersion"
+            android:id="@+id/menu_browse_DraftVersion"
+            android:title="@string/menu_browse_DraftVersion"
             android:alphabeticShortcut="d"
            />
 
           <item
-            android:id="@+id/menu_proofread_OriginalVersion"
-            android:title="@string/menu_proofread_OriginalVersion"
+            android:id="@+id/menu_browse_OriginalVersion"
+            android:title="@string/menu_browse_OriginalVersion"
             android:alphabeticShortcut="o"
            />
         </menu>
