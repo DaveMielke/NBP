@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.changes;
+package org.nbp.editor.menu.inspect;
 import org.nbp.editor.*;
 
 import android.view.MenuItem;

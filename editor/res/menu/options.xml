@@ -166,34 +166,40 @@
 
     <menu>
       <item
-        android:id="@+id/menu_changes_Submenu"
-        android:title="@string/menu_changes_Submenu"
+        android:id="@+id/menu_inspect_Submenu"
+        android:title="@string/menu_inspect_Submenu"
+        android:alphabeticShortcut="i"
         >
 
         <menu>
           <item
-            android:id="@+id/menu_changes_NextGroup"
-            android:title="@string/menu_changes_NextGroup"
+            android:id="@+id/menu_inspect_NextGroup"
+            android:title="@string/menu_inspect_NextGroup"
+            android:alphabeticShortcut="n"
            />
 
           <item
-            android:id="@+id/menu_changes_PreviousGroup"
-            android:title="@string/menu_changes_PreviousGroup"
+            android:id="@+id/menu_inspect_PreviousGroup"
+            android:title="@string/menu_inspect_PreviousGroup"
+            android:alphabeticShortcut="p"
            />
 
           <item
-            android:id="@+id/menu_changes_AllMarkup"
-            android:title="@string/menu_changes_AllMarkup"
+            android:id="@+id/menu_inspect_AllMarkup"
+            android:title="@string/menu_inspect_AllMarkup"
+            android:alphabeticShortcut="m"
            />
 
           <item
-            android:id="@+id/menu_changes_NoMarkup"
-            android:title="@string/menu_changes_NoMarkup"
+            android:id="@+id/menu_inspect_NoMarkup"
+            android:title="@string/menu_inspect_NoMarkup"
+            android:alphabeticShortcut="f"
            />
 
           <item
-            android:id="@+id/menu_changes_Original"
-            android:title="@string/menu_changes_Original"
+            android:id="@+id/menu_inspect_Original"
+            android:title="@string/menu_inspect_Original"
+            android:alphabeticShortcut="o"
            />
         </menu>
       </item>
@@ -201,6 +207,7 @@
       <item
         android:id="@+id/menu_revisions_Submenu"
         android:title="@string/menu_revisions_Submenu"
+            android:alphabeticShortcut="r"
         >
 
         <menu>
@@ -239,6 +246,7 @@
       <item
         android:id="@+id/menu_comments_Submenu"
         android:title="@string/menu_comments_Submenu"
+        android:alphabeticShortcut="c"
         >
 
         <menu>
@@ -277,11 +285,13 @@
       <item
         android:id="@+id/menu_review_Summary"
         android:title="@string/menu_review_Summary"
+        android:alphabeticShortcut="s"
        />
 
       <item
         android:id="@+id/menu_review_AcceptChanges"
         android:title="@string/menu_review_AcceptChanges"
+        android:alphabeticShortcut="a"
        />
     </menu>
   </item>

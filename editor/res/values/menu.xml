@@ -35,12 +35,12 @@
   <string name="menu_review_Summary">Summary</string>
   <string name="menu_review_AcceptChanges">Accept Changes</string>
 
-  <string name="menu_changes_Submenu">Changes</string>
-  <string name="menu_changes_NextGroup">Next Group</string>
-  <string name="menu_changes_PreviousGroup">Previous Group</string>
-  <string name="menu_changes_AllMarkup">All Markup</string>
-  <string name="menu_changes_NoMarkup">No Markup</string>
-  <string name="menu_changes_Original">Original</string>
+  <string name="menu_inspect_Submenu">Inspect</string>
+  <string name="menu_inspect_NextGroup">Next Group</string>
+  <string name="menu_inspect_PreviousGroup">Previous Group</string>
+  <string name="menu_inspect_AllMarkup">All Markup</string>
+  <string name="menu_inspect_NoMarkup">No Markup</string>
+  <string name="menu_inspect_Original">Original</string>
 
   <string name="menu_revisions_Submenu">Revisions</string>
   <string name="menu_revisions_ShowRevision">Show Revision</string>

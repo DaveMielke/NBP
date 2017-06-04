@@ -1,10 +1,10 @@
-package org.nbp.editor.menu.changes;
+package org.nbp.editor.menu.inspect;
 import org.nbp.editor.*;
 
 import android.view.MenuItem;
 
-public class Original extends EditorAction {
-  public Original () {
+public class AllMarkup extends EditorAction {
+  public AllMarkup () {
     super();
   }
 
@@ -17,7 +17,7 @@ public class Original extends EditorAction {
         new Runnable() {
           @Override
           public void run () {
-            Markup.revertRevisions(editArea.getText());
+            Markup.restoreRevisions(editArea.getText());
           }
         }
       );
