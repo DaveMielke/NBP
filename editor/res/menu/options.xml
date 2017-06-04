@@ -4,32 +4,38 @@
   <item
     android:id="@+id/menu_file_Submenu"
     android:title="@string/menu_file_Submenu"
+    android:alphabeticShortcut="f"
     >
 
     <menu>
       <item
         android:id="@+id/menu_file_New"
         android:title="@string/menu_file_New"
+        android:alphabeticShortcut="n"
        />
 
       <item
         android:id="@+id/menu_file_Recent"
         android:title="@string/menu_file_Recent"
+        android:alphabeticShortcut="r"
        />
 
       <item
         android:id="@+id/menu_file_Open"
         android:title="@string/menu_file_Open"
+        android:alphabeticShortcut="o"
        />
 
       <item
         android:id="@+id/menu_file_Save"
         android:title="@string/menu_file_Save"
+        android:alphabeticShortcut="s"
        />
 
       <item
         android:id="@+id/menu_file_SaveAs"
         android:title="@string/menu_file_SaveAs"
+        android:alphabeticShortcut="a"
        />
 
       <item
@@ -40,71 +46,83 @@
       <item
         android:id="@+id/menu_file_Delete"
         android:title="@string/menu_file_Delete"
+        android:alphabeticShortcut="d"
        />
     </menu>
   </item>
 
   <item
-    android:id="@+id/menu_edit_Submenu"
-    android:title="@string/menu_edit_Submenu"
+    android:id="@+id/menu_input_Submenu"
+    android:title="@string/menu_input_Submenu"
+    android:alphabeticShortcut="i"
     >
 
     <menu>
       <item
-        android:id="@+id/menu_edit_Paste"
-        android:title="@string/menu_edit_Paste"
+        android:id="@+id/menu_input_Paste"
+        android:title="@string/menu_input_Paste"
+        android:alphabeticShortcut="p"
        />
 
       <item
-        android:id="@+id/menu_edit_Record"
-        android:title="@string/menu_edit_Record"
+        android:id="@+id/menu_input_Record"
+        android:title="@string/menu_input_Record"
+        android:alphabeticShortcut="r"
        />
     </menu>
   </item>
 
   <item
-    android:id="@+id/menu_selection_Submenu"
-    android:title="@string/menu_selection_Submenu"
+    android:id="@+id/menu_text_Submenu"
+    android:title="@string/menu_text_Submenu"
+    android:alphabeticShortcut="t"
     >
 
     <menu>
       <group android:id="@+id/menu_group_cursor">
         <item
-          android:id="@+id/menu_selection_SelectAll"
-          android:title="@string/menu_selection_SelectAll"
+          android:id="@+id/menu_text_SelectAll"
+          android:title="@string/menu_text_SelectAll"
+          android:alphabeticShortcut="a"
          />
       </group>
 
       <group android:id="@+id/menu_group_selection">
         <item
-          android:id="@+id/menu_selection_Copy"
-          android:title="@string/menu_selection_Copy"
+          android:id="@+id/menu_text_Copy"
+          android:title="@string/menu_text_Copy"
+          android:alphabeticShortcut="c"
          />
 
         <item
-          android:id="@+id/menu_selection_Cut"
-          android:title="@string/menu_selection_Cut"
+          android:id="@+id/menu_text_Cut"
+          android:title="@string/menu_text_Cut"
+          android:alphabeticShortcut="x"
          />
 
         <item
           android:id="@+id/menu_highlight_Submenu"
           android:title="@string/menu_highlight_Submenu"
+          android:alphabeticShortcut="h"
           >
 
           <menu>
             <item
               android:id="@+id/menu_highlight_Bold"
               android:title="@string/menu_highlight_Bold"
+              android:alphabeticShortcut="b"
              />
 
             <item
               android:id="@+id/menu_highlight_Italics"
               android:title="@string/menu_highlight_Italics"
+              android:alphabeticShortcut="i"
              />
 
             <item
               android:id="@+id/menu_highlight_Strike"
               android:title="@string/menu_highlight_Strike"
+              android:alphabeticShortcut="s"
              />
 
             <item
@@ -120,18 +138,21 @@
             <item
               android:id="@+id/menu_highlight_Underline"
               android:title="@string/menu_highlight_Underline"
+              android:alphabeticShortcut="u"
              />
           </menu>
         </item>
 
         <item
-          android:id="@+id/menu_selection_Uppercase"
-          android:title="@string/menu_selection_Uppercase"
+          android:id="@+id/menu_text_Uppercase"
+          android:title="@string/menu_text_Uppercase"
+          android:alphabeticShortcut="u"
          />
 
         <item
-          android:id="@+id/menu_selection_Lowercase"
-          android:title="@string/menu_selection_Lowercase"
+          android:id="@+id/menu_text_Lowercase"
+          android:title="@string/menu_text_Lowercase"
+          android:alphabeticShortcut="l"
          />
       </group>
     </menu>
@@ -140,6 +161,7 @@
   <item
     android:id="@+id/menu_review_Submenu"
     android:title="@string/menu_review_Submenu"
+    android:alphabeticShortcut="r"
     >
 
     <menu>
@@ -267,5 +289,6 @@
   <item
     android:id="@+id/menu_main_Settings"
     android:title="@string/menu_main_Settings"
+    android:alphabeticShortcut="s"
    />
 </menu>

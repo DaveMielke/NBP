@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.edit;
+package org.nbp.inputor.menu.edit;
 import org.nbp.editor.*;
 
 import android.view.MenuItem;

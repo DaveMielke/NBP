@@ -12,16 +12,16 @@
   <string name="menu_file_Send">Send Current File</string>
   <string name="menu_file_Delete">Delete File</string>
 
-  <string name="menu_edit_Submenu">Edit</string>
-  <string name="menu_edit_Paste">Paste from Clipboard</string>
-  <string name="menu_edit_Record">Record Input</string>
+  <string name="menu_input_Submenu">Input</string>
+  <string name="menu_input_Paste">Paste from Clipboard</string>
+  <string name="menu_input_Record">Record Input</string>
 
-  <string name="menu_selection_Submenu">Selection</string>
-  <string name="menu_selection_SelectAll">Select All Text</string>
-  <string name="menu_selection_Copy">Copy to Clipboard</string>
-  <string name="menu_selection_Cut">Cut to Clipboard</string>
-  <string name="menu_selection_Uppercase">Uppercase</string>
-  <string name="menu_selection_Lowercase">Lowercase</string>
+  <string name="menu_text_Submenu">Text</string>
+  <string name="menu_text_SelectAll">Select All</string>
+  <string name="menu_text_Copy">Copy to Clipboard</string>
+  <string name="menu_text_Cut">Cut to Clipboard</string>
+  <string name="menu_text_Uppercase">Uppercase</string>
+  <string name="menu_text_Lowercase">Lowercase</string>
 
   <string name="menu_highlight_Submenu">Highlight</string>
   <string name="menu_highlight_Bold">Bold</string>

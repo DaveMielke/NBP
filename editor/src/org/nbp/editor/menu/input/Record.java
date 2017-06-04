@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.edit;
+package org.nbp.editor.menu.input;
 import org.nbp.editor.*;
 
 import android.view.MenuItem;
@@ -37,7 +37,7 @@ public class Record extends EditorAction {
       };
 
       editor.showDialog(
-        R.string.menu_edit_Record, R.layout.record_verify,
+        R.string.menu_input_Record, R.layout.record_verify,
         finisher, R.string.action_accept, listener
       );
     }
@@ -53,7 +53,7 @@ public class Record extends EditorAction {
         verifyRecording(editor, choices[0]);
       } else {
         editor.showChooser(
-          R.string.menu_edit_Record, choices,
+          R.string.menu_input_Record, choices,
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int item) {

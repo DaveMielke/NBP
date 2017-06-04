@@ -1,15 +1,15 @@
-package org.nbp.editor.menu.selection;
+package org.nbp.editor.menu.text;
 import org.nbp.editor.*;
 
 import android.view.MenuItem;
 
-public class SelectAll extends EditorAction {
-  public SelectAll () {
+public class Copy extends ClipboardAction {
+  public Copy () {
     super();
   }
 
   @Override
   public void performAction (EditorActivity editor, MenuItem item) {
-    editor.getEditArea().selectAll();
+    copyToClipboard(editor, false);
   }
 }
