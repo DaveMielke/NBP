@@ -2,6 +2,7 @@
 
 <resources>
   <string name="menu_main_Settings">Settings</string>
+  <string name="menu_main_About">About</string>
 
   <string name="menu_file_Submenu">File</string>
   <string name="menu_file_New">New File</string>

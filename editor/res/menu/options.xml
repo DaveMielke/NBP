@@ -301,4 +301,10 @@
     android:title="@string/menu_main_Settings"
     android:alphabeticShortcut="s"
    />
+
+  <item
+    android:id="@+id/menu_main_About"
+    android:title="@string/menu_main_About"
+    android:alphabeticShortcut="a"
+   />
 </menu>

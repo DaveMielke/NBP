@@ -27,6 +27,21 @@ public class DialogHelper {
     setText(view, dialog.getContext().getString(text));
   }
 
+  public final void setTextFromAsset (int view, String name) {
+    final StringBuilder text = new StringBuilder();
+
+    new InputProcessor() {
+      @Override
+      protected boolean handleLine (CharSequence line, int number) {
+        if (text.length() > 0) text.append('\n');
+        text.append(line);
+        return true;
+      }
+    }.processInput(name);
+
+    setText(view, text.toString());
+  }
+
   public final void setValue (int view, int value) {
     setText(view, Integer.toString(value));
   }
