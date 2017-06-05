@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.browse;
+package org.nbp.editor.menu.review;
 import org.nbp.editor.*;
 
 public class PreviousChange extends EditorAction {

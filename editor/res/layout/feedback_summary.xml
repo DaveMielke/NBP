@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  >
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+      android:id="@+id/feedback_summary_contentURI"
+      android:focusable="true"
+     />
+
+    <TableRow>
+      <TextView android:text="@string/feedback_summary_reviewerCount" />
+      <TextView android:id="@+id/feedback_summary_reviewerCount" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/feedback_summary_revisionCount" />
+      <TextView android:id="@+id/feedback_summary_revisionCount" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/feedback_summary_insertionCount" />
+      <TextView android:id="@+id/feedback_summary_insertionCount" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/feedback_summary_deletionCount" />
+      <TextView android:id="@+id/feedback_summary_deletionCount" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/feedback_summary_commentCount" />
+      <TextView android:id="@+id/feedback_summary_commentCount" />
+    </TableRow>
+  </TableLayout>
+</FrameLayout>

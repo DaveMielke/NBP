@@ -1,8 +1,8 @@
 package org.nbp.editor.menu.review;
 import org.nbp.editor.*;
 
-public class AcceptChanges extends EditorAction {
-  public AcceptChanges () {
+public class OriginalVersion extends EditorAction {
+  public OriginalVersion () {
     super();
   }
 
@@ -15,9 +15,7 @@ public class AcceptChanges extends EditorAction {
         new Runnable() {
           @Override
           public void run () {
-            if (Markup.acceptRevisions(editArea.getText())) {
-              editArea.setHasChanged();
-            }
+            Markup.revertRevisions(editArea.getText());
           }
         }
       );

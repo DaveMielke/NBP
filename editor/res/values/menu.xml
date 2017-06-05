@@ -4,20 +4,20 @@
   <string name="menu_main_Settings">Settings</string>
   <string name="menu_main_About">About</string>
 
-  <string name="menu_file_Submenu">File</string>
+  <string name="menu_file_Submenu">File Management</string>
   <string name="menu_file_New">New File</string>
   <string name="menu_file_Recent">Recent Files</string>
   <string name="menu_file_Open">Open Existing File</string>
-  <string name="menu_file_Save">Save Current File</string>
+  <string name="menu_file_Save">Save to Current File</string>
   <string name="menu_file_SaveAs">Save As Another File</string>
   <string name="menu_file_Send">Send Current File</string>
   <string name="menu_file_Delete">Delete File</string>
 
-  <string name="menu_input_Submenu">Input</string>
+  <string name="menu_input_Submenu">Input Sources</string>
   <string name="menu_input_Paste">Paste from Clipboard</string>
   <string name="menu_input_Record">Record Input</string>
 
-  <string name="menu_text_Submenu">Text</string>
+  <string name="menu_text_Submenu">Text Selection</string>
   <string name="menu_text_SelectAll">Select All</string>
   <string name="menu_text_Copy">Copy to Clipboard</string>
   <string name="menu_text_Cut">Cut to Clipboard</string>
@@ -32,28 +32,28 @@
   <string name="menu_highlight_Superscript">Superscript</string>
   <string name="menu_highlight_Underline">Underline</string>
 
-  <string name="menu_review_Submenu">Review</string>
-  <string name="menu_review_Summary">Summary</string>
-  <string name="menu_review_AcceptChanges">Accept Changes</string>
+  <string name="menu_feedback_Submenu">Document Feedback</string>
+  <string name="menu_feedback_Summary">Summary</string>
+  <string name="menu_feedback_AcceptChanges">Accept All Changes</string>
 
-  <string name="menu_browse_Submenu">Browse</string>
-  <string name="menu_browse_NextChange">Next Change</string>
-  <string name="menu_browse_PreviousChange">Previous Change</string>
-  <string name="menu_browse_MarkupVersion">Markup Version</string>
-  <string name="menu_browse_DraftVersion">Draft without Markup</string>
-  <string name="menu_browse_OriginalVersion">Original Version</string>
+  <string name="menu_review_Submenu">Review</string>
+  <string name="menu_review_NextChange">Next Change</string>
+  <string name="menu_review_PreviousChange">Previous Change</string>
+  <string name="menu_review_MarkupVersion">Markup Version</string>
+  <string name="menu_review_DraftVersion">Draft without Markup</string>
+  <string name="menu_review_OriginalVersion">Original Version</string>
 
   <string name="menu_revisions_Submenu">Revisions</string>
-  <string name="menu_revisions_ShowRevision">Show Revision</string>
+  <string name="menu_revisions_ShowRevision">Show This Revision</string>
   <string name="menu_revisions_NextRevision">Next Revision</string>
   <string name="menu_revisions_PreviousRevision">Previous Revision</string>
-  <string name="menu_revisions_AcceptRevision">Accept Revision</string>
-  <string name="menu_revisions_RejectRevision">Reject Revision</string>
+  <string name="menu_revisions_AcceptRevision">Accept This Revision</string>
+  <string name="menu_revisions_RejectRevision">Reject This Revision</string>
 
   <string name="menu_comments_Submenu">Comments</string>
-  <string name="menu_comments_ShowComment">Show Comment</string>
+  <string name="menu_comments_ShowComment">Show This Comment</string>
   <string name="menu_comments_NextComment">Next Comment</string>
   <string name="menu_comments_PreviousComment">Previous Comment</string>
-  <string name="menu_comments_AddComment">Add Comment</string>
-  <string name="menu_comments_RemoveComment">Remove Comment</string>
+  <string name="menu_comments_AddComment">Add New Comment</string>
+  <string name="menu_comments_RemoveComment">Remove This Comment</string>
 </resources>

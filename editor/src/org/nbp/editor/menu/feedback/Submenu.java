@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.browse;
+package org.nbp.editor.menu.feedback;
 import org.nbp.editor.*;
 
 import android.view.Menu;

@@ -159,46 +159,46 @@
   </item>
 
   <item
-    android:id="@+id/menu_review_Submenu"
-    android:title="@string/menu_review_Submenu"
-    android:alphabeticShortcut="r"
+    android:id="@+id/menu_feedback_Submenu"
+    android:title="@string/menu_feedback_Submenu"
+    android:alphabeticShortcut="d"
     >
 
     <menu>
       <item
-        android:id="@+id/menu_browse_Submenu"
-        android:title="@string/menu_browse_Submenu"
+        android:id="@+id/menu_review_Submenu"
+        android:title="@string/menu_review_Submenu"
         android:alphabeticShortcut="b"
         >
 
         <menu>
           <item
-            android:id="@+id/menu_browse_NextChange"
-            android:title="@string/menu_browse_NextChange"
+            android:id="@+id/menu_review_NextChange"
+            android:title="@string/menu_review_NextChange"
             android:alphabeticShortcut="n"
            />
 
           <item
-            android:id="@+id/menu_browse_PreviousChange"
-            android:title="@string/menu_browse_PreviousChange"
+            android:id="@+id/menu_review_PreviousChange"
+            android:title="@string/menu_review_PreviousChange"
             android:alphabeticShortcut="p"
            />
 
           <item
-            android:id="@+id/menu_browse_MarkupVersion"
-            android:title="@string/menu_browse_MarkupVersion"
+            android:id="@+id/menu_review_MarkupVersion"
+            android:title="@string/menu_review_MarkupVersion"
             android:alphabeticShortcut="m"
            />
 
           <item
-            android:id="@+id/menu_browse_DraftVersion"
-            android:title="@string/menu_browse_DraftVersion"
+            android:id="@+id/menu_review_DraftVersion"
+            android:title="@string/menu_review_DraftVersion"
             android:alphabeticShortcut="d"
            />
 
           <item
-            android:id="@+id/menu_browse_OriginalVersion"
-            android:title="@string/menu_browse_OriginalVersion"
+            android:id="@+id/menu_review_OriginalVersion"
+            android:title="@string/menu_review_OriginalVersion"
             android:alphabeticShortcut="o"
            />
         </menu>
@@ -283,14 +283,14 @@
       </item>
 
       <item
-        android:id="@+id/menu_review_Summary"
-        android:title="@string/menu_review_Summary"
+        android:id="@+id/menu_feedback_Summary"
+        android:title="@string/menu_feedback_Summary"
         android:alphabeticShortcut="s"
        />
 
       <item
-        android:id="@+id/menu_review_AcceptChanges"
-        android:title="@string/menu_review_AcceptChanges"
+        android:id="@+id/menu_feedback_AcceptChanges"
+        android:title="@string/menu_feedback_AcceptChanges"
         android:alphabeticShortcut="a"
        />
     </menu>

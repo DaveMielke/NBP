@@ -11,7 +11,7 @@ import org.nbp.common.DialogHelper;
 
 import android.text.Spanned;
 
-public class ReviewSummary implements DialogFinisher {
+public class FeedbackSummary implements DialogFinisher {
   private final Set<String> reviewerNames = new HashSet<String>();
   private int revisionCount = 0;
   private int insertionCount = 0;
@@ -115,7 +115,7 @@ public class ReviewSummary implements DialogFinisher {
     }
   }
 
-  public ReviewSummary (Spanned content) {
+  public FeedbackSummary (Spanned content) {
     addSpanHandlers();
     includeContent(content);
   }
@@ -152,11 +152,11 @@ public class ReviewSummary implements DialogFinisher {
 
   @Override
   public void finishDialog (DialogHelper helper) {
-    helper.setText(R.id.review_summary_contentURI, getContentURI());
-    helper.setValue(R.id.review_summary_reviewerCount, getReviewerCount());
-    helper.setValue(R.id.review_summary_revisionCount, getRevisionCount());
-    helper.setValue(R.id.review_summary_insertionCount, getInsertionCount());
-    helper.setValue(R.id.review_summary_deletionCount, getDeletionCount());
-    helper.setValue(R.id.review_summary_commentCount, getCommentCount());
+    helper.setText(R.id.feedback_summary_contentURI, getContentURI());
+    helper.setValue(R.id.feedback_summary_reviewerCount, getReviewerCount());
+    helper.setValue(R.id.feedback_summary_revisionCount, getRevisionCount());
+    helper.setValue(R.id.feedback_summary_insertionCount, getInsertionCount());
+    helper.setValue(R.id.feedback_summary_deletionCount, getDeletionCount());
+    helper.setValue(R.id.feedback_summary_commentCount, getCommentCount());
   }
 }

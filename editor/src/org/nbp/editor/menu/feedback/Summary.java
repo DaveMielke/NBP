@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.review;
+package org.nbp.editor.menu.feedback;
 import org.nbp.editor.*;
 
 public class Summary extends EditorAction {
@@ -9,7 +9,7 @@ public class Summary extends EditorAction {
   @Override
   public void performAction (EditorActivity editor) {
     EditArea editArea = editor.getEditArea();
-    ReviewSummary summary = new ReviewSummary(editArea.getText());
+    FeedbackSummary summary = new FeedbackSummary(editArea.getText());
 
     {
       String uri = null;
@@ -24,7 +24,7 @@ public class Summary extends EditorAction {
     }
 
     editor.showDialog(
-      R.string.menu_review_Summary, R.layout.review_summary, summary
+      R.string.menu_feedback_Summary, R.layout.feedback_summary, summary
     );
   }
 }
