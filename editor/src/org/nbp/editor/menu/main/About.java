@@ -11,6 +11,9 @@ public class About extends EditorAction implements DialogFinisher {
 
   @Override
   public void finishDialog (DialogHelper helper) {
+    helper.setText(R.id.about_version_number, R.string.NBP_Editor_version_name);
+    helper.setText(R.id.about_build_time, R.string.NBP_Editor_build_time);
+    helper.setText(R.id.about_source_revision, R.string.NBP_Editor_source_revision);
     helper.setTextFromAsset(R.id.about_copyright, "copyright");
   }
 
