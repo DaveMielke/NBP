@@ -2,7 +2,8 @@ package org.nbp.calculator;
 
 import java.util.Collection;
 
-import org.nbp.common.CommonActivity;
+import android.app.Activity;
+
 import org.nbp.common.AlertDialogBuilder;
 import android.app.AlertDialog;
 
@@ -14,8 +15,8 @@ public abstract class ApplicationUtilities {
     return collection.toArray(new String[collection.size()]);
   }
 
-  public final static AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
-    return new AlertDialogBuilder(CommonActivity.getActivity(), subtitles)
+  public final static AlertDialog.Builder newAlertDialogBuilder (Activity owner, int... subtitles) {
+    return new AlertDialogBuilder(owner, subtitles)
               .setNegativeButton(R.string.button_cancel, null)
               .setCancelable(true)
               ;

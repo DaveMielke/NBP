@@ -188,30 +188,29 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   private View createStringEditButton (final Control control) {
     final StringControl sc = (StringControl)control;
 
-    final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int button) {
-        EditText name = (EditText)CommonUtilities.findView(dialog, 1);
-        sc.setValue(name.getText().toString().trim());
-      }
-    };
-
-    final AlertDialog.Builder builder = new AlertDialog.Builder(this)
-      .setTitle(sc.getLabel())
-      .setPositiveButton(android.R.string.yes, listener)
-      .setNegativeButton(android.R.string.no, null)
-      .setCancelable(true);
-
     Button button = newButton(
       R.string.control_edit_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          EditText name = newEditText();
+          final EditText name = newEditText();
           name.setText(sc.getValue());
-          name.setId(1);
-          builder.setView(name)
-                 .show();
+
+          DialogInterface.OnClickListener listener =
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int button) {
+                sc.setValue(name.getText().toString().trim());
+              }
+            };
+
+          new AlertDialog.Builder(getActivity())
+            .setTitle(sc.getLabel())
+            .setView(name)
+            .setPositiveButton(android.R.string.yes, listener)
+            .setNegativeButton(android.R.string.no, null)
+            .setCancelable(true)
+            .show();
         }
       }
     );

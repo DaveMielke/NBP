@@ -38,15 +38,12 @@ import android.app.AlertDialog;
 public abstract class CommonActivity extends Activity implements ProblemReporter {
   private final static String LOG_TAG = CommonActivity.class.getName();
 
-  private static Activity activity = null;
-
   protected CommonActivity () {
     super();
-    activity = this;
   }
 
-  public final static Activity getActivity () {
-    return activity;
+  protected final Activity getActivity () {
+    return this;
   }
 
   public final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {

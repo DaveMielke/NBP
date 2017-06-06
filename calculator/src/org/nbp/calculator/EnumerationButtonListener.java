@@ -92,7 +92,7 @@ public class EnumerationButtonListener<E extends Enum<E>> {
       new View.OnLongClickListener() {
         @Override
         public boolean onLongClick (View view) {
-          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(getTitle());
+          AlertDialog.Builder builder = ApplicationUtilities.newAlertDialogBuilder(mainActivity, getTitle());
 
           {
             int count = enumerationValues.length;

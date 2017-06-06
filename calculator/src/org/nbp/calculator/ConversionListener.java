@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Button;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
@@ -94,6 +95,7 @@ public class ConversionListener {
     }
   }
 
+  private final Activity mainActivity;
   private final int conversionIdentifier;
   private final ViewGroup conversionRow;
 
@@ -256,7 +258,7 @@ public class ConversionListener {
     int subtitle, CharSequence[] items, int selectedItem,
     DialogInterface.OnClickListener itemSelectedListener
   ) {
-    ApplicationUtilities.newAlertDialogBuilder(subtitle)
+    ApplicationUtilities.newAlertDialogBuilder(mainActivity, subtitle)
       .setNegativeButton(R.string.button_cancel, selectionCancelledListener)
       .setSingleChoiceItems(items, selectedItem, itemSelectedListener)
       .show();
@@ -332,7 +334,8 @@ public class ConversionListener {
       }
     };
 
-  private ConversionListener (int identifier, ViewGroup row, Button.OnClickListener convertListener) {
+  private ConversionListener (Activity activity, int identifier, ViewGroup row, Button.OnClickListener convertListener) {
+    mainActivity = activity;
     conversionIdentifier = identifier;
     conversionRow = row;
 
@@ -350,13 +353,13 @@ public class ConversionListener {
     convertButton.setOnClickListener(convertListener);
   }
 
-  public final static void register (final Button.OnClickListener convertListener) {
+  public final static void register (Activity activity, final Button.OnClickListener convertListener) {
     ViewGroup keypad = Keypad.CONVERSION.getView();
     int rowCount = keypad.getChildCount();
 
     for (int rowIndex=0; rowIndex<rowCount; rowIndex+=1) {
       new ConversionListener(
-        rowIndex, (ViewGroup)keypad.getChildAt(rowIndex), convertListener
+        activity, rowIndex, (ViewGroup)keypad.getChildAt(rowIndex), convertListener
       );
     }
   }
