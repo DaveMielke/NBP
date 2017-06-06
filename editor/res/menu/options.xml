@@ -59,14 +59,14 @@
 
     <menu>
       <item
-        android:id="@+id/menu_input_Paste"
-        android:title="@string/menu_input_Paste"
+        android:id="@+id/menu_input_PasteClipboard"
+        android:title="@string/menu_input_PasteClipboard"
         android:alphabeticShortcut="p"
        />
 
       <item
-        android:id="@+id/menu_input_Record"
-        android:title="@string/menu_input_Record"
+        android:id="@+id/menu_input_RecordInput"
+        android:title="@string/menu_input_RecordInput"
         android:alphabeticShortcut="r"
        />
     </menu>
@@ -161,7 +161,7 @@
   <item
     android:id="@+id/menu_feedback_OpenSubmenu"
     android:title="@string/menu_feedback_OpenSubmenu"
-    android:alphabeticShortcut="d"
+    android:alphabeticShortcut="e"
     >
 
     <menu>
@@ -173,14 +173,14 @@
 
         <menu>
           <item
-            android:id="@+id/menu_review_NextChange"
-            android:title="@string/menu_review_NextChange"
+            android:id="@+id/menu_review_NextEdit"
+            android:title="@string/menu_review_NextEdit"
             android:alphabeticShortcut="n"
            />
 
           <item
-            android:id="@+id/menu_review_PreviousChange"
-            android:title="@string/menu_review_PreviousChange"
+            android:id="@+id/menu_review_PreviousEdit"
+            android:title="@string/menu_review_PreviousEdit"
             android:alphabeticShortcut="p"
            />
 
@@ -283,14 +283,14 @@
       </item>
 
       <item
-        android:id="@+id/menu_feedback_Summary"
-        android:title="@string/menu_feedback_Summary"
+        android:id="@+id/menu_feedback_SummarizeFeedback"
+        android:title="@string/menu_feedback_SummarizeFeedback"
         android:alphabeticShortcut="s"
        />
 
       <item
-        android:id="@+id/menu_feedback_AcceptChanges"
-        android:title="@string/menu_feedback_AcceptChanges"
+        android:id="@+id/menu_feedback_AcceptEdits"
+        android:title="@string/menu_feedback_AcceptEdits"
         android:alphabeticShortcut="a"
        />
     </menu>

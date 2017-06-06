@@ -1,8 +1,8 @@
 package org.nbp.editor.menu.input;
 import org.nbp.editor.*;
 
-public class Paste extends ClipboardAction {
-  public Paste (EditorActivity editor) {
+public class PasteClipboard extends ClipboardAction {
+  public PasteClipboard (EditorActivity editor) {
     super(editor);
   }
 

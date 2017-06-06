@@ -261,14 +261,14 @@ public class EditArea extends EditText {
     );
   }
 
-  public final boolean moveToNextChange () {
+  public final boolean moveToNextEdit () {
     return moveToNextPosition(
       findNextSpanSequence(PreviewSpan.class),
       findNextSpanSequence(RevisionSpan.class)
     );
   }
 
-  public final boolean moveToPreviousChange () {
+  public final boolean moveToPreviousEdit () {
     return moveToPreviousPosition(
       findPreviousSpanSequence(PreviewSpan.class),
       findPreviousSpanSequence(RevisionSpan.class)

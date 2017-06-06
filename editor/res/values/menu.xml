@@ -14,8 +14,8 @@
   <string name="menu_file_DeleteFile">Delete File</string>
 
   <string name="menu_input_OpenSubmenu">Input Sources…</string>
-  <string name="menu_input_Paste">Paste from Clipboard</string>
-  <string name="menu_input_Record">Record Input</string>
+  <string name="menu_input_PasteClipboard">Paste from Clipboard</string>
+  <string name="menu_input_RecordInput">Record Input</string>
 
   <string name="menu_text_OpenSubmenu">Text Selection…</string>
   <string name="menu_text_SelectAll">Select All</string>
@@ -32,25 +32,25 @@
   <string name="menu_highlight_Superscript">Superscript</string>
   <string name="menu_highlight_Underline">Underline</string>
 
-  <string name="menu_feedback_OpenSubmenu">Document Feedback…</string>
-  <string name="menu_feedback_Summary">Summary</string>
-  <string name="menu_feedback_AcceptChanges">Accept All Changes</string>
+  <string name="menu_feedback_OpenSubmenu">Edits and Comments…</string>
+  <string name="menu_feedback_SummarizeFeedback">Summarize Feedback</string>
+  <string name="menu_feedback_AcceptEdits">Accept All Edits</string>
 
-  <string name="menu_review_OpenSubmenu">Review…</string>
-  <string name="menu_review_NextChange">Next Change</string>
-  <string name="menu_review_PreviousChange">Previous Change</string>
+  <string name="menu_review_OpenSubmenu">Review Edits…</string>
+  <string name="menu_review_NextEdit">Next Edit</string>
+  <string name="menu_review_PreviousEdit">Previous Edit</string>
   <string name="menu_review_MarkupVersion">Markup Version</string>
   <string name="menu_review_DraftVersion">Draft without Markup</string>
   <string name="menu_review_OriginalVersion">Original Version</string>
 
-  <string name="menu_revisions_OpenSubmenu">Revisions…</string>
+  <string name="menu_revisions_OpenSubmenu">Revision Manager…</string>
   <string name="menu_revisions_ShowRevision">Show This Revision</string>
   <string name="menu_revisions_NextRevision">Next Revision</string>
   <string name="menu_revisions_PreviousRevision">Previous Revision</string>
   <string name="menu_revisions_AcceptRevision">Accept This Revision</string>
   <string name="menu_revisions_RejectRevision">Reject This Revision</string>
 
-  <string name="menu_comments_OpenSubmenu">Comments…</string>
+  <string name="menu_comments_OpenSubmenu">Comment Manager…</string>
   <string name="menu_comments_ShowComment">Show This Comment</string>
   <string name="menu_comments_NextComment">Next Comment</string>
   <string name="menu_comments_PreviousComment">Previous Comment</string>

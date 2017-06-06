@@ -1,8 +1,8 @@
 package org.nbp.editor.menu.feedback;
 import org.nbp.editor.*;
 
-public class AcceptChanges extends EditorAction {
-  public AcceptChanges (EditorActivity editor) {
+public class AcceptEdits extends EditorAction {
+  public AcceptEdits (EditorActivity editor) {
     super(editor);
   }
 

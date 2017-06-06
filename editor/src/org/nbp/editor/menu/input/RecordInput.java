@@ -10,8 +10,8 @@ import org.nbp.common.DialogHelper;
 
 import android.widget.EditText;
 
-public class Record extends EditorAction {
-  public Record (EditorActivity editor) {
+public class RecordInput extends EditorAction {
+  public RecordInput (EditorActivity editor) {
     super(editor);
   }
 
@@ -35,7 +35,7 @@ public class Record extends EditorAction {
       };
 
       editor.showDialog(
-        R.string.menu_input_Record, R.layout.record_verify,
+        R.string.menu_input_RecordInput, R.layout.record_verify,
         finisher, R.string.action_accept, listener
       );
     }
@@ -51,7 +51,7 @@ public class Record extends EditorAction {
         verifyRecording(editor, choices[0]);
       } else {
         editor.showChooser(
-          R.string.menu_input_Record, choices,
+          R.string.menu_input_RecordInput, choices,
           new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog, int item) {

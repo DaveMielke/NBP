@@ -1,8 +1,8 @@
 package org.nbp.editor.menu.feedback;
 import org.nbp.editor.*;
 
-public class Summary extends EditorAction {
-  public Summary (EditorActivity editor) {
+public class SummarizeFeedback extends EditorAction {
+  public SummarizeFeedback (EditorActivity editor) {
     super(editor);
   }
 
@@ -24,7 +24,7 @@ public class Summary extends EditorAction {
     }
 
     editor.showDialog(
-      R.string.menu_feedback_Summary, R.layout.feedback_summary, summary
+      R.string.menu_feedback_SummarizeFeedback, R.layout.feedback_summary, summary
     );
   }
 }
