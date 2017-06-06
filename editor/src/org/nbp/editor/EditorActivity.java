@@ -13,7 +13,6 @@ import java.util.LinkedHashSet;
 
 import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
-import org.nbp.common.Tones;
 
 import org.nbp.common.AlertDialogBuilder;
 import org.nbp.common.DialogFinisher;
@@ -600,13 +599,16 @@ public class EditorActivity extends CommonActivity {
     return false;
   }
 
-  private Menu optionsMenu = null;
-  public Menu currentMenu = null;
-
   @Override
   public boolean onCreateOptionsMenu (Menu menu) {
     getMenuInflater().inflate(R.menu.options, menu);
-    optionsMenu = menu;
+    MenuAction.setCurrentMenu(menu);
+    return true;
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu (Menu menu) {
+    MenuAction.setCurrentMenu(menu);
     return true;
   }
 
@@ -746,101 +748,11 @@ public class EditorActivity extends CommonActivity {
   }
 
   private final void addInputFilters () {
-    InputFilter hasChangedMonitor = new InputFilter() {
-      private final Runnable getMenuAction (char character) {
-        if (character < 0X20) {
-          final Menu menu = currentMenu;
-
-          if (menu != null) {
-            int count = menu.size();
-
-            char letter = character;
-            letter |= 0X60;
-
-            for (int index=0; index<count; index+=1) {
-              final MenuItem item = menu.getItem(index);
-
-              if (letter == item.getAlphabeticShortcut()) {
-                return new Runnable() {
-                  @Override
-                  public void run () {
-                    editArea.beginBatchEdit();
-                    boolean performed = menu.performIdentifierAction(item.getItemId(), 0);
-                    editArea.endBatchEdit();
-                    if (!performed)  Tones.beep();
-                  }
-                };
-              }
-            }
-          }
-        }
-
-        return null;
+    editArea.setFilters(
+      new InputFilter[] {
+        new EditAreaFilter(this)
       }
-
-      private final boolean handleCharacter (char character) {
-        if (!Character.isISOControl(character)) return false;
-        if (character == '\n') return false;
-        if (character == '\t') return false;
-
-        Tones.beep();
-        return true;
-      }
-
-      @Override
-      public CharSequence filter (
-        CharSequence src, int srcStart, int srcEnd,
-        Spanned dst, int dstStart, int dstEnd
-      ) {
-        boolean handled = false;
-        Runnable menuAction = null;
-
-        if ((srcStart + 1) == srcEnd) {
-          char character = src.charAt(srcStart);
-          menuAction = getMenuAction(character);
-
-          if (menuAction != null) {
-            handled = true;
-          } else if (handleCharacter(character)) {
-            handled = true;
-          }
-        }
-
-        if (!handled) {
-          if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
-            handled = true;
-          }
-        }
-
-        if (!handled) {
-          editArea.setHasChanged();
-          return null;
-        }
-
-        {
-          final int start = editArea.getSelectionStart();
-          final int end = editArea.getSelectionEnd();
-
-          editArea.post(
-            new Runnable() {
-              @Override
-              public void run () {
-                editArea.setSelection(start, end);
-              }
-            }
-          );
-        }
-
-        if (menuAction != null) editArea.post(menuAction);
-        return dst.subSequence(dstStart, dstEnd);
-      }
-    };
-
-    InputFilter[] inputFilters = new InputFilter[] {
-      hasChangedMonitor
-    };
-
-    editArea.setFilters(inputFilters);
+    );
   }
 
   private final void setup () {

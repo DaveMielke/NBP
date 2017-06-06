@@ -8,8 +8,18 @@ public abstract class MenuAction extends EditorAction {
     super();
   }
 
+  private static Menu currentMenu = null;
+
+  public final static Menu getCurrentMenu () {
+    return currentMenu;
+  }
+
+  public final static void setCurrentMenu (Menu menu) {
+    currentMenu = menu;
+  }
+
   protected void prepareMenu (EditorActivity editor, Menu menu) {
-    editor.currentMenu = menu;
+    setCurrentMenu(menu);
   }
 
   @Override
