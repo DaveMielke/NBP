@@ -18,7 +18,7 @@ public class About extends EditorAction implements DialogFinisher {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
-    editor.showDialog(R.string.menu_main_About, R.layout.about, this);
+  public void performAction () {
+    getEditor().showDialog(R.string.menu_main_About, R.layout.about, this);
   }
 }

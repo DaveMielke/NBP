@@ -9,7 +9,7 @@ public class Settings extends EditorAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
+  public void performAction () {
     LaunchUtilities.launchActivity(SettingsActivity.class);
   }
 }

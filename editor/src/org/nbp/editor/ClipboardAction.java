@@ -1,7 +1,5 @@
 package org.nbp.editor;
 
-import android.view.MenuItem;
-
 import android.content.ClipboardManager;
 import android.content.ClipData;
 
@@ -13,8 +11,8 @@ public abstract class ClipboardAction extends EditorAction {
     super(editor);
   }
 
-  protected final ClipboardManager getClipboard (EditorActivity editor) {
-    return (ClipboardManager)editor.getSystemService(Context.CLIPBOARD_SERVICE);
+  protected final ClipboardManager getClipboard () {
+    return (ClipboardManager)getEditor().getSystemService(Context.CLIPBOARD_SERVICE);
   }
 
   protected final CharSequence getText (ClipData clip) {
@@ -40,14 +38,14 @@ public abstract class ClipboardAction extends EditorAction {
     return null;
   }
 
-  protected final void copyToClipboard (EditorActivity editor, boolean delete) {
-    EditArea editArea = editor.getEditArea();
+  protected final void copyToClipboard (boolean delete) {
+    EditArea editArea = getEditArea();
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
 
     Editable text = editArea.getText();
     ClipData clip = ClipData.newPlainText("NBP Editor", text.subSequence(start, end));
-    getClipboard(editor).setPrimaryClip(clip);
+    getClipboard().setPrimaryClip(clip);
 
     if (delete) {
       text.delete(start, end);

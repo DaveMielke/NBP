@@ -7,7 +7,7 @@ public class Copy extends ClipboardAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
-    copyToClipboard(editor, false);
+  public void performAction () {
+    copyToClipboard(false);
   }
 }

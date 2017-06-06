@@ -7,7 +7,7 @@ public class Cut extends ClipboardAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
-    copyToClipboard(editor, true);
+  public void performAction () {
+    copyToClipboard(true);
   }
 }
