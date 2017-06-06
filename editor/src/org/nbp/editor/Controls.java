@@ -8,8 +8,16 @@ public abstract class Controls {
   }
 
   public final static ProtectTextControl protectText = new ProtectTextControl();
+  public final static OwnerNameControl ownerName = new OwnerNameControl();
 
   public final static Control[] ALL = new Control[] {
-    protectText
+    protectText,
+    ownerName
   };
+
+  public final static void restore () {
+    for (Control control : ALL) {
+      control.restoreCurrentValue();
+    }
+  }
 }

@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 
 import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -167,7 +168,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
     final AlertDialog.Builder builder = new AlertDialog.Builder(this)
       .setTitle(ec.getLabel())
-      .setNeutralButton(android.R.string.no, null)
+      .setNegativeButton(android.R.string.no, null)
       .setCancelable(true);
 
     Button button = newButton(
@@ -176,6 +177,40 @@ public abstract class CommonSettingsActivity extends CommonActivity {
         @Override
         public void onClick (View view) {
           builder.setSingleChoiceItems(labels, ec.getIntegerValue(), listener)
+                 .show();
+        }
+      }
+    );
+
+    return button;
+  }
+
+  private View createStringEditButton (final Control control) {
+    final StringControl sc = (StringControl)control;
+
+    final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick (DialogInterface dialog, int button) {
+        EditText name = (EditText)CommonUtilities.findView(dialog, 1);
+        sc.setValue(name.getText().toString().trim());
+      }
+    };
+
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this)
+      .setTitle(sc.getLabel())
+      .setPositiveButton(android.R.string.yes, listener)
+      .setNegativeButton(android.R.string.no, null)
+      .setCancelable(true);
+
+    Button button = newButton(
+      R.string.control_edit_label,
+      new Button.OnClickListener() {
+        @Override
+        public void onClick (View view) {
+          EditText name = newEditText();
+          name.setText(sc.getValue());
+          name.setId(1);
+          builder.setView(name)
                  .show();
         }
       }
@@ -260,8 +295,9 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return view;
   }
 
-  private View createIntegerValueView (Control control) {
+  private View createTextValueView (Control control) {
     final TextView view = newTextView(control.getValue());
+    view.setHint(R.string.control_hint_not_set);
 
     addControlValueChangedListener(control,
       new Control.OnValueChangedListener() {
@@ -287,10 +323,12 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     if (control instanceof BooleanControl) {
       group.addView(createBooleanValueView(control));
     } else {
-      group.addView(createIntegerValueView(control));
+      group.addView(createTextValueView(control));
 
       if (control instanceof EnumerationControl) {
         group.addView(createEnumerationChangeButton(control));
+      } else if (control instanceof StringControl) {
+        group.addView(createStringEditButton(control));
       } else {
         group.addView(createPreviousValueButton(control));
         group.addView(createNextValueButton(control));
@@ -438,7 +476,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       transaction.commit();
     } else {
       ViewGroup container = (ViewGroup)findViewById(FRAGMENT_CONTAINER_ID);
-      container.addView(newTextView(R.string.settings_main_none));
+      container.addView(newTextView(R.string.control_group_none));
     }
   }
 

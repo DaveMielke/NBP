@@ -761,6 +761,7 @@ public class EditorActivity extends CommonActivity {
     filesDirectory = getFilesDir();
     prefs = getSharedPreferences("editor", MODE_PRIVATE);
 
+    Controls.restore();
     restoreRecentURIs();
 
     setContentView(R.layout.editor);

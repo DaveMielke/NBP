@@ -2,4 +2,5 @@
 
 <resources>
   <string name="control_label_ProtectText">Protect Text</string>
+  <string name="control_label_OwnerName">Owner Name</string>
 </resources>

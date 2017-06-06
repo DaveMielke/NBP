@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 
 import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Switch;
@@ -135,6 +136,12 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
   public TextView newTextView (int text) {
     TextView view = newTextView();
     view.setText(text);
+    return view;
+  }
+
+  public EditText newEditText () {
+    EditText view = new EditText(this);
+    view.setFocusable(true);
     return view;
   }
 
