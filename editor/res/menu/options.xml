@@ -168,7 +168,7 @@
       <item
         android:id="@+id/menu_review_OpenSubmenu"
         android:title="@string/menu_review_OpenSubmenu"
-        android:alphabeticShortcut="b"
+        android:alphabeticShortcut="e"
         >
 
         <menu>
