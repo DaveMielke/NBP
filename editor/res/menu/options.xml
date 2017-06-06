@@ -2,8 +2,8 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
-    android:id="@+id/menu_file_Submenu"
-    android:title="@string/menu_file_Submenu"
+    android:id="@+id/menu_file_OpenSubmenu"
+    android:title="@string/menu_file_OpenSubmenu"
     android:alphabeticShortcut="f"
     >
 
@@ -52,8 +52,8 @@
   </item>
 
   <item
-    android:id="@+id/menu_input_Submenu"
-    android:title="@string/menu_input_Submenu"
+    android:id="@+id/menu_input_OpenSubmenu"
+    android:title="@string/menu_input_OpenSubmenu"
     android:alphabeticShortcut="i"
     >
 
@@ -73,8 +73,8 @@
   </item>
 
   <item
-    android:id="@+id/menu_text_Submenu"
-    android:title="@string/menu_text_Submenu"
+    android:id="@+id/menu_text_OpenSubmenu"
+    android:title="@string/menu_text_OpenSubmenu"
     android:alphabeticShortcut="t"
     >
 
@@ -101,8 +101,8 @@
          />
 
         <item
-          android:id="@+id/menu_highlight_Submenu"
-          android:title="@string/menu_highlight_Submenu"
+          android:id="@+id/menu_highlight_OpenSubmenu"
+          android:title="@string/menu_highlight_OpenSubmenu"
           android:alphabeticShortcut="h"
           >
 
@@ -159,15 +159,15 @@
   </item>
 
   <item
-    android:id="@+id/menu_feedback_Submenu"
-    android:title="@string/menu_feedback_Submenu"
+    android:id="@+id/menu_feedback_OpenSubmenu"
+    android:title="@string/menu_feedback_OpenSubmenu"
     android:alphabeticShortcut="d"
     >
 
     <menu>
       <item
-        android:id="@+id/menu_review_Submenu"
-        android:title="@string/menu_review_Submenu"
+        android:id="@+id/menu_review_OpenSubmenu"
+        android:title="@string/menu_review_OpenSubmenu"
         android:alphabeticShortcut="b"
         >
 
@@ -205,8 +205,8 @@
       </item>
 
       <item
-        android:id="@+id/menu_revisions_Submenu"
-        android:title="@string/menu_revisions_Submenu"
+        android:id="@+id/menu_revisions_OpenSubmenu"
+        android:title="@string/menu_revisions_OpenSubmenu"
             android:alphabeticShortcut="r"
         >
 
@@ -244,8 +244,8 @@
       </item>
 
       <item
-        android:id="@+id/menu_comments_Submenu"
-        android:title="@string/menu_comments_Submenu"
+        android:id="@+id/menu_comments_OpenSubmenu"
+        android:title="@string/menu_comments_OpenSubmenu"
         android:alphabeticShortcut="c"
         >
 

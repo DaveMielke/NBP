@@ -1,10 +1,10 @@
-package org.nbp.editor.menu.file;
+package org.nbp.editor.menu.revisions;
 import org.nbp.editor.*;
 
 import android.view.Menu;
 
-public class Submenu extends MenuAction {
-  public Submenu (EditorActivity editor) {
+public class OpenSubmenu extends MenuAction {
+  public OpenSubmenu (EditorActivity editor) {
     super(editor);
   }
 
