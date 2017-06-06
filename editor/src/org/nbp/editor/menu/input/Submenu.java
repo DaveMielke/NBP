@@ -9,7 +9,7 @@ public class Submenu extends MenuAction {
   }
 
   @Override
-  public void prepareMenu (EditorActivity editor, Menu menu) {
-    super.prepareMenu(editor, menu);
+  public void prepareMenu (Menu menu) {
+    super.prepareMenu(menu);
   }
 }

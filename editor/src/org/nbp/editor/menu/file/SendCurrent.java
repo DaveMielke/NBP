@@ -3,8 +3,8 @@ import org.nbp.editor.*;
 
 import org.nbp.common.OutgoingMessage;
 
-public class Send extends EditorAction {
-  public Send (EditorActivity editor) {
+public class SendCurrent extends EditorAction {
+  public SendCurrent (EditorActivity editor) {
     super(editor);
   }
 

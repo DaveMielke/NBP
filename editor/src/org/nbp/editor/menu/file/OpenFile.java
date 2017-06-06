@@ -4,8 +4,8 @@ import org.nbp.editor.*;
 import org.nbp.common.FileFinder;
 import java.io.File;
 
-public class Open extends EditorAction {
-  public Open (EditorActivity editor) {
+public class OpenFile extends EditorAction {
+  public OpenFile (EditorActivity editor) {
     super(editor);
   }
 

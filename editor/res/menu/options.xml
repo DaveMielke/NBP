@@ -9,26 +9,26 @@
 
     <menu>
       <item
-        android:id="@+id/menu_file_New"
-        android:title="@string/menu_file_New"
+        android:id="@+id/menu_file_NewFile"
+        android:title="@string/menu_file_NewFile"
         android:alphabeticShortcut="n"
        />
 
       <item
-        android:id="@+id/menu_file_Recent"
-        android:title="@string/menu_file_Recent"
+        android:id="@+id/menu_file_RecentFiles"
+        android:title="@string/menu_file_RecentFiles"
         android:alphabeticShortcut="r"
        />
 
       <item
-        android:id="@+id/menu_file_Open"
-        android:title="@string/menu_file_Open"
+        android:id="@+id/menu_file_OpenFile"
+        android:title="@string/menu_file_OpenFile"
         android:alphabeticShortcut="o"
        />
 
       <item
-        android:id="@+id/menu_file_Save"
-        android:title="@string/menu_file_Save"
+        android:id="@+id/menu_file_SaveCurrent"
+        android:title="@string/menu_file_SaveCurrent"
         android:alphabeticShortcut="s"
        />
 
@@ -39,13 +39,13 @@
        />
 
       <item
-        android:id="@+id/menu_file_Send"
-        android:title="@string/menu_file_Send"
+        android:id="@+id/menu_file_SendCurrent"
+        android:title="@string/menu_file_SendCurrent"
        />
 
       <item
-        android:id="@+id/menu_file_Delete"
-        android:title="@string/menu_file_Delete"
+        android:id="@+id/menu_file_DeleteFile"
+        android:title="@string/menu_file_DeleteFile"
         android:alphabeticShortcut="d"
        />
     </menu>

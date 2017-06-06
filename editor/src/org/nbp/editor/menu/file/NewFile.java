@@ -1,8 +1,8 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-public class New extends EditorAction {
-  public New (EditorActivity editor) {
+public class NewFile extends EditorAction {
+  public NewFile (EditorActivity editor) {
     super(editor);
   }
 

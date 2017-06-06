@@ -1,8 +1,8 @@
 package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
-public class Save extends SaveAs {
-  public Save (EditorActivity editor) {
+public class SaveCurrent extends SaveAs {
+  public SaveCurrent (EditorActivity editor) {
     super(editor);
   }
 

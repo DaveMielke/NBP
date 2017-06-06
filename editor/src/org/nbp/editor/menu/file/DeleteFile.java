@@ -4,8 +4,8 @@ import org.nbp.editor.*;
 import org.nbp.common.FileFinder;
 import java.io.File;
 
-public class Delete extends EditorAction {
-  public Delete (EditorActivity editor) {
+public class DeleteFile extends EditorAction {
+  public DeleteFile (EditorActivity editor) {
     super(editor);
   }
 
@@ -13,7 +13,7 @@ public class Delete extends EditorAction {
   public void performAction (final EditorActivity editor) {
     FileFinder.Builder builder = new FileFinder
       .Builder(editor)
-      .setUserTitle(R.string.menu_file_Delete)
+      .setUserTitle(R.string.menu_file_DeleteFile)
       ;
 
     editor.addRootLocations(builder);

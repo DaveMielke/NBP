@@ -18,12 +18,12 @@ public abstract class MenuAction extends EditorAction {
     currentMenu = menu;
   }
 
-  protected void prepareMenu (EditorActivity editor, Menu menu) {
+  protected void prepareMenu (Menu menu) {
     setCurrentMenu(menu);
   }
 
   @Override
-  public void performAction (EditorActivity editor, MenuItem item) {
-    prepareMenu(editor, item.getSubMenu());
+  public void performAction (MenuItem item) {
+    prepareMenu(item.getSubMenu());
   }
 }

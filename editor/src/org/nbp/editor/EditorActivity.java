@@ -424,7 +424,7 @@ public class EditorActivity extends CommonActivity {
   public final FileFinder.Builder newFileFinderBuilder (boolean forWriting) {
     int title = forWriting?
                 R.string.menu_file_SaveAs:
-                R.string.menu_file_Open;
+                R.string.menu_file_OpenFile;
 
     return new FileFinder
           .Builder(this)

@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class Recent extends EditorAction {
-  public Recent (EditorActivity editor) {
+public class RecentFiles extends EditorAction {
+  public RecentFiles (EditorActivity editor) {
     super(editor);
   }
 
@@ -84,6 +84,6 @@ public class Recent extends EditorAction {
       }
     };
 
-    editor.showDialog(R.string.menu_file_Recent, R.layout.recent_list, finisher, false);
+    editor.showDialog(R.string.menu_file_RecentFiles, R.layout.recent_list, finisher, false);
   }
 }

@@ -5,13 +5,13 @@
   <string name="menu_main_About">About</string>
 
   <string name="menu_file_Submenu">File Management</string>
-  <string name="menu_file_New">New File</string>
-  <string name="menu_file_Recent">Recent Files</string>
-  <string name="menu_file_Open">Open Existing File</string>
-  <string name="menu_file_Save">Save to Current File</string>
+  <string name="menu_file_NewFile">New File</string>
+  <string name="menu_file_RecentFiles">Recent Files</string>
+  <string name="menu_file_OpenFile">Open Existing File</string>
+  <string name="menu_file_SaveCurrent">Save to Current File</string>
   <string name="menu_file_SaveAs">Save As Another File</string>
-  <string name="menu_file_Send">Send Current File</string>
-  <string name="menu_file_Delete">Delete File</string>
+  <string name="menu_file_SendCurrent">Send Current File</string>
+  <string name="menu_file_DeleteFile">Delete File</string>
 
   <string name="menu_input_Submenu">Input Sources</string>
   <string name="menu_input_Paste">Paste from Clipboard</string>
