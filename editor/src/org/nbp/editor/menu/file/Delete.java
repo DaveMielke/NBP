@@ -5,8 +5,8 @@ import org.nbp.common.FileFinder;
 import java.io.File;
 
 public class Delete extends EditorAction {
-  public Delete () {
-    super();
+  public Delete (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

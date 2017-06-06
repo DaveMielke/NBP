@@ -6,8 +6,8 @@ import android.text.style.StyleSpan;
 import android.graphics.Typeface;
 
 public class Bold extends HighlightAction {
-  public Bold () {
-    super();
+  public Bold (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

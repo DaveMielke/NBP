@@ -2,8 +2,8 @@ package org.nbp.editor.menu.review;
 import org.nbp.editor.*;
 
 public class PreviousChange extends EditorAction {
-  public PreviousChange () {
-    super();
+  public PreviousChange (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

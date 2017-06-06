@@ -3,8 +3,8 @@ package org.nbp.editor;
 import android.text.Editable;
 
 public abstract class CharacterAction extends EditorAction {
-  protected CharacterAction () {
-    super();
+  protected CharacterAction (EditorActivity editor) {
+    super(editor);
   }
 
   protected abstract boolean testCharacter (char character);

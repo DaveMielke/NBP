@@ -2,8 +2,8 @@ package org.nbp.editor.menu.revisions;
 import org.nbp.editor.*;
 
 public class ShowRevision extends EditorAction {
-  public ShowRevision () {
-    super();
+  public ShowRevision (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

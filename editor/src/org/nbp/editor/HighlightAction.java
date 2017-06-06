@@ -5,8 +5,8 @@ import android.text.Spanned;
 import android.text.style.CharacterStyle;
 
 public abstract class HighlightAction extends EditorAction {
-  protected HighlightAction () {
-    super();
+  protected HighlightAction (EditorActivity editor) {
+    super(editor);
   }
 
   protected abstract CharacterStyle getCharacterStyle ();

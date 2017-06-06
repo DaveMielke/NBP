@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class Recent extends EditorAction {
-  public Recent () {
-    super();
+  public Recent (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

@@ -4,8 +4,8 @@ import org.nbp.editor.*;
 import org.nbp.common.OutgoingMessage;
 
 public class Send extends EditorAction {
-  public Send () {
-    super();
+  public Send (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

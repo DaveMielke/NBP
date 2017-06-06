@@ -4,8 +4,8 @@ import android.view.MenuItem;
 import android.view.Menu;
 
 public abstract class MenuAction extends EditorAction {
-  protected MenuAction () {
-    super();
+  protected MenuAction (EditorActivity editor) {
+    super(editor);
   }
 
   private static Menu currentMenu = null;

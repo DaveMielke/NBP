@@ -2,8 +2,8 @@ package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
 
 public class ShowComment extends EditorAction {
-  public ShowComment () {
-    super();
+  public ShowComment (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

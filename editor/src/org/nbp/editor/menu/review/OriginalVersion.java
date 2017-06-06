@@ -2,8 +2,8 @@ package org.nbp.editor.menu.review;
 import org.nbp.editor.*;
 
 public class OriginalVersion extends EditorAction {
-  public OriginalVersion () {
-    super();
+  public OriginalVersion (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

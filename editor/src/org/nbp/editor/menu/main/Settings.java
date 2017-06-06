@@ -4,8 +4,8 @@ import org.nbp.editor.*;
 import org.nbp.common.LaunchUtilities;
 
 public class Settings extends EditorAction {
-  public Settings () {
-    super();
+  public Settings (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

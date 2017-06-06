@@ -4,8 +4,8 @@ import org.nbp.editor.*;
 import android.view.Menu;
 
 public class Submenu extends MenuAction {
-  public Submenu () {
-    super();
+  public Submenu (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

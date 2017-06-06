@@ -2,8 +2,8 @@ package org.nbp.editor.menu.feedback;
 import org.nbp.editor.*;
 
 public class Summary extends EditorAction {
-  public Summary () {
-    super();
+  public Summary (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

@@ -9,8 +9,8 @@ import android.content.Context;
 import android.text.Editable;
 
 public abstract class ClipboardAction extends EditorAction {
-  protected ClipboardAction () {
-    super();
+  protected ClipboardAction (EditorActivity editor) {
+    super(editor);
   }
 
   protected final ClipboardManager getClipboard (EditorActivity editor) {

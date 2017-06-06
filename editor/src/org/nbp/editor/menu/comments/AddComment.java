@@ -11,8 +11,8 @@ import android.text.Editable;
 import android.text.Spanned;
 
 public class AddComment extends EditorAction {
-  public AddComment () {
-    super();
+  public AddComment (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

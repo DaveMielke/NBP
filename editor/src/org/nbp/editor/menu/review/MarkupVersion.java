@@ -2,8 +2,8 @@ package org.nbp.editor.menu.review;
 import org.nbp.editor.*;
 
 public class MarkupVersion extends EditorAction {
-  public MarkupVersion () {
-    super();
+  public MarkupVersion (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

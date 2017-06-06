@@ -5,8 +5,8 @@ import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
 
 public class About extends EditorAction implements DialogFinisher {
-  public About () {
-    super();
+  public About (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

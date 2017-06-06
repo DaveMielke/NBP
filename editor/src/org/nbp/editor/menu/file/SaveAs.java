@@ -2,8 +2,8 @@ package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
 public class SaveAs extends EditorAction {
-  public SaveAs () {
-    super();
+  public SaveAs (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

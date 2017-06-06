@@ -2,8 +2,8 @@ package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
 public class New extends EditorAction {
-  public New () {
-    super();
+  public New (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

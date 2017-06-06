@@ -2,8 +2,8 @@ package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
 
 public class NextComment extends EditorAction {
-  public NextComment () {
-    super();
+  public NextComment (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

@@ -2,8 +2,8 @@ package org.nbp.editor.menu.revisions;
 import org.nbp.editor.*;
 
 public class PreviousRevision extends EditorAction {
-  public PreviousRevision () {
-    super();
+  public PreviousRevision (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

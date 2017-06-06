@@ -4,8 +4,8 @@ import org.nbp.editor.*;
 import android.content.DialogInterface;
 
 public class AcceptRevision extends EditorAction {
-  public AcceptRevision () {
-    super();
+  public AcceptRevision (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

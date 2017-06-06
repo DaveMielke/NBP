@@ -574,10 +574,10 @@ public class EditorActivity extends CommonActivity {
     }
 
     if (!EditorAction.class.isAssignableFrom(type)) return null;
-    Constructor constructor = LanguageUtilities.getConstructor(type);
+    Constructor constructor = LanguageUtilities.getConstructor(type, EditorActivity.class);
     if (constructor == null) return null;
 
-    action = (EditorAction)LanguageUtilities.newInstance(constructor);
+    action = (EditorAction)LanguageUtilities.newInstance(constructor, this);
     editorActions.put(identifier, action);
     return action;
   }
@@ -588,7 +588,7 @@ public class EditorActivity extends CommonActivity {
     EditorAction action = getEditorAction(identifier);
 
     if (action != null) {
-      action.performAction(this, item);
+      action.performAction(item);
       return true;
     }
 

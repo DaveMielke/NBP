@@ -5,8 +5,8 @@ import android.text.style.CharacterStyle;
 import android.text.style.UnderlineSpan;
 
 public class Underline extends HighlightAction {
-  public Underline () {
-    super();
+  public Underline (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

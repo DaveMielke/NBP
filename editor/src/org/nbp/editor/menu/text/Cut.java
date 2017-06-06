@@ -2,8 +2,8 @@ package org.nbp.editor.menu.text;
 import org.nbp.editor.*;
 
 public class Cut extends ClipboardAction {
-  public Cut () {
-    super();
+  public Cut (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

@@ -6,8 +6,8 @@ import android.text.style.StyleSpan;
 import android.graphics.Typeface;
 
 public class Italics extends HighlightAction {
-  public Italics () {
-    super();
+  public Italics (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

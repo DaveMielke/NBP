@@ -11,8 +11,8 @@ import org.nbp.common.DialogHelper;
 import android.widget.EditText;
 
 public class Record extends EditorAction {
-  public Record () {
-    super();
+  public Record (EditorActivity editor) {
+    super(editor);
   }
 
   private final void verifyRecording (

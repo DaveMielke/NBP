@@ -5,8 +5,8 @@ import android.text.style.CharacterStyle;
 import android.text.style.SuperscriptSpan;
 
 public class Superscript extends HighlightAction {
-  public Superscript () {
-    super();
+  public Superscript (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

@@ -5,8 +5,8 @@ import org.nbp.common.FileFinder;
 import java.io.File;
 
 public class Open extends EditorAction {
-  public Open () {
-    super();
+  public Open (EditorActivity editor) {
+    super(editor);
   }
 
   @Override

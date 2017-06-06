@@ -4,8 +4,8 @@ import org.nbp.editor.*;
 import android.content.DialogInterface;
 
 public class RemoveComment extends EditorAction {
-  public RemoveComment () {
-    super();
+  public RemoveComment (EditorActivity editor) {
+    super(editor);
   }
 
   @Override
