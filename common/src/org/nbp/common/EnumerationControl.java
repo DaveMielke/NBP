@@ -107,7 +107,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   @Override
-  public CharSequence getValue () {
+  public String getValue () {
     return getValueLabel(getEnumerationValue());
   }
 

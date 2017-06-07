@@ -31,18 +31,8 @@ public abstract class StringControl extends Control {
   }
 
   @Override
-  public CharSequence getValue () {
+  public String getValue () {
     return getStringValue();
-  }
-
-  @Override
-  protected int getResourceForNext () {
-    return 0;
-  }
-
-  @Override
-  protected int getResourceForPrevious () {
-    return 0;
   }
 
   @Override

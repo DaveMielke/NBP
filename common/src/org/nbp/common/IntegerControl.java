@@ -33,7 +33,7 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
-  public CharSequence getValue () {
+  public String getValue () {
     return Integer.toString(getIntegerValue());
   }
 

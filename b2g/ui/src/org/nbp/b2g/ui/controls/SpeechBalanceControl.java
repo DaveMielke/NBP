@@ -25,7 +25,7 @@ public class SpeechBalanceControl extends LinearFloatControl {
   }
 
   @Override
-  public CharSequence getValue () {
+  public String getValue () {
     float value = getFloatValue();
     if (value == 0.0f) return getString(R.string.control_value_SpeechBalance_center);
 
