@@ -206,18 +206,18 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       .show();
   }
 
-  private final void selectString (final StringControl control, final String[] values) {
+  private final void chooseString (final StringControl control, final String[] choices) {
     DialogInterface.OnClickListener listener =
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int which) {
-          editString(control, values[which]);
+          editString(control, choices[which]);
         }
       };
 
     new AlertDialog.Builder(getActivity())
       .setTitle(control.getLabel())
-      .setItems(values, listener)
+      .setItems(choices, listener)
       .setNegativeButton(android.R.string.no, null)
       .setCancelable(true)
       .show();
@@ -228,17 +228,20 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
     if (value.length() == 0) {
       Collection<String> suggestions = control.getSuggestedValues();
-      int count = suggestions.size();
 
-      if (count > 0) {
-        String[] values = new String[count];
-        suggestions.toArray(values);
+      if (suggestions != null) {
+        int count = suggestions.size();
 
-        if (count == 1) {
-          value = values[0];
-        } else {
-          selectString(control, values);
-          return;
+        if (count > 0) {
+          String[] choices = new String[count];
+          suggestions.toArray(choices);
+
+          if (count == 1) {
+            value = choices[0];
+          } else {
+            chooseString(control, choices);
+            return;
+          }
         }
       }
     }
