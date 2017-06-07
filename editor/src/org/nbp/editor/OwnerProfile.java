@@ -1,5 +1,10 @@
 package org.nbp.editor;
 
+/* This object requires the following permissions (in AndroidManifest.xml):
+ * <uses-permission android:name="android.permission.READ_CONTACTS" />
+ * <uses-permission android:name="android.permission.READ_PROFILE" />
+ */
+
 import java.util.Collections;
 import java.util.Collection;
 
