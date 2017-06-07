@@ -185,9 +185,10 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return button;
   }
 
-  private final void editString (final StringControl control, CharSequence initial) {
+  private final void setStringControl (final StringControl control, String value) {
     final EditText view = newEditText();
-    view.setText(initial);
+    view.setText(value);
+    view.setSelection(value.length());
 
     DialogInterface.OnClickListener listener =
       new DialogInterface.OnClickListener() {
@@ -206,47 +207,48 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       .show();
   }
 
-  private final void chooseString (final StringControl control, final String[] choices) {
-    DialogInterface.OnClickListener listener =
-      new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick (DialogInterface dialog, int which) {
-          editString(control, choices[which]);
-        }
-      };
+  private final boolean setStringControl (final StringControl control, final String[] choices) {
+    if (choices == null) return false;
+    int count = choices.length;
+    if (count == 0) return false;
 
-    new AlertDialog.Builder(getActivity())
-      .setTitle(control.getLabel())
-      .setItems(choices, listener)
-      .setNegativeButton(android.R.string.no, null)
-      .setCancelable(true)
-      .show();
+    if (count == 1) {
+      setStringControl(control, choices[0]);
+    } else {
+      DialogInterface.OnClickListener listener =
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick (DialogInterface dialog, int which) {
+            setStringControl(control, choices[which]);
+          }
+        };
+
+      new AlertDialog.Builder(getActivity())
+        .setTitle(control.getLabel())
+        .setItems(choices, listener)
+        .setNegativeButton(android.R.string.no, null)
+        .setCancelable(true)
+        .show();
+    }
+
+    return true;
   }
 
-  private final void editString (StringControl control) {
-    CharSequence value = control.getValue();
+  private final boolean setStringControl (StringControl control, Collection<String> choices) {
+    if (choices == null) return false;
+    return setStringControl(control, choices.toArray(new String[choices.size()]));
+  }
+
+  private final void setStringControl (StringControl control) {
+    String value = control.getValue();
 
     if (value.length() == 0) {
-      Collection<String> suggestions = control.getSuggestedValues();
-
-      if (suggestions != null) {
-        int count = suggestions.size();
-
-        if (count > 0) {
-          String[] choices = new String[count];
-          suggestions.toArray(choices);
-
-          if (count == 1) {
-            value = choices[0];
-          } else {
-            chooseString(control, choices);
-            return;
-          }
-        }
+      if (setStringControl(control, control.getSuggestedValues())) {
+        return;
       }
     }
 
-    editString(control, value);
+    setStringControl(control, value);
   }
 
   private View createStringEditButton (final Control control) {
@@ -255,7 +257,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          editString((StringControl)control);
+          setStringControl((StringControl)control);
         }
       }
     );
