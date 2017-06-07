@@ -1,5 +1,7 @@
 package org.nbp.common;
 
+import java.util.Collection;
+
 import android.content.SharedPreferences;
 
 public abstract class StringControl extends Control {
@@ -51,6 +53,10 @@ public abstract class StringControl extends Control {
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
     return setStringValue(prefs.getString(key, getStringDefault()));
+  }
+
+  public Collection<String> getSuggestedValues () {
+    return null;
   }
 
   protected StringControl () {

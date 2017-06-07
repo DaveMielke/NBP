@@ -185,32 +185,74 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return button;
   }
 
-  private View createStringEditButton (final Control control) {
-    final StringControl sc = (StringControl)control;
+  private final void editString (final StringControl control, CharSequence initial) {
+    final EditText view = newEditText();
+    view.setText(initial);
 
+    DialogInterface.OnClickListener listener =
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+          control.setValue(view.getText().toString().trim());
+        }
+      };
+
+    new AlertDialog.Builder(getActivity())
+      .setTitle(control.getLabel())
+      .setView(view)
+      .setPositiveButton(android.R.string.yes, listener)
+      .setNegativeButton(android.R.string.no, null)
+      .setCancelable(true)
+      .show();
+  }
+
+  private final void selectString (final StringControl control, final String[] values) {
+    DialogInterface.OnClickListener listener =
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int which) {
+          editString(control, values[which]);
+        }
+      };
+
+    new AlertDialog.Builder(getActivity())
+      .setTitle(control.getLabel())
+      .setItems(values, listener)
+      .setNegativeButton(android.R.string.no, null)
+      .setCancelable(true)
+      .show();
+  }
+
+  private final void editString (StringControl control) {
+    CharSequence value = control.getValue();
+
+    if (value.length() == 0) {
+      Collection<String> suggestions = control.getSuggestedValues();
+      int count = suggestions.size();
+
+      if (count > 0) {
+        String[] values = new String[count];
+        suggestions.toArray(values);
+
+        if (count == 1) {
+          value = values[0];
+        } else {
+          selectString(control, values);
+          return;
+        }
+      }
+    }
+
+    editString(control, value);
+  }
+
+  private View createStringEditButton (final Control control) {
     Button button = newButton(
       R.string.control_edit_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          final EditText name = newEditText();
-          name.setText(sc.getValue());
-
-          DialogInterface.OnClickListener listener =
-            new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick (DialogInterface dialog, int button) {
-                sc.setValue(name.getText().toString().trim());
-              }
-            };
-
-          new AlertDialog.Builder(getActivity())
-            .setTitle(sc.getLabel())
-            .setView(name)
-            .setPositiveButton(android.R.string.yes, listener)
-            .setNegativeButton(android.R.string.no, null)
-            .setCancelable(true)
-            .show();
+          editString((StringControl)control);
         }
       }
     );
