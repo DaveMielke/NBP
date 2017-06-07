@@ -2,5 +2,5 @@
 
 <resources>
   <string name="control_label_ProtectText">Protect Text</string>
-  <string name="control_label_ReviewerName">Reviewer Name</string>
+  <string name="control_label_AuthorName">Author Name</string>
 </resources>

@@ -17,37 +17,42 @@ public class AddComment extends EditorAction {
 
   @Override
   public void performAction (EditorActivity editor) {
-    if (editor.verifyWritableText()) {
-      final EditArea editArea = editor.getEditArea();
+    final String name = editor.getAuthorName();
 
-      editor.showDialog(
-        R.string.menu_comments_AddComment,
-        R.layout.comment_add, R.string.action_add,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick (DialogInterface dialog, int button) {
-            CommentSpan comment;
+    if (name != null) {
+      if (editor.verifyWritableText()) {
+        final EditArea editArea = editor.getEditArea();
 
-            {
-              EditText view = (EditText)CommonUtilities.findView(dialog, R.id.comment_text);
-              Editable text = view.getText();
+        editor.showDialog(
+          R.string.menu_comments_AddComment,
+          R.layout.comment_add, R.string.action_add,
+          new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick (DialogInterface dialog, int button) {
+              CommentSpan comment;
 
-              if (text.toString().trim().isEmpty()) return;
-              comment = new CommentSpan(text);
-              comment.setReviewTime(new Date());
+              {
+                EditText view = (EditText)CommonUtilities.findView(dialog, R.id.comment_text);
+                Editable text = view.getText();
+
+                if (text.toString().trim().isEmpty()) return;
+                comment = new CommentSpan(text);
+                comment.setReviewTime(new Date());
+                comment.setReviewerName(name);
+              }
+
+              Editable text = editArea.getText();
+              int start = editArea.getSelectionStart();
+              int end = editArea.getSelectionEnd();
+
+              text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
+              comment.finishSpan(text);
+              editArea.setSelection(comment);
+              editArea.setHasChanged();
             }
-
-            Editable text = editArea.getText();
-            int start = editArea.getSelectionStart();
-            int end = editArea.getSelectionEnd();
-
-            text.setSpan(comment, start, end, Spanned.SPAN_POINT_POINT);
-            comment.finishSpan(text);
-            editArea.setSelection(comment);
-            editArea.setHasChanged();
           }
-        }
-      );
+        );
+      }
     }
   }
 }

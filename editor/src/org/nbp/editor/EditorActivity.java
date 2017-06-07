@@ -553,6 +553,16 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
+  public final String getAuthorName () {
+    {
+      String name = Controls.authorName.getValue();
+      if (!name.isEmpty()) return name;
+    }
+
+    showMessage(R.string.message_no_author_name);
+    return null;
+  }
+
   private final Map<Integer, EditorAction> editorActions =
         new HashMap<Integer, EditorAction>();
 
