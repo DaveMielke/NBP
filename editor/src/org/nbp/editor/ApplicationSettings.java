@@ -5,5 +5,5 @@ public abstract class ApplicationSettings {
   }
 
   public volatile static boolean PROTECT_TEXT = ApplicationDefaults.PROTECT_TEXT;
-  public volatile static String OWNER_NAME = ApplicationDefaults.OWNER_NAME;
+  public volatile static String REVIEWER_NAME = ApplicationDefaults.REVIEWER_NAME;
 }

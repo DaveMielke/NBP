@@ -5,30 +5,30 @@ import java.util.Collection;
 
 import org.nbp.common.StringControl;
 
-public class OwnerNameControl extends StringControl {
+public class ReviewerNameControl extends StringControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_OwnerName;
+    return R.string.control_label_ReviewerName;
   }
 
   @Override
   protected String getPreferenceKey () {
-    return "owner-name";
+    return "reviewer-name";
   }
 
   @Override
   protected String getStringDefault () {
-    return ApplicationDefaults.OWNER_NAME;
+    return ApplicationDefaults.REVIEWER_NAME;
   }
 
   @Override
   public String getStringValue () {
-    return ApplicationSettings.OWNER_NAME;
+    return ApplicationSettings.REVIEWER_NAME;
   }
 
   @Override
   protected boolean setStringValue (String value) {
-    ApplicationSettings.OWNER_NAME = value;
+    ApplicationSettings.REVIEWER_NAME = value;
     return true;
   }
 
@@ -37,7 +37,7 @@ public class OwnerNameControl extends StringControl {
     return new OwnerProfile(ApplicationContext.getContext()).getNames();
   }
 
-  public OwnerNameControl () {
+  public ReviewerNameControl () {
     super();
   }
 }

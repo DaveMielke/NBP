@@ -8,11 +8,11 @@ public abstract class Controls {
   }
 
   public final static ProtectTextControl protectText = new ProtectTextControl();
-  public final static OwnerNameControl ownerName = new OwnerNameControl();
+  public final static ReviewerNameControl reviewerName = new ReviewerNameControl();
 
   public final static Control[] ALL = new Control[] {
     protectText,
-    ownerName
+    reviewerName
   };
 
   public final static void restore () {
