@@ -52,6 +52,33 @@
   </item>
 
   <item
+    android:id="@+id/menu_spell_OpenSubmenu"
+    android:title="@string/menu_spell_OpenSubmenu"
+    android:alphabeticShortcut="c"
+    >
+
+    <menu>
+      <item
+        android:id="@+id/menu_spell_NextWord"
+        android:title="@string/menu_spell_NextWord"
+        android:alphabeticShortcut="n"
+       />
+
+      <item
+        android:id="@+id/menu_spell_PreviousWord"
+        android:title="@string/menu_spell_PreviousWord"
+        android:alphabeticShortcut="p"
+       />
+
+      <item
+        android:id="@+id/menu_spell_ShowSuggestions"
+        android:title="@string/menu_spell_ShowSuggestions"
+        android:alphabeticShortcut="s"
+       />
+    </menu>
+  </item>
+
+  <item
     android:id="@+id/menu_input_OpenSubmenu"
     android:title="@string/menu_input_OpenSubmenu"
     android:alphabeticShortcut="i"

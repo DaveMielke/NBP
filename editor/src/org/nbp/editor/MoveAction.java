@@ -9,9 +9,7 @@ public abstract class MoveAction extends SpanAction {
     super(editor);
   }
 
-  private final static int NO_POSITION = -1;
-
-  protected final int findNextSpan (Class<? extends EditorSpan> type) {
+  protected final <T> T findNextSpan (Class<T> type) {
     EditArea editArea = getEditArea();
 
     int start = editArea.getSelectionEnd();
@@ -22,14 +20,14 @@ public abstract class MoveAction extends SpanAction {
 
     while (true) {
       start = text.nextSpanTransition(start, end, type);
-      if (start == end) return NO_POSITION;
+      if (start == end) return null;
 
-      EditorSpan span = getSpan(type, start);
-      if (span != null) return span.getPosition(text);
+      T span = getSpan(type, start);
+      if (span != null) return span;
     }
   }
 
-  protected final int findPreviousSpan (Class<? extends EditorSpan> type) {
+  protected final <T> T findPreviousSpan (Class<T> type) {
     EditArea editArea = getEditArea();
 
     int start = 0;
@@ -37,15 +35,15 @@ public abstract class MoveAction extends SpanAction {
     Spanned text = editArea.getText();
 
     {
-      EditorSpan span = getSpan(type, end);
+      T span = getSpan(type, end);
       if (span != null) end = text.getSpanStart(span);
     }
 
-    EditorSpan span = null;
+    T span = null;
 
     while (true) {
       {
-        EditorSpan next = getSpan(type, start);
+        T next = getSpan(type, start);
         if (next != null) span = next;
       }
 
@@ -53,10 +51,10 @@ public abstract class MoveAction extends SpanAction {
       if (start == end) break;
     }
 
-    return (span != null)? span.getPosition(text): NO_POSITION;
+    return span;
   }
 
-  protected final int findNextSpanSequence (Class<? extends EditorSpan> type) {
+  protected final <T> T findNextSpanSequence (Class<T> type) {
     EditArea editArea = getEditArea();
 
     int start = editArea.getSelectionEnd();
@@ -66,26 +64,26 @@ public abstract class MoveAction extends SpanAction {
     int end = text.length();
 
     while (true) {
-      EditorSpan span = getSpan(type, start);
+      T span = getSpan(type, start);
       if (span == null) break;
 
       start = text.nextSpanTransition(start, end, type);
-      if (start == end) return NO_POSITION;
+      if (start == end) return null;
     }
 
     start = text.nextSpanTransition(start, end, type);
-    if (start == end) return NO_POSITION;
-    return getSpan(type, start).getPosition(text);
+    if (start == end) return null;
+    return getSpan(type, start);
   }
 
-  protected final int findPreviousSpanSequence (Class<? extends EditorSpan> type) {
+  protected final <T> T findPreviousSpanSequence (Class<T> type) {
     EditArea editArea = getEditArea();
 
     int start = 0;
     int end = editArea.getSelectionStart();
 
     Spanned text = editArea.getText();
-    Stack<EditorSpan> spans = new Stack<EditorSpan>();
+    Stack<T> spans = new Stack<T>();
 
     while (true) {
       spans.push(getSpan(type, start));
@@ -94,33 +92,58 @@ public abstract class MoveAction extends SpanAction {
     }
 
     {
-      EditorSpan span = getSpan(type, end);
+      T span = getSpan(type, end);
       if (span != spans.peek()) spans.push(span);
     }
 
     while (!spans.isEmpty()) {
-      EditorSpan span = spans.pop();
+      T span = spans.pop();
 
       if (span == null) {
-        if (spans.isEmpty()) return NO_POSITION;
+        if (spans.isEmpty()) return null;
 
         do {
-          EditorSpan next = spans.pop();
+          T next = spans.pop();
           if (next == null) break;
           span = next;
         } while (!spans.isEmpty());
 
-        return span.getPosition(text);
+        return span;
       }
     }
 
-    return NO_POSITION;
+    return null;
   }
 
-  protected final boolean moveToNextPosition (int... positions) {
+  private final static int NO_POSITION = -1;
+
+  private final int[] getPositions (Object... spans) {
+    int count = spans.length;
+    int[] positions = new int[count];
+    Spanned text = getEditArea().getText();
+
+    for (int index=0; index<count; index+=1) {
+      Object span = spans[index];
+      int position;
+
+      if (span == null) {
+        position = NO_POSITION;
+      } else if (span instanceof EditorSpan) {
+        position = ((EditorSpan)span).getPosition(text);
+      } else {
+        position = text.getSpanStart(span);
+      }
+
+      positions[index] = position;
+    }
+
+    return positions;
+  }
+
+  protected final boolean moveToNextPosition (Object... spans) {
     int nearest = NO_POSITION;
 
-    for (int position : positions) {
+    for (int position : getPositions(spans)) {
       if (position != NO_POSITION) {
         if ((nearest == NO_POSITION) || (nearest > position)) {
           nearest = position;
@@ -133,10 +156,10 @@ public abstract class MoveAction extends SpanAction {
     return true;
   }
 
-  protected final boolean moveToPreviousPosition (int... positions) {
+  protected final boolean moveToPreviousPosition (Object... spans) {
     int nearest = NO_POSITION;
 
-    for (int position : positions) {
+    for (int position : getPositions(spans)) {
       if (position != NO_POSITION) {
         if ((nearest == NO_POSITION) || (nearest < position)) {
           nearest = position;

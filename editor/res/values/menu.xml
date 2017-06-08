@@ -13,6 +13,11 @@
   <string name="menu_file_SendCurrent">Send Current File</string>
   <string name="menu_file_DeleteFile">Delete File</string>
 
+  <string name="menu_spell_OpenSubmenu">Spelling Correction…</string>
+  <string name="menu_spell_NextWord">Next Word</string>
+  <string name="menu_spell_PreviousWord">Previous Word</string>
+  <string name="menu_spell_ShowSuggestions">Show Suggestions</string>
+
   <string name="menu_input_OpenSubmenu">Input Sources…</string>
   <string name="menu_input_PasteClipboard">Paste from Clipboard</string>
   <string name="menu_input_RecordInput">Record Input</string>

@@ -32,9 +32,12 @@
   <string name="message_no_next_comment">no next comment</string>
   <string name="message_no_next_edit">no next edit</string>
   <string name="message_no_next_revision">no next revision</string>
+  <string name="message_no_next_word">no next word</string>
   <string name="message_no_previous_comment">no previous comment</string>
   <string name="message_no_previous_edit">no previous edit</string>
   <string name="message_no_previous_revision">no previous revision</string>
+  <string name="message_no_previous_word">no previous word</string>
+  <string name="message_no_suggestions">no suggestions</string>
   <string name="message_not_file">not a file</string>
   <string name="message_not_writable">file not writable</string>
   <string name="message_original_text">original text</string>
