@@ -67,6 +67,22 @@ public class EditorActivity extends CommonActivity {
   private File filesDirectory;
   private SharedPreferences prefs;
 
+  private final void removePreferenceKeys (SharedPreferences.Editor editor, String keyPrefix) {
+    for (String key : prefs.getAll().keySet()) {
+      if (key.startsWith(keyPrefix)) editor.remove(key);
+    }
+  }
+
+  private final static void putPreference (
+    SharedPreferences.Editor editor, String key, String value
+  ) {
+    if (value != null) {
+      editor.putString(key, value);
+    } else {
+      editor.remove(key);
+    }
+  }
+
   public ArrayList<String> recentURIs = new ArrayList<String>();
   private final static String PREF_RECENT_URIS = "recent-URIs";
 
@@ -93,21 +109,6 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";
-  private final static String PREF_CHECKPOINT_NAME = PREF_CHECKPOINT_PREFIX + "name";
-  private final static String PREF_CHECKPOINT_PATH = PREF_CHECKPOINT_PREFIX + "path";
-  private final static String PREF_CHECKPOINT_TYPE = PREF_CHECKPOINT_PREFIX + "type";
-  private final static String PREF_CHECKPOINT_WRITABLE = PREF_CHECKPOINT_PREFIX + "writable";
-  private final static String PREF_CHECKPOINT_START = PREF_CHECKPOINT_PREFIX + "start";
-  private final static String PREF_CHECKPOINT_END = PREF_CHECKPOINT_PREFIX + "end";
-  private final static String PREF_CHECKPOINT_SPANS = PREF_CHECKPOINT_PREFIX + "spans";
-
-  private final void removePreferenceKeys (SharedPreferences.Editor editor, String keyPrefix) {
-    for (String key : prefs.getAll().keySet()) {
-      if (key.startsWith(keyPrefix)) editor.remove(key);
-    }
-  }
-
   private EditArea editArea = null;
   private TextView uriView = null;
 
@@ -115,11 +116,33 @@ public class EditorActivity extends CommonActivity {
     return editArea;
   }
 
-  private final void showActivityResultCode (int code) {
-  }
-
   private final boolean verifyTextRange (int start, int end) {
     return ApplicationUtilities.verifyTextRange(start, end, editArea.length());
+  }
+
+  public final boolean verifyWritableText () {
+    if (!ApplicationSettings.PROTECT_TEXT) return true;
+    showMessage(R.string.message_protected_text);
+    return false;
+  }
+
+  public final boolean verifyWritableRegion (Spanned text, int start, int end) {
+    if (verifyWritableText()) {
+      if (!editArea.containsProtectedText(text, start, end)) return true;
+      showMessage(R.string.message_protected_region);
+    }
+
+    return false;
+  }
+
+  public final boolean verifyWritableRegion (int start, int end) {
+    return verifyWritableRegion(editArea.getText(), start, end);
+  }
+
+  public final boolean verifyWritableRegion () {
+    return verifyWritableRegion(
+      editArea.getSelectionStart(), editArea.getSelectionEnd()
+    );
   }
 
   private void setEditorContent (ContentHandle handle) {
@@ -147,31 +170,6 @@ public class EditorActivity extends CommonActivity {
 
   public void setEditorContent () {
     setEditorContent(null, "");
-  }
-
-  public final boolean verifyWritableText () {
-    if (!ApplicationSettings.PROTECT_TEXT) return true;
-    showMessage(R.string.message_protected_text);
-    return false;
-  }
-
-  public final boolean verifyWritableRegion (Spanned text, int start, int end) {
-    if (verifyWritableText()) {
-      if (!editArea.containsProtectedText(text, start, end)) return true;
-      showMessage(R.string.message_protected_region);
-    }
-
-    return false;
-  }
-
-  public final boolean verifyWritableRegion (int start, int end) {
-    return verifyWritableRegion(editArea.getText(), start, end);
-  }
-
-  public final boolean verifyWritableRegion () {
-    return verifyWritableRegion(
-      editArea.getSelectionStart(), editArea.getSelectionEnd()
-    );
   }
 
   private final void saveFile (
@@ -298,44 +296,6 @@ public class EditorActivity extends CommonActivity {
         }
       }
     );
-  }
-
-  public final void testHasChanged (final Runnable onSaved) {
-    if (editArea.getHasChanged()) {
-      OnDialogClickListener positiveListener = new OnDialogClickListener() {
-        @Override
-        public void onClick () {
-          if (editArea.getContentHandle() != null) {
-            saveFile(onSaved);
-          } else {
-            findFile(true, null,
-              new FileFinder.FileHandler() {
-                @Override
-                public void handleFile (File file) {
-                  if (file != null) saveFile(file, onSaved);
-                }
-              }
-            );
-          }
-        }
-      };
-
-      OnDialogClickListener negativeListener = new OnDialogClickListener() {
-        @Override
-        public void onClick () {
-          run(onSaved);
-        }
-      };
-
-      newAlertDialogBuilder(R.string.changed_title)
-        .setMessage(R.string.changed_message)
-        .setPositiveButton(R.string.changed_button_positive, positiveListener)
-        .setNeutralButton(R.string.changed_button_neutral, null)
-        .setNegativeButton(R.string.changed_button_negative, negativeListener)
-        .show();
-    } else {
-      run(onSaved);
-    }
   }
 
   private final boolean loadContent (
@@ -471,6 +431,44 @@ public class EditorActivity extends CommonActivity {
     builder.find(handler);
   }
 
+  public final void testHasChanged (final Runnable onSaved) {
+    if (editArea.getHasChanged()) {
+      OnDialogClickListener positiveListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          if (editArea.getContentHandle() != null) {
+            saveFile(onSaved);
+          } else {
+            findFile(true, null,
+              new FileFinder.FileHandler() {
+                @Override
+                public void handleFile (File file) {
+                  if (file != null) saveFile(file, onSaved);
+                }
+              }
+            );
+          }
+        }
+      };
+
+      OnDialogClickListener negativeListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          run(onSaved);
+        }
+      };
+
+      newAlertDialogBuilder(R.string.changed_title)
+        .setMessage(R.string.changed_message)
+        .setPositiveButton(R.string.changed_button_positive, positiveListener)
+        .setNeutralButton(R.string.changed_button_neutral, null)
+        .setNegativeButton(R.string.changed_button_negative, negativeListener)
+        .show();
+    } else {
+      run(onSaved);
+    }
+  }
+
   public final String getAuthorName () {
     {
       String name = Controls.authorName.getValue();
@@ -481,91 +479,14 @@ public class EditorActivity extends CommonActivity {
     return null;
   }
 
-  private final Map<Integer, EditorAction> editorActions =
-        new HashMap<Integer, EditorAction>();
-
-  private final EditorAction getEditorAction (int identifier) {
-    EditorAction action = editorActions.get(identifier);
-    if (action != null) return action;
-
-    String name = getResources().getResourceEntryName(identifier);
-    if (name == null) return null;
-
-    name = name.replace('_', '.');
-    name = getClass().getPackage().getName() + '.' + name;
-    Class type;
-
-    try {
-      type = Class.forName(name);
-    } catch (ClassNotFoundException exception) {
-      return null;
-    }
-
-    if (!EditorAction.class.isAssignableFrom(type)) return null;
-    Constructor constructor = LanguageUtilities.getConstructor(type, EditorActivity.class);
-    if (constructor == null) return null;
-
-    action = (EditorAction)LanguageUtilities.newInstance(constructor, this);
-    editorActions.put(identifier, action);
-    return action;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected (MenuItem item) {
-    int identifier = item.getItemId();
-    EditorAction action = getEditorAction(identifier);
-
-    if (action != null) {
-      action.performAction(item);
-      return true;
-    }
-
-    String name = getResources().getResourceEntryName(identifier);
-    if (name == null) name = Integer.toString(identifier);
-    Log.w(LOG_TAG, ("unhandled menu action: " + name));
-
-    return false;
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu (Menu menu) {
-    getMenuInflater().inflate(R.menu.options, menu);
-    MenuAction.setCurrentMenu(menu);
-    return true;
-  }
-
-  @Override
-  public boolean onPrepareOptionsMenu (Menu menu) {
-    MenuAction.setCurrentMenu(menu);
-    return true;
-  }
-
-  private final void prepareMenuButton () {
-    if (getActionBar() == null) {
-      Button button = (Button)findViewById(R.id.menu_button);
-      button.setVisibility(button.VISIBLE);
-
-      button.setOnClickListener(
-        new Button.OnClickListener() {
-          @Override
-          public void onClick (View view) {
-            editArea.requestFocus();
-            getActivity().openOptionsMenu();
-          }
-        }
-      );
-    }
-  }
-
-  private final static void putPreference (
-    SharedPreferences.Editor editor, String key, String value
-  ) {
-    if (value != null) {
-      editor.putString(key, value);
-    } else {
-      editor.remove(key);
-    }
-  }
+  private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";
+  private final static String PREF_CHECKPOINT_NAME = PREF_CHECKPOINT_PREFIX + "name";
+  private final static String PREF_CHECKPOINT_PATH = PREF_CHECKPOINT_PREFIX + "path";
+  private final static String PREF_CHECKPOINT_TYPE = PREF_CHECKPOINT_PREFIX + "type";
+  private final static String PREF_CHECKPOINT_WRITABLE = PREF_CHECKPOINT_PREFIX + "writable";
+  private final static String PREF_CHECKPOINT_START = PREF_CHECKPOINT_PREFIX + "start";
+  private final static String PREF_CHECKPOINT_END = PREF_CHECKPOINT_PREFIX + "end";
+  private final static String PREF_CHECKPOINT_SPANS = PREF_CHECKPOINT_PREFIX + "spans";
 
   public final void checkpointFile () {
     synchronized (this) {
@@ -671,8 +592,80 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final void editContent (ContentHandle handle) {
-    loadContent(handle);
+  private final Map<Integer, EditorAction> editorActions =
+        new HashMap<Integer, EditorAction>();
+
+  private final EditorAction getEditorAction (int identifier) {
+    EditorAction action = editorActions.get(identifier);
+    if (action != null) return action;
+
+    String name = getResources().getResourceEntryName(identifier);
+    if (name == null) return null;
+
+    name = name.replace('_', '.');
+    name = getClass().getPackage().getName() + '.' + name;
+    Class type;
+
+    try {
+      type = Class.forName(name);
+    } catch (ClassNotFoundException exception) {
+      return null;
+    }
+
+    if (!EditorAction.class.isAssignableFrom(type)) return null;
+    Constructor constructor = LanguageUtilities.getConstructor(type, EditorActivity.class);
+    if (constructor == null) return null;
+
+    action = (EditorAction)LanguageUtilities.newInstance(constructor, this);
+    editorActions.put(identifier, action);
+    return action;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected (MenuItem item) {
+    int identifier = item.getItemId();
+    EditorAction action = getEditorAction(identifier);
+
+    if (action != null) {
+      action.performAction(item);
+      return true;
+    }
+
+    String name = getResources().getResourceEntryName(identifier);
+    if (name == null) name = Integer.toString(identifier);
+    Log.w(LOG_TAG, ("unhandled menu action: " + name));
+
+    return false;
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu (Menu menu) {
+    getMenuInflater().inflate(R.menu.options, menu);
+    MenuAction.setCurrentMenu(menu);
+    return true;
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu (Menu menu) {
+    MenuAction.setCurrentMenu(menu);
+    return true;
+  }
+
+  private final void prepareMenuButton () {
+    if (getActionBar() == null) {
+      Button button = (Button)findViewById(R.id.menu_button);
+      button.setVisibility(button.VISIBLE);
+
+      button.setOnClickListener(
+        new Button.OnClickListener() {
+          @Override
+          public void onClick (View view) {
+            editArea.requestFocus();
+            getActivity().openOptionsMenu();
+          }
+        }
+      );
+    }
   }
 
   private final void addInputFilters () {
@@ -721,10 +714,10 @@ public class EditorActivity extends CommonActivity {
           restoreFile();
           result = RESULT_OK;
         } else if (action.equals(Intent.ACTION_VIEW)) {
-          editContent(new ContentHandle(uri, type, false));
+          loadContent(new ContentHandle(uri, type, false));
           result = RESULT_OK;
         } else if (action.equals(Intent.ACTION_EDIT)) {
-          editContent(new ContentHandle(uri, type, true));
+          loadContent(new ContentHandle(uri, type, true));
           result = RESULT_OK;
         }
       }
