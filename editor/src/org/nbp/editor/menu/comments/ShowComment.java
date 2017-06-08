@@ -1,14 +1,14 @@
 package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
 
-public class ShowComment extends EditorAction {
+public class ShowComment extends CommentAction {
   public ShowComment (EditorActivity editor) {
     super(editor);
   }
 
   @Override
   public void performAction (EditorActivity editor) {
-    CommentSpan comment = editor.getEditArea().getCommentSpan();
+    CommentSpan comment = getCommentSpan();
 
     if (comment != null) {
       editor.showDialog(

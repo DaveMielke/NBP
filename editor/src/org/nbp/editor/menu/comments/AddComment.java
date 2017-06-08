@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.text.Editable;
 import android.text.Spanned;
 
-public class AddComment extends EditorAction {
+public class AddComment extends CommentAction {
   public AddComment (EditorActivity editor) {
     super(editor);
   }

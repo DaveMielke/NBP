@@ -3,7 +3,7 @@ import org.nbp.editor.*;
 
 import android.content.DialogInterface;
 
-public class AcceptRevision extends EditorAction {
+public class AcceptRevision extends RevisionAction {
   public AcceptRevision (EditorActivity editor) {
     super(editor);
   }
@@ -11,7 +11,7 @@ public class AcceptRevision extends EditorAction {
   @Override
   public void performAction (final EditorActivity editor) {
     final EditArea editArea = editor.getEditArea();
-    final RevisionSpan revision = editArea.getRevisionSpan();
+    final RevisionSpan revision = getRevisionSpan();
 
     if (revision == null) {
       editor.showMessage(R.string.message_original_text);

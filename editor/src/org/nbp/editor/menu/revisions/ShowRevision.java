@@ -1,14 +1,14 @@
 package org.nbp.editor.menu.revisions;
 import org.nbp.editor.*;
 
-public class ShowRevision extends EditorAction {
+public class ShowRevision extends RevisionAction {
   public ShowRevision (EditorActivity editor) {
     super(editor);
   }
 
   @Override
   public void performAction (EditorActivity editor) {
-    RevisionSpan revision = editor.getEditArea().getRevisionSpan();
+    RevisionSpan revision = getRevisionSpan();
 
     if (revision != null) {
       editor.showDialog(
