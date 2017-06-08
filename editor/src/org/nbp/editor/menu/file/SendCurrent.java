@@ -19,7 +19,7 @@ public class SendCurrent extends EditorAction {
       if (message.send()) {
       }
     } else {
-      editor.showMessage(R.string.message_send_new);
+      showMessage(R.string.message_send_new);
     }
   }
 }

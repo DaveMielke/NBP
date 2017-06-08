@@ -14,9 +14,9 @@ public class PreviousEdit extends MoveAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
+  public void performAction () {
     if (!moveToPreviousEdit()) {
-      editor.showMessage(R.string.message_no_previous_edit);
+      showMessage(R.string.message_no_previous_edit);
     }
   }
 }

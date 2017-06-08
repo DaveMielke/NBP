@@ -13,9 +13,9 @@ public class PreviousComment extends MoveAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
+  public void performAction () {
     if (!moveToPreviousComment()) {
-      editor.showMessage(R.string.message_no_previous_comment);
+      showMessage(R.string.message_no_previous_comment);
     }
   }
 }

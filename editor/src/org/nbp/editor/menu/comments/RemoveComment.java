@@ -14,7 +14,7 @@ public class RemoveComment extends CommentAction {
     final CommentSpan comment = getCommentSpan();
 
     if (comment == null) {
-      editor.showMessage(R.string.message_uncommented_text);
+      showMessage(R.string.message_uncommented_text);
     } else if (editor.verifyWritableText()) {
       editor.showDialog(
         R.string.menu_comments_RemoveComment, R.layout.comment_show,
@@ -22,7 +22,7 @@ public class RemoveComment extends CommentAction {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            editor.performWithoutRegionProtection(
+            performWithoutRegionProtection(
               new Runnable() {
                 @Override
                 public void run () {

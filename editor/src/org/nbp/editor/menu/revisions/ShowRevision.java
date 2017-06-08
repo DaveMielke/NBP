@@ -15,7 +15,7 @@ public class ShowRevision extends RevisionAction {
         R.string.menu_revisions_ShowRevision, R.layout.revision_show, revision
       );
     } else {
-      editor.showMessage(R.string.message_original_text);
+      showMessage(R.string.message_original_text);
     }
   }
 }

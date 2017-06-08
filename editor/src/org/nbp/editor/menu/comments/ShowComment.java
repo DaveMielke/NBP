@@ -15,7 +15,7 @@ public class ShowComment extends CommentAction {
         R.string.menu_comments_ShowComment, R.layout.comment_show, comment
       );
     } else {
-      editor.showMessage(R.string.message_uncommented_text);
+      showMessage(R.string.message_uncommented_text);
     }
   }
 }

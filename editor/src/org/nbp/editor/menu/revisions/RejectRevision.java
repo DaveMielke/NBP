@@ -14,7 +14,7 @@ public class RejectRevision extends RevisionAction {
     final RevisionSpan revision = getRevisionSpan();
 
     if (revision == null) {
-      editor.showMessage(R.string.message_original_text);
+      showMessage(R.string.message_original_text);
     } else if (editor.verifyWritableText()) {
       editor.showDialog(
         R.string.menu_revisions_RejectRevision, R.layout.revision_show,
@@ -22,7 +22,7 @@ public class RejectRevision extends RevisionAction {
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick (DialogInterface dialog, int button) {
-            editor.performWithoutRegionProtection(
+            performWithoutRegionProtection(
               new Runnable() {
                 @Override
                 public void run () {

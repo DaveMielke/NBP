@@ -18,4 +18,12 @@ public abstract class EditorComponent {
   protected final void postAction (Runnable action) {
     getEditArea().post(action);
   }
+
+  protected final String getString (int resource) {
+    return getEditor().getString(resource);
+  }
+
+  protected final void showMessage (int message) {
+    getEditor().showMessage(message);
+  }
 }

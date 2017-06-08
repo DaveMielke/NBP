@@ -14,9 +14,9 @@ public class NextEdit extends MoveAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
+  public void performAction () {
     if (!moveToNextEdit()) {
-      editor.showMessage(R.string.message_no_next_edit);
+      showMessage(R.string.message_no_next_edit);
     }
   }
 }

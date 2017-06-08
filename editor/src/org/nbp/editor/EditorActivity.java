@@ -174,17 +174,6 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
-  public final void performWithoutRegionProtection (Runnable operation) {
-    boolean wasEnforced = editArea.getEnforceTextProtection();
-    editArea.setEnforceTextProtection(false);
-
-    try {
-      operation.run();
-    } finally {
-      editArea.setEnforceTextProtection(wasEnforced);
-    }
-  }
-
   private final void saveFile (
     final File file, final CharSequence content,
     final boolean confirm, final Runnable onSaved
@@ -286,6 +275,29 @@ public class EditorActivity extends CommonActivity {
 
   public final void saveFile () {
     saveFile(null, null);
+  }
+
+  public final void saveFile (Content.FormatDescriptor format) {
+    findFile(true,
+      ((format != null)? format.getFileExtensions(): null),
+      new FileFinder.FileHandler() {
+        @Override
+        public void handleFile (final File file) {
+          if (file != null) {
+            saveFile(file,
+              new Runnable() {
+                @Override
+                public void run () {
+                  ContentHandle handle = new ContentHandle(file);
+                  setEditorContent(handle);
+                  saveRecentURI(handle);
+                }
+              }
+            );
+          }
+        }
+      }
+    );
   }
 
   public final void testHasChanged (final Runnable onSaved) {
@@ -457,100 +469,6 @@ public class EditorActivity extends CommonActivity {
 
     addRootLocations(builder);
     builder.find(handler);
-  }
-
-  private final void saveAs (Content.FormatDescriptor format) {
-    findFile(true,
-      ((format != null)? format.getFileExtensions(): null),
-      new FileFinder.FileHandler() {
-        @Override
-        public void handleFile (final File file) {
-          if (file != null) {
-            saveFile(file,
-              new Runnable() {
-                @Override
-                public void run () {
-                  ContentHandle handle = new ContentHandle(file);
-                  setEditorContent(handle);
-                  saveRecentURI(handle);
-                }
-              }
-            );
-          }
-        }
-      }
-    );
-  }
-
-  private final void selectFormat () {
-    final Content.FormatDescriptor[] formats = Content.getFormatDescriptors();
-    String[] items = new String[1 + formats.length];
-
-    {
-      int count = 0;
-      items[count++] = getString(R.string.format_select_all);
-
-      for (Content.FormatDescriptor format : formats) {
-        items[count++] = format.getSelectorLabel();
-      }
-    }
-
-    DialogInterface.OnClickListener itemListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int index) {
-        saveAs((index == 0)? null: formats[index-1]);
-      }
-    };
-
-    newAlertDialogBuilder(R.string.format_request_select)
-      .setItems(items, itemListener)
-      .setNegativeButton(R.string.action_cancel, null)
-      .show();
-  }
-
-  public final void confirmFormat () {
-    ContentHandle handle = editArea.getContentHandle();
-    File file = (handle != null)? handle.getFile(): null;
-
-    if (file == null) {
-      selectFormat();
-    } else {
-      String extension = Content.getFileExtension(file);
-
-      final Content.FormatDescriptor format =
-        (extension != null)?
-        Content.getFormatDescriptorForFileExtension(extension):
-        null;
-
-      String message =
-        (format != null)? format.getSelectorLabel():
-        (extension == null)? getString(R.string.format_extension_none):
-        String.format("%s (%s)",
-          extension,
-          getString(R.string.format_extension_unrecognized)
-        );
-
-      OnDialogClickListener okListener = new OnDialogClickListener() {
-        @Override
-        public void onClick () {
-          saveAs(format);
-        }
-      };
-
-      OnDialogClickListener changeListener = new OnDialogClickListener() {
-        @Override
-        public void onClick () {
-          selectFormat();
-        }
-      };
-
-      newAlertDialogBuilder(R.string.format_request_confirm)
-        .setMessage(message)
-        .setPositiveButton(R.string.action_ok, okListener)
-        .setNeutralButton(R.string.action_change, changeListener)
-        .setNegativeButton(R.string.action_cancel, null)
-        .show();
-    }
   }
 
   public final String getAuthorName () {

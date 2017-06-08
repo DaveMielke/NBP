@@ -14,9 +14,9 @@ public class NextRevision extends MoveAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
+  public void performAction () {
     if (!moveToNextRevision()) {
-      editor.showMessage(R.string.message_no_next_revision);
+      showMessage(R.string.message_no_next_revision);
     }
   }
 }

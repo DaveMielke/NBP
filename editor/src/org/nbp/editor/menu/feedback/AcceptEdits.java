@@ -11,7 +11,7 @@ public class AcceptEdits extends EditorAction {
     if (editor.verifyWritableText()) {
       final EditArea editArea = editor.getEditArea();
 
-      editor.performWithoutRegionProtection(
+      performWithoutRegionProtection(
         new Runnable() {
           @Override
           public void run () {

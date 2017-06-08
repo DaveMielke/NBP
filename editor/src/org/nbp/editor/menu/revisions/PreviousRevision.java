@@ -14,9 +14,9 @@ public class PreviousRevision extends MoveAction {
   }
 
   @Override
-  public void performAction (EditorActivity editor) {
+  public void performAction () {
     if (!moveToPreviousRevision()) {
-      editor.showMessage(R.string.message_no_previous_revision);
+      showMessage(R.string.message_no_previous_revision);
     }
   }
 }

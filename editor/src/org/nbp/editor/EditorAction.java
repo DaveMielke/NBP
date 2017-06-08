@@ -7,6 +7,19 @@ public abstract class EditorAction extends EditorComponent {
     super(editor);
   }
 
+  protected final void performWithoutRegionProtection (Runnable operation) {
+    EditArea editArea = getEditArea();
+
+    boolean wasEnforced = editArea.getEnforceTextProtection();
+    editArea.setEnforceTextProtection(false);
+
+    try {
+      operation.run();
+    } finally {
+      editArea.setEnforceTextProtection(wasEnforced);
+    }
+  }
+
   public void performAction (EditorActivity editor) {
   }
 
