@@ -83,8 +83,12 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  public ArrayList<String> recentURIs = new ArrayList<String>();
+  private ArrayList<String> recentURIs = new ArrayList<String>();
   private final static String PREF_RECENT_URIS = "recent-URIs";
+
+  public final String[] getRecentURIs () {
+    return recentURIs.toArray(new String[recentURIs.size()]);
+  }
 
   private final void restoreRecentURIs () {
     Set<String> uris = prefs.getStringSet(PREF_RECENT_URIS, null);

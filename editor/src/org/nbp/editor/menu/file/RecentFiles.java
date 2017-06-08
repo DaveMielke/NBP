@@ -24,10 +24,12 @@ public class RecentFiles extends EditorAction {
       public void finishDialog (DialogHelper helper) {
         final Dialog dialog = helper.getDialog();
         ViewGroup table = (ViewGroup)helper.findViewById(R.id.recent_table);
-        int uriIndex = editor.recentURIs.size();
+
+        String[] uris = editor.getRecentURIs();
+        int uriIndex = uris.length;
 
         while (uriIndex > 0) {
-          final String uri = editor.recentURIs.get(--uriIndex);
+          final String uri = uris[--uriIndex];
           final View row;
 
           if (uri.charAt(0) == File.separatorChar) {
