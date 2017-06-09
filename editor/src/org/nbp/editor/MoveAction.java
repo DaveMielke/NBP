@@ -140,12 +140,16 @@ public abstract class MoveAction extends SpanAction {
     return positions;
   }
 
-  protected final boolean moveToNextPosition (Object... spans) {
+  private interface NearnessTester {
+    public boolean isNearer (int reference, int candidate);
+  }
+
+  protected final boolean moveToNearestPosition (Object[] spans, NearnessTester nearnessTester) {
     int nearest = NO_POSITION;
 
     for (int position : getPositions(spans)) {
       if (position != NO_POSITION) {
-        if ((nearest == NO_POSITION) || (nearest > position)) {
+        if ((nearest == NO_POSITION) || nearnessTester.isNearer(nearest, position)) {
           nearest = position;
         }
       }
@@ -156,19 +160,25 @@ public abstract class MoveAction extends SpanAction {
     return true;
   }
 
-  protected final boolean moveToPreviousPosition (Object... spans) {
-    int nearest = NO_POSITION;
-
-    for (int position : getPositions(spans)) {
-      if (position != NO_POSITION) {
-        if ((nearest == NO_POSITION) || (nearest < position)) {
-          nearest = position;
+  protected final boolean moveToNextPosition (Object... spans) {
+    return moveToNearestPosition(spans,
+      new NearnessTester() {
+        @Override
+        public boolean isNearer (int reference, int candidate) {
+          return candidate < reference;
         }
       }
-    }
+    );
+  }
 
-    if (nearest == NO_POSITION) return false;
-    getEditArea().setSelection(nearest);
-    return true;
+  protected final boolean moveToPreviousPosition (Object... spans) {
+    return moveToNearestPosition(spans,
+      new NearnessTester() {
+        @Override
+        public boolean isNearer (int reference, int candidate) {
+          return candidate > reference;
+        }
+      }
+    );
   }
 }
