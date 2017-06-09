@@ -124,31 +124,6 @@ public class EditorActivity extends CommonActivity {
     return ApplicationUtilities.verifyTextRange(start, end, editArea.length());
   }
 
-  public final boolean verifyWritableText () {
-    if (!ApplicationSettings.PROTECT_TEXT) return true;
-    showMessage(R.string.message_protected_text);
-    return false;
-  }
-
-  public final boolean verifyWritableRegion (Spanned text, int start, int end) {
-    if (verifyWritableText()) {
-      if (!editArea.containsProtectedText(text, start, end)) return true;
-      showMessage(R.string.message_protected_region);
-    }
-
-    return false;
-  }
-
-  public final boolean verifyWritableRegion (int start, int end) {
-    return verifyWritableRegion(editArea.getText(), start, end);
-  }
-
-  public final boolean verifyWritableRegion () {
-    return verifyWritableRegion(
-      editArea.getSelectionStart(), editArea.getSelectionEnd()
-    );
-  }
-
   private void setEditorContent (ContentHandle handle) {
     synchronized (this) {
       String path;
@@ -471,16 +446,6 @@ public class EditorActivity extends CommonActivity {
     } else {
       run(onSaved);
     }
-  }
-
-  public final String getAuthorName () {
-    {
-      String name = Controls.authorName.getValue();
-      if (!name.isEmpty()) return name;
-    }
-
-    showMessage(R.string.message_no_author_name);
-    return null;
   }
 
   private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";

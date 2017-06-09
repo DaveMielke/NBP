@@ -15,7 +15,7 @@ public class RemoveComment extends CommentAction {
 
     if (comment == null) {
       showMessage(R.string.message_uncommented_text);
-    } else if (editor.verifyWritableText()) {
+    } else if (verifyWritableText()) {
       editor.showDialog(
         R.string.menu_comments_RemoveComment, R.layout.comment_show,
         comment, R.string.action_remove,

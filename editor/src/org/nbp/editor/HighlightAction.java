@@ -15,10 +15,11 @@ public abstract class HighlightAction extends EditorAction {
   public void performAction (EditorActivity editor) {
     EditArea editArea = editor.getEditArea();
     Editable text = editArea.getText();
+
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
 
-    if (editor.verifyWritableRegion(text, start, end)) {
+    if (verifyWritableRegion(text, start, end)) {
       if (end > start) {
         text.setSpan(getCharacterStyle(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editArea.setSelection(end);

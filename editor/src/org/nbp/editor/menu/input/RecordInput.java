@@ -65,7 +65,7 @@ public class RecordInput extends EditorAction {
 
   @Override
   public void performAction (final EditorActivity editor) {
-    if (editor.verifyWritableRegion()) {
+    if (verifyWritableRegion()) {
       SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
         @Override
         public void handleText (String[] choices) {

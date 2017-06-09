@@ -17,10 +17,10 @@ public class AddComment extends CommentAction {
 
   @Override
   public void performAction (EditorActivity editor) {
-    final String name = editor.getAuthorName();
+    final String name = getAuthorName();
 
     if (name != null) {
-      if (editor.verifyWritableText()) {
+      if (verifyWritableText()) {
         final EditArea editArea = editor.getEditArea();
 
         editor.showDialog(

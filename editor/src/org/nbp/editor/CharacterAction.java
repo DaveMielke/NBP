@@ -14,10 +14,11 @@ public abstract class CharacterAction extends EditorAction {
   public void performAction (EditorActivity editor) {
     EditArea editArea = editor.getEditArea();
     Editable text = editArea.getText();
+
     int start = editArea.getSelectionStart();
     int end = editArea.getSelectionEnd();
 
-    if (editor.verifyWritableRegion(text, start, end)) {
+    if (verifyWritableRegion(text, start, end)) {
       StringBuilder replacement = new StringBuilder();
       replacement.append(' ');
 

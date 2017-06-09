@@ -74,7 +74,7 @@ public class EditAreaFilter extends EditorComponent implements InputFilter {
     }
 
     if (!handled) {
-      if (!getEditor().verifyWritableRegion(dst, dstStart, dstEnd)) {
+      if (!verifyWritableRegion(dst, dstStart, dstEnd)) {
         handled = true;
       }
     }

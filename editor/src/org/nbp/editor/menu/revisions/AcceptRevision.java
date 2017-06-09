@@ -15,7 +15,7 @@ public class AcceptRevision extends RevisionAction {
 
     if (revision == null) {
       showMessage(R.string.message_original_text);
-    } else if (editor.verifyWritableText()) {
+    } else if (verifyWritableText()) {
       editor.showDialog(
         R.string.menu_revisions_AcceptRevision, R.layout.revision_show,
         revision, R.string.action_accept,

@@ -8,7 +8,7 @@ public class AcceptEdits extends EditorAction {
 
   @Override
   public void performAction (EditorActivity editor) {
-    if (editor.verifyWritableText()) {
+    if (verifyWritableText()) {
       final EditArea editArea = editor.getEditArea();
 
       performWithoutRegionProtection(
