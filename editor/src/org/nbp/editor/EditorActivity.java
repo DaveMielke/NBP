@@ -124,6 +124,87 @@ public class EditorActivity extends CommonActivity {
     return ApplicationUtilities.verifyTextRange(start, end, editArea.length());
   }
 
+  private final File getDocumentsDirectory () {
+    File directory = Environment.getExternalStoragePublicDirectory("Documents");
+
+    if (!directory.exists()) {
+      if (!directory.mkdir()) {
+        Log.w(LOG_TAG, ("unable to create documents directory: " + directory.getAbsolutePath()));
+        return null;
+      }
+    }
+
+    return directory;
+  }
+
+  private final void addRootLocation (FileFinder.Builder builder, String name, File location) {
+    builder.addRootLocation(FileSystems.makeLabel(name, location), location);
+  }
+
+  public final void addRootLocations (FileFinder.Builder builder) {
+    {
+      ContentHandle content = editArea.getContentHandle();
+
+      if (content != null) {
+        File file = content.getFile();
+
+        if (file != null) {
+          addRootLocation(builder, "current", file.getParentFile());
+        }
+      }
+    }
+
+    {
+      File directory = getDocumentsDirectory();
+
+      if (directory != null) {
+        addRootLocation(builder, "documents", directory);
+      }
+    }
+
+    for (String label : FileSystems.getRemovableLabels()) {
+      builder.addRootLocation(label);
+    }
+  }
+
+  public final FileFinder.Builder newFileFinderBuilder (boolean forWriting) {
+    int title = forWriting?
+                R.string.menu_file_SaveAs:
+                R.string.menu_file_OpenFile;
+
+    return new FileFinder
+          .Builder(this)
+          .setUserTitle(getString(title))
+          .setForWriting(forWriting)
+          ;
+  }
+
+  public final void findFile (
+    boolean forWriting,
+    String[] extensions,
+    FileFinder.FileHandler handler
+  ) {
+    FileFinder.Builder builder = newFileFinderBuilder(forWriting);
+
+    if (extensions != null) {
+      for (String extension : extensions) {
+        builder.addFileExtension(extension);
+      }
+    }
+
+    {
+      ContentHandle handle = editArea.getContentHandle();
+
+      if (handle != null) {
+        File file = handle.getFile();
+        if (file != null) builder.setFileName(file.getName());
+      }
+    }
+
+    addRootLocations(builder);
+    builder.find(handler);
+  }
+
   private void setEditorContent (ContentHandle handle) {
     synchronized (this) {
       String path;
@@ -277,6 +358,44 @@ public class EditorActivity extends CommonActivity {
     );
   }
 
+  public final void testHasChanged (final Runnable onSaved) {
+    if (editArea.getHasChanged()) {
+      OnDialogClickListener positiveListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          if (editArea.getContentHandle() != null) {
+            saveFile(onSaved);
+          } else {
+            findFile(true, null,
+              new FileFinder.FileHandler() {
+                @Override
+                public void handleFile (File file) {
+                  if (file != null) saveFile(file, onSaved);
+                }
+              }
+            );
+          }
+        }
+      };
+
+      OnDialogClickListener negativeListener = new OnDialogClickListener() {
+        @Override
+        public void onClick () {
+          run(onSaved);
+        }
+      };
+
+      newAlertDialogBuilder(R.string.changed_title)
+        .setMessage(R.string.changed_message)
+        .setPositiveButton(R.string.changed_button_positive, positiveListener)
+        .setNeutralButton(R.string.changed_button_neutral, null)
+        .setNegativeButton(R.string.changed_button_negative, negativeListener)
+        .show();
+    } else {
+      run(onSaved);
+    }
+  }
+
   private final boolean loadContent (
     final ContentHandle handle, final Runnable onLoaded
   ) {
@@ -327,125 +446,6 @@ public class EditorActivity extends CommonActivity {
 
   public final boolean loadContent (File file) {
     return loadContent(new ContentHandle(file));
-  }
-
-  private final File getDocumentsDirectory () {
-    File directory = Environment.getExternalStoragePublicDirectory("Documents");
-
-    if (!directory.exists()) {
-      if (!directory.mkdir()) {
-        Log.w(LOG_TAG, ("unable to create documents directory: " + directory.getAbsolutePath()));
-        return null;
-      }
-    }
-
-    return directory;
-  }
-
-  private final void addRootLocation (FileFinder.Builder builder, String name, File location) {
-    builder.addRootLocation(FileSystems.makeLabel(name, location), location);
-  }
-
-  public final void addRootLocations (FileFinder.Builder builder) {
-    {
-      ContentHandle content = editArea.getContentHandle();
-
-      if (content != null) {
-        File file = content.getFile();
-
-        if (file != null) {
-          addRootLocation(builder, "current", file.getParentFile());
-        }
-      }
-    }
-
-    {
-      File directory = getDocumentsDirectory();
-
-      if (directory != null) {
-        addRootLocation(builder, "documents", directory);
-      }
-    }
-
-    for (String label : FileSystems.getRemovableLabels()) {
-      builder.addRootLocation(label);
-    }
-  }
-
-  public final FileFinder.Builder newFileFinderBuilder (boolean forWriting) {
-    int title = forWriting?
-                R.string.menu_file_SaveAs:
-                R.string.menu_file_OpenFile;
-
-    return new FileFinder
-          .Builder(this)
-          .setUserTitle(getString(title))
-          .setForWriting(forWriting)
-          ;
-  }
-
-  public final void findFile (
-    boolean forWriting,
-    String[] extensions,
-    FileFinder.FileHandler handler
-  ) {
-    FileFinder.Builder builder = newFileFinderBuilder(forWriting);
-
-    if (extensions != null) {
-      for (String extension : extensions) {
-        builder.addFileExtension(extension);
-      }
-    }
-
-    {
-      ContentHandle handle = editArea.getContentHandle();
-
-      if (handle != null) {
-        File file = handle.getFile();
-        if (file != null) builder.setFileName(file.getName());
-      }
-    }
-
-    addRootLocations(builder);
-    builder.find(handler);
-  }
-
-  public final void testHasChanged (final Runnable onSaved) {
-    if (editArea.getHasChanged()) {
-      OnDialogClickListener positiveListener = new OnDialogClickListener() {
-        @Override
-        public void onClick () {
-          if (editArea.getContentHandle() != null) {
-            saveFile(onSaved);
-          } else {
-            findFile(true, null,
-              new FileFinder.FileHandler() {
-                @Override
-                public void handleFile (File file) {
-                  if (file != null) saveFile(file, onSaved);
-                }
-              }
-            );
-          }
-        }
-      };
-
-      OnDialogClickListener negativeListener = new OnDialogClickListener() {
-        @Override
-        public void onClick () {
-          run(onSaved);
-        }
-      };
-
-      newAlertDialogBuilder(R.string.changed_title)
-        .setMessage(R.string.changed_message)
-        .setPositiveButton(R.string.changed_button_positive, positiveListener)
-        .setNeutralButton(R.string.changed_button_neutral, null)
-        .setNegativeButton(R.string.changed_button_negative, negativeListener)
-        .show();
-    } else {
-      run(onSaved);
-    }
   }
 
   private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";
