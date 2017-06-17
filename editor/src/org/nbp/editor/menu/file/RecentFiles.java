@@ -1,4 +1,4 @@
-package org.nbp.menu.file;
+package org.nbp.editor.menu.file;
 import org.nbp.editor.*;
 
 import org.nbp.common.DialogFinisher;
