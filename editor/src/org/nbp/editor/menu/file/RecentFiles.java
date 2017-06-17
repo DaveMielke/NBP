@@ -1,4 +1,4 @@
-package org.nbp.editor.menu.file;
+package org.nbp.menu.file;
 import org.nbp.editor.*;
 
 import org.nbp.common.DialogFinisher;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class RecentFiles extends EditorAction {
+public class RecentFiles extends OpenAction {
   public RecentFiles (EditorActivity editor) {
     super(editor);
   }
@@ -42,7 +42,7 @@ public class RecentFiles extends EditorAction {
                 @Override
                 public void onClick (View vie) {
                   dialog.dismiss();
-                  editor.loadContent(file);
+                  loadContent(file);
                 }
               }
             );
@@ -60,7 +60,7 @@ public class RecentFiles extends EditorAction {
                     new FileFinder.FileHandler() {
                       @Override
                       public void handleFile (File file) {
-                        if (file != null) editor.loadContent(file);
+                        if (file != null) loadContent(file);
                       }
                     }
                   );

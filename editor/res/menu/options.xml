@@ -79,113 +79,6 @@
   </item>
 
   <item
-    android:id="@+id/menu_input_OpenSubmenu"
-    android:title="@string/menu_input_OpenSubmenu"
-    android:alphabeticShortcut="i"
-    >
-
-    <menu>
-      <item
-        android:id="@+id/menu_input_PasteClipboard"
-        android:title="@string/menu_input_PasteClipboard"
-        android:alphabeticShortcut="p"
-       />
-
-      <item
-        android:id="@+id/menu_input_RecordInput"
-        android:title="@string/menu_input_RecordInput"
-        android:alphabeticShortcut="r"
-       />
-    </menu>
-  </item>
-
-  <item
-    android:id="@+id/menu_text_OpenSubmenu"
-    android:title="@string/menu_text_OpenSubmenu"
-    android:alphabeticShortcut="t"
-    >
-
-    <menu>
-      <group android:id="@+id/menu_group_cursor">
-        <item
-          android:id="@+id/menu_text_SelectAll"
-          android:title="@string/menu_text_SelectAll"
-          android:alphabeticShortcut="a"
-         />
-      </group>
-
-      <group android:id="@+id/menu_group_selection">
-        <item
-          android:id="@+id/menu_text_Copy"
-          android:title="@string/menu_text_Copy"
-          android:alphabeticShortcut="c"
-         />
-
-        <item
-          android:id="@+id/menu_text_Cut"
-          android:title="@string/menu_text_Cut"
-          android:alphabeticShortcut="x"
-         />
-
-        <item
-          android:id="@+id/menu_highlight_OpenSubmenu"
-          android:title="@string/menu_highlight_OpenSubmenu"
-          android:alphabeticShortcut="h"
-          >
-
-          <menu>
-            <item
-              android:id="@+id/menu_highlight_Bold"
-              android:title="@string/menu_highlight_Bold"
-              android:alphabeticShortcut="b"
-             />
-
-            <item
-              android:id="@+id/menu_highlight_Italics"
-              android:title="@string/menu_highlight_Italics"
-              android:alphabeticShortcut="i"
-             />
-
-            <item
-              android:id="@+id/menu_highlight_Strike"
-              android:title="@string/menu_highlight_Strike"
-              android:alphabeticShortcut="s"
-             />
-
-            <item
-              android:id="@+id/menu_highlight_Subscript"
-              android:title="@string/menu_highlight_Subscript"
-             />
-
-            <item
-              android:id="@+id/menu_highlight_Superscript"
-              android:title="@string/menu_highlight_Superscript"
-             />
-
-            <item
-              android:id="@+id/menu_highlight_Underline"
-              android:title="@string/menu_highlight_Underline"
-              android:alphabeticShortcut="u"
-             />
-          </menu>
-        </item>
-
-        <item
-          android:id="@+id/menu_text_Uppercase"
-          android:title="@string/menu_text_Uppercase"
-          android:alphabeticShortcut="u"
-         />
-
-        <item
-          android:id="@+id/menu_text_Lowercase"
-          android:title="@string/menu_text_Lowercase"
-          android:alphabeticShortcut="l"
-         />
-      </group>
-    </menu>
-  </item>
-
-  <item
     android:id="@+id/menu_feedback_OpenSubmenu"
     android:title="@string/menu_feedback_OpenSubmenu"
     android:alphabeticShortcut="e"
@@ -319,6 +212,119 @@
         android:id="@+id/menu_feedback_AcceptEdits"
         android:title="@string/menu_feedback_AcceptEdits"
         android:alphabeticShortcut="a"
+       />
+    </menu>
+  </item>
+
+  <item
+    android:id="@+id/menu_text_OpenSubmenu"
+    android:title="@string/menu_text_OpenSubmenu"
+    android:alphabeticShortcut="t"
+    >
+
+    <menu>
+      <group android:id="@+id/menu_group_cursor">
+        <item
+          android:id="@+id/menu_text_SelectAll"
+          android:title="@string/menu_text_SelectAll"
+          android:alphabeticShortcut="a"
+         />
+      </group>
+
+      <group android:id="@+id/menu_group_selection">
+        <item
+          android:id="@+id/menu_text_Copy"
+          android:title="@string/menu_text_Copy"
+          android:alphabeticShortcut="c"
+         />
+
+        <item
+          android:id="@+id/menu_text_Cut"
+          android:title="@string/menu_text_Cut"
+          android:alphabeticShortcut="x"
+         />
+
+        <item
+          android:id="@+id/menu_highlight_OpenSubmenu"
+          android:title="@string/menu_highlight_OpenSubmenu"
+          android:alphabeticShortcut="h"
+          >
+
+          <menu>
+            <item
+              android:id="@+id/menu_highlight_Bold"
+              android:title="@string/menu_highlight_Bold"
+              android:alphabeticShortcut="b"
+             />
+
+            <item
+              android:id="@+id/menu_highlight_Italics"
+              android:title="@string/menu_highlight_Italics"
+              android:alphabeticShortcut="i"
+             />
+
+            <item
+              android:id="@+id/menu_highlight_Strike"
+              android:title="@string/menu_highlight_Strike"
+              android:alphabeticShortcut="s"
+             />
+
+            <item
+              android:id="@+id/menu_highlight_Subscript"
+              android:title="@string/menu_highlight_Subscript"
+             />
+
+            <item
+              android:id="@+id/menu_highlight_Superscript"
+              android:title="@string/menu_highlight_Superscript"
+             />
+
+            <item
+              android:id="@+id/menu_highlight_Underline"
+              android:title="@string/menu_highlight_Underline"
+              android:alphabeticShortcut="u"
+             />
+          </menu>
+        </item>
+
+        <item
+          android:id="@+id/menu_text_Uppercase"
+          android:title="@string/menu_text_Uppercase"
+          android:alphabeticShortcut="u"
+         />
+
+        <item
+          android:id="@+id/menu_text_Lowercase"
+          android:title="@string/menu_text_Lowercase"
+          android:alphabeticShortcut="l"
+         />
+      </group>
+    </menu>
+  </item>
+
+  <item
+    android:id="@+id/menu_input_OpenSubmenu"
+    android:title="@string/menu_input_OpenSubmenu"
+    android:alphabeticShortcut="i"
+    >
+
+    <menu>
+      <item
+        android:id="@+id/menu_input_PasteClipboard"
+        android:title="@string/menu_input_PasteClipboard"
+        android:alphabeticShortcut="p"
+       />
+
+      <item
+        android:id="@+id/menu_input_InsertFile"
+        android:title="@string/menu_input_InsertFile"
+        android:alphabeticShortcut="i"
+       />
+
+      <item
+        android:id="@+id/menu_input_RecordInput"
+        android:title="@string/menu_input_RecordInput"
+        android:alphabeticShortcut="r"
        />
     </menu>
   </item>

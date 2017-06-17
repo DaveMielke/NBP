@@ -180,9 +180,7 @@ public class EditorActivity extends CommonActivity {
   }
 
   public final void findFile (
-    boolean forWriting,
-    String[] extensions,
-    FileFinder.FileHandler handler
+    boolean forWriting, String[] extensions, FileFinder.FileHandler handler
   ) {
     FileFinder.Builder builder = newFileFinderBuilder(forWriting);
 
@@ -396,8 +394,8 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private final boolean loadContent (
-    final ContentHandle handle, final Runnable onLoaded
+  public final void readContent (
+    final ContentHandle handle, final ContentHandler handler
   ) {
     new AsyncTask<Void, Void, CharSequence>() {
       AlertDialog dialog = null;
@@ -412,9 +410,9 @@ public class EditorActivity extends CommonActivity {
       @Override
       protected CharSequence doInBackground (Void... arguments) {
         try {
-          final Editable input = new SpannableStringBuilder();
-          Content.readContent(handle, input);
-          return input.subSequence(0, input.length());
+          final Editable content = new SpannableStringBuilder();
+          Content.readContent(handle, content);
+          return content.subSequence(0, content.length());
         } catch (OutOfMemoryError error) {
           System.gc();
           return null;
@@ -423,7 +421,19 @@ public class EditorActivity extends CommonActivity {
 
       @Override
       protected void onPostExecute (CharSequence content) {
-        if (content != null) {
+        if (content != null) handler.handleContent(content);
+        if (dialog != null) dialog.dismiss();
+      }
+    }.execute();
+  }
+
+  public final void loadContent (
+    final ContentHandle handle, final Runnable onLoaded
+  ) {
+    readContent(handle,
+      new ContentHandler() {
+        @Override
+        public void handleContent (CharSequence content) {
           final int maximum = 150000;
           int length = content.length();
           if (maximum < length) content = content.subSequence(0, maximum);
@@ -431,21 +441,13 @@ public class EditorActivity extends CommonActivity {
           setEditorContent(handle, content);
           run(onLoaded);
         }
-
-        if (dialog != null) dialog.dismiss();
       }
-    }.execute();
-
-    return true;
+    );
   }
 
-  public final boolean loadContent (ContentHandle handle) {
+  public final void loadContent (ContentHandle handle) {
     saveRecentURI(handle);
-    return loadContent(handle, null);
-  }
-
-  public final boolean loadContent (File file) {
-    return loadContent(new ContentHandle(file));
+    loadContent(handle, null);
   }
 
   private final static String PREF_CHECKPOINT_PREFIX = "checkpoint-";

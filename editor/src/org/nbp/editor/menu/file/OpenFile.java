@@ -4,7 +4,7 @@ import org.nbp.editor.*;
 import org.nbp.common.FileFinder;
 import java.io.File;
 
-public class OpenFile extends EditorAction {
+public class OpenFile extends OpenAction {
   public OpenFile (EditorActivity editor) {
     super(editor);
   }
@@ -19,11 +19,7 @@ public class OpenFile extends EditorAction {
             new FileFinder.FileHandler() {
               @Override
               public void handleFile (File file) {
-                if (file != null) {
-                  if (editor.loadContent(file)) {
-                    editor.checkpointFile();
-                  }
-                }
+                if (file != null) loadContent(file);
               }
             }
           );

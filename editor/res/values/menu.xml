@@ -18,25 +18,6 @@
   <string name="menu_spell_PreviousWord">Previous Word</string>
   <string name="menu_spell_ShowSuggestions">Show Suggestions</string>
 
-  <string name="menu_input_OpenSubmenu">Input Sources…</string>
-  <string name="menu_input_PasteClipboard">Paste from Clipboard</string>
-  <string name="menu_input_RecordInput">Record Input</string>
-
-  <string name="menu_text_OpenSubmenu">Text Selection…</string>
-  <string name="menu_text_SelectAll">Select All</string>
-  <string name="menu_text_Copy">Copy to Clipboard</string>
-  <string name="menu_text_Cut">Cut to Clipboard</string>
-  <string name="menu_text_Uppercase">Uppercase</string>
-  <string name="menu_text_Lowercase">Lowercase</string>
-
-  <string name="menu_highlight_OpenSubmenu">Highlight…</string>
-  <string name="menu_highlight_Bold">Bold</string>
-  <string name="menu_highlight_Italics">Italics</string>
-  <string name="menu_highlight_Strike">Strike</string>
-  <string name="menu_highlight_Subscript">Subscript</string>
-  <string name="menu_highlight_Superscript">Superscript</string>
-  <string name="menu_highlight_Underline">Underline</string>
-
   <string name="menu_feedback_OpenSubmenu">Edits and Comments…</string>
   <string name="menu_feedback_SummarizeFeedback">Summarize Feedback</string>
   <string name="menu_feedback_AcceptEdits">Accept All Edits</string>
@@ -61,4 +42,24 @@
   <string name="menu_comments_PreviousComment">Previous Comment</string>
   <string name="menu_comments_AddComment">Add New Comment</string>
   <string name="menu_comments_RemoveComment">Remove This Comment</string>
+
+  <string name="menu_text_OpenSubmenu">Text Selection…</string>
+  <string name="menu_text_SelectAll">Select All</string>
+  <string name="menu_text_Copy">Copy to Clipboard</string>
+  <string name="menu_text_Cut">Cut to Clipboard</string>
+  <string name="menu_text_Uppercase">Uppercase</string>
+  <string name="menu_text_Lowercase">Lowercase</string>
+
+  <string name="menu_highlight_OpenSubmenu">Highlight…</string>
+  <string name="menu_highlight_Bold">Bold</string>
+  <string name="menu_highlight_Italics">Italics</string>
+  <string name="menu_highlight_Strike">Strike</string>
+  <string name="menu_highlight_Subscript">Subscript</string>
+  <string name="menu_highlight_Superscript">Superscript</string>
+  <string name="menu_highlight_Underline">Underline</string>
+
+  <string name="menu_input_OpenSubmenu">Input Sources…</string>
+  <string name="menu_input_PasteClipboard">Paste Clipboard</string>
+  <string name="menu_input_InsertFile">Insert File</string>
+  <string name="menu_input_RecordInput">Record Input</string>
 </resources>
