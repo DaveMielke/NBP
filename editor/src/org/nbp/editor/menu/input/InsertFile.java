@@ -4,7 +4,7 @@ import org.nbp.editor.*;
 import org.nbp.common.FileFinder;
 import java.io.File;
 
-public class InsertFile extends EditorAction {
+public class InsertFile extends FileAction {
   public InsertFile (EditorActivity editor) {
     super(editor);
   }
@@ -12,7 +12,7 @@ public class InsertFile extends EditorAction {
   @Override
   public void performAction (final EditorActivity editor) {
     if (verifyWritableRegion()) {
-      editor.findFile(false, null,
+      findFile(
         new FileFinder.FileHandler() {
           @Override
           public void handleFile (File file) {

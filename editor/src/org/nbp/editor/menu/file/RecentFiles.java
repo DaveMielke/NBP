@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class RecentFiles extends OpenAction {
+public class RecentFiles extends FileAction {
   public RecentFiles (EditorActivity editor) {
     super(editor);
   }
