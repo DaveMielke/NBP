@@ -31,6 +31,8 @@ public abstract class EditorComponent {
 
   protected final boolean verifyWritableText () {
     if (!ApplicationSettings.PROTECT_TEXT) return true;
+    if (!getEditArea().getEnforceTextProtection()) return true;
+
     showMessage(R.string.message_protected_text);
     return false;
   }

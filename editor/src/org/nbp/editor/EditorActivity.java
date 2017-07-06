@@ -124,6 +124,17 @@ public class EditorActivity extends CommonActivity {
     return ApplicationUtilities.verifyTextRange(start, end, editArea.length());
   }
 
+  public final void performWithoutRegionProtection (Runnable operation) {
+    boolean wasEnforced = editArea.getEnforceTextProtection();
+    editArea.setEnforceTextProtection(false);
+
+    try {
+      operation.run();
+    } finally {
+      editArea.setEnforceTextProtection(wasEnforced);
+    }
+  }
+
   private final File getDocumentsDirectory () {
     File directory = Environment.getExternalStoragePublicDirectory("Documents");
 
@@ -218,11 +229,18 @@ public class EditorActivity extends CommonActivity {
     }
   }
 
-  private void setEditorContent (ContentHandle handle, CharSequence content) {
+  private void setEditorContent (final ContentHandle handle, final CharSequence content) {
     synchronized (this) {
-      setEditorContent(handle);
-      editArea.setText(content);
-      editArea.setHasChanged(false);
+      performWithoutRegionProtection(
+        new Runnable() {
+          @Override
+          public void run () {
+            setEditorContent(handle);
+            editArea.setText(content);
+            editArea.setHasChanged(false);
+          }
+        }
+      );
     }
   }
 
