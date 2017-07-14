@@ -21,33 +21,34 @@ import org.liblouis.NewTranslationTablesListener;
 public abstract class ApplicationContext extends CommonContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
 
+  private final static Object START_LOCK = new Object();
+
   public static boolean setContext (Context context) {
-    if (!CommonContext.setContext(context)) return false;
-    final Object LOCK = new Object();
+    synchronized (START_LOCK) {
+      if (!CommonContext.setContext(context)) return false;
 
-    final String logTag = LOG_TAG + ".startup";
-    Log.d(logTag, "begin");
+      final String logTag = LOG_TAG + ".startup";
+      Log.d(logTag, "begin");
 
-    Log.d(logTag, "preparing LibLouis");
-    {
-      NewTranslationTablesListener listener = new NewTranslationTablesListener() {
-        @Override
-        public void newTranslationTables () {
-          synchronized (LOCK) {
-            TranslationUtilities.refresh();
+      {
+        NewTranslationTablesListener listener = new NewTranslationTablesListener() {
+          @Override
+          public void newTranslationTables () {
+            synchronized (START_LOCK) {
+              TranslationUtilities.refresh();
 
-            if (ApplicationSettings.EVENT_MESSAGES) {
-              ApplicationUtilities.message(R.string.message_new_literary_tables);
+              if (ApplicationSettings.EVENT_MESSAGES) {
+                ApplicationUtilities.message(R.string.message_new_literary_tables);
+              }
             }
           }
-        }
-      };
+        };
 
-      Louis.setLogLevel(ApplicationParameters.LIBLOUIS_LOG_LEVEL);
-      Louis.initialize(context, listener);
-    }
+        Log.d(logTag, "preparing LibLouis");
+        Louis.setLogLevel(ApplicationParameters.LIBLOUIS_LOG_LEVEL);
+        Louis.initialize(context, listener);
+      }
 
-    synchronized (LOCK) {
       Log.d(logTag, "starting host monitor");
       HostMonitor.start(context);
 
