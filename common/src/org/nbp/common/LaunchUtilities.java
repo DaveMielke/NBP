@@ -25,6 +25,12 @@ public abstract class LaunchUtilities {
     return CommonContext.getContext();
   }
 
+  public static List<ResolveInfo> getLaunchableActivities (PackageManager pm) {
+    Intent intent = new Intent(Intent.ACTION_MAIN);
+    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+    return pm.queryIntentActivities(intent, 0);
+  }
+
   public static Intent toIntent (Class<? extends Activity> activity) {
     Intent intent = new Intent(getContext(), activity);
 

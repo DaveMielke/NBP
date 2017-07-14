@@ -4,6 +4,8 @@ import org.nbp.b2g.ui.*;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.nbp.common.LaunchUtilities;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.ComponentName;
@@ -75,17 +77,11 @@ public abstract class ShortcutAction extends Action {
     return getEndpoint().getLineText().toString();
   }
 
-  protected static List<ResolveInfo> getLaunchableActivities (PackageManager pm) {
-    Intent intent = new Intent(Intent.ACTION_MAIN);
-    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-    return pm.queryIntentActivities(intent, 0);
-  }
-
   @Override
   public boolean performAction () {
     String text = getText().toLowerCase();
     final PackageManager pm = getPackageManager();
-    List<ResolveInfo> activities = getLaunchableActivities(pm);
+    List<ResolveInfo> activities = LaunchUtilities.getLaunchableActivities(pm);
     final List<ActivityInfo> choices = new ArrayList<ActivityInfo>();
 
     for (ResolveInfo resolve : activities) {
