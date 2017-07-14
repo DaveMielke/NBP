@@ -156,9 +156,12 @@ public abstract class Controls {
   }
 
   public static void restoreSaneValues () {
+    brailleEnabled.setValue(true);
     typingMode.setValue(TypingMode.TEXT);
     resetHighlightedTyping();
-    oneHand.setValue(false);
-    brailleEnabled.setValue(true);
+
+    if (ApplicationSettings.ONE_HAND) {
+      oneHand.confirmValue();
+    }
   }
 }

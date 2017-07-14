@@ -104,7 +104,6 @@ to their default values:
 
 * The typing mode is set to Text (see `Typing Modes`_).
 * Highlighted typing is turned off (see `Typing Highlighted Characters`_).
-* One Hand Mode is disabled (see `One Hand Mode`_).
 * The braille display is enabled (see `Disabling the Display`_).
 
 The Back

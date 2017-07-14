@@ -31,6 +31,3 @@ Space+Dots45
 Space+Dots14 (c)
   |SayLine|
 
-Dot8+PowerOn
-  |OneHandOn|
-

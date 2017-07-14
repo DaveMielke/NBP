@@ -253,6 +253,11 @@ public abstract class KeyEvents {
     }
   }
 
+  public static void handleNavigationKey (int keyMask) {
+    handleNavigationKeyPress(keyMask);
+    handleNavigationKeyRelease(keyMask);
+  }
+
   public static int[] getCursorKeys () {
     int[] keyNumbers = new int[pressedCursorKeys.size()];
     int index = 0;
@@ -303,8 +308,7 @@ public abstract class KeyEvents {
     logCursorKeyAction(keyNumber, "press");
 
     if (pressedCursorKeys.size() == 1) {
-      handleNavigationKeyPress(KeyMask.CURSOR);
-      handleNavigationKeyRelease(KeyMask.CURSOR);
+      handleNavigationKey(KeyMask.CURSOR);
     }
   }
 

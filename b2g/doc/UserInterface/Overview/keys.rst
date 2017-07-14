@@ -47,11 +47,3 @@ pressing Backward+Dot7 (followed, of course, by pressing Space) disables it.
 Both of these key combinations have been chosen so that they can be reasonably
 easily pressed with a single hand.
 
-Switching the Power switch **off** and then back **on** automatically disables
-One Hand Mode. This provides an intuitive way for a user who has accidentally
-enabled this mode, and who may not know how to disable it, to easily revert the
-keyboard to normal operation.
-
-Another (legacy) way to enable One Hand Mode is to hold Dot8 while
-switching the power on.
-

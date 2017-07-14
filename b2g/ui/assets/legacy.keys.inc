@@ -15,5 +15,3 @@ bind Space+Dots45 TabForward
 
 bind Space+Dots14#c SayLine
 
-bind Dot8+PowerOn OneHandOn
-
