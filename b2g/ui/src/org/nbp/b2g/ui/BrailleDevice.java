@@ -277,17 +277,19 @@ public class BrailleDevice {
   }
 
   public final boolean write (byte[] cells, CharSequence text, long duration) {
-    synchronized (this) {
-      if (open()) {
-        writeDelay.cancel();
+    synchronized (writeDelay) {
+      synchronized (this) {
+        if (open()) {
+          writeDelay.cancel();
 
-        if (writeCells(cells, text, "message")) {
-          if (duration > 0) {
-            writePending = true;
-            writeDelay.start(duration);
+          if (writeCells(cells, text, "message")) {
+            if (duration > 0) {
+              writePending = true;
+              writeDelay.start(duration);
+            }
+
+            return true;
           }
-
-          return true;
         }
       }
     }
