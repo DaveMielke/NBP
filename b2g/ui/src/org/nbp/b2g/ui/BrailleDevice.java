@@ -246,25 +246,19 @@ public class BrailleDevice {
     }
   }
 
-  public final boolean write (Endpoint endpoint) {
-    synchronized (endpoint) {
-      synchronized (this) {
-        if (!open()) return false;
+  private final boolean write (CharSequence text, byte[] cells) {
+    synchronized (this) {
+      if (!open()) return false;
 
-        {
-          byte[] oldCells = getCells();
-          CharSequence text = BrailleUtilities.setCells(brailleCells, endpoint);
-
-          if (!text.equals(brailleText)) {
-            brailleText = text;
-          } else if (Arrays.equals(brailleCells, oldCells)) {
-            return true;
-          }
-        }
-
-        writePending = true;
-        logCells(brailleCells, "updated");
+      if (!text.equals(brailleText)) {
+        brailleText = text;
+      } else if (Arrays.equals(brailleCells, cells)) {
+        return true;
       }
+
+      brailleCells = cells;
+      writePending = true;
+      logCells(brailleCells, "updated");
     }
 
     synchronized (writeDelay) {
@@ -276,18 +270,56 @@ public class BrailleDevice {
     return true;
   }
 
-  public final boolean write (byte[] cells, CharSequence text, long duration) {
+  public final boolean write (Endpoint endpoint) {
+    synchronized (endpoint) {
+      int length = getLength();
+      if (length == 0) return false;
+
+      byte[] cells = new byte[length];
+      CharSequence text = BrailleUtilities.setCells(cells, endpoint);
+      return write(text, cells);
+    }
+  }
+
+  private class WriteElement {
+    public final byte[] cells = new byte[getLength()];
+    public final CharSequence text;
+
+    public WriteElement (CharSequence text) {
+      BrailleTranslation brl = TranslationUtilities.newBrailleTranslation(text, true);
+      int textLength;
+
+      if (brl != null) {
+        CharSequence braille = brl.getBrailleAsString();
+        int brailleLength = BrailleUtilities.setCells(cells, braille);
+        textLength = brl.findFirstTextOffset(brl.getTextOffset(brailleLength));
+      } else {
+        textLength = BrailleUtilities.setCells(cells, text);
+      }
+
+      this.text = text.subSequence(0, textLength);
+    }
+  }
+
+  private final boolean write (WriteElement element) {
+    return write(element.text, element.cells);
+  }
+
+  public final boolean write (CharSequence text) {
+    return write(new WriteElement(text));
+  }
+
+  public final boolean message (CharSequence text) {
+    WriteElement element = new WriteElement(text);
+
     synchronized (writeDelay) {
       synchronized (this) {
         if (open()) {
           writeDelay.cancel();
 
-          if (writeCells(cells, text, "message")) {
-            if (duration > 0) {
-              writePending = true;
-              writeDelay.start(duration);
-            }
-
+          if (writeCells(element.cells, element.text, "message")) {
+            writePending = true;
+            writeDelay.start(ApplicationParameters.BRAILLE_MESSAGE_DURATION);
             return true;
           }
         }
@@ -295,39 +327,6 @@ public class BrailleDevice {
     }
 
     return false;
-  }
-
-  public final boolean write (byte[] cells, CharSequence text) {
-    return write(cells, text, 0);
-  }
-
-  public final boolean write (byte[] cells, long duration) {
-    return write(cells, "", 0);
-  }
-
-  public final boolean write (byte[] cells) {
-    return write(cells, 0);
-  }
-
-  public final boolean write (CharSequence text, long duration) {
-    byte[] cells = new byte[getLength()];
-    BrailleTranslation brl = TranslationUtilities.newBrailleTranslation(text, true);
-    int textLength;
-
-    if (brl != null) {
-      CharSequence braille = brl.getBrailleAsString();
-      int brailleLength = BrailleUtilities.setCells(cells, braille);
-      textLength = brl.findFirstTextOffset(brl.getTextOffset(brailleLength));
-    } else {
-      textLength = BrailleUtilities.setCells(cells, text);
-    }
-
-    text = text.subSequence(0, textLength);
-    return write(cells, text, duration);
-  }
-
-  public final boolean write (CharSequence text) {
-    return write(text, 0);
   }
 
   public BrailleDevice () {
