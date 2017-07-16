@@ -17,7 +17,7 @@ public abstract class Timeout implements Runnable {
   }
 
   private Timer timerObject = null;
-  private static int timerIdentifier = 0;
+  private int timerIdentifier = 0;
 
   public boolean isActive () {
     synchronized (this) {
