@@ -7,28 +7,30 @@ public abstract class Timeout implements Runnable {
   private final long defaultDelay;
   private final String timeoutName;
 
-  private Timer timer = null;
-
-  public String getName () {
-    return timeoutName;
-  }
-
   public Timeout (long delay, String name) {
     defaultDelay = delay;
     timeoutName = name;
   }
 
+  public String getName () {
+    return timeoutName;
+  }
+
+  private Timer timerObject = null;
+  private static int timerIdentifier = 0;
+
   public boolean isActive () {
     synchronized (this) {
-      return timer != null;
+      return timerObject != null;
     }
   }
 
   public boolean cancel () {
     synchronized (this) {
       if (!isActive()) return false;
-      timer.cancel();
-      timer = null;
+
+      timerObject.cancel();
+      timerObject = null;
       return true;
     }
   }
@@ -39,20 +41,24 @@ public abstract class Timeout implements Runnable {
         cancel();
 
         final Timeout timeout = this;
+        final int identifier = ++timerIdentifier;
+
         TimerTask task = new TimerTask() {
           @Override
           public void run () {
-            final Timeout timeout = Timeout.this;
-
             synchronized (timeout) {
-              timeout.cancel();
-              timeout.run();
+              if (timeout.isActive()) {
+                if (identifier == timeout.timerIdentifier) {
+                  timeout.cancel();
+                  timeout.run();
+                }
+              }
             }
           }
         };
 
-        timer = new Timer();
-        timer.schedule(task, delay);
+        timerObject = new Timer();
+        timerObject.schedule(task, delay);
       }
     }
   }
