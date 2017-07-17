@@ -14,7 +14,7 @@ public abstract class Braille {
   public final static char UNICODE_DOT_7 = 0X0040;
   public final static char UNICODE_DOT_8 = 0X0080;
 
-  public final static char DOTS_ALL =
+  public final static char UNICODE_DOTS_ALL =
     UNICODE_DOT_1 | UNICODE_DOT_2 | UNICODE_DOT_3 | UNICODE_DOT_4
   | UNICODE_DOT_5 | UNICODE_DOT_6 | UNICODE_DOT_7 | UNICODE_DOT_8
   ;
@@ -26,7 +26,7 @@ public abstract class Braille {
   }
 
   public final static Byte toCell (char character) {
-    if (isBraillePattern(character)) return (byte)(character & DOTS_ALL);
+    if (isBraillePattern(character)) return (byte)(character & UNICODE_DOTS_ALL);
     return null;
   }
 
@@ -41,7 +41,7 @@ public abstract class Braille {
 
   public final static char toCharacter (byte cell) {
     char character = UNICODE_ROW;
-    character |= cell & DOTS_ALL;
+    character |= cell & UNICODE_DOTS_ALL;
     return character;
   }
 

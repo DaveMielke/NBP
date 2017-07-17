@@ -30,7 +30,7 @@ public abstract class Protocol extends Component {
 
     for (int i=0; i<count; i+=1) {
       char character = Braille.UNICODE_ROW;
-      character |= translateCell(cells[i]) & 0XFF;
+      character |= translateCell(cells[i]) & Braille.UNICODE_DOTS_ALL;
       text[i] = character;
     }
 
