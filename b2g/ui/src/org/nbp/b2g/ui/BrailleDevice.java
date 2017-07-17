@@ -248,16 +248,20 @@ public abstract class BrailleDevice {
   }
 
   public final int getLength () {
-    synchronized (this) {
-      if (connect()) return brailleCells.length;
-      return 0;
+    synchronized (writeDelay) {
+      synchronized (this) {
+        if (connect()) return brailleCells.length;
+        return 0;
+      }
     }
   }
 
   public final byte[] getCells () {
-    synchronized (this) {
-      if (!connect()) return null;
-      return Arrays.copyOf(brailleCells, brailleCells.length);
+    synchronized (writeDelay) {
+      synchronized (this) {
+        if (!connect()) return null;
+        return Arrays.copyOf(brailleCells, brailleCells.length);
+      }
     }
   }
 
