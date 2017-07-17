@@ -124,7 +124,7 @@ public abstract class BrailleDevice {
   }
 
   private final boolean writeCells (boolean immediate) {
-    long timeout = ApplicationParameters.BRAILLE_REWRITE_DELAY;
+    long delay = ApplicationParameters.BRAILLE_REWRITE_DELAY;
 
     if (immediate) {
       WriteElement message = messageQueue.poll();
@@ -139,7 +139,7 @@ public abstract class BrailleDevice {
         cells = message.cells;
         text = message.text;
         reason = "message";
-        timeout = ApplicationParameters.BRAILLE_MESSAGE_DURATION;
+        delay = ApplicationParameters.BRAILLE_MESSAGE_DURATION;
       } else {
         messageActive = false;
         if (!writePending) return true;
@@ -158,18 +158,19 @@ public abstract class BrailleDevice {
       return true;
     }
 
-    writeDelay.start(timeout);
+    writeDelay.start(delay);
     return true;
   }
 
-  private final Timeout writeDelay = new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
-    @Override
-    public void run () {
-      synchronized (BrailleDevice.this) {
-        writeCells(true);
+  private final Timeout writeDelay =
+    new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
+      @Override
+      public void run () {
+        synchronized (BrailleDevice.this) {
+          writeCells(true);
+        }
       }
-    }
-  };
+    };
 
   private final void restoreControls () {
     Control[] controls = new Control[] {
@@ -190,27 +191,27 @@ public abstract class BrailleDevice {
         if (isConnected()) return true;
 
         if (connectDevice()) {
-          int cellCount = getCellCount();
+          {
+            String version = getDriverVersion();
+            Log.i(LOG_TAG, "braille driver version: " + version);
+          }
 
-          if (cellCount > 0) {
-            brailleCells = new byte[cellCount];
-            Log.i(LOG_TAG, "braille cell count: " + brailleCells.length);
+          brailleCells = new byte[getCellCount()];
+          Log.i(LOG_TAG, "braille cell count: " + brailleCells.length);
+          BrailleUtilities.clearCells(brailleCells);
 
-            {
-              String version = getDriverVersion();
-              Log.i(LOG_TAG, "braille driver version: " + version);
-            }
+          brailleText = "";
+          writePending = false;
 
-            clearCells();
-            BrailleUtilities.clearCells(brailleCells);
-            brailleText = "";
-            writePending = false;
+          messageQueue.clear();
+          messageActive = false;
 
-            messageQueue.clear();
-            messageActive = false;
-
+          if (clearCells()) {
             restoreControls();
-            return writeCells(false);
+
+            if (writeCells(false)) {
+              return true;
+            }
           }
 
           disconnectDevice();
@@ -223,9 +224,8 @@ public abstract class BrailleDevice {
 
   public final void disconnect () {
     synchronized (writeDelay) {
-      writeDelay.cancel();
-
       synchronized (this) {
+        writeDelay.cancel();
         writePending = false;
         brailleText = null;
 
@@ -238,7 +238,7 @@ public abstract class BrailleDevice {
   }
 
   public boolean enable () {
-    return false;
+    return true;
   }
 
   public boolean disable () {

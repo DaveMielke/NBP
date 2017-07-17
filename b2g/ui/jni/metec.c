@@ -108,11 +108,7 @@ JAVA_METHOD(
 JAVA_METHOD(
   org_nbp_b2g_ui_MetecBrailleDevice, getCellCount, jint
 ) {
-  if (isOpen()) {
-    return BRAILLE_CELL_COUNT;
-  }
-
-  return 0;
+  return isOpen()? BRAILLE_CELL_COUNT: 0;
 }
 
 static const unsigned char firmnessSettings[] = {
