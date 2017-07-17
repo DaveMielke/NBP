@@ -7,38 +7,6 @@ import android.text.Spanned;
 import org.nbp.common.Braille;
 
 public abstract class BrailleUtilities {
-  public static char toCharacter (byte cell) {
-    char character = Braille.UNICODE_ROW;
-
-    if ((cell & BrailleDevice.DOT_1) != 0) character |= Braille.UNICODE_DOT_1;
-    if ((cell & BrailleDevice.DOT_2) != 0) character |= Braille.UNICODE_DOT_2;
-    if ((cell & BrailleDevice.DOT_3) != 0) character |= Braille.UNICODE_DOT_3;
-    if ((cell & BrailleDevice.DOT_4) != 0) character |= Braille.UNICODE_DOT_4;
-    if ((cell & BrailleDevice.DOT_5) != 0) character |= Braille.UNICODE_DOT_5;
-    if ((cell & BrailleDevice.DOT_6) != 0) character |= Braille.UNICODE_DOT_6;
-    if ((cell & BrailleDevice.DOT_7) != 0) character |= Braille.UNICODE_DOT_7;
-    if ((cell & BrailleDevice.DOT_8) != 0) character |= Braille.UNICODE_DOT_8;
-
-    return character;
-  }
-
-  public static char[] toCharacters (byte[] cells) {
-    if (cells == null) return null;
-
-    int count = cells.length;
-    char[] characters = new char[count];
-
-    for (int index=0; index<count; index+=1) {
-      characters[index] = toCharacter(cells[index]);
-    }
-
-    return characters;
-  }
-
-  public static String toString (byte[] cells) {
-    return new String(toCharacters(cells));
-  }
-
   public static void clearCells (byte[] cells, int from) {
     while (from < cells.length) cells[from++] = 0;
   }

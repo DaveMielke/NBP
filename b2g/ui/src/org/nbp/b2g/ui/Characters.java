@@ -69,20 +69,13 @@ public class Characters {
       if (dots != null) return dots;
     }
 
-    if (Braille.isBraillePattern(character)) {
-      byte dots = 0;
+    {
+      Byte dots = Braille.toCell(character);
 
-      if ((character & Braille.UNICODE_DOT_1) != 0) dots |= BrailleDevice.DOT_1;
-      if ((character & Braille.UNICODE_DOT_2) != 0) dots |= BrailleDevice.DOT_2;
-      if ((character & Braille.UNICODE_DOT_3) != 0) dots |= BrailleDevice.DOT_3;
-      if ((character & Braille.UNICODE_DOT_4) != 0) dots |= BrailleDevice.DOT_4;
-      if ((character & Braille.UNICODE_DOT_5) != 0) dots |= BrailleDevice.DOT_5;
-      if ((character & Braille.UNICODE_DOT_6) != 0) dots |= BrailleDevice.DOT_6;
-      if ((character & Braille.UNICODE_DOT_7) != 0) dots |= BrailleDevice.DOT_7;
-      if ((character & Braille.UNICODE_DOT_8) != 0) dots |= BrailleDevice.DOT_8;
-
-      setDots(character, dots);
-      return dots;
+      if (dots != null) {
+        setDots(character, dots);
+        return dots;
+      }
     }
 
     {

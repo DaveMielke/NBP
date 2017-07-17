@@ -19,4 +19,41 @@ public abstract class Braille {
     if (block == null) return false;
     return block.equals(Character.UnicodeBlock.BRAILLE_PATTERNS);
   }
+
+  public final static Byte toCell (char character) {
+    if (isBraillePattern(character)) return (byte)(character & 0XFF);
+    return null;
+  }
+
+  public final static byte CELL_DOT_1 = (byte)UNICODE_DOT_1;
+  public final static byte CELL_DOT_2 = (byte)UNICODE_DOT_2;
+  public final static byte CELL_DOT_3 = (byte)UNICODE_DOT_3;
+  public final static byte CELL_DOT_4 = (byte)UNICODE_DOT_4;
+  public final static byte CELL_DOT_5 = (byte)UNICODE_DOT_5;
+  public final static byte CELL_DOT_6 = (byte)UNICODE_DOT_6;
+  public final static byte CELL_DOT_7 = (byte)UNICODE_DOT_7;
+  public final static byte CELL_DOT_8 = (byte)UNICODE_DOT_8;
+
+  public final static char toCharacter (byte cell) {
+    char character = UNICODE_ROW;
+    character |= cell & 0XFF;
+    return character;
+  }
+
+  public final static char[] toCharacters (byte[] cells) {
+    if (cells == null) return null;
+
+    int count = cells.length;
+    char[] characters = new char[count];
+
+    for (int index=0; index<count; index+=1) {
+      characters[index] = toCharacter(cells[index]);
+    }
+
+    return characters;
+  }
+
+  public final static String toString (byte[] cells) {
+    return new String(toCharacters(cells));
+  }
 }

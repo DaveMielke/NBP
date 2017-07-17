@@ -1,6 +1,7 @@
 package org.nbp.b2g.ui;
 
 import org.nbp.common.CommonParameters;
+import org.nbp.common.Braille;
 
 import android.os.Build;
 
@@ -44,10 +45,10 @@ public abstract class ApplicationParameters extends CommonParameters {
   public final static long BRAILLE_REWRITE_DELAY = 50; // milliseconds
 
   public final static byte BRAILLE_CHARACTER_UNDEFINED =
-    BrailleDevice.DOT_3|
-    BrailleDevice.DOT_6|
-    BrailleDevice.DOT_7|
-    BrailleDevice.DOT_8;
+    Braille.CELL_DOT_3|
+    Braille.CELL_DOT_6|
+    Braille.CELL_DOT_7|
+    Braille.CELL_DOT_8;
 
   public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
 

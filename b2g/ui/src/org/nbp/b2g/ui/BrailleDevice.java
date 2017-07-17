@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Queue;
 import java.util.LinkedList;
 
+import org.nbp.common.Braille;
 import org.nbp.common.Timeout;
 import org.nbp.common.Control;
 
@@ -14,15 +15,6 @@ import org.liblouis.BrailleTranslation;
 
 public abstract class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
-
-  public final static byte DOT_1 =       0X01;
-  public final static byte DOT_2 =       0X02;
-  public final static byte DOT_3 =       0X04;
-  public final static byte DOT_4 =       0X08;
-  public final static byte DOT_5 =       0X10;
-  public final static byte DOT_6 =       0X20;
-  public final static byte DOT_7 =       0X40;
-  public final static byte DOT_8 = (byte)0X80;
 
   private BrailleMonitorWindow monitorWindow = null;
 
@@ -76,7 +68,7 @@ public abstract class BrailleDevice {
 
   private final void logCells (byte[] cells, String reason, CharSequence text) {
     boolean log = ApplicationSettings.LOG_BRAILLE;
-    String braille = BrailleUtilities.toString(cells);
+    String braille = Braille.toString(cells);
 
     if (log) {
       Log.d(LOG_TAG, String.format(

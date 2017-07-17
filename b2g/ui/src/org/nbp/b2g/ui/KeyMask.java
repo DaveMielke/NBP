@@ -3,6 +3,8 @@ package org.nbp.b2g.ui;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
+import org.nbp.common.Braille;
+
 import android.util.Log;
 
 public abstract class KeyMask {
@@ -41,14 +43,14 @@ public abstract class KeyMask {
     if ((mask & ~DOTS_ALL) != 0) return null;
 
     byte dots = 0;
-    if ((mask & DOT_1) != 0) dots |= BrailleDevice.DOT_1;
-    if ((mask & DOT_2) != 0) dots |= BrailleDevice.DOT_2;
-    if ((mask & DOT_3) != 0) dots |= BrailleDevice.DOT_3;
-    if ((mask & DOT_4) != 0) dots |= BrailleDevice.DOT_4;
-    if ((mask & DOT_5) != 0) dots |= BrailleDevice.DOT_5;
-    if ((mask & DOT_6) != 0) dots |= BrailleDevice.DOT_6;
-    if ((mask & DOT_7) != 0) dots |= BrailleDevice.DOT_7;
-    if ((mask & DOT_8) != 0) dots |= BrailleDevice.DOT_8;
+    if ((mask & DOT_1) != 0) dots |= Braille.CELL_DOT_1;
+    if ((mask & DOT_2) != 0) dots |= Braille.CELL_DOT_2;
+    if ((mask & DOT_3) != 0) dots |= Braille.CELL_DOT_3;
+    if ((mask & DOT_4) != 0) dots |= Braille.CELL_DOT_4;
+    if ((mask & DOT_5) != 0) dots |= Braille.CELL_DOT_5;
+    if ((mask & DOT_6) != 0) dots |= Braille.CELL_DOT_6;
+    if ((mask & DOT_7) != 0) dots |= Braille.CELL_DOT_7;
+    if ((mask & DOT_8) != 0) dots |= Braille.CELL_DOT_8;
     return dots;
   }
 

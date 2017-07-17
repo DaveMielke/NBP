@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.Braille;
+
 import android.util.Log;
 
 import android.text.SpannableStringBuilder;
@@ -128,7 +130,7 @@ public class TypeCharacter extends InputAction {
             return false;
           }
 
-          character = BrailleUtilities.toCharacter(dots);
+          character = Braille.toCharacter(dots);
           break;
         }
 

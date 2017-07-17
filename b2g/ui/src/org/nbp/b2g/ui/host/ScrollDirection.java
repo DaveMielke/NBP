@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.Braille;
+
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public enum ScrollDirection {
@@ -8,10 +10,10 @@ public enum ScrollDirection {
     AccessibilityNodeInfo.ACTION_SCROLL_FORWARD,
 
     new byte[] {
-      BrailleDevice.DOT_1 | BrailleDevice.DOT_5,
-      BrailleDevice.DOT_3 | BrailleDevice.DOT_8,
-      BrailleDevice.DOT_7 | BrailleDevice.DOT_6,
-      BrailleDevice.DOT_2 | BrailleDevice.DOT_4
+      Braille.CELL_DOT_1 | Braille.CELL_DOT_5,
+      Braille.CELL_DOT_3 | Braille.CELL_DOT_8,
+      Braille.CELL_DOT_7 | Braille.CELL_DOT_6,
+      Braille.CELL_DOT_2 | Braille.CELL_DOT_4
     },
 
     R.string.message_scroll_forward
@@ -21,10 +23,10 @@ public enum ScrollDirection {
     AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD,
 
     new byte[] {
-      BrailleDevice.DOT_7 | BrailleDevice.DOT_6,
-      BrailleDevice.DOT_2 | BrailleDevice.DOT_4,
-      BrailleDevice.DOT_1 | BrailleDevice.DOT_5,
-      BrailleDevice.DOT_3 | BrailleDevice.DOT_8
+      Braille.CELL_DOT_7 | Braille.CELL_DOT_6,
+      Braille.CELL_DOT_2 | Braille.CELL_DOT_4,
+      Braille.CELL_DOT_1 | Braille.CELL_DOT_5,
+      Braille.CELL_DOT_3 | Braille.CELL_DOT_8
     },
 
     R.string.message_scroll_backward
@@ -41,15 +43,15 @@ public enum ScrollDirection {
     return Devices.braille.get().write(actionText);
   }
 
-  private ScrollDirection (int action, byte[] braille, int text) {
+  private ScrollDirection (int action, byte[] symbol, int text) {
     nodeAction = action;
 
-    StringBuilder sb = new StringBuilder();
-    sb.append(BrailleUtilities.toString(braille));
-
-    sb.append(' ');
-    sb.append(ApplicationContext.getString(text));
-
-    actionText = sb.subSequence(0, sb.length());
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.append(Braille.toString(symbol));
+      sb.append(' ');
+      sb.append(ApplicationContext.getString(text));
+      actionText = sb.subSequence(0, sb.length());
+    }
   }
 }
