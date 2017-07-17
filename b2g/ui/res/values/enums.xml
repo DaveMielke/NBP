@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <string name="enum_GenericLevel_LOWEST">Lowest</string>
+  <string name="enum_GenericLevel_LOW">Low</string>
+  <string name="enum_GenericLevel_MEDIUM">Medium</string>
+  <string name="enum_GenericLevel_HIGH">High</string>
+  <string name="enum_GenericLevel_HIGHEST">Highest</string>
+
   <string name="enum_IndicatorOverlay_DOTS_78">Dots 78</string>
   <string name="enum_IndicatorOverlay_DOT_7">Dot 7</string>
   <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>

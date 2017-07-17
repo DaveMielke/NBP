@@ -44,8 +44,6 @@ public abstract class BrailleDevice {
   public abstract String getDriverVersion ();
   protected abstract int getCellCount ();
 
-  protected abstract boolean setCellFirmness (int firmness);
-
   protected abstract boolean clearCells ();
   protected abstract boolean writeCells (byte[] cells);
 
@@ -245,15 +243,7 @@ public abstract class BrailleDevice {
     return false;
   }
 
-  public final boolean setFirmness (int firmness) {
-    synchronized (this) {
-      if (isConnected()) {
-        if (setCellFirmness(firmness)) {
-          return true;
-        }
-      }
-    }
-
+  public boolean setCellFirmness (GenericLevel firmness) {
     return false;
   }
 

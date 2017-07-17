@@ -18,7 +18,7 @@ public abstract class ApplicationSettings {
   public static volatile boolean SHOW_HIGHLIGHTED = ApplicationDefaults.SHOW_HIGHLIGHTED;
   public static volatile IndicatorOverlay SELECTION_INDICATOR = ApplicationDefaults.SELECTION_INDICATOR;
   public static volatile IndicatorOverlay CURSOR_INDICATOR = ApplicationDefaults.CURSOR_INDICATOR;
-  public static volatile int BRAILLE_FIRMNESS = ApplicationDefaults.BRAILLE_FIRMNESS;
+  public static volatile GenericLevel BRAILLE_FIRMNESS = ApplicationDefaults.BRAILLE_FIRMNESS;
   public static volatile boolean BRAILLE_MONITOR = ApplicationDefaults.BRAILLE_MONITOR;
   public static volatile boolean BRAILLE_ENABLED = ApplicationDefaults.BRAILLE_ENABLED;
 

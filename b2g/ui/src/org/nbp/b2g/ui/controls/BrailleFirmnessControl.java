@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.IntegerControl;
+import org.nbp.common.EnumerationControl;
 
-public class BrailleFirmnessControl extends IntegerControl {
+public class BrailleFirmnessControl extends EnumerationControl<GenericLevel> {
   @Override
   protected int getResourceForLabel () {
     return R.string.control_label_BrailleFirmness;
@@ -20,18 +20,18 @@ public class BrailleFirmnessControl extends IntegerControl {
   }
 
   @Override
-  protected int getIntegerDefault () {
+  protected GenericLevel getEnumerationDefault () {
     return ApplicationDefaults.BRAILLE_FIRMNESS;
   }
 
   @Override
-  public int getIntegerValue () {
+  public GenericLevel getEnumerationValue () {
     return ApplicationSettings.BRAILLE_FIRMNESS;
   }
 
   @Override
-  protected boolean setIntegerValue (int value) {
-    if (!Devices.braille.get().setFirmness(value)) return false;
+  protected boolean setEnumerationValue (GenericLevel value) {
+    if (!Devices.braille.get().setCellFirmness(value)) return false;
     ApplicationSettings.BRAILLE_FIRMNESS = value;
     return true;
   }

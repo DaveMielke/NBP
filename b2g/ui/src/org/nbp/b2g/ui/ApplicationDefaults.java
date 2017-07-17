@@ -18,7 +18,7 @@ public abstract class ApplicationDefaults {
   public final static boolean SHOW_HIGHLIGHTED = true;
   public final static IndicatorOverlay SELECTION_INDICATOR = IndicatorOverlay.DOT_8;
   public final static IndicatorOverlay CURSOR_INDICATOR = IndicatorOverlay.DOTS_78;
-  public final static int BRAILLE_FIRMNESS = 4;
+  public final static GenericLevel BRAILLE_FIRMNESS = GenericLevel.MEDIUM;
   public final static boolean BRAILLE_MONITOR = false;
   public final static boolean BRAILLE_ENABLED = true;
 
