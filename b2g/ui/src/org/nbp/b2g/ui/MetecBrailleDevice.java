@@ -21,7 +21,6 @@ public class MetecBrailleDevice extends BrailleDevice {
 
   private native boolean enableDevice ();
   private native boolean disableDevice ();
-  private native boolean setCellFirmness (int firmness);
 
   private static boolean canEnableDisable () {
     return FirmwareVersion.getMainMajor() >= 3;
@@ -53,11 +52,14 @@ public class MetecBrailleDevice extends BrailleDevice {
     return false;
   }
 
+  private native int getMaximumFirmness ();
+  private native boolean setFirmness (int firmness);
+
   @Override
-  public final boolean setCellFirmness (GenericLevel firmness) {
+  public final boolean setFirmness (GenericLevel firmness) {
     synchronized (this) {
       if (isConnected()) {
-        if (setCellFirmness(firmness.getValue(0, 7))) {
+        if (setFirmness(firmness.getValue(0, getMaximumFirmness()))) {
           return true;
         }
       }

@@ -243,7 +243,7 @@ public abstract class BrailleDevice {
     return false;
   }
 
-  public boolean setCellFirmness (GenericLevel firmness) {
+  public boolean setFirmness (GenericLevel firmness) {
     return false;
   }
 

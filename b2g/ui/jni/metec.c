@@ -121,14 +121,21 @@ static const unsigned char firmnessSettings[] = {
   UOUT_191V_CONFIG_VALUE,
   UOUT_199V_CONFIG_VALUE
 };
+static const unsigned char maximumFirmness = ARRAY_COUNT(firmnessSettings) - 1;
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_MetecBrailleDevice, setCellFirmness, jboolean,
+  org_nbp_b2g_ui_MetecBrailleDevice, getMaximumFirmness, jint
+) {
+  return maximumFirmness;
+}
+
+JAVA_METHOD(
+  org_nbp_b2g_ui_MetecBrailleDevice, setFirmness, jboolean,
   jint firmness
 ) {
   LOG(DEBUG, "setting firmness: %d", firmness);
 
-  if ((firmness >= 0) && (firmness < ARRAY_COUNT(firmnessSettings))) {
+  if ((firmness >= 0) && (firmness <= maximumFirmness)) {
     if (isOpen()) {
       if (ioctl(brailleDevice, METEC_FLAT20_SET_DOT_STRENGTH, firmnessSettings[firmness]) != -1) {
         return JNI_TRUE;
