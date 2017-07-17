@@ -18,7 +18,7 @@ NATIVE_SOURCES += uinput.c
 NATIVE_SOURCES += keyboard.c
 NATIVE_SOURCES += kbdmon.c
 NATIVE_SOURCES += metec_flat20_ioctl.h
-NATIVE_SOURCES += brldev.c
+NATIVE_SOURCES += metec.c
 
 REQUIRED_TARGETS += documentation
 DOCUMENTATION_DIRECTORY = ../doc

@@ -34,13 +34,13 @@ openDevice (void) {
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, openDevice, jboolean
+  org_nbp_b2g_ui_MetecBrailleDevice, connectDevice, jboolean
 ) {
   return openDevice()? JNI_TRUE: JNI_FALSE;
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, closeDevice, void
+  org_nbp_b2g_ui_MetecBrailleDevice, disconnectDevice, void
 ) {
   if (isOpen()) {
     close(brailleDevice);
@@ -49,7 +49,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, enableDevice, jboolean
+  org_nbp_b2g_ui_MetecBrailleDevice, enableDevice, jboolean
 ) {
   LOG(DEBUG, "enabling device");
 
@@ -65,7 +65,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, disableDevice, jboolean
+  org_nbp_b2g_ui_MetecBrailleDevice, disableDevice, jboolean
 ) {
   LOG(DEBUG, "disabling device");
 
@@ -81,7 +81,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, getDriverVersion, jstring
+  org_nbp_b2g_ui_MetecBrailleDevice, getDriverVersion, jstring
 ) {
   if (isOpen()) {
     char buffer[10];
@@ -106,7 +106,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, getCellCount, jint
+  org_nbp_b2g_ui_MetecBrailleDevice, getCellCount, jint
 ) {
   if (isOpen()) {
     return BRAILLE_CELL_COUNT;
@@ -127,7 +127,7 @@ static const unsigned char firmnessSettings[] = {
 };
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, setCellFirmness, jboolean,
+  org_nbp_b2g_ui_MetecBrailleDevice, setCellFirmness, jboolean,
   jint firmness
 ) {
   LOG(DEBUG, "setting firmness: %d", firmness);
@@ -148,7 +148,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, clearCells, jboolean
+  org_nbp_b2g_ui_MetecBrailleDevice, clearCells, jboolean
 ) {
   if (isOpen()) {
     if (ioctl(brailleDevice, METEC_FLAT20_CLEAR_DISPLAY, 0) != -1) {
@@ -162,7 +162,7 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_nbp_b2g_ui_BrailleDevice, writeCells, jboolean,
+  org_nbp_b2g_ui_MetecBrailleDevice, writeCells, jboolean,
   jbyteArray jCells
 ) {
   if (isOpen()) {

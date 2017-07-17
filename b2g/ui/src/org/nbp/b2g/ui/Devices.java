@@ -7,7 +7,7 @@ public abstract class Devices {
   }
 
   public final static LazyInstantiator<BrailleDevice> braille = new
-    LazyInstantiator<BrailleDevice>(BrailleDevice.class);
+    LazyInstantiator<BrailleDevice>(MetecBrailleDevice.class);
 
   public final static LazyInstantiator<KeyboardDevice> keyboard = new
     LazyInstantiator<KeyboardDevice>(KeyboardDevice.class);

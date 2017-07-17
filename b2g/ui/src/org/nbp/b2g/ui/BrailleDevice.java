@@ -12,7 +12,7 @@ import android.content.Context;
 
 import org.liblouis.BrailleTranslation;
 
-public class BrailleDevice {
+public abstract class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
   public final static byte DOT_1 =       0X01;
@@ -38,19 +38,16 @@ public class BrailleDevice {
     return monitorWindow;
   }
 
-  private native boolean openDevice ();
-  private native void closeDevice ();
+  protected abstract boolean connectDevice ();
+  protected abstract void disconnectDevice ();
 
-  private native boolean enableDevice ();
-  private native boolean disableDevice ();
+  public abstract String getDriverVersion ();
+  protected abstract int getCellCount ();
 
-  public native String getDriverVersion ();
-  private native int getCellCount ();
+  protected abstract boolean setCellFirmness (int firmness);
 
-  private native boolean setCellFirmness (int firmness);
-
-  private native boolean clearCells ();
-  private native boolean writeCells (byte[] cells);
+  protected abstract boolean clearCells ();
+  protected abstract boolean writeCells (byte[] cells);
 
   private class WriteElement {
     public final byte[] cells = new byte[getLength()];
@@ -157,8 +154,8 @@ public class BrailleDevice {
         writePending = true;
         return false;
       }
-    } else {
-      if (writeDelay.isActive()) return true;
+    } else if (writeDelay.isActive()) {
+      return true;
     }
 
     writeDelay.start(timeout);
@@ -183,16 +180,16 @@ public class BrailleDevice {
     Control.restoreCurrentValues(controls);
   }
 
-  private final boolean isOpen () {
+  protected final boolean isConnected () {
     return brailleCells != null;
   }
 
-  public final boolean open () {
+  public final boolean connect () {
     synchronized (writeDelay) {
       synchronized (this) {
-        if (isOpen()) return true;
+        if (isConnected()) return true;
 
-        if (openDevice()) {
+        if (connectDevice()) {
           int cellCount = getCellCount();
 
           if (cellCount > 0) {
@@ -216,7 +213,7 @@ public class BrailleDevice {
             return writeCells(false);
           }
 
-          closeDevice();
+          disconnectDevice();
         }
       }
     }
@@ -224,7 +221,7 @@ public class BrailleDevice {
     return false;
   }
 
-  public final void close () {
+  public final void disconnect () {
     synchronized (writeDelay) {
       writeDelay.cancel();
 
@@ -232,45 +229,25 @@ public class BrailleDevice {
         writePending = false;
         brailleText = null;
 
-        if (isOpen()) {
+        if (isConnected()) {
           brailleCells = null;
-          closeDevice();
+          disconnectDevice();
         }
       }
     }
   }
 
-  public static boolean canEnableDisable () {
-    return FirmwareVersion.getMainMajor() >= 3;
-  }
-
-  public final boolean enable () {
-    if (!canEnableDisable()) return true;
-
-    if (isOpen()) {
-      if (enableDevice()) {
-        return true;
-      }
-    }
-
+  public boolean enable () {
     return false;
   }
 
-  public final boolean disable () {
-    if (!canEnableDisable()) return true;
-
-    if (isOpen()) {
-      if (disableDevice()) {
-        return true;
-      }
-    }
-
+  public boolean disable () {
     return false;
   }
 
   public final boolean setFirmness (int firmness) {
     synchronized (this) {
-      if (isOpen()) {
+      if (isConnected()) {
         if (setCellFirmness(firmness)) {
           return true;
         }
@@ -282,14 +259,14 @@ public class BrailleDevice {
 
   public final int getLength () {
     synchronized (this) {
-      if (open()) return brailleCells.length;
+      if (connect()) return brailleCells.length;
       return 0;
     }
   }
 
   public final byte[] getCells () {
     synchronized (this) {
-      if (!open()) return null;
+      if (!connect()) return null;
       return Arrays.copyOf(brailleCells, brailleCells.length);
     }
   }
@@ -306,7 +283,7 @@ public class BrailleDevice {
   private final boolean write (CharSequence text, byte[] cells) {
     synchronized (writeDelay) {
       synchronized (this) {
-        if (!open()) return false;
+        if (!connect()) return false;
 
         if (!text.equals(brailleText)) {
           brailleText = text;
@@ -355,7 +332,7 @@ public class BrailleDevice {
   public final boolean message (CharSequence text) {
     synchronized (writeDelay) {
       synchronized (this) {
-        if (open()) {
+        if (connect()) {
           messageQueue.offer(new WriteElement(text));
           if (messageActive) return true;
           if (writeCells(true)) return true;
@@ -367,9 +344,5 @@ public class BrailleDevice {
   }
 
   public BrailleDevice () {
-  }
-
-  static {
-    ApplicationUtilities.loadLibrary();
   }
 }
