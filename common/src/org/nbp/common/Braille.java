@@ -14,6 +14,11 @@ public abstract class Braille {
   public final static char UNICODE_DOT_7 = 0X0040;
   public final static char UNICODE_DOT_8 = 0X0080;
 
+  public final static char DOTS_ALL =
+    UNICODE_DOT_1 | UNICODE_DOT_2 | UNICODE_DOT_3 | UNICODE_DOT_4
+  | UNICODE_DOT_5 | UNICODE_DOT_6 | UNICODE_DOT_7 | UNICODE_DOT_8
+  ;
+
   public final static boolean isBraillePattern (char character) {
     Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
     if (block == null) return false;
@@ -21,7 +26,7 @@ public abstract class Braille {
   }
 
   public final static Byte toCell (char character) {
-    if (isBraillePattern(character)) return (byte)(character & 0XFF);
+    if (isBraillePattern(character)) return (byte)(character & DOTS_ALL);
     return null;
   }
 
@@ -36,7 +41,7 @@ public abstract class Braille {
 
   public final static char toCharacter (byte cell) {
     char character = UNICODE_ROW;
-    character |= cell & 0XFF;
+    character |= cell & DOTS_ALL;
     return character;
   }
 
