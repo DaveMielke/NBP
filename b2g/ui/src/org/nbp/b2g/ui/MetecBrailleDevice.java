@@ -2,25 +2,25 @@ package org.nbp.b2g.ui;
 
 public class MetecBrailleDevice extends BrailleDevice {
   @Override
-  protected native boolean connectDevice ();
+  protected final native boolean connectDevice ();
 
   @Override
-  protected native void disconnectDevice ();
+  protected final native void disconnectDevice ();
 
   @Override
-  public native String getDriverVersion ();
+  public final native String getDriverVersion ();
 
   @Override
-  protected native int getCellCount ();
+  protected final native int getCellCount ();
 
   @Override
-  protected native boolean clearCells ();
+  protected final native boolean clearCells ();
 
   @Override
-  protected native boolean writeCells (byte[] cells);
+  protected final native boolean writeCells (byte[] cells);
 
-  private native boolean enableDevice ();
-  private native boolean disableDevice ();
+  private final native boolean enableDevice ();
+  private final native boolean disableDevice ();
 
   private static boolean canEnableDisable () {
     return FirmwareVersion.getMainMajor() >= 3;
@@ -52,8 +52,8 @@ public class MetecBrailleDevice extends BrailleDevice {
     return false;
   }
 
-  private native int getMaximumFirmness ();
-  private native boolean setFirmness (int firmness);
+  private final native int getMaximumFirmness ();
+  private final native boolean setFirmness (int firmness);
 
   @Override
   public final boolean setFirmness (GenericLevel firmness) {
