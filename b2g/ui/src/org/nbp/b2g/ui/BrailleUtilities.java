@@ -124,6 +124,77 @@ public abstract class BrailleUtilities {
     }
   }
 
+  private final static char[] internalDots = new char[] {
+    Braille.UNICODE_DOT_1,
+    Braille.UNICODE_DOT_2,
+    Braille.UNICODE_DOT_3,
+    Braille.UNICODE_DOT_4,
+    Braille.UNICODE_DOT_5,
+    Braille.UNICODE_DOT_6,
+    Braille.UNICODE_DOT_7,
+    Braille.UNICODE_DOT_8
+  };
+
+  public final static byte[] makeTranslationTable (
+    int dot1, int dot2, int dot3, int dot4,
+    int dot5, int dot6, int dot7, int dot8
+  ) {
+    int dotCount = internalDots.length;
+
+    int[] externalDots = new int[] {
+      dot1, dot2, dot3, dot4, dot5, dot6, dot7, dot8
+    };
+
+    if (externalDots.length != dotCount) {
+      throw new RuntimeException("array length mismatch");
+    }
+
+    {
+      boolean sameLayout = true;
+      int externalCell = 0;
+      int dotIndex = 0;
+
+      while (dotIndex < dotCount) {
+        char internalDot = internalDots[dotIndex];
+        int externalDot = externalDots[dotIndex];
+
+        if (externalDot == 0) break;
+        if ((Braille.UNICODE_DOTS_ALL & externalDot) != externalDot) break;
+
+        if ((externalCell & externalDot) != 0) break;
+        externalCell |= externalDot;
+
+        if (externalDot != internalDot) sameLayout = false;
+        dotIndex += 1;
+      }
+
+      if (dotIndex != dotCount) {
+        throw new IllegalArgumentException(String.format(
+          "dot%d is 0X%02X", (dotIndex + 1), externalDots[dotIndex]
+        ));
+      }
+
+      if (sameLayout) return null;
+    }
+
+    final int tableSize = 0X100;
+    byte[] table = new byte[tableSize];
+
+    for (int internalCell=0; internalCell<tableSize; internalCell+=1) {
+      byte externalCell = 0;
+
+      for (int dotIndex=0; dotIndex<dotCount; dotIndex+=1) {
+        if ((internalCell & internalDots[dotIndex]) != 0) {
+          externalCell |= externalDots[dotIndex];
+        }
+      }
+
+      table[internalCell] = externalCell;
+    }
+
+    return table;
+  }
+
   private BrailleUtilities () {
   }
 }
