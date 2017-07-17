@@ -29,9 +29,7 @@ public abstract class Protocol extends Component {
     char[] text = new char[count];
 
     for (int i=0; i<count; i+=1) {
-      char character = Braille.UNICODE_ROW;
-      character |= translateCell(cells[i]) & Braille.UNICODE_DOTS_ALL;
-      text[i] = character;
+      text[i] = Braille.toCharacter(translateCell(cells[i]));
     }
 
     return write(new String(text));
