@@ -205,12 +205,12 @@ public abstract class BrailleUtilities {
       throw new RuntimeException("cell count mismatch");
     }
 
-    if (table == null) {
-      System.arraycopy(from, 0, to, 0, count);
-    } else {
+    if (table != null) {
       for (int index=0; index<count; index+=1) {
         to[index] = table[from[index]];
       }
+    } else if (to != from) {
+      System.arraycopy(from, 0, to, 0, count);
     }
   }
 
