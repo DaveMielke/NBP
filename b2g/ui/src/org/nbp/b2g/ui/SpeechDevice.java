@@ -284,14 +284,12 @@ public class SpeechDevice {
   }
 
   public final void restoreControls () {
-    Control[] controls = new Control[] {
+    Control.restoreCurrentValues(
       Controls.speechVolume,
       Controls.speechRate,
       Controls.speechPitch,
       Controls.speechBalance
-    };
-
-    Control.restoreCurrentValues(controls);
+    );
   }
 
   private final Timeout ttsRetry = new Timeout(ApplicationParameters.SPEECH_RETRY_DELAY, "speech-device-retry-delay") {

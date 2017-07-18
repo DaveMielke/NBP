@@ -17,12 +17,10 @@ public abstract class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
   private final void restoreControls () {
-    Control[] controls = new Control[] {
+    Control.restoreCurrentValues(
       Controls.brailleEnabled,
       Controls.brailleFirmness
-    };
-
-    Control.restoreCurrentValues(controls);
+    );
   }
 
   private BrailleMonitorWindow monitorWindow = null;

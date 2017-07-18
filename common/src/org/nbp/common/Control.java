@@ -141,7 +141,7 @@ public abstract class Control {
     return true;
   }
 
-  public final static void restoreDefaultValues (Control[] controls) {
+  public final static void restoreDefaultValues (Control... controls) {
     for (Control control : controls) {
       control.restoreDefaultValue();
     }
@@ -172,7 +172,7 @@ public abstract class Control {
     return restoreValue(getCurrentSettings());
   }
 
-  public final static void restoreCurrentValues (Control[] controls) {
+  public final static void restoreCurrentValues (Control... controls) {
     for (Control control : controls) {
       control.restoreCurrentValue();
     }
@@ -182,7 +182,7 @@ public abstract class Control {
     return saveValue(getSavedSettings());
   }
 
-  public final static void saveValues (Control[] controls) {
+  public final static void saveValues (Control... controls) {
     for (Control control : controls) {
       control.saveValue();
     }
@@ -192,7 +192,7 @@ public abstract class Control {
     return restoreValue(getSavedSettings());
   }
 
-  public final static void restoreSavedValues (Control[] controls) {
+  public final static void restoreSavedValues (Control... controls) {
     for (Control control : controls) {
       control.restoreSavedValue();
     }
