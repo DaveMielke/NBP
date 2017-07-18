@@ -142,6 +142,8 @@ public abstract class BrailleUtilities {
     int dot1, int dot2, int dot3, int dot4,
     int dot5, int dot6, int dot7, int dot8
   ) {
+    char allDots = Braille.UNICODE_DOTS_ALL;
+
     int[] externalDots = new int[] {
       dot1, dot2, dot3, dot4, dot5, dot6, dot7, dot8
     };
@@ -158,7 +160,7 @@ public abstract class BrailleUtilities {
         if (dot != internalDots[index]) same = false;
 
         if (dot == 0) break;
-        if ((Braille.UNICODE_DOTS_ALL & dot) != dot) break;
+        if ((allDots & dot) != dot) break;
 
         if ((cell & dot) != 0) break;
         cell |= dot;
@@ -176,9 +178,9 @@ public abstract class BrailleUtilities {
     }
 
     int dotCount = internalDots.length;
-    byte[] table = new byte[Braille.UNICODE_DOTS_ALL + 1];
+    byte[] table = new byte[allDots + 1];
 
-    for (int internalCell=0; internalCell<=Braille.UNICODE_DOTS_ALL; internalCell+=1) {
+    for (int internalCell=0; internalCell<=allDots; internalCell+=1) {
       byte externalCell = 0;
 
       for (int dotIndex=0; dotIndex<dotCount; dotIndex+=1) {
