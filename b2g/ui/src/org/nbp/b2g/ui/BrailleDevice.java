@@ -16,6 +16,15 @@ import org.liblouis.BrailleTranslation;
 public abstract class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
+  private final void restoreControls () {
+    Control[] controls = new Control[] {
+      Controls.brailleEnabled,
+      Controls.brailleFirmness
+    };
+
+    Control.restoreCurrentValues(controls);
+  }
+
   private BrailleMonitorWindow monitorWindow = null;
 
   public final BrailleMonitorWindow getMonitorWindow () {
@@ -65,6 +74,16 @@ public abstract class BrailleDevice {
 
   private final Queue<WriteElement> messageQueue = new LinkedList<WriteElement>();
   private boolean messageActive = false;
+
+  private final Timeout writeDelay =
+    new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
+      @Override
+      public void run () {
+        synchronized (BrailleDevice.this) {
+          writeCells(true);
+        }
+      }
+    };
 
   private final void logCells (byte[] cells, String reason, CharSequence text) {
     boolean log = ApplicationSettings.LOG_BRAILLE;
@@ -150,25 +169,6 @@ public abstract class BrailleDevice {
 
     writeDelay.start(delay);
     return true;
-  }
-
-  private final Timeout writeDelay =
-    new Timeout(ApplicationParameters.BRAILLE_WRITE_DELAY, "braille-device-write-delay") {
-      @Override
-      public void run () {
-        synchronized (BrailleDevice.this) {
-          writeCells(true);
-        }
-      }
-    };
-
-  private final void restoreControls () {
-    Control[] controls = new Control[] {
-      Controls.brailleEnabled,
-      Controls.brailleFirmness
-    };
-
-    Control.restoreCurrentValues(controls);
   }
 
   protected final boolean isConnected () {

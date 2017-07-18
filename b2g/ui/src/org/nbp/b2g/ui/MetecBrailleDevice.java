@@ -1,24 +1,6 @@
 package org.nbp.b2g.ui;
 
 public class MetecBrailleDevice extends BrailleDevice {
-  @Override
-  protected final native boolean connectDevice ();
-
-  @Override
-  protected final native void disconnectDevice ();
-
-  @Override
-  public final native String getDriverVersion ();
-
-  @Override
-  protected final native int getCellCount ();
-
-  @Override
-  protected final native boolean clearCells ();
-
-  @Override
-  protected final native boolean writeCells (byte[] cells);
-
   private final native boolean enableDevice ();
   private final native boolean disableDevice ();
 
@@ -67,6 +49,24 @@ public class MetecBrailleDevice extends BrailleDevice {
 
     return false;
   }
+
+  @Override
+  protected final native boolean connectDevice ();
+
+  @Override
+  protected final native void disconnectDevice ();
+
+  @Override
+  public final native String getDriverVersion ();
+
+  @Override
+  protected final native int getCellCount ();
+
+  @Override
+  protected final native boolean clearCells ();
+
+  @Override
+  protected final native boolean writeCells (byte[] cells);
 
   public MetecBrailleDevice () {
   }
