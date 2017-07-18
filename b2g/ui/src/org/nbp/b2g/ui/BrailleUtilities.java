@@ -142,22 +142,18 @@ public abstract class BrailleUtilities {
     int dot1, int dot2, int dot3, int dot4,
     int dot5, int dot6, int dot7, int dot8
   ) {
-    int dotCount = internalDots.length;
-
     int[] externalDots = new int[] {
       dot1, dot2, dot3, dot4, dot5, dot6, dot7, dot8
     };
 
-    if (externalDots.length != dotCount) {
-      throw new RuntimeException("dot count mismatch");
-    }
-
     {
       boolean same = true;
       int cell = 0;
+
+      int count = externalDots.length;
       int index = 0;
 
-      while (index < dotCount) {
+      while (index < count) {
         int dot = externalDots[index];
         if (dot != internalDots[index]) same = false;
 
@@ -170,7 +166,7 @@ public abstract class BrailleUtilities {
         index += 1;
       }
 
-      if (index != dotCount) {
+      if (index != count) {
         throw new IllegalArgumentException(String.format(
           "dot %d is 0X%02X", (index + 1), externalDots[index]
         ));
@@ -179,6 +175,7 @@ public abstract class BrailleUtilities {
       if (same) return null;
     }
 
+    int dotCount = internalDots.length;
     byte[] table = new byte[Braille.UNICODE_DOTS_ALL + 1];
 
     for (int internalCell=0; internalCell<=Braille.UNICODE_DOTS_ALL; internalCell+=1) {
