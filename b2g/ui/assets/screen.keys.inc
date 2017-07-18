@@ -10,7 +10,7 @@ bind Space+Center LongClick
 bind Dot4+Up Notifications
 bind Dot4+Down HomeKey
 bind Dot4+Left BackKey
-bind Dot4+Right RecentApps
+bind Dot4+Right RecentApplications
 bind Dot4+Center MenuKey
 
 bind Space+Dots1345#n Notifications
@@ -19,7 +19,7 @@ bind Space+Dot8+Dots1345#n ShowNotificationsOn
 
 bind Space+Dots123456 HomeKey
 bind Space+Dots1356#z BackKey
-bind Space+Dots1235#r RecentApps
+bind Space+Dots1235#r RecentApplications
 bind Space+Dots134#m MenuKey
 
 bind Space+Dots124#f FindForward

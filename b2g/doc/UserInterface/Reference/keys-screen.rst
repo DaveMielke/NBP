@@ -26,7 +26,7 @@ Dot4+Left
   |BackKey|
 
 Dot4+Right
-  |RecentApps|
+  |RecentApplications|
 
 Dot4+Center
   |MenuKey|
@@ -47,7 +47,7 @@ Space+Dots1356 (z)
   |BackKey|
 
 Space+Dots1235 (r)
-  |RecentApps|
+  |RecentApplications|
 
 Space+Dots134 (m)
   |MenuKey|

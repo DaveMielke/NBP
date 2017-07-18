@@ -11,7 +11,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ActivityInfo;
 
-public class Launch extends Action {
+public class AllApplications extends Action {
   @Override
   public boolean performAction () {
     PackageManager pm = ApplicationContext.getContext().getPackageManager();
@@ -57,7 +57,7 @@ public class Launch extends Action {
     return true;
   }
 
-  public Launch (Endpoint endpoint) {
+  public AllApplications (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

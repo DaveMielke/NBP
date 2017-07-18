@@ -4,13 +4,13 @@ import org.nbp.b2g.ui.*;
 
 import android.accessibilityservice.AccessibilityService;
 
-public class RecentApps extends GlobalAction {
+public class RecentApplications extends GlobalAction {
   @Override
   protected int getGlobalAction () {
     return AccessibilityService.GLOBAL_ACTION_RECENTS;
   }
 
-  public RecentApps (Endpoint endpoint) {
+  public RecentApplications (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

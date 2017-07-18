@@ -103,7 +103,7 @@
 .. |PowerOff| replace:: Go to the Power Off screen.
 .. |QuickStartHTML| replace:: Go to the HTML version of the `Quick Start Guide`_.
 .. |QuickStartText| replace:: Go to the plain text version of the `quick Start Guide`_.
-.. |RecentApps| replace:: Go to the Recent Apps screen.
+.. |RecentApplications| replace:: Go to the Recent Apps screen.
 .. |RemoteDisplay| replace:: Switch to `the remote braille display`_.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
 .. |ResetHighlightedTyping| replace:: Turn off all of the highlighted typing styles.
