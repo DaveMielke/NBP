@@ -153,37 +153,35 @@ public abstract class BrailleUtilities {
     }
 
     {
-      boolean sameLayout = true;
-      int externalCell = 0;
-      int dotIndex = 0;
+      boolean same = true;
+      int cell = 0;
+      int index = 0;
 
-      while (dotIndex < dotCount) {
-        char internalDot = internalDots[dotIndex];
-        int externalDot = externalDots[dotIndex];
+      while (index < dotCount) {
+        int dot = externalDots[index];
+        if (dot != internalDots[index]) same = false;
 
-        if (externalDot == 0) break;
-        if ((Braille.UNICODE_DOTS_ALL & externalDot) != externalDot) break;
+        if (dot == 0) break;
+        if ((Braille.UNICODE_DOTS_ALL & dot) != dot) break;
 
-        if ((externalCell & externalDot) != 0) break;
-        externalCell |= externalDot;
+        if ((cell & dot) != 0) break;
+        cell |= dot;
 
-        if (externalDot != internalDot) sameLayout = false;
-        dotIndex += 1;
+        index += 1;
       }
 
-      if (dotIndex != dotCount) {
+      if (index != dotCount) {
         throw new IllegalArgumentException(String.format(
-          "dot%d is 0X%02X", (dotIndex + 1), externalDots[dotIndex]
+          "dot %d is 0X%02X", (index + 1), externalDots[index]
         ));
       }
 
-      if (sameLayout) return null;
+      if (same) return null;
     }
 
-    final int tableSize = 0X100;
-    byte[] table = new byte[tableSize];
+    byte[] table = new byte[Braille.UNICODE_DOTS_ALL + 1];
 
-    for (int internalCell=0; internalCell<tableSize; internalCell+=1) {
+    for (int internalCell=0; internalCell<=Braille.UNICODE_DOTS_ALL; internalCell+=1) {
       byte externalCell = 0;
 
       for (int dotIndex=0; dotIndex<dotCount; dotIndex+=1) {
@@ -207,7 +205,7 @@ public abstract class BrailleUtilities {
 
     if (table != null) {
       for (int index=0; index<count; index+=1) {
-        to[index] = table[from[index]];
+        to[index] = table[from[index] & Braille.UNICODE_DOTS_ALL];
       }
     } else if (to != from) {
       System.arraycopy(from, 0, to, 0, count);
