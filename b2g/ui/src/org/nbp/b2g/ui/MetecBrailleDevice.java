@@ -1,6 +1,14 @@
 package org.nbp.b2g.ui;
 
 public class MetecBrailleDevice extends BrailleDevice {
+  static {
+    ApplicationUtilities.loadLibrary();
+  }
+
+  public MetecBrailleDevice () {
+    super();
+  }
+
   private final native boolean enableDevice ();
   private final native boolean disableDevice ();
 
@@ -67,11 +75,4 @@ public class MetecBrailleDevice extends BrailleDevice {
 
   @Override
   protected final native boolean writeCells (byte[] cells);
-
-  public MetecBrailleDevice () {
-  }
-
-  static {
-    ApplicationUtilities.loadLibrary();
-  }
 }

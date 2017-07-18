@@ -7,6 +7,9 @@ import android.text.Spanned;
 import org.nbp.common.Braille;
 
 public abstract class BrailleUtilities {
+  private BrailleUtilities () {
+  }
+
   public static void clearCells (byte[] cells, int from) {
     while (from < cells.length) cells[from++] = 0;
   }
@@ -146,7 +149,7 @@ public abstract class BrailleUtilities {
     };
 
     if (externalDots.length != dotCount) {
-      throw new RuntimeException("array length mismatch");
+      throw new RuntimeException("dot count mismatch");
     }
 
     {
@@ -195,6 +198,27 @@ public abstract class BrailleUtilities {
     return table;
   }
 
-  private BrailleUtilities () {
+  public final static void translateCells (byte[] table, byte[] from, byte[] to) {
+    int count = from.length;
+
+    if (to.length != count) {
+      throw new RuntimeException("cell count mismatch");
+    }
+
+    if (table == null) {
+      System.arraycopy(from, 0, to, 0, count);
+    } else {
+      for (int index=0; index<count; index+=1) {
+        to[index] = table[from[index]];
+      }
+    }
+  }
+
+  public final static byte[] translateCells (byte[] table, byte[] from) {
+    if (table == null) return from;
+
+    byte[] to = new byte[from.length];
+    translateCells(table, from, to);
+    return to;
   }
 }

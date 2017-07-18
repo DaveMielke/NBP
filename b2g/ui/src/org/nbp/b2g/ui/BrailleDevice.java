@@ -96,7 +96,7 @@ public abstract class BrailleDevice {
     if (text != null) {
       BrailleMonitorWindow window = getMonitorWindow();
       if (window != null) window.setContent(braille, text);
-      if (log) Log.d(LOG_TAG, "braille text: " + text);
+      if (log) Log.d(LOG_TAG, ("braille text: " + text));
     }
   }
 
