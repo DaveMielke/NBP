@@ -202,7 +202,7 @@ public abstract class BrailleUtilities {
     int count = from.length;
 
     if (to.length != count) {
-      throw new RuntimeException("cell count mismatch");
+      throw new IllegalArgumentException("cell count mismatch");
     }
 
     if (table != null) {
