@@ -29,6 +29,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private TextView latitudeDMS;
   private TextView longitudeDecimal;
   private TextView longitudeDMS;
+  private TextView locationName;
 
   private final void findViews () {
     azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
@@ -39,6 +40,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
     latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
+    locationName = (TextView)findViewById(R.id.location_name);
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -199,8 +201,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private Geocoder geocoder;
 
   private final void prepareLocationMonitor () {
-    locationMonitor = new BestLocationMonitor(this);
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
+    locationMonitor = new BestLocationMonitor(this);
   }
 
   private final String getLocationName (double latitude, double longitude) {
@@ -214,7 +216,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
             int lastLine = address.getMaxAddressLineIndex();
             int currentLine = 0;
 
-            if (lastLine >= currentLine) {
+            if (currentLine <= lastLine) {
               StringBuilder sb = new StringBuilder();
 
               do {
@@ -234,7 +236,29 @@ public class CompassActivity extends Activity implements SensorEventListener {
     return null;
   }
 
-  private final void setLocation (
+  private Double currentLatitude = null;
+  private Double currentLongitude = null;
+
+  private final boolean isNearCurrentLocation (double latitude, double longitude) {
+    if (currentLatitude == null) return false;
+    if (currentLongitude == null) return false;
+    return Earth.haversineDistance(currentLatitude, currentLongitude, latitude, longitude)
+         < ApplicationParameters.CURRENT_LOCATION_RADIUS;
+  }
+
+  private final void setLocationName (double latitude, double longitude) {
+    if (!isNearCurrentLocation(latitude, longitude)) {
+      currentLatitude = latitude;
+      currentLongitude = longitude;
+      String name = getLocationName(latitude, longitude);
+
+      if (name != null) {
+        locationName.setText(name);
+      }
+    }
+  }
+
+  private final void setLocationCoordinates (
     double degrees,
     TextView decimal, TextView dms,
     char positive, char negative
@@ -278,9 +302,9 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   public final void setLocation (double latitude, double longitude) {
-    setLocation(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
-    setLocation(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
-    getLocationName(latitude, longitude);
+    setLocationCoordinates(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
+    setLocationCoordinates(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
+    setLocationName(latitude, longitude);
   }
 
   @Override

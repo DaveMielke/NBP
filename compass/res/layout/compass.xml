@@ -1,90 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:paddingLeft="@dimen/screen_offset_left"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:columnCount="4"
-  android:rowCount="5"
   android:keepScreenOn="true"
   >
 
-  <TextView
-    android:layout_row="0"
-    android:layout_column="0"
-    android:text="@string/azimuth_label"
-   />
+  <TableRow>
+    <TextView android:text="@string/azimuth_label" />
+    <TextView android:id="@+id/azimuth_degrees" />
+    <TextView android:id="@+id/azimuth_direction" />
+  </TableRow>
 
-  <TextView
-    android:id="@+id/azimuth_degrees"
-    android:layout_row="0"
-    android:layout_column="1"
-   />
+  <TableRow>
+    <TextView android:text="@string/pitch_label" />
+    <TextView android:id="@+id/pitch_degrees" />
+  </TableRow>
 
-  <TextView
-    android:id="@+id/azimuth_direction"
-    android:layout_row="0"
-    android:layout_column="2"
-   />
+  <TableRow>
+    <TextView android:text="@string/roll_label" />
+    <TextView android:id="@+id/roll_degrees" />
+  </TableRow>
 
-  <TextView
-    android:layout_row="1"
-    android:layout_column="0"
-    android:text="@string/pitch_label"
-   />
+  <TableRow>
+    <TextView android:text="@string/latitude_label" />
+    <TextView android:id="@+id/latitude_decimal" />
+    <TextView android:id="@+id/latitude_dms" />
+  </TableRow>
 
-  <TextView
-    android:id="@+id/pitch_degrees"
-    android:layout_row="1"
-    android:layout_column="1"
-   />
+  <TableRow>
+    <TextView android:text="@string/longitude_label" />
+    <TextView android:id="@+id/longitude_decimal" />
+    <TextView android:id="@+id/longitude_dms" />
+  </TableRow>
 
-  <TextView
-    android:layout_row="2"
-    android:layout_column="0"
-    android:text="@string/roll_label"
-   />
-
-  <TextView
-    android:id="@+id/roll_degrees"
-    android:layout_row="2"
-    android:layout_column="1"
-   />
-
-  <TextView
-    android:layout_row="3"
-    android:layout_column="0"
-    android:text="@string/latitude_label"
-   />
-
-  <TextView
-    android:id="@+id/latitude_decimal"
-    android:layout_row="3"
-    android:layout_column="1"
-   />
-
-  <TextView
-    android:id="@+id/latitude_dms"
-    android:layout_row="3"
-    android:layout_column="2"
-   />
-
-  <TextView
-    android:layout_row="4"
-    android:layout_column="0"
-    android:text="@string/longitude_label"
-   />
-
-  <TextView
-    android:id="@+id/longitude_decimal"
-    android:layout_row="4"
-    android:layout_column="1"
-   />
-
-  <TextView
-    android:id="@+id/longitude_dms"
-    android:layout_row="4"
-    android:layout_column="2"
-   />
-</GridLayout>
+  <TableRow>
+    <TextView android:text="@string/location_label" />
+    <TextView android:id="@+id/location_name" />
+  </TableRow>
+</TableLayout>

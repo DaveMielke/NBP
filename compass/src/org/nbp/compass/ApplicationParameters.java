@@ -7,6 +7,8 @@ public abstract class ApplicationParameters {
   private ApplicationParameters () {
   }
 
+  public final static double CURRENT_LOCATION_RADIUS = 10d; // meters
+
   public final static int MEASUREMENT_DAMPING_FACTOR = 50;
 
   public final static int SENSOR_UPDATE_INTERVAL = 250000 /* microseconds */;
