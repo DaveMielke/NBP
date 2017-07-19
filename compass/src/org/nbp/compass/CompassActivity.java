@@ -7,6 +7,7 @@ import android.util.Log;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.AsyncTask;
 
 import android.widget.TextView;
 
@@ -208,20 +209,18 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   private final String getLocationName (double latitude, double longitude) {
-    if (geocoder != null) {
-      try {
-        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+    try {
+      List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
-        if (addresses != null) {
-          if (!addresses.isEmpty()) {
-            Address address = addresses.get(0);
-            String name = new LocationName(address).getName();
-            if (name != null) return name;
-          }
+      if (addresses != null) {
+        if (!addresses.isEmpty()) {
+          Address address = addresses.get(0);
+          String name = new LocationName(address).getName();
+          if (name != null) return name;
         }
-      } catch (IOException exception) {
-        Log.w(LOG_TAG, ("geocoder error: " + exception.getMessage()));
       }
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, ("geocoder error: " + exception.getMessage()));
     }
 
     return null;
@@ -229,22 +228,51 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
   private Double currentLatitude = null;
   private Double currentLongitude = null;
+  private boolean newLocation = false;
 
   private final boolean isNearCurrentLocation (double latitude, double longitude) {
-    if (currentLatitude == null) return false;
-    if (currentLongitude == null) return false;
-    return EarthMath.haversineDistance(currentLatitude, currentLongitude, latitude, longitude)
-         < ApplicationParameters.CURRENT_LOCATION_RADIUS;
+    synchronized (this) {
+      if (currentLatitude == null) return false;
+      if (currentLongitude == null) return false;
+      return EarthMath.haversineDistance(currentLatitude, currentLongitude, latitude, longitude)
+           < ApplicationParameters.CURRENT_LOCATION_RADIUS;
+    }
   }
 
   private final void setLocationName (double latitude, double longitude) {
-    if (!isNearCurrentLocation(latitude, longitude)) {
-      currentLatitude = latitude;
-      currentLongitude = longitude;
-      String name = getLocationName(latitude, longitude);
+    if (geocoder != null) {
+      if (!isNearCurrentLocation(latitude, longitude)) {
+        synchronized (this) {
+          currentLatitude = latitude;
+          currentLongitude = longitude;
+          newLocation = true;
+        }
 
-      if (name != null) {
-        locationName.setText(name);
+        new AsyncTask<Void, String, Void>() {
+          @Override
+          protected void onProgressUpdate (String... arguments) {
+            locationName.setText(arguments[0]);
+          }
+
+          @Override
+          protected Void doInBackground (Void... arguments) {
+            while (true) {
+              double latitude;
+              double longitude;
+
+              synchronized (CompassActivity.this) {
+                if (!newLocation) return null;
+                latitude = currentLatitude;
+                longitude = currentLongitude;
+                newLocation = false;
+              }
+
+              String name = getLocationName(latitude, longitude);
+              if (name == null) name = "";
+              publishProgress(name);
+            }
+          }
+        }.execute();
       }
     }
   }
