@@ -112,20 +112,22 @@ public class CompassActivity extends Activity implements SensorEventListener {
     return (float)Math.toDegrees(measurement.get());
   }
 
-  private final void logVector (String type, float[] vector) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(type);
-    char delimiter = ':';
+  private final void log (String type, float[] vector) {
+    if (ApplicationParameters.LOG_VECTORS) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(type);
+      char delimiter = ':';
 
-    for (float value : vector) {
-      sb.append(delimiter);
-      delimiter = ',';
+      for (float value : vector) {
+        sb.append(delimiter);
+        delimiter = ',';
 
-      sb.append(' ');
-      sb.append(value);
+        sb.append(' ');
+        sb.append(value);
+      }
+
+      Log.d(LOG_TAG, sb.toString());
     }
-
-    Log.d(LOG_TAG, sb.toString());
   }
 
   @Override
@@ -141,7 +143,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
           }
 
           System.arraycopy(values, 0, gravityVector, 0, count);
-          logVector("accelerometer", gravityVector);
+          log("accelerometer", gravityVector);
           break;
         }
 
@@ -151,7 +153,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
           }
 
           System.arraycopy(values, 0, geomagneticVector, 0, count);
-          logVector("geomagnetic", geomagneticVector);
+          log("geomagnetic", geomagneticVector);
           break;
         }
 
@@ -167,8 +169,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
       );
 
       sensorManager.getOrientation(rotationMatrix, currentOrientation);
-      logVector("rotation", rotationMatrix);
-      logVector("orientation", currentOrientation);
+      log("rotation", rotationMatrix);
+      log("orientation", currentOrientation);
 
       float azimuth = translateValue(azimuthMeasurement, -currentOrientation[0]);
       float pitch   = translateValue(pitchMeasurement  , -currentOrientation[1]);
@@ -197,8 +199,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
   public void onAccuracyChanged (Sensor sensor, int accuracy) {
   }
 
-  private LocationMonitor locationMonitor;
   private Geocoder geocoder;
+  private LocationMonitor locationMonitor;
 
   private final void prepareLocationMonitor () {
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
@@ -213,19 +215,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
         if (addresses != null) {
           if (!addresses.isEmpty()) {
             Address address = addresses.get(0);
-            int lastLine = address.getMaxAddressLineIndex();
-            int currentLine = 0;
-
-            if (currentLine <= lastLine) {
-              StringBuilder sb = new StringBuilder();
-
-              do {
-                if (sb.length() > 0) sb.append('\n');
-                sb.append(address.getAddressLine(currentLine));
-              } while (++currentLine <= lastLine);
-
-              if (sb.length() > 0) return sb.toString();
-            }
+            String name = new LocationName(address).getName();
+            if (name != null) return name;
           }
         }
       } catch (IOException exception) {

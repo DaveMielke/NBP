@@ -9,6 +9,9 @@ public abstract class ApplicationParameters {
 
   public final static double CURRENT_LOCATION_RADIUS = 10d; // meters
 
+  public final static boolean LOG_VECTORS = false;
+  public final static boolean LOG_ADDRESSES = true;
+
   public final static int MEASUREMENT_DAMPING_FACTOR = 50;
 
   public final static int SENSOR_UPDATE_INTERVAL = 250000 /* microseconds */;
