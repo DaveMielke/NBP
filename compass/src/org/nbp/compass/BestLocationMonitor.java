@@ -3,6 +3,10 @@ package org.nbp.compass;
 import android.location.LocationManager;
 
 public class BestLocationMonitor extends ProviderLocationMonitor {
+  public BestLocationMonitor (CompassActivity activity) {
+    super(activity);
+  }
+
   private final static String[] locationProviders = {
     LocationManager.GPS_PROVIDER,
     LocationManager.NETWORK_PROVIDER
@@ -17,9 +21,5 @@ public class BestLocationMonitor extends ProviderLocationMonitor {
     }
 
     return LocationManager.PASSIVE_PROVIDER;
-  }
-
-  public BestLocationMonitor (CompassActivity activity) {
-    super(activity);
   }
 }

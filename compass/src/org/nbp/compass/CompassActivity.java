@@ -233,7 +233,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private final boolean isNearCurrentLocation (double latitude, double longitude) {
     if (currentLatitude == null) return false;
     if (currentLongitude == null) return false;
-    return Earth.haversineDistance(currentLatitude, currentLongitude, latitude, longitude)
+    return EarthMath.haversineDistance(currentLatitude, currentLongitude, latitude, longitude)
          < ApplicationParameters.CURRENT_LOCATION_RADIUS;
   }
 

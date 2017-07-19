@@ -10,14 +10,10 @@ import android.location.LocationListener;
 public abstract class ProviderLocationMonitor extends LocationMonitor implements LocationListener {
   private final static String LOG_TAG = ProviderLocationMonitor.class.getName();
 
-  protected abstract String getLocationProvider ();
-
   private LocationManager locationManager;
-  private boolean amMonitoring = false;
 
   public ProviderLocationMonitor (CompassActivity activity) {
     super(activity);
-
     locationManager = (LocationManager)activity.getSystemService(activity.LOCATION_SERVICE);
     setLocation(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
   }
@@ -26,19 +22,27 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
     return locationManager;
   }
 
+  protected abstract String getLocationProvider ();
+  private boolean amMonitoring = false;
+
   @Override
   public final void start () {
-    String provider = getLocationProvider();
-    Log.d(LOG_TAG, ("location provider: " + provider));
+    if (!amMonitoring) {
+      String provider = getLocationProvider();
+      Log.d(LOG_TAG, ("location provider: " + provider));
 
-    try {
-      locationManager.requestLocationUpdates(
-        provider, 10000, 10f, this
-      );
+      try {
+        locationManager.requestLocationUpdates(
+          provider,
+          ApplicationParameters.PROVIDER_MINIMUM_TIME,
+          ApplicationParameters.PROVIDER_MINIMUM_DISTANCE,
+          this
+        );
 
-      amMonitoring = true;
-    } catch (IllegalArgumentException exception) {
-      Log.w(LOG_TAG, exception.getMessage());
+        amMonitoring = true;
+      } catch (IllegalArgumentException exception) {
+        Log.w(LOG_TAG, exception.getMessage());
+      }
     }
   }
 

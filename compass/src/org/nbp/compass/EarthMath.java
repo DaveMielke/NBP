@@ -1,9 +1,11 @@
 package org.nbp.compass;
 
-public abstract class Earth {
+public abstract class EarthMath {
+  private EarthMath () {
+  }
+
   public final static double RADIUS = 6371E3; // meters
 
-  // Haversine
   public final static double haversineDistance (
     double startLatitude, double startLongitude,
     double endLatitude, double endLongitude

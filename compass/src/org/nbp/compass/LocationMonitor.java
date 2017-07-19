@@ -3,9 +3,6 @@ package org.nbp.compass;
 import android.location.Location;
 
 public abstract class LocationMonitor {
-  public abstract void start ();
-  public abstract void stop ();
-
   protected final CompassActivity compassActivity;
 
   protected LocationMonitor (CompassActivity activity) {
@@ -20,4 +17,7 @@ public abstract class LocationMonitor {
       );
     }
   }
+
+  public abstract void start ();
+  public abstract void stop ();
 }
