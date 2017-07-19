@@ -1,5 +1,8 @@
 package org.nbp.compass;
 
+import java.util.List;
+import java.io.IOException;
+
 import android.util.Log;
 
 import android.app.Activity;
@@ -11,6 +14,9 @@ import android.hardware.SensorManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+import android.location.Geocoder;
+import android.location.Address;
 
 public class CompassActivity extends Activity implements SensorEventListener {
   private final static String LOG_TAG = CompassActivity.class.getName();
@@ -43,7 +49,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private SensorManager sensorManager;
   private Sensor[] sensorArray;
 
-  private final void getSensors () {
+  private final void prepareSensorMonitor () {
     sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
     sensorArray = new Sensor[sensorTypes.length];
 
@@ -65,13 +71,17 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
   private final void startSensors () {
     for (Sensor sensor : sensorArray) {
-      sensorManager.registerListener(this, sensor, ApplicationParameters.SENSOR_UPDATE_INTERVAL);
+      if (sensor != null) {
+        sensorManager.registerListener(this, sensor, ApplicationParameters.SENSOR_UPDATE_INTERVAL);
+      }
     }
   }
 
   private final void stopSensors () {
     for (Sensor sensor : sensorArray) {
-      sensorManager.unregisterListener(this, sensor);
+      if (sensor != null) {
+        sensorManager.unregisterListener(this, sensor);
+      }
     }
   }
 
@@ -186,13 +196,50 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   private LocationMonitor locationMonitor;
+  private Geocoder geocoder;
+
+  private final void prepareLocationMonitor () {
+    locationMonitor = new BestLocationMonitor(this);
+    geocoder = Geocoder.isPresent()? new Geocoder(this): null;
+  }
+
+  private final String getLocationName (double latitude, double longitude) {
+    if (geocoder != null) {
+      try {
+        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+        if (addresses != null) {
+          if (!addresses.isEmpty()) {
+            Address address = addresses.get(0);
+            int lastLine = address.getMaxAddressLineIndex();
+            int currentLine = 0;
+
+            if (lastLine >= currentLine) {
+              StringBuilder sb = new StringBuilder();
+
+              do {
+                if (sb.length() > 0) sb.append('\n');
+                sb.append(address.getAddressLine(currentLine));
+              } while (++currentLine <= lastLine);
+
+              if (sb.length() > 0) return sb.toString();
+            }
+          }
+        }
+      } catch (IOException exception) {
+        Log.w(LOG_TAG, ("geocoder error: " + exception.getMessage()));
+      }
+    }
+
+    return null;
+  }
 
   private final void setLocation (
     double degrees,
     TextView decimal, TextView dms,
     char positive, char negative
   ) {
-    decimal.setText(String.format("%.4f°", degrees));
+    decimal.setText(String.format("%.5f°", degrees));
 
     char hemisphere;
 
@@ -233,6 +280,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   public final void setLocation (double latitude, double longitude) {
     setLocation(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
     setLocation(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
+    getLocationName(latitude, longitude);
   }
 
   @Override
@@ -242,14 +290,14 @@ public class CompassActivity extends Activity implements SensorEventListener {
     setContentView(R.layout.compass);
     findViews();
 
-    getSensors();
-    locationMonitor = new BestLocationMonitor(this);
+    prepareSensorMonitor();
+    prepareLocationMonitor();
   }
 
   @Override
   protected void onResume () {
     super.onResume();
-    startSensors();
+//  startSensors();
     locationMonitor.start();
   }
 
