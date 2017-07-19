@@ -101,7 +101,7 @@ public class LocationName {
       }
     },
 
-    // locality - [district,] city
+    // locality - [neighborhood,] city
     new NameMaker() {
       @Override
       public String makeName (Address address) {

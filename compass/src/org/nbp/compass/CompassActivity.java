@@ -200,10 +200,14 @@ public class CompassActivity extends Activity implements SensorEventListener {
   public void onAccuracyChanged (Sensor sensor, int accuracy) {
   }
 
+  private boolean atNewLocation;
+  private boolean settingLocationName;
   private Geocoder geocoder;
   private LocationMonitor locationMonitor;
 
   private final void prepareLocationMonitor () {
+    atNewLocation = false;
+    settingLocationName = false;
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
     locationMonitor = new BestLocationMonitor(this);
   }
@@ -228,7 +232,6 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
   private Double currentLatitude = null;
   private Double currentLongitude = null;
-  private boolean newLocation = false;
 
   private final boolean isNearCurrentLocation (double latitude, double longitude) {
     synchronized (this) {
@@ -239,14 +242,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
     }
   }
 
-  private final void setLocationName (double latitude, double longitude) {
-    if (geocoder != null) {
-      if (!isNearCurrentLocation(latitude, longitude)) {
-        synchronized (this) {
-          currentLatitude = latitude;
-          currentLongitude = longitude;
-          newLocation = true;
-        }
+  private final void setLocationName () {
+    synchronized (this) {
+      if (!settingLocationName) {
+        settingLocationName = true;
 
         new AsyncTask<Void, String, Void>() {
           @Override
@@ -261,10 +260,14 @@ public class CompassActivity extends Activity implements SensorEventListener {
               double longitude;
 
               synchronized (CompassActivity.this) {
-                if (!newLocation) return null;
+                if (!atNewLocation) {
+                  settingLocationName = false;
+                  return null;
+                }
+
                 latitude = currentLatitude;
                 longitude = currentLongitude;
-                newLocation = false;
+                atNewLocation = false;
               }
 
               String name = getLocationName(latitude, longitude);
@@ -277,7 +280,20 @@ public class CompassActivity extends Activity implements SensorEventListener {
     }
   }
 
-  private final void setLocationCoordinates (
+  private final void setLocationName (double latitude, double longitude) {
+    if (geocoder != null) {
+      if (!isNearCurrentLocation(latitude, longitude)) {
+        synchronized (this) {
+          currentLatitude = latitude;
+          currentLongitude = longitude;
+          atNewLocation = true;
+          setLocationName();
+        }
+      }
+    }
+  }
+
+  private final void setLocationCoordinate (
     double degrees,
     TextView decimal, TextView dms,
     char positive, char negative
@@ -321,8 +337,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   public final void setLocation (double latitude, double longitude) {
-    setLocationCoordinates(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
-    setLocationCoordinates(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
+    setLocationCoordinate(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
+    setLocationCoordinate(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
     setLocationName(latitude, longitude);
   }
 
