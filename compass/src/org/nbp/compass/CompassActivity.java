@@ -24,29 +24,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private TextView longitudeDecimal;
   private TextView longitudeDMS;
 
-  private SensorManager sensorManager;
-  private LocationMonitor locationMonitor;
-
-  private final static int[] sensorTypes = new int[] {
-    Sensor.TYPE_ACCELEROMETER,
-    Sensor.TYPE_MAGNETIC_FIELD
-  };
-
-  private final Sensor[] sensorArray = new Sensor[sensorTypes.length];
-  private final float[] rotationMatrix = new float[9];
-  private final float[] currentOrientation = new float[3];
-  private float[] gravityVector = null;
-  private float[] geomagneticVector = null;
-
-  private final Measurement azimuthMeasurement = new Measurement();
-  private final Measurement pitchMeasurement = new Measurement();
-  private final Measurement rollMeasurement = new Measurement();
-
-  @Override
-  public void onCreate (Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    setContentView(R.layout.compass);
+  private final void findViews () {
     azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
     azimuthDirection = (TextView)findViewById(R.id.azimuth_direction);
     pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
@@ -55,47 +33,57 @@ public class CompassActivity extends Activity implements SensorEventListener {
     latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
+  }
 
+  private final static int[] sensorTypes = new int[] {
+    Sensor.TYPE_ACCELEROMETER,
+    Sensor.TYPE_MAGNETIC_FIELD
+  };
+
+  private SensorManager sensorManager;
+  private Sensor[] sensorArray;
+
+  private final void getSensors () {
     sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-    locationMonitor = new BestLocationMonitor(this);
+    sensorArray = new Sensor[sensorTypes.length];
 
     {
       int count = 0;
 
       for (int type : sensorTypes) {
-        sensorArray[count++] = sensorManager.getDefaultSensor(type);
+        Sensor sensor = sensorManager.getDefaultSensor(type);
+
+        if ((sensorArray[count++] = sensor) != null) {
+          Log.i(LOG_TAG, String.format(
+            "Sensor: Name:%s Type:%d Vendor:%s",
+            sensor.getName(), sensor.getType(), sensor.getVendor()
+          ));
+        }
       }
     }
   }
 
-  @Override
-  protected void onResume () {
-    super.onResume();
-
+  private final void startSensors () {
     for (Sensor sensor : sensorArray) {
-      sensorManager.registerListener(this, sensor, Parameters.SENSOR_UPDATE_INTERVAL);
-    }
-
-    locationMonitor.start();
-  }
-
-  @Override
-  protected void onPause () {
-    try {
-      for (Sensor sensor : sensorArray) {
-        sensorManager.unregisterListener(this, sensor);
-      }
-
-      locationMonitor.stop();
-    } finally {
-      super.onPause();
+      sensorManager.registerListener(this, sensor, ApplicationParameters.SENSOR_UPDATE_INTERVAL);
     }
   }
 
-  private final float translateValue (Measurement measurement, float value) {
-    measurement.add(value);
-    return (float)Math.toDegrees(measurement.get());
+  private final void stopSensors () {
+    for (Sensor sensor : sensorArray) {
+      sensorManager.unregisterListener(this, sensor);
+    }
   }
+
+  private final float[] rotationMatrix = new float[9];
+  private final float[] currentOrientation = new float[3];
+
+  private float[] gravityVector = null;
+  private float[] geomagneticVector = null;
+
+  private final Measurement azimuthMeasurement = new Measurement();
+  private final Measurement pitchMeasurement = new Measurement();
+  private final Measurement rollMeasurement = new Measurement();
 
   private final static String[] directions = new String[] {
     "n", "nne", "ne", "ene", "e", "ese", "se", "sse",
@@ -106,6 +94,27 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private final static float DIRECTIONS_PER_CIRCLE = (float)DIRECTION_COUNT;
   private final static float DEGREES_PER_CIRCLE = 360f;
   private final static float DEGREES_PER_DIRECTION = DEGREES_PER_CIRCLE / DIRECTIONS_PER_CIRCLE;
+
+  private final float translateValue (Measurement measurement, float value) {
+    measurement.add(value);
+    return (float)Math.toDegrees(measurement.get());
+  }
+
+  private final void logVector (String type, float[] vector) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(type);
+    char delimiter = ':';
+
+    for (float value : vector) {
+      sb.append(delimiter);
+      delimiter = ',';
+
+      sb.append(' ');
+      sb.append(value);
+    }
+
+    Log.d(LOG_TAG, sb.toString());
+  }
 
   @Override
   public void onSensorChanged (SensorEvent event) {
@@ -120,6 +129,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
           }
 
           System.arraycopy(values, 0, gravityVector, 0, count);
+          logVector("accelerometer", gravityVector);
           break;
         }
 
@@ -129,6 +139,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
           }
 
           System.arraycopy(values, 0, geomagneticVector, 0, count);
+          logVector("geomagnetic", geomagneticVector);
           break;
         }
 
@@ -144,6 +155,9 @@ public class CompassActivity extends Activity implements SensorEventListener {
       );
 
       sensorManager.getOrientation(rotationMatrix, currentOrientation);
+      logVector("rotation", rotationMatrix);
+      logVector("orientation", currentOrientation);
+
       float azimuth = translateValue(azimuthMeasurement, -currentOrientation[0]);
       float pitch   = translateValue(pitchMeasurement  , -currentOrientation[1]);
       float roll    = translateValue(rollMeasurement   ,  currentOrientation[2]);
@@ -170,6 +184,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
   @Override
   public void onAccuracyChanged (Sensor sensor, int accuracy) {
   }
+
+  private LocationMonitor locationMonitor;
 
   private final void setLocation (
     double degrees,
@@ -217,5 +233,33 @@ public class CompassActivity extends Activity implements SensorEventListener {
   public final void setLocation (double latitude, double longitude) {
     setLocation(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
     setLocation(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
+  }
+
+  @Override
+  public void onCreate (Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    setContentView(R.layout.compass);
+    findViews();
+
+    getSensors();
+    locationMonitor = new BestLocationMonitor(this);
+  }
+
+  @Override
+  protected void onResume () {
+    super.onResume();
+    startSensors();
+    locationMonitor.start();
+  }
+
+  @Override
+  protected void onPause () {
+    try {
+      stopSensors();
+      locationMonitor.stop();
+    } finally {
+      super.onPause();
+    }
   }
 }

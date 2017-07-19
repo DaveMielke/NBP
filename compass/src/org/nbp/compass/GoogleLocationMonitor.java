@@ -36,9 +36,9 @@ public class GoogleLocationMonitor extends LocationMonitor implements
 
   private final void startMonitoring () {
     LocationRequest request = new LocationRequest()
-      .setInterval(Parameters.LOCATION_MAXIMUM_INTERVAL)
-      .setFastestInterval(Parameters.LOCATION_MINIMUM_INTERVAL)
-      .setPriority(Parameters.LOCATION_PRIORITY)
+      .setInterval(ApplicationParameters.LOCATION_MAXIMUM_INTERVAL)
+      .setFastestInterval(ApplicationParameters.LOCATION_MINIMUM_INTERVAL)
+      .setPriority(ApplicationParameters.LOCATION_PRIORITY)
       ;
 
     LocationServices.FusedLocationApi.requestLocationUpdates(client, request, this);
