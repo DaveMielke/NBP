@@ -71,6 +71,15 @@ public class LocationName {
   }
 
   private final NameMaker[] nameMakers = new NameMaker[] {
+    // premises
+    new NameMaker() {
+      @Override
+      public String makeName (Address address) {
+        return address.getPremises();
+      }
+    },
+
+    // thoroughfare - [address] street
     new NameMaker() {
       @Override
       public String makeName (Address address) {
@@ -81,6 +90,50 @@ public class LocationName {
         if (prefix != null) name = prefix + ' ' + name;
 
         return name;
+      }
+    },
+
+    // feature
+    new NameMaker() {
+      @Override
+      public String makeName (Address address) {
+        return address.getFeatureName();
+      }
+    },
+
+    // locality - [district,] city
+    new NameMaker() {
+      @Override
+      public String makeName (Address address) {
+        String name = address.getLocality();
+        if (name == null) return null;
+
+        String prefix = address.getSubLocality();
+        if (prefix != null) name = prefix + ", " + name;
+
+        return name;
+      }
+    },
+
+    // administrative area - [county,] state
+    new NameMaker() {
+      @Override
+      public String makeName (Address address) {
+        String name = address.getAdminArea();
+        if (name == null) return null;
+
+        String prefix = address.getSubAdminArea();
+        if (prefix != null) name = prefix + ", " + name;
+
+        return name;
+      }
+    },
+
+    // country
+    new NameMaker() {
+      @Override
+      public String makeName (Address address) {
+        return address.getCountryName();
       }
     },
 
