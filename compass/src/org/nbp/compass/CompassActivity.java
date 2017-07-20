@@ -78,6 +78,32 @@ public class CompassActivity extends Activity implements SensorEventListener {
     setText(view, getString(resource));
   }
 
+  private final void setDegrees (TextView view, float degrees) {
+    setText(view, String.format("%d°", Math.round(degrees)));
+  }
+
+  private final static String[] DIRECTION_NAMES = new String[] {
+    "n", "nne", "ne", "ene", "e", "ese", "se", "sse",
+    "s", "ssw", "sw", "wsw", "w", "wnw", "nw", "nnw"
+  };
+
+  private final static int DIRECTION_COUNT = DIRECTION_NAMES.length;
+  private final static float DIRECTIONS_PER_CIRCLE = (float)DIRECTION_COUNT;
+  private final static float DEGREES_PER_CIRCLE = 360f;
+  private final static float DEGREES_PER_DIRECTION = DEGREES_PER_CIRCLE / DIRECTIONS_PER_CIRCLE;
+
+  private final void setDirection (TextView view, float degrees) {
+    int direction = Math.round(degrees / DEGREES_PER_DIRECTION);
+
+    setText(view,
+      String.format(
+        "%s%+d°",
+        DIRECTION_NAMES[direction % DIRECTION_COUNT],
+        Math.round(degrees - ((float)direction * DEGREES_PER_DIRECTION))
+      )
+    );
+  }
+
   private final static int[] sensorTypes = new int[] {
     Sensor.TYPE_ACCELEROMETER,
     Sensor.TYPE_MAGNETIC_FIELD
@@ -131,16 +157,6 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private final Measurement azimuthMeasurement = new Measurement();
   private final Measurement pitchMeasurement = new Measurement();
   private final Measurement rollMeasurement = new Measurement();
-
-  private final static String[] directions = new String[] {
-    "n", "nne", "ne", "ene", "e", "ese", "se", "sse",
-    "s", "ssw", "sw", "wsw", "w", "wnw", "nw", "nnw"
-  };
-
-  private final static int DIRECTION_COUNT = directions.length;
-  private final static float DIRECTIONS_PER_CIRCLE = (float)DIRECTION_COUNT;
-  private final static float DEGREES_PER_CIRCLE = 360f;
-  private final static float DEGREES_PER_DIRECTION = DEGREES_PER_CIRCLE / DIRECTIONS_PER_CIRCLE;
 
   private final float translateValue (Measurement measurement, float value) {
     measurement.add(value);
@@ -214,19 +230,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
       azimuth += DEGREES_PER_CIRCLE;
       azimuth %= DEGREES_PER_CIRCLE;
 
-      azimuthDegrees.setText(String.format("%d°", Math.round(azimuth)));
-      pitchDegrees.setText(String.format("%d°", Math.round(pitch)));
-      rollDegrees.setText(String.format("%d°", Math.round(roll)));
-
-      int direction = Math.round(azimuth / DEGREES_PER_DIRECTION);
-
-      azimuthDirection.setText(
-        String.format(
-          "%s%+d°",
-          directions[direction % DIRECTION_COUNT],
-          Math.round(azimuth - ((float)direction * DEGREES_PER_DIRECTION))
-        )
-      );
+      setDegrees(azimuthDegrees, azimuth);
+      setDirection(azimuthDirection, azimuth);
+      setDegrees(pitchDegrees, pitch);
+      setDegrees(rollDegrees, roll);
     }
   }
 
@@ -352,18 +359,18 @@ public class CompassActivity extends Activity implements SensorEventListener {
   ) {
     decimal.setText(String.format("%.5f°", degrees));
 
+    StringBuilder sb = new StringBuilder();
+    long value = Math.round(degrees * 3600f);
     char hemisphere;
 
-    if (degrees < 0f) {
+    if (degrees > 0f) {
+      hemisphere = positive;
+    } else if (degrees < 0f) {
       hemisphere = negative;
       degrees = -degrees;
     } else {
-      hemisphere = positive;
+      hemisphere = ' ';
     }
-
-    long value = Math.round(degrees * 3600f);
-    if (value == 0) hemisphere = ' ';
-    StringBuilder sb = new StringBuilder();
 
     sb.append(value % 60);
     sb.append('"');
