@@ -24,8 +24,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
-import android.location.Geocoder;
+import android.location.Location;
 import android.location.Address;
+import android.location.Geocoder;
 
 public class CompassActivity extends Activity implements SensorEventListener {
   private final static String LOG_TAG = CompassActivity.class.getName();
@@ -41,6 +42,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private TextView longitudeDecimal;
   private TextView longitudeDMS;
   private TextView locationName;
+  private TextView speedMagnitude;
+  private TextView bearingDegrees;
+  private TextView bearingDirection;
+  private TextView altitudeMagnitude;
 
   private final void findViews () {
     azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
@@ -52,6 +57,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
     locationName = (TextView)findViewById(R.id.location_name);
+    speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
+    bearingDegrees = (TextView)findViewById(R.id.bearing_degrees);
+    bearingDirection = (TextView)findViewById(R.id.bearing_direction);
+    altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
   }
 
   private final void setText (TextView view, CharSequence text) {
@@ -88,7 +97,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
     setText(view, getString(resource));
   }
 
-  private final void setDegrees (TextView view, float degrees) {
+  private final void setBearing (TextView view, float degrees) {
     setText(view, String.format("%d°", Math.round(degrees)));
   }
 
@@ -110,6 +119,31 @@ public class CompassActivity extends Activity implements SensorEventListener {
         "%s%+d°",
         DIRECTION_NAMES[direction % DIRECTION_COUNT],
         Math.round(degrees - ((float)direction * DEGREES_PER_DIRECTION))
+      )
+    );
+  }
+
+  private final void setDistance (TextView view, double distance) {
+    String unit = "M";
+
+    setText(view,
+      String.format(
+        "%d%s",
+        Math.round(distance),
+        unit
+      )
+    );
+  }
+
+  private final void setSpeed (TextView view, float speed) {
+    float conversion = (60f * 60f) / 1000f;
+    String unit = "kph";
+
+    setText(view,
+      String.format(
+        "%d%s",
+        Math.round(speed * conversion),
+        unit
       )
     );
   }
@@ -240,10 +274,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
       azimuth += DEGREES_PER_CIRCLE;
       azimuth %= DEGREES_PER_CIRCLE;
 
-      setDegrees(azimuthDegrees, azimuth);
+      setBearing(azimuthDegrees, azimuth);
       setDirection(azimuthDirection, azimuth);
-      setDegrees(pitchDegrees, pitch);
-      setDegrees(rollDegrees, roll);
+      setBearing(pitchDegrees, pitch);
+      setBearing(rollDegrees, roll);
     }
   }
 
@@ -394,10 +428,37 @@ public class CompassActivity extends Activity implements SensorEventListener {
     dms.setText(sb.toString());
   }
 
-  public final void setLocation (double latitude, double longitude) {
+  private final void setLocation (double latitude, double longitude) {
     setLocationCoordinate(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
     setLocationCoordinate(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
     setLocationName(latitude, longitude);
+  }
+
+  public final void setLocation (Location location) {
+    setLocation(location.getLatitude(), location.getLongitude());
+
+    if (location.hasSpeed()) {
+      float metersPerSecond = location.getSpeed();
+      setSpeed(speedMagnitude, metersPerSecond);
+    } else {
+      setText(speedMagnitude, "");
+    }
+
+    if (location.hasBearing()) {
+      float degrees = location.getBearing();
+      setBearing(bearingDegrees, degrees);
+      setDirection(bearingDirection, degrees);
+    } else {
+      setText(bearingDegrees, "");
+      setText(bearingDirection, "");
+    }
+
+    if (location.hasAltitude()) {
+      double meters = location.getAltitude();
+      setDistance(altitudeMagnitude, meters);
+    } else {
+      setText(altitudeMagnitude, "");
+    }
   }
 
   @Override

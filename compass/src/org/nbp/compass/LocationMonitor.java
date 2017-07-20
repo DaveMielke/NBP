@@ -10,12 +10,7 @@ public abstract class LocationMonitor {
   }
 
   protected final void setLocation (Location location) {
-    if (location != null) {
-      compassActivity.setLocation(
-        location.getLatitude(),
-        location.getLongitude()
-      );
-    }
+    if (location != null) compassActivity.setLocation(location);
   }
 
   public abstract void start ();

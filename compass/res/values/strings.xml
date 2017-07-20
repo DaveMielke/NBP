@@ -9,6 +9,9 @@
   <string name="latitude_label">Latitude</string>
   <string name="longitude_label">Longitude</string>
   <string name="location_label">Location</string>
+  <string name="speed_label">Speed</string>
+  <string name="bearing_label">Bearing</string>
+  <string name="altitude_label">Altitude</string>
 
   <string name="message_unknown">(unknown)</string>
   <string name="message_unsupported">(unsupported)</string>
