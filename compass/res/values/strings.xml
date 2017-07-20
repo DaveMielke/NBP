@@ -10,6 +10,7 @@
   <string name="longitude_label">Longitude</string>
   <string name="location_label">Location</string>
 
-  <string name="message_unknown">unknown</string>
-  <string name="message_unsupported">unsupported</string>
+  <string name="message_unknown">(unknown)</string>
+  <string name="message_unsupported">(unsupported)</string>
+  <string name="message_waiting">(waiting)</string>
 </resources>

@@ -74,6 +74,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
     }
   }
 
+  private final void setText (TextView view, int resource) {
+    setText(view, getString(resource));
+  }
+
   private final static int[] sensorTypes = new int[] {
     Sensor.TYPE_ACCELEROMETER,
     Sensor.TYPE_MAGNETIC_FIELD
@@ -238,15 +242,21 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private final void prepareLocationMonitor () {
     atNewLocation = false;
     settingLocationName = false;
-
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
-    if (geocoder == null) locationName.setText(R.string.message_unsupported);
+
+    setText(locationName,
+      (geocoder != null)?
+      R.string.message_waiting:
+      R.string.message_unsupported
+    );
 
     // this must be the very last step because the current location will be set
     locationMonitor = new BestLocationMonitor(this);
   }
 
   private final String getLocationName (double latitude, double longitude) {
+    String problem = null;
+
     try {
       List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
@@ -254,14 +264,21 @@ public class CompassActivity extends Activity implements SensorEventListener {
         if (!addresses.isEmpty()) {
           Address address = addresses.get(0);
           LocationUtilities.log(address);
-
-          String name = LocationUtilities.getName(address);
-          if (name != null) return name;
+          return LocationUtilities.getName(address);
+        } else {
+          problem = "no addresses";
         }
+      } else {
+        problem = "no address list";
       }
     } catch (IOException exception) {
-      Log.w(LOG_TAG, ("geocoder error: " + exception.getMessage()));
+      problem = exception.getMessage();
     }
+
+    Log.w(LOG_TAG, String.format(
+      "geocoding failure: [%.7f, %.7f]: %s",
+      latitude, longitude, problem
+    ));
 
     return null;
   }
