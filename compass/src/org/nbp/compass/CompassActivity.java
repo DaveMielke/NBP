@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityEvent;
 
+import android.text.TextUtils;
+
 import android.hardware.SensorManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -53,17 +55,19 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   private final void setText (TextView view, CharSequence text) {
-    view.setText(text);
+    if (!TextUtils.equals(text, view.getText())) {
+      view.setText(text);
 
-    if (accessibilityManager != null) {
-      if (accessibilityManager.isEnabled()) {
-        if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-          if (view.isAccessibilityFocused()) {
-            AccessibilityEvent event = AccessibilityEvent.obtain();
-            view.onInitializeAccessibilityEvent(event);
-            event.getText().add(text);
-            event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-            accessibilityManager.sendAccessibilityEvent(event);
+      if (accessibilityManager != null) {
+        if (accessibilityManager.isEnabled()) {
+          if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+            if (view.isAccessibilityFocused()) {
+              AccessibilityEvent event = AccessibilityEvent.obtain();
+              view.onInitializeAccessibilityEvent(event);
+              event.getText().add(text);
+              event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+              accessibilityManager.sendAccessibilityEvent(event);
+            }
           }
         }
       }
@@ -234,7 +238,9 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private final void prepareLocationMonitor () {
     atNewLocation = false;
     settingLocationName = false;
+
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
+    if (geocoder == null) locationName.setText(R.string.message_unsupported);
 
     // this must be the very last step because the current location will be set
     locationMonitor = new BestLocationMonitor(this);
