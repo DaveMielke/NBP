@@ -253,10 +253,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
       if (addresses != null) {
         if (!addresses.isEmpty()) {
           Address address = addresses.get(0);
-
-          if (ApplicationParameters.LOG_ADDRESSES) {
-            LocationUtilities.log(address);
-          }
+          LocationUtilities.log(address);
 
           String name = LocationUtilities.getName(address);
           if (name != null) return name;
