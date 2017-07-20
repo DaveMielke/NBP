@@ -9,23 +9,34 @@ public abstract class LocationUtilities {
   private LocationUtilities () {
   }
 
-  private final static void append (StringBuilder sb, String label, String value) {
-    if ((value != null) && !value.isEmpty()) {
+  private final static void append (StringBuilder sb, boolean haveCoordinate, double coordinate) {
+    if (haveCoordinate) {
+      sb.append(String.format("%.7f", coordinate));
+    } else {
+      sb.append('?');
+    }
+  }
+
+  private final static void append (StringBuilder sb, String label, String string) {
+    if ((string != null) && !string.isEmpty()) {
       sb.append(' ');
       sb.append(label);
       sb.append(':');
-      sb.append(value);
+
+      sb.append('"');
+      sb.append(string);
+      sb.append('"');
     }
   }
 
   public final static String toString (Address address) {
-    StringBuilder sb = new StringBuilder("address");
+    StringBuilder sb = new StringBuilder();
 
-    sb.append(" [");
-    if (address.hasLatitude()) sb.append(address.getLatitude());
-    sb.append(',');
-    if (address.hasLongitude()) sb.append(address.getLongitude());
-    sb.append("]:");
+    sb.append('[');
+    append(sb, address.hasLatitude(), address.getLatitude());
+    sb.append(", ");
+    append(sb, address.hasLongitude(), address.getLongitude());
+    sb.append(']');
 
     append(sb, "CC", address.getCountryCode());
     append(sb, "CN", address.getCountryName());
@@ -55,7 +66,7 @@ public abstract class LocationUtilities {
 
   public final static void log (Address address) {
     if (ApplicationParameters.LOG_ADDRESSES) {
-      Log.d(LOG_TAG, toString(address));
+      Log.d(LOG_TAG, ("address: " + toString(address)));
     }
   }
 
@@ -143,6 +154,7 @@ public abstract class LocationUtilities {
       if (name != null) return name;
     }
 
+    Log.w(LOG_TAG, ("no name for address: " + toString(address)));
     return "";
   }
 }

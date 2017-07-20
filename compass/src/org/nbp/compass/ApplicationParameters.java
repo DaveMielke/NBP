@@ -13,7 +13,7 @@ public abstract class ApplicationParameters {
 
 
   public final static boolean LOG_VECTORS = false;
-  public final static boolean LOG_ADDRESSES = true;
+  public final static boolean LOG_ADDRESSES = false;
 
   public final static int MEASUREMENT_DAMPING_FACTOR = 50;
 
