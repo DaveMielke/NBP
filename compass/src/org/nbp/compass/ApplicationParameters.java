@@ -7,9 +7,8 @@ public abstract class ApplicationParameters {
   private ApplicationParameters () {
   }
 
-  public final static float CURRENT_LOCATION_RADIUS = 8f; // meters
-  public final static float PROVIDER_MINIMUM_DISTANCE = CURRENT_LOCATION_RADIUS + 0.5f; // meters
   public final static long PROVIDER_MINIMUM_TIME = 5000; // milliseconds
+  public final static float PROVIDER_MINIMUM_DISTANCE = 8f; // meters
 
 
   public final static boolean LOG_VECTORS = false;

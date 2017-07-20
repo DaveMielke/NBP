@@ -290,17 +290,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
     return null;
   }
 
-  private Double currentLatitude = null;
-  private Double currentLongitude = null;
-
-  private final boolean isNearCurrentLocation (double latitude, double longitude) {
-    synchronized (this) {
-      if (currentLatitude == null) return false;
-      if (currentLongitude == null) return false;
-      return EarthMath.haversineDistance(currentLatitude, currentLongitude, latitude, longitude)
-           < ApplicationParameters.CURRENT_LOCATION_RADIUS;
-    }
-  }
+  private double currentLatitude;
+  private double currentLongitude;
 
   private final void setLocationName () {
     synchronized (this) {
@@ -341,13 +332,11 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
   private final void setLocationName (double latitude, double longitude) {
     if (geocoder != null) {
-      if (!isNearCurrentLocation(latitude, longitude)) {
-        synchronized (this) {
-          currentLatitude = latitude;
-          currentLongitude = longitude;
-          atNewLocation = true;
-          setLocationName();
-        }
+      synchronized (this) {
+        currentLatitude = latitude;
+        currentLongitude = longitude;
+        atNewLocation = true;
+        setLocationName();
       }
     }
   }
