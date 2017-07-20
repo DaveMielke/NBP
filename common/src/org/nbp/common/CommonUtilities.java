@@ -62,6 +62,6 @@ public abstract class CommonUtilities {
   }
 
   public static boolean haveAndroidSDK (int sdk) {
-    return sdk >= Build.VERSION.SDK_INT;
+    return sdk <= Build.VERSION.SDK_INT;
   }
 }

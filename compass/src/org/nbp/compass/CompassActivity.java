@@ -3,6 +3,9 @@ package org.nbp.compass;
 import java.util.List;
 import java.io.IOException;
 
+import org.nbp.common.CommonUtilities;
+
+import android.os.Build;
 import android.util.Log;
 
 import android.app.Activity;
@@ -10,6 +13,9 @@ import android.os.Bundle;
 import android.os.AsyncTask;
 
 import android.widget.TextView;
+
+import android.view.accessibility.AccessibilityManager;
+import android.view.accessibility.AccessibilityEvent;
 
 import android.hardware.SensorManager;
 import android.hardware.Sensor;
@@ -21,6 +27,8 @@ import android.location.Address;
 
 public class CompassActivity extends Activity implements SensorEventListener {
   private final static String LOG_TAG = CompassActivity.class.getName();
+
+  private AccessibilityManager accessibilityManager;
 
   private TextView azimuthDegrees;
   private TextView azimuthDirection;
@@ -42,6 +50,27 @@ public class CompassActivity extends Activity implements SensorEventListener {
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
     locationName = (TextView)findViewById(R.id.location_name);
+  }
+
+  private final void sayText (TextView view) {
+    if (accessibilityManager != null) {
+      if (accessibilityManager.isEnabled()) {
+        if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+          if (view.isAccessibilityFocused()) {
+            AccessibilityEvent event = AccessibilityEvent.obtain();
+            view.onInitializeAccessibilityEvent(event);
+            event.getText().add(view.getText());
+            event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+            accessibilityManager.sendAccessibilityEvent(event);
+          }
+        }
+      }
+    }
+  }
+
+  private final void setText (TextView view, CharSequence text) {
+    view.setText(text);
+    sayText(view);
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -209,6 +238,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
     atNewLocation = false;
     settingLocationName = false;
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
+
+    // this must be the very last step because the current location will be set
     locationMonitor = new BestLocationMonitor(this);
   }
 
@@ -250,7 +281,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
         new AsyncTask<Void, String, Void>() {
           @Override
           protected void onProgressUpdate (String... arguments) {
-            locationName.setText(arguments[0]);
+            setText(locationName, arguments[0]);
           }
 
           @Override
@@ -345,6 +376,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
   @Override
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
 
     setContentView(R.layout.compass);
     findViews();
