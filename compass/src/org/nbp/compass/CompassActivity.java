@@ -118,6 +118,8 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private final static float DEGREES_PER_DIRECTION = DEGREES_PER_CIRCLE / DIRECTIONS_PER_CIRCLE;
 
   private final void setDirection (TextView view, float degrees) {
+    degrees += DEGREES_PER_CIRCLE;
+    degrees %= DEGREES_PER_CIRCLE;
     int direction = Math.round(degrees / DEGREES_PER_DIRECTION);
 
     setText(view,
@@ -276,9 +278,6 @@ public class CompassActivity extends Activity implements SensorEventListener {
       float azimuth = translateValue(azimuthMeasurement, -currentOrientation[0]);
       float pitch   = translateValue(pitchMeasurement  , -currentOrientation[1]);
       float roll    = translateValue(rollMeasurement   ,  currentOrientation[2]);
-
-      azimuth += DEGREES_PER_CIRCLE;
-      azimuth %= DEGREES_PER_CIRCLE;
 
       setBearing(azimuthDegrees, azimuth);
       setDirection(azimuthDirection, azimuth);
