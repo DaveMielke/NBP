@@ -42,6 +42,9 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private TextView longitudeDecimal;
   private TextView longitudeDMS;
   private TextView locationName;
+  private TextView distanceMagnitude;
+  private TextView directionDegrees;
+  private TextView directionDirection;
   private TextView speedMagnitude;
   private TextView bearingDegrees;
   private TextView bearingDirection;
@@ -57,6 +60,9 @@ public class CompassActivity extends Activity implements SensorEventListener {
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
     locationName = (TextView)findViewById(R.id.location_name);
+    distanceMagnitude = (TextView)findViewById(R.id.distance_magnitude);
+    directionDegrees = (TextView)findViewById(R.id.direction_degrees);
+    directionDirection = (TextView)findViewById(R.id.direction_direction);
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
     bearingDegrees = (TextView)findViewById(R.id.bearing_degrees);
     bearingDirection = (TextView)findViewById(R.id.bearing_direction);
@@ -286,13 +292,13 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   private boolean atNewLocation;
-  private boolean settingLocationName;
+  private boolean settingLocationFields;
   private Geocoder geocoder;
   private LocationMonitor locationMonitor;
 
   private final void prepareLocationMonitor () {
     atNewLocation = false;
-    settingLocationName = false;
+    settingLocationFields = false;
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
 
     setText(locationName,
@@ -305,47 +311,82 @@ public class CompassActivity extends Activity implements SensorEventListener {
     locationMonitor = new BestLocationMonitor(this);
   }
 
-  private final String getLocationName (double latitude, double longitude) {
-    String problem = null;
-
-    try {
-      List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-      if (addresses != null) {
-        if (!addresses.isEmpty()) {
-          Address address = addresses.get(0);
-          LocationUtilities.log(address);
-          return LocationUtilities.getName(address);
-        } else {
-          problem = "no addresses";
-        }
-      } else {
-        problem = "no address list";
-      }
-    } catch (IOException exception) {
-      problem = exception.getMessage();
-    }
-
-    Log.w(LOG_TAG, String.format(
-      "geocoding failure: [%.7f, %.7f]: %s",
-      latitude, longitude, problem
-    ));
-
-    return null;
-  }
-
   private double currentLatitude;
   private double currentLongitude;
 
-  private final void setLocationName () {
+  private final void setLocationFields () {
     synchronized (this) {
-      if (!settingLocationName) {
-        settingLocationName = true;
+      if (!settingLocationFields) {
+        settingLocationFields = true;
 
-        new AsyncTask<Void, String, Void>() {
+        new AsyncTask<Void, Object, Void>() {
           @Override
-          protected void onProgressUpdate (String... arguments) {
-            setText(locationName, arguments[0]);
+          protected void onProgressUpdate (Object... arguments) {
+            String name = (String)arguments[0];
+            Float distance = (Float)arguments[1];
+            Float direction = (Float)arguments[2];
+
+            setText(locationName, name);
+
+            if (distance != null) {
+              setDistance(distanceMagnitude, distance);
+            } else {
+              setText(distanceMagnitude, "");
+            }
+
+            if (direction != null) {
+              setBearing(directionDegrees, direction);
+              setDirection(directionDirection, direction);
+            } else {
+              setText(directionDegrees, "");
+              setText(directionDirection, "");
+            }
+          }
+
+          private final void setFields (double latitude, double longitude) {
+            String problem = null;
+
+            try {
+              List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+              if (addresses != null) {
+                if (!addresses.isEmpty()) {
+                  Address address = addresses.get(0);
+                  LocationUtilities.log(address);
+
+                  String name = LocationUtilities.getName(address);
+                  Float distance = null;
+                  Float direction = null;
+
+                  if (address.hasLatitude() && address.hasLongitude()) {
+                    float[] results = new float[2];
+
+                    Location.distanceBetween(
+                      latitude, longitude,
+                      address.getLatitude(), address.getLongitude(),
+                      results
+                    );
+
+                    distance = results[0];
+                    direction = results[1];
+                  }
+
+                  publishProgress(name, distance, direction);
+                  return;
+                } else {
+                  problem = "no addresses";
+                }
+              } else {
+                problem = "no address list";
+              }
+            } catch (IOException exception) {
+              problem = exception.getMessage();
+            }
+
+            Log.w(LOG_TAG, String.format(
+              "geocoding failure: [%.7f, %.7f]: %s",
+              latitude, longitude, problem
+            ));
           }
 
           @Override
@@ -356,7 +397,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
               synchronized (CompassActivity.this) {
                 if (!atNewLocation) {
-                  settingLocationName = false;
+                  settingLocationFields = false;
                   return null;
                 }
 
@@ -365,8 +406,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
                 atNewLocation = false;
               }
 
-              String name = getLocationName(latitude, longitude);
-              if (name != null) publishProgress(name);
+              setFields(latitude, longitude);
             }
           }
         }.execute();
@@ -374,13 +414,13 @@ public class CompassActivity extends Activity implements SensorEventListener {
     }
   }
 
-  private final void setLocationName (double latitude, double longitude) {
+  private final void setLocationFields (double latitude, double longitude) {
     if (geocoder != null) {
       synchronized (this) {
         currentLatitude = latitude;
         currentLongitude = longitude;
         atNewLocation = true;
-        setLocationName();
+        setLocationFields();
       }
     }
   }
@@ -431,7 +471,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private final void setLocation (double latitude, double longitude) {
     setLocationCoordinate(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
     setLocationCoordinate(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
-    setLocationName(latitude, longitude);
+    setLocationFields(latitude, longitude);
   }
 
   public final void setLocation (Location location) {

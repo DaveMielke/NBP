@@ -41,6 +41,17 @@
   </TableRow>
 
   <TableRow>
+    <TextView android:text="@string/distance_label" />
+    <TextView android:id="@+id/distance_magnitude" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/direction_label" />
+    <TextView android:id="@+id/direction_degrees" />
+    <TextView android:id="@+id/direction_direction" />
+  </TableRow>
+
+  <TableRow>
     <TextView android:text="@string/speed_label" />
     <TextView android:id="@+id/speed_magnitude" />
   </TableRow>

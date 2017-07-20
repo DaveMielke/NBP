@@ -9,6 +9,8 @@
   <string name="latitude_label">Latitude</string>
   <string name="longitude_label">Longitude</string>
   <string name="location_label">Location</string>
+  <string name="distance_label">Distance</string>
+  <string name="direction_label">Direction</string>
   <string name="speed_label">Speed</string>
   <string name="bearing_label">Bearing</string>
   <string name="altitude_label">Altitude</string>
