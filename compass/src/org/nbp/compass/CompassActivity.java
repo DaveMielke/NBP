@@ -307,8 +307,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
               }
 
               String name = getLocationName(latitude, longitude);
-              if (name == null) name = "";
-              publishProgress(name);
+              if (name != null) publishProgress(name);
             }
           }
         }.execute();
