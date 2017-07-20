@@ -52,25 +52,22 @@ public class CompassActivity extends Activity implements SensorEventListener {
     locationName = (TextView)findViewById(R.id.location_name);
   }
 
-  private final void sayText (TextView view) {
+  private final void setText (TextView view, CharSequence text) {
+    view.setText(text);
+
     if (accessibilityManager != null) {
       if (accessibilityManager.isEnabled()) {
         if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
           if (view.isAccessibilityFocused()) {
             AccessibilityEvent event = AccessibilityEvent.obtain();
             view.onInitializeAccessibilityEvent(event);
-            event.getText().add(view.getText());
+            event.getText().add(text);
             event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
             accessibilityManager.sendAccessibilityEvent(event);
           }
         }
       }
     }
-  }
-
-  private final void setText (TextView view, CharSequence text) {
-    view.setText(text);
-    sayText(view);
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -250,7 +247,12 @@ public class CompassActivity extends Activity implements SensorEventListener {
       if (addresses != null) {
         if (!addresses.isEmpty()) {
           Address address = addresses.get(0);
-          String name = new LocationName(address).getName();
+
+          if (ApplicationParameters.LOG_ADDRESSES) {
+            LocationUtilities.log(address);
+          }
+
+          String name = LocationUtilities.getName(address);
           if (name != null) return name;
         }
       }

@@ -3,10 +3,13 @@ package org.nbp.compass;
 import android.util.Log;
 import android.location.Address;
 
-public class LocationName {
-  private final static String LOG_TAG = LocationName.class.getName();
+public abstract class LocationUtilities {
+  private final static String LOG_TAG = LocationUtilities.class.getName();
 
-  private final void log (StringBuilder sb, String label, String value) {
+  private LocationUtilities () {
+  }
+
+  private final static void log (StringBuilder sb, String label, String value) {
     if ((value != null) && !value.isEmpty()) {
       sb.append(' ');
       sb.append(label);
@@ -15,11 +18,11 @@ public class LocationName {
     }
   }
 
-  private final void log (StringBuilder sb, String label, double value) {
+  private final static void log (StringBuilder sb, String label, double value) {
     log(sb, label, Double.toString(value));
   }
 
-  private final void log (Address address) {
+  public final static void log (Address address) {
     if (ApplicationParameters.LOG_ADDRESSES) {
       StringBuilder sb = new StringBuilder();
       sb.append("address:");
@@ -54,23 +57,11 @@ public class LocationName {
     }
   }
 
-  private final Address locationAddress;
-  private String locationName = null;
-
-  public LocationName (Address address) {
-    log(address);
-    locationAddress = address;
-  }
-
-  public final Address getAddress () {
-    return locationAddress;
-  }
-
   private interface NameMaker {
     public String makeName (Address address);
   }
 
-  private final NameMaker[] nameMakers = new NameMaker[] {
+  private final static NameMaker[] nameMakers = new NameMaker[] {
     // premises
     new NameMaker() {
       @Override
@@ -135,31 +126,15 @@ public class LocationName {
       public String makeName (Address address) {
         return address.getCountryName();
       }
-    },
-
-    // this one must be last
-    new NameMaker() {
-      @Override
-      public String makeName (Address address) {
-        return "";
-      }
     }
   };
 
-  public final String getName () {
-    synchronized (this) {
-      if (locationName == null) {
-        for (NameMaker nameMaker : nameMakers) {
-          String name = nameMaker.makeName(locationAddress);
-
-          if (name != null) {
-            locationName = name;
-            break;
-          }
-        }
-      }
+  public final static String getName (Address address) {
+    for (NameMaker nameMaker : nameMakers) {
+      String name = nameMaker.makeName(address);
+      if (name != null) return name;
     }
 
-    return locationName;
+    return "";
   }
 }
