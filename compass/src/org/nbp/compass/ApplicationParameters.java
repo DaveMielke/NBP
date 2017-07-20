@@ -7,8 +7,8 @@ public abstract class ApplicationParameters {
   private ApplicationParameters () {
   }
 
-  public final static long PROVIDER_MINIMUM_TIME = 5000; // milliseconds
-  public final static float PROVIDER_MINIMUM_DISTANCE = 8f; // meters
+  public final static long LOCATION_MINIMUM_TIME = 4000; // milliseconds
+  public final static float LOCATION_MINIMUM_DISTANCE = 7f; // meters
 
 
   public final static boolean LOG_VECTORS = false;

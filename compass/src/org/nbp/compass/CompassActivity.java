@@ -58,6 +58,16 @@ public class CompassActivity extends Activity implements SensorEventListener {
     if (!TextUtils.equals(text, view.getText())) {
       view.setText(text);
 
+      if (text.length() == 0) {
+        CharSequence hint = view.getHint();
+
+        if (hint != null) {
+          if (hint.length() > 0) {
+            text = hint;
+          }
+        }
+      }
+
       if (accessibilityManager != null) {
         if (accessibilityManager.isEnabled()) {
           if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
