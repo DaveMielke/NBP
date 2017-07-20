@@ -122,11 +122,17 @@ public abstract class LocationUtilities {
       }
     },
 
-    // country
+    // country [, postal code]
     new NameMaker() {
       @Override
       public String makeName (Address address) {
-        return address.getCountryName();
+        String name = address.getCountryName();
+        if (name == null) return null;
+
+        String suffix = address.getPostalCode();
+        if (suffix != null) name = name + ", " + suffix;
+
+        return name;
       }
     }
   };
