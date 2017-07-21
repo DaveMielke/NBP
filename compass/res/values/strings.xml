@@ -6,9 +6,6 @@
   <string name="settings_activity_label">NBP Compass Settings</string>
   <string name="settings_button_label">Settings</string>
 
-  <string name="azimuth_label">Heading</string>
-  <string name="pitch_label">Pitch</string>
-  <string name="roll_label">Roll</string>
   <string name="latitude_label">Latitude</string>
   <string name="longitude_label">Longitude</string>
   <string name="altitude_label">Altitude</string>
@@ -17,6 +14,9 @@
   <string name="direction_label">Direction</string>
   <string name="speed_label">Speed</string>
   <string name="bearing_label">Bearing</string>
+  <string name="azimuth_label">Heading</string>
+  <string name="pitch_label">Pitch</string>
+  <string name="roll_label">Roll</string>
 
   <string name="message_unknown">(unknown)</string>
   <string name="message_unsupported">(unsupported)</string>

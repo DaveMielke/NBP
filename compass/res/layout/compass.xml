@@ -17,22 +17,6 @@
   </TableLayout>
 
   <TableRow>
-    <TextView android:text="@string/azimuth_label" />
-    <TextView android:id="@+id/azimuth_degrees" />
-    <TextView android:id="@+id/azimuth_point" />
-  </TableRow>
-
-  <TableRow>
-    <TextView android:text="@string/pitch_label" />
-    <TextView android:id="@+id/pitch_degrees" />
-  </TableRow>
-
-  <TableRow>
-    <TextView android:text="@string/roll_label" />
-    <TextView android:id="@+id/roll_degrees" />
-  </TableRow>
-
-  <TableRow>
     <TextView android:text="@string/latitude_label" />
     <TextView android:id="@+id/latitude_decimal" />
     <TextView android:id="@+id/latitude_dms" />
@@ -74,5 +58,21 @@
     <TextView android:text="@string/bearing_label" />
     <TextView android:id="@+id/bearing_degrees" />
     <TextView android:id="@+id/bearing_point" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/azimuth_label" />
+    <TextView android:id="@+id/azimuth_degrees" />
+    <TextView android:id="@+id/azimuth_point" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/pitch_label" />
+    <TextView android:id="@+id/pitch_degrees" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/roll_label" />
+    <TextView android:id="@+id/roll_degrees" />
   </TableRow>
 </TableLayout>

@@ -35,10 +35,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
   private AccessibilityManager accessibilityManager;
 
-  private TextView azimuthDegrees;
-  private TextView azimuthPoint;
-  private TextView pitchDegrees;
-  private TextView rollDegrees;
   private TextView latitudeDecimal;
   private TextView latitudeDMS;
   private TextView longitudeDecimal;
@@ -51,12 +47,12 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView speedMagnitude;
   private TextView bearingDegrees;
   private TextView bearingPoint;
+  private TextView azimuthDegrees;
+  private TextView azimuthPoint;
+  private TextView pitchDegrees;
+  private TextView rollDegrees;
 
   private final void findViews () {
-    azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
-    azimuthPoint = (TextView)findViewById(R.id.azimuth_point);
-    pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
-    rollDegrees = (TextView)findViewById(R.id.roll_degrees);
     latitudeDecimal = (TextView)findViewById(R.id.latitude_decimal);
     latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
@@ -69,6 +65,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
     bearingDegrees = (TextView)findViewById(R.id.bearing_degrees);
     bearingPoint = (TextView)findViewById(R.id.bearing_point);
+    azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
+    azimuthPoint = (TextView)findViewById(R.id.azimuth_point);
+    pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
+    rollDegrees = (TextView)findViewById(R.id.roll_degrees);
   }
 
   private final void setText (TextView view, CharSequence text) {
@@ -347,7 +347,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
             }
           }
 
-          private final void setFields (double latitude, double longitude) {
+          private final boolean setFields (double latitude, double longitude) {
             String problem = null;
 
             try {
@@ -376,7 +376,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                   }
 
                   publishProgress(name, distance, direction);
-                  return;
+                  return true;
                 } else {
                   problem = "no addresses";
                 }
@@ -391,6 +391,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               "geocoding failure: [%.7f, %.7f]: %s",
               latitude, longitude, problem
             ));
+
+            return false;
           }
 
           @Override
