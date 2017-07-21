@@ -110,58 +110,31 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void setBearing (TextView view, float degrees) {
-    setText(view, ApplicationUtilities.toString(degrees));
+    setText(view, ApplicationUtilities.toBearingString(degrees));
   }
 
-  private final static String[] POINT_ACRONYMS = new String[] {
-    "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
-    "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
-  };
-
-  private final static int POINT_COUNT = POINT_ACRONYMS.length;
-  private final static float POINTS_PER_CIRCLE = (float)POINT_COUNT;
-  private final static float DEGREES_PER_CIRCLE = 360f;
-  private final static float DEGREES_PER_POINT = DEGREES_PER_CIRCLE / POINTS_PER_CIRCLE;
-
-  private final void setPoint (TextView view, float degrees) {
-    degrees += DEGREES_PER_CIRCLE;
-    degrees %= DEGREES_PER_CIRCLE;
-    int point = Math.round(degrees / DEGREES_PER_POINT);
-
-    setText(view,
-      String.format(
-        "%s%+d°",
-        POINT_ACRONYMS[point % POINT_COUNT],
-        Math.round(degrees - ((float)point * DEGREES_PER_POINT))
-      )
-    );
-  }
-
-  private final void setDegrees (TextView view, double degrees) {
-    setText(view, ApplicationUtilities.toString(degrees));
-  }
-
-  private final void setCoordinate (
-    TextView view, double degrees,
-    char positive, char negative
-  ) {
-    setText(view, ApplicationUtilities.toString(degrees, positive, negative));
+  private final void setCoordinate (TextView view, double degrees) {
+    setText(view, ApplicationUtilities.toCoordinateString(degrees));
   }
 
   private final void setLatitude (TextView view, double degrees) {
-    setCoordinate(view, degrees, 'N', 'S');
+    setText(view, ApplicationUtilities.toLatitudeString(degrees));
   }
 
   private final void setLongitude (TextView view, double degrees) {
-    setCoordinate(view, degrees, 'E', 'W');
+    setText(view, ApplicationUtilities.toLongitudeString(degrees));
+  }
+
+  private final void setPoint (TextView view, float degrees) {
+    setText(view, ApplicationUtilities.toPointString(degrees));
   }
 
   private final void setDistance (TextView view, double distance) {
-    setText(view, ApplicationUtilities.toString(distance, ApplicationSettings.DISTANCE_UNIT));
+    setText(view, ApplicationUtilities.toDistanceString(distance));
   }
 
   private final void setSpeed (TextView view, float speed) {
-    setText(view, ApplicationUtilities.toString(speed, ApplicationSettings.SPEED_UNIT));
+    setText(view, ApplicationUtilities.toSpeedString(speed));
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -384,12 +357,12 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                       StringBuilder sb = new StringBuilder("where:");
 
                       sb.append(' ');
-                      sb.append(ApplicationUtilities.toString(latitude, longitude));
+                      sb.append(ApplicationUtilities.toCoordinatesString(latitude, longitude));
 
                       sb.append(' ');
-                      sb.append(ApplicationUtilities.toString(distance, ApplicationSettings.DISTANCE_UNIT));
+                      sb.append(ApplicationUtilities.toDistanceString(distance));
                       sb.append('@');
-                      sb.append(ApplicationUtilities.toString(direction));
+                      sb.append(ApplicationUtilities.toBearingString(direction));
 
                       Log.d(LOG_TAG, sb.toString());
                     }
@@ -452,8 +425,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void setLocation (double latitude, double longitude) {
-    setDegrees(latitudeDecimal, latitude);
-    setDegrees(longitudeDecimal, longitude);
+    setCoordinate(latitudeDecimal, latitude);
+    setCoordinate(longitudeDecimal, longitude);
 
     setLatitude(latitudeDMS, latitude);
     setLongitude(longitudeDMS, longitude);

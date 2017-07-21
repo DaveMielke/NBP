@@ -11,7 +11,7 @@ public abstract class LocationUtilities {
 
   private final static void appendCoordinate (StringBuilder sb, boolean haveValue, double value) {
     if (haveValue) {
-      sb.append(String.format("%.7f", value));
+      sb.append(String.format("%.5f", value));
     } else {
       sb.append('?');
     }
@@ -34,7 +34,7 @@ public abstract class LocationUtilities {
 
     sb.append('[');
     appendCoordinate(sb, address.hasLatitude(), address.getLatitude());
-    sb.append(", ");
+    sb.append(',');
     appendCoordinate(sb, address.hasLongitude(), address.getLongitude());
     sb.append(']');
 
