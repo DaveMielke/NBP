@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="control_group_general">General Settings</string>
+  <string name="control_label_DistanceUnit">Distance Unit</string>
+  <string name="control_label_SpeedUnit">Speed Unit</string>
+
+  <string name="control_group_developer">Developer Settings</string>
+  <string name="control_label_LogAddresses">Log Addresses</string>
+  <string name="control_label_LogVectors">Log Vectors</string>
+</resources>

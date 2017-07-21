@@ -3,6 +3,9 @@
 <resources>
   <string name="app_name">NBP Compass</string>
 
+  <string name="settings_activity_label">NBP Compass Settings</string>
+  <string name="settings_button_label">Settings</string>
+
   <string name="azimuth_label">Heading</string>
   <string name="pitch_label">Pitch</string>
   <string name="roll_label">Roll</string>

@@ -12,6 +12,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.AsyncTask;
 
+import android.content.Intent;
+
+import android.view.View;
 import android.widget.TextView;
 
 import android.view.accessibility.AccessibilityManager;
@@ -531,5 +534,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
     } finally {
       super.onPause();
     }
+  }
+
+  public final void onSettingsButtonClick (View view) {
+    Intent intent = new Intent(this, SettingsActivity.class);
+    startActivity(intent);
   }
 }

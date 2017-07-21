@@ -7,6 +7,15 @@
   android:keepScreenOn="true"
   >
 
+  <TableLayout>
+    <TableRow>
+      <Button
+        android:text="@string/settings_button_label"
+        android:onClick="onSettingsButtonClick"
+       />
+    </TableRow>
+  </TableLayout>
+
   <TableRow>
     <TextView android:text="@string/azimuth_label" />
     <TextView android:id="@+id/azimuth_degrees" />
