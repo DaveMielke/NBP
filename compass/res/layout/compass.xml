@@ -10,7 +10,7 @@
   <TableRow>
     <TextView android:text="@string/azimuth_label" />
     <TextView android:id="@+id/azimuth_degrees" />
-    <TextView android:id="@+id/azimuth_direction" />
+    <TextView android:id="@+id/azimuth_point" />
   </TableRow>
 
   <TableRow>
@@ -48,7 +48,7 @@
   <TableRow>
     <TextView android:text="@string/direction_label" />
     <TextView android:id="@+id/direction_degrees" />
-    <TextView android:id="@+id/direction_direction" />
+    <TextView android:id="@+id/direction_point" />
   </TableRow>
 
   <TableRow>
@@ -59,7 +59,7 @@
   <TableRow>
     <TextView android:text="@string/bearing_label" />
     <TextView android:id="@+id/bearing_degrees" />
-    <TextView android:id="@+id/bearing_direction" />
+    <TextView android:id="@+id/bearing_point" />
   </TableRow>
 
   <TableRow>

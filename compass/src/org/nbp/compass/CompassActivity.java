@@ -34,7 +34,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private AccessibilityManager accessibilityManager;
 
   private TextView azimuthDegrees;
-  private TextView azimuthDirection;
+  private TextView azimuthPoint;
   private TextView pitchDegrees;
   private TextView rollDegrees;
   private TextView latitudeDecimal;
@@ -44,15 +44,15 @@ public class CompassActivity extends Activity implements SensorEventListener {
   private TextView locationName;
   private TextView distanceMagnitude;
   private TextView directionDegrees;
-  private TextView directionDirection;
+  private TextView directionPoint;
   private TextView speedMagnitude;
   private TextView bearingDegrees;
-  private TextView bearingDirection;
+  private TextView bearingPoint;
   private TextView altitudeMagnitude;
 
   private final void findViews () {
     azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
-    azimuthDirection = (TextView)findViewById(R.id.azimuth_direction);
+    azimuthPoint = (TextView)findViewById(R.id.azimuth_point);
     pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
     rollDegrees = (TextView)findViewById(R.id.roll_degrees);
     latitudeDecimal = (TextView)findViewById(R.id.latitude_decimal);
@@ -62,10 +62,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
     locationName = (TextView)findViewById(R.id.location_name);
     distanceMagnitude = (TextView)findViewById(R.id.distance_magnitude);
     directionDegrees = (TextView)findViewById(R.id.direction_degrees);
-    directionDirection = (TextView)findViewById(R.id.direction_direction);
+    directionPoint = (TextView)findViewById(R.id.direction_point);
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
     bearingDegrees = (TextView)findViewById(R.id.bearing_degrees);
-    bearingDirection = (TextView)findViewById(R.id.bearing_direction);
+    bearingPoint = (TextView)findViewById(R.id.bearing_point);
     altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
   }
 
@@ -107,26 +107,26 @@ public class CompassActivity extends Activity implements SensorEventListener {
     setText(view, String.format("%d°", Math.round(degrees)));
   }
 
-  private final static String[] DIRECTION_NAMES = new String[] {
-    "n", "nne", "ne", "ene", "e", "ese", "se", "sse",
-    "s", "ssw", "sw", "wsw", "w", "wnw", "nw", "nnw"
+  private final static String[] POINT_ACRONYMS = new String[] {
+    "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+    "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
   };
 
-  private final static int DIRECTION_COUNT = DIRECTION_NAMES.length;
-  private final static float DIRECTIONS_PER_CIRCLE = (float)DIRECTION_COUNT;
+  private final static int POINT_COUNT = POINT_ACRONYMS.length;
+  private final static float POINTS_PER_CIRCLE = (float)POINT_COUNT;
   private final static float DEGREES_PER_CIRCLE = 360f;
-  private final static float DEGREES_PER_DIRECTION = DEGREES_PER_CIRCLE / DIRECTIONS_PER_CIRCLE;
+  private final static float DEGREES_PER_POINT = DEGREES_PER_CIRCLE / POINTS_PER_CIRCLE;
 
-  private final void setDirection (TextView view, float degrees) {
+  private final void setPoint (TextView view, float degrees) {
     degrees += DEGREES_PER_CIRCLE;
     degrees %= DEGREES_PER_CIRCLE;
-    int direction = Math.round(degrees / DEGREES_PER_DIRECTION);
+    int point = Math.round(degrees / DEGREES_PER_POINT);
 
     setText(view,
       String.format(
         "%s%+d°",
-        DIRECTION_NAMES[direction % DIRECTION_COUNT],
-        Math.round(degrees - ((float)direction * DEGREES_PER_DIRECTION))
+        POINT_ACRONYMS[point % POINT_COUNT],
+        Math.round(degrees - ((float)point * DEGREES_PER_POINT))
       )
     );
   }
@@ -280,7 +280,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
       float roll    = translateValue(rollMeasurement   ,  currentOrientation[2]);
 
       setBearing(azimuthDegrees, azimuth);
-      setDirection(azimuthDirection, azimuth);
+      setPoint(azimuthPoint, azimuth);
       setBearing(pitchDegrees, pitch);
       setBearing(rollDegrees, roll);
     }
@@ -335,10 +335,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
 
             if (direction != null) {
               setBearing(directionDegrees, direction);
-              setDirection(directionDirection, direction);
+              setPoint(directionPoint, direction);
             } else {
               setText(directionDegrees, "");
-              setText(directionDirection, "");
+              setText(directionPoint, "");
             }
           }
 
@@ -486,10 +486,10 @@ public class CompassActivity extends Activity implements SensorEventListener {
     if (location.hasBearing()) {
       float degrees = location.getBearing();
       setBearing(bearingDegrees, degrees);
-      setDirection(bearingDirection, degrees);
+      setPoint(bearingPoint, degrees);
     } else {
       setText(bearingDegrees, "");
-      setText(bearingDirection, "");
+      setText(bearingPoint, "");
     }
 
     if (location.hasAltitude()) {
