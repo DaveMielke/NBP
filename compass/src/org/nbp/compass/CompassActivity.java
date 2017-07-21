@@ -136,26 +136,25 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   private final void setDistance (TextView view, double distance) {
-    String unit = "M";
+    DistanceUnit unit = ApplicationSettings.DISTANCE_UNIT;
 
     setText(view,
       String.format(
         "%d%s",
-        Math.round(distance),
-        unit
+        Math.round(distance * unit.getConversion()),
+        unit.getAcronym()
       )
     );
   }
 
   private final void setSpeed (TextView view, float speed) {
-    float conversion = (60f * 60f) / 1000f;
-    String unit = "kph";
+    SpeedUnit unit = ApplicationSettings.SPEED_UNIT;
 
     setText(view,
       String.format(
         "%d%s",
-        Math.round(speed * conversion),
-        unit
+        Math.round(speed * unit.getConversion()),
+        unit.getAcronym()
       )
     );
   }
@@ -220,7 +219,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
   }
 
   private final void log (String type, float[] vector) {
-    if (ApplicationParameters.LOG_VECTORS) {
+    if (ApplicationSettings.LOG_VECTORS) {
       StringBuilder sb = new StringBuilder();
       sb.append(type);
       char delimiter = ':';

@@ -65,7 +65,7 @@ public abstract class LocationUtilities {
   }
 
   public final static void log (Address address) {
-    if (ApplicationParameters.LOG_ADDRESSES) {
+    if (ApplicationSettings.LOG_ADDRESSES) {
       Log.d(LOG_TAG, ("address: " + toString(address)));
     }
   }
