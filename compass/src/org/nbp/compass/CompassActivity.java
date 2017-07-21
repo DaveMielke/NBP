@@ -3,15 +3,14 @@ package org.nbp.compass;
 import java.util.List;
 import java.io.IOException;
 
+import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
 
 import android.os.Build;
 import android.util.Log;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.AsyncTask;
-
 import android.content.Intent;
 
 import android.view.View;
@@ -31,7 +30,7 @@ import android.location.Location;
 import android.location.Address;
 import android.location.Geocoder;
 
-public class CompassActivity extends Activity implements SensorEventListener {
+public class CompassActivity extends CommonActivity implements SensorEventListener {
   private final static String LOG_TAG = CompassActivity.class.getName();
 
   private AccessibilityManager accessibilityManager;
@@ -511,6 +510,7 @@ public class CompassActivity extends Activity implements SensorEventListener {
     super.onCreate(savedInstanceState);
 
     accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
+    Controls.restore();
 
     setContentView(R.layout.compass);
     findViews();

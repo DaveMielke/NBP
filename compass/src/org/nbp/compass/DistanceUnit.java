@@ -1,7 +1,8 @@
 package org.nbp.compass;
 
-public enum DistanceUnit {
+public enum DistanceUnit implements UnitDefinitions {
   METERS("M", 1f),
+  FEET("ft", FEET_PER_METER),
   ;
 
   private final String distanceAcronym;

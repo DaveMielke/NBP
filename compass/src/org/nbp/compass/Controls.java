@@ -7,10 +7,16 @@ public abstract class Controls {
   private Controls () {
   }
 
+  public final static DistanceUnitControl distanceUnit = new DistanceUnitControl();
+  public final static SpeedUnitControl speedUnit = new SpeedUnitControl();
+
   public final static LogAddressesControl logAddresses = new LogAddressesControl();
   public final static LogVectorsControl logVectors = new LogVectorsControl();
 
   public final static Control[] ALL = new Control[] {
+    distanceUnit,
+    speedUnit,
+
     logAddresses,
     logVectors
   };

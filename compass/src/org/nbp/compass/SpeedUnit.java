@@ -1,7 +1,8 @@
 package org.nbp.compass;
 
-public enum SpeedUnit {
-  KILOMETERS_PER_HOUR("kph", (3600f / 1000f)),
+public enum SpeedUnit implements UnitDefinitions {
+  KILOMETERS_PER_HOUR("kph", (KILOMETERS_PER_METER * SECONDS_PER_HOUR)),
+  MILES_PER_HOUR("mph", (MILES_PER_METER * SECONDS_PER_HOUR)),
   ;
 
   private final String speedAcronym;
