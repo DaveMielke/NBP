@@ -356,7 +356,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               if (addresses != null) {
                 if (!addresses.isEmpty()) {
                   Address address = addresses.get(0);
-                  LocationUtilities.log(address);
+
+                  if (ApplicationSettings.LOG_ADDRESSES) {
+                    LocationUtilities.log(address);
+                  }
 
                   String name = LocationUtilities.getName(address);
                   Float distance = null;
@@ -373,6 +376,31 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
                     distance = results[0];
                     direction = results[1];
+
+                    if (ApplicationSettings.LOG_ADDRESSES) {
+                      StringBuilder sb = new StringBuilder("where:");
+
+                      sb.append(
+                        String.format(
+                          " [%.7f,%.7f]", latitude, longitude
+                        )
+                      );
+
+                      {
+                        DistanceUnit unit = ApplicationSettings.DISTANCE_UNIT;
+
+                        sb.append(
+                          String.format(
+                            " %.7f%s@%.7f°",
+                            (distancE * Unit.getConversion()),
+                            unit.getAcronym(),
+                            direction
+                          )
+                        );
+                      }
+
+                      Log.d(LOG_TAG, sb.toString());
+                    }
                   }
 
                   publishProgress(name, distance, direction);

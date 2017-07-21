@@ -9,15 +9,15 @@ public abstract class LocationUtilities {
   private LocationUtilities () {
   }
 
-  private final static void append (StringBuilder sb, boolean haveCoordinate, double coordinate) {
-    if (haveCoordinate) {
-      sb.append(String.format("%.7f", coordinate));
+  private final static void appendCoordinate (StringBuilder sb, boolean haveValue, double value) {
+    if (haveValue) {
+      sb.append(String.format("%.7f", value));
     } else {
       sb.append('?');
     }
   }
 
-  private final static void append (StringBuilder sb, String label, String string) {
+  private final static void appendProperty (StringBuilder sb, String label, String string) {
     if ((string != null) && !string.isEmpty()) {
       sb.append(' ');
       sb.append(label);
@@ -33,31 +33,31 @@ public abstract class LocationUtilities {
     StringBuilder sb = new StringBuilder();
 
     sb.append('[');
-    append(sb, address.hasLatitude(), address.getLatitude());
+    appendCoordinate(sb, address.hasLatitude(), address.getLatitude());
     sb.append(", ");
-    append(sb, address.hasLongitude(), address.getLongitude());
+    appendCoordinate(sb, address.hasLongitude(), address.getLongitude());
     sb.append(']');
 
-    append(sb, "CC", address.getCountryCode());
-    append(sb, "CN", address.getCountryName());
-    append(sb, "Adm", address.getAdminArea());
-    append(sb, "SubAdm", address.getSubAdminArea());
-    append(sb, "Loc", address.getLocality());
-    append(sb, "SubLoc", address.getSubLocality());
-    append(sb, "Ftr", address.getFeatureName());
-    append(sb, "Thor", address.getThoroughfare());
-    append(sb, "SubThor", address.getSubThoroughfare());
-    append(sb, "PC", address.getPostalCode());
-    append(sb, "Prem", address.getPremises());
-    append(sb, "Phone", address.getPhone());
-    append(sb, "URL", address.getUrl());
+    appendProperty(sb, "CC", address.getCountryCode());
+    appendProperty(sb, "CN", address.getCountryName());
+    appendProperty(sb, "Adm", address.getAdminArea());
+    appendProperty(sb, "SubAdm", address.getSubAdminArea());
+    appendProperty(sb, "Loc", address.getLocality());
+    appendProperty(sb, "SubLoc", address.getSubLocality());
+    appendProperty(sb, "Ftr", address.getFeatureName());
+    appendProperty(sb, "Thor", address.getThoroughfare());
+    appendProperty(sb, "SubThor", address.getSubThoroughfare());
+    appendProperty(sb, "PC", address.getPostalCode());
+    appendProperty(sb, "Prem", address.getPremises());
+    appendProperty(sb, "Phone", address.getPhone());
+    appendProperty(sb, "URL", address.getUrl());
 
     {
       int last = address.getMaxAddressLineIndex();
       int current = 0;
 
       while (current <= last) {
-        append(sb, ("Line" + current), address.getAddressLine(current++));
+        appendProperty(sb, ("Line" + current), address.getAddressLine(current++));
       }
     }
 
@@ -65,9 +65,7 @@ public abstract class LocationUtilities {
   }
 
   public final static void log (Address address) {
-    if (ApplicationSettings.LOG_ADDRESSES) {
-      Log.d(LOG_TAG, ("address: " + toString(address)));
-    }
+    Log.d(LOG_TAG, ("address: " + toString(address)));
   }
 
   private interface NameMaker {
