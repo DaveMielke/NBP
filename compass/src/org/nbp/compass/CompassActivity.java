@@ -391,8 +391,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
                         sb.append(
                           String.format(
-                            " %.7f%s@%.7f°",
-                            (distancE * Unit.getConversion()),
+                            " %.1f%s@%.0f°",
+                            (distance * unit.getConversion()),
                             unit.getAcronym(),
                             direction
                           )
@@ -467,7 +467,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     decimal.setText(String.format("%.5f°", degrees));
 
     StringBuilder sb = new StringBuilder();
-    long value = Math.round(degrees * 3600f);
     char hemisphere;
 
     if (degrees > 0f) {
@@ -478,6 +477,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     } else {
       hemisphere = ' ';
     }
+
+    long value = Math.round(degrees * 3600f);
 
     sb.append(value % 60);
     sb.append('"');
