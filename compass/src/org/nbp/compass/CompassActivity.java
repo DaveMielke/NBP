@@ -110,7 +110,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void setBearing (TextView view, float degrees) {
-    setText(view, String.format("%d°", Math.round(degrees)));
+    setText(view, ApplicationUtilities.toString(degrees));
   }
 
   private final static String[] POINT_ACRONYMS = new String[] {
@@ -137,28 +137,31 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     );
   }
 
-  private final void setDistance (TextView view, double distance) {
-    DistanceUnit unit = ApplicationSettings.DISTANCE_UNIT;
+  private final void setDegrees (TextView view, double degrees) {
+    setText(view, ApplicationUtilities.toString(degrees));
+  }
 
-    setText(view,
-      String.format(
-        "%d%s",
-        Math.round(distance * unit.getConversion()),
-        unit.getAcronym()
-      )
-    );
+  private final void setCoordinate (
+    TextView view, double degrees,
+    char positive, char negative
+  ) {
+    setText(view, ApplicationUtilities.toString(degrees, positive, negative));
+  }
+
+  private final void setLatitude (TextView view, double degrees) {
+    setCoordinate(view, degrees, 'N', 'S');
+  }
+
+  private final void setLongitude (TextView view, double degrees) {
+    setCoordinate(view, degrees, 'E', 'W');
+  }
+
+  private final void setDistance (TextView view, double distance) {
+    setText(view, ApplicationUtilities.toString(distance, ApplicationSettings.DISTANCE_UNIT));
   }
 
   private final void setSpeed (TextView view, float speed) {
-    SpeedUnit unit = ApplicationSettings.SPEED_UNIT;
-
-    setText(view,
-      String.format(
-        "%d%s",
-        Math.round(speed * unit.getConversion()),
-        unit.getAcronym()
-      )
-    );
+    setText(view, ApplicationUtilities.toString(speed, ApplicationSettings.SPEED_UNIT));
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -380,24 +383,13 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                     if (ApplicationSettings.LOG_ADDRESSES) {
                       StringBuilder sb = new StringBuilder("where:");
 
-                      sb.append(
-                        String.format(
-                          " [%.7f,%.7f]", latitude, longitude
-                        )
-                      );
+                      sb.append(' ');
+                      sb.append(ApplicationUtilities.toString(latitude, longitude));
 
-                      {
-                        DistanceUnit unit = ApplicationSettings.DISTANCE_UNIT;
-
-                        sb.append(
-                          String.format(
-                            " %.1f%s@%.0f°",
-                            (distance * unit.getConversion()),
-                            unit.getAcronym(),
-                            direction
-                          )
-                        );
-                      }
+                      sb.append(' ');
+                      sb.append(ApplicationUtilities.toString(distance, ApplicationSettings.DISTANCE_UNIT));
+                      sb.append('@');
+                      sb.append(ApplicationUtilities.toString(direction));
 
                       Log.d(LOG_TAG, sb.toString());
                     }
@@ -459,53 +451,13 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     }
   }
 
-  private final void setLocationCoordinate (
-    double degrees,
-    TextView decimal, TextView dms,
-    char positive, char negative
-  ) {
-    decimal.setText(String.format("%.5f°", degrees));
-
-    StringBuilder sb = new StringBuilder();
-    char hemisphere;
-
-    if (degrees > 0f) {
-      hemisphere = positive;
-    } else if (degrees < 0f) {
-      hemisphere = negative;
-      degrees = -degrees;
-    } else {
-      hemisphere = ' ';
-    }
-
-    long value = Math.round(degrees * 3600f);
-
-    sb.append(value % 60);
-    sb.append('"');
-    value /= 60;
-
-    if (value > 0) {
-      sb.insert(0, "' ");
-      sb.insert(0, value%60);
-      value /= 60;
-
-      if (value > 0) {
-        sb.insert(0, "° ");
-        sb.insert(0, value);
-      }
-    }
-
-    if (hemisphere != ' ') {
-      sb.append(' ');
-      sb.append(hemisphere);
-    }
-
-    dms.setText(sb.toString());
-  }
-
   private final void setLocation (double latitude, double longitude) {
-    setLocationCoordinate(latitude, latitudeDecimal, latitudeDMS, 'N', 'S');
-    setLocationCoordinate(longitude, longitudeDecimal, longitudeDMS, 'E', 'W');
+    setDegrees(latitudeDecimal, latitude);
+    setDegrees(longitudeDecimal, longitude);
+
+    setLatitude(latitudeDMS, latitude);
+    setLongitude(longitudeDMS, longitude);
+
     setLocationFields(latitude, longitude);
   }
 

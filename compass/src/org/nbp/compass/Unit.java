@@ -1,6 +1,9 @@
 package org.nbp.compass;
 
-public interface UnitDefinitions {
+public interface Unit {
+  public String getAcronym ();
+  public float getConversion ();
+
   public final float SECONDS_PER_MINUTE = 60f;
   public final float MINUTES_PER_HOUR = 60f;
   public final float SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR;
