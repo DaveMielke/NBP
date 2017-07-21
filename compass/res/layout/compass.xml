@@ -36,6 +36,11 @@
   </TableRow>
 
   <TableRow>
+    <TextView android:text="@string/altitude_label" />
+    <TextView android:id="@+id/altitude_magnitude" />
+  </TableRow>
+
+  <TableRow>
     <TextView android:text="@string/location_label" />
     <TextView android:id="@+id/location_name" android:layout_span="2" android:hint="@string/message_unknown" />
   </TableRow>
@@ -60,10 +65,5 @@
     <TextView android:text="@string/bearing_label" />
     <TextView android:id="@+id/bearing_degrees" />
     <TextView android:id="@+id/bearing_point" />
-  </TableRow>
-
-  <TableRow>
-    <TextView android:text="@string/altitude_label" />
-    <TextView android:id="@+id/altitude_magnitude" />
   </TableRow>
 </TableLayout>
