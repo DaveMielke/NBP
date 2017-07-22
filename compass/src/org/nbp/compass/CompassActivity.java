@@ -256,28 +256,17 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   public void onSensorChanged (SensorEvent event) {
     {
       float[] values = event.values;
-      int count = values.length;
 
       switch (event.sensor.getType()) {
-        case Sensor.TYPE_ACCELEROMETER: {
-          if (gravityVector == null) {
-            gravityVector = new float[count];
-          }
-
-          System.arraycopy(values, 0, gravityVector, 0, count);
+        case Sensor.TYPE_ACCELEROMETER:
+          if (gravityVector == null) gravityVector = values;
           log("accelerometer", gravityVector);
           break;
-        }
 
-        case Sensor.TYPE_MAGNETIC_FIELD: {
-          if (geomagneticVector == null) {
-            geomagneticVector = new float[count];
-          }
-
-          System.arraycopy(values, 0, geomagneticVector, 0, count);
+        case Sensor.TYPE_MAGNETIC_FIELD:
+          if (geomagneticVector == null) geomagneticVector = values;
           log("geomagnetic", geomagneticVector);
           break;
-        }
 
         default:
           return;
@@ -285,30 +274,33 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     }
 
     if ((gravityVector != null) && (geomagneticVector != null)) {
-      sensorManager.getRotationMatrix(
+      boolean success = sensorManager.getRotationMatrix(
         rotationMatrix, null,
         gravityVector, geomagneticVector
       );
 
-      sensorManager.getOrientation(rotationMatrix, currentOrientation);
-      log("rotation", rotationMatrix);
-      log("orientation", currentOrientation);
+      if (success) {
+        log("rotation", rotationMatrix);
 
-      setOrientationAction.setAction(
-        new Runnable() {
-          @Override
-          public void run () {
-            runOnUiThread(
-              new Runnable() {
-                @Override
-                public void run () {
-                  setOrientationFields();
+        sensorManager.getOrientation(rotationMatrix, currentOrientation);
+        log("orientation", currentOrientation);
+
+        setOrientationAction.setAction(
+          new Runnable() {
+            @Override
+            public void run () {
+              runOnUiThread(
+                new Runnable() {
+                  @Override
+                  public void run () {
+                    setOrientationFields();
+                  }
                 }
-              }
-            );
+              );
+            }
           }
-        }
-      );
+        );
+      }
     }
   }
 
