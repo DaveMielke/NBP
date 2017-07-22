@@ -575,7 +575,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   @Override
   protected void onResume () {
     super.onResume();
-//  startSensors();
+    startSensors();
     locationMonitor.start();
   }
 
