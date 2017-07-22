@@ -11,7 +11,7 @@ public abstract class LocationUtilities {
 
   private final static void appendCoordinate (StringBuilder sb, boolean haveValue, double value) {
     if (haveValue) {
-      sb.append(String.format("%.5f", value));
+      sb.append(ApplicationUtilities.toCoordinateString(value));
     } else {
       sb.append('?');
     }

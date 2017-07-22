@@ -10,69 +10,77 @@
   <TableLayout>
     <TableRow>
       <Button
-        android:text="@string/settings_button_label"
+        android:text="@string/label_settings_button"
         android:onClick="onSettingsButtonClick"
        />
     </TableRow>
   </TableLayout>
 
+  <TextView android:text="@string/section_position" />
+
   <TableRow>
-    <TextView android:text="@string/latitude_label" />
+    <TextView android:text="@string/label_latitude" />
     <TextView android:id="@+id/latitude_decimal" />
     <TextView android:id="@+id/latitude_dms" />
   </TableRow>
 
   <TableRow>
-    <TextView android:text="@string/longitude_label" />
+    <TextView android:text="@string/label_longitude" />
     <TextView android:id="@+id/longitude_decimal" />
     <TextView android:id="@+id/longitude_dms" />
   </TableRow>
 
   <TableRow>
-    <TextView android:text="@string/altitude_label" />
+    <TextView android:text="@string/label_altitude" />
     <TextView android:id="@+id/altitude_magnitude" />
   </TableRow>
 
+  <TextView android:text="@string/section_location" />
+
   <TableRow>
-    <TextView android:text="@string/location_label" />
+    <TextView android:text="@string/label_location" />
     <TextView android:id="@+id/location_name" android:layout_span="2" android:hint="@string/message_unknown" />
   </TableRow>
 
   <TableRow>
-    <TextView android:text="@string/distance_label" />
+    <TextView android:text="@string/label_distance" />
     <TextView android:id="@+id/distance_magnitude" />
   </TableRow>
 
   <TableRow>
-    <TextView android:text="@string/direction_label" />
+    <TextView android:text="@string/label_direction" />
     <TextView android:id="@+id/direction_degrees" />
     <TextView android:id="@+id/direction_point" />
   </TableRow>
 
+  <TextView android:text="@string/section_motion" />
+
   <TableRow>
-    <TextView android:text="@string/speed_label" />
+    <TextView android:text="@string/label_speed" />
     <TextView android:id="@+id/speed_magnitude" />
   </TableRow>
 
   <TableRow>
-    <TextView android:text="@string/bearing_label" />
+    <TextView android:text="@string/label_bearing" />
     <TextView android:id="@+id/bearing_degrees" />
     <TextView android:id="@+id/bearing_point" />
   </TableRow>
 
+  <TextView android:text="@string/section_orientation" />
+
   <TableRow>
-    <TextView android:text="@string/azimuth_label" />
+    <TextView android:text="@string/label_azimuth" />
     <TextView android:id="@+id/azimuth_degrees" />
     <TextView android:id="@+id/azimuth_point" />
   </TableRow>
 
   <TableRow>
-    <TextView android:text="@string/pitch_label" />
+    <TextView android:text="@string/label_pitch" />
     <TextView android:id="@+id/pitch_degrees" />
   </TableRow>
 
   <TableRow>
-    <TextView android:text="@string/roll_label" />
+    <TextView android:text="@string/label_roll" />
     <TextView android:id="@+id/roll_degrees" />
   </TableRow>
 </TableLayout>

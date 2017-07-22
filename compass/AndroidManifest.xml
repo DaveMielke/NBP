@@ -34,7 +34,7 @@
 
     <activity
       android:name=".SettingsActivity"
-      android:label="@string/settings_activity_label"
+      android:label="@string/label_settings_activity"
      />
   </application>
 </manifest>

@@ -13,7 +13,13 @@ public abstract class ApplicationUtilities {
   }
 
   public final static String toCoordinatesString (double latitude, double longitude) {
-    return String.format("[%.5f,%.5f]", latitude, longitude);
+    StringBuilder sb = new StringBuilder();
+    sb.append('[');
+    sb.append(toCoordinateString(latitude));
+    sb.append(',');
+    sb.append(toCoordinateString(longitude));
+    sb.append(']');
+    return sb.toString();
   }
 
   private final static String toCoordinateString (double degrees, char positive, char negative) {
