@@ -10,18 +10,18 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationListener;
 
-public class GoogleLocationMonitor extends LocationMonitor implements
+public class FusedLocationMonitor extends LocationMonitor implements
   GoogleApiClient.ConnectionCallbacks,
   GoogleApiClient.OnConnectionFailedListener,
   LocationListener
 {
-  private final static String LOG_TAG = GoogleLocationMonitor.class.getName();
+  private final static String LOG_TAG = FusedLocationMonitor.class.getName();
 
   private final GoogleApiClient client;
   private boolean isConnected = false;
   private boolean isStarted = false;
 
-  public GoogleLocationMonitor (CompassActivity activity) {
+  public FusedLocationMonitor (CompassActivity activity) {
     super(activity);
 
     client = new GoogleApiClient.Builder(activity)

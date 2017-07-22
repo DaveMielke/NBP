@@ -139,6 +139,18 @@ public abstract class LocationUtilities {
 
         return name;
       }
+    },
+
+    // [latitude,longitude]
+    new NameMaker() {
+      @Override
+      public String makeName (Address address) {
+        if (!address.hasLatitude()) return null;
+        if (!address.hasLongitude()) return null;
+        return ApplicationUtilities.toCoordinatesString(
+          address.getLatitude(), address.getLongitude()
+        );
+      }
     }
   };
 
