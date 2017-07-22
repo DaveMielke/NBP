@@ -99,10 +99,22 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
   }
 
-  private final void setText (TextView view, CharSequence text) {
+  private final DelayedAction getAction (View view, int key, long delay) {
+    DelayedAction action = (DelayedAction)view.getTag(key);
+
+    if (action == null) {
+      action = new DelayedAction(delay, getResources().getString(key));
+      view.setTag(key, action);
+    }
+
+    return action;
+  }
+
+  private final void setText (final TextView view, final CharSequence text) {
     if (!TextUtils.equals(text, view.getText())) {
       view.setText(text);
 
+      /*
       if (text.length() == 0) {
         CharSequence hint = view.getHint();
 
@@ -112,20 +124,29 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
           }
         }
       }
+      */
 
-      if (accessibilityManager != null) {
-        if (accessibilityManager.isEnabled()) {
-          if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-            if (view.isAccessibilityFocused()) {
-              AccessibilityEvent event = AccessibilityEvent.obtain();
-              view.onInitializeAccessibilityEvent(event);
-              event.getText().add(text);
-              event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-              accessibilityManager.sendAccessibilityEvent(event);
+      final CharSequence announcement = text;
+      getAction(view, R.string.text_action_announce, ApplicationParameters.TEXT_ANNOUNCE_DELAY).setAction(
+        new Runnable() {
+          @Override
+          public void run () {
+            if (accessibilityManager != null) {
+              if (accessibilityManager.isEnabled()) {
+                if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+                  if (view.isAccessibilityFocused()) {
+                    AccessibilityEvent event = AccessibilityEvent.obtain();
+                    view.onInitializeAccessibilityEvent(event);
+                    event.getText().add(announcement);
+                    event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                    accessibilityManager.sendAccessibilityEvent(event);
+                  }
+                }
+              }
             }
           }
         }
-      }
+      );
     }
   }
 
@@ -215,13 +236,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private float[] gravityVector = null;
   private float[] geomagneticVector = null;
 
-  private final Measurement headingMeasurement = new Measurement();
-  private final Measurement pitchMeasurement = new Measurement();
-  private final Measurement rollMeasurement = new Measurement();
-
-  private final float translateValue (Measurement measurement, float value) {
-    measurement.add(value);
-    return (float)Math.toDegrees(measurement.get());
+  private final float translateOrientation (float radians) {
+    return (float)Math.toDegrees((double)radians);
   }
 
   private final void log (String type, float[] vector) {
@@ -284,9 +300,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
       log("rotation", rotationMatrix);
       log("orientation", currentOrientation);
 
-      float heading = translateValue(headingMeasurement, -currentOrientation[0]);
-      float pitch   = translateValue(pitchMeasurement  , -currentOrientation[1]);
-      float roll    = translateValue(rollMeasurement   ,  currentOrientation[2]);
+      float heading = translateOrientation(-currentOrientation[0]);
+      float pitch   = translateOrientation(-currentOrientation[1]);
+      float roll    = translateOrientation( currentOrientation[2]);
 
       setBearing(headingDegrees, heading);
       setPoint(headingPoint, heading);
@@ -330,9 +346,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
         new AsyncTask<Void, Object, Void>() {
           @Override
           protected void onProgressUpdate (Object... arguments) {
-            String name = (String)arguments[0];
-            Float distance = (Float)arguments[1];
-            Float direction = (Float)arguments[2];
+            String name     = (String)arguments[0];
+            Float distance  = (Float) arguments[1];
+            Float direction = (Float) arguments[2];
 
             setText(locationName, name);
 

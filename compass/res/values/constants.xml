@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="text_action_announce">announce_text</string>
+  <string name="text_action_show">show_text</string>
+</resources>
