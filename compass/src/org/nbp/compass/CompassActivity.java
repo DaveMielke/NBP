@@ -6,12 +6,18 @@ import java.io.IOException;
 import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
 
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
+
 import android.os.Build;
 import android.util.Log;
 
 import android.os.Bundle;
 import android.os.AsyncTask;
 import android.content.Intent;
+
+import android.view.Menu;
+import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.TextView;
@@ -507,6 +513,51 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     }
   }
 
+  private final void menuAction_settings () {
+    Intent intent = new Intent(this, SettingsActivity.class);
+    startActivity(intent);
+  }
+
+  private final void menuAction_about () {
+    DialogFinisher finisher = new DialogFinisher() {
+      @Override
+      public void finishDialog (DialogHelper helper) {
+        helper.setText(R.id.about_version_number, R.string.NBP_Compass_version_name);
+        helper.setText(R.id.about_build_time, R.string.NBP_Compass_build_time);
+        helper.setText(R.id.about_source_revision, R.string.NBP_Compass_source_revision);
+        helper.setTextFromAsset(R.id.about_copyright, "copyright");
+      }
+    };
+
+    showDialog(R.string.menu_about, R.layout.about, finisher);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected (MenuItem item) {
+    int identifier = item.getItemId();
+
+    switch (identifier) {
+      case R.id.menu_settings:
+        menuAction_settings();
+        return true;
+
+      case R.id.menu_about:
+        menuAction_about();
+        return true;
+    }
+
+    String name = getResources().getResourceEntryName(identifier);
+    if (name == null) name = Integer.toString(identifier);
+    Log.w(LOG_TAG, ("unhandled menu action: " + name));
+    return false;
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu (Menu menu) {
+    getMenuInflater().inflate(R.menu.options, menu);
+    return true;
+  }
+
   @Override
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -536,10 +587,5 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     } finally {
       super.onPause();
     }
-  }
-
-  public final void onSettingsButtonClick (View view) {
-    Intent intent = new Intent(this, SettingsActivity.class);
-    startActivity(intent);
   }
 }

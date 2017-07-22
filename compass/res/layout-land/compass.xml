@@ -7,33 +7,19 @@
   android:keepScreenOn="true"
   >
 
-  <include layout="@layout/actions" />
-
   <TableRow>
     <TableLayout>
-      <TableLayout>
-        <include layout="@layout/position" />
-      </TableLayout>
-
-      <TableLayout>
-        <include layout="@layout/location" />
-      </TableLayout>
+      <include layout="@layout/position" />
+      <include layout="@layout/location" />
     </TableLayout>
 
     <TableLayout>
-      <TableLayout>
-        <include layout="@layout/orientation" />
-      </TableLayout>
-
-      <TableLayout>
-        <include layout="@layout/motion" />
-      </TableLayout>
+      <include layout="@layout/orientation" />
+      <include layout="@layout/motion" />
     </TableLayout>
 
     <TableLayout>
-      <TableLayout>
-        <include layout="@layout/accuracy" />
-      </TableLayout>
+      <include layout="@layout/accuracy" />
     </TableLayout>
   </TableRow>
 </TableLayout>

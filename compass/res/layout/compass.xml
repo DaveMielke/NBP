@@ -7,7 +7,6 @@
   android:keepScreenOn="true"
   >
 
-  <include layout="@layout/actions" />
   <include layout="@layout/position" />
   <include layout="@layout/location" />
   <include layout="@layout/motion" />
