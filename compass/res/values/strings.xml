@@ -6,7 +6,7 @@
   <string name="label_settings_activity">NBP Compass Settings</string>
   <string name="label_settings_button">Settings</string>
 
-  <string name="section_position">Geographic Position</string>
+  <string name="section_position">Terrestrial Position</string>
   <string name="label_latitude">Latitude</string>
   <string name="label_longitude">Longitude</string>
   <string name="label_altitude">Altitude</string>
