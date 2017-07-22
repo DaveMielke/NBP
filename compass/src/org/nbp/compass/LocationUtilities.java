@@ -64,10 +64,6 @@ public abstract class LocationUtilities {
     return sb.toString();
   }
 
-  public final static void log (Address address) {
-    Log.d(LOG_TAG, ("address: " + toString(address)));
-  }
-
   private interface NameMaker {
     public String makeName (Address address);
   }

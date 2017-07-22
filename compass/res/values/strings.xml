@@ -21,7 +21,7 @@
   <string name="label_bearing">Bearing</string>
 
   <string name="section_orientation">Device Orientation</string>
-  <string name="label_azimuth">Heading</string>
+  <string name="label_heading">Heading</string>
   <string name="label_pitch">Pitch</string>
   <string name="label_roll">Roll</string>
 

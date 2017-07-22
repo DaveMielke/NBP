@@ -3,10 +3,10 @@ import org.nbp.compass.*;
 
 import org.nbp.common.BooleanControl;
 
-public class LogVectorsControl extends BooleanControl {
+public class LogSensorsControl extends BooleanControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_LogVectors;
+    return R.string.control_label_LogSensors;
   }
 
   @Override
@@ -16,26 +16,26 @@ public class LogVectorsControl extends BooleanControl {
 
   @Override
   protected String getPreferenceKey () {
-    return "log-vectors";
+    return "log-sensors";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationDefaults.LOG_VECTORS;
+    return ApplicationDefaults.LOG_SENSORS;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.LOG_VECTORS;
+    return ApplicationSettings.LOG_SENSORS;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.LOG_VECTORS = value;
+    ApplicationSettings.LOG_SENSORS = value;
     return true;
   }
 
-  public LogVectorsControl () {
+  public LogSensorsControl () {
     super();
   }
 }

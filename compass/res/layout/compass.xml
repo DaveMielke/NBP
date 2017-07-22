@@ -69,9 +69,9 @@
   <TextView android:text="@string/section_orientation" />
 
   <TableRow>
-    <TextView android:text="@string/label_azimuth" />
-    <TextView android:id="@+id/azimuth_degrees" />
-    <TextView android:id="@+id/azimuth_point" />
+    <TextView android:text="@string/label_heading" />
+    <TextView android:id="@+id/heading_degrees" />
+    <TextView android:id="@+id/heading_point" />
   </TableRow>
 
   <TableRow>

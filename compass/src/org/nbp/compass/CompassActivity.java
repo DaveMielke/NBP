@@ -54,8 +54,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView bearingPoint;
 
   // orientation
-  private TextView azimuthDegrees;
-  private TextView azimuthPoint;
+  private TextView headingDegrees;
+  private TextView headingPoint;
   private TextView pitchDegrees;
   private TextView rollDegrees;
 
@@ -79,8 +79,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     bearingPoint = (TextView)findViewById(R.id.bearing_point);
 
     // orientation
-    azimuthDegrees = (TextView)findViewById(R.id.azimuth_degrees);
-    azimuthPoint = (TextView)findViewById(R.id.azimuth_point);
+    headingDegrees = (TextView)findViewById(R.id.heading_degrees);
+    headingPoint = (TextView)findViewById(R.id.heading_point);
     pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
     rollDegrees = (TextView)findViewById(R.id.roll_degrees);
   }
@@ -201,7 +201,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private float[] gravityVector = null;
   private float[] geomagneticVector = null;
 
-  private final Measurement azimuthMeasurement = new Measurement();
+  private final Measurement headingMeasurement = new Measurement();
   private final Measurement pitchMeasurement = new Measurement();
   private final Measurement rollMeasurement = new Measurement();
 
@@ -211,7 +211,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void log (String type, float[] vector) {
-    if (ApplicationSettings.LOG_VECTORS) {
+    if (ApplicationSettings.LOG_SENSORS) {
       StringBuilder sb = new StringBuilder();
       sb.append(type);
       char delimiter = ':';
@@ -270,12 +270,12 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
       log("rotation", rotationMatrix);
       log("orientation", currentOrientation);
 
-      float azimuth = translateValue(azimuthMeasurement, -currentOrientation[0]);
+      float heading = translateValue(headingMeasurement, -currentOrientation[0]);
       float pitch   = translateValue(pitchMeasurement  , -currentOrientation[1]);
       float roll    = translateValue(rollMeasurement   ,  currentOrientation[2]);
 
-      setBearing(azimuthDegrees, azimuth);
-      setPoint(azimuthPoint, azimuth);
+      setBearing(headingDegrees, heading);
+      setPoint(headingPoint, heading);
       setBearing(pitchDegrees, pitch);
       setBearing(rollDegrees, roll);
     }
@@ -347,8 +347,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                 if (!addresses.isEmpty()) {
                   Address address = addresses.get(0);
 
-                  if (ApplicationSettings.LOG_ADDRESSES) {
-                    LocationUtilities.log(address);
+                  if (ApplicationSettings.LOG_GEOCODING) {
+                    Log.d(LOG_TAG, ("address: " + LocationUtilities.toString(address)));
                   }
 
                   String name = LocationUtilities.getName(address);
@@ -367,8 +367,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                     distance = results[0];
                     direction = results[1];
 
-                    if (ApplicationSettings.LOG_ADDRESSES) {
-                      StringBuilder sb = new StringBuilder("where:");
+                    if (ApplicationSettings.LOG_GEOCODING) {
+                      StringBuilder sb = new StringBuilder("orientation:");
 
                       sb.append(' ');
                       sb.append(ApplicationUtilities.toCoordinatesString(latitude, longitude));

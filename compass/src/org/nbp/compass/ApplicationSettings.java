@@ -7,6 +7,6 @@ public abstract class ApplicationSettings {
   public volatile static DistanceUnit DISTANCE_UNIT = ApplicationDefaults.DISTANCE_UNIT;
   public volatile static SpeedUnit SPEED_UNIT = ApplicationDefaults.SPEED_UNIT;
 
-  public volatile static boolean LOG_ADDRESSES = ApplicationDefaults.LOG_ADDRESSES;
-  public volatile static boolean LOG_VECTORS = ApplicationDefaults.LOG_VECTORS;
+  public volatile static boolean LOG_GEOCODING = ApplicationDefaults.LOG_GEOCODING;
+  public volatile static boolean LOG_SENSORS = ApplicationDefaults.LOG_SENSORS;
 }

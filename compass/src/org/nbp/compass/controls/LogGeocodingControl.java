@@ -3,10 +3,10 @@ import org.nbp.compass.*;
 
 import org.nbp.common.BooleanControl;
 
-public class LogAddressesControl extends BooleanControl {
+public class LogGeocodingControl extends BooleanControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_LogAddresses;
+    return R.string.control_label_LogGeocoding;
   }
 
   @Override
@@ -16,26 +16,26 @@ public class LogAddressesControl extends BooleanControl {
 
   @Override
   protected String getPreferenceKey () {
-    return "log-addresses";
+    return "log-geocoding";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationDefaults.LOG_ADDRESSES;
+    return ApplicationDefaults.LOG_GEOCODING;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.LOG_ADDRESSES;
+    return ApplicationSettings.LOG_GEOCODING;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.LOG_ADDRESSES = value;
+    ApplicationSettings.LOG_GEOCODING = value;
     return true;
   }
 
-  public LogAddressesControl () {
+  public LogGeocodingControl () {
     super();
   }
 }
