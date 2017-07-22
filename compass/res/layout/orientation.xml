@@ -4,21 +4,29 @@
   <TextView
     android:text="@string/section_orientation"
     android:textAppearance="?android:attr/textAppearanceLarge" 
+    android:paddingRight="@dimen/spacer_width"
    />
 
   <TableRow>
     <TextView android:text="@string/label_heading" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/heading_degrees" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/heading_point" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_pitch" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/pitch_degrees" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_roll" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/roll_degrees" />
+    <include layout="@layout/spacer" />
   </TableRow>
 </merge>

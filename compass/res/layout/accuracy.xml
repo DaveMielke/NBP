@@ -4,15 +4,20 @@
   <TextView
     android:text="@string/section_accuracy"
     android:textAppearance="?android:attr/textAppearanceLarge"
+    android:paddingRight="@dimen/spacer_width"
    />
 
   <TableRow>
     <TextView android:text="@string/label_satellites" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/accuracy_satellites" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_horizontal" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/accuracy_horizontal" />
+    <include layout="@layout/spacer" />
   </TableRow>
 </merge>

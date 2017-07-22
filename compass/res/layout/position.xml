@@ -4,22 +4,31 @@
   <TextView
     android:text="@string/section_position"
     android:textAppearance="?android:attr/textAppearanceLarge"
+    android:paddingRight="@dimen/spacer_width"
    />
 
   <TableRow>
     <TextView android:text="@string/label_latitude" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/latitude_decimal" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/latitude_dms" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_longitude" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/longitude_decimal" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/longitude_dms" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_altitude" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/altitude_magnitude" />
+    <include layout="@layout/spacer" />
   </TableRow>
 </merge>

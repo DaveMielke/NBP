@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <dimen name="spacer_width">5.0dp</dimen>
+
   <string name="text_action_announce">announce_text</string>
   <string name="text_action_show">show_text</string>
 </resources>

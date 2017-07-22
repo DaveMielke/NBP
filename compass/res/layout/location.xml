@@ -4,21 +4,29 @@
   <TextView
     android:text="@string/section_location"
     android:textAppearance="?android:attr/textAppearanceLarge"
+    android:paddingRight="@dimen/spacer_width"
    />
 
   <TableRow>
     <TextView android:text="@string/label_location" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/location_name" android:layout_span="2" android:hint="@string/message_unknown" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_distance" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/distance_magnitude" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_direction" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/direction_degrees" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/direction_point" />
+    <include layout="@layout/spacer" />
   </TableRow>
 </merge>

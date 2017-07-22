@@ -4,16 +4,22 @@
   <TextView
     android:text="@string/section_motion"
     android:textAppearance="?android:attr/textAppearanceLarge"
+    android:paddingRight="@dimen/spacer_width"
    />
 
   <TableRow>
     <TextView android:text="@string/label_speed" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/speed_magnitude" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_bearing" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/bearing_degrees" />
+    <include layout="@layout/spacer" />
     <TextView android:id="@+id/bearing_point" />
+    <include layout="@layout/spacer" />
   </TableRow>
 </merge>
