@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+  <TextView android:text="@string/section_position" />
+
+  <TableRow>
+    <TextView android:text="@string/label_latitude" />
+    <TextView android:id="@+id/latitude_decimal" />
+    <TextView android:id="@+id/latitude_dms" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_longitude" />
+    <TextView android:id="@+id/longitude_decimal" />
+    <TextView android:id="@+id/longitude_dms" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_altitude" />
+    <TextView android:id="@+id/altitude_magnitude" />
+  </TableRow>
+</merge>

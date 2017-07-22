@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+  <TextView android:text="@string/section_orientation" />
+
+  <TableRow>
+    <TextView android:text="@string/label_heading" />
+    <TextView android:id="@+id/heading_degrees" />
+    <TextView android:id="@+id/heading_point" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_pitch" />
+    <TextView android:id="@+id/pitch_degrees" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_roll" />
+    <TextView android:id="@+id/roll_degrees" />
+  </TableRow>
+</merge>

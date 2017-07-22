@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+  <TextView android:text="@string/section_motion" />
+
+  <TableRow>
+    <TextView android:text="@string/label_speed" />
+    <TextView android:id="@+id/speed_magnitude" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_bearing" />
+    <TextView android:id="@+id/bearing_degrees" />
+    <TextView android:id="@+id/bearing_point" />
+  </TableRow>
+</merge>

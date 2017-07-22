@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+  <TextView android:text="@string/section_location" />
+
+  <TableRow>
+    <TextView android:text="@string/label_location" />
+    <TextView android:id="@+id/location_name" android:layout_span="2" android:hint="@string/message_unknown" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_distance" />
+    <TextView android:id="@+id/distance_magnitude" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_direction" />
+    <TextView android:id="@+id/direction_degrees" />
+    <TextView android:id="@+id/direction_point" />
+  </TableRow>
+</merge>
