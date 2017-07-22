@@ -7,12 +7,12 @@
    />
 
   <TableRow>
-    <TextView android:text="@string/label_satellite" />
-    <TextView android:id="@+id/satellite_count" />
+    <TextView android:text="@string/label_satellites" />
+    <TextView android:id="@+id/accuracy_satellites" />
   </TableRow>
 
   <TableRow>
     <TextView android:text="@string/label_horizontal" />
-    <TextView android:id="@+id/horizontal_magnitude" />
+    <TextView android:id="@+id/accuracy_horizontal" />
   </TableRow>
 </merge>

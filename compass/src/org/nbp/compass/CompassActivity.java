@@ -42,8 +42,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private AccessibilityManager accessibilityManager;
 
   // accuracy
-  private TextView satelliteCount;
-  private TextView horizontalMagnitude;
+  private TextView accuracySatellites;
+  private TextView accuracyHorizontal;
 
   // location
   private TextView locationName;
@@ -71,8 +71,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
   private final void findViews () {
     // accuracy
-    satelliteCount = (TextView)findViewById(R.id.satellite_count);
-    horizontalMagnitude = (TextView)findViewById(R.id.horizontal_magnitude);
+    accuracySatellites = (TextView)findViewById(R.id.accuracy_satellites);
+    accuracyHorizontal = (TextView)findViewById(R.id.accuracy_horizontal);
 
     // location
     locationName = (TextView)findViewById(R.id.location_name);
@@ -490,9 +490,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
     if (location.hasAccuracy()) {
       float distance = location.getAccuracy();
-      setText(horizontalMagnitude, ("±" + ApplicationUtilities.toDistanceString(distance)));
+      setText(accuracyHorizontal, ("±" + ApplicationUtilities.toDistanceString(distance)));
     } else {
-      setText(horizontalMagnitude);
+      setText(accuracyHorizontal);
     }
 
     {
@@ -504,9 +504,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
           if (extras.containsKey(key)) {
             int count = extras.getInt(key);
-            setText(satelliteCount, Integer.toString(count));
+            setText(accuracySatellites, Integer.toString(count));
           } else {
-            setText(satelliteCount);
+            setText(accuracySatellites);
           }
         }
       }

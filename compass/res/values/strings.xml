@@ -7,8 +7,11 @@
   <string name="label_settings_button">Settings</string>
 
   <string name="section_accuracy">Measurement Accuracy</string>
-  <string name="label_satellite">Satellites</string>
-  <string name="label_horizontal">Horizontal</string>
+  <string name="label_satellites">Satellites</string>
+  <string name="label_horizontal">Distance</string>
+  <string name="label_vertical">Altitude</string>
+  <string name="label_direction">Direction</string>
+  <string name="label_speed">Speed</string>
 
   <string name="section_location">Geocoded Location</string>
   <string name="label_location">Location</string>
