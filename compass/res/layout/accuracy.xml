@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+  <TextView android:text="@string/section_accuracy" />
+
+  <TableRow>
+    <TextView android:text="@string/label_satellite" />
+    <TextView android:id="@+id/satellite_count" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/label_horizontal" />
+    <TextView android:id="@+id/horizontal_magnitude" />
+  </TableRow>
+</merge>

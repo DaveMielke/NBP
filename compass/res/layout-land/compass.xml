@@ -29,5 +29,11 @@
         <include layout="@layout/motion" />
       </TableLayout>
     </TableLayout>
+
+    <TableLayout>
+      <TableLayout>
+        <include layout="@layout/accuracy" />
+      </TableLayout>
+    </TableLayout>
   </TableRow>
 </TableLayout>

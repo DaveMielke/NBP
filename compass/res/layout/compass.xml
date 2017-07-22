@@ -11,5 +11,6 @@
   <include layout="@layout/position" />
   <include layout="@layout/location" />
   <include layout="@layout/motion" />
+  <include layout="@layout/accuracy" />
   <include layout="@layout/orientation" />
 </TableLayout>

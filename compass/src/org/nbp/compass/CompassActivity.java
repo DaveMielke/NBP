@@ -35,12 +35,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
   private AccessibilityManager accessibilityManager;
 
-  // position
-  private TextView latitudeDecimal;
-  private TextView latitudeDMS;
-  private TextView longitudeDecimal;
-  private TextView longitudeDMS;
-  private TextView altitudeMagnitude;
+  // accuracy
+  private TextView satelliteCount;
+  private TextView horizontalMagnitude;
 
   // location
   private TextView locationName;
@@ -59,13 +56,17 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView pitchDegrees;
   private TextView rollDegrees;
 
+  // position
+  private TextView latitudeDecimal;
+  private TextView latitudeDMS;
+  private TextView longitudeDecimal;
+  private TextView longitudeDMS;
+  private TextView altitudeMagnitude;
+
   private final void findViews () {
-    // position
-    latitudeDecimal = (TextView)findViewById(R.id.latitude_decimal);
-    latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
-    longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
-    longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
-    altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
+    // accuracy
+    satelliteCount = (TextView)findViewById(R.id.satellite_count);
+    horizontalMagnitude = (TextView)findViewById(R.id.horizontal_magnitude);
 
     // location
     locationName = (TextView)findViewById(R.id.location_name);
@@ -83,6 +84,13 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     headingPoint = (TextView)findViewById(R.id.heading_point);
     pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
     rollDegrees = (TextView)findViewById(R.id.roll_degrees);
+
+    // position
+    latitudeDecimal = (TextView)findViewById(R.id.latitude_decimal);
+    latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
+    longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
+    longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
+    altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
   }
 
   private final void setText (TextView view, CharSequence text) {
@@ -472,6 +480,30 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     } else {
       setText(bearingDegrees);
       setText(bearingPoint);
+    }
+
+    if (location.hasAccuracy()) {
+      float distance = location.getAccuracy();
+      setText(horizontalMagnitude, ("±" + ApplicationUtilities.toDistanceString(distance)));
+    } else {
+      setText(horizontalMagnitude);
+    }
+
+    {
+      Bundle extras = location.getExtras();
+
+      if (extras != null) {
+        {
+          String key = "satellites";
+
+          if (extras.containsKey(key)) {
+            int count = extras.getInt(key);
+            setText(satelliteCount, Integer.toString(count));
+          } else {
+            setText(satelliteCount);
+          }
+        }
+      }
     }
   }
 

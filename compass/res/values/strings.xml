@@ -6,10 +6,9 @@
   <string name="label_settings_activity">NBP Compass Settings</string>
   <string name="label_settings_button">Settings</string>
 
-  <string name="section_position">Terrestrial Position</string>
-  <string name="label_latitude">Latitude</string>
-  <string name="label_longitude">Longitude</string>
-  <string name="label_altitude">Altitude</string>
+  <string name="section_accuracy">Measurement Accuracy</string>
+  <string name="label_satellite">Satellites</string>
+  <string name="label_horizontal">Horizontal</string>
 
   <string name="section_location">Geocoded Location</string>
   <string name="label_location">Location</string>
@@ -24,6 +23,11 @@
   <string name="label_heading">Heading</string>
   <string name="label_pitch">Pitch</string>
   <string name="label_roll">Roll</string>
+
+  <string name="section_position">Terrestrial Position</string>
+  <string name="label_latitude">Latitude</string>
+  <string name="label_longitude">Longitude</string>
+  <string name="label_altitude">Altitude</string>
 
   <string name="message_unknown">(unknown)</string>
   <string name="message_unsupported">(unsupported)</string>
