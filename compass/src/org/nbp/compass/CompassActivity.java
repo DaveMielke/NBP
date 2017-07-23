@@ -138,31 +138,31 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void setBearing (TextView view, float degrees) {
-    setText(view, ApplicationUtilities.toBearingString(degrees));
+    setText(view, ApplicationUtilities.toBearingText(degrees));
   }
 
   private final void setCoordinate (TextView view, double degrees) {
-    setText(view, ApplicationUtilities.toCoordinateString(degrees));
+    setText(view, ApplicationUtilities.toCoordinateText(degrees));
   }
 
   private final void setLatitude (TextView view, double degrees) {
-    setText(view, ApplicationUtilities.toLatitudeString(degrees));
+    setText(view, ApplicationUtilities.toLatitudeText(degrees));
   }
 
   private final void setLongitude (TextView view, double degrees) {
-    setText(view, ApplicationUtilities.toLongitudeString(degrees));
+    setText(view, ApplicationUtilities.toLongitudeText(degrees));
   }
 
   private final void setPoint (TextView view, float degrees) {
-    setText(view, ApplicationUtilities.toPointString(degrees));
+    setText(view, ApplicationUtilities.toPointText(degrees));
   }
 
   private final void setDistance (TextView view, double distance) {
-    setText(view, ApplicationUtilities.toDistanceString(distance));
+    setText(view, ApplicationUtilities.toDistanceText(distance));
   }
 
   private final void setSpeed (TextView view, float speed) {
-    setText(view, ApplicationUtilities.toSpeedString(speed));
+    setText(view, ApplicationUtilities.toSpeedText(speed));
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -339,9 +339,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
         new AsyncTask<Void, Object, Void>() {
           @Override
           protected void onProgressUpdate (Object... arguments) {
-            String name     = (String)arguments[0];
-            Float distance  = (Float) arguments[1];
-            Float direction = (Float) arguments[2];
+            CharSequence name     = (CharSequence)arguments[0];
+            Float distance        = (Float)       arguments[1];
+            Float direction       = (Float)       arguments[2];
 
             setText(locationName, name);
 
@@ -374,8 +374,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                     Log.d(LOG_TAG, ("address: " + LocationUtilities.toString(address)));
                   }
 
-                  String name = LocationUtilities.getName(address);
-                  if (name.isEmpty()) name = getString(R.string.message_unknown);
+                  CharSequence name = LocationUtilities.getName(address);
+                  if (name.length() == 0) name = getString(R.string.message_unknown);
 
                   Float distance = null;
                   Float direction = null;
@@ -396,12 +396,12 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                       StringBuilder sb = new StringBuilder("orientation:");
 
                       sb.append(' ');
-                      sb.append(ApplicationUtilities.toCoordinatesString(latitude, longitude));
+                      sb.append(ApplicationUtilities.toCoordinatesText(latitude, longitude));
 
                       sb.append(' ');
-                      sb.append(ApplicationUtilities.toDistanceString(distance));
+                      sb.append(ApplicationUtilities.toDistanceText(distance));
                       sb.append('@');
-                      sb.append(ApplicationUtilities.toBearingString(direction));
+                      sb.append(ApplicationUtilities.toBearingText(direction));
 
                       Log.d(LOG_TAG, sb.toString());
                     }
@@ -501,7 +501,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
     if (location.hasAccuracy()) {
       float distance = location.getAccuracy();
-      setText(accuracyHorizontal, ("±" + ApplicationUtilities.toDistanceString(distance)));
+      setText(accuracyHorizontal, ("±" + ApplicationUtilities.toDistanceText(distance)));
     } else {
       setText(accuracyHorizontal);
     }

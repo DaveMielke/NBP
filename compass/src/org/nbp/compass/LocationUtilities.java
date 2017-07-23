@@ -11,7 +11,7 @@ public abstract class LocationUtilities {
 
   private final static void appendCoordinate (StringBuilder sb, boolean haveValue, double value) {
     if (haveValue) {
-      sb.append(ApplicationUtilities.toCoordinateString(value));
+      sb.append(ApplicationUtilities.toCoordinateText(value));
     } else {
       sb.append('?');
     }
@@ -65,14 +65,14 @@ public abstract class LocationUtilities {
   }
 
   private interface NameMaker {
-    public String makeName (Address address);
+    public CharSequence makeName (Address address);
   }
 
   private final static NameMaker[] nameMakers = new NameMaker[] {
     // premises
     new NameMaker() {
       @Override
-      public String makeName (Address address) {
+      public CharSequence makeName (Address address) {
         return address.getPremises();
       }
     },
@@ -80,7 +80,7 @@ public abstract class LocationUtilities {
     // thoroughfare - [address] street
     new NameMaker() {
       @Override
-      public String makeName (Address address) {
+      public CharSequence makeName (Address address) {
         String name = address.getThoroughfare();
         if (name == null) return null;
 
@@ -94,7 +94,7 @@ public abstract class LocationUtilities {
     // feature
     new NameMaker() {
       @Override
-      public String makeName (Address address) {
+      public CharSequence makeName (Address address) {
         return address.getFeatureName();
       }
     },
@@ -102,7 +102,7 @@ public abstract class LocationUtilities {
     // locality - [neighborhood,] city
     new NameMaker() {
       @Override
-      public String makeName (Address address) {
+      public CharSequence makeName (Address address) {
         String name = address.getLocality();
         if (name == null) return null;
 
@@ -116,7 +116,7 @@ public abstract class LocationUtilities {
     // administrative area - [county,] state
     new NameMaker() {
       @Override
-      public String makeName (Address address) {
+      public CharSequence makeName (Address address) {
         String name = address.getAdminArea();
         if (name == null) return null;
 
@@ -130,7 +130,7 @@ public abstract class LocationUtilities {
     // country [, postal code]
     new NameMaker() {
       @Override
-      public String makeName (Address address) {
+      public CharSequence makeName (Address address) {
         String name = address.getCountryName();
         if (name == null) return null;
 
@@ -144,19 +144,19 @@ public abstract class LocationUtilities {
     // [latitude,longitude]
     new NameMaker() {
       @Override
-      public String makeName (Address address) {
+      public CharSequence makeName (Address address) {
         if (!address.hasLatitude()) return null;
         if (!address.hasLongitude()) return null;
-        return ApplicationUtilities.toCoordinatesString(
+        return ApplicationUtilities.toCoordinatesText(
           address.getLatitude(), address.getLongitude()
         );
       }
     }
   };
 
-  public final static String getName (Address address) {
+  public final static CharSequence getName (Address address) {
     for (NameMaker nameMaker : nameMakers) {
-      String name = nameMaker.makeName(address);
+      CharSequence name = nameMaker.makeName(address);
       if (name != null) return name;
     }
 

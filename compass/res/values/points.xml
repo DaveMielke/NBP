@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="compass_point_N">north</string>
+  <string name="compass_point_NNE">north north east</string>
+  <string name="compass_point_NE">north east</string>
+  <string name="compass_point_ENE">east north east</string>
+  <string name="compass_point_E">east</string>
+  <string name="compass_point_ESE">east south east</string>
+  <string name="compass_point_SE">south east</string>
+  <string name="compass_point_SSE">south south east</string>
+  <string name="compass_point_S">south</string>
+  <string name="compass_point_SSW">south south west</string>
+  <string name="compass_point_SW">south west</string>
+  <string name="compass_point_WSW">west south west</string>
+  <string name="compass_point_W">west</string>
+  <string name="compass_point_WNW">west north west</string>
+  <string name="compass_point_NW">north west</string>
+  <string name="compass_point_NNW">north north west</string>
+</resources>
