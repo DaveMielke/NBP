@@ -109,10 +109,17 @@ public abstract class ApplicationUtilities {
     SpannableStringBuilder sb = new SpannableStringBuilder();
     sb.append(point.name());
 
-    Object span = point.getSpeechSpan();
-    if (span != null) sb.setSpan(span, 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    {
+      Object span = point.getSpeechSpan();
+      if (span != null) sb.setSpan(span, 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
 
-    sb.append(String.format("%+d°", Math.round(point.getOffset(degrees))));
+    {
+      float offset = point.getOffset(degrees);
+      if (offset >= 0f) sb.append('+');
+      sb.append(toAngleText(offset));
+    }
+
     return sb.subSequence(0, sb.length());
   }
 }

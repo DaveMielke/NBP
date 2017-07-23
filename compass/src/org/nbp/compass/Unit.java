@@ -4,6 +4,9 @@ public interface Unit {
   public String getSymbol ();
   public float getMultiplier ();
 
+  public final static float DEGREES_PER_CIRCLE = 360f;
+  public final static float GRADIANS_PER_CIRCLE = 400f;
+  public final static float MILS_PER_CIRCLE = (float)(Math.PI * 2E3d);
   public final float SECONDS_PER_MINUTE = 60f;
   public final float MINUTES_PER_HOUR = 60f;
   public final float METERS_PER_KILOMETER = 1E3f;

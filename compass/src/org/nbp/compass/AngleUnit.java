@@ -2,9 +2,9 @@ package org.nbp.compass;
 
 public enum AngleUnit implements Unit {
   DEGREES("°", 1f),
+  GRADIANS("G", (GRADIANS_PER_CIRCLE / DEGREES_PER_CIRCLE)),
+  MILS("mil", (MILS_PER_CIRCLE / DEGREES_PER_CIRCLE)),
   ;
-
-  public final static float DEGREES_PER_CIRCLE = 360f;
 
   private final String angleSymbol;
   private final float angleMultiplier;
