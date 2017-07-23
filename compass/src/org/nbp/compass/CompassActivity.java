@@ -142,12 +142,16 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setText(view, ApplicationUtilities.toDistanceText(meters));
   }
 
-  private final void setSpeed (TextView view, float mps) {
-    setText(view, ApplicationUtilities.toSpeedText(mps));
+  private final void setSpeed (TextView view, float metersPerSecond) {
+    setText(view, ApplicationUtilities.toSpeedText(metersPerSecond));
   }
 
   private final void setAngle (TextView view, float degrees) {
     setText(view, ApplicationUtilities.toAngleText(degrees));
+  }
+
+  private final void setHeading (TextView view, float degrees) {
+    setText(view, ApplicationUtilities.toHeadingText(degrees));
   }
 
   private final void setCoordinate (TextView view, double degrees) {
@@ -225,10 +229,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     float pitch   = translateOrientationAngle(-currentOrientation[1]);
     float roll    = translateOrientationAngle( currentOrientation[2]);
 
-    heading += 360f;
-    heading %= 360f;
+    heading += AngleUnit.DEGREES_PER_CIRCLE;
+    heading %= AngleUnit.DEGREES_PER_CIRCLE;
 
-    setAngle(headingDegrees, heading);
+    setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
@@ -356,7 +360,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
             }
 
             if (direction != null) {
-              setAngle(directionDegrees, direction);
+              setHeading(directionDegrees, direction);
               setPoint(directionPoint, direction);
             } else {
               setText(directionDegrees);

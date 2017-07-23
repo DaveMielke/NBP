@@ -3,3 +3,4 @@ show a stale location
 show a stale orientation
 geocode failure retries
 compass graphic
+new android O accuracies: speed, bearing, altitude

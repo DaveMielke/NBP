@@ -4,6 +4,7 @@
   <string name="control_group_general">General Settings</string>
   <string name="control_label_DistanceUnit">Distance Unit</string>
   <string name="control_label_SpeedUnit">Speed Unit</string>
+  <string name="control_label_AngleUnit">Angle Unit</string>
 
   <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_LogGeocoding">Log Geocoding</string>

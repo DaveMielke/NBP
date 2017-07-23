@@ -7,22 +7,40 @@ public abstract class ApplicationUtilities {
   private ApplicationUtilities () {
   }
 
+  private final static long getConversion (double magnitude, Unit unit) {
+    return Math.round(magnitude * unit.getMultiplier());
+  }
+
+  public final static CharSequence toMagnitudeText (double magnitude, Unit unit, Float ifZero) {
+    long conversion = getConversion(magnitude, unit);
+
+    if (ifZero != null) {
+      if (conversion == 0) {
+        conversion = getConversion(ifZero, unit);
+      }
+    }
+
+    return String.format("%d%s", conversion, unit.getSymbol());
+  }
+
   public final static CharSequence toMagnitudeText (double magnitude, Unit unit) {
-    return String.format("%d%s",
-      Math.round(magnitude * unit.getMultiplier()), unit.getSymbol()
-    );
+    return toMagnitudeText(magnitude, unit, null);
   }
 
   public final static CharSequence toDistanceText (double meters) {
     return toMagnitudeText(meters, ApplicationSettings.DISTANCE_UNIT);
   }
 
-  public final static CharSequence toSpeedText (float mps) {
-    return toMagnitudeText(mps, ApplicationSettings.SPEED_UNIT);
+  public final static CharSequence toSpeedText (float metersPerSecond) {
+    return toMagnitudeText(metersPerSecond, ApplicationSettings.SPEED_UNIT);
   }
 
-  public final static CharSequence toAngleText (double degrees) {
+  public final static CharSequence toAngleText (float degrees) {
     return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT);
+  }
+
+  public final static CharSequence toHeadingText (float degrees) {
+    return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT, AngleUnit.DEGREES_PER_CIRCLE);
   }
 
   public final static CharSequence toCoordinateText (double degrees) {
