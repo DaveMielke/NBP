@@ -10,7 +10,7 @@
   <TableRow>
     <TextView android:text="@string/label_location" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/location_name" android:layout_span="2" android:hint="@string/message_unknown" />
+    <TextView android:id="@+id/location_name" android:layout_span="2" />
     <include layout="@layout/spacer" />
   </TableRow>
 

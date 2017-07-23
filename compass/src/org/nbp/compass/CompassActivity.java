@@ -375,6 +375,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                   }
 
                   String name = LocationUtilities.getName(address);
+                  if (name.isEmpty()) name = getString(R.string.message_unknown);
+
                   Float distance = null;
                   Float direction = null;
 
