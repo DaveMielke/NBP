@@ -117,6 +117,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
         if (accessibilityManager.isEnabled()) {
           if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
             if (view.isAccessibilityFocused()) {
+              accessibilityManager.interrupt();
               AccessibilityEvent event = AccessibilityEvent.obtain();
               view.onInitializeAccessibilityEvent(event);
               event.getText().add(text);

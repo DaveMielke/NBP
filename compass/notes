@@ -1,6 +1,5 @@
 test the fused location monitor
 show a stale location
 show a stale orientation
-interrupt speech
 geocode failure retries
 compass graphic
