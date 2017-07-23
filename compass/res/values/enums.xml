@@ -5,6 +5,8 @@
   <string name="enum_DistanceUnit_FEET">Feet</string>
 
   <string name="enum_SpeedUnit_MPS">Meters Per Second</string>
+  <string name="enum_SpeedUnit_FPS">Feet Per Second</string>
   <string name="enum_SpeedUnit_KPH">Kilometers Per Hour</string>
   <string name="enum_SpeedUnit_MPH">Miles Per Hour</string>
+  <string name="enum_SpeedUnit_KN">Knots</string>
 </resources>

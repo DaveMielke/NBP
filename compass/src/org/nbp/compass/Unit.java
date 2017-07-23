@@ -17,4 +17,5 @@ public interface Unit {
   public final float KILOMETERS_PER_METER = 1E-3f;
   public final float FEET_PER_MILE = 5280F;
   public final float MILES_PER_METER = FEET_PER_METER / FEET_PER_MILE;
+  public final float METERS_PER_KNOT = 1852f;
 }

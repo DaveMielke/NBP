@@ -2,8 +2,10 @@ package org.nbp.compass;
 
 public enum SpeedUnit implements Unit {
   MPS("mps", 1f),
-  KPH("kph", (KILOMETERS_PER_METER * SECONDS_PER_HOUR)),
-  MPH("mph", (MILES_PER_METER * SECONDS_PER_HOUR)),
+  FPS("fps", FEET_PER_METER),
+  KPH("kph", (SECONDS_PER_HOUR * KILOMETERS_PER_METER)),
+  MPH("mph", (SECONDS_PER_HOUR * MILES_PER_METER)),
+  KN("kn", (SECONDS_PER_HOUR / METERS_PER_KNOT)),
   ;
 
   private final String speedAcronym;
