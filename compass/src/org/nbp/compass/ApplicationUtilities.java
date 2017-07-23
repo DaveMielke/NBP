@@ -7,8 +7,22 @@ public abstract class ApplicationUtilities {
   private ApplicationUtilities () {
   }
 
-  public final static CharSequence toBearingText (float degrees) {
-    return String.format("%d°", Math.round(degrees));
+  public final static CharSequence toMagnitudeText (double magnitude, Unit unit) {
+    return String.format("%d%s",
+      Math.round(magnitude * unit.getMultiplier()), unit.getSymbol()
+    );
+  }
+
+  public final static CharSequence toAngleText (double degrees) {
+    return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT);
+  }
+
+  public final static CharSequence toDistanceText (double meters) {
+    return toMagnitudeText(meters, ApplicationSettings.DISTANCE_UNIT);
+  }
+
+  public final static CharSequence toSpeedText (float mps) {
+    return toMagnitudeText(mps, ApplicationSettings.SPEED_UNIT);
   }
 
   public final static CharSequence toCoordinateText (double degrees) {
@@ -71,17 +85,8 @@ public abstract class ApplicationUtilities {
     return toCoordinateText(degrees, 'E', 'W');
   }
 
-  private final static int POINT_COUNT = CompassPoint.values().length;
-  private final static float POINTS_PER_CIRCLE = (float)POINT_COUNT;
-  private final static float DEGREES_PER_CIRCLE = 360f;
-  private final static float DEGREES_PER_POINT = DEGREES_PER_CIRCLE / POINTS_PER_CIRCLE;
-
   public final static CharSequence toPointText (float degrees) {
-    degrees += DEGREES_PER_CIRCLE;
-    degrees %= DEGREES_PER_CIRCLE;
-
-    int ordinal = Math.round(degrees / DEGREES_PER_POINT);
-    CompassPoint point = CompassPoint.values()[ordinal % POINT_COUNT];
+    CompassPoint point = CompassPoint.getPoint(degrees);
 
     SpannableStringBuilder sb = new SpannableStringBuilder();
     sb.append(point.name());
@@ -89,21 +94,7 @@ public abstract class ApplicationUtilities {
     Object span = point.getSpeechSpan();
     if (span != null) sb.setSpan(span, 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-    sb.append(String.format("%+d°", Math.round(degrees - ((float)ordinal * DEGREES_PER_POINT))));
+    sb.append(String.format("%+d°", Math.round(degrees - point.getDegrees())));
     return sb.subSequence(0, sb.length());
-  }
-
-  public final static CharSequence toMagnitudeText (double magnitude, Unit unit) {
-    return String.format("%d%s",
-      Math.round(magnitude * unit.getMultiplier()), unit.getSymbol()
-    );
-  }
-
-  public final static CharSequence toDistanceText (double distance) {
-    return toMagnitudeText(distance, ApplicationSettings.DISTANCE_UNIT);
-  }
-
-  public final static CharSequence toSpeedText (float speed) {
-    return toMagnitudeText(speed, ApplicationSettings.SPEED_UNIT);
   }
 }

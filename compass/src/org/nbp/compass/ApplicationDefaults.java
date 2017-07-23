@@ -4,6 +4,7 @@ public abstract class ApplicationDefaults {
   private ApplicationDefaults () {
   }
 
+  public final static AngleUnit ANGLE_UNIT = AngleUnit.DEGREES;
   public final static DistanceUnit DISTANCE_UNIT = DistanceUnit.FEET;
   public final static SpeedUnit SPEED_UNIT = SpeedUnit.MPH;
 

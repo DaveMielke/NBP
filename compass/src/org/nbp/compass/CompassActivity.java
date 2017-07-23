@@ -138,8 +138,16 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setText(view, "");
   }
 
-  private final void setBearing (TextView view, float degrees) {
-    setText(view, ApplicationUtilities.toBearingText(degrees));
+  private final void setAngle (TextView view, float degrees) {
+    setText(view, ApplicationUtilities.toAngleText(degrees));
+  }
+
+  private final void setDistance (TextView view, double meters) {
+    setText(view, ApplicationUtilities.toDistanceText(meters));
+  }
+
+  private final void setSpeed (TextView view, float mps) {
+    setText(view, ApplicationUtilities.toSpeedText(mps));
   }
 
   private final void setCoordinate (TextView view, double degrees) {
@@ -156,14 +164,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
   private final void setPoint (TextView view, float degrees) {
     setText(view, ApplicationUtilities.toPointText(degrees));
-  }
-
-  private final void setDistance (TextView view, double distance) {
-    setText(view, ApplicationUtilities.toDistanceText(distance));
-  }
-
-  private final void setSpeed (TextView view, float speed) {
-    setText(view, ApplicationUtilities.toSpeedText(speed));
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -216,19 +216,22 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private float[] gravityVector = null;
   private float[] geomagneticVector = null;
 
-  private final float translateOrientation (float radians) {
+  private final float translateOrientationAngle (float radians) {
     return (float)Math.toDegrees((double)radians);
   }
 
   private final void setOrientationFields () {
-    float heading = translateOrientation( currentOrientation[0]);
-    float pitch   = translateOrientation(-currentOrientation[1]);
-    float roll    = translateOrientation( currentOrientation[2]);
+    float heading = translateOrientationAngle( currentOrientation[0]);
+    float pitch   = translateOrientationAngle(-currentOrientation[1]);
+    float roll    = translateOrientationAngle( currentOrientation[2]);
 
-    setBearing(headingDegrees, heading);
+    heading += 360f;
+    heading %= 360f;
+
+    setAngle(headingDegrees, heading);
     setPoint(headingPoint, heading);
-    setBearing(pitchDegrees, pitch);
-    setBearing(rollDegrees, roll);
+    setAngle(pitchDegrees, pitch);
+    setAngle(rollDegrees, roll);
   }
 
   private final DelayedAction setOrientationAction = new DelayedAction(
@@ -353,7 +356,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
             }
 
             if (direction != null) {
-              setBearing(directionDegrees, direction);
+              setAngle(directionDegrees, direction);
               setPoint(directionPoint, direction);
             } else {
               setText(directionDegrees);
@@ -402,7 +405,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                       sb.append(' ');
                       sb.append(ApplicationUtilities.toDistanceText(distance));
                       sb.append('@');
-                      sb.append(ApplicationUtilities.toBearingText(direction));
+                      sb.append(ApplicationUtilities.toAngleText(direction));
 
                       Log.d(LOG_TAG, sb.toString());
                     }
@@ -493,7 +496,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
     if (location.hasBearing()) {
       float degrees = location.getBearing();
-      setBearing(bearingDegrees, degrees);
+      setAngle(bearingDegrees, degrees);
       setPoint(bearingPoint, degrees);
     } else {
       setText(bearingDegrees);
