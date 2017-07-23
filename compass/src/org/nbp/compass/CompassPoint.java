@@ -21,7 +21,13 @@ public enum CompassPoint {
   }
 
   public final float getDegrees () {
-    return ((float)ordinal() * DEGREES_PER_POINT);
+    return (float)ordinal() * DEGREES_PER_POINT;
+  }
+
+  public final float getOffset (float degrees) {
+    float offset = Math.round(degrees - getDegrees());
+    if (offset > DEGREES_PER_POINT) offset -= DEGREES_PER_CIRCLE;
+    return offset;
   }
 
   private String pointPhrase = null;
@@ -36,33 +42,34 @@ public enum CompassPoint {
         int length = string.length();
 
         for (int index=0; index<length; index+=1) {
+          if (sb.length() > 0) sb.append(' ');
+
           char character = string.charAt(index);
-          String word;
+          int word = 0;
 
           switch (character) {
             case 'N':
-              word = CommonContext.getString(R.string.direction_north);
+              word = R.string.direction_north;
               break;
 
             case 'E':
-              word = CommonContext.getString(R.string.direction_east);
+              word = R.string.direction_east;
               break;
 
             case 'S':
-              word = CommonContext.getString(R.string.direction_south);
+              word = R.string.direction_south;
               break;
 
             case 'W':
-              word = CommonContext.getString(R.string.direction_west);
-              break;
-
-            default:
-              word = "?";
+              word = R.string.direction_west;
               break;
           }
 
-          if (sb.length() > 0) sb.append(' ');
-          sb.append(word);
+          if (word != 0) {
+            sb.append(CommonContext.getString(word));
+          } else {
+            sb.append('?');
+          }
         }
 
         pointPhrase = sb.toString();

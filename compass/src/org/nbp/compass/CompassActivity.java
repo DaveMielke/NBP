@@ -138,16 +138,16 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setText(view, "");
   }
 
-  private final void setAngle (TextView view, float degrees) {
-    setText(view, ApplicationUtilities.toAngleText(degrees));
-  }
-
   private final void setDistance (TextView view, double meters) {
     setText(view, ApplicationUtilities.toDistanceText(meters));
   }
 
   private final void setSpeed (TextView view, float mps) {
     setText(view, ApplicationUtilities.toSpeedText(mps));
+  }
+
+  private final void setAngle (TextView view, float degrees) {
+    setText(view, ApplicationUtilities.toAngleText(degrees));
   }
 
   private final void setCoordinate (TextView view, double degrees) {

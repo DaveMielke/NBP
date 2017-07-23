@@ -13,16 +13,16 @@ public abstract class ApplicationUtilities {
     );
   }
 
-  public final static CharSequence toAngleText (double degrees) {
-    return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT);
-  }
-
   public final static CharSequence toDistanceText (double meters) {
     return toMagnitudeText(meters, ApplicationSettings.DISTANCE_UNIT);
   }
 
   public final static CharSequence toSpeedText (float mps) {
     return toMagnitudeText(mps, ApplicationSettings.SPEED_UNIT);
+  }
+
+  public final static CharSequence toAngleText (double degrees) {
+    return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT);
   }
 
   public final static CharSequence toCoordinateText (double degrees) {
@@ -94,7 +94,7 @@ public abstract class ApplicationUtilities {
     Object span = point.getSpeechSpan();
     if (span != null) sb.setSpan(span, 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-    sb.append(String.format("%+d°", Math.round(degrees - point.getDegrees())));
+    sb.append(String.format("%+d°", Math.round(point.getOffset(degrees))));
     return sb.subSequence(0, sb.length());
   }
 }
