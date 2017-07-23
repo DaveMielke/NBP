@@ -5,21 +5,21 @@ public enum DistanceUnit implements Unit {
   FEET("ft", FEET_PER_METER),
   ;
 
-  private final String distanceAcronym;
-  private final float distanceConversion;
+  private final String distanceSymbol;
+  private final float distanceMultiplier;
 
-  private DistanceUnit (String acronym, float conversion) {
-    distanceAcronym = acronym;
-    distanceConversion = conversion;
+  private DistanceUnit (String symbol, float multiplier) {
+    distanceSymbol = symbol;
+    distanceMultiplier = multiplier;
   }
 
   @Override
-  public final String getAcronym () {
-    return distanceAcronym;
+  public final String getSymbol () {
+    return distanceSymbol;
   }
 
   @Override
-  public final float getConversion () {
-    return distanceConversion;
+  public final float getMultiplier () {
+    return distanceMultiplier;
   }
 }

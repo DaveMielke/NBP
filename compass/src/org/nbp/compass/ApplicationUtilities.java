@@ -95,7 +95,7 @@ public abstract class ApplicationUtilities {
 
   public final static CharSequence toMagnitudeText (double magnitude, Unit unit) {
     return String.format("%d%s",
-      Math.round(magnitude * unit.getConversion()), unit.getAcronym()
+      Math.round(magnitude * unit.getMultiplier()), unit.getSymbol()
     );
   }
 

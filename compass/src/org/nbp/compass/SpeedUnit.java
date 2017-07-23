@@ -8,21 +8,21 @@ public enum SpeedUnit implements Unit {
   KN("kn", (SECONDS_PER_HOUR / METERS_PER_KNOT)),
   ;
 
-  private final String speedAcronym;
-  private final float speedConversion;
+  private final String speedSymbol;
+  private final float speedMultiplier;
 
-  private SpeedUnit (String acronym, float conversion) {
-    speedAcronym = acronym;
-    speedConversion = conversion;
+  private SpeedUnit (String symbol, float multiplier) {
+    speedSymbol = symbol;
+    speedMultiplier = multiplier;
   }
 
   @Override
-  public final String getAcronym () {
-    return speedAcronym;
+  public final String getSymbol () {
+    return speedSymbol;
   }
 
   @Override
-  public final float getConversion () {
-    return speedConversion;
+  public final float getMultiplier () {
+    return speedMultiplier;
   }
 }
