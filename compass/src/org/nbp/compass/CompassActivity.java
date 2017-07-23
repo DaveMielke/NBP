@@ -222,7 +222,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private final void setOrientationFields () {
     float heading = translateOrientation( currentOrientation[0]);
     float pitch   = translateOrientation(-currentOrientation[1]);
-    float roll    = translateOrientation(-currentOrientation[2]);
+    float roll    = translateOrientation( currentOrientation[2]);
 
     setBearing(headingDegrees, heading);
     setPoint(headingPoint, heading);
