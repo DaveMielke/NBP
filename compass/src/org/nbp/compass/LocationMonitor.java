@@ -18,8 +18,8 @@ public abstract class LocationMonitor {
 
   private enum ProviderState {
     STOPPED,
-    STARTED,
-    FAILED;
+    FAILED,
+    STARTED;
   }
 
   protected abstract boolean startProvider ();
@@ -41,9 +41,13 @@ public abstract class LocationMonitor {
   }
 
   public final void stopMonitor () {
-    if (providerState == ProviderState.STARTED) {
-      stopProvider();
-      providerState = ProviderState.STOPPED;
+    switch (providerState) {
+      case STARTED:
+        stopProvider();
+      case FAILED:
+        providerState = ProviderState.STOPPED;
+      case STOPPED:
+        break;
     }
   }
 }

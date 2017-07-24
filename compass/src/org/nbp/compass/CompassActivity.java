@@ -318,11 +318,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   public void onAccuracyChanged (Sensor sensor, int accuracy) {
   }
 
+  private Geocoder geocoder;
   private boolean atNewLocation = false;
   private boolean settingLocationFields = false;
-
-  private Geocoder geocoder;
-  private LocationMonitor locationMonitor;
 
   private final void prepareLocationMonitor () {
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
@@ -332,9 +330,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
       R.string.message_waiting:
       R.string.message_unsupported
     );
+  }
 
-    // this must be the very last step because the current location will be set
-    locationMonitor = ApplicationSettings.LOCATION_PROVIDER.getMonitor();
+  private final static LocationMonitor getLocationMonitor () {
+    return ApplicationSettings.LOCATION_PROVIDER.getMonitor();
   }
 
   private double currentLatitude;
@@ -604,14 +603,14 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   protected void onResume () {
     super.onResume();
     startSensors();
-    locationMonitor.startMonitor();
+    getLocationMonitor().startMonitor();
   }
 
   @Override
   protected void onPause () {
     try {
       stopSensors();
-      locationMonitor.stopMonitor();
+      getLocationMonitor().stopMonitor();
     } finally {
       super.onPause();
     }

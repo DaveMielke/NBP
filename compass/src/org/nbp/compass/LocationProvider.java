@@ -3,10 +3,10 @@ package org.nbp.compass;
 import org.nbp.common.LazyInstantiator;
 
 public enum LocationProvider {
-  BEST(BestLocationMonitor.class),
-  GPS(GPSLocationMonitor.class),
-  NETWORK(NetworkLocationMonitor.class),
   PASSIVE(PassiveLocationMonitor.class),
+  NETWORK(NetworkLocationMonitor.class),
+  GPS(GPSLocationMonitor.class),
+  BEST(BestLocationMonitor.class),
   FUSED(FusedLocationMonitor.class),
   ;
 

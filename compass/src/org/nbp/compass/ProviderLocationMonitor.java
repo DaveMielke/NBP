@@ -11,12 +11,11 @@ import android.location.Location;
 public abstract class ProviderLocationMonitor extends LocationMonitor implements LocationListener {
   private final static String LOG_TAG = ProviderLocationMonitor.class.getName();
 
-  private LocationManager locationManager;
+  private final LocationManager locationManager;
 
   public ProviderLocationMonitor () {
     super();
     locationManager = (LocationManager)getCompassActivity().getSystemService(Context.LOCATION_SERVICE);
-    setLocation(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
   }
 
   protected final LocationManager getLocationManager () {
@@ -31,6 +30,7 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
     if (!isStarted) {
       String provider = getLocationProvider();
       Log.d(LOG_TAG, ("location provider: " + provider));
+      setLocation(locationManager.getLastKnownLocation(provider));
 
       try {
         locationManager.requestLocationUpdates(
