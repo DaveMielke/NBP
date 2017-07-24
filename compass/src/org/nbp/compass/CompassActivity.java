@@ -258,7 +258,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final DelayedAction setOrientationAction = new DelayedAction(
-    ApplicationParameters.ORIENTATION_MINIMUM_TIME, "update-orientation"
+    ApplicationParameters.ORIENTATION_UPDATE_DELAY, "update-orientation"
   );
 
   @Override
