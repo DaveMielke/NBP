@@ -220,6 +220,12 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private float[] gravityVector = null;
   private float[] geomagneticVector = null;
 
+  private final float toHeading (float degrees) {
+    degrees += AngleUnit.DEGREES_PER_CIRCLE;
+    degrees %= AngleUnit.DEGREES_PER_CIRCLE;
+    return degrees;
+  }
+
   private final float translateOrientationAngle (float radians) {
     return (float)Math.toDegrees((double)radians);
   }
@@ -229,11 +235,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     float pitch   = translateOrientationAngle(-currentOrientation[1]);
     float roll    = translateOrientationAngle( currentOrientation[2]);
 
-    heading += AngleUnit.DEGREES_PER_CIRCLE;
-    heading %= AngleUnit.DEGREES_PER_CIRCLE;
-
+    heading = toHeading(heading);
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
+
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
   }
@@ -350,9 +355,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
         new AsyncTask<Void, Object, Void>() {
           @Override
           protected void onProgressUpdate (Object... arguments) {
-            CharSequence name     = (CharSequence)arguments[0];
-            Float distance        = (Float)       arguments[1];
-            Float direction       = (Float)       arguments[2];
+            CharSequence name = (CharSequence)arguments[0];
+            Float distance    = (Float)       arguments[1];
+            Float direction   = (Float)       arguments[2];
 
             setText(locationName, name);
 
@@ -363,8 +368,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
             }
 
             if (direction != null) {
-              setHeading(directionDegrees, direction);
-              setPoint(directionPoint, direction);
+              float heading = toHeading(direction);
+              setHeading(directionDegrees, heading);
+              setPoint(directionPoint, heading);
             } else {
               setText(directionDegrees);
               setText(directionPoint);
