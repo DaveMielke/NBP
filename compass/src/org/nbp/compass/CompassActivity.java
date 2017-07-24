@@ -518,6 +518,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     }
 
     {
+      String satelliteCount = "";
       Bundle extras = location.getExtras();
 
       if (extras != null) {
@@ -525,13 +526,12 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
           String key = "satellites";
 
           if (extras.containsKey(key)) {
-            int count = extras.getInt(key);
-            setText(accuracySatellites, Integer.toString(count));
-          } else {
-            setText(accuracySatellites);
+            satelliteCount = Integer.toString(extras.getInt(key));
           }
         }
       }
+
+      setText(accuracySatellites, satelliteCount);
     }
   }
 
