@@ -99,8 +99,17 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
   }
 
+  private final boolean isAccessibilityEnabled () {
+    if (accessibilityManager == null) return false;
+    return accessibilityManager.isEnabled();
+  }
+
+  private final boolean isSameText (TextView view, CharSequence text) {
+    return TextUtils.equals(text, view.getText());
+  }
+
   private final void setText (TextView view, CharSequence text) {
-    if (!TextUtils.equals(text, view.getText())) {
+    if (!isSameText(view, text)) {
       view.setText(text);
 
       if (text.length() == 0) {
@@ -114,17 +123,15 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
       }
 
       if (text.length() > 0) {
-        if (accessibilityManager != null) {
-          if (accessibilityManager.isEnabled()) {
-            if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-              if (view.isAccessibilityFocused()) {
-                accessibilityManager.interrupt();
-                AccessibilityEvent event = AccessibilityEvent.obtain();
-                view.onInitializeAccessibilityEvent(event);
-                event.getText().add(text);
-                event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-                accessibilityManager.sendAccessibilityEvent(event);
-              }
+        if (isAccessibilityEnabled()) {
+          if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+            if (view.isAccessibilityFocused()) {
+              accessibilityManager.interrupt();
+              AccessibilityEvent event = AccessibilityEvent.obtain();
+              view.onInitializeAccessibilityEvent(event);
+              event.getText().add(text);
+              event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+              accessibilityManager.sendAccessibilityEvent(event);
             }
           }
         }
