@@ -6,9 +6,9 @@ public abstract class ApplicationParameters {
   private ApplicationParameters () {
   }
 
-  public final static float LOCATION_MINIMUM_DISTANCE = 7f; // meters
-  public final static int LOCATION_MINIMUM_TIME = 4000; // milliseconds
-  public final static int LOCATION_MAXIMUM_TIME = 10000; // milliseconds
+  public final static float LOCATION_UPDATE_RADIUS = 6f; // meters
+  public final static int LOCATION_UPDATE_TIME = 4000; // milliseconds
+  public final static int LOCATION_SHORTEST_TIME = 1000; // milliseconds
   public final static int LOCATION_FUSED_PRIORITY = LocationRequest.PRIORITY_HIGH_ACCURACY;
 
   public final static int ORIENTATION_UPDATE_DELAY = 2000; // milliseconds
