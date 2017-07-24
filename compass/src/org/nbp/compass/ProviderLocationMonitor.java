@@ -29,20 +29,25 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
   protected final boolean startProvider () {
     if (!isStarted) {
       String provider = getLocationProvider();
-      Log.d(LOG_TAG, ("location provider: " + provider));
-      setLocation(locationManager.getLastKnownLocation(provider));
+      Log.d(LOG_TAG, ("provider: " + provider));
 
-      try {
-        locationManager.requestLocationUpdates(
-          provider,
-          ApplicationParameters.LOCATION_MINIMUM_TIME,
-          ApplicationParameters.LOCATION_MINIMUM_DISTANCE,
-          this
-        );
+      if (locationManager.isProviderEnabled(provider)) {
+        setLocation(locationManager.getLastKnownLocation(provider));
 
-        isStarted = true;
-      } catch (IllegalArgumentException exception) {
-        Log.w(LOG_TAG, exception.getMessage());
+        try {
+          locationManager.requestLocationUpdates(
+            provider,
+            ApplicationParameters.LOCATION_MINIMUM_TIME,
+            ApplicationParameters.LOCATION_MINIMUM_DISTANCE,
+            this
+          );
+
+          isStarted = true;
+        } catch (IllegalArgumentException exception) {
+          Log.w(LOG_TAG, exception.getMessage());
+        }
+      } else {
+        Log.w(LOG_TAG, ("provider not available: " + provider));
       }
     }
 

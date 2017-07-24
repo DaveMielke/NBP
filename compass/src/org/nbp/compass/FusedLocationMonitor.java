@@ -17,14 +17,14 @@ public class FusedLocationMonitor extends LocationMonitor implements
 {
   private final static String LOG_TAG = FusedLocationMonitor.class.getName();
 
-  private enum ProviderState {
+  private enum MonitorState {
     DISCONNECTED,
     CONNECTING,
     CONNECTED,
     STARTED
   }
 
-  private ProviderState state = ProviderState.DISCONNECTED;
+  private MonitorState state = MonitorState.DISCONNECTED;
   private final GoogleApiClient client;
 
   public FusedLocationMonitor () {
@@ -55,8 +55,9 @@ public class FusedLocationMonitor extends LocationMonitor implements
   protected final boolean startProvider () {
     switch (state) {
       case DISCONNECTED:
+        Log.d(LOG_TAG, "connecting");
         client.connect();
-        state = ProviderState.CONNECTING;
+        state = MonitorState.CONNECTING;
       case CONNECTING:
         break;
 
@@ -74,7 +75,7 @@ public class FusedLocationMonitor extends LocationMonitor implements
     switch (state) {
       case STARTED:
         stopMonitoring();
-        state = ProviderState.CONNECTED;
+        state = MonitorState.CONNECTED;
       case CONNECTED:
         break;
     }
@@ -87,10 +88,11 @@ public class FusedLocationMonitor extends LocationMonitor implements
 
   @Override
   public void onConnected (Bundle connectionHint) {
-    state = ProviderState.CONNECTED;
+    state = MonitorState.CONNECTED;
+    Log.d(LOG_TAG, "connected");
 
     startMonitoring();
-    state = ProviderState.STARTED;
+    state = MonitorState.STARTED;
 
     setLocation(LocationServices.FusedLocationApi.getLastLocation(client));
   }
@@ -102,7 +104,7 @@ public class FusedLocationMonitor extends LocationMonitor implements
 
   @Override
   public void onConnectionFailed (ConnectionResult result) {
-    state = ProviderState.DISCONNECTED;
+    state = MonitorState.DISCONNECTED;
     Log.w(LOG_TAG, ("connection failed: " + result.getErrorCode()));
   }
 }
