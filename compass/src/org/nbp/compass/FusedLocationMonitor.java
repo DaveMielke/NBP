@@ -17,9 +17,15 @@ public class FusedLocationMonitor extends LocationMonitor implements
 {
   private final static String LOG_TAG = FusedLocationMonitor.class.getName();
 
+  private enum ProviderState {
+    DISCONNECTED,
+    CONNECTING,
+    CONNECTED,
+    STARTED
+  }
+
+  private ProviderState state = ProviderState.DISCONNECTED;
   private final GoogleApiClient client;
-  private boolean isConnected = false;
-  private boolean isStarted = false;
 
   public FusedLocationMonitor () {
     super();
@@ -29,9 +35,6 @@ public class FusedLocationMonitor extends LocationMonitor implements
                                 .addOnConnectionFailedListener(this)
                                 .addApi(LocationServices.API)
                                 .build();
-
-    Log.d(LOG_TAG, "connecting");
-    client.connect();
   }
 
   private final void startMonitoring () {
@@ -50,21 +53,30 @@ public class FusedLocationMonitor extends LocationMonitor implements
 
   @Override
   protected final boolean startProvider () {
-    if (!isStarted) {
-      if (isConnected) {
+    switch (state) {
+      case DISCONNECTED:
+        client.connect();
+        state = ProviderState.CONNECTING;
+      case CONNECTING:
+        break;
+
+      case CONNECTED:
         startMonitoring();
-        isStarted = true;
-      }
+      case STARTED:
+        break;
     }
 
-    return isStarted;
+    return true;
   }
 
   @Override
   protected final void stopProvider () {
-    if (isStarted) {
-      if (isConnected) stopMonitoring();
-      isStarted = false;
+    switch (state) {
+      case STARTED:
+        stopMonitoring();
+        state = ProviderState.CONNECTED;
+      case CONNECTED:
+        break;
     }
   }
 
@@ -75,11 +87,12 @@ public class FusedLocationMonitor extends LocationMonitor implements
 
   @Override
   public void onConnected (Bundle connectionHint) {
-    isConnected = true;
-    Log.d(LOG_TAG, "connected");
+    state = ProviderState.CONNECTED;
+
+    startMonitoring();
+    state = ProviderState.STARTED;
 
     setLocation(LocationServices.FusedLocationApi.getLastLocation(client));
-    if (isStarted) startMonitoring();
   }
 
   @Override
@@ -89,6 +102,7 @@ public class FusedLocationMonitor extends LocationMonitor implements
 
   @Override
   public void onConnectionFailed (ConnectionResult result) {
+    state = ProviderState.DISCONNECTED;
     Log.w(LOG_TAG, ("connection failed: " + result.getErrorCode()));
   }
 }
