@@ -154,16 +154,16 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setText(view, ApplicationUtilities.toHeadingText(degrees));
   }
 
-  private final void setCoordinate (TextView view, double degrees) {
-    setText(view, ApplicationUtilities.toCoordinateText(degrees));
-  }
-
   private final void setLatitude (TextView view, double degrees) {
     setText(view, ApplicationUtilities.toLatitudeText(degrees));
   }
 
   private final void setLongitude (TextView view, double degrees) {
     setText(view, ApplicationUtilities.toLongitudeText(degrees));
+  }
+
+  private final void setCoordinate (TextView view, double degrees) {
+    setText(view, ApplicationUtilities.toCoordinateText(degrees));
   }
 
   private final void setPoint (TextView view, float degrees) {
@@ -214,38 +214,11 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     }
   }
 
-  private final float[] rotationMatrix = new float[9];
-  private final float[] currentOrientation = new float[3];
-
   private float[] gravityVector = null;
   private float[] geomagneticVector = null;
 
-  private final float toHeading (float degrees) {
-    degrees += AngleUnit.DEGREES_PER_CIRCLE;
-    degrees %= AngleUnit.DEGREES_PER_CIRCLE;
-    return degrees;
-  }
-
-  private final float translateOrientationAngle (float radians) {
-    return (float)Math.toDegrees((double)radians);
-  }
-
-  private final void setOrientationFields () {
-    float heading = translateOrientationAngle( currentOrientation[0]);
-    float pitch   = translateOrientationAngle(-currentOrientation[1]);
-    float roll    = translateOrientationAngle( currentOrientation[2]);
-
-    heading = toHeading(heading);
-    setHeading(headingDegrees, heading);
-    setPoint(headingPoint, heading);
-
-    setAngle(pitchDegrees, pitch);
-    setAngle(rollDegrees, roll);
-  }
-
-  private final DelayedAction setOrientationAction = new DelayedAction(
-    ApplicationParameters.ORIENTATION_MINIMUM_TIME, "update-orientation"
-  );
+  private final float[] rotationMatrix = new float[9];
+  private final float[] currentOrientation = new float[3];
 
   private final void log (String type, float[] vector) {
     if (ApplicationSettings.LOG_SENSORS) {
@@ -264,6 +237,27 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
       Log.d(LOG_TAG, sb.toString());
     }
   }
+
+  private final float translateOrientationAngle (float radians) {
+    return (float)Math.toDegrees((double)radians);
+  }
+
+  private final void setOrientationFields () {
+    float heading = translateOrientationAngle( currentOrientation[0]);
+    float pitch   = translateOrientationAngle(-currentOrientation[1]);
+    float roll    = translateOrientationAngle( currentOrientation[2]);
+
+    heading = ApplicationUtilities.toHeading(heading);
+    setHeading(headingDegrees, heading);
+    setPoint(headingPoint, heading);
+
+    setAngle(pitchDegrees, pitch);
+    setAngle(rollDegrees, roll);
+  }
+
+  private final DelayedAction setOrientationAction = new DelayedAction(
+    ApplicationParameters.ORIENTATION_MINIMUM_TIME, "update-orientation"
+  );
 
   @Override
   public void onSensorChanged (SensorEvent event) {
@@ -324,14 +318,13 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   public void onAccuracyChanged (Sensor sensor, int accuracy) {
   }
 
-  private boolean atNewLocation;
-  private boolean settingLocationFields;
+  private boolean atNewLocation = false;
+  private boolean settingLocationFields = false;
+
   private Geocoder geocoder;
   private LocationMonitor locationMonitor;
 
   private final void prepareLocationMonitor () {
-    atNewLocation = false;
-    settingLocationFields = false;
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
 
     setText(locationName,
@@ -368,7 +361,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
             }
 
             if (direction != null) {
-              float heading = toHeading(direction);
+              float heading = ApplicationUtilities.toHeading(direction);
               setHeading(directionDegrees, heading);
               setPoint(directionPoint, heading);
             } else {

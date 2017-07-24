@@ -7,16 +7,22 @@ public abstract class ApplicationUtilities {
   private ApplicationUtilities () {
   }
 
-  private final static long getConversion (double magnitude, Unit unit) {
+  public final static float toHeading (float degrees) {
+    degrees += AngleUnit.DEGREES_PER_CIRCLE;
+    degrees %= AngleUnit.DEGREES_PER_CIRCLE;
+    return degrees;
+  }
+
+  private final static long convertMagnitude (double magnitude, Unit unit) {
     return Math.round(magnitude * unit.getMultiplier());
   }
 
   public final static CharSequence toMagnitudeText (double magnitude, Unit unit, Float ifZero) {
-    long conversion = getConversion(magnitude, unit);
+    long conversion = convertMagnitude(magnitude, unit);
 
     if (ifZero != null) {
       if (conversion == 0) {
-        conversion = getConversion(ifZero, unit);
+        conversion = convertMagnitude(ifZero, unit);
       }
     }
 
@@ -41,20 +47,6 @@ public abstract class ApplicationUtilities {
 
   public final static CharSequence toHeadingText (float degrees) {
     return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT, AngleUnit.DEGREES_PER_CIRCLE);
-  }
-
-  public final static CharSequence toCoordinateText (double degrees) {
-    return String.format("%.5f°", degrees);
-  }
-
-  public final static CharSequence toCoordinatesText (double latitude, double longitude) {
-    StringBuilder sb = new StringBuilder();
-    sb.append('[');
-    sb.append(toCoordinateText(latitude));
-    sb.append(',');
-    sb.append(toCoordinateText(longitude));
-    sb.append(']');
-    return sb.toString();
   }
 
   private final static CharSequence toCoordinateText (double degrees, char positive, char negative) {
@@ -101,6 +93,20 @@ public abstract class ApplicationUtilities {
 
   public final static CharSequence toLongitudeText (double degrees) {
     return toCoordinateText(degrees, 'E', 'W');
+  }
+
+  public final static CharSequence toCoordinateText (double degrees) {
+    return String.format("%.5f°", degrees);
+  }
+
+  public final static CharSequence toCoordinatesText (double latitude, double longitude) {
+    StringBuilder sb = new StringBuilder();
+    sb.append('[');
+    sb.append(toCoordinateText(latitude));
+    sb.append(',');
+    sb.append(toCoordinateText(longitude));
+    sb.append(']');
+    return sb.toString();
   }
 
   public final static CharSequence toPointText (float degrees) {
