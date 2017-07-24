@@ -16,26 +16,34 @@ public abstract class LocationMonitor {
     }
   }
 
+  private enum ProviderState {
+    STOPPED,
+    STARTED,
+    FAILED;
+  }
+
   protected abstract boolean startProvider ();
   protected abstract void stopProvider ();
-  private boolean isStarted = false;
+  private ProviderState providerState = ProviderState.STOPPED;
 
   public final boolean isStarted () {
-    return isStarted;
+    return providerState != ProviderState.STOPPED;
   }
 
   public final void startMonitor () {
-    if (!isStarted) {
+    if (providerState != ProviderState.STARTED) {
       if (startProvider()) {
-        isStarted = true;
+        providerState = ProviderState.STARTED;
+      } else {
+        providerState = ProviderState.FAILED;
       }
     }
   }
 
   public final void stopMonitor () {
-    if (isStarted) {
+    if (providerState == ProviderState.STARTED) {
       stopProvider();
-      isStarted = false;
+      providerState = ProviderState.STOPPED;
     }
   }
 }
