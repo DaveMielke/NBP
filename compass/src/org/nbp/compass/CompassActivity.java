@@ -264,15 +264,18 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   public void onSensorChanged (SensorEvent event) {
     {
       float[] values = event.values;
+      int count = values.length;
 
       switch (event.sensor.getType()) {
         case Sensor.TYPE_ACCELEROMETER:
-          if (gravityVector == null) gravityVector = values;
+          if (gravityVector == null) gravityVector = new float[count];
+          System.arraycopy(values, 0, gravityVector, 0, count);
           log("accelerometer", gravityVector);
           break;
 
         case Sensor.TYPE_MAGNETIC_FIELD:
-          if (geomagneticVector == null) geomagneticVector = values;
+          if (geomagneticVector == null) geomagneticVector = new float[count];
+          System.arraycopy(values, 0, geomagneticVector, 0, count);
           log("geomagnetic", geomagneticVector);
           break;
 
