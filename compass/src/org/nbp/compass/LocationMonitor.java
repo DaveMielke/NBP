@@ -6,14 +6,16 @@ public abstract class LocationMonitor {
   protected LocationMonitor () {
   }
 
-  protected final CompassActivity getCompassActivity () {
+  protected final static CompassActivity getActivity () {
     return CompassActivity.getCompassActivity();
   }
 
-  protected final void setLocation (Location location) {
-    if (location != null) {
-      getCompassActivity().setLocation(location);
-    }
+  public final static LocationProvider getCurrentProvider () {
+    return ApplicationSettings.LOCATION_PROVIDER;
+  }
+
+  public final static LocationMonitor getCurrentMonitor () {
+    return getCurrentProvider().getMonitor();
   }
 
   private enum MonitorState {
@@ -30,7 +32,7 @@ public abstract class LocationMonitor {
     return state != MonitorState.STOPPED;
   }
 
-  public final void startMonitor () {
+  public final void start () {
     if (state != MonitorState.STARTED) {
       if (startProvider()) {
         state = MonitorState.STARTED;
@@ -40,7 +42,7 @@ public abstract class LocationMonitor {
     }
   }
 
-  public final void stopMonitor () {
+  public final void stop () {
     switch (state) {
       case STARTED:
         stopProvider();
@@ -48,6 +50,29 @@ public abstract class LocationMonitor {
         state = MonitorState.STOPPED;
       case STOPPED:
         break;
+    }
+  }
+
+  public final static void startCurrentMonitor () {
+    getCurrentMonitor().start();
+  }
+
+  public final static void stopCurrentMonitor () {
+    getCurrentMonitor().stop();
+  }
+
+  public final static void restartCurrentMonitor () {
+    LocationMonitor monitor = getCurrentMonitor();
+
+    if (monitor.isStarted()) {
+      monitor.stop();
+      monitor.start();
+    }
+  }
+
+  protected final void setLocation (Location location) {
+    if (location != null) {
+      getActivity().setLocation(location);
     }
   }
 }

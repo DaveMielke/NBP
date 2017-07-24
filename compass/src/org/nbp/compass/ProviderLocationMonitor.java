@@ -15,7 +15,7 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
 
   public ProviderLocationMonitor () {
     super();
-    locationManager = (LocationManager)getCompassActivity().getSystemService(Context.LOCATION_SERVICE);
+    locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
   }
 
   protected final LocationManager getLocationManager () {

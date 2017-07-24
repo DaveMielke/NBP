@@ -31,18 +31,16 @@ public class LocationProviderControl extends EnumerationControl<LocationProvider
 
   @Override
   protected boolean setEnumerationValue (LocationProvider value) {
-    LocationProvider oldProvider = ApplicationSettings.LOCATION_PROVIDER;
+    LocationProvider oldProvider = LocationMonitor.getCurrentProvider();
 
     if (value != oldProvider) {
       LocationMonitor oldMonitor = oldProvider.getMonitor();
-      boolean started = oldMonitor.isStarted();
-      if (started) oldMonitor.stopMonitor();
-      ApplicationSettings.LOCATION_PROVIDER = value;
 
-      if (started) {
-        LocationMonitor newMonitor = value.getMonitor();
-        newMonitor.startMonitor();
-      }
+      boolean started = oldMonitor.isStarted();
+      if (started) oldMonitor.stop();
+
+      ApplicationSettings.LOCATION_PROVIDER = value;
+      if (started) LocationMonitor.startCurrentMonitor();
     }
 
     return true;

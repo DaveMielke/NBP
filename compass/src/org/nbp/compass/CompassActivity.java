@@ -334,10 +334,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     );
   }
 
-  private final static LocationMonitor getLocationMonitor () {
-    return ApplicationSettings.LOCATION_PROVIDER.getMonitor();
-  }
-
   private double currentLatitude;
   private double currentLongitude;
 
@@ -604,15 +600,15 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   @Override
   protected void onResume () {
     super.onResume();
+    LocationMonitor.startCurrentMonitor();
     startSensors();
-    getLocationMonitor().startMonitor();
   }
 
   @Override
   protected void onPause () {
     try {
       stopSensors();
-      getLocationMonitor().stopMonitor();
+      LocationMonitor.stopCurrentMonitor();
     } finally {
       super.onPause();
     }

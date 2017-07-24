@@ -30,7 +30,7 @@ public class FusedLocationMonitor extends LocationMonitor implements
   public FusedLocationMonitor () {
     super();
 
-    client = new GoogleApiClient.Builder(getCompassActivity())
+    client = new GoogleApiClient.Builder(getActivity())
                                 .addConnectionCallbacks(this)
                                 .addOnConnectionFailedListener(this)
                                 .addApi(LocationServices.API)
