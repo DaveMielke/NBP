@@ -10,14 +10,6 @@ public abstract class LocationMonitor {
     return CompassActivity.getCompassActivity();
   }
 
-  public final static LocationProvider getCurrentProvider () {
-    return ApplicationSettings.LOCATION_PROVIDER;
-  }
-
-  public final static LocationMonitor getCurrentMonitor () {
-    return getCurrentProvider().getMonitor();
-  }
-
   private enum MonitorState {
     STOPPED,
     FAILED,
@@ -51,6 +43,14 @@ public abstract class LocationMonitor {
       case STOPPED:
         break;
     }
+  }
+
+  public final static LocationProvider getCurrentProvider () {
+    return ApplicationSettings.LOCATION_PROVIDER;
+  }
+
+  public final static LocationMonitor getCurrentMonitor () {
+    return getCurrentProvider().getMonitor();
   }
 
   public final static void startCurrentMonitor () {
