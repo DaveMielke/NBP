@@ -10,4 +10,5 @@ public abstract class ApplicationSettings {
 
   public volatile static boolean LOG_GEOCODING = ApplicationDefaults.LOG_GEOCODING;
   public volatile static boolean LOG_SENSORS = ApplicationDefaults.LOG_SENSORS;
+  public volatile static LocationProvider LOCATION_PROVIDER = ApplicationDefaults.LOCATION_PROVIDER;
 }

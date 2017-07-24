@@ -3,8 +3,8 @@ package org.nbp.compass;
 import android.location.LocationManager;
 
 public class GPSLocationMonitor extends ProviderLocationMonitor {
-  public GPSLocationMonitor (CompassActivity activity) {
-    super(activity);
+  public GPSLocationMonitor () {
+    super();
   }
 
   @Override

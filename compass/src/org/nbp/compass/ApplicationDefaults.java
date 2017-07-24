@@ -10,4 +10,5 @@ public abstract class ApplicationDefaults {
 
   public final static boolean LOG_GEOCODING = false;
   public final static boolean LOG_SENSORS = false;
+  public final static LocationProvider LOCATION_PROVIDER = LocationProvider.BEST;
 }

@@ -4,6 +4,12 @@
   <string name="enum_DistanceUnit_METERS">Meters</string>
   <string name="enum_DistanceUnit_FEET">Feet</string>
 
+  <string name="enum_LocationProvider_BEST">Best</string>
+  <string name="enum_LocationProvider_GPS">GPS</string>
+  <string name="enum_LocationProvider_NETWORK">Network</string>
+  <string name="enum_LocationProvider_PASSIVE">Passive</string>
+  <string name="enum_LocationProvider_FUSED">Fused</string>
+
   <string name="enum_SpeedUnit_MPS">Meters Per Second</string>
   <string name="enum_SpeedUnit_FPS">Feet Per Second</string>
   <string name="enum_SpeedUnit_KPH">Kilometers Per Hour</string>

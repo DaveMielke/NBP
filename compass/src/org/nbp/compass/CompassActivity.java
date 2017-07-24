@@ -334,7 +334,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     );
 
     // this must be the very last step because the current location will be set
-    locationMonitor = new BestLocationMonitor(this);
+    locationMonitor = ApplicationSettings.LOCATION_PROVIDER.getMonitor();
   }
 
   private double currentLatitude;
@@ -579,9 +579,16 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     return true;
   }
 
+  private static CompassActivity compassActivity = null;
+
+  public final static CompassActivity getCompassActivity () {
+    return compassActivity;
+  }
+
   @Override
-  public void onCreate (Bundle savedInstanceState) {
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    compassActivity = this;
 
     accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
     Controls.restore();
@@ -597,14 +604,14 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   protected void onResume () {
     super.onResume();
     startSensors();
-    locationMonitor.start();
+    locationMonitor.startMonitor();
   }
 
   @Override
   protected void onPause () {
     try {
       stopSensors();
-      locationMonitor.stop();
+      locationMonitor.stopMonitor();
     } finally {
       super.onPause();
     }

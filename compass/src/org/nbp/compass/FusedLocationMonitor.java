@@ -21,10 +21,10 @@ public class FusedLocationMonitor extends LocationMonitor implements
   private boolean isConnected = false;
   private boolean isStarted = false;
 
-  public FusedLocationMonitor (CompassActivity activity) {
-    super(activity);
+  public FusedLocationMonitor () {
+    super();
 
-    client = new GoogleApiClient.Builder(activity)
+    client = new GoogleApiClient.Builder(getCompassActivity())
                                 .addConnectionCallbacks(this)
                                 .addOnConnectionFailedListener(this)
                                 .addApi(LocationServices.API)
@@ -49,15 +49,23 @@ public class FusedLocationMonitor extends LocationMonitor implements
   }
 
   @Override
-  public final void start () {
-    isStarted = true;
-    if (isConnected) startMonitoring();
+  protected final boolean startProvider () {
+    if (!isStarted) {
+      if (isConnected) {
+        startMonitoring();
+        isStarted = true;
+      }
+    }
+
+    return isStarted;
   }
 
   @Override
-  public final void stop () {
-    isStarted = false;
-    if (isConnected) stopMonitoring();
+  protected final void stopProvider () {
+    if (isStarted) {
+      if (isConnected) stopMonitoring();
+      isStarted = false;
+    }
   }
 
   @Override

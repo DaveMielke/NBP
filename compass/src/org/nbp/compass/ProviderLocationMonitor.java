@@ -2,19 +2,20 @@ package org.nbp.compass;
 
 import android.util.Log;
 import android.os.Bundle;
-import android.location.Location;
+import android.content.Context;
 
 import android.location.LocationManager;
 import android.location.LocationListener;
+import android.location.Location;
 
 public abstract class ProviderLocationMonitor extends LocationMonitor implements LocationListener {
   private final static String LOG_TAG = ProviderLocationMonitor.class.getName();
 
   private LocationManager locationManager;
 
-  public ProviderLocationMonitor (CompassActivity activity) {
-    super(activity);
-    locationManager = (LocationManager)activity.getSystemService(activity.LOCATION_SERVICE);
+  public ProviderLocationMonitor () {
+    super();
+    locationManager = (LocationManager)getCompassActivity().getSystemService(Context.LOCATION_SERVICE);
     setLocation(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
   }
 
@@ -23,11 +24,11 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
   }
 
   protected abstract String getLocationProvider ();
-  private boolean amMonitoring = false;
+  private boolean isStarted = false;
 
   @Override
-  public final void start () {
-    if (!amMonitoring) {
+  protected final boolean startProvider () {
+    if (!isStarted) {
       String provider = getLocationProvider();
       Log.d(LOG_TAG, ("location provider: " + provider));
 
@@ -39,18 +40,20 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
           this
         );
 
-        amMonitoring = true;
+        isStarted = true;
       } catch (IllegalArgumentException exception) {
         Log.w(LOG_TAG, exception.getMessage());
       }
     }
+
+    return isStarted;
   }
 
   @Override
-  public final void stop () {
-    if (amMonitoring) {
+  protected final void stopProvider () {
+    if (isStarted) {
       locationManager.removeUpdates(this);
-      amMonitoring = false;
+      isStarted = false;
     }
   }
 

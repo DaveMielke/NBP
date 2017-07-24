@@ -9,4 +9,5 @@
   <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_LogGeocoding">Log Geocoding</string>
   <string name="control_label_LogSensors">Log Sensors</string>
+  <string name="control_label_LocationProvider">Location Provider</string>
 </resources>

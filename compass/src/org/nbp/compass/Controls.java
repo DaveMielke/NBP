@@ -13,6 +13,7 @@ public abstract class Controls {
 
   public final static LogGeocodingControl logGeocoding = new LogGeocodingControl();
   public final static LogSensorsControl logSensors = new LogSensorsControl();
+  public final static LocationProviderControl locationProvider = new LocationProviderControl();
 
   public final static Control[] ALL = new Control[] {
     distanceUnit,
@@ -20,7 +21,8 @@ public abstract class Controls {
     angleUnit,
 
     logGeocoding,
-    logSensors
+    logSensors,
+    locationProvider
   };
 
   public final static void restore () {
