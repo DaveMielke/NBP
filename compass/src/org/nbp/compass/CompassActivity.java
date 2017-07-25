@@ -108,16 +108,18 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     return TextUtils.equals(text, view.getText());
   }
 
-  private final DelayedAction getAnnounceAction (TextView view) {
+  private final DelayedAction getChangedTextAnnouncer (TextView view) {
+    int key = R.string.text_tag_announcer;
+
     synchronized (view) {
-      DelayedAction action = (DelayedAction)view.getTag();
+      DelayedAction action = (DelayedAction)view.getTag(key);
 
       if (action == null) {
         action = new DelayedAction(
           ApplicationParameters.ANNOUNCE_MINIMUM_TIME, "announce-text"
         );
 
-        view.setTag(action);
+        view.setTag(key, action);
       }
 
       return action;
@@ -125,9 +127,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void setText (final TextView view, CharSequence text) {
-    DelayedAction announceAction = getAnnounceAction(view);
+    DelayedAction announcer = getChangedTextAnnouncer(view);
 
-    synchronized (announceAction) {
+    synchronized (announcer) {
       synchronized (view) {
         if (!isSameText(view, text)) {
           view.setText(text);
@@ -142,31 +144,42 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
             }
           }
 
-          if (text.length() > 0) {
-            final CharSequence announcement = text;
+          final CharSequence announcement = text;
+          announcer.setAction(
+            new Runnable() {
+              @Override
+              public void run () {
+                synchronized (view) {
+                  CharSequence text = "";
+                  int key = R.string.text_tag_announcement;
 
-            announceAction.setAction(
-              new Runnable() {
-                @Override
-                public void run () {
-                  synchronized (view) {
-                    if (isAccessibilityEnabled()) {
-                      if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-                        if (view.isAccessibilityFocused()) {
-                          accessibilityManager.interrupt();
-                          AccessibilityEvent event = AccessibilityEvent.obtain();
-                          view.onInitializeAccessibilityEvent(event);
-                          event.getText().add(announcement);
-                          event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-                          accessibilityManager.sendAccessibilityEvent(event);
+                  if (isAccessibilityEnabled()) {
+                    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+                      if (view.isAccessibilityFocused()) {
+                        text = announcement;
+
+                        if (announcement.length() > 0) {
+                          if (!isSameText(view, (CharSequence)view.getTag(key))) {
+                            accessibilityManager.interrupt();
+
+                            AccessibilityEvent event = AccessibilityEvent.obtain();
+                            view.onInitializeAccessibilityEvent(event);
+
+                            event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                            event.getText().add(announcement);
+
+                            accessibilityManager.sendAccessibilityEvent(event);
+                          }
                         }
                       }
                     }
                   }
+
+                  view.setTag(key, text);
                 }
               }
-            );
-          }
+            }
+          );
         }
       }
     }
@@ -297,7 +310,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setAngle(rollDegrees, roll);
   }
 
-  private final DelayedAction setOrientationAction = new DelayedAction(
+  private final DelayedAction orientationUpdater = new DelayedAction(
     ApplicationParameters.UPDATE_MINIMUM_TIME, "update-orientation"
   );
 
@@ -337,7 +350,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
         sensorManager.getOrientation(rotationMatrix, currentOrientation);
         log("orientation", currentOrientation);
 
-        setOrientationAction.setAction(
+        orientationUpdater.setAction(
           new Runnable() {
             @Override
             public void run () {

@@ -2,4 +2,7 @@
 
 <resources>
   <dimen name="spacer_width">5.0dp</dimen>
+
+  <string name="text_tag_announcer">changed text announcer</string>
+  <string name="text_tag_announcement">changed text announcement</string>
 </resources>
