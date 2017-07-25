@@ -125,44 +125,48 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void setText (final TextView view, CharSequence text) {
-    synchronized (view) {
-      if (!isSameText(view, text)) {
-        view.setText(text);
+    DelayedAction announceAction = getAnnounceAction(view);
 
-        if (text.length() == 0) {
-          CharSequence hint = view.getHint();
+    synchronized (announceAction) {
+      synchronized (view) {
+        if (!isSameText(view, text)) {
+          view.setText(text);
 
-          if (hint != null) {
-            if (hint.length() > 0) {
-              text = hint;
+          if (text.length() == 0) {
+            CharSequence hint = view.getHint();
+
+            if (hint != null) {
+              if (hint.length() > 0) {
+                text = hint;
+              }
             }
           }
-        }
 
-        if (text.length() > 0) {
-          final CharSequence announcement = text;
+          if (text.length() > 0) {
+            final CharSequence announcement = text;
 
-          getAnnounceAction(view).setAction(
-            new Runnable() {
-              @Override
-              public void run () {
-                synchronized (view) {
-                  if (isAccessibilityEnabled()) {
-                    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-                      if (view.isAccessibilityFocused()) {
-                        accessibilityManager.interrupt();
-                        AccessibilityEvent event = AccessibilityEvent.obtain();
-                        view.onInitializeAccessibilityEvent(event);
-                        event.getText().add(announcement);
-                        event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-                        accessibilityManager.sendAccessibilityEvent(event);
+            announceAction.setAction(
+              new Runnable() {
+                @Override
+                public void run () {
+                  synchronized (view) {
+                    if (isAccessibilityEnabled()) {
+                      if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+                        if (view.isAccessibilityFocused()) {
+                          accessibilityManager.interrupt();
+                          AccessibilityEvent event = AccessibilityEvent.obtain();
+                          view.onInitializeAccessibilityEvent(event);
+                          event.getText().add(announcement);
+                          event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                          accessibilityManager.sendAccessibilityEvent(event);
+                        }
                       }
                     }
                   }
                 }
               }
-            }
-          );
+            );
+          }
         }
       }
     }
