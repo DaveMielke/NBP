@@ -50,7 +50,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView distanceMagnitude;
   private TextView directionDegrees;
   private TextView directionPoint;
-  private TextView directionClock;
+  private TextView directionRelative;
 
   // motion
   private TextView speedMagnitude;
@@ -80,7 +80,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     distanceMagnitude = (TextView)findViewById(R.id.distance_magnitude);
     directionDegrees = (TextView)findViewById(R.id.direction_degrees);
     directionPoint = (TextView)findViewById(R.id.direction_point);
-    directionClock = (TextView)findViewById(R.id.direction_clock);
+    directionRelative = (TextView)findViewById(R.id.direction_relative);
 
     // motion
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
@@ -227,6 +227,30 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setText(view, ApplicationUtilities.toPointText(degrees));
   }
 
+  private final static float NO_HEADING = 0f;
+  private float savedDirectionHeading = NO_HEADING;
+  private float savedCompassHeading = NO_HEADING;
+
+  private final void setRelativeDirection () {
+    if ((savedDirectionHeading != NO_HEADING) && (savedCompassHeading != NO_HEADING)) {
+      setText(directionRelative,
+        ApplicationUtilities.toOClockText(
+          savedDirectionHeading, savedCompassHeading
+        )
+      );
+    }
+  }
+
+  private final void saveDirectionHeading (float heading) {
+    savedDirectionHeading = heading;
+    setRelativeDirection();
+  }
+
+  private final void saveCompassHeading (float heading) {
+    savedCompassHeading = heading;
+    setRelativeDirection();
+  }
+
   private final static int[] sensorTypes = new int[] {
     Sensor.TYPE_ACCELEROMETER,
     Sensor.TYPE_MAGNETIC_FIELD
@@ -307,7 +331,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     heading = ApplicationUtilities.toHeading(heading);
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
-    setClockCompass(heading);
+    saveCompassHeading(heading);
 
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
@@ -388,28 +412,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     );
   }
 
-  private Float clockCompass = null;
-  private Float clockDirection = null;
-
-  private final void setClock () {
-    if ((clockCompass != null) && (clockDirection != null)) {
-      float heading = ApplicationUtilities.toHeading(clockDirection - clockCompass);
-      int clock = Math.round(heading / 30f);
-      if (clock == 0) clock = 12;
-      setText(directionClock, String.format("@ %d o'clock", clock));
-    }
-  }
-
-  private final void setClockCompass (float heading) {
-    clockCompass = heading;
-    setClock();
-  }
-
-  private final void setClockDirection (float direction) {
-    clockDirection = direction;
-    setClock();
-  }
-
   private boolean atNewLocation = false;
   private boolean amGeocodingLocation = false;
 
@@ -440,7 +442,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               float heading = ApplicationUtilities.toHeading(direction);
               setHeading(directionDegrees, heading);
               setPoint(directionPoint, heading);
-              setClockDirection(heading);
+              saveDirectionHeading(heading);
             } else {
               setText(directionDegrees);
               setText(directionPoint);

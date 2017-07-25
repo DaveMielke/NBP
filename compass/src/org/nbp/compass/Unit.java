@@ -5,6 +5,10 @@ public interface Unit {
   public float getMultiplier ();
 
   public final static float DEGREES_PER_CIRCLE = 360f;
+  public final static int ARCMINUTES_PER_DEGREE = 60;
+  public final static int ARCSECONDS_PER_ARCMINUTE = 60;
+  public final static int ARCSECONDS_PER_DEGREE = ARCMINUTES_PER_DEGREE * ARCSECONDS_PER_ARCMINUTE;
+
   public final static float GRADIANS_PER_CIRCLE = 400f;
   public final static float MILS_PER_CIRCLE = (float)(Math.PI * 2E3d);
   public final float SECONDS_PER_MINUTE = 60f;

@@ -19,7 +19,7 @@
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/distance_magnitude" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/direction_clock" />
+    <TextView android:id="@+id/direction_relative" />
     <include layout="@layout/spacer" />
   </TableRow>
 

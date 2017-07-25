@@ -8,7 +8,7 @@ public abstract class ApplicationUtilities {
   }
 
   public final static float toHeading (float degrees) {
-    degrees += AngleUnit.DEGREES_PER_CIRCLE;
+    while (degrees < 0f) degrees += AngleUnit.DEGREES_PER_CIRCLE;
     degrees %= AngleUnit.DEGREES_PER_CIRCLE;
     return degrees;
   }
@@ -62,16 +62,16 @@ public abstract class ApplicationUtilities {
     }
 
     StringBuilder sb = new StringBuilder();
-    long value = Math.round(degrees * 3600f);
+    long value = Math.round(degrees * (double)AngleUnit.ARCSECONDS_PER_DEGREE);
 
-    sb.append(value % 60);
+    sb.append(value % AngleUnit.ARCSECONDS_PER_ARCMINUTE);
     sb.append('"');
-    value /= 60;
+    value /= AngleUnit.ARCSECONDS_PER_ARCMINUTE;
 
     if (value > 0) {
       sb.insert(0, "' ");
-      sb.insert(0, value%60);
-      value /= 60;
+      sb.insert(0, (value % AngleUnit.ARCMINUTES_PER_DEGREE));
+      value /= AngleUnit.ARCMINUTES_PER_DEGREE;
 
       if (value > 0) {
         sb.insert(0, "° ");
@@ -127,5 +127,15 @@ public abstract class ApplicationUtilities {
     }
 
     return sb.subSequence(0, sb.length());
+  }
+
+  private final static int HOURS_PER_CLOCK = 12;
+  private final static float DEGREES_PER_HOUR = AngleUnit.DEGREES_PER_CIRCLE / (float)HOURS_PER_CLOCK;
+
+  public final static CharSequence toOClockText (float directionHeading, float compassHeading) {
+    float heading = toHeading(directionHeading - compassHeading);
+    int hour = Math.round(heading / DEGREES_PER_HOUR);
+    if (hour == 0) hour = HOURS_PER_CLOCK;
+    return String.format("@ %d o'clock", hour);
   }
 }
