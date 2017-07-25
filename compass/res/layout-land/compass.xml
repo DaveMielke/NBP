@@ -9,13 +9,13 @@
 
   <TableRow>
     <TableLayout>
-      <include layout="@layout/position" />
-      <include layout="@layout/location" />
+      <include layout="@layout/orientation" />
+      <include layout="@layout/motion" />
     </TableLayout>
 
     <TableLayout>
-      <include layout="@layout/orientation" />
-      <include layout="@layout/motion" />
+      <include layout="@layout/location" />
+      <include layout="@layout/position" />
     </TableLayout>
 
     <TableLayout>

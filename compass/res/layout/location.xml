@@ -31,4 +31,11 @@
     <TextView android:id="@+id/direction_point" />
     <include layout="@layout/spacer" />
   </TableRow>
+
+  <TableRow android:id="@+id/row_altitude">
+    <TextView android:text="@string/label_altitude" />
+    <include layout="@layout/spacer" />
+    <TextView android:id="@+id/altitude_magnitude" />
+    <include layout="@layout/spacer" />
+  </TableRow>
 </merge>

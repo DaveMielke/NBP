@@ -48,9 +48,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   // location
   private TextView locationName;
   private TextView distanceMagnitude;
+  private TextView directionRelative;
   private TextView directionDegrees;
   private TextView directionPoint;
-  private TextView directionRelative;
+  private TextView altitudeMagnitude;
 
   // motion
   private TextView speedMagnitude;
@@ -68,7 +69,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView latitudeDMS;
   private TextView longitudeDecimal;
   private TextView longitudeDMS;
-  private TextView altitudeMagnitude;
 
   private final void findViews () {
     // accuracy
@@ -78,9 +78,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     // location
     locationName = (TextView)findViewById(R.id.location_name);
     distanceMagnitude = (TextView)findViewById(R.id.distance_magnitude);
+    directionRelative = (TextView)findViewById(R.id.direction_relative);
     directionDegrees = (TextView)findViewById(R.id.direction_degrees);
     directionPoint = (TextView)findViewById(R.id.direction_point);
-    directionRelative = (TextView)findViewById(R.id.direction_relative);
+    altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
 
     // motion
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
@@ -98,7 +99,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
-    altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
   }
 
   private final boolean isAccessibilityEnabled () {
