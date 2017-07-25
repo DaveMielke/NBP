@@ -50,6 +50,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView distanceMagnitude;
   private TextView directionDegrees;
   private TextView directionPoint;
+  private TextView directionClock;
 
   // motion
   private TextView speedMagnitude;
@@ -79,6 +80,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     distanceMagnitude = (TextView)findViewById(R.id.distance_magnitude);
     directionDegrees = (TextView)findViewById(R.id.direction_degrees);
     directionPoint = (TextView)findViewById(R.id.direction_point);
+    directionClock = (TextView)findViewById(R.id.direction_clock);
 
     // motion
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
@@ -305,6 +307,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     heading = ApplicationUtilities.toHeading(heading);
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
+    setClockCompass(heading);
 
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
@@ -385,16 +388,38 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     );
   }
 
+  private Float clockCompass = null;
+  private Float clockDirection = null;
+
+  private final void setClock () {
+    if ((clockCompass != null) && (clockDirection != null)) {
+      float heading = ApplicationUtilities.toHeading(clockDirection - clockCompass);
+      int clock = Math.round(heading / 30f);
+      if (clock == 0) clock = 12;
+      setText(directionClock, String.format("@ %d o'clock", clock));
+    }
+  }
+
+  private final void setClockCompass (float heading) {
+    clockCompass = heading;
+    setClock();
+  }
+
+  private final void setClockDirection (float direction) {
+    clockDirection = direction;
+    setClock();
+  }
+
   private boolean atNewLocation = false;
-  private boolean geocodingLocation = false;
+  private boolean amGeocodingLocation = false;
 
   private double locationLatitude;
   private double locationLongitude;
 
   private final void geocodeLocation () {
     synchronized (this) {
-      if (!geocodingLocation) {
-        geocodingLocation = true;
+      if (!amGeocodingLocation) {
+        amGeocodingLocation = true;
 
         new AsyncTask<Void, Object, Void>() {
           @Override
@@ -415,6 +440,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               float heading = ApplicationUtilities.toHeading(direction);
               setHeading(directionDegrees, heading);
               setPoint(directionPoint, heading);
+              setClockDirection(heading);
             } else {
               setText(directionDegrees);
               setText(directionPoint);
@@ -496,7 +522,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
               synchronized (CompassActivity.this) {
                 if (!atNewLocation) {
-                  geocodingLocation = false;
+                  amGeocodingLocation = false;
                   return null;
                 }
 
