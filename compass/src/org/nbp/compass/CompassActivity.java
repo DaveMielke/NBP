@@ -374,8 +374,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private Geocoder geocoder;
-  private boolean atNewLocation = false;
-  private boolean geocodingLocation = false;
 
   private final void prepareLocationMonitor () {
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
@@ -387,8 +385,11 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     );
   }
 
-  private double currentLatitude;
-  private double currentLongitude;
+  private boolean atNewLocation = false;
+  private boolean geocodingLocation = false;
+
+  private double locationLatitude;
+  private double locationLongitude;
 
   private final void geocodeLocation () {
     synchronized (this) {
@@ -420,7 +421,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
             }
           }
 
-          private final boolean setFields (double latitude, double longitude) {
+          private final boolean geocode (double latitude, double longitude) {
             String problem = null;
 
             try {
@@ -499,12 +500,12 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                   return null;
                 }
 
-                latitude = currentLatitude;
-                longitude = currentLongitude;
+                latitude = locationLatitude;
+                longitude = locationLongitude;
                 atNewLocation = false;
               }
 
-              setFields(latitude, longitude);
+              geocode(latitude, longitude);
             }
           }
         }.execute();
@@ -515,8 +516,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private final void geocodeLocation (double latitude, double longitude) {
     if (geocoder != null) {
       synchronized (this) {
-        currentLatitude = latitude;
-        currentLongitude = longitude;
+        locationLatitude = latitude;
+        locationLongitude = longitude;
         atNewLocation = true;
         geocodeLocation();
       }
