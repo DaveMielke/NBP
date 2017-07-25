@@ -106,10 +106,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     return accessibilityManager.isEnabled();
   }
 
-  private final boolean isSameText (TextView view, CharSequence text) {
-    return TextUtils.equals(text, view.getText());
-  }
-
   private final DelayedAction getChangedTextAnnouncer (TextView view) {
     int key = R.string.text_tag_announcer;
 
@@ -133,42 +129,32 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
     synchronized (announcer) {
       synchronized (view) {
-        if (!isSameText(view, text)) {
+        if (!TextUtils.equals(text, view.getText())) {
           view.setText(text);
 
-          if (text.length() == 0) {
-            CharSequence hint = view.getHint();
-
-            if (hint != null) {
-              if (hint.length() > 0) {
-                text = hint;
-              }
-            }
-          }
-
-          final CharSequence announcement = text;
           announcer.setAction(
             new Runnable() {
               @Override
               public void run () {
                 synchronized (view) {
-                  CharSequence text = null;
                   int key = R.string.text_tag_announcement;
+                  CharSequence text = view.getText();
+                  boolean cancel = true;
 
                   if (isAccessibilityEnabled()) {
                     if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
                       if (view.isAccessibilityFocused()) {
-                        text = announcement;
+                        cancel = false;
 
-                        if (announcement.length() > 0) {
-                          if (!isSameText(view, (CharSequence)view.getTag(key))) {
+                        if (text.length() > 0) {
+                          if (!TextUtils.equals(text, (CharSequence)view.getTag(key))) {
                             accessibilityManager.interrupt();
 
                             AccessibilityEvent event = AccessibilityEvent.obtain();
                             view.onInitializeAccessibilityEvent(event);
 
                             event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-                            event.getText().add(announcement);
+                            event.getText().add(text);
 
                             accessibilityManager.sendAccessibilityEvent(event);
                           }
@@ -177,6 +163,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                     }
                   }
 
+                  if (cancel) text = null;
                   view.setTag(key, text);
                 }
               }
@@ -232,13 +219,14 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private float savedCompassHeading = NO_HEADING;
 
   private final void setRelativeDirection () {
-    if ((savedDirectionHeading != NO_HEADING) && (savedCompassHeading != NO_HEADING)) {
-      setText(directionRelative,
-        ApplicationUtilities.toOClockText(
-          savedDirectionHeading, savedCompassHeading
-        )
-      );
-    }
+    if (savedDirectionHeading == NO_HEADING) return;
+    if (savedCompassHeading == NO_HEADING) return;
+
+    setText(directionRelative,
+      ApplicationUtilities.toOClockText(
+        savedDirectionHeading, savedCompassHeading
+      )
+    );
   }
 
   private final void saveDirectionHeading (float heading) {
