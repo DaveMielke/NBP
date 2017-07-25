@@ -7,6 +7,13 @@
     android:paddingRight="@dimen/spacer_width"
    />
 
+  <TableRow android:id="@+id/row_altitude">
+    <TextView android:text="@string/label_altitude" />
+    <include layout="@layout/spacer" />
+    <TextView android:id="@+id/altitude_magnitude" />
+    <include layout="@layout/spacer" />
+  </TableRow>
+
   <TableRow android:id="@+id/row_latitude">
     <TextView android:text="@string/label_latitude" />
     <include layout="@layout/spacer" />

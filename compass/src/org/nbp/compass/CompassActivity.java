@@ -51,7 +51,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView directionRelative;
   private TextView directionDegrees;
   private TextView directionPoint;
-  private TextView altitudeMagnitude;
 
   // motion
   private TextView speedMagnitude;
@@ -65,6 +64,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView rollDegrees;
 
   // position
+  private TextView altitudeMagnitude;
   private TextView latitudeDecimal;
   private TextView latitudeDMS;
   private TextView longitudeDecimal;
@@ -81,7 +81,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     directionRelative = (TextView)findViewById(R.id.direction_relative);
     directionDegrees = (TextView)findViewById(R.id.direction_degrees);
     directionPoint = (TextView)findViewById(R.id.direction_point);
-    altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
 
     // motion
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
@@ -95,6 +94,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     rollDegrees = (TextView)findViewById(R.id.roll_degrees);
 
     // position
+    altitudeMagnitude = (TextView)findViewById(R.id.altitude_magnitude);
     latitudeDecimal = (TextView)findViewById(R.id.latitude_decimal);
     latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
