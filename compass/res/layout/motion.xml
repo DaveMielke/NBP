@@ -7,14 +7,14 @@
     android:paddingRight="@dimen/spacer_width"
    />
 
-  <TableRow>
+  <TableRow android:id="@+id/row_speed">
     <TextView android:text="@string/label_speed" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/speed_magnitude" />
     <include layout="@layout/spacer" />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:id="@+id/row_bearing">
     <TextView android:text="@string/label_bearing" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/bearing_degrees" />

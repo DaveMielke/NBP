@@ -7,14 +7,14 @@
     android:paddingRight="@dimen/spacer_width"
    />
 
-  <TableRow>
+  <TableRow android:id="@+id/row_satellites">
     <TextView android:text="@string/label_satellites" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/accuracy_satellites" />
     <include layout="@layout/spacer" />
   </TableRow>
 
-  <TableRow>
+  <TableRow android:id="@+id/row_horizontal">
     <TextView android:text="@string/label_horizontal" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/accuracy_horizontal" />
