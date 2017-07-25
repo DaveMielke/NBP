@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:paddingLeft="@dimen/screen_offset_left"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:keepScreenOn="true"
-  >
-
-  <include layout="@layout/orientation" />
-  <include layout="@layout/location" />
-  <include layout="@layout/motion" />
-  <include layout="@layout/position" />
-  <include layout="@layout/accuracy" />
-</TableLayout>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+  <ImageView
+    android:src="@drawable/compass"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:importantForAccessibility="no"
+   />
+</merge>

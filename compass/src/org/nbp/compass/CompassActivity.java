@@ -660,7 +660,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
     Controls.restore();
 
-    setContentView(R.layout.compass);
+    setContentView(R.layout.main);
     findViews();
 
     prepareSensorMonitor();
