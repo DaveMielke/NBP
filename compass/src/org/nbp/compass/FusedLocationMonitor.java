@@ -84,7 +84,7 @@ public class FusedLocationMonitor extends LocationMonitor implements
 
   @Override
   public void onLocationChanged (Location location) {
-    setLocation(location);
+    updateLocation(location);
   }
 
   @Override
@@ -95,7 +95,7 @@ public class FusedLocationMonitor extends LocationMonitor implements
     startMonitoring();
     state = MonitorState.STARTED;
 
-    setLocation(LocationServices.FusedLocationApi.getLastLocation(client));
+    updateLocation(LocationServices.FusedLocationApi.getLastLocation(client));
   }
 
   @Override

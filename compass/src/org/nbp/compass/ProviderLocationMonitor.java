@@ -32,7 +32,7 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
       Log.d(LOG_TAG, ("provider: " + provider));
 
       if (locationManager.isProviderEnabled(provider)) {
-        setLocation(locationManager.getLastKnownLocation(provider));
+        updateLocation(locationManager.getLastKnownLocation(provider));
 
         try {
           locationManager.requestLocationUpdates(
@@ -64,7 +64,7 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
 
   @Override
   public void onLocationChanged (Location location) {
-    setLocation(location);
+    updateLocation(location);
   }
 
   @Override

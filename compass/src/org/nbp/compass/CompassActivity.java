@@ -150,7 +150,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               @Override
               public void run () {
                 synchronized (view) {
-                  CharSequence text = "";
+                  CharSequence text = null;
                   int key = R.string.text_tag_announcement;
 
                   if (isAccessibilityEnabled()) {
@@ -375,7 +375,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
   private Geocoder geocoder;
   private boolean atNewLocation = false;
-  private boolean settingLocationFields = false;
+  private boolean geocodingLocation = false;
 
   private final void prepareLocationMonitor () {
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
@@ -390,10 +390,10 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private double currentLatitude;
   private double currentLongitude;
 
-  private final void setLocationFields () {
+  private final void geocodeLocation () {
     synchronized (this) {
-      if (!settingLocationFields) {
-        settingLocationFields = true;
+      if (!geocodingLocation) {
+        geocodingLocation = true;
 
         new AsyncTask<Void, Object, Void>() {
           @Override
@@ -495,7 +495,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
               synchronized (CompassActivity.this) {
                 if (!atNewLocation) {
-                  settingLocationFields = false;
+                  geocodingLocation = false;
                   return null;
                 }
 
@@ -512,29 +512,29 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     }
   }
 
-  private final void setLocationFields (double latitude, double longitude) {
+  private final void geocodeLocation (double latitude, double longitude) {
     if (geocoder != null) {
       synchronized (this) {
         currentLatitude = latitude;
         currentLongitude = longitude;
         atNewLocation = true;
-        setLocationFields();
+        geocodeLocation();
       }
     }
   }
 
-  private final void setLocation (double latitude, double longitude) {
+  private final void setPosition (double latitude, double longitude) {
     setCoordinate(latitudeDecimal, latitude);
     setCoordinate(longitudeDecimal, longitude);
 
     setLatitude(latitudeDMS, latitude);
     setLongitude(longitudeDMS, longitude);
 
-    setLocationFields(latitude, longitude);
+    geocodeLocation(latitude, longitude);
   }
 
-  public final void setLocation (Location location) {
-    setLocation(location.getLatitude(), location.getLongitude());
+  public final void onLocationReceived (Location location) {
+    setPosition(location.getLatitude(), location.getLongitude());
 
     if (location.hasAltitude()) {
       double meters = location.getAltitude();

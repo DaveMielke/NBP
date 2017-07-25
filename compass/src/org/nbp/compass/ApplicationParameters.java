@@ -13,5 +13,5 @@ public abstract class ApplicationParameters {
   public final static int LOCATION_UPDATE_TIME = 4000; // milliseconds
   public final static int LOCATION_FUSED_PRIORITY = LocationRequest.PRIORITY_HIGH_ACCURACY;
 
-  public final static int SENSOR_UPDATE_INTERVAL = 250000 /* microseconds */;
+  public final static int SENSOR_UPDATE_INTERVAL = UPDATE_MINIMUM_TIME * 1000; // microseconds;
 }
