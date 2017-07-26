@@ -12,4 +12,5 @@
   <include layout="@layout/position" />
   <include layout="@layout/accuracy" />
   <include layout="@layout/orientation" />
+  <include layout="@layout/compass" />
 </TableLayout>

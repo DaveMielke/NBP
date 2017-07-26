@@ -2,6 +2,7 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
   <ImageView
+    android:id="@+id/compass"
     android:src="@drawable/compass"
     android:contentDescription="[compass]"
     android:layout_height="wrap_content"

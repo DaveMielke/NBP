@@ -21,9 +21,9 @@ import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import android.view.accessibility.AccessibilityManager;
-import android.view.accessibility.AccessibilityEvent;
 
 import android.text.TextUtils;
 
@@ -60,6 +60,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   // orientation
   private TextView headingDegrees;
   private TextView headingPoint;
+  private ImageView headingCompass;
   private TextView pitchDegrees;
   private TextView rollDegrees;
 
@@ -90,6 +91,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     // orientation
     headingDegrees = (TextView)findViewById(R.id.heading_degrees);
     headingPoint = (TextView)findViewById(R.id.heading_point);
+    headingCompass = (ImageView)findViewById(R.id.compass);
     pitchDegrees = (TextView)findViewById(R.id.pitch_degrees);
     rollDegrees = (TextView)findViewById(R.id.roll_degrees);
 
@@ -149,14 +151,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
                         if (text.length() > 0) {
                           if (!TextUtils.equals(text, (CharSequence)view.getTag(key))) {
                             accessibilityManager.interrupt();
-
-                            AccessibilityEvent event = AccessibilityEvent.obtain();
-                            view.onInitializeAccessibilityEvent(event);
-
-                            event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-                            event.getText().add(text);
-
-                            accessibilityManager.sendAccessibilityEvent(event);
+                            view.announceForAccessibility(text);
                           }
                         }
                       }
