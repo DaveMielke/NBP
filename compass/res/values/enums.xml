@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <string name="enum_AngleUnit_DEGREES">Degrees (360°)</string>
+  <string name="enum_AngleUnit_GRADIANS">Gradians (400G)</string>
+  <string name="enum_AngleUnit_MILS">Mils (6283mil)</string>
+
   <string name="enum_DistanceUnit_METERS">Meters</string>
   <string name="enum_DistanceUnit_FEET">Feet</string>
 
@@ -10,10 +14,10 @@
   <string name="enum_LocationProvider_BEST">Best</string>
   <string name="enum_LocationProvider_FUSED">Fused</string>
 
-  <string name="enum_RelativeDirection_POSITIVE_ANGLE">Positive Angle</string>
-  <string name="enum_RelativeDirection_SIGNED_ANGLE">Signed Angle</string>
-  <string name="enum_RelativeDirection_LEFT_RIGHT">Left/Right Angle</string>
-  <string name="enum_RelativeDirection_OCLOCK">O\'Clock</string>
+  <string name="enum_RelativeDirection_POSITIVE_ANGLE">Positive Angle (1 - 360)</string>
+  <string name="enum_RelativeDirection_SIGNED_ANGLE">Signed Angle (-180 - 180)</string>
+  <string name="enum_RelativeDirection_LEFT_RIGHT">Angle to the Left/Right (0 - 180)</string>
+  <string name="enum_RelativeDirection_OCLOCK">O\'Clock (1 - 12)</string>
 
   <string name="enum_SpeedUnit_MPS">Meters Per Second</string>
   <string name="enum_SpeedUnit_FPS">Feet Per Second</string>
