@@ -22,4 +22,10 @@
       <include layout="@layout/accuracy" />
     </TableLayout>
   </TableRow>
+
+  <TableLayout>
+    <TableRow>
+      <include layout="@layout/compass" />
+    </TableRow>
+  </TableLayout>
 </TableLayout>

@@ -108,6 +108,20 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     return accessibilityManager.isEnabled();
   }
 
+  private final void rotateTo (View view, float degrees) {
+    if (view != null) {
+      float delta = degrees - view.getRotation();
+
+      if (delta > 180f) {
+        delta -= AngleUnit.DEGREES_PER_CIRCLE;
+      } else if (delta < -180f) {
+        delta += AngleUnit.DEGREES_PER_CIRCLE;
+      }
+
+      view.animate().rotationBy(delta).start();
+    }
+  }
+
   private final DelayedAction getChangedTextAnnouncer (TextView view) {
     int key = R.string.text_tag_announcer;
 
@@ -321,19 +335,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
     setOrientationHeading(heading);
-
-    {
-      View view = headingCompass;
-      float delta = -heading - view.getRotation();
-
-      if (delta > 180f) {
-        delta -= AngleUnit.DEGREES_PER_CIRCLE;
-      } else if (delta < -180f) {
-        delta += AngleUnit.DEGREES_PER_CIRCLE;
-      }
-
-      view.animate().rotationBy(delta).start();
-    }
+    rotateTo(headingCompass, -heading);
 
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
