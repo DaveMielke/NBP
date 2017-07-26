@@ -211,7 +211,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
   private final static float NO_HEADING = 0f;
   private float orientationHeading = NO_HEADING;
-  private float locationDirection = NO_HEADING;
+  private float locationHeading = NO_HEADING;
 
   private final CharSequence toRelativeText (float direction) {
     float reference = orientationHeading;
@@ -226,18 +226,18 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     if (text != null) setText(view, text);
   }
 
-  private final void setRelativeDirection () {
-    setRelativeDirection(directionRelative, locationDirection);
+  private final void setRelativeLocation () {
+    setRelativeDirection(directionRelative, locationHeading);
+  }
+
+  private final void setLocationHeading (float heading) {
+    locationHeading = heading;
+    setRelativeLocation();
   }
 
   private final void setOrientationHeading (float heading) {
     orientationHeading = heading;
-    setRelativeDirection();
-  }
-
-  private final void setLocationDirection (float direction) {
-    locationDirection = direction;
-    setRelativeDirection();
+    setRelativeLocation();
   }
 
   private final static int[] sensorTypes = new int[] {
@@ -321,6 +321,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
     setOrientationHeading(heading);
+    headingCompass.animate().rotation(-heading).start();
 
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
@@ -431,7 +432,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               float heading = ApplicationUtilities.toHeading(direction);
               setHeading(directionDegrees, heading);
               setPoint(directionPoint, heading);
-              setLocationDirection(heading);
+              setLocationHeading(heading);
             } else {
               setText(directionDegrees);
               setText(directionPoint);
