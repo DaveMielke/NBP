@@ -211,23 +211,23 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
 
   private final static float NO_HEADING = 0f;
   private float orientationHeading = NO_HEADING;
-  private float directionHeading = NO_HEADING;
+  private float locationDirection = NO_HEADING;
 
-  private final CharSequence toRelativeText (float heading) {
+  private final CharSequence toRelativeText (float direction) {
     float reference = orientationHeading;
     if (reference == NO_HEADING) return null;
 
-    if (heading == NO_HEADING) return null;
-    return ApplicationUtilities.toRelativeText(heading, reference);
+    if (direction == NO_HEADING) return null;
+    return ApplicationUtilities.toRelativeText(direction, reference);
   }
 
-  private final void setRelativeHeading (TextView view, float heading) {
-    CharSequence text = toRelativeText(heading);
+  private final void setRelativeDirection (TextView view, float direction) {
+    CharSequence text = toRelativeText(direction);
     if (text != null) setText(view, text);
   }
 
   private final void setRelativeDirection () {
-    setRelativeHeading(directionRelative, directionHeading);
+    setRelativeDirection(directionRelative, locationDirection);
   }
 
   private final void setOrientationHeading (float heading) {
@@ -235,8 +235,8 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setRelativeDirection();
   }
 
-  private final void setDirectionHeading (float heading) {
-    directionHeading = heading;
+  private final void setLocationDirection (float direction) {
+    locationDirection = direction;
     setRelativeDirection();
   }
 
@@ -431,7 +431,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               float heading = ApplicationUtilities.toHeading(direction);
               setHeading(directionDegrees, heading);
               setPoint(directionPoint, heading);
-              setDirectionHeading(heading);
+              setLocationDirection(heading);
             } else {
               setText(directionDegrees);
               setText(directionPoint);

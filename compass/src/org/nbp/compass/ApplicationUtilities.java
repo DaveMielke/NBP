@@ -129,9 +129,7 @@ public abstract class ApplicationUtilities {
     return sb.subSequence(0, sb.length());
   }
 
-  public final static CharSequence toRelativeText (
-    float actualHeading, float referenceHeading
-  ) {
-    return ApplicationSettings.RELATIVE_HEADING.toText(actualHeading, referenceHeading);
+  public final static CharSequence toRelativeText (float direction, float reference) {
+    return ApplicationSettings.RELATIVE_DIRECTION.toText(direction, reference);
   }
 }

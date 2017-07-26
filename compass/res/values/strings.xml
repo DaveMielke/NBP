@@ -41,6 +41,9 @@
   <string name="direction_south">south</string>
   <string name="direction_west">west</string>
 
+  <string name="direction_left">left</string>
+  <string name="direction_right">right</string>
+
   <string name="menu_about">About</string>
   <string name="menu_settings">Settings</string>
 
