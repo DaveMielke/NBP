@@ -62,7 +62,7 @@ public enum RelativeDirection {
   private final static float DEGREES_PER_HOUR = AngleUnit.DEGREES_PER_CIRCLE / (float)HOURS_PER_CLOCK;
 
   private final static float toSignedDegrees (float direction) {
-    float degrees = direction;
+    float degrees = (float)Math.rint(direction);
     if (degrees > 180f) degrees -= AngleUnit.DEGREES_PER_CIRCLE;
     return degrees;
   }
