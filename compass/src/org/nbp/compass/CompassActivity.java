@@ -321,7 +321,19 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
     setOrientationHeading(heading);
-    headingCompass.animate().rotation(-heading).start();
+
+    {
+      View view = headingCompass;
+      float delta = -heading - view.getRotation();
+
+      if (delta > 180f) {
+        delta -= AngleUnit.DEGREES_PER_CIRCLE;
+      } else if (delta < -180f) {
+        delta += AngleUnit.DEGREES_PER_CIRCLE;
+      }
+
+      view.animate().rotationBy(delta).start();
+    }
 
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
