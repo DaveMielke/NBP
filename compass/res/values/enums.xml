@@ -10,6 +10,10 @@
   <string name="enum_LocationProvider_BEST">Best</string>
   <string name="enum_LocationProvider_FUSED">Fused</string>
 
+  <string name="enum_RelativeHeading_HEADING">Heading Angle</string>
+  <string name="enum_RelativeHeading_RELATIVE">Relative Angle</string>
+  <string name="enum_RelativeHeading_OCLOCK">O\'Clock</string>
+
   <string name="enum_SpeedUnit_MPS">Meters Per Second</string>
   <string name="enum_SpeedUnit_FPS">Feet Per Second</string>
   <string name="enum_SpeedUnit_KPH">Kilometers Per Hour</string>

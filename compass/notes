@@ -2,6 +2,11 @@ show a stale location
 show a stale orientation
 geocode failure retries
 compass graphic
+direction pointer graphic
+user location entry
 new android O accuracies: speed, bearing, altitude
 settings: geocoding time, orientation time, geocoding distance
 street intersections, transit stops, user-supplied locations
+B2G GPS signal strength
+B2G network location provider
+B2G geocoding
