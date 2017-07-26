@@ -129,13 +129,9 @@ public abstract class ApplicationUtilities {
     return sb.subSequence(0, sb.length());
   }
 
-  private final static int HOURS_PER_CLOCK = 12;
-  private final static float DEGREES_PER_HOUR = AngleUnit.DEGREES_PER_CIRCLE / (float)HOURS_PER_CLOCK;
-
-  public final static CharSequence toOClockText (float directionHeading, float compassHeading) {
-    float heading = toHeading(directionHeading - compassHeading);
-    int hour = Math.round(heading / DEGREES_PER_HOUR);
-    if (hour == 0) hour = HOURS_PER_CLOCK;
-    return String.format("@ %d o'clock", hour);
+  public final static CharSequence toRelativeText (
+    float actualHeading, float referenceHeading
+  ) {
+    return ApplicationSettings.RELATIVE_HEADING.toText(actualHeading, referenceHeading);
   }
 }

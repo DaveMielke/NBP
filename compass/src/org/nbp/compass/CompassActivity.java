@@ -215,27 +215,33 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final static float NO_HEADING = 0f;
-  private float savedDirectionHeading = NO_HEADING;
-  private float savedCompassHeading = NO_HEADING;
+  private float orientationHeading = NO_HEADING;
+  private float directionHeading = NO_HEADING;
 
-  private final void setRelativeDirection () {
-    if (savedDirectionHeading == NO_HEADING) return;
-    if (savedCompassHeading == NO_HEADING) return;
+  private final CharSequence toRelativeText (float heading) {
+    float reference = orientationHeading;
+    if (reference == NO_HEADING) return null;
 
-    setText(directionRelative,
-      ApplicationUtilities.toOClockText(
-        savedDirectionHeading, savedCompassHeading
-      )
-    );
+    if (heading == NO_HEADING) return null;
+    return ApplicationUtilities.toRelativeText(heading, reference);
   }
 
-  private final void saveDirectionHeading (float heading) {
-    savedDirectionHeading = heading;
+  private final void setRelativeHeading (TextView view, float heading) {
+    CharSequence text = toRelativeText(heading);
+    if (text != null) setText(view, text);
+  }
+
+  private final void setRelativeDirection () {
+    setRelativeHeading(directionRelative, directionHeading);
+  }
+
+  private final void setOrientationHeading (float heading) {
+    orientationHeading = heading;
     setRelativeDirection();
   }
 
-  private final void saveCompassHeading (float heading) {
-    savedCompassHeading = heading;
+  private final void setDirectionHeading (float heading) {
+    directionHeading = heading;
     setRelativeDirection();
   }
 
@@ -319,7 +325,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     heading = ApplicationUtilities.toHeading(heading);
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
-    saveCompassHeading(heading);
+    setOrientationHeading(heading);
 
     setAngle(pitchDegrees, pitch);
     setAngle(rollDegrees, roll);
@@ -430,7 +436,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
               float heading = ApplicationUtilities.toHeading(direction);
               setHeading(directionDegrees, heading);
               setPoint(directionPoint, heading);
-              saveDirectionHeading(heading);
+              setDirectionHeading(heading);
             } else {
               setText(directionDegrees);
               setText(directionPoint);
