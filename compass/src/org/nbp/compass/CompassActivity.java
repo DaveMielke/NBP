@@ -143,7 +143,7 @@ public abstract class CompassActivity extends CommonActivity {
                 public void run () {
                   synchronized (view) {
                     int key = R.string.text_tag_announcement;
-                    CharSequence text = view.getText();
+                    final CharSequence text = view.getText();
                     boolean cancel = true;
 
                     if (isAccessibilityEnabled()) {
@@ -155,19 +155,21 @@ public abstract class CompassActivity extends CommonActivity {
                             if (!TextUtils.equals(text, (CharSequence)view.getTag(key))) {
                               accessibilityManager.interrupt();
 
-                              try {
-                                view.announceForAccessibility(text);
-                              } catch (RuntimeException exception) {
-                                Log.e(LOG_TAG, "unexpected exception", exception);
-                              }
+                              CommonUtilities.runUnsafeCode(
+                                new Runnable() {
+                                  @Override
+                                  public void run () {
+                                    view.announceForAccessibility(text);
+                                  }
+                                }
+                              );
                             }
                           }
                         }
                       }
                     }
 
-                    if (cancel) text = null;
-                    view.setTag(key, text);
+                    view.setTag(key, (cancel? null: text));
                   }
                 }
               }

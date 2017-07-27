@@ -8,7 +8,21 @@ import android.content.DialogInterface;
 import android.view.View;
 
 public abstract class CommonUtilities {
+  private final static String LOG_TAG = CommonUtilities.class.getName();
+
   protected CommonUtilities () {
+  }
+
+  public static boolean haveAndroidSDK (int sdk) {
+    return sdk <= Build.VERSION.SDK_INT;
+  }
+
+  public final static void runUnsafeCode (Runnable runnable) {
+    try {
+      runnable.run();
+    } catch (RuntimeException exception) {
+      Log.e(LOG_TAG, "unexpected exception", exception);
+    }
   }
 
   private static ProblemReporter errorReporter = new ProblemReporter() {
@@ -59,9 +73,5 @@ public abstract class CommonUtilities {
 
   public final static View findView (DialogInterface dialog, int identifier) {
     return ((Dialog)dialog).findViewById(identifier);
-  }
-
-  public static boolean haveAndroidSDK (int sdk) {
-    return sdk <= Build.VERSION.SDK_INT;
   }
 }
