@@ -462,7 +462,18 @@ public abstract class CompassActivity extends CommonActivity {
   protected final void setOrientationHeading (float heading) {
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
-    rotateTo(headingCompass, -heading);
+
+    {
+      View compass = headingCompass;
+      rotateTo(compass, -heading);
+
+      compass.setContentDescription(
+        String.format(
+          "[compass rotated at %s]",
+          ApplicationUtilities.toAngleText(ApplicationUtilities.toHeading(compass.getRotation()))
+        )
+      );
+    }
 
     orientationHeading = heading;
     setRelativeLocation();
