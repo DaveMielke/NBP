@@ -222,10 +222,9 @@ public class MainActivity extends CompassActivity implements SensorEventListener
     mainActivity = this;
 
     setContentView(R.layout.main);
-    findViews();
+    finishCompassActivityCreation();
 
     prepareSensorMonitor();
-    Controls.restore();
   }
 
   @Override

@@ -233,7 +233,9 @@ public abstract class CompassActivity extends CommonActivity {
     setText(view, ApplicationUtilities.toPointText(degrees));
   }
 
+  private final static float NO_DISTANCE = Float.NaN;
   private final static float NO_HEADING = 0f;
+
   private float orientationHeading = NO_HEADING;
   private float locationHeading = NO_HEADING;
 
@@ -254,9 +256,29 @@ public abstract class CompassActivity extends CommonActivity {
     setRelativeDirection(directionRelative, locationHeading);
   }
 
+  private final void setLocationName (CharSequence name) {
+    setText(locationName, name);
+  }
+
   private final void setLocationHeading (float heading) {
+    if (heading != NO_HEADING) {
+      setHeading(directionDegrees, heading);
+      setPoint(directionPoint, heading);
+    } else {
+      setText(directionDegrees);
+      setText(directionPoint);
+    }
+
     locationHeading = heading;
     setRelativeLocation();
+  }
+
+  private final void setLocationDistance (float distance) {
+    if (distance != NO_DISTANCE) {
+      setDistance(distanceMagnitude, distance);
+    } else {
+      setText(distanceMagnitude);
+    }
   }
 
   private Geocoder geocoder;
@@ -289,23 +311,14 @@ public abstract class CompassActivity extends CommonActivity {
             Float distance    = (Float)       arguments[1];
             Float direction   = (Float)       arguments[2];
 
-            setText(locationName, name);
+            setLocationName(name);
+            setLocationDistance((distance != null)? distance: NO_DISTANCE);
 
-            if (distance != null) {
-              setDistance(distanceMagnitude, distance);
-            } else {
-              setText(distanceMagnitude);
-            }
-
-            if (direction != null) {
-              float heading = ApplicationUtilities.toHeading(direction);
-              setHeading(directionDegrees, heading);
-              setPoint(directionPoint, heading);
-              setLocationHeading(heading);
-            } else {
-              setText(directionDegrees);
-              setText(directionPoint);
-            }
+            setLocationHeading(
+              (direction != null)?
+              ApplicationUtilities.toHeading(direction):
+              NO_HEADING
+            );
           }
 
           private final boolean geocode (double latitude, double longitude) {
@@ -493,6 +506,11 @@ public abstract class CompassActivity extends CommonActivity {
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
+  }
+
+  protected final void finishCompassActivityCreation () {
+    findViews();
+    Controls.restore();
     prepareGeocoding();
   }
 }
