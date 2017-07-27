@@ -2,33 +2,33 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
   <TextView
-    android:text="@string/section_location"
+    android:text="@string/section_address"
     android:textAppearance="?android:attr/textAppearanceLarge"
     android:paddingRight="@dimen/spacer_width"
    />
 
-  <TableRow android:id="@+id/row_location">
-    <TextView android:text="@string/label_location" />
+  <TableRow android:id="@+id/row_address">
+    <TextView android:text="@string/label_name" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/location_name" android:layout_span="2" />
+    <TextView android:id="@+id/address_name" android:layout_span="2" />
     <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow android:id="@+id/row_distance">
     <TextView android:text="@string/label_distance" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/distance_magnitude" />
+    <TextView android:id="@+id/address_distance" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/direction_relative" />
+    <TextView android:id="@+id/address_direction" />
     <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow android:id="@+id/row_direction">
     <TextView android:text="@string/label_direction" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/direction_degrees" />
+    <TextView android:id="@+id/address_degrees" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/direction_point" />
+    <TextView android:id="@+id/address_point" />
     <include layout="@layout/spacer" />
   </TableRow>
 </merge>

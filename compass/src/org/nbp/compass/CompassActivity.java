@@ -38,12 +38,12 @@ public abstract class CompassActivity extends CommonActivity {
   private TextView accuracySatellites;
   private TextView accuracyHorizontal;
 
-  // location
-  private TextView locationName;
-  private TextView distanceMagnitude;
-  private TextView directionRelative;
-  private TextView directionDegrees;
-  private TextView directionPoint;
+  // address
+  private TextView addressName;
+  private TextView addressDistance;
+  private TextView addressDirection;
+  private TextView addressDegrees;
+  private TextView addressPoint;
 
   // motion
   private TextView speedMagnitude;
@@ -69,12 +69,12 @@ public abstract class CompassActivity extends CommonActivity {
     accuracySatellites = (TextView)findViewById(R.id.accuracy_satellites);
     accuracyHorizontal = (TextView)findViewById(R.id.accuracy_horizontal);
 
-    // location
-    locationName = (TextView)findViewById(R.id.location_name);
-    distanceMagnitude = (TextView)findViewById(R.id.distance_magnitude);
-    directionRelative = (TextView)findViewById(R.id.direction_relative);
-    directionDegrees = (TextView)findViewById(R.id.direction_degrees);
-    directionPoint = (TextView)findViewById(R.id.direction_point);
+    // address
+    addressName = (TextView)findViewById(R.id.address_name);
+    addressDistance = (TextView)findViewById(R.id.address_distance);
+    addressDirection = (TextView)findViewById(R.id.address_direction);
+    addressDegrees = (TextView)findViewById(R.id.address_degrees);
+    addressPoint = (TextView)findViewById(R.id.address_point);
 
     // motion
     speedMagnitude = (TextView)findViewById(R.id.speed_magnitude);
@@ -235,7 +235,7 @@ public abstract class CompassActivity extends CommonActivity {
 
   private final static float UNKNOWN_VALUE = Float.NaN;
   private float orientationHeading = UNKNOWN_VALUE;
-  private float locationHeading = UNKNOWN_VALUE;
+  private float addressHeading = UNKNOWN_VALUE;
 
   private final CharSequence toRelativeText (float direction) {
     float reference = orientationHeading;
@@ -255,32 +255,32 @@ public abstract class CompassActivity extends CommonActivity {
     }
   }
 
-  private final void setRelativeLocation () {
-    setRelativeDirection(directionRelative, locationHeading);
+  private final void setAddressDirection () {
+    setRelativeDirection(addressDirection, addressHeading);
   }
 
-  private final void setLocationName (CharSequence name) {
-    setText(locationName, name);
+  private final void setAddressName (CharSequence name) {
+    setText(addressName, name);
   }
 
-  private final void setLocationDistance (float distance) {
+  private final void setAddressDistance (float distance) {
     if (distance != UNKNOWN_VALUE) {
-      setDistance(distanceMagnitude, distance);
+      setDistance(addressDistance, distance);
     } else {
-      setText(distanceMagnitude);
+      setText(addressDistance);
     }
   }
 
-  private final void setLocationHeading (float heading) {
-    if ((locationHeading = heading) != UNKNOWN_VALUE) {
-      setHeading(directionDegrees, heading);
-      setPoint(directionPoint, heading);
+  private final void setAddressHeading (float heading) {
+    if ((addressHeading = heading) != UNKNOWN_VALUE) {
+      setHeading(addressDegrees, heading);
+      setPoint(addressPoint, heading);
     } else {
-      setText(directionDegrees);
-      setText(directionPoint);
+      setText(addressDegrees);
+      setText(addressPoint);
     }
 
-    setRelativeLocation();
+    setAddressDirection();
   }
 
   private Geocoder geocoder;
@@ -288,7 +288,7 @@ public abstract class CompassActivity extends CommonActivity {
   private final void prepareGeocoding () {
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
 
-    setText(locationName,
+    setText(addressName,
       (geocoder != null)?
       R.string.message_waiting:
       R.string.message_unsupported
@@ -298,8 +298,8 @@ public abstract class CompassActivity extends CommonActivity {
   private boolean atNewLocation = false;
   private boolean amGeocodingLocation = false;
 
-  private double locationLatitude;
-  private double locationLongitude;
+  private double locationLatitude = UNKNOWN_VALUE;
+  private double locationLongitude = UNKNOWN_VALUE;
 
   private final void geocodeLocation () {
     synchronized (this) {
@@ -313,10 +313,10 @@ public abstract class CompassActivity extends CommonActivity {
             Float distance    = (Float)       arguments[1];
             Float direction   = (Float)       arguments[2];
 
-            setLocationName(name);
-            setLocationDistance((distance != null)? distance: UNKNOWN_VALUE);
+            setAddressName(name);
+            setAddressDistance((distance != null)? distance: UNKNOWN_VALUE);
 
-            setLocationHeading(
+            setAddressHeading(
               (direction != null)?
               ApplicationUtilities.toHeading(direction):
               UNKNOWN_VALUE
@@ -334,10 +334,10 @@ public abstract class CompassActivity extends CommonActivity {
                   Address address = addresses.get(0);
 
                   if (ApplicationSettings.LOG_GEOCODING) {
-                    Log.d(LOG_TAG, ("address: " + LocationUtilities.toString(address)));
+                    Log.d(LOG_TAG, ("address: " + AddressUtilities.toString(address)));
                   }
 
-                  CharSequence name = LocationUtilities.getName(address);
+                  CharSequence name = AddressUtilities.getName(address);
                   if (name.length() == 0) name = getString(R.string.message_unknown);
 
                   Float distance = null;
@@ -436,7 +436,7 @@ public abstract class CompassActivity extends CommonActivity {
     geocodeLocation(latitude, longitude);
   }
 
-  public final void onLocationReceived (Location location) {
+  public final void setLocation (Location location) {
     setPosition(location.getLatitude(), location.getLongitude());
 
     if (location.hasAltitude()) {
@@ -493,7 +493,7 @@ public abstract class CompassActivity extends CommonActivity {
     rotateTo(headingCompass, -heading, "compass");
 
     orientationHeading = heading;
-    setRelativeLocation();
+    setAddressDirection();
   }
 
   protected final void setOrientationPitch (float degrees) {

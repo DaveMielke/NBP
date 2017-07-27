@@ -71,6 +71,6 @@ public abstract class LocationMonitor {
   }
 
   protected final void updateLocation (Location location) {
-    if (location != null) getActivity().onLocationReceived(location);
+    if (location != null) getActivity().setLocation(location);
   }
 }

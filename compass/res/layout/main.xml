@@ -7,7 +7,7 @@
   android:keepScreenOn="true"
   >
 
-  <include layout="@layout/location" />
+  <include layout="@layout/address" />
   <include layout="@layout/motion" />
   <include layout="@layout/position" />
   <include layout="@layout/accuracy" />

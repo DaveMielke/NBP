@@ -3,10 +3,10 @@ package org.nbp.compass;
 import android.util.Log;
 import android.location.Address;
 
-public abstract class LocationUtilities {
-  private final static String LOG_TAG = LocationUtilities.class.getName();
+public abstract class AddressUtilities {
+  private final static String LOG_TAG = AddressUtilities.class.getName();
 
-  private LocationUtilities () {
+  private AddressUtilities () {
   }
 
   private final static void appendCoordinate (StringBuilder sb, boolean haveValue, double value) {

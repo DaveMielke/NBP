@@ -14,7 +14,7 @@
     </TableLayout>
 
     <TableLayout>
-      <include layout="@layout/location" />
+      <include layout="@layout/address" />
       <include layout="@layout/position" />
     </TableLayout>
 
