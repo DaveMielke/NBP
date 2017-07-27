@@ -233,23 +233,26 @@ public abstract class CompassActivity extends CommonActivity {
     setText(view, ApplicationUtilities.toPointText(degrees));
   }
 
-  private final static float NO_DISTANCE = Float.NaN;
-  private final static float NO_HEADING = 0f;
-
-  private float orientationHeading = NO_HEADING;
-  private float locationHeading = NO_HEADING;
+  private final static float UNKNOWN_VALUE = Float.NaN;
+  private float orientationHeading = UNKNOWN_VALUE;
+  private float locationHeading = UNKNOWN_VALUE;
 
   private final CharSequence toRelativeText (float direction) {
     float reference = orientationHeading;
-    if (reference == NO_HEADING) return null;
+    if (reference == UNKNOWN_VALUE) return null;
 
-    if (direction == NO_HEADING) return null;
+    if (direction == UNKNOWN_VALUE) return null;
     return ApplicationUtilities.toRelativeText(direction, reference);
   }
 
   private final void setRelativeDirection (TextView view, float direction) {
     CharSequence text = toRelativeText(direction);
-    if (text != null) setText(view, text);
+
+    if (text != null) {
+      setText(view, text);
+    } else {
+      setText(view);
+    }
   }
 
   private final void setRelativeLocation () {
@@ -260,8 +263,16 @@ public abstract class CompassActivity extends CommonActivity {
     setText(locationName, name);
   }
 
+  private final void setLocationDistance (float distance) {
+    if (distance != UNKNOWN_VALUE) {
+      setDistance(distanceMagnitude, distance);
+    } else {
+      setText(distanceMagnitude);
+    }
+  }
+
   private final void setLocationHeading (float heading) {
-    if (heading != NO_HEADING) {
+    if ((locationHeading = heading) != UNKNOWN_VALUE) {
       setHeading(directionDegrees, heading);
       setPoint(directionPoint, heading);
     } else {
@@ -269,16 +280,7 @@ public abstract class CompassActivity extends CommonActivity {
       setText(directionPoint);
     }
 
-    locationHeading = heading;
     setRelativeLocation();
-  }
-
-  private final void setLocationDistance (float distance) {
-    if (distance != NO_DISTANCE) {
-      setDistance(distanceMagnitude, distance);
-    } else {
-      setText(distanceMagnitude);
-    }
   }
 
   private Geocoder geocoder;
@@ -312,12 +314,12 @@ public abstract class CompassActivity extends CommonActivity {
             Float direction   = (Float)       arguments[2];
 
             setLocationName(name);
-            setLocationDistance((distance != null)? distance: NO_DISTANCE);
+            setLocationDistance((distance != null)? distance: UNKNOWN_VALUE);
 
             setLocationHeading(
               (direction != null)?
               ApplicationUtilities.toHeading(direction):
-              NO_HEADING
+              UNKNOWN_VALUE
             );
           }
 
