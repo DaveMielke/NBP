@@ -96,7 +96,7 @@ public abstract class CompassActivity extends CommonActivity {
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
   }
 
-  private final void rotateTo (View view, float degrees) {
+  private final void rotateTo (View view, float degrees, String label) {
     if (view != null) {
       float delta = degrees - view.getRotation();
 
@@ -107,7 +107,20 @@ public abstract class CompassActivity extends CommonActivity {
       }
 
       view.animate().rotationBy(delta).start();
+
+      if (label != null) {
+        view.setContentDescription(
+          String.format(
+            "[%s rotated @ %s]", label,
+            ApplicationUtilities.toAngleText(ApplicationUtilities.toHeading(view.getRotation()))
+          )
+        );
+      }
     }
+  }
+
+  private final void rotateTo (View view, float degrees) {
+    rotateTo(view, degrees, null);
   }
 
   private final DelayedAction getChangedTextAnnouncer (TextView view) {
@@ -462,18 +475,7 @@ public abstract class CompassActivity extends CommonActivity {
   protected final void setOrientationHeading (float heading) {
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
-
-    {
-      View compass = headingCompass;
-      rotateTo(compass, -heading);
-
-      compass.setContentDescription(
-        String.format(
-          "[compass rotated at %s]",
-          ApplicationUtilities.toAngleText(ApplicationUtilities.toHeading(compass.getRotation()))
-        )
-      );
-    }
+    rotateTo(headingCompass, -heading, "compass");
 
     orientationHeading = heading;
     setRelativeLocation();
