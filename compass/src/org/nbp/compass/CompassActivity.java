@@ -6,18 +6,11 @@ import java.io.IOException;
 import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
 
-import org.nbp.common.DialogFinisher;
-import org.nbp.common.DialogHelper;
-
 import android.os.Build;
 import android.util.Log;
 
 import android.os.Bundle;
 import android.os.AsyncTask;
-import android.content.Intent;
-
-import android.view.Menu;
-import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.TextView;
@@ -27,19 +20,19 @@ import android.view.accessibility.AccessibilityManager;
 
 import android.text.TextUtils;
 
-import android.hardware.SensorManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-
 import android.location.Location;
 import android.location.Address;
 import android.location.Geocoder;
 
-public class CompassActivity extends CommonActivity implements SensorEventListener {
+public abstract class CompassActivity extends CommonActivity {
   private final static String LOG_TAG = CompassActivity.class.getName();
 
   private AccessibilityManager accessibilityManager;
+
+  private final boolean isAccessibilityEnabled () {
+    if (accessibilityManager == null) return false;
+    return accessibilityManager.isEnabled();
+  }
 
   // accuracy
   private TextView accuracySatellites;
@@ -71,7 +64,7 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   private TextView longitudeDecimal;
   private TextView longitudeDMS;
 
-  private final void findViews () {
+  protected final void findViews () {
     // accuracy
     accuracySatellites = (TextView)findViewById(R.id.accuracy_satellites);
     accuracyHorizontal = (TextView)findViewById(R.id.accuracy_horizontal);
@@ -101,11 +94,6 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     latitudeDMS = (TextView)findViewById(R.id.latitude_dms);
     longitudeDecimal = (TextView)findViewById(R.id.longitude_decimal);
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
-  }
-
-  private final boolean isAccessibilityEnabled () {
-    if (accessibilityManager == null) return false;
-    return accessibilityManager.isEnabled();
   }
 
   private final void rotateTo (View view, float degrees) {
@@ -141,43 +129,50 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
   }
 
   private final void setText (final TextView view, CharSequence text) {
-    DelayedAction announcer = getChangedTextAnnouncer(view);
+    if (view != null) {
+      DelayedAction announcer = getChangedTextAnnouncer(view);
 
-    synchronized (announcer) {
-      synchronized (view) {
-        if (!TextUtils.equals(text, view.getText())) {
-          view.setText(text);
+      synchronized (announcer) {
+        synchronized (view) {
+          if (!TextUtils.equals(text, view.getText())) {
+            view.setText(text);
 
-          announcer.setAction(
-            new Runnable() {
-              @Override
-              public void run () {
-                synchronized (view) {
-                  int key = R.string.text_tag_announcement;
-                  CharSequence text = view.getText();
-                  boolean cancel = true;
+            announcer.setAction(
+              new Runnable() {
+                @Override
+                public void run () {
+                  synchronized (view) {
+                    int key = R.string.text_tag_announcement;
+                    CharSequence text = view.getText();
+                    boolean cancel = true;
 
-                  if (isAccessibilityEnabled()) {
-                    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-                      if (view.isAccessibilityFocused()) {
-                        cancel = false;
+                    if (isAccessibilityEnabled()) {
+                      if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+                        if (view.isAccessibilityFocused()) {
+                          cancel = false;
 
-                        if (text.length() > 0) {
-                          if (!TextUtils.equals(text, (CharSequence)view.getTag(key))) {
-                            accessibilityManager.interrupt();
-                            view.announceForAccessibility(text);
+                          if (text.length() > 0) {
+                            if (!TextUtils.equals(text, (CharSequence)view.getTag(key))) {
+                              accessibilityManager.interrupt();
+
+                              try {
+                                view.announceForAccessibility(text);
+                              } catch (RuntimeException exception) {
+                                Log.e(LOG_TAG, "unexpected exception", exception);
+                              }
+                            }
                           }
                         }
                       }
                     }
-                  }
 
-                  if (cancel) text = null;
-                  view.setTag(key, text);
+                    if (cancel) text = null;
+                    view.setTag(key, text);
+                  }
                 }
               }
-            }
-          );
+            );
+          }
         }
       }
     }
@@ -249,164 +244,9 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     setRelativeLocation();
   }
 
-  private final void setOrientationHeading (float heading) {
-    orientationHeading = heading;
-    setRelativeLocation();
-  }
-
-  private final static int[] sensorTypes = new int[] {
-    Sensor.TYPE_ACCELEROMETER,
-    Sensor.TYPE_MAGNETIC_FIELD
-  };
-
-  private SensorManager sensorManager;
-  private Sensor[] sensorArray;
-
-  private final void prepareSensorMonitor () {
-    sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-    sensorArray = new Sensor[sensorTypes.length];
-
-    {
-      int count = 0;
-
-      for (int type : sensorTypes) {
-        Sensor sensor = sensorManager.getDefaultSensor(type);
-
-        if ((sensorArray[count++] = sensor) != null) {
-          Log.i(LOG_TAG, String.format(
-            "Sensor: Name:%s Type:%d Vendor:%s",
-            sensor.getName(), sensor.getType(), sensor.getVendor()
-          ));
-        }
-      }
-    }
-  }
-
-  private final void startSensors () {
-    for (Sensor sensor : sensorArray) {
-      if (sensor != null) {
-        sensorManager.registerListener(this, sensor, ApplicationParameters.SENSOR_UPDATE_INTERVAL);
-      }
-    }
-  }
-
-  private final void stopSensors () {
-    for (Sensor sensor : sensorArray) {
-      if (sensor != null) {
-        sensorManager.unregisterListener(this, sensor);
-      }
-    }
-  }
-
-  private float[] gravityVector = null;
-  private float[] geomagneticVector = null;
-
-  private final float[] rotationMatrix = new float[9];
-  private final float[] currentOrientation = new float[3];
-
-  private final void log (String type, float[] vector) {
-    if (ApplicationSettings.LOG_SENSORS) {
-      StringBuilder sb = new StringBuilder();
-      sb.append(type);
-      char delimiter = ':';
-
-      for (float value : vector) {
-        sb.append(delimiter);
-        delimiter = ',';
-
-        sb.append(' ');
-        sb.append(value);
-      }
-
-      Log.d(LOG_TAG, sb.toString());
-    }
-  }
-
-  private final float translateOrientationAngle (float radians) {
-    return (float)Math.toDegrees((double)radians);
-  }
-
-  private final void setOrientationFields () {
-    float heading = translateOrientationAngle( currentOrientation[0]);
-    float pitch   = translateOrientationAngle(-currentOrientation[1]);
-    float roll    = translateOrientationAngle( currentOrientation[2]);
-
-    heading = ApplicationUtilities.toHeading(heading);
-    setHeading(headingDegrees, heading);
-    setPoint(headingPoint, heading);
-    setOrientationHeading(heading);
-    rotateTo(headingCompass, -heading);
-
-    setAngle(pitchDegrees, pitch);
-    setAngle(rollDegrees, roll);
-  }
-
-  private final DelayedAction orientationUpdater = new DelayedAction(
-    ApplicationParameters.UPDATE_MINIMUM_TIME, "update-orientation"
-  );
-
-  @Override
-  public void onSensorChanged (SensorEvent event) {
-    {
-      float[] values = event.values;
-      int count = values.length;
-
-      switch (event.sensor.getType()) {
-        case Sensor.TYPE_ACCELEROMETER:
-          if (gravityVector == null) gravityVector = new float[count];
-          System.arraycopy(values, 0, gravityVector, 0, count);
-          log("accelerometer", gravityVector);
-          break;
-
-        case Sensor.TYPE_MAGNETIC_FIELD:
-          if (geomagneticVector == null) geomagneticVector = new float[count];
-          System.arraycopy(values, 0, geomagneticVector, 0, count);
-          log("geomagnetic", geomagneticVector);
-          break;
-
-        default:
-          return;
-      }
-    }
-
-    if ((gravityVector != null) && (geomagneticVector != null)) {
-      boolean success = sensorManager.getRotationMatrix(
-        rotationMatrix, null,
-        gravityVector, geomagneticVector
-      );
-
-      if (success) {
-        log("rotation", rotationMatrix);
-
-        sensorManager.getOrientation(rotationMatrix, currentOrientation);
-        log("orientation", currentOrientation);
-
-        orientationUpdater.setAction(
-          new Runnable() {
-            @Override
-            public void run () {
-              runOnUiThread(
-                new Runnable() {
-                  @Override
-                  public void run () {
-                    setOrientationFields();
-                  }
-                }
-              );
-            }
-          }
-        );
-      }
-    }
-  }
-
-  @Override
-  public void onAccuracyChanged (Sensor sensor, int accuracy) {
-  }
-
   private Geocoder geocoder;
 
-  private final void prepareLocationMonitor () {
+  private final void prepareGeocoding () {
     geocoder = Geocoder.isPresent()? new Geocoder(this): null;
 
     setText(locationName,
@@ -617,86 +457,27 @@ public class CompassActivity extends CommonActivity implements SensorEventListen
     }
   }
 
-  private final void menuAction_settings () {
-    Intent intent = new Intent(this, SettingsActivity.class);
-    startActivity(intent);
+  protected final void setOrientationHeading (float heading) {
+    setHeading(headingDegrees, heading);
+    setPoint(headingPoint, heading);
+    rotateTo(headingCompass, -heading);
+
+    orientationHeading = heading;
+    setRelativeLocation();
   }
 
-  private final void menuAction_about () {
-    DialogFinisher finisher = new DialogFinisher() {
-      @Override
-      public void finishDialog (DialogHelper helper) {
-        helper.setText(R.id.about_version_number, R.string.NBP_Compass_version_name);
-        helper.setText(R.id.about_build_time, R.string.NBP_Compass_build_time);
-        helper.setText(R.id.about_source_revision, R.string.NBP_Compass_source_revision);
-        helper.setTextFromAsset(R.id.about_copyright, "copyright");
-      }
-    };
-
-    showDialog(R.string.menu_about, R.layout.about, finisher);
+  protected final void setOrientationPitch (float degrees) {
+    setAngle(pitchDegrees, degrees);
   }
 
-  @Override
-  public boolean onOptionsItemSelected (MenuItem item) {
-    int identifier = item.getItemId();
-
-    switch (identifier) {
-      case R.id.menu_settings:
-        menuAction_settings();
-        return true;
-
-      case R.id.menu_about:
-        menuAction_about();
-        return true;
-    }
-
-    String name = getResources().getResourceEntryName(identifier);
-    if (name == null) name = Integer.toString(identifier);
-    Log.w(LOG_TAG, ("unhandled menu action: " + name));
-    return false;
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu (Menu menu) {
-    getMenuInflater().inflate(R.menu.options, menu);
-    return true;
-  }
-
-  private static CompassActivity compassActivity = null;
-
-  public final static CompassActivity getCompassActivity () {
-    return compassActivity;
+  protected final void setOrientationRoll (float degrees) {
+    setAngle(rollDegrees, degrees);
   }
 
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    compassActivity = this;
-
     accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
-    Controls.restore();
-
-    setContentView(R.layout.main);
-    findViews();
-
-    prepareSensorMonitor();
-    prepareLocationMonitor();
-  }
-
-  @Override
-  protected void onResume () {
-    super.onResume();
-    LocationMonitor.startCurrentMonitor();
-    startSensors();
-  }
-
-  @Override
-  protected void onPause () {
-    try {
-      stopSensors();
-      LocationMonitor.stopCurrentMonitor();
-    } finally {
-      super.onPause();
-    }
+    prepareGeocoding();
   }
 }

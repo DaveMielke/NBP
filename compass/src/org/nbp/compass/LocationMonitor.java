@@ -7,7 +7,7 @@ public abstract class LocationMonitor {
   }
 
   protected final static CompassActivity getActivity () {
-    return CompassActivity.getCompassActivity();
+    return MainActivity.getMainActivity();
   }
 
   private enum MonitorState {
