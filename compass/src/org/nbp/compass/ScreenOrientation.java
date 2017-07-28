@@ -91,7 +91,7 @@ public enum ScreenOrientation {
 
     for (ScreenOrientation orientation : ScreenOrientation.values()) {
       if (orientation.getConfigurationValue() == value) {
-        if (orientation == CURRENT) return null;
+        if (orientation == DETECT) return null;
         return orientation;
       }
     }
