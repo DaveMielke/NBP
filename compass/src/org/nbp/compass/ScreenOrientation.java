@@ -7,6 +7,28 @@ import android.content.res.Configuration;
 import android.content.pm.ActivityInfo;
 
 public enum ScreenOrientation {
+  CURRENT(
+    Configuration.ORIENTATION_UNDEFINED,
+    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED,
+
+    new Handlers() {
+      @Override
+      public float getHeading (float heading) {
+        return heading;
+      }
+
+      @Override
+      public float getPitch (float pitch, float roll) {
+        return pitch;
+      }
+
+      @Override
+      public float getRoll (float pitch, float roll) {
+        return roll;
+      }
+    }
+  ),
+
   PORTRAIT(
     Configuration.ORIENTATION_PORTRAIT,
     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
@@ -84,7 +106,10 @@ public enum ScreenOrientation {
     int value = getConfiguredOrientation(context);
 
     for (ScreenOrientation orientation : ScreenOrientation.values()) {
-      if (orientation.getConfigurationValue() == value) return orientation;
+      if (orientation.getConfigurationValue() == value) {
+        if (orientation == CURRENT) return null;
+        return orientation;
+      }
     }
 
     return PORTRAIT;

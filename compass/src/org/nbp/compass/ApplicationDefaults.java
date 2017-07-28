@@ -8,6 +8,7 @@ public abstract class ApplicationDefaults {
   public final static SpeedUnit SPEED_UNIT = SpeedUnit.MPH;
   public final static AngleUnit ANGLE_UNIT = AngleUnit.DEGREES;
   public final static RelativeDirection RELATIVE_DIRECTION = RelativeDirection.OCLOCK;
+  public final static ScreenOrientation SCREEN_ORIENTATION = ScreenOrientation.CURRENT;
 
   public final static boolean LOG_GEOCODING = false;
   public final static boolean LOG_SENSORS = false;

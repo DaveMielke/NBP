@@ -11,6 +11,7 @@ public abstract class Controls {
   public final static SpeedUnitControl speedUnit = new SpeedUnitControl();
   public final static AngleUnitControl angleUnit = new AngleUnitControl();
   public final static RelativeDirectionControl relativeDirection = new RelativeDirectionControl();
+  public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
 
   public final static LogGeocodingControl logGeocoding = new LogGeocodingControl();
   public final static LogSensorsControl logSensors = new LogSensorsControl();
@@ -21,6 +22,7 @@ public abstract class Controls {
     speedUnit,
     angleUnit,
     relativeDirection,
+    screenOrientation,
 
     logGeocoding,
     logSensors,

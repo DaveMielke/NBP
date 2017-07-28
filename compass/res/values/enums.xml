@@ -19,6 +19,10 @@
   <string name="enum_RelativeDirection_LEFT_RIGHT">Angle to the Left/Right (0 - 180)</string>
   <string name="enum_RelativeDirection_OCLOCK">O\'Clock (1 - 12)</string>
 
+  <string name="enum_ScreenOrientation_CURRENT">Current</string>
+  <string name="enum_ScreenOrientation_PORTRAIT">Portrait</string>
+  <string name="enum_ScreenOrientation_LANDSCAPE">Landscape</string>
+
   <string name="enum_SpeedUnit_MPS">Meters Per Second</string>
   <string name="enum_SpeedUnit_FPS">Feet Per Second</string>
   <string name="enum_SpeedUnit_KPH">Kilometers Per Hour</string>
