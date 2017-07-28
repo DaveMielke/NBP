@@ -6,9 +6,10 @@ import org.nbp.common.DialogHelper;
 import android.util.Log;
 import android.os.Bundle;
 
+import android.content.Intent;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.content.Intent;
 
 import android.hardware.SensorManager;
 import android.hardware.Sensor;
@@ -221,6 +222,7 @@ public class NavigationActivity extends BaseActivity implements SensorEventListe
     super.onCreate(savedInstanceState);
     navigationActivity = this;
 
+    ScreenOrientation.getCurrentOrientation(this).setCurrentOrientation(this);
     setContentView(R.layout.navigation);
     finishBaseActivityCreation();
 
