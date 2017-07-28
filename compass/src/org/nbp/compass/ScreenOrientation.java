@@ -7,16 +7,65 @@ import android.content.res.Configuration;
 import android.content.pm.ActivityInfo;
 
 public enum ScreenOrientation {
-  PORTRAIT(Configuration.ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT),
-  LANDSCAPE(Configuration.ORIENTATION_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE),
+  PORTRAIT(
+    Configuration.ORIENTATION_PORTRAIT,
+    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
+
+    new Handlers() {
+      @Override
+      public float getHeading (float heading) {
+        return heading;
+      }
+
+      @Override
+      public float getPitch (float pitch, float roll) {
+        return pitch;
+      }
+
+      @Override
+      public float getRoll (float pitch, float roll) {
+        return roll;
+      }
+    }
+  ),
+
+  LANDSCAPE(
+    Configuration.ORIENTATION_LANDSCAPE,
+    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
+
+    new Handlers() {
+      @Override
+      public float getHeading (float heading) {
+        return heading + 90f;
+      }
+
+      @Override
+      public float getPitch (float pitch, float roll) {
+        return -roll;
+      }
+
+      @Override
+      public float getRoll (float pitch, float roll) {
+        return -pitch;
+      }
+    }
+  ),
   ;
+
+  private interface Handlers {
+    public float getHeading (float heading);
+    public float getPitch (float pitch, float roll);
+    public float getRoll (float pitch, float roll);
+  }
 
   private final int configurationValue;
   private final int requestValue;
+  private final Handlers orientationHandlers;
 
-  private ScreenOrientation (int configuration, int request) {
+  private ScreenOrientation (int configuration, int request, Handlers handlers) {
     configurationValue = configuration;
     requestValue = request;
+    orientationHandlers = handlers;
   }
 
   public final int getConfigurationValue () {
@@ -43,5 +92,17 @@ public enum ScreenOrientation {
 
   public final void setCurrentOrientation (Activity activity) {
     activity.setRequestedOrientation(getRequestValue());
+  }
+
+  public final float getHeading (float heading) {
+    return orientationHandlers.getHeading(heading);
+  }
+
+  public final float getPitch (float pitch, float roll) {
+    return orientationHandlers.getPitch(pitch, roll);
+  }
+
+  public final float getRoll (float pitch, float roll) {
+    return orientationHandlers.getRoll(pitch, roll);
   }
 }
