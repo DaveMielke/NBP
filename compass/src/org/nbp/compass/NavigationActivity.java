@@ -96,6 +96,17 @@ public class NavigationActivity extends BaseActivity implements SensorEventListe
     float pitch   = translateOrientationAngle(-currentOrientation[1]);
     float roll    = translateOrientationAngle( currentOrientation[2]);
 
+    {
+      float h = heading;
+      float p = pitch;
+      float r = roll;
+
+      ScreenOrientation orientation = ApplicationSettings.SCREEN_ORIENTATION;
+      heading = orientation.getHeading(h);
+      pitch = orientation.getPitch(p, r);
+      roll = orientation.getRoll(p, r);
+    }
+
     heading = ApplicationUtilities.toHeading(heading);
     setOrientationHeading(heading);
 
@@ -222,7 +233,6 @@ public class NavigationActivity extends BaseActivity implements SensorEventListe
     super.onCreate(savedInstanceState);
     navigationActivity = this;
 
-    ScreenOrientation.getCurrentOrientation(this).setCurrentOrientation(this);
     setContentView(R.layout.navigation);
     finishBaseActivityCreation();
 

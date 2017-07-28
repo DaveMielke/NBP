@@ -68,7 +68,7 @@ public enum ScreenOrientation {
 
       @Override
       public float getRoll (float pitch, float roll) {
-        return -pitch;
+        return pitch;
       }
     }
   ),
