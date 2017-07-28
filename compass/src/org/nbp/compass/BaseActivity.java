@@ -24,8 +24,8 @@ import android.location.Location;
 import android.location.Address;
 import android.location.Geocoder;
 
-public abstract class CompassActivity extends CommonActivity {
-  private final static String LOG_TAG = CompassActivity.class.getName();
+public abstract class BaseActivity extends CommonActivity {
+  private final static String LOG_TAG = BaseActivity.class.getName();
 
   private AccessibilityManager accessibilityManager;
 
@@ -396,7 +396,7 @@ public abstract class CompassActivity extends CommonActivity {
               double latitude;
               double longitude;
 
-              synchronized (CompassActivity.this) {
+              synchronized (BaseActivity.this) {
                 if (!atNewLocation) {
                   amGeocodingLocation = false;
                   return null;
@@ -510,7 +510,7 @@ public abstract class CompassActivity extends CommonActivity {
     accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
   }
 
-  protected final void finishCompassActivityCreation () {
+  protected final void finishBaseActivityCreation () {
     findViews();
     Controls.restore();
     prepareGeocoding();

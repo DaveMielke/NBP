@@ -15,8 +15,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
-public class MainActivity extends CompassActivity implements SensorEventListener {
-  private final static String LOG_TAG = MainActivity.class.getName();
+public class NavigationActivity extends BaseActivity implements SensorEventListener {
+  private final static String LOG_TAG = NavigationActivity.class.getName();
 
   private final static int[] sensorTypes = new int[] {
     Sensor.TYPE_ACCELEROMETER,
@@ -210,19 +210,19 @@ public class MainActivity extends CompassActivity implements SensorEventListener
     return true;
   }
 
-  private static MainActivity mainActivity = null;
+  private static NavigationActivity navigationActivity = null;
 
-  public final static MainActivity getMainActivity () {
-    return mainActivity;
+  public final static NavigationActivity getNavigationActivity () {
+    return navigationActivity;
   }
 
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mainActivity = this;
+    navigationActivity = this;
 
-    setContentView(R.layout.main);
-    finishCompassActivityCreation();
+    setContentView(R.layout.navigation);
+    finishBaseActivityCreation();
 
     prepareSensorMonitor();
   }
