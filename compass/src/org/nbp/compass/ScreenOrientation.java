@@ -7,33 +7,17 @@ import android.content.res.Configuration;
 import android.content.pm.ActivityInfo;
 
 public enum ScreenOrientation {
-  CURRENT(
+  DETECT(
     Configuration.ORIENTATION_UNDEFINED,
     ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED,
-
-    new Handlers() {
-      @Override
-      public float getHeading (float heading) {
-        return heading;
-      }
-
-      @Override
-      public float getPitch (float pitch, float roll) {
-        return pitch;
-      }
-
-      @Override
-      public float getRoll (float pitch, float roll) {
-        return roll;
-      }
-    }
+    null
   ),
 
   PORTRAIT(
     Configuration.ORIENTATION_PORTRAIT,
     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
 
-    new Handlers() {
+    new Conversions() {
       @Override
       public float getHeading (float heading) {
         return heading;
@@ -55,7 +39,7 @@ public enum ScreenOrientation {
     Configuration.ORIENTATION_LANDSCAPE,
     ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
 
-    new Handlers() {
+    new Conversions() {
       @Override
       public float getHeading (float heading) {
         return heading + 90f;
@@ -74,7 +58,7 @@ public enum ScreenOrientation {
   ),
   ;
 
-  private interface Handlers {
+  public interface Conversions {
     public float getHeading (float heading);
     public float getPitch (float pitch, float roll);
     public float getRoll (float pitch, float roll);
@@ -82,12 +66,12 @@ public enum ScreenOrientation {
 
   private final int configurationValue;
   private final int requestValue;
-  private final Handlers orientationHandlers;
+  private final Conversions orientationConversions;
 
-  private ScreenOrientation (int configuration, int request, Handlers handlers) {
+  private ScreenOrientation (int configuration, int request, Conversions conversions) {
     configurationValue = configuration;
     requestValue = request;
-    orientationHandlers = handlers;
+    orientationConversions = conversions;
   }
 
   public final int getConfigurationValue () {
@@ -119,15 +103,12 @@ public enum ScreenOrientation {
     activity.setRequestedOrientation(getRequestValue());
   }
 
-  public final float getHeading (float heading) {
-    return orientationHandlers.getHeading(heading);
-  }
+  public final Conversions getConversions (Context context) {
+    if (orientationConversions != null) return orientationConversions;
 
-  public final float getPitch (float pitch, float roll) {
-    return orientationHandlers.getPitch(pitch, roll);
-  }
+    ScreenOrientation orientation = getCurrentOrientation(context);
+    if (orientation == null) return null;
 
-  public final float getRoll (float pitch, float roll) {
-    return orientationHandlers.getRoll(pitch, roll);
+    return orientation.orientationConversions;
   }
 }
