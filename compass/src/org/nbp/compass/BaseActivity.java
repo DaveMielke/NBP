@@ -512,7 +512,6 @@ public abstract class BaseActivity extends CommonActivity {
 
   protected final void finishBaseActivityCreation () {
     findViews();
-    Controls.restore();
     prepareGeocoding();
   }
 }

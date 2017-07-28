@@ -240,6 +240,16 @@ public class NavigationActivity extends BaseActivity implements SensorEventListe
     finishBaseActivityCreation();
 
     prepareSensorMonitor();
+    Controls.restore();
+  }
+
+  @Override
+  protected void onDestroy () {
+    try {
+      navigationActivity = null;
+    } finally {
+      super.onDestroy();
+    }
   }
 
   @Override
