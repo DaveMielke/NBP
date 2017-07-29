@@ -7,8 +7,19 @@ public abstract class IntegerControl extends Control {
   public abstract int getIntegerValue ();
   protected abstract boolean setIntegerValue (int value);
 
+  protected int getIntegerScale () {
+    return 1;
+  }
+
   private final boolean adjustValue (int adjustment) {
-    return setIntegerValue(getIntegerValue() + adjustment);
+    int value = getIntegerValue();
+    int scale = getIntegerScale();
+
+    value += adjustment * scale;
+    value /= scale;
+    value *= scale;
+
+    return setIntegerValue(value);
   }
 
   @Override

@@ -4,6 +4,8 @@ public abstract class ApplicationDefaults {
   private ApplicationDefaults () {
   }
 
+  public final static int LOCATION_INTERVAL = 4 * Unit.MILLISECONDS_PER_SECOND; // milliseconds
+  public final static int LOCATION_RADIUS = 6; // meters
   public final static DistanceUnit DISTANCE_UNIT = DistanceUnit.FEET;
   public final static SpeedUnit SPEED_UNIT = SpeedUnit.MPH;
   public final static AngleUnit ANGLE_UNIT = AngleUnit.DEGREES;

@@ -7,6 +7,8 @@ public abstract class Controls {
   private Controls () {
   }
 
+  public final static LocationIntervalControl locationInterval = new LocationIntervalControl();
+  public final static LocationRadiusControl locationRadius = new LocationRadiusControl();
   public final static DistanceUnitControl distanceUnit = new DistanceUnitControl();
   public final static SpeedUnitControl speedUnit = new SpeedUnitControl();
   public final static AngleUnitControl angleUnit = new AngleUnitControl();
@@ -18,6 +20,8 @@ public abstract class Controls {
   public final static LocationProviderControl locationProvider = new LocationProviderControl();
 
   public final static Control[] ALL = new Control[] {
+    locationInterval,
+    locationRadius,
     distanceUnit,
     speedUnit,
     angleUnit,

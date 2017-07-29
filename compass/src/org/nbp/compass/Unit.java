@@ -15,9 +15,10 @@ public interface Unit {
   public final static int ARCSECONDS_PER_ARCMINUTE = 60;
   public final static int ARCSECONDS_PER_DEGREE = ARCMINUTES_PER_DEGREE * ARCSECONDS_PER_ARCMINUTE;
 
-  public final float SECONDS_PER_MINUTE = 60f;
-  public final float MINUTES_PER_HOUR = 60f;
-  public final float SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR;
+  public final int MILLISECONDS_PER_SECOND = 1000;
+  public final int SECONDS_PER_MINUTE = 60;
+  public final int MINUTES_PER_HOUR = 60;
+  public final int SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR;
 
   public final float METERS_PER_KILOMETER = 1E3f;
   public final float METERS_PER_KNOT = 1852f;

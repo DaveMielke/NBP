@@ -9,8 +9,8 @@ public abstract class ApplicationParameters {
   public final static int UPDATE_MINIMUM_TIME = 250; // milliseconds
   public final static int ANNOUNCE_MINIMUM_TIME = 2000; // milliseconds
 
-  public final static float LOCATION_UPDATE_RADIUS = 6f; // meters
-  public final static int LOCATION_UPDATE_TIME = 4000; // milliseconds
+  public final static int LOCATION_MAXIMUM_RADIUS = 20; // meters
+  public final static int LOCATION_MAXIMUM_INTERVAL = 20 * Unit.MILLISECONDS_PER_SECOND; // milliseconds
   public final static int LOCATION_FUSED_PRIORITY = LocationRequest.PRIORITY_HIGH_ACCURACY;
 
   public final static int SENSOR_UPDATE_INTERVAL = UPDATE_MINIMUM_TIME * 1000; // microseconds;
