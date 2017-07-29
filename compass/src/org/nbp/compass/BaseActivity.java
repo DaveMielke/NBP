@@ -98,15 +98,8 @@ public abstract class BaseActivity extends CommonActivity {
 
   private final void rotateTo (View view, float degrees, String label) {
     if (view != null) {
-      float delta = degrees - view.getRotation();
-
-      if (delta > 180f) {
-        delta -= AngleUnit.DEGREES_PER_CIRCLE;
-      } else if (delta < -180f) {
-        delta += AngleUnit.DEGREES_PER_CIRCLE;
-      }
-
-      view.animate().rotationBy(delta).start();
+      degrees = ApplicationUtilities.toNearestAngle(degrees, view.getRotation());
+      view.animate().rotation(degrees).start();
 
       if (label != null) {
         view.setContentDescription(

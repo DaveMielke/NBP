@@ -7,10 +7,14 @@ public abstract class ApplicationUtilities {
   private ApplicationUtilities () {
   }
 
-  public final static float toHeading (float degrees) {
-    while (degrees < 0f) degrees += AngleUnit.DEGREES_PER_CIRCLE;
-    degrees %= AngleUnit.DEGREES_PER_CIRCLE;
+  public final static float toNearestAngle (float degrees, float reference) {
+    while ((degrees - reference) > 180f) degrees -= 360f;
+    while ((degrees - reference) < -180f) degrees += 360f;
     return degrees;
+  }
+
+  public final static float toHeading (float degrees) {
+    return toNearestAngle(degrees, 180f);
   }
 
   private final static long convertMagnitude (double magnitude, Unit unit) {
