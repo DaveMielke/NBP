@@ -8,13 +8,19 @@ public abstract class ApplicationUtilities {
   }
 
   public final static float toNearestAngle (float degrees, float reference) {
-    while ((degrees - reference) > 180f) degrees -= 360f;
-    while ((degrees - reference) < -180f) degrees += 360f;
+    while ((degrees - reference) > AngleUnit.DEGREES_PER_HALF_TURN) {
+      degrees -= AngleUnit.DEGREES_PER_FULL_TURN;
+    }
+
+    while ((degrees - reference) < -AngleUnit.DEGREES_PER_HALF_TURN) {
+      degrees += AngleUnit.DEGREES_PER_FULL_TURN;
+    }
+
     return degrees;
   }
 
   public final static float toHeading (float degrees) {
-    return toNearestAngle(degrees, 180f);
+    return toNearestAngle(degrees, AngleUnit.DEGREES_PER_HALF_TURN);
   }
 
   private final static long convertMagnitude (double magnitude, Unit unit) {
@@ -50,7 +56,7 @@ public abstract class ApplicationUtilities {
   }
 
   public final static CharSequence toHeadingText (float degrees) {
-    return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT, AngleUnit.DEGREES_PER_CIRCLE);
+    return toMagnitudeText(degrees, ApplicationSettings.ANGLE_UNIT, AngleUnit.DEGREES_PER_FULL_TURN);
   }
 
   private final static CharSequence toCoordinateText (double degrees, char positive, char negative) {

@@ -11,8 +11,8 @@ public enum CompassPoint {
   S, SSW, SW, WSW, W, WNW, NW, NNW;
 
   private final static int POINT_COUNT = values().length;
-  private final static float POINTS_PER_CIRCLE = (float)POINT_COUNT;
-  private final static float DEGREES_PER_POINT = AngleUnit.DEGREES_PER_CIRCLE / POINTS_PER_CIRCLE;
+  private final static float POINTS_PER_FULL_TURN = (float)POINT_COUNT;
+  private final static float DEGREES_PER_POINT = AngleUnit.DEGREES_PER_FULL_TURN / POINTS_PER_FULL_TURN;
 
   public final static CompassPoint getPoint (float degrees) {
     int ordinal = Math.round(degrees / DEGREES_PER_POINT);
@@ -25,7 +25,7 @@ public enum CompassPoint {
 
   public final float getOffset (float degrees) {
     float offset = Math.round(degrees - getDegrees());
-    if (offset > DEGREES_PER_POINT) offset -= AngleUnit.DEGREES_PER_CIRCLE;
+    if (offset > DEGREES_PER_POINT) offset -= AngleUnit.DEGREES_PER_FULL_TURN;
     return offset;
   }
 

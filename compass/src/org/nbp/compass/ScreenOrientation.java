@@ -42,7 +42,7 @@ public enum ScreenOrientation {
     new Conversions() {
       @Override
       public float getHeading (float heading) {
-        return heading + 90f;
+        return heading + AngleUnit.DEGREES_PER_QUARTER_TURN;
       }
 
       @Override
