@@ -1,4 +1,4 @@
-package org.nbp.b2g.ui;
+package org.nbp.common;
 
 public class SpeechSpan {
   private final String text;

@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.LogarithmicFloatControl;
+import org.nbp.common.PitchControl;
 
-public class SpeechPitchControl extends LogarithmicFloatControl {
+public class SpeechPitchControl extends PitchControl {
   @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SpeechPitch;
@@ -12,16 +12,6 @@ public class SpeechPitchControl extends LogarithmicFloatControl {
   @Override
   protected int getResourceForGroup () {
     return R.string.control_group_speech;
-  }
-
-  @Override
-  protected int getResourceForNext () {
-    return R.string.control_next_SpeechPitch;
-  }
-
-  @Override
-  protected int getResourceForPrevious () {
-    return R.string.control_previous_SpeechPitch;
   }
 
   @Override

@@ -13,5 +13,7 @@ public abstract class CommonParameters {
   public final static int BEEP_DURATION = 100; // milliseconds
   public final static int ALERT_DURATION = 300; // milliseconds
 
+  public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
+
   public final static int SCREEN_LEFT_OFFSET = 60; // DIPs
 }

@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.LinearFloatControl;
+import org.nbp.common.VolumeControl;
 
-public class SpeechVolumeControl extends LinearFloatControl {
+public class SpeechVolumeControl extends VolumeControl {
   @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SpeechVolume;
@@ -12,16 +12,6 @@ public class SpeechVolumeControl extends LinearFloatControl {
   @Override
   protected int getResourceForGroup () {
     return R.string.control_group_speech;
-  }
-
-  @Override
-  protected int getResourceForNext () {
-    return R.string.control_next_SpeechVolume;
-  }
-
-  @Override
-  protected int getResourceForPrevious () {
-    return R.string.control_previous_SpeechVolume;
   }
 
   @Override

@@ -5,6 +5,8 @@ import org.nbp.b2g.ui.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.SpeechSpan;
+
 import android.util.Log;
 
 import android.os.Bundle;

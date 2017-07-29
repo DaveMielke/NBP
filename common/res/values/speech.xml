@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="control_speech_volume_next">Louder</string>
+  <string name="control_speech_volume_previous">Softer</string>
+
+  <string name="control_speech_rate_next">Faster</string>
+  <string name="control_speech_rate_previous">Slower</string>
+
+  <string name="control_speech_pitch_next">Higher</string>
+  <string name="control_speech_pitch_previous">Lower</string>
+
+  <string name="control_speech_balance_next">More Right</string>
+  <string name="control_speech_balance_previous">More Left</string>
+
+  <string name="control_speech_balance_center">Center</string>
+  <string name="control_speech_balance_left">Left</string>
+  <string name="control_speech_balance_right">Right</string>
+</resources>

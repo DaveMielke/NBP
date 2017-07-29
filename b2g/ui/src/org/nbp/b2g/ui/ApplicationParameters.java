@@ -50,8 +50,6 @@ public abstract class ApplicationParameters extends CommonParameters {
     Braille.CELL_DOT_7|
     Braille.CELL_DOT_8;
 
-  public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
-
   public final static int SDK_VERSION = Build.VERSION.SDK_INT;
 
   private ApplicationParameters () {

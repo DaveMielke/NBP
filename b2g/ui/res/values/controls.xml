@@ -52,22 +52,6 @@
   <string name="control_label_LogBraille">Log Braille</string>
   <string name="control_label_LogSpeech">Log Speech</string>
 
-  <string name="control_next_SpeechVolume">Louder</string>
-  <string name="control_previous_SpeechVolume">Softer</string>
-
-  <string name="control_next_SpeechRate">Faster</string>
-  <string name="control_previous_SpeechRate">Slower</string>
-
-  <string name="control_next_SpeechPitch">Higher</string>
-  <string name="control_previous_SpeechPitch">Lower</string>
-
-  <string name="control_next_SpeechBalance">More Right</string>
-  <string name="control_previous_SpeechBalance">More Left</string>
-
-  <string name="control_value_SpeechBalance_center">Center</string>
-  <string name="control_value_SpeechBalance_left">Left</string>
-  <string name="control_value_SpeechBalance_right">Right</string>
-
   <string name="control_value_LiteraryBraille_off">computer braille</string>
   <string name="control_value_LiteraryBraille_on">literary braille</string>
 </resources>

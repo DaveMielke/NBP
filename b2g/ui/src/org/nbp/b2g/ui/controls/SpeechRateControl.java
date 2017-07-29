@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.LogarithmicFloatControl;
+import org.nbp.common.RateControl;
 
-public class SpeechRateControl extends LogarithmicFloatControl {
+public class SpeechRateControl extends RateControl {
   @Override
   protected int getResourceForLabel () {
     return R.string.control_label_SpeechRate;
@@ -15,23 +15,8 @@ public class SpeechRateControl extends LogarithmicFloatControl {
   }
 
   @Override
-  protected int getResourceForNext () {
-    return R.string.control_next_SpeechRate;
-  }
-
-  @Override
-  protected int getResourceForPrevious () {
-    return R.string.control_previous_SpeechRate;
-  }
-
-  @Override
   protected String getPreferenceKey () {
     return "speech-rate";
-  }
-
-  @Override
-  protected float getLinearScale () {
-    return super.getLinearScale() / 2.0f;
   }
 
   @Override
