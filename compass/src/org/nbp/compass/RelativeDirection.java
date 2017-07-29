@@ -78,6 +78,6 @@ public enum RelativeDirection {
   }
 
   public final CharSequence toText (float direction, float reference) {
-    return directionFormatter.formatDirection(ApplicationUtilities.toHeading(direction - reference));
+    return directionFormatter.formatDirection(ApplicationUtilities.toUnsignedAngle(direction - reference));
   }
 }

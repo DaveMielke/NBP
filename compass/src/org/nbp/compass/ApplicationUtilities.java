@@ -8,18 +8,22 @@ public abstract class ApplicationUtilities {
   }
 
   public final static float toNearestAngle (float degrees, float reference) {
-    while ((degrees - reference) > AngleUnit.DEGREES_PER_HALF_TURN) {
-      degrees -= AngleUnit.DEGREES_PER_FULL_TURN;
-    }
-
     while ((degrees - reference) < -AngleUnit.DEGREES_PER_HALF_TURN) {
       degrees += AngleUnit.DEGREES_PER_FULL_TURN;
+    }
+
+    while ((degrees - reference) > AngleUnit.DEGREES_PER_HALF_TURN) {
+      degrees -= AngleUnit.DEGREES_PER_FULL_TURN;
     }
 
     return degrees;
   }
 
-  public final static float toHeading (float degrees) {
+  public final static float toSignedAngle (float degrees) {
+    return toNearestAngle(degrees, 0f);
+  }
+
+  public final static float toUnsignedAngle (float degrees) {
     return toNearestAngle(degrees, AngleUnit.DEGREES_PER_HALF_TURN);
   }
 
@@ -160,13 +164,13 @@ public abstract class ApplicationUtilities {
     if (hours != 0) {
       if (sb.length() > 0) sb.append(' ');
       sb.append(hours);
-      sb.append("hr");
+      sb.append('h');
     }
 
     if (minutes != 0) {
       if (sb.length() > 0) sb.append(' ');
       sb.append(minutes);
-      sb.append("min");
+      sb.append('m');
     }
 
     {
@@ -183,8 +187,8 @@ public abstract class ApplicationUtilities {
       }
 
       if (sb.length() > oldLength) {
-        sb.insert(oldLength, ' ');
-        sb.append("sec");
+        if (oldLength > 0) sb.insert(oldLength, ' ');
+        sb.append('s');
       }
     }
 

@@ -110,7 +110,7 @@ public class NavigationActivity extends BaseActivity implements SensorEventListe
       }
     }
 
-    heading = ApplicationUtilities.toHeading(heading);
+    heading = ApplicationUtilities.toUnsignedAngle(heading);
     setOrientationHeading(heading);
 
     setOrientationPitch(pitch);

@@ -105,7 +105,7 @@ public abstract class BaseActivity extends CommonActivity {
         view.setContentDescription(
           String.format(
             "[%s rotated @ %s]", label,
-            ApplicationUtilities.toAngleText(ApplicationUtilities.toHeading(view.getRotation()))
+            ApplicationUtilities.toAngleText(ApplicationUtilities.toUnsignedAngle(degrees))
           )
         );
       }
@@ -311,7 +311,7 @@ public abstract class BaseActivity extends CommonActivity {
 
             setAddressHeading(
               (direction != null)?
-              ApplicationUtilities.toHeading(direction):
+              ApplicationUtilities.toUnsignedAngle(direction):
               UNKNOWN_VALUE
             );
           }
