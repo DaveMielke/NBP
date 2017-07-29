@@ -376,8 +376,9 @@ public abstract class BaseActivity extends CommonActivity {
             }
 
             Log.w(LOG_TAG, String.format(
-              "geocoding failure: [%.7f, %.7f]: %s",
-              latitude, longitude, problem
+              "geocoding failure: %s: %s",
+              ApplicationUtilities.toCoordinatesText(latitude, longitude),
+              problem
             ));
 
             return false;
