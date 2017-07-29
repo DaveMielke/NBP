@@ -82,21 +82,21 @@ public enum ScreenOrientation {
     return requestValue;
   }
 
-  public final static int getConfiguredOrientation (Context context) {
+  public final static int getCurrentConfiguration (Context context) {
     return context.getResources().getConfiguration().orientation;
   }
 
   public final static ScreenOrientation getCurrentOrientation (Context context) {
-    int value = getConfiguredOrientation(context);
+    int currentConfiguration = getCurrentConfiguration(context);
 
     for (ScreenOrientation orientation : ScreenOrientation.values()) {
-      if (orientation.getConfigurationValue() == value) {
-        if (orientation == DETECT) return null;
+      if (orientation.getConfigurationValue() == currentConfiguration) {
+        if (orientation == DETECT) break;
         return orientation;
       }
     }
 
-    return PORTRAIT;
+    return null;
   }
 
   public final void setCurrentOrientation (Activity activity) {
