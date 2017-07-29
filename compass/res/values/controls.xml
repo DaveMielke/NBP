@@ -4,11 +4,13 @@
   <string name="control_group_general">General Settings</string>
   <string name="control_label_LocationInterval">Location Interval</string>
   <string name="control_label_LocationRadius">Location Radius</string>
+  <string name="control_label_ScreenOrientation">Screen Orientation</string>
+
+  <string name="control_group_unit">Unit Settings</string>
   <string name="control_label_DistanceUnit">Distance Unit</string>
   <string name="control_label_SpeedUnit">Speed Unit</string>
   <string name="control_label_AngleUnit">Angle Unit</string>
   <string name="control_label_RelativeDirection">Relative Direction</string>
-  <string name="control_label_ScreenOrientation">Screen Orientation</string>
 
   <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_LogGeocoding">Log Geocoding</string>

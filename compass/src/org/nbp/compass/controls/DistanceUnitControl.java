@@ -11,7 +11,7 @@ public class DistanceUnitControl extends EnumerationControl<DistanceUnit> {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_general;
+    return R.string.control_group_unit;
   }
 
   @Override
