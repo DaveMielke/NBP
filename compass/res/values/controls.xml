@@ -12,6 +12,12 @@
   <string name="control_label_AngleUnit">Angle Unit</string>
   <string name="control_label_RelativeDirection">Relative Direction</string>
 
+  <string name="control_group_speech">Speech Settings</string>
+  <string name="control_label_SpeechVolume">Volume</string>
+  <string name="control_label_SpeechRate">Rate</string>
+  <string name="control_label_SpeechPitch">Pitch</string>
+  <string name="control_label_SpeechBalance">Balance</string>
+
   <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_LogGeocoding">Log Geocoding</string>
   <string name="control_label_LogSensors">Log Sensors</string>

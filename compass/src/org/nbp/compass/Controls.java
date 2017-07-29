@@ -16,6 +16,11 @@ public abstract class Controls {
   public final static AngleUnitControl angleUnit = new AngleUnitControl();
   public final static RelativeDirectionControl relativeDirection = new RelativeDirectionControl();
 
+  public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
+  public final static SpeechRateControl speechRate = new SpeechRateControl();
+  public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
+  public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
+
   public final static LogGeocodingControl logGeocoding = new LogGeocodingControl();
   public final static LogSensorsControl logSensors = new LogSensorsControl();
   public final static LocationProviderControl locationProvider = new LocationProviderControl();
@@ -29,6 +34,11 @@ public abstract class Controls {
     speedUnit,
     angleUnit,
     relativeDirection,
+
+    speechVolume,
+    speechRate,
+    speechPitch,
+    speechBalance,
 
     logGeocoding,
     logSensors,

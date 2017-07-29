@@ -18,14 +18,14 @@ public abstract class TextSpeaker {
   public final static float MAXIMUM_VOLUME = 1.0f;
   public final static float MINIMUM_VOLUME = 0.0f;
 
+  public final static float MAXIMUM_BALANCE = 1.0f;
+  public final static float MINIMUM_BALANCE = -MAXIMUM_BALANCE;
+
   public final static float MAXIMUM_RATE = 4.0f;
   public final static float MINIMUM_RATE = 1.0f / 3.0f;
 
   public final static float MAXIMUM_PITCH = 2.0f;
   public final static float MINIMUM_PITCH = 1.0f / 2.0f;
-
-  public final static float MAXIMUM_BALANCE = 1.0f;
-  public final static float MINIMUM_BALANCE = -MAXIMUM_BALANCE;
 
   protected abstract void initializeProperties ();
 
