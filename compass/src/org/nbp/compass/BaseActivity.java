@@ -528,7 +528,7 @@ public abstract class BaseActivity extends CommonActivity {
     }
   }
 
-  protected final void setOrientationHeading (float heading) {
+  public final void setOrientationHeading (float heading) {
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
     rotateTo(headingCompass, -heading, "compass");
@@ -537,11 +537,11 @@ public abstract class BaseActivity extends CommonActivity {
     setAddressDirection();
   }
 
-  protected final void setOrientationPitch (float degrees) {
+  public final void setOrientationPitch (float degrees) {
     setAngle(pitchDegrees, degrees);
   }
 
-  protected final void setOrientationRoll (float degrees) {
+  public final void setOrientationRoll (float degrees) {
     setAngle(rollDegrees, degrees);
   }
 
