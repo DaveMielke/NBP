@@ -1,5 +1,7 @@
 package org.nbp.compass;
 
+import org.nbp.common.speech.SpeechParameters;
+
 public abstract class ApplicationDefaults {
   private ApplicationDefaults () {
   }
@@ -13,10 +15,10 @@ public abstract class ApplicationDefaults {
   public final static AngleUnit ANGLE_UNIT = AngleUnit.DEGREES;
   public final static RelativeDirection RELATIVE_DIRECTION = RelativeDirection.OCLOCK;
 
-  public final static float SPEECH_VOLUME = 1.0f;
-  public final static float SPEECH_RATE = 1.0f;
-  public final static float SPEECH_PITCH = 1.0f;
-  public final static float SPEECH_BALANCE = 0.0f;
+  public final static float SPEECH_VOLUME = SpeechParameters.VOLUME_MAXIMUM;
+  public final static float SPEECH_RATE = SpeechParameters.RATE_REFERENCE;
+  public final static float SPEECH_PITCH = SpeechParameters.PITCH_REFERENCE;
+  public final static float SPEECH_BALANCE = SpeechParameters.BALANCE_CENTER;
 
   public final static boolean LOG_GEOCODING = false;
   public final static boolean LOG_SENSORS = false;

@@ -16,18 +16,6 @@ import android.text.Spanned;
 public abstract class TextSpeaker {
   private final static String LOG_TAG = TextSpeaker.class.getName();
 
-  public final static float MAXIMUM_VOLUME = 1.0f;
-  public final static float MINIMUM_VOLUME = 0.0f;
-
-  public final static float MAXIMUM_BALANCE = 1.0f;
-  public final static float MINIMUM_BALANCE = -MAXIMUM_BALANCE;
-
-  public final static float MAXIMUM_RATE = 4.0f;
-  public final static float MINIMUM_RATE = 1.0f / 3.0f;
-
-  public final static float MAXIMUM_PITCH = 2.0f;
-  public final static float MINIMUM_PITCH = 1.0f / 2.0f;
-
   protected abstract void initializeProperties ();
 
   protected boolean isLogging () {
@@ -227,7 +215,7 @@ public abstract class TextSpeaker {
   }
 
   public final boolean setVolume (float volume) {
-    if (verifyRange("volume", volume, MINIMUM_VOLUME, MAXIMUM_VOLUME)) {
+    if (verifyRange("volume", volume, SpeechParameters.VOLUME_MINIMUM, SpeechParameters.VOLUME_MAXIMUM)) {
       synchronized (this) {
         if (isStarted()) {
           setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
@@ -240,7 +228,7 @@ public abstract class TextSpeaker {
   }
 
   public final boolean setBalance (float balance) {
-    if (verifyRange("balance", balance, MINIMUM_BALANCE, MAXIMUM_BALANCE)) {
+    if (verifyRange("balance", balance, SpeechParameters.BALANCE_MINIMUM, SpeechParameters.BALANCE_MAXIMUM)) {
       synchronized (this) {
         if (isStarted()) {
           setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
@@ -253,7 +241,7 @@ public abstract class TextSpeaker {
   }
 
   public final boolean setRate (float rate) {
-    if (verifyRange("rate", rate, MINIMUM_RATE, MAXIMUM_RATE)) {
+    if (verifyRange("rate", rate, SpeechParameters.RATE_MINIMUM, SpeechParameters.RATE_MAXIMUM)) {
       synchronized (this) {
         if (isStarted()) {
           try {
@@ -269,7 +257,7 @@ public abstract class TextSpeaker {
   }
 
   public final boolean setPitch (float pitch) {
-    if (verifyRange("pitch", pitch, MINIMUM_PITCH, MAXIMUM_PITCH)) {
+    if (verifyRange("pitch", pitch, SpeechParameters.PITCH_MINIMUM, SpeechParameters.PITCH_MAXIMUM)) {
       synchronized (this) {
         if (isStarted()) {
           try {

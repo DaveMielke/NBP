@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import org.nbp.common.speech.SpeechParameters;
+
 public abstract class ApplicationDefaults {
   private ApplicationDefaults () {
   }
@@ -23,10 +25,10 @@ public abstract class ApplicationDefaults {
   public final static boolean BRAILLE_ENABLED = true;
 
   public final static boolean SPEECH_ENABLED = true;
-  public final static float SPEECH_VOLUME = 1.0f;
-  public final static float SPEECH_RATE = 1.0f;
-  public final static float SPEECH_PITCH = 1.0f;
-  public final static float SPEECH_BALANCE = 0.0f;
+  public final static float SPEECH_VOLUME = SpeechParameters.VOLUME_MAXIMUM;
+  public final static float SPEECH_RATE = SpeechParameters.RATE_REFERENCE;
+  public final static float SPEECH_PITCH = SpeechParameters.PITCH_REFERENCE;
+  public final static float SPEECH_BALANCE = SpeechParameters.BALANCE_CENTER;
   public final static boolean SLEEP_TALK = false;
 
   public final static boolean LONG_PRESS = true;
