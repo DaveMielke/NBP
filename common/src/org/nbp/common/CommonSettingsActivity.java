@@ -185,7 +185,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return button;
   }
 
-  private final void setStringControl (final StringControl control, String value) {
+  private final void setStringControl (final StringControl control, CharSequence value) {
     final EditText view = newEditText();
     view.setText(value);
     view.setSelection(value.length());
@@ -240,7 +240,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   private final void setStringControl (StringControl control) {
-    String value = control.getValue();
+    CharSequence value = control.getValue();
 
     if (value.length() == 0) {
       if (setStringControl(control, control.getSuggestedValues())) {

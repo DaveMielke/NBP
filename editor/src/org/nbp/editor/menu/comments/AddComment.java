@@ -17,7 +17,7 @@ public class AddComment extends CommentAction {
 
   @Override
   public void performAction (EditorActivity editor) {
-    final String name = getAuthorName();
+    final CharSequence name = getAuthorName();
 
     if (name != null) {
       if (verifyWritableText()) {
@@ -38,7 +38,7 @@ public class AddComment extends CommentAction {
                 if (text.toString().trim().isEmpty()) return;
                 comment = new CommentSpan(text);
                 comment.setReviewTime(new Date());
-                comment.setReviewerName(name);
+                comment.setReviewerName(name.toString());
               }
 
               Editable text = editArea.getText();

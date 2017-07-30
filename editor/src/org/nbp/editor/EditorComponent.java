@@ -58,10 +58,10 @@ public abstract class EditorComponent {
     );
   }
 
-  protected final String getAuthorName () {
+  protected final CharSequence getAuthorName () {
     {
-      String name = Controls.authorName.getValue();
-      if (!name.isEmpty()) return name;
+      CharSequence name = Controls.authorName.getValue();
+      if (name.length() > 0) return name;
     }
 
     showMessage(R.string.message_no_author_name);

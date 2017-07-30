@@ -15,8 +15,8 @@ public class LocationRadiusControl extends IntegerControl {
   }
 
   @Override
-  public String getValue () {
-    return ApplicationUtilities.toDistanceText(getIntegerValue()).toString();
+  public CharSequence getValue () {
+    return ApplicationUtilities.toDistanceText(getIntegerValue());
   }
 
   @Override

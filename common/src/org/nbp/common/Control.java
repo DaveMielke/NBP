@@ -12,7 +12,7 @@ public abstract class Control {
 
   protected abstract int getResourceForLabel ();
 
-  public abstract String getValue ();
+  public abstract CharSequence getValue ();
   protected abstract boolean setDefaultValue ();
   protected abstract boolean setNextValue ();
   protected abstract boolean setPreviousValue ();

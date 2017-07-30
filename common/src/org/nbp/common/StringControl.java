@@ -31,7 +31,7 @@ public abstract class StringControl extends Control {
   }
 
   @Override
-  public String getValue () {
+  public CharSequence getValue () {
     return getStringValue();
   }
 

@@ -13,7 +13,7 @@ public abstract class BalanceControl extends LinearFloatControl {
   }
 
   @Override
-  public final String getValue () {
+  public final CharSequence getValue () {
     float value = getFloatValue();
     if (value == 0.0f) return getString(R.string.control_speech_balance_center);
 

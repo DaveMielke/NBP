@@ -37,7 +37,7 @@ public abstract class BooleanControl extends Control {
   }
 
   @Override
-  public String getValue () {
+  public CharSequence getValue () {
     return getBooleanValue()? getLabelForNext(): getLabelForPrevious();
   }
 

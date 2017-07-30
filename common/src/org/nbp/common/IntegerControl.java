@@ -44,7 +44,7 @@ public abstract class IntegerControl extends Control {
   }
 
   @Override
-  public String getValue () {
+  public CharSequence getValue () {
     return Integer.toString(getIntegerValue());
   }
 

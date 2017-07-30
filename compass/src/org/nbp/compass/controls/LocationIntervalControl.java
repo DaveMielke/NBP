@@ -14,8 +14,8 @@ public class LocationIntervalControl extends IntegerControl {
     return R.string.control_group_general;
   }
 
-  public String getValue () {
-    return ApplicationUtilities.toTimeText(getIntegerValue()).toString();
+  public CharSequence getValue () {
+    return ApplicationUtilities.toTimeText(getIntegerValue());
   }
 
   @Override
