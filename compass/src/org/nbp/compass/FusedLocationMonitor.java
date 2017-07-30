@@ -40,7 +40,7 @@ public class FusedLocationMonitor extends LocationMonitor implements
   private final void startMonitoring () {
     LocationRequest request = new LocationRequest()
       .setSmallestDisplacement(ApplicationSettings.LOCATION_RADIUS)
-      .setInterval(ApplicationSettings.LOCATION_INTERVAL)
+      .setInterval(ApplicationSettings.UPDATE_INTERVAL)
       .setFastestInterval(ApplicationParameters.UPDATE_MINIMUM_TIME)
       .setPriority(ApplicationParameters.LOCATION_FUSED_PRIORITY)
       ;

@@ -6,7 +6,7 @@ public abstract class ApplicationDefaults {
   private ApplicationDefaults () {
   }
 
-  public final static int LOCATION_INTERVAL = 4 * Unit.MILLISECONDS_PER_SECOND; // milliseconds
+  public final static int UPDATE_INTERVAL = 4 * Unit.MILLISECONDS_PER_SECOND; // milliseconds
   public final static int LOCATION_RADIUS = 6; // meters
   public final static ScreenOrientation SCREEN_ORIENTATION = ScreenOrientation.PORTRAIT;
 

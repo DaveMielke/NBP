@@ -4,7 +4,7 @@ public abstract class ApplicationSettings {
   private ApplicationSettings () {
   }
 
-  public volatile static int LOCATION_INTERVAL = ApplicationDefaults.LOCATION_INTERVAL; // milliseconds
+  public volatile static int UPDATE_INTERVAL = ApplicationDefaults.UPDATE_INTERVAL; // milliseconds
   public volatile static int LOCATION_RADIUS = ApplicationDefaults.LOCATION_RADIUS; // meters
   public volatile static ScreenOrientation SCREEN_ORIENTATION = ApplicationDefaults.SCREEN_ORIENTATION;
 

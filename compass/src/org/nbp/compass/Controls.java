@@ -7,7 +7,7 @@ public abstract class Controls {
   private Controls () {
   }
 
-  public final static LocationIntervalControl locationInterval = new LocationIntervalControl();
+  public final static UpdateIntervalControl updateInterval = new UpdateIntervalControl();
   public final static LocationRadiusControl locationRadius = new LocationRadiusControl();
   public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
 
@@ -26,7 +26,7 @@ public abstract class Controls {
   public final static LocationProviderControl locationProvider = new LocationProviderControl();
 
   public final static Control[] ALL = new Control[] {
-    locationInterval,
+    updateInterval,
     locationRadius,
     screenOrientation,
 

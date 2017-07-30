@@ -37,7 +37,7 @@ public abstract class ProviderLocationMonitor extends LocationMonitor implements
         try {
           locationManager.requestLocationUpdates(
             provider,
-            ApplicationSettings.LOCATION_INTERVAL,
+            ApplicationSettings.UPDATE_INTERVAL,
             ApplicationSettings.LOCATION_RADIUS,
             this
           );

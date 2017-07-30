@@ -3,10 +3,10 @@ import org.nbp.compass.*;
 
 import org.nbp.common.IntegerControl;
 
-public class LocationIntervalControl extends IntegerControl {
+public class UpdateIntervalControl extends IntegerControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_LocationInterval;
+    return R.string.control_label_UpdateInterval;
   }
 
   @Override
@@ -20,7 +20,7 @@ public class LocationIntervalControl extends IntegerControl {
 
   @Override
   protected String getPreferenceKey () {
-    return "location-interval";
+    return "update-interval";
   }
 
   @Override
@@ -30,25 +30,25 @@ public class LocationIntervalControl extends IntegerControl {
 
   @Override
   protected int getIntegerDefault () {
-    return ApplicationDefaults.LOCATION_INTERVAL;
+    return ApplicationDefaults.UPDATE_INTERVAL;
   }
 
   @Override
   public int getIntegerValue () {
-    return ApplicationSettings.LOCATION_INTERVAL;
+    return ApplicationSettings.UPDATE_INTERVAL;
   }
 
   @Override
   protected boolean setIntegerValue (int value) {
     if (value < 1) return false;
-    if (value > ApplicationParameters.LOCATION_MAXIMUM_INTERVAL) return false;
+    if (value > ApplicationParameters.UPDATE_MAXIMUM_INTERVAL) return false;
 
-    ApplicationSettings.LOCATION_INTERVAL = value;
+    ApplicationSettings.UPDATE_INTERVAL = value;
     LocationMonitor.restartCurrentMonitor();
     return true;
   }
 
-  public LocationIntervalControl () {
+  public UpdateIntervalControl () {
     super();
   }
 }
