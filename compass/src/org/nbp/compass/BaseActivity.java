@@ -354,17 +354,12 @@ public abstract class BaseActivity extends CommonActivity {
             Float distance    = (Float)       arguments[1];
             Float direction   = (Float)       arguments[2];
 
-            setAddressName(name);
             setAddressDistance((distance != null)? distance: UNKNOWN_VALUE);
+            setAddressHeading((direction != null)? ApplicationUtilities.toUnsignedAngle(direction): UNKNOWN_VALUE);
 
-            setAddressHeading(
-              (direction != null)?
-              ApplicationUtilities.toUnsignedAngle(direction):
-              UNKNOWN_VALUE
-            );
-
-            if (ApplicationSettings.ANNOUNCE_LOCATION) {
-              announceLocation();
+            if (!name.equals(getText(addressName))) {
+              setAddressName(name);
+              if (ApplicationSettings.ANNOUNCE_LOCATION) announceLocation();
             }
           }
 
