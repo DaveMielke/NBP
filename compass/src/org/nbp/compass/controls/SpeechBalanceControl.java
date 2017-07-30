@@ -1,7 +1,7 @@
 package org.nbp.compass.controls;
 import org.nbp.compass.*;
 
-import org.nbp.common.BalanceControl;
+import org.nbp.common.speech.BalanceControl;
 
 public class SpeechBalanceControl extends BalanceControl {
   @Override

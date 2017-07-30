@@ -1,6 +1,6 @@
 package org.nbp.compass;
 
-import org.nbp.common.TextSpeaker;
+import org.nbp.common.speech.TextSpeaker;
 import org.nbp.common.Control;
 
 public abstract class Announcements {

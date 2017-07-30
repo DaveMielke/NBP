@@ -1,4 +1,5 @@
-package org.nbp.common;
+package org.nbp.common.speech;
+import org.nbp.common.*;
 
 import java.util.Map;
 import java.util.HashMap;

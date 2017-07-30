@@ -1,7 +1,7 @@
 package org.nbp.compass.controls;
 import org.nbp.compass.*;
 
-import org.nbp.common.RateControl;
+import org.nbp.common.speech.RateControl;
 
 public class SpeechRateControl extends RateControl {
   @Override

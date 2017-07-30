@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.BalanceControl;
+import org.nbp.common.speech.BalanceControl;
 
 public class SpeechBalanceControl extends BalanceControl {
   @Override

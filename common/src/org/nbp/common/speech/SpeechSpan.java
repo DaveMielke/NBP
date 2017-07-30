@@ -1,4 +1,5 @@
-package org.nbp.common;
+package org.nbp.common.speech;
+import org.nbp.common.*;
 
 public class SpeechSpan {
   private final String text;

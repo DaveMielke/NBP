@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.RateControl;
+import org.nbp.common.speech.RateControl;
 
 public class SpeechRateControl extends RateControl {
   @Override

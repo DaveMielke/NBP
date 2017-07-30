@@ -1,7 +1,7 @@
 package org.nbp.compass.controls;
 import org.nbp.compass.*;
 
-import org.nbp.common.VolumeControl;
+import org.nbp.common.speech.VolumeControl;
 
 public class SpeechVolumeControl extends VolumeControl {
   @Override

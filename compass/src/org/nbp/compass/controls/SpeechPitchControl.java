@@ -1,7 +1,7 @@
 package org.nbp.compass.controls;
 import org.nbp.compass.*;
 
-import org.nbp.common.PitchControl;
+import org.nbp.common.speech.PitchControl;
 
 public class SpeechPitchControl extends PitchControl {
   @Override

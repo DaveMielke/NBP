@@ -2,7 +2,7 @@ package org.nbp.editor.menu.input;
 import org.nbp.editor.*;
 
 import org.nbp.common.CommonUtilities;
-import org.nbp.common.SpeechToText;
+import org.nbp.common.speech.SpeechToText;
 
 import android.content.DialogInterface;
 import org.nbp.common.DialogFinisher;

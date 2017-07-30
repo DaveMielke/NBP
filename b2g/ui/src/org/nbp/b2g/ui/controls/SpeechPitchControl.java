@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.PitchControl;
+import org.nbp.common.speech.PitchControl;
 
 public class SpeechPitchControl extends PitchControl {
   @Override

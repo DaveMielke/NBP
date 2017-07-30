@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-import org.nbp.common.TextSpeaker;
+import org.nbp.common.speech.TextSpeaker;
 import org.nbp.common.Control;
 
 public class SpeechDevice extends TextSpeaker {

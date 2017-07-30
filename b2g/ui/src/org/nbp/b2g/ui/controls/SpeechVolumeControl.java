@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.VolumeControl;
+import org.nbp.common.speech.VolumeControl;
 
 public class SpeechVolumeControl extends VolumeControl {
   @Override
