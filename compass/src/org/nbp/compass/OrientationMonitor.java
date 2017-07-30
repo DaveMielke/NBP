@@ -107,10 +107,6 @@ public class OrientationMonitor extends NavigationMonitor implements SensorEvent
     setOrientation(heading, pitch, roll);
   }
 
-  private final DelayedAction orientationUpdater = new DelayedAction(
-    ApplicationParameters.UPDATE_MINIMUM_TIME, "update-orientation"
-  );
-
   @Override
   public void onSensorChanged (SensorEvent event) {
     {
@@ -147,21 +143,7 @@ public class OrientationMonitor extends NavigationMonitor implements SensorEvent
         sensorManager.getOrientation(rotationMatrix, currentOrientation);
         log("orientation", currentOrientation);
 
-        orientationUpdater.setAction(
-          new Runnable() {
-            @Override
-            public void run () {
-              runOnUiThread(
-                new Runnable() {
-                  @Override
-                  public void run () {
-                    setOrientation();
-                  }
-                }
-              );
-            }
-          }
-        );
+        setOrientation();
       }
     }
   }

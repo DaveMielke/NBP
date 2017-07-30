@@ -10,15 +10,8 @@ public abstract class NavigationMonitor {
     return NavigationActivity.getNavigationActivity();
   }
 
-  protected final void runOnUiThread (Runnable task) {
-    getActivity().runOnUiThread(task);
-  }
-
   protected final void setOrientation (float heading, float pitch, float roll) {
-    BaseActivity activity = getActivity();
-    activity.setOrientationHeading(heading);
-    activity.setOrientationPitch(pitch);
-    activity.setOrientationRoll(roll);
+    getActivity().setOrientation(heading, pitch, roll);
   }
 
   protected final void setLocation (Location location) {

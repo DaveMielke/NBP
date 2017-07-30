@@ -528,7 +528,7 @@ public abstract class BaseActivity extends CommonActivity {
     }
   }
 
-  public final void setOrientationHeading (float heading) {
+  private final void setOrientationHeading (float heading) {
     setHeading(headingDegrees, heading);
     setPoint(headingPoint, heading);
     rotateTo(headingCompass, -heading, "compass");
@@ -537,12 +537,36 @@ public abstract class BaseActivity extends CommonActivity {
     setAddressDirection();
   }
 
-  public final void setOrientationPitch (float degrees) {
+  private final void setOrientationPitch (float degrees) {
     setAngle(pitchDegrees, degrees);
   }
 
-  public final void setOrientationRoll (float degrees) {
+  private final void setOrientationRoll (float degrees) {
     setAngle(rollDegrees, degrees);
+  }
+
+  private final DelayedAction orientationUpdater = new DelayedAction(
+    ApplicationParameters.UPDATE_MINIMUM_TIME, "update-orientation"
+  );
+
+  public final void setOrientation (final float heading, final float pitch, final float roll) {
+    orientationUpdater.setAction(
+      new Runnable() {
+        @Override
+        public void run () {
+          runOnUiThread(
+            new Runnable() {
+              @Override
+              public void run () {
+                setOrientationHeading(heading);
+                setOrientationPitch(pitch);
+                setOrientationRoll(roll);
+              }
+            }
+          );
+        }
+      }
+    );
   }
 
   @Override
