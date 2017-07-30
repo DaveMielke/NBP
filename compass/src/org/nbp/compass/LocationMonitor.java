@@ -2,12 +2,8 @@ package org.nbp.compass;
 
 import android.location.Location;
 
-public abstract class LocationMonitor {
+public abstract class LocationMonitor extends NavigationMonitor {
   protected LocationMonitor () {
-  }
-
-  protected final static NavigationActivity getActivity () {
-    return NavigationActivity.getNavigationActivity();
   }
 
   private enum MonitorState {
@@ -68,9 +64,5 @@ public abstract class LocationMonitor {
       monitor.stop();
       monitor.start();
     }
-  }
-
-  protected final void updateLocation (Location location) {
-    if (location != null) getActivity().setLocation(location);
   }
 }

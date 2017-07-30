@@ -8,12 +8,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
-public class OrientationMonitor implements SensorEventListener {
+public class OrientationMonitor extends NavigationMonitor implements SensorEventListener {
   private final static String LOG_TAG = OrientationMonitor.class.getName();
-
-  protected final static NavigationActivity getActivity () {
-    return NavigationActivity.getNavigationActivity();
-  }
 
   private final static int[] sensorTypes = new int[] {
     Sensor.TYPE_ACCELEROMETER,
@@ -88,15 +84,13 @@ public class OrientationMonitor implements SensorEventListener {
     return (float)Math.toDegrees((double)radians);
   }
 
-  private final void setFields () {
-    BaseActivity activity = getActivity();
-
+  private final void setOrientation () {
     float heading = translateOrientationAngle( currentOrientation[0]);
     float pitch   = translateOrientationAngle(-currentOrientation[1]);
     float roll    = translateOrientationAngle( currentOrientation[2]);
 
     {
-      ScreenOrientation.Conversions conversions = ApplicationSettings.SCREEN_ORIENTATION.getConversions(activity);
+      ScreenOrientation.Conversions conversions = ApplicationSettings.SCREEN_ORIENTATION.getConversions(getActivity());
 
       if (conversions != null) {
         float h = heading;
@@ -110,10 +104,7 @@ public class OrientationMonitor implements SensorEventListener {
     }
 
     heading = ApplicationUtilities.toUnsignedAngle(heading);
-    activity.setOrientationHeading(heading);
-
-    activity.setOrientationPitch(pitch);
-    activity.setOrientationRoll(roll);
+    setOrientation(heading, pitch, roll);
   }
 
   private final DelayedAction orientationUpdater = new DelayedAction(
@@ -160,11 +151,11 @@ public class OrientationMonitor implements SensorEventListener {
           new Runnable() {
             @Override
             public void run () {
-              getActivity().runOnUiThread(
+              runOnUiThread(
                 new Runnable() {
                   @Override
                   public void run () {
-                    setFields();
+                    setOrientation();
                   }
                 }
               );
