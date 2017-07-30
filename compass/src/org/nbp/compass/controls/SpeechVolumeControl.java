@@ -31,8 +31,9 @@ public class SpeechVolumeControl extends VolumeControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!EventAnnouncer.singleton().setVolume(value)) return false;
+    if (!Announcements.setVolume(value)) return false;
     ApplicationSettings.SPEECH_VOLUME = value;
+    Announcements.confirmSetting(R.string.control_label_SpeechVolume, getValue());
     return true;
   }
 

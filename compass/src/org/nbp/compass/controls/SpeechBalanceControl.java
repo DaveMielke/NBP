@@ -31,8 +31,9 @@ public class SpeechBalanceControl extends BalanceControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!EventAnnouncer.singleton().setBalance(value)) return false;
+    if (!Announcements.setBalance(value)) return false;
     ApplicationSettings.SPEECH_BALANCE = value;
+    Announcements.confirmSetting(R.string.control_label_SpeechBalance, getValue());
     return true;
   }
 
