@@ -10,6 +10,8 @@ public abstract class ApplicationDefaults {
   public final static int LOCATION_RADIUS = 6; // meters
   public final static ScreenOrientation SCREEN_ORIENTATION = ScreenOrientation.PORTRAIT;
 
+  public final static boolean ANNOUNCE_LOCATION = false;
+
   public final static DistanceUnit DISTANCE_UNIT = DistanceUnit.FEET;
   public final static SpeedUnit SPEED_UNIT = SpeedUnit.MPH;
   public final static AngleUnit ANGLE_UNIT = AngleUnit.DEGREES;

@@ -96,6 +96,54 @@ public abstract class BaseActivity extends CommonActivity {
     longitudeDMS = (TextView)findViewById(R.id.longitude_dms);
   }
 
+  private final CharSequence getText (TextView view) {
+    if (view == null) return null;
+
+    CharSequence text = view.getText();
+    if (text == null) return null;
+
+    if (text.length() == 0) return null;
+    return text;
+  }
+
+  public final void announce (String announcement) {
+    Announcements.say(announcement, true);
+  }
+
+  public final void announceLocation () {
+    StringBuilder announcement = new StringBuilder();
+
+    {
+      CharSequence name = getText(addressName);
+
+      if (name != null) {
+        announcement.append(name);
+        announcement.append(':');
+      }
+    }
+
+    {
+      CharSequence distance = getText(addressDistance);
+
+      if (distance != null) {
+        if (announcement.length() > 0) announcement.append(' ');
+        announcement.append(distance);
+      }
+    }
+
+    {
+      CharSequence direction = getText(addressDirection);
+      if (direction == null) direction = getText(addressPoint);
+
+      if (direction != null) {
+        if (announcement.length() > 0) announcement.append(' ');
+        announcement.append(direction);
+      }
+    }
+
+    if (announcement.length() > 0) announce(announcement.toString());
+  }
+
   private final void rotateTo (View view, float degrees, String label) {
     if (view != null) {
       degrees = ApplicationUtilities.toNearestAngle(degrees, view.getRotation());
@@ -314,6 +362,10 @@ public abstract class BaseActivity extends CommonActivity {
               ApplicationUtilities.toUnsignedAngle(direction):
               UNKNOWN_VALUE
             );
+
+            if (ApplicationSettings.ANNOUNCE_LOCATION) {
+              announceLocation();
+            }
           }
 
           private final boolean geocode (double latitude, double longitude) {

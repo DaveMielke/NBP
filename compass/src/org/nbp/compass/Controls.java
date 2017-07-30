@@ -11,6 +11,8 @@ public abstract class Controls {
   public final static LocationRadiusControl locationRadius = new LocationRadiusControl();
   public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
 
+  public final static AnnounceLocationControl announceLocation = new AnnounceLocationControl();
+
   public final static DistanceUnitControl distanceUnit = new DistanceUnitControl();
   public final static SpeedUnitControl speedUnit = new SpeedUnitControl();
   public final static AngleUnitControl angleUnit = new AngleUnitControl();
@@ -29,6 +31,8 @@ public abstract class Controls {
     updateInterval,
     locationRadius,
     screenOrientation,
+
+    announceLocation,
 
     distanceUnit,
     speedUnit,

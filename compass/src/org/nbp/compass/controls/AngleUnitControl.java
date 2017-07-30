@@ -11,7 +11,7 @@ public class AngleUnitControl extends EnumerationControl<AngleUnit> {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_unit;
+    return R.string.control_group_units;
   }
 
   @Override

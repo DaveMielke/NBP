@@ -11,7 +11,7 @@ public class RelativeDirectionControl extends EnumerationControl<RelativeDirecti
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_unit;
+    return R.string.control_group_units;
   }
 
   @Override

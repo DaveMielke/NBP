@@ -11,7 +11,7 @@ public class SpeedUnitControl extends EnumerationControl<SpeedUnit> {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_unit;
+    return R.string.control_group_units;
   }
 
   @Override
