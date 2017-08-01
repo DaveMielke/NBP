@@ -79,7 +79,7 @@ public abstract class ASCIIBraille extends Braille {
     return ascii - ASCII_MINIMUM;
   }
 
-  public final static char toCharacter (byte ascii) {
+  public final static char asciiToChar (byte ascii) {
     int index = toIndex(ascii);
     if (index < 0) return 0;
 
@@ -98,7 +98,7 @@ public abstract class ASCIIBraille extends Braille {
     }
   }
 
-  public final static byte toAscii (char character) {
+  public final static byte charToAscii (char character) {
     if (isBraillePattern(character)) {
       return (byte)(dotsToAscii[character & 0X3F] + ASCII_MINIMUM);
     }

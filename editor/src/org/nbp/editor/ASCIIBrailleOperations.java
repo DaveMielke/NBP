@@ -22,7 +22,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
       }
 
       {
-        char character = ASCIIBraille.toCharacter(brf);
+        char character = ASCIIBraille.asciiToChar(brf);
 
         if (character != 0) {
           content.append(character);
@@ -43,7 +43,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
 
       for (int index=0; index<count; index+=1) {
         char character = content.charAt(index);
-        byte brf = ASCIIBraille.toAscii(character);
+        byte brf = ASCIIBraille.charToAscii(character);
 
         if (brf == 0) {
           if ((character <= 0XFF) && Character.isISOControl(character)) {
