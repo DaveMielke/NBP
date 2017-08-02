@@ -8,10 +8,12 @@ public abstract class Controls {
   }
 
   public final static ProtectTextControl protectText = new ProtectTextControl();
+  public final static BrailleModeControl brailleMode = new BrailleModeControl();
   public final static AuthorNameControl authorName = new AuthorNameControl();
 
   public final static Control[] ALL = new Control[] {
     protectText,
+    brailleMode,
     authorName
   };
 

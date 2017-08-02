@@ -6,6 +6,9 @@ public abstract class ASCIIBraille extends Braille {
   private final static byte ASCII_MINIMUM = 0X20;
   private final static byte ASCII_MAXIMUM = 0X7E;
 
+  private final static byte ASCII_LETTER = 0X40;
+  private final static byte ASCII_LOWERCASE = 0X20;
+
   private final static byte[] asciiToDots = new byte[] {
     /* 20   */ 0,
     /* 21 ! */ UNICODE_DOT_2 | UNICODE_DOT_3 | UNICODE_DOT_4 | UNICODE_DOT_6,
@@ -79,10 +82,25 @@ public abstract class ASCIIBraille extends Braille {
     return ascii - ASCII_MINIMUM;
   }
 
-  public final static char asciiToChar (byte ascii) {
+  public final static boolean isASCIIBraille (byte ascii) {
+    return asciiToIndex(ascii) >= 0;
+  }
+
+  public final static char asciiToCell (byte ascii) {
     int index = asciiToIndex(ascii);
     if (index < 0) return 0;
     return toCharacter(asciiToDots[index]);
+  }
+
+  public final static char asciiToNabcc (byte ascii) {
+    if (!ASCIIBraille.isASCIIBraille(ascii)) return 0;
+
+    if ((ascii & ASCII_LETTER) != 0) {
+      byte withoutDot7 = (byte)(ascii | ASCII_LOWERCASE);
+      if (withoutDot7 <= ASCII_MAXIMUM) ascii = withoutDot7;
+    }
+
+    return (char)(ascii & 0XFF);
   }
 
   private final static byte[] dotsToAscii = new byte[0X40];
