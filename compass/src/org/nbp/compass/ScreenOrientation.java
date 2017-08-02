@@ -56,7 +56,8 @@ public enum ScreenOrientation {
       }
     }
   ),
-  ;
+
+  ; // end of enumeration
 
   public interface Conversions {
     public float getHeading (float heading);

@@ -8,7 +8,7 @@ public enum LocationProvider {
   GPS(GPSLocationMonitor.class),
   BEST(BestLocationMonitor.class),
   FUSED(FusedLocationMonitor.class),
-  ;
+  ; // end of enumeration
 
   private final LazyInstantiator<? extends LocationMonitor> monitorInstantiator;
 

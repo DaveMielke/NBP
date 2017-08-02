@@ -3,7 +3,7 @@ package org.nbp.compass;
 public enum DistanceUnit implements Unit {
   METERS("M", 1f),
   FEET("ft", FEET_PER_METER),
-  ;
+  ; // end of enumeration
 
   private final String distanceSymbol;
   private final float distanceMultiplier;

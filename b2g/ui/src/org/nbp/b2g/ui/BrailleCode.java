@@ -44,7 +44,7 @@ public enum BrailleCode {
     TranslationEnumeration.ES_G1
   ),
 
-  ; // endof enumeration
+  ; // end of enumeration
 
   private final TranslationEnumeration translationEnumeration;
 

@@ -52,7 +52,8 @@ public enum RelativeDirection {
       }
     }
   ),
-  ;
+
+  ; // end of enumeration
 
   private interface Formatter {
     public CharSequence formatDirection (float direction);

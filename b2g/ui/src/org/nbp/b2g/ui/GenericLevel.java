@@ -5,7 +5,8 @@ public enum GenericLevel {
   LOW,
   MEDIUM,
   HIGH,
-  HIGHEST;
+  HIGHEST,
+  ; // end of enumeration
 
   private final static int MAXIMUM_VALUE = values().length - 1;
 

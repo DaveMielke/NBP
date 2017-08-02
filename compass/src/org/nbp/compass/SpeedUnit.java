@@ -6,7 +6,7 @@ public enum SpeedUnit implements Unit {
   KPH("kph", (SECONDS_PER_HOUR / METERS_PER_KILOMETER)),
   MPH("mph", (SECONDS_PER_HOUR * MILES_PER_METER)),
   KN("kn", (SECONDS_PER_HOUR / METERS_PER_KNOT)),
-  ;
+  ; // end of enumeration
 
   private final String speedSymbol;
   private final float speedMultiplier;

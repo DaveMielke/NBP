@@ -6,7 +6,7 @@ public enum IndicatorOverlay {
   DOTS_78(Braille.CELL_DOT_7 | Braille.CELL_DOT_8),
   DOT_7(Braille.CELL_DOT_7),
   DOT_8(Braille.CELL_DOT_8),
-  ;
+  ; // end of enumeration
 
   private final byte indicatorDots;
 
