@@ -73,19 +73,16 @@ public abstract class ASCIIBraille extends Braille {
     /* 5F _ */ UNICODE_DOT_4 | UNICODE_DOT_5 | UNICODE_DOT_6
   };
 
-  private final static int toIndex (byte ascii) {
+  private final static int asciiToIndex (byte ascii) {
     if ((ascii < ASCII_MINIMUM) || (ascii > ASCII_MAXIMUM)) return -1;
     if ((ascii & 0X40) != 0) ascii &= 0X5F;
     return ascii - ASCII_MINIMUM;
   }
 
   public final static char asciiToChar (byte ascii) {
-    int index = toIndex(ascii);
+    int index = asciiToIndex(ascii);
     if (index < 0) return 0;
-
-    char character = UNICODE_ROW;
-    character |= asciiToDots[index] & 0XFF;
-    return character;
+    return toCharacter(asciiToDots[index]);
   }
 
   private final static byte[] dotsToAscii = new byte[0X40];
