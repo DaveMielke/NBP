@@ -4,17 +4,17 @@ public enum BrailleMode {
   CELLS(
     new Conversions() {
       @Override
-      public char asciiToChar (byte ascii) {
-        return ASCIIBraille.asciiToCell(ascii);
+      public char symbolToChar (byte symbol) {
+        return ASCIIBraille.symbolToCell(symbol);
       }
     }
   ),
 
-  NABCC(
+  TEXT(
     new Conversions() {
       @Override
-      public char asciiToChar (byte ascii) {
-        return ASCIIBraille.asciiToNabcc(ascii);
+      public char symbolToChar (byte symbol) {
+        return ASCIIBraille.symbolToText(symbol);
       }
     }
   ),
@@ -22,7 +22,7 @@ public enum BrailleMode {
   ; // end of enumeration
 
   public interface Conversions {
-    public char asciiToChar (byte ascii);
+    public char symbolToChar (byte symbol);
   }
 
   private final Conversions brailleConversions;

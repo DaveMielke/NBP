@@ -10,10 +10,10 @@ public class ASCIIBrailleOperations extends ByteOperations {
   @Override
   protected int processBytes (Editable content, byte[] buffer, int count) {
     for (int index=0; index<count; index+=1) {
-      byte ascii = buffer[index];
+      byte symbol = buffer[index];
 
       {
-        char character = (char)(ascii & 0XFF);
+        char character = (char)(symbol & 0XFF);
 
         if (Character.isISOControl(character) || Character.isWhitespace(character)) {
           content.append(character);
@@ -22,7 +22,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
       }
 
       {
-        char character = ApplicationSettings.BRAILLE_MODE.getConversions().asciiToChar(ascii);
+        char character = ApplicationSettings.BRAILLE_MODE.getConversions().symbolToChar(symbol);
 
         if (character != 0) {
           content.append(character);
@@ -43,19 +43,19 @@ public class ASCIIBrailleOperations extends ByteOperations {
 
       for (int index=0; index<count; index+=1) {
         char character = content.charAt(index);
-        byte ascii = ASCIIBraille.charToAscii(character);
+        byte symbol = ASCIIBraille.charToSymbol(character);
 
-        if (ascii == 0) {
+        if (symbol == 0) {
           if ((character <= 0XFF) && Character.isISOControl(character)) {
-            ascii = (byte)character;
+            symbol = (byte)character;
           } else if (Character.isWhitespace(character)) {
-            ascii = ' ';
+            symbol = ' ';
           } else {
             continue;
           }
         }
 
-        buffer.write(ascii);
+        buffer.write(symbol);
       }
     } finally {
       buffer.close();

@@ -5,6 +5,6 @@ public abstract class ApplicationDefaults {
   }
 
   public final static boolean PROTECT_TEXT = false;
-  public final static BrailleMode BRAILLE_MODE = BrailleMode.NABCC;
+  public final static BrailleMode BRAILLE_MODE = BrailleMode.TEXT;
   public final static String AUTHOR_NAME = "";
 }

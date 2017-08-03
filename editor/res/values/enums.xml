@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="enum_BrailleMode_CELLS">Braille</string>
-  <string name="enum_BrailleMode_NABCC">Text</string>
+  <string name="enum_BrailleMode_CELLS">Braille Cells</string>
+  <string name="enum_BrailleMode_TEXT">Regular Text</string>
 </resources>

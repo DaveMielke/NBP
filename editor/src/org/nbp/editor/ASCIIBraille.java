@@ -9,7 +9,13 @@ public abstract class ASCIIBraille extends Braille {
   private final static byte ASCII_LETTER = 0X40;
   private final static byte ASCII_LOWERCASE = 0X20;
 
-  private final static byte[] asciiToDots = new byte[] {
+  public final static boolean isSymbol (byte symbol) {
+    if (symbol < ASCII_MINIMUM) return false;
+    if (symbol > ASCII_MAXIMUM) return false;
+    return true;
+  }
+
+  private final static byte[] symbolToDots = new byte[] {
     /* 20   */ 0,
     /* 21 ! */ UNICODE_DOT_2 | UNICODE_DOT_3 | UNICODE_DOT_4 | UNICODE_DOT_6,
     /* 22 " */ UNICODE_DOT_5,
@@ -76,46 +82,42 @@ public abstract class ASCIIBraille extends Braille {
     /* 5F _ */ UNICODE_DOT_4 | UNICODE_DOT_5 | UNICODE_DOT_6
   };
 
-  private final static int asciiToIndex (byte ascii) {
-    if ((ascii < ASCII_MINIMUM) || (ascii > ASCII_MAXIMUM)) return -1;
-    if ((ascii & 0X40) != 0) ascii &= 0X5F;
-    return ascii - ASCII_MINIMUM;
+  private final static int symbolToIndex (byte symbol) {
+    if (!isSymbol(symbol)) return -1;
+    if ((symbol & ASCII_LETTER) != 0) symbol &= ~ASCII_LOWERCASE;
+    return symbol - ASCII_MINIMUM;
   }
 
-  public final static boolean isASCIIBraille (byte ascii) {
-    return asciiToIndex(ascii) >= 0;
-  }
-
-  public final static char asciiToCell (byte ascii) {
-    int index = asciiToIndex(ascii);
+  public final static char symbolToCell (byte symbol) {
+    int index = symbolToIndex(symbol);
     if (index < 0) return 0;
-    return toCharacter(asciiToDots[index]);
+    return toCharacter(symbolToDots[index]);
   }
 
-  public final static char asciiToNabcc (byte ascii) {
-    if (!ASCIIBraille.isASCIIBraille(ascii)) return 0;
+  public final static char symbolToText (byte symbol) {
+    if (!isSymbol(symbol)) return 0;
 
-    if ((ascii & ASCII_LETTER) != 0) {
-      byte withoutDot7 = (byte)(ascii | ASCII_LOWERCASE);
-      if (withoutDot7 <= ASCII_MAXIMUM) ascii = withoutDot7;
+    if ((symbol & ASCII_LETTER) != 0) {
+      byte withoutDot7 = (byte)(symbol | ASCII_LOWERCASE);
+      if (withoutDot7 <= ASCII_MAXIMUM) symbol = withoutDot7;
     }
 
-    return (char)(ascii & 0XFF);
+    return (char)(symbol & 0XFF);
   }
 
-  private final static byte[] dotsToAscii = new byte[0X40];
+  private final static byte[] dotsToSymbol = new byte[0X40];
 
   static {
-    int count = asciiToDots.length;
+    int count = symbolToDots.length;
 
     for (byte index=0; index<count; index+=1) {
-      dotsToAscii[asciiToDots[index]] = index;
+      dotsToSymbol[symbolToDots[index]] = index;
     }
   }
 
-  public final static byte charToAscii (char character) {
+  public final static byte charToSymbol (char character) {
     if (isBraillePattern(character)) {
-      return (byte)(dotsToAscii[character & 0X3F] + ASCII_MINIMUM);
+      return (byte)(dotsToSymbol[character & 0X3F] + ASCII_MINIMUM);
     }
 
     if ((character >= ASCII_MINIMUM) && (character <= ASCII_MAXIMUM)) {
