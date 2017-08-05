@@ -512,14 +512,17 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   @Override
-  public void onCreate (Bundle state) {
+  protected void onCreate (Bundle state) {
     super.onCreate(state);
+
+    setOrientationToVertical();
     setContentView(R.layout.common_settings);
 
     if (settingControls != null) {
-      FragmentTransaction transaction = getFragmentManager().beginTransaction();
-      transaction.add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment());
-      transaction.commit();
+      getFragmentManager()
+        .beginTransaction()
+        .add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment())
+        .commit();
     } else {
       ViewGroup container = (ViewGroup)findViewById(FRAGMENT_CONTAINER_ID);
       container.addView(newTextView(R.string.control_group_none));
@@ -527,7 +530,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   @Override
-  public void onDestroy () {
+  protected void onDestroy () {
     try {
       removeControlValueChangedListeners();
     } finally {

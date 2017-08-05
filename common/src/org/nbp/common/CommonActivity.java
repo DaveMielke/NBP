@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
+import android.content.pm.ActivityInfo;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,14 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
 
   protected final Activity getActivity () {
     return this;
+  }
+
+  protected final void setOrientationToVertical () {
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+  }
+
+  protected final void setOrientationToLandscape () {
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
   }
 
   public final void addViews (ViewGroup group, ViewGroup.LayoutParams parameters, View... views) {
