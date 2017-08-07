@@ -221,13 +221,18 @@ public abstract class KeyEvents {
           longPressTimeout.start();
         } else if ((keyMask == KeyMask.SPACE) && (activeNavigationKeys != 0)) {
           performAction(false);
-          pressedCursorKeys.clear();
         } else {
           activeNavigationKeys |= keyMask;
         }
       }
     }
   }
+
+  private final static int END_ONE_HAND = KeyMask.CURSOR
+                                        | KeyMask.GROUP_DPAD   
+                                        | KeyMask.GROUP_VOLUME
+                                        | KeyMask.GROUP_POWER
+                                        ;
 
   private static void handleNavigationKeyRelease (int keyMask) {
     keyMask = handleEndpointNavigationKeyEvent(keyMask, false);
@@ -238,9 +243,11 @@ public abstract class KeyEvents {
         pressedNavigationKeys &= ~keyMask;
         logNavigationKeysChange(keyMask, "release");
 
-        if (!ApplicationSettings.ONE_HAND) {
-          performAction(false);
-        }
+        boolean isComplete = !ApplicationSettings.ONE_HAND
+                           || ((activeNavigationKeys & END_ONE_HAND) != 0)
+                           ;
+
+        if (isComplete) performAction(false);
       }
     }
   }
@@ -300,26 +307,23 @@ public abstract class KeyEvents {
     onKeyPress();
     if (handleEndpointCursorKeyEvent(keyNumber, true)) return;
 
-    if (ApplicationSettings.ONE_HAND) {
-      pressedCursorKeys.clear();
-    }
+    synchronized (longPressTimeout) {
+      pressedCursorKeys.add(keyNumber);
+      logCursorKeyAction(keyNumber, "press");
 
-    pressedCursorKeys.add(keyNumber);
-    logCursorKeyAction(keyNumber, "press");
-
-    if (pressedCursorKeys.size() == 1) {
-      handleNavigationKey(KeyMask.CURSOR);
+      if (pressedCursorKeys.size() == 1) {
+        handleNavigationKey(KeyMask.CURSOR);
+      }
     }
   }
 
   private static void handleCursorKeyRelease (int keyNumber) {
     if (handleEndpointCursorKeyEvent(keyNumber, false)) return;
 
-    if (!ApplicationSettings.ONE_HAND) {
+    synchronized (longPressTimeout) {
       pressedCursorKeys.remove(keyNumber);
+      logCursorKeyAction(keyNumber, "release");
     }
-
-    logCursorKeyAction(keyNumber, "release");
   }
 
   public static void handleCursorKeyEvent (int keyNumber, boolean press) {

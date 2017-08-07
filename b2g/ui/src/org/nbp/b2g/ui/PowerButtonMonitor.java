@@ -25,12 +25,6 @@ public class PowerButtonMonitor extends EventMonitor {
       KeyEvents.handleNavigationKeyEvent(keyMask, press);
     }
 
-    if (ApplicationSettings.ONE_HAND && !press) {
-      if (KeyEvents.getNavigationKeys() != 0) {
-        KeyEvents.handleNavigationKey(KeyMask.SPACE);
-      }
-    }
-
     return true;
   }
 

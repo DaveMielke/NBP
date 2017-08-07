@@ -33,14 +33,26 @@ public abstract class KeyMask {
   public final static int CURSOR      = 0X100000;
   public final static int LONG_PRESS  = 0X200000;
 
-  public final static int DOTS_ALL = (DOT_1 | DOT_2 | DOT_3 | DOT_4 | DOT_5 | DOT_6 | DOT_7 | DOT_8);
+  public final static int GROUP_DOTS = DOT_1 | DOT_2 | DOT_3 | DOT_4
+                                     | DOT_5 | DOT_6 | DOT_7 | DOT_8
+                                     ;
+
+  public final static int GROUP_DPAD = DPAD_CENTER
+                                     | DPAD_LEFT | DPAD_RIGHT
+                                     | DPAD_UP | DPAD_DOWN
+                                     ;
+
+  public final static int GROUP_PAN = FORWARD | BACKWARD;
+  public final static int GROUP_VOLUME = VOLUME_DOWN | VOLUME_UP;
+  public final static int GROUP_POWER = WAKE | SLEEP;
+
   public final static char KEY_COMBINATION_DELIMITER = ',';
   public final static char KEY_NAME_DELIMITER = '+';
 
   public static Byte toDots (int mask) {
     if (mask == 0) return null;
     if (mask == SPACE) return 0;
-    if ((mask & ~DOTS_ALL) != 0) return null;
+    if ((mask & ~GROUP_DOTS) != 0) return null;
 
     byte dots = 0;
     if ((mask & DOT_1) != 0) dots |= Braille.CELL_DOT_1;
@@ -144,7 +156,7 @@ public abstract class KeyMask {
       for (KeyEntry key : keyEntries.values()) {
         if ((mask & key.bit) != 0) {
           String name = key.name;
-          boolean isDot = (key.bit & DOTS_ALL) != 0;
+          boolean isDot = (key.bit & GROUP_DOTS) != 0;
 
           if (!(isDot && (dotCount > 0))) {
             if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
