@@ -47,11 +47,15 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return this;
   }
 
-  protected final void setOrientationToVertical () {
+  protected final void lockScreenOrientation () {
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+  }
+
+  protected final void setScreenOrientationToPortrait () {
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
   }
 
-  protected final void setOrientationToLandscape () {
+  protected final void setScreenOrientationToLandscape () {
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
   }
 

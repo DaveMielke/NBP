@@ -515,7 +515,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   protected void onCreate (Bundle state) {
     super.onCreate(state);
 
-    setOrientationToVertical();
+    lockScreenOrientation();
     setContentView(R.layout.common_settings);
 
     if (settingControls != null) {
