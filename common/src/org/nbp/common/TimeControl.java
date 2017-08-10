@@ -3,6 +3,13 @@ package org.nbp.common;
 import org.nbp.common.IntegerControl;
 
 public abstract class TimeControl extends IntegerControl {
+  private final static Integer MINIMUM_VALUE = 1;
+
+  @Override
+  protected Integer getIntegerMinimum () {
+    return MINIMUM_VALUE;
+  }
+
   protected final static int MILLISECONDS_PER_SECOND = 1000;
   protected final static int SECONDS_PER_MINUTE = 60;
   protected final static int MINUTES_PER_HOUR = 60;

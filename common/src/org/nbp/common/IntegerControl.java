@@ -11,6 +11,14 @@ public abstract class IntegerControl extends Control {
     return 1;
   }
 
+  protected Integer getIntegerMinimum () {
+    return null;
+  }
+
+  protected Integer getIntegerMaximum () {
+    return null;
+  }
+
   private final boolean adjustValue (int adjustment) {
     int value = getIntegerValue();
     int scale = getIntegerScale();
@@ -18,6 +26,14 @@ public abstract class IntegerControl extends Control {
     value += adjustment * scale;
     value /= scale;
     value *= scale;
+
+    if (adjustment > 0) {
+      Integer maximum = getIntegerMaximum();
+      if ((maximum != null) && (value > maximum)) return false;
+    } else if (adjustment < 0) {
+      Integer minimum = getIntegerMinimum();
+      if ((minimum != null) && (value < minimum)) return false;
+    }
 
     return setIntegerValue(value);
   }

@@ -54,6 +54,7 @@ public abstract class Controls {
 
   public final static OneHandControl oneHand = new OneHandControl();
   public final static SpaceTimeoutControl spaceTimeout = new SpaceTimeoutControl();
+  public final static BindingTimeoutControl bindingTimeout = new BindingTimeoutControl();
 
   public final static RemoteDisplayControl remoteDisplay = new RemoteDisplayControl();
   public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
@@ -101,6 +102,7 @@ public abstract class Controls {
 
     oneHand,
     spaceTimeout,
+    bindingTimeout,
 
     remoteDisplay,
     secureConnection,

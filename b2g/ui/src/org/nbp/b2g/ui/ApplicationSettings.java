@@ -34,6 +34,7 @@ public abstract class ApplicationSettings {
 
   public static volatile boolean ONE_HAND = ApplicationDefaults.ONE_HAND;
   public static volatile int SPACE_TIMEOUT = ApplicationDefaults.SPACE_TIMEOUT;
+  public static volatile int BINDING_TIMEOUT = ApplicationDefaults.BINDING_TIMEOUT;
 
   public static volatile boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
   public static volatile boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;

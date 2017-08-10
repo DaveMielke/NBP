@@ -21,7 +21,14 @@ public class UpdateIntervalControl extends TimeControl {
 
   @Override
   protected final int getIntegerScale () {
-    return Unit.MILLISECONDS_PER_SECOND;
+    return MILLISECONDS_PER_SECOND;
+  }
+
+  private final static Integer MAXIMUM_VALUE = ApplicationParameters.UPDATE_MAXIMUM_INTERVAL;
+
+  @Override
+  protected Integer getIntegerMaximum () {
+    return MAXIMUM_VALUE;
   }
 
   @Override
@@ -36,9 +43,6 @@ public class UpdateIntervalControl extends TimeControl {
 
   @Override
   protected boolean setIntegerValue (int value) {
-    if (value < 1) return false;
-    if (value > ApplicationParameters.UPDATE_MAXIMUM_INTERVAL) return false;
-
     ApplicationSettings.UPDATE_INTERVAL = value;
     LocationMonitor.restartCurrentMonitor();
     return true;

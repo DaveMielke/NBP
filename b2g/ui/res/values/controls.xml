@@ -37,6 +37,7 @@
   <string name="control_group_one_hand">One Hand Settings</string>
   <string name="control_label_OneHand">One Hand</string>
   <string name="control_label_SpaceTimeout">Space Timeout</string>
+  <string name="control_label_BindingTimeout">Binding Timeout</string>
 
   <string name="control_group_remote">Remote Settings</string>
   <string name="control_label_RemoteDisplay">Remote Display</string>

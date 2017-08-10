@@ -41,23 +41,6 @@ public abstract class KeyEvents {
                                                 | KeyMask.GROUP_POWER
                                                 ;
 
-  public final static void resetKeys () {
-    if (ApplicationSettings.LOG_KEYBOARD) {
-      Log.d(LOG_TAG, "resetting key state");
-    }
-
-    activeNavigationKeys = 0;
-    pressedNavigationKeys = 0;
-    pressedCursorKeys.clear();
-
-    oneHandKeyPressed = false;
-    oneHandSpaceTimeout = 0;
-  }
-
-  static {
-    resetKeys();
-  }
-
   public static boolean performAction (final Action action) {
     if (ApplicationSettings.LOG_ACTIONS) {
       Log.d(LOG_TAG, "performing action: " + action.getName());
@@ -201,12 +184,31 @@ public abstract class KeyEvents {
     awakenSystem();
   }
 
-  private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME, "long-key-press-timeout") {
+  private static Timeout longPressTimeout = new Timeout(ApplicationParameters.LONG_PRESS_TIME, "long-press-timeout") {
     @Override
     public void run () {
       performAction(true);
     }
   };
+
+  public final static void resetKeys () {
+    synchronized (longPressTimeout) {
+      if (ApplicationSettings.LOG_KEYBOARD) {
+        Log.d(LOG_TAG, "resetting key state");
+      }
+
+      activeNavigationKeys = 0;
+      pressedNavigationKeys = 0;
+      pressedCursorKeys.clear();
+
+      oneHandKeyPressed = false;
+      oneHandSpaceTimeout = 0;
+    }
+  }
+
+  static {
+    resetKeys();
+  }
 
   public static int getNavigationKeys () {
     return activeNavigationKeys;
@@ -291,7 +293,6 @@ public abstract class KeyEvents {
         longPressTimeout.cancel();
         pressedNavigationKeys &= ~keyMask;
         logNavigationKeysChange(keyMask, "release");
-
         if (isComplete) performAction(false);
       }
     }
