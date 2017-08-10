@@ -32,7 +32,7 @@ public abstract class KeyEvents {
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
   private static boolean oneHandKeyPressed;
-  private static long oneHandTypeTimeout;
+  private static long oneHandSpaceTimeout;
 
   private final static int oneHandImmediateKeys = KeyMask.CURSOR
                                                 | KeyMask.GROUP_PAN
@@ -51,7 +51,7 @@ public abstract class KeyEvents {
     pressedCursorKeys.clear();
 
     oneHandKeyPressed = false;
-    oneHandTypeTimeout = 0;
+    oneHandSpaceTimeout = 0;
   }
 
   static {
@@ -150,7 +150,7 @@ public abstract class KeyEvents {
     if (keys == 0) return true;
 
     boolean wasModifier = false;
-    oneHandTypeTimeout = 0;
+    oneHandSpaceTimeout = 0;
 
     try {
       Action action = getAction(keys, isLongPress);
@@ -164,8 +164,8 @@ public abstract class KeyEvents {
           performed = true;
 
           if (action instanceof TypeCharacter) {
-            oneHandTypeTimeout = SystemClock.elapsedRealtime()
-                               + 2000;
+            oneHandSpaceTimeout = SystemClock.elapsedRealtime()
+                                + ApplicationSettings.SPACE_TIMEOUT;
           }
         }
       }
@@ -283,7 +283,7 @@ public abstract class KeyEvents {
               isComplete = true;
             } else {
               activeNavigationKeys = KeyMask.SPACE;
-              if (SystemClock.elapsedRealtime() < oneHandTypeTimeout) isComplete = true;
+              if (SystemClock.elapsedRealtime() < oneHandSpaceTimeout) isComplete = true;
             }
           }
         }

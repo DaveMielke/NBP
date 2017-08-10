@@ -1,9 +1,9 @@
 package org.nbp.compass.controls;
 import org.nbp.compass.*;
 
-import org.nbp.common.IntegerControl;
+import org.nbp.common.TimeControl;
 
-public class UpdateIntervalControl extends IntegerControl {
+public class UpdateIntervalControl extends TimeControl {
   @Override
   protected int getResourceForLabel () {
     return R.string.control_label_UpdateInterval;
@@ -12,10 +12,6 @@ public class UpdateIntervalControl extends IntegerControl {
   @Override
   protected int getResourceForGroup () {
     return R.string.control_group_general;
-  }
-
-  public CharSequence getValue () {
-    return ApplicationUtilities.toTimeText(getIntegerValue());
   }
 
   @Override

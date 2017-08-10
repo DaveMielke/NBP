@@ -31,7 +31,9 @@ public abstract class ApplicationSettings {
 
   public static volatile boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
   public static volatile boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
+
   public static volatile boolean ONE_HAND = ApplicationDefaults.ONE_HAND;
+  public static volatile int SPACE_TIMEOUT = ApplicationDefaults.SPACE_TIMEOUT;
 
   public static volatile boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
   public static volatile boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;

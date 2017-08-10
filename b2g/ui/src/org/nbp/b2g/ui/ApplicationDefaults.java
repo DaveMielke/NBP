@@ -33,7 +33,9 @@ public abstract class ApplicationDefaults {
 
   public final static boolean LONG_PRESS = true;
   public final static boolean REVERSE_PANNING = false;
+
   public final static boolean ONE_HAND = false;
+  public final static int SPACE_TIMEOUT = 2000; // milliseconds
 
   public final static boolean REMOTE_DISPLAY = false;
   public final static boolean SECURE_CONNECTION = false;
