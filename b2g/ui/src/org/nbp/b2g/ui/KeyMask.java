@@ -32,6 +32,7 @@ public abstract class KeyMask {
   public final static int SLEEP       = 0X080000;
   public final static int CURSOR      = 0X100000;
   public final static int LONG_PRESS  = 0X200000;
+  public final static int ONE_HAND    = 0X400000;
 
   public final static int GROUP_DOTS = DOT_1 | DOT_2 | DOT_3 | DOT_4
                                      | DOT_5 | DOT_6 | DOT_7 | DOT_8

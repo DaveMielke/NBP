@@ -116,10 +116,9 @@ public abstract class KeyEvents {
   }
 
   private static boolean performAction (boolean isLongPress) {
-    boolean wasModifier = false;
-
     int keys = activeNavigationKeys;
     if (keys == 0) return true;
+    boolean wasModifier = false;
 
     try {
       Action action = getAction(keys, isLongPress);
@@ -128,10 +127,7 @@ public abstract class KeyEvents {
       if (action != null) {
         if (action instanceof ModifierAction) wasModifier = true;
         if (!action.isHidden()) Devices.braille.get().dismiss();
-
-        if (performAction(action)) {
-          performed = true;
-        }
+        if (performAction(action)) performed = true;
       }
 
       if (!performed) Tones.beep();
@@ -216,20 +212,20 @@ public abstract class KeyEvents {
         pressedNavigationKeys |= keyMask;
         logNavigationKeysChange(keyMask, "press");
 
-        if (!ApplicationSettings.ONE_HAND) {
+        if (ApplicationSettings.ONE_HAND) {
+          activeNavigationKeys |= keyMask & ~KeyMask.SPACE;
+          activeNavigationKeys |= KeyMask.ONE_HAND;
+        } else {
           activeNavigationKeys = pressedNavigationKeys;
           longPressTimeout.start();
-        } else if ((keyMask == KeyMask.SPACE) && (activeNavigationKeys != 0)) {
-          performAction(false);
-        } else {
-          activeNavigationKeys |= keyMask;
         }
       }
     }
   }
 
   private final static int END_ONE_HAND = KeyMask.CURSOR
-                                        | KeyMask.GROUP_DPAD   
+                                        | KeyMask.GROUP_PAN
+                                        | KeyMask.GROUP_DPAD
                                         | KeyMask.GROUP_VOLUME
                                         | KeyMask.GROUP_POWER
                                         ;
@@ -239,13 +235,28 @@ public abstract class KeyEvents {
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
-        longPressTimeout.cancel();
-        pressedNavigationKeys &= ~keyMask;
-        logNavigationKeysChange(keyMask, "release");
-
         boolean isComplete = !ApplicationSettings.ONE_HAND
                            || ((activeNavigationKeys & END_ONE_HAND) != 0)
                            ;
+
+        if ((activeNavigationKeys & KeyMask.ONE_HAND) != 0) {
+          activeNavigationKeys &= ~KeyMask.ONE_HAND;
+
+          if ((pressedNavigationKeys & KeyMask.SPACE) != 0) {
+            if ((pressedNavigationKeys & ~KeyMask.SPACE) != 0) {
+              activeNavigationKeys |= KeyMask.SPACE;
+              isComplete = true;
+            } else if (activeNavigationKeys != 0) {
+              isComplete = true;
+            } else {
+              activeNavigationKeys = KeyMask.SPACE;
+            }
+          }
+        }
+
+        longPressTimeout.cancel();
+        pressedNavigationKeys &= ~keyMask;
+        logNavigationKeysChange(keyMask, "release");
 
         if (isComplete) performAction(false);
       }
