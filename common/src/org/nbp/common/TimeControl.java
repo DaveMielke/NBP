@@ -43,6 +43,12 @@ public abstract class TimeControl extends IntegerControl {
             ((float)seconds + ((float)milliseconds / MILLISECONDS_PER_SECOND))
           )
         );
+
+        while (true) {
+          int last = sb.length() - 1;
+          if (sb.charAt(last) != '0') break;
+          sb.setLength(last);
+        }
       } else if (seconds != 0) {
         sb.append(seconds);
       }
