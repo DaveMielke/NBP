@@ -18,15 +18,45 @@ import org.nbp.common.Timeout;
 import org.nbp.common.Tones;
 
 import android.util.Log;
-
+import android.os.SystemClock;
 import android.os.PowerManager;
 
 public abstract class KeyEvents {
   private final static String LOG_TAG = KeyEvents.class.getName();
 
-  private static int pressedNavigationKeys = 0;
-  private static int activeNavigationKeys = 0;
+  private KeyEvents () {
+  }
+
+  private static int activeNavigationKeys;
+  private static int pressedNavigationKeys;
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
+
+  private static boolean oneHandKeyPressed;
+  private static long oneHandTypeTimeout;
+
+  private final static int oneHandImmediateKeys = KeyMask.CURSOR
+                                                | KeyMask.GROUP_PAN
+                                                | KeyMask.GROUP_DPAD
+                                                | KeyMask.GROUP_VOLUME
+                                                | KeyMask.GROUP_POWER
+                                                ;
+
+  public final static void resetKeys () {
+    if (ApplicationSettings.LOG_KEYBOARD) {
+      Log.d(LOG_TAG, "resetting key state");
+    }
+
+    activeNavigationKeys = 0;
+    pressedNavigationKeys = 0;
+    pressedCursorKeys.clear();
+
+    oneHandKeyPressed = false;
+    oneHandTypeTimeout = 0;
+  }
+
+  static {
+    resetKeys();
+  }
 
   public static boolean performAction (final Action action) {
     if (ApplicationSettings.LOG_ACTIONS) {
@@ -118,7 +148,9 @@ public abstract class KeyEvents {
   private static boolean performAction (boolean isLongPress) {
     int keys = activeNavigationKeys;
     if (keys == 0) return true;
+
     boolean wasModifier = false;
+    oneHandTypeTimeout = 0;
 
     try {
       Action action = getAction(keys, isLongPress);
@@ -127,7 +159,15 @@ public abstract class KeyEvents {
       if (action != null) {
         if (action instanceof ModifierAction) wasModifier = true;
         if (!action.isHidden()) Devices.braille.get().dismiss();
-        if (performAction(action)) performed = true;
+
+        if (performAction(action)) {
+          performed = true;
+
+          if (action instanceof TypeCharacter) {
+            oneHandTypeTimeout = SystemClock.elapsedRealtime()
+                               + 2000;
+          }
+        }
       }
 
       if (!performed) Tones.beep();
@@ -214,7 +254,7 @@ public abstract class KeyEvents {
 
         if (ApplicationSettings.ONE_HAND) {
           activeNavigationKeys |= keyMask & ~KeyMask.SPACE;
-          activeNavigationKeys |= KeyMask.ONE_HAND;
+          oneHandKeyPressed = true;
         } else {
           activeNavigationKeys = pressedNavigationKeys;
           longPressTimeout.start();
@@ -223,24 +263,17 @@ public abstract class KeyEvents {
     }
   }
 
-  private final static int END_ONE_HAND = KeyMask.CURSOR
-                                        | KeyMask.GROUP_PAN
-                                        | KeyMask.GROUP_DPAD
-                                        | KeyMask.GROUP_VOLUME
-                                        | KeyMask.GROUP_POWER
-                                        ;
-
   private static void handleNavigationKeyRelease (int keyMask) {
     keyMask = handleEndpointNavigationKeyEvent(keyMask, false);
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
         boolean isComplete = !ApplicationSettings.ONE_HAND
-                           || ((activeNavigationKeys & END_ONE_HAND) != 0)
+                           || ((activeNavigationKeys & oneHandImmediateKeys) != 0)
                            ;
 
-        if ((activeNavigationKeys & KeyMask.ONE_HAND) != 0) {
-          activeNavigationKeys &= ~KeyMask.ONE_HAND;
+        if (oneHandKeyPressed) {
+          oneHandKeyPressed = false;
 
           if ((pressedNavigationKeys & KeyMask.SPACE) != 0) {
             if ((pressedNavigationKeys & ~KeyMask.SPACE) != 0) {
@@ -250,6 +283,7 @@ public abstract class KeyEvents {
               isComplete = true;
             } else {
               activeNavigationKeys = KeyMask.SPACE;
+              if (SystemClock.elapsedRealtime() < oneHandTypeTimeout) isComplete = true;
             }
           }
         }
@@ -343,19 +377,5 @@ public abstract class KeyEvents {
     } else {
       handleCursorKeyRelease(keyNumber);
     }
-  }
-
-  public static void resetKeys () {
-    if (ApplicationSettings.LOG_KEYBOARD) {
-      Log.d(LOG_TAG, "resetting key state");
-    }
-
-    pressedNavigationKeys = 0;
-    activeNavigationKeys = pressedNavigationKeys;
-
-    pressedCursorKeys.clear();
-  }
-
-  private KeyEvents () {
   }
 }
