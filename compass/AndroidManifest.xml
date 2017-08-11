@@ -13,7 +13,7 @@
 
   <application
     android:label="@string/app_name"
-    android:icon="@drawable/nbp_compass"
+    android:icon="@drawable/nbp_navigator"
     >
 
     <meta-data
