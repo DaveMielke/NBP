@@ -26,9 +26,12 @@ also reenables it.
 Speech
 ~~~~~~
 
-Speech is supported. It's enabled by default.
+Speech is supported, and is enabled by default.
 Pressing Forward+VolumeUp enables it,
 and pressing Forward+VolumeDown disables it.
+Alternate combinations that are usable in `One Hand Mode`_,
+which use Dot6 instead of Forward,
+have been defined.
 
 * To interrupt what's currently being spoken, press Dot1+Left.
 
@@ -60,8 +63,8 @@ Adjusting the Pitch:
   * Press Dot3+VolumeUp for **higher**.
 
 Adjusting the Balance:
-  * Press Dot7+VolumeDown for **more left**.
-  * Press Dot7+VolumeUp for **more right**.
+  * Press Dot4+VolumeDown for **more left**.
+  * Press Dot4+VolumeUp for **more right**.
 
 Sleep Talk Mode
 ```````````````
@@ -73,6 +76,9 @@ notification, occurs.
 
 This mode is disabled by default. Pressing Backward+VolumeUp enables it, and
 pressing Backward+VolumeDown disables it.
+Alternate combinations that are usable in `One Hand Mode`_,
+which use Dot5 instead of Backward,
+have been defined.
 
 Differences from Braille Rendering
 ``````````````````````````````````

@@ -35,6 +35,10 @@ Forward together. This will cause the indicators to be presented within a pop-up
   Wi-Fi: MyNetwork 60% 54Mbps
   Bluetooth: on discovering discoverable connectable
 
+An alternate combination that's usable in `One Hand Mode`_,
+Space+i (dots 24),
+has been defined.
+
 Build Details
 ~~~~~~~~~~~~~
 

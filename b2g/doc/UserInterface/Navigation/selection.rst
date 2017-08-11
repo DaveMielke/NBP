@@ -50,3 +50,9 @@ character, then the selection is implicitly extended back to (and including)
 the character where the cursor is. This, for example, provides an easy way to
 replace a word, line, paragraph, etc.
 
+Alternate combinations that are usable in `One Hand Mode`_ have been defined.
+They use:
+
+* Dot1 instead of Backward to set the start of the selection
+* Dot4 instead of Forward to set the end of the selection
+
