@@ -15,10 +15,10 @@ public abstract class ApplicationSettings {
   public volatile static AngleUnit ANGLE_UNIT = ApplicationDefaults.ANGLE_UNIT;
   public volatile static RelativeDirection RELATIVE_DIRECTION = ApplicationDefaults.RELATIVE_DIRECTION;
 
-  public static volatile float SPEECH_VOLUME = ApplicationDefaults.SPEECH_VOLUME;
-  public static volatile float SPEECH_RATE = ApplicationDefaults.SPEECH_RATE;
-  public static volatile float SPEECH_PITCH = ApplicationDefaults.SPEECH_PITCH;
-  public static volatile float SPEECH_BALANCE = ApplicationDefaults.SPEECH_BALANCE;
+  public volatile static float SPEECH_VOLUME = ApplicationDefaults.SPEECH_VOLUME;
+  public volatile static float SPEECH_RATE = ApplicationDefaults.SPEECH_RATE;
+  public volatile static float SPEECH_PITCH = ApplicationDefaults.SPEECH_PITCH;
+  public volatile static float SPEECH_BALANCE = ApplicationDefaults.SPEECH_BALANCE;
 
   public volatile static boolean LOG_GEOCODING = ApplicationDefaults.LOG_GEOCODING;
   public volatile static boolean LOG_SENSORS = ApplicationDefaults.LOG_SENSORS;

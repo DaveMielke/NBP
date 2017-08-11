@@ -4,50 +4,50 @@ public abstract class ApplicationSettings {
   private ApplicationSettings () {
   }
 
-  public static volatile boolean LITERARY_BRAILLE = ApplicationDefaults.LITERARY_BRAILLE;
-  public static volatile BrailleCode BRAILLE_CODE = ApplicationDefaults.BRAILLE_CODE;
-  public static volatile boolean WORD_WRAP = ApplicationDefaults.WORD_WRAP;
-  public static volatile boolean SHOW_NOTIFICATIONS = ApplicationDefaults.SHOW_NOTIFICATIONS;
+  public volatile static boolean LITERARY_BRAILLE = ApplicationDefaults.LITERARY_BRAILLE;
+  public volatile static BrailleCode BRAILLE_CODE = ApplicationDefaults.BRAILLE_CODE;
+  public volatile static boolean WORD_WRAP = ApplicationDefaults.WORD_WRAP;
+  public volatile static boolean SHOW_NOTIFICATIONS = ApplicationDefaults.SHOW_NOTIFICATIONS;
 
-  public static volatile TypingMode TYPING_MODE = ApplicationDefaults.TYPING_MODE;
-  public static volatile boolean TYPING_BOLD = ApplicationDefaults.TYPING_BOLD;
-  public static volatile boolean TYPING_ITALIC = ApplicationDefaults.TYPING_ITALIC;
-  public static volatile boolean TYPING_STRIKE = ApplicationDefaults.TYPING_STRIKE;
-  public static volatile boolean TYPING_UNDERLINE = ApplicationDefaults.TYPING_UNDERLINE;
+  public volatile static TypingMode TYPING_MODE = ApplicationDefaults.TYPING_MODE;
+  public volatile static boolean TYPING_BOLD = ApplicationDefaults.TYPING_BOLD;
+  public volatile static boolean TYPING_ITALIC = ApplicationDefaults.TYPING_ITALIC;
+  public volatile static boolean TYPING_STRIKE = ApplicationDefaults.TYPING_STRIKE;
+  public volatile static boolean TYPING_UNDERLINE = ApplicationDefaults.TYPING_UNDERLINE;
 
-  public static volatile boolean SHOW_HIGHLIGHTED = ApplicationDefaults.SHOW_HIGHLIGHTED;
-  public static volatile IndicatorOverlay SELECTION_INDICATOR = ApplicationDefaults.SELECTION_INDICATOR;
-  public static volatile IndicatorOverlay CURSOR_INDICATOR = ApplicationDefaults.CURSOR_INDICATOR;
-  public static volatile GenericLevel BRAILLE_FIRMNESS = ApplicationDefaults.BRAILLE_FIRMNESS;
-  public static volatile boolean BRAILLE_MONITOR = ApplicationDefaults.BRAILLE_MONITOR;
-  public static volatile boolean BRAILLE_ENABLED = ApplicationDefaults.BRAILLE_ENABLED;
+  public volatile static boolean SHOW_HIGHLIGHTED = ApplicationDefaults.SHOW_HIGHLIGHTED;
+  public volatile static IndicatorOverlay SELECTION_INDICATOR = ApplicationDefaults.SELECTION_INDICATOR;
+  public volatile static IndicatorOverlay CURSOR_INDICATOR = ApplicationDefaults.CURSOR_INDICATOR;
+  public volatile static GenericLevel BRAILLE_FIRMNESS = ApplicationDefaults.BRAILLE_FIRMNESS;
+  public volatile static boolean BRAILLE_MONITOR = ApplicationDefaults.BRAILLE_MONITOR;
+  public volatile static boolean BRAILLE_ENABLED = ApplicationDefaults.BRAILLE_ENABLED;
 
-  public static volatile boolean SPEECH_ENABLED = ApplicationDefaults.SPEECH_ENABLED;
-  public static volatile float SPEECH_VOLUME = ApplicationDefaults.SPEECH_VOLUME;
-  public static volatile float SPEECH_RATE = ApplicationDefaults.SPEECH_RATE;
-  public static volatile float SPEECH_PITCH = ApplicationDefaults.SPEECH_PITCH;
-  public static volatile float SPEECH_BALANCE = ApplicationDefaults.SPEECH_BALANCE;
-  public static volatile boolean SLEEP_TALK = ApplicationDefaults.SLEEP_TALK;
+  public volatile static boolean SPEECH_ENABLED = ApplicationDefaults.SPEECH_ENABLED;
+  public volatile static float SPEECH_VOLUME = ApplicationDefaults.SPEECH_VOLUME;
+  public volatile static float SPEECH_RATE = ApplicationDefaults.SPEECH_RATE;
+  public volatile static float SPEECH_PITCH = ApplicationDefaults.SPEECH_PITCH;
+  public volatile static float SPEECH_BALANCE = ApplicationDefaults.SPEECH_BALANCE;
+  public volatile static boolean SLEEP_TALK = ApplicationDefaults.SLEEP_TALK;
 
-  public static volatile boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
-  public static volatile boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
+  public volatile static boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
+  public volatile static boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
 
-  public static volatile boolean ONE_HAND = ApplicationDefaults.ONE_HAND;
-  public static volatile int SPACE_TIMEOUT = ApplicationDefaults.SPACE_TIMEOUT;
-  public static volatile int BINDING_TIMEOUT = ApplicationDefaults.BINDING_TIMEOUT;
+  public volatile static boolean ONE_HAND = ApplicationDefaults.ONE_HAND;
+  public volatile static int SPACE_TIMEOUT = ApplicationDefaults.SPACE_TIMEOUT;
+  public volatile static int BINDING_TIMEOUT = ApplicationDefaults.BINDING_TIMEOUT;
 
-  public static volatile boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
-  public static volatile boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
+  public volatile static boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
+  public volatile static boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
-  public static volatile boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
-  public static volatile boolean ADVANCED_ACTIONS = ApplicationDefaults.ADVANCED_ACTIONS;
-  public static volatile boolean EXTRA_INDICATORS = ApplicationDefaults.EXTRA_INDICATORS;
-  public static volatile boolean EVENT_MESSAGES = ApplicationDefaults.EVENT_MESSAGES;
-  public static volatile boolean LOG_UPDATES = ApplicationDefaults.LOG_UPDATES;
-  public static volatile boolean LOG_KEYBOARD = ApplicationDefaults.LOG_KEYBOARD;
-  public static volatile boolean LOG_ACTIONS = ApplicationDefaults.LOG_ACTIONS;
-  public static volatile boolean LOG_NAVIGATION = ApplicationDefaults.LOG_NAVIGATION;
-  public static volatile boolean LOG_GESTURES = ApplicationDefaults.LOG_GESTURES;
-  public static volatile boolean LOG_BRAILLE = ApplicationDefaults.LOG_BRAILLE;
-  public static volatile boolean LOG_SPEECH = ApplicationDefaults.LOG_SPEECH;
+  public volatile static boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
+  public volatile static boolean ADVANCED_ACTIONS = ApplicationDefaults.ADVANCED_ACTIONS;
+  public volatile static boolean EXTRA_INDICATORS = ApplicationDefaults.EXTRA_INDICATORS;
+  public volatile static boolean EVENT_MESSAGES = ApplicationDefaults.EVENT_MESSAGES;
+  public volatile static boolean LOG_UPDATES = ApplicationDefaults.LOG_UPDATES;
+  public volatile static boolean LOG_KEYBOARD = ApplicationDefaults.LOG_KEYBOARD;
+  public volatile static boolean LOG_ACTIONS = ApplicationDefaults.LOG_ACTIONS;
+  public volatile static boolean LOG_NAVIGATION = ApplicationDefaults.LOG_NAVIGATION;
+  public volatile static boolean LOG_GESTURES = ApplicationDefaults.LOG_GESTURES;
+  public volatile static boolean LOG_BRAILLE = ApplicationDefaults.LOG_BRAILLE;
+  public volatile static boolean LOG_SPEECH = ApplicationDefaults.LOG_SPEECH;
 }

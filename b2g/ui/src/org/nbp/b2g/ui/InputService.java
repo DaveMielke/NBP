@@ -27,7 +27,7 @@ public class InputService extends InputMethodService {
   }
 
   private final static Object inputServiceLock = new Object();
-  private static volatile InputService inputService = null;
+  private volatile static InputService inputService = null;
 
   public static InputService getInputService () {
     synchronized (inputServiceLock) {
