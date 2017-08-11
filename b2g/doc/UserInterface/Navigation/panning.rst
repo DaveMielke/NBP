@@ -1,5 +1,5 @@
-Navigating with the Forward and Backward Keys
----------------------------------------------
+Navigating with the Panning Keys
+--------------------------------
 
 The easiest way to navigate the screen is to use the Forward and Backward 
 keys because they move sequentially through all of the screen elements,

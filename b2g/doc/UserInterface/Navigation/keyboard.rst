@@ -12,7 +12,7 @@ What each of these keys does is defined by Android - not by the
 |user interface|. Because of this, navigating with these keys isn't fully
 compatible with |user interface| navigation:
 
-* `Navigating with the Forward and Backward Keys`_
+* `Navigating with the Panning Keys`_
 * `Navigating with the Directional Keys`_
 
 Android keeps track of the current screen element when these keys are used, and

@@ -1,7 +1,7 @@
 Useful Features
 ---------------
 
-Braille Friendly Clock
+Braille-friendly Clock
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You can access a braille-friendly clock by pressing Space+t (dots 2345).
