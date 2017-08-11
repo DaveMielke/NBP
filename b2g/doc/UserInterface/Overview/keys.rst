@@ -64,7 +64,7 @@ Pressing any of the other keys:
 also signals the completion of a combination.
 This means that a combination involving more than one of these other keys
 cannot be used when in One Hand Mode.
-Additional alternate combinations have been defined
+Additional alternate combinations have been defined, therefore,
 in order to mitigate this restriction.
 They are:
 

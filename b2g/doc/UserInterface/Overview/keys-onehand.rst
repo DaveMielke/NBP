@@ -1,7 +1,7 @@
 .. table:: Alternate Key Combinations for One Hand Mode
 
   =================  =======================================
-  Key Combination             
+  Key Combination    Action
   -----------------  ---------------------------------------
   Space+i (dots 24)  Display various `status indicators`_.
   Dot1+Cursor        Set the start of the `text selection`_.
