@@ -126,8 +126,8 @@
 .. |SendAndroidLog| replace:: Send a copy of the Android log to the B2G developers.
 .. |SendScreen| replace:: Send a copy of the current screen content to the B2G developers.
 .. |SetLeft| replace:: Pan the braille display a specific amount to the right.
-.. |SetSelectionEnd| replace:: Set or change the end of the text selection.
-.. |SetSelectionStart| replace:: Set or change the start of the text selection.
+.. |SetSelectionEnd| replace:: Set or change the end of the `text selection`_.
+.. |SetSelectionStart| replace:: Set or change the start of the `text selection`_.
 .. |Settings| replace:: Go to the B2G Settings screen.
 .. |ShowNotificationsOff| replace:: Don't show notifications.
 .. |ShowNotificationsOn| replace:: Show notifications.

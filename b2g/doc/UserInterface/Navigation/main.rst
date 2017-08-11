@@ -6,7 +6,7 @@ Screen Navigation
 .. include:: panning.rst
 .. include:: directional.rst
 .. include:: input.rst
-.. include:: select.rst
+.. include:: selection.rst
 .. include:: clipboard.rst
 .. include:: slider.rst
 .. include:: find.rst

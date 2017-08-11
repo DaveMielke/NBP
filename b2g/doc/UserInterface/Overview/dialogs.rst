@@ -30,7 +30,7 @@ information. This includes (but isn't limited to):
 * The description of a character (see `Identifying an Unrecognized
   Character`_).
 
-* The values of various status indicators (see `Checking Status Indicators`_).
+* The values of various `status indicators`_.
 
 * An `Action Chooser`_.
 
@@ -60,8 +60,8 @@ and/or to additional lines.
 
 The response to a prompt is remembered. The response area of a prompt is
 initially empty, but, from then on, it's initialized to the previous response
-entered for that prompt. The remembered response is selected (see `Selecting
-Text`_) so that it can be easily replaced.
+entered for that prompt. The remembered response is selected
+(see `Text Selection`_) so that it can be easily replaced.
 
 Action Chooser
 ~~~~~~~~~~~~~~

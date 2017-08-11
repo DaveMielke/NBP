@@ -10,6 +10,18 @@ Backward+Cursor
 Forward+Cursor
   |SetSelectionEnd|
 
+Dot1+Cursor
+  |SetSelectionStart|
+
+Dot4+Cursor
+  |SetSelectionEnd|
+
+Space+Dots17
+  |ToSelectionStart|
+
+Space+Dots48
+  |ToSelectionEnd|
+
 Space+Dot8+Dot1 (a)
   |SelectAll|
 
@@ -30,12 +42,6 @@ Space+Dots136 (u)
 
 Space+Dots1346 (x)
   |TypeControl|
-
-Space+Dots17
-  |ToSelectionStart|
-
-Space+Dots48
-  |ToSelectionEnd|
 
 Space+Dot7+Dots2345 (t)
   |TypingModeText|

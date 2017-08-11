@@ -29,7 +29,7 @@ representation within the currently selected braille code can be typed.
 
 In general, a cursor routing key corresponds to the first character of the
 literary braille symbol that it's behind. The only exception to this rule is
-when setting the end of a text selection (see `Selecting Text`_). In that case
+when setting the end of a `text selection`_. In that case
 it corresponds to the last character of the symbol.
 
 A cursor routing key may, on occasion, seem to be corresponding to the wrong

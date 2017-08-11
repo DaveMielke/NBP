@@ -46,6 +46,7 @@ bind Backward+Dot7 OneHandOff
 bind Forward+Dot8 OneHandOn
 
 bind Backward+Forward DescribeIndicators
+bind Space+Dots24#i DescribeIndicators
 
 bind Space+Dots12345678 Null
 

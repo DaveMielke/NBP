@@ -1,4 +1,4 @@
-Selecting Text
+Text Selection
 --------------
 
 Each character within the current text selection is highlighted via

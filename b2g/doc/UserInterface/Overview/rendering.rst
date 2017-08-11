@@ -176,7 +176,7 @@ Since this style of cursor representation can't be used in braille, the
 the right of the actual cursor.
 
 The cursor isn't shown when at least one character has been selected
-(see `Selecting Text`_). This is because editing actions are then performed on
+(see `Text Selection`_). This is because editing actions are then performed on
 all of the selected characters as a single unit rather than at the cursor's
 location.
 

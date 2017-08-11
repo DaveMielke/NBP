@@ -19,6 +19,12 @@ bind Dot2+VolumeUp SpeakFaster
 bind Dot3+VolumeDown SpeakLower
 bind Dot3+VolumeUp SpeakHigher
 
-bind Dot7+VolumeDown SpeakLeft
-bind Dot7+VolumeUp SpeakRight
+bind Dot4+VolumeDown SpeakLeft
+bind Dot4+VolumeUp SpeakRight
+
+bind Dot5+VolumeDown SleepTalkOff
+bind Dot5+VolumeUp SleepTalkOn
+
+bind Dot6+VolumeDown SpeechOff
+bind Dot6+VolumeUp SpeechOn
 

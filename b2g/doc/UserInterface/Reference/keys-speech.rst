@@ -43,9 +43,21 @@ Dot3+VolumeDown
 Dot3+VolumeUp
   |SpeakHigher|
 
-Dot7+VolumeDown
+Dot4+VolumeDown
   |SpeakLeft|
 
-Dot7+VolumeUp
+Dot4+VolumeUp
   |SpeakRight|
+
+Dot5+VolumeDown
+  |SleepTalkOff|
+
+Dot5+VolumeUp
+  |SleepTalkOn|
+
+Dot6+VolumeDown
+  |SpeechOff|
+
+Dot6+VolumeUp
+  |SpeechOn|
 

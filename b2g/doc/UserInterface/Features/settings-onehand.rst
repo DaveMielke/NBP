@@ -1,9 +1,10 @@
-.. table:: Keyboard Settings
+.. table:: One Hand Settings
 
   ====================  =======  ====================  =====================
   Setting               Default  Choices               Buttons
   --------------------  -------  --------------------  ---------------------
-  Long Key Presses      On       Off, On
-  Reverse Panning       Off      Off, On
+  One Hand Mode         Off      Off, On
+  Space Timeout         1s       0.5s - 5s
+  Binding Timeout       15s      5s - 1m
   ====================  =======  ====================  =====================
 

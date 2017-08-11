@@ -1,8 +1,8 @@
 Useful Features
 ---------------
 
-Checking the Time
-~~~~~~~~~~~~~~~~~
+Braille Friendly Clock
+~~~~~~~~~~~~~~~~~~~~~~
 
 You can access a braille-friendly clock by pressing Space+t (dots 2345).
 The date and time are displayed on the first line using the same format
@@ -22,8 +22,8 @@ The abbreviation EST (in this example) means Eastern Standard Time
 (a North American time zone),
 which is five hours earlier (hence the minus sign [-]) than UTC.
 
-Checking Status Indicators
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Status Indicators
+~~~~~~~~~~~~~~~~~
 
 You can check various helpful status indicators by pressing Backward and
 Forward together. This will cause the indicators to be presented within a pop-up
@@ -35,8 +35,8 @@ Forward together. This will cause the indicators to be presented within a pop-up
   Wi-Fi: MyNetwork 60% 54Mbps
   Bluetooth: on discovering discoverable connectable
 
-Identifying the Build
-~~~~~~~~~~~~~~~~~~~~~
+Build Details
+~~~~~~~~~~~~~
 
 There may be times when you need to identify the exact build of the
 |user interface| that you're currently using. For example, this information is

@@ -65,6 +65,11 @@ Keyboard Settings
 
 .. include:: settings-keyboard.rst
 
+One Hand Settings
+~~~~~~~~~~~~~~~~~
+
+.. include:: settings-onehand.rst
+
 Remote Settings
 ~~~~~~~~~~~~~~~
 

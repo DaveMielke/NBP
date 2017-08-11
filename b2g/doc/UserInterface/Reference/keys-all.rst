@@ -100,6 +100,9 @@ Forward+Dot8
 Backward+Forward
   |DescribeIndicators|
 
+Space+Dos24 (i)
+  |DescribeIndicators|
+
 Space+Dots12345678
   |Null|
 

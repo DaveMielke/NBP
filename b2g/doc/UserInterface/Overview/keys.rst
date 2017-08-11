@@ -30,20 +30,50 @@ and pressing Backward+Dot3 disables it.
 One Hand Mode
 ~~~~~~~~~~~~~
 
-One Hand Mode is primarily for those users who only have the use of one 
-hand. When it's on, each key of a key combination may be pressed separately.
-Pressing Space indicates that all of the keys of the combination have been
-pressed. If Space itself is part of the combination then it must be pressed
-first.
+One Hand Mode is primarily for those users who only have the use of one hand.
+When it's on, each dot key of a combination may be pressed separately.
+For those whose operable hand is sufficiently functional,
+pressing more than one key at a time is supported.
+Pressing Space indicates that all of the keys have now been pressed.
+If Space itself is part of the combination
+then it must be additionally pressed first.
+So:
 
-For those whose operable hand is sufficiently functional, pressing more 
-than one key at a time is supported. The only exception to this is that 
-Space, whether pressed at the start (to include it in the combination) 
-or at the end (to indicate that the combination is complete), should 
-always be pressed separately.
+1) If Space is part of the combination then press it first.
+2) Press the dot keys of the combination either separately or in groups.
+3) Press Space to indicate that the combination has been fully entered.
 
-This mode is disabled by default. Pressing Forward+Dot8 enables it, and
-pressing Backward+Dot7 (followed, of course, by pressing Space) disables it.
-Both of these key combinations have been chosen so that they can be reasonably
-easily pressed with a single hand.
+To type a space (which is a key combination without any dots),
+simply press Space twice (with no dots in between).
+There's an efficient way to add a space immediately after typing a character
+(except after a space).
+After pressing all of the dots that represent the character,
+followed by Space to cause it to be typed,
+quickly press Space again (just once).
+The amount of time that you have to do this
+(before pressing Space begins a new key combination)
+can be customized via the Space Timeout setting.
+
+Pressing any of the other keys:
+
+* a panning key (Forward, Backward)
+* a D-Pad key (Up, Down, Left, Right, Center)
+* a cursor routing key
+* a volume key
+
+also signals the completion of a combination.
+This means that a combination involving more than one of these other keys
+cannot be used when in One Hand Mode.
+Additional alternate combinations have been defined
+in order to mitigate this restriction.
+They are:
+
+.. include:: keys-onehand.rst
+
+This mode is disabled by default.
+Pressing Dot8+Forward enables it,
+and pressing Dot7+Backward disables it.
+When disabling it, Dot7 must, of course, be pressed first.
+Both of these key combinations have been chosen so that
+they can be reasonably easily pressed with a single hand.
 

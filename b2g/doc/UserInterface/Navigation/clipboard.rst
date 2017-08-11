@@ -1,5 +1,5 @@
-Using the Clipboard
--------------------
+The Clipboard
+-------------
 
 To copy text to the clipboard, press Space+Dot8+c (dots 14). If this is done
 when not within an input area, or when within an input area with no selected
@@ -23,7 +23,7 @@ To copy part of the text to the clipboard when not within an input area:
    * The last character is before the first character.
 
 Note that these same steps work somewhat differently within an input area (see
-`Selecting Text`_).
+`Text Selection`_).
 
 To cut text to the clipboard, press Space+Dot8+x (dots 1346). This can only be
 done within an input area. If text hasn't been selected then all of the text is
