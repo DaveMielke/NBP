@@ -391,13 +391,13 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
-  private View createUpdateUserInterfaceButton () {
+  private View createUpdatePackageButton (int label, final int uri) {
     Button button = newButton(
-      R.string.maintenance_UpdateUserInterface_label,
+      label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          LaunchUtilities.launchViewer(R.string.uri_ui_apk);
+          LaunchUtilities.launchViewer(uri);
         }
       }
     );
@@ -405,18 +405,32 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     return button;
   }
 
-  private View createUpdateEditorButton () {
-    Button button = newButton(
-      R.string.maintenance_UpdateEditor_label,
-      new Button.OnClickListener() {
-        @Override
-        public void onClick (View view) {
-          LaunchUtilities.launchViewer(R.string.uri_editor_apk);
-        }
-      }
+  private View createUpdateUserInterfaceButton () {
+    return createUpdatePackageButton(
+      R.string.maintenance_UpdateUserInterface_label,
+      R.string.uri_ui_apk
     );
+  }
 
-    return button;
+  private View createUpdateEditorButton () {
+    return createUpdatePackageButton(
+      R.string.maintenance_UpdateEditor_label,
+      R.string.uri_editor_apk
+    );
+  }
+
+  private View createUpdateCalculatorButton () {
+    return createUpdatePackageButton(
+      R.string.maintenance_UpdateCalculator_label,
+      R.string.uri_calculator_apk
+    );
+  }
+
+  private View createUpdateNavigatorButton () {
+    return createUpdatePackageButton(
+      R.string.maintenance_UpdateNavigator_label,
+      R.string.uri_navigator_apk
+    );
   }
 
   @Override
@@ -428,6 +442,8 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
       createUpdateUserInterfaceButton(),
       createUpdateEditorButton(),
+      createUpdateCalculatorButton(),
+      createUpdateNavigatorButton(),
 
       createVerifySystemUpdateButton(),
       createUpdateSystemButton(),

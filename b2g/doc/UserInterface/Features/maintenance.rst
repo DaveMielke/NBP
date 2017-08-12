@@ -31,8 +31,18 @@ Update User Interface
   See `Updating Applications`_ for details.
   |uses internet|
 
-Update NBP Editor
-  Upgrade to the latest version of the NBP Editor.
+Update Editor
+  Upgrade to the latest version of the |organization acronym| editor.
+  See `Updating Applications`_ for details.
+  |uses internet|
+
+Update Calculator
+  Upgrade to the latest version of the |organization acronym| calculator.
+  See `Updating Applications`_ for details.
+  |uses internet|
+
+Update Navigator
+  Upgrade to the latest version of the |organization acronym| navigator.
   See `Updating Applications`_ for details.
   |uses internet|
 

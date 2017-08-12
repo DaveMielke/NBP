@@ -70,7 +70,7 @@ They are:
 
 .. include:: keys-onehand.rst
 
-This mode is disabled by default.
+One Hand Mode is disabled by default.
 Pressing Dot8+Forward enables it,
 and pressing Dot7+Backward disables it.
 When disabling it, Dot7 must, of course, be pressed first.

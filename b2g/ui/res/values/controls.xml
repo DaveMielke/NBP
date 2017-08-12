@@ -31,7 +31,7 @@
   <string name="control_label_SleepTalk">Sleep Talk</string>
 
   <string name="control_group_keyboard">Keyboard Settings</string>
-  <string name="control_label_LongPress">Long Key Presses</string>
+  <string name="control_label_LongPress">Long Presses</string>
   <string name="control_label_ReversePanning">Reverse Panning</string>
 
   <string name="control_group_one_hand">One Hand Settings</string>
