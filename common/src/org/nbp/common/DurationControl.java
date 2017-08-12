@@ -2,7 +2,7 @@ package org.nbp.common;
 
 import org.nbp.common.IntegerControl;
 
-public abstract class TimeControl extends IntegerControl {
+public abstract class DurationControl extends IntegerControl {
   private final static Integer MINIMUM_VALUE = 1;
 
   @Override
@@ -78,7 +78,7 @@ public abstract class TimeControl extends IntegerControl {
     return sb.toString();
   }
 
-  public TimeControl () {
+  protected DurationControl () {
     super();
   }
 }

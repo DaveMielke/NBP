@@ -1,9 +1,9 @@
 package org.nbp.navigator.controls;
 import org.nbp.navigator.*;
 
-import org.nbp.common.TimeControl;
+import org.nbp.common.DurationControl;
 
-public class UpdateIntervalControl extends TimeControl {
+public class UpdateIntervalControl extends DurationControl {
   @Override
   protected int getResourceForLabel () {
     return R.string.control_label_UpdateInterval;

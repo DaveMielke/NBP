@@ -1,9 +1,9 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.TimeControl;
+import org.nbp.common.DurationControl;
 
-public class BindingTimeoutControl extends TimeControl {
+public class BindingTimeoutControl extends DurationControl {
   @Override
   protected int getResourceForLabel () {
     return R.string.control_label_BindingTimeout;
