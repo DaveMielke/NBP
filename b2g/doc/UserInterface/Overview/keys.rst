@@ -54,6 +54,13 @@ The amount of time that you have to do this
 (before pressing Space begins a new key combination)
 can be customized via the Space Timeout setting.
 
+If Space is pressed at the same time as at least one other key
+then all of the pressed keys (including Space)
+are added to the current combination,
+and the combination is then considered to be complete.
+This allows users who are able to press Space together with other keys
+to navigate more quickly.
+
 Pressing any of the other keys:
 
 * a panning key (Forward, Backward)
