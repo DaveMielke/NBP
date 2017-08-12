@@ -13,21 +13,30 @@ public abstract class TimeControl extends IntegerControl {
   protected final static int MILLISECONDS_PER_SECOND = 1000;
   protected final static int SECONDS_PER_MINUTE = 60;
   protected final static int MINUTES_PER_HOUR = 60;
+  protected final static int HOURS_PER_DAY = 24;
 
   @Override
-  public CharSequence getValue () {
+  public final CharSequence getValue () {
     StringBuilder sb = new StringBuilder();
-    int value = getIntegerValue();
+    int milliseconds = getIntegerValue();
 
-    int milliseconds = value % MILLISECONDS_PER_SECOND;
-    value /= MILLISECONDS_PER_SECOND;
+    int seconds = milliseconds / MILLISECONDS_PER_SECOND;
+    milliseconds %= MILLISECONDS_PER_SECOND;
 
-    int seconds = value % SECONDS_PER_MINUTE;
-    value /= SECONDS_PER_MINUTE;
+    int minutes = seconds / SECONDS_PER_MINUTE;
+    seconds %= SECONDS_PER_MINUTE;
 
-    int minutes = value % MINUTES_PER_HOUR;
-    value /= MINUTES_PER_HOUR;
-    int hours = value;
+    int hours = minutes / MINUTES_PER_HOUR;
+    minutes %= MINUTES_PER_HOUR;
+
+    int days = hours / HOURS_PER_DAY;
+    hours %= HOURS_PER_DAY;
+
+    if (days != 0) {
+      if (sb.length() > 0) sb.append(' ');
+      sb.append(days);
+      sb.append('d');
+    }
 
     if (hours != 0) {
       if (sb.length() > 0) sb.append(' ');
