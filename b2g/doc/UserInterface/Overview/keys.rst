@@ -33,10 +33,10 @@ One Hand Mode
 One Hand Mode has been designed to make the |product name| easy to use
 by those who only have the use of one of their hands.
 It's disabled by default.
-Press Dot8+Forward to enable it,
-and press Dot7+Backward to disable it.
-Both of these key combinations have been chosen so that
-they can be reasonably easily pressed with a single hand.
+Pressing Dot8+Forward enables it,
+and pressing Dot7+Backward disables it.
+Both of these key combinations were chosen so that
+they could be reasonably easily pressed with a single hand.
 
 When One Hand Mode is enabled,
 each dot key of a combination may be pressed separately.
