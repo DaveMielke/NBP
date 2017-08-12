@@ -84,5 +84,6 @@ bind Dot6+Down DropBelow
 bind Dot6+Center DropOn
 
 bind Backward+Forward+Space DescribeBuild
+bind Space+Dots1236#v DescribeBuild
 
 include advanced-screen.keys.inc

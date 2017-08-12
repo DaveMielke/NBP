@@ -30,13 +30,22 @@ and pressing Backward+Dot3 disables it.
 One Hand Mode
 ~~~~~~~~~~~~~
 
-One Hand Mode is primarily for those users who only have the use of one hand.
-When it's on, each dot key of a combination may be pressed separately.
+One Hand Mode has been designed to make the |product name| easy to use
+by those who only have the use of one of their hands.
+It's disabled by default.
+Press Dot8+Forward to enable it,
+and press Dot7+Backward to disable it.
+Both of these key combinations have been chosen so that
+they can be reasonably easily pressed with a single hand.
+
+When One Hand Mode is enabled,
+each dot key of a combination may be pressed separately.
 For those whose operable hand is sufficiently functional,
 pressing more than one key at a time is supported.
-Pressing Space indicates that all of the keys have now been pressed.
-If Space itself is part of the combination
-then it must be additionally pressed first.
+Press Space to signal that the combination is complete,
+i.e. that all of its keys have now been pressed.
+If the combination contains the Space key
+then an additional Space must be pressed first.
 So:
 
 1) If Space is part of the combination then press it first.
@@ -61,7 +70,7 @@ and the combination is then considered to be complete.
 This allows users who are able to press Space together with other keys
 to navigate more quickly.
 
-Pressing any of the other keys:
+Pressing any of the other |product name| keys:
 
 * a panning key (Forward, Backward)
 * a D-Pad key (Up, Down, Left, Right, Center)
@@ -77,11 +86,4 @@ in order to mitigate this restriction.
 They are:
 
 .. include:: keys-onehand.rst
-
-One Hand Mode is disabled by default.
-Pressing Dot8+Forward enables it,
-and pressing Dot7+Backward disables it.
-When disabling it, Dot7 must, of course, be pressed first.
-Both of these key combinations have been chosen so that
-they can be reasonably easily pressed with a single hand.
 

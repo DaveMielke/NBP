@@ -63,6 +63,10 @@ within a screen that looks something like this::
   Base Firmware         128.0
   Metec Driver Version  1.00
 
+An alternate combination that's usable in `One Hand Mode`_,
+Space+v (dots 1236),
+has been defined.
+
 Builtin Shortcuts
 ~~~~~~~~~~~~~~~~~
 
