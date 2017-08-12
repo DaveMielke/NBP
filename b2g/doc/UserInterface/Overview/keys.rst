@@ -68,9 +68,10 @@ Pressing any of the other keys:
 * a cursor routing key
 * a volume key
 
-also signals the completion of a combination.
-This means that a combination involving more than one of these other keys
-cannot be used when in One Hand Mode.
+also signals the completion of the current combination.
+This means that you don't then press Space to indicate that you're done.
+It also means that a combination involving more than one of these other keys
+can't be used when in One Hand Mode.
 Additional alternate combinations have been defined, therefore,
 in order to mitigate this restriction.
 They are:
