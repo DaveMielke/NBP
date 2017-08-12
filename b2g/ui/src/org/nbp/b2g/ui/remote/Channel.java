@@ -93,7 +93,7 @@ public abstract class Channel extends Component implements Runnable {
   private Timeout readTimeout = new Timeout(ApplicationParameters.REMOTE_DISPLAY_READ_TIMEOUT, "remote-display-read-timeout") {
     @Override
     public void run () {
-      synchronized (this) {
+      synchronized (Channel.this) {
         Log.w(LOG_TAG, "channel read timeout");
         handleTimeout();
         resetInput();

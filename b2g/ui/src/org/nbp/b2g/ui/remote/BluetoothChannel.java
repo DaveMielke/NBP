@@ -31,12 +31,12 @@ public class BluetoothChannel extends Channel {
   }
 
   private final static Object STOP_LOCK = new Object();
-  private boolean stopFlag;
+  private boolean isStopping;
   private Closeable currentSocket;
 
   private final boolean setCurrentSocket (Closeable socket) {
     synchronized (STOP_LOCK) {
-      if (stopFlag) return false;
+      if (isStopping) return false;
       currentSocket = socket;
       return true;
     }
@@ -54,7 +54,7 @@ public class BluetoothChannel extends Channel {
       @Override
       public void onReceive (Context context, Intent intent) {
         synchronized (STOP_LOCK) {
-          if (!stopFlag) {
+          if (!isStopping) {
             String action = intent.getAction();
 
             if (action != null) {
@@ -184,15 +184,15 @@ public class BluetoothChannel extends Channel {
             InputStream inputStream = getInputStream(session);
 
             if (inputStream != null) {
+              inputStream = new BufferedInputStream(inputStream);
+
               if ((outputStream = getOutputStream(session)) != null) {
                 outputStream = new BufferedOutputStream(outputStream);
-                handleInput(new BufferedInputStream(inputStream));
+                handleInput(inputStream);
 
-                closeObject(outputStream, "Bluetooth output stream");
                 outputStream = null;
               }
 
-              closeObject(inputStream, "Bluetooth input stream");
               inputStream = null;
             }
 
@@ -213,7 +213,7 @@ public class BluetoothChannel extends Channel {
       write("Bluetooth off");
 
       synchronized (STOP_LOCK) {
-        if (stopFlag) break;
+        if (isStopping) break;
 
         try {
           STOP_LOCK.wait();
@@ -227,7 +227,7 @@ public class BluetoothChannel extends Channel {
 
   @Override
   protected final void initializeChannelThread () {
-    stopFlag = false;
+    isStopping = false;
     currentSocket = null;
     outputStream = null;
   }
@@ -235,7 +235,7 @@ public class BluetoothChannel extends Channel {
   @Override
   protected final void stopChannelThread () {
     synchronized (STOP_LOCK) {
-      stopFlag = true;
+      isStopping = true;
       closeCurrentSocket();
       STOP_LOCK.notify();
     }
