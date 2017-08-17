@@ -31,7 +31,8 @@ public abstract class KeyEvents {
   private static int pressedNavigationKeys;
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
-  private static boolean oneHandKeyPressed;
+  private final static int oneHandCompletionKey = KeyMask.SPACE;
+  private static boolean oneHandNavigationKeyPressed;
   private static long oneHandSpaceTimeout;
 
   private final static int oneHandImmediateKeys = KeyMask.CURSOR
@@ -131,9 +132,7 @@ public abstract class KeyEvents {
   private static boolean performAction (boolean isLongPress) {
     int keys = activeNavigationKeys;
     if (keys == 0) return true;
-
     boolean wasModifier = false;
-    oneHandSpaceTimeout = 0;
 
     try {
       Action action = getAction(keys, isLongPress);
@@ -142,15 +141,7 @@ public abstract class KeyEvents {
       if (action != null) {
         if (action instanceof ModifierAction) wasModifier = true;
         if (!action.isHidden()) Devices.braille.get().dismiss();
-
-        if (performAction(action)) {
-          performed = true;
-
-          if (action instanceof TypeCharacter) {
-            oneHandSpaceTimeout = SystemClock.elapsedRealtime()
-                                + ApplicationSettings.SPACE_TIMEOUT;
-          }
-        }
+        if (performAction(action)) performed = true;
       }
 
       if (!performed) Tones.beep();
@@ -201,7 +192,7 @@ public abstract class KeyEvents {
       pressedNavigationKeys = 0;
       pressedCursorKeys.clear();
 
-      oneHandKeyPressed = false;
+      oneHandNavigationKeyPressed = false;
       oneHandSpaceTimeout = 0;
     }
   }
@@ -255,8 +246,8 @@ public abstract class KeyEvents {
         logNavigationKeysChange(keyMask, "press");
 
         if (ApplicationSettings.ONE_HAND) {
-          activeNavigationKeys |= keyMask & ~KeyMask.SPACE;
-          oneHandKeyPressed = true;
+          activeNavigationKeys |= keyMask & ~oneHandCompletionKey;
+          oneHandNavigationKeyPressed = true;
         } else {
           activeNavigationKeys = pressedNavigationKeys;
           longPressTimeout.start();
@@ -274,18 +265,26 @@ public abstract class KeyEvents {
                            || ((activeNavigationKeys & oneHandImmediateKeys) != 0)
                            ;
 
-        if (oneHandKeyPressed) {
-          oneHandKeyPressed = false;
+        if (oneHandNavigationKeyPressed) {
+          oneHandNavigationKeyPressed = false;
 
-          if ((pressedNavigationKeys & KeyMask.SPACE) != 0) {
-            if ((pressedNavigationKeys & ~KeyMask.SPACE) != 0) {
-              activeNavigationKeys |= KeyMask.SPACE;
+          long spaceTimeout = oneHandSpaceTimeout;
+          oneHandSpaceTimeout = 0;
+
+          if ((pressedNavigationKeys & oneHandCompletionKey) != 0) {
+            if ((pressedNavigationKeys & ~oneHandCompletionKey) != 0) {
+              activeNavigationKeys |= oneHandCompletionKey;
               isComplete = true;
             } else if (activeNavigationKeys != 0) {
               isComplete = true;
+
+              if (activeNavigationKeys != oneHandCompletionKey) {
+                oneHandSpaceTimeout = SystemClock.elapsedRealtime()
+                                    + ApplicationSettings.SPACE_TIMEOUT;
+              }
             } else {
-              activeNavigationKeys = KeyMask.SPACE;
-              if (SystemClock.elapsedRealtime() < oneHandSpaceTimeout) isComplete = true;
+              activeNavigationKeys = oneHandCompletionKey;
+              if (SystemClock.elapsedRealtime() < spaceTimeout) isComplete = true;
             }
           }
         }
