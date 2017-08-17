@@ -2,7 +2,7 @@ package org.nbp.editor.menu.input;
 import org.nbp.editor.*;
 
 import org.nbp.common.CommonUtilities;
-import org.nbp.common.speech.SpeechToText;
+import org.nbp.common.speech.TextRecorder;
 
 import android.content.DialogInterface;
 import org.nbp.common.DialogFinisher;
@@ -66,14 +66,14 @@ public class RecordInput extends EditorAction {
   @Override
   public void performAction (final EditorActivity editor) {
     if (verifyWritableRegion()) {
-      SpeechToText.TextHandler handler = new SpeechToText.TextHandler() {
+      TextRecorder.TextHandler handler = new TextRecorder.TextHandler() {
         @Override
         public void handleText (String[] choices) {
           verifyRecording(editor, choices);
         }
       };
 
-      new SpeechToText.Builder(editor)
+      new TextRecorder.Builder(editor)
                       .start(handler);
     }
   }

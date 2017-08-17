@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="TextRecorder_RESULT_ERROR_AUDIO">recording error</string>
+  <string name="TextRecorder_RESULT_ERROR_CLIENT">client error</string>
+  <string name="TextRecorder_RESULT_ERROR_INSUFFICIENT_PERMISSIONS">not permitted</string>
+  <string name="TextRecorder_RESULT_ERROR_NETWORK">network error</string>
+  <string name="TextRecorder_RESULT_ERROR_NETWORK_TIMEOUT">network timeout</string>
+  <string name="TextRecorder_RESULT_ERROR_NO_MATCH">no match</string>
+  <string name="TextRecorder_RESULT_ERROR_RECOGNIZER_BUSY">service busy</string>
+  <string name="TextRecorder_RESULT_ERROR_SERVER">server error</string>
+  <string name="TextRecorder_RESULT_ERROR_SPEECH_TIMEOUT">no input</string>
+</resources>

@@ -1,13 +1,13 @@
 package org.nbp.navigator;
 
-import org.nbp.common.speech.TextSpeaker;
+import org.nbp.common.speech.TextPlayer;
 import org.nbp.common.Control;
 
 public abstract class Announcements {
   private Announcements () {
   }
 
-  public static class Announcer extends TextSpeaker {
+  public static class Announcer extends TextPlayer {
     private Announcer () {
       super();
     }

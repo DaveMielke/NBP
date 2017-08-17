@@ -9,40 +9,40 @@ import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 
-public abstract class SpeechToText {
-  private final static String LOG_TAG = SpeechToText.class.getName();
+public abstract class TextRecorder {
+  private final static String LOG_TAG = TextRecorder.class.getName();
 
-  private SpeechToText () {
+  private TextRecorder () {
   }
 
   public final static int toResultMessage (int code) {
     switch (code) {
       case SpeechRecognizer.ERROR_AUDIO:
-        return R.string.SpeechToText_RESULT_ERROR_AUDIO;
+        return R.string.TextRecorder_RESULT_ERROR_AUDIO;
 
       case SpeechRecognizer.ERROR_CLIENT:
-        return R.string.SpeechToText_RESULT_ERROR_CLIENT;
+        return R.string.TextRecorder_RESULT_ERROR_CLIENT;
 
       case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-        return R.string.SpeechToText_RESULT_ERROR_INSUFFICIENT_PERMISSIONS;
+        return R.string.TextRecorder_RESULT_ERROR_INSUFFICIENT_PERMISSIONS;
 
       case SpeechRecognizer.ERROR_NETWORK:
-        return R.string.SpeechToText_RESULT_ERROR_NETWORK;
+        return R.string.TextRecorder_RESULT_ERROR_NETWORK;
 
       case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-        return R.string.SpeechToText_RESULT_ERROR_NETWORK_TIMEOUT;
+        return R.string.TextRecorder_RESULT_ERROR_NETWORK_TIMEOUT;
 
       case SpeechRecognizer.ERROR_NO_MATCH:
-        return R.string.SpeechToText_RESULT_ERROR_NO_MATCH;
+        return R.string.TextRecorder_RESULT_ERROR_NO_MATCH;
 
       case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-        return R.string.SpeechToText_RESULT_ERROR_RECOGNIZER_BUSY;
+        return R.string.TextRecorder_RESULT_ERROR_RECOGNIZER_BUSY;
 
       case SpeechRecognizer.ERROR_SERVER:
-        return R.string.SpeechToText_RESULT_ERROR_SERVER;
+        return R.string.TextRecorder_RESULT_ERROR_SERVER;
 
       case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-        return R.string.SpeechToText_RESULT_ERROR_SPEECH_TIMEOUT;
+        return R.string.TextRecorder_RESULT_ERROR_SPEECH_TIMEOUT;
 
       default:
         return ActivityResultHandler.toResultMessage(code);

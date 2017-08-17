@@ -13,8 +13,8 @@ import android.speech.tts.TextToSpeech;
 
 import android.text.Spanned;
 
-public abstract class TextSpeaker {
-  private final static String LOG_TAG = TextSpeaker.class.getName();
+public abstract class TextPlayer {
+  private final static String LOG_TAG = TextPlayer.class.getName();
 
   protected abstract void initializeProperties ();
 
@@ -275,7 +275,7 @@ public abstract class TextSpeaker {
   private final Timeout ttsRetry = new Timeout(CommonParameters.SPEECH_RETRY_DELAY, "speech-retry-delay") {
     @Override
     public void run () {
-      synchronized (TextSpeaker.this) {
+      synchronized (TextPlayer.this) {
         ttsStart();
       }
     }
@@ -288,7 +288,7 @@ public abstract class TextSpeaker {
       TextToSpeech.OnInitListener onInitListener = new TextToSpeech.OnInitListener() {
         @Override
         public void onInit (int status) {
-          synchronized (TextSpeaker.this) {
+          synchronized (TextPlayer.this) {
             ttsStatus = status;
 
             if (isStarted()) {
@@ -329,7 +329,7 @@ public abstract class TextSpeaker {
     }
   }
 
-  public TextSpeaker () {
+  public TextPlayer () {
     audioManager = CommonContext.getAudioManager();
     ttsStart();
   }
