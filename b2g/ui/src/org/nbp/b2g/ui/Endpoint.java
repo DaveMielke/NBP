@@ -102,14 +102,7 @@ public abstract class Endpoint {
           }
         }
 
-        {
-          SpeechDevice speech = Devices.speech.get();
-
-          synchronized (speech) {
-            speech.stopSpeaking();
-            speech.say(text);
-          }
-        }
+        ApplicationUtilities.say(text);
       }
 
       oldText = newText;

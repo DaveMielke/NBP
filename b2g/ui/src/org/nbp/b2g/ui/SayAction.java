@@ -15,14 +15,7 @@ public abstract class SayAction extends Action {
       }
     }
 
-    {
-      SpeechDevice speech = Devices.speech.get();
-
-      synchronized (speech) {
-        speech.stopSpeaking();
-        return speech.say(text);
-      }
-    }
+    return ApplicationUtilities.say(text);
   }
 
   protected SayAction (Endpoint endpoint) {

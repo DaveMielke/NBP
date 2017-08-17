@@ -47,14 +47,22 @@ public abstract class ApplicationUtilities {
     return ViewConfiguration.getGlobalActionKeyTimeout();
   }
 
+  public static boolean say (CharSequence text) {
+    SpeechDevice speech = Devices.speech.get();
+
+    synchronized (speech) {
+      if (!speech.stopSpeaking()) return false;
+      return speech.say(text);
+    }
+  }
+
+  public static boolean say (int resource) {
+    return say(ApplicationContext.getString(resource));
+  }
+
   public static void message (String text) {
     Devices.braille.get().message(text);
-
-    SpeechDevice speech = Devices.speech.get();
-    synchronized (speech) {
-      speech.stopSpeaking();
-      speech.say(text);
-    }
+    say(text);
   }
 
   public static void message (String format, Object... arguments) {
