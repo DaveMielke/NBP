@@ -27,6 +27,7 @@ public abstract class KeyEvents {
   private KeyEvents () {
   }
 
+  private static long navigationKeyReleaseTime;
   private static int activeNavigationKeys;
   private static int pressedNavigationKeys;
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
@@ -188,6 +189,7 @@ public abstract class KeyEvents {
         Log.d(LOG_TAG, "resetting key state");
       }
 
+      navigationKeyReleaseTime = 0;
       activeNavigationKeys = 0;
       pressedNavigationKeys = 0;
       pressedCursorKeys.clear();
@@ -242,10 +244,19 @@ public abstract class KeyEvents {
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
+        boolean noKeysPressed = (pressedNavigationKeys == 0)
+                              && pressedCursorKeys.isEmpty();
+
         pressedNavigationKeys |= keyMask;
         logNavigationKeysChange(keyMask, "press");
 
         if (ApplicationSettings.ONE_HAND) {
+          if (noKeysPressed) {
+            if ((navigationKeyReleaseTime + ApplicationSettings.PRESSED_TIMEOUT) < SystemClock.elapsedRealtime()) {
+              activeNavigationKeys = 0;
+            }
+          }
+
           activeNavigationKeys |= keyMask & ~oneHandCompletionKey;
           oneHandNavigationKeyPressed = true;
         } else {
@@ -261,28 +272,38 @@ public abstract class KeyEvents {
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
+        long now = SystemClock.elapsedRealtime();
+        navigationKeyReleaseTime = now;
+
         boolean isComplete = !ApplicationSettings.ONE_HAND
                            || ((activeNavigationKeys & oneHandImmediateKeys) != 0)
                            ;
 
         if (oneHandNavigationKeyPressed) {
+          // first key release of a fully pressed combination
           oneHandNavigationKeyPressed = false;
 
+          // capture and reset the space timeout so that only one space can be quick
           long spaceTimeout = oneHandSpaceTimeout;
           oneHandSpaceTimeout = 0;
 
           if ((pressedNavigationKeys & oneHandCompletionKey) != 0) {
+            // the combination included Space
+
             if ((pressedNavigationKeys & ~oneHandCompletionKey) != 0) {
+              // the combination also included at least one other key
               activeNavigationKeys |= oneHandCompletionKey;
               isComplete = true;
             } else if (activeNavigationKeys != 0) {
+              // just Space was rpessed so complete the pending combination
               isComplete = true;
 
               if (activeNavigationKeys != oneHandCompletionKey) {
-                oneHandSpaceTimeout = SystemClock.elapsedRealtime()
-                                    + ApplicationSettings.SPACE_TIMEOUT;
+                // start the quick space timeout except after Space itself
+                oneHandSpaceTimeout = now + ApplicationSettings.SPACE_TIMEOUT;
               }
             } else {
+              // it's an initial Space so start a new combination with it
               activeNavigationKeys = oneHandCompletionKey;
               if (SystemClock.elapsedRealtime() < spaceTimeout) isComplete = true;
             }

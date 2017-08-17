@@ -3,10 +3,10 @@ import org.nbp.b2g.ui.*;
 
 import org.nbp.common.DurationControl;
 
-public class BindingTimeoutControl extends DurationControl {
+public class PressedTimeoutControl extends DurationControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_BindingTimeout;
+    return R.string.control_label_PressedTimeout;
   }
 
   @Override
@@ -16,7 +16,7 @@ public class BindingTimeoutControl extends DurationControl {
 
   @Override
   protected String getPreferenceKey () {
-    return "binding-timeout";
+    return "pressed-timeout";
   }
 
   @Override
@@ -33,21 +33,21 @@ public class BindingTimeoutControl extends DurationControl {
 
   @Override
   protected int getIntegerDefault () {
-    return ApplicationDefaults.BINDING_TIMEOUT;
+    return ApplicationDefaults.PRESSED_TIMEOUT;
   }
 
   @Override
   public int getIntegerValue () {
-    return ApplicationSettings.BINDING_TIMEOUT;
+    return ApplicationSettings.PRESSED_TIMEOUT;
   }
 
   @Override
   protected boolean setIntegerValue (int value) {
-    ApplicationSettings.BINDING_TIMEOUT = value;
+    ApplicationSettings.PRESSED_TIMEOUT = value;
     return true;
   }
 
-  public BindingTimeoutControl () {
+  public PressedTimeoutControl () {
     super();
   }
 }

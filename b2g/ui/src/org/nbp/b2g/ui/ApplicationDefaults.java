@@ -36,7 +36,7 @@ public abstract class ApplicationDefaults {
 
   public final static boolean ONE_HAND = false;
   public final static int SPACE_TIMEOUT = 1000; // milliseconds
-  public final static int BINDING_TIMEOUT = 15000; // milliseconds
+  public final static int PRESSED_TIMEOUT = 15000; // milliseconds
 
   public final static boolean REMOTE_DISPLAY = false;
   public final static boolean SECURE_CONNECTION = false;
