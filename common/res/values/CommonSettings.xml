@@ -25,4 +25,7 @@
 
   <string name="control_next_numeric">Increase</string>
   <string name="control_previous_numeric">Decrease</string>
+
+  <string name="control_next_duration">Longer</string>
+  <string name="control_previous_duration">Shorter</string>
 </resources>

@@ -10,6 +10,16 @@ public abstract class DurationControl extends IntegerControl {
     return MINIMUM_VALUE;
   }
 
+  @Override
+  protected int getResourceForNext () {
+    return R.string.control_next_duration;
+  }
+
+  @Override
+  protected int getResourceForPrevious () {
+    return R.string.control_previous_duration;
+  }
+
   protected final static int MILLISECONDS_PER_SECOND = 1000;
   protected final static int SECONDS_PER_MINUTE = 60;
   protected final static int MINUTES_PER_HOUR = 60;

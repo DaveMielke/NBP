@@ -244,14 +244,13 @@ public abstract class KeyEvents {
 
     if (keyMask != 0) {
       synchronized (longPressTimeout) {
-        boolean noKeysPressed = (pressedNavigationKeys == 0)
-                              && pressedCursorKeys.isEmpty();
+        boolean isFirstPress = pressedNavigationKeys == 0;
 
         pressedNavigationKeys |= keyMask;
         logNavigationKeysChange(keyMask, "press");
 
         if (ApplicationSettings.ONE_HAND) {
-          if (noKeysPressed) {
+          if (isFirstPress) {
             if ((navigationKeyReleaseTime + ApplicationSettings.PRESSED_TIMEOUT) < SystemClock.elapsedRealtime()) {
               activeNavigationKeys = 0;
             }
