@@ -36,32 +36,34 @@ It's disabled by default.
 Pressing Dot8+Forward enables it,
 and pressing Dot7+Backward disables it.
 Both of these key combinations were chosen so that
-they could be reasonably easily pressed with a single hand.
+they can be reasonably easily pressed with a single hand.
 
 When One Hand Mode is enabled,
 each dot key of a combination may be pressed separately.
 For those whose operable hand is sufficiently functional,
 pressing more than one key at a time is supported.
-Press Space to signal that the combination is complete,
-i.e. that all of its keys have now been pressed.
-If the combination contains the Space key
-then an additional Space must be pressed first.
+Press Space after all of the keys have been pressed
+to indicate that the combination has been fully entered.
+The Space key itself isn't included within the combination.
+If the combination does contain the Space key
+then an additional Space must be pressed, by itself, first.
+
 So:
 
-1) If Space is part of the combination then press it first.
+1) If Space is part of the combination then press it, on its own, first.
 2) Press the dot keys of the combination either separately or in groups.
 3) Press Space to indicate that the combination has been fully entered.
 
 To type a space (which is a key combination without any dots),
-simply press Space twice (with no dots in between).
-There's an efficient way to add a space immediately after typing a character
+simply press Space twice (with no dot keys in between).
+There's a quick way to type a space immediately after typing a character
 (except after a space).
 After pressing all of the dots that represent the character,
-followed by Space to cause it to be typed,
+followed by Space to complete that combination,
 quickly press Space again (just once).
 The amount of time that you have to do this
-(before pressing Space begins a new key combination)
-can be customized via the Space Timeout setting.
+(before pressing Space reverts to starting a new combination that includes it)
+can be customized via the Space Timeout setting (which defaults to 1 second).
 
 If Space is pressed at the same time as at least one other key
 then all of the pressed keys (including Space)
@@ -77,13 +79,23 @@ Pressing any of the other |product name| keys:
 * a cursor routing key
 * a volume key
 
-also signals the completion of the current combination.
-This means that you don't then press Space to indicate that you're done.
-It also means that a combination involving more than one of these other keys
+also signals the completion of the current key combination.
+In this case, you don't press Space to indicate that you're done.
+That key, as well as all of the other keys
+that are also pressed at the same time,
+are included within the current combination.
+
+While this feature allows for natural and efficient screen navigation,
+it also means that a combination involving more than one of these other keys
 can't be used when in One Hand Mode.
 Additional alternate combinations have been defined, therefore,
 in order to mitigate this restriction.
 They are:
 
 .. include:: keys-onehand.rst
+
+If you don't press any keys for a while after having started a combination
+then that combination is automatically cancelled and you need to start over.
+The amount of time before a combination is cancelled can be customized
+via the Pressed Timeout setting (which defaults to 15 seconds).
 
