@@ -2,6 +2,7 @@ package org.nbp.navigator.controls;
 import org.nbp.navigator.*;
 
 import org.nbp.common.controls.IntegerControl;
+import org.nbp.common.controls.Control;
 
 public class LocationRadiusControl extends IntegerControl {
   @Override
@@ -46,5 +47,14 @@ public class LocationRadiusControl extends IntegerControl {
 
   public LocationRadiusControl () {
     super();
+
+    Controls.distanceUnit.addOnValueChangedListener(
+      new OnValueChangedListener() {
+        @Override
+        public void onValueChanged (Control control) {
+          callOnValueChangedListeners();
+        }
+      }
+    );
   }
 }

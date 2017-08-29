@@ -102,7 +102,7 @@ public abstract class Control {
     return onValueChangedListeners.remove(listener);
   }
 
-  private final void callOnValueChangedListeners () {
+  protected final void callOnValueChangedListeners () {
     for (OnValueChangedListener listener : onValueChangedListeners) {
       listener.onValueChanged(this);
     }

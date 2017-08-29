@@ -7,16 +7,18 @@ public abstract class Controls {
   private Controls () {
   }
 
+  // The unit control objects need to be constructed first because
+  // formatting the values of some of the other controls relies on them.
+  public final static DistanceUnitControl distanceUnit = new DistanceUnitControl();
+  public final static SpeedUnitControl speedUnit = new SpeedUnitControl();
+  public final static AngleUnitControl angleUnit = new AngleUnitControl();
+  public final static RelativeDirectionControl relativeDirection = new RelativeDirectionControl();
+
   public final static UpdateIntervalControl updateInterval = new UpdateIntervalControl();
   public final static LocationRadiusControl locationRadius = new LocationRadiusControl();
   public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
 
   public final static AnnounceLocationControl announceLocation = new AnnounceLocationControl();
-
-  public final static DistanceUnitControl distanceUnit = new DistanceUnitControl();
-  public final static SpeedUnitControl speedUnit = new SpeedUnitControl();
-  public final static AngleUnitControl angleUnit = new AngleUnitControl();
-  public final static RelativeDirectionControl relativeDirection = new RelativeDirectionControl();
 
   public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
   public final static SpeechRateControl speechRate = new SpeechRateControl();
