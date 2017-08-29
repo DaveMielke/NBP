@@ -22,6 +22,7 @@ The braille display is enabled by default. It can be disabled by pressing
 Backward+Dot1, and reenabled by pressing Forward+Dot4.
 Either booting the |product name| or waking it up (see `The Power Switch`_)
 also reenables it if `speech`_ is disabled.
+Braille can't be disabled while `speech`_ is disabled.
 
 Speech
 ~~~~~~
@@ -32,6 +33,8 @@ and pressing Forward+VolumeDown disables it.
 Alternate combinations that are usable in `One Hand Mode`_,
 which use Dot6 instead of Forward,
 have been defined.
+Speech can't be disabled while braille is disabled
+(see `Disabling the Display`_).
 
 * To interrupt what's currently being spoken, press Dot1+Left.
 

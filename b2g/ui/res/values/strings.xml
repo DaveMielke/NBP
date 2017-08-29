@@ -199,6 +199,9 @@
   <string name="message_new_literary_tables">new literary tables</string>
   <string name="message_battery_percentage">battery</string>
 
+  <string name="error_braille_off">not with braille off</string>
+  <string name="error_speech_off">not with speech off</string>
+
   <string name="prompt_find">find</string>
   <string name="prompt_unicode">Unicode</string>
 

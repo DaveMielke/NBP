@@ -31,6 +31,13 @@ public class BrailleEnabledControl extends BooleanControl {
 
   @Override
   protected boolean setBooleanValue (boolean value) {
+    if (!value) {
+      if (!Controls.speechEnabled.getBooleanValue()) {
+        ApplicationUtilities.message(R.string.error_speech_off);
+        return false;
+      }
+    }
+
     BrailleDevice braille = Devices.braille.get();
     if (!(value? braille.enable(): braille.disable())) return false;
 
