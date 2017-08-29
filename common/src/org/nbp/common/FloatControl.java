@@ -37,7 +37,7 @@ public abstract class FloatControl extends IntegerControl {
 
   public final boolean setValue (float value) {
     if (!setFloatValue(value)) return false;
-    reportValue(false);
+    reportValueChange();
     return true;
   }
 

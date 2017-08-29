@@ -55,7 +55,7 @@ public abstract class Control {
   }
 
   public interface ConfirmationListener {
-    public abstract void confirm (String confirmation);
+    public void confirm (String confirmation);
   }
 
   private static ConfirmationListener confirmationListener = null;
@@ -87,7 +87,7 @@ public abstract class Control {
   }
 
   public interface OnValueChangedListener {
-    public abstract void onValueChanged (Control control);
+    public void onValueChanged (Control control);
   }
 
   private final Set<OnValueChangedListener> onValueChangedListeners =
@@ -99,6 +99,12 @@ public abstract class Control {
 
   public final boolean removeOnValueChangedListener (OnValueChangedListener listener) {
     return onValueChangedListeners.remove(listener);
+  }
+
+  private final void callOnValueChangedListeners () {
+    for (OnValueChangedListener listener : onValueChangedListeners) {
+      listener.onValueChanged(this);
+    }
   }
 
   private final static SharedPreferences getSettings (String name) {
@@ -126,18 +132,19 @@ public abstract class Control {
     return editor.commit();
   }
 
-  protected final void reportValue (boolean confirm) {
+  protected final void reportValueChange () {
     saveValue(getCurrentSettings());
-    if (confirm) confirmValue();
+    callOnValueChangedListeners();
+  }
 
-    for (OnValueChangedListener listener : onValueChangedListeners) {
-      listener.onValueChanged(this);
-    }
+  private final void confirmValueChange () {
+    confirmValue();
+    reportValueChange();
   }
 
   public final boolean restoreDefaultValue () {
     if (!setDefaultValue()) return false;
-    reportValue(false);
+    reportValueChange();
     return true;
   }
 
@@ -152,19 +159,19 @@ public abstract class Control {
     if (key == null) return restoreDefaultValue();
 
     if (!restoreValue(prefs, key)) return false;
-    reportValue(false);
+    reportValueChange();
     return true;
   }
 
   public final boolean nextValue () {
     if (!setNextValue()) return false;
-    reportValue(true);
+    confirmValueChange();
     return true;
   }
 
   public final boolean previousValue () {
     if (!setPreviousValue()) return false;
-    reportValue(true);
+    confirmValueChange();
     return true;
   }
 

@@ -26,7 +26,7 @@ public abstract class StringControl extends Control {
 
   public final boolean setValue (String value) {
     if (!setStringValue(value)) return false;
-    reportValue(false);
+    reportValueChange();
     return true;
   }
 
