@@ -32,6 +32,7 @@ public abstract class BooleanControl extends Control {
   }
 
   public final boolean setValue (boolean value) {
+    if (value == getBooleanValue()) return true;
     if (!setBooleanValue(value)) return false;
     reportValueChange();
     return true;

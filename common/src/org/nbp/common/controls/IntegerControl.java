@@ -55,6 +55,7 @@ public abstract class IntegerControl extends Control {
   }
 
   public final boolean setValue (int value) {
+    if (value == getIntegerValue()) return true;
     if (!setIntegerValue(value)) return false;
     reportValueChange();
     return true;
