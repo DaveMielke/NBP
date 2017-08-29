@@ -1,6 +1,8 @@
 package org.nbp.common.speech;
 import org.nbp.common.*;
 
+import org.nbp.common.controls.LogarithmicFloatControl;
+
 public abstract class RateControl extends LogarithmicFloatControl {
   @Override
   protected int getResourceForNext () {

@@ -1,4 +1,5 @@
-package org.nbp.common;
+package org.nbp.common.controls;
+import org.nbp.common.*;
 
 public abstract class LinearFloatControl extends FloatControl {
   @Override

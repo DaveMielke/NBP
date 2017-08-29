@@ -1,7 +1,7 @@
 package org.nbp.navigator;
 import org.nbp.navigator.controls.*;
 
-import org.nbp.common.Control;
+import org.nbp.common.controls.Control;
 
 public abstract class Controls {
   private Controls () {

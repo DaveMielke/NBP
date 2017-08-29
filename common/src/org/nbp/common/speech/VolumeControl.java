@@ -1,6 +1,8 @@
 package org.nbp.common.speech;
 import org.nbp.common.*;
 
+import org.nbp.common.controls.LinearFloatControl;
+
 public abstract class VolumeControl extends LinearFloatControl {
   @Override
   protected int getResourceForNext () {

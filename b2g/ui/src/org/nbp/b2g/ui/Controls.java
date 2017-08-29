@@ -1,8 +1,8 @@
 package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.controls.*;
 
-import org.nbp.common.Control;
-import org.nbp.common.BooleanControl;
+import org.nbp.common.controls.Control;
+import org.nbp.common.controls.BooleanControl;
 
 import java.util.Arrays;
 import java.util.Collections;

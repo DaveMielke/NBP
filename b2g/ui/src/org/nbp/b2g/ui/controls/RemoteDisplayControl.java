@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 import org.nbp.b2g.ui.remote.RemoteEndpoint;
 
-import org.nbp.common.BooleanControl;
+import org.nbp.common.controls.BooleanControl;
 
 public class RemoteDisplayControl extends BooleanControl {
   @Override

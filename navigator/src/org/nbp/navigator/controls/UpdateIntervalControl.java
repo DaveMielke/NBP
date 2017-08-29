@@ -1,7 +1,7 @@
 package org.nbp.navigator.controls;
 import org.nbp.navigator.*;
 
-import org.nbp.common.DurationControl;
+import org.nbp.common.controls.DurationControl;
 
 public class UpdateIntervalControl extends DurationControl {
   @Override

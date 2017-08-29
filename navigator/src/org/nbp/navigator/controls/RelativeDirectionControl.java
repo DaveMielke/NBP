@@ -1,7 +1,7 @@
 package org.nbp.navigator.controls;
 import org.nbp.navigator.*;
 
-import org.nbp.common.EnumerationControl;
+import org.nbp.common.controls.EnumerationControl;
 
 public class RelativeDirectionControl extends EnumerationControl<RelativeDirection> {
   @Override

@@ -1,7 +1,7 @@
 package org.nbp.editor.controls;
 import org.nbp.editor.*;
 
-import org.nbp.common.EnumerationControl;
+import org.nbp.common.controls.EnumerationControl;
 
 public class BrailleModeControl extends EnumerationControl<BrailleMode> {
   @Override

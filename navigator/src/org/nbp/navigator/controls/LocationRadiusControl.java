@@ -1,7 +1,7 @@
 package org.nbp.navigator.controls;
 import org.nbp.navigator.*;
 
-import org.nbp.common.IntegerControl;
+import org.nbp.common.controls.IntegerControl;
 
 public class LocationRadiusControl extends IntegerControl {
   @Override

@@ -1,7 +1,7 @@
 package org.nbp.navigator.controls;
 import org.nbp.navigator.*;
 
-import org.nbp.common.BooleanControl;
+import org.nbp.common.controls.BooleanControl;
 
 public class AnnounceLocationControl extends BooleanControl {
   @Override

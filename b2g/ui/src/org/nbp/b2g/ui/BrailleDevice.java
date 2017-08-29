@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import org.nbp.common.Braille;
 import org.nbp.common.Timeout;
-import org.nbp.common.Control;
+import org.nbp.common.controls.Control;
 
 import android.util.Log;
 import android.content.Context;

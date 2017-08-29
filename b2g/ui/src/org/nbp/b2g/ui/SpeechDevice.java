@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
 import org.nbp.common.speech.TextPlayer;
-import org.nbp.common.Control;
+import org.nbp.common.controls.Control;
 
 public class SpeechDevice extends TextPlayer {
   public SpeechDevice () {

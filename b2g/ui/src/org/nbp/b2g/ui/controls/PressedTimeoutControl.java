@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.DurationControl;
+import org.nbp.common.controls.DurationControl;
 
 public class PressedTimeoutControl extends DurationControl {
   @Override

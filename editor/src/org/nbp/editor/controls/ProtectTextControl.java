@@ -1,7 +1,7 @@
 package org.nbp.editor.controls;
 import org.nbp.editor.*;
 
-import org.nbp.common.BooleanControl;
+import org.nbp.common.controls.BooleanControl;
 
 public class ProtectTextControl extends BooleanControl {
   @Override

@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-import org.nbp.common.Control;
+import org.nbp.common.controls.Control;
 
 public abstract class NextValueAction extends ControlAction<Control> {
   @Override

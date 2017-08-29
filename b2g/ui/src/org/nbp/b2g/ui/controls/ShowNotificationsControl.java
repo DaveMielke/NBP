@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.BooleanControl;
+import org.nbp.common.controls.BooleanControl;
 
 public class ShowNotificationsControl extends BooleanControl {
   @Override

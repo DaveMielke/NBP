@@ -3,7 +3,7 @@ import org.nbp.editor.*;
 
 import java.util.Collection;
 
-import org.nbp.common.StringControl;
+import org.nbp.common.controls.StringControl;
 
 public class AuthorNameControl extends StringControl {
   @Override

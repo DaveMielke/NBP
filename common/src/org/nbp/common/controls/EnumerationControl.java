@@ -1,4 +1,5 @@
-package org.nbp.common;
+package org.nbp.common.controls;
+import org.nbp.common.*;
 
 import org.nbp.common.LanguageUtilities;
 

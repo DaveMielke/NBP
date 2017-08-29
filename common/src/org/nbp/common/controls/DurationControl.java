@@ -1,6 +1,5 @@
-package org.nbp.common;
-
-import org.nbp.common.IntegerControl;
+package org.nbp.common.controls;
+import org.nbp.common.*;
 
 public abstract class DurationControl extends IntegerControl {
   private final static Integer MINIMUM_VALUE = 1;

@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.EnumerationControl;
+import org.nbp.common.controls.EnumerationControl;
 
 public class TypingModeControl extends EnumerationControl<TypingMode> {
   @Override
