@@ -102,9 +102,12 @@ If the system is running, then:
 When the system is either booted or woken up, the following settings are reset
 to their default values:
 
-* The typing mode is set to Text (see `Typing Modes`_).
+* The braille display is enabled (see `Disabling the Display`_)
+  if `speech`_ is disabled.
+
+* The typing mode is set to Regular Text (see `Typing Modes`_).
+
 * Highlighted typing is turned off (see `Typing Highlighted Characters`_).
-* The braille display is enabled (see `Disabling the Display`_).
 
 The Back
 --------

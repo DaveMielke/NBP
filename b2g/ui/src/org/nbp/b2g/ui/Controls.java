@@ -162,7 +162,7 @@ public abstract class Controls {
   }
 
   public static void restoreSaneValues () {
-    brailleEnabled.setValue(true);
+    if (!speechEnabled.getBooleanValue()) brailleEnabled.setValue(true);
     typingMode.setValue(TypingMode.TEXT);
     resetHighlightedTyping();
 

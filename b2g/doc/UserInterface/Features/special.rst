@@ -21,7 +21,7 @@ Disabling the Display
 The braille display is enabled by default. It can be disabled by pressing
 Backward+Dot1, and reenabled by pressing Forward+Dot4.
 Either booting the |product name| or waking it up (see `The Power Switch`_)
-also reenables it.
+also reenables it if `speech`_ is disabled.
 
 Speech
 ~~~~~~
