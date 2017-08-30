@@ -1,5 +1,7 @@
 package org.nbp.navigator;
 
+import org.nbp.navigator.controls.ActivationLevelControl;
+
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
 
@@ -88,10 +90,14 @@ public class NavigationActivity extends BaseActivity {
     }
   }
 
+  private final static ActivationLevelControl[] CONTROLS = new ActivationLevelControl[] {
+    Controls.locationMonitor
+  };
+
   @Override
   protected void onResume () {
     super.onResume();
-    LocationMonitor.startCurrentMonitor();
+    for (ActivationLevelControl control : CONTROLS) control.onResume();
     orientationMonitor.start();
   }
 
@@ -99,7 +105,7 @@ public class NavigationActivity extends BaseActivity {
   protected void onPause () {
     try {
       orientationMonitor.stop();
-      LocationMonitor.stopCurrentMonitor();
+      for (ActivationLevelControl control : CONTROLS) control.onPause();
     } finally {
       super.onPause();
     }

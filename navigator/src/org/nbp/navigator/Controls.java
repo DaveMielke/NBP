@@ -14,11 +14,12 @@ public abstract class Controls {
   public final static AngleUnitControl angleUnit = new AngleUnitControl();
   public final static RelativeDirectionControl relativeDirection = new RelativeDirectionControl();
 
-  public final static UpdateIntervalControl updateInterval = new UpdateIntervalControl();
-  public final static LocationRadiusControl locationRadius = new LocationRadiusControl();
-  public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
-
   public final static AnnounceLocationControl announceLocation = new AnnounceLocationControl();
+  public final static LocationMonitorControl locationMonitor = new LocationMonitorControl();
+  public final static LocationRadiusControl locationRadius = new LocationRadiusControl();
+  public final static UpdateIntervalControl updateInterval = new UpdateIntervalControl();
+
+  public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
 
   public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
   public final static SpeechRateControl speechRate = new SpeechRateControl();
@@ -30,11 +31,12 @@ public abstract class Controls {
   public final static LocationProviderControl locationProvider = new LocationProviderControl();
 
   public final static Control[] ALL = new Control[] {
-    updateInterval,
-    locationRadius,
-    screenOrientation,
-
     announceLocation,
+    locationMonitor,
+    locationRadius,
+    updateInterval,
+
+    screenOrientation,
 
     distanceUnit,
     speedUnit,

@@ -44,13 +44,15 @@ public abstract class Announcements {
   public final static boolean say (CharSequence text, boolean interrupt) {
     Announcer annoncer = getAnnouncer();
 
-    if (interrupt) {
-      if (!announcer.stopSpeaking()) {
-        return false;
+    synchronized (announcer) {
+      if (interrupt) {
+        if (!announcer.stopSpeaking()) {
+          return false;
+        }
       }
-    }
 
-    return announcer.say(text);
+      return announcer.say(text);
+    }
   }
 
   public final static boolean say (CharSequence text) {

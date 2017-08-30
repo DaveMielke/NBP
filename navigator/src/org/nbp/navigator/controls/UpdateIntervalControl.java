@@ -11,7 +11,7 @@ public class UpdateIntervalControl extends DurationControl {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_general;
+    return R.string.control_group_location;
   }
 
   @Override

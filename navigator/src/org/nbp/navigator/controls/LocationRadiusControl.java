@@ -12,7 +12,7 @@ public class LocationRadiusControl extends IntegerControl {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_general;
+    return R.string.control_group_location;
   }
 
   @Override

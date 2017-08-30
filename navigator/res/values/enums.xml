@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <string name="enum_ActivationLevel_OFF">Off</string>
+  <string name="enum_ActivationLevel_FOREGROUND">Foreground</string>
+  <string name="enum_ActivationLevel_ALWAYS">Always</string>
+
   <string name="enum_AngleUnit_DEGREES">Degrees (360°)</string>
   <string name="enum_AngleUnit_GRADIANS">Gradians (400G)</string>
   <string name="enum_AngleUnit_MILS">Mils (6283mil)</string>

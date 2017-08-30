@@ -11,7 +11,7 @@ public class AnnounceLocationControl extends BooleanControl {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_announcements;
+    return R.string.control_group_location;
   }
 
   @Override
