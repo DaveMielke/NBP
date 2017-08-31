@@ -339,8 +339,8 @@ public abstract class BaseActivity extends CommonActivity {
   private boolean atNewLocation = false;
   private boolean amGeocodingLocation = false;
 
-  private double locationLatitude = UNKNOWN_VALUE;
-  private double locationLongitude = UNKNOWN_VALUE;
+  private Double locationLatitude = null;
+  private Double locationLongitude = null;
 
   private final void geocodeLocation () {
     synchronized (this) {
@@ -457,13 +457,11 @@ public abstract class BaseActivity extends CommonActivity {
   }
 
   private final void geocodeLocation (double latitude, double longitude) {
-    if (geocoder != null) {
-      synchronized (this) {
-        locationLatitude = latitude;
-        locationLongitude = longitude;
-        atNewLocation = true;
-        geocodeLocation();
-      }
+    synchronized (this) {
+      locationLatitude = latitude;
+      locationLongitude = longitude;
+      atNewLocation = true;
+      if (geocoder != null) geocodeLocation();
     }
   }
 
@@ -478,7 +476,34 @@ public abstract class BaseActivity extends CommonActivity {
   }
 
   public final void setLocation (Location location) {
-    setPosition(location.getLatitude(), location.getLongitude());
+    {
+      double latitude = location.getLatitude();
+      double longitude = location.getLongitude();
+
+      if (location.hasAccuracy()) {
+        float accuracy = location.getAccuracy();
+
+        synchronized (this) {
+          if ((locationLatitude != null) && (locationLongitude != null)) {
+            float[] results = new float[1];
+
+            Location.distanceBetween(
+              locationLatitude, locationLongitude,
+              latitude, longitude, results
+            );
+
+            float distance = results[0];
+            if (Math.abs(distance / accuracy) < 0.5) return;
+          }
+        }
+
+        setText(accuracyHorizontal, ("±" + ApplicationUtilities.toDistanceText(accuracy)));
+      } else {
+        setText(accuracyHorizontal);
+      }
+
+      setPosition(latitude, longitude);
+    }
 
     if (location.hasAltitude()) {
       double meters = location.getAltitude();
@@ -501,13 +526,6 @@ public abstract class BaseActivity extends CommonActivity {
     } else {
       setText(bearingDegrees);
       setText(bearingPoint);
-    }
-
-    if (location.hasAccuracy()) {
-      float distance = location.getAccuracy();
-      setText(accuracyHorizontal, ("±" + ApplicationUtilities.toDistanceText(distance)));
-    } else {
-      setText(accuracyHorizontal);
     }
 
     {
