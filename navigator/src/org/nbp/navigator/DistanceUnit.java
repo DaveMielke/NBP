@@ -1,7 +1,7 @@
 package org.nbp.navigator;
 
 public enum DistanceUnit implements Unit {
-  METERS("M", 1f),
+  METERS("m", 1f),
   FEET("ft", FEET_PER_METER),
   ; // end of enumeration
 
