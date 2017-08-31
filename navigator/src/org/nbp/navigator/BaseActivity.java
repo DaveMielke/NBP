@@ -274,19 +274,18 @@ public abstract class BaseActivity extends CommonActivity {
     setText(view, ApplicationUtilities.toPointText(degrees));
   }
 
-  private final static float UNKNOWN_VALUE = Float.NaN;
-  private float orientationHeading = UNKNOWN_VALUE;
-  private float addressHeading = UNKNOWN_VALUE;
+  private Float orientationHeading = null;
+  private Float addressHeading = null;
 
-  private final CharSequence toRelativeText (float direction) {
-    float reference = orientationHeading;
-    if (reference == UNKNOWN_VALUE) return null;
+  private final CharSequence toRelativeText (Float direction) {
+    Float reference = orientationHeading;
+    if (reference == null) return null;
 
-    if (direction == UNKNOWN_VALUE) return null;
+    if (direction == null) return null;
     return ApplicationUtilities.toRelativeText(direction, reference);
   }
 
-  private final void setRelativeDirection (TextView view, float direction) {
+  private final void setRelativeDirection (TextView view, Float direction) {
     CharSequence text = toRelativeText(direction);
 
     if (text != null) {
@@ -304,16 +303,16 @@ public abstract class BaseActivity extends CommonActivity {
     setText(addressName, name);
   }
 
-  private final void setAddressDistance (float distance) {
-    if (distance != UNKNOWN_VALUE) {
+  private final void setAddressDistance (Float distance) {
+    if (distance != null) {
       setDistance(addressDistance, distance);
     } else {
       setText(addressDistance);
     }
   }
 
-  private final void setAddressHeading (float heading) {
-    if ((addressHeading = heading) != UNKNOWN_VALUE) {
+  private final void setAddressHeading (Float heading) {
+    if ((addressHeading = heading) != null) {
       setHeading(addressDegrees, heading);
       setPoint(addressPoint, heading);
     } else {
@@ -354,8 +353,8 @@ public abstract class BaseActivity extends CommonActivity {
             Float distance    = (Float)       arguments[1];
             Float direction   = (Float)       arguments[2];
 
-            setAddressDistance((distance != null)? distance: UNKNOWN_VALUE);
-            setAddressHeading((direction != null)? ApplicationUtilities.toUnsignedAngle(direction): UNKNOWN_VALUE);
+            setAddressDistance(distance);
+            setAddressHeading((direction != null)? ApplicationUtilities.toUnsignedAngle(direction): null);
 
             if (!name.equals(getText(addressName))) {
               setAddressName(name);
