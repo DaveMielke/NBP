@@ -31,17 +31,19 @@ public abstract class Controls {
   public final static LocationProviderControl locationProvider = new LocationProviderControl();
 
   public final static Control[] ALL = new Control[] {
+    // The unit settings need to be restored first because
+    // restoring the values of some of the other settings relies on them.
+    distanceUnit,
+    speedUnit,
+    angleUnit,
+    relativeDirection,
+
     announceLocation,
     locationMonitor,
     locationRadius,
     updateInterval,
 
     screenOrientation,
-
-    distanceUnit,
-    speedUnit,
-    angleUnit,
-    relativeDirection,
 
     speechVolume,
     speechRate,
