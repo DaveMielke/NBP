@@ -10,7 +10,7 @@
   <TableRow android:id="@+id/row_address">
     <TextView android:text="@string/label_name" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/address_name" android:layout_span="2" />
+    <TextView android:id="@+id/address_name" android:layout_span="3" />
     <include layout="@layout/spacer" />
   </TableRow>
 
