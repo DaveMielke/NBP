@@ -349,14 +349,14 @@ public abstract class BaseActivity extends CommonActivity {
         new AsyncTask<Void, Object, Void>() {
           @Override
           protected void onProgressUpdate (Object... arguments) {
-            CharSequence name = (CharSequence)arguments[0];
-            Float distance    = (Float)       arguments[1];
-            Float direction   = (Float)       arguments[2];
+            CharSequence name      = (CharSequence)arguments[0];
+            Float        distance  = (Float)       arguments[1];
+            Float        direction = (Float)       arguments[2];
 
             setAddressDistance(distance);
             setAddressHeading((direction != null)? ApplicationUtilities.toUnsignedAngle(direction): null);
 
-            if (!name.equals(getText(addressName))) {
+            if (!TextUtils.equals(name, getText(addressName))) {
               setAddressName(name);
               if (ApplicationSettings.ANNOUNCE_LOCATION) announceLocation();
             }
