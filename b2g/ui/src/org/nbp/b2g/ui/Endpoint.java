@@ -29,31 +29,19 @@ public abstract class Endpoint {
     if (!ApplicationSettings.ECHO_WORDS) return null;
 
     if (to <= from) return null;
-    if (!Character.isWhitespace(text.charAt(--to))) return null;
+    if (--to == 0) return null;
+    if (!Character.isWhitespace(text.charAt(to))) return null;
 
-    if (to > 0) {
-      if (Character.isWhitespace(text.charAt(to-1))) {
-        return null;
-      }
-    }
-
-    if (from > 0) {
-      if (from == to) {
-        from -= 1;
-      }
-    }
+    from = to - 1;
+    if (Character.isWhitespace(text.charAt(from))) return null;
 
     while (from > 0) {
-      if (Character.isWhitespace(text.charAt(from))) break;
-      from -= 1;
+      if (Character.isWhitespace(text.charAt(--from))) {
+        from += 1;
+        break;
+      }
     }
 
-    while (from < to) {
-      if (!Character.isWhitespace(text.charAt(from))) break;
-      from += 1;
-    }
-
-    if (from == to) return null;
     return text.subSequence(from, to);
   }
 
