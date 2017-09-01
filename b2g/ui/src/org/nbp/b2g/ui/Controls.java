@@ -43,6 +43,10 @@ public abstract class Controls {
   public final static BrailleEnabledControl brailleEnabled = new BrailleEnabledControl();
 
   public final static SpeechEnabledControl speechEnabled = new SpeechEnabledControl();
+  public final static EchoWordsControl echoWords = new EchoWordsControl();
+  public final static EchoCharactersControl echoCharacters = new EchoCharactersControl();
+  public final static EchoDeletionsControl echoDeletions = new EchoDeletionsControl();
+  public final static EchoSelectionControl echoSelection = new EchoSelectionControl();
   public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
   public final static SpeechRateControl speechRate = new SpeechRateControl();
   public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
@@ -91,6 +95,10 @@ public abstract class Controls {
     brailleEnabled,
 
     speechEnabled,
+    echoWords,
+    echoCharacters,
+    echoDeletions,
+    echoSelection,
     speechVolume,
     speechRate,
     speechPitch,

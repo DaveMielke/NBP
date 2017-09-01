@@ -25,6 +25,10 @@ public abstract class ApplicationDefaults {
   public final static boolean BRAILLE_ENABLED = true;
 
   public final static boolean SPEECH_ENABLED = true;
+  public final static boolean ECHO_WORDS = true;
+  public final static boolean ECHO_CHARACTERS = true;
+  public final static boolean ECHO_DELETIONS = true;
+  public final static boolean ECHO_SELECTION = true;
   public final static float SPEECH_VOLUME = SpeechParameters.VOLUME_MAXIMUM;
   public final static float SPEECH_RATE = SpeechParameters.RATE_REFERENCE;
   public final static float SPEECH_PITCH = SpeechParameters.PITCH_REFERENCE;

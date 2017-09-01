@@ -24,6 +24,10 @@
 
   <string name="control_group_speech">Speech Settings</string>
   <string name="control_label_SpeechEnabled">Speech</string>
+  <string name="control_label_EchoWords">Echo Words</string>
+  <string name="control_label_EchoCharacters">Echo Characters</string>
+  <string name="control_label_EchoDeletions">Echo Deletions</string>
+  <string name="control_label_EchoSelection">Echo Selection</string>
   <string name="control_label_SpeechVolume">Volume</string>
   <string name="control_label_SpeechRate">Rate</string>
   <string name="control_label_SpeechPitch">Pitch</string>

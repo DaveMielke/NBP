@@ -94,6 +94,8 @@
   <string name="ResetHighlightedTyping_action_confirmation">Highlighting Off</string>
   <string name="LogScreen_action_confirmation">Screen Logged</string>
   <string name="SetCopyStart_action_confirmation">start of copy</string>
+  <string name="SetSelectionEnd_action_confirmation">end of selection</string>
+  <string name="SetSelectionStart_action_confirmation">start of selection</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
   <string name="TypeControl_action_confirmation">control</string>
 

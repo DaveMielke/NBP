@@ -23,6 +23,10 @@ public abstract class ApplicationSettings {
   public volatile static boolean BRAILLE_ENABLED = ApplicationDefaults.BRAILLE_ENABLED;
 
   public volatile static boolean SPEECH_ENABLED = ApplicationDefaults.SPEECH_ENABLED;
+  public volatile static boolean ECHO_WORDS = ApplicationDefaults.ECHO_WORDS;
+  public volatile static boolean ECHO_CHARACTERS = ApplicationDefaults.ECHO_CHARACTERS;
+  public volatile static boolean ECHO_DELETIONS = ApplicationDefaults.ECHO_DELETIONS;
+  public volatile static boolean ECHO_SELECTION = ApplicationDefaults.ECHO_SELECTION;
   public volatile static float SPEECH_VOLUME = ApplicationDefaults.SPEECH_VOLUME;
   public volatile static float SPEECH_RATE = ApplicationDefaults.SPEECH_RATE;
   public volatile static float SPEECH_PITCH = ApplicationDefaults.SPEECH_PITCH;

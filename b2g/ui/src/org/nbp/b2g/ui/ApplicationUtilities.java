@@ -47,13 +47,22 @@ public abstract class ApplicationUtilities {
     return ViewConfiguration.getGlobalActionKeyTimeout();
   }
 
-  public static boolean say (CharSequence text) {
+  public static boolean say (CharSequence text, boolean immediate) {
     SpeechDevice speech = Devices.speech.get();
 
     synchronized (speech) {
-      if (!speech.stopSpeaking()) return false;
+      if (immediate) {
+        if (!speech.stopSpeaking()) {
+          return false;
+        }
+      }
+
       return speech.say(text);
     }
+  }
+
+  public static boolean say (CharSequence text) {
+    return say(text, true);
   }
 
   public static boolean say (int resource) {

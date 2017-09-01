@@ -18,16 +18,50 @@ public abstract class Endpoint {
   private int oldSelectionStart;
   private int oldSelectionEnd;
 
-  protected void resetSpeech () {
+  protected final void resetSpeech () {
     oldText = "";
     oldLineStart = -1;
     oldSelectionStart = NO_SELECTION;
     oldSelectionEnd = NO_SELECTION;
   }
 
-  private void say () {
+  private final CharSequence getCompletedWord (CharSequence text, int from, int to) {
+    if (!ApplicationSettings.ECHO_WORDS) return null;
+
+    if (to <= from) return null;
+    if (!Character.isWhitespace(text.charAt(--to))) return null;
+
+    if (to > 0) {
+      if (Character.isWhitespace(text.charAt(to-1))) {
+        return null;
+      }
+    }
+
+    if (from > 0) {
+      if (from == to) {
+        from -= 1;
+      }
+    }
+
+    while (from > 0) {
+      if (Character.isWhitespace(text.charAt(from))) break;
+      from -= 1;
+    }
+
+    while (from < to) {
+      if (!Character.isWhitespace(text.charAt(from))) break;
+      from += 1;
+    }
+
+    if (from == to) return null;
+    return text.subSequence(from, to);
+  }
+
+  private final void say () {
     synchronized (this) {
       CharSequence text = null;
+      boolean echo = true;
+      CharSequence word = null;
 
       final CharSequence newText = getText();
       final int newLength = newText.length();
@@ -61,6 +95,8 @@ public abstract class Endpoint {
         to = Math.max(to, from);
 
         text = newText.subSequence(from, to);
+        echo = ApplicationSettings.ECHO_CHARACTERS;
+        word = getCompletedWord(newText, from, to);
       } else if (oldEnd > start) {
         int from = Math.max(start, newLineStart);
         int to = Math.max(oldEnd, start);
@@ -69,21 +105,30 @@ public abstract class Endpoint {
         to = Math.max(to, from);
 
         text = oldText.subSequence(from, to);
+        echo = ApplicationSettings.ECHO_DELETIONS;
       } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
         int offset = NO_SELECTION;
+        int action = 0;
 
         if (newSelectionStart != oldSelectionStart) {
           offset = newSelectionStart;
+          action = R.string.SetSelectionStart_action_confirmation;
         } else if (newSelectionEnd != oldSelectionEnd) {
           offset = newSelectionEnd - 1;
+          action = R.string.SetSelectionEnd_action_confirmation;
         }
 
         if (offset != NO_SELECTION) {
           if (offset < newLength) {
             text = newText.subSequence(offset, offset+1);
+            echo = ApplicationSettings.ECHO_SELECTION;
           } else if (offset == newLength) {
             text = ApplicationContext.getString(R.string.character_end);
+            echo = ApplicationSettings.ECHO_SELECTION;
           }
+
+          if (newSelectionStart == newSelectionEnd) action = 0;
+          if (action != 0) word = ApplicationContext.getString(action);
         }
       }
 
@@ -102,7 +147,10 @@ public abstract class Endpoint {
           }
         }
 
-        ApplicationUtilities.say(text);
+        if (echo) {
+          ApplicationUtilities.say(text, true);
+          if (word != null) ApplicationUtilities.say(word, false);
+        }
       }
 
       oldText = newText;
