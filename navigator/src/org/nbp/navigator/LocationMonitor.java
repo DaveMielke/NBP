@@ -4,12 +4,15 @@ import android.location.Location;
 
 public abstract class LocationMonitor extends NavigationMonitor {
   protected LocationMonitor () {
+    super();
+  }
+
+  protected final void setLocation (Location location) {
+    if (location != null) getActivity().setLocation(location);
   }
 
   private enum MonitorState {
-    STOPPED,
-    FAILED,
-    STARTED;
+    STOPPED, FAILED, STARTED;
   }
 
   protected abstract boolean startProvider ();

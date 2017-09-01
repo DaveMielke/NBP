@@ -62,7 +62,6 @@ public class NavigationActivity extends BaseActivity {
   }
 
   private static NavigationActivity navigationActivity = null;
-  private OrientationMonitor orientationMonitor = null;
 
   public final static NavigationActivity getNavigationActivity () {
     return navigationActivity;
@@ -75,15 +74,12 @@ public class NavigationActivity extends BaseActivity {
 
     setContentView(R.layout.navigation);
     finishBaseActivityCreation();
-
-    orientationMonitor = new OrientationMonitor();
     Controls.restore();
   }
 
   @Override
   protected void onDestroy () {
     try {
-      orientationMonitor = null;
       navigationActivity = null;
     } finally {
       super.onDestroy();
@@ -98,13 +94,11 @@ public class NavigationActivity extends BaseActivity {
   protected void onResume () {
     super.onResume();
     for (ActivationLevelControl control : CONTROLS) control.onResume();
-    orientationMonitor.start();
   }
 
   @Override
   protected void onPause () {
     try {
-      orientationMonitor.stop();
       for (ActivationLevelControl control : CONTROLS) control.onPause();
     } finally {
       super.onPause();
