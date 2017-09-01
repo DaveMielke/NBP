@@ -43,7 +43,7 @@ public class SensorOrientationMonitor extends OrientationMonitor implements Sens
   }
 
   @Override
-  protected final boolean startMonitor () {
+  protected final boolean startProvider () {
     for (Sensor sensor : sensorArray) {
       if (sensor != null) {
         sensorManager.registerListener(this, sensor, ApplicationParameters.SENSOR_UPDATE_INTERVAL);
@@ -54,14 +54,12 @@ public class SensorOrientationMonitor extends OrientationMonitor implements Sens
   }
 
   @Override
-  protected final boolean stopMonitor () {
+  protected final void stopProvider () {
     for (Sensor sensor : sensorArray) {
       if (sensor != null) {
         sensorManager.unregisterListener(this, sensor);
       }
     }
-
-    return true;
   }
 
   private float[] gravityVector = null;

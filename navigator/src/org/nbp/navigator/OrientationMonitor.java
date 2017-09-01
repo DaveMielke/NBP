@@ -9,39 +9,6 @@ public abstract class OrientationMonitor extends NavigationMonitor {
     getActivity().setOrientation(heading, pitch, roll);
   }
 
-  private enum MonitorState {
-    STOPPED, FAILED, STARTED;
-  }
-
-  protected abstract boolean startMonitor ();
-  protected abstract boolean stopMonitor ();
-  private MonitorState state = MonitorState.STOPPED;
-
-  private final boolean isStarted () {
-    return state != MonitorState.STOPPED;
-  }
-
-  private final void start () {
-    if (state != MonitorState.STARTED) {
-      if (startMonitor()) {
-        state = MonitorState.STARTED;
-      } else {
-        state = MonitorState.FAILED;
-      }
-    }
-  }
-
-  private final void stop () {
-    switch (state) {
-      case STARTED:
-        stopMonitor();
-      case FAILED:
-        state = MonitorState.STOPPED;
-      case STOPPED:
-        break;
-    }
-  }
-
   public enum Reason {
     NAVIGATION_ACTIVITY, LOCATION_MONITOR;
 
