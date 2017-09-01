@@ -127,8 +127,13 @@ public abstract class Endpoint {
             echo = ApplicationSettings.ECHO_SELECTION;
           }
 
-          if (newSelectionStart == newSelectionEnd) action = 0;
-          if (action != 0) word = ApplicationContext.getString(action);
+          if (echo) {
+            if (newSelectionStart != newSelectionEnd) {
+              if (action != 0) {
+                word = ApplicationContext.getString(action);
+              }
+            }
+          }
         }
       }
 
@@ -147,9 +152,18 @@ public abstract class Endpoint {
           }
         }
 
-        if (echo) {
-          ApplicationUtilities.say(text, true);
-          if (word != null) ApplicationUtilities.say(word, false);
+        {
+          boolean immediate = true;
+
+          if (echo) {
+            ApplicationUtilities.say(text, immediate);
+            immediate = false;
+          }
+
+          if (word != null) {
+            ApplicationUtilities.say(word, immediate);
+            immediate = false;
+          }
         }
       }
 
