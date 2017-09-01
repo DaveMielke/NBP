@@ -154,14 +154,15 @@ public abstract class Endpoint {
 
         {
           boolean immediate = true;
+          CharSequence[] segments = new CharSequence[] {
+            echo? text: null,
+            word
+          };
 
-          if (echo) {
-            ApplicationUtilities.say(text, immediate);
-            immediate = false;
-          }
+          for (CharSequence segment : segments) {
+            if (segment == null) continue;
 
-          if (word != null) {
-            ApplicationUtilities.say(word, immediate);
+            ApplicationUtilities.say(segment, immediate);
             immediate = false;
           }
         }
