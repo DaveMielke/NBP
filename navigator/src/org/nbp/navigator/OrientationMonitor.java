@@ -1,5 +1,8 @@
 package org.nbp.navigator;
 
+import java.util.Set;
+import java.util.HashSet;
+
 public abstract class OrientationMonitor extends NavigationMonitor {
   protected OrientationMonitor () {
     super();
@@ -11,30 +14,24 @@ public abstract class OrientationMonitor extends NavigationMonitor {
 
   public enum Reason {
     NAVIGATION_ACTIVITY, LOCATION_MONITOR;
-
-    public final int getBit () {
-      return 1 << ordinal();
-    }
   }
 
   private final static OrientationMonitor orientationMonitor = new SensorOrientationMonitor();
-  private static int currentReasons = 0;
+  private final static Set<Reason> currentReasons = new HashSet<Reason>();
 
   private final static void applyCurrentReasons () {
-    if (currentReasons != 0) {
-      orientationMonitor.start();
-    } else {
+    if (currentReasons.isEmpty()) {
       orientationMonitor.stop();
+    } else {
+      orientationMonitor.start();
     }
   }
 
   public final static void start (Reason reason) {
-    currentReasons |= reason.getBit();
-    applyCurrentReasons();
+    if (currentReasons.add(reason)) applyCurrentReasons();
   }
 
   public final static void stop (Reason reason) {
-    currentReasons &= ~reason.getBit();
-    applyCurrentReasons();
+    if (currentReasons.remove(reason)) applyCurrentReasons();
   }
 }
