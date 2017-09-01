@@ -42,9 +42,32 @@ public abstract class OrientationMonitor extends NavigationMonitor {
     }
   }
 
-  private final static OrientationMonitor orientationMonitor = new SensorOrientationMonitor();
+  public enum Reason {
+    NAVIGATION_ACTIVITY, LOCATION_MONITOR;
 
-  public final static OrientationMonitor getMonitor () {
-    return orientationMonitor;
+    public final int getBit () {
+      return 1 << ordinal();
+    }
+  }
+
+  private final static OrientationMonitor orientationMonitor = new SensorOrientationMonitor();
+  private static int currentReasons = 0;
+
+  private final static void applyCurrentReasons () {
+    if (currentReasons != 0) {
+      orientationMonitor.start();
+    } else {
+      orientationMonitor.stop();
+    }
+  }
+
+  public final static void start (Reason reason) {
+    currentReasons |= reason.getBit();
+    applyCurrentReasons();
+  }
+
+  public final static void stop (Reason reason) {
+    currentReasons &= ~reason.getBit();
+    applyCurrentReasons();
   }
 }

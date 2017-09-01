@@ -34,19 +34,18 @@ public class LocationMonitorControl extends ActivationLevelControl {
     return true;
   }
 
-  private final static OrientationMonitor getOrientationMonitor () {
-    return OrientationMonitor.getMonitor();
-  }
+  private final static OrientationMonitor.Reason ORIENTATION_MONITOR_REASON
+                     = OrientationMonitor.Reason.LOCATION_MONITOR;
 
   @Override
   protected final void startTask () {
     LocationMonitor.startCurrentMonitor();
-    getOrientationMonitor().start();
+    OrientationMonitor.start(ORIENTATION_MONITOR_REASON);
   }
 
   @Override
   protected final void stopTask () {
-    getOrientationMonitor().stop();
+    OrientationMonitor.stop(ORIENTATION_MONITOR_REASON);
     LocationMonitor.stopCurrentMonitor();
   }
 

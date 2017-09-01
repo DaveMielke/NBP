@@ -90,15 +90,20 @@ public class NavigationActivity extends BaseActivity {
     Controls.locationMonitor
   };
 
+  private final static OrientationMonitor.Reason ORIENTATION_MONITOR_REASON
+                     = OrientationMonitor.Reason.NAVIGATION_ACTIVITY;
+
   @Override
   protected void onResume () {
     super.onResume();
     for (ActivationLevelControl control : CONTROLS) control.onResume();
+    OrientationMonitor.start(ORIENTATION_MONITOR_REASON);
   }
 
   @Override
   protected void onPause () {
     try {
+      OrientationMonitor.stop(ORIENTATION_MONITOR_REASON);
       for (ActivationLevelControl control : CONTROLS) control.onPause();
     } finally {
       super.onPause();
