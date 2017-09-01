@@ -17,11 +17,11 @@ public abstract class OrientationMonitor extends NavigationMonitor {
   protected abstract boolean stopMonitor ();
   private MonitorState state = MonitorState.STOPPED;
 
-  public final boolean isStarted () {
+  private final boolean isStarted () {
     return state != MonitorState.STOPPED;
   }
 
-  public final void start () {
+  private final void start () {
     if (state != MonitorState.STARTED) {
       if (startMonitor()) {
         state = MonitorState.STARTED;
@@ -31,7 +31,7 @@ public abstract class OrientationMonitor extends NavigationMonitor {
     }
   }
 
-  public final void stop () {
+  private final void stop () {
     switch (state) {
       case STARTED:
         stopMonitor();
