@@ -27,6 +27,7 @@ public abstract class ApplicationSettings {
   public volatile static boolean ECHO_CHARACTERS = ApplicationDefaults.ECHO_CHARACTERS;
   public volatile static boolean ECHO_DELETIONS = ApplicationDefaults.ECHO_DELETIONS;
   public volatile static boolean ECHO_SELECTION = ApplicationDefaults.ECHO_SELECTION;
+  public volatile static boolean SPEAK_LINES = ApplicationDefaults.SPEAK_LINES;
   public volatile static float SPEECH_VOLUME = ApplicationDefaults.SPEECH_VOLUME;
   public volatile static float SPEECH_RATE = ApplicationDefaults.SPEECH_RATE;
   public volatile static float SPEECH_PITCH = ApplicationDefaults.SPEECH_PITCH;

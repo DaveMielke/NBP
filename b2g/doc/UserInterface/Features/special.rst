@@ -69,6 +69,43 @@ Adjusting the Balance:
   * Press Dot4+VolumeDown for **more left**.
   * Press Dot4+VolumeUp for **more right**.
 
+Customizing What is Spoken
+``````````````````````````
+
+There are a number of `speech settings`_ that can be used
+to customize how much is spoken.
+All of them default to ``on``,
+but each of them can be individually turned ``off``.
+They are:
+
+Echo Words
+  Speak each word after it's been fully typed.
+  A word is deemed to be complete as soon as a space is typed.
+
+Echo Characters
+  Speak each character as it's typed.
+  If characters are typed quickly,
+  e.g. when pasting from `the clipboard`_,
+  then they may be grouped together and
+  pronounced, for example, as a partial word.
+
+Echo Deletions
+  Speak each character as it's deleted (see `Input Areas`_).
+  If characters are deleted quickly,
+  e.g. when deleting a block of selected text (see `Text Selection`_),
+  then they may be grouped together and
+  pronounced, for example, as a partial word.
+
+Echo Selection
+  Speak changes to the start or end of the `text selection`_.
+  The character at the new position is spoken,
+  followed by the phrase ``start of selection`` or ``end of selection``.
+
+Speak Lines
+  Speak the entire line
+  either when vertical navigation explicitly switches to a new one
+  or when horizontal navigation implicitly wraps to a new one.
+
 Sleep Talk Mode
 ```````````````
 

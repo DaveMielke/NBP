@@ -28,6 +28,7 @@
   <string name="control_label_EchoCharacters">Echo Characters</string>
   <string name="control_label_EchoDeletions">Echo Deletions</string>
   <string name="control_label_EchoSelection">Echo Selection</string>
+  <string name="control_label_SpeakLines">Speak Lines</string>
   <string name="control_label_SpeechVolume">Volume</string>
   <string name="control_label_SpeechRate">Rate</string>
   <string name="control_label_SpeechPitch">Pitch</string>

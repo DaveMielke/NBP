@@ -128,6 +128,7 @@ public abstract class Endpoint {
       if (text == null) {
         if (newLineStart != oldLineStart) {
           text = getLineText();
+          echo = ApplicationSettings.SPEAK_LINES;
         }
       }
 
