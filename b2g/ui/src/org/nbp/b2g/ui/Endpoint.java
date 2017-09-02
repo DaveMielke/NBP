@@ -50,6 +50,7 @@ public abstract class Endpoint {
       CharSequence text = null;
       boolean echo = true;
       CharSequence word = null;
+      int action = 0;
 
       final CharSequence newText = getText();
       final int newLength = newText.length();
@@ -96,7 +97,6 @@ public abstract class Endpoint {
         echo = ApplicationSettings.ECHO_DELETIONS;
       } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
         int offset = NO_SELECTION;
-        int action = 0;
 
         if (newSelectionStart != oldSelectionStart) {
           offset = newSelectionStart;
@@ -115,13 +115,7 @@ public abstract class Endpoint {
             echo = ApplicationSettings.ECHO_SELECTION;
           }
 
-          if (echo) {
-            if (newSelectionStart != newSelectionEnd) {
-              if (action != 0) {
-                word = ApplicationContext.getString(action);
-              }
-            }
-          }
+          if (newSelectionStart == newSelectionEnd) action = 0;
         }
       }
 
@@ -143,9 +137,11 @@ public abstract class Endpoint {
 
         {
           boolean immediate = true;
+
           CharSequence[] segments = new CharSequence[] {
             echo? text: null,
-            word
+            word,
+            (echo && (action != 0))? ApplicationContext.getString(action): null
           };
 
           for (CharSequence segment : segments) {
