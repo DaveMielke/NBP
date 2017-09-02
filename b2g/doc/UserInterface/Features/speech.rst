@@ -1,31 +1,5 @@
-Special Features
-----------------
-
-Braille
-~~~~~~~
-
-The On-screen Monitor
-`````````````````````
-
-An on-screen monitor that shows what's on the braille display can be enabled
-from `The Settings Screen`_. It shows both the braille cells and the text.
-
-Adjusting the Dot Firmness
-``````````````````````````
-
-The firmness of the braille dots can be adjusted from `The Settings Screen`_.
-
-Disabling the Display
-`````````````````````
-
-The braille display is enabled by default. It can be disabled by pressing
-Backward+Dot1, and reenabled by pressing Forward+Dot4.
-Either booting the |product name| or waking it up (see `The Power Switch`_)
-also reenables it if `speech`_ is disabled.
-Braille can't be disabled while `speech`_ is disabled.
-
 Speech
-~~~~~~
+------
 
 Speech is supported, and is enabled by default.
 Pressing Forward+VolumeUp enables it,
@@ -70,7 +44,7 @@ Adjusting the Balance:
   * Press Dot4+VolumeUp for **more right**.
 
 Customizing What is Spoken
-``````````````````````````
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are a number of `speech settings`_ that can be used
 to customize how much is spoken.
@@ -107,7 +81,7 @@ Speak Lines
   or when horizontal navigation implicitly wraps to a new one.
 
 Sleep Talk Mode
-```````````````
+~~~~~~~~~~~~~~~
 
 Sleep Talk Mode leaves speech active while the Power switch is off. This
 capability is useful when, for example, you'd like to reduce battery drain but
@@ -121,7 +95,7 @@ which use Dot5 instead of Backward,
 have been defined.
 
 Differences from Braille Rendering
-``````````````````````````````````
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Speech is rendered differently than braille is in the following ways:
 
