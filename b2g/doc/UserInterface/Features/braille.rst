@@ -1,5 +1,5 @@
-Braille
--------
+Braille Display Options
+-----------------------
 
 The On-screen Monitor
 ~~~~~~~~~~~~~~~~~~~~~
