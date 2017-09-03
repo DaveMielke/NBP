@@ -135,22 +135,11 @@ public abstract class Endpoint {
           }
         }
 
-        {
-          boolean immediate = true;
-
-          CharSequence[] segments = new CharSequence[] {
-            echo? text: null,
-            word,
-            (echo && (action != 0))? ApplicationContext.getString(action): null
-          };
-
-          for (CharSequence segment : segments) {
-            if (segment == null) continue;
-
-            ApplicationUtilities.say(segment, immediate);
-            immediate = false;
-          }
-        }
+        ApplicationUtilities.say(
+          echo? text: null,
+          word,
+          (echo && (action != 0))? ApplicationContext.getString(action): null
+        );
       }
 
       oldText = newText;

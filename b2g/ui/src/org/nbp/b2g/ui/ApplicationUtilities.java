@@ -61,8 +61,16 @@ public abstract class ApplicationUtilities {
     }
   }
 
-  public static boolean say (CharSequence text) {
-    return say(text, true);
+  public static boolean say (CharSequence... segments) {
+    boolean immediate = true;
+
+    for (CharSequence segment : segments) {
+      if (segment == null) continue;
+      if (!say(segment, immediate)) return false;
+      immediate = false;
+    }
+
+    return true;
   }
 
   public static boolean say (int resource) {
