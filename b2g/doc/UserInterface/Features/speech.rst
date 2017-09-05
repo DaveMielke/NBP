@@ -65,6 +65,8 @@ Echo Characters
 
 Echo Deletions
   Speak each character as it's deleted (see `Input Areas`_).
+  The character being deleted is spoken,
+  followed by the word ``deleted``.
   If characters are deleted quickly,
   e.g. when deleting a block of selected text (see `Text Selection`_),
   then they may be grouped together and

@@ -95,6 +95,7 @@ public abstract class Endpoint {
 
         text = oldText.subSequence(from, to);
         echo = ApplicationSettings.ECHO_DELETIONS;
+        action = R.string.DeleteCharacter_action_confirmation;
       } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
         int offset = NO_SELECTION;
 
