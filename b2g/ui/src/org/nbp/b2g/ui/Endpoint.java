@@ -76,7 +76,10 @@ public abstract class Endpoint {
         }
       }
 
-      if (newEnd > start) {
+      if (newLineStart != oldLineStart) {
+        text = getLineText();
+        echo = ApplicationSettings.SPEAK_LINES;
+      } else if (newEnd > start) {
         int from = Math.max(start, (newLineStart - 1));
         int to = Math.min(newEnd, (newLineStart + getLineLength()));
 
@@ -117,13 +120,6 @@ public abstract class Endpoint {
           }
 
           if (newSelectionStart == newSelectionEnd) action = 0;
-        }
-      }
-
-      if (text == null) {
-        if (newLineStart != oldLineStart) {
-          text = getLineText();
-          echo = ApplicationSettings.SPEAK_LINES;
         }
       }
 
