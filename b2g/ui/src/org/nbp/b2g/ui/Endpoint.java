@@ -80,20 +80,18 @@ public abstract class Endpoint {
           echo = ApplicationSettings.ECHO_CHARACTERS;
 
           if (ApplicationSettings.ECHO_WORDS) {
-            if (start == oldEnd) {
-              if (newSelectionStart == newSelectionEnd) {
-                int position = newSelectionStart - newLineStart;
+            if (newSelectionStart == newSelectionEnd) {
+              int position = newSelectionStart - newLineStart;
 
-                if (position >= 0) {
-                  while (newEnd > position) {
-                    if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
-                      oldEnd += 1;
-                      newEnd += 1;
-                      break;
-                    }
-
-                    start = oldEnd;
+              if (position >= 0) {
+                while (newEnd > position) {
+                  if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
+                    oldEnd += 1;
+                    newEnd += 1;
+                    break;
                   }
+
+                  start -= 1;
                 }
               }
             }
