@@ -15,26 +15,21 @@ public abstract class Endpoint {
 
   private CharSequence oldLineText;
   private int oldLineStart;
-
   private int oldSelectionStart;
   private int oldSelectionEnd;
 
   protected final void resetSpeech () {
     oldLineText = "";
     oldLineStart = -1;
-
     oldSelectionStart = NO_SELECTION;
     oldSelectionEnd = NO_SELECTION;
   }
 
-  private final CharSequence getCompletedWord (CharSequence text, int from, int to) {
-    if (!ApplicationSettings.ECHO_WORDS) return null;
-
-    if (to <= from) return null;
-    if (--to == 0) return null;
+  private final CharSequence getCompletedWord (CharSequence text, int to) {
+    if (--to < 1) return null;
     if (!Character.isWhitespace(text.charAt(to))) return null;
 
-    from = to - 1;
+    int from = to - 1;
     if (Character.isWhitespace(text.charAt(from))) return null;
 
     while (from > 0) {
@@ -56,7 +51,6 @@ public abstract class Endpoint {
 
       final CharSequence newLineText = getLineText();
       final int newLineStart = getLineStart();
-
       final int newSelectionStart = getSelectionStart();
       final int newSelectionEnd = getSelectionEnd();
 
@@ -84,7 +78,28 @@ public abstract class Endpoint {
         if (newEnd > start) {
           text = newLineText.subSequence(start, newEnd);
           echo = ApplicationSettings.ECHO_CHARACTERS;
-          word = getCompletedWord(newLineText, start, newEnd);
+
+          if (ApplicationSettings.ECHO_WORDS) {
+            if (start == oldEnd) {
+              if (newSelectionStart == newSelectionEnd) {
+                int position = newSelectionStart - newLineStart;
+
+                if (position >= 0) {
+                  while (newEnd > position) {
+                    if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
+                      oldEnd += 1;
+                      newEnd += 1;
+                      break;
+                    }
+
+                    start = oldEnd;
+                  }
+                }
+              }
+            }
+
+            word = getCompletedWord(getText(), (newLineStart + newEnd));
+          }
         } else if (oldEnd > start) {
           text = oldLineText.subSequence(start, oldEnd);
           echo = ApplicationSettings.ECHO_DELETIONS;
@@ -136,7 +151,6 @@ public abstract class Endpoint {
 
       oldLineText = newLineText;
       oldLineStart = newLineStart;
-
       oldSelectionStart = newSelectionStart;
       oldSelectionEnd = newSelectionEnd;
     }
