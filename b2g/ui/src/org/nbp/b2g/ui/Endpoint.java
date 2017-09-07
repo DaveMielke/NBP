@@ -13,14 +13,16 @@ import org.nbp.common.Braille;
 public abstract class Endpoint {
   private final static String LOG_TAG = Endpoint.class.getName();
 
-  private CharSequence oldText;
+  private CharSequence oldLineText;
   private int oldLineStart;
+
   private int oldSelectionStart;
   private int oldSelectionEnd;
 
   protected final void resetSpeech () {
-    oldText = "";
+    oldLineText = "";
     oldLineStart = -1;
+
     oldSelectionStart = NO_SELECTION;
     oldSelectionEnd = NO_SELECTION;
   }
@@ -52,74 +54,67 @@ public abstract class Endpoint {
       CharSequence word = null;
       int action = 0;
 
-      final CharSequence newText = getText();
-      final int newLength = newText.length();
-
+      final CharSequence newLineText = getLineText();
       final int newLineStart = getLineStart();
+
       final int newSelectionStart = getSelectionStart();
       final int newSelectionEnd = getSelectionEnd();
 
-      int start = 0;
-      int oldEnd = oldText.length();
-      int newEnd = newLength;
-
-      while ((start < oldEnd) && (start < newEnd)) {
-        if (oldText.charAt(start) != newText.charAt(start)) break;
-        start += 1;
-      }
-
-      while ((oldEnd > start) && (newEnd > start)) {
-        if (oldText.charAt(--oldEnd) != newText.charAt(--newEnd)) {
-          oldEnd += 1;
-          newEnd += 1;
-          break;
-        }
-      }
-
       if (newLineStart != oldLineStart) {
-        text = getLineText();
+        text = newLineText;
         echo = ApplicationSettings.SPEAK_LINES;
-      } else if (newEnd > start) {
-        int from = Math.max(start, (newLineStart - 1));
-        int to = Math.min(newEnd, (newLineStart + getLineLength()));
+      } else {
+        int start = 0;
+        int oldEnd = oldLineText.length();
+        int newEnd = newLineText.length();
 
-        from = Math.min(from, to);
-        to = Math.max(to, from);
-
-        text = newText.subSequence(from, to);
-        echo = ApplicationSettings.ECHO_CHARACTERS;
-        word = getCompletedWord(newText, from, to);
-      } else if (oldEnd > start) {
-        int from = Math.max(start, newLineStart);
-        int to = Math.max(oldEnd, start);
-
-        from = Math.min(from, to);
-        to = Math.max(to, from);
-
-        text = oldText.subSequence(from, to);
-        echo = ApplicationSettings.ECHO_DELETIONS;
-        action = R.string.DeleteCharacter_action_confirmation;
-      } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
-        int offset = NO_SELECTION;
-
-        if (newSelectionStart != oldSelectionStart) {
-          offset = newSelectionStart;
-          action = R.string.SetSelectionStart_action_confirmation;
-        } else if (newSelectionEnd != oldSelectionEnd) {
-          offset = newSelectionEnd - 1;
-          action = R.string.SetSelectionEnd_action_confirmation;
+        while ((start < oldEnd) && (start < newEnd)) {
+          if (oldLineText.charAt(start) != newLineText.charAt(start)) break;
+          start += 1;
         }
 
-        if (offset != NO_SELECTION) {
-          if (offset < newLength) {
-            text = newText.subSequence(offset, offset+1);
-            echo = ApplicationSettings.ECHO_SELECTION;
-          } else if (offset == newLength) {
-            text = ApplicationContext.getString(R.string.character_end);
-            echo = ApplicationSettings.ECHO_SELECTION;
+        while ((oldEnd > start) && (newEnd > start)) {
+          if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
+            oldEnd += 1;
+            newEnd += 1;
+            break;
+          }
+        }
+
+        if (newEnd > start) {
+          text = newLineText.subSequence(start, newEnd);
+          echo = ApplicationSettings.ECHO_CHARACTERS;
+          word = getCompletedWord(newLineText, start, newEnd);
+        } else if (oldEnd > start) {
+          text = oldLineText.subSequence(start, oldEnd);
+          echo = ApplicationSettings.ECHO_DELETIONS;
+          action = R.string.DeleteCharacter_action_confirmation;
+        } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
+          int offset = NO_SELECTION;
+
+          if (newSelectionStart != oldSelectionStart) {
+            offset = newSelectionStart;
+            action = R.string.SetSelectionStart_action_confirmation;
+          } else if (newSelectionEnd != oldSelectionEnd) {
+            offset = newSelectionEnd - 1;
+            action = R.string.SetSelectionEnd_action_confirmation;
           }
 
-          if (newSelectionStart == newSelectionEnd) action = 0;
+          if (offset != NO_SELECTION) {
+            final CharSequence newText = getText();
+            final int newLength = newText.length();
+
+            if (offset < newLength) {
+              text = newText.subSequence(offset, offset+1);
+            } else if (offset == newLength) {
+              text = ApplicationContext.getString(R.string.character_end);
+            }
+
+            if (text != null) {
+              echo = ApplicationSettings.ECHO_SELECTION;
+              if (newSelectionStart == newSelectionEnd) action = 0;
+            }
+          }
         }
       }
 
@@ -139,8 +134,9 @@ public abstract class Endpoint {
         );
       }
 
-      oldText = newText;
+      oldLineText = newLineText;
       oldLineStart = newLineStart;
+
       oldSelectionStart = newSelectionStart;
       oldSelectionEnd = newSelectionEnd;
     }
