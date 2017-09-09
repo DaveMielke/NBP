@@ -24,8 +24,19 @@ public abstract class HostAction extends ScanCodeAction {
 
   public AccessibilityNodeInfo getCurrentNode () {
     AccessibilityNodeInfo node = getHostEndpoint().getCurrentNode();
-    if (node == null) node = ScreenUtilities.getCurrentNode();
-    return node;
+
+    if (node != null) {
+      AccessibilityNodeInfo parent = node.getParent();
+
+      if (parent != null) {
+        parent.recycle();
+        return node;
+      }
+
+      node.recycle();
+    }
+
+    return ScreenUtilities.getCurrentNode();
   }
 
   private static void logNodeAction (AccessibilityNodeInfo node, String action, String status) {
