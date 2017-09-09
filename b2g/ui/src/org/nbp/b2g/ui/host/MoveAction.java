@@ -41,18 +41,24 @@ public abstract class MoveAction extends ScreenAction {
     AccessibilityNodeInfo node = getCurrentNode();
 
     if (node != null) {
-      ScreenUtilities.logNavigation(node, "starting node");
-
       {
         AccessibilityNodeInfo parent = node.getParent();
 
         if (parent != null) {
           parent.recycle();
+          parent = null;
         } else {
-          node = ScreenUtilities.getCurrentNode();
+          AccessibilityNodeInfo current = ScreenUtilities.getCurrentNode();
+
+          if (current != null) {
+            node.recycle();
+            node = current;
+            current = null;
+          }
         }
       }
 
+      ScreenUtilities.logNavigation(node, "starting node");
       if (innerMove(node)) moved = true;
     } else {
       ScreenUtilities.logNavigation("no starting node");
