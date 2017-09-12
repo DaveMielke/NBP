@@ -3,19 +3,9 @@ package org.nbp.navigator;
 import org.nbp.common.speech.TextPlayer;
 import org.nbp.common.controls.Control;
 
-import org.nbp.common.CommonContext;
-import android.content.Context;
-
-public abstract class Announcements {
+public abstract class Announcements extends NavigatorComponent {
   private Announcements () {
-  }
-
-  private final static Context getContext () {
-    return CommonContext.getContext();
-  }
-
-  private final static String getString (int resource) {
-    return getContext().getString(resource);
+    super();
   }
 
   public static class Announcer extends TextPlayer {

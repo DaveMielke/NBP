@@ -17,8 +17,6 @@ import android.os.Bundle;
 import android.os.AsyncTask;
 
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.view.accessibility.AccessibilityManager;
 
 import android.widget.TextView;
@@ -30,8 +28,12 @@ import android.location.Location;
 import android.location.Address;
 import android.location.Geocoder;
 
-public class NavigationFragment extends Fragment {
+public class NavigationFragment extends NavigatorFragment {
   private final static String LOG_TAG = NavigationFragment.class.getName();
+
+  public NavigationFragment () {
+    super(R.layout.navigation);
+  }
 
   private AccessibilityManager accessibilityManager;
 
@@ -577,7 +579,7 @@ public class NavigationFragment extends Fragment {
     ApplicationParameters.UPDATE_MINIMUM_TIME, "update-orientation"
   );
 
-  public final void setOrientation (final float heading, final float pitch, final float roll) {
+  public final void setOrientation (final Orientation orientation) {
     orientationUpdater.setAction(
       new Runnable() {
         @Override
@@ -586,20 +588,15 @@ public class NavigationFragment extends Fragment {
             new Runnable() {
               @Override
               public void run () {
-                setOrientationHeading(heading);
-                setOrientationPitch(pitch);
-                setOrientationRoll(roll);
+                setOrientationHeading(orientation.getHeading());
+                setOrientationPitch(orientation.getPitch());
+                setOrientationRoll(orientation.getRoll());
               }
             }
           );
         }
       }
     );
-  }
-
-  @Override
-  public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedState) {
-    return inflater.inflate(R.layout.navigation, container, false);
   }
 
   private static NavigationFragment navigationFragment = null;
@@ -620,6 +617,16 @@ public class NavigationFragment extends Fragment {
     super.onActivityCreated(savedState);
     findViews();
     prepareGeocoding();
+
+    {
+      Orientation orientation = OrientationMonitor.getOrientation();
+      if (orientation != null) setOrientation(orientation);
+    }
+
+    {
+      Location location = LocationMonitor.getLocation();
+      if (location != null) setLocation(location);
+    }
   }
 
   @Override

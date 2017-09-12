@@ -12,8 +12,22 @@ public abstract class OrientationMonitor extends NavigationMonitor {
     super();
   }
 
+  private final static Object LOCK = new Object();
+  private static Orientation latestOrientation = null;
+
   protected final void setOrientation (float heading, float pitch, float roll) {
-    getFragment().setOrientation(heading, pitch, roll);
+    Orientation orientation = new Orientation(heading, pitch, roll);
+
+    synchronized (LOCK) {
+      latestOrientation = orientation;
+      getFragment().setOrientation(orientation);
+    }
+  }
+
+  public final static Orientation getOrientation () {
+    synchronized (LOCK) {
+      return latestOrientation;
+    }
   }
 
   public enum Reason {

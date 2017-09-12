@@ -7,8 +7,22 @@ public abstract class LocationMonitor extends NavigationMonitor {
     super();
   }
 
+  private final static Object LOCK = new Object();
+  private static Location latestLocation = null;
+
   protected final void setLocation (Location location) {
-    if (location != null) getFragment().setLocation(location);
+    if (location != null) {
+      synchronized (LOCK) {
+        latestLocation = location;
+        getFragment().setLocation(location);
+      }
+    }
+  }
+
+  public final static Location getLocation () {
+    synchronized (LOCK) {
+      return latestLocation;
+    }
   }
 
   public final static LocationProvider getCurrentProvider () {
