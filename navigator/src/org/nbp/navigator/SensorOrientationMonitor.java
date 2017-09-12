@@ -22,7 +22,7 @@ public class SensorOrientationMonitor extends OrientationMonitor implements Sens
   public SensorOrientationMonitor () {
     super();
 
-    Context context = getActivity();
+    Context context = getContext();
     sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
     sensorArray = new Sensor[sensorTypes.length];
 
@@ -96,7 +96,7 @@ public class SensorOrientationMonitor extends OrientationMonitor implements Sens
     float roll    = translateOrientationAngle( currentOrientation[2]);
 
     {
-      ScreenOrientation.Conversions conversions = ApplicationSettings.SCREEN_ORIENTATION.getConversions(getActivity());
+      ScreenOrientation.Conversions conversions = ApplicationSettings.SCREEN_ORIENTATION.getConversions(getContext());
 
       if (conversions != null) {
         float h = heading;

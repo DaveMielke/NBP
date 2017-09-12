@@ -1,7 +1,6 @@
 package org.nbp.navigator;
 
-import org.nbp.navigator.controls.ActivationLevelControl;
-
+import org.nbp.common.CommonActivity;
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;
 
@@ -13,8 +12,10 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class NavigationActivity extends BaseActivity {
-  private final static String LOG_TAG = NavigationActivity.class.getName();
+public class NavigatorActivity extends CommonActivity {
+  private final static String LOG_TAG = NavigatorActivity.class.getName();
+
+  private final NavigationFragment navigationFragment = new NavigationFragment();
 
   private final void menuAction_settings () {
     Intent intent = new Intent(this, SettingsActivity.class);
@@ -61,52 +62,32 @@ public class NavigationActivity extends BaseActivity {
     return true;
   }
 
-  private static NavigationActivity navigationActivity = null;
+  private static NavigatorActivity navigatorActivity = null;
 
-  public final static NavigationActivity getNavigationActivity () {
-    return navigationActivity;
+  public final static NavigatorActivity getNavigatorActivity () {
+    return navigatorActivity;
   }
 
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    navigationActivity = this;
+    navigatorActivity = this;
 
-    setContentView(R.layout.navigation);
-    finishBaseActivityCreation();
+    setContentView(R.layout.navigator);
+    getFragmentManager()
+      .beginTransaction()
+      .add(R.id.navigator_fragment_container, navigationFragment)
+      .commit();
+
     Controls.restore();
   }
 
   @Override
   protected void onDestroy () {
     try {
-      navigationActivity = null;
+      navigatorActivity = null;
     } finally {
       super.onDestroy();
-    }
-  }
-
-  private final static ActivationLevelControl[] CONTROLS = new ActivationLevelControl[] {
-    Controls.locationMonitor
-  };
-
-  private final static OrientationMonitor.Reason ORIENTATION_MONITOR_REASON
-                     = OrientationMonitor.Reason.NAVIGATION_ACTIVITY;
-
-  @Override
-  protected void onResume () {
-    super.onResume();
-    for (ActivationLevelControl control : CONTROLS) control.onResume();
-    OrientationMonitor.start(ORIENTATION_MONITOR_REASON);
-  }
-
-  @Override
-  protected void onPause () {
-    try {
-      OrientationMonitor.stop(ORIENTATION_MONITOR_REASON);
-      for (ActivationLevelControl control : CONTROLS) control.onPause();
-    } finally {
-      super.onPause();
     }
   }
 }

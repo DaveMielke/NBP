@@ -3,8 +3,19 @@ package org.nbp.navigator;
 import org.nbp.common.speech.TextPlayer;
 import org.nbp.common.controls.Control;
 
+import org.nbp.common.CommonContext;
+import android.content.Context;
+
 public abstract class Announcements {
   private Announcements () {
+  }
+
+  private final static Context getContext () {
+    return CommonContext.getContext();
+  }
+
+  private final static String getString (int resource) {
+    return getContext().getString(resource);
   }
 
   public static class Announcer extends TextPlayer {
@@ -68,7 +79,7 @@ public abstract class Announcements {
     if (announcer.isInitializing) return true;
 
     StringBuilder confirmation = new StringBuilder();
-    confirmation.append(NavigationActivity.getNavigationActivity().getString(label));
+    confirmation.append(getString(label));
     confirmation.append(' ');
     confirmation.append(value);
 

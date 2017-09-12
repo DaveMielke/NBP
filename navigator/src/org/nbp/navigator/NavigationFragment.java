@@ -1,10 +1,14 @@
 package org.nbp.navigator;
 
+import org.nbp.navigator.controls.ActivationLevelControl;
+
 import java.util.List;
 import java.io.IOException;
 
-import org.nbp.common.CommonActivity;
 import org.nbp.common.CommonUtilities;
+
+import android.app.Fragment;
+import android.app.Activity;
 
 import android.os.Build;
 import android.util.Log;
@@ -13,10 +17,12 @@ import android.os.Bundle;
 import android.os.AsyncTask;
 
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import android.view.accessibility.AccessibilityManager;
+
 import android.widget.TextView;
 import android.widget.ImageView;
-
-import android.view.accessibility.AccessibilityManager;
 
 import android.text.TextUtils;
 
@@ -24,8 +30,8 @@ import android.location.Location;
 import android.location.Address;
 import android.location.Geocoder;
 
-public abstract class BaseActivity extends CommonActivity {
-  private final static String LOG_TAG = BaseActivity.class.getName();
+public class NavigationFragment extends Fragment {
+  private final static String LOG_TAG = NavigationFragment.class.getName();
 
   private AccessibilityManager accessibilityManager;
 
@@ -64,7 +70,12 @@ public abstract class BaseActivity extends CommonActivity {
   private TextView longitudeDecimal;
   private TextView longitudeDMS;
 
+  private final View findViewById (int identifier) {
+    return getActivity().findViewById(identifier);
+  }
+
   protected final void findViews () {
+    //
     // accuracy
     accuracySatellites = (TextView)findViewById(R.id.accuracy_satellites);
     accuracyHorizontal = (TextView)findViewById(R.id.accuracy_horizontal);
@@ -326,7 +337,7 @@ public abstract class BaseActivity extends CommonActivity {
   private Geocoder geocoder;
 
   private final void prepareGeocoding () {
-    geocoder = Geocoder.isPresent()? new Geocoder(this): null;
+    geocoder = Geocoder.isPresent()? new Geocoder(getActivity()): null;
 
     setText(addressName,
       (geocoder != null)?
@@ -436,7 +447,7 @@ public abstract class BaseActivity extends CommonActivity {
               double latitude;
               double longitude;
 
-              synchronized (BaseActivity.this) {
+              synchronized (NavigationFragment.this) {
                 if (!atNewLocation) {
                   amGeocodingLocation = false;
                   return null;
@@ -571,7 +582,7 @@ public abstract class BaseActivity extends CommonActivity {
       new Runnable() {
         @Override
         public void run () {
-          runOnUiThread(
+          getActivity().runOnUiThread(
             new Runnable() {
               @Override
               public void run () {
@@ -587,13 +598,60 @@ public abstract class BaseActivity extends CommonActivity {
   }
 
   @Override
-  protected void onCreate (Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    accessibilityManager = (AccessibilityManager)getSystemService(ACCESSIBILITY_SERVICE);
+  public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedState) {
+    return inflater.inflate(R.layout.navigation, container, false);
   }
 
-  protected final void finishBaseActivityCreation () {
+  private static NavigationFragment navigationFragment = null;
+
+  public final static NavigationFragment getNavigationFragment () {
+    return navigationFragment;
+  }
+
+  @Override
+  public void onCreate (Bundle savedState) {
+    super.onCreate(savedState);
+    navigationFragment = this;
+    accessibilityManager = (AccessibilityManager)getActivity().getSystemService(Activity.ACCESSIBILITY_SERVICE);
+  }
+
+  @Override
+  public void onActivityCreated (Bundle savedState) {
+    super.onActivityCreated(savedState);
     findViews();
     prepareGeocoding();
+  }
+
+  @Override
+  public void onDestroy () {
+    try {
+      navigationFragment = null;
+    } finally {
+      super.onDestroy();
+    }
+  }
+
+  private final static ActivationLevelControl[] CONTROLS = new ActivationLevelControl[] {
+    Controls.locationMonitor
+  };
+
+  private final static OrientationMonitor.Reason ORIENTATION_MONITOR_REASON
+                     = OrientationMonitor.Reason.NAVIGATION_FRAGMENT;
+
+  @Override
+  public void onResume () {
+    super.onResume();
+    for (ActivationLevelControl control : CONTROLS) control.onResume();
+    OrientationMonitor.start(ORIENTATION_MONITOR_REASON);
+  }
+
+  @Override
+  public void onPause () {
+    try {
+      OrientationMonitor.stop(ORIENTATION_MONITOR_REASON);
+      for (ActivationLevelControl control : CONTROLS) control.onPause();
+    } finally {
+      super.onPause();
+    }
   }
 }

@@ -32,7 +32,7 @@ public class ScreenOrientationControl extends EnumerationControl<ScreenOrientati
   @Override
   protected boolean setEnumerationValue (ScreenOrientation value) {
     ApplicationSettings.SCREEN_ORIENTATION = value;
-    value.setCurrentOrientation(NavigationActivity.getNavigationActivity());
+    value.setCurrentOrientation(NavigatorActivity.getNavigatorActivity());
     return true;
   }
 

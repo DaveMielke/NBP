@@ -8,7 +8,7 @@ public abstract class LocationMonitor extends NavigationMonitor {
   }
 
   protected final void setLocation (Location location) {
-    if (location != null) getActivity().setLocation(location);
+    if (location != null) getFragment().setLocation(location);
   }
 
   public final static LocationProvider getCurrentProvider () {

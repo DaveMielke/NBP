@@ -1,6 +1,9 @@
 package org.nbp.navigator;
 
+import org.nbp.common.CommonContext;
+
 import android.util.Log;
+import android.content.Context;
 
 public abstract class NavigationMonitor {
   private final String LOG_TAG = getClass().getName();
@@ -8,8 +11,12 @@ public abstract class NavigationMonitor {
   protected NavigationMonitor () {
   }
 
-  protected final static NavigationActivity getActivity () {
-    return NavigationActivity.getNavigationActivity();
+  protected final static NavigationFragment getFragment () {
+    return NavigationFragment.getNavigationFragment();
+  }
+
+  protected final static Context getContext () {
+    return CommonContext.getContext();
   }
 
   private enum MonitorState {

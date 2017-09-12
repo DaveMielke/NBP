@@ -13,11 +13,11 @@ public abstract class OrientationMonitor extends NavigationMonitor {
   }
 
   protected final void setOrientation (float heading, float pitch, float roll) {
-    getActivity().setOrientation(heading, pitch, roll);
+    getFragment().setOrientation(heading, pitch, roll);
   }
 
   public enum Reason {
-    NAVIGATION_ACTIVITY, LOCATION_MONITOR;
+    NAVIGATION_FRAGMENT, LOCATION_MONITOR;
 
     public final void log (String action) {
       Log.d(LOG_TAG, String.format("%s for %s", action, name()));
