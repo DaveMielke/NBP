@@ -7,15 +7,15 @@
     android:paddingRight="@dimen/spacer_width"
    />
 
-  <TableRow android:id="@+id/row_address">
-    <TextView android:text="@string/label_name" />
+  <TableRow android:id="@+id/row_address_place">
+    <TextView android:text="@string/label_address_place" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/address_name" android:layout_span="3" />
+    <TextView android:id="@+id/address_place" android:layout_span="3" />
     <include layout="@layout/spacer" />
   </TableRow>
 
-  <TableRow android:id="@+id/row_distance">
-    <TextView android:text="@string/label_distance" />
+  <TableRow android:id="@+id/row_address_distance">
+    <TextView android:text="@string/label_address_distance" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/address_distance" />
     <include layout="@layout/spacer" />
@@ -23,8 +23,8 @@
     <include layout="@layout/spacer" />
   </TableRow>
 
-  <TableRow android:id="@+id/row_direction">
-    <TextView android:text="@string/label_direction" />
+  <TableRow android:id="@+id/row_address_heading">
+    <TextView android:text="@string/label_address_heading" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/address_degrees" />
     <include layout="@layout/spacer" />

@@ -7,30 +7,30 @@
   <string name="label_settings_button">Settings</string>
 
   <string name="section_accuracy">Measurement Accuracy</string>
-  <string name="label_satellites">Satellites</string>
-  <string name="label_horizontal">Distance</string>
-  <string name="label_vertical">Altitude</string>
-  <string name="label_direction">Direction</string>
-  <string name="label_speed">Speed</string>
+  <string name="label_accuracy_satellites">Satellites</string>
+  <string name="label_accuracy_position">Position</string>
+  <string name="label_accuracy_altitude">Altitude</string>
+  <string name="label_accuracy_speed">Speed</string>
+  <string name="label_accuracy_bearing">Bearing</string>
 
   <string name="section_address">Geocoded Location</string>
-  <string name="label_name">Location</string>
-  <string name="label_distance">Distance</string>
-  <string name="label_direction">Direction</string>
+  <string name="label_address_place">Place</string>
+  <string name="label_address_distance">Distance</string>
+  <string name="label_address_heading">Direction</string>
 
   <string name="section_motion">Physical Motion</string>
-  <string name="label_speed">Speed</string>
-  <string name="label_bearing">Bearing</string>
+  <string name="label_motion_speed">Speed</string>
+  <string name="label_motion_bearing">Bearing</string>
 
   <string name="section_orientation">Device Orientation</string>
-  <string name="label_heading">Heading</string>
-  <string name="label_pitch">Pitch</string>
-  <string name="label_roll">Roll</string>
+  <string name="label_orientation_heading">Heading</string>
+  <string name="label_orientation_pitch">Pitch</string>
+  <string name="label_orientation_roll">Roll</string>
 
   <string name="section_position">Terrestrial Position</string>
-  <string name="label_latitude">Latitude</string>
-  <string name="label_longitude">Longitude</string>
-  <string name="label_altitude">Altitude</string>
+  <string name="label_position_altitude">Altitude</string>
+  <string name="label_position_latitude">Latitude</string>
+  <string name="label_position_longitude">Longitude</string>
 
   <string name="message_unknown">(unknown)</string>
   <string name="message_unsupported">(unsupported)</string>

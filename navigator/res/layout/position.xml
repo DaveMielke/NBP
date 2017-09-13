@@ -7,15 +7,15 @@
     android:paddingRight="@dimen/spacer_width"
    />
 
-  <TableRow android:id="@+id/row_altitude">
-    <TextView android:text="@string/label_altitude" />
+  <TableRow android:id="@+id/row_position_altitude">
+    <TextView android:text="@string/label_position_altitude" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/altitude_magnitude" />
     <include layout="@layout/spacer" />
   </TableRow>
 
-  <TableRow android:id="@+id/row_latitude">
-    <TextView android:text="@string/label_latitude" />
+  <TableRow android:id="@+id/row_position_latitude">
+    <TextView android:text="@string/label_position_latitude" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/latitude_decimal" />
     <include layout="@layout/spacer" />
@@ -23,8 +23,8 @@
     <include layout="@layout/spacer" />
   </TableRow>
 
-  <TableRow android:id="@+id/row_longitude">
-    <TextView android:text="@string/label_longitude" />
+  <TableRow android:id="@+id/row_position_longitude">
+    <TextView android:text="@string/label_position_longitude" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/longitude_decimal" />
     <include layout="@layout/spacer" />

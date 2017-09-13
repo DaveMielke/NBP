@@ -44,10 +44,13 @@ public class NavigationFragment extends NavigatorFragment {
 
   // accuracy
   private TextView accuracySatellites;
-  private TextView accuracyHorizontal;
+  private TextView accuracyPosition;
+  private TextView accuracyAltitude;
+  private TextView accuracySpeed;
+  private TextView accuracyBearing;
 
   // address
-  private TextView addressName;
+  private TextView addressPlace;
   private TextView addressDistance;
   private TextView addressDirection;
   private TextView addressDegrees;
@@ -80,10 +83,13 @@ public class NavigationFragment extends NavigatorFragment {
     //
     // accuracy
     accuracySatellites = (TextView)findViewById(R.id.accuracy_satellites);
-    accuracyHorizontal = (TextView)findViewById(R.id.accuracy_horizontal);
+    accuracyPosition = (TextView)findViewById(R.id.accuracy_position);
+    accuracyAltitude = (TextView)findViewById(R.id.accuracy_altitude);
+    accuracySpeed = (TextView)findViewById(R.id.accuracy_speed);
+    accuracyBearing = (TextView)findViewById(R.id.accuracy_bearing);
 
     // address
-    addressName = (TextView)findViewById(R.id.address_name);
+    addressPlace = (TextView)findViewById(R.id.address_place);
     addressDistance = (TextView)findViewById(R.id.address_distance);
     addressDirection = (TextView)findViewById(R.id.address_direction);
     addressDegrees = (TextView)findViewById(R.id.address_degrees);
@@ -127,10 +133,10 @@ public class NavigationFragment extends NavigatorFragment {
     StringBuilder announcement = new StringBuilder();
 
     {
-      CharSequence name = getText(addressName);
+      CharSequence place = getText(addressPlace);
 
-      if (name != null) {
-        announcement.append(name);
+      if (place != null) {
+        announcement.append(place);
         announcement.append(':');
       }
     }
@@ -312,8 +318,8 @@ public class NavigationFragment extends NavigatorFragment {
     setRelativeDirection(addressDirection, addressHeading);
   }
 
-  private final void setAddressName (CharSequence name) {
-    setText(addressName, name);
+  private final void setAddressPlace (CharSequence place) {
+    setText(addressPlace, place);
   }
 
   private final void setAddressDistance (Float distance) {
@@ -341,7 +347,7 @@ public class NavigationFragment extends NavigatorFragment {
   private final void prepareGeocoding () {
     geocoder = Geocoder.isPresent()? new Geocoder(getActivity()): null;
 
-    setText(addressName,
+    setText(addressPlace,
       (geocoder != null)?
       R.string.message_waiting:
       R.string.message_unsupported
@@ -362,15 +368,15 @@ public class NavigationFragment extends NavigatorFragment {
         new AsyncTask<Void, Object, Void>() {
           @Override
           protected void onProgressUpdate (Object... arguments) {
-            CharSequence name      = (CharSequence)arguments[0];
-            Float        distance  = (Float)       arguments[1];
-            Float        direction = (Float)       arguments[2];
+            CharSequence place    = (CharSequence)arguments[0];
+            Float        distance = (Float)       arguments[1];
+            Float        heading  = (Float)       arguments[2];
 
             setAddressDistance(distance);
-            setAddressHeading((direction != null)? ApplicationUtilities.toUnsignedAngle(direction): null);
+            setAddressHeading((heading != null)? ApplicationUtilities.toUnsignedAngle(heading): null);
 
-            if (!TextUtils.equals(name, getText(addressName))) {
-              setAddressName(name);
+            if (!TextUtils.equals(place, getText(addressPlace))) {
+              setAddressPlace(place);
               if (ApplicationSettings.ANNOUNCE_LOCATION) announceLocation();
             }
           }
@@ -393,7 +399,7 @@ public class NavigationFragment extends NavigatorFragment {
                   if (name.length() == 0) name = getString(R.string.message_unknown);
 
                   Float distance = null;
-                  Float direction = null;
+                  Float heading = null;
 
                   if (address.hasLatitude() && address.hasLongitude()) {
                     float[] results = new float[2];
@@ -405,7 +411,7 @@ public class NavigationFragment extends NavigatorFragment {
                     );
 
                     distance = results[0];
-                    direction = results[1];
+                    heading = results[1];
 
                     if (ApplicationSettings.LOG_GEOCODING) {
                       StringBuilder sb = new StringBuilder("orientation:");
@@ -416,13 +422,13 @@ public class NavigationFragment extends NavigatorFragment {
                       sb.append(' ');
                       sb.append(ApplicationUtilities.toDistanceText(distance));
                       sb.append('@');
-                      sb.append(ApplicationUtilities.toAngleText(direction));
+                      sb.append(ApplicationUtilities.toAngleText(heading));
 
                       Log.d(LOG_TAG, sb.toString());
                     }
                   }
 
-                  publishProgress(name, distance, direction);
+                  publishProgress(name, distance, heading);
                   return true;
                 } else {
                   problem = "no addresses";
@@ -509,9 +515,9 @@ public class NavigationFragment extends NavigatorFragment {
           }
         }
 
-        setText(accuracyHorizontal, ("±" + ApplicationUtilities.toDistanceText(accuracy)));
+        setText(accuracyPosition, ("±" + ApplicationUtilities.toDistanceText(accuracy)));
       } else {
-        setText(accuracyHorizontal);
+        setText(accuracyPosition);
       }
 
       setPosition(latitude, longitude);
