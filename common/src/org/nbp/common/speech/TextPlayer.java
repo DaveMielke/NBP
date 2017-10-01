@@ -7,9 +7,11 @@ import java.util.LinkedHashMap;
 
 import android.util.Log;
 import android.os.Build;
+import android.os.Bundle;
 
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 
 import android.text.Spanned;
 
@@ -21,6 +23,50 @@ public abstract class TextPlayer {
   protected boolean isLogging () {
     return false;
   }
+
+  private final void logSpeechAction (CharSequence... phrases) {
+    if (isLogging()) {
+      StringBuilder sb = new StringBuilder();
+
+      for (CharSequence phrase : phrases) {
+        if (phrase == null) continue;
+        if (phrase.length() == 0) continue;
+
+        if (sb.length() > 0) sb.append(": ");
+        sb.append(phrase);
+      }
+
+      if (sb.length() > 0) {
+        sb.insert(0, "speech action: ");
+        Log.d(LOG_TAG, sb.toString());
+      }
+    }
+  }
+
+  private final void logSpeechFailure (String action, Exception exception) {
+    Log.w(LOG_TAG, String.format(
+      "speech failure: %s: %s", action, exception.getMessage()
+    ));
+  }
+
+  private final Bundle ttsParameterBundle = new Bundle();
+  private final HashMap<String, String> ttsParameterMap =
+            new HashMap<String, String>();
+
+  private final void setParameter (String key, String value) {
+    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+      synchronized (ttsParameterBundle) {
+        ttsParameterBundle.putString(key, value);
+      }
+    } else {
+      synchronized (ttsParameterMap) {
+        ttsParameterMap.put(key, value);
+      }
+    }
+  }
+
+  private final static int OK = TextToSpeech.SUCCESS;
+  private int ttsStatus = TextToSpeech.ERROR;
 
   private final AudioManager audioManager;
 
@@ -36,28 +82,6 @@ public abstract class TextPlayer {
       put(AudioManager.STREAM_DTMF, "DTMF");
     }
   };
-
-  private final HashMap<String, String> ttsParameters =
-            new HashMap<String, String>();
-
-  private final static int OK = TextToSpeech.SUCCESS;
-  private int ttsStatus = TextToSpeech.ERROR;
-
-  private TextToSpeech ttsObject = null;
-  private int maximumLength;
-  private String pendingSayText = null;
-
-  private final void logSpeechFailure (String action, Exception exception) {
-    Log.w(LOG_TAG, String.format(
-      "speech failure: %s: %s", action, exception.getMessage()
-    ));
-  }
-
-  private final void setParameter (String parameter, String value) {
-    synchronized (ttsParameters) {
-      ttsParameters.put(parameter, value);
-    }
-  }
 
   public final void setAudioStream (int stream) {
     setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, Integer.toString(stream));
@@ -95,8 +119,22 @@ public abstract class TextPlayer {
     return isStarted();
   }
 
+  private TextToSpeech ttsObject = null;
+  private CharSequence pendingSpeakText = null;
+
+  private TextSegmentGenerator textSegmentGenerator;
+  private boolean isSpeaking = false;
+  private int utteranceIdentifier = 0;
+
+  private final void speakingStopped () {
+    isSpeaking = false;
+    if (textSegmentGenerator != null) textSegmentGenerator.removeText();
+  }
+
   public final boolean stopSpeaking () {
     synchronized (this) {
+      speakingStopped();
+
       if (isStarted()) {
         try {
           if (!ttsObject.isSpeaking()) return true;
@@ -105,9 +143,7 @@ public abstract class TextPlayer {
           return false;
         }
 
-        if (isLogging()) {
-          Log.d(LOG_TAG, "speech: stop");
-        }
+        logSpeechAction("stop");
 
         try {
           if (ttsObject.stop() == OK) return true;
@@ -120,53 +156,35 @@ public abstract class TextPlayer {
     return false;
   }
 
-  public final boolean say (String text) {
-    if (text != null) {
-      synchronized (this) {
-        if (isActive()) {
-          while (true) {
-            if (text.length() == 0) return true;
+  private final boolean speak () {
+    synchronized (this) {
+      if (isActive()) {
+        CharSequence segment = textSegmentGenerator.nextSegment();
 
-            int nl = text.indexOf('\n');
-            String line;
+        if (segment == null) {
+          isSpeaking = false;
+          return true;
+        }
 
-            if (nl == -1) {
-              line = text;
-              text = "";
-            } else {
-              line = text.substring(0, nl);
-              text = text.substring(nl+1);
-            }
+        String utterance = Integer.toString(++utteranceIdentifier);
+        logSpeechAction("speak", utterance, segment);
 
-            while (true) {
-              int length = line.length();
-              if (length == 0) break;
-              String segment;
+        try {
+          int queueMode = TextToSpeech.QUEUE_ADD;
+          int status;
 
-              if (length > maximumLength) {
-                int end = line.lastIndexOf(' ', maximumLength);
-                if (end == -1) end = maximumLength;
-                segment = line.substring(0, end);
-                line = line.substring(end);
-              } else {
-                segment = line;
-                line = "";
-              }
-
-              if (isLogging()) {
-                Log.d(LOG_TAG, ("speech: say: " + segment));
-              }
-
-              try {
-                if (ttsObject.speak(segment, TextToSpeech.QUEUE_ADD, ttsParameters) != OK) return false;
-              } catch (IllegalArgumentException exception) {
-                logSpeechFailure("speak", exception);
-                return false;
-              }
-            }
+          if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+            status = ttsObject.speak(segment, queueMode, ttsParameterBundle, utterance);
+          } else {
+            setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utterance);
+            status = ttsObject.speak(segment.toString(), queueMode, ttsParameterMap);
           }
-        } else {
-          pendingSayText = text;
+
+          if (status == OK) {
+            return true;
+          }
+        } catch (IllegalArgumentException exception) {
+          logSpeechFailure("speak", exception);
         }
       }
     }
@@ -175,28 +193,20 @@ public abstract class TextPlayer {
   }
 
   public final boolean say (CharSequence text) {
-    if (!(text instanceof Spanned)) return say(text.toString());
+    synchronized (this) {
+      if (isActive()) {
+        textSegmentGenerator.addText(text);
 
-    Spanned spanned = (Spanned)text;
-    int length = spanned.length();
-    int start = 0;
-
-    while (start < length) {
-      int end = spanned.nextSpanTransition(start, length, SpeechSpan.class);
-      SpeechSpan[] spans = spanned.getSpans(start, start+1, SpeechSpan.class);
-      String segment;
-
-      if (spans.length == 0) {
-        segment = spanned.subSequence(start, end).toString();
+        if (!isSpeaking) {
+          isSpeaking = true;
+          speak();
+        }
       } else {
-        segment = spans[0].getText();
+        pendingSpeakText = text;
       }
-
-      if (!say(segment)) return false;
-      start = end;
     }
 
-    return true;
+    return false;
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
@@ -219,19 +229,6 @@ public abstract class TextPlayer {
       synchronized (this) {
         if (isStarted()) {
           setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  public final boolean setBalance (float balance) {
-    if (verifyRange("balance", balance, SpeechParameters.BALANCE_MINIMUM, SpeechParameters.BALANCE_MAXIMUM)) {
-      synchronized (this) {
-        if (isStarted()) {
-          setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
           return true;
         }
       }
@@ -272,6 +269,120 @@ public abstract class TextPlayer {
     return false;
   }
 
+  public final boolean setBalance (float balance) {
+    if (verifyRange("balance", balance, SpeechParameters.BALANCE_MINIMUM, SpeechParameters.BALANCE_MAXIMUM)) {
+      synchronized (this) {
+        if (isStarted()) {
+          setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private final int getMaximumLength () {
+    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+      try {
+        return ttsObject.getMaxSpeechInputLength();
+      } catch (IllegalArgumentException exception) {
+        logSpeechFailure("get length", exception);
+      }
+    }
+
+    return 4000;
+  }
+
+  private final TextSegmentGenerator makeTextSegmentGenerator () {
+    TextSegmentGenerator.OuterGenerator speechSpanGenerator =
+      new TextSegmentGenerator.OuterGenerator() {
+        @Override
+        protected final CharSequence generateSegment () {
+          if (remainingText instanceof Spanned) {
+            Spanned text = (Spanned)remainingText;
+
+            if (text.length() > 0) {
+              SpeechSpan[] spans = text.getSpans(0, 0, SpeechSpan.class);
+
+              if (spans != null) {
+                if (spans.length > 0) {
+                  SpeechSpan span = spans[0];
+                  removeText(text.getSpanEnd(span));
+                  return span.getText();
+                }
+              }
+
+              {
+                int length = text.length();
+                int end = text.nextSpanTransition(0, length, SpeechSpan.class);
+
+                if (end < length) {
+                  CharSequence segment = text.subSequence(0, end);
+                  removeText(end);
+                  return segment;
+                }
+              }
+            }
+          }
+
+          return null;
+        }
+      };
+
+    return new TextSegmentGenerator.Builder()
+                                   .add(speechSpanGenerator)
+                                   .add('\n')
+                                   .add('\t')
+                                   .add(getMaximumLength())
+                                   .build();
+  }
+
+  private final void setUtteranceProgressListener () {
+    ttsObject.setOnUtteranceProgressListener(
+      new UtteranceProgressListener() {
+        // added in API Level 15 (Icecream Sandwich)
+        public void onStart (String utterance) {
+          synchronized (TextPlayer.this) {
+            logSpeechAction("starting", utterance);
+          }
+        }
+
+        // added in API Level 15 (Icecream Sandwich)
+        public void onError (String utterance) {
+          synchronized (TextPlayer.this) {
+            logSpeechAction("error", utterance);
+            speakingStopped();
+          }
+        }
+
+        // added in API Level 21 (Lollipop)
+        public void onError (String utterance, int error) {
+          synchronized (TextPlayer.this) {
+            logSpeechAction(("error " + Integer.toString(error)), utterance);
+            speakingStopped();
+          }
+        }
+
+        // added in API Level 23 (MarshMallow)
+        public void onStop (String utterance, boolean interrupted) {
+          synchronized (TextPlayer.this) {
+            logSpeechAction("stopped", utterance);
+            speakingStopped();
+          }
+        }
+
+        // added in API Level 15 (Icecream Sandwich)
+        public void onDone (String utterance) {
+          synchronized (TextPlayer.this) {
+            logSpeechAction("done", utterance);
+            speak();
+          }
+        }
+      }
+    );
+  }
+
   private final Timeout ttsRetry = new Timeout(CommonParameters.SPEECH_RETRY_DELAY, "speech-retry-delay") {
     @Override
     public void run () {
@@ -294,19 +405,12 @@ public abstract class TextPlayer {
             if (isStarted()) {
               Log.d(LOG_TAG, "speech started");
               initializeProperties();
-              maximumLength = 4000;
+              textSegmentGenerator = makeTextSegmentGenerator();
+              setUtteranceProgressListener();
 
-              if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-                try {
-                  maximumLength = ttsObject.getMaxSpeechInputLength();
-                } catch (IllegalArgumentException exception) {
-                  logSpeechFailure("get length", exception);
-                }
-              }
-
-              if (pendingSayText != null) {
-                String text = pendingSayText;
-                pendingSayText = null;
+              if (pendingSpeakText != null) {
+                CharSequence text = pendingSpeakText;
+                pendingSpeakText = null;
                 say(text);
               }
             } else {
