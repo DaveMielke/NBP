@@ -133,11 +133,11 @@ public abstract class TextPlayer {
   private CharSequence pendingSpeakText = null;
 
   private TextSegmentGenerator textSegmentGenerator;
-  private boolean isSpeaking = false;
+  private int speakingCount = 0;
   private int utteranceIdentifier = 0;
 
   private final void speakingStopped () {
-    isSpeaking = false;
+    speakingCount = 0;
     if (textSegmentGenerator != null) textSegmentGenerator.removeText();
   }
 
@@ -169,32 +169,34 @@ public abstract class TextPlayer {
   private final boolean speak () {
     synchronized (this) {
       if (isActive()) {
-        CharSequence segment = textSegmentGenerator.nextSegment();
-
-        if (segment == null) {
-          isSpeaking = false;
-          return true;
-        }
-
-        String utterance = Integer.toString(++utteranceIdentifier);
-        logSpeechAction("speak", utterance, segment);
-
-        try {
-          int queueMode = TextToSpeech.QUEUE_ADD;
-          int status;
-
-          if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
-            status = ttsObject.speak(segment, queueMode, ttsParameterBundle, utterance);
-          } else {
-            setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utterance);
-            status = ttsObject.speak(segment.toString(), queueMode, ttsParameterMap);
-          }
-
-          if (status == OK) {
+        while (true) {
+          if (speakingCount >= CommonParameters.SPEECH_SYNTHESIS_CONCURRENCY) {
             return true;
           }
-        } catch (IllegalArgumentException exception) {
-          logSpeechFailure("speak", exception);
+
+          CharSequence segment = textSegmentGenerator.nextSegment();
+          if (segment == null) return true;
+
+          String utterance = Integer.toString(++utteranceIdentifier);
+          logSpeechAction("speak", utterance, segment);
+
+          try {
+            int queueMode = TextToSpeech.QUEUE_ADD;
+            int status;
+
+            if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+              status = ttsObject.speak(segment, queueMode, ttsParameterBundle, utterance);
+            } else {
+              setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utterance);
+              status = ttsObject.speak(segment.toString(), queueMode, ttsParameterMap);
+            }
+
+            if (status != OK) break;
+            speakingCount += 1;
+          } catch (IllegalArgumentException exception) {
+            logSpeechFailure("speak", exception);
+            break;
+          }
         }
       }
     }
@@ -206,11 +208,7 @@ public abstract class TextPlayer {
     synchronized (this) {
       if (isActive()) {
         textSegmentGenerator.addText(text);
-
-        if (!isSpeaking) {
-          isSpeaking = true;
-          speak();
-        }
+        if (!speak()) return false;
       } else {
         pendingSpeakText = text;
       }
@@ -386,6 +384,7 @@ public abstract class TextPlayer {
         public void onDone (String utterance) {
           synchronized (TextPlayer.this) {
             logSpeechAction("done", utterance);
+            speakingCount -= 1;
             speak();
           }
         }

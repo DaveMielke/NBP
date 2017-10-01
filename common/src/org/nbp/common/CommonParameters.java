@@ -14,6 +14,7 @@ public abstract class CommonParameters {
   public final static int ALERT_DURATION = 300; // milliseconds
 
   public final static long SPEECH_RETRY_DELAY = 5000; // milliseconds
+  public final static long SPEECH_SYNTHESIS_CONCURRENCY = 2;
 
   public final static int SCREEN_LEFT_OFFSET = 60; // DIPs
 }
