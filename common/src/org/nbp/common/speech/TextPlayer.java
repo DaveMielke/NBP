@@ -379,7 +379,7 @@ public abstract class TextPlayer {
         // added in API Level 23 (MarshMallow)
         public void onStop (String utterance, boolean interrupted) {
           synchronized (TextPlayer.this) {
-            logSpeechAction("stopped", utterance);
+            logSpeechAction((interrupted? "interrupted": "stopped"), utterance);
             speakingStopped();
           }
         }
