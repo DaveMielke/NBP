@@ -4,6 +4,9 @@ import org.nbp.common.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.Set;
+import java.util.HashSet;
+
 import android.util.Log;
 import android.os.Build;
 import android.os.Bundle;
@@ -132,18 +135,18 @@ public abstract class TextPlayer {
   private TextToSpeech ttsObject = null;
   private CharSequence pendingSpeakText = null;
 
-  private TextSegmentGenerator textSegmentGenerator;
-  private int speakingCount = 0;
+  private TextSegmentGenerator segmentGenerator;
   private int utteranceIdentifier = 0;
+  private final Set<String> activeUtterances = new HashSet<String>();
 
-  private final void speakingStopped () {
-    speakingCount = 0;
-    if (textSegmentGenerator != null) textSegmentGenerator.removeText();
+  private final void cancelSpeaking () {
+    segmentGenerator.removeText();
+    activeUtterances.clear();
   }
 
   public final boolean stopSpeaking () {
     synchronized (this) {
-      speakingStopped();
+      if (segmentGenerator != null) segmentGenerator.removeText();
 
       if (isStarted()) {
         try {
@@ -166,15 +169,15 @@ public abstract class TextPlayer {
     return false;
   }
 
-  private final boolean speak () {
+  private final boolean startSpeaking () {
     synchronized (this) {
       if (isActive()) {
         while (true) {
-          if (speakingCount >= CommonParameters.SPEECH_SYNTHESIS_CONCURRENCY) {
+          if (activeUtterances.size() >= CommonParameters.SPEECH_SYNTHESIS_CONCURRENCY) {
             return true;
           }
 
-          CharSequence segment = textSegmentGenerator.nextSegment();
+          CharSequence segment = segmentGenerator.nextSegment();
           if (segment == null) return true;
 
           String utterance = Integer.toString(++utteranceIdentifier);
@@ -192,7 +195,7 @@ public abstract class TextPlayer {
             }
 
             if (status != OK) break;
-            speakingCount += 1;
+            activeUtterances.add(utterance);
           } catch (IllegalArgumentException exception) {
             logSpeechFailure("speak", exception);
             break;
@@ -207,8 +210,8 @@ public abstract class TextPlayer {
   public final boolean say (CharSequence text) {
     synchronized (this) {
       if (isActive()) {
-        textSegmentGenerator.addText(text);
-        if (!speak()) return false;
+        segmentGenerator.addText(text);
+        if (!startSpeaking()) return false;
       } else {
         pendingSpeakText = text;
       }
@@ -302,7 +305,7 @@ public abstract class TextPlayer {
     return 4000;
   }
 
-  private final TextSegmentGenerator makeTextSegmentGenerator () {
+  private final TextSegmentGenerator makeSegmentGenerator () {
     int maximumLength = getMaximumLength();
     logSpeechAction("maximum length", Integer.toString(maximumLength));
 
@@ -363,7 +366,7 @@ public abstract class TextPlayer {
         public void onError (String utterance) {
           synchronized (TextPlayer.this) {
             logSpeechAction("error", utterance);
-            speakingStopped();
+            cancelSpeaking();
           }
         }
 
@@ -371,7 +374,7 @@ public abstract class TextPlayer {
         public void onError (String utterance, int error) {
           synchronized (TextPlayer.this) {
             logSpeechAction(("error " + Integer.toString(error)), utterance);
-            speakingStopped();
+            cancelSpeaking();
           }
         }
 
@@ -379,7 +382,7 @@ public abstract class TextPlayer {
         public void onStop (String utterance, boolean interrupted) {
           synchronized (TextPlayer.this) {
             logSpeechAction((interrupted? "interrupted": "stopped"), utterance);
-            speakingStopped();
+            cancelSpeaking();
           }
         }
 
@@ -387,8 +390,8 @@ public abstract class TextPlayer {
         public void onDone (String utterance) {
           synchronized (TextPlayer.this) {
             logSpeechAction("done", utterance);
-            speakingCount -= 1;
-            speak();
+            activeUtterances.remove(utterance);
+            startSpeaking();
           }
         }
       }
@@ -417,7 +420,7 @@ public abstract class TextPlayer {
             if (isStarted()) {
               Log.d(LOG_TAG, "speech started");
               initializeProperties();
-              textSegmentGenerator = makeTextSegmentGenerator();
+              segmentGenerator = makeSegmentGenerator();
               setUtteranceProgressListener();
 
               if (pendingSpeakText != null) {
