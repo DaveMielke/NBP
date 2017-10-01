@@ -133,7 +133,7 @@ public abstract class TextPlayer {
   }
 
   private TextToSpeech ttsObject = null;
-  private CharSequence pendingSpeakText = null;
+  private CharSequence pendingText = null;
 
   private TextSegmentGenerator segmentGenerator;
   private int utteranceIdentifier = 0;
@@ -213,11 +213,11 @@ public abstract class TextPlayer {
         segmentGenerator.addText(text);
         if (!startSpeaking()) return false;
       } else {
-        pendingSpeakText = text;
+        pendingText = text;
       }
     }
 
-    return false;
+    return true;
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
@@ -423,9 +423,9 @@ public abstract class TextPlayer {
               segmentGenerator = makeSegmentGenerator();
               setUtteranceProgressListener();
 
-              if (pendingSpeakText != null) {
-                CharSequence text = pendingSpeakText;
-                pendingSpeakText = null;
+              if (pendingText != null) {
+                CharSequence text = pendingText;
+                pendingText = null;
                 say(text);
               }
             } else {
