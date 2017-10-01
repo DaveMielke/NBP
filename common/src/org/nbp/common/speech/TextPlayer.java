@@ -104,9 +104,7 @@ public abstract class TextPlayer {
     float loudestVolume = -1f;
 
     for (AudioStream stream : audioStreams) {
-      int current = stream.getCurrentVolume();
-      int maximum = stream.getMaximumVolume();
-      float volume = (float)current / (float)maximum;
+      float volume = stream.getNormalizedVolume();
 
       if (volume > loudestVolume) {
         loudestVolume = volume;

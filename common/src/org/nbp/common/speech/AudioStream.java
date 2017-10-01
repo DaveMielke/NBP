@@ -82,16 +82,20 @@ public enum AudioStream {
     return audioManager;
   }
 
-  public final int getCurrentVolume () {
-    return getAudioManager().getStreamVolume(streamNumber);
-  }
-
   public final int getMaximumVolume () {
     return getAudioManager().getStreamMaxVolume(streamNumber);
   }
 
-  public final void setVolume (int volume) {
+  public final int getCurrentVolume () {
+    return getAudioManager().getStreamVolume(streamNumber);
+  }
+
+  public final void setCurrentVolume (int volume) {
     getAudioManager().setStreamVolume(streamNumber, volume, 0);
+  }
+
+  public final float getNormalizedVolume () {
+    return (float)getCurrentVolume() / (float)getMaximumVolume();
   }
 
   private final void adjustVolume (int direction) {
