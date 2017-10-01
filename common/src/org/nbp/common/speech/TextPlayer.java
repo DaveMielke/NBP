@@ -303,6 +303,9 @@ public abstract class TextPlayer {
   }
 
   private final TextSegmentGenerator makeTextSegmentGenerator () {
+    int maximumLength = getMaximumLength();
+    logSpeechAction("maximum length", Integer.toString(maximumLength));
+
     TextSegmentGenerator.OuterGenerator speechSpanGenerator =
       new TextSegmentGenerator.OuterGenerator() {
         @Override
@@ -342,7 +345,7 @@ public abstract class TextPlayer {
                                    .add(speechSpanGenerator)
                                    .add('\n')
                                    .add('\t')
-                                   .add(getMaximumLength())
+                                   .add(maximumLength, true)
                                    .build();
   }
 

@@ -138,21 +138,39 @@ public abstract class TextSegmentGenerator {
       return this;
     }
 
-    public final Builder add (final int length) {
+    public final Builder add (final int length, final boolean onWhitespace) {
       add(
         new OuterGenerator() {
           @Override
           protected final CharSequence generateSegment () {
             if (remainingText.length() <= length) return null;
+            int end = length;
 
-            CharSequence segment = remainingText.subSequence(0, length);
-            removeText(length);
+            if (onWhitespace) {
+              if (!Character.isWhitespace(remainingText.charAt(end))) {
+                int index = end;
+
+                while (index > 0) {
+                  if (Character.isWhitespace(remainingText.charAt(--index))) {
+                    end = index;
+                    break;
+                  }
+                }
+              }
+            }
+
+            CharSequence segment = remainingText.subSequence(0, end);
+            removeText(end);
             return segment;
           }
         }
       );
 
       return this;
+    }
+
+    public final Builder add (int length) {
+      return add(length, false);
     }
   }
 }
