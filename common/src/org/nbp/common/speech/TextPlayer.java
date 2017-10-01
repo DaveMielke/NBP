@@ -99,7 +99,7 @@ public abstract class TextPlayer {
     setAudioStream(stream.getAudioStream());
   }
 
-  public final void selectLoudestAudioStream () {
+  public final AudioStream getLoudestAudioStream () {
     AudioStream loudestStream = null;
     float loudestVolume = -1f;
 
@@ -116,7 +116,11 @@ public abstract class TextPlayer {
       if (loudestVolume == 1f) break;
     }
 
-    setAudioStream(loudestStream);
+    return loudestStream;
+  }
+
+  public final void selectLoudestAudioStream () {
+    setAudioStream(getLoudestAudioStream());
   }
 
   private final boolean isStarted () {
