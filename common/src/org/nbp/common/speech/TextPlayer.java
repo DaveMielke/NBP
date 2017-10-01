@@ -96,7 +96,7 @@ public abstract class TextPlayer {
   }
 
   public final void setAudioStream (AudioStream stream) {
-    setAudioStream(stream.getAudioStream());
+    setAudioStream(stream.getStreamNumber());
   }
 
   public final AudioStream getLoudestAudioStream () {

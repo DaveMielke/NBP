@@ -49,16 +49,16 @@ public enum AudioStream {
 
   ; // end of enumeration
 
-  private final int audioStream;
+  private final int streamNumber;
   private final int minimumSDK;
 
   private AudioStream (int stream, int sdk) {
-    audioStream = stream;
+    streamNumber = stream;
     minimumSDK = sdk;
   }
 
-  public final int getAudioStream () {
-    return audioStream;
+  public final int getStreamNumber () {
+    return streamNumber;
   }
 
   public final int getMinimumSDK () {
@@ -83,19 +83,19 @@ public enum AudioStream {
   }
 
   public final int getCurrentVolume () {
-    return getAudioManager().getStreamVolume(audioStream);
+    return getAudioManager().getStreamVolume(streamNumber);
   }
 
   public final int getMaximumVolume () {
-    return getAudioManager().getStreamMaxVolume(audioStream);
+    return getAudioManager().getStreamMaxVolume(streamNumber);
   }
 
   public final void setVolume (int volume) {
-    getAudioManager().setStreamVolume(audioStream, volume, 0);
+    getAudioManager().setStreamVolume(streamNumber, volume, 0);
   }
 
   private final void adjustVolume (int direction) {
-    getAudioManager().adjustStreamVolume(audioStream, direction, 0);
+    getAudioManager().adjustStreamVolume(streamNumber, direction, 0);
   }
 
   public final void increaseVolume () {
