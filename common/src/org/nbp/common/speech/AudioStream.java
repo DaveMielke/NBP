@@ -98,6 +98,16 @@ public enum AudioStream {
     return (float)getCurrentVolume() / (float)getMaximumVolume();
   }
 
+  public final void setNormalizedVolume (float volume) {
+    int maximum = getMaximumVolume();
+    int current = Math.round(volume * (float)maximum);
+
+    current = Math.min(current, maximum);
+    current = Math.max(current, 0);
+
+    setCurrentVolume(current);
+  }
+
   private final void adjustVolume (int direction) {
     getAudioManager().adjustStreamVolume(streamNumber, direction, 0);
   }
