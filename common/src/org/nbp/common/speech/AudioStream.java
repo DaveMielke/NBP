@@ -6,13 +6,13 @@ import android.content.Context;
 import android.media.AudioManager;
 
 public enum AudioStream {
-/*Accessibility(
+/*ACCESSIBILITY(
     AudioManager.STREAM_ACCESSIBILITY,
     Build.VERSION_CODES.O
   ),
 */
 
-  Alarm(
+  ALARM(
     AudioManager.STREAM_ALARM,
     Build.VERSION_CODES.BASE
   ),
@@ -22,27 +22,27 @@ public enum AudioStream {
     Build.VERSION_CODES.ECLAIR
   ),
 
-  Music(
+  MUSIC(
     AudioManager.STREAM_MUSIC,
     Build.VERSION_CODES.BASE
   ),
 
-  Notification(
+  NOTIFICATION(
     AudioManager.STREAM_NOTIFICATION,
     Build.VERSION_CODES.CUPCAKE
   ),
 
-  Ring(
+  RING(
     AudioManager.STREAM_RING,
     Build.VERSION_CODES.BASE
   ),
 
-  System(
+  SYSTEM(
     AudioManager.STREAM_SYSTEM,
     Build.VERSION_CODES.BASE
   ),
 
-  Call(
+  CALL(
     AudioManager.STREAM_VOICE_CALL,
     Build.VERSION_CODES.BASE
   ),

@@ -3,7 +3,6 @@ import org.nbp.common.*;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import android.util.Log;
 import android.os.Build;
@@ -65,50 +64,59 @@ public abstract class TextPlayer {
     }
   }
 
+  private final void setParameter (String key, int value) {
+    setParameter(key, Integer.toString(value));
+  }
+
+  private final void setParameter (String key, float value) {
+    setParameter(key, Float.toString(value));
+  }
+
   private final static int OK = TextToSpeech.SUCCESS;
   private int ttsStatus = TextToSpeech.ERROR;
 
   private final AudioManager audioManager;
 
-  private final static Map<Integer, String> audioStreams =
-         new LinkedHashMap<Integer, String>() {
-    {
-      put(AudioManager.STREAM_MUSIC, "music");
-      put(AudioManager.STREAM_NOTIFICATION, "notification");
-      put(AudioManager.STREAM_ALARM, "alarm");
-      put(AudioManager.STREAM_RING, "ring");
-      put(AudioManager.STREAM_SYSTEM, "system");
-      put(AudioManager.STREAM_VOICE_CALL, "voice");
-      put(AudioManager.STREAM_DTMF, "DTMF");
-    }
+  private final static AudioStream[] audioStreams = {
+    AudioStream.MUSIC,
+    AudioStream.NOTIFICATION,
+    AudioStream.ALARM,
+    AudioStream.RING,
+    AudioStream.SYSTEM,
+    AudioStream.CALL,
+    AudioStream.DTMF
   };
 
   public final void setAudioStream (int stream) {
-    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, Integer.toString(stream));
+    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, stream);
   }
 
   public final void setAudioStream () {
     setAudioStream(TextToSpeech.Engine.DEFAULT_STREAM);
   }
 
-  public final void selectLoudestAudioStream () {
-    int selected = -1;
-    float loudest = -1f;
+  public final void setAudioStream (AudioStream stream) {
+    setAudioStream(stream.getAudioStream());
+  }
 
-    for (int stream : audioStreams.keySet()) {
-      int current = audioManager.getStreamVolume(stream);
-      int maximum = audioManager.getStreamMaxVolume(stream);
+  public final void selectLoudestAudioStream () {
+    AudioStream loudestStream = null;
+    float loudestVolume = -1f;
+
+    for (AudioStream stream : audioStreams) {
+      int current = stream.getCurrentVolume();
+      int maximum = stream.getMaximumVolume();
       float volume = (float)current / (float)maximum;
 
-      if (volume > loudest) {
-        loudest = volume;
-        selected = stream;
+      if (volume > loudestVolume) {
+        loudestVolume = volume;
+        loudestStream = stream;
       }
 
-      if (loudest == 1f) break;
+      if (loudestVolume == 1f) break;
     }
 
-    setAudioStream(selected);
+    setAudioStream(loudestStream);
   }
 
   private final boolean isStarted () {
@@ -228,7 +236,7 @@ public abstract class TextPlayer {
     if (verifyRange("volume", volume, SpeechParameters.VOLUME_MINIMUM, SpeechParameters.VOLUME_MAXIMUM)) {
       synchronized (this) {
         if (isStarted()) {
-          setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
+          setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
           return true;
         }
       }
@@ -273,7 +281,7 @@ public abstract class TextPlayer {
     if (verifyRange("balance", balance, SpeechParameters.BALANCE_MINIMUM, SpeechParameters.BALANCE_MAXIMUM)) {
       synchronized (this) {
         if (isStarted()) {
-          setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, Float.toString(balance));
+          setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, balance);
           return true;
         }
       }
