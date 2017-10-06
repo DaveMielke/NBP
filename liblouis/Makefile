@@ -1,4 +1,4 @@
-include ../../setup.mk
+include ../setup.mk
 include $(BUILD_DIRECTORY)app.prologue.mk
 
 APPLICATION_NAME = louis
