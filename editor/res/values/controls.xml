@@ -3,5 +3,6 @@
 <resources>
   <string name="control_label_ProtectText">Protect Text</string>
   <string name="control_label_BrailleMode">BRL/BRF Mode</string>
+  <string name="control_label_BrailleCode">Braille Code</string>
   <string name="control_label_AuthorName">Author Name</string>
 </resources>

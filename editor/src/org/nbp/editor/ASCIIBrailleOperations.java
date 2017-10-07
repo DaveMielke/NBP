@@ -6,9 +6,35 @@ import java.io.BufferedOutputStream;
 
 import android.text.Editable;
 
+import org.liblouis.TranslationTable;
+import org.liblouis.TranslationBuilder;
+import org.liblouis.BrailleTranslation;
+import org.liblouis.TextTranslation;
+
 public class ASCIIBrailleOperations extends ByteOperations {
+  private final static BrailleMode.Conversions getConversions () {
+    return ApplicationSettings.BRAILLE_MODE.getConversions();
+  }
+
+  private final static TranslationTable getTranslationTable () {
+    return ApplicationSettings.BRAILLE_CODE.getTranslationTable();
+  }
+
+  private final static TranslationBuilder getTranslationBuilder () {
+    TranslationTable table = getTranslationTable();
+    if (table == null) return null;
+
+    TranslationBuilder builder = new TranslationBuilder();
+    builder.setTranslationTable(table);
+    builder.setAllowLongerOutput(true);
+    builder.setIncludeHighlighting(true);
+    return builder;
+  }
+
   @Override
   protected int processBytes (Editable content, byte[] buffer, int count) {
+    BrailleMode.Conversions conversions = getConversions();
+
     for (int index=0; index<count; index+=1) {
       byte symbol = buffer[index];
 
@@ -22,7 +48,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
       }
 
       {
-        char character = ApplicationSettings.BRAILLE_MODE.getConversions().symbolToChar(symbol);
+        char character = conversions.symbolToChar(symbol);
 
         if (character != 0) {
           content.append(character);
@@ -34,14 +60,61 @@ public class ASCIIBrailleOperations extends ByteOperations {
     return count;
   }
 
+  private final int endBytes (
+    TranslationBuilder builder, Editable content, int from, int to
+  ) {
+    if (builder == null) return to - from;
+    if (to == from) return 0;
+
+    CharSequence characters = content.subSequence(from, to);
+    builder.setInputCharacters(characters);
+    builder.setOutputLength(characters.length() * 2);
+
+    TextTranslation translation = new TextTranslation(builder);
+    CharSequence replacement = translation.getTextWithSpans();
+    content.replace(from, to, replacement);
+    return replacement.length();
+  }
+
   @Override
-  public void write (OutputStream stream, CharSequence content) throws IOException {
-    OutputStream buffer = new BufferedOutputStream(stream);
+  protected void endBytes (Editable content) {
+    TranslationBuilder builder = getTranslationBuilder();
+    int length = content.length();
+    int from = 0;
+    int to;
 
-    try {
-      int count = content.length();
+    for (to=0; to<length; to+=1) {
+      char character = content.charAt(to);
 
-      for (int index=0; index<count; index+=1) {
+      if (character == '\n') {
+        int adjustment = endBytes(builder, content, from, to) - (to - from);
+        length += adjustment;
+        to += adjustment;
+        from = to + 1;
+      }
+    }
+
+    endBytes(builder, content, from, to);
+  }
+
+  private final void write (
+    OutputStream stream, TranslationBuilder builder,
+    CharSequence content, int from, int to
+  ) throws IOException {
+    if (to > from) {
+      content = content.subSequence(from, to);
+
+      if (builder != null) {
+        builder.setInputCharacters(content);
+        builder.setOutputLength(content.length() * 2);
+
+        BrailleTranslation translation = new BrailleTranslation(builder);
+        content = translation.getBrailleAsString();
+      }
+
+      int length = content.length();
+
+      for (int index=0; index<length; index+=1) {
         char character = content.charAt(index);
         byte symbol = ASCIIBraille.charToSymbol(character);
 
@@ -55,10 +128,36 @@ public class ASCIIBrailleOperations extends ByteOperations {
           }
         }
 
-        buffer.write(symbol);
+        stream.write(symbol);
       }
+    }
+  }
+
+  @Override
+  public void write (OutputStream stream, CharSequence content) throws IOException {
+    if (!(stream instanceof BufferedOutputStream)) {
+      stream = new BufferedOutputStream(stream);
+    }
+
+    try {
+      TranslationBuilder builder = getTranslationBuilder();
+      int length = content.length();
+      int from = 0;
+      int to;
+
+      for (to=0; to<length; to+=1) {
+        char character = content.charAt(to);
+
+        if (character == '\n') {
+          write(stream, builder, content, from, to);
+          from = to + 1;
+          stream.write(character);
+        }
+      }
+
+      if (to > from) write(stream, builder, content, from, to);
     } finally {
-      buffer.close();
+      stream.close();
     }
   }
 

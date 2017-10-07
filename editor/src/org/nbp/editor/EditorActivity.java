@@ -24,6 +24,8 @@ import java.lang.reflect.Constructor;
 import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
 
+import org.liblouis.Louis;
+
 import android.net.Uri;
 
 import android.util.Log;
@@ -687,6 +689,7 @@ public class EditorActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Louis.initialize(getApplicationContext());
     setup();
 
     int result = RESULT_CANCELED;
