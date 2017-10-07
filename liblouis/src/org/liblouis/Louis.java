@@ -202,17 +202,13 @@ public final class Louis {
 
   public static void initialize (Context context, NewTranslationTablesListener newTranslationTablesListener) {
     synchronized (INITIALIZATION_LOCK) {
-      if (currentContext != null) {
-        throw new IllegalStateException("already initialized");
+      if (currentContext == null) {
+        currentContext = context;
+        dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
+        setDataPath(dataDirectory.getAbsolutePath());
+        updatePackageData(newTranslationTablesListener);
       }
-
-      currentContext = context;
-      dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
-
-      setDataPath(dataDirectory.getAbsolutePath());
     }
-
-    updatePackageData(newTranslationTablesListener);
   }
 
   public static void initialize (Context context) {
