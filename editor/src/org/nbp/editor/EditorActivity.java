@@ -689,7 +689,7 @@ public class EditorActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Louis.initialize(getApplicationContext());
+    Louis.initialize(this);
     setup();
 
     int result = RESULT_CANCELED;
