@@ -60,12 +60,12 @@ public final class Louis {
   }
 
   private final static Object INITIALIZATION_LOCK = new Object();
-  private static Context currentContext = null;
+  private static Context applicationContext = null;
   private static File dataDirectory = null;
 
   private static void requireInitialization () {
     synchronized (INITIALIZATION_LOCK) {
-      if (currentContext == null) {
+      if (applicationContext == null) {
         throw new IllegalStateException("not initialized yet");
       }
     }
@@ -73,7 +73,7 @@ public final class Louis {
 
   public static Context getContext () {
     requireInitialization();
-    return currentContext;
+    return applicationContext;
   }
 
   public static File getDataDirectory () {
@@ -82,7 +82,7 @@ public final class Louis {
   }
 
   private static SharedPreferences getSharedPreferences () {
-    return PreferenceManager.getDefaultSharedPreferences(currentContext);
+    return PreferenceManager.getDefaultSharedPreferences(applicationContext);
   }
 
   private static void removeFile (File file) {
@@ -139,7 +139,7 @@ public final class Louis {
   }
 
   private static void extractAssets () {
-    AssetManager assets = currentContext.getAssets();
+    AssetManager assets = applicationContext.getAssets();
 
     String name = "liblouis";
     String oldName = name + ".old";
@@ -166,7 +166,7 @@ public final class Louis {
 
   private static void updatePackageData (final NewTranslationTablesListener newTranslationTablesListener) {
     final SharedPreferences prefs = getSharedPreferences();
-    final File file = new File(currentContext.getPackageCodePath());
+    final File file = new File(applicationContext.getPackageCodePath());
 
     final String prefKey_size = "package-size";
     final long oldSize = prefs.getLong(prefKey_size, -1);
@@ -201,12 +201,18 @@ public final class Louis {
   }
 
   public static void initialize (Context context, NewTranslationTablesListener newTranslationTablesListener) {
+    context = context.getApplicationContext();
+
     synchronized (INITIALIZATION_LOCK) {
-      if (currentContext == null) {
-        currentContext = context;
+      if (applicationContext == null) {
+        applicationContext = context;
         dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
         setDataPath(dataDirectory.getAbsolutePath());
         updatePackageData(newTranslationTablesListener);
+      } else if (context != applicationContext) {
+        throw new IllegalArgumentException("different application context");
+      } else if (newTranslationTablesListener != null) {
+        newTranslationTablesListener.newTranslationTables();
       }
     }
   }
