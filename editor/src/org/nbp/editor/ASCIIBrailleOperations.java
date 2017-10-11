@@ -60,10 +60,10 @@ public class ASCIIBrailleOperations extends ByteOperations {
     return count;
   }
 
-  private final int endBytes (
+  private final int translateInputCharacters (
     TranslationBuilder builder, Editable content, int from, int to
   ) {
-    if (builder == null) return to - from;
+    if (builder == null) return 0;
     if (to == from) return 0;
 
     CharSequence characters = content.subSequence(from, to);
@@ -73,7 +73,21 @@ public class ASCIIBrailleOperations extends ByteOperations {
     TextTranslation translation = new TextTranslation(builder);
     CharSequence replacement = translation.getTextWithSpans();
     content.replace(from, to, replacement);
-    return replacement.length();
+    return replacement.length() - (to - from);
+  }
+
+  private final boolean isSpecialCharacter (char character) {
+    switch (character) {
+      case '\f':
+      case '\n':
+      case '\r':
+      case '\t':
+        return true;
+
+      default:
+      case ' ':
+        return false;
+    }
   }
 
   @Override
@@ -86,15 +100,15 @@ public class ASCIIBrailleOperations extends ByteOperations {
     for (to=0; to<length; to+=1) {
       char character = content.charAt(to);
 
-      if (character == '\n') {
-        int adjustment = endBytes(builder, content, from, to) - (to - from);
+      if (isSpecialCharacter(character)) {
+        int adjustment = translateInputCharacters(builder, content, from, to);
         length += adjustment;
         to += adjustment;
         from = to + 1;
       }
     }
 
-    endBytes(builder, content, from, to);
+    translateInputCharacters(builder, content, from, to);
   }
 
   private final void write (
@@ -148,7 +162,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
       for (to=0; to<length; to+=1) {
         char character = content.charAt(to);
 
-        if (character == '\n') {
+        if (isSpecialCharacter(character)) {
           write(stream, builder, content, from, to);
           from = to + 1;
           stream.write(character);
