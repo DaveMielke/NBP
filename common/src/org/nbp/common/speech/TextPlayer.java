@@ -140,13 +140,15 @@ public abstract class TextPlayer {
   private final Set<String> activeUtterances = new HashSet<String>();
 
   private final void cancelSpeaking () {
-    segmentGenerator.removeText();
-    activeUtterances.clear();
+    synchronized (this) {
+      if (segmentGenerator != null) segmentGenerator.removeText();
+      activeUtterances.clear();
+    }
   }
 
   public final boolean stopSpeaking () {
     synchronized (this) {
-      if (segmentGenerator != null) segmentGenerator.removeText();
+      cancelSpeaking();
 
       if (isStarted()) {
         try {

@@ -20,17 +20,23 @@ public abstract class TextSegmentGenerator {
 
     @Override
     public final void removeText () {
-      textSegments.clear();
+      synchronized (this) {
+        textSegments.clear();
+      }
     }
 
     @Override
     public final void addText (CharSequence text) {
-      if (text != null) textSegments.add(text);
+      synchronized (this) {
+        if (text != null) textSegments.add(text);
+      }
     }
 
     @Override
     public final CharSequence nextSegment () {
-      return textSegments.poll();
+      synchronized (this) {
+        return textSegments.poll();
+      }
     }
   }
 
@@ -49,46 +55,52 @@ public abstract class TextSegmentGenerator {
 
     @Override
     public final void removeText () {
-      remainingText = null;
-      getInnerGenerator().removeText();
+      synchronized (this) {
+        remainingText = null;
+        getInnerGenerator().removeText();
+      }
     }
 
     @Override
     public final void addText (CharSequence text) {
-      getInnerGenerator().addText(text);
+      synchronized (this) {
+        getInnerGenerator().addText(text);
+      }
     }
 
     @Override
     public final CharSequence nextSegment () {
-      while (true) {
-        if (remainingText == null) {
-          remainingText = getInnerGenerator().nextSegment();
-          if (remainingText == null) return null;
-        }
-
-        CharSequence segment = generateSegment();
-
-        if (segment == null) {
-          segment = remainingText;
-          remainingText = null;
-        }
-
-        int from = 0;
-        int to = segment.length();
-
-        while (from < to) {
-          if (!Character.isWhitespace(segment.charAt(from))) break;
-          from += 1;
-        }
-
-        while (to > from) {
-          if (!Character.isWhitespace(segment.charAt(--to))) {
-            to += 1;
-            break;
+      synchronized (this) {
+        while (true) {
+          if (remainingText == null) {
+            remainingText = getInnerGenerator().nextSegment();
+            if (remainingText == null) return null;
           }
-        }
 
-        if (to > from) return segment.subSequence(from, to);
+          CharSequence segment = generateSegment();
+
+          if (segment == null) {
+            segment = remainingText;
+            remainingText = null;
+          }
+
+          int from = 0;
+          int to = segment.length();
+
+          while (from < to) {
+            if (!Character.isWhitespace(segment.charAt(from))) break;
+            from += 1;
+          }
+
+          while (to > from) {
+            if (!Character.isWhitespace(segment.charAt(--to))) {
+              to += 1;
+              break;
+            }
+          }
+
+          if (to > from) return segment.subSequence(from, to);
+        }
       }
     }
 
