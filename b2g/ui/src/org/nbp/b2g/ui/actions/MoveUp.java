@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class MoveUp extends DirectionalAction {
+public class MoveUp extends LineAction {
   @Override
   protected ActionResult performCursorAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();
@@ -34,11 +34,7 @@ public class MoveUp extends DirectionalAction {
   public ActionResult performInternalAction (Endpoint endpoint) {
     int start = endpoint.getLineStart();
     if (start == 0) return ActionResult.FAILED;
-
-    endpoint.setLine(start-1);
-    endpoint.setLineIndent(0);
-
-    return ActionResult.WRITE;
+    return setLine(endpoint, start-1);
   }
 
   @Override

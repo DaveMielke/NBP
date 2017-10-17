@@ -1,11 +1,13 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class ScrollUp extends DirectionalAction {
+public class ScrollUp extends LineAction {
   private ActionResult scrollText (Endpoint endpoint) {
     CharSequence text = endpoint.getText();
-    boolean wasBlank = true;
+
     int start = endpoint.getLineStart();
+    int greatestIndent = 0;
+    boolean wasBlank = true;
 
     while (start > 0) {
       int end = start - 1;
@@ -14,21 +16,21 @@ public class ScrollUp extends DirectionalAction {
 
       for (int index=start; index<end; index+=1) {
         if (text.charAt(index) != ' ') {
+          {
+            int indent = index - start;
+            if (indent < greatestIndent) return setLine(endpoint, end+1);
+            greatestIndent = indent;
+          }
+
           isBlank = false;
           break;
         }
       }
 
-      if (!isBlank && (start == 0)) {
-        endpoint.setLine(start);
-        endpoint.setLineIndent(0);
-        return ActionResult.WRITE;
-      }
-
-      if (isBlank && !wasBlank) {
-        endpoint.setLine(end+1);
-        endpoint.setLineIndent(0);
-        return ActionResult.WRITE;
+      if (isBlank) {
+        if (!wasBlank) return setLine(endpoint, end+1);
+      } else {
+        if (start == 0) return setLine(endpoint, start);
       }
 
       wasBlank = isBlank;
