@@ -674,14 +674,16 @@ public abstract class Endpoint {
   }
 
   protected final void adjustRight (int offset, int keep) {
-    int brailleLength = Devices.braille.get().getLength();
     int lineLength = getLineLength();
     if (offset > lineLength) offset = lineLength;
 
-    int first = findFirstBrailleOffset(lineIndent);
-    int last = findLastBrailleOffset(offset);
+    int brailleIndent = findFirstBrailleOffset(lineIndent);
+    int brailleOffset = findLastBrailleOffset(offset);
 
-    if ((last - first) >= brailleLength) {
+    int brailleLength = Devices.braille.get().getLength();
+    int nextSegment = findNextSegment(brailleLength, lineIndent);
+
+    if (brailleOffset >= findFirstBrailleOffset(nextSegment)) {
       lineIndent = findPreviousSegment((brailleLength - keep), offset);
     }
   }

@@ -7,25 +7,30 @@ public abstract class CursorKeyAction extends Action {
 
   @Override
   public final boolean performAction (int cursorKey) {
+    if (cursorKey < 0) return false;
+    int brailleLength = Devices.braille.get().getLength();
+    if (cursorKey >= brailleLength) return false;
     Endpoint endpoint = getEndpoint();
 
-    if (cursorKey < 0) return false;
-    if (cursorKey >= Devices.braille.get().getLength()) return false;
-
     synchronized (endpoint) {
-      int last;
+      int lineLength = endpoint.getLineLength();
+      int lineIndent = endpoint.getLineIndent();
+      int nextSegment = endpoint.findNextSegment(brailleLength, lineIndent);
+      int lastCell;
 
-      if (allowEnd && endpoint.isInputArea()) {
-        last = endpoint.getBrailleLength();
+      if (nextSegment < lineLength) {
+        lastCell = endpoint.findFirstBrailleOffset(nextSegment) - 1;
+      } else if (allowEnd && endpoint.isInputArea()) {
+        lastCell = endpoint.getBrailleLength();
       } else {
-        last = endpoint.findFirstBrailleOffset(endpoint.getLineLength()) - 1;
+        lastCell = endpoint.findFirstBrailleOffset(lineLength) - 1;
       }
 
-      int start = endpoint.findFirstBrailleOffset(endpoint.getLineIndent());
-      last -= start;
-      if (cursorKey > last) cursorKey = last;
+      int brailleIndent = endpoint.findFirstBrailleOffset(lineIndent);
+      lastCell -= brailleIndent;
+      if (cursorKey > lastCell) cursorKey = lastCell;
 
-      if (!performCursorKeyAction(endpoint, endpoint.getLineOffset(start + cursorKey))) return false;
+      if (!performCursorKeyAction(endpoint, endpoint.getLineOffset(brailleIndent + cursorKey))) return false;
       return endpoint.write();
     }
   }
