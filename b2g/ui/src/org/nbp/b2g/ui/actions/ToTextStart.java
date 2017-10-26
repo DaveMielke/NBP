@@ -11,9 +11,16 @@ public class ToTextStart extends Action {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
-      endpoint.setLine(0);
-      endpoint.setLineIndent(0);
-      return endpoint.write();
+      int textOffset = 0;
+
+      if (endpoint.isInputArea()) {
+        endpoint.setCursor(textOffset);
+        return true;
+      } else {
+        endpoint.setLine(textOffset);
+        endpoint.setLineIndent(0);
+        return endpoint.write();
+      }
     }
   }
 
