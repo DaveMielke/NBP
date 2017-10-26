@@ -23,7 +23,7 @@ public abstract class CursorKeyAction extends Action {
 
       int start = endpoint.findFirstBrailleOffset(endpoint.getLineIndent());
       last -= start;
-      if (cursorKey > last) return false;
+      if (cursorKey > last) cursorKey = last;
 
       if (!performCursorKeyAction(endpoint, endpoint.getLineOffset(start + cursorKey))) return false;
       return endpoint.write();
