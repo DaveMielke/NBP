@@ -102,9 +102,12 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   public final boolean setValue (E value) {
-    if (value == getEnumerationValue()) return true;
-    if (!setEnumerationValue(value)) return false;
-    reportValueChange();
+    synchronized (this) {
+      if (value == getEnumerationValue()) return true;
+      if (!setEnumerationValue(value)) return false;
+      reportValueChange();
+    }
+
     return true;
   }
 

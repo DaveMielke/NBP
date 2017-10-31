@@ -26,18 +26,21 @@ public abstract class StringControl extends Control {
   }
 
   public final boolean setValue (String value) {
-    {
-      String currentValue = getStringValue();
+    synchronized (this) {
+      {
+        String currentValue = getStringValue();
 
-      if (value == null) {
-        if (currentValue == null) return true;
-      } else if (value.equals(currentValue)) {
-        return true;
+        if (value == null) {
+          if (currentValue == null) return true;
+        } else if (value.equals(currentValue)) {
+          return true;
+        }
       }
+
+      if (!setStringValue(value)) return false;
+      reportValueChange();
     }
 
-    if (!setStringValue(value)) return false;
-    reportValueChange();
     return true;
   }
 
