@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class MoveUp extends LineAction {
+public class MoveUp extends VerticalAction {
   @Override
   protected ActionResult performCursorAction (Endpoint endpoint) {
     int start = endpoint.getSelectionStart();

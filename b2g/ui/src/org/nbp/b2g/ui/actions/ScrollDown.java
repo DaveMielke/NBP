@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class ScrollDown extends LineAction {
+public class ScrollDown extends VerticalAction {
   private ActionResult scrollText (Endpoint endpoint) {
     CharSequence text = endpoint.getText();
     int length = text.length();

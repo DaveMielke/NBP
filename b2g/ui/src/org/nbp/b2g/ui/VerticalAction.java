@@ -1,6 +1,6 @@
 package org.nbp.b2g.ui;
 
-public abstract class LineAction extends DirectionalAction {
+public abstract class VerticalAction extends DirectionalAction {
   protected final ActionResult setLine (Endpoint endpoint, int offset) {
     endpoint.setLine(offset);
 
@@ -13,7 +13,7 @@ public abstract class LineAction extends DirectionalAction {
     }
   }
 
-  protected LineAction (Endpoint endpoint, boolean isAdvanced) {
+  protected VerticalAction (Endpoint endpoint, boolean isAdvanced) {
     super(endpoint, isAdvanced);
   }
 }
