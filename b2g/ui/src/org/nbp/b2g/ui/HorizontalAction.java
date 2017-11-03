@@ -25,6 +25,13 @@ public abstract class HorizontalAction extends DirectionalAction {
   protected final ActionResult setCursor (Endpoint endpoint, int offset) {
     endpoint.setLine(offset);
 
+    {
+      CharSequence text = endpoint.getText();
+      int end = findNextObject(endpoint, offset);
+      if (end == NOT_FOUND) end = text.length();
+      ApplicationUtilities.say(text.subSequence(offset, end));
+    }
+
     if (endpoint.isInputArea()) {
       endpoint.setCursor(offset);
       return ActionResult.DONE;
