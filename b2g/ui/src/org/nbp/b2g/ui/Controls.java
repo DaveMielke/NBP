@@ -173,11 +173,9 @@ public abstract class Controls {
 
   public static void restoreSaneValues () {
     if (!speechEnabled.getBooleanValue()) brailleEnabled.setValue(true);
+    if (ApplicationSettings.ONE_HAND) oneHand.confirmValue();
+
     typingMode.setValue(TypingMode.TEXT);
     resetHighlightedTyping();
-
-    if (ApplicationSettings.ONE_HAND) {
-      oneHand.confirmValue();
-    }
   }
 }
