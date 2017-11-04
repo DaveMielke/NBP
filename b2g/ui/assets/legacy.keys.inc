@@ -4,6 +4,7 @@ bind Space+Dot6 CursorRight
 bind Space+Dot2 ToPreviousWord
 bind Space+Dot5 ToNextWord
 bind Space+Dots25 SayWord
+bind Space+Dots25+LongPress SpellWord
 
 bind Space+Dot1 CursorUp
 bind Space+Dot4 CursorDown

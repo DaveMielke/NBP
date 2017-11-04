@@ -13,6 +13,9 @@ Space+Dot5
 Space+Dots25
   |SayWord|
 
+Space+Dots25+LongPress
+  |SpellWord|
+
 Space+Dot1
   |CursorUp|
 

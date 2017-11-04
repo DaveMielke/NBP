@@ -61,7 +61,7 @@ public abstract class HorizontalAction extends DirectionalAction {
     return setCursor(endpoint, previous);
   }
 
-  protected final ActionResult performSayAction (Endpoint endpoint) {
+  private final CharSequence getCurrentObject (Endpoint endpoint) {
     CharSequence text = endpoint.getText();
     int length = text.length();
 
@@ -82,8 +82,43 @@ public abstract class HorizontalAction extends DirectionalAction {
       to = next;
     }
 
-    ApplicationUtilities.say(text.subSequence(from, to));
-    return ActionResult.FAILED;
+    while (from < to) {
+      if (!Character.isWhitespace(text.charAt(from))) break;
+      from += 1;
+    }
+
+    while (to > from) {
+      if (!Character.isWhitespace(text.charAt(--to))) {
+        to += 1;
+        break;
+      }
+    }
+
+    if (from == to) return null;
+    return text.subSequence(from, to);
+  }
+
+  protected final ActionResult performSayAction (Endpoint endpoint) {
+    CharSequence text = getCurrentObject(endpoint);
+    if (text == null) return ActionResult.FAILED;
+
+    ApplicationUtilities.say(text);
+    return ActionResult.DONE;
+  }
+
+  protected final ActionResult performSpellAction (Endpoint endpoint) {
+    CharSequence text = getCurrentObject(endpoint);
+    if (text == null) return ActionResult.FAILED;
+
+    int count = text.length();
+    CharSequence[] characters = new CharSequence[count];
+
+    for (int index=0; index<count; index+=1) {
+      characters[index] = Character.toString(text.charAt(index));
+    }
+
+    ApplicationUtilities.say(characters);
+    return ActionResult.DONE;
   }
 
   protected HorizontalAction (Endpoint endpoint, boolean isAdvanced) {

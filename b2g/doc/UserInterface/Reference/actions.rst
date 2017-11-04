@@ -144,6 +144,7 @@
 .. |SpeakSofter| replace:: Decrease the speech volume.
 .. |SpeechOff| replace:: Turn off speech.
 .. |SpeechOn| replace:: Turn on speech.
+.. |SpellWord| replace:: Spell the current word.
 .. |StopSpeaking| replace:: Stop speaking immediately (mute).
 .. |Store| replace:: Go to the Store (Market) app.
 .. |SwitchLauncher| replace:: Go to the Android launcher chooser.
