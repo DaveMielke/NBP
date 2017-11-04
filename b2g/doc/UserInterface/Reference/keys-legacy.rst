@@ -4,6 +4,9 @@ Space+Dot3
 Space+Dot6
   |CursorRight|
 
+Space+Dots36
+  |SayCharacter|
+
 Space+Dot2
   |ToPreviousWord|
 

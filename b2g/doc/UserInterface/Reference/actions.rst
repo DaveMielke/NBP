@@ -115,6 +115,7 @@
 .. |SayAfter| replace:: Speak from the start of the braille display to the end of the screen element.
 .. |SayAll| replace:: Speak all of the screen element.
 .. |SayBefore| replace:: Speak from the start of the screen element to the start of the braille display.
+.. |SayCharacter| replace:: Speak the current character.
 .. |SayLine| replace:: Speak the current line.
 .. |SayWord| replace:: Speak the current word.
 .. |ScrollBackward| replace:: Force the screen to scroll backward (up or left).

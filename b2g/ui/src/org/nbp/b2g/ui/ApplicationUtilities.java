@@ -47,12 +47,17 @@ public abstract class ApplicationUtilities {
     return ViewConfiguration.getGlobalActionKeyTimeout();
   }
 
-  public final static CharSequence toString (char character) {
+  public final static String toString (char character) {
   RESOURCE:
     {
       int resource;
 
       switch (character) {
+        case 'A':
+        case 'a':
+          resource = R.string.character_a;
+          break;
+
         case ' ':
           resource = R.string.character_space;
           break;
