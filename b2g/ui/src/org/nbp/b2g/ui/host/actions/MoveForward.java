@@ -5,12 +5,12 @@ import org.nbp.b2g.ui.*;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public class MoveForward extends MoveAction {
-  private boolean moveToNode (AccessibilityNodeInfo node) {
+  private final boolean moveToNode (AccessibilityNodeInfo node) {
     if (setCurrentNode(node)) return true;
     return moveToDescendant(node);
   }
 
-  private boolean moveToDescendant (AccessibilityNodeInfo node, int index) {
+  private final boolean moveToDescendant (AccessibilityNodeInfo node, int index) {
     int count = node.getChildCount();
 
     while (index < count) {
@@ -26,12 +26,12 @@ public class MoveForward extends MoveAction {
     return false;
   }
 
-  private boolean moveToDescendant (AccessibilityNodeInfo node) {
+  private final boolean moveToDescendant (AccessibilityNodeInfo node) {
     return moveToDescendant(node, 0);
   }
 
   @Override
-  protected boolean moveToNextNode (AccessibilityNodeInfo node, boolean inner) {
+  protected final boolean moveToNextNode (AccessibilityNodeInfo node, boolean inner) {
     node = AccessibilityNodeInfo.obtain(node);
 
     if (moveToDescendant(node)) {
@@ -63,7 +63,7 @@ public class MoveForward extends MoveAction {
   }
 
   @Override
-  protected ScrollDirection getScrollDirection () {
+  protected final ScrollDirection getScrollDirection () {
     return ScrollDirection.FORWARD;
   }
 

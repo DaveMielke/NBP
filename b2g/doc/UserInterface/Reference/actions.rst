@@ -83,7 +83,9 @@
 .. |MoveForward| replace:: Go to the start of the next screen element.
 .. |MoveLeft| replace:: Go to the previous character of editable text or pan to the left.
 .. |MoveRight| replace:: Go to the next character of editable text or pan to the right.
+.. |MoveToFirst| replace:: Go to the first screen element.
 .. |MoveToFirstChild| replace:: Go to and describe the first child node.
+.. |MoveToLast| replace:: Go to the last screen element.
 .. |MoveToNextSibling| replace:: Go to and describe the next sibling node.
 .. |MoveToParent| replace:: Go to and describe the parent node.
 .. |MoveToPreviousSibling| replace:: Go to and describe the previous sibling node.
@@ -115,10 +117,10 @@
 .. |SayAfter| replace:: Speak from the start of the braille display to the end of the screen element.
 .. |SayAll| replace:: Speak all of the screen element.
 .. |SayBefore| replace:: Speak from the start of the screen element to the start of the braille display.
-.. |SayCharacter| replace:: Speak the current character.
+.. |SayCharacter| replace:: Speak the current character (or the selected characters).
 .. |SayLine| replace:: Speak the current line.
-.. |SayPhonetic| replace:: Speak the current character phonetically.
-.. |SayWord| replace:: Speak the current word.
+.. |SayPhonetic| replace:: Speak the current character (or the selected characters) phonetically.
+.. |SayWord| replace:: Speak the current word (or the selected text).
 .. |ScrollBackward| replace:: Force the screen to scroll backward (up or left).
 .. |ScrollDown| replace:: Go to the next page of a list or paragraph of text.
 .. |ScrollForward| replace:: Force the screen to scroll forward (down or right).
@@ -146,7 +148,7 @@
 .. |SpeakSofter| replace:: Decrease the speech volume.
 .. |SpeechOff| replace:: Turn off speech.
 .. |SpeechOn| replace:: Turn on speech.
-.. |SpellWord| replace:: Spell the current word.
+.. |SpellWord| replace:: Spell the current word (or the selected text).
 .. |StopSpeaking| replace:: Stop speaking immediately (mute).
 .. |Store| replace:: Go to the Store (Market) app.
 .. |SwitchLauncher| replace:: Go to the Android launcher chooser.

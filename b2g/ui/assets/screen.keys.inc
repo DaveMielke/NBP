@@ -4,6 +4,9 @@ bind Forward+LongPress MoveForward
 bind Backward+Space MoveBackward
 bind Forward+Space MoveForward
 
+bind Space+Dots126 MoveToFirst
+bind Space+Dots345 MoveToLast
+
 bind Center Click
 bind Space+Center LongClick
 

@@ -469,12 +469,12 @@ public class HostEndpoint extends Endpoint {
 
   @Override
   public final Class<? extends Action> getScrollFirstAction () {
-    return MoveFirst.class;
+    return ScrollToFirst.class;
   }
 
   @Override
   public final Class<? extends Action> getScrollLastAction () {
-    return MoveLast.class;
+    return ScrollToLast.class;
   }
 
   @Override

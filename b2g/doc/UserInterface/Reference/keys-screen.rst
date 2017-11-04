@@ -10,6 +10,12 @@ Backward+Space
 Forward+Space
   |MoveForward|
 
+Space+Dots126
+  |MoveToFirst|
+
+Space+Dots345
+  |MoveToLast|
+
 Center
   |Click|
 
