@@ -115,7 +115,8 @@
 .. |SayAfter| replace:: Speak from the start of the braille display to the end of the screen element.
 .. |SayAll| replace:: Speak all of the screen element.
 .. |SayBefore| replace:: Speak from the start of the screen element to the start of the braille display.
-.. |SayLine| replace:: Speak all of the current line.
+.. |SayLine| replace:: Speak the current line.
+.. |SayWord| replace:: Speak the current word.
 .. |ScrollBackward| replace:: Force the screen to scroll backward (up or left).
 .. |ScrollDown| replace:: Go to the next page of a list or paragraph of text.
 .. |ScrollForward| replace:: Force the screen to scroll forward (down or right).
@@ -149,6 +150,8 @@
 .. |TabBackward| replace:: `The Shift+Tab keys`_ (on a keyboard). Cycle backward to the previous control element.
 .. |TabForward| replace:: `The Tab key`_ (on a keyboard). Cycle forward to the next control element.
 .. |TextMessaging| replace:: Go to the Text (Messaging) [SMS, MMS] app.
+.. |ToNextWord| replace:: Go to the start of the next word.
+.. |ToPreviousWord| replace:: Go to the start of the previous word.
 .. |ToSelectionEnd| replace:: Go to the end of the text selection (or to the cursor).
 .. |ToSelectionStart| replace:: Go to the start of the text selection (or to the cursor).
 .. |ToTextEnd| replace:: `The Control+End keys`_ (on a keyboard). Go to the end of the input area.

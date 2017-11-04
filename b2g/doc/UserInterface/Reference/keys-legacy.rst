@@ -4,11 +4,23 @@ Space+Dot3
 Space+Dot6
   |CursorRight|
 
+Space+Dot2
+  |ToPreviousWord|
+
+Space+Dot5
+  |ToNextWord|
+
+Space+Dots25
+  |SayWord|
+
 Space+Dot1
   |CursorUp|
 
 Space+Dot4
   |CursorDown|
+
+Space+Dots14
+  |SayLine|
 
 Space+Dots23
   |PageUp|
@@ -27,7 +39,4 @@ Space+Dots12
 
 Space+Dots45
   |TabForward|
-
-Space+Dots14 (c)
-  |SayLine|
 
