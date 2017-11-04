@@ -2,6 +2,10 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class SayCharacter extends Action {
+  protected String toString (char character) {
+    return ApplicationUtilities.toString(character);
+  }
+
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
@@ -29,7 +33,7 @@ public class SayCharacter extends Action {
       characters = new String[count];
 
       for (int index=0; index<count; index+=1) {
-        characters[index] = ApplicationUtilities.toString(text.charAt(start + index));
+        characters[index] = toString(text.charAt(start + index));
       }
     }
 

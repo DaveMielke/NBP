@@ -7,6 +7,9 @@ Space+Dot6
 Space+Dots36
   |SayCharacter|
 
+Space+Dots36+LongPress
+  |SayPhonetic|
+
 Space+Dot2
   |ToPreviousWord|
 

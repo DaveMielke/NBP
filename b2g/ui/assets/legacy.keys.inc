@@ -1,6 +1,7 @@
 bind Space+Dot3 CursorLeft
 bind Space+Dot6 CursorRight
 bind Space+Dots36 SayCharacter
+bind Space+Dots36+LongPress SayPhonetic
 
 bind Space+Dot2 ToPreviousWord
 bind Space+Dot5 ToNextWord
