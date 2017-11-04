@@ -122,7 +122,7 @@ public abstract class Endpoint {
             final int newLength = newText.length();
 
             if (offset < newLength) {
-              text = newText.subSequence(offset, offset+1);
+              text = ApplicationUtilities.toString(newText.charAt(offset));
             } else if (offset == newLength) {
               text = ApplicationContext.getString(R.string.character_end);
             }

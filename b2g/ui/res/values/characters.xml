@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="character_end">end</string>
+  <string name="character_space">space</string>
+  <string name="character_newline">new line</string>
+</resources>

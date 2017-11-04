@@ -47,6 +47,30 @@ public abstract class ApplicationUtilities {
     return ViewConfiguration.getGlobalActionKeyTimeout();
   }
 
+  public final static CharSequence toString (char character) {
+  RESOURCE:
+    {
+      int resource;
+
+      switch (character) {
+        case ' ':
+          resource = R.string.character_space;
+          break;
+
+        case '\n':
+          resource = R.string.character_newline;
+          break;
+
+        default:
+          break RESOURCE;
+      }
+
+      return ApplicationContext.getString(resource);
+    }
+
+    return Character.toString(character);
+  }
+
   public static boolean say (CharSequence text, boolean immediate) {
     SpeechDevice speech = Devices.speech.get();
 

@@ -208,8 +208,5 @@
   <string name="prompt_find">find</string>
   <string name="prompt_unicode">Unicode</string>
 
-  <string name="character_end">end</string>
-  <string name="character_newline">new line</string>
-
   <string name="message_no_character_name">no character name</string>
 </resources>

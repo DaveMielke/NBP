@@ -114,7 +114,7 @@ public abstract class HorizontalAction extends DirectionalAction {
     CharSequence[] characters = new CharSequence[count];
 
     for (int index=0; index<count; index+=1) {
-      characters[index] = Character.toString(text.charAt(index));
+      characters[index] = ApplicationUtilities.toString(text.charAt(index));
     }
 
     ApplicationUtilities.say(characters);
