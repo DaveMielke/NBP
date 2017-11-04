@@ -10,16 +10,16 @@ public abstract class HorizontalAction extends DirectionalAction {
     return endpoint.getLineStart() + endpoint.getLineIndent();
   }
 
-  protected final int getFirstPosition (Endpoint endpoint) {
-    if (!endpoint.isInputArea()) return getInternalPosition(endpoint);
-    return endpoint.getSelectionStart();
+  protected final int getSelectionStart (Endpoint endpoint) {
+    return endpoint.isInputArea()?
+           endpoint.getSelectionStart():
+           getInternalPosition(endpoint);
   }
 
-  protected final int getLastPosition (Endpoint endpoint) {
-    if (!endpoint.isInputArea()) return getInternalPosition(endpoint);
-    int position = endpoint.getSelectionEnd();
-    if (position != getFirstPosition(endpoint)) position -= 1;
-    return position;
+  protected final int getSelectionEnd (Endpoint endpoint) {
+    return endpoint.isInputArea()?
+           endpoint.getSelectionEnd():
+           getInternalPosition(endpoint);
   }
 
   protected final ActionResult setCursor (Endpoint endpoint, int offset) {
@@ -46,7 +46,8 @@ public abstract class HorizontalAction extends DirectionalAction {
   protected abstract int findPreviousObject (Endpoint endpoint, int offset);
 
   protected final ActionResult performNextAction (Endpoint endpoint) {
-    int current = getLastPosition(endpoint);
+    int current = getSelectionEnd(endpoint);
+    if (current != getSelectionStart(endpoint)) current -= 1;
     int next = findNextObject(endpoint, current);
 
     if (next == NOT_FOUND) return ActionResult.FAILED;
@@ -54,7 +55,7 @@ public abstract class HorizontalAction extends DirectionalAction {
   }
 
   protected final ActionResult performPreviousAction (Endpoint endpoint) {
-    int current = getFirstPosition(endpoint);
+    int current = getSelectionStart(endpoint);
     int previous = findPreviousObject(endpoint, current);
 
     if (previous == NOT_FOUND) return ActionResult.FAILED;
@@ -65,37 +66,38 @@ public abstract class HorizontalAction extends DirectionalAction {
     CharSequence text = endpoint.getText();
     int length = text.length();
 
-    int from = getFirstPosition(endpoint);
-    int to = getLastPosition(endpoint);
+    int start = getSelectionStart(endpoint);
+    int end = getSelectionEnd(endpoint);
 
-    {
-      int offset = from;
-      if (offset < length) offset += 1;
-
-      int previous = findPreviousObject(endpoint, offset);
-      if (previous != NOT_FOUND) from = previous;
-    }
-
-    {
-      int next = findNextObject(endpoint, to);
-      if (next == NOT_FOUND) next = length;
-      to = next;
-    }
-
-    while (from < to) {
-      if (!Character.isWhitespace(text.charAt(from))) break;
-      from += 1;
-    }
-
-    while (to > from) {
-      if (!Character.isWhitespace(text.charAt(--to))) {
-        to += 1;
-        break;
+    if (start == end) {
+      {
+        if (start < length) start += 1;
+        int previous = findPreviousObject(endpoint, start);
+        if (previous != NOT_FOUND) start = previous;
       }
+
+      {
+        int next = findNextObject(endpoint, end);
+        if (next == NOT_FOUND) next = length;
+        end = next;
+      }
+
+      while (start < end) {
+        if (!Character.isWhitespace(text.charAt(start))) break;
+        start += 1;
+      }
+
+      while (end > start) {
+        if (!Character.isWhitespace(text.charAt(--end))) {
+          end += 1;
+          break;
+        }
+      }
+
+      if (start == end) return null;
     }
 
-    if (from == to) return null;
-    return text.subSequence(from, to);
+    return text.subSequence(start, end);
   }
 
   protected final ActionResult performSayAction (Endpoint endpoint) {

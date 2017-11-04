@@ -154,7 +154,7 @@
 .. |TabForward| replace:: `The Tab key`_ (on a keyboard). Cycle forward to the next control element.
 .. |TextMessaging| replace:: Go to the Text (Messaging) [SMS, MMS] app.
 .. |ToNextWord| replace:: Go to the start of the next word.
-.. |ToPreviousWord| replace:: Go to the start of the previous word.
+.. |ToPreviousWord| replace:: Go to the start of the previous (or current) word.
 .. |ToSelectionEnd| replace:: Go to the end of the text selection (or to the cursor).
 .. |ToSelectionStart| replace:: Go to the start of the text selection (or to the cursor).
 .. |ToTextEnd| replace:: `The Control+End keys`_ (on a keyboard). Go to the end of the input area.
