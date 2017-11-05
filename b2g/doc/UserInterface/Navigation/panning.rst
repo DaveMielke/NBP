@@ -87,5 +87,5 @@ to the start of the first line by pressing Space+Dots123,
 or to the end of the last line by pressing Space+Dots456.
 These key combinations are the same as those that have been traditionally used
 to emulate the Control+Home/End keys of a standard keyboard
-(see `Navigating with Keyboard Keys`_).
+(see `Navigating with an External Keyboard`_).
 

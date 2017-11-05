@@ -105,6 +105,14 @@ The Down key moves the cursor to the same position on the next line.
 If text has been selected then the cursor is moved to just below the last
 selected character, and the selection is cleared.
 
+Traditional Key Combinations within an INput Area
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The |user interface| supports input area navigation via dot key chords
+|traditional key combinations|.
+
+.. include:: input-traditional.rst
+
 Password Fields
 ~~~~~~~~~~~~~~~
 
