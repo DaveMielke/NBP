@@ -6,6 +6,9 @@ The |user interface| supports screen navigation via key combinations
 See `Traditional Key Combinations within an Input Area`_
 for how they work within an input area.
 
+Physical Keyboard Key Emulation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 What each of these combinations does is defined by Android -
 not by the |user interface| -
 so navigating with them is, unfortunately,
@@ -32,22 +35,22 @@ Android keeps track of the current screen element when these keys are used, and
   elements that merely present helpful text.
 
 The Enter Key
-~~~~~~~~~~~~~
+`````````````
 
 **Dot8**
 
-* If on a button then press it.
+* |if button| press it.
 
-* If on a checkbox then check/uncheck it.
+* |if checkbox| check/uncheck it.
 
-* If on a switch then move it to its other position.
+* |if switch| move it to its other position.
 
-* If on a folder then open it.
+* |if folder| open it.
 
-* If on an app then go to it.
+* |if app| go to it.
 
 The Cursor Left Key
-~~~~~~~~~~~~~~~~~~~
+```````````````````
 
 **Space + Dot3**
 
@@ -56,7 +59,7 @@ The Cursor Left Key
   |cursor navigation is unreliable|
 
 The Cursor Right Key
-~~~~~~~~~~~~~~~~~~~~
+````````````````````
 
 **Space + Dot6**
 
@@ -65,7 +68,7 @@ The Cursor Right Key
   |cursor navigation is unreliable|
 
 The Cursor Up Key
-~~~~~~~~~~~~~~~~~
+`````````````````
 
 **Space + Dot1**
 
@@ -73,7 +76,7 @@ The Cursor Up Key
   |cursor navigation is unreliable|
 
 The Cursor Down Key
-~~~~~~~~~~~~~~~~~~~
+```````````````````
 
 **Space + Dot4**
 
@@ -81,84 +84,87 @@ The Cursor Down Key
   |cursor navigation is unreliable|
 
 The Page Up Key
-~~~~~~~~~~~~~~~
+```````````````
 
 **Space + Dots23**
 
 Perform a scroll backward (up or to the left) operation.
 
-* If within a list then move up several elements. If the first element is
+* |if list| move up several elements. If the first element is
   already visible then move to it.
 
-* If within a set of pages then switch to the previous one.
+* |if pages| switch to the previous one.
 
 The Page Down Key
-~~~~~~~~~~~~~~~~~
+`````````````````
 
 **Space + Dots56**
 
 Perform a scroll forward (down or to the right) operation.
 
-* If within a list then move down several elements. If the last element is
+* |if list| move down several elements. If the last element is
   already visible then move to it.
 
-* If within a set of pages then switch to the next one.
+* |if pages| switch to the next one.
 
 The Home Key
-~~~~~~~~~~~~
+````````````
 
 **Space + Dots13**
 
-* If within a list then move to its first element.
+* |if list| move to its first element.
 
-* If within a set of pages then switch to the first one.
+* |if pages| switch to the first one.
 
 The End Key
-~~~~~~~~~~~
+```````````
 
 **Space + Dots46**
 
-* If within a list then move to its last element.
+* |if list| move to its last element.
 
-* If within a set of pages then switch to the last one.
+* |if pages| switch to the last one.
 
 The Control+Home Keys
-~~~~~~~~~~~~~~~~~~~~~
+`````````````````````
 
 **Space + Dots123**
 
 Move to the start of the first line of text.
 
 The Control+End Keys
-~~~~~~~~~~~~~~~~~~~~
+````````````````````
 
 **Space + Dots456**
 
 Move to the end of the last line of text.
 
 The Shift+Tab Keys
-~~~~~~~~~~~~~~~~~~
+``````````````````
 
 **Space + Dots12**
 
-Move to the previous screen element that can perform an action. If on the first
-screen element then wrap to the last one.
+Move to the previous screen element that can perform an action.
+If on the first screen element then wrap to the last one.
 
 The Tab Key
-~~~~~~~~~~~
+```````````
 
 **Space + Dots45**
 
-Move to the next screen element that can perform an action. If on the last
-screen element then wrap to the first one.
+Move to the next screen element that can perform an action.
+If on the last screen element then wrap to the first one.
+
+Other Traditional Key Combinations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Space + Dots126
-~~~~~~~~~~~~~~~
+```````````````
 
-Move to the first (usually at the top-left) screen element.
+Move directly to the first screen element (usually at the top-left).
 
 Space + Dots345
-~~~~~~~~~~~~~~~
+```````````````
 
-Move to the last (usually at the bottom-right) screen element.
+Move directly to the last screen element (usually at the bottom-right).
 

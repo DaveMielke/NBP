@@ -93,14 +93,14 @@ Space + Dot4
 Space + Dots23
 ``````````````
 
-Move the cursor up to the first line of the current paragraph.
+Move the cursor to the start of the first line of the current paragraph.
 If it's on the first line of a paragraph
-then move it up to the first line of the previous paragraph.
+then move it to the start of the first line of the previous paragraph.
 
 Space + Dots56
 ``````````````
 
-Move the cursor down to the first line of the next paragraph.
+Move the cursor to the start of the first line of the next paragraph.
 
 Space + Dots13
 ``````````````
