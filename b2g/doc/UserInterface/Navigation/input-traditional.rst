@@ -15,44 +15,42 @@
 Space + Dot3
 ````````````
 
-* If text hasn't been selected
-  then move the cursor one character to the left.
+* |if cursor| move the cursor one character to the left.
   If it's at the start of a line
   then wrap to the end of the previous line.
 
-* If text has been selected then |move cursor to start of selection|.
+* |if selection| |move cursor to start of selection|.
 
 Space + Dot6
 ````````````
 
-* If text hasn't been selected
-  then move the cursor one character to the right.
+* |if cursor| move the cursor one character to the right.
   If it's at the end of a line
   then wrap to the start of the next line.
 
-* If text has been selected then |move cursor to end of selection|.
+* |if selection| |move cursor to end of selection|.
 
 Space + Dot1
 ````````````
 
-* If text hasn't been selected then move the cursor one line up.
+* |if cursor| move the cursor one line up.
   |describe vertical cursor motion within text|
 
-* If text has been selected then |move cursor to start of selection|.
+* |if selection| |move cursor to start of selection|.
 
 Space + Dot4
 ````````````
 
-* If text hasn't been selected then move the cursor one line down.
+* |if cursor| move the cursor one line down.
   |describe vertical cursor motion within text|
 
-* If text has been selected then |move cursor to end of selection|.
+* |if selection| |move cursor to end of selection|.
 
 Space + Dots23
 ``````````````
 
 Move the cursor up to the first line of the current paragraph.
-If already on the first line of a paragraph
+If it's on the first line of a paragraph
 then move up to the first line of the previous paragraph.
 
 Space + Dots56

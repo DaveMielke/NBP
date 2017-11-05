@@ -5,6 +5,9 @@ Screen Navigation
   that are commonly used by other products
   (screen readers, note takers, etc)
 
+.. |if cursor| replace:: If text hasn't been selected then
+.. |if selection| replace:: If text has been selected then
+
 .. include:: android.rst
 .. include:: gestures.rst
 .. include:: panning.rst

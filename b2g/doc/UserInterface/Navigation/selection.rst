@@ -2,8 +2,7 @@ Text Selection
 --------------
 
 Each character within the current text selection is highlighted via
-|the selection indicator|. If text has been selected then the cursor isn't
-shown.
+|the selection indicator|. |if selection| the cursor isn't shown.
 
 Selecting text is useful in at least the following ways:
 

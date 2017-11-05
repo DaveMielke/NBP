@@ -26,11 +26,11 @@ Note that these same steps work somewhat differently within an input area (see
 `Text Selection`_).
 
 To cut text to the clipboard, press Space+Dot8+x (dots 1346). This can only be
-done within an input area. If text hasn't been selected then all of the text is
-cut. If text has been selected then just that text is cut.
+done within an input area. |if cursor| all of the text is
+cut. |if selection| just that text is cut.
 
 To paste text from the clipboard, press Space+Dot8+v (dots 1236). This can only
-be done within an input area. If text hasn't been selected then the pasted text
-is inserted just to the left of the cursor. If text has been selected then the
+be done within an input area. |if cursor| the pasted text
+is inserted just to the left of the cursor. |if selection| the
 pasted text replaces the selected text.
 

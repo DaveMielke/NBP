@@ -3,8 +3,8 @@ Input Areas
 
 The character where the cursor is is highlighted via |the cursor indicator|.
 
-Pressing a cursor routing key brings the cursor to that character. If 
-text has been selected then the selection is cleared.
+Pressing a cursor routing key brings the cursor to that character.
+|if selection| the selection is cleared.
 
 An additional blank character is rendered at the end of each line within an
 input area. This character represents the delimiter between a line and the one
@@ -16,10 +16,10 @@ that follows it.
 
 When a character is typed (see `Typing Characters`_), then:
 
-* If text hasn't been selected then the typed character is inserted just to the
+* |if cursor| the typed character is inserted just to the
   left of the cursor.
 
-* If text has been selected then the typed character replaces the selected
+* |if selection| the typed character replaces the selected
   text.
 
 The Enter Key within an Input Area
@@ -40,19 +40,19 @@ Deleting Characters
 
 The Backspace key is Dot7.
 
-* If text hasn't been selected then the character just to the left of the
+* |if cursor| the character just to the left of the
   cursor is deleted. If this key is pressed when at the start of a line then
   that line is joined to the end of the previous one.
 
-* If text has been selected then the selected text is deleted.
+* |if selection| the selected text is deleted.
 
 The Delete key is Space+d (dots 145).
 
-* If text hasn't been selected then the character where the cursor is is
+* |if cursor| the character where the cursor is is
   deleted. If this key is pressed when at the end of a line then that line is
   joined to the start of the next one.
 
-* If text has been selected then the selected text is deleted.
+* |if selection| the selected text is deleted.
 
 Panning within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,13 +67,17 @@ The Forward and Backward keys pan through an input area in the expected way:
   wraps to the end of the previous one. At the start of the first line
   it moves to the start of the previous screen element.
 
-Pressing Space+Dots17 pans the braille display such that
-its first character corresponds to the cursor's location,
-or, if text has been selected, to the start of the selection.
+Pressing Space+Dots17 pans the braille display
+such that its first character corresponds to:
 
-Pressing Space+Dots48 pans the braille display such that
-its last character corresponds to the cursor's location,
-or, if text has been selected, to the end of the selection.
+* |if cursor| the cursor's location.
+* |if selection| the first selected character.
+
+Pressing Space+Dots48 pans the braille display
+such that its last character corresponds to:
+
+* |if cursor| the cursor's location.
+* |if selection| the last selected character.
 
 The Directional Keys within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,23 +90,23 @@ will not leave the input area. The braille display is panned, as needed, such
 that the cursor is always visible.
 
 The Left key moves the cursor to the previous character. If it's at the start
-of a line then it wraps to the end of the previous line. If text has been
-selected then the cursor is moved to just before the first selected character,
+of a line then it wraps to the end of the previous line.
+|if selection| the cursor is moved to just before the first selected character,
 and the selection is cleared.
 
 The Right key moves the cursor to the next character. If it's at the end of a
-line then it wraps to the start of the next line. If text has been selected
-then the cursor is moved to just after the last selected character, and the
+line then it wraps to the start of the next line. |if selection|
+the cursor is moved to just after the last selected character, and the
 selection is cleared.
 
 The Up key moves the cursor to the same position on the previous line.
 |directional move to short line|
-If text has been selected then the cursor is moved to just above the first
+|if selection| the cursor is moved to just above the first
 selected character, and the selection is cleared.
 
 The Down key moves the cursor to the same position on the next line.
 |directional move to short line|
-If text has been selected then the cursor is moved to just below the last
+|if selection| the cursor is moved to just below the last
 selected character, and the selection is cleared.
 
 Traditional Key Combinations within an INput Area
