@@ -152,3 +152,13 @@ The Tab Key
 Move to the next screen element that can perform an action. If on the last
 screen element then wrap to the first one.
 
+Space + Dots126
+~~~~~~~~~~~~~~~
+
+Move to the first (usually at the top-left) screen element.
+
+Space + Dots345
+~~~~~~~~~~~~~~~
+
+Move to the last (usually at the bottom-right) screen element.
+
