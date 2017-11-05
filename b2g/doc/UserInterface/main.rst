@@ -10,6 +10,9 @@
 
 .. contents::
 
+.. |need long key presses| replace::
+  `Long Press Mode`_ needs to be enabled.
+
 .. include:: Notes/main.rst
 .. include:: Physical/main.rst
 .. include:: Overview/main.rst

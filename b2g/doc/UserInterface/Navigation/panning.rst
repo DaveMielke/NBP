@@ -33,7 +33,8 @@ start of the next (or previous) screen element:
 
 * Press Space together with Forward (or Backward).
 
-* Long press Forward (or Backward). See `Long Press Mode`_.
+* Long press Forward (or Backward).
+  |need long key presses|
 
 Word Wrap Mode
 ~~~~~~~~~~~~~~
