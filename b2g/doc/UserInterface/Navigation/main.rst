@@ -20,8 +20,8 @@ Screen Navigation
 .. include:: gestures.rst
 .. include:: panning.rst
 .. include:: directional.rst
-.. include:: keyboard.rst
 .. include:: traditional.rst
+.. include:: keyboard.rst
 .. include:: input.rst
 .. include:: selection.rst
 .. include:: clipboard.rst
