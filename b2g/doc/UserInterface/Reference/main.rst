@@ -39,10 +39,10 @@ Speech Operations
 
 .. include:: keys-speech.rst
 
-Legacy Bindings
-~~~~~~~~~~~~~~~
+Traditional Bindings
+~~~~~~~~~~~~~~~~~~~~
 
-.. include:: keys-legacy.rst
+.. include:: keys-traditional.rst
 
 Remote Braille Display Operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

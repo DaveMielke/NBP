@@ -13,7 +13,6 @@ Speech can't be disabled while braille is disabled
 * To interrupt what's currently being spoken, press Dot1+Left.
 
 * To hear all of the current line, press Dot1+Right.
-  Another (legacy) way to do so is to press Space+c (dots 14).
 
 * To hear all of the current screen element, press Dot1+Center.
 

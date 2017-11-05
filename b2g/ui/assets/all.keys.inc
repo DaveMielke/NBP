@@ -51,7 +51,7 @@ bind Space+Dots24#i DescribeIndicators
 bind Space+Dots12345678 Null
 
 include required.keys.inc
-include legacy.keys.inc
+include traditional.keys.inc
 include advanced-all.keys.inc
 include remote.keys.inc
 include phone.keys.inc
