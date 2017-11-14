@@ -45,6 +45,7 @@ public abstract class ExpressionParser {
     DIVIDE,
     MODULO,
     EXPONENTIATE,
+
     FACTORIAL,
     PERCENT,
 
@@ -52,6 +53,7 @@ public abstract class ExpressionParser {
     AND,
     OR,
     XOR,
+
     LSL,
     LSR,
     ASR,

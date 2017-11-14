@@ -894,8 +894,8 @@ public class CalculatorActivity extends CommonActivity {
 
           final List<String> variables = getUserVariableLines();
 
-          for (String name : Variables.getSystemVariableNames()) {
-            variables.add(formatVariableLine(Variables.getSystemVariable(name)));
+          for (String name : Variables.getPredefinedVariableNames()) {
+            variables.add(formatVariableLine(Variables.getPredefinedVariable(name)));
           }
 
           builder.setItems(

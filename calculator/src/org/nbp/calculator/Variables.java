@@ -11,98 +11,98 @@ public abstract class Variables {
   private Variables () {
   }
 
-  private static class SystemVariables extends LinkedHashMap<String, SystemVariable> {
-    public SystemVariables () {
+  private static class PredefinedVariables extends LinkedHashMap<String, PredefinedVariable> {
+    public PredefinedVariables () {
       super();
     }
   }
 
-  private final static SystemVariables systemVariables = new SystemVariables();
+  private final static PredefinedVariables predefinedVariables = new PredefinedVariables();
 
-  private static void setSystemVariable (String name, AbstractNumber value, String description) {
-    systemVariables.put(name, new SystemVariable(name, value, description));
+  private static void defineConstant (String name, AbstractNumber value, String description) {
+    predefinedVariables.put(name, new PredefinedConstant(name, value, description));
   }
 
-  private static void setSystemVariable (String name, double real, double imag, String description) {
-    setSystemVariable(name, new ComplexNumber(real, imag), description);
+  private static void defineConstant (String name, double real, double imag, String description) {
+    defineConstant(name, new ComplexNumber(real, imag), description);
   }
 
-  private static void setSystemVariable (String name, double real, String description) {
-    setSystemVariable(name, new ComplexNumber(real), description);
+  private static void defineConstant (String name, double real, String description) {
+    defineConstant(name, new ComplexNumber(real), description);
   }
 
   static {
-    setSystemVariable(
+    defineConstant(
       "gamma", 0.57721566490153286060,
       "Euler-Mascheroni constant"
     );
 
-    setSystemVariable(
+    defineConstant(
       "pi", 3.14159265358979323846,
       "ratio of circumference to diameter"
     );
 
-    setSystemVariable(
+    defineConstant(
       "sigma", 5.670367E-8,
       "Stefan-Boltzmann constant [W m^-2 K^-4]"
     );
 
-    setSystemVariable(
+    defineConstant(
       "c", 299792458d,
       "speed of light in vacuum [m s^-1]"
     );
 
-    setSystemVariable(
+    defineConstant(
       "e", 2.71828182845904523536,
       "base of natural logarithms"
     );
 
-    setSystemVariable(
+    defineConstant(
       "h", 6.626070040E-34,
       "Planck constant [J s]"
     );
 
-    setSystemVariable(
+    defineConstant(
       "i", 0d, 1d,
       "imaginary unit"
     );
 
-    setSystemVariable(
+    defineConstant(
       "k", 1.38064852E-23,
       "Boltzmann constant [J K^-1]"
     );
 
-    setSystemVariable(
+    defineConstant(
       "F", 96485.33289,
       "Faraday constant [C mol^-1]"
     );
 
-    setSystemVariable(
+    defineConstant(
       "G", 6.67408E-11,
       "Newtonian constant of gravitation [m^3 kg^-1 s^-2]"
     );
 
-    setSystemVariable(
+    defineConstant(
       "L", 6.022140857E23,
       "Avogadro constant [mol^-1]"
     );
 
-    setSystemVariable(
+    defineConstant(
       "R", 8.3144598,
       "molar gas constant [J mol^-1 K^-1]"
     );
   }
 
-  public static String[] getSystemVariableNames () {
-    return ApplicationUtilities.toArray(systemVariables.keySet());
+  public static String[] getPredefinedVariableNames () {
+    return ApplicationUtilities.toArray(predefinedVariables.keySet());
   }
 
-  public static Variable getSystemVariable (String name) {
-    return systemVariables.get(name);
+  public static Variable getPredefinedVariable (String name) {
+    return predefinedVariables.get(name);
   }
 
-  public static boolean removeSystemVariable (String name) {
-    return systemVariables.remove(name) != null;
+  public static boolean removePredefinedVariable (String name) {
+    return predefinedVariables.remove(name) != null;
   }
 
   private static SharedPreferences getUserVariables () {
@@ -144,7 +144,7 @@ public abstract class Variables {
     }
 
     {
-      Variable variable = getSystemVariable(name);
+      Variable variable = getPredefinedVariable(name);
       if (variable != null) return variable;
     }
 
@@ -152,7 +152,7 @@ public abstract class Variables {
   }
 
   public static boolean set (String name, AbstractNumber value) {
-    if (systemVariables.containsKey(name)) return false;
+    if (predefinedVariables.containsKey(name)) return false;
     getUserVariables().edit().putString(name, value.toString()).apply();
     return true;
   }
