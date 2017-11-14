@@ -29,7 +29,7 @@ public abstract class HorizontalAction extends DirectionalAction {
       CharSequence text = endpoint.getText();
       int end = findNextObject(endpoint, offset);
       if (end == NOT_FOUND) end = text.length();
-      ApplicationUtilities.say(text.subSequence(offset, end));
+      endpoint.setSelectedObject(offset, end);
     }
 
     if (endpoint.isInputArea()) {

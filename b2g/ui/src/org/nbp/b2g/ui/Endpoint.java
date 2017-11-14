@@ -17,12 +17,21 @@ public abstract class Endpoint {
   private int oldLineStart;
   private int oldSelectionStart;
   private int oldSelectionEnd;
+  private int selectedObjectStart;
+  private int selectedObjectEnd;
 
   protected final void resetSpeech () {
     oldLineText = "";
     oldLineStart = -1;
     oldSelectionStart = NO_SELECTION;
     oldSelectionEnd = NO_SELECTION;
+    selectedObjectStart = NO_SELECTION;
+    selectedObjectEnd = NO_SELECTION;
+  }
+
+  public final void setSelectedObject (int start, int end) {
+    selectedObjectStart = start;
+    selectedObjectEnd = end;
   }
 
   private final CharSequence getCompletedWord (CharSequence text, int to) {
@@ -54,82 +63,96 @@ public abstract class Endpoint {
       final int newSelectionStart = getSelectionStart();
       final int newSelectionEnd = getSelectionEnd();
 
-      if (newLineStart != oldLineStart) {
-        text = newLineText;
-        echo = ApplicationSettings.SPEAK_LINES;
-      } else {
-        int start = 0;
-        int oldEnd = oldLineText.length();
-        int newEnd = newLineText.length();
+      if (selectedObjectStart != NO_SELECTION) {
+        final CharSequence newText = getText();
 
-        while ((start < oldEnd) && (start < newEnd)) {
-          if (oldLineText.charAt(start) != newLineText.charAt(start)) break;
-          start += 1;
+        if ((0 <= selectedObjectStart) &&
+            (selectedObjectStart < selectedObjectEnd) &&
+            (selectedObjectEnd <= newText.length())
+           ) {
+          text = newText.subSequence(selectedObjectStart, selectedObjectEnd);
+          echo = ApplicationSettings.ECHO_SELECTION;
         }
+      }
 
-        while ((oldEnd > start) && (newEnd > start)) {
-          if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
-            oldEnd += 1;
-            newEnd += 1;
-            break;
+      if (text == null) {
+        if (newLineStart != oldLineStart) {
+          text = newLineText;
+          echo = ApplicationSettings.SPEAK_LINES;
+        } else {
+          int start = 0;
+          int oldEnd = oldLineText.length();
+          int newEnd = newLineText.length();
+
+          while ((start < oldEnd) && (start < newEnd)) {
+            if (oldLineText.charAt(start) != newLineText.charAt(start)) break;
+            start += 1;
           }
-        }
 
-        if (newEnd > start) {
-          text = newLineText.subSequence(start, newEnd);
-          echo = ApplicationSettings.ECHO_CHARACTERS;
+          while ((oldEnd > start) && (newEnd > start)) {
+            if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
+              oldEnd += 1;
+              newEnd += 1;
+              break;
+            }
+          }
 
-          if (ApplicationSettings.ECHO_WORDS) {
-            if (start == oldEnd) {
-              if (newSelectionStart == newSelectionEnd) {
-                int position = newSelectionStart - newLineStart;
+          if (newEnd > start) {
+            text = newLineText.subSequence(start, newEnd);
+            echo = ApplicationSettings.ECHO_CHARACTERS;
 
-                if (position >= 0) {
-                  while (newEnd > position) {
-                    if (start == 0) break;
+            if (ApplicationSettings.ECHO_WORDS) {
+              if (start == oldEnd) {
+                if (newSelectionStart == newSelectionEnd) {
+                  int position = newSelectionStart - newLineStart;
 
-                    if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
-                      oldEnd += 1;
-                      newEnd += 1;
-                      break;
+                  if (position >= 0) {
+                    while (newEnd > position) {
+                      if (start == 0) break;
+
+                      if (oldLineText.charAt(--oldEnd) != newLineText.charAt(--newEnd)) {
+                        oldEnd += 1;
+                        newEnd += 1;
+                        break;
+                      }
+
+                      start -= 1;
                     }
-
-                    start -= 1;
                   }
                 }
               }
+
+              word = getCompletedWord(getText(), (newLineStart + newEnd));
+            }
+          } else if (oldEnd > start) {
+            text = oldLineText.subSequence(start, oldEnd);
+            echo = ApplicationSettings.ECHO_DELETIONS;
+            action = R.string.DeleteCharacter_action_confirmation;
+          } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
+            int offset = NO_SELECTION;
+
+            if (newSelectionStart != oldSelectionStart) {
+              offset = newSelectionStart;
+              action = R.string.SetSelectionStart_action_confirmation;
+            } else if (newSelectionEnd != oldSelectionEnd) {
+              offset = newSelectionEnd - 1;
+              action = R.string.SetSelectionEnd_action_confirmation;
             }
 
-            word = getCompletedWord(getText(), (newLineStart + newEnd));
-          }
-        } else if (oldEnd > start) {
-          text = oldLineText.subSequence(start, oldEnd);
-          echo = ApplicationSettings.ECHO_DELETIONS;
-          action = R.string.DeleteCharacter_action_confirmation;
-        } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
-          int offset = NO_SELECTION;
+            if (offset != NO_SELECTION) {
+              final CharSequence newText = getText();
+              final int newLength = newText.length();
 
-          if (newSelectionStart != oldSelectionStart) {
-            offset = newSelectionStart;
-            action = R.string.SetSelectionStart_action_confirmation;
-          } else if (newSelectionEnd != oldSelectionEnd) {
-            offset = newSelectionEnd - 1;
-            action = R.string.SetSelectionEnd_action_confirmation;
-          }
+              if (offset < newLength) {
+                text = ApplicationUtilities.toString(newText.charAt(offset));
+              } else if (offset == newLength) {
+                text = ApplicationContext.getString(R.string.character_end);
+              }
 
-          if (offset != NO_SELECTION) {
-            final CharSequence newText = getText();
-            final int newLength = newText.length();
-
-            if (offset < newLength) {
-              text = ApplicationUtilities.toString(newText.charAt(offset));
-            } else if (offset == newLength) {
-              text = ApplicationContext.getString(R.string.character_end);
-            }
-
-            if (text != null) {
-              echo = ApplicationSettings.ECHO_SELECTION;
-              if (newSelectionStart == newSelectionEnd) action = 0;
+              if (text != null) {
+                echo = ApplicationSettings.ECHO_SELECTION;
+                if (newSelectionStart == newSelectionEnd) action = 0;
+              }
             }
           }
         }
@@ -155,6 +178,8 @@ public abstract class Endpoint {
       oldLineStart = newLineStart;
       oldSelectionStart = newSelectionStart;
       oldSelectionEnd = newSelectionEnd;
+      selectedObjectStart = NO_SELECTION;
+      selectedObjectEnd = NO_SELECTION;
     }
   }
 
