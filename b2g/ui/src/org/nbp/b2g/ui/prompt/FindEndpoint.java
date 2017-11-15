@@ -89,7 +89,7 @@ public class FindEndpoint extends PromptEndpoint {
 
     if (from < to) {
       if (words[from].isEmpty()) {
-        sb.append("(?:^|\\s)\\s*+");
+        sb.append("(?:^|\\s)\\s*");
         from += 1;
       }
     }
