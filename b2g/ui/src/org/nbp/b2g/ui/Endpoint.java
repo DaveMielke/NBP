@@ -17,21 +17,21 @@ public abstract class Endpoint {
   private int oldLineStart;
   private int oldSelectionStart;
   private int oldSelectionEnd;
-  private int selectedObjectStart;
-  private int selectedObjectEnd;
+  private int speechTextStart;
+  private int speechTextEnd;
 
   protected final void resetSpeech () {
     oldLineText = "";
     oldLineStart = -1;
     oldSelectionStart = NO_SELECTION;
     oldSelectionEnd = NO_SELECTION;
-    selectedObjectStart = NO_SELECTION;
-    selectedObjectEnd = NO_SELECTION;
+    speechTextStart = NO_SELECTION;
+    speechTextEnd = NO_SELECTION;
   }
 
-  public final void setSelectedObject (int start, int end) {
-    selectedObjectStart = start;
-    selectedObjectEnd = end;
+  public final void setSpeechText (int start, int end) {
+    speechTextStart = start;
+    speechTextEnd = end;
   }
 
   private final CharSequence getCompletedWord (CharSequence text, int to) {
@@ -63,14 +63,14 @@ public abstract class Endpoint {
       final int newSelectionStart = getSelectionStart();
       final int newSelectionEnd = getSelectionEnd();
 
-      if (selectedObjectStart != NO_SELECTION) {
+      if (speechTextStart != NO_SELECTION) {
         final CharSequence newText = getText();
 
-        if ((0 <= selectedObjectStart) &&
-            (selectedObjectStart < selectedObjectEnd) &&
-            (selectedObjectEnd <= newText.length())
+        if ((0 <= speechTextStart) &&
+            (speechTextStart < speechTextEnd) &&
+            (speechTextEnd <= newText.length())
            ) {
-          text = newText.subSequence(selectedObjectStart, selectedObjectEnd);
+          text = newText.subSequence(speechTextStart, speechTextEnd);
           echo = ApplicationSettings.ECHO_SELECTION;
         }
       }
@@ -178,8 +178,8 @@ public abstract class Endpoint {
       oldLineStart = newLineStart;
       oldSelectionStart = newSelectionStart;
       oldSelectionEnd = newSelectionEnd;
-      selectedObjectStart = NO_SELECTION;
-      selectedObjectEnd = NO_SELECTION;
+      speechTextStart = NO_SELECTION;
+      speechTextEnd = NO_SELECTION;
     }
   }
 
