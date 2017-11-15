@@ -105,7 +105,8 @@ public class FindEndpoint extends PromptEndpoint {
 
     while (from < to) {
       String word = words[from++];
-      if (word.isEmpty()) continue;
+      int length = word.length();
+      if (length == 0) continue;
 
       if (separator == null) {
         separator = "\\s+";
@@ -113,9 +114,11 @@ public class FindEndpoint extends PromptEndpoint {
         sb.append(separator);
       }
 
-      sb.append("\\Q");
-      sb.append(word);
-      sb.append("\\E");
+      for (int index=0; index<length; index+=1) {
+        char character = word.charAt(index);
+        if (!Character.isLetterOrDigit(character)) sb.append('\\');
+        sb.append(character);
+      }
     }
 
     if (to < words.length) sb.append("(?:\\s|$)");
