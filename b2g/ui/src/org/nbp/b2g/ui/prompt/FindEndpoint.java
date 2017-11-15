@@ -80,16 +80,15 @@ public class FindEndpoint extends PromptEndpoint {
 
   private final void setSearchPattern (String string) {
     StringBuilder sb = new StringBuilder();
+    sb.append("(?i)");
 
     String[] words = string.split("\\s+", -1);
-    String separator = null;
-
     int from = 0;
     int to = words.length;
 
     if (from < to) {
       if (words[from].isEmpty()) {
-        sb.append("(?:^|\\s)\\s*");
+        sb.append("(?:^|\\s)");
         from += 1;
       }
     }
@@ -100,7 +99,7 @@ public class FindEndpoint extends PromptEndpoint {
       }
     }
 
-    sb.append("(?i)");
+    String separator = null;
     sb.append('(');
 
     while (from < to) {
@@ -121,8 +120,8 @@ public class FindEndpoint extends PromptEndpoint {
       }
     }
 
-    if (to < words.length) sb.append("(?:\\s|$)");
     sb.append(')');
+    if (to < words.length) sb.append("(?:\\s|$)");
     searchPattern = Pattern.compile(sb.toString());
 
     if (ApplicationSettings.LOG_ACTIONS) {
