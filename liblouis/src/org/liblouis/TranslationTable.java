@@ -117,7 +117,7 @@ public class TranslationTable extends Translator {
   );
 
   public final boolean translate (
-    String inputBuffer, char[] outputBuffer,
+    CharSequence inputBuffer, char[] outputBuffer,
     int[] outputOffsets, int[] inputOffsets,
     boolean backTranslate, boolean includeHighlighting,
     int[] resultValues
@@ -132,16 +132,15 @@ public class TranslationTable extends Translator {
       inputBuffer.length(), outputBuffer.length
     );
 
-    final short[] typeForm = !includeHighlighting? null:
-                             backTranslate? null:
-                             createTypeForm(typeFormLength, inputBuffer);
+    final short[] typeForm =
+      !includeHighlighting? null:
+      backTranslate? null:
+      createTypeForm(typeFormLength, inputBuffer);
 
     synchronized (Louis.NATIVE_LOCK) {
       return translate(
-        fileName,
-        inputBuffer, outputBuffer, typeForm,
-        outputOffsets, inputOffsets, resultValues,
-        backTranslate
+        fileName, inputBuffer.toString(), outputBuffer, typeForm,
+        outputOffsets, inputOffsets, resultValues, backTranslate
       );
     }
   }

@@ -185,10 +185,9 @@ public class Translation {
 
     final boolean includeHighlighting = builder.getIncludeHighlighting();
     final boolean allowLongerOutput = builder.getAllowLongerOutput();
-    int outputLength = builder.getOutputLength();
 
-    final String inputString = suppliedInput.toString();
-    final int inputLength = inputString.length();
+    final int inputLength = suppliedInput.length();
+    int outputLength = builder.getOutputLength();
 
     CharSequence input = suppliedInput;
     int[] outOffsets = new int[inputLength];
@@ -210,7 +209,7 @@ public class Translation {
       resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
       translated = translationTable.translate(
-        inputString, output, outOffsets, inOffsets,
+        suppliedInput, output, outOffsets, inOffsets,
         backTranslate, includeHighlighting, resultValues
       );
 
@@ -231,7 +230,11 @@ public class Translation {
           resultValues[RVI_CURSOR_OFFSET] = -1;
         }
 
-        inputString.getChars(0, inputString.length(), output, 0);
+        {
+          String string = suppliedInput.toString();
+          string.getChars(0, string.length(), output, 0);
+        }
+
         break;
       }
 
@@ -271,7 +274,7 @@ public class Translation {
             int outOffset = resultValues[RVI_OUTPUT_LENGTH];
             if (outOffset == outputLength) break FIX_END;
 
-            output[outOffset] = inputString.charAt(inOffset);
+            output[outOffset] = suppliedInput.charAt(inOffset);
             outOffsets[inOffset] = outOffset;
             inOffsets[outOffset] = inOffset;
 
