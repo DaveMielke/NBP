@@ -116,6 +116,7 @@ public class TranslationTable extends Translator {
     int[] resultValues, boolean backTranslate
   );
 
+  @Override
   public final boolean translate (
     CharSequence inputBuffer, char[] outputBuffer,
     int[] outputOffsets, int[] inputOffsets,
@@ -126,22 +127,71 @@ public class TranslationTable extends Translator {
       backTranslate?
       getBackwardTableFile():
       getForwardTableFile();
-    final String fileName = tableFile.getFileName();
 
-    final int typeFormLength = Math.max(
-      inputBuffer.length(), outputBuffer.length
-    );
+    final int inputLength = inputBuffer.length();
+    final int outputLength = outputBuffer.length;
 
+    final int typeFormLength = Math.max(inputLength, outputLength);
     final short[] typeForm =
       !includeHighlighting? null:
       backTranslate? null:
       createTypeForm(typeFormLength, inputBuffer);
 
     synchronized (Louis.NATIVE_LOCK) {
-      return translate(
-        fileName, inputBuffer.toString(), outputBuffer, typeForm,
-        outputOffsets, inputOffsets, resultValues, backTranslate
+      boolean translated = translate(
+        tableFile.getFileName(), inputBuffer.toString(), outputBuffer,
+        typeForm, outputOffsets, inputOffsets, resultValues, backTranslate
       );
+
+      if (!translated) return false;
     }
+
+    if (backTranslate) {
+      {
+        int outStart = 0;
+
+        while (true) {
+          int inputOffset = resultValues[RVI_INPUT_LENGTH];
+          if (inputOffset == inputLength) break;
+
+          int outputOffset = outputOffsets[inputOffset];
+          if (outputOffset < outStart) break;
+          if (outputOffset > outputLength) break;
+
+          outStart = outputOffset;
+          resultValues[RVI_INPUT_LENGTH] = inputOffset + 1;
+        }
+      }
+
+    FIX_END:
+      if (resultValues[RVI_INPUT_LENGTH] == inputLength) {
+        int outLength = resultValues[RVI_OUTPUT_LENGTH];
+
+        while (true) {
+          int inputOffset = resultValues[RVI_INPUT_LENGTH];
+          if (inputOffset == 0) break;
+
+          if (outputOffsets[inputOffset -= 1] != outLength) break;
+          resultValues[RVI_INPUT_LENGTH] = inputOffset;
+        }
+
+        while (true) {
+          int inputOffset = resultValues[RVI_INPUT_LENGTH];
+          if (inputOffset == inputLength) break;
+
+          int outputOffset = resultValues[RVI_OUTPUT_LENGTH];
+          if (outputOffset == outputLength) break FIX_END;
+
+          outputBuffer[outputOffset] = inputBuffer.charAt(inputOffset);
+          outputOffsets[inputOffset] = outputOffset;
+          inputOffsets[outputOffset] = inputOffset;
+
+          resultValues[RVI_INPUT_LENGTH] = inputOffset + 1;
+          resultValues[RVI_OUTPUT_LENGTH] = outputOffset + 1;
+        }
+      }
+    }
+
+    return true;
   }
 }

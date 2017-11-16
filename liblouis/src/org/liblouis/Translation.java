@@ -166,18 +166,6 @@ public class Translation {
     return outputCursor;
   }
 
-  private enum ResultValuesIndex {
-    INPUT_LENGTH,
-    OUTPUT_LENGTH,
-    CURSOR_OFFSET,
-    ; // end of enumeration
-  }
-
-  private final static int RESULT_VALUES_COUNT = ResultValuesIndex.values().length;
-  private final static int RVI_INPUT_LENGTH = ResultValuesIndex.INPUT_LENGTH.ordinal();
-  private final static int RVI_OUTPUT_LENGTH = ResultValuesIndex.OUTPUT_LENGTH.ordinal();
-  private final static int RVI_CURSOR_OFFSET = ResultValuesIndex.CURSOR_OFFSET.ordinal();
-
   public Translation (TranslationBuilder builder, boolean backTranslate) {
     translationTable = builder.getTranslationTable();
     suppliedInput = builder.getInputCharacters();
@@ -191,7 +179,7 @@ public class Translation {
 
     CharSequence input = suppliedInput;
     int[] outOffsets = new int[inputLength];
-    final int[] resultValues = new int[RESULT_VALUES_COUNT];
+    final int[] resultValues = new int[Translator.RESULT_VALUES_COUNT];
 
     char[] output;
     int[] inOffsets;
@@ -204,9 +192,9 @@ public class Translation {
       output = new char[outputLength];
       inOffsets = new int[outputLength];
 
-      resultValues[RVI_INPUT_LENGTH]  = inputLength;
-      resultValues[RVI_OUTPUT_LENGTH] = outputLength;
-      resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
+      resultValues[Translator.RVI_INPUT_LENGTH]  = inputLength;
+      resultValues[Translator.RVI_OUTPUT_LENGTH] = outputLength;
+      resultValues[Translator.RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
       translated = translationTable.translate(
         suppliedInput, output, outOffsets, inOffsets,
@@ -216,18 +204,18 @@ public class Translation {
       if (!translated) {
         Log.w(LOG_TAG, "translation failed");
 
-        if (resultValues[RVI_INPUT_LENGTH] > resultValues[RVI_OUTPUT_LENGTH]) {
-          resultValues[RVI_INPUT_LENGTH] = resultValues[RVI_OUTPUT_LENGTH];
-        } else if (resultValues[RVI_OUTPUT_LENGTH] > resultValues[RVI_INPUT_LENGTH]) {
-          resultValues[RVI_OUTPUT_LENGTH] = resultValues[RVI_INPUT_LENGTH];
+        if (resultValues[Translator.RVI_INPUT_LENGTH] > resultValues[Translator.RVI_OUTPUT_LENGTH]) {
+          resultValues[Translator.RVI_INPUT_LENGTH] = resultValues[Translator.RVI_OUTPUT_LENGTH];
+        } else if (resultValues[Translator.RVI_OUTPUT_LENGTH] > resultValues[Translator.RVI_INPUT_LENGTH]) {
+          resultValues[Translator.RVI_OUTPUT_LENGTH] = resultValues[Translator.RVI_INPUT_LENGTH];
         }
 
-        for (int offset=0; offset<resultValues[RVI_INPUT_LENGTH]; offset+=1) {
+        for (int offset=0; offset<resultValues[Translator.RVI_INPUT_LENGTH]; offset+=1) {
           inOffsets[offset] = outOffsets[offset] = offset;
         }
 
-        if (resultValues[RVI_CURSOR_OFFSET] >= resultValues[RVI_INPUT_LENGTH]) {
-          resultValues[RVI_CURSOR_OFFSET] = -1;
+        if (resultValues[Translator.RVI_CURSOR_OFFSET] >= resultValues[Translator.RVI_INPUT_LENGTH]) {
+          resultValues[Translator.RVI_CURSOR_OFFSET] = -1;
         }
 
         {
@@ -238,60 +226,13 @@ public class Translation {
         break;
       }
 
-      if (backTranslate) {
-        int outStart = 0;
-
-        while (true) {
-          int inOffset = resultValues[RVI_INPUT_LENGTH];
-          if (inOffset == inputLength) break;
-
-          int outOffset = outOffsets[inOffset];
-          if (outOffset < outStart) break;
-          if (outOffset > outputLength) break;
-
-          outStart = outOffset;
-          resultValues[RVI_INPUT_LENGTH] = inOffset + 1;
-        }
-      }
-
-    FIX_END:
-      if (resultValues[RVI_INPUT_LENGTH] == inputLength) {
-        if (backTranslate) {
-          int outLength = resultValues[RVI_OUTPUT_LENGTH];
-
-          while (true) {
-            int inOffset = resultValues[RVI_INPUT_LENGTH];
-            if (inOffset == 0) break;
-
-            if (outOffsets[inOffset -= 1] != outLength) break;
-            resultValues[RVI_INPUT_LENGTH] = inOffset;
-          }
-
-          while (true) {
-            int inOffset = resultValues[RVI_INPUT_LENGTH];
-            if (inOffset == inputLength) break;
-
-            int outOffset = resultValues[RVI_OUTPUT_LENGTH];
-            if (outOffset == outputLength) break FIX_END;
-
-            output[outOffset] = suppliedInput.charAt(inOffset);
-            outOffsets[inOffset] = outOffset;
-            inOffsets[outOffset] = inOffset;
-
-            resultValues[RVI_INPUT_LENGTH] = inOffset + 1;
-            resultValues[RVI_OUTPUT_LENGTH] = outOffset + 1;
-          }
-        }
-
-        break;
-      }
-
+      int currentConsumed = resultValues[Translator.RVI_INPUT_LENGTH];
+      if (currentConsumed == inputLength) break;
       if (!allowLongerOutput) break;
-      int currentConsumed = resultValues[RVI_INPUT_LENGTH];
 
       if (currentConsumed == previousConsumed) {
         if (++retryCount > 5) break;
-        if ((outputLength - resultValues[RVI_OUTPUT_LENGTH]) > 100) break;
+        if ((outputLength - resultValues[Translator.RVI_OUTPUT_LENGTH]) > 100) break;
       } else {
         retryCount = 0;
         previousConsumed = currentConsumed;
@@ -300,9 +241,9 @@ public class Translation {
       outputLength <<= 1;
     }
 
-    int newInputLength  = resultValues[RVI_INPUT_LENGTH];
-    int newOutputLength = resultValues[RVI_OUTPUT_LENGTH];
-    int newCursorOffset = resultValues[RVI_CURSOR_OFFSET];
+    int newInputLength  = resultValues[Translator.RVI_INPUT_LENGTH];
+    int newOutputLength = resultValues[Translator.RVI_OUTPUT_LENGTH];
+    int newCursorOffset = resultValues[Translator.RVI_CURSOR_OFFSET];
 
     if (newInputLength < inputLength) {
       input = input.subSequence(0, newInputLength);
