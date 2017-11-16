@@ -7,7 +7,7 @@ typedef enum {
 } ResultValuesIndex;
 
 JAVA_METHOD(
-  org_liblouis_Translation, translate, jboolean,
+  org_liblouis_TranslationTable, translate, jboolean,
   jstring jTableFile,
   jstring jInputBuffer, jcharArray jOutputBuffer, jshortArray jTypeForm,
   jintArray jOutputOffsets, jintArray jInputOffsets,

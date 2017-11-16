@@ -7,19 +7,8 @@ import android.util.Log;
 import android.text.Spanned;
 import android.text.SpannableStringBuilder;
 
-import android.text.style.UnderlineSpan;
-import android.text.style.StyleSpan;
-import android.graphics.Typeface;
-
 public class Translation {
   private final static String LOG_TAG = Translation.class.getName();
-
-  private native boolean translate (
-    String tableName,
-    String inputBuffer, char[] outputBuffer, short[] typeForm,
-    int[] outputOffsets, int[] inputOffsets,
-    int[] resultValues, boolean backTranslate
-  );
 
   private final TranslationTable translationTable;
   private final boolean translationSucceeded;
@@ -177,63 +166,6 @@ public class Translation {
     return outputCursor;
   }
 
-  private final static short TYPE_FORM_BOLD = Emphasis.getBoldBit();
-  private final static short TYPE_FORM_ITALIC = Emphasis.getItalicBit();
-  private final static short TYPE_FORM_UNDERLINE = Emphasis.getUnderlineBit();
-
-  private static short[] createTypeForm (int length) {
-    short[] typeForm = new short[length];
-    Arrays.fill(typeForm, (short)0);
-    return typeForm;
-  }
-
-  private static short[] createTypeForm (int length, CharSequence text) {
-    short[] typeForm = null;
-
-    if (text instanceof Spanned) {
-      Spanned spanned = (Spanned)text;
-      Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
-
-      if (spans != null) {
-        for (Object span : spans) {
-          short flags = 0;
-
-          if (span instanceof UnderlineSpan) {
-            flags |= TYPE_FORM_UNDERLINE;
-          } else if (span instanceof StyleSpan) {
-            switch (((StyleSpan)span).getStyle()) {
-              case Typeface.BOLD:
-                flags |= TYPE_FORM_BOLD;
-                break;
-
-              case Typeface.ITALIC:
-                flags |= TYPE_FORM_ITALIC;
-                break;
-
-              case Typeface.BOLD_ITALIC:
-                flags |= TYPE_FORM_BOLD;
-                flags |= TYPE_FORM_ITALIC;
-                break;
-            }
-          }
-
-          if (flags != 0) {
-            if (typeForm == null) typeForm = createTypeForm(length);
-
-            int start = spanned.getSpanStart(span);
-            int end = spanned.getSpanEnd(span);
-
-            for (int index=start; index<end; index+=1) {
-              typeForm[index] |= flags;
-            }
-          }
-        }
-      }
-    }
-
-    return typeForm;
-  }
-
   private enum ResultValuesIndex {
     INPUT_LENGTH,
     OUTPUT_LENGTH,
@@ -250,12 +182,6 @@ public class Translation {
     translationTable = builder.getTranslationTable();
     suppliedInput = builder.getInputCharacters();
     inputCursor = builder.getCursorOffset();
-
-    final TableFile tableFile =
-      backTranslate?
-      translationTable.getBackwardTableFile():
-      translationTable.getForwardTableFile();
-    final String fileName = tableFile.getFileName();
 
     final boolean includeHighlighting = builder.getIncludeHighlighting();
     final boolean allowLongerOutput = builder.getAllowLongerOutput();
@@ -283,19 +209,10 @@ public class Translation {
       resultValues[RVI_OUTPUT_LENGTH] = outputLength;
       resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
-      int typeFormLength = Math.max(inputLength, outputLength);
-      short[] typeForm = !includeHighlighting? null:
-                        backTranslate? null:
-                        createTypeForm(typeFormLength, input);
-
-      synchronized (Louis.NATIVE_LOCK) {
-        translated = translate(
-          fileName,
-          inputString, output, typeForm,
-          outOffsets, inOffsets, resultValues,
-          backTranslate
-        );
-      }
+      translated = translationTable.translate(
+        inputString, output, outOffsets, inOffsets,
+        backTranslate, includeHighlighting, resultValues
+      );
 
       if (!translated) {
         Log.w(LOG_TAG, "translation failed");
