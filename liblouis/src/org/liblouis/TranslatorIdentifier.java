@@ -443,11 +443,14 @@ public enum TranslatorIdentifier {
 
   ; // end of enumeration
 
-  private final Translator translatorObject;
+  private final String forwardName;
+  private final String backwardName;
   private final int translatorDescription;
+  private Translator translatorObject = null;
 
-  TranslatorIdentifier (String forwardName, String backwardName, int description) {
-    translatorObject = new TranslationTable(forwardName, backwardName);
+  TranslatorIdentifier (String forward, String backward, int description) {
+    forwardName = forward;
+    backwardName = backward;
     translatorDescription = description;
   }
 
@@ -455,11 +458,17 @@ public enum TranslatorIdentifier {
     this(name, name, description);
   }
 
-  public final Translator getTranslator () {
-    return translatorObject;
-  }
-
   public final String getDescription () {
     return Louis.getContext().getString(translatorDescription);
+  }
+
+  public final Translator getTranslator () {
+    synchronized (this) {
+      if (translatorObject == null) {
+        translatorObject = new TranslationTable(forwardName, backwardName);
+      }
+    }
+
+    return translatorObject;
   }
 }
