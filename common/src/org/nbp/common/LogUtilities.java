@@ -9,11 +9,16 @@ public abstract class LogUtilities {
   protected void LogUtilities () {
   }
 
-  public final static void logText (CharSequence name, CharSequence text) {
-    Log.d(LOG_TAG, String.format(
-      "%s: %d/%s/",
-      name, text.length(), text
-    ));
+  private final static void log (String text) {
+    Log.d(LOG_TAG, text);
+  }
+
+  private final static void log (CharSequence text) {
+    log(text.toString());
+  }
+
+  public final static void logText (CharSequence label, CharSequence text) {
+    log(String.format("%s: %d/%s/", label, text.length(), text));
   }
 
   public final static void logSpans (CharSequence text, int start, int end) {
@@ -50,10 +55,27 @@ public abstract class LogUtilities {
       }
     }
 
-    Log.d(LOG_TAG, sb.toString());
+    log(sb);
   }
 
   public final static void logSpans (CharSequence text) {
     logSpans(text, 0, text.length());
+  }
+
+  public final static void logCharacters (CharSequence label, CharSequence characters) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(label);
+    sb.append(':');
+    int count = characters.length();
+
+    for (int index=0; index<count; index+=1) {
+      sb.append(String.format(" %04X", (int)characters.charAt(index)));
+    }
+
+    log(sb);
+  }
+
+  public final static void logCharacters (CharSequence label, char[] characters) {
+    logCharacters(label, new String(characters));
   }
 }
