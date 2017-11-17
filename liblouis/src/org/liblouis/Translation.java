@@ -7,7 +7,7 @@ import android.util.Log;
 import android.text.Spanned;
 import android.text.SpannableStringBuilder;
 
-public class Translation {
+public class Translation extends TranslationComponent {
   private final static String LOG_TAG = Translation.class.getName();
 
   private final Translator translator;
@@ -192,9 +192,9 @@ public class Translation {
       output = new char[outputLength];
       inOffsets = new int[outputLength];
 
-      resultValues[Translator.RVI_INPUT_LENGTH]  = inputLength;
-      resultValues[Translator.RVI_OUTPUT_LENGTH] = outputLength;
-      resultValues[Translator.RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
+      resultValues[RVI_INPUT_LENGTH]  = inputLength;
+      resultValues[RVI_OUTPUT_LENGTH] = outputLength;
+      resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
       translated = translator.translate(
         suppliedInput, output, outOffsets, inOffsets,
@@ -204,18 +204,18 @@ public class Translation {
       if (!translated) {
         Log.w(LOG_TAG, "translation failed");
 
-        if (resultValues[Translator.RVI_INPUT_LENGTH] > resultValues[Translator.RVI_OUTPUT_LENGTH]) {
-          resultValues[Translator.RVI_INPUT_LENGTH] = resultValues[Translator.RVI_OUTPUT_LENGTH];
-        } else if (resultValues[Translator.RVI_OUTPUT_LENGTH] > resultValues[Translator.RVI_INPUT_LENGTH]) {
-          resultValues[Translator.RVI_OUTPUT_LENGTH] = resultValues[Translator.RVI_INPUT_LENGTH];
+        if (resultValues[RVI_INPUT_LENGTH] > resultValues[RVI_OUTPUT_LENGTH]) {
+          resultValues[RVI_INPUT_LENGTH] = resultValues[RVI_OUTPUT_LENGTH];
+        } else if (resultValues[RVI_OUTPUT_LENGTH] > resultValues[RVI_INPUT_LENGTH]) {
+          resultValues[RVI_OUTPUT_LENGTH] = resultValues[RVI_INPUT_LENGTH];
         }
 
-        for (int offset=0; offset<resultValues[Translator.RVI_INPUT_LENGTH]; offset+=1) {
+        for (int offset=0; offset<resultValues[RVI_INPUT_LENGTH]; offset+=1) {
           inOffsets[offset] = outOffsets[offset] = offset;
         }
 
-        if (resultValues[Translator.RVI_CURSOR_OFFSET] >= resultValues[Translator.RVI_INPUT_LENGTH]) {
-          resultValues[Translator.RVI_CURSOR_OFFSET] = -1;
+        if (resultValues[RVI_CURSOR_OFFSET] >= resultValues[RVI_INPUT_LENGTH]) {
+          resultValues[RVI_CURSOR_OFFSET] = -1;
         }
 
         {
@@ -226,13 +226,13 @@ public class Translation {
         break;
       }
 
-      int currentConsumed = resultValues[Translator.RVI_INPUT_LENGTH];
+      int currentConsumed = resultValues[RVI_INPUT_LENGTH];
       if (currentConsumed == inputLength) break;
       if (!allowLongerOutput) break;
 
       if (currentConsumed == previousConsumed) {
         if (++retryCount > 5) break;
-        if ((outputLength - resultValues[Translator.RVI_OUTPUT_LENGTH]) > 100) break;
+        if ((outputLength - resultValues[RVI_OUTPUT_LENGTH]) > 100) break;
       } else {
         retryCount = 0;
         previousConsumed = currentConsumed;
@@ -241,9 +241,9 @@ public class Translation {
       outputLength <<= 1;
     }
 
-    int newInputLength  = resultValues[Translator.RVI_INPUT_LENGTH];
-    int newOutputLength = resultValues[Translator.RVI_OUTPUT_LENGTH];
-    int newCursorOffset = resultValues[Translator.RVI_CURSOR_OFFSET];
+    int newInputLength  = resultValues[RVI_INPUT_LENGTH];
+    int newOutputLength = resultValues[RVI_OUTPUT_LENGTH];
+    int newCursorOffset = resultValues[RVI_CURSOR_OFFSET];
 
     if (newInputLength < inputLength) {
       input = input.subSequence(0, newInputLength);
