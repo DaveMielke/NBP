@@ -16,6 +16,12 @@ import java.io.InputStream;
 public final class Louis {
   private final static String LOG_TAG = Louis.class.getName();
 
+  public final static String ASSETS_FOLDER = "liblouis";
+
+  public final static String toAssetsPath (String asset) {
+    return ASSETS_FOLDER + File.separatorChar + asset;
+  }
+
   private final static String LIBRARY_NAME = "louis";
   private final static String LIBRARY_VERSION;
   public static native String getVersion ();
@@ -141,7 +147,7 @@ public final class Louis {
   private static void extractAssets () {
     AssetManager assets = applicationContext.getAssets();
 
-    String name = "liblouis";
+    String name = ASSETS_FOLDER;
     String oldName = name + ".old";
     String newName = name + ".new";
 
@@ -151,7 +157,7 @@ public final class Louis {
 
     removeFile(oldLocation);
     removeFile(newLocation);
-    extractAssets(assets, name, newLocation);
+    extractAssets(assets, ASSETS_FOLDER, newLocation);
 
     synchronized (NATIVE_LOCK) {
       location.renameTo(oldLocation);

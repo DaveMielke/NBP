@@ -14,7 +14,7 @@ public class TableFile {
     return tableName;
   }
 
-  public final static String SUBDIRECTORY = "liblouis/tables";
+  public final static String SUBDIRECTORY = Louis.toAssetsPath("tables");
   public final static String EXTENSION = ".ctb";
 
   public final static String makeFileName (String name) {
