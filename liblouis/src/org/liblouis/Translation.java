@@ -233,8 +233,8 @@ public class Translation extends TranslationComponent {
       if (!allowLongerOutput) break;
 
       if (currentConsumed == previousConsumed) {
-        if (++retryCount > 5) break;
-        if ((outputLength - resultValues[RVI_OUTPUT_LENGTH]) > 100) break;
+        if (++retryCount > ApplicationParameters.TRANSLATION_RETRY_LIMIT) break;
+        if ((outputLength - resultValues[RVI_OUTPUT_LENGTH]) > ApplicationParameters.TRANSLATION_UNUSED_LIMIT) break;
       } else {
         retryCount = 0;
         previousConsumed = currentConsumed;

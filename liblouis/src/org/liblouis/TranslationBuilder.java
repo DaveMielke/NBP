@@ -1,8 +1,6 @@
 package org.liblouis;
 
 public class TranslationBuilder {
-  public final static TranslatorIdentifier DEFAULT_TRANSLATOR = TranslatorIdentifier.EN_UEB_G2;
-
   private Translator translatorObject = null;
   private CharSequence inputCharacters = "";
   private int outputLength = 1;
@@ -12,7 +10,7 @@ public class TranslationBuilder {
 
   public final Translator getTranslator () {
     if (translatorObject == null) {
-      setTranslator(DEFAULT_TRANSLATOR);
+      setTranslator(ApplicationParameters.DEFAULT_TRANSLATOR);
     }
 
     return translatorObject;
