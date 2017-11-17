@@ -6,7 +6,7 @@ import java.io.BufferedOutputStream;
 
 import android.text.Editable;
 
-import org.liblouis.TranslationTable;
+import org.liblouis.Translator;
 import org.liblouis.TranslationBuilder;
 import org.liblouis.BrailleTranslation;
 import org.liblouis.TextTranslation;
@@ -16,16 +16,16 @@ public class ASCIIBrailleOperations extends ByteOperations {
     return ApplicationSettings.BRAILLE_MODE.getConversions();
   }
 
-  private final static TranslationTable getTranslationTable () {
-    return ApplicationSettings.BRAILLE_CODE.getTranslationTable();
+  private final static Translator getTranslator () {
+    return ApplicationSettings.BRAILLE_CODE.getTranslator();
   }
 
   private final static TranslationBuilder getTranslationBuilder () {
-    TranslationTable table = getTranslationTable();
-    if (table == null) return null;
+    Translator translator = getTranslator();
+    if (translator == null) return null;
 
     TranslationBuilder builder = new TranslationBuilder();
-    builder.setTranslationTable(table);
+    builder.setTranslator(translator);
     builder.setAllowLongerOutput(true);
     builder.setIncludeHighlighting(true);
     return builder;

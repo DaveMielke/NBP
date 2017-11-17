@@ -1,38 +1,38 @@
 package org.liblouis;
 
 public class TranslationBuilder {
-  public final static TranslationEnumeration DEFAULT_TRANSLATION_TABLE = TranslationEnumeration.EN_UEB_G2;
+  public final static TranslatorEnumeration DEFAULT_TRANSLATOR = TranslatorEnumeration.EN_UEB_G2;
 
-  private TranslationTable translationTable = null;
+  private Translator translator = null;
   private CharSequence inputCharacters = "";
   private int outputLength = 1;
   private Integer cursorOffset = null;
   private boolean includeHighlighting = false;
   private boolean allowLongerOutput = false;
 
-  public final TranslationTable getTranslationTable () {
-    if (translationTable == null) {
-      setTranslationTable(DEFAULT_TRANSLATION_TABLE);
+  public final Translator getTranslator () {
+    if (translator == null) {
+      setTranslator(DEFAULT_TRANSLATOR);
     }
 
-    return translationTable;
+    return translator;
   }
 
-  public final TranslationBuilder setTranslationTable (TranslationTable table) {
-    translationTable = table;
+  public final TranslationBuilder setTranslator (Translator translator) {
+    this.translator = translator;
     return this;
   }
 
-  public final TranslationBuilder setTranslationTable (TranslationEnumeration table) {
-    return setTranslationTable(table.getTranslationTable());
+  public final TranslationBuilder setTranslator (TranslatorEnumeration value) {
+    return setTranslator(value.getTranslator());
   }
 
-  public final TranslationBuilder setTranslationTable (String name) {
-    return setTranslationTable(new TranslationTable(name));
+  public final TranslationBuilder setTranslator (String name) {
+    return setTranslator(new TranslationTable(name));
   }
 
-  public final TranslationBuilder setTranslationTable (String forward, String backward) {
-    return setTranslationTable(new TranslationTable(forward, backward));
+  public final TranslationBuilder setTranslator (String forward, String backward) {
+    return setTranslator(new TranslationTable(forward, backward));
   }
 
   public final CharSequence getInputCharacters () {
@@ -92,7 +92,7 @@ public class TranslationBuilder {
   }
 
   private final void verifyValues () {
-    verifyValue((translationTable != null), "translation table not set");
+    verifyValue((translator != null), "translator not set");
     verifyValue((inputCharacters != null), "input characters not set");
     verifyValue((outputLength >= 0), "negative output length");
     verifyValue(((cursorOffset == null) || (cursorOffset >= 0)), "negative cursor offset");

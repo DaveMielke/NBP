@@ -21,7 +21,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
 
   @Override
   protected String getValueLabel (BrailleCode code) {
-    return code.getTranslationEnumeration().getDescription();
+    return code.getTranslatorEnumeration().getDescription();
   }
 
   @Override

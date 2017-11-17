@@ -18,7 +18,7 @@ public abstract class TranslationUtilities {
               .setInputCharacters(input)
               .setOutputLength(input.length() * LENGTH_MULTIPLIER)
               .setAllowLongerOutput(true)
-              .setTranslationTable(ApplicationSettings.BRAILLE_CODE.getTranslationTable());
+              .setTranslator(ApplicationSettings.BRAILLE_CODE.getTranslator());
   }
 
   public static BrailleTranslation newBrailleTranslation (

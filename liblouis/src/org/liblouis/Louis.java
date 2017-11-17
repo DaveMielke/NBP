@@ -245,10 +245,10 @@ public final class Louis {
   }
 
   public static BrailleTranslation getBrailleTranslation (
-    TranslationTable table, CharSequence text
+    Translator translator, CharSequence text
   ) {
     return new TranslationBuilder()
-              .setTranslationTable(table)
+              .setTranslator(translator)
               .setInputCharacters(text)
               .setOutputLength(text.length() * 2)
               .setAllowLongerOutput(true)
@@ -256,10 +256,10 @@ public final class Louis {
   }
 
   public static TextTranslation getTextTranslation (
-    TranslationTable table, CharSequence braille
+    Translator translator, CharSequence braille
   ) {
     return new TranslationBuilder()
-              .setTranslationTable(table)
+              .setTranslator(translator)
               .setInputCharacters(braille)
               .setOutputLength(braille.length() * 3)
               .setAllowLongerOutput(true)

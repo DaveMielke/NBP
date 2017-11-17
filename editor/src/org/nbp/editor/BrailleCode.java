@@ -1,26 +1,26 @@
 package org.nbp.editor;
 
-import org.liblouis.TranslationEnumeration;
-import org.liblouis.TranslationTable;
+import org.liblouis.Translator;
+import org.liblouis.TranslatorEnumeration;
 
 public enum BrailleCode {
   NONE(null),
-  UEB(TranslationEnumeration.EN_UEB_G2),
-  EBAE(TranslationEnumeration.EN_US_G2),
+  UEB(TranslatorEnumeration.EN_UEB_G2),
+  EBAE(TranslatorEnumeration.EN_US_G2),
   ; // end of enumeration
 
-  private final TranslationEnumeration translationEnumeration;
+  private final TranslatorEnumeration translatorEnumeration;
 
-  BrailleCode (TranslationEnumeration table) {
-    translationEnumeration = table;
+  BrailleCode (TranslatorEnumeration translator) {
+    translatorEnumeration = translator;
   }
 
-  public final TranslationEnumeration getTranslationEnumeration () {
-    return translationEnumeration;
+  public final TranslatorEnumeration getTranslatorEnumeration () {
+    return translatorEnumeration;
   }
 
-  public final TranslationTable getTranslationTable () {
-    if (translationEnumeration == null) return null;
-    return translationEnumeration.getTranslationTable();
+  public final Translator getTranslator () {
+    if (translatorEnumeration == null) return null;
+    return translatorEnumeration.getTranslator();
   }
 }

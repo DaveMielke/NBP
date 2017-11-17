@@ -1,62 +1,62 @@
 package org.nbp.b2g.ui;
 
-import org.liblouis.TranslationEnumeration;
-import org.liblouis.TranslationTable;
+import org.liblouis.Translator;
+import org.liblouis.TranslatorEnumeration;
 
 public enum BrailleCode {
   EN_UEB_G1(
-    TranslationEnumeration.EN_UEB_G1
+    TranslatorEnumeration.EN_UEB_G1
   ),
 
   EN_UEB_G2(
-    TranslationEnumeration.EN_UEB_G2
+    TranslatorEnumeration.EN_UEB_G2
   ),
 
   EN_EBAE_G1(
-    TranslationEnumeration.EN_US_G1
+    TranslatorEnumeration.EN_US_G1
   ),
 
   EN_EBAE_G2(
-    TranslationEnumeration.EN_US_G2
+    TranslatorEnumeration.EN_US_G2
   ),
 
   FR_BFU_G2(
-    TranslationEnumeration.FR_BFU_G2
+    TranslatorEnumeration.FR_BFU_G2
   ),
 
   DE_G1(
-    TranslationEnumeration.DE_DE_G1
+    TranslatorEnumeration.DE_DE_G1
   ),
 
   DE_G2(
-    TranslationEnumeration.DE_DE_G2
+    TranslatorEnumeration.DE_DE_G2
   ),
 
   EL(
-    TranslationEnumeration.EL
+    TranslatorEnumeration.EL
   ),
 
   HE(
-    TranslationEnumeration.HE
+    TranslatorEnumeration.HE
   ),
 
   ES_G1(
-    TranslationEnumeration.ES_G1
+    TranslatorEnumeration.ES_G1
   ),
 
   ; // end of enumeration
 
-  private final TranslationEnumeration translationEnumeration;
+  private final TranslatorEnumeration translatorEnumeration;
 
-  BrailleCode (TranslationEnumeration table) {
-    translationEnumeration = table;
+  BrailleCode (TranslatorEnumeration translator) {
+    translatorEnumeration = translator;
   }
 
-  public final TranslationEnumeration getTranslationEnumeration () {
-    return translationEnumeration;
+  public final TranslatorEnumeration getTranslatorEnumeration () {
+    return translatorEnumeration;
   }
 
-  public final TranslationTable getTranslationTable () {
-    return translationEnumeration.getTranslationTable();
+  public final Translator getTranslator () {
+    return translatorEnumeration.getTranslator();
   }
 }

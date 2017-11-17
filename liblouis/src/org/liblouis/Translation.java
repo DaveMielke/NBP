@@ -10,7 +10,7 @@ import android.text.SpannableStringBuilder;
 public class Translation {
   private final static String LOG_TAG = Translation.class.getName();
 
-  private final TranslationTable translationTable;
+  private final Translator translator;
   private final boolean translationSucceeded;
 
   private final CharSequence suppliedInput;
@@ -24,8 +24,8 @@ public class Translation {
   private final int[] outputOffsets;
   private final Integer outputCursor;
 
-  public final TranslationTable getTranslationTable () {
-    return translationTable;
+  public final Translator getTranslator () {
+    return translator;
   }
 
   public final CharSequence getSuppliedInput () {
@@ -167,7 +167,7 @@ public class Translation {
   }
 
   public Translation (TranslationBuilder builder, boolean backTranslate) {
-    translationTable = builder.getTranslationTable();
+    translator = builder.getTranslator();
     suppliedInput = builder.getInputCharacters();
     inputCursor = builder.getCursorOffset();
 
@@ -196,7 +196,7 @@ public class Translation {
       resultValues[Translator.RVI_OUTPUT_LENGTH] = outputLength;
       resultValues[Translator.RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
 
-      translated = translationTable.translate(
+      translated = translator.translate(
         suppliedInput, output, outOffsets, inOffsets,
         backTranslate, includeHighlighting, resultValues
       );
