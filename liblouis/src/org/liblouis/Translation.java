@@ -167,6 +167,8 @@ public class Translation extends TranslationComponent {
   }
 
   public Translation (TranslationBuilder builder, boolean backTranslate) {
+    super();
+
     translator = builder.getTranslator();
     suppliedInput = builder.getInputCharacters();
     inputCursor = builder.getCursorOffset();

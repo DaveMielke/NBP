@@ -2,6 +2,7 @@ package org.liblouis;
 
 public abstract class Translator extends TranslationComponent {
   protected Translator () {
+    super();
   }
 
   public abstract boolean translate (

@@ -1,6 +1,6 @@
 package org.liblouis;
 
-public enum TranslatorEnumeration {
+public enum TranslatorIdentifier {
   AFR_ZA_G1(
     "afr-za-g1", R.string.louis_ttd_AFR_ZA_G1
   ),
@@ -443,23 +443,23 @@ public enum TranslatorEnumeration {
 
   ; // end of enumeration
 
-  private final Translator enumerationTranslator;
-  private final int enumerationDescription;
+  private final Translator translatorObject;
+  private final int translatorDescription;
 
-  TranslatorEnumeration (String forwardName, String backwardName, int description) {
-    enumerationTranslator = new TranslationTable(forwardName, backwardName);
-    enumerationDescription = description;
+  TranslatorIdentifier (String forwardName, String backwardName, int description) {
+    translatorObject = new TranslationTable(forwardName, backwardName);
+    translatorDescription = description;
   }
 
-  TranslatorEnumeration (String name, int description) {
+  TranslatorIdentifier (String name, int description) {
     this(name, name, description);
   }
 
   public final Translator getTranslator () {
-    return enumerationTranslator;
+    return translatorObject;
   }
 
   public final String getDescription () {
-    return Louis.getContext().getString(enumerationDescription);
+    return Louis.getContext().getString(translatorDescription);
   }
 }

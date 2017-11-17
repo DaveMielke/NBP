@@ -122,25 +122,27 @@ public abstract class Tests {
     Set<File> notFound = new HashSet<File>();
     Collections.addAll(notFound, TableFile.getAllFiles());
 
-    for (TranslatorEnumeration value : TranslatorEnumeration.values()) {
-      Translator translator = value.getTranslator();
-
+    for (TranslatorIdentifier identifier : TranslatorIdentifier.values()) {
       {
-        String identifier = value.name();
+        String name = identifier.name();
 
-        if (!identifier.equals(identifier.toUpperCase())) {
-          Log.d(LOG_TAG, "translator identifier not all uppercase: " + identifier);
+        if (!name.equals(name.toUpperCase())) {
+          Log.d(LOG_TAG, ("translator identifier not all uppercase: " + name));
         }
       }
 
-      if (translator instanceof TranslationTable) {
-        TranslationTable table = (TranslationTable)translator;
+      {
+        Translator translator = identifier.getTranslator();
 
-        TableFile forward = table.getForwardTableFile();
-        auditFile(notFound, forward);
+        if (translator instanceof TranslationTable) {
+          TranslationTable table = (TranslationTable)translator;
 
-        TableFile backward = table.getBackwardTableFile();
-        if (backward != forward) auditFile(notFound, backward);
+          TableFile forward = table.getForwardTableFile();
+          auditFile(notFound, forward);
+
+          TableFile backward = table.getBackwardTableFile();
+          if (backward != forward) auditFile(notFound, backward);
+        }
       }
     }
 

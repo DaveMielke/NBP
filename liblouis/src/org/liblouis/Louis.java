@@ -50,14 +50,14 @@ public final class Louis {
     OFF  ('O'),
     ; // end of enumeration
 
-    private final char character;
+    private final char levelCharacter;
 
     LogLevel (char character) {
-      this.character = character;
+      levelCharacter = character;
     }
 
     public final char getCharacter () {
-      return character;
+      return levelCharacter;
     }
   }
 

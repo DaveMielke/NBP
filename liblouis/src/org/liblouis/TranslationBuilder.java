@@ -1,9 +1,9 @@
 package org.liblouis;
 
 public class TranslationBuilder {
-  public final static TranslatorEnumeration DEFAULT_TRANSLATOR = TranslatorEnumeration.EN_UEB_G2;
+  public final static TranslatorIdentifier DEFAULT_TRANSLATOR = TranslatorIdentifier.EN_UEB_G2;
 
-  private Translator translator = null;
+  private Translator translatorObject = null;
   private CharSequence inputCharacters = "";
   private int outputLength = 1;
   private Integer cursorOffset = null;
@@ -11,20 +11,20 @@ public class TranslationBuilder {
   private boolean allowLongerOutput = false;
 
   public final Translator getTranslator () {
-    if (translator == null) {
+    if (translatorObject == null) {
       setTranslator(DEFAULT_TRANSLATOR);
     }
 
-    return translator;
+    return translatorObject;
   }
 
   public final TranslationBuilder setTranslator (Translator translator) {
-    this.translator = translator;
+    translatorObject = translator;
     return this;
   }
 
-  public final TranslationBuilder setTranslator (TranslatorEnumeration value) {
-    return setTranslator(value.getTranslator());
+  public final TranslationBuilder setTranslator (TranslatorIdentifier identifier) {
+    return setTranslator(identifier.getTranslator());
   }
 
   public final TranslationBuilder setTranslator (String name) {
@@ -92,7 +92,7 @@ public class TranslationBuilder {
   }
 
   private final void verifyValues () {
-    verifyValue((translator != null), "translator not set");
+    verifyValue((translatorObject != null), "translator not set");
     verifyValue((inputCharacters != null), "input characters not set");
     verifyValue((outputLength >= 0), "negative output length");
     verifyValue(((cursorOffset == null) || (cursorOffset >= 0)), "negative cursor offset");
