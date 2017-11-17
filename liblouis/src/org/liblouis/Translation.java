@@ -181,7 +181,7 @@ public class Translation extends TranslationComponent {
 
     CharSequence input = suppliedInput;
     int[] outOffsets = new int[inputLength];
-    final int[] resultValues = new int[Translator.RESULT_VALUES_COUNT];
+    final int[] resultValues = new int[RESULT_VALUES_COUNT];
 
     char[] output;
     int[] inOffsets;
@@ -196,7 +196,7 @@ public class Translation extends TranslationComponent {
 
       resultValues[RVI_INPUT_LENGTH]  = inputLength;
       resultValues[RVI_OUTPUT_LENGTH] = outputLength;
-      resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: -1;
+      resultValues[RVI_CURSOR_OFFSET] = (inputCursor != null)? inputCursor: NO_CURSOR;
 
       translated = translator.translate(
         suppliedInput, output, outOffsets, inOffsets,
@@ -212,17 +212,18 @@ public class Translation extends TranslationComponent {
           resultValues[RVI_OUTPUT_LENGTH] = resultValues[RVI_INPUT_LENGTH];
         }
 
-        for (int offset=0; offset<resultValues[RVI_INPUT_LENGTH]; offset+=1) {
-          inOffsets[offset] = outOffsets[offset] = offset;
-        }
-
-        if (resultValues[RVI_CURSOR_OFFSET] >= resultValues[RVI_INPUT_LENGTH]) {
-          resultValues[RVI_CURSOR_OFFSET] = -1;
-        }
-
         {
-          String string = suppliedInput.toString();
-          string.getChars(0, string.length(), output, 0);
+          final int length = resultValues[RVI_INPUT_LENGTH];
+
+          for (int offset=0; offset<length; offset+=1) {
+            inOffsets[offset] = outOffsets[offset] = offset;
+          }
+
+          if (resultValues[RVI_CURSOR_OFFSET] >= length) {
+            resultValues[RVI_CURSOR_OFFSET] = NO_CURSOR;
+          }
+
+          suppliedInput.toString().getChars(0, length, output, 0);
         }
 
         break;
