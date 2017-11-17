@@ -3,13 +3,43 @@ package org.liblouis;
 import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
-
 import java.io.File;
 
 import android.util.Log;
 
 public abstract class Tests {
   private final static String LOG_TAG = Tests.class.getName();
+
+  private Tests () {
+  }
+
+  private final static void log (String text) {
+    Log.d(LOG_TAG, text);
+  }
+
+  private final static void log (CharSequence text) {
+    log(text.toString());
+  }
+
+  public final static void logCharacters (
+    CharSequence label, CharSequence characters,
+    boolean asText, boolean asHexadecimal
+  ) {
+    if (asText) log(String.format("%s: %s", label, characters));
+
+    if (asHexadecimal) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(label);
+      sb.append(':');
+      int count = characters.length();
+
+      for (int index=0; index<count; index+=1) {
+        sb.append(String.format(" %04X", (int)characters.charAt(index)));
+      }
+
+      log(sb);
+    }
+  }
 
   private final static char OUT_OF_BOUNDS_CHARACTER = (char)0x28FF;
 
@@ -18,7 +48,7 @@ public abstract class Tests {
     int inputOffset, char inputCharacter,
     int outputOffset, char outputCharacter
   ) {
-    Log.d(LOG_TAG, String.format(
+    log(String.format(
       "%s: %d->%d %c->%c %04X->%04X",
       label,
       inputOffset, outputOffset,
@@ -74,36 +104,72 @@ public abstract class Tests {
     logInputOffsets(translation);
   }
 
-  public final static void translateText (TranslationTable table, CharSequence text) {
-    Log.d(LOG_TAG, ("begin text translation test: " + text));
+  public final static void testTextTranslation (
+    Translator translator, CharSequence text,
+    boolean showText, boolean showHexadecimal, boolean showOffsets
+  ) {
+    log("begin text translation test");
+    logCharacters("txt", text, showText, showHexadecimal);
 
-    BrailleTranslation brl = Louis.getBrailleTranslation(table, text);
-    CharSequence braille = brl.getBrailleWithSpans();
-    Log.d(LOG_TAG, ("braille translation: " + braille));
-    logOffsets(brl);
+    CharSequence braille;
+    {
+      BrailleTranslation translation = Louis.getBrailleTranslation(translator, text);
+      braille = translation.getBrailleWithSpans();
+      logCharacters("brl", braille, showText, showHexadecimal);
+      if (showOffsets) logOffsets(translation);
+    }
 
-    TextTranslation txt = Louis.getTextTranslation(table, braille);
-    CharSequence back = txt.getTextWithSpans();
-    Log.d(LOG_TAG, ("text back-translation: " + back));
-    logOffsets(txt);
+    {
+      TextTranslation translation = Louis.getTextTranslation(translator, braille);
+      logCharacters("bck", translation.getTextWithSpans(), showText, showHexadecimal);
+      if (showOffsets) logOffsets(translation);
+    }
 
-    Log.d(LOG_TAG, "end text translation test");
+    log("end text translation test");
   }
 
-  public final static void translateBraille (TranslationTable table, CharSequence braille) {
-    Log.d(LOG_TAG, ("begin braille translation test: " + braille));
+  public final static void testBrailleTranslation (
+    Translator translator, CharSequence braille,
+    boolean showText, boolean showHexadecimal, boolean showOffsets
+  ) {
+    log("begin braille translation test");
+    logCharacters("brl", braille, showText, showHexadecimal);
 
-     TextTranslation txt = Louis.getTextTranslation(table, braille);
-    CharSequence text = txt.getTextWithSpans();
-    Log.d(LOG_TAG, ("text translation: " + text));
-    logOffsets(txt);
+     CharSequence text;
+     {
+       TextTranslation translation = Louis.getTextTranslation(translator, braille);
+       text = translation.getTextWithSpans();
+       logCharacters("txt", text, showText, showHexadecimal);
+       if (showOffsets) logOffsets(translation);
+     }
 
-    BrailleTranslation brl = Louis.getBrailleTranslation(table, text);
-    CharSequence back = brl.getBrailleWithSpans();
-    Log.d(LOG_TAG, ("braille back-translation: " + back));
-    logOffsets(brl);
+    {
+      BrailleTranslation translation = Louis.getBrailleTranslation(translator, text);
+      logCharacters("bck", translation.getBrailleWithSpans(), showText, showHexadecimal);
+      if (showOffsets) logOffsets(translation);
+    }
 
-    Log.d(LOG_TAG, "end braille translation test");
+    log("end braille translation test");
+  }
+
+  public final static void testTextTranslation (
+    TranslatorIdentifier identifier, CharSequence text,
+    boolean showText, boolean showHexadecimal, boolean showOffsets
+  ) {
+    testTextTranslation(
+      identifier.getTranslator(), text,
+      showText, showHexadecimal, showOffsets
+    );
+  }
+
+  public final static void testBrailleTranslation (
+    TranslatorIdentifier identifier, CharSequence braille,
+    boolean showText, boolean showHexadecimal, boolean showOffsets
+  ) {
+    testBrailleTranslation(
+      identifier.getTranslator(), braille,
+      showText, showHexadecimal, showOffsets
+    );
   }
 
   private final static void auditFile (Set<File> notFound, TableFile tableFile) {
@@ -116,8 +182,8 @@ public abstract class Tests {
     }
   }
 
-  public static void auditTranslationTableEnumeration () {
-    Log.d(LOG_TAG, "begin translation table enumeration audit");
+  public static void auditTranslatorIdentifiers () {
+    Log.d(LOG_TAG, "begin translator identifier audit");
 
     Set<File> notFound = new HashSet<File>();
     Collections.addAll(notFound, TableFile.getAllFiles());
@@ -147,12 +213,9 @@ public abstract class Tests {
     }
 
     for (File file : notFound) {
-      Log.d(LOG_TAG, "table file not enumerated: " + file.getAbsolutePath());
+      Log.d(LOG_TAG, "unknown table file: " + file.getAbsolutePath());
     }
 
-    Log.d(LOG_TAG, "end translation table enumeration audit");
-  }
-
-  protected Tests () {
+    Log.d(LOG_TAG, "end translator identifier audit");
   }
 }
