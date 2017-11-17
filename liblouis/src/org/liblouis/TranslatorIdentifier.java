@@ -441,6 +441,7 @@ public enum TranslatorIdentifier {
     "zh-tw", R.string.louis_ttd_ZH_TW
   ),
 
+  PINYIN(R.string.louis_ttd_PINYIN),
   ; // end of enumeration
 
   private final String forwardName;
@@ -458,6 +459,10 @@ public enum TranslatorIdentifier {
     this(name, name, description);
   }
 
+  TranslatorIdentifier (int description) {
+    this(null, description);
+  }
+
   public final String getDescription () {
     return Louis.getContext().getString(translatorDescription);
   }
@@ -465,7 +470,15 @@ public enum TranslatorIdentifier {
   public final Translator getTranslator () {
     synchronized (this) {
       if (translatorObject == null) {
-        translatorObject = new TranslationTable(forwardName, backwardName);
+        switch (this) {
+          case PINYIN:
+            translatorObject = new PinyinTranslator();
+            break;
+
+          default:
+            translatorObject = new TranslationTable(forwardName, backwardName);
+            break;
+        }
       }
     }
 
