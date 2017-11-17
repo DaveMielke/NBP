@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
+import com.duxburysystems.BrlTrn;
+
 import android.os.Build;
 import android.util.Log;
 
@@ -95,5 +97,54 @@ public abstract class DuxburyTranslator extends Translator {
   protected DuxburyTranslator () {
     super();
     verifyAuthorization();
+  }
+
+  protected abstract BrlTrn getForwardTranslator ();
+  protected abstract BrlTrn getBackwardTranslator ();
+
+  @Override
+  public final boolean translate (
+    CharSequence inputBuffer, char[] outputBuffer,
+    int[] outputOffsets, int[] inputOffsets,
+    boolean backTranslate, boolean includeHighlighting,
+    int[] resultValues
+  ) {
+    BrlTrn translator =
+      backTranslate?
+      getBackwardTranslator():
+      getForwardTranslator();
+
+    int inputLength = inputBuffer.length();
+    int outputLength = outputBuffer.length;
+
+    {
+      String input = inputBuffer.toString();
+      String output = translator.translate(input);
+
+      outputLength = Math.min(outputLength, output.length());
+      output.getChars(0, outputLength, outputBuffer, 0);
+    }
+
+    {
+      int count = outputOffsets.length;
+
+      for (int index=0; index<count; index+=1) {
+        outputOffsets[index] = 0;
+      }
+    }
+
+    {
+      int count = inputOffsets.length;
+
+      for (int index=0; index<count; index+=1) {
+        inputOffsets[index] = 0;
+      }
+    }
+
+    resultValues[RVI_INPUT_LENGTH]  = inputLength;
+    resultValues[RVI_OUTPUT_LENGTH] = outputLength;
+    resultValues[RVI_CURSOR_OFFSET] = NO_CURSOR;
+
+    return true;
   }
 }

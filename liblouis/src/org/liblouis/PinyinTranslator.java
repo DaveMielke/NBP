@@ -19,12 +19,12 @@ public class PinyinTranslator extends DuxburyTranslator {
   }
 
   @Override
-  public final boolean translate (
-    CharSequence inputBuffer, char[] outputBuffer,
-    int[] outputOffsets, int[] inputOffsets,
-    boolean backTranslate, boolean includeHighlighting,
-    int[] resultValues
-  ) {
-    return false;
+  protected final BrlTrn getForwardTranslator () {
+    return forwardTranslator;
+  }
+
+  @Override
+  protected final BrlTrn getBackwardTranslator () {
+    return backwardTranslator;
   }
 }
