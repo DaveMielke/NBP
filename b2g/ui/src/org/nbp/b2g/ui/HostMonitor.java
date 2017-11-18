@@ -61,7 +61,7 @@ public class HostMonitor extends BroadcastReceiver {
               sdcardWakeLock.acquire();
             }
 
-            Characters.setCharacters(new Characters());
+            Characters.setCharacters();
             break;
           }
 
@@ -91,6 +91,12 @@ public class HostMonitor extends BroadcastReceiver {
 
     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
       handleMediaAction(intent, MediaAction.REMOVED);
+      return;
+    }
+
+    if (action.equals(Intent.ACTION_LOCALE_CHANGED)) {
+      Log.d(LOG_TAG, "changing character set");
+      Characters.setCharacters();
       return;
     }
 

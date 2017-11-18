@@ -238,9 +238,11 @@ public class Characters {
       String language = locale.getLanguage();
 
       if (language != null) {
+        Log.i(LOG_TAG, ("language: " + language));
         String country = locale.getCountry();
 
         if (country != null) {
+          Log.i(LOG_TAG, ("country: " + country));
           names.add((language + "_" + country));
         }
 
@@ -277,5 +279,9 @@ public class Characters {
       currentCharacters = newCharacters;
       return oldCharacters;
     }
+  }
+
+  public static Characters setCharacters () {
+    return setCharacters(new Characters());
   }
 }
