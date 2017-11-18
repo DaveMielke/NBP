@@ -7,6 +7,7 @@ import java.io.BufferedOutputStream;
 import android.text.Editable;
 
 import org.liblouis.Translator;
+import org.liblouis.TranslatorIdentifier;
 import org.liblouis.TranslationBuilder;
 import org.liblouis.BrailleTranslation;
 import org.liblouis.TextTranslation;
@@ -16,11 +17,26 @@ public class ASCIIBrailleOperations extends ByteOperations {
     return ApplicationSettings.BRAILLE_MODE.getConversions();
   }
 
-  private final static Translator getTranslator () {
-    return ApplicationSettings.BRAILLE_CODE.getTranslator();
+  private final static Translator getTranslator () throws IOException {
+    BrailleCode code = ApplicationSettings.BRAILLE_CODE;;
+
+    try {
+      return code.getTranslator();
+    } catch (SecurityException exception) {
+      TranslatorIdentifier identifier = code.getTranslatorIdentifier();
+
+      throw new IOException(
+        String.format(
+          "translator not available: %s (%s): %s",
+          identifier.name(),
+          identifier.getDescription(),
+          exception.getMessage()
+        )
+      );
+    }
   }
 
-  private final static TranslationBuilder getTranslationBuilder () {
+  private final static TranslationBuilder getTranslationBuilder () throws IOException {
     Translator translator = getTranslator();
     if (translator == null) return null;
 
@@ -91,7 +107,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
   }
 
   @Override
-  protected void endBytes (Editable content) {
+  protected void endBytes (Editable content) throws IOException {
     TranslationBuilder builder = getTranslationBuilder();
     int length = content.length();
     int from = 0;

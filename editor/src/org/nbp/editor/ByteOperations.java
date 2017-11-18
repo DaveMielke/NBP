@@ -6,14 +6,14 @@ import java.io.InputStream;
 import android.text.Editable;
 
 public class ByteOperations extends ContentOperations {
-  protected void beginBytes (Editable content) {
+  protected void beginBytes (Editable content) throws IOException {
   }
 
-  protected int processBytes (Editable content, byte[] buffer, int count) {
+  protected int processBytes (Editable content, byte[] buffer, int count) throws IOException {
     return count;
   }
 
-  protected void endBytes (Editable content) {
+  protected void endBytes (Editable content) throws IOException {
   }
 
   @Override

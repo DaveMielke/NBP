@@ -1,5 +1,7 @@
 package org.nbp.editor;
 
+import java.io.IOException;
+
 import android.text.Editable;
 
 public class TextKeywordOperations extends ByteOperations {
@@ -8,7 +10,7 @@ public class TextKeywordOperations extends ByteOperations {
   private boolean ignore;
 
   @Override
-  protected void beginBytes (Editable content) {
+  protected void beginBytes (Editable content) throws IOException {
     super.beginBytes(content);
     bytesProcessed = 0;
     done = false;
@@ -16,7 +18,7 @@ public class TextKeywordOperations extends ByteOperations {
   }
 
   @Override
-  protected int processBytes (Editable content, byte[] buffer, int count) {
+  protected int processBytes (Editable content, byte[] buffer, int count) throws IOException {
     int from = BrailleNoteKeyword.HEADER_SIZE - bytesProcessed;
     bytesProcessed += count;
     if (done || (from >= count)) return count;

@@ -1,5 +1,7 @@
 package org.nbp.editor;
 
+import java.io.IOException;
+
 import android.text.Editable;
 
 public class BrailleKeywordOperations extends ASCIIBrailleOperations {
@@ -7,7 +9,7 @@ public class BrailleKeywordOperations extends ASCIIBrailleOperations {
   private boolean done;
 
   @Override
-  protected void beginBytes (Editable content) {
+  protected void beginBytes (Editable content) throws IOException {
     super.beginBytes(content);
     bytesProcessed = 0;
     done = false;
