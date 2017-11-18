@@ -1,5 +1,8 @@
 include nabcc.chars.inc
 
+# No tone: ü
+cahr U+00FC 1256
+
 # Tone 1 (macron): a e i o u ü
 char U+0101 178
 char U+0113 1578
@@ -38,7 +41,4 @@ char U+00EC 1467
 char U+00F2 14567
 char U+00F9 1567
 char U+01DC 234567
-
-# Neutral tone: ü
-cahr U+00FC 1256
 
