@@ -95,7 +95,6 @@ public class HostMonitor extends BroadcastReceiver {
     }
 
     if (action.equals(Intent.ACTION_LOCALE_CHANGED)) {
-      Log.d(LOG_TAG, "changing character set");
       Characters.setCharacters();
       return;
     }

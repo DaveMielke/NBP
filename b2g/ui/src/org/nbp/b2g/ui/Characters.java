@@ -235,14 +235,13 @@ public class Characters {
     Locale locale = Locale.getDefault();
 
     if (locale != null) {
+      Log.i(LOG_TAG, ("locale: " + locale.toString()));
       String language = locale.getLanguage();
 
       if (language != null) {
-        Log.i(LOG_TAG, ("language: " + language));
         String country = locale.getCountry();
 
         if (country != null) {
-          Log.i(LOG_TAG, ("country: " + country));
           names.add((language + "_" + country));
         }
 
