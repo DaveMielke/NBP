@@ -3,6 +3,7 @@ import org.nbp.common.*;
 
 import org.nbp.common.LanguageUtilities;
 
+import android.util.Log;
 import android.content.SharedPreferences;
 
 import android.text.Spannable;
@@ -10,6 +11,8 @@ import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
 
 public abstract class EnumerationControl<E extends Enum> extends IntegerControl {
+  private final static String LOG_TAG = EnumerationControl.class.getName();
+
   protected abstract E getEnumerationDefault ();
   public abstract E getEnumerationValue ();
   protected abstract boolean setEnumerationValue (E value);
@@ -191,16 +194,30 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
     E value = null;
-    try {
-      String name = prefs.getString(key, "");
+    String name = prefs.getString(key, "");
 
-      if (name.length() > 0) {
-        try {
-          value = (E)(Enum.valueOf(getEnumerationClass(), name));
-        } catch (IllegalArgumentException exception) {
+    if (name.length() > 0) {
+      try {
+        value = (E)(Enum.valueOf(getEnumerationClass(), name));
+
+        if (!testEnumerationValue(value)) {
+          value = null;
+
+          Log.w(LOG_TAG,
+            String.format(
+              "control setting not available: %s: %s",
+              getLabel(), name
+            )
+          );
         }
+      } catch (IllegalArgumentException exception) {
+        Log.w(LOG_TAG,
+          String.format(
+            "unrecognized control setting: %s: %s",
+            getLabel(), name
+          )
+        );
       }
-    } catch (ClassCastException exception) {
     }
 
     if (value == null) value = getEnumerationDefault();
