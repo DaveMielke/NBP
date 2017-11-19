@@ -239,8 +239,8 @@ public final class Louis {
   }
 
   public final static boolean compileTable (InternalTranslator translator) {
-    return compileTable(translator.getForwardTableFile())
-        && compileTable(translator.getBackwardTableFile())
+    return compileTable(translator.getForwardTable())
+        && compileTable(translator.getBackwardTable())
         ;
   }
 

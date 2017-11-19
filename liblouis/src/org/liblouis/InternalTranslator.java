@@ -25,32 +25,32 @@ public class InternalTranslator extends Translator {
     this(name, name);
   }
 
-  public final TableFile getForwardTableFile () {
+  public final TableFile getForwardTable () {
     return forwardTable;
   }
 
-  public final TableFile getBackwardTableFile () {
+  public final TableFile getBackwardTable () {
     return backwardTable;
   }
 
-  public final TableFile getTableFile () {
-    return getForwardTableFile();
+  public final TableFile getTable () {
+    return getForwardTable();
   }
 
   public final String getTableName () {
-    return getTableFile().getTableName();
+    return getTable().getTableName();
   }
 
   public final String getFileName () {
-    return getTableFile().getFileName();
+    return getTable().getFileName();
   }
 
   public final File getFileObject () {
-    return getTableFile().getFileObject();
+    return getTable().getFileObject();
   }
 
   public final short getEmphasisBit (String name) {
-    return getTableFile().getEmphasisBit(name);
+    return getTable().getEmphasisBit(name);
   }
 
   private final static short TYPE_FORM_BOLD = Emphasis.getBoldBit();
@@ -124,10 +124,7 @@ public class InternalTranslator extends Translator {
     boolean backTranslate, boolean includeHighlighting,
     int[] resultValues
   ) {
-    final TableFile tableFile =
-      backTranslate?
-      getBackwardTableFile():
-      getForwardTableFile();
+    final TableFile table = backTranslate? getBackwardTable(): getForwardTable();
 
     final int inputLength = inputBuffer.length();
     final int outputLength = outputBuffer.length;
@@ -140,7 +137,7 @@ public class InternalTranslator extends Translator {
 
     synchronized (Louis.NATIVE_LOCK) {
       boolean translated = translate(
-        tableFile.getFileName(), inputBuffer.toString(), outputBuffer,
+        table.getFileName(), inputBuffer.toString(), outputBuffer,
         typeForm, outputOffsets, inputOffsets, resultValues, backTranslate
       );
 

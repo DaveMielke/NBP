@@ -203,10 +203,10 @@ public abstract class Tests {
         if (translator instanceof InternalTranslator) {
           InternalTranslator internal = (InternalTranslator)translator;
 
-          TableFile forward = internal.getForwardTableFile();
+          TableFile forward = internal.getForwardTable();
           auditFile(notFound, forward);
 
-          TableFile backward = internal.getBackwardTableFile();
+          TableFile backward = internal.getBackwardTable();
           if (backward != forward) auditFile(notFound, backward);
         }
       }
