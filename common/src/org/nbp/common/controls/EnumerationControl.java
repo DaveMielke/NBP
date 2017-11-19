@@ -10,7 +10,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   public abstract E getEnumerationValue ();
   protected abstract boolean setEnumerationValue (E value);
 
-  private final Class getEnumerationClass () {
+  private final Class<? extends Enum> getEnumerationClass () {
     return getEnumerationDefault().getClass();
   }
 
@@ -32,8 +32,34 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueArray().length;
   }
 
+  private final static Integer minimumValue = 0;
+  private static Integer maximumValue = null;
+
+  @Override
+  protected Integer getIntegerMinimum () {
+    return minimumValue;
+  }
+
+  @Override
+  protected Integer getIntegerMaximum () {
+    synchronized (minimumValue) {
+      if (maximumValue == null) maximumValue = getValueCount() - 1;
+    }
+
+    return maximumValue;
+  }
+
   private final E getValue (int ordinal) {
     return getValueArray()[ordinal];
+  }
+
+  protected boolean testEnumerationValue (E value) {
+    return true;
+  }
+
+  @Override
+  protected final boolean testIntegerValue (int value) {
+    return testEnumerationValue(getValue(value));
   }
 
   private String[] labelArray = null;
