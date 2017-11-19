@@ -476,7 +476,7 @@ public enum TranslatorIdentifier {
             break;
 
           default:
-            translatorObject = new TranslationTable(forwardName, backwardName);
+            translatorObject = new InternalTranslator(forwardName, backwardName);
             break;
         }
       }

@@ -26,11 +26,11 @@ public class TranslationBuilder {
   }
 
   public final TranslationBuilder setTranslator (String name) {
-    return setTranslator(new TranslationTable(name));
+    return setTranslator(new InternalTranslator(name));
   }
 
-  public final TranslationBuilder setTranslator (String forward, String backward) {
-    return setTranslator(new TranslationTable(forward, backward));
+  public final TranslationBuilder setTranslator (String forwardName, String backwardName) {
+    return setTranslator(new InternalTranslator(forwardName, backwardName));
   }
 
   public final CharSequence getInputCharacters () {

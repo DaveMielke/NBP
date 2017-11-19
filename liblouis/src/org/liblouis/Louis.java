@@ -37,7 +37,7 @@ public final class Louis {
   public static native void releaseMemory ();
   public static native String getDataPath ();
   public static native void setDataPath (String path);
-  private static native boolean compileTranslationTable (String table);
+  private static native boolean compileTable (String path);
   private static native void setLogLevel (char character);
 
   public enum LogLevel {
@@ -228,19 +228,19 @@ public final class Louis {
     initialize(context, null);
   }
 
-  public final static boolean compileTranslationTable (File table) {
+  public final static boolean compileTable (File file) {
     synchronized (NATIVE_LOCK) {
-      return compileTranslationTable(table.getAbsolutePath());
+      return compileTable(file.getAbsolutePath());
     }
   }
 
-  public final static boolean compileTranslationTable (TableFile table) {
-    return compileTranslationTable(table.getFileObject());
+  public final static boolean compileTable (TableFile table) {
+    return compileTable(table.getFileObject());
   }
 
-  public final static boolean compileTranslationTable (TranslationTable table) {
-    return compileTranslationTable(table.getForwardTableFile())
-        && compileTranslationTable(table.getBackwardTableFile())
+  public final static boolean compileTable (InternalTranslator translator) {
+    return compileTable(translator.getForwardTableFile())
+        && compileTable(translator.getBackwardTableFile())
         ;
   }
 

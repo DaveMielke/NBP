@@ -60,13 +60,13 @@ JAVA_METHOD(
 }
 
 JAVA_METHOD(
-  org_liblouis_Louis, compileTranslationTable, jboolean,
-  jstring jTable
+  org_liblouis_Louis, compileTable, jboolean,
+  jstring jPath
 ) {
   jboolean isCopy;
-  const char *cTable = (*env)->GetStringUTFChars(env, jTable, &isCopy);
-  logPrint(LOG_DEBUG, "compiling translation table: %s", cTable);
-  void *table = lou_getTable(cTable);
-  (*env)->ReleaseStringUTFChars(env, jTable, cTable);
+  const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
+  logPrint(LOG_DEBUG, "compiling table: %s", cPath);
+  void *table = lou_getTable(cPath);
+  (*env)->ReleaseStringUTFChars(env, jPath, cPath);
   return table? JNI_TRUE: JNI_FALSE;
 }

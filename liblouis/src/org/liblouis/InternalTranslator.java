@@ -8,19 +8,20 @@ import android.text.style.UnderlineSpan;
 import android.text.style.StyleSpan;
 import android.graphics.Typeface;
 
-public class TranslationTable extends Translator {
+public class InternalTranslator extends Translator {
   private final TableFile forwardTable;
   private final TableFile backwardTable;
 
-  TranslationTable (String forwardName, String backwardName) {
+  InternalTranslator (String forwardName, String backwardName) {
     super();
 
     forwardTable = new TableFile(forwardName);
-    backwardTable = backwardName.equals(forwardName)?
-                    forwardTable: new TableFile(backwardName);
+    backwardTable = (backwardName == null)? forwardTable:
+                    backwardName.equals(forwardName)? forwardTable:
+                    new TableFile(backwardName);
   }
 
-  TranslationTable (String name) {
+  InternalTranslator (String name) {
     this(name, name);
   }
 
