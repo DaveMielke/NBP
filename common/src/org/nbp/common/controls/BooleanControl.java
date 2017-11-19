@@ -11,9 +11,16 @@ public abstract class BooleanControl extends Control {
     return false;
   }
 
+  protected boolean testBooleanValue (boolean value) {
+    return true;
+  }
+
   private final boolean changeValue (boolean value) {
-    if (value == getBooleanValue()) return false;
-    return setBooleanValue(value);
+    synchronized (this) {
+      if (value == getBooleanValue()) return false;
+      if (!testBooleanValue(value)) return false;
+      return setBooleanValue(value);
+    }
   }
 
   @Override
@@ -34,6 +41,7 @@ public abstract class BooleanControl extends Control {
   public final boolean setValue (boolean value) {
     synchronized (this) {
       if (value == getBooleanValue()) return true;
+      if (!testBooleanValue(value)) return false;
       if (!setBooleanValue(value)) return false;
       reportValueChange();
     }

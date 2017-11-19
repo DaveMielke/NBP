@@ -25,6 +25,10 @@ public abstract class StringControl extends Control {
     return setStringValue(getStringDefault());
   }
 
+  protected boolean testStringValue (String value) {
+    return true;
+  }
+
   public final boolean setValue (String value) {
     synchronized (this) {
       {
@@ -37,6 +41,7 @@ public abstract class StringControl extends Control {
         }
       }
 
+      if (!testStringValue(value)) return false;
       if (!setStringValue(value)) return false;
       reportValueChange();
     }

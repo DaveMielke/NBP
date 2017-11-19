@@ -17,8 +17,43 @@ public abstract class FloatControl extends IntegerControl {
     return floatValue;
   }
 
+  protected float toFloatValue (int integerValue) {
+    return toFloatValue((float)integerValue / getLinearScale());
+  }
+
   protected int toIntegerValue (float floatValue) {
     return Math.round(toLinearValue(floatValue) * getLinearScale());
+  }
+
+  protected Float getFloatMinimum () {
+    return null;
+  }
+
+  protected Float getFloatMaximum () {
+    return null;
+  }
+
+  protected boolean testFloatValue (float value) {
+    return true;
+  }
+
+  @Override
+  protected final Integer getIntegerMinimum () {
+    Float minimum = getFloatMinimum();
+    if (minimum == null) return null;
+    return toIntegerValue(minimum);
+  }
+
+  @Override
+  protected final Integer getIntegerMaximum () {
+    Float maximum = getFloatMaximum();
+    if (maximum == null) return null;
+    return toIntegerValue(maximum);
+  }
+
+  @Override
+  protected final boolean testIntegerValue (int value) {
+    return testFloatValue(toFloatValue(value));
   }
 
   @Override
@@ -33,12 +68,13 @@ public abstract class FloatControl extends IntegerControl {
 
   @Override
   protected final boolean setIntegerValue (int value) {
-    return setFloatValue(toFloatValue((float)value / getLinearScale()));
+    return setFloatValue(toFloatValue(value));
   }
 
   public final boolean setValue (float value) {
     synchronized (this) {
       if (value == getFloatValue()) return true;
+      if (!testFloatValue(value)) return false;
       if (!setFloatValue(value)) return false;
       reportValueChange();
     }
