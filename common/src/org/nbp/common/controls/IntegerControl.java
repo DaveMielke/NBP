@@ -63,6 +63,7 @@ public abstract class IntegerControl extends Control {
   public final boolean setValue (int value) {
     synchronized (this) {
       if (value == getIntegerValue()) return true;
+      if (!testIntegerValue(value)) return false;
       if (!setIntegerValue(value)) return false;
       reportValueChange();
     }

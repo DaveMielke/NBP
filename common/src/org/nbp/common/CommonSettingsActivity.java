@@ -158,7 +158,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
   private View createEnumerationChangeButton (final Control control) {
     final EnumerationControl ec = (EnumerationControl)control;
-    final CharSequence[] labels = ec.getValueLabels();
+    final CharSequence[] labels = ec.newValueLabels();
 
     final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
       @Override

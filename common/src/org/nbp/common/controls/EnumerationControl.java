@@ -5,6 +5,10 @@ import org.nbp.common.LanguageUtilities;
 
 import android.content.SharedPreferences;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
+
 public abstract class EnumerationControl<E extends Enum> extends IntegerControl {
   protected abstract E getEnumerationDefault ();
   public abstract E getEnumerationValue ();
@@ -97,13 +101,22 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return getValueLabel(getValue(ordinal));
   }
 
-  public final String[] getValueLabels () {
+  public final CharSequence[] newValueLabels () {
     E[] values = getValueArray();
     int count = values.length;
-    String[] labels = new String[count];
+    CharSequence[] labels = new CharSequence[count];
 
-    for (int index=0; index<count; index+=1) {
-      labels[index] = getValueLabel(values[index]);
+    for (int ordinal=0; ordinal<count; ordinal+=1) {
+      E value = values[ordinal];
+      CharSequence label = getValueLabel(value);
+
+      if (!testEnumerationValue(value)) {
+        Spannable text = new SpannableString(label);
+        text.setSpan(new StrikethroughSpan(), 0, text.length(), text.SPAN_EXCLUSIVE_EXCLUSIVE);
+        label = text;
+      }
+
+      labels[ordinal] = label;
     }
 
     return labels;
@@ -130,6 +143,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   public final boolean setValue (E value) {
     synchronized (this) {
       if (value == getEnumerationValue()) return true;
+      if (!testEnumerationValue(value)) return false;
       if (!setEnumerationValue(value)) return false;
       reportValueChange();
     }
