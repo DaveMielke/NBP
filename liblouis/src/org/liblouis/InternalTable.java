@@ -10,19 +10,16 @@ public class InternalTable {
     tableName = name;
   }
 
-  public final String getTableName () {
+  public final String getName () {
     return tableName;
   }
 
   public final static String SUBDIRECTORY = Louis.toAssetsPath("tables");
   public final static String EXTENSION = ".ctb";
 
-  public final static String makeFileName (String name) {
-    return name + EXTENSION;
-  }
-
   private final static Object STATIC_LOCK = new Object();
   private static File tablesDirectory = null;
+  private File tableFile = null;
 
   public static File getDirectory () {
     synchronized (STATIC_LOCK) {
@@ -34,40 +31,35 @@ public class InternalTable {
     return tablesDirectory;
   }
 
-  private String fileName = null;
-  private File fileObject = null;
-
-  public final String getFileName () {
-    synchronized (this) {
-      if (fileName == null) {
-        fileName = makeFileName(getTableName());
-      }
-    }
-
-    return fileName;
+  private final String makeFileName () {
+    return tableName + EXTENSION;
   }
 
-  public final File getFileObject () {
+  public final File getFile () {
     synchronized (this) {
-      if (fileObject == null) {
-        fileObject = new File(getDirectory(), getFileName());
+      if (tableFile == null) {
+        tableFile = new File(getDirectory(), makeFileName());
       }
     }
 
-    return fileObject;
+    return tableFile;
+  }
+
+  public final String getPath () {
+    return getFile().getAbsolutePath();
   }
 
   private native short getEmphasisBit (String tablePath, String emphasisClass);
   public final short getEmphasisBit (String emphasisClass) {
     synchronized (Louis.NATIVE_LOCK) {
-      return getEmphasisBit(getFileName(), emphasisClass);
+      return getEmphasisBit(getPath(), emphasisClass);
     }
   }
 
   private native boolean addRule (String tablePath, String rule);
   public final boolean addRule (String rule) {
     synchronized (Louis.NATIVE_LOCK) {
-      return addRule(getFileName(), rule);
+      return addRule(getPath(), rule);
     }
   }
 

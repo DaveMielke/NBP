@@ -173,7 +173,7 @@ public abstract class Tests {
   }
 
   private final static void auditFile (Set<File> notFound, InternalTable table) {
-    File file = table.getFileObject();
+    File file = table.getFile();
 
     if (file.exists()) {
       notFound.remove(file);

@@ -91,7 +91,7 @@ public class InternalTranslator extends Translator {
   }
 
   private native boolean translate (
-    String tableName,
+    String tablePath,
     String inputBuffer, char[] outputBuffer, short[] typeForm,
     int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate
@@ -117,7 +117,7 @@ public class InternalTranslator extends Translator {
 
     synchronized (Louis.NATIVE_LOCK) {
       boolean translated = translate(
-        table.getFileName(), inputBuffer.toString(), outputBuffer,
+        table.getPath(), inputBuffer.toString(), outputBuffer,
         typeForm, outputOffsets, inputOffsets, resultValues, backTranslate
       );
 
