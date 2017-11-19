@@ -33,27 +33,6 @@ public class InternalTranslator extends Translator {
     return backwardTable;
   }
 
-  public final InternalTable getTable () {
-    if (forwardTable == backwardTable) return forwardTable;
-    throw new IllegalStateException("forward and backward tables are different");
-  }
-
-  public final String getTableName () {
-    return getTable().getTableName();
-  }
-
-  public final String getFileName () {
-    return getTable().getFileName();
-  }
-
-  public final File getFileObject () {
-    return getTable().getFileObject();
-  }
-
-  public final short getEmphasisBit (String name) {
-    return getTable().getEmphasisBit(name);
-  }
-
   private final static short TYPE_FORM_BOLD = Emphasis.getBoldBit();
   private final static short TYPE_FORM_ITALIC = Emphasis.getItalicBit();
   private final static short TYPE_FORM_UNDERLINE = Emphasis.getUnderlineBit();

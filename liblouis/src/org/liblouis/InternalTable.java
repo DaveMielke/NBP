@@ -59,12 +59,16 @@ public class InternalTable {
 
   private native short getEmphasisBit (String tablePath, String emphasisClass);
   public final short getEmphasisBit (String emphasisClass) {
-    return getEmphasisBit(getFileName(), emphasisClass);
+    synchronized (Louis.NATIVE_LOCK) {
+      return getEmphasisBit(getFileName(), emphasisClass);
+    }
   }
 
   private native boolean addRule (String tablePath, String rule);
   public final boolean addRule (String rule) {
-    return addRule(getFileName(), rule);
+    synchronized (Louis.NATIVE_LOCK) {
+      return addRule(getFileName(), rule);
+    }
   }
 
   public final static File[] getAllFiles () {
