@@ -9,31 +9,31 @@ import android.text.style.StyleSpan;
 import android.graphics.Typeface;
 
 public class InternalTranslator extends Translator {
-  private final TableFile forwardTable;
-  private final TableFile backwardTable;
+  private final InternalTable forwardTable;
+  private final InternalTable backwardTable;
 
   InternalTranslator (String forwardName, String backwardName) {
     super();
 
-    forwardTable = new TableFile(forwardName);
+    forwardTable = new InternalTable(forwardName);
     backwardTable = (backwardName == null)? forwardTable:
                     backwardName.equals(forwardName)? forwardTable:
-                    new TableFile(backwardName);
+                    new InternalTable(backwardName);
   }
 
   InternalTranslator (String name) {
     this(name, name);
   }
 
-  public final TableFile getForwardTable () {
+  public final InternalTable getForwardTable () {
     return forwardTable;
   }
 
-  public final TableFile getBackwardTable () {
+  public final InternalTable getBackwardTable () {
     return backwardTable;
   }
 
-  public final TableFile getTable () {
+  public final InternalTable getTable () {
     return getForwardTable();
   }
 
@@ -124,7 +124,7 @@ public class InternalTranslator extends Translator {
     boolean backTranslate, boolean includeHighlighting,
     int[] resultValues
   ) {
-    final TableFile table = backTranslate? getBackwardTable(): getForwardTable();
+    final InternalTable table = backTranslate? getBackwardTable(): getForwardTable();
 
     final int inputLength = inputBuffer.length();
     final int outputLength = outputBuffer.length;

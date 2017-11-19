@@ -172,8 +172,8 @@ public abstract class Tests {
     );
   }
 
-  private final static void auditFile (Set<File> notFound, TableFile tableFile) {
-    File file = tableFile.getFileObject();
+  private final static void auditFile (Set<File> notFound, InternalTable table) {
+    File file = table.getFileObject();
 
     if (file.exists()) {
       notFound.remove(file);
@@ -186,7 +186,7 @@ public abstract class Tests {
     Log.d(LOG_TAG, "begin translator identifier audit");
 
     Set<File> notFound = new HashSet<File>();
-    Collections.addAll(notFound, TableFile.getAllFiles());
+    Collections.addAll(notFound, InternalTable.getAllFiles());
 
     for (TranslatorIdentifier identifier : TranslatorIdentifier.values()) {
       {
@@ -203,10 +203,10 @@ public abstract class Tests {
         if (translator instanceof InternalTranslator) {
           InternalTranslator internal = (InternalTranslator)translator;
 
-          TableFile forward = internal.getForwardTable();
+          InternalTable forward = internal.getForwardTable();
           auditFile(notFound, forward);
 
-          TableFile backward = internal.getBackwardTable();
+          InternalTable backward = internal.getBackwardTable();
           if (backward != forward) auditFile(notFound, backward);
         }
       }

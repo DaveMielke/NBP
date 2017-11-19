@@ -3,10 +3,10 @@ package org.liblouis;
 import java.io.File;
 import java.io.FileFilter;
 
-public class TableFile {
+public class InternalTable {
   private final String tableName;
 
-  public TableFile (String name) {
+  public InternalTable (String name) {
     tableName = name;
   }
 
@@ -57,12 +57,12 @@ public class TableFile {
     return fileObject;
   }
 
-  private native short getEmphasisBit (String tableFile, String emphasisClass);
+  private native short getEmphasisBit (String tablePath, String emphasisClass);
   public final short getEmphasisBit (String emphasisClass) {
     return getEmphasisBit(getFileName(), emphasisClass);
   }
 
-  private native boolean addRule (String tableFile, String rule);
+  private native boolean addRule (String tablePath, String rule);
   public final boolean addRule (String rule) {
     return addRule(getFileName(), rule);
   }
