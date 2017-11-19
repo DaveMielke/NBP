@@ -34,7 +34,8 @@ public class InternalTranslator extends Translator {
   }
 
   public final InternalTable getTable () {
-    return getForwardTable();
+    if (forwardTable == backwardTable) return forwardTable;
+    throw new IllegalStateException("forward and backward tables are different");
   }
 
   public final String getTableName () {
