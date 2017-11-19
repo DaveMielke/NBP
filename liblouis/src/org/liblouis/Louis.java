@@ -170,7 +170,7 @@ public final class Louis {
     removeFile(oldLocation);
   }
 
-  private static void updatePackageData (final NewTranslationTablesListener newTranslationTablesListener) {
+  private static void updatePackageData (final NewInternalTablesListener newInternalTablesListener) {
     final SharedPreferences prefs = getSharedPreferences();
     final File file = new File(applicationContext.getPackageCodePath());
 
@@ -198,15 +198,15 @@ public final class Louis {
           editor.putLong(prefKey_time, newTime);
           editor.commit();
 
-          if (newTranslationTablesListener != null) {
-            newTranslationTablesListener.newTranslationTables();
+          if (newInternalTablesListener != null) {
+            newInternalTablesListener.newTables();
           }
         }
       }.start();
     }
   }
 
-  public static void initialize (Context context, NewTranslationTablesListener newTranslationTablesListener) {
+  public static void initialize (Context context, NewInternalTablesListener newInternalTablesListener) {
     context = context.getApplicationContext();
 
     synchronized (INITIALIZATION_LOCK) {
@@ -215,11 +215,11 @@ public final class Louis {
         dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
         setDataPath(dataDirectory.getAbsolutePath());
         com.duxburysystems.AssetUtilities.setRootFolder(toAssetsPath("duxbury"));
-        updatePackageData(newTranslationTablesListener);
+        updatePackageData(newInternalTablesListener);
       } else if (context != applicationContext) {
         throw new IllegalArgumentException("different application context");
-      } else if (newTranslationTablesListener != null) {
-        newTranslationTablesListener.newTranslationTables();
+      } else if (newInternalTablesListener != null) {
+        newInternalTablesListener.newTables();
       }
     }
   }

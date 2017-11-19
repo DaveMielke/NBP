@@ -16,7 +16,7 @@ import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputMethodInfo;
 
 import org.liblouis.Louis;
-import org.liblouis.NewTranslationTablesListener;
+import org.liblouis.NewInternalTablesListener;
 
 public abstract class ApplicationContext extends CommonContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
@@ -31,9 +31,9 @@ public abstract class ApplicationContext extends CommonContext {
       Log.d(logTag, "begin");
 
       {
-        NewTranslationTablesListener listener = new NewTranslationTablesListener() {
+        NewInternalTablesListener listener = new NewInternalTablesListener() {
           @Override
-          public void newTranslationTables () {
+          public void newTables () {
             synchronized (START_LOCK) {
               TranslationUtilities.refresh();
 
