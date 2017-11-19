@@ -1,7 +1,7 @@
 package org.liblouis;
 
 public class TranslationBuilder {
-  private Translator translatorObject = null;
+  private Translator selectedTranslator = null;
   private CharSequence inputCharacters = "";
   private int outputLength = 1;
   private Integer cursorOffset = null;
@@ -9,15 +9,15 @@ public class TranslationBuilder {
   private boolean allowLongerOutput = false;
 
   public final Translator getTranslator () {
-    if (translatorObject == null) {
+    if (selectedTranslator == null) {
       setTranslator(ApplicationParameters.DEFAULT_TRANSLATOR);
     }
 
-    return translatorObject;
+    return selectedTranslator;
   }
 
   public final TranslationBuilder setTranslator (Translator translator) {
-    translatorObject = translator;
+    selectedTranslator = translator;
     return this;
   }
 
@@ -90,7 +90,7 @@ public class TranslationBuilder {
   }
 
   private final void verifyValues () {
-    verifyValue((translatorObject != null), "translator not set");
+    verifyValue((selectedTranslator != null), "translator not set");
     verifyValue((inputCharacters != null), "input characters not set");
     verifyValue((outputLength >= 0), "negative output length");
     verifyValue(((cursorOffset == null) || (cursorOffset >= 0)), "negative cursor offset");

@@ -447,7 +447,7 @@ public enum TranslatorIdentifier {
   private final String forwardName;
   private final String backwardName;
   private final int translatorDescription;
-  private Translator translatorObject = null;
+  private Translator identifiedTranslator = null;
 
   TranslatorIdentifier (String forward, String backward, int description) {
     forwardName = forward;
@@ -469,19 +469,19 @@ public enum TranslatorIdentifier {
 
   public final Translator getTranslator () {
     synchronized (this) {
-      if (translatorObject == null) {
+      if (identifiedTranslator == null) {
         switch (this) {
           case PINYIN:
-            translatorObject = new PinyinTranslator();
+            identifiedTranslator = new PinyinTranslator();
             break;
 
           default:
-            translatorObject = new InternalTranslator(forwardName, backwardName);
+            identifiedTranslator = new InternalTranslator(forwardName, backwardName);
             break;
         }
       }
     }
 
-    return translatorObject;
+    return identifiedTranslator;
   }
 }
