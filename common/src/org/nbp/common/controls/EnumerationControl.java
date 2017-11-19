@@ -75,7 +75,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     }
   }
 
-  protected String getValueLabel (E value) {
+  public String getValueLabel (E value) {
     String labels[] = getLabelArray();
 
     synchronized (labels) {

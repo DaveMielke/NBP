@@ -27,10 +27,8 @@ public class ASCIIBrailleOperations extends ByteOperations {
 
       throw new IOException(
         String.format(
-          "translator not available: %s (%s): %s",
-          identifier.name(),
-          identifier.getDescription(),
-          exception.getMessage()
+          "braille code not available: %s: %s",
+          Controls.brailleCode.getValueLabel(code), exception.getMessage()
         )
       );
     }
