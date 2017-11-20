@@ -9,7 +9,7 @@ public class LogsOff extends Action {
     Controls.logKeyboard,
     Controls.logActions,
     Controls.logNavigation,
-    Controls.logGestures,
+    Controls.logEmulations,
     Controls.logBraille,
     Controls.logSpeech
   };

@@ -60,8 +60,8 @@
 .. |LogActionsOn| replace:: Turn on the logging of user interface actions.
 .. |LogBrailleOff| replace:: Turn off the logging of braille display updates.
 .. |LogBrailleOn| replace:: Turn on the logging of braille display updates.
-.. |LogGesturesOff| replace:: Turn off the logging of touch screen gestures.
-.. |LogGesturesOn| replace:: Turn on the logging of touch screen gestures.
+.. |LogEmulationsOff| replace:: Turn off the logging of touch screen emulations.
+.. |LogEmulationsOn| replace:: Turn on the logging of touch screen emulations.
 .. |LogKeyboardOff| replace:: Turn off the logging of keyboard key events.
 .. |LogKeyboardOn| replace:: Turn on the logging of keyboard key events.
 .. |LogNavigationOff| replace:: Turn off the logging of internal screen navigation operations.

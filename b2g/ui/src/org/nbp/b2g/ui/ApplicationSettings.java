@@ -52,7 +52,7 @@ public abstract class ApplicationSettings {
   public volatile static boolean LOG_KEYBOARD = ApplicationDefaults.LOG_KEYBOARD;
   public volatile static boolean LOG_ACTIONS = ApplicationDefaults.LOG_ACTIONS;
   public volatile static boolean LOG_NAVIGATION = ApplicationDefaults.LOG_NAVIGATION;
-  public volatile static boolean LOG_GESTURES = ApplicationDefaults.LOG_GESTURES;
+  public volatile static boolean LOG_EMULATIONS = ApplicationDefaults.LOG_EMULATIONS;
   public volatile static boolean LOG_BRAILLE = ApplicationDefaults.LOG_BRAILLE;
   public volatile static boolean LOG_SPEECH = ApplicationDefaults.LOG_SPEECH;
 }

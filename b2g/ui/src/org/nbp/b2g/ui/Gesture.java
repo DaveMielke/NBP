@@ -21,7 +21,7 @@ public abstract class Gesture {
   }
 
   private static boolean begin (int x, int y, int fingers) {
-    if (ApplicationSettings.LOG_GESTURES) {
+    if (ApplicationSettings.LOG_EMULATIONS) {
       Log.d(LOG_TAG, String.format(
         "gesture begin: [%d,%d] Fingers:%d", x, y, fingers
       ));
@@ -33,7 +33,7 @@ public abstract class Gesture {
   }
 
   private static boolean move (int x, int y) {
-    if (ApplicationSettings.LOG_GESTURES) {
+    if (ApplicationSettings.LOG_EMULATIONS) {
       Log.d(LOG_TAG, String.format("gesture move: [%d,%d]", x, y));
     }
 
@@ -42,7 +42,7 @@ public abstract class Gesture {
   }
 
   private static boolean end () {
-    if (ApplicationSettings.LOG_GESTURES) {
+    if (ApplicationSettings.LOG_EMULATIONS) {
       Log.d(LOG_TAG, "gesture end");
     }
 
@@ -51,7 +51,7 @@ public abstract class Gesture {
   }
 
   private static boolean end (int x, int y) {
-    if (ApplicationSettings.LOG_GESTURES) {
+    if (ApplicationSettings.LOG_EMULATIONS) {
       Log.d(LOG_TAG, String.format("gesture end: [%d,%d]", x, y));
     }
 

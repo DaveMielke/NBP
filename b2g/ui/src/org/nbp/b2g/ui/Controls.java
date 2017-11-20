@@ -68,11 +68,11 @@ public abstract class Controls {
   public final static AdvancedActionsControl advancedActions = new AdvancedActionsControl();
   public final static ExtraIndicatorsControl extraIndicators = new ExtraIndicatorsControl();
   public final static EventMessagesControl eventMessages = new EventMessagesControl();
-  public final static LogUpdatesControl logUpdates = new LogUpdatesControl();
-  public final static LogKeyboardControl logKeyboard = new LogKeyboardControl();
   public final static LogActionsControl logActions = new LogActionsControl();
   public final static LogNavigationControl logNavigation = new LogNavigationControl();
-  public final static LogGesturesControl logGestures = new LogGesturesControl();
+  public final static LogUpdatesControl logUpdates = new LogUpdatesControl();
+  public final static LogKeyboardControl logKeyboard = new LogKeyboardControl();
+  public final static LogEmulationsControl logEmulations = new LogEmulationsControl();
   public final static LogBrailleControl logBraille = new LogBrailleControl();
   public final static LogSpeechControl logSpeech = new LogSpeechControl();
 
@@ -121,11 +121,11 @@ public abstract class Controls {
     advancedActions,
     extraIndicators,
     eventMessages,
-    logUpdates,
-    logKeyboard,
     logActions,
     logNavigation,
-    logGestures,
+    logUpdates,
+    logKeyboard,
+    logEmulations,
     logBraille,
     logSpeech
   };

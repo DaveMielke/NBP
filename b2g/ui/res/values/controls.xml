@@ -53,11 +53,11 @@
   <string name="control_label_AdvancedActions">Advanced Actions</string>
   <string name="control_label_ExtraIndicators">Extra Indicators</string>
   <string name="control_label_EventMessages">Event Messages</string>
-  <string name="control_label_LogUpdates">Log Updates</string>
-  <string name="control_label_LogKeyboard">Log Keyboard</string>
   <string name="control_label_LogActions">Log Actions</string>
   <string name="control_label_LogNavigation">Log Navigation</string>
-  <string name="control_label_LogGestures">Log Gestures</string>
+  <string name="control_label_LogUpdates">Log Updates</string>
+  <string name="control_label_LogKeyboard">Log Keyboard</string>
+  <string name="control_label_LogEmulations">Log Emulations</string>
   <string name="control_label_LogBraille">Log Braille</string>
   <string name="control_label_LogSpeech">Log Speech</string>
 
