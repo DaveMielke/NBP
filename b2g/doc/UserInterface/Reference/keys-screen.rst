@@ -73,17 +73,17 @@ Space+Dots125,Dots123 (h l)
 Space+Dots125,Dots134 (h m)
   |UserManualText|
 
-Space+Dots125,Dots78+Dots134 (h M)
-  |UserManualHTML|
-
 Space+Dots125,Dots12345 (h q)
   |QuickStartText|
 
-Space+Dots125,Dots78+Dots12345 (h Q)
-  |QuickStartHTML|
-
 Space+Dots125,Dots2456 (h w)
   |WarrantyText|
+
+Space+Dots125,Dots78+Dots134 (h M)
+  |UserManualHTML|
+
+Space+Dots125,Dots78+Dots12345 (h Q)
+  |QuickStartHTML|
 
 Space+Dots125,Dots78+Dots2456 (h W)
   |WarrantyHTML|
