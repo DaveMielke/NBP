@@ -65,7 +65,7 @@ public abstract class Endpoints {
     setCurrentEndpoint(endpoint);
   }
 
-  public static void setPopupEndpoint (String text) {
+  public static void setPopupEndpoint (CharSequence text) {
     setPopupEndpoint(text, null);
   }
 

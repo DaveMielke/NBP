@@ -2,6 +2,10 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class CopyToClipboard extends Action {
+  protected CharSequence toActualText (CharSequence text) {
+    return text;
+  }
+
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
@@ -9,7 +13,7 @@ public class CopyToClipboard extends Action {
     if (text == null) text = endpoint.getText();
 
     if (text != null) {
-      if (Clipboard.putText(text)) {
+      if (Clipboard.putText(toActualText(text))) {
         return true;
       }
     }

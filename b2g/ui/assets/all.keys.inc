@@ -21,6 +21,9 @@ bind Dot8+Cursor SetLeft
 bind Space+Dots123 ToTextStart
 bind Space+Dots456 ToTextEnd
 
+bind Space+Dot7+Dots1236#v ShowClipboard
+bind Space+Dot7+Dots1346#x ClearClipboard
+bind Space+Dot7+Dots14#c AddToClipboard
 bind Space+Dot8+Dots14#c CopyToClipboard
 
 bind Space+Dot7+Dots1245#g BrailleCodePrevious

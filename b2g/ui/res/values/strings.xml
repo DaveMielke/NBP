@@ -88,9 +88,11 @@
 
   <string name="SystemMaintenance_action_label">System Maintenance</string>
 
+  <string name="AddToClipboard_action_confirmation">added to clipboard</string>
   <string name="ClearAndroidLog_action_confirmation">Android log cleared</string>
-  <string name="CopyToClipboard_action_confirmation">Copied to Clipboard</string>
-  <string name="CutToClipboard_action_confirmation">Cut to Clipboard</string>
+  <string name="ClearClipboard_action_confirmation">clipboard cleared</string>
+  <string name="CopyToClipboard_action_confirmation">copied to clipboard</string>
+  <string name="CutToClipboard_action_confirmation">cut to clipboard</string>
   <string name="DeleteCharacter_action_confirmation">deleted</string>
   <string name="LogsOff_action_confirmation">Logs Off</string>
   <string name="LogsOn_action_confirmation">Logs On</string>

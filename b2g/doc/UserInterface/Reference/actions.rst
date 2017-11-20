@@ -1,5 +1,6 @@
 .. |AccessibilitySettings| replace:: Go to the Accessibility Settings screen.
 .. |AddShortcut| replace:: Add a shortcut to `the home screen`_.
+.. |AddToClipboard| replace:: Add the selected (or all) text to `the clipboard`_.
 .. |AirplaneModeOff| replace:: Turn off Android's airplane mode.
 .. |AirplaneModeOn| replace:: Turn on Android's airplane mode.
 .. |AllApplications| replace:: Show a list of all the applications that are installed on the |product name|.
@@ -15,16 +16,17 @@
 .. |Calculator| replace:: Go to the Calculator app.
 .. |Calendar| replace:: Go to the Calendar app.
 .. |ClearAndroidLog| replace:: Clear the Android log.
+.. |ClearClipboard| replace:: Clear `the clipboard`_.
 .. |Click| replace:: Tap (click) the current screen element.
 .. |Clock| replace:: Go to the B2G digital clock.
 .. |ComputerBraille| replace:: Switch to `typing in computer braille`_ (eight dots).
-.. |CopyToClipboard| replace:: Copy the selected (or all) text to the clipboard.
+.. |CopyToClipboard| replace:: Copy the selected (or all) text to `the clipboard`_.
 .. |CursorDown| replace:: `The Cursor Down key`_ (on a keyboard).
 .. |CursorKey| replace:: Bring the cursor to a specific character or click the current screen element.
 .. |CursorLeft| replace:: `The Cursor Left key`_ (on a keyboard).
 .. |CursorRight| replace:: `The Cursor Right key`_ (on a keyboard).
 .. |CursorUp| replace:: `The Cursor Up key`_ (on a keyboard).
-.. |CutToClipboard| replace:: Cut the selected text to the clipboard.
+.. |CutToClipboard| replace:: Cut the selected text to `the clipboard`_.
 .. |DeleteNext| replace:: Delete the character that the cursor indicator is on.
 .. |DeletePrevious| replace:: Delete the character to the left of the cursor indicator.
 .. |DescribeBuild| replace:: Show details that identify the current build.
@@ -135,6 +137,7 @@
 .. |SetSelectionEnd| replace:: Set or change the end of the `text selection`_.
 .. |SetSelectionStart| replace:: Set or change the start of the `text selection`_.
 .. |Settings| replace:: Go to the B2G Settings screen.
+.. |ShowClipboard| replace:: Show `the clipboard`_.
 .. |ShowNotificationsOff| replace:: Don't show notifications.
 .. |ShowNotificationsOn| replace:: Show notifications.
 .. |SleepTalkOff| replace:: Speak only when the B2G is awake.

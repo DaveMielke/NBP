@@ -49,6 +49,15 @@ Space+Dots123
 Space+Dots456
   |ToTextEnd|
 
+Space+Dot7+Dots1236 (v)
+  |ShowClipboard|
+
+Space+Dot7+Dots1346 (x)
+  |ClearClipboard|
+
+Space+Dot7+Dots14 (c)
+  |AddToClipboard|
+
 Space+Dot8+Dots14 (c)
   |CopyToClipboard|
 
