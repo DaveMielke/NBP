@@ -103,6 +103,7 @@
 .. |PasteFromClipboard| replace:: Paste the current clipboard content.
 .. |People| replace:: Go to the People (Contacts) app.
 .. |PowerOff| replace:: Go to the Power Off screen.
+.. |ProductPage| replace:: Go to the `Product Page`_ for the |product name|.
 .. |QuickStartHTML| replace:: Go to the HTML version of the `Quick Start Guide`_.
 .. |QuickStartText| replace:: Go to the plain text version of the `quick Start Guide`_.
 .. |RecentApplications| replace:: Go to the Recent Apps screen.

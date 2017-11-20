@@ -4,13 +4,13 @@ import org.nbp.b2g.ui.*;
 
 import android.net.Uri;
 
-public class QuickStartHTML extends ViewerActivityAction {
+public class ProductPage extends ViewerActivityAction {
   @Override
   protected Uri getUri () {
-    return Uri.parse(getString(R.string.uri_b2g_start_html));
+    return Uri.parse(getString(R.string.uri_b2g_product_html));
   }
 
-  public QuickStartHTML (Endpoint endpoint) {
+  public ProductPage (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

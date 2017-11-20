@@ -33,6 +33,7 @@ bind Space+Dots125#h,Dots123#l ListActions
 bind Space+Dots125#h,Dots134#m UserManualText
 bind Space+Dots125#h,Dots12345#q QuickStartText
 bind Space+Dots125#h,Dots2456#w WarrantyText
+bind Space+Dots125#h,Dots123456 ProductPage
 bind Space+Dots125#h,Dots78+Dots134#m UserManualHTML
 bind Space+Dots125#h,Dots78+Dots12345#q QuickStartHTML
 bind Space+Dots125#h,Dots78+Dots2456#w WarrantyHTML

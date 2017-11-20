@@ -79,6 +79,9 @@ Space+Dots125,Dots12345 (h q)
 Space+Dots125,Dots2456 (h w)
   |WarrantyText|
 
+Space+Dots125,Dots123456
+  |ProductPage|
+
 Space+Dots125,Dots78+Dots134 (h M)
   |UserManualHTML|
 

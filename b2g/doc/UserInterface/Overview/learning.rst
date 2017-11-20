@@ -34,7 +34,7 @@ HTML
 
 .. |user manual| replace:: User Manual (this document)
 .. |quickstart guide| replace:: Quickstart Guide
-.. |warranty and return| replace:: Warranty and Return Policy
+.. |warranty and return| replace:: Limited Warranty and Return Policy
 
 The available documents are:
 
@@ -59,6 +59,9 @@ q (dots 12345)
 
 w (dots 2456)
   The plain-text version of the |warranty and return|.
+
+Dots123456
+  The `Product Page`_ for the |product name| (in HTML, of course).
 
 M (dots 13478)
   The HTML version of the |user manual|.

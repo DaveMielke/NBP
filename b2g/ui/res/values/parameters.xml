@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="uri_b2g_warranty_html">http://brltty.com/archive/B2G/Warranty.html</string>
-  <string name="uri_b2g_warranty_text">http://brltty.com/archive/B2G/Warranty.txt</string>
+  <string name="uri_b2g_product_html">http://www.NBP.org/ic/nbp/B2G-GRY.html?id=edDD2MWZ</string>
 
-  <string name="uri_ui_apk">http://brltty.com/archive/B2G/B2G_UI.apk</string>
-  <string name="uri_ui_manual_html">http://brltty.com/archive/B2G/UserInterface.html</string>
-  <string name="uri_ui_manual_text">http://brltty.com/archive/B2G/UserInterface.txt</string>
-  <string name="uri_ui_start_html">http://brltty.com/archive/B2G/QuickStart.html</string>
-  <string name="uri_ui_start_text">http://brltty.com/archive/B2G/QuickStart.txt</string>
+  <string name="uri_b2g_warranty_html">http://BRLTTY.com/archive/B2G/Warranty.html</string>
+  <string name="uri_b2g_warranty_text">http://BRLTTY.com/archive/B2G/Warranty.txt</string>
 
-  <string name="uri_editor_apk">http://brltty.com/archive/B2G/NBP_Editor.apk</string>
-  <string name="uri_editor_manual_html">http://brltty.com/archive/B2G/Editor.html</string>
-  <string name="uri_editor_manual_text">http://brltty.com/archive/B2G/Editor.txt</string>
+  <string name="uri_b2g_start_html">http://BRLTTY.com/archive/B2G/QuickStart.html</string>
+  <string name="uri_b2g_start_text">http://BRLTTY.com/archive/B2G/QuickStart.txt</string>
 
-  <string name="uri_calculator_apk">http://brltty.com/archive/B2G/NBP_Calculator.apk</string>
-  <string name="uri_calculator_manual_html">http://brltty.com/archive/B2G/Calculator.html</string>
-  <string name="uri_calculator_manual_text">http://brltty.com/archive/B2G/Calculator.txt</string>
+  <string name="uri_ui_apk">http://BRLTTY.com/archive/B2G/B2G_UI.apk</string>
+  <string name="uri_ui_manual_html">http://BRLTTY.com/archive/B2G/UserInterface.html</string>
+  <string name="uri_ui_manual_text">http://BRLTTY.com/archive/B2G/UserInterface.txt</string>
 
-  <string name="uri_navigator_apk">http://brltty.com/archive/B2G/NBP_Navigator.apk</string>
-  <string name="uri_navigator_manual_html">http://brltty.com/archive/B2G/Navigator.html</string>
-  <string name="uri_navigator_manual_text">http://brltty.com/archive/B2G/Navigator.txt</string>
+  <string name="uri_editor_apk">http://BRLTTY.com/archive/B2G/NBP_Editor.apk</string>
+  <string name="uri_editor_manual_html">http://BRLTTY.com/archive/B2G/Editor.html</string>
+  <string name="uri_editor_manual_text">http://BRLTTY.com/archive/B2G/Editor.txt</string>
 
-  <string name="recipient_bm">Brian MacDonald &lt;BMacdonald@NBP.org&gt;</string>
+  <string name="uri_calculator_apk">http://BRLTTY.com/archive/B2G/NBP_Calculator.apk</string>
+  <string name="uri_calculator_manual_html">http://BRLTTY.com/archive/B2G/Calculator.html</string>
+  <string name="uri_calculator_manual_text">http://BRLTTY.com/archive/B2G/Calculator.txt</string>
+
+  <string name="uri_navigator_apk">http://BRLTTY.com/archive/B2G/NBP_Navigator.apk</string>
+  <string name="uri_navigator_manual_html">http://BRLTTY.com/archive/B2G/Navigator.html</string>
+  <string name="uri_navigator_manual_text">http://BRLTTY.com/archive/B2G/Navigator.txt</string>
+
+  <string name="recipient_bm">Brian Mac Donald &lt;BMacdonald@NBP.org&gt;</string>
   <string name="recipient_db">Deane Blazie &lt;Deane@Blazie.net&gt;</string>
   <string name="recipient_dm">Dave Mielke &lt;Dave@Mielke.cc&gt;</string>
 
