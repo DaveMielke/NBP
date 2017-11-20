@@ -142,6 +142,12 @@
     </activity>
 
     <activity
+        android:name=".host.VoiceOverActivity"
+        android:label="@string/VoiceOver_activity_label"
+        >
+    </activity>
+
+    <activity
         android:name=".host.WarrantyActivity"
         android:label="@string/warranty_activity_label"
         >

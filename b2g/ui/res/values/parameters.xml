@@ -9,6 +9,9 @@
   <string name="uri_b2g_start_html">http://BRLTTY.com/archive/B2G/QuickStart.html</string>
   <string name="uri_b2g_start_text">http://BRLTTY.com/archive/B2G/QuickStart.txt</string>
 
+  <string name="uri_b2g_vo_html">http://BRLTTY.com/archive/B2G/VoiceOver.html</string>
+  <string name="uri_b2g_vo_text">http://BRLTTY.com/archive/B2G/VoiceOver.txt</string>
+
   <string name="uri_ui_apk">http://BRLTTY.com/archive/B2G/B2G_UI.apk</string>
   <string name="uri_ui_manual_html">http://BRLTTY.com/archive/B2G/UserInterface.html</string>
   <string name="uri_ui_manual_text">http://BRLTTY.com/archive/B2G/UserInterface.txt</string>

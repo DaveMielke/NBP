@@ -62,7 +62,9 @@
 
   <string name="userManual_activity_label">B2G User Interface Manual</string>
 
-  <string name="warranty_activity_label">B2G Warranty and Return Policy</string>
+  <string name="VoiceOver_activity_label">B2G VoiceOver Guide</string>
+
+  <string name="warranty_activity_label">B2G Limited Warranty and Return Policy</string>
 
   <string name="answerCall_message_not_ringing">not ringing</string>
 

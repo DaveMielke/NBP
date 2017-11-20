@@ -32,8 +32,9 @@ HTML
     As of the time that this is being written, we recommend
     that you use the |recommended web browser| browser.
 
-.. |user manual| replace:: User Manual (this document)
-.. |quickstart guide| replace:: Quickstart Guide
+.. |user manual| replace:: user manual (this document)
+.. |quickstart guide| replace:: quickstart guide
+.. |VoiceOver guide| replace:: VoiceOver guide
 .. |warranty and return| replace:: Limited Warranty and Return Policy
 
 The available documents are:
@@ -57,17 +58,23 @@ m (dots 134)
 q (dots 12345)
   The plain-text version of the |quickstart guide|.
 
+v (dots 1236)
+  The plain-text version of the |VoiceOver guide|.
+
 w (dots 2456)
   The plain-text version of the |warranty and return|.
 
 Dots123456
-  The `Product Page`_ for the |product name| (in HTML, of course).
+  The `product page`_ for the |product name| (in HTML, of course).
 
 M (dots 13478)
   The HTML version of the |user manual|.
 
 Q (dots 1234578)
   The HTML version of the |quickstart guide|.
+
+V (dots 123678)
+  The HTML version of the |VoiceOver guide|.
 
 W (dots 245678)
   The HTML version of the |warranty and return|.

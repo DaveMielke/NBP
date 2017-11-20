@@ -103,9 +103,9 @@
 .. |PasteFromClipboard| replace:: Paste the current clipboard content.
 .. |People| replace:: Go to the People (Contacts) app.
 .. |PowerOff| replace:: Go to the Power Off screen.
-.. |ProductPage| replace:: Go to the `Product Page`_ for the |product name|.
-.. |QuickStartHTML| replace:: Go to the HTML version of the `Quick Start Guide`_.
-.. |QuickStartText| replace:: Go to the plain text version of the `quick Start Guide`_.
+.. |ProductPage| replace:: Go to the `product page`_ for the |product name|.
+.. |QuickStartHTML| replace:: Go to the HTML version of the `Quick Start guide`_.
+.. |QuickStartText| replace:: Go to the plain text version of the `quick Start guide`_.
 .. |RecentApplications| replace:: Go to the Recent Apps screen.
 .. |RemoteDisplay| replace:: Switch to `the remote braille display`_.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
@@ -177,9 +177,11 @@
 .. |TypingStrikeOn| replace:: Turn on strike-through typing.
 .. |TypingUnderlineOff| replace:: Turn off underlined typing.
 .. |TypingUnderlineOn| replace:: Turn on underlined typing.
-.. |UserManualHTML| replace:: Go to the HTML version of the `User Interface Manual`_.
-.. |UserManualText| replace:: Go to the plain text version of the `User Interface Manual`_.
+.. |UserManualHTML| replace:: Go to the HTML version of the `User Interface manual`_.
+.. |UserManualText| replace:: Go to the plain text version of the `User Interface manual`_.
 .. |VoiceCommand| replace:: Initiate an Android voice command.
+.. |VoiceOverHTML| replace:: Go to the HTML version of the `VoiceOver guide`_.
+.. |VoiceOverText| replace:: Go to the plain text version of the `VoiceOver guide`_.
 .. |VolumeDown| replace:: The Android Volume Down key (applies to the current audio stream).
 .. |VolumeUp| replace:: The Android Volume Up key (applies to the current audio stream).
 .. |WarrantyHTML| replace:: Go to the HTML version of the `Limited Warranty and Return Policy`_.

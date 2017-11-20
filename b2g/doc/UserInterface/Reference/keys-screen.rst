@@ -76,6 +76,9 @@ Space+Dots125,Dots134 (h m)
 Space+Dots125,Dots12345 (h q)
   |QuickStartText|
 
+Space+Dots125,Dots1236 (h v)
+  |VoiceOverText|
+
 Space+Dots125,Dots2456 (h w)
   |WarrantyText|
 
@@ -87,6 +90,9 @@ Space+Dots125,Dots78+Dots134 (h M)
 
 Space+Dots125,Dots78+Dots12345 (h Q)
   |QuickStartHTML|
+
+Space+Dots125,Dots78+Dots1236 (h V)
+  |VoiceOverHTML|
 
 Space+Dots125,Dots78+Dots2456 (h W)
   |WarrantyHTML|
