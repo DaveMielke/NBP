@@ -55,6 +55,9 @@ Space+Dots1356 (z)
 Space+Dots1235 (r)
   |RecentApplications|
 
+Space+Dots1245 (g)
+  |AllApplications|
+
 Space+Dots134 (m)
   |MenuKey|
 

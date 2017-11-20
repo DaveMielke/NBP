@@ -22,7 +22,8 @@ the |user interface| supports the following home screen management operations:
 * To add a shortcut to the home screen:
 
   1) Go to a list of all the apps currently installed on the |product name|.
-     To do this via `The Standard Android Launcher`_:
+     The easiest way to do this is to press Space+g (dots 1245).
+     To do it via `The Standard Android Launcher`_:
 
      1) Go to the home screen.
      2) Open the ``Apps`` drawer (on the `favourites bar`_).

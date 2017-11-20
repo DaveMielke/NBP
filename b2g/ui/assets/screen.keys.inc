@@ -23,6 +23,7 @@ bind Space+Dot8+Dots1345#n ShowNotificationsOn
 bind Space+Dots123456 HomeKey
 bind Space+Dots1356#z BackKey
 bind Space+Dots1235#r RecentApplications
+bind Space+Dots1245#g AllApplications
 bind Space+Dots134#m MenuKey
 
 bind Space+Dots124#f FindForward
