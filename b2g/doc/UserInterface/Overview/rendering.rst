@@ -16,7 +16,7 @@ It's the default, and is typically used for:
 * Reading books.
 
 Characters are rendered using the currently selected braille code.
-Space+g (dots 1245) displays a message (see `Messages`_) that confirms
+Space+Dots78+g (dots 1245) displays a message (see `Messages`_) that confirms
 which braille code has been selected.
 Space+Dot8+g (dots 1245) selects the next braille code,
 and Space+Dot7+g (dots 1245) selects the previous braille code.

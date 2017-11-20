@@ -23,9 +23,9 @@ bind Space+Dots456 ToTextEnd
 
 bind Space+Dot8+Dots14#c CopyToClipboard
 
-bind Space+Dots1245#g BrailleCodeConfirm
 bind Space+Dot7+Dots1245#g BrailleCodePrevious
 bind Space+Dot8+Dots1245#g BrailleCodeNext
+bind Space+Dots78+Dots1245#g BrailleCodeConfirm
 
 bind Space+Dots235#6 LiteraryBraille
 bind Space+Dots236#8 ComputerBraille

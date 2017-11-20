@@ -52,14 +52,14 @@ Space+Dots456
 Space+Dot8+Dots14 (c)
   |CopyToClipboard|
 
-Space+Dots1245 (g)
-  |BrailleCodeConfirm|
-
 Space+Dot7+Dots1245 (g)
   |BrailleCodePrevious|
 
 Space+Dot8+Dots1245 (g)
   |BrailleCodeNext|
+
+Space+Dots78+Dots1245 (g)
+  |BrailleCodeConfirm|
 
 Space+Dots235 (6)
   |LiteraryBraille|
