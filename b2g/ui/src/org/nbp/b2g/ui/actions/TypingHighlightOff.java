@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class ResetHighlightedTyping extends Action {
+public class TypingHighlightOff extends Action {
   @Override
   public boolean performAction () {
     Controls.resetHighlightedTyping();
@@ -10,10 +10,10 @@ public class ResetHighlightedTyping extends Action {
 
   @Override
   protected Integer getConfirmation () {
-    return R.string.ResetHighlightedTyping_action_confirmation;
+    return R.string.TypingHighlightOff_action_confirmation;
   }
 
-  public ResetHighlightedTyping (Endpoint endpoint) {
+  public TypingHighlightOff (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

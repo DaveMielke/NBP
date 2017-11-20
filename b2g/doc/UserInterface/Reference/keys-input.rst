@@ -52,8 +52,11 @@ Space+Dot8+Dots2345 (t)
 Space+Dots78+Dots2345 (t)
   |TypingModeConfirm|
 
+Space+Dots78+Dots125 (h)
+  |TypingHighlightConfirm|
+
 Space+Dot7+Dots125 (h)
-  |ResetHighlightedTyping|
+  |TypingHighlightOff|
 
 Space+Dot7+Dots12 (b)
   |TypingBoldOff|

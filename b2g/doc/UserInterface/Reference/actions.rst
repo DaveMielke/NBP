@@ -110,7 +110,6 @@
 .. |RecentApplications| replace:: Go to the Recent Apps screen.
 .. |RemoteDisplay| replace:: Switch to `the remote braille display`_.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
-.. |ResetHighlightedTyping| replace:: Turn off all of the highlighted typing styles.
 .. |ResetSettings| replace:: Reset the B2G settings to their default values.
 .. |RestoreSettings| replace:: Restore the B2G settings to their most recently saved values.
 .. |ReversePanningOff| replace:: Turn off `reverse panning mode`_.
@@ -169,6 +168,8 @@
 .. |TypeUnicode| replace:: Prompt for the Unicode value of the character to be typed.
 .. |TypingBoldOff| replace:: Turn off bold typing.
 .. |TypingBoldOn| replace:: Turn on bold typing.
+.. |TypingHighlightConfirm| replace:: Show the active highlighted typing styles.
+.. |TypingHighlightOff| replace:: Turn off all of the highlighted typing styles.
 .. |TypingItalicOff| replace:: Turn off italic typing.
 .. |TypingItalicOn| replace:: Turn on italic typing.
 .. |TypingModeBraille| replace:: Set the typing mode to braille.

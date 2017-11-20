@@ -121,6 +121,9 @@ Underlining
   * Press Space+Dot8+u (dots 136) to turn it on.
   * Press Space+Dot7+u (dots 136) to turn it off.
 
+Pressing Space+Dots78+h (dots 125) displays a message (see `Messages`_)
+that lists the highlighting styles that are currently active.
+
 Press Space+Dot7+h (dots 125) to turn all of these highlighting styles off.
 Either booting the |product name| or waking it up (see `The Power Switch`_)
 also turns them off.

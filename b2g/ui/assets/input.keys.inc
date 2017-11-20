@@ -24,7 +24,8 @@ bind Space+Dot7+Dots2345#t TypingModeText
 bind Space+Dot8+Dots2345#t TypingModeBraille
 bind Space+Dots78+Dots2345#t TypingModeConfirm
 
-bind Space+Dot7+Dots125#h ResetHighlightedTyping
+bind Space+Dots78+Dots125#h TypingHighlightConfirm
+bind Space+Dot7+Dots125#h TypingHighlightOff
 bind Space+Dot7+Dots12#b TypingBoldOff
 bind Space+Dot8+Dots12#b TypingBoldOn
 bind Space+Dot7+Dots24#i TypingItalicOff

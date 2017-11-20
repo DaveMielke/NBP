@@ -94,13 +94,13 @@
   <string name="DeleteCharacter_action_confirmation">deleted</string>
   <string name="LogsOff_action_confirmation">Logs Off</string>
   <string name="LogsOn_action_confirmation">Logs On</string>
-  <string name="ResetHighlightedTyping_action_confirmation">Highlighting Off</string>
   <string name="LogScreen_action_confirmation">Screen Logged</string>
   <string name="SetCopyStart_action_confirmation">start of copy</string>
   <string name="SetSelectionEnd_action_confirmation">end of selection</string>
   <string name="SetSelectionStart_action_confirmation">start of selection</string>
   <string name="StopSpeaking_action_confirmation">Speech Stopped</string>
   <string name="TypeControl_action_confirmation">control</string>
+  <string name="TypingHighlightOff_action_confirmation">Highlight Off</string>
 
   <string name="button_settings_change">Change</string>
   <string name="button_dialog_cancel">Cancel</string>
