@@ -4,10 +4,16 @@ set -e
 . ../../build/resources.sh
 writeResourcesPrologue
 
-sed -n \
-    -e 's/^\.\.  *|\([a-zA-Z]*\)|  *replace::  *\(.*\)$/\1 \2/p' \
-    -e 's/ *$//' \
-    <../doc/UserInterface/Reference/actions.rst |
+sed -n '
+  s/^\.\.  *|\([a-zA-Z]*\)|  *replace::  *\(.*\)$/\1 \2/
+  T
+
+  s/ *$//
+  s/ `/ /g
+  s/`_//g
+
+  p
+' <../doc/UserInterface/Reference/actions.rst |
   while read action description
   do
     writeSimpleResource string "action_summary_${action}" "${description}"

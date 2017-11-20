@@ -29,17 +29,14 @@ bind Space+Dots124#f FindForward
 bind Space+Dot7+Dots124#f FindPrevious
 bind Space+Dot8+Dots124#f FindNext
 
-bind Space+Dots2456#w WarrantyText
-bind Space+Dots78+Dots2456#w WarrantyHTML
-
-bind Space+Dots12345#q QuickStartText
-bind Space+Dots78+Dots12345#q QuickStartHTML
-
-bind Space+Dots125#h UserManualText
-bind Space+Dots78+Dots125#h UserManualHTML
-
-bind Space+Dot8+Dots125#h DescribeActions
-bind Space+Cursor DescribeCursorKeyActions
+bind Space+Dots125#h,Dots123#l ListActions
+bind Space+Dots125#h,Dots134#m UserManualText
+bind Space+Dots125#h,Dots78+Dots134#m UserManualHTML
+bind Space+Dots125#h,Dots12345#q QuickStartText
+bind Space+Dots125#h,Dots78+Dots12345#q QuickStartHTML
+bind Space+Dots125#h,Dots2456#w WarrantyText
+bind Space+Dots125#h,Dots78+Dots2456#w WarrantyHTML
+bind Space+Cursor ListCursorKeyActions
 
 bind Space+Dots135#o Settings
 bind Space+Dots78+Dots134#m Maintenance

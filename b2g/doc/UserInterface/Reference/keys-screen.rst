@@ -67,29 +67,29 @@ Space+Dot7+Dots124 (f)
 Space+Dot8+Dots124 (f)
   |FindNext|
 
-Space+Dots2456 (w)
-  |WarrantyText|
+Space+Dots125,Dots123 (h l)
+  |ListActions|
 
-Space+Dots78+Dots2456 (w)
-  |WarrantyHTML|
-
-Space+Dots12345 (q)
-  |QuickStartText|
-
-Space+Dots78+Dots12345 (q)
-  |QuickStartHTML|
-
-Space+Dots125 (h)
+Space+Dots125,Dots134 (h m)
   |UserManualText|
 
-Space+Dots78+Dots125 (h)
+Space+Dots125,Dots78+Dots134 (h M)
   |UserManualHTML|
 
-Space+Dot8+Dots125 (h)
-  |DescribeActions|
+Space+Dots125,Dots12345 (h q)
+  |QuickStartText|
+
+Space+Dots125,Dots78+Dots12345 (h Q)
+  |QuickStartHTML|
+
+Space+Dots125,Dots2456 (h w)
+  |WarrantyText|
+
+Space+Dots125,Dots78+Dots2456 (h W)
+  |WarrantyHTML|
 
 Space+Cursor
-  |DescribeCursorKeyActions|
+  |ListCursorKeyActions|
 
 Space+Dots135 (o)
   |Settings|

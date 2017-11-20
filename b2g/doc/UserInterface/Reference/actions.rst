@@ -26,10 +26,8 @@
 .. |CutToClipboard| replace:: Cut the selected text to the clipboard.
 .. |DeleteNext| replace:: Delete the character that the cursor indicator is on.
 .. |DeletePrevious| replace:: Delete the character to the left of the cursor indicator.
-.. |DescribeActions| replace:: Show a list of all the actions that don't involve a cursor routing key.
 .. |DescribeBuild| replace:: Show details that identify the current build.
 .. |DescribeCharacter| replace:: Show the description of a specific character.
-.. |DescribeCursorKeyActions| replace:: Show a list of all the actions that do involve a cursor routing key.
 .. |DescribeHighlighting| replace:: Show how a specific character has been highlighted.
 .. |DescribeIndicators| replace:: Show the values of important device status indicators.
 .. |Dialer| replace:: Go to the Dialer (Phone) app.
@@ -55,6 +53,8 @@
 .. |Gallery| replace:: Go to the Gallery app.
 .. |Home| replace:: `The Home key`_ (on a keyboard).
 .. |HomeKey| replace:: The Android Home key. Go to `the home screen`_.
+.. |ListActions| replace:: Show a list of all the actions that don't involve a cursor routing key.
+.. |ListCursorKeyActions| replace:: Show a list of all the actions that do involve a cursor routing key.
 .. |LiteraryBraille| replace:: Switch to `typing in literary braille`_ (six dots).
 .. |LogActionsOff| replace:: Turn off the logging of user interface actions.
 .. |LogActionsOn| replace:: Turn on the logging of user interface actions.
