@@ -7,14 +7,15 @@ import java.util.LinkedHashMap;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import android.view.View;
+import android.widget.Switch;
+import android.widget.CheckBox;
 
 public class DescribeCurrentNode extends DescriptionAction {
   private class NodeDescriber {
     public NodeDescriber () {
     }
 
-    public int getType (AccessibilityNodeInfo node) {
+    public int getType () {
       return 0;
     }
 
@@ -22,24 +23,70 @@ public class DescribeCurrentNode extends DescriptionAction {
     }
   }
 
-  private final static Map<Class<? extends View>, NodeDescriber> nodeDescribers =
-         new LinkedHashMap<Class<? extends View>, NodeDescriber>();
+  private final Map<Class, NodeDescriber> nodeDescribers =
+         new LinkedHashMap<Class, NodeDescriber>() {
+    {
+      put(Switch.class,
+        new NodeDescriber() {
+          @Override
+          public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
+            sb.append(' ');
+            sb.append(node.isChecked()? "on": "off");
+          }
+        }
+      );
+
+      put(CheckBox.class,
+        new NodeDescriber() {
+          @Override
+          public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
+            sb.append(' ');
+            sb.append(node.isChecked()? "checked": "unchecked");
+          }
+        }
+      );
+    }
+  };
+
+  private final NodeDescriber getNodeDescriber (String typeName) {
+    try {
+      Class nodeType = Class.forName(typeName);
+
+      for (Class describerType : nodeDescribers.keySet()) {
+        if (describerType.isAssignableFrom(nodeType)) {
+          return nodeDescribers.get(describerType);
+        }
+      }
+    } catch (ClassNotFoundException exception) {
+    }
+
+    return null;
+  }
 
   @Override
   public void makeDescription (StringBuilder sb) {
     AccessibilityNodeInfo node = Endpoints.host.get().getCurrentNode();
     if (node == null) return;
 
-    {
-      String name = node.getClassName().toString();
+    String typeName = node.getClassName().toString();
+    NodeDescriber nodeDescriber = getNodeDescriber(typeName);
 
+    if (nodeDescriber != null) {
+      int resource = nodeDescriber.getType();
+      if (resource != 0) appendString(sb, resource);
+    }
+
+    if (sb.length() == 0) {
       {
-        int index = name.lastIndexOf('.');
-        if (index >= 0) name = name.substring(index+1);
+        int index = typeName.lastIndexOf('.');
+        if (index >= 0) typeName = typeName.substring(index+1);
       }
 
-      appendString(sb, toWords(name));
+      appendString(sb, toWords(typeName));
     }
+
+    sb.append(':');
+    if (nodeDescriber != null) nodeDescriber.describeNode(sb, node);
   }
 
   public DescribeCurrentNode (Endpoint endpoint) {
