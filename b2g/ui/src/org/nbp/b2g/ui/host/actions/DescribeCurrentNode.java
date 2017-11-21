@@ -85,6 +85,19 @@ public class DescribeCurrentNode extends DescriptionAction {
       appendString(sb, toWords(typeName));
     }
 
+    {
+      CharSequence text = node.getContentDescription();
+
+      if (text != null) {
+        if (text.length() > 0) {
+          sb.append(' ');
+          sb.append('[');
+          sb.append(text);
+          sb.append(']');
+        }
+      }
+    }
+
     sb.append(':');
     if (nodeDescriber != null) nodeDescriber.describeNode(sb, node);
   }
