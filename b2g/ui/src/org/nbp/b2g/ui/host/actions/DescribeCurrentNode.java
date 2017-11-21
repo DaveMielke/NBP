@@ -9,14 +9,34 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import android.widget.Switch;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class DescribeCurrentNode extends DescriptionAction {
   private class NodeDescriber {
     public NodeDescriber () {
     }
 
-    public int getType () {
-      return 0;
+    protected final void appendLength (StringBuilder sb, AccessibilityNodeInfo node) {
+      CharSequence text = node.getText();
+
+      if (text != null) {
+        sb.append(" Len:");
+        sb.append(text.length());
+      }
+    }
+
+    protected final void appendChecked (
+      StringBuilder sb, AccessibilityNodeInfo node, String no, String yes
+    ) {
+      sb.append(' ');
+      sb.append(node.isChecked()? yes: no);
+    }
+
+    public String getType (AccessibilityNodeInfo node) {
+      return null;
     }
 
     public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
@@ -30,8 +50,7 @@ public class DescribeCurrentNode extends DescriptionAction {
         new NodeDescriber() {
           @Override
           public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
-            sb.append(' ');
-            sb.append(node.isChecked()? "on": "off");
+            appendChecked(sb, node, "off", "on");
           }
         }
       );
@@ -40,8 +59,49 @@ public class DescribeCurrentNode extends DescriptionAction {
         new NodeDescriber() {
           @Override
           public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
-            sb.append(' ');
-            sb.append(node.isChecked()? "checked": "unchecked");
+            appendChecked(sb, node, "unchecked", "checked");
+          }
+        }
+      );
+
+      put(RadioButton.class,
+        new NodeDescriber() {
+          @Override
+          public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
+            appendChecked(sb, node, "unselected", "selected");
+          }
+        }
+      );
+
+      put(Button.class,
+        new NodeDescriber() {
+        }
+      );
+
+      put(EditText.class,
+        new NodeDescriber() {
+          @Override
+          public String getType (AccessibilityNodeInfo node) {
+            return node.isPassword()? "password": "edit";
+          }
+
+          @Override
+          public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
+            appendLength(sb, node);
+          }
+        }
+      );
+
+      put(TextView.class,
+        new NodeDescriber() {
+          @Override
+          public String getType (AccessibilityNodeInfo node) {
+            return "text";
+          }
+
+          @Override
+          public void describeNode (StringBuilder sb, AccessibilityNodeInfo node) {
+            appendLength(sb, node);
           }
         }
       );
@@ -72,8 +132,8 @@ public class DescribeCurrentNode extends DescriptionAction {
     NodeDescriber nodeDescriber = getNodeDescriber(typeName);
 
     if (nodeDescriber != null) {
-      int resource = nodeDescriber.getType();
-      if (resource != 0) appendString(sb, resource);
+      String type = nodeDescriber.getType(node);
+      if (type != null) appendString(sb, type);
     }
 
     if (sb.length() == 0) {
