@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import android.graphics.Point;
+import android.graphics.Rect;
+
 public class DescribeCurrentNode extends DescriptionAction {
   private class NodeDescriber {
     public NodeDescriber () {
@@ -123,6 +126,10 @@ public class DescribeCurrentNode extends DescriptionAction {
     return null;
   }
 
+  private final static int toPercentage (int reference, int value) {
+    return (value * 100) / reference;
+  }
+
   @Override
   public void makeDescription (StringBuilder sb) {
     AccessibilityNodeInfo node = Endpoints.host.get().getCurrentNode();
@@ -158,8 +165,35 @@ public class DescribeCurrentNode extends DescriptionAction {
       }
     }
 
-    sb.append(':');
-    if (nodeDescriber != null) nodeDescriber.describeNode(sb, node);
+    if (nodeDescriber != null) {
+      int length = sb.length();
+      nodeDescriber.describeNode(sb, node);
+      if (sb.length() > length) sb.insert(length, ':');
+    }
+
+    {
+      Point size = ApplicationContext.getScreenSize();
+
+      if (size != null) {
+        Rect region = new Rect();
+        node.getBoundsInScreen(region);
+
+        sb.append('\n');
+        sb.append("Locn:");
+
+        sb.append(' ');
+        sb.append('[');
+        sb.append(toPercentage(size.x, region.left));
+        sb.append(',');
+        sb.append(toPercentage(size.y, region.top));
+        sb.append(']');
+
+        sb.append(' ');
+        sb.append(toPercentage(size.x, (region.right - region.left)));
+        sb.append('x');
+        sb.append(toPercentage(size.y, (region.bottom - region.top)));
+      }
+    }
   }
 
   public DescribeCurrentNode (Endpoint endpoint) {
