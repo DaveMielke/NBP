@@ -1,3 +1,5 @@
+bind Space+Dots2456#w DescribeCurrentNode
+
 bind Backward+LongPress MoveBackward
 bind Forward+LongPress MoveForward
 

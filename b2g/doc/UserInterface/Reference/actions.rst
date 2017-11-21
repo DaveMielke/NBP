@@ -31,6 +31,7 @@
 .. |DeletePrevious| replace:: Delete the character to the left of the cursor indicator.
 .. |DescribeBuild| replace:: Show details that identify the current build.
 .. |DescribeCharacter| replace:: Show the description of a specific character.
+.. |DescribeCurrentNode| replace:: Show a description of the current screen element.
 .. |DescribeHighlighting| replace:: Show how a specific character has been highlighted.
 .. |DescribeIndicators| replace:: Show the values of important device status indicators.
 .. |Dialer| replace:: Go to the Dialer (Phone) app.

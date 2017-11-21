@@ -23,22 +23,8 @@ import android.net.wifi.WifiInfo;
 
 import android.bluetooth.BluetoothAdapter;
 
-public class DescribeIndicators extends Action {
+public class DescribeIndicators extends DescriptionAction {
   protected final static String LOG_TAG = DescribeIndicators.class.getName();
-
-  private static void appendString (StringBuilder sb, String string) {
-    sb.append(string);
-  }
-
-  private static void appendString (StringBuilder sb, int string) {
-    appendString(sb, ApplicationContext.getString(string));
-  }
-
-  private static void startLine (StringBuilder sb, int label) {
-    if (sb.length() > 0) sb.append('\n');
-    appendString(sb, label);
-    sb.append(":");
-  }
 
   private static boolean isAirplaneModeOn () {
     int value = Settings.System.getInt(
@@ -378,9 +364,7 @@ public class DescribeIndicators extends Action {
   }
 
   @Override
-  public boolean performAction () {
-    StringBuilder sb = new StringBuilder();
-
+  protected void makeDescription (StringBuilder sb) {
     if (isAirplaneModeOn()) {
       startLine(sb, R.string.DescribeIndicators_alert_label);
       sb.append(' ');
@@ -391,10 +375,6 @@ public class DescribeIndicators extends Action {
     reportTelephonyIndicators(sb);
     reportWifiIndicators(sb);
     reportBluetoothIndicators(sb);
-
-    if (sb.length() == 0) return false;
-    Endpoints.setPopupEndpoint(sb.toString());
-    return true;
   }
 
   public DescribeIndicators (Endpoint endpoint) {
