@@ -48,6 +48,8 @@ public abstract class ApplicationUtilities {
   }
 
   public final static String toString (char character) {
+    String string = null;
+
   RESOURCE:
     {
       int resource;
@@ -70,10 +72,12 @@ public abstract class ApplicationUtilities {
           break RESOURCE;
       }
 
-      return ApplicationContext.getString(resource);
+      string = ApplicationContext.getString(resource);
     }
 
-    return Character.toString(character);
+    if (string == null) string = Character.toString(character);
+    if (Character.isUpperCase(character)) string = "cap " + string;
+    return string;
   }
 
   public static boolean say (CharSequence text, boolean immediate) {
