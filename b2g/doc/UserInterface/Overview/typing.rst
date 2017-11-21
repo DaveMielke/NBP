@@ -121,7 +121,7 @@ Underlining
   * Press Space+Dot8+u (dots 136) to turn it on.
   * Press Space+Dot7+u (dots 136) to turn it off.
 
-Pressing Space+Dots78+h (dots 125) displays a message (see `Messages`_)
+Pressing Space+Dots78+h (dots 125) displays a pop-up (see `Pop-ups`_)
 that lists the highlighting styles that are currently active.
 
 Press Space+Dot7+h (dots 125) to turn all of these highlighting styles off.

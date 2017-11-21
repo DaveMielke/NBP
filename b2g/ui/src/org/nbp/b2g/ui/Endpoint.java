@@ -10,7 +10,7 @@ import org.liblouis.BrailleTranslation;
 import org.liblouis.TextTranslation;
 import org.nbp.common.Braille;
 
-public abstract class Endpoint {
+public abstract class Endpoint extends UserInterfaceComponent {
   private final static String LOG_TAG = Endpoint.class.getName();
 
   private CharSequence oldLineText;
@@ -146,7 +146,7 @@ public abstract class Endpoint {
               if (offset < newLength) {
                 text = ApplicationUtilities.toString(newText.charAt(offset));
               } else if (offset == newLength) {
-                text = ApplicationContext.getString(R.string.character_end);
+                text = getString(R.string.character_end);
               }
 
               if (text != null) {
@@ -162,7 +162,7 @@ public abstract class Endpoint {
         if (text.length() == 1) {
           switch (text.charAt(0)) {
             case '\n':
-              text = ApplicationContext.getString(R.string.character_newline);
+              text = getString(R.string.character_newline);
               break;
           }
         }
@@ -170,7 +170,7 @@ public abstract class Endpoint {
         ApplicationUtilities.say(
           echo? text: null,
           word,
-          (echo && (action != 0))? ApplicationContext.getString(action): null
+          (echo && (action != 0))? getString(action): null
         );
       }
 
@@ -795,7 +795,7 @@ public abstract class Endpoint {
   }
 
   public final boolean write (int string) {
-    return write(ApplicationContext.getString(string));
+    return write(getString(string));
   }
 
   public final boolean performAction (Class<? extends Action> type) {
@@ -1082,7 +1082,8 @@ public abstract class Endpoint {
     return false;
   }
 
-  public Endpoint (String name) {
+  protected Endpoint (String name) {
+    super();
     keyBindings = new KeyBindings(this, name);
     setText("");
   }

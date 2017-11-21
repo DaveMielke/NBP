@@ -58,7 +58,7 @@ public class DescribeIndicators extends DescriptionAction {
     }
 
     protected final void addValue (int value, int text) {
-      map.put(value, ApplicationContext.getString(text));
+      map.put(value, getString(text));
     }
 
     public IndicatorProperty (String label) {

@@ -14,7 +14,7 @@ import android.content.pm.ActivityInfo;
 public class AllApplications extends Action {
   @Override
   public boolean performAction () {
-    PackageManager pm = ApplicationContext.getContext().getPackageManager();
+    PackageManager pm = getContext().getPackageManager();
     Map<String, ActivityInfo> map = new TreeMap<String, ActivityInfo>();
 
     for (ResolveInfo resolve : LaunchUtilities.getLaunchableActivities(pm)) {
@@ -28,7 +28,7 @@ public class AllApplications extends Action {
     final ActivityInfo[] array = new ActivityInfo[count];
 
     StringBuilder sb = new StringBuilder();
-    sb.append(ApplicationContext.getString(R.string.launch_message_select));
+    sb.append(getString(R.string.launch_message_select));
 
     {
       int index = 0;

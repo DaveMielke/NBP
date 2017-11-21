@@ -20,7 +20,7 @@ public class SayCharacter extends Action {
       if (end == start) {
         if (end == text.length()) {
           characters = new String[] {
-            ApplicationContext.getString(R.string.character_end)
+            getString(R.string.character_end)
           };
 
           break HAVE_CHARACTERS;

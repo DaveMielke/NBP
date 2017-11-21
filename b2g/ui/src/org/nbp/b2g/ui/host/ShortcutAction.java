@@ -105,7 +105,7 @@ public abstract class ShortcutAction extends Action {
 
       default: {
         StringBuilder sb = new StringBuilder();
-        sb.append(ApplicationContext.getString(R.string.shortcut_message_ambiguous));
+        sb.append(getString(R.string.shortcut_message_ambiguous));
 
         for (ActivityInfo activity : choices) {
           sb.append('\n');

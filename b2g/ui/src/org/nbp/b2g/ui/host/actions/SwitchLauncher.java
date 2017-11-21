@@ -10,7 +10,7 @@ import android.content.ComponentName;
 public class SwitchLauncher extends Action {
   @Override
   public boolean performAction () {
-    Context context = ApplicationContext.getContext();
+    Context context = getContext();
     if (context == null) return false;
 
     ComponentName fakeLauncher = new ComponentName(context, FakeLauncher.class);

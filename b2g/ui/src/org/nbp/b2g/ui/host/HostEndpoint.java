@@ -61,7 +61,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, int text) {
-    setSpeechSpan(sb, start, ApplicationContext.getString(text));
+    setSpeechSpan(sb, start, getString(text));
   }
 
   private final static void appendElementState (SpannableStringBuilder sb, String word) {
@@ -75,7 +75,7 @@ public class HostEndpoint extends Endpoint {
   }
 
   private final static void appendElementState (SpannableStringBuilder sb, int word) {
-    appendElementState(sb, ApplicationContext.getString(word));
+    appendElementState(sb, getString(word));
   }
 
   private final CharSequence toText (AccessibilityNodeInfo node) {

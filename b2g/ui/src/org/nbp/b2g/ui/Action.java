@@ -4,16 +4,14 @@ import org.nbp.common.LanguageUtilities;
 
 import android.util.Log;
 
-import android.content.Context;
-
-public abstract class Action {
+public abstract class Action extends UserInterfaceComponent {
   private final static String LOG_TAG = Action.class.getName();
 
-  private final Endpoint endpoint;
+  private final Endpoint actionEndpoint;
   private final boolean isAdvancedAction;
 
   public final Endpoint getEndpoint () {
-    return endpoint;
+    return actionEndpoint;
   }
 
   public final boolean isAdvanced () {
@@ -57,10 +55,6 @@ public abstract class Action {
     return performAction(cursorKeys[0]);
   }
 
-  protected final static Context getContext () {
-    return ApplicationContext.getContext();
-  }
-
   protected Integer getConfirmation () {
     return null;
   }
@@ -82,7 +76,8 @@ public abstract class Action {
   }
 
   protected Action (Endpoint endpoint, boolean isAdvanced) {
+    super();
     isAdvancedAction = isAdvanced;
-    this.endpoint = endpoint;
+    actionEndpoint = endpoint;
   }
 }

@@ -20,10 +20,6 @@ public abstract class SystemSettingAction extends Action {
     return getContext().getContentResolver();
   }
 
-  protected final String getString (int resource) {
-    return ApplicationContext.getString(resource);
-  }
-
   @Override
   public final boolean performAction () {
     ContentResolver resolver = getContentResolver();

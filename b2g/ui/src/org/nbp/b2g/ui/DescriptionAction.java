@@ -19,7 +19,7 @@ public abstract class DescriptionAction extends Action {
   }
 
   protected final static void appendString (StringBuilder sb, int string) {
-    appendString(sb, ApplicationContext.getString(string));
+    appendString(sb, getString(string));
   }
 
   protected final static void startLine (StringBuilder sb, int label) {

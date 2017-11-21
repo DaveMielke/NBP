@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class TypingHighlightConfirm extends Action {
   private final void appendTerm (StringBuilder sb, int term) {
     if (sb.length() > 0) sb.append(' ');
-    sb.append(ApplicationContext.getString(term));
+    sb.append(getString(term));
   }
 
   private final void appendTerm (StringBuilder sb, int term, boolean isActive) {
@@ -36,7 +36,7 @@ public class TypingHighlightConfirm extends Action {
     );
 
     if (sb.length() == 0) appendTerm(sb, R.string.DescribeHighlighting_none);
-    ApplicationUtilities.message(sb.toString());
+    Endpoints.setPopupEndpoint(sb.toString());
     return true;
   }
 

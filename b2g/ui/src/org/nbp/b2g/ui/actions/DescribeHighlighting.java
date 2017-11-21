@@ -13,7 +13,7 @@ import android.text.Spanned;
 
 public class DescribeHighlighting extends CursorKeyAction {
   private final static void appendString (StringBuilder sb, int string) {
-    sb.append(ApplicationContext.getString(string));
+    sb.append(getString(string));
   }
 
   private final static void startLine (StringBuilder sb, int label) {

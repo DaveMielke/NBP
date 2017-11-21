@@ -10,7 +10,7 @@ public class DescribeCharacter extends CursorKeyAction {
 
   private static void startLine (StringBuilder sb, int label) {
     sb.append('\n');
-    sb.append(ApplicationContext.getString(label));
+    sb.append(getString(label));
     sb.append(": ");
   }
 
@@ -25,7 +25,7 @@ public class DescribeCharacter extends CursorKeyAction {
       if (name != null) {
         name = name.toLowerCase();
       } else {
-        name = ApplicationContext.getString(R.string.message_no_character_name);
+        name = getString(R.string.message_no_character_name);
       }
 
       sb.append(name);
