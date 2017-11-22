@@ -180,7 +180,7 @@ public class Translation extends TranslationComponent {
     int outputLength = builder.getOutputLength();
 
     CharSequence input = suppliedInput;
-    int[] outOffsets = new int[inputLength];
+    int[] outOffsets = new int[inputLength + 1];
     final int[] resultValues = new int[RESULT_VALUES_COUNT];
 
     char[] output;
@@ -192,7 +192,7 @@ public class Translation extends TranslationComponent {
 
     while (true) {
       output = new char[outputLength];
-      inOffsets = new int[outputLength];
+      inOffsets = new int[outputLength + 1];
 
       resultValues[RVI_INPUT_LENGTH]  = inputLength;
       resultValues[RVI_OUTPUT_LENGTH] = outputLength;
@@ -215,7 +215,7 @@ public class Translation extends TranslationComponent {
         {
           final int length = resultValues[RVI_INPUT_LENGTH];
 
-          for (int offset=0; offset<length; offset+=1) {
+          for (int offset=0; offset<=length; offset+=1) {
             inOffsets[offset] = outOffsets[offset] = offset;
           }
 
@@ -250,13 +250,16 @@ public class Translation extends TranslationComponent {
 
     if (newInputLength < inputLength) {
       input = input.subSequence(0, newInputLength);
-      outOffsets = Arrays.copyOf(outOffsets, newInputLength);
+      outOffsets = Arrays.copyOf(outOffsets, newInputLength + 1);
     }
 
     if (newOutputLength < outputLength) {
       output = Arrays.copyOf(output, newOutputLength);
-      inOffsets = Arrays.copyOf(inOffsets, newOutputLength);
+      inOffsets = Arrays.copyOf(inOffsets, newOutputLength + 1);
     }
+
+    outOffsets[newInputLength] = newOutputLength;
+    inOffsets[newOutputLength] = newInputLength;
 
     consumedInput = input;
     outputArray = output;
