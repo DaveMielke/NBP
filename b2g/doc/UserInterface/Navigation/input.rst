@@ -54,6 +54,35 @@ The Delete key is Space+d (dots 145).
 
 * |if selection| the selected text is deleted.
 
+Deleting Words
+~~~~~~~~~~~~~~
+
+Pressing Space+Dot7+d (dots 145) deletes the previous word.
+
+* If the cursor is on a word, but not on its first character,
+  then the characters of that word to the left of the cursor are removed.
+
+* If the cursor is on the first character of a word,
+  or if it's on space after a word,
+  then the previous word, along with all the space after it, is removed.
+
+* If the cursor is on space at the start of a line
+  then all of that space is removed.
+
+Pressing Space+Dot8+d (dots 145) deletes the next word.
+
+* If the cursor is on the first character of a word
+  then that word, along with all the space after it, is removed.
+
+* If the cursor is on any other character (except the first) of a word
+  then the characters of that word to the right of the cursor are removed.
+
+* If the cursor is on space before a word
+  then that word, along with all the space before it, is removed.
+
+* If the cursor is on space at the end of a line
+  then all of that space is removed.
+
 Panning within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -109,7 +138,7 @@ The Down key moves the cursor to the same position on the next line.
 |if selection| the cursor is moved to just below the last
 selected character, and the selection is cleared.
 
-Traditional Key Combinations within an INput Area
+Traditional Key Combinations within an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The |user interface| supports input area navigation via dot key chords

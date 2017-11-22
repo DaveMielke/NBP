@@ -1,13 +1,13 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class DeleteNext extends DeleteAction {
+public class DeletePreviousCharacter extends DeleteAction {
   @Override
   protected final int getDeleteOffset () {
-    return 0;
+    return -1;
   }
 
-  public DeleteNext (Endpoint endpoint) {
+  public DeletePreviousCharacter (Endpoint endpoint) {
     super(endpoint);
   }
 }

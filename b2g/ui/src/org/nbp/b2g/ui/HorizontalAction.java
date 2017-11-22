@@ -22,12 +22,16 @@ public abstract class HorizontalAction extends DirectionalAction {
            getInternalPosition(endpoint);
   }
 
+  protected final static int NOT_FOUND = -1;
+  protected abstract int findNextObject (CharSequence text, int offset);
+  protected abstract int findPreviousObject (CharSequence text, int offset);
+
   protected final ActionResult setCursor (Endpoint endpoint, int offset) {
     endpoint.setLine(offset);
 
     {
       CharSequence text = endpoint.getText();
-      int end = findNextObject(endpoint, offset);
+      int end = findNextObject(text, offset);
       if (end == NOT_FOUND) end = text.length();
       endpoint.setSpeechText(offset, end);
     }
@@ -41,14 +45,10 @@ public abstract class HorizontalAction extends DirectionalAction {
     }
   }
 
-  protected final static int NOT_FOUND = -1;
-  protected abstract int findNextObject (Endpoint endpoint, int offset);
-  protected abstract int findPreviousObject (Endpoint endpoint, int offset);
-
   protected final ActionResult performNextAction (Endpoint endpoint) {
     int current = getSelectionEnd(endpoint);
     if (current != getSelectionStart(endpoint)) current -= 1;
-    int next = findNextObject(endpoint, current);
+    int next = findNextObject(endpoint.getText(), current);
 
     if (next == NOT_FOUND) return ActionResult.FAILED;
     return setCursor(endpoint, next);
@@ -56,7 +56,7 @@ public abstract class HorizontalAction extends DirectionalAction {
 
   protected final ActionResult performPreviousAction (Endpoint endpoint) {
     int current = getSelectionStart(endpoint);
-    int previous = findPreviousObject(endpoint, current);
+    int previous = findPreviousObject(endpoint.getText(), current);
 
     if (previous == NOT_FOUND) return ActionResult.FAILED;
     return setCursor(endpoint, previous);
@@ -72,12 +72,12 @@ public abstract class HorizontalAction extends DirectionalAction {
     if (start == end) {
       {
         if (start < length) start += 1;
-        int previous = findPreviousObject(endpoint, start);
+        int previous = findPreviousObject(text, start);
         if (previous != NOT_FOUND) start = previous;
       }
 
       {
-        int next = findNextObject(endpoint, end);
+        int next = findNextObject(text, end);
         if (next == NOT_FOUND) next = length;
         end = next;
       }

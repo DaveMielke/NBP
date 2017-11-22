@@ -1,8 +1,14 @@
 Dot7
-  |DeletePrevious|
+  |DeletePreviousCharacter|
 
 Space+Dots145 (d)
-  |DeleteNext|
+  |DeleteNextCharacter|
+
+Space+Dot7+Dots145 (d)
+  |DeletePreviousWord|
+
+Space+Dot8+Dots145 (d)
+  |DeleteNextWord|
 
 Backward+Cursor
   |SetSelectionStart|

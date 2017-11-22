@@ -1,5 +1,7 @@
-bind Dot7 DeletePrevious
-bind Space+Dots145#d DeleteNext
+bind Dot7 DeletePreviousCharacter
+bind Space+Dots145#d DeleteNextCharacter
+bind Space+Dot7+Dots145#d DeletePreviousWord
+bind Space+Dot8+Dots145#d DeleteNextWord
 
 bind Backward+Cursor SetSelectionStart
 bind Forward+Cursor SetSelectionEnd

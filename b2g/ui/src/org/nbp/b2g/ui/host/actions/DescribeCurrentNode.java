@@ -179,7 +179,7 @@ public class DescribeCurrentNode extends DescriptionAction {
         node.getBoundsInScreen(region);
 
         sb.append('\n');
-        sb.append("Locn:");
+        sb.append("At:");
 
         sb.append(' ');
         sb.append('[');

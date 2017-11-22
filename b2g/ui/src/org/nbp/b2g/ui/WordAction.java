@@ -2,8 +2,7 @@ package org.nbp.b2g.ui;
 
 public abstract class WordAction extends HorizontalAction {
   @Override
-  protected final int findNextObject (Endpoint endpoint, int offset) {
-    CharSequence text = endpoint.getText();
+  protected final int findNextObject (CharSequence text, int offset) {
     int length = text.length();
     boolean wasSpace = false;
 
@@ -19,8 +18,7 @@ public abstract class WordAction extends HorizontalAction {
   }
 
   @Override
-  protected final int findPreviousObject (Endpoint endpoint, int offset) {
-    CharSequence text = endpoint.getText();
+  protected final int findPreviousObject (CharSequence text, int offset) {
     boolean wasSpace = true;
 
     while (offset > 0) {

@@ -27,8 +27,10 @@
 .. |CursorRight| replace:: `The Cursor Right key`_ (on a keyboard).
 .. |CursorUp| replace:: `The Cursor Up key`_ (on a keyboard).
 .. |CutToClipboard| replace:: Cut the selected text to `the clipboard`_.
-.. |DeleteNext| replace:: Delete the character that the cursor indicator is on.
-.. |DeletePrevious| replace:: Delete the character to the left of the cursor indicator.
+.. |DeleteNextCharacter| replace:: Delete the character that the cursor indicator is on.
+.. |DeleteNextWord| replace:: Delete the next word (or the end of the current word).
+.. |DeletePreviousCharacter| replace:: Delete the character to the left of the cursor indicator.
+.. |DeletePreviousWord| replace:: Delete the previous word (or the start of the current word).
 .. |DescribeBuild| replace:: Show details that identify the current build.
 .. |DescribeCharacter| replace:: Show the description of a specific character.
 .. |DescribeCurrentNode| replace:: Show a description of the current screen element.
