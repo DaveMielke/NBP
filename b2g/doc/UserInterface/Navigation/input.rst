@@ -57,6 +57,17 @@ The Delete key is Space+d (dots 145).
 Deleting Words
 ~~~~~~~~~~~~~~
 
+|if selection| these actions don't do anything.
+
+* Add Dot7 to Space+d to delete the previous word.
+* Add Dot8 to Space+d to delete the next (or current) word.
+
+If the cursor is on space then all of that space is also deleted.
+If the cursor is within a word (not on its first character)
+then, rather than deleting the previous/next word,
+these actions delete the start/end of the current word.
+Here are the specifics:
+
 Pressing Space+Dot7+d (dots 145) deletes the previous word.
 
 * If the cursor is on a word, but not on its first character,
