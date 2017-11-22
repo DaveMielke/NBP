@@ -57,7 +57,8 @@ The Delete key is Space+d (dots 145).
 Deleting Words
 ~~~~~~~~~~~~~~
 
-|if selection| these actions don't do anything.
+These actions only work when there's a cursor.
+|if selection| they don't do anything.
 
 * Add Dot7 to Space+d to delete the previous word.
 * Add Dot8 to Space+d to delete the next (or current) word.
