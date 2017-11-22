@@ -132,14 +132,15 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
           type = TokenType.PERCENT;
           break;
 
+        case Variables.PREDEFINED_PREFIX:
+          type = TokenType.PREDEFINED;
+          end = findEndOfIdentifier(end);
+          break;
+
         default: {
           if (isIdentifierCharacter(character, true)) {
             type = TokenType.IDENTIFIER;
-
-            while (end < length) {
-              if (!isIdentifierCharacter(getExpressionCharacter(end), false)) break;
-              end += 1;
-            }
+            end = findEndOfIdentifier(end);
           } else if (Character.isDigit(character)) {
             if ((end = findEndOfDegrees(start, length)) > start) {
               type = TokenType.DEGREES;
@@ -307,6 +308,7 @@ public class ComplexEvaluator extends ExpressionEvaluator<ComplexNumber> {
 
           case OPEN:
           case IDENTIFIER:
+          case PREDEFINED:
             value = value.mul(evaluateElement());
             break;
 

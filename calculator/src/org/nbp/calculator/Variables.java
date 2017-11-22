@@ -17,10 +17,21 @@ public abstract class Variables {
     }
   }
 
+  public final static char PREDEFINED_PREFIX = '_';
   private final static PredefinedVariables predefinedVariables = new PredefinedVariables();
 
+  private static void defineVariable (PredefinedVariable variable) {
+    predefinedVariables.put(variable.getName(), variable);
+  }
+
+  static {
+    defineVariable(LastResult.singleton());
+  }
+
   private static void defineConstant (String name, AbstractNumber value, String description) {
-    predefinedVariables.put(name, new PredefinedConstant(name, value, description));
+    PredefinedConstant constant = new PredefinedConstant(name, value, description);
+    predefinedVariables.put(name, constant);
+    predefinedVariables.put((PREDEFINED_PREFIX + name), constant);
   }
 
   private static void defineConstant (String name, double real, double imag, String description) {
@@ -152,7 +163,10 @@ public abstract class Variables {
   }
 
   public static boolean set (String name, AbstractNumber value) {
+    if (name.isEmpty()) return false;
+    if (name.charAt(0) == PREDEFINED_PREFIX) return false;
     if (predefinedVariables.containsKey(name)) return false;
+
     getUserVariables().edit().putString(name, value.toString()).apply();
     return true;
   }

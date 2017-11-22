@@ -29,6 +29,7 @@ public abstract class ExpressionParser {
   }
 
   protected static enum TokenType {
+    PREDEFINED,
     IDENTIFIER,
     ASSIGN,
 
@@ -105,6 +106,17 @@ public abstract class ExpressionParser {
     if (Character.isLetter(character)) return true;
     if (first) return false;
     return Character.isDigit(character);
+  }
+
+  protected final int findEndOfIdentifier (int index) {
+    int length = getExpressionLength();
+
+    while (index < length) {
+      if (!isIdentifierCharacter(getExpressionCharacter(index), false)) break;
+      index += 1;
+    }
+
+    return index;
   }
 
   protected interface PatternVerifier {

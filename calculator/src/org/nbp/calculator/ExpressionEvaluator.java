@@ -54,6 +54,7 @@ public abstract class ExpressionEvaluator<T extends AbstractNumber> extends Expr
         case OPEN:
           return evaluateSubexpression();
 
+        case PREDEFINED:
         case IDENTIFIER: {
           String name = getTokenText();
           nextToken();

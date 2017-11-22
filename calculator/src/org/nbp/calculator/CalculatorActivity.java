@@ -225,6 +225,7 @@ public class CalculatorActivity extends CommonActivity {
 
   private final void finishExpression () {
     if (evaluateExpression(true)) {
+      LastResult.singleton().setValue(resultValue);
       setFocusToResult();
       showKeypad(0);
 

@@ -85,14 +85,15 @@ public abstract class WholeEvaluator extends ExpressionEvaluator<WholeNumber> {
           type = TokenType.LSR;
           break;
 
+        case Variables.PREDEFINED_PREFIX:
+          type = TokenType.PREDEFINED;
+          end = findEndOfIdentifier(end);
+          break;
+
         default: {
           if (isIdentifierCharacter(character, true)) {
             type = TokenType.IDENTIFIER;
-
-            while (end < length) {
-              if (!isIdentifierCharacter(getExpressionCharacter(end), false)) break;
-              end += 1;
-            }
+            end = findEndOfIdentifier(end);
           } else if (isDigit(character)) {
             type = TokenType.HEXADECIMAL;
 
