@@ -46,7 +46,7 @@ public abstract class ApplicationDefaults {
   public final static boolean REMOTE_DISPLAY = false;
   public final static boolean SECURE_CONNECTION = false;
 
-  public final static CharacterCode CHARACTER_CODE = CharacterCode.LOCALE;
+  public final static ComputerBraille COMPUTER_BRAILLE = ComputerBraille.LOCAL;
   public final static boolean CRASH_EMAILS = false;
   public final static boolean ADVANCED_ACTIONS = false;
   public final static boolean EXTRA_INDICATORS = false;

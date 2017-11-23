@@ -3,7 +3,7 @@
   ====================  =======  ====================  =====================
   Setting               Default  Choices               Buttons
   --------------------  -------  --------------------  ---------------------
-  Character Code        locale   locale, en, ...
+  Computer Braille      local    local, en, ...
   Crash Emails          Off      Off, On
   Advanced Actions      Off      Off, On
   Extra Indicators      Off      Off, On

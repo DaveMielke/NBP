@@ -261,6 +261,6 @@ public class Characters {
   }
 
   public static Characters getCharacters () {
-    return ApplicationSettings.CHARACTER_CODE.getCharacters();
+    return ApplicationSettings.COMPUTER_BRAILLE.getCharacters();
   }
 }

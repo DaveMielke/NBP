@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
-public enum CharacterCode {
-  LOCALE(null),
+public enum ComputerBraille {
+  LOCAL(null),
   EN("en"),
   EN_CA("en_CA"),
   EN_US("en_US"),
@@ -12,7 +12,7 @@ public enum CharacterCode {
   private final String codeName;
   private Characters characters = null;
 
-  CharacterCode (String name) {
+  ComputerBraille (String name) {
     codeName = name;
   }
 

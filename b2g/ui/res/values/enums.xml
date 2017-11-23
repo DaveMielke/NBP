@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="enum_CharacterCode_LOCALE">locale-based</string>
-  <string name="enum_CharacterCode_EN">English</string>
-  <string name="enum_CharacterCode_EN_CA">English (Canada)</string>
-  <string name="enum_CharacterCode_EN_US">English (US)</string>
-  <string name="enum_CharacterCode_PINYIN">Pinyin</string>
-  <string name="enum_CharacterCode_ZH_CN">Chinese (China)</string>
+  <string name="enum_ComputerBraille_LOCAL">local</string>
+  <string name="enum_ComputerBraille_EN">English</string>
+  <string name="enum_ComputerBraille_EN_CA">English (Canada)</string>
+  <string name="enum_ComputerBraille_EN_US">English (US)</string>
+  <string name="enum_ComputerBraille_PINYIN">Pinyin</string>
+  <string name="enum_ComputerBraille_ZH_CN">Chinese (China)</string>
 
   <string name="enum_GenericLevel_LOWEST">Lowest</string>
   <string name="enum_GenericLevel_LOW">Low</string>

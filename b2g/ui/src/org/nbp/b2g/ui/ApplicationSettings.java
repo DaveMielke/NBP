@@ -44,7 +44,7 @@ public abstract class ApplicationSettings {
   public volatile static boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
   public volatile static boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
-  public volatile static CharacterCode CHARACTER_CODE = ApplicationDefaults.CHARACTER_CODE;
+  public volatile static ComputerBraille COMPUTER_BRAILLE = ApplicationDefaults.COMPUTER_BRAILLE;
   public volatile static boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
   public volatile static boolean ADVANCED_ACTIONS = ApplicationDefaults.ADVANCED_ACTIONS;
   public volatile static boolean EXTRA_INDICATORS = ApplicationDefaults.EXTRA_INDICATORS;

@@ -64,7 +64,7 @@ public abstract class Controls {
   public final static RemoteDisplayControl remoteDisplay = new RemoteDisplayControl();
   public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
 
-  public final static CharacterCodeControl characterCode = new CharacterCodeControl();
+  public final static ComputerBrailleControl computerBraille = new ComputerBrailleControl();
   public final static CrashEmailsControl crashEmails = new CrashEmailsControl();
   public final static AdvancedActionsControl advancedActions = new AdvancedActionsControl();
   public final static ExtraIndicatorsControl extraIndicators = new ExtraIndicatorsControl();
@@ -118,7 +118,7 @@ public abstract class Controls {
     remoteDisplay,
     secureConnection,
 
-    characterCode,
+    computerBraille,
     crashEmails,
     advancedActions,
     extraIndicators,

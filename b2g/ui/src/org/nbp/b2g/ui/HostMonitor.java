@@ -94,7 +94,7 @@ public class HostMonitor extends BroadcastReceiver {
     }
 
     if (action.equals(Intent.ACTION_LOCALE_CHANGED)) {
-      CharacterCode.LOCALE.reloadCharacters();
+      ComputerBraille.LOCAL.reloadCharacters();
       return;
     }
 
