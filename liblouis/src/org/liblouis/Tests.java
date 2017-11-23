@@ -33,16 +33,16 @@ public abstract class Tests {
 
   public final static void log (String label, int... values) {
     StringBuilder sb = new StringBuilder();
+    int count = values.length;
+
     sb.append(label);
-    sb.append(':');
+    sb.append(": [");
+    sb.append(count);
+    sb.append(']');
 
-    {
-      int count = values.length;
-
-      for (int index=0; index<count; index+=1) {
-        sb.append(' ');
-        sb.append(values[index]);
-      }
+    for (int index=0; index<count; index+=1) {
+      sb.append(' ');
+      sb.append(values[index]);
     }
 
     log(sb);
@@ -223,7 +223,9 @@ public abstract class Tests {
 
           int[] inputOffsets = new int[outputLength + 1];
           int inputLength = Translator.makeInputOffsets(inputOffsets, outputOffsets);
+          int outputLength = outputOffsets[inputLength];
 
+          log(String.format("Lengths: In:%d Out:%d", inputLength, outputLength));
           log("out->in", inputOffsets);
         }
       }
