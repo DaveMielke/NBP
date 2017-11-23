@@ -231,7 +231,6 @@ public class Characters {
 
   private static Collection<String> getDefaultNames () {
     Collection<String> names = new ArrayList<String>();
-    names.add("override");
     Locale locale = Locale.getDefault();
 
     if (locale != null) {
@@ -261,26 +260,7 @@ public class Characters {
     this(getDefaultNames());
   }
 
-  private final static Object CURRENT_CHARACTERS_LOCK = new Object();
-  private static Characters currentCharacters = null;
-
   public static Characters getCharacters () {
-    synchronized (CURRENT_CHARACTERS_LOCK) {
-      if (currentCharacters == null) currentCharacters = new Characters();
-    }
-
-    return currentCharacters;
-  }
-
-  public static Characters setCharacters (Characters newCharacters) {
-    synchronized (CURRENT_CHARACTERS_LOCK) {
-      Characters oldCharacters = currentCharacters;
-      currentCharacters = newCharacters;
-      return oldCharacters;
-    }
-  }
-
-  public static Characters setCharacters () {
-    return setCharacters(new Characters());
+    return ApplicationSettings.CHARACTER_CODE.getCharacters();
   }
 }

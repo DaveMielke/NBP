@@ -10,6 +10,7 @@ public enum CharacterCode {
   ; // end of enumeration
 
   private final String codeName;
+  private Characters characters = null;
 
   CharacterCode (String name) {
     codeName = name;
@@ -20,7 +21,20 @@ public enum CharacterCode {
   }
 
   public final Characters getCharacters () {
-    if (codeName == null) return new Characters();
-    return new Characters(codeName);
+    synchronized (this) {
+      if (characters == null) {
+        characters = (codeName != null)?
+                     new Characters(codeName):
+                     new Characters();
+      }
+
+      return characters;
+    }
+  }
+
+  public final void reloadCharacters () {
+    synchronized (this) {
+      characters = null;
+    }
   }
 }
