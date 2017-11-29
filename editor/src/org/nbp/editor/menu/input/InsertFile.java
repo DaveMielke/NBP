@@ -3,6 +3,7 @@ import org.nbp.editor.*;
 
 import org.nbp.common.FileFinder;
 import java.io.File;
+import android.text.Editable;
 
 public class InsertFile extends FileAction {
   public InsertFile (EditorActivity editor) {
@@ -21,7 +22,7 @@ public class InsertFile extends FileAction {
                 new ContentHandle(file),
                 new ContentHandler() {
                   @Override
-                  public void handleContent (CharSequence content) {
+                  public void handleContent (Editable content) {
                     editor.getEditArea().replaceSelection(content);
                   }
                 }

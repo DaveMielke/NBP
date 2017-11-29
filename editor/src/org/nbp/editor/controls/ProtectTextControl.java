@@ -10,6 +10,11 @@ public class ProtectTextControl extends BooleanControl {
   }
 
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_general;
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "protect-text";
   }

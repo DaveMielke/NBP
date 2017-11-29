@@ -14,6 +14,11 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   }
 
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "braille-code";
   }

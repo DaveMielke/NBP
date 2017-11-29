@@ -417,7 +417,7 @@ public class EditorActivity extends CommonActivity {
   public final void readContent (
     final ContentHandle handle, final ContentHandler handler
   ) {
-    new AsyncTask<Void, Void, CharSequence>() {
+    new AsyncTask<Void, Void, Editable>() {
       AlertDialog dialog = null;
 
       @Override
@@ -428,11 +428,11 @@ public class EditorActivity extends CommonActivity {
       }
 
       @Override
-      protected CharSequence doInBackground (Void... arguments) {
+      protected Editable doInBackground (Void... arguments) {
         try {
           final Editable content = new SpannableStringBuilder();
           Content.readContent(handle, content);
-          return content.subSequence(0, content.length());
+          return content;
         } catch (OutOfMemoryError error) {
           System.gc();
           return null;
@@ -440,11 +440,20 @@ public class EditorActivity extends CommonActivity {
       }
 
       @Override
-      protected void onPostExecute (CharSequence content) {
+      protected void onPostExecute (Editable content) {
         if (content != null) handler.handleContent(content);
         if (dialog != null) dialog.dismiss();
       }
     }.execute();
+  }
+
+  private final static boolean applySizeLimit (Editable content) {
+    int length = content.length();
+    int limit = ApplicationSettings.SIZE_LIMIT;
+    if (length <= limit) return false;
+
+    content.delete(limit, length);
+    return true;
   }
 
   public final void loadContent (
@@ -453,10 +462,21 @@ public class EditorActivity extends CommonActivity {
     readContent(handle,
       new ContentHandler() {
         @Override
-        public void handleContent (CharSequence content) {
-          final int maximum = 150000;
-          int length = content.length();
-          if (maximum < length) content = content.subSequence(0, maximum);
+        public void handleContent (Editable content) {
+          if (applySizeLimit(content)) {
+            showMessage(
+              R.string.message_truncated_content,
+              handle.getNormalizedString()
+            );
+
+            int start = content.length();
+            content.append("\n[incomplete file]");
+
+            content.setSpan(
+              new DecorationSpan(), start, content.length(),
+              Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+          }
 
           setEditorContent(handle, content);
           run(onLoaded);

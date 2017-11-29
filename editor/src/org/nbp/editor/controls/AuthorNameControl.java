@@ -12,6 +12,11 @@ public class AuthorNameControl extends StringControl {
   }
 
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_document;
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "author-name";
   }

@@ -10,6 +10,11 @@ public class BrailleModeControl extends EnumerationControl<BrailleMode> {
   }
 
   @Override
+  protected int getResourceForGroup () {
+    return R.string.control_group_braille;
+  }
+
+  @Override
   protected String getPreferenceKey () {
     return "braille-mode";
   }
