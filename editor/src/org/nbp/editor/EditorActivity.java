@@ -452,6 +452,38 @@ public class EditorActivity extends CommonActivity {
     int limit = ApplicationSettings.SIZE_LIMIT;
     if (length <= limit) return false;
 
+  REFINE_LIMIT:
+    {
+      int fuzz = 1000;
+
+      {
+        int index = limit;
+        int maximum = index + fuzz;
+        if (maximum >= length) return false;
+
+        while (index < maximum) {
+          if (content.charAt(index) == '\n') {
+            limit = index;
+            break REFINE_LIMIT;
+          }
+
+          index += 1;
+        }
+      }
+
+      {
+        int index = limit;
+        int minimum = Math.max(0, (index - fuzz));
+
+        while (index > minimum) {
+          if (content.charAt(--index) == '\n') {
+            limit = index;
+            break REFINE_LIMIT;
+          }
+        }
+      }
+    }
+
     content.delete(limit, length);
     return true;
   }
@@ -470,7 +502,9 @@ public class EditorActivity extends CommonActivity {
             );
 
             int start = content.length();
-            content.append("\n[incomplete file]");
+            content.append("\n[");
+            content.append(getString(R.string.message_truncated_content));
+            content.append(']');
 
             content.setSpan(
               new DecorationSpan(), start, content.length(),
