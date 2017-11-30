@@ -447,10 +447,10 @@ public class EditorActivity extends CommonActivity {
     }.execute();
   }
 
-  private final static boolean applySizeLimit (Editable content) {
+  private final static void applySizeLimit (Editable content) {
     int length = content.length();
     int limit = ApplicationSettings.SIZE_LIMIT;
-    if (length <= limit) return false;
+    if (length <= limit) return;
 
   REFINE_LIMIT:
     {
@@ -459,7 +459,7 @@ public class EditorActivity extends CommonActivity {
       {
         int index = limit;
         int maximum = index + fuzz;
-        if (maximum >= length) return false;
+        if (maximum >= length) return;
 
         while (index < maximum) {
           if (content.charAt(index) == '\n') {
@@ -485,7 +485,6 @@ public class EditorActivity extends CommonActivity {
     }
 
     content.delete(limit, length);
-    return true;
   }
 
   public final void loadContent (
@@ -495,19 +494,30 @@ public class EditorActivity extends CommonActivity {
       new ContentHandler() {
         @Override
         public void handleContent (Editable content) {
-          if (applySizeLimit(content)) {
+          int oldLength = content.length();
+          applySizeLimit(content);
+          int newLength = content.length();
+
+          if (newLength != oldLength) {
             showMessage(
               R.string.message_truncated_content,
-              handle.getNormalizedString()
+              String.format(
+                "%s: %d -> %d",
+                handle.getNormalizedString(),
+                oldLength, newLength
+              )
             );
 
-            int start = content.length();
-            content.append("\n[");
-            content.append(getString(R.string.message_truncated_content));
-            content.append(']');
+            content.append(
+              String.format(
+                "\n[%s: %d -> %d]",
+                getString(R.string.message_truncated_content),
+                oldLength, newLength
+              )
+            );
 
             content.setSpan(
-              new DecorationSpan(), start, content.length(),
+              new DecorationSpan(), newLength, content.length(),
               Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             );
           }
