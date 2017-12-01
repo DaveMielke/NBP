@@ -47,7 +47,8 @@ public class DescribeCurrentNode extends DescriptionAction {
   }
 
   private final Map<Class, NodeDescriber> nodeDescribers =
-         new LinkedHashMap<Class, NodeDescriber>() {
+         new LinkedHashMap<Class, NodeDescriber>()
+  {
     {
       put(Switch.class,
         new NodeDescriber() {

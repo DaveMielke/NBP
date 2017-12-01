@@ -13,10 +13,14 @@ public abstract class CharacterPhrase {
                new HashMap<Character, String>();
 
   private final static Map<Character, Integer> resources =
-               new HashMap<Character, Integer>() {
+               new HashMap<Character, Integer>()
+  {
     {
-      put('A', R.string.character_a);
-      put('a', R.string.character_a);
+      {
+        Integer a = R.string.character_a;
+        put('a', a);
+        put('A', a);
+      }
 
       put('\n', R.string.character_newline);
 

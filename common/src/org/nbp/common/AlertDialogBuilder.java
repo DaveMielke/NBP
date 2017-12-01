@@ -21,7 +21,8 @@ public class AlertDialogBuilder extends AlertDialog.Builder {
   }
 
   private final static Map<Integer, ListViewOperation> listViewOperations =
-               new HashMap<Integer, ListViewOperation>() {
+               new HashMap<Integer, ListViewOperation>()
+  {
     {
       put(KeyEvent.KEYCODE_DPAD_DOWN,
         new ListViewOperation() {
