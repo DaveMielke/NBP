@@ -706,23 +706,6 @@ public class EditorActivity extends CommonActivity {
     return true;
   }
 
-  private final void prepareMenuButton () {
-    if (getActionBar() == null) {
-      Button button = (Button)findViewById(R.id.menu_button);
-      button.setVisibility(button.VISIBLE);
-
-      button.setOnClickListener(
-        new Button.OnClickListener() {
-          @Override
-          public void onClick (View view) {
-            editArea.requestFocus();
-            getActivity().openOptionsMenu();
-          }
-        }
-      );
-    }
-  }
-
   private final void addInputFilters () {
     editArea.setFilters(
       new InputFilter[] {
@@ -746,7 +729,6 @@ public class EditorActivity extends CommonActivity {
     setEditorContent();
 
     showReportedErrors();
-    prepareMenuButton();
     addInputFilters();
   }
 

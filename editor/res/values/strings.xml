@@ -4,7 +4,6 @@
   <string name="app_name">NBP Editor</string>
   <string name="settings_activity_label">NBP Editor Settings</string>
 
-  <string name="button_menu">Menu</string>
   <string name="hint_new_file">[new file]</string>
   <string name="hint_edit_area">[empty file]</string>
 
