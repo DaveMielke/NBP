@@ -14,14 +14,20 @@ import org.nbp.common.CommonUtilities;
 import org.nbp.common.Timeout;
 import org.nbp.common.Tones;
 
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
+
 import org.nbp.common.CharacterUtilities;
 import org.nbp.common.OnTextEditedListener;
 
 import android.util.Log;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Build;
+
+import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -1251,5 +1257,41 @@ public class CalculatorActivity extends CommonActivity {
     } finally {
       super.onPause();
     }
+  }
+
+  private final void menuAction_about () {
+    DialogFinisher finisher = new DialogFinisher() {
+      @Override
+      public void finishDialog (DialogHelper helper) {
+        helper.setText(R.id.about_version_number, R.string.NBP_Calculator_version_name);
+        helper.setText(R.id.about_build_time, R.string.NBP_Calculator_build_time);
+        helper.setText(R.id.about_source_revision, R.string.NBP_Calculator_source_revision);
+        helper.setTextFromAsset(R.id.about_copyright, "copyright");
+      }
+    };
+
+    showDialog(R.string.menu_about, R.layout.about, finisher);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected (MenuItem item) {
+    int identifier = item.getItemId();
+
+    switch (identifier) {
+      case R.id.menu_about:
+        menuAction_about();
+        return true;
+    }
+
+    String name = getResources().getResourceEntryName(identifier);
+    if (name == null) name = Integer.toString(identifier);
+    Log.w(LOG_TAG, ("unhandled menu action: " + name));
+    return false;
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu (Menu menu) {
+    getMenuInflater().inflate(R.menu.options, menu);
+    return true;
   }
 }

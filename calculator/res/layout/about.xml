@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  >
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TableRow>
+      <TextView android:text="@string/about_version_number" android:focusable="true" />
+      <TextView android:id="@+id/about_version_number" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/about_build_time" />
+      <TextView android:id="@+id/about_build_time" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/about_source_revision" />
+      <TextView android:id="@+id/about_source_revision" />
+    </TableRow>
+
+    <TextView android:id="@+id/about_copyright" />
+  </TableLayout>
+</FrameLayout>

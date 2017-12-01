@@ -3,6 +3,11 @@
 <resources>
   <string name="app_name">NBP Calculator</string>
 
+  <string name="menu_about">About</string>
+  <string name="about_version_number">Version Number</string>
+  <string name="about_build_time">Build Time</string>
+  <string name="about_source_revision">Source Revision</string>
+
   <string name="label_variable">Variable Name:</string>
 
   <string name="hint_expression">[ enter expression ]</string>
