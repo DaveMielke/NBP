@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class SayCharacter extends Action {
   protected String toString (char character) {
-    return ApplicationUtilities.toString(character);
+    return CharacterPhrase.get(character);
   }
 
   @Override

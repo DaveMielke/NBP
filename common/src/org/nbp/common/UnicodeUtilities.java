@@ -62,8 +62,12 @@ public abstract class UnicodeUtilities {
     return normalize(string, Normalizer.Form.NFD);
   }
 
+  public static String decompose (char character) {
+    return decompose(Character.toString(character));
+  }
+
   public static char getBaseCharacter (char character) {
-    return decompose(Character.toString(character)).charAt(0);
+    return decompose(character).charAt(0);
   }
 
   private UnicodeUtilities () {

@@ -47,39 +47,6 @@ public abstract class ApplicationUtilities {
     return ViewConfiguration.getGlobalActionKeyTimeout();
   }
 
-  public final static String toString (char character) {
-    String string = null;
-
-  RESOURCE:
-    {
-      int resource;
-
-      switch (character) {
-        case 'A':
-        case 'a':
-          resource = R.string.character_a;
-          break;
-
-        case ' ':
-          resource = R.string.character_space;
-          break;
-
-        case '\n':
-          resource = R.string.character_newline;
-          break;
-
-        default:
-          break RESOURCE;
-      }
-
-      string = ApplicationContext.getString(resource);
-    }
-
-    if (string == null) string = Character.toString(character);
-    if (Character.isUpperCase(character)) string = "cap " + string;
-    return string;
-  }
-
   public static boolean say (CharSequence text, boolean immediate) {
     SpeechDevice speech = Devices.speech.get();
 

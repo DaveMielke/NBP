@@ -102,7 +102,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
             echo = ApplicationSettings.ECHO_CHARACTERS;
 
             if (text.length() == 1) {
-              text = ApplicationUtilities.toString(text.charAt(0));
+              text = CharacterPhrase.get(text.charAt(0));
             }
 
             if (ApplicationSettings.ECHO_WORDS) {
@@ -134,7 +134,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
             action = R.string.DeleteCharacter_action_confirmation;
 
             if (text.length() == 1) {
-              text = ApplicationUtilities.toString(text.charAt(0));
+              text = CharacterPhrase.get(text.charAt(0));
             }
           } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
             int offset = NO_SELECTION;
@@ -152,7 +152,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
               final int newLength = newText.length();
 
               if (offset < newLength) {
-                text = ApplicationUtilities.toString(newText.charAt(offset));
+                text = CharacterPhrase.get(newText.charAt(offset));
               } else if (offset == newLength) {
                 text = getString(R.string.character_end);
               }
