@@ -47,6 +47,7 @@ public abstract class CharacterPhrase {
     String characters = UnicodeUtilities.decompose(character);
     int count = characters.length();
 
+  CHARACTER_LOOP:
     for (int index=0; index<count; index+=1) {
       character = characters.charAt(index);
 
@@ -54,19 +55,14 @@ public abstract class CharacterPhrase {
       if (Character.isUpperCase(character)) sb.append("cap ");
 
       if (dictionaries != null) {
-        boolean found = false;
-
         for (Dictionary dictionary : dictionaries) {
           String word = dictionary.get(character);
 
           if (word != null) {
             sb.append(word);
-            found = true;
-            break;
+            continue CHARACTER_LOOP;
           }
         }
-
-        if (found) continue;
       }
 
       final Character resourceKey = character;
@@ -77,7 +73,7 @@ public abstract class CharacterPhrase {
           resource = SPACE;
         } else {
           sb.append(character);
-          continue;
+          continue CHARACTER_LOOP;
         }
 
         resourceCache.put(resourceKey, resource);
