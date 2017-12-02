@@ -2,38 +2,50 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class SayPhonetic extends SayCharacter {
-  @Override
-  protected String toString (char character) {
-    switch (character) {
-      case 'A': case 'a': return "Alpha";
-      case 'B': case 'b': return "Bravo";
-      case 'C': case 'c': return "Charlie";
-      case 'D': case 'd': return "Delta";
-      case 'E': case 'e': return "Echo";
-      case 'F': case 'f': return "Foxtrot";
-      case 'G': case 'g': return "Golf";
-      case 'H': case 'h': return "Hotel";
-      case 'I': case 'i': return "India";
-      case 'J': case 'j': return "Juliet";
-      case 'K': case 'k': return "Kilo";
-      case 'L': case 'l': return "Lima";
-      case 'M': case 'm': return "Mike";
-      case 'N': case 'n': return "November";
-      case 'O': case 'o': return "Oscar";
-      case 'P': case 'p': return "Papa";
-      case 'Q': case 'q': return "Quebec";
-      case 'R': case 'r': return "Romeo";
-      case 'S': case 's': return "Sierra";
-      case 'T': case 't': return "Tango";
-      case 'U': case 'u': return "Uniform";
-      case 'V': case 'v': return "Victor";
-      case 'W': case 'w': return "Whiskey";
-      case 'X': case 'x': return "X-ray";
-      case 'Y': case 'y': return "Yankee";
-      case 'Z': case 'z': return "Zulu";
+  private final static CharacterPhrase.Cache cache =
+                   new CharacterPhrase.Cache();
+
+  private final static CharacterPhrase.Dictionary dictionary =
+                   new CharacterPhrase.Dictionary()
+  {
+    private void put (char letter, String word) {
+      super.put(letter, word);
+      super.put(Character.toUpperCase(letter), word);
     }
 
-    return super.toString(character);
+    {
+      put('a', "Alpha");
+      put('b', "Bravo");
+      put('c', "Charlie");
+      put('d', "Delta");
+      put('e', "Echo");
+      put('f', "Foxtrot");
+      put('g', "Golf");
+      put('h', "Hotel");
+      put('i', "India");
+      put('j', "Juliet");
+      put('k', "Kilo");
+      put('l', "Lima");
+      put('m', "Mike");
+      put('n', "November");
+      put('o', "Oscar");
+      put('p', "Papa");
+      put('q', "Quebec");
+      put('r', "Romeo");
+      put('s', "Sierra");
+      put('t', "Tango");
+      put('u', "Uniform");
+      put('v', "Victor");
+      put('w', "Whiskey");
+      put('x', "X-ray");
+      put('y', "Yankee");
+      put('z', "Zulu");
+    }
+  };
+
+  @Override
+  protected String toString (char character) {
+    return CharacterPhrase.get(character, cache, dictionary);
   }
 
   public SayPhonetic (Endpoint endpoint) {

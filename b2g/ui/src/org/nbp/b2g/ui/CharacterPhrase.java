@@ -9,10 +9,15 @@ public abstract class CharacterPhrase {
   private CharacterPhrase () {
   }
 
-  private final static Map<Character, String> phrases =
-               new HashMap<Character, String>();
+  public static class Dictionary extends HashMap<Character, String> {
+  }
 
-  private final static Map<Character, Integer> resources =
+  public static class Cache extends HashMap<Character, String> {
+  }
+
+  private final static Integer SPACE = R.string.character_space;
+
+  private final static Map<Character, Integer> resourceCache =
                new HashMap<Character, Integer>()
   {
     {
@@ -37,44 +42,70 @@ public abstract class CharacterPhrase {
     }
   };
 
-  public final static String get (char character) {
-    synchronized (phrases) {
-      Character phraseKey = character;
+  public final static String get (char character, Dictionary... dictionaries) {
+    StringBuilder sb = new StringBuilder();
+    String characters = UnicodeUtilities.decompose(character);
+    int count = characters.length();
 
-      {
-        String phrase = phrases.get(phraseKey);
-        if (phrase != null) return phrase;
-      }
+    for (int index=0; index<count; index+=1) {
+      character = characters.charAt(index);
 
-      StringBuilder sb = new StringBuilder();
-      String characters = UnicodeUtilities.decompose(character);
-      int count = characters.length();
+      if (sb.length() > 0) sb.append(' ');
+      if (Character.isUpperCase(character)) sb.append("cap ");
 
-      for (int index=0; index<count; index+=1) {
-        character = characters.charAt(index);
-        Character resourceKey = character;
-        Integer resource = resources.get(resourceKey);
+      if (dictionaries != null) {
+        boolean found = false;
 
-        if (sb.length() > 0) sb.append(' ');
-        if (Character.isUpperCase(character)) sb.append("cap ");
+        for (Dictionary dictionary : dictionaries) {
+          String word = dictionary.get(character);
 
-        if (resource == null) {
-          if (Character.isWhitespace(character)) {
-            resource = R.string.character_space;
-          } else {
-            sb.append(character);
-            continue;
+          if (word != null) {
+            sb.append(word);
+            found = true;
+            break;
           }
-
-          resources.put(resourceKey, resource);
         }
 
-        sb.append(ApplicationContext.getString(resource));
+        if (found) continue;
       }
 
-      String phrase = sb.toString();
-      phrases.put(phraseKey, phrase);
+      final Character resourceKey = character;
+      Integer resource = resourceCache.get(resourceKey);
+
+      if (resource == null) {
+        if (Character.isWhitespace(character)) {
+          resource = SPACE;
+        } else {
+          sb.append(character);
+          continue;
+        }
+
+        resourceCache.put(resourceKey, resource);
+      }
+
+      sb.append(ApplicationContext.getString(resource));
+    }
+
+    return sb.toString();
+  }
+
+  public final static String get (char character, Cache cache, Dictionary... dictionaries) {
+    synchronized (cache) {
+      final Character key = character;
+      String phrase = cache.get(key);
+
+      if (phrase == null) {
+        phrase = get(character, dictionaries);
+        cache.put(key, phrase);
+      }
+
       return phrase;
     }
+  }
+
+  private final static Cache phraseCache = new Cache();
+
+  public final static String get (char character) {
+    return get(character, phraseCache, null);
   }
 }
