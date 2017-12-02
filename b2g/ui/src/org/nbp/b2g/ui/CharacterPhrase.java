@@ -10,9 +10,15 @@ public abstract class CharacterPhrase {
   }
 
   public static class Dictionary extends HashMap<Character, String> {
+    public Dictionary () {
+      super();
+    }
   }
 
   public static class Cache extends HashMap<Character, String> {
+    public Cache () {
+      super();
+    }
   }
 
   private final static Integer SPACE = R.string.character_space;
