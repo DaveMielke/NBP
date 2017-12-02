@@ -39,6 +39,11 @@ public abstract class CharacterPhrase {
       put('\u030A', R.string.character_ring);
       put('\u030C', R.string.character_caron);
       put('\u0327', R.string.character_cedilla);
+
+      put('\u0342', R.string.character_perispomeni);
+      put('\u0343', R.string.character_koronis);
+      put('\u0344', R.string.character_dialytika_tonos);
+      put('\u0345', R.string.character_ypogegrammeni);
     }
   };
 
