@@ -32,7 +32,7 @@ public class DescribeCharacter extends CursorKeyAction {
     }
 
     startLine(sb, R.string.DescribeCharacter_label_codepoint);
-    sb.append(Characters.toCodePoint(character));
+    sb.append(Characters.toUnicodeString(character));
 
     if (ApplicationSettings.EXTRA_INDICATORS) {
       String decomposition = UnicodeUtilities.decompose(character);
@@ -43,7 +43,7 @@ public class DescribeCharacter extends CursorKeyAction {
 
         for (int index=0; index<count; index+=1) {
           sb.append(' ');
-          sb.append(Characters.toCodePoint(decomposition.charAt(index)));
+          sb.append(Characters.toUnicodeString(decomposition.charAt(index)));
         }
       }
     }

@@ -23,7 +23,7 @@ public class Characters {
 
   public final static String UNICODE_PREFIX = "U+";
 
-  public static String toCodePoint (char character) {
+  public static String toUnicodeString (char character) {
     return String.format("%s%04X", UNICODE_PREFIX, (int)character);
   }
 
