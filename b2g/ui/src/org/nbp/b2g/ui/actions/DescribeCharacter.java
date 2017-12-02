@@ -32,8 +32,21 @@ public class DescribeCharacter extends CursorKeyAction {
     }
 
     startLine(sb, R.string.DescribeCharacter_label_codepoint);
-    sb.append(Characters.UNICODE_PREFIX);
-    sb.append(String.format("%04X", (int)character));
+    sb.append(Characters.toCodePoint(character));
+
+    if (ApplicationSettings.EXTRA_INDICATORS) {
+      String decomposition = UnicodeUtilities.decompose(character);
+
+      if (!decomposition.equals(Character.toString(character))) {
+        sb.append(" ->");
+        int count = decomposition.length();
+
+        for (int index=0; index<count; index+=1) {
+          sb.append(' ');
+          sb.append(Characters.toCodePoint(decomposition.charAt(index)));
+        }
+      }
+    }
 
     {
       Character.UnicodeBlock block = Character.UnicodeBlock.of(character);

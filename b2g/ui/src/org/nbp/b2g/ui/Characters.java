@@ -23,6 +23,10 @@ public class Characters {
 
   public final static String UNICODE_PREFIX = "U+";
 
+  public static String toCodePoint (char character) {
+    return String.format("%s%04X", UNICODE_PREFIX, (int)character);
+  }
+
   public static void logEvent (int priority, String tag, char character, String message) {
     Log.println(priority, tag, String.format(
       "%s: %s%04X", message, UNICODE_PREFIX, (int)character
