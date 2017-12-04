@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := louis
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) $(LOCAL_PATH)/liblouis-location/liblouis
-LOCAL_CFLAGS := -Wall -DTABLESDIR=\"liblouis-location/tables\"
+LOCAL_CFLAGS := -std=c99 -Wall -DTABLESDIR=\"liblouis-location/tables\"
 LOCAL_LDLIBS := -llog
 
 LOCAL_SRC_FILES := \
@@ -14,7 +14,7 @@ LOCAL_SRC_FILES := \
    liblouis-location/liblouis/lou_backTranslateString.c \
    liblouis-location/liblouis/pattern.c \
    liblouis-location/liblouis/logging.c \
-   liblouis-location/liblouis/wrappers.c \
+   liblouis-location/liblouis/utils.c \
    log.c \
    translation.c \
    louis.c
