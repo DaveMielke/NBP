@@ -194,37 +194,37 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
     E value = null;
-    String name = prefs.getString(key, "");
 
-    if (name.length() > 0) {
-      try {
-        value = (E)(Enum.valueOf(getEnumerationClass(), name));
+    try {
+      String name = prefs.getString(key, "");
 
-        if (!testEnumerationValue(value)) {
-          value = null;
+      if (name.length() > 0) {
+        try {
+          value = (E)(Enum.valueOf(getEnumerationClass(), name));
 
+          if (!testEnumerationValue(value)) {
+            value = null;
+
+            Log.w(LOG_TAG,
+              String.format(
+                "control setting not available: %s: %s",
+                getLabel(), name
+              )
+            );
+          }
+        } catch (IllegalArgumentException exception) {
           Log.w(LOG_TAG,
             String.format(
-              "control setting not available: %s: %s",
+              "unrecognized control setting: %s: %s",
               getLabel(), name
             )
           );
         }
-      } catch (IllegalArgumentException exception) {
-        Log.w(LOG_TAG,
-          String.format(
-            "unrecognized control setting: %s: %s",
-            getLabel(), name
-          )
-        );
-      } catch (ClassCastException exception) {
-        Log.w(LOG_TAG,
-          String.format(
-            "invalid control setting type: %s: %s",
-            getLabel(), name
-          )
-        );
       }
+    } catch (ClassCastException exception) {
+      Log.w(LOG_TAG,
+        String.format("control setting not a string: %s", getLabel())
+      );
     }
 
     if (value == null) value = getEnumerationDefault();
