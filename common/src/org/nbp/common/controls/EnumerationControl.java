@@ -217,6 +217,13 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
             getLabel(), name
           )
         );
+      } catch (ClassCastException exception) {
+        Log.w(LOG_TAG,
+          String.format(
+            "invalid control setting type: %s: %s",
+            getLabel(), name
+          )
+        );
       }
     }
 
