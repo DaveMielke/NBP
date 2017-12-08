@@ -101,7 +101,12 @@ public abstract class IntegerControl extends Control {
     try {
       value = prefs.getInt(key, value);
     } catch (ClassCastException exception) {
-      Log.w(LOG_TAG, ("saved value not an integer: " + getLabel()));
+      Log.w(LOG_TAG,
+        String.format(
+          "saved value not an integer: %s: %s",
+          getLabel(), exception.getMessage()
+        )
+      );
     }
 
     return setIntegerValue(value);

@@ -69,7 +69,12 @@ public abstract class StringControl extends Control {
     try {
       value = prefs.getString(key, value);
     } catch (ClassCastException exception) {
-      Log.w(LOG_TAG, ("saved value not a string: " + getLabel()));
+      Log.w(LOG_TAG,
+        String.format(
+          "saved value not a string: %s: %s",
+          getLabel(), exception.getMessage()
+        )
+      );
     }
 
     return setStringValue(value);

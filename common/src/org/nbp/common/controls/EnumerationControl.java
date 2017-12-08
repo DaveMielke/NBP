@@ -207,7 +207,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
 
             Log.w(LOG_TAG,
               String.format(
-                "control setting not available: %s: %s",
+                "saved value not allowed: %s: %s",
                 getLabel(), name
               )
             );
@@ -215,14 +215,19 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
         } catch (IllegalArgumentException exception) {
           Log.w(LOG_TAG,
             String.format(
-              "unrecognized control setting: %s: %s",
+              "saved value not recognized: %s: %s",
               getLabel(), name
             )
           );
         }
       }
     } catch (ClassCastException exception) {
-      Log.w(LOG_TAG, ("saved value not a string: " + getLabel()));
+      Log.w(LOG_TAG,
+        String.format(
+          "saved value not a string: %s: %s",
+          getLabel(), exception.getMessage()
+        )
+      );
     }
 
     if (value == null) value = getEnumerationDefault();

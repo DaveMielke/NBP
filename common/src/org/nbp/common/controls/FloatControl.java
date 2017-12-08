@@ -97,7 +97,12 @@ public abstract class FloatControl extends IntegerControl {
     try {
       value = prefs.getFloat(key, value);
     } catch (ClassCastException exception) {
-      Log.w(LOG_TAG, ("saved value not a float: " + getLabel()));
+      Log.w(LOG_TAG,
+        String.format(
+          "saved value not a float: %s: %s",
+          getLabel(), exception.getMessage()
+        )
+      );
     }
 
     return setFloatValue(value);

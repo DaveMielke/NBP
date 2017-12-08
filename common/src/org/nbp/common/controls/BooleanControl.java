@@ -79,7 +79,12 @@ public abstract class BooleanControl extends Control {
     try {
       value = prefs.getBoolean(key, value);
     } catch (ClassCastException exception) {
-      Log.w(LOG_TAG, ("saved value not a boolean: " + getLabel()));
+      Log.w(LOG_TAG,
+        String.format(
+          "saved value not a boolean: %s: %s",
+          getLabel(), exception.getMessage()
+        )
+      );
     }
 
     return setBooleanValue(value);
