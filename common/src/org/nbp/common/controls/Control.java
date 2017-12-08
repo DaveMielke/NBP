@@ -36,7 +36,10 @@ public abstract class Control {
 
         if (!testValue(savedValue)) {
           Log.w(LOG_TAG,
-            ("saved value not allowed: " + getLabel() + ": " + savedValue)
+            String.format(
+              "saved value not allowed: %s: %s",
+              getLabel(), savedValue.toString()
+            )
           );
 
           savedValue = defaultValue;
