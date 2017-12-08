@@ -7,6 +7,8 @@ import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import org.nbp.common.CharacterUtilities;
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -19,7 +21,7 @@ public class ClockActivity extends Activity {
   private final void showTime (Date date) {
     StringBuilder time = new StringBuilder();
     time.append(DateFormat.getDateFormat(this).format(date));
-    time.append(' ');
+    time.append(CharacterUtilities.CHAR_NBSP);
 
     StringBuilder format = new StringBuilder();
     boolean use24HourFormat = DateFormat.is24HourFormat(this);
