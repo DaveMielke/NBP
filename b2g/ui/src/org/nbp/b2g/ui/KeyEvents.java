@@ -153,22 +153,22 @@ public abstract class KeyEvents {
     }
   }
 
-  private final static Object awakenSynchronizeLock = new Object();
-  private static PowerManager.WakeLock awakenWakeLock = null;
+  private final static Object AWAKEN_LOCK = new Object();
+  private static PowerManager.WakeLock keyEventWakeLock = null;
 
   private static void awakenSystem () {
-    synchronized (awakenSynchronizeLock) {
-      if (awakenWakeLock == null) {
-        awakenWakeLock = ApplicationContext.newWakeLock(
-          PowerManager.SCREEN_BRIGHT_WAKE_LOCK
-          | PowerManager.ACQUIRE_CAUSES_WAKEUP
-          | PowerManager.ON_AFTER_RELEASE,
-          "awaken"
+    synchronized (AWAKEN_LOCK) {
+      if (keyEventWakeLock == null) {
+        keyEventWakeLock = ApplicationContext.newWakeLock(
+          PowerManager.ACQUIRE_CAUSES_WAKEUP |
+          PowerManager.ON_AFTER_RELEASE |
+          PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
+          "key-event"
         );
       }
 
-      awakenWakeLock.acquire();
-      awakenWakeLock.release();
+      keyEventWakeLock.acquire();
+      keyEventWakeLock.release();
     }
   }
 
