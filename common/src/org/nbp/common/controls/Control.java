@@ -1,13 +1,16 @@
 package org.nbp.common.controls;
 import org.nbp.common.*;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import java.util.Set;
 import java.util.HashSet;
 
+import android.util.Log;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public abstract class Control {
+  private final static String LOG_TAG = Control.class.getName();
+
   protected Control () {
   }
 
@@ -18,8 +21,47 @@ public abstract class Control {
   protected abstract boolean setNextValue ();
   protected abstract boolean setPreviousValue ();
 
+  protected abstract class ValueRestorer<T> {
+    protected abstract T getDefaultValue ();
+    protected abstract T getSavedValue (SharedPreferences prefs, String key, T defaultValue);
+    protected abstract boolean setCurrentValue (T value);
+    protected abstract boolean testValue (T value);
+
+    public final boolean restoreValue (SharedPreferences prefs, String key) {
+      T defaultValue = getDefaultValue();
+      T savedValue;
+
+      try {
+        savedValue = getSavedValue(prefs, key, defaultValue);
+
+        if (!testValue(savedValue)) {
+          Log.w(LOG_TAG,
+            ("saved value not allowed: " + getLabel() + ": " + savedValue)
+          );
+
+          savedValue = defaultValue;
+        }
+      } catch (ClassCastException exception) {
+        Log.w(LOG_TAG,
+          String.format(
+            "incorrect saved value type: %s: %s",
+            getLabel(), exception.getMessage()
+          )
+        );
+
+        savedValue = defaultValue;
+      }
+
+      return setCurrentValue(savedValue);
+    }
+  }
+
   protected abstract void saveValue (SharedPreferences.Editor editor, String key);
-  protected abstract boolean restoreValue (SharedPreferences prefs, String key);
+  protected abstract ValueRestorer getValueRestorer ();
+
+  protected final boolean restoreValue (SharedPreferences prefs, String key) {
+    return getValueRestorer().restoreValue(prefs, key);
+  }
 
   protected final static String getString (int resource) {
     return CommonContext.getString(resource);

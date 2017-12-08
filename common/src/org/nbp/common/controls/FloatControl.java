@@ -1,12 +1,9 @@
 package org.nbp.common.controls;
 import org.nbp.common.*;
 
-import android.util.Log;
 import android.content.SharedPreferences;
 
 public abstract class FloatControl extends IntegerControl {
-  private final static String LOG_TAG = FloatControl.class.getName();
-
   protected abstract float getLinearScale ();
   protected abstract float getFloatDefault ();
   public abstract float getFloatValue ();
@@ -91,21 +88,28 @@ public abstract class FloatControl extends IntegerControl {
   }
 
   @Override
-  protected boolean restoreValue (SharedPreferences prefs, String key) {
-    float value = getFloatDefault();
+  protected ValueRestorer getValueRestorer () {
+    return new ValueRestorer<Float>() {
+      @Override
+      protected Float getDefaultValue () {
+        return getFloatDefault();
+      }
 
-    try {
-      value = prefs.getFloat(key, value);
-    } catch (ClassCastException exception) {
-      Log.w(LOG_TAG,
-        String.format(
-          "saved value not a float: %s: %s",
-          getLabel(), exception.getMessage()
-        )
-      );
-    }
+      @Override
+      protected Float getSavedValue (SharedPreferences prefs, String key, Float defaultValue) {
+        return prefs.getFloat(key, defaultValue);
+      }
 
-    return setFloatValue(value);
+      @Override
+      protected boolean setCurrentValue (Float value) {
+        return setFloatValue(value);
+      }
+
+      @Override
+      protected boolean testValue (Float value) {
+        return testFloatValue(value);
+      }
+    };
   }
 
   protected FloatControl () {

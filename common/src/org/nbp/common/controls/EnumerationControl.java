@@ -192,46 +192,43 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
   }
 
   @Override
-  protected boolean restoreValue (SharedPreferences prefs, String key) {
-    E value = null;
+  protected ValueRestorer getValueRestorer () {
+    return new ValueRestorer<E>() {
+      @Override
+      protected E getDefaultValue () {
+        return getEnumerationDefault();
+      }
 
-    try {
-      String name = prefs.getString(key, "");
+      @Override
+      protected E getSavedValue (SharedPreferences prefs, String key, E defaultValue) {
+        String name = prefs.getString(key, "");
 
-      if (name.length() > 0) {
-        try {
-          value = (E)(Enum.valueOf(getEnumerationClass(), name));
-
-          if (!testEnumerationValue(value)) {
-            value = null;
-
+        if (name.length() > 0) {
+          try {
+            return (E)(Enum.valueOf(getEnumerationClass(), name));
+          } catch (IllegalArgumentException exception) {
             Log.w(LOG_TAG,
               String.format(
-                "saved value not allowed: %s: %s",
+                "saved value not recognized: %s: %s",
                 getLabel(), name
               )
             );
           }
-        } catch (IllegalArgumentException exception) {
-          Log.w(LOG_TAG,
-            String.format(
-              "saved value not recognized: %s: %s",
-              getLabel(), name
-            )
-          );
         }
-      }
-    } catch (ClassCastException exception) {
-      Log.w(LOG_TAG,
-        String.format(
-          "saved value not a string: %s: %s",
-          getLabel(), exception.getMessage()
-        )
-      );
-    }
 
-    if (value == null) value = getEnumerationDefault();
-    return setEnumerationValue(value);
+        return defaultValue;
+      }
+
+      @Override
+      protected boolean setCurrentValue (E value) {
+        return setEnumerationValue(value);
+      }
+
+      @Override
+      protected boolean testValue (E value) {
+        return testEnumerationValue(value);
+      }
+    };
   }
 
   protected EnumerationControl () {
