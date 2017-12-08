@@ -3,9 +3,12 @@ import org.nbp.common.*;
 
 import java.util.Collection;
 
+import android.util.Log;
 import android.content.SharedPreferences;
 
 public abstract class StringControl extends Control {
+  private final static String LOG_TAG = StringControl.class.getName();
+
   protected abstract String getStringDefault ();
   public abstract String getStringValue ();
   protected abstract boolean setStringValue (String value);
@@ -61,7 +64,15 @@ public abstract class StringControl extends Control {
 
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
-    return setStringValue(prefs.getString(key, getStringDefault()));
+    String value = getStringDefault();
+
+    try {
+      value = prefs.getString(key, value);
+    } catch (ClassCastException exception) {
+      Log.w(LOG_TAG, ("saved value not a string: " + getLabel()));
+    }
+
+    return setStringValue(value);
   }
 
   public Collection<String> getSuggestedValues () {

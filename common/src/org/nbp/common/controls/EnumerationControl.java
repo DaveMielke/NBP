@@ -222,9 +222,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
         }
       }
     } catch (ClassCastException exception) {
-      Log.w(LOG_TAG,
-        String.format("control setting not a string: %s", getLabel())
-      );
+      Log.w(LOG_TAG, ("saved value not a string: " + getLabel()));
     }
 
     if (value == null) value = getEnumerationDefault();

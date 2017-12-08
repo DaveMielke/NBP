@@ -1,9 +1,12 @@
 package org.nbp.common.controls;
 import org.nbp.common.*;
 
+import android.util.Log;
 import android.content.SharedPreferences;
 
 public abstract class IntegerControl extends Control {
+  private final static String LOG_TAG = IntegerControl.class.getName();
+
   protected abstract int getIntegerDefault ();
   public abstract int getIntegerValue ();
   protected abstract boolean setIntegerValue (int value);
@@ -93,7 +96,15 @@ public abstract class IntegerControl extends Control {
 
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
-    return setIntegerValue(prefs.getInt(key, getIntegerDefault()));
+    int value = getIntegerDefault();
+
+    try {
+      value = prefs.getInt(key, value);
+    } catch (ClassCastException exception) {
+      Log.w(LOG_TAG, ("saved value not an integer: " + getLabel()));
+    }
+
+    return setIntegerValue(value);
   }
 
   protected IntegerControl () {

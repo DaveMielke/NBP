@@ -1,9 +1,12 @@
 package org.nbp.common.controls;
 import org.nbp.common.*;
 
+import android.util.Log;
 import android.content.SharedPreferences;
 
 public abstract class BooleanControl extends Control {
+  private final static String LOG_TAG = BooleanControl.class.getName();
+
   public abstract boolean getBooleanValue ();
   protected abstract boolean setBooleanValue (boolean value);
 
@@ -71,7 +74,15 @@ public abstract class BooleanControl extends Control {
 
   @Override
   protected boolean restoreValue (SharedPreferences prefs, String key) {
-    return setBooleanValue(prefs.getBoolean(key, getBooleanDefault()));
+    boolean value = getBooleanDefault();
+
+    try {
+      value = prefs.getBoolean(key, value);
+    } catch (ClassCastException exception) {
+      Log.w(LOG_TAG, ("saved value not a boolean: " + getLabel()));
+    }
+
+    return setBooleanValue(value);
   }
 
   protected BooleanControl () {
