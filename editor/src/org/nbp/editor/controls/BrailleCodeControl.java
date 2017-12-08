@@ -25,6 +25,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
 
   @Override
   protected boolean testEnumerationValue (BrailleCode value) {
+    if (value.getTranslatorIdentifier() == null) return true;
     String problem;
 
     try {
