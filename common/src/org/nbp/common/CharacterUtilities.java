@@ -36,6 +36,10 @@ public abstract class CharacterUtilities {
   public final static char CHAR_SPACE = 0X0020; // space
   public final static char CHAR_DEL   = 0X007F; // delete
   public final static char CHAR_NBSP  = 0X00A0; // no-break space
+  public final static char CHAR_NNBSP = 0X202F; // narrow no-break space
+  public final static char CHAR_ZNBSP = 0XFEFF; // zero-width no-break space
+  public final static char CHAR_REPCH = 0XFFFD; // replacement character
+  public final static char CHAR_BOM   = 0XFFFE; // byte order mark
 
   private final static CharacterFieldMap characterFields = new CharacterFieldMap() {
     @Override

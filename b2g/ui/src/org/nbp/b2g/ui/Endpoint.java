@@ -8,7 +8,9 @@ import static org.liblouis.Tests.logOffsets;
 import org.liblouis.Translation;
 import org.liblouis.BrailleTranslation;
 import org.liblouis.TextTranslation;
+
 import org.nbp.common.Braille;
+import org.nbp.common.CharacterUtilities;
 
 public abstract class Endpoint extends UserInterfaceComponent {
   private final static String LOG_TAG = Endpoint.class.getName();
@@ -658,7 +660,21 @@ public abstract class Endpoint extends UserInterfaceComponent {
   }
 
   private final static boolean isWordBreak (char character) {
-    return Character.isWhitespace(character);
+    switch (character) {
+      // hard-code the space character for efficiency because it's so common
+      case ' ':
+        return true;
+
+      // no-break spaces aren't word break opportunities
+      case CharacterUtilities.CHAR_NNBSP:
+      case CharacterUtilities.CHAR_ZNBSP:
+      case CharacterUtilities.CHAR_NBSP:
+        return false;
+
+      default:
+        // all other space characters are word break opportunities
+        return Character.isWhitespace(character);
+    }
   }
 
   private final boolean isWordBreak (int textOffset) {
