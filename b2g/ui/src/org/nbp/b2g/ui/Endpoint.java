@@ -663,18 +663,13 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
   private final boolean isWordBreak (int textOffset) {
     if (!isWordBreak(getLineText().charAt(textOffset))) return false;
+    if (!ApplicationSettings.BRAILLE_CODE.getJoinableWords()) return true;
 
-    // handle "joined" contractions - e.g. EBAE's "to" and "by" contractions
+    // handle joined contractions - e.g. EBAE's "to" and "by" contractions
     CharSequence brailleCharacters = getBrailleCharacters();
     int brailleOffset = getBrailleOffset(textOffset);
     if (brailleOffset == brailleCharacters.length()) return true;
-
-    if (brailleCharacters.charAt(brailleOffset) != Braille.UNICODE_ROW) {
-      // should return false but LibLouis's offsets need to be fixed first
-      return true;
-    }
-
-    return true;
+    return brailleCharacters.charAt(brailleOffset) == Braille.UNICODE_ROW;
   }
 
   protected final void adjustLeft (int offset, int keep) {
