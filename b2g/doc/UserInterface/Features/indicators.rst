@@ -13,5 +13,5 @@ Forward together. This will cause the indicators to be presented within a pop-up
 
 An alternate combination that's usable in `One Hand Mode`_,
 Space+i (dots 24),
-has been defined.
+has also been defined.
 

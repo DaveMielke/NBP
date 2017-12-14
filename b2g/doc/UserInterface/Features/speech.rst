@@ -6,9 +6,36 @@ Pressing Forward+VolumeUp enables it,
 and pressing Forward+VolumeDown disables it.
 Alternate combinations that are usable in `One Hand Mode`_,
 which use Dot6 instead of Forward,
-have been defined.
+have also been defined.
 Speech can't be disabled while braille is disabled
 (see `Disabling the Display`_).
+
+Adjusting the Speech
+~~~~~~~~~~~~~~~~~~~~
+
+Adjusting the Volume:
+  * Press Dot1+VolumeDown for **softer**.
+  * Press Dot1+VolumeUp for **louder**.
+
+  The speech volume is set relative to the system volume.
+  If, therefore, the speech volume is set as high as it'll go
+  but it still sounds too soft then try increasing the system volume
+  (by pressing VolumeUp by itself).
+
+Adjusting the Rate:
+  * Press Dot2+VolumeDown for **slower**.
+  * Press Dot2+VolumeUp for **faster**.
+
+Adjusting the Pitch:
+  * Press Dot3+VolumeDown for **lower**.
+  * Press Dot3+VolumeUp for **higher**.
+
+Adjusting the Balance:
+  * Press Dot4+VolumeDown for **more left**.
+  * Press Dot4+VolumeUp for **more right**.
+
+Reading with Speech
+~~~~~~~~~~~~~~~~~~~
 
 * To interrupt what's currently being spoken, press Dot1+Left.
 
@@ -22,25 +49,27 @@ Speech can't be disabled while braille is disabled
 * To hear just what's on and after the braille display,
   press Dot1+Down.
 
-Adjusting the Volume:
-  * Press Dot1+VolumeDown for **softer**.
-  * Press Dot1+VolumeUp for **louder**.
+Editing with Speech
+~~~~~~~~~~~~~~~~~~~
 
-  The speech volume is set relative to the system volume. If, therefore, the
-  speech volume is set as high as it'll go but still sounds too soft then try
-  increasing the system volume (by pressing VolumeUp by itself).
+* To have the current character spoken, press Dots36.
+  |if selection| all of the selected characters are spoken.
 
-Adjusting the Rate:
-  * Press Dot2+VolumeDown for **slower**.
-  * Press Dot2+VolumeUp for **faster**.
+* To have the current character spoken phonetically, long press Dots36.
+  |need long key presses|
+  |if selection| all of the selected characters are spoken phonetically.
 
-Adjusting the Pitch:
-  * Press Dot3+VolumeDown for **lower**.
-  * Press Dot3+VolumeUp for **higher**.
+* To have the current word spoken, press Dots25.
+  |if selection| the selected text is spoken.
 
-Adjusting the Balance:
-  * Press Dot4+VolumeDown for **more left**.
-  * Press Dot4+VolumeUp for **more right**.
+* To have the current word spelled, long press Dots25.
+  |need long key presses|
+  |if selection| the selected text is spelled.
+
+* To have the current line spoken, press dots14.
+
+* To have the current line spelled, long press dots14.
+  |need long key presses|
 
 Customizing What is Spoken
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,7 +122,7 @@ This mode is disabled by default. Pressing Backward+VolumeUp enables it, and
 pressing Backward+VolumeDown disables it.
 Alternate combinations that are usable in `One Hand Mode`_,
 which use Dot5 instead of Backward,
-have been defined.
+have also been defined.
 
 Differences from Braille Rendering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

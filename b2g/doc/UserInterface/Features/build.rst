@@ -24,5 +24,5 @@ within a screen that looks something like this::
 
 An alternate combination that's usable in `One Hand Mode`_,
 Space+v (dots 1236),
-has been defined.
+has also been defined.
 
