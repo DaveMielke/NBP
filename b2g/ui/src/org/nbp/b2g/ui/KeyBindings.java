@@ -312,12 +312,14 @@ public class KeyBindings {
   private InputProcessor makeInputProcessor () {
     DirectiveProcessor directiveProcessor = new DirectiveProcessor();
 
-    directiveProcessor.addDirective("bind", new DirectiveProcessor.DirectiveHandler() {
-      @Override
-      public boolean handleDirective (String[] operands) {
-        return bindKeyCombination(operands);
+    directiveProcessor.addDirective("bind",
+      new DirectiveProcessor.DirectiveHandler() {
+        @Override
+        public boolean handleDirective (String[] operands) {
+          return bindKeyCombination(operands);
+        }
       }
-    });
+    );
 
     return directiveProcessor;
   }

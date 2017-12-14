@@ -1,13 +1,11 @@
 Editor:
   binding to query cursor location
   binding to query braille location
-  disable/enable keyboard
   write-protect files
   fixed line length
   multiple files
 
 SIM indicators for non-GSM
-braille and speech not both off
 android.intent.action.master_clear_notification
 typing font selector
 reset to english

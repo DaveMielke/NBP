@@ -37,7 +37,7 @@ public enum BrailleCode {
     return translatorIdentifier.getTranslator();
   }
 
-  public final boolean getJoinableWords () {
+  public final boolean hasJoinableWords () {
     return joinableWords;
   }
 }

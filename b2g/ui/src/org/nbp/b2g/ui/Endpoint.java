@@ -680,7 +680,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
   private final boolean isWordBreak (int textOffset) {
     if (!isWordBreak(getLineText().charAt(textOffset))) return false;
     if (!ApplicationSettings.LITERARY_BRAILLE) return true;
-    if (!ApplicationSettings.BRAILLE_CODE.getJoinableWords()) return true;
+    if (!ApplicationSettings.BRAILLE_CODE.hasJoinableWords()) return true;
 
     // handle joined contractions - e.g. EBAE's "to" and "by" contractions
     CharSequence brailleCharacters = getBrailleCharacters();
