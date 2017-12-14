@@ -71,7 +71,32 @@ Editing with Speech
 * To have the current line spelled, long press dots14.
   |need long key presses|
 
-Customizing What is Spoken
+When a character is spoken (or when text is being spelled),
+the prefix ``cap`` (meaning capital) is added if it's an uppercase letter.
+Additionally, if the character has any diacritics (accents)
+then each of their names is spoken after it
+(see `Supported Diacritics`_ for details).
+For example:
+
+* The letter ``É`` (an uppercase E with an acute accent)
+  is spoken as "cap e acute".
+
+* The letter ``ǘ`` (a lowercase u with diaeresis and acute accents)
+  is spoken as "u diaeresis acute".
+
+When a character is spoken (or text is being spelled) phonetically:
+
+* English letters are spoken as corresponding English words
+  so that they can be easily differentiated from one another
+  (see `English Phonetic Alphabet`_ for details).
+  For example, with some text-to-speech synthesizers it may be difficult
+  to discern the difference between ``b`` and ``v``.
+  When spoken phonetically, however, it's easy as, respectively,
+  they are ``Bravo`` and ``Victor``.
+
+* All other characters are spoken by name.
+
+Customizing What Is Spoken
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are a number of `speech settings`_ that can be used
