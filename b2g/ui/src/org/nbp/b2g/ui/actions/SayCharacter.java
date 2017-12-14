@@ -13,9 +13,14 @@ public class SayCharacter extends Action {
 
   HAVE_CHARACTERS:
     synchronized (endpoint) {
+      if (!endpoint.isInputArea()) return false;
       CharSequence text = endpoint.getText();
+
       int start = endpoint.getSelectionStart();
+      if (!endpoint.isSelected(start)) return false;
+
       int end = endpoint.getSelectionEnd();
+      if (!endpoint.isSelected(end)) return false;
 
       if (end == start) {
         if (end == text.length()) {
@@ -37,8 +42,7 @@ public class SayCharacter extends Action {
       }
     }
 
-    ApplicationUtilities.say(characters);
-    return true;
+    return ApplicationUtilities.say(characters);
   }
 
   public SayCharacter (Endpoint endpoint) {
