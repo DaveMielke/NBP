@@ -77,6 +77,17 @@ public abstract class ApplicationUtilities {
     return say(ApplicationContext.getString(resource));
   }
 
+  public static boolean spell (CharSequence text) {
+    int length = text.length();
+    CharSequence[] characters = new CharSequence[length];
+
+    for (int index=0; index<length; index+=1) {
+      characters[index] = CharacterPhrase.get(text.charAt(index));
+    }
+
+    return ApplicationUtilities.say(characters);
+  }
+
   public static void message (String text) {
     Devices.braille.get().message(text);
     say(text);

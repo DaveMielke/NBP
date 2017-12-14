@@ -31,6 +31,9 @@ Space+Dot4
 Space+Dots14
   |SayLine|
 
+Space+Dots14+LongPress
+  |SpellLine|
+
 Space+Dots23
   |PageUp|
 

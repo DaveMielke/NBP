@@ -112,15 +112,9 @@ public abstract class HorizontalAction extends DirectionalAction {
     CharSequence text = getCurrentObject(endpoint);
     if (text == null) return ActionResult.FAILED;
 
-    int count = text.length();
-    CharSequence[] characters = new CharSequence[count];
-
-    for (int index=0; index<count; index+=1) {
-      characters[index] = CharacterPhrase.get(text.charAt(index));
-    }
-
-    ApplicationUtilities.say(characters);
-    return ActionResult.DONE;
+    return ApplicationUtilities.spell(text)?
+           ActionResult.DONE:
+           ActionResult.FAILED;
   }
 
   protected HorizontalAction (Endpoint endpoint, boolean isAdvanced) {

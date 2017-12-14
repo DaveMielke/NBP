@@ -155,6 +155,7 @@
 .. |SpeakSofter| replace:: Decrease the speech volume.
 .. |SpeechOff| replace:: Turn off speech.
 .. |SpeechOn| replace:: Turn on speech.
+.. |SpellLine| replace:: Spell the current line.
 .. |SpellWord| replace:: Spell the current word (or the selected text).
 .. |StopSpeaking| replace:: Stop speaking immediately (mute).
 .. |Store| replace:: Go to the Store (Market) app.

@@ -11,6 +11,7 @@ bind Space+Dots25+LongPress SpellWord
 bind Space+Dot1 CursorUp
 bind Space+Dot4 CursorDown
 bind Space+Dots14 SayLine
+bind Space+Dots14+LongPress SpellLine
 
 bind Space+Dots23 PageUp
 bind Space+Dots56 PageDown

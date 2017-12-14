@@ -90,6 +90,18 @@ Space + Dot4
 
 * |if selection| |move cursor to end of selection|.
 
+Space + Dots14
+``````````````
+
+Speak the current line.
+
+Long Press of Space + Dots14
+````````````````````````````
+
+Spell the current line.
+
+|need long key presses|
+
 Space + Dots23
 ``````````````
 
