@@ -11,7 +11,6 @@ MAKE_FILE_LOG_TAG;
 #include <linux/input.h>
 
 #define KEYBOARD_DEVICE_NAME "cp430_keypad"
-#define POWER_BUTTON_DEVICE_NAME "twl4030_pwrbutton"
 #define NO_DEVICE -1
 
 static char *
@@ -82,12 +81,6 @@ JAVA_METHOD(
   org_nbp_b2g_ui_KeyboardMonitor, openDevice, jint
 ) {
   return openEventDevice(KEYBOARD_DEVICE_NAME);
-}
-
-JAVA_METHOD(
-  org_nbp_b2g_ui_PowerButtonMonitor, openDevice, jint
-) {
-  return openEventDevice(POWER_BUTTON_DEVICE_NAME);
 }
 
 JAVA_METHOD(

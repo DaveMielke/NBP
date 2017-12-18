@@ -1,21 +1,11 @@
 package org.nbp.b2g.ui;
 
 public abstract class EventMonitors {
-  private final static KeyboardMonitor keyboardMonitor = new KeyboardMonitor();
-  private final static PowerButtonMonitor powerButtonMonitor = new PowerButtonMonitor();
+  public final static KeyboardMonitor keyboard = new KeyboardMonitor();
 
   private final static EventMonitor[] eventMonitors = new EventMonitor[] {
-    keyboardMonitor,
-    powerButtonMonitor
+    keyboard
   };
-
-  public static KeyboardMonitor getKeyboardMonitor () {
-    return keyboardMonitor;
-  }
-
-  public static PowerButtonMonitor getPowerButtonMonitor () {
-    return powerButtonMonitor;
-  }
 
   public static void startEventMonitors () {
     KeyEvents.resetKeys();

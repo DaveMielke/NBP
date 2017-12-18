@@ -1,16 +1,23 @@
 package org.nbp.b2g.ui;
 
+import java.io.File;
+
 import android.os.Build;
 import android.os.Environment;
 import android.os.SystemClock;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import android.view.ViewConfiguration;
 
-import java.io.File;
-
-import org.liblouis.BrailleTranslation;
-
 public abstract class ApplicationUtilities {
+  private final static Handler mainHandler = new Handler(Looper.getMainLooper());
+
+  public final static boolean runOnMainThread (Runnable runnable) {
+    return mainHandler.post(runnable);
+  }
+
   public static boolean haveSdkVersion (int version) {
     return ApplicationParameters.SDK_VERSION >= version;
   }

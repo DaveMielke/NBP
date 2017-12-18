@@ -81,7 +81,21 @@ public class HostMonitor extends BroadcastReceiver {
   public void onReceive (Context context, Intent intent) {
     String action = intent.getAction();
     if (action == null) return;
-    Log.d(LOG_TAG, "host event: " + action);
+    Log.d(LOG_TAG, ("host event: " + action));
+
+    if (action.equals(Intent.ACTION_SCREEN_ON)) {
+      ApplicationUtilities.runOnMainThread(
+        new Runnable() {
+          @Override
+          public void run () {
+            KeyEvents.resetKeys();
+            Controls.restoreSaneValues();
+          }
+        }
+      );
+
+      return;
+    }
 
     if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
       handleMediaAction(intent, MediaAction.ADDED);
@@ -137,6 +151,8 @@ public class HostMonitor extends BroadcastReceiver {
   public static void start (Context context) {
     IntentFilter filter = new IntentFilter();
     filter.addAction(Intent.ACTION_BATTERY_CHANGED);
+    filter.addAction(Intent.ACTION_SCREEN_ON);
+    filter.addAction(Intent.ACTION_SCREEN_OFF);
 
     BroadcastReceiver receiver = new HostMonitor();
     context.registerReceiver(receiver, filter);

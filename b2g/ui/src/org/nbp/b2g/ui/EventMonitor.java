@@ -42,9 +42,10 @@ public abstract class EventMonitor extends Thread {
     }
   }
 
+  @Override
   public void run () {
     String name = getName();
-    Log.d(LOG_TAG, name + " started");
+    Log.d(LOG_TAG, (name + " started"));
 
     final int NO_DEVICE = -1;
     int device = openDevice();
@@ -53,10 +54,10 @@ public abstract class EventMonitor extends Thread {
       monitorDevice(device);
       closeDevice(device);
     } else {
-      Log.w(LOG_TAG, name + " device not opened");
+      Log.w(LOG_TAG, (name + " device not opened"));
     }
 
-    Log.d(LOG_TAG, name + " stopped");
+    Log.d(LOG_TAG, (name + " stopped"));
   }
 
   public EventMonitor (String threadName) {

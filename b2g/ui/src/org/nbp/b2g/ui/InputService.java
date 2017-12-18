@@ -102,7 +102,7 @@ public class InputService extends InputMethodService {
   }
 
   private static KeyboardMonitor getKeyboardMonitor () {
-    return EventMonitors.getKeyboardMonitor();
+    return EventMonitors.keyboard;
   }
 
   private static boolean isKeyboardMonitorRunning () {

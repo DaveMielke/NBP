@@ -21,7 +21,6 @@ public abstract class ApplicationParameters extends CommonParameters {
   public final static Louis.LogLevel LIBLOUIS_LOG_LEVEL = Louis.LogLevel.INFO;
 
   public final static boolean ENABLE_KEYBOARD_MONITOR = true;
-  public final static boolean ENABLE_POWER_BUTTON_MONITOR = false;
   public final static boolean CHORDS_SEND_SYSTEM_KEYS = true;
 
   public final static long LONG_PRESS_DELAY = 100; // milliseconds

@@ -40,7 +40,6 @@ public abstract class KeyEvents {
                                                 | KeyMask.GROUP_PAN
                                                 | KeyMask.GROUP_DPAD
                                                 | KeyMask.GROUP_VOLUME
-                                                | KeyMask.GROUP_POWER
                                                 ;
 
   public static boolean performAction (final Action action) {
