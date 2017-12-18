@@ -1,4 +1,5 @@
 package org.nbp.b2g.ui;
+import org.nbp.b2g.ui.host.ScreenMonitor;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -16,7 +17,8 @@ import android.os.PowerManager;
 public class HostMonitor extends BroadcastReceiver {
   private final static String LOG_TAG = HostMonitor.class.getName();
 
-  private final static Map<String, Bundle> intentExtras = new HashMap<String, Bundle>();
+  private final static Map<String, Bundle> intentExtras =
+               new HashMap<String, Bundle>();
 
   public final static Bundle getIntentExtras (String action) {
     synchronized (intentExtras) {
@@ -77,73 +79,117 @@ public class HostMonitor extends BroadcastReceiver {
     }
   }
 
+  private interface ActionPerformer {
+    public void performAction (Context context, Intent intent, boolean first);
+  }
+
+  private final static Map<String, ActionPerformer> actionPerformers =
+               new HashMap<String, ActionPerformer>()
+  {
+    {
+      put(
+        Intent.ACTION_BOOT_COMPLETED,
+        new ActionPerformer() {
+          @Override
+          public void performAction (Context context, Intent intent, boolean first) {
+            Log.d(LOG_TAG, "starting screen monitor");
+            ScreenMonitor.start();
+
+            Log.d(LOG_TAG, "starting input service");
+            InputService.start();
+          }
+        }
+      );
+
+      put(
+        Intent.ACTION_SCREEN_ON,
+        new ActionPerformer() {
+          @Override
+          public void performAction (Context context, Intent intent, boolean first) {
+            ApplicationUtilities.runOnMainThread(
+              new Runnable() {
+                @Override
+                public void run () {
+                  KeyEvents.resetKeys();
+                  Controls.restoreSaneValues();
+                }
+              }
+            );
+          }
+        }
+      );
+
+      put(
+        Intent.ACTION_BATTERY_CHANGED,
+        new ActionPerformer() {
+          @Override
+          public void performAction (Context context, Intent intent, boolean first) {
+            if (first) {
+              BatteryReport.start();
+
+              BatteryProperties battery = new BatteryProperties();
+              Double percentage = battery.getPercentFull();
+
+              if (percentage != null) {
+                ApplicationUtilities.message(
+                  String.format(
+                    "%s %.0f%%",
+                    context.getString(R.string.message_battery_percentage),
+                    percentage
+                  )
+                );
+              }
+            }
+          }
+        }
+      );
+
+      put(
+        Intent.ACTION_LOCALE_CHANGED,
+        new ActionPerformer() {
+          @Override
+          public void performAction (Context context, Intent intent, boolean first) {
+            ComputerBraille.LOCAL.reloadCharacters();
+          }
+        }
+      );
+
+      put(
+        Intent.ACTION_MEDIA_MOUNTED,
+        new ActionPerformer() {
+          @Override
+          public void performAction (Context context, Intent intent, boolean first) {
+            handleMediaAction(intent, MediaAction.ADDED);
+          }
+        }
+      );
+
+      put(
+        Intent.ACTION_MEDIA_EJECT,
+        new ActionPerformer() {
+          @Override
+          public void performAction (Context context, Intent intent, boolean first) {
+            handleMediaAction(intent, MediaAction.REMOVED);
+          }
+        }
+      );
+    }
+  };
+
   @Override
   public void onReceive (Context context, Intent intent) {
     String action = intent.getAction();
     if (action == null) return;
     Log.d(LOG_TAG, ("host event: " + action));
 
-    if (action.equals(Intent.ACTION_SCREEN_ON)) {
-      ApplicationUtilities.runOnMainThread(
-        new Runnable() {
-          @Override
-          public void run () {
-            KeyEvents.resetKeys();
-            Controls.restoreSaneValues();
-          }
-        }
-      );
-
-      return;
-    }
-
-    if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-      handleMediaAction(intent, MediaAction.ADDED);
-      return;
-    }
-
-    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-      handleMediaAction(intent, MediaAction.REMOVED);
-      return;
-    }
-
-    if (action.equals(Intent.ACTION_LOCALE_CHANGED)) {
-      ComputerBraille.LOCAL.reloadCharacters();
-      return;
-    }
-
-    if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-      Log.d(LOG_TAG, "starting screen monitor");
-      org.nbp.b2g.ui.host.ScreenMonitor.start();
-
-      Log.d(LOG_TAG, "starting input service");
-      InputService.start();
-
-      return;
-    }
-
     synchronized (intentExtras) {
       Bundle extras = intent.getExtras();
       boolean first = intentExtras.get(action) == null;
       intentExtras.put(action, extras);
+      ActionPerformer actionPerformer = actionPerformers.get(action);
 
-      if (first) {
-        if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
-          BatteryReport.start();
-
-          BatteryProperties battery = new BatteryProperties();
-          Double percentage = battery.getPercentFull();
-
-          if (percentage != null) {
-            ApplicationUtilities.message(
-              String.format(
-                "%s %.0f%%",
-                context.getString(R.string.message_battery_percentage),
-                percentage
-              )
-            );
-          }
-        }
+      if (actionPerformer != null) {
+        actionPerformer.performAction(context, intent, first);
       }
     }
   }
