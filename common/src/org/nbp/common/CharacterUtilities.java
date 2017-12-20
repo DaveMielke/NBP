@@ -1,6 +1,7 @@
 package org.nbp.common;
 
 public abstract class CharacterUtilities {
+  // ASCII control characters
   public final static char CHAR_NUL = 0X0000; // null
   public final static char CHAR_SOH = 0X0001; // start of header
   public final static char CHAR_STX = 0X0002; // start of text
@@ -35,22 +36,25 @@ public abstract class CharacterUtilities {
   public final static char CHAR_US  = 0X001F; // unit separator
   public final static char CHAR_DEL = 0X007F; // delete
 
+  // space characters
   public final static char CHAR_SPACE = 0X0020; // space
   public final static char CHAR_NBSP  = 0X00A0; // no-break space
   public final static char CHAR_NNBSP = 0X202F; // narrow no-break space
   public final static char CHAR_ZNBSP = 0XFEFF; // zero-width no-break space
 
-  public final static char CHAR_ACUTE      = 0X0301;
-  public final static char CHAR_BREVE      = 0X0306;
-  public final static char CHAR_CARON      = 0X030C;
-  public final static char CHAR_CEDILLA    = 0X0327;
-  public final static char CHAR_CIRCUMFLEX = 0X0302;
-  public final static char CHAR_DIAERESIS  = 0X0308;
-  public final static char CHAR_GRAVE      = 0X0300;
-  public final static char CHAR_MACRON     = 0X0304;
-  public final static char CHAR_RING       = 0X030A;
-  public final static char CHAR_TILDE      = 0X0303;
+  // combining diacritics
+  public final static char COMB_ACUTE      = 0X0301;
+  public final static char COMB_BREVE      = 0X0306;
+  public final static char COMB_CARON      = 0X030C;
+  public final static char COMB_CEDILLA    = 0X0327;
+  public final static char COMB_CIRCUMFLEX = 0X0302;
+  public final static char COMB_DIAERESIS  = 0X0308;
+  public final static char COMB_GRAVE      = 0X0300;
+  public final static char COMB_MACRON     = 0X0304;
+  public final static char COMB_RING       = 0X030A;
+  public final static char COMB_TILDE      = 0X0303;
 
+  // special characters
   public final static char CHAR_REPCH = 0XFFFD; // replacement character
   public final static char CHAR_BOM   = 0XFFFE; // byte order mark
 

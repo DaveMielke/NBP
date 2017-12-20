@@ -36,16 +36,16 @@ public abstract class CharacterPhrase {
 
       put('\n', R.string.character_newline);
 
-      put(CharacterUtilities.CHAR_ACUTE     , R.string.character_acute     );
-      put(CharacterUtilities.CHAR_BREVE     , R.string.character_breve     );
-      put(CharacterUtilities.CHAR_CARON     , R.string.character_caron     );
-      put(CharacterUtilities.CHAR_CEDILLA   , R.string.character_cedilla   );
-      put(CharacterUtilities.CHAR_CIRCUMFLEX, R.string.character_circumflex);
-      put(CharacterUtilities.CHAR_DIAERESIS , R.string.character_diaeresis );
-      put(CharacterUtilities.CHAR_GRAVE     , R.string.character_grave     );
-      put(CharacterUtilities.CHAR_MACRON    , R.string.character_macron    );
-      put(CharacterUtilities.CHAR_RING      , R.string.character_ring      );
-      put(CharacterUtilities.CHAR_TILDE     , R.string.character_tilde     );
+      put(CharacterUtilities.COMB_ACUTE     , R.string.character_acute     );
+      put(CharacterUtilities.COMB_BREVE     , R.string.character_breve     );
+      put(CharacterUtilities.COMB_CARON     , R.string.character_caron     );
+      put(CharacterUtilities.COMB_CEDILLA   , R.string.character_cedilla   );
+      put(CharacterUtilities.COMB_CIRCUMFLEX, R.string.character_circumflex);
+      put(CharacterUtilities.COMB_DIAERESIS , R.string.character_diaeresis );
+      put(CharacterUtilities.COMB_GRAVE     , R.string.character_grave     );
+      put(CharacterUtilities.COMB_MACRON    , R.string.character_macron    );
+      put(CharacterUtilities.COMB_RING      , R.string.character_ring      );
+      put(CharacterUtilities.COMB_TILDE     , R.string.character_tilde     );
     }
   };
 
