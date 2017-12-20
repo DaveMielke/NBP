@@ -3,6 +3,7 @@ package org.nbp.b2g.ui;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.CharacterUtilities;
 import org.nbp.common.UnicodeUtilities;
 
 public abstract class CharacterPhrase {
@@ -35,21 +36,16 @@ public abstract class CharacterPhrase {
 
       put('\n', R.string.character_newline);
 
-      put('\u0300', R.string.character_grave);
-      put('\u0301', R.string.character_acute);
-      put('\u0302', R.string.character_circumflex);
-      put('\u0303', R.string.character_tilde);
-      put('\u0304', R.string.character_macron);
-      put('\u0306', R.string.character_breve);
-      put('\u0308', R.string.character_diaeresis);
-      put('\u030A', R.string.character_ring);
-      put('\u030C', R.string.character_caron);
-      put('\u0327', R.string.character_cedilla);
-
-      put('\u0342', R.string.character_perispomeni);
-      put('\u0343', R.string.character_koronis);
-      put('\u0344', R.string.character_dialytika_tonos);
-      put('\u0345', R.string.character_ypogegrammeni);
+      put(CharacterUtilities.CHAR_ACUTE     , R.string.character_acute     );
+      put(CharacterUtilities.CHAR_BREVE     , R.string.character_breve     );
+      put(CharacterUtilities.CHAR_CARON     , R.string.character_caron     );
+      put(CharacterUtilities.CHAR_CEDILLA   , R.string.character_cedilla   );
+      put(CharacterUtilities.CHAR_CIRCUMFLEX, R.string.character_circumflex);
+      put(CharacterUtilities.CHAR_DIAERESIS , R.string.character_diaeresis );
+      put(CharacterUtilities.CHAR_GRAVE     , R.string.character_grave     );
+      put(CharacterUtilities.CHAR_MACRON    , R.string.character_macron    );
+      put(CharacterUtilities.CHAR_RING      , R.string.character_ring      );
+      put(CharacterUtilities.CHAR_TILDE     , R.string.character_tilde     );
     }
   };
 
