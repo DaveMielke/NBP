@@ -9,7 +9,7 @@ public class BatteryProperties extends SystemProperties {
 
   public BatteryProperties () {
     super("class/power_supply/battery-0");
-    batteryExtras = HostMonitor.getIntentExtras(Intent.ACTION_BATTERY_CHANGED);
+    batteryExtras = HostMonitor.getActionExtras(Intent.ACTION_BATTERY_CHANGED);
   }
 
   public final Bundle getExtras () {

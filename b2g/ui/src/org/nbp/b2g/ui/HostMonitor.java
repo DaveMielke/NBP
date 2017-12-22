@@ -17,12 +17,12 @@ import android.os.PowerManager;
 public class HostMonitor extends BroadcastReceiver {
   private final static String LOG_TAG = HostMonitor.class.getName();
 
-  private final static Map<String, Bundle> intentExtras =
+  private final static Map<String, Bundle> actionExtras =
                new HashMap<String, Bundle>();
 
-  public final static Bundle getIntentExtras (String action) {
-    synchronized (intentExtras) {
-      return intentExtras.get(action);
+  public final static Bundle getActionExtras (String action) {
+    synchronized (actionExtras) {
+      return actionExtras.get(action);
     }
   }
 
@@ -182,11 +182,12 @@ public class HostMonitor extends BroadcastReceiver {
     if (action == null) return;
     Log.d(LOG_TAG, ("host event: " + action));
 
-    synchronized (intentExtras) {
-      Bundle extras = intent.getExtras();
-      boolean first = intentExtras.get(action) == null;
-      intentExtras.put(action, extras);
+    synchronized (actionExtras) {
       ActionPerformer actionPerformer = actionPerformers.get(action);
+      Bundle intentExtras = intent.getExtras();
+
+      boolean first = !actionExtras.containsKey(action);
+      actionExtras.put(action, intentExtras);
 
       if (actionPerformer != null) {
         actionPerformer.performAction(context, intent, first);
