@@ -39,34 +39,34 @@ public abstract class Colors {
   }
 
   private static InputProcessor makeX11InputProcessor () {
-    DirectiveProcessor directiveProcessor = new DirectiveProcessor();
+    return new DirectiveProcessor()
+      .setUnknownDirectiveHandler(
+        new DirectiveProcessor.DirectiveHandler() {
+          @Override
+          public boolean handleDirective (String[] operands) {
+            if (operands.length == 4) {
+              String red   = operands[0];
+              String green = operands[1];
+              String blue  = operands[2];
+              String name  = operands[3];
 
-    directiveProcessor.setUnknownDirectiveHandler(
-      new DirectiveProcessor.DirectiveHandler() {
-        @Override
-        public boolean handleDirective (String[] operands) {
-          if (operands.length == 4) {
-            String red   = operands[0];
-            String green = operands[1];
-            String blue  = operands[2];
-            String name  = operands[3];
-
-            try {
-              addColorName(name,
-                Integer.valueOf(red),
-                Integer.valueOf(green),
-                Integer.valueOf(blue)
-              );
-            } catch (NumberFormatException exception) {
+              try {
+                addColorName(name,
+                  Integer.valueOf(red),
+                  Integer.valueOf(green),
+                  Integer.valueOf(blue)
+                );
+              } catch (NumberFormatException exception) {
+              }
             }
+
+            return true;
           }
-
-          return true;
         }
-      }
-    );
+      )
 
-    return directiveProcessor;
+      .setSkipCommentLines(true)
+      ;
   }
 
   private static void loadX11ColorNames () {

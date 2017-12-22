@@ -98,7 +98,26 @@ public class Characters {
     return null;
   }
 
+  private static Character parseEscapeSequence (String sequence) {
+    if (sequence.length() != 2) return null;
+    char character = sequence.charAt(1);
+
+    switch (character) {
+      default:
+        if (character != sequence.charAt(0)) return null;
+      case DirectiveProcessor.COMMENT_CHARACTER:
+        return character;
+    }
+  }
+
   private static Character parseCharacter (String operand) {
+    if (operand.charAt(0) == '\\') {
+      Character character = parseEscapeSequence(operand);
+      if (character != null) return character;
+      Log.w(LOG_TAG, ("unrecognized escape sequence: " + operand));
+      return null;
+    }
+
     {
       Character character = CharacterUtilities.getCharacter(operand);
       if (character != null) return character;
@@ -123,7 +142,7 @@ public class Characters {
       }
     }
 
-    Log.w(LOG_TAG, "unknown character: " + operand);
+    Log.w(LOG_TAG, ("unknown character: " + operand));
     return null;
   }
 
@@ -192,73 +211,74 @@ public class Characters {
   }
 
   private final InputProcessor makeInputProcessor () {
-    DirectiveProcessor directiveProcessor = new DirectiveProcessor();
-
-    directiveProcessor.addDirective("char",
-      new DirectiveProcessor.DirectiveHandler() {
-        @Override
-        public boolean handleDirective (String[] operands) {
-          return defineCharacter(operands, true);
+    return new DirectiveProcessor()
+      .addDirective("char",
+        new DirectiveProcessor.DirectiveHandler() {
+          @Override
+          public boolean handleDirective (String[] operands) {
+            return defineCharacter(operands, true);
+          }
         }
-      }
-    );
+      )
 
-    directiveProcessor.addDirective("glyph",
-      new DirectiveProcessor.DirectiveHandler() {
-        @Override
-        public boolean handleDirective (String[] operands) {
-          return defineCharacter(operands, false);
+      .addDirective("glyph",
+        new DirectiveProcessor.DirectiveHandler() {
+          @Override
+          public boolean handleDirective (String[] operands) {
+            return defineCharacter(operands, false);
+          }
         }
-      }
-    );
+      )
 
-    directiveProcessor.addDirective("alias",
-      new DirectiveProcessor.DirectiveHandler() {
-        @Override
-        public boolean handleDirective (String[] operands) {
-          int index = 0;
+      .addDirective("alias",
+        new DirectiveProcessor.DirectiveHandler() {
+          @Override
+          public boolean handleDirective (String[] operands) {
+            int index = 0;
 
-          if (index == operands.length) {
-            Log.w(LOG_TAG, "new character not specified");
+            if (index == operands.length) {
+              Log.w(LOG_TAG, "new character not specified");
+              return true;
+            }
+
+            String newCharacterOperand = operands[index++];
+            Character newCharacter = parseCharacter(newCharacterOperand);
+            if (newCharacter == null) return true;
+            Byte newDots = getDots(newCharacter);
+
+            if (index == operands.length) {
+              Log.w(LOG_TAG, "existing character not specified");
+              return true;
+            }
+
+            String existingCharacterOperand = operands[index++];
+            Character existingCharacter = parseCharacter(existingCharacterOperand);
+            if (existingCharacter == null) return true;
+            Byte existingDots = getDots(existingCharacter);
+
+            if (index < operands.length) {
+              Log.w(LOG_TAG, "too many operands");
+            }
+
+            if (existingDots == null) {
+              Log.w(LOG_TAG, "existing character not defined");
+              return true;
+            }
+
+            if (newDots == null) {
+              setDots(newCharacter, existingDots);
+            } else if (!newDots.equals(existingDots)) {
+              Log.w(LOG_TAG, "new character already defined");
+            }
+
             return true;
           }
-
-          String newCharacterOperand = operands[index++];
-          Character newCharacter = parseCharacter(newCharacterOperand);
-          if (newCharacter == null) return true;
-          Byte newDots = getDots(newCharacter);
-
-          if (index == operands.length) {
-            Log.w(LOG_TAG, "existing character not specified");
-            return true;
-          }
-
-          String existingCharacterOperand = operands[index++];
-          Character existingCharacter = parseCharacter(existingCharacterOperand);
-          if (existingCharacter == null) return true;
-          Byte existingDots = getDots(existingCharacter);
-
-          if (index < operands.length) {
-            Log.w(LOG_TAG, "too many operands");
-          }
-
-          if (existingDots == null) {
-            Log.w(LOG_TAG, "existing character not defined");
-            return true;
-          }
-
-          if (newDots == null) {
-            setDots(newCharacter, existingDots);
-          } else if (!newDots.equals(existingDots)) {
-            Log.w(LOG_TAG, "new character already defined");
-          }
-
-          return true;
         }
-      }
-    );
+      )
 
-    return directiveProcessor;
+      .setSkipCommentLines(true)
+      .setTrimTrailingComments(true)
+      ;
   }
 
   public Characters (String[] names) {

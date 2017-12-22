@@ -11,6 +11,19 @@ import android.util.Log;
 public class DirectiveProcessor extends InputProcessor {
   private final static String LOG_TAG = DirectiveProcessor.class.getName();
 
+  private boolean skipCommentLines = false;
+  private boolean trimTrailingComments = false;
+
+  public final DirectiveProcessor setSkipCommentLines (boolean yes) {
+    skipCommentLines = yes;
+    return this;
+  }
+
+  public final DirectiveProcessor setTrimTrailingComments (boolean yes) {
+    trimTrailingComments = yes;
+    return this;
+  }
+
   private final static Pattern OPERANDS_PATTERN = Pattern.compile("\\s+");
 
   public interface DirectiveHandler {
@@ -25,8 +38,9 @@ public class DirectiveProcessor extends InputProcessor {
     }
   };
 
-  public final void setUnknownDirectiveHandler (DirectiveHandler handler) {
+  public final DirectiveProcessor setUnknownDirectiveHandler (DirectiveHandler handler) {
     unknownDirectiveHandler = handler;
+    return this;
   }
 
   private final Map<String, DirectiveHandler> directives = new HashMap<String, DirectiveHandler>();
@@ -35,49 +49,61 @@ public class DirectiveProcessor extends InputProcessor {
     return name.toLowerCase();
   }
 
-  public final boolean addDirective (String name, DirectiveHandler handler, boolean force) {
+  public final DirectiveProcessor addDirective (String name, DirectiveHandler handler) {
     name = normalizeName(name);
 
-    if (!force) {
-      if (directives.get(name) != null) {
-        Log.w(LOG_TAG, "directive already defined: " + name);
-        return false;
-      }
+    if (directives.get(name) == null) {
+      directives.put(name, handler);
+    } else {
+      Log.w(LOG_TAG, ("directive already defined: " + name));
     }
 
-    directives.put(name, handler);
-    return true;
+    return this;
   }
 
-  public final boolean addDirective (String name, DirectiveHandler handler) {
-    return addDirective(name, handler, false);
-  }
+  public final static char COMMENT_CHARACTER = '#';
+  private final static String COMMENT_OPERAND = Character.toString(COMMENT_CHARACTER);
 
   @Override
   protected final boolean handleLine (CharSequence text, int number) {
     String[] operands = OPERANDS_PATTERN.split(text.toString());
-    int index = 0;
+    int from = 0;
+    int to = operands.length;
 
-    if (index < operands.length) {
-      if (operands[index].isEmpty()) {
-        index += 1;
+    if (from < to) {
+      if (operands[from].isEmpty()) {
+        from += 1;
       }
     }
 
-    if (index == operands.length) return true;
-    String directive = operands[index];
-    if (directive.charAt(0) == '#') return true;
+    if (trimTrailingComments) {
+      for (int index=from; index<to; index+=1) {
+        if (operands[index].equals(COMMENT_OPERAND)) {
+          to = index;
+          break;
+        }
+      }
+    }
+
+    if (from == to) return true;
+    String directive = operands[from];
+
+    if (skipCommentLines) {
+      if (directive.charAt(0) == COMMENT_CHARACTER) {
+        return true;
+      }
+    }
 
     directive = normalizeName(directive);
     DirectiveHandler handler = directives.get(directive);
 
     if (handler != null) {
-      index += 1;
+      from += 1;
     } else {
       handler = unknownDirectiveHandler;
     }
 
-    operands = Arrays.copyOfRange(operands, index, operands.length);
+    operands = Arrays.copyOfRange(operands, from, to);
     return handler.handleDirective(operands);
   }
 
@@ -99,12 +125,14 @@ public class DirectiveProcessor extends InputProcessor {
   }
 
   private final void addDirectives () {
-    addDirective("include", new DirectiveProcessor.DirectiveHandler() {
-      @Override
-      public boolean handleDirective (String[] operands) {
-        return processNestedInput(operands);
+    addDirective("include",
+      new DirectiveHandler() {
+        @Override
+        public boolean handleDirective (String[] operands) {
+          return processNestedInput(operands);
+        }
       }
-    });
+    );
   }
 
   public DirectiveProcessor () {

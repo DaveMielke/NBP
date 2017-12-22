@@ -310,18 +310,19 @@ public class KeyBindings {
   }
 
   private InputProcessor makeInputProcessor () {
-    DirectiveProcessor directiveProcessor = new DirectiveProcessor();
-
-    directiveProcessor.addDirective("bind",
-      new DirectiveProcessor.DirectiveHandler() {
-        @Override
-        public boolean handleDirective (String[] operands) {
-          return bindKeyCombination(operands);
+    return new DirectiveProcessor()
+      .addDirective("bind",
+        new DirectiveProcessor.DirectiveHandler() {
+          @Override
+          public boolean handleDirective (String[] operands) {
+            return bindKeyCombination(operands);
+          }
         }
-      }
-    );
+      )
 
-    return directiveProcessor;
+      .setSkipCommentLines(true)
+      .setTrimTrailingComments(true)
+      ;
   }
 
   private void addKeyBindings (String name) {

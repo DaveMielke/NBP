@@ -4,7 +4,7 @@ include numbers-nemeth.chars.inc
 char space 0
 char ! 2346
 char " 5
-char # 3456
+char \# 3456
 char $ 1246
 char % 146
 char & 12346
@@ -34,7 +34,7 @@ char _ 456
 
 char @ 47
 char [ 2467
-char \ 12567
+char \\ 12567
 char ] 124567
 char ^ 457
 
