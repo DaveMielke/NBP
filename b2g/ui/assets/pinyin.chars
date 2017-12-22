@@ -1,7 +1,7 @@
 include nabcc.chars.inc
 
-# No tone: ü
-char	U+00FC	1256	# u + diaeresis
+# no tone: ü
+char	U+00FC	12568	# u + diaeresis
 
 # Tone 1 (macron): a e i o u ü
 char	U+0101	178	# a + macron (tone 1)
