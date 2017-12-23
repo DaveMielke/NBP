@@ -1,10 +1,11 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import org.nbp.common.CharacterUtilities;
 
@@ -82,7 +83,7 @@ public abstract class DiacriticAction extends Action {
     return diacriticNames.keySet();
   }
 
-  protected static class DiacriticMap extends LinkedHashMap<Character, Character> {
+  protected static class DiacriticMap extends HashMap<Character, Character> {
     public DiacriticMap () {
       super();
     }
@@ -116,6 +117,7 @@ public abstract class DiacriticAction extends Action {
 
   @Override
   public final boolean performAction () {
+    defineDiacritics();
     final Endpoint endpoint = Endpoints.host.get();
 
     synchronized (endpoint) {
@@ -132,6 +134,17 @@ public abstract class DiacriticAction extends Action {
             Set<Character> diacriticSet = diacriticMap.keySet();
             if (diacriticSet.isEmpty()) return false;
             final Character[] diacriticArray = diacriticSet.toArray(new Character[diacriticSet.size()]);
+
+            Arrays.sort(diacriticArray,
+              new Comparator<Character>() {
+                @Override
+                public int compare (Character diacritic1, Character diacritic2) {
+                  String name1 = diacriticNames.get(diacritic1);
+                  String name2 = diacriticNames.get(diacritic2);
+                  return name1.compareTo(name2);
+                }
+              }
+            );
 
             StringBuilder message = new StringBuilder();
             message.append(getString(getChooseMessage()));
@@ -164,6 +177,5 @@ public abstract class DiacriticAction extends Action {
 
   protected DiacriticAction (Endpoint endpoint) {
     super(endpoint, false);
-    defineDiacritics();
   }
 }
