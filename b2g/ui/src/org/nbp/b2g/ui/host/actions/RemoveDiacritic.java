@@ -36,13 +36,7 @@ public class RemoveDiacritic extends DiacriticAction {
         int index = 0;
 
         while (true) {
-          String composition = UnicodeUtilities.compose(decomposition.toString());
-
-          if (composition != null) {
-            if (composition.length() == 1) {
-              map.put(diacritic, composition.charAt(0));
-            }
-          }
+          mapDiacritic(map, diacritic, decomposition.toString());
 
           if (++index == count) break;
           char next = decomposition.charAt(index);

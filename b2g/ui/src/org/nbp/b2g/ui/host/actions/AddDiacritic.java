@@ -27,15 +27,9 @@ public class AddDiacritic extends DiacriticAction {
     decomposition.append(base);
     decomposition.append(' ');
 
-    for (Character diacritic : getDiacritics()) {
+    for (Character diacritic : DiacriticUtilities.getSupportedDiacritics()) {
       decomposition.setCharAt(1, diacritic);
-      String composition = UnicodeUtilities.compose(decomposition.toString());
-
-      if (composition != null) {
-        if (composition.length() == 1) {
-          map.put(diacritic, composition.charAt(0));
-        }
-      }
+      mapDiacritic(map, diacritic, decomposition.toString());
     }
   }
 
