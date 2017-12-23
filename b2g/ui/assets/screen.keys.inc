@@ -92,4 +92,7 @@ bind Dot6+Center DropOn
 bind Backward+Forward+Space DescribeBuild
 bind Space+Dots1236#v DescribeBuild
 
+bind Space+Dot8+Dots13456#y AddDiacritic
+bind Space+Dot7+Dots13456#y RemoveDiacritic
+
 include advanced-screen.keys.inc
