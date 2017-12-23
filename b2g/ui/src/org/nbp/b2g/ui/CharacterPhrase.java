@@ -35,22 +35,11 @@ public abstract class CharacterPhrase {
       }
 
       put('\n', R.string.character_newline);
-
-      put(CharacterUtilities.COMB_ACUTE     , R.string.character_acute     );
-      put(CharacterUtilities.COMB_BREVE     , R.string.character_breve     );
-      put(CharacterUtilities.COMB_CARON     , R.string.character_caron     );
-      put(CharacterUtilities.COMB_CEDILLA   , R.string.character_cedilla   );
-      put(CharacterUtilities.COMB_CIRCUMFLEX, R.string.character_circumflex);
-      put(CharacterUtilities.COMB_DIAERESIS , R.string.character_diaeresis );
-      put(CharacterUtilities.COMB_GRAVE     , R.string.character_grave     );
-      put(CharacterUtilities.COMB_MACRON    , R.string.character_macron    );
-      put(CharacterUtilities.COMB_RING      , R.string.character_ring      );
-      put(CharacterUtilities.COMB_TILDE     , R.string.character_tilde     );
     }
   };
 
   public final static String get (char character, Dictionary... dictionaries) {
-    StringBuilder sb = new StringBuilder();
+    StringBuilder phrase = new StringBuilder();
     String characters = UnicodeUtilities.decompose(character);
     int count = characters.length();
 
@@ -58,17 +47,26 @@ public abstract class CharacterPhrase {
     for (int index=0; index<count; index+=1) {
       character = characters.charAt(index);
 
-      if (sb.length() > 0) sb.append(' ');
-      if (Character.isUpperCase(character)) sb.append("cap ");
+      if (phrase.length() > 0) phrase.append(' ');
+      if (Character.isUpperCase(character)) phrase.append("cap ");
 
       if (dictionaries != null) {
         for (Dictionary dictionary : dictionaries) {
           String word = dictionary.get(character);
 
           if (word != null) {
-            sb.append(word);
+            phrase.append(word);
             continue CHARACTER_LOOP;
           }
+        }
+      }
+
+      {
+        String name = DiacriticUtilities.getDiacriticName(character);
+
+        if (name != null) {
+          phrase.append(name);
+          continue CHARACTER_LOOP;
         }
       }
 
@@ -79,17 +77,17 @@ public abstract class CharacterPhrase {
         if (Character.isWhitespace(character)) {
           resource = SPACE;
         } else {
-          sb.append(character);
+          phrase.append(character);
           continue CHARACTER_LOOP;
         }
 
         resourceCache.put(resourceKey, resource);
       }
 
-      sb.append(ApplicationContext.getString(resource));
+      phrase.append(ApplicationContext.getString(resource));
     }
 
-    return sb.toString();
+    return phrase.toString();
   }
 
   public final static String get (char character, Cache cache, Dictionary... dictionaries) {

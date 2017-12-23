@@ -1,6 +1,14 @@
 Tables
 ======
 
+General Tables
+--------------
+
+Supported Diacritics
+~~~~~~~~~~~~~~~~~~~~
+
+.. include:: general-diacritics.rst
+
 Braille Tables
 --------------
 
@@ -90,9 +98,4 @@ English Phonetic Alphabet
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: speech-phonetic.rst
-
-Supported Diacritics
-~~~~~~~~~~~~~~~~~~~~
-
-.. include:: speech-diacritics.rst
 
