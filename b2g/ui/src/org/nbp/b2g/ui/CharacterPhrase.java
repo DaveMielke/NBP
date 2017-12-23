@@ -107,6 +107,6 @@ public abstract class CharacterPhrase {
   private final static Cache phraseCache = new Cache();
 
   public final static String get (char character) {
-    return get(character, phraseCache, null);
+    return get(character, phraseCache);
   }
 }
