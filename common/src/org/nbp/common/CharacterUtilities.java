@@ -43,16 +43,20 @@ public abstract class CharacterUtilities {
   public final static char CHAR_ZNBSP = 0XFEFF; // zero-width no-break space
 
   // combining diacritics
-  public final static char COMB_ACUTE      = 0X0301;
-  public final static char COMB_BREVE      = 0X0306;
-  public final static char COMB_CARON      = 0X030C;
-  public final static char COMB_CEDILLA    = 0X0327;
-  public final static char COMB_CIRCUMFLEX = 0X0302;
-  public final static char COMB_DIAERESIS  = 0X0308;
-  public final static char COMB_GRAVE      = 0X0300;
-  public final static char COMB_MACRON     = 0X0304;
-  public final static char COMB_RING       = 0X030A;
-  public final static char COMB_TILDE      = 0X0303;
+  public final static char COMB_ACUTE         = 0X0301;
+  public final static char COMB_BREVE         = 0X0306;
+  public final static char COMB_CARON         = 0X030C;
+  public final static char COMB_CEDILLA       = 0X0327;
+  public final static char COMB_CIRCUMFLEX    = 0X0302;
+  public final static char COMB_DASIA         = 0X0314;
+  public final static char COMB_DIAERESIS     = 0X0308;
+  public final static char COMB_GRAVE         = 0X0300;
+  public final static char COMB_MACRON        = 0X0304;
+  public final static char COMB_PERISPOMENI   = 0X0342;
+  public final static char COMB_PSILI         = 0X0313;
+  public final static char COMB_RING          = 0X030A;
+  public final static char COMB_TILDE         = 0X0303;
+  public final static char COMB_YPOGEGRAMMENI = 0X0345;
 
   // special characters
   public final static char CHAR_REPCH = 0XFFFD; // replacement character

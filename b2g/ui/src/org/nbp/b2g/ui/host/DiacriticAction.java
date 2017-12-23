@@ -52,6 +52,11 @@ public abstract class DiacriticAction extends Action {
         );
 
         defineDiacritic(
+          CharacterUtilities.COMB_DASIA,
+          R.string.character_dasia
+        );
+
+        defineDiacritic(
           CharacterUtilities.COMB_DIAERESIS,
           R.string.character_diaeresis
         );
@@ -67,6 +72,16 @@ public abstract class DiacriticAction extends Action {
         );
 
         defineDiacritic(
+          CharacterUtilities.COMB_PERISPOMENI,
+          R.string.character_perispomeni
+        );
+
+        defineDiacritic(
+          CharacterUtilities.COMB_PSILI,
+          R.string.character_psili
+        );
+
+        defineDiacritic(
           CharacterUtilities.COMB_RING,
           R.string.character_ring
         );
@@ -75,12 +90,21 @@ public abstract class DiacriticAction extends Action {
           CharacterUtilities.COMB_TILDE,
           R.string.character_tilde
         );
+
+        defineDiacritic(
+          CharacterUtilities.COMB_YPOGEGRAMMENI,
+          R.string.character_ypogegrammeni
+        );
       }
     }
   }
 
   protected final Set<Character> getDiacritics () {
     return diacriticNames.keySet();
+  }
+
+  protected final String getDiacriticName (char diacritic) {
+    return diacriticNames.get(diacritic);
   }
 
   protected static class DiacriticMap extends HashMap<Character, Character> {
@@ -132,6 +156,7 @@ public abstract class DiacriticAction extends Action {
             if (diacriticMap == null) return false;
 
             Set<Character> diacriticSet = diacriticMap.keySet();
+            diacriticSet.retainAll(getDiacritics());
             if (diacriticSet.isEmpty()) return false;
             final Character[] diacriticArray = diacriticSet.toArray(new Character[diacriticSet.size()]);
 
@@ -139,8 +164,8 @@ public abstract class DiacriticAction extends Action {
               new Comparator<Character>() {
                 @Override
                 public int compare (Character diacritic1, Character diacritic2) {
-                  String name1 = diacriticNames.get(diacritic1);
-                  String name2 = diacriticNames.get(diacritic2);
+                  String name1 = getDiacriticName(diacritic1);
+                  String name2 = getDiacriticName(diacritic2);
                   return name1.compareTo(name2);
                 }
               }
@@ -151,7 +176,7 @@ public abstract class DiacriticAction extends Action {
 
             for (Character diacritic : diacriticArray) {
               message.append('\n');
-              message.append(diacriticNames.get(diacritic));
+              message.append(getDiacriticName(diacritic));
             }
 
             Endpoints.setPopupEndpoint(message.toString(),
