@@ -199,3 +199,52 @@ two leading zeroes.
 
   4) Press Enter. The prompt goes away, and the ``s`` is typed.
 
+Adding/Removing Diacritical Marks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One way to add or remove a diacritical mark (an accent) from a letter is
+to retype that letter using the corrected braille representation.
+This is the most natural way to do it for those who
+are using an appropriate braille code and are familiar with it.
+For other braille users, however,
+this seemingly simple and common literary endeavour
+can be rather daunting.
+It may even be impossible if the braille code being used doesn't support it.
+
+The |user interface| provides a menu-based way to add and remove diacritical marks
+that can be easily used by anyone.
+It modifies the character that's immediately to the left of the cursor indicator
+so that the most common case,
+typing a letter and then adding diacritical marks to it,
+can be performed in a natural and intuitive way.
+See `Supported Diacritical Marks`_ for a list of
+the diacritical marks that the |user interface| supports.
+
+To add a diacritical mark to the character, press Space+Dot8+m (dots 134).
+This presents a pop-up (see `Pop-ups`_) that lists
+all of the diacritical marks that may be added to the character.
+Navigate to the one that you'd like to add, and press Center.
+Pressing Enter will cancel the operation without modifying the character.
+
+To remove a diacritical mark to the character, press Space+Dot7+m (dots 134).
+This presents a pop-up (see `Pop-ups`_) that lists
+all of the diacritical marks that are currently on the character.
+Navigate to the one that you'd like to remove, and press Center.
+Pressing Enter will cancel the operation without modifying the character.
+
+There are a few ways to find out which diacritical marks are currently on a character:
+
+* Place the cursor indicator immediately to the right of the character
+  and then press Space+Dot7+m (dots 134) -
+  the process (documented here) to remove a diacritical mark.
+  Read the list of diacritical marks that are currently on the character,
+  and then press Enter to cancel the operation.
+  This method won't work if there are no diacritical marks on the character.
+
+* Hold Dot7 while pressing the cursor routing key behind the character.
+  See `Identifying an Unrecognized Character`_ for details.
+
+* Place the cursor indicator on the character
+  and then press Dots36 to have it spoken.
+  See `Editing with Speech`_ for details.
+

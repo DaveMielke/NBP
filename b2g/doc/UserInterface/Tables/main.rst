@@ -4,8 +4,8 @@ Tables
 General Tables
 --------------
 
-Supported Diacritics
-~~~~~~~~~~~~~~~~~~~~
+Supported Diacritical Marks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: general-diacritics.rst
 

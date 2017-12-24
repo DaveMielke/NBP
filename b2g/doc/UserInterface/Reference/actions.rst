@@ -1,4 +1,5 @@
 .. |AccessibilitySettings| replace:: Go to the Accessibility Settings screen.
+.. |AddDiacriticalMark| replace:: Add a diacritical mark to the previous character.
 .. |AddShortcut| replace:: Add a shortcut to `the home screen`_.
 .. |AddToClipboard| replace:: Add the selected (or all) text to `the clipboard`_.
 .. |AirplaneModeOff| replace:: Turn off Android's airplane mode.
@@ -114,6 +115,7 @@
 .. |QuickStartText| replace:: Go to the plain text version of the `quick Start guide`_.
 .. |RecentApplications| replace:: Go to the Recent Apps screen.
 .. |RemoteDisplay| replace:: Switch to `the remote braille display`_.
+.. |RemoveDiacriticalMark| replace:: Remove a diacritical mark from the previous character.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
 .. |ResetSettings| replace:: Reset the B2G settings to their default values.
 .. |RestoreSettings| replace:: Restore the B2G settings to their most recently saved values.

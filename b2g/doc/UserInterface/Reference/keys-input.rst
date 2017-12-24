@@ -49,6 +49,12 @@ Space+Dots136 (u)
 Space+Dots1346 (x)
   |TypeControl|
 
+Space+Dot7+Dots134 (m)
+  |RemoveDiacriticalMark|
+
+Space+Dot8+Dots134 (m)
+  |AddDiacriticalMark|
+
 Space+Dot7+Dots2345 (t)
   |TypingModeText|
 

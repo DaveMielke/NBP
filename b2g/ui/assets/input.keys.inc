@@ -22,8 +22,8 @@ bind Space+Dot8 TypeDot8
 bind Space+Dots136#u TypeUnicode
 bind Space+Dots1346#x TypeControl
 
-bind Space+Dot8+Dots134#m AddDiacriticalMark
 bind Space+Dot7+Dots134#m RemoveDiacriticalMark
+bind Space+Dot8+Dots134#m AddDiacriticalMark
 
 bind Space+Dot7+Dots2345#t TypingModeText
 bind Space+Dot8+Dots2345#t TypingModeBraille

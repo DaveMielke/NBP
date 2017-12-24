@@ -75,7 +75,7 @@ When a character is spoken (or when text is being spelled),
 the prefix ``cap`` (meaning capital) is added if it's an uppercase letter.
 Additionally, if the character has any diacritics (accents)
 then each of their names is spoken after it
-(see `Supported Diacritics`_ for details).
+(see `Supported Diacritical Marks`_ for details).
 For example:
 
 * The letter ``É`` (an uppercase E with an acute accent)

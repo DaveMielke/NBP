@@ -1,4 +1,4 @@
-.. table:: Supported Diacritics (Accents)
+.. table:: Supported Diacritical Marks
 
   =============  =====  ===========================================
   Name           Where  Shape
