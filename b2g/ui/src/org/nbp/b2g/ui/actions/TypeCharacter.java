@@ -85,73 +85,69 @@ public class TypeCharacter extends InputAction {
   }
 
   @Override
-  protected final boolean performInputAction () {
-    Endpoint endpoint = getEndpoint();
+  protected final boolean performInputAction (Endpoint endpoint) {
+    TypingMode typingMode = ApplicationSettings.TYPING_MODE;
+    boolean literaryBraille = ApplicationSettings.LITERARY_BRAILLE && (typingMode == TypingMode.TEXT);
 
-    synchronized (endpoint) {
-      TypingMode typingMode = ApplicationSettings.TYPING_MODE;
-      boolean literaryBraille = ApplicationSettings.LITERARY_BRAILLE && (typingMode == TypingMode.TEXT);
-
-      if (endpoint.isPasswordField()) {
-        typingMode = TypingMode.TEXT;
-        literaryBraille = false;
-      } else if (literaryBraille) {
-        typingMode = TypingMode.BRAILLE;
-      }
-
-      int keyMask = getNavigationKeys();
-      Character character;
-
-      switch (typingMode) {
-        case TEXT: {
-          character = Characters.getCharacters().toCharacter(keyMask);
-
-          if (character == null) {
-            Log.w(LOG_TAG, String.format(
-              "not mapped to a character: %s",
-              KeyMask.toString(keyMask)
-            ));
-
-            return false;
-          }
-
-          break;
-        }
-
-        case BRAILLE: {
-          Byte dots = KeyMask.toDots(keyMask);
-
-          if (dots == null) {
-            Log.w(LOG_TAG, String.format(
-              "not a braille character: %s",
-              KeyMask.toString(keyMask)
-            ));
-
-            return false;
-          }
-
-          character = Braille.toCharacter(dots);
-          break;
-        }
-
-        default:
-          Log.w(LOG_TAG, ("unsupported typing mode: " + typingMode.name()));
-          return false;
-      }
-
-      return typeCharacter(endpoint, character, literaryBraille);
+    if (endpoint.isPasswordField()) {
+      typingMode = TypingMode.TEXT;
+      literaryBraille = false;
+    } else if (literaryBraille) {
+      typingMode = TypingMode.BRAILLE;
     }
+
+    int keyMask = getNavigationKeys();
+    Character character;
+
+    switch (typingMode) {
+      case TEXT: {
+        character = Characters.getCharacters().toCharacter(keyMask);
+
+        if (character == null) {
+          Log.w(LOG_TAG, String.format(
+            "not mapped to a character: %s",
+            KeyMask.toString(keyMask)
+          ));
+
+          return false;
+        }
+
+        break;
+      }
+
+      case BRAILLE: {
+        Byte dots = KeyMask.toDots(keyMask);
+
+        if (dots == null) {
+          Log.w(LOG_TAG, String.format(
+            "not a braille character: %s",
+            KeyMask.toString(keyMask)
+          ));
+
+          return false;
+        }
+
+        character = Braille.toCharacter(dots);
+        break;
+      }
+
+      default:
+        Log.w(LOG_TAG, ("unsupported typing mode: " + typingMode.name()));
+        return false;
+    }
+
+    return typeCharacter(endpoint, character, literaryBraille);
   }
 
   @Override
-  protected final boolean performNonInputAction () {
+  protected final boolean performNonInputAction (Endpoint endpoint) {
     int keyMask = getNavigationKeys();
     if (!KeyMask.isDots(keyMask)) return false;
 
     keyMask &= ~KeyMask.SPACE;
     if (keyMask == 0) return false;
 
-    return getEndpoint().handleDotKeys(keyMask);
+    return endpoint.handleDotKeys(keyMask);
   }
 
   public TypeCharacter (Endpoint endpoint) {

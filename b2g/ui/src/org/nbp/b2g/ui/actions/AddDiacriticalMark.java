@@ -1,10 +1,7 @@
-package org.nbp.b2g.ui.host.actions;
-import org.nbp.b2g.ui.host.*;
+package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-import org.nbp.common.UnicodeUtilities;
-
-public class AddDiacritic extends DiacriticAction {
+public class AddDiacriticalMark extends DiacriticAction {
   protected final int getChooseMessage () {
     return R.string.diacritic_choose_add;
   }
@@ -33,7 +30,7 @@ public class AddDiacritic extends DiacriticAction {
     }
   }
 
-  public AddDiacritic (Endpoint endpoint) {
+  public AddDiacriticalMark (Endpoint endpoint) {
     super(endpoint);
   }
 }

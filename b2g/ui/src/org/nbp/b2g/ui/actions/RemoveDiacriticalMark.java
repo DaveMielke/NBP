@@ -1,10 +1,9 @@
-package org.nbp.b2g.ui.host.actions;
-import org.nbp.b2g.ui.host.*;
+package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 import org.nbp.common.UnicodeUtilities;
 
-public class RemoveDiacritic extends DiacriticAction {
+public class RemoveDiacriticalMark extends DiacriticAction {
   protected final int getChooseMessage () {
     return R.string.diacritic_choose_remove;
   }
@@ -47,7 +46,7 @@ public class RemoveDiacritic extends DiacriticAction {
     }
   }
 
-  public RemoveDiacritic (Endpoint endpoint) {
+  public RemoveDiacriticalMark (Endpoint endpoint) {
     super(endpoint);
   }
 }
