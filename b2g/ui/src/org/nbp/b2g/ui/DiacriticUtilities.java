@@ -4,6 +4,9 @@ import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import org.nbp.common.CharacterUtilities;
 
 public abstract class DiacriticUtilities {
@@ -100,6 +103,19 @@ public abstract class DiacriticUtilities {
 
   public final static String getDiacriticName (char diacritic) {
     return diacriticNames.get(diacritic);
+  }
+
+  public final static void sortDiacriticsByName (Character[] diacritics) {
+    Arrays.sort(diacritics,
+      new Comparator<Character>() {
+        @Override
+        public int compare (Character diacritic1, Character diacritic2) {
+          String name1 = DiacriticUtilities.getDiacriticName(diacritic1);
+          String name2 = DiacriticUtilities.getDiacriticName(diacritic2);
+          return name1.compareTo(name2);
+        }
+      }
+    );
   }
 
   private DiacriticUtilities () {

@@ -1,7 +1,5 @@
 package org.nbp.b2g.ui;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
@@ -55,18 +53,9 @@ public abstract class DiacriticAction extends InputAction {
         Set<Character> diacriticSet = diacriticMap.keySet();
         diacriticSet.retainAll(DiacriticUtilities.getSupportedDiacritics());
         if (diacriticSet.isEmpty()) return false;
-        final Character[] diacriticArray = diacriticSet.toArray(new Character[diacriticSet.size()]);
 
-        Arrays.sort(diacriticArray,
-          new Comparator<Character>() {
-            @Override
-            public int compare (Character diacritic1, Character diacritic2) {
-              String name1 = DiacriticUtilities.getDiacriticName(diacritic1);
-              String name2 = DiacriticUtilities.getDiacriticName(diacritic2);
-              return name1.compareTo(name2);
-            }
-          }
-        );
+        final Character[] diacriticArray = diacriticSet.toArray(new Character[diacriticSet.size()]);
+        DiacriticUtilities.sortDiacriticsByName(diacriticArray);
 
         StringBuilder message = new StringBuilder();
         message.append(getString(getChooseMessage()));
