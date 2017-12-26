@@ -36,7 +36,7 @@ public abstract class EmoticonUtilities {
     defineEmoticon("o_O", R.string.emoticon_confused);
     defineEmoticon("<3", R.string.emoticon_heart);
     defineEmoticon("x-(", R.string.emoticon_mad);
-    defineEmoticon(":-/", R.string.emoticon_scheptical);
+    defineEmoticon(":-/", R.string.emoticon_skeptical);
     defineEmoticon(":-|", R.string.emoticon_indecision);
     defineEmoticon("#-)", R.string.emoticon_partied);
     defineEmoticon("%-)", R.string.emoticon_drunk);

@@ -5,6 +5,7 @@
   --------  -------------------------
   :-)       Smile, Happy
   :-))      Big Smile, Very Happy
+  ;-)       Winking
   O:-)      Angel
   >:-)      Evil, Devilish
   :-(       Frown, Sad
@@ -15,7 +16,7 @@
   :-X       Lips are Sealed
   :-*       Kissing
   :-!       Foot in Mouth
-  :-/       Scheptical
+  :-/       Skeptical
   :-\\      Undecided
   :-|       Indecision, Straight Face
   <:-|      Dunce, Dumb
@@ -24,9 +25,8 @@
   :-###     Sick
   <3        Heart
   \|-O      Bored, Yawning
-  >:O       Yelling
   o_O       Confused
-  ;-)       Winking
+  >:O       Yelling
   %-)       Drunk
   #-)       Partied All Night
   B-)       Cool
