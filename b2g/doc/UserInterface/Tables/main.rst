@@ -9,6 +9,11 @@ Supported Diacritical Marks
 
 .. include:: general-diacritics.rst
 
+Supported Emoticons
+~~~~~~~~~~~~~~~~~~~
+
+.. include:: general-emoticons.rst
+
 Braille Tables
 --------------
 
