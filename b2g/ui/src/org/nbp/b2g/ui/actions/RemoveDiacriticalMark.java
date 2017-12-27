@@ -5,7 +5,7 @@ import org.nbp.common.UnicodeUtilities;
 
 public class RemoveDiacriticalMark extends DiacriticAction {
   protected final int getChooseMessage () {
-    return R.string.diacritic_choose_remove;
+    return R.string.popup_select_diacritic_remove;
   }
 
   private final static Object MAP_LOCK = new Object();

@@ -5,7 +5,7 @@ public class TypeEmoticon extends InputAction {
   @Override
   protected final boolean performInputAction (final Endpoint endpoint) {
     StringBuilder message = new StringBuilder();
-    message.append(getString(R.string.emoticon_message_select));
+    message.append(getString(R.string.popup_select_emoticon));
     final String[] emoticons = EmoticonUtilities.getEmoticons();
 
     for (String emoticon : emoticons) {

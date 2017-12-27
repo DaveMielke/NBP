@@ -28,7 +28,7 @@ public class AllApplications extends Action {
     final ActivityInfo[] array = new ActivityInfo[count];
 
     StringBuilder sb = new StringBuilder();
-    sb.append(getString(R.string.launch_message_select));
+    sb.append(getString(R.string.popup_select_activity));
 
     {
       int index = 0;

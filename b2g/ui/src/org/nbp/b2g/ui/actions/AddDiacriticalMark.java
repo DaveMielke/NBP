@@ -3,7 +3,7 @@ import org.nbp.b2g.ui.*;
 
 public class AddDiacriticalMark extends DiacriticAction {
   protected final int getChooseMessage () {
-    return R.string.diacritic_choose_add;
+    return R.string.popup_select_diacritic_add;
   }
 
   private final static Object MAP_LOCK = new Object();

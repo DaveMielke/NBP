@@ -4,12 +4,12 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ActionChooser {
+public class ActionChooser extends UserInterfaceComponent {
   private static String makeText (List<Action> actions, KeyBindingMap map, Integer cursorKey) {
     boolean haveCursorKey = cursorKey != null;
 
     StringBuilder sb = new StringBuilder();
-    sb.append(ApplicationContext.getString(R.string.ChooseAction_label));
+    sb.append(getString(R.string.popup_select_action));
 
     for (Integer keys : map.keySet()) {
       boolean needsCursorKey = (keys & KeyMask.CURSOR) != 0;
