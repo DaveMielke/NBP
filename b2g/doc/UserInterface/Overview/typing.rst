@@ -248,3 +248,33 @@ There are a few ways to find out which diacritical marks are currently on a char
   and then press Dots36 to have it spoken.
   See `Editing with Speech`_ for details.
 
+Typing Emoticons
+~~~~~~~~~~~~~~~~
+
+Emoticons are sequences of basic characters
+(commonly used within emails, text messages, etc)
+that depict emotions.
+For example:
+
+* ``:-)`` for a smile (happy face).
+* ``:-(`` for a frown (sad face).
+
+The |user interface| offers a menu-based way to type an emoticon.
+Pressing Space+e (dots 15) presents a list of emoticon descriptions
+within a pop-up (see `Pop-ups`_).
+Pressing Center on the desired description types its corresponding emoticon.
+Spaces are added to either side of the emoticon, as needed,
+to ensure that it's separated from the surrounding text.
+Pressing Enter will cancel the operation without typing an emoticon.
+
+See `Supported Emoticons`_ for the list of emoticons
+that the |user interface| supports.
+Some `literary braille`_ codes might not work well with some emoticons -
+for example, those that don't allow for a colon at the beginning of a word.
+Likewise, some speech voices may behave unexpectedly -
+for example, they may:
+
+* speak a different description
+* spell out the individual characters
+* say nothing at all
+
