@@ -10,7 +10,7 @@ public class TypeEmoticon extends InputAction {
 
     for (String emoticon : emoticons) {
       message.append('\n');
-      message.append(EmoticonUtilities.getEmoticonName(emoticon));
+      message.append(EmoticonUtilities.getDescription(emoticon));
     }
 
     Endpoints.setPopupEndpoint(

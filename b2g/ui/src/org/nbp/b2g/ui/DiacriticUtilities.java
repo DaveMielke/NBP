@@ -12,18 +12,17 @@ import org.nbp.common.CharacterUtilities;
 
 public abstract class DiacriticUtilities {
   private final static Set<Character> supportedDiacritics;
-  private final static Map<Character, String> diacriticNames;
-  private final static Map<String, Character> diacriticCharacters;
+  private final static Map<Character, Integer> diacriticNames;
+  private final static Map<Integer, Character> diacriticCharacters;
 
-  private final static void defineDiacritic (Character character, int resource) {
-    String name = ApplicationContext.getString(resource);
+  private final static void defineDiacritic (Character character, Integer name) {
     diacriticNames.put(character, name);
     diacriticCharacters.put(name, character);
   }
 
   static {
-    diacriticNames = new HashMap<Character, String>();
-    diacriticCharacters = new HashMap<String, Character>();
+    diacriticNames = new HashMap<Character, Integer>();
+    diacriticCharacters = new HashMap<Integer, Character>();
 
     defineDiacritic(
       CharacterUtilities.COMB_ACUTE,
@@ -102,8 +101,10 @@ public abstract class DiacriticUtilities {
     return supportedDiacritics;
   }
 
-  public final static String getDiacriticName (char diacritic) {
-    return diacriticNames.get(diacritic);
+  public final static String getName (char diacritic) {
+    Integer name = diacriticNames.get(diacritic);
+    if (name == null) return null;
+    return ApplicationContext.getString(name);
   }
 
   public final static void sortDiacriticsByName (Character[] diacritics) {
@@ -111,9 +112,7 @@ public abstract class DiacriticUtilities {
       new Comparator<Character>() {
         @Override
         public int compare (Character diacritic1, Character diacritic2) {
-          String name1 = DiacriticUtilities.getDiacriticName(diacritic1);
-          String name2 = DiacriticUtilities.getDiacriticName(diacritic2);
-          return name1.compareTo(name2);
+          return getName(diacritic1).compareTo(getName(diacritic2));
         }
       }
     );

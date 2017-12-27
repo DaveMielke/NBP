@@ -62,7 +62,7 @@ public abstract class CharacterPhrase {
       }
 
       {
-        String name = DiacriticUtilities.getDiacriticName(character);
+        String name = DiacriticUtilities.getName(character);
 
         if (name != null) {
           phrase.append(name);

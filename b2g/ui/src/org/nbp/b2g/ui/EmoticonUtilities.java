@@ -11,16 +11,16 @@ public abstract class EmoticonUtilities {
   }
 
   private final static Set<String> supportedEmoticons;
-  private final static Map<String, String> emoticonNames;
+  private final static Map<String, Integer> emoticonDescriptions;
 
-  private final static void defineEmoticon (String emoticon, int resource) {
+  private final static void defineEmoticon (String emoticon, int description) {
     supportedEmoticons.add(emoticon);
-    emoticonNames.put(emoticon, ApplicationContext.getString(resource));
+    emoticonDescriptions.put(emoticon, description);
   }
 
   static {
     supportedEmoticons = new LinkedHashSet<String>();
-    emoticonNames = new HashMap<String, String>();
+    emoticonDescriptions = new HashMap<String, Integer>();
 
     defineEmoticon(":-)", R.string.emoticon_smile);
     defineEmoticon(":-))", R.string.emoticon_smile_big);
@@ -56,7 +56,9 @@ public abstract class EmoticonUtilities {
     return emoticons.toArray(new String[emoticons.size()]);
   }
 
-  public final static String getEmoticonName (String emoticon) {
-    return emoticonNames.get(emoticon);
+  public final static String getDescription (String emoticon) {
+    Integer description = emoticonDescriptions.get(emoticon);
+    if (description == null) return null;
+    return ApplicationContext.getString(description);
   }
 }

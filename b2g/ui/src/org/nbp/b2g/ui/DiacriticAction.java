@@ -62,7 +62,7 @@ public abstract class DiacriticAction extends InputAction {
 
         for (Character diacritic : diacriticArray) {
           message.append('\n');
-          message.append(DiacriticUtilities.getDiacriticName(diacritic));
+          message.append(DiacriticUtilities.getName(diacritic));
         }
 
         Endpoints.setPopupEndpoint(message.toString(),
