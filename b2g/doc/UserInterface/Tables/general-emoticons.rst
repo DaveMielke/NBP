@@ -1,8 +1,8 @@
 .. table:: Supported Emoticons
 
-  ========  =========================
+  ========  ============================
   Emoticon  Description
-  --------  -------------------------
+  --------  ----------------------------
   :-)       Smile, Happy
   :-))      Big Smile, Very Happy
   ;-)       Winking
@@ -12,7 +12,7 @@
   :-/       Skeptical
   o_O       Confused
   \|-O      Bored, Yawning
-  :-|       Indecision, Straight Face
+  :-|       No Expression, Straight Face
   :-D       Laughing
   :-O       Surprised, Shocked
   :-P       Cheeky, Playful
@@ -30,5 +30,5 @@
   >:-)      Evil, Devilish
   %-)       Drunk
   #-)       Partied All Night
-  ========  =========================
+  ========  ============================
 
