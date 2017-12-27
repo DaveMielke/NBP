@@ -50,8 +50,9 @@ public abstract class EmoticonUtilities {
     supportedEmoticons = emoticonNames.keySet();
   }
 
-  public final static Set<String> getSupportedEmoticons () {
-    return supportedEmoticons;
+  public final static String[] getEmoticons () {
+    Set<String> emoticons = supportedEmoticons;
+    return emoticons.toArray(new String[emoticons.size()]);
   }
 
   public final static String getEmoticonName (String emoticon) {

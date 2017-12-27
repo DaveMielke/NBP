@@ -174,6 +174,7 @@
 .. |TypeControl| replace:: The keyboard Control key (applies to the next typed character).
 .. |TypeDot7| replace:: Type the character represented by just dot 7.
 .. |TypeDot8| replace:: Type the character represented by just dot 8.
+.. |TypeEmoticon| replace:: Prompt for the name of an emoticon to type.
 .. |TypeUnicode| replace:: Prompt for the Unicode value of the character to be typed.
 .. |TypingBoldOff| replace:: Turn off bold typing.
 .. |TypingBoldOn| replace:: Turn on bold typing.

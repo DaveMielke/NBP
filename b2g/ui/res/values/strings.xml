@@ -79,6 +79,8 @@
   <string name="diacritic_choose_add">Add a diacritical mark by pressing Center on it:</string>
   <string name="diacritic_choose_remove">Remove a diacritical mark by pressing Center on it:</string>
 
+  <string name="emoticon_message_select">Select an emoticon by pressing Center on it:</string>
+
   <string name="launch_message_select">Select an activity by pressing Center on it:</string>
 
   <string name="shortcut_message_none">activity not found</string>

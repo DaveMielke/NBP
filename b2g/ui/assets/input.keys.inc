@@ -19,6 +19,7 @@ bind Space+Dot8+Dots1236#v PasteFromClipboard
 bind Space+Dot7 TypeDot7
 bind Space+Dot8 TypeDot8
 
+bind Space+Dots15#e TypeEmoticon
 bind Space+Dots136#u TypeUnicode
 bind Space+Dots1346#x TypeControl
 

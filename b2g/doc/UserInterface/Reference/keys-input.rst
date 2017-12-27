@@ -43,6 +43,9 @@ Space+Dot7
 Space+Dot8
   |TypeDot8|
 
+Space+Dots15 (e)
+  |TypeEmoticon|
+
 Space+Dots136 (u)
   |TypeUnicode|
 

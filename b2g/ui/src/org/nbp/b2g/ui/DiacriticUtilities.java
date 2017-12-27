@@ -1,5 +1,6 @@
 package org.nbp.b2g.ui;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
@@ -98,7 +99,7 @@ public abstract class DiacriticUtilities {
   }
 
   public final static Set<Character> getSupportedDiacritics () {
-    return supportedDiacritics;
+    return Collections.unmodifiableSet(supportedDiacritics);
   }
 
   public final static String getDiacriticName (char diacritic) {
