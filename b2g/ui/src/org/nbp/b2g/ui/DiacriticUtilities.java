@@ -13,16 +13,13 @@ import org.nbp.common.CharacterUtilities;
 public abstract class DiacriticUtilities {
   private final static Set<Character> supportedDiacritics;
   private final static Map<Character, Integer> diacriticNames;
-  private final static Map<Integer, Character> diacriticCharacters;
 
   private final static void defineDiacritic (Character character, Integer name) {
     diacriticNames.put(character, name);
-    diacriticCharacters.put(name, character);
   }
 
   static {
     diacriticNames = new HashMap<Character, Integer>();
-    diacriticCharacters = new HashMap<Integer, Character>();
 
     defineDiacritic(
       CharacterUtilities.COMB_ACUTE,
