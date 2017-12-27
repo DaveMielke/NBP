@@ -5,7 +5,7 @@
   --------  ----------------------------
   :-)       Smile, Happy
   :-))      Big Smile, Very Happy
-  ;-)       Winking
+  ;-)       Wink
   :-(       Frown, Sad
   :'-)      Happy Tears
   :'-(      Crying
@@ -21,14 +21,11 @@
   :-X       Lips are Sealed
   :-[       Embarrassed
   :-!       Foot in Mouth
+  <:-|      Dunce, Dumb
   >:O       Yelling
   x-(       Mad
-  B-)       Cool
-  <:-|      Dunce, Dumb
   :-###     Sick
   O:-)      Angel
   >:-)      Evil, Devilish
-  %-)       Drunk
-  #-)       Partied All Night
   ========  ============================
 

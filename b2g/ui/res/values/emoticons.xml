@@ -5,8 +5,6 @@
   <string name="emoticon_bored">Bored, Yawning</string>
   <string name="emoticon_cheeky">Cheeky, Playful</string>
   <string name="emoticon_confused">Confused</string>
-  <string name="emoticon_cool">Cool</string>
-  <string name="emoticon_drunk">Drunk</string>
   <string name="emoticon_dunce">Dunce, Dumb</string>
   <string name="emoticon_embarrassed">Embarrassed</string>
   <string name="emoticon_evil">Evil, Devilish</string>
@@ -18,7 +16,6 @@
   <string name="emoticon_laughing">Laughing</string>
   <string name="emoticon_lips_sealed">Lips are Sealed</string>
   <string name="emoticon_mad">Mad</string>
-  <string name="emoticon_partied">Partied All Night</string>
   <string name="emoticon_sick">Sick</string>
   <string name="emoticon_skeptical">Skeptical</string>
   <string name="emoticon_smile">Smile, Happy</string>
@@ -26,6 +23,6 @@
   <string name="emoticon_surprised">Surprised, Shocked</string>
   <string name="emoticon_tears_happy">Happy Tears</string>
   <string name="emoticon_tears_sad">Crying</string>
-  <string name="emoticon_winking">Winking</string>
+  <string name="emoticon_wink">Wink</string>
   <string name="emoticon_yelling">Yelling</string>
 </resources>

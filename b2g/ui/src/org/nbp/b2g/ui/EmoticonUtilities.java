@@ -24,7 +24,7 @@ public abstract class EmoticonUtilities {
 
     defineEmoticon(":-)"  , R.string.emoticon_smile);
     defineEmoticon(":-))" , R.string.emoticon_smile_big);
-    defineEmoticon(";-)"  , R.string.emoticon_winking);
+    defineEmoticon(";-)"  , R.string.emoticon_wink);
     defineEmoticon(":-("  , R.string.emoticon_frown);
     defineEmoticon(":'-)" , R.string.emoticon_tears_happy);
     defineEmoticon(":'-(" , R.string.emoticon_tears_sad);
@@ -40,15 +40,12 @@ public abstract class EmoticonUtilities {
     defineEmoticon(":-X"  , R.string.emoticon_lips_sealed);
     defineEmoticon(":-["  , R.string.emoticon_embarrassed);
     defineEmoticon(":-!"  , R.string.emoticon_foot_in_mouth);
+    defineEmoticon("<:-|" , R.string.emoticon_dunce);
     defineEmoticon(">:O"  , R.string.emoticon_yelling);
     defineEmoticon("x-("  , R.string.emoticon_mad);
-    defineEmoticon("B-)"  , R.string.emoticon_cool);
-    defineEmoticon("<:-|" , R.string.emoticon_dunce);
     defineEmoticon(":-###", R.string.emoticon_sick);
     defineEmoticon("O:-)" , R.string.emoticon_angel);
     defineEmoticon(">:-)" , R.string.emoticon_evil);
-    defineEmoticon("%-)"  , R.string.emoticon_drunk);
-    defineEmoticon("#-)"  , R.string.emoticon_partied);
   }
 
   public final static String[] getEmoticons () {
