@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.UnicodeUtilities;
+
 public class AddDiacriticalMark extends DiacriticAction {
   protected final int getChooseMessage () {
     return R.string.popup_select_diacritic_add;
@@ -20,13 +22,16 @@ public class AddDiacriticalMark extends DiacriticAction {
 
   @Override
   protected final void makeDiacriticMap (DiacriticMap map, Character base) {
-    StringBuilder decomposition = new StringBuilder();
-    decomposition.append(base);
-    decomposition.append(' ');
+    StringBuilder decomposition = new StringBuilder(UnicodeUtilities.decompose(Character.toString(base)));
+    int length = decomposition.length();
 
     for (Character diacritic : DiacriticUtilities.getSupportedDiacritics()) {
-      decomposition.setCharAt(1, diacritic);
-      mapDiacritic(map, diacritic, decomposition.toString());
+      for (int index=1; index<=length; index+=1) {
+        decomposition.insert(index, diacritic);
+        boolean mapped = mapDiacritic(map, diacritic, decomposition.toString());
+        decomposition.deleteCharAt(index);
+        if (mapped) break;
+      }
     }
   }
 
