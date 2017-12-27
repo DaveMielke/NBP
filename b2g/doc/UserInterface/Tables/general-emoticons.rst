@@ -6,30 +6,30 @@
   :-)       Smile, Happy
   :-))      Big Smile, Very Happy
   ;-)       Winking
-  O:-)      Angel
-  >:-)      Evil, Devilish
   :-(       Frown, Sad
-  :-[       Embarrassed
+  :'-)      Happy Tears
+  :'-(      Crying
+  o_O       Confused
+  \|-O      Bored, Yawning
   :-D       Laughing
   :-O       Surprised, Shocked
   :-P       Cheeky, Playful
-  :-X       Lips are Sealed
   :-*       Kissing
+  <3        Heart
+  :-X       Lips are Sealed
+  :-[       Embarrassed
   :-!       Foot in Mouth
   :-/       Skeptical
   :-\\      Undecided
-  :-|       Indecision, Straight Face
-  <:-|      Dunce, Dumb
-  :'-)      Happy Tears
-  :'-(      Crying
-  :-###     Sick
-  <3        Heart
-  \|-O      Bored, Yawning
-  o_O       Confused
   >:O       Yelling
+  x-(       Mad
+  :-|       Indecision, Straight Face
+  B-)       Cool
+  O:-)      Angel
+  >:-)      Evil, Devilish
+  <:-|      Dunce, Dumb
+  :-###     Sick
   %-)       Drunk
   #-)       Partied All Night
-  B-)       Cool
-  x-(       Mad
   ========  =========================
 
