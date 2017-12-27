@@ -9,8 +9,10 @@
   :-(       Frown, Sad
   :'-)      Happy Tears
   :'-(      Crying
+  :-/       Skeptical
   o_O       Confused
   \|-O      Bored, Yawning
+  :-|       Indecision, Straight Face
   :-D       Laughing
   :-O       Surprised, Shocked
   :-P       Cheeky, Playful
@@ -19,16 +21,13 @@
   :-X       Lips are Sealed
   :-[       Embarrassed
   :-!       Foot in Mouth
-  :-/       Skeptical
-  :-\\      Undecided
   >:O       Yelling
   x-(       Mad
-  :-|       Indecision, Straight Face
   B-)       Cool
-  O:-)      Angel
-  >:-)      Evil, Devilish
   <:-|      Dunce, Dumb
   :-###     Sick
+  O:-)      Angel
+  >:-)      Evil, Devilish
   %-)       Drunk
   #-)       Partied All Night
   ========  =========================

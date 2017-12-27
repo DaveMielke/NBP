@@ -95,11 +95,11 @@ public abstract class DiacriticUtilities {
       R.string.character_ypogegrammeni
     );
 
-    supportedDiacritics = diacriticNames.keySet();
+    supportedDiacritics = Collections.unmodifiableSet(diacriticNames.keySet());
   }
 
   public final static Set<Character> getSupportedDiacritics () {
-    return Collections.unmodifiableSet(supportedDiacritics);
+    return supportedDiacritics;
   }
 
   public final static String getDiacriticName (char diacritic) {
