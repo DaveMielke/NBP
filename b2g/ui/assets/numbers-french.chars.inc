@@ -8,3 +8,5 @@ char	6	1246
 char	7	12456
 char	8	1256
 char	9	246
+
+include numbers-alias.chars.inc
