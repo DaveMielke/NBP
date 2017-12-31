@@ -1,2 +1,2 @@
 include en.chars
-include spanish.chars.inc
+include spanish-glyphs.chars.inc

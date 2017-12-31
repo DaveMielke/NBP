@@ -1,4 +1,4 @@
 include en.chars
-include french.chars.inc
-include german.chars.inc
-include italian.chars.inc
+include french-glyphs.chars.inc
+include german-glyphs.chars.inc
+include italian-glyphs.chars.inc

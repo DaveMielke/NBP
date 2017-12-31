@@ -1,5 +1,8 @@
-include space.chars.inc
-include cyrillic.chars.inc
-include greek.chars.inc
-include hebrew.chars.inc
-include navigation.chars.inc
+include space-alias.chars.inc
+include box-glyphs.chars.inc
+
+include cyrillic-glyphs.chars.inc
+include greek-glyphs.chars.inc
+include hebrew-glyphs.chars.inc
+
+include navigation-glyphs.chars.inc
