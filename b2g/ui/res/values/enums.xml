@@ -5,6 +5,7 @@
   <string name="enum_ComputerBraille_EN">English</string>
   <string name="enum_ComputerBraille_EN_CA">English (Canada)</string>
   <string name="enum_ComputerBraille_EN_US">English (US)</string>
+  <string name="enum_ComputerBraille_FR">French</string>
   <string name="enum_ComputerBraille_PINYIN">Pinyin</string>
   <string name="enum_ComputerBraille_ZH_CN">Chinese (China)</string>
 

@@ -5,6 +5,7 @@ public enum ComputerBraille {
   EN("en"),
   EN_CA("en_CA"),
   EN_US("en_US"),
+  FR("fr"),
   PINYIN("pinyin"),
   ZH_CN("zh_CN"),
   ; // end of enumeration
