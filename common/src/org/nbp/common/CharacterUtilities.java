@@ -24,8 +24,8 @@ public abstract class CharacterUtilities {
   public final static char CHAR_DC3 = 0X0013; // direct control 3 (X-off)
   public final static char CHAR_DC4 = 0X0014; // direct control 4
   public final static char CHAR_NAK = 0X0015; // negative acknowledgement
-  public final static char CHAR_SYN = 0X0016; // synchronous
-  public final static char CHAR_ETB = 0X0017; // end of text block
+  public final static char CHAR_SYN = 0X0016; // synchronous idle
+  public final static char CHAR_ETB = 0X0017; // end of transmission block
   public final static char CHAR_CAN = 0X0018; // cancel
   public final static char CHAR_EM  = 0X0019; // end of medium
   public final static char CHAR_SUB = 0X001A; // substitute
