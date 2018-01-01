@@ -1,4 +1,4 @@
 include nabcc.chars.inc
 include control-glyphs.chars.inc
-include symbol-glyphs.chars.inc
+include symbols.chars.inc
 include common.chars.inc
