@@ -47,7 +47,6 @@ public class AllApplications extends Action {
           ActivityInfo activity = array[index];
 
           LaunchUtilities.launchActivity(activity);
-          Endpoints.setHostEndpoint();
           return true;
         }
       }

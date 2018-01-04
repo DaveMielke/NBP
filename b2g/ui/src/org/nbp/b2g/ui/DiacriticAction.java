@@ -70,12 +70,7 @@ public abstract class DiacriticAction extends InputAction {
             @Override
             public boolean handleClick (int index) {
               char character = diacriticMap.get(diacriticArray[index]);
-
-              try {
-                return endpoint.replaceText(start, end, Character.toString(character));
-              } finally {
-                Endpoints.setHostEndpoint();
-              }
+              return endpoint.replaceText(start, end, Character.toString(character));
             }
           }
         );

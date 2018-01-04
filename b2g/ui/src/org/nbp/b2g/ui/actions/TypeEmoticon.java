@@ -36,11 +36,7 @@ public class TypeEmoticon extends InputAction {
               }
             }
 
-            try {
-              return endpoint.insertText(emoticon.toString());
-            } finally {
-              Endpoints.setHostEndpoint();
-            }
+            return endpoint.insertText(emoticon.toString());
           }
         }
       }
