@@ -30,6 +30,7 @@ public class PopupEndpoint extends Endpoint {
   }
 
   private PopupClickHandler clickHandler = null;
+  private int headerLines = 0;
 
   private final int getIndex () {
     int index = 0;
@@ -46,7 +47,10 @@ public class PopupEndpoint extends Endpoint {
   public boolean handleClick () {
     synchronized (this) {
       if (clickHandler != null) {
-        if (clickHandler.handleValue(getIndex())) {
+        int index = getIndex() - headerLines;
+        if (index < 0) return true;
+
+        if (clickHandler.handleValue(index)) {
           return true;
         }
       }
@@ -56,9 +60,10 @@ public class PopupEndpoint extends Endpoint {
     return false;
   }
 
-  public final void set (CharSequence text, PopupClickHandler handler) {
+  public final void set (CharSequence text, int first, PopupClickHandler handler) {
     synchronized (this) {
       clickHandler = handler;
+      headerLines = first;
       write(text);
     }
   }

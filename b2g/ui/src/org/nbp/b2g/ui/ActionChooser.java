@@ -36,11 +36,10 @@ public class ActionChooser extends UserInterfaceComponent {
 
   public static void chooseAction (KeyBindingMap map, final Integer cursorKey) {
     final List<Action> actions = new ArrayList<Action>();
-    Endpoints.setPopupEndpoint(makeText(actions, map, cursorKey),
+    Endpoints.setPopupEndpoint(makeText(actions, map, cursorKey), 1,
       new PopupClickHandler () {
         @Override
         public final boolean handleClick (int index) {
-          if ((index -= 1) < 0) return true;
           Action action = actions.get(index);
 
           Endpoints.setHostEndpoint();

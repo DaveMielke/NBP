@@ -59,10 +59,14 @@ public abstract class Endpoints {
     setCurrentEndpoint(host.get());
   }
 
-  public static void setPopupEndpoint (CharSequence text, PopupClickHandler handler) {
+  public static void setPopupEndpoint (CharSequence text, int first, PopupClickHandler handler) {
     PopupEndpoint endpoint = popup.get();
-    endpoint.set(text, handler);
+    endpoint.set(text, first, handler);
     setCurrentEndpoint(endpoint);
+  }
+
+  public static void setPopupEndpoint (CharSequence text, PopupClickHandler handler) {
+    setPopupEndpoint(text, 0, handler);
   }
 
   public static void setPopupEndpoint (CharSequence text) {

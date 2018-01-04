@@ -40,11 +40,10 @@ public class AllApplications extends Action {
       }
     }
 
-    Endpoints.setPopupEndpoint(sb.toString(),
+    Endpoints.setPopupEndpoint(sb.toString(), 1,
       new PopupClickHandler () {
         @Override
         public final boolean handleClick (int index) {
-          if ((index -= 1) < 0) return true;
           ActivityInfo activity = array[index];
 
           LaunchUtilities.launchActivity(activity);

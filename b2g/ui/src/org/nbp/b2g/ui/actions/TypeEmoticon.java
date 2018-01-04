@@ -13,13 +13,11 @@ public class TypeEmoticon extends InputAction {
       message.append(EmoticonUtilities.getDescription(emoticon));
     }
 
-    Endpoints.setPopupEndpoint(
-      message.toString(),
+    Endpoints.setPopupEndpoint(message.toString(), 1,
       new PopupClickHandler() {
         @Override
         public boolean handleClick (int index) {
-          if (index == 0) return false;
-          StringBuilder emoticon = new StringBuilder(emoticons[--index]);
+          StringBuilder emoticon = new StringBuilder(emoticons[index]);
 
           synchronized (endpoint) {
             CharSequence text = endpoint.getText();

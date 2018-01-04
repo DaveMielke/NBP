@@ -112,11 +112,10 @@ public abstract class ShortcutAction extends Action {
           sb.append(getLabel(pm, activity));
         }
 
-        Endpoints.setPopupEndpoint(sb.toString(),
+        Endpoints.setPopupEndpoint(sb.toString(), 1,
           new PopupClickHandler () {
             @Override
             public final boolean handleClick (int index) {
-              if ((index -= 1) < 0) return true;
               ActivityInfo activity = choices.get(index);
 
               performShortcutAction(pm, activity);

@@ -65,12 +65,11 @@ public abstract class DiacriticAction extends InputAction {
           message.append(DiacriticUtilities.getName(diacritic));
         }
 
-        Endpoints.setPopupEndpoint(message.toString(),
+        Endpoints.setPopupEndpoint(message.toString(), 1,
           new PopupClickHandler() {
             @Override
             public boolean handleClick (int index) {
-              if (index == 0) return false;
-              char character = diacriticMap.get(diacriticArray[--index]);
+              char character = diacriticMap.get(diacriticArray[index]);
 
               try {
                 return endpoint.replaceText(start, end, Character.toString(character));
