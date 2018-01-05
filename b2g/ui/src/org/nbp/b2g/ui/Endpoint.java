@@ -43,8 +43,6 @@ public abstract class Endpoint extends UserInterfaceComponent {
   }
 
   protected final void resetSpeech () {
-    logSpeech("reset");
-
     oldLineText = "";
     oldLineStart = -1;
 
@@ -197,7 +195,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
             } else if (sayUnchangedLine) {
               text = newLineText;
               echo = ApplicationSettings.SPEAK_LINES;
-              logSpeech("same line", text);
+              logSpeech("unchanged line", text);
             }
 
             if (offset != NO_SELECTION) {
