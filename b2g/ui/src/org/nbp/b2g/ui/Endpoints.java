@@ -58,9 +58,12 @@ public abstract class Endpoints {
   private static boolean setCurrentEndpoint (Endpoint endpoint) {
     WRITE_LOCK.lock();
     try {
+      boolean prepare = true;
+
       if (endpoint == null) {
         if (endpointStack.empty()) return false;
         endpoint = endpointStack.pop();
+        prepare = false;
       } else if (endpoint == host.get()) {
         endpointStack.clear();
       } else if (endpointStack.contains(endpoint)) {
@@ -74,7 +77,7 @@ public abstract class Endpoints {
       if (endpoint != currentEndpoint) {
         if (currentEndpoint != null) currentEndpoint.onBackground();
         currentEndpoint = endpoint;
-        if (currentEndpoint != null) currentEndpoint.onForeground();
+        if (currentEndpoint != null) currentEndpoint.onForeground(prepare);
       }
     } finally {
       WRITE_LOCK.unlock();

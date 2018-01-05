@@ -372,7 +372,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
     }
   }
 
-  public void onForeground () {
+  public void onForeground (boolean prepare) {
     resetSpeech();
     refresh();
   }

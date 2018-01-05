@@ -10,9 +10,12 @@ public abstract class PromptEndpoint extends InputEndpoint {
   }
 
   @Override
-  public final void onForeground () {
-    setSelection(start, buffer.length());
-    super.onForeground();
+  public final void onForeground (boolean prepare) {
+    try {
+      if (prepare) setSelection(start, buffer.length());
+    } finally {
+      super.onForeground(prepare);
+    }
   }
 
   protected final int getResponseLength () {
