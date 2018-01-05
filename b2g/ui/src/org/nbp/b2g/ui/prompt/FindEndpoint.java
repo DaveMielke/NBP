@@ -17,7 +17,7 @@ public class FindEndpoint extends PromptEndpoint {
 
   private final boolean findOccurrence (Searcher searcher) {
     if (searchPattern != null) {
-      Endpoint endpoint = Endpoints.host.get();
+      Endpoint endpoint = Endpoints.getPreviousEndpoint();
       boolean found = false;
 
       synchronized (endpoint) {

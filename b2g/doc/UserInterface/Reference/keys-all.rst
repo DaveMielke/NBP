@@ -61,6 +61,21 @@ Space+Dot7+Dots14 (c)
 Space+Dot8+Dots14 (c)
   |CopyToClipboard|
 
+Space+Dots124 (f)
+  |FindForward|
+
+Space+Dot7+Dots124 (f)
+  |FindPrevious|
+
+Space+Dot8+Dots124 (f)
+  |FindNext|
+
+Space+Dots235 (6)
+  |LiteraryBraille|
+
+Space+Dots236 (8)
+  |ComputerBraille|
+
 Space+Dot7+Dots1245 (g)
   |BrailleCodePrevious|
 
@@ -69,12 +84,6 @@ Space+Dot8+Dots1245 (g)
 
 Space+Dots78+Dots1245 (g)
   |BrailleCodeConfirm|
-
-Space+Dots235 (6)
-  |LiteraryBraille|
-
-Space+Dots236 (8)
-  |ComputerBraille|
 
 Space+Dot7+Dots2456 (w)
   |WordWrapOff|

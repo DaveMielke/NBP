@@ -26,12 +26,16 @@ bind Space+Dot7+Dots1346#x ClearClipboard
 bind Space+Dot7+Dots14#c AddToClipboard
 bind Space+Dot8+Dots14#c CopyToClipboard
 
-bind Space+Dot7+Dots1245#g BrailleCodePrevious
-bind Space+Dot8+Dots1245#g BrailleCodeNext
-bind Space+Dots78+Dots1245#g BrailleCodeConfirm
+bind Space+Dots124#f FindForward
+bind Space+Dot7+Dots124#f FindPrevious
+bind Space+Dot8+Dots124#f FindNext
 
 bind Space+Dots235#6 LiteraryBraille
 bind Space+Dots236#8 ComputerBraille
+
+bind Space+Dot7+Dots1245#g BrailleCodePrevious
+bind Space+Dot8+Dots1245#g BrailleCodeNext
+bind Space+Dots78+Dots1245#g BrailleCodeConfirm
 
 bind Space+Dot7+Dots2456#w WordWrapOff
 bind Space+Dot8+Dots2456#w WordWrapOn

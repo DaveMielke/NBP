@@ -64,15 +64,6 @@ Space+Dots1245 (g)
 Space+Dots134 (m)
   |MenuKey|
 
-Space+Dots124 (f)
-  |FindForward|
-
-Space+Dot7+Dots124 (f)
-  |FindPrevious|
-
-Space+Dot8+Dots124 (f)
-  |FindNext|
-
 Space+Dots125,Dots123 (h l)
   |ListActions|
 

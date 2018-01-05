@@ -28,10 +28,6 @@ bind Space+Dots1235#r RecentApplications
 bind Space+Dots1245#g AllApplications
 bind Space+Dots134#m MenuKey
 
-bind Space+Dots124#f FindForward
-bind Space+Dot7+Dots124#f FindPrevious
-bind Space+Dot8+Dots124#f FindNext
-
 bind Space+Dots125#h,Dots123#l ListActions
 bind Space+Dots125#h,Dots134#m UserManualText
 bind Space+Dots125#h,Dots12345#q QuickStartText
