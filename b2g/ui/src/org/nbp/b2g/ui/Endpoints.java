@@ -96,8 +96,12 @@ public abstract class Endpoints {
 
   public static boolean setPopupEndpoint (CharSequence text, int first, PopupClickHandler handler) {
     PopupEndpoint endpoint = popup.get();
-    endpoint.set(text, first, handler);
-    return setCurrentEndpoint(endpoint);
+
+    synchronized (endpoint) {
+      if (!setCurrentEndpoint(endpoint)) return false;
+      endpoint.set(text, first, handler);
+      return true;
+    }
   }
 
   public static boolean setPopupEndpoint (CharSequence text, PopupClickHandler handler) {
