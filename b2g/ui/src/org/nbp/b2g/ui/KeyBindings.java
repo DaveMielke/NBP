@@ -325,14 +325,13 @@ public class KeyBindings {
       ;
   }
 
-  private void addKeyBindings (String name) {
+  public void addKeyBindings (String name) {
     Log.d(LOG_TAG, "begin key binding definitions: " + name);
     makeInputProcessor().processInput((name + ".keys"));
     Log.d(LOG_TAG, "end key binding definitions: " + name);
   }
 
-  public KeyBindings (Endpoint endpoint, String name) {
+  public KeyBindings (Endpoint endpoint) {
     this.endpoint = endpoint;
-    addKeyBindings(name);
   }
 }

@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui.prompt;
 import org.nbp.b2g.ui.*;
 
-public abstract class PromptEndpoint extends Endpoint {
+public abstract class PromptEndpoint extends InputEndpoint {
   private final StringBuilder buffer = new StringBuilder();
   private final int start;
 
@@ -71,7 +71,7 @@ public abstract class PromptEndpoint extends Endpoint {
   }
 
   public PromptEndpoint (int prompt, String prefix) {
-    super("prompt");
+    super();
 
     buffer.append(getString(prompt));
     buffer.append("> ");

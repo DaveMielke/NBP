@@ -51,9 +51,11 @@ public class PopupEndpoint extends Endpoint {
       int index = getIndex() - headerLines;
       if (index < 0) return false;
 
-      boolean handled = clickHandler.handleValue(index);
-      if (!handleKeyboardKey_enter()) return false;
-      return handled;
+      try {
+        return clickHandler.handleValue(index);
+      } finally {
+        if (!handleKeyboardKey_enter()) return false;
+      }
     }
   }
 
@@ -66,6 +68,7 @@ public class PopupEndpoint extends Endpoint {
   }
 
   public PopupEndpoint () {
-    super("popup");
+    super();
+    addKeyBindings("popup");
   }
 }

@@ -42,7 +42,6 @@ public class ActionChooser extends UserInterfaceComponent {
         public final boolean handleClick (int index) {
           Action action = actions.get(index);
 
-          Endpoints.setHostEndpoint();
           if (cursorKey != null) return KeyEvents.performAction(action, cursorKey);
           return KeyEvents.performAction(action);
         }

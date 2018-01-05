@@ -43,7 +43,8 @@ public class RemoteEndpoint extends Endpoint {
   }
 
   public RemoteEndpoint () {
-    super("remote");
+    super();
+    addKeyBindings("remote");
 
     currentChannel = new BluetoothChannel();
     currentProtocol = new BaumProtocol();

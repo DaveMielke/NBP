@@ -32,7 +32,7 @@ Input Operations
 Screen Operations
 ~~~~~~~~~~~~~~~~~
 
-.. include:: keys-screen.rst
+.. include:: keys-host.rst
 
 Speech Operations
 ~~~~~~~~~~~~~~~~~
@@ -65,10 +65,10 @@ Advanced Operations
 Common Actions
 ``````````````
 
-.. include:: keys-advanced-all.rst
+.. include:: keys-all-advanced.rst
 
 Screen Actions
 ``````````````
 
-.. include:: keys-advanced-screen.rst
+.. include:: keys-host-advanced.rst
 
