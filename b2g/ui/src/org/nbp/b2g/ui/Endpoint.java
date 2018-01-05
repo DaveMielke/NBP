@@ -22,7 +22,28 @@ public abstract class Endpoint extends UserInterfaceComponent {
   private int speechTextStart;
   private int speechTextEnd;
 
+  private final static void logSpeech (String what, CharSequence text) {
+    if (ApplicationSettings.LOG_SPEECH) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("speech: ");
+      sb.append(what);
+
+      if (text != null) {
+        sb.append(": ");
+        sb.append(text);
+      }
+
+      Log.v(LOG_TAG, sb.toString());
+    }
+  }
+
+  private final static void logSpeech (String what) {
+    logSpeech(what, null);
+  }
+
   protected final void resetSpeech () {
+    logSpeech("reset");
+
     oldLineText = "";
     oldLineStart = -1;
     oldSelectionStart = NO_SELECTION;
@@ -74,6 +95,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
            ) {
           text = newText.subSequence(speechTextStart, speechTextEnd);
           echo = ApplicationSettings.ECHO_SELECTION;
+          logSpeech("selected object", text);
         }
       }
 
@@ -81,6 +103,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
         if (newLineStart != oldLineStart) {
           text = newLineText;
           echo = ApplicationSettings.SPEAK_LINES;
+          logSpeech("different line", text);
         } else {
           int start = 0;
           int oldEnd = oldLineText.length();
@@ -105,6 +128,9 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
             if (text.length() == 1) {
               text = CharacterPhrase.get(text.charAt(0));
+              logSpeech("insert character", text);
+            } else {
+              logSpeech("insert text", text);
             }
 
             if (ApplicationSettings.ECHO_WORDS) {
@@ -129,6 +155,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
               }
 
               word = getCompletedWord(getText(), (newLineStart + newEnd));
+              if (word != null) logSpeech("completed word", word);
             }
           } else if (oldEnd > start) {
             text = oldLineText.subSequence(start, oldEnd);
@@ -137,6 +164,9 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
             if (text.length() == 1) {
               text = CharacterPhrase.get(text.charAt(0));
+              logSpeech("delete character", text);
+            } else {
+              logSpeech("delete text", text);
             }
           } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
             int offset = NO_SELECTION;
@@ -144,9 +174,11 @@ public abstract class Endpoint extends UserInterfaceComponent {
             if (newSelectionStart != oldSelectionStart) {
               offset = newSelectionStart;
               action = R.string.SetSelectionStart_action_confirmation;
+              logSpeech("selection start", text);
             } else if (newSelectionEnd != oldSelectionEnd) {
               offset = newSelectionEnd - 1;
               action = R.string.SetSelectionEnd_action_confirmation;
+              logSpeech("selection end", text);
             }
 
             if (offset != NO_SELECTION) {
