@@ -50,7 +50,7 @@ public class ScreenMonitor extends AccessibilityService {
     return sb.subSequence(0, sb.length());
   }
 
-  private static boolean showPopup (
+  private static boolean showText (
     CharSequence text,
     PopupClickHandler clickHandler,
     String... labels
@@ -77,12 +77,12 @@ public class ScreenMonitor extends AccessibilityService {
     return Endpoints.setPopupEndpoint(text.toString(), clickHandler);
   }
 
-  private final boolean showPopup (
+  private final boolean showText (
     Collection<CharSequence> lines,
     PopupClickHandler clickHandler,
     String... labels
   ) {
-    return showPopup(toText(lines), clickHandler, labels);
+    return showText(toText(lines), clickHandler, labels);
   }
 
   private static CharSequence getAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {
@@ -327,16 +327,13 @@ public class ScreenMonitor extends AccessibilityService {
         clickHandler = new PopupClickHandler() {
           @Override
           public final boolean handleClick (int index) {
-            if (!performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)) {
-              return false;
-            }
-
+            if (!performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS)) return false;
             return Endpoints.setHostEndpoint();
           }
         };
       }
 
-      showPopup(event.getText(), clickHandler, getString(title));
+      showText(event.getText(), clickHandler, getString(title));
     }
   }
 
