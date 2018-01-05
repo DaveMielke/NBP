@@ -179,15 +179,21 @@ public abstract class Endpoint extends UserInterfaceComponent {
             }
           } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
             int offset = NO_SELECTION;
+            String what = null;
 
             if (newSelectionStart != oldSelectionStart) {
               offset = newSelectionStart;
-              action = R.string.SetSelectionStart_action_confirmation;
-              logSpeech("selection start", text);
+
+              if (newSelectionStart == newSelectionEnd) {
+                what = "cursor position";
+              } else {
+                what = "selection start";
+                action = R.string.SetSelectionStart_action_confirmation;
+              }
             } else if (newSelectionEnd != oldSelectionEnd) {
               offset = newSelectionEnd - 1;
               action = R.string.SetSelectionEnd_action_confirmation;
-              logSpeech("selection end", text);
+              what = "selection end";
             } else if (sayUnchangedLine) {
               text = newLineText;
               echo = ApplicationSettings.SPEAK_LINES;
@@ -206,7 +212,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
               if (text != null) {
                 echo = ApplicationSettings.ECHO_SELECTION;
-                if (newSelectionStart == newSelectionEnd) action = 0;
+                logSpeech(what, text);
               }
             }
           }
