@@ -373,7 +373,10 @@ public abstract class Endpoint extends UserInterfaceComponent {
   }
 
   public void onForeground (boolean prepare) {
-    resetSpeech();
+    if (prepare) {
+      resetSpeech();
+    }
+
     refresh();
   }
 
