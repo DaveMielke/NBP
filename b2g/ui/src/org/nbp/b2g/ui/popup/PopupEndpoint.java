@@ -8,7 +8,7 @@ public class PopupEndpoint extends Endpoint {
   private Timeout timeout = new Timeout(ApplicationParameters.BRAILLE_POPUP_TIMEOUT, "popup-timeout") {
     @Override
     public void run () {
-      Endpoints.setHostEndpoint();
+      Endpoints.setPreviousEndpoint();
     }
   };
 

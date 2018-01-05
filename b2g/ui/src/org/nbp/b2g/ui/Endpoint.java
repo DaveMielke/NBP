@@ -1036,8 +1036,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
   }
 
   public boolean handleKeyboardKey_enter () {
-    Endpoints.setHostEndpoint();
-    return true;
+    return Endpoints.setPreviousEndpoint();
   }
 
   public boolean handleKeyboardKey_cursorLeft () {

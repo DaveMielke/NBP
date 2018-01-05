@@ -331,8 +331,7 @@ public class ScreenMonitor extends AccessibilityService {
               return false;
             }
 
-            Endpoints.setHostEndpoint();
-            return true;
+            return Endpoints.setHostEndpoint();
           }
         };
       }

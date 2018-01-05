@@ -49,7 +49,7 @@ public class UnicodeEndpoint extends PromptEndpoint {
   protected final boolean handleResponse (String response) {
     Character character = toCharacter(response);
     if (character == null) return false;
-    return Endpoints.host.get().insertText(character);
+    return Endpoints.getPreviousEndpoint().insertText(character);
   }
 
   public UnicodeEndpoint () {

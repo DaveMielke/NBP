@@ -4,6 +4,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import java.util.Stack;
+
 import org.nbp.common.LazyInstantiator;
 
 import org.nbp.b2g.ui.host.HostEndpoint;
@@ -13,33 +15,6 @@ import org.nbp.b2g.ui.prompt.UnicodeEndpoint;
 import org.nbp.b2g.ui.remote.RemoteEndpoint;
 
 public abstract class Endpoints {
-  private final static ReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
-  public final static Lock READ_LOCK = READ_WRITE_LOCK.readLock();
-  private final static Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
-  private static Endpoint currentEndpoint = null;
-
-  public static Endpoint getCurrentEndpoint () {
-    READ_LOCK.lock();
-    try {
-      return currentEndpoint;
-    } finally {
-      READ_LOCK.unlock();
-    }
-  }
-
-  private static void setCurrentEndpoint (Endpoint endpoint) {
-    WRITE_LOCK.lock();
-    try {
-      if (endpoint != currentEndpoint) {
-        if (currentEndpoint != null) currentEndpoint.onBackground();
-        currentEndpoint = endpoint;
-        if (currentEndpoint != null) currentEndpoint.onForeground();
-      }
-    } finally {
-      WRITE_LOCK.unlock();
-    }
-  }
-
   public final static LazyInstantiator<HostEndpoint> host = new
     LazyInstantiator<HostEndpoint>(HostEndpoint.class);
 
@@ -55,34 +30,89 @@ public abstract class Endpoints {
   public final static LazyInstantiator<RemoteEndpoint> remote = new
     LazyInstantiator<RemoteEndpoint>(RemoteEndpoint.class);
 
-  public static void setHostEndpoint () {
-    setCurrentEndpoint(host.get());
+  private final static ReadWriteLock CURRENT_ENDPOINT_LOCK = new ReentrantReadWriteLock();
+  public final static Lock READ_LOCK = CURRENT_ENDPOINT_LOCK.readLock();
+  private final static Lock WRITE_LOCK = CURRENT_ENDPOINT_LOCK.writeLock();
+
+  private static Endpoint currentEndpoint = null;
+  private final static Stack<Endpoint> endpointStack = new Stack<Endpoint>();
+
+  public static Endpoint getCurrentEndpoint () {
+    READ_LOCK.lock();
+    try {
+      return currentEndpoint;
+    } finally {
+      READ_LOCK.unlock();
+    }
   }
 
-  public static void setPopupEndpoint (CharSequence text, int first, PopupClickHandler handler) {
+  public final static Endpoint getPreviousEndpoint () {
+    READ_LOCK.lock();
+    try {
+      return endpointStack.peek();
+    } finally {
+      READ_LOCK.unlock();
+    }
+  }
+
+  private static boolean setCurrentEndpoint (Endpoint endpoint) {
+    WRITE_LOCK.lock();
+    try {
+      if (endpoint != currentEndpoint) {
+        if (endpoint == null) {
+          if (endpointStack.empty()) return false;
+          endpoint = endpointStack.pop();
+        } else if (endpoint == host.get()) {
+          endpointStack.clear();
+        } else if (endpointStack.contains(endpoint)) {
+          return false;
+        } else {
+          endpointStack.push(currentEndpoint);
+        }
+
+        if (currentEndpoint != null) currentEndpoint.onBackground();
+        currentEndpoint = endpoint;
+        if (currentEndpoint != null) currentEndpoint.onForeground();
+      }
+    } finally {
+      WRITE_LOCK.unlock();
+    }
+
+    return true;
+  }
+
+  public final static boolean setPreviousEndpoint () {
+    return setCurrentEndpoint(null);
+  }
+
+  public static boolean setHostEndpoint () {
+    return setCurrentEndpoint(host.get());
+  }
+
+  public static boolean setPopupEndpoint (CharSequence text, int first, PopupClickHandler handler) {
     PopupEndpoint endpoint = popup.get();
     endpoint.set(text, first, handler);
-    setCurrentEndpoint(endpoint);
+    return setCurrentEndpoint(endpoint);
   }
 
-  public static void setPopupEndpoint (CharSequence text, PopupClickHandler handler) {
-    setPopupEndpoint(text, 0, handler);
+  public static boolean setPopupEndpoint (CharSequence text, PopupClickHandler handler) {
+    return setPopupEndpoint(text, 0, handler);
   }
 
-  public static void setPopupEndpoint (CharSequence text) {
-    setPopupEndpoint(text, null);
+  public static boolean setPopupEndpoint (CharSequence text) {
+    return setPopupEndpoint(text, null);
   }
 
-  public static void setFindEndpoint () {
-    setCurrentEndpoint(find.get());
+  public static boolean setFindEndpoint () {
+    return setCurrentEndpoint(find.get());
   }
 
-  public static void setUnicodeEndpoint () {
-    setCurrentEndpoint(unicode.get());
+  public static boolean setUnicodeEndpoint () {
+    return setCurrentEndpoint(unicode.get());
   }
 
-  public static void setRemoteEndpoint () {
-    setCurrentEndpoint(remote.get());
+  public static boolean setRemoteEndpoint () {
+    return setCurrentEndpoint(remote.get());
   }
 
   private Endpoints () {

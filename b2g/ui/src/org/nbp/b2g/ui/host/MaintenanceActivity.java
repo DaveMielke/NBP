@@ -109,8 +109,11 @@ public class MaintenanceActivity extends ProgrammaticActivity {
 
   @Override
   public boolean startRequest (Intent intent, ActivityResultHandler handler) {
-    Endpoints.setHostEndpoint();
-    return super.startRequest(intent, handler);
+    try {
+      return Endpoints.setHostEndpoint();
+    } finally {
+      if (!super.startRequest(intent, handler)) return false;
+    }
   }
 
   private final void showActivityResultCode (int code) {

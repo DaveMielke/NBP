@@ -5,8 +5,7 @@ import org.nbp.b2g.ui.*;
 public class Offline extends Action {
   @Override
   public boolean performAction () {
-    Endpoints.setHostEndpoint();
-    return true;
+    return Endpoints.setPreviousEndpoint();
   }
 
   public Offline (Endpoint endpoint) {

@@ -16,8 +16,11 @@ public class AnswerCall extends Action {
       return false;
     }
 
-    Endpoints.setHostEndpoint();
-    return InputService.injectKey(KeyEvent.KEYCODE_HEADSETHOOK);
+    try {
+      return InputService.injectKey(KeyEvent.KEYCODE_HEADSETHOOK);
+    } finally {
+      if (!Endpoints.setHostEndpoint()) return false;
+    }
   }
 
   public AnswerCall (Endpoint endpoint) {
