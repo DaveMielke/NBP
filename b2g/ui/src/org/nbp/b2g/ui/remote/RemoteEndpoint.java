@@ -43,7 +43,7 @@ public class RemoteEndpoint extends Endpoint {
   }
 
   public RemoteEndpoint () {
-    super();
+    super(false);
     addKeyBindings("remote");
 
     currentChannel = new BluetoothChannel();

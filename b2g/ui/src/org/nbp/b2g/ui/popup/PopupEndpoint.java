@@ -68,7 +68,7 @@ public class PopupEndpoint extends Endpoint {
   }
 
   public PopupEndpoint () {
-    super();
+    super(true);
     addKeyBindings("popup");
   }
 }

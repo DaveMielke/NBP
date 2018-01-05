@@ -1098,11 +1098,11 @@ public abstract class Endpoint extends UserInterfaceComponent {
     keyBindings.addKeyBindings(name);
   }
 
-  protected Endpoint () {
+  protected Endpoint (boolean defineKeyBindings) {
     super();
     setText("");
 
     keyBindings = new KeyBindings(this);
-    addKeyBindings("all");
+    if (defineKeyBindings) addKeyBindings("all");
   }
 }
