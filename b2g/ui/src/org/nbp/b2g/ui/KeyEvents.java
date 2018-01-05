@@ -98,7 +98,8 @@ public abstract class KeyEvents {
   }
 
   private static Action getAction (int keys, boolean isLongPress) {
-    KeyBindings keyBindings = Endpoints.getCurrentEndpoint().getKeyBindings();
+    Endpoint endpoint = Endpoints.getCurrentEndpoint();
+    KeyBindings keyBindings = endpoint.getKeyBindings();
     Action action = null;
 
     if (isLongPress && ApplicationSettings.LONG_PRESS) {
@@ -110,9 +111,11 @@ public abstract class KeyEvents {
     }
 
     if (action == null) {
-      if (keyBindings.isRootKeyBindings()) {
-        if (KeyMask.isDots(keys)) {
-          action = keyBindings.getAction(TypeCharacter.class);
+      if (endpoint instanceof InputEndpoint) {
+        if (keyBindings.isRootKeyBindings()) {
+          if (KeyMask.isDots(keys)) {
+            action = keyBindings.getAction(TypeCharacter.class);
+          }
         }
       }
     }
