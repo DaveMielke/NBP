@@ -21,6 +21,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
   private int oldSelectionEnd;
   private int speechTextStart;
   private int speechTextEnd;
+  private boolean sayUnchangedLine;
 
   private final static void logSpeech (String what, CharSequence text) {
     if (ApplicationSettings.LOG_SPEECH) {
@@ -46,10 +47,18 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
     oldLineText = "";
     oldLineStart = -1;
+
     oldSelectionStart = NO_SELECTION;
     oldSelectionEnd = NO_SELECTION;
+
     speechTextStart = NO_SELECTION;
     speechTextEnd = NO_SELECTION;
+
+    sayUnchangedLine = false;
+  }
+
+  private final void setSayUnchangedLine () {
+    sayUnchangedLine = true;
   }
 
   public final void setSpeechText (int start, int end) {
@@ -95,7 +104,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
            ) {
           text = newText.subSequence(speechTextStart, speechTextEnd);
           echo = ApplicationSettings.ECHO_SELECTION;
-          logSpeech("selected object", text);
+          logSpeech("selected text", text);
         }
       }
 
@@ -179,6 +188,10 @@ public abstract class Endpoint extends UserInterfaceComponent {
               offset = newSelectionEnd - 1;
               action = R.string.SetSelectionEnd_action_confirmation;
               logSpeech("selection end", text);
+            } else if (sayUnchangedLine) {
+              text = newLineText;
+              echo = ApplicationSettings.SPEAK_LINES;
+              logSpeech("same line", text);
             }
 
             if (offset != NO_SELECTION) {
@@ -214,6 +227,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
       oldSelectionEnd = newSelectionEnd;
       speechTextStart = NO_SELECTION;
       speechTextEnd = NO_SELECTION;
+      sayUnchangedLine = false;
     }
   }
 
@@ -407,6 +421,8 @@ public abstract class Endpoint extends UserInterfaceComponent {
   public void onForeground (boolean prepare) {
     if (prepare) {
       resetSpeech();
+    } else {
+      setSayUnchangedLine();
     }
 
     refresh();
