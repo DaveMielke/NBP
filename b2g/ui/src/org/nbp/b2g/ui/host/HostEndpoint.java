@@ -170,7 +170,7 @@ public class HostEndpoint extends InputEndpoint {
 
       if (!sameNode) {
         resetSpeech();
-        clearSelection();
+        changeSelection(NO_SELECTION, NO_SELECTION);
       }
 
       setText(text, sameNode);
