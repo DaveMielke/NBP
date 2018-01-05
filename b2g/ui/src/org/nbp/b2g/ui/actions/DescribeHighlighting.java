@@ -95,8 +95,7 @@ public class DescribeHighlighting extends CursorKeyAction {
       appendString(sb, R.string.DescribeHighlighting_none);
     }
 
-    Endpoints.setPopupEndpoint(sb.toString());
-    return true;
+    return Endpoints.setPopupEndpoint(sb.toString());
   }
 
   public DescribeHighlighting (Endpoint endpoint) {

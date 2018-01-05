@@ -40,7 +40,7 @@ public class AllApplications extends Action {
       }
     }
 
-    Endpoints.setPopupEndpoint(sb.toString(), 1,
+    return Endpoints.setPopupEndpoint(sb.toString(), 1,
       new PopupClickHandler () {
         @Override
         public final boolean handleClick (int index) {
@@ -51,8 +51,6 @@ public class AllApplications extends Action {
         }
       }
     );
-
-    return true;
   }
 
   public AllApplications (Endpoint endpoint) {

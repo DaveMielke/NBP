@@ -10,8 +10,7 @@ public class ShowClipboard extends Action {
       CharSequence text = Clipboard.getText();
 
       if ((text != null) && (text.length() > 0)) {
-        Endpoints.setPopupEndpoint(text);
-        return true;
+        return Endpoints.setPopupEndpoint(text);
       }
     }
 

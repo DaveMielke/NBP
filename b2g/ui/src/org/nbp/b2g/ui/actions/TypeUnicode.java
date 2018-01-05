@@ -4,8 +4,7 @@ import org.nbp.b2g.ui.*;
 public class TypeUnicode extends InputAction {
   @Override
   protected final boolean performInputAction (Endpoint endpoint) {
-    Endpoints.setUnicodeEndpoint();
-    return true;
+    return Endpoints.setUnicodeEndpoint();
   }
 
   public TypeUnicode (Endpoint endpoint) {

@@ -101,7 +101,7 @@ public abstract class ShortcutAction extends Action {
 
       case 1:
         performShortcutAction(pm, choices.get(0));
-        break;
+        return true;
 
       default: {
         StringBuilder sb = new StringBuilder();
@@ -112,7 +112,7 @@ public abstract class ShortcutAction extends Action {
           sb.append(getLabel(pm, activity));
         }
 
-        Endpoints.setPopupEndpoint(sb.toString(), 1,
+        return Endpoints.setPopupEndpoint(sb.toString(), 1,
           new PopupClickHandler () {
             @Override
             public final boolean handleClick (int index) {
@@ -123,12 +123,8 @@ public abstract class ShortcutAction extends Action {
             }
           }
         );
-
-        break;
       }
     }
-
-    return true;
   }
 
   protected ShortcutAction (Endpoint endpoint) {

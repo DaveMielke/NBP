@@ -47,13 +47,13 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     showMessage(message);
   }
 
-  private void setMessage (String message) {
-    Endpoints.setPopupEndpoint(message);
+  private boolean setMessage (String message) {
     showMessage(message);
+    return Endpoints.setPopupEndpoint(message);
   }
 
-  private void setMessage (int message) {
-    setMessage(getString(message));
+  private boolean setMessage (int message) {
+    return setMessage(getString(message));
   }
 
   private abstract class MaintenanceTask extends AsyncTask<Void, String, String> {

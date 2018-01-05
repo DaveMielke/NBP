@@ -87,8 +87,7 @@ public class DescribeCharacter extends CursorKeyAction {
       }
     }
 
-    Endpoints.setPopupEndpoint(sb.toString());
-    return true;
+    return Endpoints.setPopupEndpoint(sb.toString());
   }
 
   public DescribeCharacter (Endpoint endpoint) {

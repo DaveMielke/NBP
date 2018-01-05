@@ -50,39 +50,39 @@ public class ScreenMonitor extends AccessibilityService {
     return sb.subSequence(0, sb.length());
   }
 
-  private static void showPopup (
+  private static boolean showPopup (
     CharSequence text,
     PopupClickHandler clickHandler,
     String... labels
   ) {
-    if (text != null) {
-      if (labels.length > 0) {
-        StringBuilder sb = new StringBuilder();
+    if (text == null) return false;
 
-        for (String label : labels) {
-          if (!label.isEmpty()) {
-            if (sb.length() > 0) sb.append(" - ");
-            sb.append(label);
-          }
-        }
+    if (labels.length > 0) {
+      StringBuilder sb = new StringBuilder();
 
-        if (sb.length() > 0) {
-          sb.append('\n');
-          sb.append(text);
-          text = sb;
+      for (String label : labels) {
+        if (!label.isEmpty()) {
+          if (sb.length() > 0) sb.append(" - ");
+          sb.append(label);
         }
       }
 
-      Endpoints.setPopupEndpoint(text.toString(), clickHandler);
+      if (sb.length() > 0) {
+        sb.append('\n');
+        sb.append(text);
+        text = sb;
+      }
     }
+
+    return Endpoints.setPopupEndpoint(text.toString(), clickHandler);
   }
 
-  private final void showPopup (
+  private final boolean showPopup (
     Collection<CharSequence> lines,
     PopupClickHandler clickHandler,
     String... labels
   ) {
-    showPopup(toText(lines), clickHandler, labels);
+    return showPopup(toText(lines), clickHandler, labels);
   }
 
   private static CharSequence getAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {

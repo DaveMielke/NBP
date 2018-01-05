@@ -36,8 +36,7 @@ public class TypingHighlightConfirm extends Action {
     );
 
     if (sb.length() == 0) appendTerm(sb, R.string.DescribeHighlighting_none);
-    Endpoints.setPopupEndpoint(sb.toString());
-    return true;
+    return Endpoints.setPopupEndpoint(sb.toString());
   }
 
   public TypingHighlightConfirm (Endpoint endpoint) {

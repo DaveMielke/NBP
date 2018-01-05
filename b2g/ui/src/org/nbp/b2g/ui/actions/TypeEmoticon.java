@@ -13,7 +13,7 @@ public class TypeEmoticon extends InputAction {
       message.append(EmoticonUtilities.getDescription(emoticon));
     }
 
-    Endpoints.setPopupEndpoint(message.toString(), 1,
+    return Endpoints.setPopupEndpoint(message.toString(), 1,
       new PopupClickHandler() {
         @Override
         public boolean handleClick (int index) {
@@ -41,8 +41,6 @@ public class TypeEmoticon extends InputAction {
         }
       }
     );
-
-    return true;
   }
 
   public TypeEmoticon (Endpoint endpoint) {
