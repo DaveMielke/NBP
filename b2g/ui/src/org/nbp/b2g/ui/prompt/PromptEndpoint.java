@@ -14,6 +14,7 @@ public abstract class PromptEndpoint extends InputEndpoint {
     try {
       if (prepare) {
         setSelection(start, buffer.length());
+        adjustScroll(0);
       }
     } finally {
       super.onForeground(prepare);
