@@ -10,6 +10,7 @@ import org.liblouis.Louis;
 public abstract class ApplicationParameters extends CommonParameters {
   public final static char PASSWORD_CHARACTER = '*';
 
+  public final static long IDLE_SCREEN_DELAY = 500; // milliseconds
   public final static long LONG_PRESS_TIME = 500; // milliseconds
   public final static long PARTIAL_ENTRY_TIMEOUT = 2000; // milliseconds
 

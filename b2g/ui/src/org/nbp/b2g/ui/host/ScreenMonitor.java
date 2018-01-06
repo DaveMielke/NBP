@@ -5,6 +5,7 @@ import org.nbp.b2g.ui.host.HostEndpoint;
 import java.util.Collection;
 import java.util.List;
 
+import org.nbp.common.Timeout;
 import org.nbp.common.SettingsUtilities;
 
 import android.util.Log;
@@ -91,15 +92,14 @@ public class ScreenMonitor extends AccessibilityService {
 
     {
       AccessibilityNodeInfo source = event.getSource();
+      if (source == null) return null;
 
-      if (source != null) {
-        boolean same = source.equals(node);
-        source.recycle();
-        if (!same) return null;
-      }
+      boolean same = source.equals(node);
+      source.recycle();
+      if (!same) return null;
     }
 
-    {
+    if (node.isPassword()) {
       CharSequence text = toText(event.getText());
       if (text != null) return text;
     }
@@ -523,26 +523,77 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  @Override
-  public void onAccessibilityEvent (final AccessibilityEvent event) {
-    synchronized (ACCESSIBILITY_EVENT_LOCK) {
-      if (ApplicationSettings.LOG_UPDATES) {
-        Log.d(LOG_TAG, "accessibility event starting: " + event.toString());
-      //say(event);
-      }
+  private final Timeout idleScreenDelay = new Timeout(ApplicationParameters.IDLE_SCREEN_DELAY, "idle-screen-delay") {
+    @Override
+    public void run () {
+      synchronized (ACCESSIBILITY_EVENT_LOCK) {
+        HostEndpoint endpoint = getHostEndpoint();
 
-      Crash.runComponent(
-        "accessibility event", event.toString(),
-        new Runnable() {
-          @Override
-          public void run () {
-            handleAccessibilityEvent(event);
+        synchronized (endpoint) {
+          AccessibilityNodeInfo original = endpoint.getCurrentNode();
+
+          if (original != null) {
+            logEventComponent(original, "reassessment");
+            AccessibilityNodeInfo current = ScreenUtilities.findCurrentNode(original);
+
+            if (current != null) {
+              {
+                AccessibilityNodeInfo refreshed = ScreenUtilities.getRefreshedNode(current);
+
+                if (refreshed != null) {
+                  current.recycle();
+                  current = refreshed;
+                }
+              }
+
+              if (!current.equals(original)) {
+                logEventComponent(current, "node");
+                write(current, false);
+              } else if (!current.toString().equals(original.toString())) {
+                logEventComponent(current, "node");
+                write(current, true);
+              }
+
+              current.recycle();
+            }
+
+            original.recycle();
           }
         }
-      );
+      }
+    }
+  };
 
-      if (ApplicationSettings.LOG_UPDATES) {
-        Log.d(LOG_TAG, "accessibility event finished");
+  @Override
+  public void onAccessibilityEvent (final AccessibilityEvent event) {
+    synchronized (idleScreenDelay) {
+      idleScreenDelay.cancel();
+
+      synchronized (ACCESSIBILITY_EVENT_LOCK) {
+        if (ApplicationSettings.LOG_UPDATES) {
+          Log.d(LOG_TAG, "accessibility event starting: " + event.toString());
+        //say(event);
+        }
+
+        try {
+          Crash.runComponent(
+            "accessibility event", event.toString(),
+            new Runnable() {
+              @Override
+              public void run () {
+                handleAccessibilityEvent(event);
+              }
+            }
+          );
+
+/*DISABLED
+          idleScreenDelay.start();
+*/
+        } finally {
+          if (ApplicationSettings.LOG_UPDATES) {
+            Log.d(LOG_TAG, "accessibility event finished");
+          }
+        }
       }
     }
   }
