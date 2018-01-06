@@ -116,9 +116,6 @@ public abstract class ScreenUtilities {
       sb.append(bounds.toShortString());
     }
 
-    sb.append(" #");
-    sb.append(node.hashCode());
-
     if ((text != null) && (text instanceof Spanned)) {
       Spanned spanned = (Spanned)text;
       Object[] spans = spanned.getSpans(0, spanned.length(), Object.class);
