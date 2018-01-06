@@ -52,7 +52,7 @@ public class PopupEndpoint extends Endpoint {
       if (index < 0) return false;
 
       try {
-        return clickHandler.handleValue(index);
+        return clickHandler.handleClick(index);
       } finally {
         if (!handleKeyboardKey_enter()) return false;
       }
