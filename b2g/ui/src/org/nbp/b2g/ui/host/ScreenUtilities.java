@@ -72,6 +72,7 @@ public abstract class ScreenUtilities {
     if (node.isAccessibilityFocused()) sb.append(" afd");
 
     if (node.isScrollable()) sb.append(" scb");
+    if (node.isClickable()) sb.append(" clb");
     if (node.isCheckable()) sb.append(" ckb");
     if (node.isChecked()) sb.append(" ckd");
     if (node.isSelected()) sb.append(" sld");
