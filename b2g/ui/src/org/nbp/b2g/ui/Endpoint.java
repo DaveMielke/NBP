@@ -87,6 +87,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
       boolean echo = true;
       CharSequence word = null;
       int action = 0;
+      String what = null;
 
       final CharSequence newLineText = getLineText();
       final int newLineStart = getLineStart();
@@ -102,7 +103,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
            ) {
           text = newText.subSequence(speechTextStart, speechTextEnd);
           echo = ApplicationSettings.ECHO_SELECTION;
-          logSpeech("selected text", text);
+          what = "selected text";
         }
       }
 
@@ -110,7 +111,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
         if (newLineStart != oldLineStart) {
           text = newLineText;
           echo = ApplicationSettings.SPEAK_LINES;
-          logSpeech("different line", text);
+          what = "different line";
         } else {
           int start = 0;
           int oldEnd = oldLineText.length();
@@ -135,9 +136,9 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
             if (text.length() == 1) {
               text = CharacterPhrase.get(text.charAt(0));
-              logSpeech("insert character", text);
+              what = "inserted character";
             } else {
-              logSpeech("insert text", text);
+              what = "inserted text";
             }
 
             if (ApplicationSettings.ECHO_WORDS) {
@@ -162,7 +163,6 @@ public abstract class Endpoint extends UserInterfaceComponent {
               }
 
               word = getCompletedWord(getText(), (newLineStart + newEnd));
-              if (word != null) logSpeech("completed word", word);
             }
           } else if (oldEnd > start) {
             text = oldLineText.subSequence(start, oldEnd);
@@ -171,31 +171,30 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
             if (text.length() == 1) {
               text = CharacterPhrase.get(text.charAt(0));
-              logSpeech("delete character", text);
+              what = "deleted character";
             } else {
-              logSpeech("delete text", text);
+              what = "deleted text";
             }
           } else if (isSelected(newSelectionStart) && isSelected(newSelectionEnd)) {
             int offset = NO_SELECTION;
-            String what = null;
 
             if (newSelectionStart != oldSelectionStart) {
               offset = newSelectionStart;
 
               if (newSelectionStart == newSelectionEnd) {
-                what = "cursor position";
+                what = "current character";
               } else {
-                what = "selection start";
+                what = "first character";
                 action = R.string.SetSelectionStart_action_confirmation;
               }
             } else if (newSelectionEnd != oldSelectionEnd) {
               offset = newSelectionEnd - 1;
               action = R.string.SetSelectionEnd_action_confirmation;
-              what = "selection end";
+              what = "last character";
             } else if (sayUnchangedLine) {
               text = newLineText;
               echo = ApplicationSettings.SPEAK_LINES;
-              logSpeech("unchanged line", text);
+              what = "unchanged line";
             }
 
             if (offset != NO_SELECTION) {
@@ -208,16 +207,16 @@ public abstract class Endpoint extends UserInterfaceComponent {
                 text = getString(R.string.character_end);
               }
 
-              if (text != null) {
-                echo = ApplicationSettings.ECHO_SELECTION;
-                logSpeech(what, text);
-              }
+              if (text != null) echo = ApplicationSettings.ECHO_SELECTION;
             }
           }
         }
       }
 
       if (text != null) {
+        logSpeech(what, text);
+        if (word != null) logSpeech("completed word", word);
+
         ApplicationUtilities.say(
           echo? text: null,
           word,
