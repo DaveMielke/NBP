@@ -133,12 +133,8 @@ public class ScreenMonitor extends AccessibilityService {
     return true;
   }
 
-  private static boolean write (AccessibilityNodeInfo node, boolean force, AccessibilityEvent event) {
-    return getHostEndpoint().write(node, force);
-  }
-
   private static boolean write (AccessibilityNodeInfo node, boolean force) {
-    return write(node, force, null);
+    return getHostEndpoint().write(node, force);
   }
 
   private static boolean write (int string) {
@@ -281,7 +277,7 @@ public class ScreenMonitor extends AccessibilityService {
         AccessibilityNodeInfo node = ScreenUtilities.findCurrentNode(root);
 
         if (node != null) {
-          write(node, true, event);
+          write(node, true);
           node.recycle();
         }
       }
@@ -360,8 +356,8 @@ public class ScreenMonitor extends AccessibilityService {
     }
   }
 
-  private static void handleViewAccessibilityFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
-    if (view.isAccessibilityFocused()) write(view, true, event);
+  private static void handleViewAccessibilityFocused (AccessibilityNodeInfo view) {
+    if (view.isAccessibilityFocused()) write(view, true);
   }
 
   private static void handleViewInputFocused (AccessibilityEvent event, AccessibilityNodeInfo view) {
@@ -444,7 +440,7 @@ public class ScreenMonitor extends AccessibilityService {
 
           switch (type) {
             case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
-              handleViewAccessibilityFocused(event, source);
+              handleViewAccessibilityFocused(source);
               break;
 
             case AccessibilityEvent.TYPE_VIEW_FOCUSED:
@@ -465,11 +461,11 @@ public class ScreenMonitor extends AccessibilityService {
 
                 switch (type) {
                   case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                    write(node, true, event);
+                    write(node, true);
                     break;
 
                   default:
-                    write(node, false, event);
+                    write(node, false);
                     break;
 
                   case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED: {
@@ -493,7 +489,7 @@ public class ScreenMonitor extends AccessibilityService {
 
                     synchronized (endpoint) {
                       if (endpoint.onTextSelectionChange(source, from, to)) {
-                        write(node, false, event);
+                        write(node, false);
                       }
                     }
 
