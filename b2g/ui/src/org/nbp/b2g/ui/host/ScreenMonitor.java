@@ -17,6 +17,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.content.Intent;
 import android.app.Notification;
 
+import android.text.TextUtils;
 import android.text.SpannableStringBuilder;
 
 public class ScreenMonitor extends AccessibilityService {
@@ -102,33 +103,37 @@ public class ScreenMonitor extends AccessibilityService {
     if (node.isPassword()) {
       CharSequence text = toText(event.getText());
       if (text != null) return text;
-    }
 
-    if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
-      int count = event.getItemCount();
+      if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
+        int count = event.getItemCount();
 
-      if (count != -1) {
-        StringBuilder sb = new StringBuilder();
-        char character = node.isPassword()? ApplicationParameters.PASSWORD_CHARACTER: ' ';
+        if (count != -1) {
+          StringBuilder sb = new StringBuilder();
+          char character = ApplicationParameters.PASSWORD_CHARACTER;
 
-        while (count > 0) {
-          sb.append(character);
-          count -= 1;
+          while (count > 0) {
+            sb.append(character);
+            count -= 1;
+          }
+
+          return sb.toString();
         }
-
-        return sb.toString();
       }
     }
 
     return null;
   }
 
-  private static void setAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {
-    AccessibilityText.set(node, getAccessibilityText(node, event));
+  private static boolean setAccessibilityText (AccessibilityNodeInfo node, AccessibilityEvent event) {
+    CharSequence text = getAccessibilityText(node, event);
+    if (text == null) return false;
+
+    if (TextUtils.equals(text, AccessibilityText.get(node))) return false;
+    AccessibilityText.set(node, text);
+    return true;
   }
 
   private static boolean write (AccessibilityNodeInfo node, boolean force, AccessibilityEvent event) {
-    setAccessibilityText(node, event);
     return getHostEndpoint().write(node, force);
   }
 
@@ -435,6 +440,7 @@ public class ScreenMonitor extends AccessibilityService {
       default:
         if (source != null) {
           logEventComponent(source, "source");
+          setAccessibilityText(source, event);
 
           switch (type) {
             case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
@@ -471,8 +477,6 @@ public class ScreenMonitor extends AccessibilityService {
                     int cursor = event.getFromIndex() + event.getAddedCount();
 
                     synchronized (endpoint) {
-                      setAccessibilityText(node, event);
-
                       boolean write = false;
                       if (endpoint.onTextChange(node)) write = true;
                       if (endpoint.onTextSelectionChange(source, cursor, cursor)) write = true;
@@ -530,34 +534,21 @@ public class ScreenMonitor extends AccessibilityService {
         HostEndpoint endpoint = getHostEndpoint();
 
         synchronized (endpoint) {
-          AccessibilityNodeInfo original = endpoint.getCurrentNode();
+          AccessibilityNodeInfo node = endpoint.getCurrentNode();
 
-          if (original != null) {
-            logEventComponent(original, "reassessment");
-            AccessibilityNodeInfo current = ScreenUtilities.findCurrentNode(original);
+          if (node != null) {
+            {
+              AccessibilityNodeInfo refreshed = ScreenUtilities.getRefreshedNode(node);
 
-            if (current != null) {
-              {
-                AccessibilityNodeInfo refreshed = ScreenUtilities.getRefreshedNode(current);
-
-                if (refreshed != null) {
-                  current.recycle();
-                  current = refreshed;
-                }
+              if (refreshed != null) {
+                node.recycle();
+                node = refreshed;
               }
-
-              if (!current.equals(original)) {
-                logEventComponent(current, "node");
-                write(current, false);
-              } else if (!current.toString().equals(original.toString())) {
-                logEventComponent(current, "node");
-                write(current, true);
-              }
-
-              current.recycle();
             }
 
-            original.recycle();
+            logEventComponent(node, "reassessment");
+            write(node, false);
+            node.recycle();
           }
         }
       }
@@ -586,9 +577,7 @@ public class ScreenMonitor extends AccessibilityService {
             }
           );
 
-/*DISABLED
           idleScreenDelay.start();
-*/
         } finally {
           if (ApplicationSettings.LOG_UPDATES) {
             Log.d(LOG_TAG, "accessibility event finished");

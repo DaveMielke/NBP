@@ -105,14 +105,16 @@ public class HostEndpoint extends InputEndpoint {
     if (text != null) {
       textInsertionOffset = sb.length();
     } else if (ScreenUtilities.isEditable(node)) {
-      int end = getSelectionEnd();
+      if (node.isPassword()) {
+        int end = getSelectionEnd();
 
-      if (isSelected(end)) {
-        char character = isPasswordField()? ApplicationParameters.PASSWORD_CHARACTER: ' ';
+        if (isSelected(end)) {
+          char character = ApplicationParameters.PASSWORD_CHARACTER;
 
-        while (end > 0) {
-          sb.append(character);
-          end -= 1;
+          while (end > 0) {
+            sb.append(character);
+            end -= 1;
+          }
         }
       }
     } else if ((text = node.getContentDescription()) != null) {
