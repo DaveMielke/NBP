@@ -11,6 +11,8 @@ sed -n '
   s/ *$//
   s/ `/ /g
   s/`_//g
+  s/|product name|/B2G/
+  s/|organization acronym|/NBP/
 
   p
 ' <../doc/UserInterface/Reference/actions.rst |

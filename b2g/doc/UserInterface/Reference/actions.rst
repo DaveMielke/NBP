@@ -19,7 +19,7 @@
 .. |ClearAndroidLog| replace:: Clear the Android log.
 .. |ClearClipboard| replace:: Clear `the clipboard`_.
 .. |Click| replace:: Tap (click) the current screen element.
-.. |Clock| replace:: Go to the B2G digital clock.
+.. |Clock| replace:: Go to the `braille-friendly clock`_.
 .. |ComputerBraille| replace:: Switch to `typing in computer braille`_ (eight dots).
 .. |CopyToClipboard| replace:: Copy the selected (or all) text to `the clipboard`_.
 .. |CursorDown| replace:: `The Cursor Down key`_ (on a keyboard).
@@ -83,7 +83,7 @@
 .. |LongClick| replace:: Hold (long click) the current screen element.
 .. |LongPressOff| replace:: Turn off `long press mode`_.
 .. |LongPressOn| replace:: Turn on `long press mode`_.
-.. |Maintenance| replace:: Go to the B2G System Maintenance screen.
+.. |Maintenance| replace:: Go to the |product name| System Maintenance screen.
 .. |MenuKey| replace:: The Android Menu key.
 .. |MoveBackward| replace:: Go to the start of the previous screen element.
 .. |MoveDown| replace:: Go down one line of text or to the start of the next screen element.
@@ -117,11 +117,11 @@
 .. |RemoteDisplay| replace:: Switch to `the remote braille display`_.
 .. |RemoveDiacriticalMark| replace:: Remove a diacritical mark from the previous character.
 .. |RemoveShortcut| replace:: Remove a shortcut from `the home screen`_.
-.. |ResetSettings| replace:: Reset the B2G settings to their default values.
-.. |RestoreSettings| replace:: Restore the B2G settings to their most recently saved values.
+.. |ResetSettings| replace:: Reset the user interface settings to their default values.
+.. |RestoreSettings| replace:: Restore the user interface settings to their most recently saved values.
 .. |ReversePanningOff| replace:: Turn off `reverse panning mode`_.
 .. |ReversePanningOn| replace:: Turn on `reverse panning mode`_.
-.. |SaveSettings| replace:: Save the current B2G settings.
+.. |SaveSettings| replace:: Save the current user interface settings.
 .. |SayAfter| replace:: Speak from the start of the braille display to the end of the screen element.
 .. |SayAll| replace:: Speak all of the screen element.
 .. |SayBefore| replace:: Speak from the start of the screen element to the start of the braille display.
@@ -136,17 +136,17 @@
 .. |ScrollRight| replace:: Go to the end of a list or line.
 .. |ScrollUp| replace:: Go to the previous page of a list or paragraph of text.
 .. |SelectAll| replace:: Select all of the text.
-.. |SendAndroidLog| replace:: Send a copy of the Android log to the B2G developers.
-.. |SendScreen| replace:: Send a copy of the current screen content to the B2G developers.
+.. |SendAndroidLog| replace:: Send a copy of the Android log to the user interface developers.
+.. |SendScreen| replace:: Send a copy of the current screen content to the user interface developers.
 .. |SetLeft| replace:: Pan the braille display a specific amount to the right.
 .. |SetSelectionEnd| replace:: Set or change the end of the `text selection`_.
 .. |SetSelectionStart| replace:: Set or change the start of the `text selection`_.
-.. |Settings| replace:: Go to the B2G Settings screen.
+.. |Settings| replace:: Go to the user interface Settings screen.
 .. |ShowClipboard| replace:: Show `the clipboard`_.
 .. |ShowNotificationsOff| replace:: Don't show notifications.
 .. |ShowNotificationsOn| replace:: Show notifications.
-.. |SleepTalkOff| replace:: Speak only when the B2G is awake.
-.. |SleepTalkOn| replace:: Speak even when the B2G is asleep.
+.. |SleepTalkOff| replace:: Speak only when the |product name| is awake.
+.. |SleepTalkOn| replace:: Speak even when the |product name| is asleep.
 .. |SpeakFaster| replace:: Increase the speech rate.
 .. |SpeakHigher| replace:: Increase the speech pitch.
 .. |SpeakLeft| replace:: Adjust the speech balance more toward the left.
