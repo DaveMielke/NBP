@@ -141,9 +141,8 @@ public class InternalTranslator extends Translator {
         }
       }
 
-    FIX_END:
       if (resultValues[RVI_INPUT_LENGTH] == inputLength) {
-        int outLength = resultValues[RVI_OUTPUT_LENGTH];
+        final int outLength = resultValues[RVI_OUTPUT_LENGTH];
 
         while (true) {
           int inputOffset = resultValues[RVI_INPUT_LENGTH];
@@ -152,21 +151,21 @@ public class InternalTranslator extends Translator {
           if (outputOffsets[inputOffset -= 1] != outLength) break;
           resultValues[RVI_INPUT_LENGTH] = inputOffset;
         }
+      }
 
-        while (true) {
-          int inputOffset = resultValues[RVI_INPUT_LENGTH];
-          if (inputOffset == inputLength) break;
+      while (true) {
+        int inputOffset = resultValues[RVI_INPUT_LENGTH];
+        if (inputOffset == inputLength) break;
 
-          int outputOffset = resultValues[RVI_OUTPUT_LENGTH];
-          if (outputOffset == outputLength) break FIX_END;
+        int outputOffset = resultValues[RVI_OUTPUT_LENGTH];
+        if (outputOffset == outputLength) break;
 
-          outputBuffer[outputOffset] = inputBuffer.charAt(inputOffset);
-          outputOffsets[inputOffset] = outputOffset;
-          inputOffsets[outputOffset] = inputOffset;
+        outputBuffer[outputOffset] = inputBuffer.charAt(inputOffset);
+        outputOffsets[inputOffset] = outputOffset;
+        inputOffsets[outputOffset] = inputOffset;
 
-          resultValues[RVI_INPUT_LENGTH] = inputOffset + 1;
-          resultValues[RVI_OUTPUT_LENGTH] = outputOffset + 1;
-        }
+        resultValues[RVI_INPUT_LENGTH] = inputOffset + 1;
+        resultValues[RVI_OUTPUT_LENGTH] = outputOffset + 1;
       }
     }
 
