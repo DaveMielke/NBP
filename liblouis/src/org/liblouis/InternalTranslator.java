@@ -129,15 +129,15 @@ public class InternalTranslator extends Translator {
         int outStart = 0;
 
         while (true) {
-          int inputOffset = resultValues[RVI_INPUT_LENGTH];
-          if (inputOffset == inputLength) break;
+          final int inOffset = resultValues[RVI_INPUT_LENGTH];
+          if (inOffset == inputLength) break;
 
-          int outputOffset = outputOffsets[inputOffset];
-          if (outputOffset < outStart) break;
-          if (outputOffset > outputLength) break;
+          final int outOffset = outputOffsets[inOffset];
+          if (outOffset < outStart) break;
+          if (outOffset > outputLength) break;
 
-          outStart = outputOffset;
-          resultValues[RVI_INPUT_LENGTH] = inputOffset + 1;
+          outStart = outOffset;
+          resultValues[RVI_INPUT_LENGTH] = inOffset + 1;
         }
       }
 
@@ -145,27 +145,27 @@ public class InternalTranslator extends Translator {
         final int outLength = resultValues[RVI_OUTPUT_LENGTH];
 
         while (true) {
-          int inputOffset = resultValues[RVI_INPUT_LENGTH];
-          if (inputOffset == 0) break;
+          int inOffset = resultValues[RVI_INPUT_LENGTH];
+          if (inOffset == 0) break;
 
-          if (outputOffsets[inputOffset -= 1] != outLength) break;
-          resultValues[RVI_INPUT_LENGTH] = inputOffset;
+          if (outputOffsets[inOffset -= 1] != outLength) break;
+          resultValues[RVI_INPUT_LENGTH] = inOffset;
         }
       }
 
       while (true) {
-        int inputOffset = resultValues[RVI_INPUT_LENGTH];
-        if (inputOffset == inputLength) break;
+        final int inOffset = resultValues[RVI_INPUT_LENGTH];
+        if (inOffset == inputLength) break;
 
-        int outputOffset = resultValues[RVI_OUTPUT_LENGTH];
-        if (outputOffset == outputLength) break;
+        final int outOffset = resultValues[RVI_OUTPUT_LENGTH];
+        if (outOffset == outputLength) break;
 
-        outputBuffer[outputOffset] = inputBuffer.charAt(inputOffset);
-        outputOffsets[inputOffset] = outputOffset;
-        inputOffsets[outputOffset] = inputOffset;
+        outputBuffer[outOffset] = inputBuffer.charAt(inOffset);
+        outputOffsets[inOffset] = outOffset;
+        inputOffsets[outOffset] = inOffset;
 
-        resultValues[RVI_INPUT_LENGTH] = inputOffset + 1;
-        resultValues[RVI_OUTPUT_LENGTH] = outputOffset + 1;
+        resultValues[RVI_INPUT_LENGTH] = inOffset + 1;
+        resultValues[RVI_OUTPUT_LENGTH] = outOffset + 1;
       }
     }
 
