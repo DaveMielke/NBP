@@ -152,21 +152,6 @@ public class InternalTranslator extends Translator {
           resultValues[RVI_INPUT_LENGTH] = inOffset;
         }
       }
-
-      while (true) {
-        final int inOffset = resultValues[RVI_INPUT_LENGTH];
-        if (inOffset == inputLength) break;
-
-        final int outOffset = resultValues[RVI_OUTPUT_LENGTH];
-        if (outOffset == outputLength) break;
-
-        outputBuffer[outOffset] = inputBuffer.charAt(inOffset);
-        outputOffsets[inOffset] = outOffset;
-        inputOffsets[outOffset] = inOffset;
-
-        resultValues[RVI_INPUT_LENGTH] = inOffset + 1;
-        resultValues[RVI_OUTPUT_LENGTH] = outOffset + 1;
-      }
     }
 
     return true;
