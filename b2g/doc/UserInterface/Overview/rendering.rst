@@ -153,7 +153,7 @@ Whenever you move onto a password field, a message (see `Messages`_) saying::
   password field
 
 is displayed.
-Also, an asterisk [*] is displayed for each character you type within it.
+Also, |the password character| is displayed for each character you type within it.
 
 Input Area Indicators
 `````````````````````

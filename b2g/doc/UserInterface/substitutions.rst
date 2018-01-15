@@ -26,7 +26,9 @@
 .. |message time| replace:: two seconds
 .. |popup time| replace:: 30 seconds
 
+.. |the password character| replace:: an asterisk [*]
 .. |the undefined character| replace:: dots 3, 6, 7, and 8 [⣤]
+
 .. |the cursor indicator| replace:: dots 7 and 8 [⣀]
 .. |the selection indicator| replace:: dot 8 [⢀]
 

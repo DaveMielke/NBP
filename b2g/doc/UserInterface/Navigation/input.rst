@@ -181,7 +181,7 @@ and that you need to be `typing in computer braille`_.
 Android has an accessibility setting named Speak Passwords
 that affects how what you type within a password field is rendered.
 If it's disabled (the default) then each character within a password field
-is rendered as an asterisk [*].
+is rendered as |the password character|.
 If it's enabled then password fields are rendered in plain text.
 While enabling this setting makes it easy to be sure that a password
 has been typed correctly, be aware that,
