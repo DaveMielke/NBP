@@ -178,3 +178,13 @@ is displayed whenever you move onto a password field in order to alert you
 that you won't be able to read what you're typing
 and that you need to be `typing in computer braille`_.
 
+Android has an accessibility setting named Speak Passwords
+that affects how what you type within a password field is rendered.
+If it's disabled (the default) then each character within a password field
+is rendered as an asterisk [*].
+If it's enabled then password fields are rendered in plain text.
+While enabling this setting makes it easy to be sure that a password
+has been typed correctly, be aware that,
+in addition to being on the braille display (which can be read privately),
+if speech is enabled then it's also spoken (which can be heard by others).
+
