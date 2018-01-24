@@ -238,7 +238,7 @@ public abstract class Tests {
     if (file.exists()) {
       notFound.remove(file);
     } else {
-      Log.d(LOG_TAG, "file not found: " + file.getAbsolutePath());
+      log(("file not found: " + file.getAbsolutePath()));
     }
   }
 
@@ -256,7 +256,7 @@ public abstract class Tests {
               String name = identifier.name();
 
               if (!name.equals(name.toUpperCase())) {
-                Log.d(LOG_TAG, ("translator identifier not all uppercase: " + name));
+                log(("translator identifier not all uppercase: " + name));
               }
             }
 
@@ -276,7 +276,7 @@ public abstract class Tests {
           }
 
           for (File file : notFound) {
-            Log.d(LOG_TAG, "unknown table file: " + file.getAbsolutePath());
+            log(("unknown table file: " + file.getAbsolutePath()));
           }
         }
       }
