@@ -15,7 +15,6 @@ public class InternalTable {
   }
 
   public final static String SUBDIRECTORY = Louis.toAssetsPath("tables");
-  public final static String EXTENSION = ".ctb";
 
   private final static Object STATIC_LOCK = new Object();
   private static File tablesDirectory = null;
@@ -31,14 +30,10 @@ public class InternalTable {
     return tablesDirectory;
   }
 
-  private final String makeFileName () {
-    return tableName + EXTENSION;
-  }
-
   public final File getFile () {
     synchronized (this) {
       if (tableFile == null) {
-        tableFile = new File(getDirectory(), makeFileName());
+        tableFile = new File(getDirectory(), tableName);
       }
     }
 
@@ -64,11 +59,19 @@ public class InternalTable {
   }
 
   public final static File[] getAllFiles () {
+    final String[] extensions = new String[] {".ctb", ".utb"};
+
     return getDirectory().listFiles(
       new FileFilter() {
         @Override
         public boolean accept (File file) {
-          return file.getName().endsWith(EXTENSION);
+          String name = file.getName();
+
+          for (String extension : extensions) {
+            if (name.endsWith(extension)) return true;
+          }
+
+          return false;
         }
       }
     );
