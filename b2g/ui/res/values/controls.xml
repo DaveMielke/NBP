@@ -8,7 +8,7 @@
   <string name="control_label_ShowNotifications">Notifications</string>
 
   <string name="control_group_input">Input Settings</string>
-  <string name="control_label_TypingMode">Typing</string>
+  <string name="control_label_TypingMode">Typing Mode</string>
   <string name="control_label_TypingBold">Bold</string>
   <string name="control_label_TypingItalic">Italic</string>
   <string name="control_label_TypingStrike">Strike</string>
