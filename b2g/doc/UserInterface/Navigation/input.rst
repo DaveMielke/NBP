@@ -188,3 +188,14 @@ has been typed correctly, be aware that,
 in addition to being on the braille display (which can be read privately),
 if speech is enabled then it's also spoken (which can be overheard by others).
 
+Protecting an Input Area
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can protect an input area against inadvertent modification
+(accidentally typing, etc)
+by disabling input area editing.
+This is done by pressing Space+Dot7+e (dots 15).
+Pressing Space+Dot8+e (dots 15) reenables it.
+When disabled, any action that would normally modify an input area
+results in a message (see `Messages`_) that input editing has been disabled.
+

@@ -18,6 +18,10 @@ public abstract class Action extends UserInterfaceComponent {
     return isAdvancedAction;
   }
 
+  public boolean editsInput () {
+    return false;
+  }
+
   public final String getName () {
     String name = LanguageUtilities.getClassName(getClass());
 

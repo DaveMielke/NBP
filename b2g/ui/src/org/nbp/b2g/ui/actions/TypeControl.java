@@ -7,6 +7,11 @@ public class TypeControl extends ModifierAction {
     return R.string.TypeControl_action_confirmation;
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public TypeControl (Endpoint endpoint) {
     super(endpoint, false);
   }

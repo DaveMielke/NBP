@@ -1,3 +1,9 @@
+Space+Dot7+Dots15 (e)
+  |EditingOff|
+
+Space+Dot8+Dots15 (e)
+  |EditingOn|
+
 Dot7
   |DeletePreviousCharacter|
 

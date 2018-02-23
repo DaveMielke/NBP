@@ -34,6 +34,7 @@ public abstract class ApplicationSettings {
   public volatile static float SPEECH_BALANCE = ApplicationDefaults.SPEECH_BALANCE;
   public volatile static boolean SLEEP_TALK = ApplicationDefaults.SLEEP_TALK;
 
+  public volatile static boolean EDITING_ENABLED = ApplicationDefaults.EDITING_ENABLED;
   public volatile static boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
   public volatile static boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
 

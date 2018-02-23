@@ -7,6 +7,11 @@ public class TypeDot8 extends TypeCharacter {
     return KeyMask.DOT_8;
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public TypeDot8 (Endpoint endpoint) {
     super(endpoint);
   }

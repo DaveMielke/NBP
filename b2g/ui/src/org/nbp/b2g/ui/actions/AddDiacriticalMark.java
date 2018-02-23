@@ -35,6 +35,11 @@ public class AddDiacriticalMark extends DiacriticAction {
     }
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public AddDiacriticalMark (Endpoint endpoint) {
     super(endpoint);
   }

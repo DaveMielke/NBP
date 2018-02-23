@@ -1,3 +1,6 @@
+bind Space+Dot7+Dots15#e EditingOff
+bind Space+Dot8+Dots15#e EditingOn
+
 bind Dot7 DeletePreviousCharacter
 bind Space+Dots145#d DeleteNextCharacter
 bind Space+Dot7+Dots145#d DeletePreviousWord

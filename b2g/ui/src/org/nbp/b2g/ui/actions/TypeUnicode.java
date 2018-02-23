@@ -7,6 +7,11 @@ public class TypeUnicode extends InputAction {
     return Endpoints.setUnicodeEndpoint();
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public TypeUnicode (Endpoint endpoint) {
     super(endpoint);
   }

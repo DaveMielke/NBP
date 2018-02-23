@@ -59,6 +59,11 @@ public class DeleteNextWord extends WordAction {
     return ActionResult.FAILED;
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public DeleteNextWord (Endpoint endpoint) {
     super(endpoint, false);
   }

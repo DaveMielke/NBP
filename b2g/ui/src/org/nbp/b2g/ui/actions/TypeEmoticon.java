@@ -43,6 +43,11 @@ public class TypeEmoticon extends InputAction {
     );
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public TypeEmoticon (Endpoint endpoint) {
     super(endpoint);
   }

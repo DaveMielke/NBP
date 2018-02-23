@@ -150,6 +150,11 @@ public class TypeCharacter extends InputAction {
     return endpoint.handleDotKeys(keyMask);
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public TypeCharacter (Endpoint endpoint) {
     super(endpoint);
   }

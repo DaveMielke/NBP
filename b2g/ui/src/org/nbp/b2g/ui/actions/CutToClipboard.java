@@ -28,6 +28,11 @@ public class CutToClipboard extends Action {
     return R.string.CutToClipboard_action_confirmation;
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public CutToClipboard (Endpoint endpoint) {
     super(endpoint, false);
   }

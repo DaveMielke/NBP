@@ -21,6 +21,11 @@ public class PasteFromClipboard extends Action {
     return false;
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public PasteFromClipboard (Endpoint endpoint) {
     super(endpoint, false);
   }

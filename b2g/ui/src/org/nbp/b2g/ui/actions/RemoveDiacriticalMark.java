@@ -46,6 +46,11 @@ public class RemoveDiacriticalMark extends DiacriticAction {
     }
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public RemoveDiacriticalMark (Endpoint endpoint) {
     super(endpoint);
   }

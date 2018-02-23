@@ -36,6 +36,7 @@
   <string name="control_label_SleepTalk">Sleep Talk</string>
 
   <string name="control_group_keyboard">Keyboard Settings</string>
+  <string name="control_label_EditingEnabled">Input Editing</string>
   <string name="control_label_LongPress">Long Presses</string>
   <string name="control_label_ReversePanning">Reverse Panning</string>
 

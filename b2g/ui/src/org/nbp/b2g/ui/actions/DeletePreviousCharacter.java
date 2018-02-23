@@ -7,6 +7,11 @@ public class DeletePreviousCharacter extends DeleteAction {
     return -1;
   }
 
+  @Override
+  public boolean editsInput () {
+    return true;
+  }
+
   public DeletePreviousCharacter (Endpoint endpoint) {
     super(endpoint);
   }

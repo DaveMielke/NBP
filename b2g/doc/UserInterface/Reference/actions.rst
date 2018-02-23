@@ -48,6 +48,8 @@
 .. |DropLeft| replace:: Drag to immediately left of the current screen element.
 .. |DropOn| replace:: Drag to on top of the current screen element.
 .. |DropRight| replace:: Drag to immediately right of the current screen element.
+.. |EditingOff| replace:: Disable the editing of `input areas`_.
+.. |EditingOn| replace:: Enable the editing of `input areas`_.
 .. |Editor| replace:: Go to the |organization acronym| editor.
 .. |EMail| replace:: Go to the EMail app.
 .. |End| replace:: `The End key`_ (on a keyboard).
