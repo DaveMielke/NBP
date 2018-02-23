@@ -7,6 +7,11 @@ public class Enter extends Action {
     return getEndpoint().handleKeyboardKey_enter();
   }
 
+  @Override
+  public boolean editsInput () {
+    return getEndpoint().isInputArea();
+  }
+
   public Enter (Endpoint endpoint) {
     super(endpoint, false);
   }
