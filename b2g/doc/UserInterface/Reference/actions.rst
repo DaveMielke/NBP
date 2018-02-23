@@ -48,8 +48,6 @@
 .. |DropLeft| replace:: Drag to immediately left of the current screen element.
 .. |DropOn| replace:: Drag to on top of the current screen element.
 .. |DropRight| replace:: Drag to immediately right of the current screen element.
-.. |EditingOff| replace:: Disable the editing of `input areas`_.
-.. |EditingOn| replace:: Enable the editing of `input areas`_.
 .. |Editor| replace:: Go to the |organization acronym| editor.
 .. |EMail| replace:: Go to the EMail app.
 .. |End| replace:: `The End key`_ (on a keyboard).
@@ -62,6 +60,8 @@
 .. |Gallery| replace:: Go to the Gallery app.
 .. |Home| replace:: `The Home key`_ (on a keyboard).
 .. |HomeKey| replace:: The Android Home key. Go to `the home screen`_.
+.. |InputEditingOff| replace:: Disable the editing of `input areas`_.
+.. |InputEditingOn| replace:: Enable the editing of `input areas`_.
 .. |ListActions| replace:: Show a list of all the actions that don't involve a cursor routing key.
 .. |ListCursorKeyActions| replace:: Show a list of all the actions that do involve a cursor routing key.
 .. |LiteraryBraille| replace:: Switch to `typing in literary braille`_ (six dots).

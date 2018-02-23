@@ -36,7 +36,7 @@ public abstract class ApplicationDefaults {
   public final static float SPEECH_BALANCE = SpeechParameters.BALANCE_CENTER;
   public final static boolean SLEEP_TALK = false;
 
-  public final static boolean EDITING_ENABLED = true;
+  public final static boolean INPUT_EDITING = true;
   public final static boolean LONG_PRESS = true;
   public final static boolean REVERSE_PANNING = false;
 

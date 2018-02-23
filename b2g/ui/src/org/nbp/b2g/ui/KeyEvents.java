@@ -44,8 +44,8 @@ public abstract class KeyEvents {
 
   public static boolean performAction (final Action action) {
     if (action.editsInput()) {
-      if (!ApplicationSettings.EDITING_ENABLED) {
-        ApplicationUtilities.message(R.string.error_editing_off);
+      if (!ApplicationSettings.INPUT_EDITING) {
+        Controls.inputEditing.confirmValue();
         return false;
       }
     }

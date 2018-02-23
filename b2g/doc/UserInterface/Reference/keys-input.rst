@@ -1,8 +1,8 @@
 Space+Dot7+Dots15 (e)
-  |EditingOff|
+  |InputEditingOff|
 
 Space+Dot8+Dots15 (e)
-  |EditingOn|
+  |InputEditingOn|
 
 Dot7
   |DeletePreviousCharacter|

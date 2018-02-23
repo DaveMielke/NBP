@@ -54,7 +54,7 @@ public abstract class Controls {
   public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
   public final static SleepTalkControl sleepTalk = new SleepTalkControl();
 
-  public final static EditingEnabledControl editingEnabled = new EditingEnabledControl();
+  public final static InputEditingControl inputEditing = new InputEditingControl();
   public final static LongPressControl longPress = new LongPressControl();
   public final static ReversePanningControl reversePanning = new ReversePanningControl();
 
@@ -109,7 +109,7 @@ public abstract class Controls {
     speechBalance,
     sleepTalk,
 
-    editingEnabled,
+    inputEditing,
     longPress,
     reversePanning,
 

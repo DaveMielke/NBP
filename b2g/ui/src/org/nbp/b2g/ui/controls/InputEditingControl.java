@@ -3,10 +3,10 @@ import org.nbp.b2g.ui.*;
 
 import org.nbp.common.controls.BooleanControl;
 
-public class EditingEnabledControl extends BooleanControl {
+public class InputEditingControl extends BooleanControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_EditingEnabled;
+    return R.string.control_label_InputEditing;
   }
 
   @Override
@@ -16,26 +16,26 @@ public class EditingEnabledControl extends BooleanControl {
 
   @Override
   protected String getPreferenceKey () {
-    return "editing-enabled";
+    return "input-editing";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationDefaults.EDITING_ENABLED;
+    return ApplicationDefaults.INPUT_EDITING;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.EDITING_ENABLED;
+    return ApplicationSettings.INPUT_EDITING;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.EDITING_ENABLED = value;
+    ApplicationSettings.INPUT_EDITING = value;
     return true;
   }
 
-  public EditingEnabledControl () {
+  public InputEditingControl () {
     super();
   }
 }
