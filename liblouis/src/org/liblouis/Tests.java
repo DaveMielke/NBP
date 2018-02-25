@@ -232,13 +232,15 @@ public abstract class Tests {
     );
   }
 
-  private final static void auditFile (Set<File> notFound, InternalTable table) {
-    File file = table.getFile();
+  private final static void auditFiles (Set<File> notFound, InternalTable table) {
+    for (String name : table.getNames()) {
+      File file = table.getFile(name);
 
-    if (file.exists()) {
-      notFound.remove(file);
-    } else {
-      log(("file not found: " + file.getAbsolutePath()));
+      if (file.exists()) {
+        notFound.remove(file);
+      } else {
+        log(("file not found: " + file.getAbsolutePath()));
+      }
     }
   }
 
@@ -267,10 +269,10 @@ public abstract class Tests {
                 InternalTranslator internal = (InternalTranslator)translator;
 
                 InternalTable forward = internal.getForwardTable();
-                auditFile(notFound, forward);
+                auditFiles(notFound, forward);
 
                 InternalTable backward = internal.getBackwardTable();
-                if (backward != forward) auditFile(notFound, backward);
+                if (backward != forward) auditFiles(notFound, backward);
               }
             }
           }

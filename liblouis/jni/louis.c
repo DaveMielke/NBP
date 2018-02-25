@@ -61,12 +61,12 @@ JAVA_METHOD(
 
 JAVA_METHOD(
   org_liblouis_Louis, compileTable, jboolean,
-  jstring jPath
+  jstring jTableList
 ) {
   jboolean isCopy;
-  const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
-  logPrint(LOG_DEBUG, "compiling table: %s", cPath);
-  void *table = lou_getTable(cPath);
-  (*env)->ReleaseStringUTFChars(env, jPath, cPath);
+  const char *cTableList = (*env)->GetStringUTFChars(env, jTableList, &isCopy);
+  logPrint(LOG_DEBUG, "compiling table: %s", cTableList);
+  void *table = lou_getTable(cTableList);
+  (*env)->ReleaseStringUTFChars(env, jTableList, cTableList);
   return table? JNI_TRUE: JNI_FALSE;
 }

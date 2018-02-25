@@ -60,26 +60,26 @@ JAVA_METHOD(
 
 JAVA_METHOD(
   org_liblouis_InternalTable, getEmphasisBit, jshort,
-  jstring jTablePath, jstring jEmphasisClass
+  jstring jTableList, jstring jEmphasisClass
 ) {
-  const char *cTablePath = (*env)->GetStringUTFChars(env, jTablePath, NULL);
+  const char *cTableList = (*env)->GetStringUTFChars(env, jTableList, NULL);
   const char *cEmphasisClass = (*env)->GetStringUTFChars(env, jEmphasisClass, NULL);
-  formtype bit = lou_getTypeformForEmphClass(cTablePath, cEmphasisClass);
+  formtype bit = lou_getTypeformForEmphClass(cTableList, cEmphasisClass);
 
-  (*env)->ReleaseStringUTFChars(env, jTablePath, cTablePath);
+  (*env)->ReleaseStringUTFChars(env, jTableList, cTableList);
   (*env)->ReleaseStringUTFChars(env, jEmphasisClass, cEmphasisClass);
   return bit;
 }
 
 JAVA_METHOD(
   org_liblouis_InternalTable, addRule, jboolean,
-  jstring jTablePath, jstring jRule
+  jstring jTableList, jstring jRule
 ) {
-  const char *cTablePath = (*env)->GetStringUTFChars(env, jTablePath, NULL);
+  const char *cTableList = (*env)->GetStringUTFChars(env, jTableList, NULL);
   const char *cRule = (*env)->GetStringUTFChars(env, jRule, NULL);
-  int successful = lou_compileString(cTablePath, cRule);
+  int successful = lou_compileString(cTableList, cRule);
 
-  (*env)->ReleaseStringUTFChars(env, jTablePath, cTablePath);
+  (*env)->ReleaseStringUTFChars(env, jTableList, cTableList);
   (*env)->ReleaseStringUTFChars(env, jRule, cRule);
   return successful? JNI_TRUE: JNI_FALSE;
 }
@@ -92,12 +92,12 @@ typedef enum {
 
 JAVA_METHOD(
   org_liblouis_InternalTranslator, translate, jboolean,
-  jstring jTablePath,
+  jstring jTableList,
   jstring jInputBuffer, jcharArray jOutputBuffer, jshortArray jTypeForm,
   jintArray jOutputOffsets, jintArray jInputOffsets,
   jintArray jResultValues, jboolean backTranslate
 ) {
-  const char *cTablePath = (*env)->GetStringUTFChars(env, jTablePath, NULL);
+  const char *cTableList = (*env)->GetStringUTFChars(env, jTableList, NULL);
 
   const jchar *cInputBuffer = (*env)->GetStringChars(env, jInputBuffer, NULL);
   jchar *cOutputBuffer = (*env)->GetCharArrayElements(env, jOutputBuffer, NULL);
@@ -123,12 +123,12 @@ JAVA_METHOD(
 
   int successful =
     ((backTranslate != JNI_FALSE)? lou_backTranslate: lou_translate)(
-      cTablePath, cInputBuffer, inputLength, cOutputBuffer, outputLength,
+      cTableList, cInputBuffer, inputLength, cOutputBuffer, outputLength,
       (uint16_t *)cTypeForm, spacing, cOutputOffsets, cInputOffsets,
       cursorOffset, translationMode
     );
 
-  (*env)->ReleaseStringUTFChars(env, jTablePath, cTablePath);
+  (*env)->ReleaseStringUTFChars(env, jTableList, cTableList);
   (*env)->ReleaseStringChars(env, jInputBuffer, cInputBuffer);
   (*env)->ReleaseCharArrayElements(env, jOutputBuffer, cOutputBuffer, 0);
   if (haveTypeForm) (*env)->ReleaseShortArrayElements(env, jTypeForm, cTypeForm, 0);

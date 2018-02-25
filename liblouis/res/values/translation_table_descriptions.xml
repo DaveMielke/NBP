@@ -55,7 +55,7 @@
   <string name="louis_ttd_GR_BB">(Septuagint and Greek New Testament)</string>
   <string name="louis_ttd_HAW_US_G1">Hawaiian</string>
   <string name="louis_ttd_HE">Hebrew</string>
-  <string name="louis_ttd_HR">Croatian</string>
+  <string name="louis_ttd_HR_G1">Croatian</string>
   <string name="louis_ttd_HU_HU_COMP8">Hungarian (eight-dot computer braille)</string>
   <string name="louis_ttd_HU_HU_G1">Hungarian, Grade 1</string>
   <string name="louis_ttd_HY">Armenian</string>
@@ -79,9 +79,9 @@
   <string name="louis_ttd_NE">Nepali</string>
   <string name="louis_ttd_NEMETH">Mathematics, Nemeth</string>
   <string name="louis_ttd_NEMETH_EDIT">Mathematics, Nemeth (for post-translation editing)</string>
-  <string name="louis_ttd_NL_BE_G1">Dutch, Belgium</string>
-  <string name="louis_ttd_NL_NL_G1">Dutch, Netherlands</string>
-  <string name="louis_ttd_NO_NO">Norwegian (based on the Offentlig Utvalg for Blindeskrift [Public Commission for Braille] translation table for CP1252)</string>
+  <string name="louis_ttd_NL_BE_G0">Dutch, Belgium</string>
+  <string name="louis_ttd_NL_NL_G0">Dutch, Netherlands</string>
+  <string name="louis_ttd_NO_NO_COMP8">Norwegian (based on the Offentlig Utvalg for Blindeskrift [Public Commission for Braille] translation table for CP1252)</string>
   <string name="louis_ttd_NO_NO_G1">Norwegian, Level 1</string>
   <string name="louis_ttd_NO_NO_G2">Norwegian, Level 2</string>
   <string name="louis_ttd_NO_NO_G3">Norwegian, Level 3</string>

@@ -1,6 +1,5 @@
 package org.liblouis;
 
-import java.io.File;
 import java.util.Arrays;
 
 import android.text.Spanned;
@@ -12,17 +11,17 @@ public class InternalTranslator extends Translator {
   private final InternalTable forwardTable;
   private final InternalTable backwardTable;
 
-  InternalTranslator (String forwardName, String backwardName) {
+  InternalTranslator (String forwardTableList, String backwardTableList) {
     super();
 
-    forwardTable = new InternalTable(forwardName);
-    backwardTable = (backwardName == null)? forwardTable:
-                    backwardName.equals(forwardName)? forwardTable:
-                    new InternalTable(backwardName);
+    forwardTable = new InternalTable(forwardTableList);
+    backwardTable = (backwardTableList == null)? forwardTable:
+                    backwardTableList.equals(forwardTableList)? forwardTable:
+                    new InternalTable(backwardTableList);
   }
 
-  InternalTranslator (String name) {
-    this(name, name);
+  InternalTranslator (String tableList) {
+    this(tableList, tableList);
   }
 
   public final InternalTable getForwardTable () {
@@ -117,7 +116,7 @@ public class InternalTranslator extends Translator {
 
     synchronized (Louis.NATIVE_LOCK) {
       boolean translated = translate(
-        table.getPath(), inputBuffer.toString(), outputBuffer,
+        table.getList(), inputBuffer.toString(), outputBuffer,
         typeForm, outputOffsets, inputOffsets, resultValues, backTranslate
       );
 

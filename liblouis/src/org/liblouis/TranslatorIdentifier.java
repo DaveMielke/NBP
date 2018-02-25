@@ -220,8 +220,8 @@ public enum TranslatorIdentifier {
     "he.ctb", R.string.louis_ttd_HE
   ),
 
-  HR(
-    "hr.ctb", R.string.louis_ttd_HR
+  HR_G1(
+    "hr-g1.ctb", R.string.louis_ttd_HR_G1
   ),
 
   HU_HU_COMP8(
@@ -316,16 +316,16 @@ public enum TranslatorIdentifier {
     "nemeth_edit.ctb", R.string.louis_ttd_NEMETH_EDIT
   ),
 
-  NL_BE_G1(
-    "nl-BE-g1.ctb", R.string.louis_ttd_NL_BE_G1
+  NL_BE_G0(
+    "nl-BE-g0.utb", R.string.louis_ttd_NL_BE_G0
   ),
 
-  NL_NL_G1(
-    "nl-NL-g1.ctb", R.string.louis_ttd_NL_NL_G1
+  NL_NL_G0(
+    "nl-NL-g0.utb", R.string.louis_ttd_NL_NL_G0
   ),
 
-  NO_NO(
-    "no-no.ctb", R.string.louis_ttd_NO_NO
+  NO_NO_COMP8(
+    "no-no-comp8.ctb", R.string.louis_ttd_NO_NO_COMP8
   ),
 
   NO_NO_G1(
@@ -455,14 +455,14 @@ public enum TranslatorIdentifier {
   PINYIN(R.string.louis_ttd_PINYIN),
   ; // end of enumeration
 
-  private final String forwardName;
-  private final String backwardName;
+  private final String forwardTableName;
+  private final String backwardTableName;
   private final int translatorDescription;
   private Translator translatorObject = null;
 
-  TranslatorIdentifier (String forward, String backward, int description) {
-    forwardName = forward;
-    backwardName = backward;
+  TranslatorIdentifier (String forwardName, String backwardName, int description) {
+    forwardTableName = forwardName;
+    backwardTableName = backwardName;
     translatorDescription = description;
   }
 
@@ -504,15 +504,15 @@ public enum TranslatorIdentifier {
     public String getTableName (TranslatorIdentifier identifier);
   }
 
-  private final String makeTableName (TableNameGetter tableNameGetter) {
+  private final String makeTableList (TableNameGetter tableNameGetter) {
     StringBuilder sb = new StringBuilder();
+    sb.append(tableNameGetter.getTableName(this));
 
     for (TranslatorIdentifier identifier : auxiliaryTranslators) {
+      sb.append(InternalTable.TABLE_LIST_DELIMITER);
       sb.append(tableNameGetter.getTableName(identifier));
-      sb.append(',');
     }
 
-    sb.append(tableNameGetter.getTableName(this));
     return sb.toString();
   }
 
@@ -532,20 +532,20 @@ public enum TranslatorIdentifier {
 
             default:
               translatorObject = new InternalTranslator(
-                makeTableName(
+                makeTableList(
                   new TableNameGetter() {
                     @Override
                     public String getTableName (TranslatorIdentifier identifier) {
-                      return identifier.forwardName;
+                      return identifier.forwardTableName;
                     }
                   }
                 ),
 
-                makeTableName(
+                makeTableList(
                   new TableNameGetter() {
                     @Override
                     public String getTableName (TranslatorIdentifier identifier) {
-                      return identifier.backwardName;
+                      return identifier.backwardTableName;
                     }
                   }
                 )

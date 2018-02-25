@@ -235,7 +235,7 @@ public final class Louis {
   }
 
   public final static boolean compileTable (InternalTable table) {
-    return compileTable(table.getFile());
+    return compileTable(table.getList());
   }
 
   public final static boolean compileTable (InternalTranslator translator) {

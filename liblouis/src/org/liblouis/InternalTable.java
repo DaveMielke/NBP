@@ -4,21 +4,26 @@ import java.io.File;
 import java.io.FileFilter;
 
 public class InternalTable {
-  private final String tableName;
+  private final String tableList;
 
-  public InternalTable (String name) {
-    tableName = name;
+  public InternalTable (String tables) {
+    tableList = tables;
   }
 
-  public final String getName () {
-    return tableName;
+  public final String getList () {
+    return tableList;
+  }
+
+  public final static String TABLE_LIST_DELIMITER = ",";
+
+  public final String[] getNames () {
+    return getList().split(TABLE_LIST_DELIMITER);
   }
 
   public final static String SUBDIRECTORY = Louis.toAssetsPath("tables");
 
   private final static Object STATIC_LOCK = new Object();
   private static File tablesDirectory = null;
-  private File tableFile = null;
 
   public static File getDirectory () {
     synchronized (STATIC_LOCK) {
@@ -30,31 +35,21 @@ public class InternalTable {
     return tablesDirectory;
   }
 
-  public final File getFile () {
-    synchronized (this) {
-      if (tableFile == null) {
-        tableFile = new File(getDirectory(), tableName);
-      }
-    }
-
-    return tableFile;
-  }
-
-  public final String getPath () {
-    return getFile().getAbsolutePath();
+  public static File getFile (String name) {
+    return new File(getDirectory(), name);
   }
 
   private native short getEmphasisBit (String tablePath, String emphasisClass);
   public final short getEmphasisBit (String emphasisClass) {
     synchronized (Louis.NATIVE_LOCK) {
-      return getEmphasisBit(getPath(), emphasisClass);
+      return getEmphasisBit(tableList, emphasisClass);
     }
   }
 
   private native boolean addRule (String tablePath, String rule);
   public final boolean addRule (String rule) {
     synchronized (Louis.NATIVE_LOCK) {
-      return addRule(getPath(), rule);
+      return addRule(tableList, rule);
     }
   }
 
