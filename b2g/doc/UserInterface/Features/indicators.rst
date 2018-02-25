@@ -7,9 +7,9 @@ Forward together. This will cause the indicators to be presented within a pop-up
 
   Alert: Airplane Mode
   Battery: 78% charging USB
-  SIM: MyProvider 75% GSM idle EDGE connected AccessPointName
   Wi-Fi: MyNetwork 60% 54Mbps
   Bluetooth: on discovering discoverable connectable
+  SIM: MyProvider 75% GSM idle EDGE connected AccessPointName
 
 An alternate combination that's usable in `One Hand Mode`_,
 Space+i (dots 24),

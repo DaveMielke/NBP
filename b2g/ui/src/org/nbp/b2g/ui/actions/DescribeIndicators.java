@@ -146,6 +146,104 @@ public class DescribeIndicators extends DescriptionAction {
     }
   }
 
+  private final IndicatorProperty wifiState = new IndicatorProperty("Wi-Fi state") {
+    {
+      addValue(WifiManager.WIFI_STATE_UNKNOWN, R.string.DescribeIndicators_wifi_state_unknown);
+      addValue(WifiManager.WIFI_STATE_DISABLING, R.string.DescribeIndicators_wifi_state_disabling);
+      addValue(WifiManager.WIFI_STATE_DISABLED, R.string.DescribeIndicators_wifi_state_disabled);
+      addValue(WifiManager.WIFI_STATE_ENABLING, R.string.DescribeIndicators_wifi_state_enabling);
+      addValue(WifiManager.WIFI_STATE_ENABLED, R.string.DescribeIndicators_wifi_state_enabled);
+    }
+  };
+
+  private void reportWifiIndicators (StringBuilder sb) {
+    WifiManager wifi = (WifiManager)ApplicationContext.getSystemService(Context.WIFI_SERVICE);
+
+    if (wifi != null) {
+      startLine(sb, R.string.DescribeIndicators_wifi_label);
+      int state = wifi.getWifiState();
+
+      switch (state) {
+        case WifiManager.WIFI_STATE_ENABLED: {
+          WifiInfo info = wifi.getConnectionInfo();
+
+          if (info != null) {
+            String name = info.getSSID();
+
+            if ((name != null) && !name.isEmpty()) {
+              sb.append(' ');
+              sb.append(name);
+
+              {
+                int rssi = info.getRssi();
+
+                sb.append(' ');
+                sb.append(wifi.calculateSignalLevel(rssi, 101));
+                sb.append('%');
+              }
+
+              {
+                int speed = info.getLinkSpeed();
+
+                if (speed > 0) {
+                  sb.append(' ');
+                  sb.append(speed);
+                  sb.append("Mbps");
+                }
+              }
+
+              break;
+            }
+          }
+        }
+
+        default:
+          wifiState.report(sb, state);
+          break;
+      }
+    }
+  }
+
+  private final IndicatorProperty adapterState = new IndicatorProperty("bluetooth adapter state") {
+    {
+      addValue(BluetoothAdapter.STATE_OFF, R.string.DescribeIndicators_bluetooth_adapter_off);
+      addValue(BluetoothAdapter.STATE_ON, R.string.DescribeIndicators_bluetooth_adapter_on);
+      addValue(BluetoothAdapter.STATE_TURNING_OFF, R.string.DescribeIndicators_bluetooth_adapter_turning_off);
+      addValue(BluetoothAdapter.STATE_TURNING_ON, R.string.DescribeIndicators_bluetooth_adapter_turning_on);
+    }
+  };
+
+  private void reportBluetoothIndicators (StringBuilder sb) {
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+
+    if (adapter != null) {
+      startLine(sb, R.string.DescribeIndicators_bluetooth_label);
+
+      int state = adapter.getState();
+      adapterState.report(sb, state);
+
+      if (state == BluetoothAdapter.STATE_ON) {
+        if (adapter.isDiscovering()) {
+          sb.append(' ');
+          appendString(sb, R.string.DescribeIndicators_bluetooth_property_discovering);
+        }
+
+        switch (adapter.getScanMode()) {
+          case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
+            sb.append(' ');
+            appendString(sb, R.string.DescribeIndicators_bluetooth_property_discoverable);
+          case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
+            sb.append(' ');
+            appendString(sb, R.string.DescribeIndicators_bluetooth_property_connectable);
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
+  }
+
   private final IndicatorProperty simState = new IndicatorProperty("SIM state") {
     {
       addValue(TelephonyManager.SIM_STATE_UNKNOWN, R.string.DescribeIndicators_sim_state_unknown);
@@ -265,104 +363,6 @@ public class DescribeIndicators extends DescriptionAction {
     }
   }
 
-  private final IndicatorProperty wifiState = new IndicatorProperty("Wi-Fi state") {
-    {
-      addValue(WifiManager.WIFI_STATE_UNKNOWN, R.string.DescribeIndicators_wifi_state_unknown);
-      addValue(WifiManager.WIFI_STATE_DISABLING, R.string.DescribeIndicators_wifi_state_disabling);
-      addValue(WifiManager.WIFI_STATE_DISABLED, R.string.DescribeIndicators_wifi_state_disabled);
-      addValue(WifiManager.WIFI_STATE_ENABLING, R.string.DescribeIndicators_wifi_state_enabling);
-      addValue(WifiManager.WIFI_STATE_ENABLED, R.string.DescribeIndicators_wifi_state_enabled);
-    }
-  };
-
-  private void reportWifiIndicators (StringBuilder sb) {
-    WifiManager wifi = (WifiManager)ApplicationContext.getSystemService(Context.WIFI_SERVICE);
-
-    if (wifi != null) {
-      startLine(sb, R.string.DescribeIndicators_wifi_label);
-      int state = wifi.getWifiState();
-
-      switch (state) {
-        case WifiManager.WIFI_STATE_ENABLED: {
-          WifiInfo info = wifi.getConnectionInfo();
-
-          if (info != null) {
-            String name = info.getSSID();
-
-            if ((name != null) && !name.isEmpty()) {
-              sb.append(' ');
-              sb.append(name);
-
-              {
-                int rssi = info.getRssi();
-
-                sb.append(' ');
-                sb.append(wifi.calculateSignalLevel(rssi, 101));
-                sb.append('%');
-              }
-
-              {
-                int speed = info.getLinkSpeed();
-
-                if (speed > 0) {
-                  sb.append(' ');
-                  sb.append(speed);
-                  sb.append("Mbps");
-                }
-              }
-
-              break;
-            }
-          }
-        }
-
-        default:
-          wifiState.report(sb, state);
-          break;
-      }
-    }
-  }
-
-  private final IndicatorProperty adapterState = new IndicatorProperty("bluetooth adapter state") {
-    {
-      addValue(BluetoothAdapter.STATE_OFF, R.string.DescribeIndicators_bluetooth_adapter_off);
-      addValue(BluetoothAdapter.STATE_ON, R.string.DescribeIndicators_bluetooth_adapter_on);
-      addValue(BluetoothAdapter.STATE_TURNING_OFF, R.string.DescribeIndicators_bluetooth_adapter_turning_off);
-      addValue(BluetoothAdapter.STATE_TURNING_ON, R.string.DescribeIndicators_bluetooth_adapter_turning_on);
-    }
-  };
-
-  private void reportBluetoothIndicators (StringBuilder sb) {
-    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-
-    if (adapter != null) {
-      startLine(sb, R.string.DescribeIndicators_bluetooth_label);
-
-      int state = adapter.getState();
-      adapterState.report(sb, state);
-
-      if (state == BluetoothAdapter.STATE_ON) {
-        if (adapter.isDiscovering()) {
-          sb.append(' ');
-          appendString(sb, R.string.DescribeIndicators_bluetooth_property_discovering);
-        }
-
-        switch (adapter.getScanMode()) {
-          case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
-            sb.append(' ');
-            appendString(sb, R.string.DescribeIndicators_bluetooth_property_discoverable);
-          case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
-            sb.append(' ');
-            appendString(sb, R.string.DescribeIndicators_bluetooth_property_connectable);
-            break;
-
-          default:
-            break;
-        }
-      }
-    }
-  }
-
   @Override
   protected void makeDescription (StringBuilder sb) {
     if (isAirplaneModeOn()) {
@@ -372,9 +372,9 @@ public class DescribeIndicators extends DescriptionAction {
     }
 
     reportBatteryIndicators(sb);
-    reportTelephonyIndicators(sb);
     reportWifiIndicators(sb);
     reportBluetoothIndicators(sb);
+    reportTelephonyIndicators(sb);
   }
 
   public DescribeIndicators (Endpoint endpoint) {
