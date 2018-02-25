@@ -54,7 +54,7 @@ public class InternalTable {
   }
 
   public final static File[] getAllFiles () {
-    final String[] extensions = new String[] {".ctb", ".utb"};
+    final String[] extensions = new String[] {".ctb", ".utb", ".tbl"};
 
     return getDirectory().listFiles(
       new FileFilter() {
