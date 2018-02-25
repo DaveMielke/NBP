@@ -4,6 +4,18 @@ import java.util.Set;
 import java.util.LinkedHashSet;
 
 public enum TranslatorIdentifier {
+  BRAILLE_PATTERNS(
+    "braille-patterns.utb", R.string.louis_ttd_BRAILLE_PATTERNS
+  ),
+
+  IPA_BASE(
+    "IPA_base.utb", R.string.louis_ttd_IPA_BASE
+  ),
+
+  IPA_EXTEND(
+    "IPA_extend.utb", R.string.louis_ttd_IPA_EXTEND
+  ),
+
   AFR_ZA_G1(
     "afr-za-g1.ctb", R.string.louis_ttd_AFR_ZA_G1
   ),
@@ -234,14 +246,6 @@ public enum TranslatorIdentifier {
 
   HY(
     "hy.ctb", R.string.louis_ttd_HY
-  ),
-
-  IPA_BASE(
-    "IPA_base.utb", R.string.louis_ttd_IPA_base
-  ),
-
-  IPA_EXTEND(
-    "IPA_extend.utb", R.string.louis_ttd_IPA_extend
   ),
 
   IS(

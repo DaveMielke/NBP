@@ -90,7 +90,7 @@ public class InternalTranslator extends Translator {
   }
 
   private native boolean translate (
-    String tablePath,
+    String tableList,
     String inputBuffer, char[] outputBuffer, short[] typeForm,
     int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate
