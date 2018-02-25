@@ -49,8 +49,11 @@
   <string name="control_label_RemoteDisplay">Remote Display</string>
   <string name="control_label_SecureConnection">Secure Connection</string>
 
-  <string name="control_group_developer">Developer Settings</string>
+  <string name="control_group_advanced">Advanced Settings</string>
   <string name="control_label_ComputerBraille">Computer Braille</string>
+  <string name="control_label_PhoneticAlphabet">Phonetic Alphabet</string>
+
+  <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_CrashEmails">Crash Emails</string>
   <string name="control_label_AdvancedActions">Advanced Actions</string>
   <string name="control_label_ExtraIndicators">Extra Indicators</string>

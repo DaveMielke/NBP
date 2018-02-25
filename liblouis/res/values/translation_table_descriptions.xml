@@ -59,6 +59,8 @@
   <string name="louis_ttd_HU_HU_COMP8">Hungarian (eight-dot computer braille)</string>
   <string name="louis_ttd_HU_HU_G1">Hungarian, Grade 1</string>
   <string name="louis_ttd_HY">Armenian</string>
+  <string name="louis_ttd_IPA_base">International Phonetic Alphabet (basic)</string>
+  <string name="louis_ttd_IPA_extend">International Phonetic Alphabet (extended)</string>
   <string name="louis_ttd_IS">Icelandic</string>
   <string name="louis_ttd_IU_CA_G1">Inuktitut</string>
   <string name="louis_ttd_KO_2006_G1">Korean, Grade 1 (2006)</string>

@@ -75,6 +75,11 @@ Remote Settings
 
 .. include:: settings-remote.rst
 
+Advanced Settings
+~~~~~~~~~~~~~~~~~
+
+.. include:: settings-advanced.rst
+
 Developer Settings
 ~~~~~~~~~~~~~~~~~~
 

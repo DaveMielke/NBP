@@ -66,6 +66,8 @@ public abstract class Controls {
   public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
 
   public final static ComputerBrailleControl computerBraille = new ComputerBrailleControl();
+  public final static PhoneticAlphabetControl phoneticAlphabet = new PhoneticAlphabetControl();
+
   public final static CrashEmailsControl crashEmails = new CrashEmailsControl();
   public final static AdvancedActionsControl advancedActions = new AdvancedActionsControl();
   public final static ExtraIndicatorsControl extraIndicators = new ExtraIndicatorsControl();
@@ -121,6 +123,8 @@ public abstract class Controls {
     secureConnection,
 
     computerBraille,
+    phoneticAlphabet,
+
     crashEmails,
     advancedActions,
     extraIndicators,

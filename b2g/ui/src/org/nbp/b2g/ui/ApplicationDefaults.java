@@ -48,6 +48,8 @@ public abstract class ApplicationDefaults {
   public final static boolean SECURE_CONNECTION = false;
 
   public final static ComputerBraille COMPUTER_BRAILLE = ComputerBraille.LOCAL;
+  public final static PhoneticAlphabet PHONETIC_ALPHABET = PhoneticAlphabet.OFF;
+
   public final static boolean CRASH_EMAILS = false;
   public final static boolean ADVANCED_ACTIONS = false;
   public final static boolean EXTRA_INDICATORS = false;

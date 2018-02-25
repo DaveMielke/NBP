@@ -46,6 +46,8 @@ public abstract class ApplicationSettings {
   public volatile static boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
   public volatile static ComputerBraille COMPUTER_BRAILLE = ApplicationDefaults.COMPUTER_BRAILLE;
+  public volatile static PhoneticAlphabet PHONETIC_ALPHABET = ApplicationDefaults.PHONETIC_ALPHABET;
+
   public volatile static boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
   public volatile static boolean ADVANCED_ACTIONS = ApplicationDefaults.ADVANCED_ACTIONS;
   public volatile static boolean EXTRA_INDICATORS = ApplicationDefaults.EXTRA_INDICATORS;

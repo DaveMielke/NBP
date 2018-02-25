@@ -1,5 +1,8 @@
 package org.liblouis;
 
+import java.util.Set;
+import java.util.LinkedHashSet;
+
 public enum TranslatorIdentifier {
   AFR_ZA_G1(
     "afr-za-g1.ctb", R.string.louis_ttd_AFR_ZA_G1
@@ -233,6 +236,14 @@ public enum TranslatorIdentifier {
     "hy.ctb", R.string.louis_ttd_HY
   ),
 
+  IPA_BASE(
+    "IPA_base.utb", R.string.louis_ttd_IPA_base
+  ),
+
+  IPA_EXTEND(
+    "IPA_extend.utb", R.string.louis_ttd_IPA_extend
+  ),
+
   IS(
     "is.ctb", R.string.louis_ttd_IS
   ),
@@ -447,7 +458,7 @@ public enum TranslatorIdentifier {
   private final String forwardName;
   private final String backwardName;
   private final int translatorDescription;
-  private Translator identifiedTranslator = null;
+  private Translator translatorObject = null;
 
   TranslatorIdentifier (String forward, String backward, int description) {
     forwardName = forward;
@@ -467,21 +478,84 @@ public enum TranslatorIdentifier {
     return Louis.getContext().getString(translatorDescription);
   }
 
+  private final static Set<TranslatorIdentifier> auxiliaryTranslators =
+         new LinkedHashSet<TranslatorIdentifier>();
+
+  private static int currentAuxiliaryTranslatorsCounter = 0;
+  private int myAuxiliaryTranslatorsCounter = 0;
+
+  public final static boolean addAuxiliaryTranslator (TranslatorIdentifier identifier) {
+    synchronized (auxiliaryTranslators) {
+      boolean added = auxiliaryTranslators.add(identifier);
+      currentAuxiliaryTranslatorsCounter += 1;
+      return added;
+    }
+  }
+
+  public final static boolean removeAuxiliaryTranslator (TranslatorIdentifier identifier) {
+    synchronized (auxiliaryTranslators) {
+      boolean removed = auxiliaryTranslators.remove(identifier);
+      currentAuxiliaryTranslatorsCounter += 1;
+      return removed;
+    }
+  }
+
+  private static interface TableNameGetter {
+    public String getTableName (TranslatorIdentifier identifier);
+  }
+
+  private final String makeTableName (TableNameGetter tableNameGetter) {
+    StringBuilder sb = new StringBuilder();
+
+    for (TranslatorIdentifier identifier : auxiliaryTranslators) {
+      sb.append(tableNameGetter.getTableName(identifier));
+      sb.append(',');
+    }
+
+    sb.append(tableNameGetter.getTableName(this));
+    return sb.toString();
+  }
+
   public final Translator getTranslator () {
     synchronized (this) {
-      if (identifiedTranslator == null) {
-        switch (this) {
-          case PINYIN:
-            identifiedTranslator = new PinyinTranslator();
-            break;
+      synchronized (auxiliaryTranslators) {
+        if (myAuxiliaryTranslatorsCounter != currentAuxiliaryTranslatorsCounter) {
+          translatorObject = null;
+          myAuxiliaryTranslatorsCounter = currentAuxiliaryTranslatorsCounter;
+        }
 
-          default:
-            identifiedTranslator = new InternalTranslator(forwardName, backwardName);
-            break;
+        if (translatorObject == null) {
+          switch (this) {
+            case PINYIN:
+              translatorObject = new PinyinTranslator();
+              break;
+
+            default:
+              translatorObject = new InternalTranslator(
+                makeTableName(
+                  new TableNameGetter() {
+                    @Override
+                    public String getTableName (TranslatorIdentifier identifier) {
+                      return identifier.forwardName;
+                    }
+                  }
+                ),
+
+                makeTableName(
+                  new TableNameGetter() {
+                    @Override
+                    public String getTableName (TranslatorIdentifier identifier) {
+                      return identifier.backwardName;
+                    }
+                  }
+                )
+              );
+              break;
+          }
         }
       }
     }
 
-    return identifiedTranslator;
+    return translatorObject;
   }
 }

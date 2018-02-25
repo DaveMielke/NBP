@@ -11,7 +11,7 @@ public class ComputerBrailleControl extends EnumerationControl<ComputerBraille> 
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_developer;
+    return R.string.control_group_advanced;
   }
 
   @Override
