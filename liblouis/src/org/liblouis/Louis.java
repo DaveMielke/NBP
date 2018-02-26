@@ -228,27 +228,27 @@ public final class Louis {
     initialize(context, null);
   }
 
-  public final static boolean compileTable (File file) {
+  public final static boolean compile (String tableList) {
     synchronized (NATIVE_LOCK) {
-      return compileTable(file.getAbsolutePath());
+      return compileTable(tableList);
     }
   }
 
-  public final static boolean compileTable (InternalTable table) {
-    synchronized (NATIVE_LOCK) {
-      return compileTable(table.getList());
-    }
+  public final static boolean compile (File file) {
+    return compile(file.getAbsolutePath());
   }
 
-  public final static boolean compileTable (InternalTranslator translator) {
-    synchronized (NATIVE_LOCK) {
-      InternalTable forwardTable = translator.getForwardTable();
-      if (!compileTable(forwardTable)) return false;
+  public final static boolean compile (InternalTable table) {
+    return compile(table.getList());
+  }
 
-      InternalTable backwardTable = translator.getBackwardTable();
-      if (backwardTable == forwardTable) return true;
-      return compileTable(backwardTable);
-    }
+  public final static boolean compile (InternalTranslator translator) {
+    InternalTable forwardTable = translator.getForwardTable();
+    if (!compile(forwardTable)) return false;
+
+    InternalTable backwardTable = translator.getBackwardTable();
+    if (backwardTable == forwardTable) return true;
+    return compile(backwardTable);
   }
 
   public static BrailleTranslation getBrailleTranslation (
