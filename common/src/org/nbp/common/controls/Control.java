@@ -169,13 +169,14 @@ public abstract class Control {
     return null;
   }
 
-  private final boolean saveValue (SharedPreferences prefs) {
+  private final void saveValue (SharedPreferences prefs) {
     String key = getPreferenceKey();
-    if (key == null) return true;
 
-    SharedPreferences.Editor editor = prefs.edit();
-    saveValue(editor, key);
-    return editor.commit();
+    if (key != null) {
+      SharedPreferences.Editor editor = prefs.edit();
+      saveValue(editor, key);
+      editor.apply();
+    }
   }
 
   protected final void reportValueChange () {
@@ -231,8 +232,8 @@ public abstract class Control {
     }
   }
 
-  public final boolean saveValue () {
-    return saveValue(getSavedSettings());
+  public final void saveValue () {
+    saveValue(getSavedSettings());
   }
 
   public final static void saveValues (Control... controls) {
