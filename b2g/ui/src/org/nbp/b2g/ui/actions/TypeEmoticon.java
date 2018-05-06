@@ -30,10 +30,8 @@ public class TypeEmoticon extends InputAction {
               }
             }
 
-            if (end < text.length()) {
-              if (!Character.isWhitespace(text.charAt(end))) {
-                emoticon.append(' ');
-              }
+            if (!((end < text.length()) && Character.isWhitespace(text.charAt(end)))) {
+              emoticon.append(' ');
             }
 
             return endpoint.insertText(emoticon.toString());
