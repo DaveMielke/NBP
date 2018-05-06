@@ -29,24 +29,22 @@
   <!-- for reading user-provided data files (keys, chars, etc) -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-  <!-- for creating org.nbp.b2g.ui/ -->
+  <!-- for creating the org.nbp.b2g.ui/ folder -->
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
   <!-- for the SendAndroidLog action -->
   <uses-permission android:name="android.permission.READ_LOGS" />
 
-  <!-- for the braille monitor (system overlay) window -->
+  <!-- for the braille monitor window -->
+  <!-- for the screen orientation window -->
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-  <!-- for the DescribeStatus action -->
+  <!-- for the DescribeIndicators action -->
   <uses-permission android:name="android.permission.BATTERY_STATS" />
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-  <!-- for the braille display endpoint -->
+  <!-- for the remote braille display endpoint -->
   <uses-permission android:name="android.permission.BLUETOOTH" />
-
-  <!-- for fixing the Bluetooth device name (Braille to Go -> B2G) -->
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
   <!-- for system maintenance operations -->
   <uses-permission android:name="android.permission.REBOOT" />
