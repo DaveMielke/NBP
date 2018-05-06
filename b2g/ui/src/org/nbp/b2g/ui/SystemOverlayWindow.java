@@ -42,7 +42,7 @@ public class SystemOverlayWindow {
     );
   }
 
-  protected final static class WindowParameters extends WindowManager.LayoutParams {
+  protected static class WindowParameters extends WindowManager.LayoutParams {
     public WindowParameters () {
       super(
         WindowManager.LayoutParams.WRAP_CONTENT /* width */,
@@ -57,8 +57,8 @@ public class SystemOverlayWindow {
     }
   }
 
-  private final static WindowParameters windowParameters = new WindowParameters();
-  protected void adjustWindowParameters (WindowParameters parameters) {}
+  protected void adjustWindowParameters (WindowParameters parameters) {
+  }
 
   protected final class WindowLayout extends LinearLayout {
     public WindowLayout (Context context) {
@@ -89,8 +89,9 @@ public class SystemOverlayWindow {
           WindowLayout layout = getLayout();
 
           if (!isVisible(layout)) {
-            adjustWindowParameters(windowParameters);
-            windowManager.addView(layout, windowParameters);
+            WindowParameters parameters = new WindowParameters();
+            adjustWindowParameters(parameters);
+            windowManager.addView(layout, parameters);
             logWindowState("visible");
           }
         }

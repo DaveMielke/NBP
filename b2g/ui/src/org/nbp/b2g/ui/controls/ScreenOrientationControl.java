@@ -37,7 +37,7 @@ public class ScreenOrientationControl extends EnumerationControl<ScreenOrientati
 
     if (window == null) window = new ScreenOrientationWindow(ApplicationContext.getContext());
     window.setInvisible();
-    if (value.getActivityOrientation() != 0) window.setVisible();
+    window.setVisible();
 
     return true;
   }
