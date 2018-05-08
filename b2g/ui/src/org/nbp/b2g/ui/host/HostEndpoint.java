@@ -15,6 +15,8 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
+import android.widget.RadioButton;
+
 import android.text.Spanned;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -52,6 +54,13 @@ public class HostEndpoint extends InputEndpoint {
     }
   }
 
+  private final boolean canAssign (Class to) {
+    synchronized (this) {
+      if (currentNode == null) return false;
+      return ScreenUtilities.canAssign(to, currentNode);
+    }
+  }
+
   private static void setSpeechSpan (SpannableStringBuilder sb, int start, String text) {
     sb.setSpan(new SpeechSpan(text), start, sb.length(), sb.SPAN_EXCLUSIVE_EXCLUSIVE);
   }
@@ -84,18 +93,31 @@ public class HostEndpoint extends InputEndpoint {
     CharSequence text;
 
     if (node.isCheckable()) {
-      boolean isChecked = node.isChecked();
       int start = sb.length();
 
-      sb.append('⣏');
-      sb.append(isChecked? '⠶': ' ');
-      sb.append("⣹ ");
+      boolean isChecked = node.isChecked();
+      boolean isSingle = canAssign(RadioButton.class);
 
-      setSpeechSpan(sb, start, (
-        isChecked?
-        R.string.checkbox_on:
-        R.string.checkbox_off
-      ));
+      final char begin;
+      final char end;
+      final int word;
+
+      if (isSingle) {
+        begin = '⢎';
+        end   = '⡱';
+        word  = isChecked? R.string.choice_single_on: R.string.choice_single_off;
+      } else {
+        begin = '⣏';
+        end   = '⣹';
+        word  = isChecked? R.string.choice_multiple_on: R.string.choice_multiple_off;
+      }
+
+      sb.append(begin);
+      sb.append(isChecked? '⠶': ' ');
+      sb.append(end);
+
+      sb.append(' ');
+      setSpeechSpan(sb, start, word);
     }
 
     if ((text = node.getText()) == null) {

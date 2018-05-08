@@ -87,8 +87,11 @@
 
   <string name="state_disabled">disabled</string>
 
-  <string name="checkbox_off">not checked</string>
-  <string name="checkbox_on">checked</string>
+  <string name="choice_multiple_off">not checked</string>
+  <string name="choice_multiple_on">checked</string>
+
+  <string name="choice_single_off">not selected</string>
+  <string name="choice_single_on">selected</string>
 
   <string name="SystemMaintenance_action_label">System Maintenance</string>
 
