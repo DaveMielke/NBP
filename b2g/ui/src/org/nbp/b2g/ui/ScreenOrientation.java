@@ -3,7 +3,7 @@ package org.nbp.b2g.ui;
 import android.content.pm.ActivityInfo;
 
 public enum ScreenOrientation {
-  AUTOMATIC(0),
+  UNLOCKED(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED),
   PORTRAIT(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT),
   LANDSCAPE(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE),
   ; // end of enumeration

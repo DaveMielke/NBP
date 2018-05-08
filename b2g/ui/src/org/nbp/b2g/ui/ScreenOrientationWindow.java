@@ -12,11 +12,7 @@ public class ScreenOrientationWindow extends SystemOverlayWindow {
   protected void adjustWindowParameters (WindowParameters parameters) {
     super.adjustWindowParameters(parameters);
     parameters.format = PixelFormat.RGBA_8888;
-
-    {
-      int orientation = ApplicationSettings.SCREEN_ORIENTATION.getActivityOrientation();
-      if (orientation != 0) parameters.screenOrientation = orientation;
-    }
+    parameters.screenOrientation = ApplicationSettings.SCREEN_ORIENTATION.getActivityOrientation();
   }
 
   public ScreenOrientationWindow (final Context context) {

@@ -23,7 +23,7 @@
   <string name="enum_PhoneticAlphabet_BASIC">Basic</string>
   <string name="enum_PhoneticAlphabet_EXTENDED">Extended</string>
 
-  <string name="enum_ScreenOrientation_AUTOMATIC">Automatic</string>
+  <string name="enum_ScreenOrientation_UNLOCKED">Unlocked</string>
   <string name="enum_ScreenOrientation_PORTRAIT">Portrait</string>
   <string name="enum_ScreenOrientation_LANDSCAPE">Landscape</string>
 
