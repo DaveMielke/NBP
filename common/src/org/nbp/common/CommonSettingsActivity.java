@@ -18,7 +18,6 @@ import android.app.FragmentTransaction;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 
 import android.widget.ListView;
 import android.widget.AdapterView;
@@ -386,47 +385,8 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return group;
   }
 
-  private Fragment createFragment (final View view, final String title) {
-    return new Fragment() {
-      private TextView titleView = null;
-      private View focusedView = null;
-
-      @Override
-      public void onCreate (Bundle state) {
-        super.onCreate(state);
-        titleView = (TextView)findViewById(R.id.settings_fragment_title);
-      }
-
-      @Override
-      public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle state) {
-        return view;
-      }
-
-      @Override
-      public void onResume () {
-        super.onResume();
-        titleView.setText(title);
-
-        if (focusedView != null) {
-          focusedView.requestFocus();
-        } else {
-          view.requestFocus();
-        }
-      }
-
-      @Override
-      public void onPause () {
-        try {
-          if (view instanceof ViewGroup) {
-            ViewGroup group = (ViewGroup)view;
-            View focused = group.findFocus();
-            if (focused != null) focusedView = focused;
-          }
-        } finally {
-          super.onPause();
-        }
-      }
-    };
+  private Fragment createFragment (View view, String title) {
+    return new CommonSettingsFragment(view, title);
   }
 
   private Fragment createFragment (final View view, int title) {
