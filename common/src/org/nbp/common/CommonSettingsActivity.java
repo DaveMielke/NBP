@@ -385,12 +385,8 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return group;
   }
 
-  private Fragment createFragment (View view, String title) {
-    return new CommonSettingsFragment(view, title);
-  }
-
-  private Fragment createFragment (final View view, int title) {
-    return createFragment(view, getString(title));
+  private Fragment getFragment (final View view, int title) {
+    return CommonSettingsFragment.get(view, getString(title));
   }
 
   private Fragment createControlGroupsFragment () {
@@ -432,7 +428,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
         int index = 0;
 
         for (String label : labelSet) {
-          fragmentArray[index++] = createFragment(groupTables.get(label), label);
+          fragmentArray[index++] = CommonSettingsFragment.get(groupTables.get(label), label);
         }
       }
 
@@ -459,7 +455,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       mainContainer.addView(newVerticalScrollContainer(mainTable));
     }
 
-    return createFragment(mainContainer, R.string.control_group_main);
+    return getFragment(mainContainer, R.string.control_group_main);
   }
 
   @Override
