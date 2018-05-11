@@ -2,8 +2,6 @@
 .. |AddDiacriticalMark| replace:: Add a diacritical mark to the previous character.
 .. |AddShortcut| replace:: Add a shortcut to `the home screen`_.
 .. |AddToClipboard| replace:: Add the selected (or all) text to `the clipboard`_.
-.. |AirplaneModeOff| replace:: Turn off Android's airplane mode.
-.. |AirplaneModeOn| replace:: Turn on Android's airplane mode.
 .. |AllApplications| replace:: Show a list of all the applications that are installed on the |product name|.
 .. |AndroidSettings| replace:: Go to the Android Settings screen.
 .. |Assist| replace:: Go to the current Google Assist app.

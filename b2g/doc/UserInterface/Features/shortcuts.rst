@@ -9,12 +9,6 @@ The following shortcuts to useful Android screens are provided:
 Space+p (dots 1234)
   Go to the Power Off screen.
 
-Space+Dot7+p (dots 1234)
-  Turn off Airplane Mode.
-
-Space+Dot8+p (dots 1234)
-  Turn on Airplane Mode.
-
 Space+? (dots 1456)
   Go to the currently registered **assist** app. The default is
   ``Google Now``.
