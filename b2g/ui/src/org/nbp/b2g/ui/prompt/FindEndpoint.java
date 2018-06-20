@@ -15,9 +15,8 @@ public class FindEndpoint extends PromptEndpoint {
     public abstract boolean search (Matcher matcher, int start, int end);
   }
 
-  private final boolean findOccurrence (Searcher searcher) {
+  private final boolean findOccurrence (Endpoint endpoint, Searcher searcher) {
     if (searchPattern != null) {
-      Endpoint endpoint = Endpoints.getPreviousEndpoint();
       boolean found = false;
 
       synchronized (endpoint) {
@@ -51,8 +50,8 @@ public class FindEndpoint extends PromptEndpoint {
     }
   };
 
-  public final boolean findNextOccurrence () {
-    return findOccurrence(forwardSearch);
+  public final boolean findNextOccurrence (Endpoint endpoint) {
+    return findOccurrence(endpoint, forwardSearch);
   }
 
   private final Searcher backwardSearch = new Searcher() {
@@ -74,8 +73,8 @@ public class FindEndpoint extends PromptEndpoint {
     }
   };
 
-  public final boolean findPreviousOccurrence () {
-    return findOccurrence(backwardSearch);
+  public final boolean findPreviousOccurrence (Endpoint endpoint) {
+    return findOccurrence(endpoint, backwardSearch);
   }
 
   private final void setSearchPattern (String string) {
@@ -132,7 +131,7 @@ public class FindEndpoint extends PromptEndpoint {
   @Override
   protected final boolean handleResponse (String response) {
     setSearchPattern(response);
-    return findNextOccurrence();
+    return findNextOccurrence(Endpoints.getPreviousEndpoint());
   }
 
   public FindEndpoint () {
