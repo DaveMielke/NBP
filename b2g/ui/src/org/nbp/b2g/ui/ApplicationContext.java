@@ -2,6 +2,7 @@ package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.host.ScreenMonitor;
 
 import android.util.Log;
+import android.util.DisplayMetrics;
 
 import android.content.Context;
 import org.nbp.common.CommonContext;
@@ -20,6 +21,37 @@ import org.liblouis.NewInternalTablesListener;
 
 public abstract class ApplicationContext extends CommonContext {
   private final static String LOG_TAG = ApplicationContext.class.getName();
+
+  private ApplicationContext () {
+  }
+
+  public static DisplayMetrics getDisplayMetrics () {
+    DisplayMetrics metrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    return metrics;
+  }
+
+  public static void logDisplayMetrics (DisplayMetrics metrics) {
+    Log.d(LOG_TAG,
+      String.format(
+        "display metrics: %dx%d@%d %.2fx%.2f d=%.2f s=%.2f",
+        metrics.widthPixels, metrics.heightPixels, metrics.densityDpi,
+        metrics.xdpi, metrics.ydpi, metrics.density, metrics.scaledDensity
+      )
+    );
+  }
+
+  public static void logDisplayMetrics () {
+    logDisplayMetrics(getDisplayMetrics());
+  }
+
+  private static void setDisplayDensity (int dpi) {
+    DisplayMetrics metrics = getDisplayMetrics();
+    metrics.densityDpi = dpi;
+    metrics.density = (float)dpi / (float)DisplayMetrics.DENSITY_DEFAULT;
+    metrics.scaledDensity = metrics.density;
+    getResources().getDisplayMetrics().setTo(metrics);
+  }
 
   private final static Object START_LOCK = new Object();
 
@@ -115,8 +147,5 @@ public abstract class ApplicationContext extends CommonContext {
     }
 
     return null;
-  }
-
-  private ApplicationContext () {
   }
 }

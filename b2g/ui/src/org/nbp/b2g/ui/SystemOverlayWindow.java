@@ -8,9 +8,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.graphics.PixelFormat;
 
-import android.view.Display;
-import android.graphics.Point;
-
 import android.os.Looper;
 import android.os.Handler;
 import android.os.Message;
@@ -28,19 +25,6 @@ public class SystemOverlayWindow {
 
   private final WindowManager windowManager;
   private final Thread windowThread;
-
-  public final void logDisplayProperties () {
-    Display display = windowManager.getDefaultDisplay();
-
-    Point size = new Point();
-    display.getSize(size);
-
-    Log.d(LOG_TAG,
-      String.format(
-        "display properties: %dx%d", size.x, size.y
-      )
-    );
-  }
 
   protected static class WindowParameters extends WindowManager.LayoutParams {
     public WindowParameters () {
@@ -122,8 +106,7 @@ public class SystemOverlayWindow {
   }
 
   public SystemOverlayWindow (final Context context) {
-    windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-    logDisplayProperties();
+    windowManager = ApplicationContext.getWindowManager();
 
     windowThread = new Thread() {
       @Override
