@@ -1,0 +1,88 @@
+<alert xmlns="urn:oasis:names:tc:emergency:cap:1.2">
+<identifier>AS-MD-aa58a5ff-8d98-44f0-81e6-3dc5b4f47fb4</identifier>
+<sender>fema.ipaws.lab@gmail.com</sender>
+<sent>2018-05-14T09:05:45-06:00</sent>
+<status>Actual</status>
+<msgType>Alert</msgType>
+<source>AlertSense</source>
+<scope>Public</scope>
+<addresses/>
+<code>IPAWSv1.0</code>
+<info>
+<language>en-US</language>
+<category>Other</category>
+<event>Child Abduction Emergency</event>
+<responseType>Execute</responseType>
+<urgency>Immediate</urgency>
+<severity>Extreme</severity>
+<certainty>Observed</certainty>
+<eventCode>
+<valueName>SAME</valueName>
+<value>CAE</value>
+</eventCode>
+<effective>2018-05-14T09:05:45-06:00</effective>
+<expires>2018-05-14T09:20:45-06:00</expires>
+<senderName>JITC,Testing,MD</senderName>
+<headline>AMBER Alert Demonstration</headline>
+<description>
+This is a demonstration only message. An AMBER alert has been issued for the state of Maryland. Listeners and viewers are advised to look for a black Acura R D X driven by a 35 to 40 year old female with brown hair and dark sunglasses. The victim is a 10 year old white male with blonde hair and blue eyes, approximately 4 feet 5 inches tall. He was last seen outside of Johnson Elementary School wearing an orange lacrosse jersey and blue sport shorts. It is believed that the victim has been abducted by a non family member and at risk of physical harm. If you see someone matching this description please dial 9 1 1 immediately and tell the operator you have an AMBER alert sighting for Maryland. This is a demonstration only message. Do not take action.
+</description>
+<parameter>
+<valueName>EAS-ORG</valueName>
+<value>CIV</value>
+</parameter>
+<parameter>
+<valueName>CMAMtext</valueName>
+<value>
+Demonstration only message. AMBER Alert for your area. Tune to local TV or radio. Test.
+</value>
+</parameter>
+<parameter>
+<valueName>BLOCKCHANNEL</valueName>
+<value>NWEM</value>
+</parameter>
+<resource>
+<resourceDesc>EAS Broadcast Content</resourceDesc>
+<mimeType>audio/x-ipaws-audio-mp3</mimeType>
+<uri>
+https://storage-tts.alertsense.com/tts-generated-audio/5fbc8a7aabe9e1c425e41ec0b90fa441.mp3
+</uri>
+</resource>
+<area>
+<areaDesc>Charles County, MD</areaDesc>
+<polygon>
+38.60866745129469,-77.11110170312497 38.512021177601966,-76.90236146874997 38.39156885401037,-76.91746766992185 38.38941609257726,-76.98750551171872 38.45827266541737,-77.01634462304685 38.40878863822865,-77.08912904687497 38.359270703954756,-77.20311220117185 38.412554919222465,-77.26834352441404 38.512021177601966,-77.26353700585935 38.56787709841427,-77.21066530175779 38.6043748212049,-77.17736299462888 38.60866745129469,-77.11110170312497
+</polygon>
+<geocode>
+<valueName>SAME</valueName>
+<value>024017</value>
+</geocode>
+</area>
+</info>
+<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+<ds:Reference URI="">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+<ds:DigestValue>VUmDbMDVshogpR7+M01+Si9ZvrU3w+o40FFM1wo1/ck=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue>
+NZL2XvaHOvZDyELNgatzTY4h27Xdo/yQfR91bAjGpDFZnR6P/4IG/WjQ65xyAzIgir5WJs/1iakbj4WH1zry03v2I1hKPSSvSEWj0OeQFYAgsdIj0aNXKjFDHRvB5090SdaytL5FaDSVFVFHtsmKZTnH51G6yV1hTTGaPge5kPdXwRUzo8bpHelh9rUpNVKVo8wFgklthRt0C/P/O3d197W9GxY7J7uNm1ALa9eRAsieUoc53tE66ezqXq9MTCcSvbA+MCeRiTSTv5+1s+ryOHqnBsoO7dqozv7nXG2lZ2n40IjHZFHQZ12LnRB1J6qFRlaIkCHDNFTLHdQoVQSYyQ==
+</ds:SignatureValue>
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509SubjectName>
+CN=IPAWSOPEN_120042, OU=Devices, OU=FEMA, OU=Department of Homeland Security, O=U.S. Government, C=US
+</ds:X509SubjectName>
+<ds:X509Certificate>
+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
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</ds:Signature>
+</alert>
