@@ -1,11 +1,9 @@
 #!/bin/bash
-
-set -e
-shopt -s nullglob
+. "${0%/*}/prologue.sh"
 
 readonly defaultMinutesBefore=30
 
-showUsage() {
+showUsageSummary() {
 cat <<END-OF-USAGE
 Get current US IPAWS [Integrated Public Alert and Warning System] alerts.
 Usage: ${0##*/} [-option ...]
@@ -32,33 +30,6 @@ the current time is used.
 END-OF-USAGE
 }
 
-programMessage() {
-   local message="${1}"
-
-   [ -z "${message}" ] || echo "${0##*/}: ${message}"
-}
-
-syntaxError() {
-   local message="${1}"
-
-   programMessage "${message}"
-   exit 2
-}
-
-semanticError() {
-   local message="${1}"
-
-   programMessage "${message}"
-   exit 3
-}
-
-responseError() {
-   local message="${1}"
-
-   programMessage "${message}"
-   exit 4
-}
-
 makeAlertFileList() {
    alertFileList=()
 
@@ -82,7 +53,6 @@ readonly defaultExtension="txt"
 readonly timeFormat="%Y-%m-%dT%H:%M:%SZ"
 readonly timeGlob="[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z"
 
-helpRequested=false
 showProperties=false
 managedDirectory=""
 useTestServer=false
@@ -91,32 +61,35 @@ getGeneralAlerts=false
 getEmergencyAlerts=false
 minutesBefore=""
 
-while getopts ":d:eghm:p:tv" option
-do
-   case "${option}"
-   in
-      d) managedDirectory="${OPTARG}";;
-      e) getEmergencyAlerts=true;;
-      g) getGeneralAlerts=true;;
-      h) helpRequested=true;;
-      m) minutesBefore="${OPTARG}";;
-      p) requestPIN="${OPTARG}";;
-      t) useTestServer=true;;
-      v) showProperties=true;;
-
-      :) syntaxError "missing operand: -${OPTARG}";;
-     \?) syntaxError "unrecognized option: -${OPTARG}";;
-      *) syntaxError "unimplemented option: -${option}";;
-   esac
-done
-
-shift $((OPTIND - 1))
-[ "${#}" -eq 0 ] || syntaxError "too many parameters"
-
-"${helpRequested}" && {
-   showUsage
-   exit 0
+handleOption_d() {
+   managedDirectory="${OPTARG}"
 }
+
+handleOption_e() {
+   getEmergencyAlerts=true
+}
+
+handleOption_g() {
+   getGeneralAlerts=true
+}
+
+handleOption_m() {
+   minutesBefore="${OPTARG}"
+}
+
+handleOption_p() {
+   requestPIN="${OPTARG}"
+}
+
+handleOption_t() {
+   useTestServer=true
+}
+
+handleOption_v() {
+   showProperties=true
+}
+
+handleOptions "d:egm:p:tv" "${@}"
 
 makeAlertFileList
 
