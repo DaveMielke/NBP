@@ -6,8 +6,20 @@ programDirectory="${0%/*}"
 [ "${programDirectory}" = "${programDirectory}" ] && programDirectory="."
 readonly programDirectory="$(realpath "${programDirectory}")"
 
-. "${programDirectory}/scripts.sh"
-. "${programDirectory}/arguments.sh"
-. "${programDirectory}/strings.sh"
-. "${programDirectory}/xml.sh"
+declare -A includedScriptLibraries=()
+includeScriptLibraries() {
+   local name
+
+   for name
+   do
+      local -n included="includedScriptLibraries["${name}"]"
+
+      [ -z "${included}" ] && {
+         included=1
+         . "${programDirectory}/${name}.sh"
+      }
+
+      unset -n included
+   done
+}
 
