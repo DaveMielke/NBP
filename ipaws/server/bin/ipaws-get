@@ -1,6 +1,13 @@
 #!/bin/bash
 . "${0%/*}/prologue.sh"
 
+readonly -A serverTypes=(
+   ["demonstration"]="demo"
+   ["production"]="prod"
+   ["test"]="test"
+)
+
+readonly defaultServerType="prod"
 readonly defaultMinutesBefore=30
 
 showUsageSummary() {
@@ -14,35 +21,40 @@ The following options may be specified:
 -e             get EAS [Emergency Alert System] alerts
 -g             get general (non-EAS) alerts
 -h             show this usage summary on standard output and then exit
--m minutes     how much before the reference time to look (default is ${defaultMinutesBefore})
+-m minutes     how far before the reference time to look (default is ${defaultMinutesBefore})
 -p characters  the server access PIN
 -v             show properties on standard error
 -D             use the demonstration server
--P             use the production server
+-P             use the production server (this is the default)
 -T             use the test server
 
 Alert type options can be combined. If none are specified then all are assumed.
+If more than one server option is specified then the last one is used.
 
-Alerts files are in the data directory and are named ${alertsFilePrefix}<time>.<extension>.
-<time> is an ISO-8601 UTC timestamp (yyyy-mm-ddThh:mm:ssZ).
-<extension> is .${alertsFileExtension} for retrieved alerts, .${errorExtension} for errors, and .${defaultExtension} otherwise.
+Alerts files are in the data directory. They're named ${alertsFilePrefix}<time>.<extension>.
+* <time> is an ISO-8601 UTC timestamp (yyyy-mm-ddThh:mm:ssZ).
+* <extension> is .${alertsFileExtension} for successfully retrieved alert sets,
+  and .${textFileExtension} when the retrieval fails.
 
 The reference time used for alerts retrieval is taken from the name of the most
-recent alerts file (.${alertsFileExtension}). If there aren't any then the current
-time is used.
+recently retrieved alerts file (${alertsFilePrefix}*.${alertsFileExtension}). If there aren't any then the
+current time is used.
+
+If the PIN isn't specified then it's read from *.pin in the configuration
+directory, where * is the server type - one of: $(joinArrayValues serverTypes ", ")
 END-OF-USAGE
 }
 
 readonly timeFormat="%Y-%m-%dT%H:%M:%SZ"
 readonly timeGlob="[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z"
 
-showProperties=false
 configurationDirectory=""
 dataDirectory=""
+showProperties=false
 serverType=""
 requestPIN=""
-getGeneralAlerts=false
 getEmergencyAlerts=false
+getGeneralAlerts=false
 minutesBefore=""
 
 handleOption_c() {
@@ -89,10 +101,12 @@ handleOptions "c:d:egm:p:vDPT" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
+"${showProperties}" && programMessage "configuration-directory ${configurationDirectory}"
 processConfigurationFile "${configurationDirectory}"
 
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
+"${showProperties}" && programMessage "data-directory ${dataDirectory}"
 
 readonly currentTime="$(date -u +"${timeFormat}")"
 "${showProperties}" && programMessage "current-time ${currentTime}"
@@ -113,8 +127,14 @@ fi
 readonly alertsTime
 "${showProperties}" && programMessage "alerts-time ${alertsTime}"
 
-[ -n "${serverType}" ] || serverType="prod"
-requestURL="https://${configuredProperties["${serverType}-server"]}"
+[ -n "${serverType}" ] || serverType="${defaultServerType}"
+"${showProperties}" && programMessage "server-type ${serverType}"
+
+serverName="${configuredProperties["${serverType}-server"]}"
+[ -n "${serverName}" ] || semanticError "server type not supported: ${serverType}"
+"${showProperties}" && programMessage "server-name ${serverName}"
+
+requestURL="https://${serverName}"
 requestURL+="/IPAWSOPEN_EAS_SERVICE/rest/"
 
 readonly types=("" "eas" "public_non_eas" "public")
@@ -144,11 +164,8 @@ alertsFile="${dataDirectory}/${alertsFilePrefix}${currentTime}."
 if [ "${serverResponse}" != "${serverResponse#<?xml}" ]
 then
    alertsFile+="${alertsFileExtension}"
-elif [ "${serverResponse}" != "${serverResponse#<html}" ]
-then
-   alertsFile+="${errorExtension}"
 else
-   alertsFile+="${defaultExtension}"
+   alertsFile+="${textFileExtension}"
 fi
 
 readonly alertsFile
