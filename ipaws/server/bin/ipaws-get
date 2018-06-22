@@ -9,9 +9,10 @@ Get current US IPAWS [Integrated Public Alert and Warning System] alerts.
 Usage: ${0##*/} [-option ...]
 
 The following options may be specified:
--d path        the directory to be managed (${filePrefix}* files)
+-c path        the configuration directory (default is ${defaultConfigurationDirectory})
+-d path        the data directory (default is ${defaultDataDirectory})
 -e             get EAS [Emergency Alert System] alerts
--g             get general alerts
+-g             get general (non-EAS) alerts
 -h             show this usage summary on standard output and then exit
 -m minutes     how much before the reference time to look (default is ${defaultMinutesBefore})
 -p characters  the server access PIN
@@ -20,32 +21,17 @@ The following options may be specified:
 
 Alert type options can be combined. If none are specified then all are assumed.
 
-Managed files (see the -d option) are named ${filePrefix}<time>.<extension>.
+Alerts files are in the data directory and are named ${alertsFilePrefix}<time>.<extension>.
 <time> is an ISO-8601 UTC timestamp (yyyy-mm-ddThh:mm:ssZ).
 <extension> is .${alertsExtension} for retrieved alerts, .${errorExtension} for errors, and .${defaultExtension} otherwise.
 
-The reference time used for alert retrieval is taken from the name of the most
-recent alerts file (.${alertsExtension}). If there aren't any, or if -d wasn't specified, then
-the current time is used.
+The reference time used for alerts retrieval is taken from the name of the most
+recent alerts file (.${alertsExtension}). If there aren't any then the current
+time is used.
 END-OF-USAGE
 }
 
-makeAlertFileList() {
-   alertFileList=()
-
-   [ -z "${managedDirectory}" ] || {
-      [ -d "${managedDirectory}" ] || semanticError "not a directory: ${managedDirectory}"
-      [ -x "${managedDirectory}" ] || semanticError "directory not searchable: ${managedDirectory}"
-      [ -r "${managedDirectory}" ] || semanticError "directory not readable: ${managedDirectory}"
-      [ -w "${managedDirectory}" ] || semanticError "directory not writable: ${managedDirectory}"
-      alertFileList=( "${managedDirectory}/${filePrefix}"${timeGlob}".${alertsExtension}" )
-   }
-
-   readonly alertFileList
-   readonly alertFileCount="${#alertFileList[*]}"
-}
-
-readonly filePrefix="IPAWS@"
+readonly alertsFilePrefix="IPAWS@"
 readonly alertsExtension="xml"
 readonly errorExtension="html"
 readonly defaultExtension="txt"
@@ -54,15 +40,20 @@ readonly timeFormat="%Y-%m-%dT%H:%M:%SZ"
 readonly timeGlob="[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z"
 
 showProperties=false
-managedDirectory=""
+configurationDirectory=""
+dataDirectory=""
 useTestServer=false
-requestPIN="NHBwdWhvMmNmNjM"
+requestPIN=""
 getGeneralAlerts=false
 getEmergencyAlerts=false
 minutesBefore=""
 
+handleOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
 handleOption_d() {
-   managedDirectory="${OPTARG}"
+   dataDirectory="${OPTARG}"
 }
 
 handleOption_e() {
@@ -89,22 +80,32 @@ handleOption_v() {
    showProperties=true
 }
 
-handleOptions "d:egm:p:tv" "${@}"
+handleOptions "c:d:egm:p:tv" "${@}"
 
-makeAlertFileList
+[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
+verifyReadableDirectory "${configurationDirectory}"
 
-if [ "${alertFileCount}" -gt 0 ]
+[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
+verifyWritableDirectory "${dataDirectory}"
+
+readonly currentTime="$(date -u +"${timeFormat}")"
+"${showProperties}" && programMessage "current-time ${currentTime}"
+
+readonly alertsFileList=( "${dataDirectory}/${alertsFilePrefix}"${timeGlob}".${alertsExtension}" )
+readonly alertsFileCount="${#alertsFileList[*]}"
+
+if [ "${alertsFileCount}" -gt 0 ]
 then
-   timeReference="${alertFileList[alertFileCount-1]}"
-   timeReference="${timeReference##*/}"
-   timeReference="${timeReference#${filePrefix}}"
-   timeReference="${timeReference%.*}"
+   alertsTime="${alertsFileList[alertsFileCount-1]}"
+   alertsTime="${alertsTime##*/}"
+   alertsTime="${alertsTime#${alertsFilePrefix}}"
+   alertsTime="${alertsTime%.*}"
 else
-   timeReference="$(date -u +"${timeFormat}")"
+   alertsTime="${currentTime}"
 fi
 
-readonly timeReference
-"${showProperties}" && programMessage "time ${timeReference}"
+readonly alertsTime
+"${showProperties}" && programMessage "alerts-time ${alertsTime}"
 
 requestURL="https://"
 "${useTestServer}" && requestURL+="tdl."
@@ -121,32 +122,31 @@ requestURL+="${type}"
 
 [ -n "${minutesBefore}" ] || minutesBefore="${defaultMinutesBefore}"
 [[ "${minutesBefore}" =~ ^[1-9][0-9]*$ ]] || syntaxError "invalid minutes before operand: ${minutesBefore}"
-requestURL+="/recent/$(date -u -d "${timeReference} -${minutesBefore} minutes" +"${timeFormat}")"
+requestURL+="/recent/$(date -u -d "${alertsTime} -${minutesBefore} minutes" +"${timeFormat}")"
 
-"${showProperties}" && programMessage "URL ${requestURL}"
+[ -z "${requestPIN}" ] && {
+   pinFile="${configurationDirectory}/$("${useTestServer}" && echo "test" || echo "prod").pin"
+   [ -f "${pinFile}" ] && [ -r "${pinFile}" ] && read <"${pinFile}" requestPIN || :
+}
+
+"${showProperties}" && programMessage "request-url ${requestURL}"
 serverResponse=$(curl --silent --show-error --get --data-urlencode "pin=${requestPIN}" "${requestURL}") || exit "${?}"
 [ -z "${serverResponse}" ] && responseError "no data received"
 [ "${serverResponse}" = "${serverResponse#<}" ] && responseError "${serverResponse}"
 
-if [ -n "${managedDirectory}" ]
+alertsFile="${dataDirectory}/${alertsFilePrefix}${currentTime}."
+if [ "${serverResponse}" != "${serverResponse#<?xml}" ]
 then
-   outputFile="${managedDirectory}/${filePrefix}$(date -u +"${timeFormat}")."
-
-   if [ "${serverResponse}" != "${serverResponse#<?xml}" ]
-   then
-      outputFile+="${alertsExtension}"
-   elif [ "${serverResponse}" != "${serverResponse#<html}" ]
-   then
-      outputFile+="${errorExtension}"
-   else
-      outputFile+="${defaultExtension}"
-   fi
+   alertsFile+="${alertsExtension}"
+elif [ "${serverResponse}" != "${serverResponse#<html}" ]
+then
+   alertsFile+="${errorExtension}"
 else
-   outputFile="/dev/stdout"
+   alertsFile+="${defaultExtension}"
 fi
 
-readonly outputFile
-"${showProperties}" && programMessage "file ${outputFile}"
+readonly alertsFile
+"${showProperties}" && programMessage "alerts-file ${alertsFile}"
+echo >"${alertsFile}" "${serverResponse}"
 
-echo >"${outputFile}" "${serverResponse}"
 exit 0
