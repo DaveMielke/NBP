@@ -16,25 +16,22 @@ The following options may be specified:
 -h             show this usage summary on standard output and then exit
 -m minutes     how much before the reference time to look (default is ${defaultMinutesBefore})
 -p characters  the server access PIN
--t             access the test server
--v              show properties on standard error
+-v             show properties on standard error
+-D             use the demonstration server
+-P             use the production server
+-T             use the test server
 
 Alert type options can be combined. If none are specified then all are assumed.
 
 Alerts files are in the data directory and are named ${alertsFilePrefix}<time>.<extension>.
 <time> is an ISO-8601 UTC timestamp (yyyy-mm-ddThh:mm:ssZ).
-<extension> is .${alertsExtension} for retrieved alerts, .${errorExtension} for errors, and .${defaultExtension} otherwise.
+<extension> is .${alertsFileExtension} for retrieved alerts, .${errorExtension} for errors, and .${defaultExtension} otherwise.
 
 The reference time used for alerts retrieval is taken from the name of the most
-recent alerts file (.${alertsExtension}). If there aren't any then the current
+recent alerts file (.${alertsFileExtension}). If there aren't any then the current
 time is used.
 END-OF-USAGE
 }
-
-readonly alertsFilePrefix="IPAWS@"
-readonly alertsExtension="xml"
-readonly errorExtension="html"
-readonly defaultExtension="txt"
 
 readonly timeFormat="%Y-%m-%dT%H:%M:%SZ"
 readonly timeGlob="[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z"
@@ -42,7 +39,7 @@ readonly timeGlob="[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0
 showProperties=false
 configurationDirectory=""
 dataDirectory=""
-useTestServer=false
+serverType=""
 requestPIN=""
 getGeneralAlerts=false
 getEmergencyAlerts=false
@@ -72,18 +69,27 @@ handleOption_p() {
    requestPIN="${OPTARG}"
 }
 
-handleOption_t() {
-   useTestServer=true
-}
-
 handleOption_v() {
    showProperties=true
 }
 
-handleOptions "c:d:egm:p:tv" "${@}"
+handleOption_D() {
+   serverType="demo"
+}
+
+handleOption_P() {
+   serverType="prod"
+}
+
+handleOption_T() {
+   serverType="test"
+}
+
+handleOptions "c:d:egm:p:vDPT" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
+processConfigurationFile "${configurationDirectory}"
 
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
@@ -91,7 +97,7 @@ verifyWritableDirectory "${dataDirectory}"
 readonly currentTime="$(date -u +"${timeFormat}")"
 "${showProperties}" && programMessage "current-time ${currentTime}"
 
-readonly alertsFileList=( "${dataDirectory}/${alertsFilePrefix}"${timeGlob}".${alertsExtension}" )
+readonly alertsFileList=( "${dataDirectory}/${alertsFilePrefix}"${timeGlob}".${alertsFileExtension}" )
 readonly alertsFileCount="${#alertsFileList[*]}"
 
 if [ "${alertsFileCount}" -gt 0 ]
@@ -107,9 +113,9 @@ fi
 readonly alertsTime
 "${showProperties}" && programMessage "alerts-time ${alertsTime}"
 
-requestURL="https://"
-"${useTestServer}" && requestURL+="tdl."
-requestURL+="apps.fema.gov/IPAWSOPEN_EAS_SERVICE/rest/"
+[ -n "${serverType}" ] || serverType="prod"
+requestURL="https://${configuredProperties["${serverType}-server"]}"
+requestURL+="/IPAWSOPEN_EAS_SERVICE/rest/"
 
 readonly types=("" "eas" "public_non_eas" "public")
 index=0
@@ -125,7 +131,7 @@ requestURL+="${type}"
 requestURL+="/recent/$(date -u -d "${alertsTime} -${minutesBefore} minutes" +"${timeFormat}")"
 
 [ -z "${requestPIN}" ] && {
-   pinFile="${configurationDirectory}/$("${useTestServer}" && echo "test" || echo "prod").pin"
+   pinFile="${configurationDirectory}/${serverType}.pin"
    [ -f "${pinFile}" ] && [ -r "${pinFile}" ] && read <"${pinFile}" requestPIN || :
 }
 
@@ -137,7 +143,7 @@ serverResponse=$(curl --silent --show-error --get --data-urlencode "pin=${reques
 alertsFile="${dataDirectory}/${alertsFilePrefix}${currentTime}."
 if [ "${serverResponse}" != "${serverResponse#<?xml}" ]
 then
-   alertsFile+="${alertsExtension}"
+   alertsFile+="${alertsFileExtension}"
 elif [ "${serverResponse}" != "${serverResponse#<html}" ]
 then
    alertsFile+="${errorExtension}"
