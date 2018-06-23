@@ -38,7 +38,7 @@ handleCommandArguments() {
       showCommonCommandOptionsUsageSummary
 
       [ -n "${options}" ] && {
-         echo ""
+         echo -e "\nThe options that are specific to this command are:"
          showCommandSpecificOptionsUsageSummary
       }
 

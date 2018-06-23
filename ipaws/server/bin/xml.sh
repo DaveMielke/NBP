@@ -1,4 +1,4 @@
-readonly xpathAlert="/ns1:alerts/alert"
+readonly xpathAlertElement="/ns1:alerts/alert"
 
 xpathGet() {
    local file="${1}"
@@ -10,13 +10,13 @@ xpathGet() {
 ipawsGetAlertCount() {
    local file="${1}"
 
-   xpathGet "${file}" "count(${xpathAlert})"
+   xpathGet "${file}" "count(${xpathAlertElement})"
 } && readonly -f ipawsGetAlertCount
 
 ipawsGetAlertElement() {
    local file="${1}"
    local index="${2}"
 
-   xpathGet "${file}" "${xpathAlert}[${index}]"
+   xpathGet "${file}" "${xpathAlertElement}[${index}]"
 } && readonly -f ipawsGetAlertElement
 

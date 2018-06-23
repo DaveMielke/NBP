@@ -1,0 +1,73 @@
+#!/bin/bash
+
+. "${0%/*}/prologue.sh"
+includeScriptLibraries command arguments xml
+
+showCommandSpecificOptionsUsageSummary() {
+cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+-c path        the configuration directory (default is ${defaultConfigurationDirectory})
+-d path        the data directory (default is ${defaultDataDirectory})
+END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+}
+
+configurationDirectory=""
+dataDirectory=""
+
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
+}
+
+extractAlerts() {
+   local temporaryFile="${alertFileExtension}"
+
+   while :
+   do
+      set -- *.${alertsFileExtension}
+      [ "${#}" -eq 0 ] && break
+      local alertsFile
+
+      for alertsFile
+      do
+         logInfo "processing alerts file: ${alertsFile}"
+
+         local alertCount="$(ipawsGetAlertCount "${alertsFile}")"
+         local alertNumber=0
+
+         while (( (alertNumber += 1) <= alertCount ))
+         do
+            ipawsGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
+            local alertIdentifier="$(xpathGet "${temporaryFile}" "/alert/identifier/text()")"
+            [ -z "${alertIdentifier}" ] && continue
+
+            local alertFile="${alertIdentifier}.${alertFileExtension}"
+            [ -f "${alertFile}" ] && continue
+
+            logInfo "new alert: ${alertIdentifier}"
+            mv "${temporaryFile}" "${alertFile}"
+         done
+
+         logInfo "removing alerts file: ${alertsFile}"
+         rm "${alertsFile}"
+      done
+   done
+}
+
+handleCommandArguments "c:d:" "" "${@}"
+
+[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
+verifyReadableDirectory "${configurationDirectory}"
+logInfo "configuration-directory ${configurationDirectory}"
+processConfigurationFile "${configurationDirectory}"
+
+[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
+verifyWritableDirectory "${dataDirectory}"
+logInfo "data-directory ${dataDirectory}"
+cd "${dataDirectory}"
+
+extractAlerts
+logInfo "done"
+exit 0

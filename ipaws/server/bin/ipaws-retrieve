@@ -20,15 +20,15 @@ The options that are specific to this command are:
 -T             use the test server
 
 Alert type options can be combined. If none are specified then all are assumed.
-If more than one server option is specified then the last one is used.
+If more than one server type option is specified then the last one is used.
 
 Successfully retrieved alerts files are in the data directory. They're
 named <time>.${alertsFileExtension}, where <time> is the ISO-8601 UTC timestamp
 (yyyy-mm-ddThh:mm:ssZ) for when the file was retrieved.
 
 The reference time used for alerts retrieval is the name of the most recently
-retrieved alerts file (*.${alertsFileExtension}). If there aren't any then the current time
-is used.
+retrieved alerts file (*.${alertsFileExtension}). If there aren't any then the current time is
+used. The file extension .${failureFileExtension} indicates a failure during alerts retrieval.
 
 If the PIN isn't specified then it's read from *.pin in the configuration
 directory, where * is the server type - one of: $(joinArrayValues serverTypes ", ")

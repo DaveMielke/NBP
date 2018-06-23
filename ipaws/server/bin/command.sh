@@ -5,7 +5,8 @@ readonly configurationFileName="ipaws.conf"
 
 readonly defaultDataDirectory="${serverDirectory}/var"
 readonly failureFileExtension="failed"
-readonly alertsFileExtension="retrieved"
+readonly alertsFileExtension="alerts"
+readonly alertFileExtension="alert"
 
 syntaxError() {
    local message="${1}"
