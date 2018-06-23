@@ -9,7 +9,16 @@ readonly programDirectory="$(realpath "${programDirectory}")"
 programMessage() {
    local message="${1}"
 
-   [ -z "${message}" ] || echo "${programName}: ${message}"
+   [ -z "${message}" ] || {
+      if [ -t 2 ]
+      then
+         message="${programName}: ${message}"
+      else
+         printf -v message "%(%Y-%m-%d@%H:%M:%S)T %s %s" -1 "${programName}" "${message}"
+      fi
+
+      echo >&2 "${message}"
+   }
 } && readonly -f programMessage
 
 defineEnumeration() {
