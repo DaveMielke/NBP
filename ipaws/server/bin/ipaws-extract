@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments xml
+includeScriptLibraries command arguments xml locks
 
 showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
@@ -22,6 +22,7 @@ handleCommandOption_d() {
 }
 
 extractAlerts() {
+   acquireExclusiveLock extract
    local temporaryFile="${alertFileExtension}"
 
    while :
@@ -45,6 +46,7 @@ extractAlerts() {
 
             local alertFile="${alertIdentifier}.${alertFileExtension}"
             [ -f "${alertFile}" ] && continue
+            acceptAlert "${temporaryFile}" || continue
 
             logInfo "new alert: ${alertIdentifier}"
             mv "${temporaryFile}" "${alertFile}"
@@ -54,6 +56,12 @@ extractAlerts() {
          rm "${alertsFile}"
       done
    done
+}
+
+acceptAlert() {
+   local file="${1}"
+
+   return 0
 }
 
 handleCommandArguments "c:d:" "" "${@}"
