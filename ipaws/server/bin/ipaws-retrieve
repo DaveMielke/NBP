@@ -158,7 +158,11 @@ else
 fi
 
 readonly outputFile="${dataDirectory}/${currentTime}.${outputFileExtension}"
+[ -e "${outputFile}" ] && responseError "output file already exists: ${outputFile}"
 logInfo "output-file ${outputFile##*/}"
-echo >"${outputFile}" "${serverResponse}"
 
+readonly temporaryFile="${alertsFileExtension}.retrieved"
+echo >"${temporaryFile}" "${serverResponse}" || exit "${?}"
+
+mv "${temporaryFile}" "${outputFile}"
 exit 0
