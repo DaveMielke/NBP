@@ -33,7 +33,8 @@ extractAlerts() {
 
       for alertsFile
       do
-         logInfo "processing alerts file: ${alertsFile}"
+         local alertsName="${alertsFile%.*}"
+         logInfo "processing alert set: ${alertsName}"
 
          local alertCount="$(ipawsGetAlertCount "${alertsFile}")"
          local alertNumber=0
@@ -52,7 +53,7 @@ extractAlerts() {
             mv "${temporaryFile}" "${alertFile}"
          done
 
-         logInfo "removing alerts file: ${alertsFile}"
+         logInfo "removing alert set: ${alertsName}"
          rm "${alertsFile}"
       done
    done
@@ -68,14 +69,14 @@ handleCommandArguments "c:d:" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
-logInfo "configuration-directory ${configurationDirectory}"
+logDebug "configuration-directory ${configurationDirectory}"
 processConfigurationFile "${configurationDirectory}"
 
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
-logInfo "data-directory ${dataDirectory}"
+logDebug "data-directory ${dataDirectory}"
 cd "${dataDirectory}"
 
 extractAlerts
-logInfo "done"
+logDebug "done"
 exit 0

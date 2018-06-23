@@ -166,5 +166,5 @@ readonly temporaryFile="${outputFile%/*}/${alertsFileExtension}.retrieved"
 echo >"${temporaryFile}" "${serverResponse}" || exit "${?}"
 
 mv "${temporaryFile}" "${outputFile}"
-logInfo "alert set added: ${outputFileName##*/}"
+logInfo "new alert set: ${outputFileName##*/}"
 exit 0
