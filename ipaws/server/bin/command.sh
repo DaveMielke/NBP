@@ -10,21 +10,21 @@ readonly alertsFileExtension="retrieved"
 syntaxError() {
    local message="${1}"
 
-   programMessage "${message}"
+   logError "${message}"
    exit 2
 } && readonly -f syntaxError
 
 semanticError() {
    local message="${1}"
 
-   programMessage "${message}"
+   logError "${message}"
    exit 3
 } && readonly -f semanticError
 
 responseError() {
    local message="${1}"
 
-   programMessage "${message}"
+   logError "${message}"
    exit 4
 } && readonly -f responseError
 
@@ -58,7 +58,7 @@ processConfigurationFile() {
             problem="excess data"
          fi
 
-         programMessage "${problem}: ${*}: ${file}[${number}]"
+         logWarning "${problem}: ${*}: ${file}[${number}]"
       fi
    done <"${file}"
 } && readonly -f processConfigurationFile

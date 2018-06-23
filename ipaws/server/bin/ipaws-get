@@ -6,21 +6,15 @@ includeScriptLibraries command arguments strings
 readonly defaultServerType="prod"
 readonly defaultMinutesBefore=30
 
-showUsageSummary() {
-cat <<END-OF-USAGE
-Get current US IPAWS [Integrated Public Alert and Warning System] alerts.
-Usage: ${0##*/} [-option ...]
-
-The following options may be specified:
+showCommandSpecificOptionsUsageSummary() {
+cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+The options that are specific to this command are:
 -c path        the configuration directory (default is ${defaultConfigurationDirectory})
 -d path        the data directory (default is ${defaultDataDirectory})
 -e             get EAS [Emergency Alert System] alerts
 -g             get general (non-EAS) alerts
--h             show this usage summary on standard output and then exit
 -m minutes     how far before the reference time to look (default is ${defaultMinutesBefore})
 -p characters  the server access PIN
--q             decrease verbosity
--v             increase verbosity
 -D             use the demonstration server
 -P             use the production server (this is the default)
 -T             use the test server
@@ -38,7 +32,7 @@ is used.
 
 If the PIN isn't specified then it's read from *.pin in the configuration
 directory, where * is the server type - one of: $(joinArrayValues serverTypes ", ")
-END-OF-USAGE
+END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
 readonly -A serverTypes=(
@@ -58,43 +52,43 @@ getEmergencyAlerts=false
 getGeneralAlerts=false
 minutesBefore=""
 
-handleOption_c() {
+handleCommandOption_c() {
    configurationDirectory="${OPTARG}"
 }
 
-handleOption_d() {
+handleCommandOption_d() {
    dataDirectory="${OPTARG}"
 }
 
-handleOption_e() {
+handleCommandOption_e() {
    getEmergencyAlerts=true
 }
 
-handleOption_g() {
+handleCommandOption_g() {
    getGeneralAlerts=true
 }
 
-handleOption_m() {
+handleCommandOption_m() {
    minutesBefore="${OPTARG}"
 }
 
-handleOption_p() {
+handleCommandOption_p() {
    requestPIN="${OPTARG}"
 }
 
-handleOption_D() {
+handleCommandOption_D() {
    serverType="demo"
 }
 
-handleOption_P() {
+handleCommandOption_P() {
    serverType="prod"
 }
 
-handleOption_T() {
+handleCommandOption_T() {
    serverType="test"
 }
 
-handleOptions "c:d:egm:p:DPT" "${@}"
+handleCommandArguments "c:d:egm:p:DPT" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"

@@ -13,49 +13,66 @@ verifyWritableDirectory() {
    [ -w "${path}" ] || semanticError "directory not writable: ${path}"
 } && readonly -f verifyWritableDirectory
 
-handleOptions() {
-   local options="hqv${1}"
-   shift 1
+handleCommandArguments() {
+   local options="${1}"
+   local positional="${2}"
+   shift 2
 
    local usageSummaryRequested=false
+   local logLevelAdjustment=0
    local option
 
-   while getopts ":${options}" option
+   while getopts ":hqv${options}" option
    do
       case "${option}"
       in
          :) syntaxError "missing operand: -${OPTARG}";;
         \?) syntaxError "unrecognized option: -${OPTARG}";;
-         *) "handleOption_${option}";;
+         *) "handleCommandOption_${option}";;
       esac
    done
 
    "${usageSummaryRequested}" && {
-      showUsageSummary
+      [ -z "${positional}" ] || positional=" ${positional}"
+      echo "Usage: ${programName} [-option ...]${positional}"
+      showCommonCommandOptionsUsageSummary
+
+      [ -n "${options}" ] && {
+         echo ""
+         showCommandSpecificOptionsUsageSummary
+      }
+
       exit 0
    }
 
    shift $((OPTIND - 1))
-   handlePositionalArguments "${@}"
-} && readonly -f handleOptions
+   handlePositionalCommandArguments "${@}"
+   let currentLogLevel+=logLevelAdjustment || :
+} && readonly -f handleCommandArguments
 
-handleOption_h() {
+showCommonCommandOptionsUsageSummary() {
+cat <<END-OF-COMMON-OPTIONS-USAGE-SUMMARY
+
+The options that are common to all commands are:
+-h  help: show this command usage summary on standard output and then exit
+-q  quiet: decrease logging verbosity
+-v  verbose: increase logging verbosity
+END-OF-COMMON-OPTIONS-USAGE-SUMMARY
+} && readonly -f showCommonCommandOptionsUsageSummary
+
+handleCommandOption_h() {
    usageSummaryRequested=true
-} && readonly -f handleOption_h
+} && readonly -f handleCommandOption_h
 
-handleOption_q() {
-   let currentLogLevel+=1
-} && readonly -f handleOption_q
+handleCommandOption_q() {
+   let logLevelAdjustment+=1 || :
+} && readonly -f handleCommandOption_q
 
-handleOption_v() {
-   let currentLogLevel-=1
-} && readonly -f handleOption_v
+handleCommandOption_v() {
+   let logLevelAdjustment-=1 || :
+} && readonly -f handleCommandOption_v
 
-showUsageSummary() {
-   semanticError "usage summary not available"
-}
-
-handlePositionalArguments() {
+handlePositionalCommandArguments() {
    [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"
 }
 
