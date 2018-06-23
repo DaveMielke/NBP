@@ -1,0 +1,67 @@
+#!/bin/bash
+
+. "${0%/*}/prologue.sh"
+includeScriptLibraries command arguments locks
+
+showCommandSpecificOptionsUsageSummary() {
+cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+-c path        the configuration directory (default is ${defaultConfigurationDirectory})
+-d path        the data directory (default is ${defaultDataDirectory})
+END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+}
+
+configurationDirectory=""
+dataDirectory=""
+
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
+}
+
+handleCommandArguments "c:d:" "" "${@}"
+
+[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
+verifyReadableDirectory "${configurationDirectory}"
+logDebug "configuration-directory ${configurationDirectory}"
+processConfigurationFile "${configurationDirectory}"
+
+[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
+verifyWritableDirectory "${dataDirectory}"
+logDebug "data-directory ${dataDirectory}"
+
+makeCommand() {
+   local script="${1}"
+   shift 1
+   command=("${programDirectory}/${script}" -v -c "${configurationDirectory}" -d "${dataDirectory}" "${@}")
+}
+
+runScript() {
+   makeCommand "${@}"
+   "${command[@]}" || return "${?}"
+}
+
+retrieveAlerts() {
+   while :
+   do
+      runScript ipaws-retrieve -T && runScript ipaws-extract
+      sleep 60
+   done
+}
+
+awaitClients() {
+   makeCommand ipaws-client -v -v
+   ncat -l 14216 --keep-open --sh-exec "${command[*]}"
+}
+
+attemptExclusiveLock lock server || semanticError "already running"
+umask 022
+exec 2>"${dataDirectory}/server.log"
+
+retrieveAlerts &
+awaitClients &
+wait
+
+exit 0
