@@ -1,97 +1,107 @@
-declare -A lockDescriptorNames=()
+declare -A lockNames=()
 
-findLockDescriptor() {
-   local -n fldDescriptor="${1}"
-   local name="${2}"
-   local fd=10
+openLockFile() {
+   local olfLock="${1}"
+   local olfName="${2}"
+   local olfDescriptor=10
 
    while :
    do
-      [ -e "/dev/fd/${fd}" ] || break
-      let fd+=1
+      [ -e "/dev/fd/${olfDescriptor}" ] || break
+      let olfDescriptor+=1
    done
 
-   eval exec "${fd}>>" '"${dataDirectory}/${name}.lock"'
-   fldDescriptor="${fd}"
-} && readonly -f findLockDescriptor
+   eval exec "${olfDescriptor}>>" '"${dataDirectory}/${olfName}.lock"'
+   setVariable "${olfLock}" "${olfDescriptor}"
+} && readonly -f openLockFile
+
+closeLockFile() {
+   local lock="${1}"
+
+   eval exec "${lock}>&-"
+} && readonly -f closeLockFile
 
 acquireLock() {
-   local -n aqlDescriptor="${1}"
-   local name="${2}"
-   local exclusive="${3}"
-   local wait="${4}"
+   local aqlVariable="${1}"
+   local aqlName="${2}"
+   local aqlExclusive="${3}"
+   local aqlWait="${4}"
 
-   local typeWord typeOption
-   if "${exclusive}"
+   local aqlTypeWord aqlTypeOption
+   if "${aqlExclusive}"
    then
-      typeWord="exclusive"
-      typeOption="-e"
+      aqlTypeWord="exclusive"
+      aqlTypeOption="-e"
    else
-      typeWord="shared"
-      typeOption="-s"
+      aqlTypeWord="shared"
+      aqlTypeOption="-s"
    fi
 
-   local actionWord actionOption
-   if "${wait}"
+   local aqlActionWord aqlActionOption
+   if "${aqlWait}"
    then
-      actionWord="acquiring"
-      actionOption=""
+      aqlActionWord="acquiring"
+      aqlActionOption=""
    else
-      actionWord="attempting"
-      actionOption="-n"
+      aqlActionWord="attempting"
+      aqlActionOption="-n"
    fi
 
-   findLockDescriptor aqlDescriptor "${name}"
-   logDebug "${actionWord} ${typeWord} lock: ${name}"
+   local aqlLock
+   openLockFile aqlLock "${aqlName}"
+   logDebug "${aqlActionWord} ${aqlTypeWord} lock: ${aqlName}"
 
-   flock ${typeOption} ${actionOption} "${aqlDescriptor}" || {
-      logDebug "lock failed: ${name}"
+   flock ${aqlTypeOption} ${aqlActionOption} "${aqlLock}" || {
+      logDebug "lock failed: ${aqlName}"
+      closeLockFile "${aqlLock}"
       return 1
    }
 
-   lockDescriptorNames[${aqlDescriptor}]="${name}"
-   logDebug "lock acquired: ${name}"
+   lockNames[${aqlLock}]="${aqlName}"
+   logDebug "lock acquired: ${aqlName}"
+   setVariable "${aqlVariable}" "${aqlLock}"
 } && readonly -f acquireLock
 
 acquireExclusiveLock() {
-   local -n axlDescriptor="${1}"
-   local name="${2}"
+   local axlVariable="${1}"
+   local axlName="${2}"
 
-   acquireLock axlDescriptor "${name}" true true
+   acquireLock "${axlVariable}" "${axlName}" true true
 } && readonly -f acquireExclusiveLock
 
 acquireSharedLock() {
-   local -n aslDescriptor="${1}"
-   local name="${2}"
+   local aslVariable="${1}"
+   local aslName="${2}"
 
-   acquireLock aslDescriptor "${name}" false true
+   acquireLock "${aslVariable}" "${aslName}" false true
 } && readonly -f acquireSharedLock
 
 attemptExclusiveLock() {
-   local -n axlDescriptor="${1}"
-   local name="${2}"
+   local axlVariable="${1}"
+   local axlName="${2}"
 
-   acquireLock axlDescriptor "${name}" true false
+   acquireLock "${axlVariable}" "${axlName}" true false
 } && readonly -f attemptExclusiveLock
 
 attemptSharedLock() {
-   local -n aslDescriptor="${1}"
-   local name="${2}"
+   local aslVariable="${1}"
+   local aslName="${2}"
 
-   acquireLock aslDescriptor "${name}" false false
+   acquireLock "${aslVariable}" "${aslName}" false false
 } && readonly -f attemptSharedLock
 
 releaseLock() {
-   local descriptor="${1}"
-   local -n name="lockDescriptorNames[${descriptor}]"
+   local lock="${1}"
+   local -n name="lockNames[${lock}]"
 
    if [ -n "${name}" ]
    then
-      flock -u "${descriptor}"
+      flock -u "${lock}"
+      closeLockFile "${lock}"
       logDebug "lock released: ${name}"
       unset name
    else
-      logWarning "lock not held: fd=${descriptor}"
+      logWarning "lock not held: fd=${lock}"
    fi
 } && readonly -f releaseLock
 

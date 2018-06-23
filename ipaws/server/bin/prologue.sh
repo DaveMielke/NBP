@@ -21,6 +21,10 @@ programMessage() {
    }
 } && readonly -f programMessage
 
+setVariable() {
+   eval "${1}"'="'"${2}"'"'
+} && readonly -f setVariable
+
 defineEnumeration() {
    local array="${1}"
    shift 1
