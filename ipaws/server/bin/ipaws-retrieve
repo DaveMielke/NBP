@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments strings
+includeScriptLibraries command arguments strings locks
 
 readonly defaultServerType="prod"
 readonly defaultMinutesBefore=30
@@ -98,6 +98,7 @@ processConfigurationFile "${configurationDirectory}"
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
+attemptExclusiveLock lock retrieve || semanticError "already running"
 
 readonly currentTime="$(date -u +"${timeFormat}")"
 logDebug "current-time ${currentTime}"
