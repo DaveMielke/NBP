@@ -23,7 +23,7 @@ handleCommandOption_d() {
 
 extractAlerts() {
    acquireExclusiveLock extract
-   local temporaryFile="${alertFileExtension}"
+   local temporaryFile="${alertFileExtension}.extracted"
 
    while :
    do

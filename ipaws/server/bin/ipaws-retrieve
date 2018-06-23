@@ -92,15 +92,15 @@ handleCommandArguments "c:d:egm:p:DPT" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
-logInfo "configuration-directory ${configurationDirectory}"
+logDebug "configuration-directory ${configurationDirectory}"
 processConfigurationFile "${configurationDirectory}"
 
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
-logInfo "data-directory ${dataDirectory}"
+logDebug "data-directory ${dataDirectory}"
 
 readonly currentTime="$(date -u +"${timeFormat}")"
-logInfo "current-time ${currentTime}"
+logDebug "current-time ${currentTime}"
 
 readonly alertsFileList=( "${dataDirectory}/"${timeGlob}".${alertsFileExtension}" )
 readonly alertsFileCount="${#alertsFileList[*]}"
@@ -115,14 +115,14 @@ else
 fi
 
 readonly alertsTime
-logInfo "alerts-time ${alertsTime}"
+logDebug "alerts-time ${alertsTime}"
 
 [ -n "${serverType}" ] || serverType="${defaultServerType}"
-logInfo "server-type ${serverType}"
+logDebug "server-type ${serverType}"
 
 serverName="${configuredProperties["${serverType}-server"]}"
 [ -n "${serverName}" ] || semanticError "server type not supported: ${serverType}"
-logInfo "server-name ${serverName}"
+logDebug "server-name ${serverName}"
 
 requestURL="https://${serverName}"
 requestURL+="/IPAWSOPEN_EAS_SERVICE/rest/"
@@ -145,7 +145,7 @@ requestURL+="/recent/$(date -u -d "${alertsTime} -${minutesBefore} minutes" +"${
    [ -f "${pinFile}" ] && [ -r "${pinFile}" ] && read <"${pinFile}" requestPIN || :
 }
 
-logInfo "request-url ${requestURL}"
+logDebug "request-url ${requestURL}"
 serverResponse=$(curl --silent --show-error --get --data-urlencode "pin=${requestPIN}" "${requestURL}") || exit "${?}"
 [ -z "${serverResponse}" ] && responseError "no data received"
 [ "${serverResponse}" = "${serverResponse#<}" ] && responseError "${serverResponse}"
@@ -157,12 +157,14 @@ else
    readonly outputFileExtension="${failureFileExtension}"
 fi
 
-readonly outputFile="${dataDirectory}/${currentTime}.${outputFileExtension}"
+readonly outputFileName="${currentTime}"
+readonly outputFile="${dataDirectory}/${outputFileName}.${outputFileExtension}"
 [ -e "${outputFile}" ] && responseError "output file already exists: ${outputFile}"
-logInfo "output-file ${outputFile##*/}"
+logDebug "output-file ${outputFile##*/}"
 
-readonly temporaryFile="${alertsFileExtension}.retrieved"
+readonly temporaryFile="${outputFile%/*}/${alertsFileExtension}.retrieved"
 echo >"${temporaryFile}" "${serverResponse}" || exit "${?}"
 
 mv "${temporaryFile}" "${outputFile}"
+logInfo "alert set added: ${outputFileName##*/}"
 exit 0
