@@ -12,5 +12,5 @@ joinArrayValues()  {
    done
 
    echo "${result}"
-}
+} && readonly -f joinArrayValues
 

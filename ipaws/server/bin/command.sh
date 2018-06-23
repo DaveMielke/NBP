@@ -4,36 +4,29 @@ readonly defaultConfigurationDirectory="${serverDirectory}/etc"
 readonly configurationFileName="ipaws.conf"
 
 readonly defaultDataDirectory="${serverDirectory}/var"
-readonly alertsFilePrefix="IPAWS@"
-readonly alertsFileExtension="xml"
-readonly textFileExtension="txt"
-
-programMessage() {
-   local message="${1}"
-
-   [ -z "${message}" ] || echo "${programName}: ${message}"
-}
+readonly failureFileExtension="failed"
+readonly alertsFileExtension="retrieved"
 
 syntaxError() {
    local message="${1}"
 
    programMessage "${message}"
    exit 2
-}
+} && readonly -f syntaxError
 
 semanticError() {
    local message="${1}"
 
    programMessage "${message}"
    exit 3
-}
+} && readonly -f semanticError
 
 responseError() {
    local message="${1}"
 
    programMessage "${message}"
    exit 4
-}
+} && readonly -f responseError
 
 processConfigurationFile() {
    local directory="${1}"
@@ -68,5 +61,5 @@ processConfigurationFile() {
          programMessage "${problem}: ${*}: ${file}[${number}]"
       fi
    done <"${file}"
-}
+} && readonly -f processConfigurationFile
 

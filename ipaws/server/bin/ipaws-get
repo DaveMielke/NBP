@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries scripts arguments strings
+includeScriptLibraries command arguments strings
 
 readonly defaultServerType="prod"
 readonly defaultMinutesBefore=30
@@ -19,7 +19,8 @@ The following options may be specified:
 -h             show this usage summary on standard output and then exit
 -m minutes     how far before the reference time to look (default is ${defaultMinutesBefore})
 -p characters  the server access PIN
--v             show properties on standard error
+-q             decrease verbosity
+-v             increase verbosity
 -D             use the demonstration server
 -P             use the production server (this is the default)
 -T             use the test server
@@ -27,14 +28,13 @@ The following options may be specified:
 Alert type options can be combined. If none are specified then all are assumed.
 If more than one server option is specified then the last one is used.
 
-Alerts files are in the data directory. They're named ${alertsFilePrefix}<time>.<extension>.
-* <time> is an ISO-8601 UTC timestamp (yyyy-mm-ddThh:mm:ssZ).
-* <extension> is .${alertsFileExtension} for successfully retrieved alert sets,
-  and .${textFileExtension} when the retrieval fails.
+Successfully retrieved alerts files are in the data directory. They're
+named <time>.${alertsFileExtension}, where <time> is the ISO-8601 UTC timestamp
+(yyyy-mm-ddThh:mm:ssZ) for when the file was retrieved.
 
-The reference time used for alerts retrieval is taken from the name of the most
-recently retrieved alerts file (${alertsFilePrefix}*.${alertsFileExtension}). If there aren't any then the
-current time is used.
+The reference time used for alerts retrieval is the name of the most recently
+retrieved alerts file (*.${alertsFileExtension}). If there aren't any then the current time
+is used.
 
 If the PIN isn't specified then it's read from *.pin in the configuration
 directory, where * is the server type - one of: $(joinArrayValues serverTypes ", ")
@@ -52,7 +52,6 @@ readonly timeGlob="[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0
 
 configurationDirectory=""
 dataDirectory=""
-showProperties=false
 serverType=""
 requestPIN=""
 getEmergencyAlerts=false
@@ -83,10 +82,6 @@ handleOption_p() {
    requestPIN="${OPTARG}"
 }
 
-handleOption_v() {
-   showProperties=true
-}
-
 handleOption_D() {
    serverType="demo"
 }
@@ -99,42 +94,41 @@ handleOption_T() {
    serverType="test"
 }
 
-handleOptions "c:d:egm:p:vDPT" "${@}"
+handleOptions "c:d:egm:p:DPT" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
-"${showProperties}" && programMessage "configuration-directory ${configurationDirectory}"
+logInfo "configuration-directory ${configurationDirectory}"
 processConfigurationFile "${configurationDirectory}"
 
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
-"${showProperties}" && programMessage "data-directory ${dataDirectory}"
+logInfo "data-directory ${dataDirectory}"
 
 readonly currentTime="$(date -u +"${timeFormat}")"
-"${showProperties}" && programMessage "current-time ${currentTime}"
+logInfo "current-time ${currentTime}"
 
-readonly alertsFileList=( "${dataDirectory}/${alertsFilePrefix}"${timeGlob}".${alertsFileExtension}" )
+readonly alertsFileList=( "${dataDirectory}/"${timeGlob}".${alertsFileExtension}" )
 readonly alertsFileCount="${#alertsFileList[*]}"
 
 if [ "${alertsFileCount}" -gt 0 ]
 then
    alertsTime="${alertsFileList[alertsFileCount-1]}"
    alertsTime="${alertsTime##*/}"
-   alertsTime="${alertsTime#${alertsFilePrefix}}"
    alertsTime="${alertsTime%.*}"
 else
    alertsTime="${currentTime}"
 fi
 
 readonly alertsTime
-"${showProperties}" && programMessage "alerts-time ${alertsTime}"
+logInfo "alerts-time ${alertsTime}"
 
 [ -n "${serverType}" ] || serverType="${defaultServerType}"
-"${showProperties}" && programMessage "server-type ${serverType}"
+logInfo "server-type ${serverType}"
 
 serverName="${configuredProperties["${serverType}-server"]}"
 [ -n "${serverName}" ] || semanticError "server type not supported: ${serverType}"
-"${showProperties}" && programMessage "server-name ${serverName}"
+logInfo "server-name ${serverName}"
 
 requestURL="https://${serverName}"
 requestURL+="/IPAWSOPEN_EAS_SERVICE/rest/"
@@ -157,21 +151,20 @@ requestURL+="/recent/$(date -u -d "${alertsTime} -${minutesBefore} minutes" +"${
    [ -f "${pinFile}" ] && [ -r "${pinFile}" ] && read <"${pinFile}" requestPIN || :
 }
 
-"${showProperties}" && programMessage "request-url ${requestURL}"
+logInfo "request-url ${requestURL}"
 serverResponse=$(curl --silent --show-error --get --data-urlencode "pin=${requestPIN}" "${requestURL}") || exit "${?}"
 [ -z "${serverResponse}" ] && responseError "no data received"
 [ "${serverResponse}" = "${serverResponse#<}" ] && responseError "${serverResponse}"
 
-alertsFile="${dataDirectory}/${alertsFilePrefix}${currentTime}."
 if [ "${serverResponse}" != "${serverResponse#<?xml}" ]
 then
-   alertsFile+="${alertsFileExtension}"
+   readonly outputFileExtension="${alertsFileExtension}"
 else
-   alertsFile+="${textFileExtension}"
+   readonly outputFileExtension="${failureFileExtension}"
 fi
 
-readonly alertsFile
-"${showProperties}" && programMessage "alerts-file ${alertsFile}"
-echo >"${alertsFile}" "${serverResponse}"
+readonly outputFile="${dataDirectory}/${currentTime}.${outputFileExtension}"
+logInfo "output-file ${outputFile##*/}"
+echo >"${outputFile}" "${serverResponse}"
 
 exit 0
