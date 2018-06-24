@@ -10,17 +10,6 @@ cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
-configurationDirectory=""
-dataDirectory=""
-
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
 extractAlerts() {
    acquireExclusiveLock lock extract
    local temporaryFile="${alertFileExtension}.extracted"
@@ -63,6 +52,17 @@ acceptAlert() {
    local file="${1}"
 
    return 0
+}
+
+configurationDirectory=""
+dataDirectory=""
+
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
 }
 
 handleCommandArguments "c:d:" "" "${@}"

@@ -138,7 +138,7 @@ type="${types[index]}"
 requestURL+="${type}"
 
 [ -n "${minutesBefore}" ] || minutesBefore="${defaultMinutesBefore}"
-[[ "${minutesBefore}" =~ ^[1-9][0-9]*$ ]] || syntaxError "invalid minutes before operand: ${minutesBefore}"
+verifyIntegerValue "${minutesBefore}" "minutes before" 1
 requestURL+="/recent/$(date -u -d "${alertsTime} -${minutesBefore} minutes" +"${timeFormat}")"
 
 [ -z "${requestPIN}" ] && {

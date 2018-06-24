@@ -1,3 +1,16 @@
+verifyIntegerValue() {
+   local value="${1}"
+   local description="${2}"
+   local minimum="${3}"
+   local maximum="${4}"
+
+   description+=" value"
+   [[ "${value}" =~ ^(0|-?[1-9][0-9]*)$ ]] || syntaxError "invalid ${description}: ${value}"
+   [ -n "${minimum}" ] && [ "${value}" -lt "${minimum}" ] && semanticError "${description} less than ${minimum}: ${value}"
+   [ -n "${maximum}" ] && [ "${value}" -gt "${maximum}" ] && semanticError "${description} greater than ${maximum}: ${value}"
+   return 0
+} && readonly -f verifyIntegerValue
+
 verifyReadableDirectory() {
    local path="${1}"
 

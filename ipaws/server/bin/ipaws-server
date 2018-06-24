@@ -1,37 +1,18 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
+verifyCommands ncat
 includeScriptLibraries command arguments locks
+
+readonly defaultPortNumber=14216
 
 showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
--c path        the configuration directory (default is ${defaultConfigurationDirectory})
--d path        the data directory (default is ${defaultDataDirectory})
+-c path  the configuration directory (default is ${defaultConfigurationDirectory})
+-d path  the data directory (default is ${defaultDataDirectory})
+-p port   the port number to listen on (default is ${defaultPortNumber})
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
-
-configurationDirectory=""
-dataDirectory=""
-
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-handleCommandArguments "c:d:" "" "${@}"
-verifyCommands ncat
-
-[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
-verifyReadableDirectory "${configurationDirectory}"
-logDebug "configuration-directory ${configurationDirectory}"
-processConfigurationFile "${configurationDirectory}"
-
-[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
-verifyWritableDirectory "${dataDirectory}"
-logDebug "data-directory ${dataDirectory}"
 
 makeCommand() {
    local script="${1}"
@@ -54,8 +35,39 @@ retrieveAlerts() {
 
 awaitClients() {
    makeCommand ipaws-client
-   ncat -l 14216 --keep-open --sh-exec "${command[*]}"
+   ncat -l "${portNumber}" --keep-open --sh-exec "${command[*]}"
 }
+
+configurationDirectory=""
+dataDirectory=""
+portNumber=""
+
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
+}
+
+handleCommandOption_p() {
+   portNumber="${OPTARG}"
+}
+
+handleCommandArguments "c:d:p:" "" "${@}"
+
+[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
+verifyReadableDirectory "${configurationDirectory}"
+logDebug "configuration-directory ${configurationDirectory}"
+processConfigurationFile "${configurationDirectory}"
+
+[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
+verifyWritableDirectory "${dataDirectory}"
+logDebug "data-directory ${dataDirectory}"
+
+[ -n "${portNumber}" ] || portNumber="${defaultPortNumber}"
+verifyIntegerValue "${portNumber}" "port number" 1024 65535
+logDebug "port-number ${portNumber}"
 
 attemptExclusiveLock lock server || semanticError "already running"
 umask 022
