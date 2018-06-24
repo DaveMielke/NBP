@@ -5,12 +5,14 @@ verifyCommands ncat
 includeScriptLibraries command arguments locks
 
 readonly defaultPortNumber=14216
+readonly defaultRetrieveInterval=30
 
 showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
--c path  the configuration directory (default is ${defaultConfigurationDirectory})
--d path  the data directory (default is ${defaultDataDirectory})
--p port   the port number to listen on (default is ${defaultPortNumber})
+-c path     the configuration directory (default is ${defaultConfigurationDirectory})
+-d path     the data directory (default is ${defaultDataDirectory})
+-p port     the port number to listen on (default is ${defaultPortNumber})
+-r seconds  the alerts retrieval interval (default is ${defaultRetrieveInterval})
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
@@ -29,7 +31,7 @@ retrieveAlerts() {
    while :
    do
       runScript ipaws-retrieve -T && runScript ipaws-extract
-      sleep 60
+      sleep "${retrieveInterval}"
    done
 }
 
@@ -41,6 +43,7 @@ awaitClients() {
 configurationDirectory=""
 dataDirectory=""
 portNumber=""
+retrieveInterval=""
 
 handleCommandOption_c() {
    configurationDirectory="${OPTARG}"
@@ -54,7 +57,11 @@ handleCommandOption_p() {
    portNumber="${OPTARG}"
 }
 
-handleCommandArguments "c:d:p:" "" "${@}"
+handleCommandOption_r() {
+   retrieveInterval="${OPTARG}"
+}
+
+handleCommandArguments "c:d:p:r:" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
@@ -68,6 +75,10 @@ logDebug "data-directory ${dataDirectory}"
 [ -n "${portNumber}" ] || portNumber="${defaultPortNumber}"
 verifyIntegerValue "${portNumber}" "port number" 1024 65535
 logDebug "port-number ${portNumber}"
+
+[ -n "${retrieveInterval}" ] || retrieveInterval="${defaultRetrieveInterval}"
+verifyIntegerValue "${retrieveInterval}" "retrieve interval" 15
+logDebug "retrieve-interval ${retrieveInterval}"
 
 attemptExclusiveLock lock server || semanticError "already running"
 umask 022
