@@ -163,7 +163,7 @@ logDebug "output-file ${outputFile##*/}"
 readonly temporaryFile="${outputFile%/*}/${alertsFileExtension}.retrieved"
 echo >"${temporaryFile}" "${serverResponse}" || exit "${?}"
 
-chmod a-w "${temporaryFile}"
 mv "${temporaryFile}" "${outputFile}"
+chmod a-w "${outputFile}"
 logInfo "new alert set: ${outputFileName##*/}"
 exit 0

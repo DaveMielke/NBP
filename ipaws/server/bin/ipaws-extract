@@ -35,12 +35,12 @@ extractAlerts() {
             [ -z "${alertIdentifier}" ] && continue
 
             local alertFile="${alertIdentifier}.${alertFileExtension}"
-            [ -f "${alertFile}" ] && continue
+            [ -e "${alertFile}" ] && continue
             acceptAlert "${temporaryFile}" || continue
 
             logInfo "new alert: ${alertIdentifier}"
-            chmod a-w "${temporaryFile}"
             mv "${temporaryFile}" "${alertFile}"
+            chmod a-w "${alertFile}"
          done
 
          logInfo "removing alert set: ${alertsName}"
