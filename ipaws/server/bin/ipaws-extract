@@ -39,6 +39,7 @@ extractAlerts() {
             acceptAlert "${temporaryFile}" || continue
 
             logInfo "new alert: ${alertIdentifier}"
+            chmod a-w "${temporaryFile}"
             mv "${temporaryFile}" "${alertFile}"
          done
 
