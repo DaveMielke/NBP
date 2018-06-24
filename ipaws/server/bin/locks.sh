@@ -1,3 +1,5 @@
+verifyCommands flock
+
 declare -A lockNames=()
 
 openLockFile() {

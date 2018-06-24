@@ -22,6 +22,7 @@ handleCommandOption_d() {
 }
 
 handleCommandArguments "c:d:" "" "${@}"
+verifyCommands ncat
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
@@ -52,7 +53,7 @@ retrieveAlerts() {
 }
 
 awaitClients() {
-   makeCommand ipaws-client -v -v
+   makeCommand ipaws-client
    ncat -l 14216 --keep-open --sh-exec "${command[*]}"
 }
 

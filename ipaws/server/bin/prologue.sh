@@ -100,6 +100,17 @@ logError() {
    logMessage error "${message}"
 } && readonly -f logError
 
+verifyCommands() {
+   local command
+
+   for command
+   do
+      local path=$(type -p "${command}")
+      [ -n "${path}" ] || semanticError "command not found: ${command}"
+      logDebug "command-path ${path}"
+   done
+} && readonly -f verifyCommands
+
 declare -A includedScriptLibraries=()
 includeScriptLibraries() {
    local name

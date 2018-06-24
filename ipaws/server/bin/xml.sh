@@ -1,3 +1,5 @@
+verifyCommands xpath
+
 readonly xpathAlertElement="/ns1:alerts/alert"
 
 xpathGet() {
