@@ -36,7 +36,7 @@ retrieveAlerts() {
 }
 
 awaitClients() {
-   makeCommand ipaws-client
+   makeCommand ipaws-session
    ncat -l "${portNumber}" --keep-open --sh-exec "${command[*]}"
 }
 

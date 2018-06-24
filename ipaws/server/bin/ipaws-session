@@ -32,6 +32,6 @@ processConfigurationFile "${configurationDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
 
-logInfo "connection from [${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
+logInfo "client connected: [${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
 
 exit 0
