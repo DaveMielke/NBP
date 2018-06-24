@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="custom_rules" default="help">
+  <import file="../../nbp_sign.xml" />
+  <import file="../../version_code.xml" />
+</project>
