@@ -78,6 +78,7 @@ handleCommandOption_r() {
    retrieveInterval="${OPTARG}"
 }
 
+setLogLevel info
 handleCommandArguments "c:d:p:r:" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"

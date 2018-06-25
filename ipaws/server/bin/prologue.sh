@@ -100,6 +100,18 @@ logError() {
    logMessage error "${message}"
 } && readonly -f logError
 
+setLogLevel() {
+   local type="${1}"
+   local level="${logLevelEnumeration[${type}]}"
+
+   if [ -n "${level}" ]
+   then
+      IPAWS_LOG_LEVEL="${level}"
+   else
+      logWarning "unknown log type: ${type}"
+   fi
+} && readonly -f setLogLevel
+
 verifyCommands() {
    local command
 
