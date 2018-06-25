@@ -13,6 +13,25 @@ If no alert files are specified then all of them are analyzed.
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
+configurationDirectory=""
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+dataDirectory=""
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
+}
+
+removeFiles=false
+handleCommandOption_R() {
+   removeFiles=true
+}
+
+handlePositionalCommandArguments() {
+   alertFiles=("${@}")
+}
+
 rejectAlert() {
    local file="${1}"
 
@@ -30,26 +49,6 @@ rejectAlert() {
    fi
 
    return 1
-}
-
-configurationDirectory=""
-dataDirectory=""
-removeFiles=false
-
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-handleCommandOption_R() {
-   removeFiles=true
-}
-
-handlePositionalCommandArguments() {
-   alertFiles=("${@}")
 }
 
 handleCommandArguments "c:d:R" "[alert-file ...]" "${@}"

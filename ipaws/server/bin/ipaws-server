@@ -16,6 +16,26 @@ cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
+configurationDirectory=""
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+dataDirectory=""
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
+}
+
+portNumber=""
+handleCommandOption_p() {
+   portNumber="${OPTARG}"
+}
+
+retrieveInterval=""
+handleCommandOption_r() {
+   retrieveInterval="${OPTARG}"
+}
+
 writeLog() {
    local currentName=""
 
@@ -55,27 +75,6 @@ retrieveAlerts() {
 awaitClients() {
    makeCommand ipaws-session
    ncat -l "${portNumber}" --keep-open --sh-exec "${command[*]}"
-}
-
-configurationDirectory=""
-dataDirectory=""
-portNumber=""
-retrieveInterval=""
-
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-handleCommandOption_p() {
-   portNumber="${OPTARG}"
-}
-
-handleCommandOption_r() {
-   retrieveInterval="${OPTARG}"
 }
 
 setLogLevel info

@@ -35,52 +35,49 @@ directory, where * is the server type - one of: $(joinArrayValues serverTypes ",
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
+configurationDirectory=""
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+dataDirectory=""
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
+}
+
+getEmergencyAlerts=false
+handleCommandOption_e() {
+   getEmergencyAlerts=true
+}
+
+getGeneralAlerts=false
+handleCommandOption_g() {
+   getGeneralAlerts=true
+}
+
+minutesBefore=""
+handleCommandOption_m() {
+   minutesBefore="${OPTARG}"
+}
+
+requestPIN=""
+handleCommandOption_p() {
+   requestPIN="${OPTARG}"
+}
+
 readonly -A serverTypes=(
    ["demonstration"]="demo"
    ["production"]="prod"
    ["test"]="test"
 )
 
-configurationDirectory=""
-dataDirectory=""
 serverType=""
-requestPIN=""
-getEmergencyAlerts=false
-getGeneralAlerts=false
-minutesBefore=""
-
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-handleCommandOption_e() {
-   getEmergencyAlerts=true
-}
-
-handleCommandOption_g() {
-   getGeneralAlerts=true
-}
-
-handleCommandOption_m() {
-   minutesBefore="${OPTARG}"
-}
-
-handleCommandOption_p() {
-   requestPIN="${OPTARG}"
-}
-
 handleCommandOption_D() {
    serverType="demo"
 }
-
 handleCommandOption_P() {
    serverType="prod"
 }
-
 handleCommandOption_T() {
    serverType="test"
 }

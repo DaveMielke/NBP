@@ -11,12 +11,11 @@ END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
 configurationDirectory=""
-dataDirectory=""
-
 handleCommandOption_c() {
    configurationDirectory="${OPTARG}"
 }
 
+dataDirectory=""
 handleCommandOption_d() {
    dataDirectory="${OPTARG}"
 }
