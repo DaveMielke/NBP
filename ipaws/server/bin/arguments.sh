@@ -51,7 +51,7 @@ handleCommandArguments() {
       showCommonCommandOptionsUsageSummary
 
       [ -n "${options}" ] && {
-         echo -e "\nThe options that are specific to this command are:"
+         echo -e "\nThese options are specific to this command:"
          showCommandSpecificOptionsUsageSummary
       }
 
@@ -66,7 +66,7 @@ handleCommandArguments() {
 showCommonCommandOptionsUsageSummary() {
 cat <<END-OF-COMMON-OPTIONS-USAGE-SUMMARY
 
-The options that are common to all commands are:
+These options are common to all commands:
 -h  (help) show this command usage summary on standard output and then exit
 -q  (quiet) decrease logging verbosity
 -v  (verbose) increase logging verbosity

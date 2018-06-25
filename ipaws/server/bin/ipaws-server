@@ -12,14 +12,16 @@ showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 -c path     the configuration directory (default is ${defaultConfigurationDirectory})
 -d path     the data directory (default is ${defaultDataDirectory})
--e             get EAS [Emergency Alert System] alerts (see ipaws-retrieve -h)
--g             get general (non-EAS) alerts (see ipaws-retrieve -h)
--m minutes     how far before the reference time to look (see ipaws-retrieve -h)
--p characters  the server access PIN (see ipaws-retrieve -h)
--s type        which server to use (see ipaws-retrieve -h)
 -M count    the maximum number of concurrent clients (default is ${defaultMaximumClients})
 -P port     the port number to listen on (default is ${defaultPortNumber})
 -R seconds  the alerts retrieval interval (default is ${defaultRetrieveInterval})
+
+These options are passed through to ipaws-retrieve:
+-e             get EAS [Emergency Alert System] alerts
+-g             get general (non-EAS) alerts
+-m minutes     how far before the reference time to look
+-p characters  the server access PIN
+-s type        which server to use
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
