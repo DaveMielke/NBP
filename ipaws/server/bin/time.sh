@@ -15,3 +15,9 @@ epochSeconds() {
    date -d "${time}" +"%s"
 } && readonly -f epochSeconds
 
+epochToUTC() {
+   local seconds="${1}"
+
+   utcTime "@${seconds}"
+} && readonly -f epochToUTC
+
