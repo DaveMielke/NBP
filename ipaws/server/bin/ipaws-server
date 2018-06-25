@@ -4,6 +4,7 @@
 verifyCommands ncat
 includeScriptLibraries command arguments locks
 
+readonly defaultMaximumClients=100
 readonly defaultPortNumber=14216
 readonly defaultRetrieveInterval=30
 
@@ -11,6 +12,7 @@ showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 -c path     the configuration directory (default is ${defaultConfigurationDirectory})
 -d path     the data directory (default is ${defaultDataDirectory})
+-m count    the maximum number of concurrent clients (default is ${defaultMaximumClients})
 -p port     the port number to listen on (default is ${defaultPortNumber})
 -r seconds  the alerts retrieval interval (default is ${defaultRetrieveInterval})
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
@@ -24,6 +26,11 @@ handleCommandOption_c() {
 dataDirectory=""
 handleCommandOption_d() {
    dataDirectory="${OPTARG}"
+}
+
+maximumClients=""
+handleCommandOption_m() {
+   maximumClients="${OPTARG}"
 }
 
 portNumber=""
@@ -74,11 +81,11 @@ retrieveAlerts() {
 
 awaitClients() {
    makeCommand ipaws-session
-   ncat -l "${portNumber}" --keep-open --sh-exec "${command[*]}"
+   ncat -l "${portNumber}" --max-conns "${maximumClients}" --keep-open --sh-exec "${command[*]}"
 }
 
 setLogLevel info
-handleCommandArguments "c:d:p:r:" "" "${@}"
+handleCommandArguments "c:d:m:p:r:" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
@@ -88,6 +95,10 @@ processConfigurationFile "${configurationDirectory}"
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
+
+[ -n "${maximumClients}" ] || maximumClients="${defaultMaximumClients}"
+verifyIntegerValue "${maximumClients}" "maximum clients" 1
+logDebug "maximum-clients ${maximumClients}"
 
 [ -n "${portNumber}" ] || portNumber="${defaultPortNumber}"
 verifyIntegerValue "${portNumber}" "port number" 1024 65535
