@@ -7,7 +7,7 @@ showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 -c path        the configuration directory (default is ${defaultConfigurationDirectory})
 -d path        the data directory (default is ${defaultDataDirectory})
--r             remove the files that are rejected by the filter
+-R             remove the files that are rejected by the filter
 
 If no alert files are specified then all of them are analyzed.
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
@@ -44,7 +44,7 @@ handleCommandOption_d() {
    dataDirectory="${OPTARG}"
 }
 
-handleCommandOption_r() {
+handleCommandOption_R() {
    removeFiles=true
 }
 
@@ -52,7 +52,7 @@ handlePositionalCommandArguments() {
    alertFiles=("${@}")
 }
 
-handleCommandArguments "c:d:r" "[alert-file ...]" "${@}"
+handleCommandArguments "c:d:R" "[alert-file ...]" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
@@ -113,5 +113,5 @@ do
    let skipCount-=1 || :
 done
 
-logInfo "summary: Accepted:${acceptCount} Rejected:${rejectCount} Skipped:${skipCount}"
+logInfo "summary: Accept:${acceptCount} Reject:${rejectCount} Skip:${skipCount}"
 exit 0
