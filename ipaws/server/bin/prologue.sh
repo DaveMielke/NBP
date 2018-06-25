@@ -63,18 +63,18 @@ defineEnumeration() {
    readonly array
 } && readonly -f defineEnumeration
 
-defineEnumeration logLevels debug info warning error
-currentLogLevel="${logLevels["warning"]}"
+defineEnumeration logLevelEnumeration debug info warning error
+[ -n "${IPAWS_LOG_LEVEL}" ] || export IPAWS_LOG_LEVEL="${logLevelEnumeration["warning"]}"
 
 logMessage() {
    local type="${1}"
    local message="${2}"
-   local level="${logLevels[${type}]}"
+   local level="${logLevelEnumeration[${type}]}"
 
    if [ -z "${level}" ]
    then
       programMessage "unknown log type: ${type}: ${message}"
-   elif [ "${level}" -ge "${currentLogLevel}" ]
+   elif [ "${level}" -ge "${IPAWS_LOG_LEVEL}" ]
    then
       programMessage "${message}"
    fi

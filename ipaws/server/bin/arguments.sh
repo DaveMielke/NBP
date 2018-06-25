@@ -60,7 +60,7 @@ handleCommandArguments() {
 
    shift $((OPTIND - 1))
    handlePositionalCommandArguments "${@}"
-   let currentLogLevel+=logLevelAdjustment || :
+   let IPAWS_LOG_LEVEL+=logLevelAdjustment || :
 } && readonly -f handleCommandArguments
 
 showCommonCommandOptionsUsageSummary() {

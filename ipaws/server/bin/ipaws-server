@@ -36,7 +36,7 @@ writeLog() {
 makeCommand() {
    local script="${1}"
    shift 1
-   command=("${programDirectory}/${script}" -v -c "${configurationDirectory}" -d "${dataDirectory}" "${@}")
+   command=("${programDirectory}/${script}" -c "${configurationDirectory}" -d "${dataDirectory}" "${@}")
 }
 
 runScript() {
