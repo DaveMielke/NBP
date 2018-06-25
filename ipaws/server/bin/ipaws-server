@@ -12,9 +12,14 @@ showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 -c path     the configuration directory (default is ${defaultConfigurationDirectory})
 -d path     the data directory (default is ${defaultDataDirectory})
--m count    the maximum number of concurrent clients (default is ${defaultMaximumClients})
--p port     the port number to listen on (default is ${defaultPortNumber})
--r seconds  the alerts retrieval interval (default is ${defaultRetrieveInterval})
+-e             get EAS [Emergency Alert System] alerts (see ipaws-retrieve -h)
+-g             get general (non-EAS) alerts (see ipaws-retrieve -h)
+-m minutes     how far before the reference time to look (see ipaws-retrieve -h)
+-p characters  the server access PIN (see ipaws-retrieve -h)
+-s type        which server to use (see ipaws-retrieve -h)
+-M count    the maximum number of concurrent clients (default is ${defaultMaximumClients})
+-P port     the port number to listen on (default is ${defaultPortNumber})
+-R seconds  the alerts retrieval interval (default is ${defaultRetrieveInterval})
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
@@ -28,18 +33,43 @@ handleCommandOption_d() {
    dataDirectory="${OPTARG}"
 }
 
-maximumClients=""
+getEmergencyAlerts=false
+handleCommandOption_e() {
+   getEmergencyAlerts=true
+}
+
+getGeneralAlerts=false
+handleCommandOption_g() {
+   getGeneralAlerts=true
+}
+
+minutesBefore=""
 handleCommandOption_m() {
+   minutesBefore="${OPTARG}"
+}
+
+requestPIN=""
+handleCommandOption_p() {
+   requestPIN="${OPTARG}"
+}
+
+serverType=""
+handleCommandOption_s() {
+   serverType="${OPTARG}"
+}
+
+maximumClients=""
+handleCommandOption_M() {
    maximumClients="${OPTARG}"
 }
 
 portNumber=""
-handleCommandOption_p() {
+handleCommandOption_P() {
    portNumber="${OPTARG}"
 }
 
 retrieveInterval=""
-handleCommandOption_r() {
+handleCommandOption_R() {
    retrieveInterval="${OPTARG}"
 }
 
@@ -72,9 +102,16 @@ runScript() {
 }
 
 retrieveAlerts() {
+   local retrieveOptions=()
+   "${getEmergencyAlerts}" && retrieveOptions+=(-e)
+   "${getGeneralAlerts}" && retrieveOptions+=(-g)
+   [ -n "${minutesBefore}" ] && retrieveOptions+=(-m "${minutesBefore}")
+   [ -n "${requestPIN}" ] && retrieveOptions+=(-p "${requestPIN}")
+   [ -n "${serverType}" ] && retrieveOptions+=(-s "${serverType}")
+
    while :
    do
-      runScript ipaws-retrieve -s test && runScript ipaws-extract &
+      runScript ipaws-retrieve "${retrieveOptions[@]}" && runScript ipaws-extract &
       sleep "${retrieveInterval}"
    done
 }
@@ -85,7 +122,7 @@ awaitClients() {
 }
 
 setLogLevel info
-handleCommandArguments "c:d:m:p:r:" "" "${@}"
+handleCommandArguments "c:d:egm:p:s:M:P:R:" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
