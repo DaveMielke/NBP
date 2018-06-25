@@ -90,15 +90,15 @@ readonly alertsFileCount="${#alertsFileList[*]}"
 
 if [ "${alertsFileCount}" -gt 0 ]
 then
-   alertsTime="${alertsFileList[alertsFileCount-1]}"
-   alertsTime="${alertsTime##*/}"
-   alertsTime="${alertsTime%.*}"
+   referenceTime="${alertsFileList[alertsFileCount-1]}"
+   referenceTime="${referenceTime##*/}"
+   referenceTime="${referenceTime%.*}"
 else
-   alertsTime="${currentTime}"
+   referenceTime="${currentTime}"
 fi
 
-readonly alertsTime
-logDebug "alerts-time ${alertsTime}"
+readonly referenceTime
+logDebug "reference-time ${referenceTime}"
 
 [ -n "${serverType}" ] || serverType="${defaultServerType}"
 logDebug "server-type ${serverType}"
@@ -121,7 +121,7 @@ requestURL+="${type}"
 
 [ -n "${minutesBefore}" ] || minutesBefore="${defaultMinutesBefore}"
 verifyIntegerValue "${minutesBefore}" "minutes before" 1
-requestURL+="/recent/$(utcTime "${alertsTime} -${minutesBefore} minutes")"
+requestURL+="/recent/$(utcTime "${referenceTime} -${minutesBefore} minutes")"
 
 [ -z "${requestPIN}" ] && {
    pinFile="${configurationDirectory}/${serverType}.pin"
