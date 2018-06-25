@@ -1,29 +1,74 @@
 includeScriptLibraries time
 verifyCommands stat
 
-getFileProperty() {
+fileProperty() {
    local path="${1}"
    local property="${2}"
 
    stat -c "%${property}" -- "${path}"
-} && readonly -f getFileProperty
+} && readonly -f fileProperty
+
+fileOwnerName() {
+   local path="${1}"
+
+   fileProperty "${path}" U
+} && readonly -f fileOwnerName
+
+fileOwnerIdentifier() {
+   local path="${1}"
+
+   fileProperty "${path}" u
+} && readonly -f fileOwnerIdentifier
+
+fileGroupName() {
+   local path="${1}"
+
+   fileProperty "${path}" G
+} && readonly -f fileGroupName
+
+fileGroupIdentifier() {
+   local path="${1}"
+
+   fileProperty "${path}" g
+} && readonly -f fileGroupIdentifier
+
+fileType() {
+   local path="${1}"
+
+   local type="$(fileProperty "${path}" F)"
+   type="${type#regular }"
+   type="${type%% *}"
+   echo "${type}"
+} && readonly -f fileType
+
+fileSize() {
+   local path="${1}"
+
+   fileProperty "${path}" s
+} && readonly -f fileSize
+
+fileMountPoint() {
+   local path="${1}"
+
+   fileProperty "${path}" m
+} && readonly -f fileMountPoint
 
 epochFileAccessTime() {
    local path="${1}"
 
-   getFileProperty "${path}" X
+   fileProperty "${path}" X
 } && readonly -f epochFileAccessTime
 
 epochFileModificationTime() {
    local path="${1}"
 
-   getFileProperty "${path}" Y
+   fileProperty "${path}" Y
 } && readonly -f epochFileModificationTime
 
 epochFileChangeTime() {
    local path="${1}"
 
-   getFileProperty "${path}" Z
+   fileProperty "${path}" Z
 } && readonly -f epochFileChangeTime
 
 utcFileAccessTime() {
