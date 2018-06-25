@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments strings time locks
+includeScriptLibraries command arguments time locks
 
 readonly defaultServerType="prod"
 readonly defaultMinutesBefore=5
@@ -15,9 +15,7 @@ The options that are specific to this command are:
 -g             get general (non-EAS) alerts
 -m minutes     how far before the reference time to look (default is ${defaultMinutesBefore})
 -p characters  the server access PIN
--D             use the demonstration server
--P             use the production server (this is the default)
--T             use the test server
+-s type        which server to use (default is ${defaultServerType})
 
 Alert type options can be combined. If none are specified then all are assumed.
 If more than one server type option is specified then the last one is used.
@@ -31,7 +29,7 @@ retrieved alerts file (*.${alertsFileExtension}). If there aren't any then the c
 used. The file extension .${failureFileExtension} indicates a failure during alerts retrieval.
 
 If the PIN isn't specified then it's read from *.pin in the configuration
-directory, where * is the server type - one of: $(joinArrayValues serverTypes ", ")
+directory, where * is the server type (see *-server in the configuration file).
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
@@ -65,24 +63,12 @@ handleCommandOption_p() {
    requestPIN="${OPTARG}"
 }
 
-readonly -A serverTypes=(
-   ["demonstration"]="demo"
-   ["production"]="prod"
-   ["test"]="test"
-)
-
 serverType=""
-handleCommandOption_D() {
-   serverType="demo"
-}
-handleCommandOption_P() {
-   serverType="prod"
-}
-handleCommandOption_T() {
-   serverType="test"
+handleCommandOption_s() {
+   serverType="${OPTARG}"
 }
 
-handleCommandArguments "c:d:egm:p:DPT" "" "${@}"
+handleCommandArguments "c:d:egm:p:s:" "" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
@@ -118,7 +104,7 @@ logDebug "alerts-time ${alertsTime}"
 logDebug "server-type ${serverType}"
 
 serverName="${configuredProperties["${serverType}-server"]}"
-[ -n "${serverName}" ] || semanticError "server type not supported: ${serverType}"
+[ -n "${serverName}" ] || semanticError "server type not defined: ${serverType}"
 logDebug "server-name ${serverName}"
 
 requestURL="https://${serverName}"

@@ -67,9 +67,9 @@ showCommonCommandOptionsUsageSummary() {
 cat <<END-OF-COMMON-OPTIONS-USAGE-SUMMARY
 
 The options that are common to all commands are:
--h  help: show this command usage summary on standard output and then exit
--q  quiet: decrease logging verbosity
--v  verbose: increase logging verbosity
+-h  (help) show this command usage summary on standard output and then exit
+-q  (quiet) decrease logging verbosity
+-v  (verbose) increase logging verbosity
 END-OF-COMMON-OPTIONS-USAGE-SUMMARY
 } && readonly -f showCommonCommandOptionsUsageSummary
 
