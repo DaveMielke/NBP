@@ -111,6 +111,23 @@ verifyCommands() {
    done
 } && readonly -f verifyCommands
 
+executeOnExit() {
+   local -n command="onExitCommand$((++onExitCommandCount))"
+   command=("${@}")
+} && readonly -f executeOnExit
+
+executeOnExitCommands() {
+   while [ "${onExitCommandCount}" -gt 0 ]
+   do
+      local -n command="onExitCommand$((onExitCommandCount--))"
+      "${command[@]}"
+      unset -n command
+   done
+} && readonly -f executeOnExitCommands
+
+onExitCommandCount=0
+trap executeOnExitCommands exit
+
 declare -A includedScriptLibraries=()
 includeScriptLibraries() {
    local name

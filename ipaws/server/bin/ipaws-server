@@ -22,7 +22,7 @@ writeLog() {
    while read -r line
    do
       local newName
-      printf -v newName "%(%Y-%m-%d)T" -1
+      printf -v newName "%(%Y%m%d)T" -1
 
       [ "${newName}" != "${currentNae}" ] && {
          currentName="${newName}"
@@ -98,6 +98,8 @@ verifyIntegerValue "${retrieveInterval}" "retrieve interval" 15
 logDebug "retrieve-interval ${retrieveInterval}"
 
 attemptExclusiveLock lock server || semanticError "already running"
+executeOnExit releaseLock "${lock}"
+
 umask 022
 exec 2> >(writeLog)
 

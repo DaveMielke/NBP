@@ -12,6 +12,8 @@ END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 
 extractAlerts() {
    acquireExclusiveLock lock extract
+   executeOnExit releaseLock "${lock}"
+
    local temporaryFile="${alertFileExtension}.extracted"
 
    while :

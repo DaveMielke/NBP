@@ -95,7 +95,9 @@ processConfigurationFile "${configurationDirectory}"
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
+
 attemptExclusiveLock lock retrieve || semanticError "already running"
+executeOnExit releaseLock "${lock}"
 
 readonly currentTime="$(utcTime)"
 logDebug "current-time ${currentTime}"
