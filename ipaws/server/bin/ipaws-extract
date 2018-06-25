@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments xml locks
+includeScriptLibraries command arguments CAP locks
 
 showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
@@ -36,24 +36,26 @@ extractAlerts() {
       do
          local alertsName="${alertsFile%.*}"
          logInfo "processing alert set: ${alertsName}"
+         local alertCount="$(capGetAlertCount "${alertsFile}")"
 
-         local alertCount="$(ipawsGetAlertCount "${alertsFile}")"
-         local alertNumber=0
+         [ -n "${alertCount}" ] && {
+            local alertNumber=0
 
-         while (( (alertNumber += 1) <= alertCount ))
-         do
-            ipawsGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
-            local alertIdentifier="$(xpathGet "${temporaryFile}" "/alert/identifier/text()")"
-            [ -z "${alertIdentifier}" ] && continue
+            while (( (alertNumber += 1) <= alertCount ))
+            do
+               capGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
+               local alertIdentifier="$(xpathGet "${temporaryFile}" "/alert/identifier/text()")"
+               [ -n "${alertIdentifier}" ] || continue
 
-            local alertFile="${alertIdentifier}.${alertFileExtension}"
-            [ -e "${alertFile}" ] && continue
-            acceptAlert "${temporaryFile}" || continue
+               local alertFile="${alertIdentifier}.${alertFileExtension}"
+               [ -e "${alertFile}" ] && continue
+               acceptAlert "${temporaryFile}" || continue
 
-            logInfo "new alert: ${alertIdentifier}"
-            mv -- "${temporaryFile}" "${alertFile}"
-            chmod -- a-w "${alertFile}"
-         done
+               logInfo "new alert: ${alertIdentifier}"
+               mv -- "${temporaryFile}" "${alertFile}"
+               chmod -- a-w "${alertFile}"
+            done
+         }
 
          logInfo "removing alert set: ${alertsName}"
          rm -f -- "${alertsFile}"
