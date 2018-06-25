@@ -103,7 +103,7 @@ do
 
       "${removeFiles}" && {
          logInfo "removing alert file: ${file}"
-         rm -f "${file}"
+         rm -f -- "${file}"
       }
    else
       let acceptCount+=1

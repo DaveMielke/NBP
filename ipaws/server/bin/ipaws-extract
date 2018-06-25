@@ -51,12 +51,12 @@ extractAlerts() {
             acceptAlert "${temporaryFile}" || continue
 
             logInfo "new alert: ${alertIdentifier}"
-            mv "${temporaryFile}" "${alertFile}"
-            chmod a-w "${alertFile}"
+            mv -- "${temporaryFile}" "${alertFile}"
+            chmod -- a-w "${alertFile}"
          done
 
          logInfo "removing alert set: ${alertsName}"
-         rm "${alertsFile}"
+         rm -f -- "${alertsFile}"
       done
    done
 }

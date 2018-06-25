@@ -1,4 +1,5 @@
 includeScriptLibraries time
+verifyCommands stat
 
 getFileProperty() {
    local path="${1}"
