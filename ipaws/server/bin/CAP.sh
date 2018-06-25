@@ -7,15 +7,15 @@ defineEnumeration capCertaintyEnumeration Observed Likely Possible Unlikely Unkn
 readonly capAlertElement="/ns1:alerts/alert"
 
 capGetAlertCount() {
-   local file="${1}"
+   local alerts="${1}"
 
-   xpathGet "${file}" "count(${capAlertElement})"
+   xmlEvaluate "${alerts}" "count(${capAlertElement})"
 } && readonly -f capGetAlertCount
 
 capGetAlertElement() {
-   local file="${1}"
+   local alerts="${1}"
    local index="${2}"
 
-   xpathGet "${file}" "${capAlertElement}[${index}]"
+   xmlEvaluate "${alerts}" "${capAlertElement}[${index}]"
 } && readonly -f capGetAlertElement
 

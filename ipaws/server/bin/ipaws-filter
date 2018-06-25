@@ -35,20 +35,20 @@ handlePositionalCommandArguments() {
 rejectAlert() {
    local file="${1}"
 
-   local sentTime="$(xpathGet "${file}" "/alert/sent/text()")"
+   local sentTime="$(xmlEvaluate "${file}" "/alert/sent/text()")"
    [ -n "${sentTime}" ] || {
       logInfo "no sent time: ${file}"
       return 0
    }
 
-   [ "$(xpathGet "${file}" "count(/alert/info)")" = "1" ] || {
+   xmlNodeExists "${file}" "/alert/info" || {
       logInfo "no info element: ${file}"
       return 0
    }
 
-   local expiryTime="$(xpathGet "${file}" "/alert/info/expires/text()")"
+   local expiryTime="$(xmlEvaluate "${file}" "/alert/info/expires/text()")"
    [ -n "${expiryTime}" ] || {
-      local effectiveTime="$(xpathGet "${file}" "/alert/info/effective/text()")"
+      local effectiveTime="$(xmlEvaluate "${file}" "/alert/info/effective/text()")"
       [ -n "${effectiveTime}" ] || effectiveTime="${sentTime}"
       expiryTime="$(utcTime "${effectiveTime} -1 day")"
    }
@@ -103,7 +103,7 @@ do
       continue
    }
 
-   [ "$(xpathGet "${file}" "count(/alert)")" -eq "1" ] || {
+   xmlNodeExists "${file}" "/alert" || {
       logWarning "not an alert: ${file}"
       continue
    }

@@ -44,7 +44,7 @@ extractAlerts() {
             while (( (alertNumber += 1) <= alertCount ))
             do
                capGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
-               local alertIdentifier="$(xpathGet "${temporaryFile}" "/alert/identifier/text()")"
+               local alertIdentifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
                [ -n "${alertIdentifier}" ] || continue
 
                local alertFile="${alertIdentifier}.${alertFileExtension}"
