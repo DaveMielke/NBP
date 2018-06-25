@@ -140,7 +140,7 @@ requestURL+="/recent/$(utcTime "${alertsTime} -${minutesBefore} minutes")"
 
 [ -z "${requestPIN}" ] && {
    pinFile="${configurationDirectory}/${serverType}.pin"
-   [ -f "${pinFile}" ] && [ -r "${pinFile}" ] && read <"${pinFile}" requestPIN || :
+   [ -f "${pinFile}" ] && [ -r "${pinFile}" ] && read <"${pinFile}" -r requestPIN || :
 }
 
 logDebug "request-url ${requestURL}"

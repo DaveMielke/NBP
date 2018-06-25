@@ -16,6 +16,23 @@ cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
+writeLog() {
+   local currentName=""
+
+   while read -r line
+   do
+      local newName
+      printf -v newName "%(%Y-%m-%d)T" -1
+
+      [ "${newName}" != "${currentNae}" ] && {
+         currentName="${newName}"
+         exec >>"${dataDirectory}/${currentName}.log"
+      }
+
+      echo -E "${line}"
+   done
+}
+
 makeCommand() {
    local script="${1}"
    shift 1
@@ -82,7 +99,7 @@ logDebug "retrieve-interval ${retrieveInterval}"
 
 attemptExclusiveLock lock server || semanticError "already running"
 umask 022
-exec 2>"${dataDirectory}/server.log"
+exec 2> >(writeLog)
 
 retrieveAlerts &
 awaitClients &
