@@ -47,7 +47,7 @@ runScript() {
 retrieveAlerts() {
    while :
    do
-      runScript ipaws-retrieve -T && runScript ipaws-extract &
+      (runScript ipaws-retrieve -T && runScript ipaws-extract &) &
       sleep "${retrieveInterval}"
    done
 }

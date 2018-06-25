@@ -4,7 +4,7 @@
 includeScriptLibraries command arguments strings time locks
 
 readonly defaultServerType="prod"
-readonly defaultMinutesBefore=30
+readonly defaultMinutesBefore=5
 
 showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
