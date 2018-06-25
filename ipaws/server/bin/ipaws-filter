@@ -35,18 +35,29 @@ handlePositionalCommandArguments() {
 rejectAlert() {
    local file="${1}"
 
-   local expiryTime="$(xpathGet "${file}" "/alert/info/expires/text()")"
-   if [ -n "${expiryTime}" ]
-   then
-      local expirySeconds="$(epochSeconds "${expiryTime}")"
+   local sentTime="$(xpathGet "${file}" "/alert/sent/text()")"
+   [ -n "${sentTime}" ] || {
+      logInfo "no sent time: ${file}"
+      return 0
+   }
 
-      [ "${expirySeconds}" -lt "${currentSeconds}" ] && {
-         logInfo "alert file has expired: ${file}: ${expiryTime}"
-         return 0
-      }
-   else
-      logWarning "no expiry time: ${file}"
-   fi
+   [ "$(xpathGet "${file}" "count(/alert/info)")" = "1" ] || {
+      logInfo "no info element: ${file}"
+      return 0
+   }
+
+   local expiryTime="$(xpathGet "${file}" "/alert/info/expires/text()")"
+   [ -n "${expiryTime}" ] || {
+      local effectiveTime="$(xpathGet "${file}" "/alert/info/effective/text()")"
+      [ -n "${effectiveTime}" ] || effectiveTime="${sentTime}"
+      expiryTime="$(utcTime "${effectiveTime} -1 day")"
+   }
+
+   local expirySeconds="$(epochSeconds "${expiryTime}")"
+   [ "${expirySeconds}" -lt "${currentSeconds}" ] && {
+      logInfo "expired: ${file}: ${expiryTime}"
+      return 0
+   }
 
    return 1
 }
