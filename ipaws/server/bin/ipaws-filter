@@ -17,16 +17,17 @@ rejectAlert() {
    local file="${1}"
 
    local expiryTime="$(xpathGet "${file}" "/alert/info/expires/text()")"
-   [ -n "${expiryTime}" ] || {
-      logWarning "no expiry time: ${file}"
-      return 1
-   }
+   if [ -n "${expiryTime}" ]
+   then
+      local expirySeconds="$(epochSeconds "${expiryTime}")"
 
-   local expirySeconds="$(epochSeconds "${expiryTime}")"
-   [ "${expirySeconds}" -lt "${currentSeconds}" ] && {
-      logInfo "alert file has expired: ${file}: ${expiryTime}"
-      return 0
-   }
+      [ "${expirySeconds}" -lt "${currentSeconds}" ] && {
+         logInfo "alert file has expired: ${file}: ${expiryTime}"
+         return 0
+      }
+   else
+      logWarning "no expiry time: ${file}"
+   fi
 
    return 1
 }
@@ -71,8 +72,9 @@ readonly currentSeconds="$(epochSeconds "${currentTime}")"
    alertFiles=(*".${alertFileExtension}")
 }
 
-readonly fileCount="${#alertFiles[*]}"
+acceptCount=0
 rejectCount=0
+skipCount="${#alertFiles[*]}"
 
 for file in "${alertFiles[@]}"
 do
@@ -96,15 +98,20 @@ do
       continue
    }
 
-   rejectAlert "${file}" && {
+   if rejectAlert "${file}"
+   then
       let rejectCount+=1
 
       "${removeFiles}" && {
          logInfo "removing alert file: ${file}"
-         rm "${file}"
+         rm -f "${file}"
       }
-   }
+   else
+      let acceptCount+=1
+   fi
+
+   let skipCount-=1 || :
 done
 
-logInfo "alert files rejected: ${rejectCount} of ${fileCount}"
+logInfo "summary: Accepted:${acceptCount} Rejected:${rejectCount} Skipped:${skipCount}"
 exit 0
