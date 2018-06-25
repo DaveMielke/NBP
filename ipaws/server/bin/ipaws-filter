@@ -7,12 +7,13 @@ showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 -c path        the configuration directory (default is ${defaultConfigurationDirectory})
 -d path        the data directory (default is ${defaultDataDirectory})
+-r             remove the files that are rejected by the filter
 
 If no alert files are specified then all of them are analyzed.
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
 }
 
-removeAlert() {
+rejectAlert() {
    local file="${1}"
 
    local expiryTime="$(xpathGet "${file}" "/alert/info/expires/text()")"
@@ -32,6 +33,7 @@ removeAlert() {
 
 configurationDirectory=""
 dataDirectory=""
+removeFiles=false
 
 handleCommandOption_c() {
    configurationDirectory="${OPTARG}"
@@ -41,11 +43,15 @@ handleCommandOption_d() {
    dataDirectory="${OPTARG}"
 }
 
+handleCommandOption_r() {
+   removeFiles=true
+}
+
 handlePositionalCommandArguments() {
    alertFiles=("${@}")
 }
 
-handleCommandArguments "c:d:" "[alert-file ...]" "${@}"
+handleCommandArguments "c:d:r" "[alert-file ...]" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
@@ -56,43 +62,49 @@ processConfigurationFile "${configurationDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
 
-readonly currentSeconds="$(epochSeconds)"
-logDebug "current-seconds ${currentSeconds}"
+readonly currentTime="$(utcTime)"
+logDebug "current-time ${currentTime}"
+readonly currentSeconds="$(epochSeconds "${currentTime}")"
 
 [ "${#alertFiles[*]}" -gt 0 ] || {
    cd "${dataDirectory}"
    alertFiles=(*".${alertFileExtension}")
 }
 
-for path in "${alertFiles[@]}"
+readonly fileCount="${#alertFiles[*]}"
+rejectCount=0
+
+for file in "${alertFiles[@]}"
 do
-   [ -e "${path}" ] || {
-      logWarning "file not found: ${path}"
+   [ -e "${file}" ] || {
+      logWarning "file not found: ${file}"
       continue
    }
 
-   [ -f "${path}" ] || {
-      logWarning "not a file: ${path}"
+   [ -f "${file}" ] || {
+      logWarning "not a file: ${file}"
       continue
    }
 
-   [ -r "${path}" ] || {
-      logWarning "file not readable: ${path}"
+   [ -r "${file}" ] || {
+      logWarning "file not readable: ${file}"
       continue
    }
 
-   file="${path##*/}"
-   name="${file%.*}"
-   extension="${file##*.}"
-
-   [ "${file}" = "${extension}" ] || [ "${extension}" != "${alertFileExtension}" ] || [ -z "${name}" ] && {
-      logWarning "not an alert file: ${path}"
+   [ "$(xpathGet "${file}" "count(/alert)")" -eq "1" ] || {
+      logWarning "not an alert: ${file}"
       continue
    }
 
-   removeAlert "${path}" && {
-      logInfo "removing alert file: ${path}"
+   rejectAlert "${file}" && {
+      let rejectCount+=1
+
+      "${removeFiles}" && {
+         logInfo "removing alert file: ${file}"
+         rm "${file}"
+      }
    }
 done
 
+logInfo "alert files rejected: ${rejectCount} of ${fileCount}"
 exit 0
