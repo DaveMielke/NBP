@@ -1,0 +1,98 @@
+#!/bin/bash
+
+. "${0%/*}/prologue.sh"
+includeScriptLibraries command arguments xml time
+
+showCommandSpecificOptionsUsageSummary() {
+cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+-c path        the configuration directory (default is ${defaultConfigurationDirectory})
+-d path        the data directory (default is ${defaultDataDirectory})
+
+If no alert files are specified then all of them are analyzed.
+END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+}
+
+removeAlert() {
+   local file="${1}"
+
+   local expiryTime="$(xpathGet "${file}" "/alert/info/expires/text()")"
+   [ -n "${expiryTime}" ] || {
+      logWarning "no expiry time: ${file}"
+      return 1
+   }
+
+   local expirySeconds="$(epochSeconds "${expiryTime}")"
+   [ "${expirySeconds}" -lt "${currentSeconds}" ] && {
+      logInfo "alert file has expired: ${file}: ${expiryTime}"
+      return 0
+   }
+
+   return 1
+}
+
+configurationDirectory=""
+dataDirectory=""
+
+handleCommandOption_c() {
+   configurationDirectory="${OPTARG}"
+}
+
+handleCommandOption_d() {
+   dataDirectory="${OPTARG}"
+}
+
+handlePositionalCommandArguments() {
+   alertFiles=("${@}")
+}
+
+handleCommandArguments "c:d:" "[alert-file ...]" "${@}"
+
+[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
+verifyReadableDirectory "${configurationDirectory}"
+logDebug "configuration-directory ${configurationDirectory}"
+processConfigurationFile "${configurationDirectory}"
+
+[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
+verifyWritableDirectory "${dataDirectory}"
+logDebug "data-directory ${dataDirectory}"
+
+readonly currentSeconds="$(epochSeconds)"
+logDebug "current-seconds ${currentSeconds}"
+
+[ "${#alertFiles[*]}" -gt 0 ] || {
+   cd "${dataDirectory}"
+   alertFiles=(*".${alertFileExtension}")
+}
+
+for path in "${alertFiles[@]}"
+do
+   [ -e "${path}" ] || {
+      logWarning "file not found: ${path}"
+      continue
+   }
+
+   [ -f "${path}" ] || {
+      logWarning "not a file: ${path}"
+      continue
+   }
+
+   [ -r "${path}" ] || {
+      logWarning "file not readable: ${path}"
+      continue
+   }
+
+   file="${path##*/}"
+   name="${file%.*}"
+   extension="${file##*.}"
+
+   [ "${file}" = "${extension}" ] || [ "${extension}" != "${alertFileExtension}" ] || [ -z "${name}" ] && {
+      logWarning "not an alert file: ${path}"
+      continue
+   }
+
+   removeAlert "${path}" && {
+      logInfo "removing alert file: ${path}"
+   }
+done
+
+exit 0
