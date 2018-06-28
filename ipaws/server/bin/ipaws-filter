@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments xml time
+includeScriptLibraries command arguments filter
 
 showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
@@ -32,36 +32,6 @@ handlePositionalCommandArguments() {
    alertFiles=("${@}")
 }
 
-rejectAlert() {
-   local file="${1}"
-
-   local sentTime="$(xmlEvaluate "${file}" "/alert/sent/text()")"
-   [ -n "${sentTime}" ] || {
-      logInfo "no sent time: ${file}"
-      return 0
-   }
-
-   xmlNodeExists "${file}" "/alert/info" || {
-      logInfo "no info element: ${file}"
-      return 0
-   }
-
-   local expiryTime="$(xmlEvaluate "${file}" "/alert/info/expires/text()")"
-   [ -n "${expiryTime}" ] || {
-      local effectiveTime="$(xmlEvaluate "${file}" "/alert/info/effective/text()")"
-      [ -n "${effectiveTime}" ] || effectiveTime="${sentTime}"
-      expiryTime="$(utcTime "${effectiveTime} -1 day")"
-   }
-
-   local expirySeconds="$(epochSeconds "${expiryTime}")"
-   [ "${expirySeconds}" -lt "${currentSeconds}" ] && {
-      logInfo "expired: ${file}: ${expiryTime}"
-      return 0
-   }
-
-   return 1
-}
-
 handleCommandArguments "c:d:R" "[alert-file ...]" "${@}"
 
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
@@ -72,10 +42,6 @@ processConfigurationFile "${configurationDirectory}"
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
-
-readonly currentTime="$(utcTime)"
-logDebug "current-time ${currentTime}"
-readonly currentSeconds="$(epochSeconds "${currentTime}")"
 
 [ "${#alertFiles[*]}" -gt 0 ] || {
    cd "${dataDirectory}"
@@ -103,21 +69,16 @@ do
       continue
    }
 
-   xmlNodeExists "${file}" "/alert" || {
-      logWarning "not an alert: ${file}"
-      continue
-   }
-
-   if rejectAlert "${file}"
+   if acceptAlert "${file}"
    then
+      let acceptCount+=1
+   else
       let rejectCount+=1
 
       "${removeFiles}" && {
          logInfo "removing alert file: ${file}"
          rm -f -- "${file}"
       }
-   else
-      let acceptCount+=1
    fi
 
    let skipCount-=1 || :

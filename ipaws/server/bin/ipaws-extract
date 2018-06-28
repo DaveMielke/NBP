@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments CAP locks
+includeScriptLibraries command arguments locks CAP xml filter
 
 showCommandSpecificOptionsUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
@@ -44,14 +44,13 @@ extractAlerts() {
             while (( (alertNumber += 1) <= alertCount ))
             do
                capGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
-               local alertIdentifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
-               [ -n "${alertIdentifier}" ] || continue
 
-               local alertFile="${alertIdentifier}.${alertFileExtension}"
+               local identifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
+               local alertFile="${identifier}.${alertFileExtension}"
                [ -e "${alertFile}" ] && continue
                acceptAlert "${temporaryFile}" || continue
 
-               logInfo "new alert: ${alertIdentifier}"
+               logInfo "new alert: ${identifier}"
                mv -- "${temporaryFile}" "${alertFile}"
                chmod -- a-w "${alertFile}"
             done
@@ -61,12 +60,6 @@ extractAlerts() {
          rm -f -- "${alertsFile}"
       done
    done
-}
-
-acceptAlert() {
-   local file="${1}"
-
-   return 0
 }
 
 handleCommandArguments "c:d:" "" "${@}"
