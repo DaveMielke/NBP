@@ -45,14 +45,19 @@ extractAlerts() {
             do
                capGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
 
-               local identifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
-               local alertFile="${identifier}.${alertFileExtension}"
+               local alertIdentifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
+               local alertFile="${alertIdentifier}.${alertFileExtension}"
                [ -e "${alertFile}" ] && continue
-               acceptAlert "${temporaryFile}" || continue
+               logInfo "new alert: ${alertIdentifier}"
 
-               logInfo "new alert: ${identifier}"
-               mv -- "${temporaryFile}" "${alertFile}"
-               chmod -- a-w "${alertFile}"
+               if acceptAlert "${temporaryFile}"
+               then
+                  logInfo "alert accepted: ${alertIdentifier}"
+                  mv -- "${temporaryFile}" "${alertFile}"
+                  chmod -- a-w "${alertFile}"
+               else
+                  logInfo "alert rejected: ${alertIdentifier}"
+               fi
             done
          }
 

@@ -12,38 +12,18 @@ acceptAlert() {
       return 1
    }
 
-   local alertIdentifier="$(xmlEvaluate "${file}" "/alert/identifier/text()")"
    [ -n "${alertIdentifier}" ] || {
-      logWarning "missing identifier: ${file}"
-      return 1
+      local alertIdentifier="$(xmlEvaluate "${file}" "/alert/identifier/text()")"
+
+      [ -n "${alertIdentifier}" ] || {
+         logWarning "missing identifier: ${file}"
+         return 1
+      }
    }
 
    handleAlertMessageType "${file}" || return 1
    hasAlertExpired "${file}" && return 1
-
-   local configurationFile="${configurationDirectory}/ipaws.filter"
-   [ -f "${configurationFile}" ] || return 0
-
-   local line configurationLine=0
-
-   while read -r line
-   do
-      let configurationLine+=1
-
-      set -- ${line%%#*}
-      [ "${#}" -eq 0 ] && continue
-      local field="${1}"
-      shift 1
-
-      case "${field}"
-      in
-         status) acceptDiscreteField "${file}" "/alert/status" "${@}" || return 1;;
-         urgency) acceptEnumeratedField "${file}" "/alert/info/urgency" capUrgencyEnumeration "${@}" || return 1;;
-         severity) acceptEnumeratedField "${file}" "/alert/info/severity" capSeverityEnumeration "${@}" || return 1;;
-         certainty) acceptEnumeratedField "${file}" "/alert/info/certainty" capCertaintyEnumeration "${@}" || return 1;;
-         *) logFilterConfigurationProblem "unrecognized filter field" "${field}";;
-      esac
-   done <"${configurationFile}"
+   processConfigurationFile "${file}" || return 1
 
    return 0
 } && readonly -f acceptAlert
@@ -53,7 +33,7 @@ handleAlertMessageType() {
 
    local type="$(xmlEvaluate "${file}" "/alert/msgType/text()")"
    [ -n "${type}" ] || {
-      logWarning "missing message type: ${file}"
+      logWarning "missing message type: ${alertIdentifier}"
       return 1
    }
 
@@ -69,13 +49,13 @@ handleAlertMessageType() {
          noun="cancellation"
          action="cancelled"
       else
-         logWarning "unrecognized message type: ${type}: ${file}"
+         logWarning "unrecognized message type: ${type}: ${alertIdentifier}"
          return 1
       fi
 
       local references="$(xmlEvaluate "${file}" "/alert/references/text()")"
       [ -n "${references}" ] || {
-         logWarning "${noun} with no references: ${file}"
+         logWarning "${noun} with no references: ${alertIdentifier}"
          return 1
       }
 
@@ -85,7 +65,7 @@ handleAlertMessageType() {
       local sent="${3}"
 
       [ -n "${identifier}" ] || {
-         logWarning "${noun} with no referenced identifier: ${file}"
+         logWarning "${noun} with no referenced identifier: ${alertIdentifier}"
          return 1
       }
 
@@ -101,7 +81,7 @@ hasAlertExpired() {
 
    local sentTime="$(xmlEvaluate "${file}" "/alert/sent/text()")"
    [ -n "${sentTime}" ] || {
-      logInfo "no sent time: ${file}"
+      logInfo "no sent time: ${alertIdentifier}"
       return 0
    }
 
@@ -121,6 +101,36 @@ hasAlertExpired() {
    return 1
 } && readonly -f hasAlertExpired
 
+processFilterConfigurationFile() {
+   local file="${1}"
+
+   local configurationFile="${configurationDirectory}/ipaws.filter"
+   [ -f "${configurationFile}" ] && [ -r "${configurationFile}" ] && {
+      local line configurationLine=0
+
+      while read -r line
+      do
+         let configurationLine+=1
+
+         set -- ${line%%#*}
+         [ "${#}" -eq 0 ] && continue
+         local field="${1}"
+         shift 1
+
+         case "${field}"
+         in
+            status) acceptDiscreteField "${file}" "/alert/status" "${@}" || return 1;;
+            urgency) acceptEnumeratedField "${file}" "/alert/info/urgency" capUrgencyEnumeration "${@}" || return 1;;
+            severity) acceptEnumeratedField "${file}" "/alert/info/severity" capSeverityEnumeration "${@}" || return 1;;
+            certainty) acceptEnumeratedField "${file}" "/alert/info/certainty" capCertaintyEnumeration "${@}" || return 1;;
+            *) logFilterConfigurationProblem "unrecognized filter field" "${field}";;
+         esac
+      done <"${configurationFile}"
+   }
+
+   return 0
+} && readonly -f processFilterConfigurationFile
+
 acceptDiscreteField() {
    local file="${1}"
    local element="${2}"
@@ -128,7 +138,7 @@ acceptDiscreteField() {
 
    local text="$(xmlEvaluate "${file}" "${element}/text()")"
    [ -n "${text}" ] || {
-      logWarning "element not defined: ${element}: ${file}"
+      logWarning "element not defined: ${element}: ${alertIdentifier}"
       return 1
    }
 
@@ -138,7 +148,7 @@ acceptDiscreteField() {
       [ "${text}" = "${value}" ] && return 0
    done
 
-   logWarning "value not accepted: ${element}=${text}: ${file}"
+   logWarning "value not accepted: ${element}=${text}: ${alertIdentifier}"
    return 1
 } && readonly -f acceptDiscreteField
 
@@ -150,7 +160,7 @@ acceptEnumeratedField() {
 
    local text="$(xmlEvaluate "${file}" "${element}/text()")"
    [ -n "${text}" ] || {
-      logWarning "element not defined: ${element}: ${file}"
+      logWarning "element not defined: ${element}: ${alertIdentifier}"
       return 1
    }
 
@@ -167,12 +177,12 @@ acceptEnumeratedField() {
 
    local actual="${enumeration[${text}]}"
    [ -n "${actual}" ] || {
-      logWarning "unrecognized value: ${element}=${text}: ${file}"
+      logWarning "unrecognized value: ${element}=${text}: ${alertIdentifier}"
       return 1
    }
 
    [ "${actual}" -le "${maximum}" ] || {
-      logWarning "value not accepted: ${element}=${text}: ${file}"
+      logWarning "value not accepted: ${element}=${text}: ${alertIdentifier}"
       return 1
    }
 
