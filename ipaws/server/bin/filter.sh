@@ -24,11 +24,11 @@ acceptAlert() {
    local configurationFile="${configurationDirectory}/ipaws.filter"
    [ -f "${configurationFile}" ] || return 0
 
-   local line lineNumber
+   local line configurationLine=0
 
    while read -r line
    do
-      let lineNumber+=1
+      let configurationLine+=1
 
       set -- ${line%%#*}
       [ "${#}" -eq 0 ] && continue
@@ -37,10 +37,10 @@ acceptAlert() {
 
       case "${field}"
       in
-         status) checkDiscreteField "${file}" "/alert/status" "${@}" || return 1;;
-         urgency) checkEnumeratedField "${file}" "/alert/info/urgency" capUrgencyEnumeration "${@}" || return 1;;
-         severity) checkEnumeratedField "${file}" "/alert/info/severity" capSeverityEnumeration "${@}" || return 1;;
-         certainty) checkEnumeratedField "${file}" "/alert/info/certainty" capCertaintyEnumeration "${@}" || return 1;;
+         status) acceptDiscreteField "${file}" "/alert/status" "${@}" || return 1;;
+         urgency) acceptEnumeratedField "${file}" "/alert/info/urgency" capUrgencyEnumeration "${@}" || return 1;;
+         severity) acceptEnumeratedField "${file}" "/alert/info/severity" capSeverityEnumeration "${@}" || return 1;;
+         certainty) acceptEnumeratedField "${file}" "/alert/info/certainty" capCertaintyEnumeration "${@}" || return 1;;
          *) logFilterConfigurationProblem "unrecognized filter field" "${field}";;
       esac
    done <"${configurationFile}"
@@ -121,7 +121,7 @@ hasAlertExpired() {
    return 1
 } && readonly -f hasAlertExpired
 
-checkDiscreteField() {
+acceptDiscreteField() {
    local file="${1}"
    local element="${2}"
    shift 2
@@ -138,11 +138,11 @@ checkDiscreteField() {
       [ "${text}" = "${value}" ] && return 0
    done
 
-   logWarning "value not allowed: ${element}=${text}: ${file}"
+   logWarning "value not accepted: ${element}=${text}: ${file}"
    return 1
-} && readonly -f checkDiscreteField
+} && readonly -f acceptDiscreteField
 
-checkEnumeratedField() {
+acceptEnumeratedField() {
    local file="${1}"
    local element="${2}"
    local -n enumeration="${3}"
@@ -172,17 +172,17 @@ checkEnumeratedField() {
    }
 
    [ "${actual}" -le "${maximum}" ] || {
-      logWarning "value not allowed: ${element}=${text}: ${file}"
+      logWarning "value not accepted: ${element}=${text}: ${file}"
       return 1
    }
 
    return 0
-} && readonly -f checkEnumeratedField
+} && readonly -f acceptEnumeratedField
 
 logFilterConfigurationProblem() {
    local problem="${1}"
    local data="${2}"
 
-   logWarning "${problem}: ${data}: ${configurationFile}[${lineNumber}]"
+   logWarning "${problem}: ${data}: ${configurationFile}[${configurationLine}]"
 } && readonly -f logFilterConfigurationProblem
 
