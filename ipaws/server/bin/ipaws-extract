@@ -50,7 +50,7 @@ extractAlerts() {
                [ -e "${alertFile}" ] && continue
                logInfo "new alert: ${alertIdentifier}"
 
-               if acceptAlert "${temporaryFile}"
+               if acceptAlert "${temporaryFile}" true
                then
                   logInfo "alert accepted: ${alertIdentifier}"
                   mv -- "${temporaryFile}" "${alertFile}"

@@ -6,11 +6,7 @@ readonly filterSeconds="$(epochSeconds "${filterTime}")"
 
 acceptAlert() {
    local file="${1}"
-
-   xmlNodeExists "${file}" "/alert" || {
-      logWarning "not an alert: ${file}"
-      return 1
-   }
+   local remove="${2:-false}"
 
    [ -n "${alertIdentifier}" ] || {
       local alertIdentifier="$(xmlEvaluate "${file}" "/alert/identifier/text()")"
@@ -21,15 +17,15 @@ acceptAlert() {
       }
    }
 
-   handleAlertMessageType "${file}" || return 1
-   hasAlertExpired "${file}" && return 1
-   processConfigurationFile "${file}" || return 1
-
-   return 0
+   handleAlertMessageType "${file}" "${remove}" &&
+   handleAlertExpiry "${file}" &&
+   processConfigurationFile "${file}" &&
+   return 0 || return 1
 } && readonly -f acceptAlert
 
 handleAlertMessageType() {
    local file="${1}"
+   local remove="${2:-false}"
 
    local type="$(xmlEvaluate "${file}" "/alert/msgType/text()")"
    [ -n "${type}" ] || {
@@ -69,20 +65,28 @@ handleAlertMessageType() {
          return 1
       }
 
-      logInfo "removing obsolete alert: ${identifier}: ${action} by ${alertIdentifier}"
-      rm -f -- "${dataDirectory}/${identifier}.${alertFileExtension}"
+      logInfo "alert is obsolete: ${identifier}: ${action} by ${identifier}"
+
+      "${remove}" && {
+         local path="${dataDirectory}/${identifier}.${alertFileExtension}"
+
+         [ -f "${path}" ] && {
+            logInfo "removing alert: ${identifier}"
+            rm -f -- "${path}"
+         }
+      }
    }
 
    return 0
 } && readonly -f handleAlertMessageType
 
-hasAlertExpired() {
+handleAlertExpiry() {
    local file="${1}"
 
    local sentTime="$(xmlEvaluate "${file}" "/alert/sent/text()")"
    [ -n "${sentTime}" ] || {
       logInfo "no sent time: ${alertIdentifier}"
-      return 0
+      return 1
    }
 
    local expiryTime="$(xmlEvaluate "${file}" "/alert/info/expires/text()")"
@@ -95,11 +99,11 @@ hasAlertExpired() {
    local expirySeconds="$(epochSeconds "${expiryTime}")"
    [ "${expirySeconds}" -lt "${filterSeconds}" ] && {
       logInfo "alert has expired: ${alertIdentifier}: ${expiryTime}"
-      return 0
+      return 1
    }
 
-   return 1
-} && readonly -f hasAlertExpired
+   return 0
+} && readonly -f handleAlertExpiry
 
 processFilterConfigurationFile() {
    local file="${1}"

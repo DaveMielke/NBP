@@ -69,7 +69,7 @@ do
       continue
    }
 
-   if acceptAlert "${file}"
+   if acceptAlert "${file}" "${removeFiles}"
    then
       let acceptCount+=1
    else
