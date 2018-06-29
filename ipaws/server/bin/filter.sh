@@ -65,7 +65,7 @@ handleAlertMessageType() {
          return 1
       }
 
-      logInfo "alert is obsolete: ${identifier}: ${action} by ${identifier}"
+      logInfo "alert is obsolete: ${identifier}: ${action} by ${alertIdentifier}"
 
       "${remove}" && {
          local path="${dataDirectory}/${identifier}.${alertFileExtension}"
