@@ -118,6 +118,16 @@ retrieveAlerts() {
    done
 }
 
+reviewAlerts() {
+   local -r interval=$((60 * 60))
+   local -r deviation=$((60 * 3))
+
+   while sleep $((interval + ((RANDOM % (deviation * 2)) - deviation)))
+   do
+      runScript ipaws-review -R &
+   done
+}
+
 awaitClients() {
    makeCommand ipaws-session
    ncat -l "${portNumber}" --max-conns "${maximumClients}" --keep-open --sh-exec "${command[*]}"
@@ -154,6 +164,7 @@ umask 022
 exec 2> >(writeLog)
 
 retrieveAlerts &
+reviewAlerts &
 awaitClients &
 wait
 

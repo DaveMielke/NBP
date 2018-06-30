@@ -65,7 +65,7 @@ handleAlertMessageType() {
          return 1
       }
 
-      logInfo "alert is obsolete: ${identifier}: ${action} by ${alertIdentifier}"
+      logInfo "alert withdrawn: ${identifier}: ${action} by ${alertIdentifier}"
 
       "${remove}" && {
          local path="${dataDirectory}/${identifier}.${alertFileExtension}"
@@ -98,7 +98,7 @@ handleAlertExpiry() {
 
    local expirySeconds="$(epochSeconds "${expiryTime}")"
    [ "${expirySeconds}" -lt "${filterSeconds}" ] && {
-      logInfo "alert has expired: ${alertIdentifier}: ${expiryTime}"
+      logInfo "alert expired: ${alertIdentifier}: ${expiryTime}"
       return 1
    }
 
