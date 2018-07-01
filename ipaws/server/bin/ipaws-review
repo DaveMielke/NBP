@@ -37,7 +37,7 @@ handleCommandArguments "c:d:R" "[alert-file ...]" "${@}"
 [ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
 logDebug "configuration-directory ${configurationDirectory}"
-processConfigurationFile "${configurationDirectory}"
+processCommandConfigurationFile "${configurationDirectory}"
 
 [ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"

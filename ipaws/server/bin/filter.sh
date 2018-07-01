@@ -1,4 +1,4 @@
-includeScriptLibraries xml time
+includeScriptLibraries xml time CAP
 
 readonly filterTime="$(utcTime)"
 logDebug "filter-time ${filterTime}"
@@ -19,7 +19,7 @@ acceptAlert() {
 
    handleAlertMessageType "${file}" "${remove}" &&
    handleAlertExpiry "${file}" &&
-   processConfigurationFile "${file}" &&
+   processFilterConfigurationFile "${file}" &&
    return 0 || return 1
 } && readonly -f acceptAlert
 

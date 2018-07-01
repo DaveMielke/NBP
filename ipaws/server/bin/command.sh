@@ -29,7 +29,7 @@ responseError() {
    exit 4
 } && readonly -f responseError
 
-processConfigurationFile() {
+processCommandConfigurationFile() {
    local directory="${1}"
 
    declare -g -A configuredProperties
@@ -62,5 +62,5 @@ processConfigurationFile() {
          logWarning "${problem}: ${*}: ${file}[${number}]"
       fi
    done <"${file}"
-} && readonly -f processConfigurationFile
+} && readonly -f processCommandConfigurationFile
 
