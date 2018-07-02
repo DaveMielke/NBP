@@ -31,13 +31,6 @@ internalError() {
    exit 4
 } && readonly -f internalError
 
-responseError() {
-   local message="${1}"
-
-   logError "${message}"
-   exit 5
-} && readonly -f responseError
-
 processCommandConfigurationFile() {
    local directory="${1}"
 

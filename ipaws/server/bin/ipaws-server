@@ -2,7 +2,7 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommands ncat
-includeScriptLibraries command arguments options-common options-retrieve locks
+includeScriptLibraries command arguments options-common options-retrieve
 
 readonly defaultMaximumClients=100
 readonly defaultPortNumber=14216

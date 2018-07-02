@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments options-common locks CAP xml filter
+includeScriptLibraries command arguments options-common CAP xml filter
 
 extractAlerts() {
    waitIfAlreadyRunning

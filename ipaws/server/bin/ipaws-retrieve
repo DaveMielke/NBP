@@ -1,10 +1,17 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments options-common options-retrieve time locks
+includeScriptLibraries command arguments options-common options-retrieve time
 
 showCommandUsageSummary() {
    showRetrieveUsageSummary
+}
+
+responseError() {
+   local message="${1}"
+
+   logError "${message}"
+   exit 10
 }
 
 handleCommandArguments "" "${@}"
