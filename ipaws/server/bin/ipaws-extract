@@ -4,9 +4,7 @@
 includeScriptLibraries command arguments options-common locks CAP xml filter
 
 extractAlerts() {
-   acquireExclusiveLock lock extract
-   executeOnExit releaseLock "${lock}"
-
+   waitIfAlreadyRunning
    local temporaryFile="${alertFileExtension}.extracted"
 
    while :

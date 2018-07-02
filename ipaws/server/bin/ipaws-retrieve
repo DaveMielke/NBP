@@ -9,9 +9,7 @@ showCommandUsageSummary() {
 
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
-
-attemptExclusiveLock lock retrieve || semanticError "already running"
-executeOnExit releaseLock "${lock}"
+failIfAlreadyRunning
 
 readonly currentTime="$(utcTime)"
 logDebug "current-time ${currentTime}"

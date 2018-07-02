@@ -1,3 +1,5 @@
+includeScriptLibraries locks
+
 readonly serverDirectory="${programDirectory%/*}"
 
 readonly defaultConfigurationDirectory="${serverDirectory}/etc"
@@ -70,4 +72,16 @@ processCommandConfigurationFile() {
       fi
    done <"${file}"
 } && readonly -f processCommandConfigurationFile
+
+failIfAlreadyRunning() {
+   local lock
+   attemptExclusiveLock lock "${programName}" || semanticError "already running"
+   executeOnExit releaseLock "${lock}"
+} && readonly -f failIfAlreadyRunning
+
+waitIfAlreadyRunning() {
+   local lock
+   acquireExclusiveLock lock "${programName}"
+   executeOnExit releaseLock "${lock}"
+} && readonly -f waitIfAlreadyRunning
 

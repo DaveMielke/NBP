@@ -18,9 +18,7 @@ handlePositionalCommandArguments() {
 
 handleCommandArguments "[alert-file ...]" "${@}"
 prepareCommonCommandOptions
-
-attemptExclusiveLock lock review || semanticError "already running"
-executeOnExit releaseLock "${lock}"
+failIfAlreadyRunning
 
 [ "${#alertFiles[*]}" -gt 0 ] || {
    cd "${dataDirectory}"
