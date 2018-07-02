@@ -2,14 +2,12 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommands ncat
-includeScriptLibraries command arguments retrieve locks
+includeScriptLibraries command arguments options-common options-retrieve locks
 
 readonly defaultMaximumClients=100
 readonly defaultPortNumber=14216
 readonly defaultRetrieveInterval=90
 
-addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
-addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
 addCommandOption M maximumClients count "the maximum number of concurrent clients" "${defaultMaximumClients}"
 addCommandOption P portNumber port "the port number to listen on" "${defaultPortNumber}"
 addCommandOption R retrieveInterval seconds "the alerts retrieval interval" "${defaultRetrieveInterval}"
@@ -78,13 +76,7 @@ awaitClients() {
 
 setLogLevel info
 handleCommandArguments "" "${@}"
-
-verifyReadableDirectory "${configurationDirectory}"
-logDebug "configuration-directory ${configurationDirectory}"
-processCommandConfigurationFile "${configurationDirectory}"
-
-verifyWritableDirectory "${dataDirectory}"
-logDebug "data-directory ${dataDirectory}"
+prepareCommonCommandOptions
 
 [ -n "${maximumClients}" ] || maximumClients="${defaultMaximumClients}"
 verifyIntegerValue "${maximumClients}" "maximum clients" 1

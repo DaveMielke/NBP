@@ -1,10 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments locks CAP xml filter
-
-addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
-addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
+includeScriptLibraries command arguments options-common locks CAP xml filter
 
 extractAlerts() {
    acquireExclusiveLock lock extract
@@ -54,15 +51,9 @@ extractAlerts() {
 }
 
 handleCommandArguments "" "${@}"
+prepareCommonCommandOptions
 
-verifyReadableDirectory "${configurationDirectory}"
-logDebug "configuration-directory ${configurationDirectory}"
-processCommandConfigurationFile "${configurationDirectory}"
-
-verifyWritableDirectory "${dataDirectory}"
-logDebug "data-directory ${dataDirectory}"
 cd "${dataDirectory}"
-
 extractAlerts
 logDebug "done"
 exit 0

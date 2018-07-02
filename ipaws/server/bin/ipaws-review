@@ -1,10 +1,8 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments locks filter
+includeScriptLibraries command arguments options-common locks filter
 
-addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
-addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
 addCommandOption R removeFiles flag "remove the files that are rejected by the filter"
 
 showCommandUsageSummary() {
@@ -19,13 +17,7 @@ handlePositionalCommandArguments() {
 }
 
 handleCommandArguments "[alert-file ...]" "${@}"
-
-verifyReadableDirectory "${configurationDirectory}"
-logDebug "configuration-directory ${configurationDirectory}"
-processCommandConfigurationFile "${configurationDirectory}"
-
-verifyWritableDirectory "${dataDirectory}"
-logDebug "data-directory ${dataDirectory}"
+prepareCommonCommandOptions
 
 attemptExclusiveLock lock review || semanticError "already running"
 executeOnExit releaseLock "${lock}"

@@ -45,6 +45,8 @@ addCommandOption() {
 
    [ -n "${option}" ] || internalError "option character not specified"
    [ "${#option}" -eq 1 ] && [ "${option}" != "${option#*[a-zA-Z0-9]}" ] || internalError "invalid option character: ${option}"
+   [ -n "${commandOptionTypes[${option}]}" ] && internalError "option already defined: -${option}"
+
    [ -n "${variable}" ] || internalError "option variable not specified: -${option}"
    [ -n "${type}" ] || internalError "option type not specified: -${option}"
    [ -n "${summary}" ] || internalError "option summary not specified: -${option}"

@@ -1,23 +1,14 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments retrieve time locks
-
-addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
-addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
+includeScriptLibraries command arguments options-common options-retrieve time locks
 
 showCommandUsageSummary() {
    showRetrieveUsageSummary
 }
 
 handleCommandArguments "" "${@}"
-
-verifyReadableDirectory "${configurationDirectory}"
-logDebug "configuration-directory ${configurationDirectory}"
-processCommandConfigurationFile "${configurationDirectory}"
-
-verifyWritableDirectory "${dataDirectory}"
-logDebug "data-directory ${dataDirectory}"
+prepareCommonCommandOptions
 
 attemptExclusiveLock lock retrieve || semanticError "already running"
 executeOnExit releaseLock "${lock}"

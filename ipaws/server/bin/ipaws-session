@@ -1,19 +1,10 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments
-
-addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
-addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
+includeScriptLibraries command arguments options-common
 
 handleCommandArguments "" "${@}"
-
-verifyReadableDirectory "${configurationDirectory}"
-logDebug "configuration-directory ${configurationDirectory}"
-processCommandConfigurationFile "${configurationDirectory}"
-
-verifyWritableDirectory "${dataDirectory}"
-logDebug "data-directory ${dataDirectory}"
+prepareCommonCommandOptions
 
 logInfo "client connected: [${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
 
