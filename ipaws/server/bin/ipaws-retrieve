@@ -1,81 +1,21 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-includeScriptLibraries command arguments time locks
+includeScriptLibraries command arguments retrieve time locks
 
-readonly defaultServerType="prod"
-readonly defaultMinutesBefore=5
+addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
+addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
 
-showCommandSpecificOptionsUsageSummary() {
-cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
-The options that are specific to this command are:
--c path        the configuration directory (default is ${defaultConfigurationDirectory})
--d path        the data directory (default is ${defaultDataDirectory})
--e             get EAS [Emergency Alert System] alerts
--g             get general (non-EAS) alerts
--m minutes     how far before the reference time to look (default is ${defaultMinutesBefore})
--p characters  the server access PIN
--s type        which server to use (default is ${defaultServerType})
-
-Alert type options can be combined. If none are specified then all are assumed.
-If more than one server type option is specified then the last one is used.
-
-Successfully retrieved alerts files are in the data directory. They're
-named <time>.${alertsFileExtension}, where <time> is the ISO-8601 UTC timestamp
-(yyyy-mm-ddThh:mm:ssZ) for when the file was retrieved.
-
-The reference time used for alerts retrieval is the name of the most recently
-retrieved alerts file (*.${alertsFileExtension}). If there aren't any then the current time is
-used. The file extension .${failureFileExtension} indicates a failure during alerts retrieval.
-
-If the PIN isn't specified then it's read from *.pin in the configuration
-directory, where * is the server type (see *-server in the configuration file).
-END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+showCommandUsageSummary() {
+   showRetrieveUsageSummary
 }
 
-configurationDirectory=""
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
+handleCommandArguments "" "${@}"
 
-dataDirectory=""
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-getEmergencyAlerts=false
-handleCommandOption_e() {
-   getEmergencyAlerts=true
-}
-
-getGeneralAlerts=false
-handleCommandOption_g() {
-   getGeneralAlerts=true
-}
-
-minutesBefore=""
-handleCommandOption_m() {
-   minutesBefore="${OPTARG}"
-}
-
-requestPIN=""
-handleCommandOption_p() {
-   requestPIN="${OPTARG}"
-}
-
-serverType=""
-handleCommandOption_s() {
-   serverType="${OPTARG}"
-}
-
-handleCommandArguments "c:d:egm:p:s:" "" "${@}"
-
-[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
 logDebug "configuration-directory ${configurationDirectory}"
 processCommandConfigurationFile "${configurationDirectory}"
 
-[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
 

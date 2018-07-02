@@ -1,3 +1,5 @@
+includeScriptLibraries command
+
 verifyIntegerValue() {
    local value="${1}"
    local description="${2}"
@@ -26,64 +28,188 @@ verifyWritableDirectory() {
    [ -w "${path}" ] || semanticError "directory not writable: ${path}"
 } && readonly -f verifyWritableDirectory
 
-handleCommandArguments() {
-   local options="${1}"
-   local positional="${2}"
-   shift 2
+commandOptionCharacters=""
+declare -g -A commandOptionDefaults=()
+declare -g -A commandOptionOperands=()
+declare -g -A commandOptionSummaries=()
+declare -g -A commandOptionTypes=()
+declare -g -A commandOptionVariables=()
 
-   local usageSummaryRequested=false
-   local logLevelAdjustment=0
+addCommandOption() {
+   local option="${1}"
+   local variable="${2}"
+   local type="${3}"
+   local summary="${4}"
+   local default="${5}"
+   local operand=""
+
+   [ -n "${option}" ] || internalError "option character not specified"
+   [ "${#option}" -eq 1 ] && [ "${option}" != "${option#*[a-zA-Z0-9]}" ] || internalError "invalid option character: ${option}"
+   [ -n "${variable}" ] || internalError "option variable not specified: -${option}"
+   [ -n "${type}" ] || internalError "option type not specified: -${option}"
+   [ -n "${summary}" ] || internalError "option summary not specified: -${option}"
+
+   if [[ "${type}" =~ ^flag|increment|decrement$ ]]
+   then
+      [ -n "${default}" ] && internalError "default value not allowed: -${option}"
+   else
+      operand="${type}"
+      type="string"
+   fi
+
+   commandOptionDefaults[${option}]="${default}"
+   commandOptionOperands[${option}]="${operand}"
+   commandOptionSummaries[${option}]="${summary}"
+   commandOptionTypes[${option}]="${type}"
+   commandOptionVariables[${option}]="${variable}"
+   commandOptionCharacters+="${option} "
+} && readonly -f addCommandOption
+
+addCommandOption h usageSummaryRequested flag "show this usage summary on standard output and then eixt"
+addCommandOption q logLevelAdjustment increment "decrease logging verbosity"
+addCommandOption v logLevelAdjustment decrement "increase logging verbosity"
+
+handleCommandArguments() {
+   local positional="${1}"
+   shift 1
+
+   local usageSummaryRequested logLevelAdjustment
+   local optionsString=":"
    local option
 
-   while getopts ":hqv${options}" option
+   [ -n "${commandOptionCharacters}" ] && {
+      for option in ${commandOptionCharacters}
+      do
+         local operand="${commandOptionOperands[${option}]}"
+         local type="${commandOptionTypes[${option}]}"
+         local variable="${commandOptionVariables[${option}]}"
+
+         optionsString+="${option}"
+         [ -n "${operand}" ] && optionsString+=":"
+         "initializeCommandOption_${type}" "${variable}"
+      done
+   }
+
+   while getopts "${optionsString}" option
    do
       case "${option}"
       in
          :) syntaxError "missing operand: -${OPTARG}";;
         \?) syntaxError "unrecognized option: -${OPTARG}";;
-         *) "handleCommandOption_${option}";;
+         *) 
+            local type="${commandOptionTypes[${option}]}"
+            local variable="${commandOptionVariables[${option}]}"
+            "handleCommandOption_${type}" "${variable}"
+            ;;
       esac
    done
 
    "${usageSummaryRequested}" && {
-      [ -z "${positional}" ] || positional=" ${positional}"
-      echo "Usage: ${programName} [-option ...]${positional}"
-      showCommonCommandOptionsUsageSummary
+      local usage="Usage: ${programName}"
+      [ -n "${optionsString}" ] && usage+=" [-option ...]"
+      [ -n "${positional}" ] && usage+=" ${positional}"
+      echo "${usage}"
 
-      [ -n "${options}" ] && {
-         echo -e "\nThese options are specific to this command:"
-         showCommandSpecificOptionsUsageSummary
-      }
-
+      showOptionalCommandArgumentsSummary
+      showCommandUsageSummary
       exit 0
    }
 
    shift $((OPTIND - 1))
    handlePositionalCommandArguments "${@}"
+
+   [ -n "${commandOptionCharacters}" ] && {
+      for option in ${commandOptionCharacters}
+      do
+         local variable="${commandOptionVariables[${option}]}"
+
+         [ -n "${!variable}" ] || {
+            local default="${commandOptionDefaults[${option}]}"
+            [ -n "${default}" ] && setVariable "${variable}" "${default}"
+         }
+      done
+   }
+
    let IPAWS_LOG_LEVEL+=logLevelAdjustment || :
 } && readonly -f handleCommandArguments
 
-showCommonCommandOptionsUsageSummary() {
-cat <<END-OF-COMMON-OPTIONS-USAGE-SUMMARY
+initializeCommandOption_flag() {
+   setVariable "${1}" false
+} && readonly -f initializeCommandOption_flag
 
-These options are common to all commands:
--h  (help) show this command usage summary on standard output and then exit
--q  (quiet) decrease logging verbosity
--v  (verbose) increase logging verbosity
-END-OF-COMMON-OPTIONS-USAGE-SUMMARY
-} && readonly -f showCommonCommandOptionsUsageSummary
+initializeCommandOption_increment() {
+   setVariable "${1}" 0
+} && readonly -f initializeCommandOption_increment
 
-handleCommandOption_h() {
-   usageSummaryRequested=true
-} && readonly -f handleCommandOption_h
+initializeCommandOption_decrement() {
+   setVariable "${1}" 0
+} && readonly -f initializeCommandOption_decrement
 
-handleCommandOption_q() {
-   let logLevelAdjustment+=1 || :
-} && readonly -f handleCommandOption_q
+initializeCommandOption_string() {
+   setVariable "${1}" ""
+} && readonly -f initializeCommandOption_string
 
-handleCommandOption_v() {
-   let logLevelAdjustment-=1 || :
-} && readonly -f handleCommandOption_v
+handleCommandOption_flag() {
+   setVariable "${1}" true
+} && readonly -f handleCommandOption_flag
+
+handleCommandOption_increment() {
+   setVariable "${1}" $(( ${!1} + 1 ))
+} && readonly -f handleCommandOption_increment
+
+handleCommandOption_decrement() {
+   setVariable "${1}" $(( ${!1} - 1 ))
+} && readonly -f handleCommandOption_decrement
+
+handleCommandOption_string() {
+   setVariable "${1}" "${OPTARG}"
+} && readonly -f handleCommandOption_string
+
+showOptionalCommandArgumentsSummary() {
+   [ -n "${commandOptionCharacters}" ] && {
+      echo -e "\nThe following options may be specified:"
+      local option optionWidth=0 operandWidth=0
+
+      for option in ${commandOptionCharacters}
+      do
+         [ "${#option}" -gt "${optionWidth}" ] && optionWidth="${#option}"
+
+         local operand="${commandOptionOperands[${option}]}"
+         [ "${#operand}" -gt "${operandWidth}" ] && operandWidth="${#operand}"
+      done
+
+      for option in $(echo "${commandOptionCharacters}" | tr " " $'\n' | sort)
+      do
+         while [ "${#option}" -lt "${optionWidth}" ]
+         do
+            option+=" "
+         done
+
+         local line="-${option}"
+         local operand="${commandOptionOperands[${option}]}"
+
+         [ "${operandWidth}" -gt 0 ] && {
+            while [ "${#operand}" -lt "${operandWidth}" ]
+            do
+               operand+=" "
+            done
+
+            line+="  ${operand}"
+         }
+
+         local summary="${commandOptionSummaries[${option}]}"
+         local default="${commandOptionDefaults[${option}]}"
+         [ -n "${default}" ] && summary+=" (default is ${default}"
+         [ -n "${summary}" ] && line+="  ${summary# }"
+
+         echo "${line}"
+      done
+   }
+} && readonly -f showOptionalCommandArgumentsSummary
+
+showCommandUsageSummary() {
+   :
+}
 
 handlePositionalCommandArguments() {
    [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"

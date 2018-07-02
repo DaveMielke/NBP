@@ -3,31 +3,15 @@
 . "${0%/*}/prologue.sh"
 includeScriptLibraries command arguments
 
-showCommandSpecificOptionsUsageSummary() {
-cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
--c path        the configuration directory (default is ${defaultConfigurationDirectory})
--d path        the data directory (default is ${defaultDataDirectory})
-END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
-}
+addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
+addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
 
-configurationDirectory=""
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
+handleCommandArguments "" "${@}"
 
-dataDirectory=""
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-handleCommandArguments "c:d:" "" "${@}"
-
-[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
 logDebug "configuration-directory ${configurationDirectory}"
 processCommandConfigurationFile "${configurationDirectory}"
 
-[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
 

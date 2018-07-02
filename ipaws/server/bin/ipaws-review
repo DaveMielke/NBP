@@ -3,43 +3,27 @@
 . "${0%/*}/prologue.sh"
 includeScriptLibraries command arguments locks filter
 
-showCommandSpecificOptionsUsageSummary() {
+addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
+addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
+addCommandOption R removeFiles flag "remove the files that are rejected by the filter"
+
+showCommandUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
--c path        the configuration directory (default is ${defaultConfigurationDirectory})
--d path        the data directory (default is ${defaultDataDirectory})
--R             remove the files that are rejected by the filter
 
 If no alert files are specified then all of them are analyzed.
 END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
-}
-
-configurationDirectory=""
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-dataDirectory=""
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-removeFiles=false
-handleCommandOption_R() {
-   removeFiles=true
 }
 
 handlePositionalCommandArguments() {
    alertFiles=("${@}")
 }
 
-handleCommandArguments "c:d:R" "[alert-file ...]" "${@}"
+handleCommandArguments "[alert-file ...]" "${@}"
 
-[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
 logDebug "configuration-directory ${configurationDirectory}"
 processCommandConfigurationFile "${configurationDirectory}"
 
-[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
 

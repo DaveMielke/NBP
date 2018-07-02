@@ -2,77 +2,20 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommands ncat
-includeScriptLibraries command arguments locks
+includeScriptLibraries command arguments retrieve locks
 
 readonly defaultMaximumClients=100
 readonly defaultPortNumber=14216
 readonly defaultRetrieveInterval=90
 
-showCommandSpecificOptionsUsageSummary() {
-cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
--c path     the configuration directory (default is ${defaultConfigurationDirectory})
--d path     the data directory (default is ${defaultDataDirectory})
--M count    the maximum number of concurrent clients (default is ${defaultMaximumClients})
--P port     the port number to listen on (default is ${defaultPortNumber})
--R seconds  the alerts retrieval interval (default is ${defaultRetrieveInterval})
+addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
+addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
+addCommandOption M maximumClients count "the maximum number of concurrent clients" "${defaultMaximumClients}"
+addCommandOption P portNumber port "the port number to listen on" "${defaultPortNumber}"
+addCommandOption R retrieveInterval seconds "the alerts retrieval interval" "${defaultRetrieveInterval}"
 
-These options are passed through to ipaws-retrieve:
--e             get EAS [Emergency Alert System] alerts
--g             get general (non-EAS) alerts
--m minutes     how far before the reference time to look
--p characters  the server access PIN
--s type        which server to use
-END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
-}
-
-configurationDirectory=""
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-dataDirectory=""
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
-
-getEmergencyAlerts=false
-handleCommandOption_e() {
-   getEmergencyAlerts=true
-}
-
-getGeneralAlerts=false
-handleCommandOption_g() {
-   getGeneralAlerts=true
-}
-
-minutesBefore=""
-handleCommandOption_m() {
-   minutesBefore="${OPTARG}"
-}
-
-requestPIN=""
-handleCommandOption_p() {
-   requestPIN="${OPTARG}"
-}
-
-serverType=""
-handleCommandOption_s() {
-   serverType="${OPTARG}"
-}
-
-maximumClients=""
-handleCommandOption_M() {
-   maximumClients="${OPTARG}"
-}
-
-portNumber=""
-handleCommandOption_P() {
-   portNumber="${OPTARG}"
-}
-
-retrieveInterval=""
-handleCommandOption_R() {
-   retrieveInterval="${OPTARG}"
+showCommandUsageSummary() {
+   showRetrieveUsageSummary
 }
 
 writeLog() {
@@ -134,14 +77,12 @@ awaitClients() {
 }
 
 setLogLevel info
-handleCommandArguments "c:d:egm:p:s:M:P:R:" "" "${@}"
+handleCommandArguments "" "${@}"
 
-[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
 logDebug "configuration-directory ${configurationDirectory}"
 processCommandConfigurationFile "${configurationDirectory}"
 
-[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
 

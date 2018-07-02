@@ -3,22 +3,8 @@
 . "${0%/*}/prologue.sh"
 includeScriptLibraries command arguments locks CAP xml filter
 
-showCommandSpecificOptionsUsageSummary() {
-cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
--c path        the configuration directory (default is ${defaultConfigurationDirectory})
--d path        the data directory (default is ${defaultDataDirectory})
-END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
-}
-
-configurationDirectory=""
-handleCommandOption_c() {
-   configurationDirectory="${OPTARG}"
-}
-
-dataDirectory=""
-handleCommandOption_d() {
-   dataDirectory="${OPTARG}"
-}
+addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
+addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
 
 extractAlerts() {
    acquireExclusiveLock lock extract
@@ -67,14 +53,12 @@ extractAlerts() {
    done
 }
 
-handleCommandArguments "c:d:" "" "${@}"
+handleCommandArguments "" "${@}"
 
-[ -n "${configurationDirectory}" ] || configurationDirectory="${defaultConfigurationDirectory}"
 verifyReadableDirectory "${configurationDirectory}"
 logDebug "configuration-directory ${configurationDirectory}"
 processCommandConfigurationFile "${configurationDirectory}"
 
-[ -n "${dataDirectory}" ] || dataDirectory="${defaultDataDirectory}"
 verifyWritableDirectory "${dataDirectory}"
 logDebug "data-directory ${dataDirectory}"
 cd "${dataDirectory}"

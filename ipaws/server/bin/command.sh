@@ -1,7 +1,7 @@
 readonly serverDirectory="${programDirectory%/*}"
 
 readonly defaultConfigurationDirectory="${serverDirectory}/etc"
-readonly configurationFileName="ipaws.conf"
+readonly commandConfigurationFile="ipaws.conf"
 
 readonly defaultDataDirectory="${serverDirectory}/var"
 readonly failureFileExtension="failed"
@@ -22,18 +22,25 @@ semanticError() {
    exit 3
 } && readonly -f semanticError
 
-responseError() {
+internalError() {
    local message="${1}"
 
    logError "${message}"
    exit 4
+} && readonly -f internalError
+
+responseError() {
+   local message="${1}"
+
+   logError "${message}"
+   exit 5
 } && readonly -f responseError
 
 processCommandConfigurationFile() {
    local directory="${1}"
 
    declare -g -A configuredProperties
-   local file="${directory}/${configurationFileName}"
+   local file="${directory}/${commandConfigurationFile}"
    [ -f "${file}" ] && [ -r "${file}" ] || return 0
    local line number=0
 
