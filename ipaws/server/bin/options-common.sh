@@ -6,7 +6,7 @@ addCommandOption d dataDirectory path "the data directory" "${defaultDataDirecto
 prepareCommonCommandOptions() {
    verifyReadableDirectory "${configurationDirectory}"
    logDebug "configuration-directory ${configurationDirectory}"
-   processCommandConfigurationFile "${configurationDirectory}"
+   importCommandProperties
 
    verifyWritableDirectory "${dataDirectory}"
    logDebug "data-directory ${dataDirectory}"
