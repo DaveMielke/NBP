@@ -36,9 +36,7 @@ fi
 readonly referenceTime
 logDebug "reference-time ${referenceTime}"
 
-[ -n "${serverType}" ] || serverType="${defaultServerType}"
 logDebug "server-type ${serverType}"
-
 serverName="${configuredProperties["${serverType}-server"]}"
 [ -n "${serverName}" ] || semanticError "server type not defined: ${serverType}"
 logDebug "server-name ${serverName}"
@@ -55,7 +53,6 @@ type="${types[index]}"
 [ -n "${type}" ] || semanticError "alert type combination not supported"
 requestURL+="${type}"
 
-[ -n "${minutesBefore}" ] || minutesBefore="${defaultMinutesBefore}"
 verifyIntegerValue "${minutesBefore}" "minutes before" 1
 requestURL+="/recent/$(utcTime "${referenceTime} -${minutesBefore} minutes")"
 

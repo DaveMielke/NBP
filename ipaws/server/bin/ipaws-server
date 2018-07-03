@@ -78,15 +78,12 @@ setLogLevel info
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
 
-[ -n "${maximumClients}" ] || maximumClients="${defaultMaximumClients}"
 verifyIntegerValue "${maximumClients}" "maximum clients" 1
 logDebug "maximum-clients ${maximumClients}"
 
-[ -n "${portNumber}" ] || portNumber="${defaultPortNumber}"
 verifyIntegerValue "${portNumber}" "port number" 1024 65535
 logDebug "port-number ${portNumber}"
 
-[ -n "${retrieveInterval}" ] || retrieveInterval="${defaultRetrieveInterval}"
 verifyIntegerValue "${retrieveInterval}" "retrieve interval" 15
 logDebug "retrieve-interval ${retrieveInterval}"
 
