@@ -123,10 +123,10 @@ verifyCommands() {
    done
 } && readonly -f verifyCommands
 
-executeOnExit() {
+pushOnExitCommand() {
    local -n command="onExitCommand$((++onExitCommandCount))"
    command=("${@}")
-} && readonly -f executeOnExit
+} && readonly -f pushOnExitCommand
 
 executeOnExitCommands() {
    while [ "${onExitCommandCount}" -gt 0 ]
@@ -140,7 +140,7 @@ executeOnExitCommands() {
 onExitCommandCount=0
 trap executeOnExitCommands exit
 
-declare -A includedScriptLibraries=()
+declare -g -A includedScriptLibraries=()
 includeScriptLibraries() {
    local name
 
