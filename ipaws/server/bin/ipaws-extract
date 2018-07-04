@@ -17,7 +17,11 @@ extractAlerts() {
       do
          local alertsName="${alertsFile%.*}"
          logInfo "processing alert set: ${alertsName}"
+
          local alertCount="$(capGetAlertCount "${alertsFile}")"
+         local duplicateCount=0
+         local acceptCount=0
+         local rejectCount=0
 
          [ -n "${alertCount}" ] && {
             local alertNumber=0
@@ -28,21 +32,29 @@ extractAlerts() {
 
                local alertIdentifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
                local alertFile="${alertIdentifier}.${alertFileExtension}"
-               [ -e "${alertFile}" ] && continue
-               logInfo "new alert: ${alertIdentifier}"
 
-               if acceptAlert "${temporaryFile}" true
+               if [ -e "${alertFile}" ]
                then
-                  logInfo "alert accepted: ${alertIdentifier}"
-                  mv -- "${temporaryFile}" "${alertFile}"
-                  chmod -- a-w "${alertFile}"
+                  let duplicateCount+=1
                else
-                  logInfo "alert rejected: ${alertIdentifier}"
+                  logInfo "new alert: ${alertIdentifier}"
+
+                  if acceptAlert "${temporaryFile}" true
+                  then
+                     logInfo "alert accepted: ${alertIdentifier}"
+                     let acceptCount+=1
+                     mv -- "${temporaryFile}" "${alertFile}"
+                     chmod -- a-w "${alertFile}"
+                  else
+                     logInfo "alert rejected: ${alertIdentifier}"
+                     let rejectCount+=1
+                     rm -- "${temporaryFile}"
+                  fi
                fi
             done
          }
 
-         logInfo "removing alert set: ${alertsName}"
+         logInfo "summary: Acc:${acceptCount} Rej:${rejectCount} Dup:${duplicateCount}"
          rm -f -- "${alertsFile}"
       done
    done

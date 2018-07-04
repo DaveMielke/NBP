@@ -62,5 +62,5 @@ do
    let skipCount-=1 || :
 done
 
-logInfo "summary: Accept:${acceptCount} Reject:${rejectCount} Skip:${skipCount}"
+logInfo "summary: Acc:${acceptCount} Rej:${rejectCount} Skp:${skipCount}"
 exit 0
