@@ -22,7 +22,8 @@ failIfAlreadyRunning
 
 [ "${#alertFiles[*]}" -gt 0 ] || {
    cd "${dataDirectory}"
-   alertFiles=( $(ls -1 -r --sort=time *".${alertFileExtension}") )
+   set -- *".${alertFileExtension}"
+   [ "${#}" -gt 0 ] && alertFiles=( $(ls -1 -r --sort=time -- "${@}") )
 }
 
 acceptCount=0
