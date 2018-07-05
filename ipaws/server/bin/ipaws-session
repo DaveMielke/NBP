@@ -1,11 +1,59 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
+verifyCommandAvailability inotifywait
 includeScriptLibraries command arguments options-common
+
+monitorAlerts() {
+   exec </dev/null
+   local time file events
+
+   while read -r time file events
+   do
+      [ "${file}" = "${file%.${alertFileExtension}}" ] && continue
+      local event
+
+      for event in ${events}
+      do
+         case "${event}"
+         in
+            MOVED_TO) handleAlertAdded "${file}";;
+            MOVED_FROM) handleAlertRemoved "${file}";;
+            DELETE) handleAlertRemoved "${file}";;
+            *) logWarning "unhandled inotify event: ${event}: ${file}";;
+         esac
+      done
+   done < <(inotifywait --quiet --monitor --timefmt "%Y-%m-%dT%H:%M:%S" --format "%T %f % e" --event moved_to --event moved_from --event delete -- "${dataDirectory}")
+}
+
+handleAlertAdded() {
+   local file="${1}"
+
+   echo "alert added: ${file}"
+}
+
+handleAlertRemoved() {
+   local file="${1}"
+
+   echo "alert removed: ${file}"
+}
 
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
 
-logInfo "client connected: [${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
+client="[${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
+logInfo "client connected: ${client}"
 
+monitorAlerts &
+pushOnExitCommand kill -TERM "${!}"
+
+while read -r -a clientCommand
+do
+   logInfo "client command: ${client}: ${clientCommand[*]}"
+   [ "${#clientCommand[*]}" -eq 0 ] && continue
+   echo "${#clientCommand[0]} ${clientCommand[0]}"
+   [ "${clientCommand[0]}" = "quit" ] && break
+done
+
+logInfo "client disconnected: ${client}"
 exit 0

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-verifyCommands ncat
+verifyCommandAvailability ncat
 includeScriptLibraries command arguments options-common options-retrieve
 
 readonly defaultMaximumClients=100
@@ -70,6 +70,8 @@ reviewAlerts() {
 }
 
 awaitClients() {
+   logInfo "listening: Port:${portNumber} Max:${maximumClients}"
+
    makeCommand ipaws-session
    ncat -l "${portNumber}" --max-conns "${maximumClients}" --keep-open --sh-exec "${command[*]}"
 }

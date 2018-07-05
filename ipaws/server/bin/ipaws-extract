@@ -43,18 +43,22 @@ extractAlerts() {
                   then
                      logInfo "alert accepted: ${alertIdentifier}"
                      let acceptCount+=1
+
                      mv -- "${temporaryFile}" "${alertFile}"
                      chmod -- a-w "${alertFile}"
-                  else
-                     logInfo "alert rejected: ${alertIdentifier}"
-                     let rejectCount+=1
-                     rm -- "${temporaryFile}"
+
+                     continue
                   fi
+
+                  logInfo "alert rejected: ${alertIdentifier}"
+                  let rejectCount+=1
                fi
+
+               rm -- "${temporaryFile}"
             done
          }
 
-         logInfo "summary: Acc:${acceptCount} Rej:${rejectCount} Dup:${duplicateCount}"
+         logInfo "alert set summary: ${alertsName}: Acc:${acceptCount} Rej:${rejectCount} Dup:${duplicateCount}"
          rm -f -- "${alertsFile}"
       done
    done

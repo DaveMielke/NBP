@@ -1,5 +1,5 @@
 includeScriptLibraries time
-verifyCommands stat
+verifyCommandAvailability stat
 
 fileProperty() {
    local path="${1}"

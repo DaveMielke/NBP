@@ -1,4 +1,4 @@
-verifyCommands xpath
+verifyCommandAvailability xpath
 
 xmlEvaluate() {
    local file="${1}"

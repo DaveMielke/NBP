@@ -112,7 +112,7 @@ setLogLevel() {
    fi
 } && readonly -f setLogLevel
 
-verifyCommands() {
+verifyCommandAvailability() {
    local command
 
    for command
@@ -121,7 +121,7 @@ verifyCommands() {
       [ -n "${path}" ] || semanticError "command not found: ${command}"
       logDebug "command-path ${path}"
    done
-} && readonly -f verifyCommands
+} && readonly -f verifyCommandAvailability
 
 pushOnExitCommand() {
    local -n command="onExitCommand$((++onExitCommandCount))"
@@ -132,7 +132,8 @@ executeOnExitCommands() {
    while [ "${onExitCommandCount}" -gt 0 ]
    do
       local -n command="onExitCommand$((onExitCommandCount--))"
-      "${command[@]}"
+      logDebug "executing on exit command: ${command[*]}"
+      "${command[@]}" || :
       unset -n command
    done
 } && readonly -f executeOnExitCommands

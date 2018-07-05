@@ -1,4 +1,4 @@
-verifyCommands flock
+verifyCommandAvailability flock
 
 declare -A lockNames=()
 
