@@ -5,22 +5,16 @@ declare -A lockNames=()
 openLockFile() {
    local olfLock="${1}"
    local olfName="${2}"
-   local olfDescriptor=10
 
-   while :
-   do
-      [ -e "/dev/fd/${olfDescriptor}" ] || break
-      let olfDescriptor+=1
-   done
-
-   eval exec "${olfDescriptor}>>" '"${dataDirectory}/${olfName}.lock"'
+   local olfDescriptor
+   exec {olfDescriptor}>> "${dataDirectory}/${olfName}.lock"
    setVariable "${olfLock}" "${olfDescriptor}"
 } && readonly -f openLockFile
 
 closeLockFile() {
    local lock="${1}"
 
-   eval exec "${lock}>&-"
+   exec {lock}>&-
 } && readonly -f closeLockFile
 
 acquireLock() {
@@ -60,7 +54,7 @@ acquireLock() {
    }
 
    lockNames[${aqlLock}]="${aqlName}"
-   logDebug "lock acquired: ${aqlName}"
+   logDebug "lock acquired: ${aqlName}: fd:${aqlLock}"
    setVariable "${aqlVariable}" "${aqlLock}"
 } && readonly -f acquireLock
 
@@ -100,7 +94,7 @@ releaseLock() {
    then
       flock -u "${lock}"
       closeLockFile "${lock}"
-      logDebug "lock released: ${name}"
+      logDebug "lock released: ${name}: fd:${lock}"
       unset name
    else
       logWarning "lock not held: fd=${lock}"
