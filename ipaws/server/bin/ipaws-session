@@ -4,38 +4,62 @@
 verifyCommandAvailability inotifywait
 includeScriptLibraries command arguments options-common
 
-monitorAlerts() {
-   exec </dev/null
+monitorAlertFiles() {
+   coproc inotify {
+      exec inotifywait --quiet --monitor \
+      --format "%T %f % e" --timefmt "%Y-%m-%dT%H:%M:%S" \
+      --event moved_to --event moved_from --event delete \
+      -- "${dataDirectory}"
+   }
+
+   local pid="${inotify_PID}"
+   pushOnExitCommand kill -TERM "${pid}"
+   eval exec "9<&${inotify[0]}"
    local time file events
 
-   while read -r time file events
+   while read -u 9 -r time file events
    do
       [ "${file}" = "${file%.${alertFileExtension}}" ] && continue
+      local identifier="${file%.*}"
       local event
 
       for event in ${events}
       do
          case "${event}"
          in
-            MOVED_TO) handleAlertAdded "${file}";;
-            MOVED_FROM) handleAlertRemoved "${file}";;
-            DELETE) handleAlertRemoved "${file}";;
+            MOVED_TO) handleAlertAdded "${identifier}";;
+            MOVED_FROM) handleAlertRemoved "${identifier}";;
+            DELETE) handleAlertRemoved "${identifier}";;
             *) logWarning "unhandled inotify event: ${event}: ${file}";;
          esac
       done
-   done < <(inotifywait --quiet --monitor --timefmt "%Y-%m-%dT%H:%M:%S" --format "%T %f % e" --event moved_to --event moved_from --event delete -- "${dataDirectory}")
+   done &
+
+   eval exec "9<&-"
 }
 
 handleAlertAdded() {
-   local file="${1}"
+   local identifier="${1}"
 
-   echo "alert added: ${file}"
+   echo "alert added: ${identifier}"
 }
 
 handleAlertRemoved() {
-   local file="${1}"
+   local identifier="${1}"
 
-   echo "alert removed: ${file}"
+   echo "alert removed: ${identifier}"
+}
+
+handleClientCommands() {
+   local -a command
+
+   while read -r -a command
+   do
+      logInfo "client command: ${command[*]}"
+      [ "${#command[*]}" -eq 0 ] && continue
+      echo "${#command[0]} ${command[0]}"
+      [ "${command[0]}" = "quit" ] && return 0
+   done
 }
 
 handleCommandArguments "" "${@}"
@@ -43,17 +67,8 @@ prepareCommonCommandOptions
 
 client="[${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
 logInfo "client connected: ${client}"
-
-monitorAlerts &
-pushOnExitCommand kill -TERM "${!}"
-
-while read -r -a clientCommand
-do
-   logInfo "client command: ${client}: ${clientCommand[*]}"
-   [ "${#clientCommand[*]}" -eq 0 ] && continue
-   echo "${#clientCommand[0]} ${clientCommand[0]}"
-   [ "${clientCommand[0]}" = "quit" ] && break
-done
-
+monitorAlertFiles
+handleClientCommands
 logInfo "client disconnected: ${client}"
+
 exit 0
