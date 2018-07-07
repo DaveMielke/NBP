@@ -9,31 +9,40 @@ monitorAlertFiles() {
       exec inotifywait --quiet --monitor \
       --format "%T %f % e" --timefmt "%Y-%m-%dT%H:%M:%S" \
       --event moved_to --event moved_from --event delete \
-      -- "${dataDirectory}"
+      -- .
    }
 
    local pid="${inotify_PID}"
    pushOnExitCommand kill -TERM "${pid}"
    eval exec "9<&${inotify[0]}"
-   local time file events
 
-   while read -u 9 -r time file events
-   do
-      [ "${file}" = "${file%.${alertFileExtension}}" ] && continue
-      local identifier="${file%.*}"
-      local event
+   (
+      local time file events
+      set -- *".${alertFileExtension}"
 
-      for event in ${events}
+      for file
       do
-         case "${event}"
-         in
-            MOVED_TO) handleAlertAdded "${identifier}";;
-            MOVED_FROM) handleAlertRemoved "${identifier}";;
-            DELETE) handleAlertRemoved "${identifier}";;
-            *) logWarning "unhandled inotify event: ${event}: ${file}";;
-         esac
+         handleAlertAdded "${file%.*}"
       done
-   done &
+
+      while read -u 9 -r time file events
+      do
+         [ "${file}" = "${file%.${alertFileExtension}}" ] && continue
+         local identifier="${file%.*}"
+         local event
+
+         for event in ${events}
+         do
+            case "${event}"
+            in
+               MOVED_TO) handleAlertAdded "${identifier}";;
+               MOVED_FROM) handleAlertRemoved "${identifier}";;
+               DELETE) handleAlertRemoved "${identifier}";;
+               *) logWarning "unhandled inotify event: ${event}: ${file}";;
+            esac
+         done
+      done
+   ) &
 
    eval exec "9<&-"
 }
@@ -64,6 +73,7 @@ handleClientCommands() {
 
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
+cd "${dataDirectory}"
 
 client="[${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
 logInfo "client connected: ${client}"
