@@ -3,7 +3,7 @@ shopt -s nullglob
 
 readonly programName="${0##*/}"
 programDirectory="${0%/*}"
-[ "${programDirectory}" = "${programDirectory}" ] && programDirectory="."
+[ "${programDirectory}" = "${0}" ] && programDirectory="."
 readonly programDirectory="$(realpath "${programDirectory}")"
 
 programMessage() {
