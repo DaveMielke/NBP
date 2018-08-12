@@ -1,8 +1,39 @@
-includeScriptLibraries xml time CAP
+includeScriptLibraries xml time CAP files
 
 readonly filterTime="$(utcTime)"
 logDebug "filter-time ${filterTime}"
 readonly filterSeconds="$(epochSeconds "${filterTime}")"
+
+cacheAlertProperties() {
+   local file="${1}"
+
+   cacheAlertProperty "${file}" type /alert/msgType
+   cacheAlertProperty "${file}" references /alert/references
+
+   cacheAlertProperty "${file}" sent /alert/sent
+   cacheAlertProperty "${file}" effective /alert/info/effective
+   cacheAlertProperty "${file}" expires /alert/info/expires
+
+   cacheAlertProperty "${file}" status /alert/status
+   cacheAlertProperty "${file}" certainty /alert/info/certainty
+   cacheAlertProperty "${file}" severity /alert/info/severity
+   cacheAlertProperty "${file}" urgency /alert/info/urgency
+} && readonly -f cacheAlertProperties
+
+cacheAlertProperty() {
+   local file="${1}"
+   local property="${2}"
+   local element="${3}"
+
+   setFileAttribute "${file}" "nbp.ipaws.alert.${property}" "$(xmlEvaluate "${file}" "${element}/text()")"
+} && readonly -f cacheAlertProperty
+
+getAlertProperty() {
+   local file="${1}"
+   local property="${2}"
+
+   getFileAttribute "${file}" "nbp.ipaws.alert.${property}"
+} && readonly -f getAlertProperty
 
 acceptAlert() {
    local file="${1}"
@@ -17,17 +48,17 @@ acceptAlert() {
       }
    }
 
-   handleAlertMessageType "${file}" "${remove}" &&
+   handleAlertType "${file}" "${remove}" &&
    handleAlertExpiry "${file}" &&
-   processFilterConfigurationFile "${file}" &&
+   acceptConfiguredAlertProperties "${file}" &&
    return 0 || return 1
 } && readonly -f acceptAlert
 
-handleAlertMessageType() {
+handleAlertType() {
    local file="${1}"
    local remove="${2:-false}"
 
-   local type="$(xmlEvaluate "${file}" "/alert/msgType/text()")"
+   local type="$(getAlertProperty "${file}" type)"
    [ -n "${type}" ] || {
       logWarning "missing message type: ${alertIdentifier}"
       return 1
@@ -49,7 +80,7 @@ handleAlertMessageType() {
          return 1
       fi
 
-      local references="$(xmlEvaluate "${file}" "/alert/references/text()")"
+      local references="$(getAlertProperty "${file}" references)"
       [ -n "${references}" ] || {
          logWarning "${noun} with no references: ${alertIdentifier}"
          return 1
@@ -78,20 +109,20 @@ handleAlertMessageType() {
    }
 
    return 0
-} && readonly -f handleAlertMessageType
+} && readonly -f handleAlertType
 
 handleAlertExpiry() {
    local file="${1}"
 
-   local sentTime="$(xmlEvaluate "${file}" "/alert/sent/text()")"
+   local sentTime="$(getAlertProperty "${file}" sent)"
    [ -n "${sentTime}" ] || {
       logInfo "no sent time: ${alertIdentifier}"
       return 1
    }
 
-   local expiryTime="$(xmlEvaluate "${file}" "/alert/info/expires/text()")"
+   local expiryTime="$(getAlertProperty "${file}" expires)"
    [ -n "${expiryTime}" ] || {
-      local effectiveTime="$(xmlEvaluate "${file}" "/alert/info/effective/text()")"
+      local effectiveTime="$(getAlertProperty "${file}" effective)"
       [ -n "${effectiveTime}" ] || effectiveTime="${sentTime}"
       expiryTime="$(utcTime "${effectiveTime} -1 day")"
    }
@@ -105,7 +136,7 @@ handleAlertExpiry() {
    return 0
 } && readonly -f handleAlertExpiry
 
-processFilterConfigurationFile() {
+acceptConfiguredAlertProperties() {
    local file="${1}"
 
    local configurationFile="${configurationDirectory}/ipaws.filter"
@@ -123,26 +154,26 @@ processFilterConfigurationFile() {
 
          case "${field}"
          in
-            status) acceptDiscreteField "${file}" "/alert/status" "${@}" || return 1;;
-            urgency) acceptEnumeratedField "${file}" "/alert/info/urgency" capUrgencyEnumeration "${@}" || return 1;;
-            severity) acceptEnumeratedField "${file}" "/alert/info/severity" capSeverityEnumeration "${@}" || return 1;;
-            certainty) acceptEnumeratedField "${file}" "/alert/info/certainty" capCertaintyEnumeration "${@}" || return 1;;
+            status) acceptDiscreteAlertProperty "${file}" status "${@}" || return 1;;
+            urgency) acceptEnumeratedAlertProperty "${file}" urgency capUrgencyEnumeration "${@}" || return 1;;
+            severity) acceptEnumeratedAlertProperty "${file}" severity capSeverityEnumeration "${@}" || return 1;;
+            certainty) acceptEnumeratedAlertProperty "${file}" certainty capCertaintyEnumeration "${@}" || return 1;;
             *) logFilterConfigurationProblem "unrecognized filter field" "${field}";;
          esac
       done <"${configurationFile}"
    }
 
    return 0
-} && readonly -f processFilterConfigurationFile
+} && readonly -f acceptConfiguredAlertProperties
 
-acceptDiscreteField() {
+acceptDiscreteAlertProperty() {
    local file="${1}"
-   local element="${2}"
+   local property="${2}"
    shift 2
 
-   local text="$(xmlEvaluate "${file}" "${element}/text()")"
+   local text="$(getAlertProperty "${file}" "${property}")"
    [ -n "${text}" ] || {
-      logWarning "element not defined: ${element}: ${alertIdentifier}"
+      logWarning "property not defined: ${property}: ${alertIdentifier}"
       return 1
    }
 
@@ -152,46 +183,46 @@ acceptDiscreteField() {
       [ "${text}" = "${value}" ] && return 0
    done
 
-   logWarning "value not accepted: ${element}=${text}: ${alertIdentifier}"
+   logWarning "value not accepted: ${property}=${text}: ${alertIdentifier}"
    return 1
-} && readonly -f acceptDiscreteField
+} && readonly -f acceptDiscreteAlertProperty
 
-acceptEnumeratedField() {
+acceptEnumeratedAlertProperty() {
    local file="${1}"
-   local element="${2}"
+   local property="${2}"
    local -n enumeration="${3}"
    local threshold="${4}"
 
-   local text="$(xmlEvaluate "${file}" "${element}/text()")"
+   local text="$(getAlertProperty "${file}" "${property}")"
    [ -n "${text}" ] || {
-      logWarning "element not defined: ${element}: ${alertIdentifier}"
+      logWarning "property not defined: ${property}: ${alertIdentifier}"
       return 1
    }
 
    [ -n "${threshold}" ] || {
-      logFilterConfigurationProblem "missing configured threshold" "${element}"
+      logFilterConfigurationProblem "missing configured threshold" "${property}"
       return 0
    }
 
    local maximum="${enumeration[${threshold}]}"
    [ -n "${maximum}" ] || {
-      logFilterConfigurationProblem "unrecognized configured threshold" "${element}=${threshold}"
+      logFilterConfigurationProblem "unrecognized configured threshold" "${property}=${threshold}"
       return 0
    }
 
    local actual="${enumeration[${text}]}"
    [ -n "${actual}" ] || {
-      logWarning "unrecognized value: ${element}=${text}: ${alertIdentifier}"
+      logWarning "unrecognized value: ${property}=${text}: ${alertIdentifier}"
       return 1
    }
 
    [ "${actual}" -le "${maximum}" ] || {
-      logWarning "value not accepted: ${element}=${text}: ${alertIdentifier}"
+      logWarning "value not accepted: ${property}=${text}: ${alertIdentifier}"
       return 1
    }
 
    return 0
-} && readonly -f acceptEnumeratedField
+} && readonly -f acceptEnumeratedAlertProperty
 
 logFilterConfigurationProblem() {
    local problem="${1}"

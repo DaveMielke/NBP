@@ -38,6 +38,7 @@ extractAlerts() {
                   let duplicateCount+=1
                else
                   logInfo "new alert: ${alertIdentifier}"
+                  cacheAlertProperties "${temporaryFile}"
 
                   if acceptAlert "${temporaryFile}" true
                   then

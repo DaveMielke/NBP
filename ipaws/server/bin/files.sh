@@ -1,91 +1,94 @@
-includeScriptLibraries time
-verifyCommandAvailability stat
+verifyCommandAvailability stat getfattr setfattr
 
-fileProperty() {
+getFileProperty() {
    local path="${1}"
    local property="${2}"
 
    stat -c "%${property}" -- "${path}"
-} && readonly -f fileProperty
+} && readonly -f getFileProperty
 
-fileOwnerName() {
+getFileOwnerName() {
    local path="${1}"
 
-   fileProperty "${path}" U
-} && readonly -f fileOwnerName
+   getFileProperty "${path}" U
+} && readonly -f getFileOwnerName
 
-fileOwnerIdentifier() {
+getFileOwnerIdentifier() {
    local path="${1}"
 
-   fileProperty "${path}" u
-} && readonly -f fileOwnerIdentifier
+   getFileProperty "${path}" u
+} && readonly -f getFileOwnerIdentifier
 
-fileGroupName() {
+getFileGroupName() {
    local path="${1}"
 
-   fileProperty "${path}" G
-} && readonly -f fileGroupName
+   getFileProperty "${path}" G
+} && readonly -f getFileGroupName
 
-fileGroupIdentifier() {
+getFileGroupIdentifier() {
    local path="${1}"
 
-   fileProperty "${path}" g
-} && readonly -f fileGroupIdentifier
+   getFileProperty "${path}" g
+} && readonly -f getFileGroupIdentifier
 
-fileType() {
+getFileType() {
    local path="${1}"
 
-   local type="$(fileProperty "${path}" F)"
+   local type="$(getFileProperty "${path}" F)"
    type="${type#regular }"
    type="${type%% *}"
    echo "${type}"
-} && readonly -f fileType
+} && readonly -f getFileType
 
-fileSize() {
+getFileSize() {
    local path="${1}"
 
-   fileProperty "${path}" s
-} && readonly -f fileSize
+   getFileProperty "${path}" s
+} && readonly -f getFileSize
 
-fileMountPoint() {
+getFileMountPoint() {
    local path="${1}"
 
-   fileProperty "${path}" m
-} && readonly -f fileMountPoint
+   getFileProperty "${path}" m
+} && readonly -f getFileMountPoint
 
-epochFileAccessTime() {
+getFileAccessTime() {
    local path="${1}"
 
-   fileProperty "${path}" X
-} && readonly -f epochFileAccessTime
+   getFileProperty "${path}" X
+} && readonly -f getFileAccessTime
 
-epochFileModificationTime() {
+getFileModificationTime() {
    local path="${1}"
 
-   fileProperty "${path}" Y
-} && readonly -f epochFileModificationTime
+   getFileProperty "${path}" Y
+} && readonly -f getFileModificationTime
 
-epochFileChangeTime() {
+getFileChangeTime() {
    local path="${1}"
 
-   fileProperty "${path}" Z
-} && readonly -f epochFileChangeTime
+   getFileProperty "${path}" Z
+} && readonly -f getFileChangeTime
 
-utcFileAccessTime() {
+getFileAttribute() {
    local path="${1}"
+   local name="${2}"
 
-   epochToUTC "$(epochFileAccessTime "${path}")"
-} && readonly -f utcFileAccessTime
+   getfattr -n "user.${name}" --only-values -- "${path}"
+} && readonly -f getFileAttribute
 
-utcFileModificationTime() {
+setFileAttribute() {
    local path="${1}"
+   local name="${2}"
+   local value="${3}"
 
-   epochToUTC "$(epochFileModificationTime "${path}")"
-} && readonly -f utcFileModificationTime
+   setfattr -n "user.${name}" -v "\"${value}\"" -- "${path}"
+} && readonly -f setFileAttribute
 
-utcFileChangeTime() {
+unsetFileAttribute() {
    local path="${1}"
+   local name="${2}"
 
-   epochToUTC "$(epochFileChangeTime "${path}")"
-} && readonly -f utcFileChangeTime
+   setfattr -x "user.${name}" -- "${path}"
+} && readonly -f unsetFileAttribute
 
