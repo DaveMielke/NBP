@@ -18,6 +18,9 @@ cacheAlertProperties() {
    cacheAlertProperty "${file}" certainty /alert/info/certainty
    cacheAlertProperty "${file}" severity /alert/info/severity
    cacheAlertProperty "${file}" urgency /alert/info/urgency
+
+   cacheAlertProperty "${file}" event "/alert/info/eventCode[valueName/text()='SAME']/value"
+   cacheAlertProperty "${file}" location "/alert/info/area/geocode[valueName/text()='SAME']/value"
 } && readonly -f cacheAlertProperties
 
 cacheAlertProperty() {
@@ -171,19 +174,19 @@ acceptDiscreteAlertProperty() {
    local property="${2}"
    shift 2
 
-   local text="$(getAlertProperty "${file}" "${property}")"
-   [ -n "${text}" ] || {
+   local value="$(getAlertProperty "${file}" "${property}")"
+   [ -n "${value}" ] || {
       logWarning "property not defined: ${property}: ${alertIdentifier}"
       return 1
    }
 
-   local value
-   for value
+   local candidate
+   for candidate
    do
-      [ "${text}" = "${value}" ] && return 0
+      [ "${value}" = "${candidate}" ] && return 0
    done
 
-   logWarning "value not accepted: ${property}=${text}: ${alertIdentifier}"
+   logWarning "property value not accepted: ${property}=${value}: ${alertIdentifier}"
    return 1
 } && readonly -f acceptDiscreteAlertProperty
 
@@ -193,8 +196,8 @@ acceptEnumeratedAlertProperty() {
    local -n enumeration="${3}"
    local threshold="${4}"
 
-   local text="$(getAlertProperty "${file}" "${property}")"
-   [ -n "${text}" ] || {
+   local value="$(getAlertProperty "${file}" "${property}")"
+   [ -n "${value}" ] || {
       logWarning "property not defined: ${property}: ${alertIdentifier}"
       return 1
    }
@@ -210,18 +213,15 @@ acceptEnumeratedAlertProperty() {
       return 0
    }
 
-   local actual="${enumeration[${text}]}"
+   local actual="${enumeration[${value}]}"
    [ -n "${actual}" ] || {
-      logWarning "unrecognized value: ${property}=${text}: ${alertIdentifier}"
+      logWarning "unrecognized property value: ${property}=${value}: ${alertIdentifier}"
       return 1
    }
 
-   [ "${actual}" -le "${maximum}" ] || {
-      logWarning "value not accepted: ${property}=${text}: ${alertIdentifier}"
-      return 1
-   }
-
-   return 0
+   (( actual <= maximum )) && return 0
+   logWarning "property value not accepted: ${property}=${value}: ${alertIdentifier}"
+   return 1
 } && readonly -f acceptEnumeratedAlertProperty
 
 logFilterConfigurationProblem() {
