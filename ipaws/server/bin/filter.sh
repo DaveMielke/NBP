@@ -20,7 +20,7 @@ cacheAlertProperties() {
    cacheAlertProperty "${file}" urgency /alert/info/urgency
 
    cacheAlertProperty "${file}" event "/alert/info/eventCode[valueName/text()='SAME']/value"
-   cacheAlertProperty "${file}" location "/alert/info/area/geocode[valueName/text()='SAME']/value"
+   cacheAlertProperty "${file}" area "/alert/info/area/geocode[valueName/text()='SAME']/value"
 } && readonly -f cacheAlertProperties
 
 cacheAlertProperty() {
