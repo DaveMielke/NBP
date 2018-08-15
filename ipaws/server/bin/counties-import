@@ -2,7 +2,7 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommandAvailability curl
-includeScriptLibraries command arguments options-common sql files time
+includeScriptLibraries command arguments options-common sql files
 
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
@@ -10,12 +10,29 @@ prepareCommonCommandOptions
 sameCodes="${commandProperties["same-codes"]}"
 [ -n "${sameCodes}" ] || semanticError "SAME codes URL not defined"
 
-countiesFile="${dataDirectory}/counties.csv"
-curl -s -S -o "${countiesFile}" -z "${countiesFile}" "${sameCodes}"
+csvFile="${dataDirectory}/counties.csv"
+newFile="${csvFile}.new"
+rm -f -- "${newFile}"
+curl -s -S -o "${newFile}" -z "${csvFile}" "${sameCodes}"
 
-countiesTime="$(getFileModifiedTime "${countiesFile}")"
-sed -e 's/, */,/g' -i "${countiesFile}"
-setFileModifiedTime "${countiesFile}" "${countiesTime}"
+if [ -f "${newFile}" ]
+then
+   if egrep -q -e '^[0-9]{6},' "${newFile}"
+   then
+      newTime="$(getFileModifiedTime "${newFile}")"
+      sed -e 's/, */,/g' -i "${newFile}"
+      setFileModifiedTime "${newFile}" "${newTime}"
+
+      mv -- "${newFile}" "${csvFile}"
+      logInfo "new county data"
+   else
+      rm -- "${newFile}"
+      logError "county data retrieval problem"
+      [ -f "${csvFile}" ] || semanticError "county data not available"
+   fi
+else
+   logInfo "county data not updated"
+fi
 
 sqlExecute "
 drop table if exists county;
@@ -25,7 +42,7 @@ create table county (
    state text not null
 );
 
-.import ${countiesFile} county
+.import ${csvFile} county
 "
 
 exit 0
