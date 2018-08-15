@@ -1,0 +1,20 @@
+#!/bin/bash
+
+. "${0%/*}/prologue.sh"
+includeScriptLibraries command arguments options-common sql
+
+handleCommandArguments "" "${@}"
+prepareCommonCommandOptions
+
+sqlExecute "
+drop table if exists state;
+create table state (
+   SAME text primary key not null,
+   abbr text unique not null,
+   name text not null
+);
+
+.import ${configurationDirectory}/states.csv state
+"
+
+exit 0
