@@ -30,12 +30,12 @@ handleClientCommands() {
       local command="${arguments[0]}"
       unset "arguments[0]"
       [ "${command}" = "quit" ] && return 0
-      local scriptlet="${programDirectory}/ipaws-session-${command}.cmd"
+      local scriptlet="${programDirectory}/${serverType}-session-${command}.cmd"
 
       if [ -f "${scriptlet}" ]
       then
          . "${scriptlet}"
-         "ipawsSession_${command}" "${arguments[@]}"
+         "${serverType}Session_${command}" "${arguments[@]}"
       else
          logWarning "unrecognized ${serverType} client command: ${client}: ${command}"
       fi
