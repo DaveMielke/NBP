@@ -1,42 +1,8 @@
-includeScriptLibraries xml time CAP files
+includeScriptLibraries xml time cap
 
 readonly filterTime="$(utcTime)"
 logDebug "filter-time ${filterTime}"
 readonly filterSeconds="$(epochSeconds "${filterTime}")"
-
-cacheAlertProperties() {
-   local file="${1}"
-
-   cacheAlertProperty "${file}" type /alert/msgType
-   cacheAlertProperty "${file}" references /alert/references
-
-   cacheAlertProperty "${file}" sent /alert/sent
-   cacheAlertProperty "${file}" effective /alert/info/effective
-   cacheAlertProperty "${file}" expires /alert/info/expires
-
-   cacheAlertProperty "${file}" status /alert/status
-   cacheAlertProperty "${file}" certainty /alert/info/certainty
-   cacheAlertProperty "${file}" severity /alert/info/severity
-   cacheAlertProperty "${file}" urgency /alert/info/urgency
-
-   cacheAlertProperty "${file}" event "/alert/info/eventCode[valueName/text()='SAME']/value"
-   cacheAlertProperty "${file}" area "/alert/info/area/geocode[valueName/text()='SAME']/value"
-} && readonly -f cacheAlertProperties
-
-cacheAlertProperty() {
-   local file="${1}"
-   local property="${2}"
-   local element="${3}"
-
-   setFileAttribute "${file}" "nbp.ipaws.alert.${property}" "$(xmlEvaluate "${file}" "${element}/text()")"
-} && readonly -f cacheAlertProperty
-
-getAlertProperty() {
-   local file="${1}"
-   local property="${2}"
-
-   getFileAttribute "${file}" "nbp.ipaws.alert.${property}"
-} && readonly -f getAlertProperty
 
 acceptAlert() {
    local file="${1}"
@@ -61,7 +27,7 @@ handleAlertType() {
    local file="${1}"
    local remove="${2:-false}"
 
-   local type="$(getAlertProperty "${file}" type)"
+   local type="$(capGetAlertProperty "${file}" type)"
    [ -n "${type}" ] || {
       logWarning "missing message type: ${alertIdentifier}"
       return 1
@@ -83,7 +49,7 @@ handleAlertType() {
          return 1
       fi
 
-      local references="$(getAlertProperty "${file}" references)"
+      local references="$(capGetAlertProperty "${file}" references)"
       [ -n "${references}" ] || {
          logWarning "${noun} with no references: ${alertIdentifier}"
          return 1
@@ -117,15 +83,15 @@ handleAlertType() {
 handleAlertExpiry() {
    local file="${1}"
 
-   local sentTime="$(getAlertProperty "${file}" sent)"
+   local sentTime="$(capGetAlertProperty "${file}" sent)"
    [ -n "${sentTime}" ] || {
       logInfo "no sent time: ${alertIdentifier}"
       return 1
    }
 
-   local expiryTime="$(getAlertProperty "${file}" expires)"
+   local expiryTime="$(capGetAlertProperty "${file}" expires)"
    [ -n "${expiryTime}" ] || {
-      local effectiveTime="$(getAlertProperty "${file}" effective)"
+      local effectiveTime="$(capGetAlertProperty "${file}" effective)"
       [ -n "${effectiveTime}" ] || effectiveTime="${sentTime}"
       expiryTime="$(utcTime "${effectiveTime} -1 day")"
    }
@@ -174,7 +140,7 @@ acceptDiscreteAlertProperty() {
    local property="${2}"
    shift 2
 
-   local value="$(getAlertProperty "${file}" "${property}")"
+   local value="$(capGetAlertProperty "${file}" "${property}")"
    [ -n "${value}" ] || {
       logWarning "property not defined: ${property}: ${alertIdentifier}"
       return 1
@@ -196,7 +162,7 @@ acceptEnumeratedAlertProperty() {
    local -n enumeration="${3}"
    local threshold="${4}"
 
-   local value="$(getAlertProperty "${file}" "${property}")"
+   local value="$(capGetAlertProperty "${file}" "${property}")"
    [ -n "${value}" ] || {
       logWarning "property not defined: ${property}: ${alertIdentifier}"
       return 1
