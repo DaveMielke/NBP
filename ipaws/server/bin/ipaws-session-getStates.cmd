@@ -5,7 +5,7 @@ ipawsSession_getStates() {
    local -A result
 
    sqlEvaluate result "
-   select abbr, name from state order by name;
+   select abbr, SAME, name from state order by name;
    "
 
    local count="${result["count"]}"
@@ -17,6 +17,7 @@ ipawsSession_getStates() {
       let index+=1
 
       response+=" ${result["${index},abbr"]}"
+      response+=" ${result["${index},SAME"]}"
       response+=" ${result["${index},name"]}"
    done
 

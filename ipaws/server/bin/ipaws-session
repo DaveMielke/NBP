@@ -64,7 +64,7 @@ handleClientCommands() {
 
    while read -r -a arguments
    do
-      logInfo "client command: ${arguments[*]}"
+      logInfo "client command: ${client}: ${arguments[*]}"
       [ "${#arguments[*]}" -eq 0 ] && continue
 
       local command="${arguments[0]}"
@@ -76,6 +76,8 @@ handleClientCommands() {
       then
          . "${scriptlet}"
          "ipawsSession_${command}" "${arguments[@]}"
+      else
+         logWarning "unrecognized client command: ${client}: ${command}"
       fi
    done
 }
