@@ -60,14 +60,23 @@ handleAlertRemoved() {
 }
 
 handleClientCommands() {
-   local -a command
+   local -a arguments
 
-   while read -r -a command
+   while read -r -a arguments
    do
-      logInfo "client command: ${command[*]}"
-      [ "${#command[*]}" -eq 0 ] && continue
-      echo "${#command[0]} ${command[0]}"
-      [ "${command[0]}" = "quit" ] && return 0
+      logInfo "client command: ${arguments[*]}"
+      [ "${#arguments[*]}" -eq 0 ] && continue
+
+      local command="${arguments[0]}"
+      unset "arguments[0]"
+      [ "${command}" = "quit" ] && return 0
+      local scriptlet="${programDirectory}/ipaws-session-${command}.cmd"
+
+      if [ -f "${scriptlet}" ]
+      then
+         . "${scriptlet}"
+         "ipawsSession_${command}" "${arguments[@]}"
+      fi
    done
 }
 
