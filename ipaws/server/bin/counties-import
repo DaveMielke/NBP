@@ -1,0 +1,31 @@
+#!/bin/bash
+
+. "${0%/*}/prologue.sh"
+verifyCommandAvailability curl
+includeScriptLibraries command arguments options-common sql files time
+
+handleCommandArguments "" "${@}"
+prepareCommonCommandOptions
+
+sameCodes="${commandProperties["same-codes"]}"
+[ -n "${sameCodes}" ] || semanticError "SAME codes URL not defined"
+
+countiesFile="${dataDirectory}/counties.csv"
+curl -s -S -o "${countiesFile}" -z "${countiesFile}" "${sameCodes}"
+
+countiesTime="$(getFileModifiedTime "${countiesFile}")"
+sed -e 's/, */,/g' -i "${countiesFile}"
+setFileModifiedTime "${countiesFile}" "${countiesTime}"
+
+sqlExecute "
+drop table if exists county;
+create table county (
+   SAME text primary key not null,
+   name text not null,
+   state text not null
+);
+
+.import ${countiesFile} county
+"
+
+exit 0

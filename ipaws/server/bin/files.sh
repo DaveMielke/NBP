@@ -1,4 +1,5 @@
 verifyCommandAvailability stat getfattr setfattr
+includeScriptLibraries time
 
 getFileProperty() {
    local path="${1}"
@@ -52,23 +53,45 @@ getFileMountPoint() {
    getFileProperty "${path}" m
 } && readonly -f getFileMountPoint
 
-getFileAccessTime() {
+getFileAccessedTime() {
    local path="${1}"
 
    getFileProperty "${path}" X
-} && readonly -f getFileAccessTime
+} && readonly -f getFileAccessedTime
 
-getFileModificationTime() {
+getFileModifiedTime() {
    local path="${1}"
 
    getFileProperty "${path}" Y
-} && readonly -f getFileModificationTime
+} && readonly -f getFileModifiedTime
 
-getFileChangeTime() {
+getFileChangedTime() {
    local path="${1}"
 
    getFileProperty "${path}" Z
-} && readonly -f getFileChangeTime
+} && readonly -f getFileChangedTime
+
+setFileTime() {
+   local path="${1}"
+   local epoch="${2}"
+   local which="${3}"
+
+   touch -c -"${which}" -d "$(epochToUTC "${epoch}")" -- "${path}"
+} && readonly -f setFileTime
+
+setFileAccessedTime() {
+   local path="${1}"
+   local epoch="${2}"
+
+   setFileTime "${path}" "${epoch}" a
+} && readonly -f setFileAccessedTime
+
+setFileModifiedTime() {
+   local path="${1}"
+   local epoch="${2}"
+
+   setFileTime "${path}" "${epoch}" m
+} && readonly -f setFileModifiedTime
 
 getFileAttribute() {
    local path="${1}"

@@ -44,6 +44,6 @@ waitIfAlreadyRunning() {
 } && readonly -f waitIfAlreadyRunning
 
 importCommandProperties() {
-   importProperties commandProperties "${configurationDirectory}/${programName%%-*}.conf"
+   importProperties commandProperties "${configurationDirectory}/commands.conf"
 } && readonly -f importCommandProperties
 

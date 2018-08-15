@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
+verifyCommandAvailability curl
 includeScriptLibraries command arguments options-common options-retrieve time
 
 showCommandUsageSummary() {
