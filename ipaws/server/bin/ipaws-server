@@ -72,7 +72,7 @@ reviewAlerts() {
 awaitClients() {
    logInfo "listening: Port:${portNumber} Max:${maximumClients}"
 
-   makeCommand ipaws-session
+   makeCommand client-session ipaws
    ncat -l "${portNumber}" --max-conns "${maximumClients}" --keep-open --sh-exec "${command[*]}"
 }
 

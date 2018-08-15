@@ -1,0 +1,54 @@
+#!/bin/bash
+
+. "${0%/*}/prologue.sh"
+includeScriptLibraries command arguments options-common
+
+showCommandUsageSummary() {
+cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY
+}
+
+handlePositionalCommandArguments() {
+   [ "${#}" -ge 1 ] || syntaxError "missing server type"
+   serverType="${1}"
+   shift 1
+
+   serverScriptlet="${programDirectory}/${serverType}-session.cmd"
+   [ -f "${serverScriptlet}" ] || syntaxError "unknown server type: ${serverType}"
+
+   [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"
+}
+
+handleClientCommands() {
+   local -a arguments
+
+   while read -r -a arguments
+   do
+      logInfo "${serverType} client command: ${client}: ${arguments[*]}"
+      [ "${#arguments[*]}" -eq 0 ] && continue
+
+      local command="${arguments[0]}"
+      unset "arguments[0]"
+      [ "${command}" = "quit" ] && return 0
+      local scriptlet="${programDirectory}/ipaws-session-${command}.cmd"
+
+      if [ -f "${scriptlet}" ]
+      then
+         . "${scriptlet}"
+         "ipawsSession_${command}" "${arguments[@]}"
+      else
+         logWarning "unrecognized ${serverType} client command: ${client}: ${command}"
+      fi
+   done
+}
+
+handleCommandArguments "server-type" "${@}"
+prepareCommonCommandOptions
+
+client="[${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
+logInfo "${serverType} client connected: ${client}"
+. "${serverScriptlet}"
+handleClientCommands
+logInfo "${serverType} client disconnected: ${client}"
+
+exit 0
