@@ -25,6 +25,6 @@ ipawsSession_getCounties() {
       done
    }
 
-   echo "${response}"
+   writeClientResponse "${response}"
 }
 

@@ -24,7 +24,7 @@ handleClientCommands() {
 
    while read -r -a arguments
    do
-      logInfo "${serverType} client command: ${client}: ${arguments[*]}"
+      logInfo "command: ${client}: ${arguments[*]}"
       [ "${#arguments[*]}" -eq 0 ] && continue
 
       local command="${arguments[0]}"
@@ -37,18 +37,37 @@ handleClientCommands() {
          . "${scriptlet}"
          "${serverType}Session_${command}" "${arguments[@]}"
       else
-         logWarning "unrecognized ${serverType} client command: ${client}: ${command}"
+         logWarning "unrecognized command: ${client}: ${command}"
       fi
    done
+}
+
+beginClientResponse() {
+   exec {clientResponseLock}>> "/dev/stdout"
+   flock -e "${clientResponseLock}"
+}
+
+endClientResponse() {
+   flock -u "${clientResponseLock}"
+   exec {clientResponseLock}>&-
+   unset clientResponseLock
+}
+
+writeClientResponse() {
+   local response="${1}"
+
+   beginClientResponse
+   echo "${response}"
+   endClientResponse
 }
 
 handleCommandArguments "server-type" "${@}"
 prepareCommonCommandOptions
 
 client="[${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
-logInfo "${serverType} client connected: ${client}"
+logInfo "connected: ${client}"
 . "${serverScriptlet}"
 handleClientCommands
-logInfo "${serverType} client disconnected: ${client}"
+logInfo "disconnected: ${client}"
 
 exit 0

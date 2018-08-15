@@ -21,6 +21,6 @@ ipawsSession_getStates() {
       response+=" ${result["${index},name"]}"
    done
 
-   echo "${response}"
+   writeClientResponse "${response}"
 }
 

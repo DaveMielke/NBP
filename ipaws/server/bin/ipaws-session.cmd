@@ -46,13 +46,16 @@ ipawsMonitorAlerts() {
 ipawsAlertAdded() {
    local identifier="${1}"
 
-   echo "alert added: ${identifier}"
+   beginClientResponse
+   echo "beginAlert ${identifier}"
+   echo "endAlert ${identifier}"
+   endClientResponse
 }
 
 ipawsAlertRemoved() {
    local identifier="${1}"
 
-   echo "alert removed: ${identifier}"
+   writeClientResponse "removeAlert ${identifier}"
 }
 
 cd "${dataDirectory}"
