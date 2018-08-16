@@ -20,6 +20,14 @@ handlePositionalCommandArguments() {
    [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"
 }
 
+beginServerSession() {
+   :
+}
+
+endServerSession() {
+   :
+}
+
 handleClientCommands() {
    local -a arguments
 
@@ -67,7 +75,11 @@ prepareCommonCommandOptions
 
 clientReference="[${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
 logInfo "connected: ${clientReference}"
+
 . "${serverScriptlet}"
+beginServerSession
+pushOnExitCommand endServerSession
+
 handleClientCommands
 logInfo "disconnected: ${clientReference}"
 

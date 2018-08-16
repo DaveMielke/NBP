@@ -1,4 +1,18 @@
 verifyCommandAvailability inotifywait
+includeScriptLibraries sql
+
+endServerSession() {
+   local command="begin transaction;"
+   local table
+
+   for table in areas alerts
+   do
+      command+=" delete from ${table} where client='${clientReference}';"
+   done
+
+   command+=" commit;"
+   sqlExecute "${command}"
+}
 
 ipawsMonitorAlerts() {
    coproc inotify {
