@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
+verifyCommandAvailability flock
 includeScriptLibraries command arguments options-common
 
 showCommandUsageSummary() {

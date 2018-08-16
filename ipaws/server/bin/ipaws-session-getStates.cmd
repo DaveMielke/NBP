@@ -5,7 +5,7 @@ ipawsSession_getStates() {
    local -A result
 
    sqlEvaluate result "
-   select abbr, SAME, name from state order by name;
+   select abbr, SAME, name from states order by name;
    "
 
    local count="${result["count"]}"

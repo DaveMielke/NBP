@@ -35,14 +35,16 @@ else
 fi
 
 sqlExecute "
-drop table if exists county;
-create table county (
+create table if not exists counties (
    SAME text primary key not null,
    name text not null,
    state text not null
 );
 
-.import ${csvFile} county
+begin transaction;
+delete from counties;
+.import ${csvFile} counties
+commit;
 "
 
 exit 0

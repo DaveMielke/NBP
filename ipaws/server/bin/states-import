@@ -7,14 +7,16 @@ handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
 
 sqlExecute "
-drop table if exists state;
-create table state (
+create table if not exists states (
    SAME text primary key not null,
    abbr text unique not null,
    name text not null
 );
 
-.import ${configurationDirectory}/states.csv state
+begin transaction;
+delete from states;
+.import ${configurationDirectory}/states.csv states
+commit;
 "
 
 exit 0

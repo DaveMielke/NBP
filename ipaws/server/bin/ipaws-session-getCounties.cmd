@@ -8,7 +8,7 @@ ipawsSession_getCounties() {
       local -A result
 
       sqlEvaluate result "
-      select SAME, name from county where state = '${state}' order by name;
+      select SAME, name from counties where state = '${state}' order by name;
       "
 
       response+=" ${state}"
