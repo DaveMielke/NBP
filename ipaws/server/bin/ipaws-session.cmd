@@ -117,4 +117,4 @@ ipawsDeleteAlert() {
 }
 
 cd "${dataDirectory}"
-ipawsMonitorAlerts
+ipawsHaveAlerts=false
