@@ -6,6 +6,13 @@ sqlMakeCommand() {
    sqlCommand=(sqlite3 -init "${configurationDirectory}/${sqlConfigurationFile}" "${@}" "${dataDirectory}/${sqlDatabaseFile}")
 } && readonly -f sqlMakeCommand
 
+sqlExecute() {
+   local command="${1}"
+
+   sqlMakeCommand -separator ,
+   "${sqlCommand[@]}" <<<"${command}"
+} && readonly -f sqlExecute
+
 sqlEvaluate() {
    local -n sqlResponse="${1}"
    local command="${2}"
@@ -33,10 +40,17 @@ sqlEvaluate() {
    sqlResponse["count"]="${count}"
 } && readonly -f sqlEvaluate
 
-sqlExecute() {
-   local command="${1}"
+sqlCount() {
+   local -n sqlCount="${1}"
+   local sqlTable="${2}"
+   local sqlWhere="${3}"
 
-   sqlMakeCommand -separator ,
-   "${sqlCommand[@]}" <<<"${command}"
-} && readonly -f sqlExecute
+   local command="select count(*) as count from ${sqlTable}"
+   [ -n "${sqlWhere}" ] && command+=" where ${sqlWhere}"
+   command+=";"
+
+   local -A sqlResult
+   sqlEvaluate sqlResult "${command}"
+   sqlCount="${sqlResult["1,count"]}"
+} && readonly -f sqlCount
 
