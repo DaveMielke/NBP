@@ -1,5 +1,5 @@
 verifyCommandAvailability inotifywait
-includeScriptLibraries sql
+includeScriptLibraries cap sql
 
 endServerSession() {
    local command="begin transaction;"
@@ -60,16 +60,60 @@ ipawsMonitorAlerts() {
 ipawsAlertAdded() {
    local identifier="${1}"
 
-   beginClientResponse
-   echo "beginAlert ${identifier}"
-   echo "endAlert ${identifier}"
-   endClientResponse
+   ipawsHaveAlert "${identifier}" || {
+      local file="${identifier}.${alertFileExtension}"
+      set -- $(capGetAlertProperty "${file}" area.SAME)
+      [ "${#}" -eq 0 ] && return 0
+
+      local areas=""
+      local area
+
+      for area
+      do
+         [ -n "${areas}" ] && areas+=", "
+         areas+="'${area}'"
+      done
+
+      local count
+      sqlCount count areas "client='${clientReference}' and SAME in (${areas})"
+      [ "${count}" -eq 0 ] && return 0
+
+      beginClientResponse
+      echo "beginAlert ${identifier}"
+      echo "endAlert ${identifier}"
+      endClientResponse
+
+      ipawsInsertAlert "${identifier}"
+   }
 }
 
 ipawsAlertRemoved() {
    local identifier="${1}"
 
-   writeClientResponse "removeAlert ${identifier}"
+   ipawsHaveAlert "${identifier}" && {
+      writeClientResponse "removeAlert ${identifier}"
+      ipawsDeleteAlert "${identifier}"
+   }
+}
+
+ipawsHaveAlert() {
+   local identifier="${1}"
+
+   sqlCount count alerts "client='${clientReference}' and identifier='${identifier}'"
+   (( count == 0 )) && return 1
+   return 0
+}
+
+ipawsInsertAlert() {
+   local identifier="${1}"
+
+   sqlExecute "insert into alerts (client, identifier) values ('${clientReference}', '${identifier}');"
+}
+
+ipawsDeleteAlert() {
+   local identifier="${1}"
+
+   sqlExecute "delete from alerts where client='${clientReference}' and identifier='${identifier}';"
 }
 
 cd "${dataDirectory}"
