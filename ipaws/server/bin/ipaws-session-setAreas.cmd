@@ -18,11 +18,11 @@ ipawsSession_setAreas() {
    done
 
    local command="begin transaction;"
-   command+=" delete from areas where client='${clientReference}';"
+   command+=" delete from requested_areas where client='${clientReference}';"
 
    for area in "${!areas[@]}"
    do
-      command+=" insert into areas (client, SAME) values ('${clientReference}', '${area}');"
+      command+=" insert into requested_areas (client, SAME) values ('${clientReference}', '${area}');"
    done
 
    command+=" commit;"

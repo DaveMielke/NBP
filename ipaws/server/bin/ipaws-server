@@ -96,15 +96,15 @@ exec 2> >(writeLog)
 sqlExecute "
 drop table if exists states;
 drop table if exists counties;
-drop table if exists areas;
-drop table if exists alerts;
+drop table if exists requested_areas;
+drop table if exists sent_alerts;
 
-create table areas (
+create table requested_areas (
    client text not null,
    SAME text not null
 );
 
-create table alerts (
+create table sent_alerts (
    client text not null,
    identifier text not null
 );

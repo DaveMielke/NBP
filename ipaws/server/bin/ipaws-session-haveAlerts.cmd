@@ -1,16 +1,17 @@
-includeScriptLibraries sql
-
 ipawsSession_haveAlerts() {
-   "${ipawsHaveAlerts}" || {
-      ipawsHaveAlerts=true
-      local identifier
+   local identifier
 
-      for identifier
-      do
+   for identifier
+   do
+      local file="${identifier}.${alertFileExtension}"
+
+      if [ ! -f "${file}" ]
+      then
+         writeClientResponse "removeAlert ${identifier}"
+      elif ! ipawsHasAlert "${identifier}"
+      then
          ipawsInsertAlert "${identifier}"
-      done
-
-      ipawsMonitorAlerts
-   }
+      fi
+   done
 }
 

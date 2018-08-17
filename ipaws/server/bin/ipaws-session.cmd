@@ -5,7 +5,7 @@ endServerSession() {
    local command="begin transaction;"
    local table
 
-   for table in areas alerts
+   for table in requested_areas sent_alerts
    do
       command+=" delete from ${table} where client='${clientReference}';"
    done
@@ -18,7 +18,8 @@ ipawsMonitorAlerts() {
    coproc inotify {
       exec inotifywait --quiet --monitor \
       --format "%T %f % e" --timefmt "%Y-%m-%dT%H:%M:%S" \
-      --event moved_to --event moved_from --event delete \
+      --event create --event delete \
+      --event moved_from --event moved_to \
       -- .
    }
 
@@ -45,9 +46,12 @@ ipawsMonitorAlerts() {
          do
             case "${event}"
             in
-               MOVED_TO) ipawsAlertAdded "${identifier}";;
-               MOVED_FROM) ipawsAlertRemoved "${identifier}";;
+               CREATE) ipawsAlertAdded "${identifier}";;
                DELETE) ipawsAlertRemoved "${identifier}";;
+
+               MOVED_FROM) ipawsAlertRemoved "${identifier}";;
+               MOVED_TO) ipawsAlertAdded "${identifier}";;
+
                *) logWarning "unhandled inotify event: ${event}: ${file}";;
             esac
          done
@@ -60,7 +64,7 @@ ipawsMonitorAlerts() {
 ipawsAlertAdded() {
    local identifier="${1}"
 
-   ipawsHaveAlert "${identifier}" || {
+   ipawsHasAlert "${identifier}" || {
       local file="${identifier}.${alertFileExtension}"
       set -- $(capGetAlertProperty "${file}" area.SAME)
       [ "${#}" -eq 0 ] && return 0
@@ -75,7 +79,7 @@ ipawsAlertAdded() {
       done
 
       local count
-      sqlCount count areas "client='${clientReference}' and SAME in (${areas})"
+      sqlCount count requested_areas "client='${clientReference}' and SAME in (${areas})"
       [ "${count}" -eq 0 ] && return 0
 
       beginClientResponse
@@ -90,16 +94,16 @@ ipawsAlertAdded() {
 ipawsAlertRemoved() {
    local identifier="${1}"
 
-   ipawsHaveAlert "${identifier}" && {
+   ipawsHasAlert "${identifier}" && {
       writeClientResponse "removeAlert ${identifier}"
       ipawsDeleteAlert "${identifier}"
    }
 }
 
-ipawsHaveAlert() {
+ipawsHasAlert() {
    local identifier="${1}"
 
-   sqlCount count alerts "client='${clientReference}' and identifier='${identifier}'"
+   sqlCount count sent_alerts "client='${clientReference}' and identifier='${identifier}'"
    (( count == 0 )) && return 1
    return 0
 }
@@ -107,14 +111,14 @@ ipawsHaveAlert() {
 ipawsInsertAlert() {
    local identifier="${1}"
 
-   sqlExecute "insert into alerts (client, identifier) values ('${clientReference}', '${identifier}');"
+   sqlExecute "insert into sent_alerts (client, identifier) values ('${clientReference}', '${identifier}');"
 }
 
 ipawsDeleteAlert() {
    local identifier="${1}"
 
-   sqlExecute "delete from alerts where client='${clientReference}' and identifier='${identifier}';"
+   sqlExecute "delete from sent_alerts where client='${clientReference}' and identifier='${identifier}';"
 }
 
 cd "${dataDirectory}"
-ipawsHaveAlerts=false
+ipawsSendingAlerts=false
