@@ -20,14 +20,6 @@ handlePositionalCommandArguments() {
    [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"
 }
 
-beginServerSession() {
-   :
-}
-
-endServerSession() {
-   :
-}
-
 handleClientCommands() {
    local -a arguments
 

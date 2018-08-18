@@ -1,7 +1,7 @@
 includeScriptLibraries sql
 
 ipawsSession_getStates() {
-   local response="states"
+   local response="allStates"
    local -A result
 
    sqlEvaluate result "

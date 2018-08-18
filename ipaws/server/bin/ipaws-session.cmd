@@ -1,7 +1,15 @@
 verifyCommandAvailability inotifywait
 includeScriptLibraries cap sql
 
+beginServerSession() {
+   emptySessionSpecificTables
+} && readonly -f beginServerSession
+
 endServerSession() {
+   emptySessionSpecificTables
+} && readonly -f endServerSession
+
+emptySessionSpecificTables() {
    local command="begin transaction;"
    local table
 
@@ -12,7 +20,7 @@ endServerSession() {
 
    command+=" commit;"
    sqlExecute "${command}"
-}
+} && readonly -f emptySessionSpecificTables
 
 ipawsMonitorAlerts() {
    coproc inotify {
@@ -59,7 +67,7 @@ ipawsMonitorAlerts() {
    ) &
 
    eval exec "9<&-"
-}
+} && readonly -f ipawsMonitorAlerts
 
 ipawsAlertAdded() {
    local identifier="${1}"
@@ -84,12 +92,13 @@ ipawsAlertAdded() {
 
       beginClientResponse
       echo "beginAlert ${identifier}"
+      cat "${file}"
       echo "endAlert ${identifier}"
       endClientResponse
 
       ipawsInsertAlert "${identifier}"
    }
-}
+} && readonly -f ipawsAlertAdded
 
 ipawsAlertRemoved() {
    local identifier="${1}"
@@ -98,7 +107,7 @@ ipawsAlertRemoved() {
       writeClientResponse "removeAlert ${identifier}"
       ipawsDeleteAlert "${identifier}"
    }
-}
+} && readonly -f ipawsAlertRemoved
 
 ipawsHasAlert() {
    local identifier="${1}"
@@ -106,19 +115,19 @@ ipawsHasAlert() {
    sqlCount count sent_alerts "client='${clientReference}' and identifier='${identifier}'"
    (( count == 0 )) && return 1
    return 0
-}
+} && readonly -f ipawsHasAlert
 
 ipawsInsertAlert() {
    local identifier="${1}"
 
    sqlExecute "insert into sent_alerts (client, identifier) values ('${clientReference}', '${identifier}');"
-}
+} && readonly -f ipawsInsertAlert
 
 ipawsDeleteAlert() {
    local identifier="${1}"
 
    sqlExecute "delete from sent_alerts where client='${clientReference}' and identifier='${identifier}';"
-}
+} && readonly -f ipawsDeleteAlert
 
 cd "${dataDirectory}"
 ipawsSendingAlerts=false

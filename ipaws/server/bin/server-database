@@ -1,0 +1,11 @@
+#!/bin/bash
+
+. "${0%/*}/prologue.sh"
+includeScriptLibraries command arguments options-common sql
+
+handleCommandArguments "" "${@}"
+prepareCommonCommandOptions
+
+sqlMakeCommand
+"${sqlCommand[@]}"
+exit "${?}"

@@ -1,7 +1,7 @@
 includeScriptLibraries sql
 
 ipawsSession_getCounties() {
-   local response="counties"
+   local response="stateCounties"
 
    [ "${#}" -ge 1 ] && {
       local state="${1}"
