@@ -10,8 +10,8 @@
     android:id="@+id/main_switch"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:onClick="mainSwitchToggled"
-    android:textOn="Running"
-    android:textOff="Stopped"
+    android:onClick="onMainSwitchToggled"
+    android:textOff="@string/main_switch_off"
+    android:textOn="@string/main_switch_on"
    />
 </LinearLayout>

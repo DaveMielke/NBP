@@ -3,4 +3,7 @@
 <resources>
   <string name="app_name">NBP IPAWS</string>
   <string name="alert_service_label">NBP IPAWS Alert Service</string>
+
+  <string name="main_switch_off">Stopped</string>
+  <string name="main_switch_on">Running</string>
 </resources>

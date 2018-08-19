@@ -14,10 +14,6 @@ public class MainActivity extends Activity {
 
   private Switch mainSwitch = null;
 
-  private final Intent makeAlertServiceIntent () {
-    return new Intent(this, AlertService.class);
-  }
-
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,7 +28,11 @@ public class MainActivity extends Activity {
     mainSwitch.setChecked((AlertService.getAlertService() != null));
   }
 
-  public final void mainSwitchToggled (View view) {
+  private final Intent makeAlertServiceIntent () {
+    return new Intent(this, AlertService.class);
+  }
+
+  public final void onMainSwitchToggled (View view) {
     boolean isOn = mainSwitch.isChecked();
 
     if (isOn) {
