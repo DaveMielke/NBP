@@ -33,15 +33,16 @@ public class SessionThread extends Thread {
     sessionContext = context;
   }
 
-  private final void handleResponse (String response) {
-  }
-
-  public final void sendCommand (StringBuilder command) throws IOException {
+  public final void sendCommand (String command) throws IOException {
     synchronized (sessionWriter) {
-      sessionWriter.write(command.toString());
+      sessionWriter.write(command);
       sessionWriter.write('\n');
       sessionWriter.flush();
     }
+  }
+
+  public final void sendCommand (StringBuilder command) throws IOException {
+    sendCommand(command.toString());
   }
 
   public final void setAreas () throws IOException {
@@ -55,9 +56,15 @@ public class SessionThread extends Thread {
     sendCommand(command);
   }
 
-  private final void sendAlerts () throws IOException {
-    StringBuilder command = new StringBuilder("sendAlerts");
-    sendCommand(command);
+  private final void handleResponse (String response) {
+  }
+
+  private final void handleResponses () throws IOException {
+    String response;
+
+    while ((response = sessionReader.readLine()) != null) {
+      handleResponse(response);
+    }
   }
 
   private final SocketAddress makeSocketAddress () {
@@ -84,15 +91,11 @@ public class SessionThread extends Thread {
         try {
           setAreas();
           haveAlerts();
-          sendAlerts();
+          sendCommand("sendAlerts");
 
           sessionReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
           try {
-            String response;
-
-            while ((response = sessionReader.readLine()) != null) {
-              handleResponse(response);
-            }
+            handleResponses();
           } finally {
             sessionReader = null;
           }
