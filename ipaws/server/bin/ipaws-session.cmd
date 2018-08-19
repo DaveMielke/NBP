@@ -74,17 +74,8 @@ ipawsAlertAdded() {
 
    ipawsHasAlert "${identifier}" || {
       local file="${identifier}.${alertFileExtension}"
-      set -- $(capGetAlertProperty "${file}" area.SAME)
-      [ "${#}" -eq 0 ] && return 0
-
-      local areas=""
-      local area
-
-      for area
-      do
-         [ -n "${areas}" ] && areas+=", "
-         areas+="'${area}'"
-      done
+      local areas="$(capGetAlertProperty "${file}" SQL.areas)"
+      [ -n "${areas}" ] || return 0
 
       local count
       sqlCount count requested_areas "client='${clientReference}' and SAME in (${areas})"

@@ -40,8 +40,9 @@ extractAlerts() {
                   logInfo "new alert: ${alertIdentifier}"
                   capCacheAlertProperties "${temporaryFile}"
 
-                  if acceptAlert "${temporaryFile}" true
-                  then
+                  acceptAlert "${temporaryFile}" true && {
+                     cacheAlertAreas "${temporaryFile}"
+
                      logInfo "alert accepted: ${alertIdentifier}"
                      let acceptCount+=1
 
@@ -49,7 +50,7 @@ extractAlerts() {
                      chmod -- a-w "${alertFile}"
 
                      continue
-                  fi
+                  }
 
                   logInfo "alert rejected: ${alertIdentifier}"
                   let rejectCount+=1
@@ -63,6 +64,34 @@ extractAlerts() {
          rm -f -- "${alertsFile}"
       done
    done
+}
+
+cacheAlertAreas() {
+   local alert="${1}"
+
+   set -- $(capGetAlertProperty "${alert}" area.SAME)
+   local -A areas
+   local area
+
+   for area
+   do
+      areas["${area}"]=1
+
+      area="${area:1:2}"
+      areas["${area}"]=1
+   done
+
+   areas["00"]=1
+   set -- ${!areas[@]}
+   local strings=""
+
+   for area
+   do
+      [ -n "${strings}" ] && strings+=","
+      strings+="'${area}'"
+   done
+
+   capSetAlertProperty "${alert}" SQL.areas "${strings}"
 }
 
 handleCommandArguments "" "${@}"

@@ -8,13 +8,19 @@ ipawsSession_setAreas() {
    for area
    do
       [[ "${area}" =~ ^[0-9]{6}$ ]] || continue
-      areas["${area}"]=1
 
-      area="0${area#?}"
-      areas["${area}"]=1
+      if [[ "${area}" =~ ^0..0{3}$ ]]
+      then
+         areas["${area:1:2}"]=1
+      else
+         areas["${area}"]=1
 
-      area="${area%???}000"
-      areas["${area}"]=1
+         area="0${area#?}"
+         areas["${area}"]=1
+
+         area="${area%???}000"
+         areas["${area}"]=1
+      fi
    done
 
    local command="begin transaction;"
