@@ -18,21 +18,20 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
 
-public class SessionThread extends Thread {
-  private final static String LOG_TAG = SessionThread.class.getName();
+public class AlertSession {
+  private final static String LOG_TAG = AlertSession.class.getName();
 
+  private final static String DATA_ENCODING = "UTF8";
   private final static int INITIAL_DELAY = 1;
   private final static int MAXIMUM_DELAY = 300;
-  private final static String DATA_ENCODING = "UTF8";
 
-  private Context sessionContext = null;
+  private final Context sessionContext;
+  private final Thread sessionThread;
+  private boolean isStopping = false;
+
+  private Socket sessionSocket = null;
   private BufferedWriter sessionWriter = null;
   private BufferedReader sessionReader = null;
-
-  public SessionThread (Context context) {
-    super("session-thread");
-    sessionContext = context;
-  }
 
   public final void writeCommand (String command) throws IOException {
     synchronized (sessionWriter) {
@@ -62,9 +61,11 @@ public class SessionThread extends Thread {
   }
 
   private final void handleResponses () throws IOException {
-    String response;
+    while (true) {
+      String response = sessionReader.readLine();
+      if (Thread.interrupted()) break;
+      if (response == null) break;
 
-    while ((response = sessionReader.readLine()) != null) {
       Log.d(LOG_TAG, ("received response: " + response));
       handleResponse(response);
     }
@@ -82,24 +83,26 @@ public class SessionThread extends Thread {
   private final boolean doSession () {
     boolean connected = false;
 
+    synchronized (this) {
+      sessionSocket = new Socket();
+    }
+
     try {
       SocketAddress address = makeSocketAddress();
       Log.d(LOG_TAG, ("connecting to " + address.toString()));
-
-      Socket socket = new Socket();
-      socket.connect(address);
+      sessionSocket.connect(address);
 
       try {
         connected = true;
         Log.d(LOG_TAG, "connected");
 
         try {
-          socket.setKeepAlive(true);
+          sessionSocket.setKeepAlive(true);
 
           sessionWriter =
             new BufferedWriter(
               new OutputStreamWriter(
-                socket.getOutputStream(),
+                sessionSocket.getOutputStream(),
                 DATA_ENCODING
               )
             );
@@ -112,7 +115,7 @@ public class SessionThread extends Thread {
             sessionReader =
               new BufferedReader(
                 new InputStreamReader(
-                  socket.getInputStream(),
+                  sessionSocket.getInputStream(),
                   DATA_ENCODING
                 )
               );
@@ -129,9 +132,11 @@ public class SessionThread extends Thread {
           Log.e(LOG_TAG, ("session error: " + exception.getMessage()));
         }
       } finally {
-        Log.d(LOG_TAG, "disconnecting");
-        socket.close();
-        socket = null;
+        synchronized (this) {
+          Log.d(LOG_TAG, "disconnecting");
+          sessionSocket.close();
+          sessionSocket = null;
+        }
       }
     } catch (IOException exception) {
       Log.e(LOG_TAG, ("socket error: " + exception.getMessage()));
@@ -140,8 +145,7 @@ public class SessionThread extends Thread {
     return connected;
   }
 
-  @Override
-  public void run () {
+  public final void doThread () {
     Log.d(LOG_TAG, "startiong");
 
     try {
@@ -151,16 +155,54 @@ public class SessionThread extends Thread {
         currentDelay = doSession()? INITIAL_DELAY: (currentDelay << 1);
         if (currentDelay > MAXIMUM_DELAY) currentDelay = MAXIMUM_DELAY;
 
-        try {
-          Log.d(LOG_TAG, "waiting");
-          sleep(currentDelay * 1000);
-        } catch (InterruptedException exception) {
-          Log.d(LOG_TAG, "interrupted");
-          break;
+        synchronized (this) {
+          if (isStopping) break;
+
+          try {
+            Log.d(LOG_TAG, "waiting");
+            wait(currentDelay * 1000);
+          } catch (InterruptedException exception) {
+            Log.d(LOG_TAG, "interrupted");
+            break;
+          }
         }
       }
     } finally {
-      Log.d(LOG_TAG, "stoppiong");
+      Log.d(LOG_TAG, "stopped");
     }
+  }
+
+  public final void stop () {
+    synchronized (this) {
+      if (!isStopping) {
+        Log.d(LOG_TAG, "stopping");
+        isStopping = true;
+        sessionThread.interrupt();
+      }
+
+      if (sessionSocket != null) {
+        try {
+          sessionSocket.close();
+        } catch (IOException exception) {
+          Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
+        }
+      }
+    }
+  }
+
+  public AlertSession (Context context) {
+    sessionContext = context;
+
+    sessionThread = new Thread(
+      new Runnable() {
+        @Override
+        public void run () {
+          doThread();
+        }
+      }
+    );
+
+    sessionThread.setName("session-thread");
+    sessionThread.start();
   }
 }

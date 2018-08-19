@@ -10,24 +10,23 @@ public class AlertService extends Service {
   private final static String LOG_TAG = AlertService.class.getName();
 
   private static AlertService alertService = null;
-  private static SessionThread sessionThread = null;
+  private static AlertSession alertSession = null;
 
   public static AlertService getAlertService () {
     return alertService;
   }
 
-  public static SessionThread getSessionThread () {
-    return sessionThread;
+  public static AlertSession getAlertSession () {
+    return alertSession;
   }
 
   @Override
   public void onCreate () {
     super.onCreate();
     alertService = this;
-    Log.d(LOG_TAG, "starting");
 
-    sessionThread = new SessionThread(this);
-    sessionThread.start();
+    Log.d(LOG_TAG, "starting");
+    alertSession = new AlertSession(this);
   }
 
   @Override
@@ -35,6 +34,9 @@ public class AlertService extends Service {
     try {
       Log.d(LOG_TAG, "stopping");
       alertService = null;
+
+      alertSession.stop();
+      alertSession = null;
     } finally {
       super.onDestroy();
     }

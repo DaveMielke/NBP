@@ -6,9 +6,12 @@
   android:layout_height="fill_parent"
   >
 
-  <TextView
+  <Switch
+    android:id="@+id/main_switch"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Hello World, MainActivity"
+    android:onClick="mainSwitchToggled"
+    android:textOn="Running"
+    android:textOff="Stopped"
    />
 </LinearLayout>
