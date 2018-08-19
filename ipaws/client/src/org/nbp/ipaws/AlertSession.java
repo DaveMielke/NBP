@@ -51,16 +51,21 @@ public class AlertSession extends AlertComponent {
     writeCommand(command);
   }
 
-  private final String readResponse () throws IOException {
-    String response = sessionReader.readLine();
-    if (Thread.interrupted()) return null;
-    return response;
+  private final String readResponse () {
+    try {
+      String response = sessionReader.readLine();
+      if (!Thread.interrupted()) return response;
+    } catch (IOException exception) {
+      Log.e(LOG_TAG, ("session read error: " + exception.getMessage()));
+    }
+
+    return null;
   }
 
   private final void handleResponse (String response) {
   }
 
-  private final void handleResponses () throws IOException {
+  private final void handleResponses () {
     while (true) {
       String response = readResponse();
       if (response == null) break;
