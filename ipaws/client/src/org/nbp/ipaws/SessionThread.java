@@ -21,8 +21,8 @@ import java.io.BufferedWriter;
 public class SessionThread extends Thread {
   private final static String LOG_TAG = SessionThread.class.getName();
 
-  private final static int INITIAL_DELAY =   1000;
-  private final static int MAXIMUM_DELAY = 300000;
+  private final static int INITIAL_DELAY = 1;
+  private final static int MAXIMUM_DELAY = 300;
   private final static String DATA_ENCODING = "UTF8";
 
   private Context sessionContext = null;
@@ -96,13 +96,13 @@ public class SessionThread extends Thread {
         try {
           socket.setKeepAlive(true);
 
-          sessionWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+          sessionWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), DATA_ENCODING));
           try {
             setAreas();
             haveAlerts();
             sendCommand("sendAlerts");
 
-            sessionReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            sessionReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), DATA_ENCODING));
             try {
               handleResponses();
             } finally {
@@ -139,7 +139,7 @@ public class SessionThread extends Thread {
 
         try {
           Log.d(LOG_TAG, "waiting");
-          sleep(currentDelay);
+          sleep(currentDelay * 1000);
         } catch (InterruptedException exception) {
           Log.d(LOG_TAG, "interrupted");
           break;
