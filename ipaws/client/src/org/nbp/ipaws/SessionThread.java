@@ -23,6 +23,7 @@ public class SessionThread extends Thread {
 
   private final static int INITIAL_DELAY =   1000;
   private final static int MAXIMUM_DELAY = 300000;
+  private final static String DATA_ENCODING = "UTF8";
 
   private Context sessionContext = null;
   private BufferedWriter sessionWriter = null;
@@ -35,6 +36,7 @@ public class SessionThread extends Thread {
 
   public final void sendCommand (String command) throws IOException {
     synchronized (sessionWriter) {
+      Log.d(LOG_TAG, ("sending command: " + command));
       sessionWriter.write(command);
       sessionWriter.write('\n');
       sessionWriter.flush();
@@ -63,6 +65,7 @@ public class SessionThread extends Thread {
     String response;
 
     while ((response = sessionReader.readLine()) != null) {
+      Log.d(LOG_TAG, ("received response: " + response));
       handleResponse(response);
     }
   }
@@ -82,9 +85,11 @@ public class SessionThread extends Thread {
     try {
       Socket socket = new Socket();
 
+      Log.d(LOG_TAG, "connecting");
       socket.connect(makeSocketAddress());
       try {
         connected = true;
+        Log.d(LOG_TAG, "connected");
         socket.setKeepAlive(true);
 
         sessionWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -103,6 +108,8 @@ public class SessionThread extends Thread {
           sessionWriter = null;
         }
       } finally {
+        Log.d(LOG_TAG, "disconnecting");
+
         try {
           socket.close();
         } catch (IOException exception) {
@@ -120,16 +127,25 @@ public class SessionThread extends Thread {
 
   @Override
   public void run () {
-    int currentDelay = INITIAL_DELAY;
+    Log.d(LOG_TAG, "startiong");
 
-    while (true) {
-      currentDelay = doSession()? INITIAL_DELAY: (currentDelay << 1);
-      if (currentDelay > MAXIMUM_DELAY) currentDelay = MAXIMUM_DELAY;
+    try {
+      int currentDelay = INITIAL_DELAY;
 
-      try {
-        sleep(currentDelay);
-      } catch (InterruptedException exception) {
+      while (true) {
+        currentDelay = doSession()? INITIAL_DELAY: (currentDelay << 1);
+        if (currentDelay > MAXIMUM_DELAY) currentDelay = MAXIMUM_DELAY;
+
+        try {
+          Log.d(LOG_TAG, "waiting");
+          sleep(currentDelay);
+        } catch (InterruptedException exception) {
+          Log.d(LOG_TAG, "interrupted");
+          break;
+        }
       }
+    } finally {
+      Log.d(LOG_TAG, "stoppiong");
     }
   }
 }
