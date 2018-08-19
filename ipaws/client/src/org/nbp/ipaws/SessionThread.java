@@ -34,7 +34,7 @@ public class SessionThread extends Thread {
     sessionContext = context;
   }
 
-  public final void sendCommand (String command) throws IOException {
+  public final void writeCommand (String command) throws IOException {
     synchronized (sessionWriter) {
       Log.d(LOG_TAG, ("sending command: " + command));
       sessionWriter.write(command);
@@ -43,19 +43,19 @@ public class SessionThread extends Thread {
     }
   }
 
-  public final void sendCommand (StringBuilder command) throws IOException {
-    sendCommand(command.toString());
+  public final void writeCommand (StringBuilder command) throws IOException {
+    writeCommand(command.toString());
   }
 
   public final void setAreas () throws IOException {
     StringBuilder command = new StringBuilder("setAreas");
     command.append(" 000000");
-    sendCommand(command);
+    writeCommand(command);
   }
 
   private final void haveAlerts () throws IOException {
     StringBuilder command = new StringBuilder("haveAlerts");
-    sendCommand(command);
+    writeCommand(command);
   }
 
   private final void handleResponse (String response) {
@@ -96,13 +96,27 @@ public class SessionThread extends Thread {
         try {
           socket.setKeepAlive(true);
 
-          sessionWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), DATA_ENCODING));
+          sessionWriter =
+            new BufferedWriter(
+              new OutputStreamWriter(
+                socket.getOutputStream(),
+                DATA_ENCODING
+              )
+            );
+
           try {
             setAreas();
             haveAlerts();
-            sendCommand("sendAlerts");
+            writeCommand("sendAlerts");
 
-            sessionReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), DATA_ENCODING));
+            sessionReader =
+              new BufferedReader(
+                new InputStreamReader(
+                  socket.getInputStream(),
+                  DATA_ENCODING
+                )
+              );
+
             try {
               handleResponses();
             } finally {
