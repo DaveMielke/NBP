@@ -2,4 +2,5 @@
 
 <resources>
   <string name="app_name">NBP IPAWS</string>
+  <string name="alert_service_label">NBP IPAWS Alert Service</string>
 </resources>
