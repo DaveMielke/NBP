@@ -83,43 +83,44 @@ public class SessionThread extends Thread {
     boolean connected = false;
 
     try {
-      Socket socket = new Socket();
+      SocketAddress address = makeSocketAddress();
+      Log.d(LOG_TAG, ("connecting to " + address.toString()));
 
-      Log.d(LOG_TAG, "connecting");
-      socket.connect(makeSocketAddress());
+      Socket socket = new Socket();
+      socket.connect(address);
+
       try {
         connected = true;
         Log.d(LOG_TAG, "connected");
-        socket.setKeepAlive(true);
 
-        sessionWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         try {
-          setAreas();
-          haveAlerts();
-          sendCommand("sendAlerts");
+          socket.setKeepAlive(true);
 
-          sessionReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+          sessionWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
           try {
-            handleResponses();
+            setAreas();
+            haveAlerts();
+            sendCommand("sendAlerts");
+
+            sessionReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            try {
+              handleResponses();
+            } finally {
+              sessionReader = null;
+            }
           } finally {
-            sessionReader = null;
+            sessionWriter = null;
           }
-        } finally {
-          sessionWriter = null;
+        } catch (IOException exception) {
+          Log.e(LOG_TAG, ("session error: " + exception.getMessage()));
         }
       } finally {
         Log.d(LOG_TAG, "disconnecting");
-
-        try {
-          socket.close();
-        } catch (IOException exception) {
-          Log.e(LOG_TAG, ("socket close error: " + exception.getMessage()));
-        }
-
+        socket.close();
         socket = null;
       }
     } catch (IOException exception) {
-      Log.e(LOG_TAG, ("socket I/O error: " + exception.getMessage()));
+      Log.e(LOG_TAG, ("socket error: " + exception.getMessage()));
     }
 
     return connected;
