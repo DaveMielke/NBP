@@ -12,9 +12,12 @@
   <!-- for accessing the internet -->
   <uses-permission android:name="android.permission.INTERNET" />
 
+  <!-- for restarting the service -->
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
   <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
     <activity
-      android:name="MainActivity"
+      android:name=".MainActivity"
       android:label="@string/app_name"
       >
 
@@ -25,9 +28,18 @@
     </activity>
 
     <service
-      android:name="AlertService"
+      android:name=".AlertService"
       android:label="@string/alert_service_label"
       >
     </service>
+
+    <receiver
+      android:name=".HostMonitor"
+      >
+
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+      </intent-filter>
+    </receiver>
   </application>
 </manifest>

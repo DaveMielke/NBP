@@ -28,17 +28,13 @@ public class MainActivity extends Activity {
     mainSwitch.setChecked((AlertService.getAlertService() != null));
   }
 
-  private final Intent makeAlertServiceIntent () {
-    return new Intent(this, AlertService.class);
-  }
-
   public final void onMainSwitchToggled (View view) {
     boolean isOn = mainSwitch.isChecked();
 
     if (isOn) {
-      startService(makeAlertServiceIntent());
+      startService(AlertService.makeIntent(this));
     } else {
-      stopService(makeAlertServiceIntent());
+      stopService(AlertService.makeIntent(this));
     }
   }
 }

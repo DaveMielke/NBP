@@ -4,6 +4,7 @@ import android.util.Log;
 
 import android.app.Service;
 import android.os.IBinder;
+import android.content.Context;
 import android.content.Intent;
 
 public class AlertService extends Service {
@@ -50,5 +51,9 @@ public class AlertService extends Service {
   @Override
   public IBinder onBind (Intent intent) {
     return null;
+  }
+
+  public static Intent makeIntent (Context context) {
+    return new Intent(context, AlertService.class);
   }
 }
