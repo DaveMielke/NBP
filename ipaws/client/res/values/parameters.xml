@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources>
-  <string name="server_name">mielke.cc</string>
-  <integer name="server_port">14216</integer>
-</resources>

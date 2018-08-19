@@ -10,27 +10,21 @@ import java.net.SocketAddress;
 import java.net.InetSocketAddress;
 import java.io.IOException;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
-import java.io.OutputStream;
+import java.io.Writer;
 import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
 
-public class AlertSession {
+public class AlertSession extends AlertComponent {
   private final static String LOG_TAG = AlertSession.class.getName();
 
-  private final static String DATA_ENCODING = "UTF8";
-  private final static int INITIAL_DELAY = 1;
-  private final static int MAXIMUM_DELAY = 300;
-
-  private final Context sessionContext;
   private final Thread sessionThread;
   private boolean isStopping = false;
 
   private Socket sessionSocket = null;
-  private BufferedWriter sessionWriter = null;
+  private Writer sessionWriter = null;
   private BufferedReader sessionReader = null;
 
   public final void writeCommand (String command) throws IOException {
@@ -57,13 +51,18 @@ public class AlertSession {
     writeCommand(command);
   }
 
+  private final String readResponse () throws IOException {
+    String response = sessionReader.readLine();
+    if (Thread.interrupted()) return null;
+    return response;
+  }
+
   private final void handleResponse (String response) {
   }
 
   private final void handleResponses () throws IOException {
     while (true) {
-      String response = sessionReader.readLine();
-      if (Thread.interrupted()) break;
+      String response = readResponse();
       if (response == null) break;
 
       Log.d(LOG_TAG, ("received response: " + response));
@@ -72,11 +71,9 @@ public class AlertSession {
   }
 
   private final SocketAddress makeSocketAddress () {
-    Resources resources = sessionContext.getResources();
-
     return new InetSocketAddress(
-      resources.getString(R.string.server_name),
-      resources.getInteger(R.integer.server_port)
+      ApplicationParameters.SERVER_NAME,
+      ApplicationParameters.SERVER_PORT
     );
   }
 
@@ -103,7 +100,7 @@ public class AlertSession {
             new BufferedWriter(
               new OutputStreamWriter(
                 sessionSocket.getOutputStream(),
-                DATA_ENCODING
+                ApplicationParameters.CHARACTER_ENCODING
               )
             );
 
@@ -116,7 +113,7 @@ public class AlertSession {
               new BufferedReader(
                 new InputStreamReader(
                   sessionSocket.getInputStream(),
-                  DATA_ENCODING
+                  ApplicationParameters.CHARACTER_ENCODING
                 )
               );
 
@@ -149,11 +146,17 @@ public class AlertSession {
     Log.d(LOG_TAG, "startiong");
 
     try {
-      int currentDelay = INITIAL_DELAY;
+      int currentDelay = ApplicationParameters.RECONNECT_INITIAL_DELAY;
 
       while (true) {
-        currentDelay = doSession()? INITIAL_DELAY: (currentDelay << 1);
-        if (currentDelay > MAXIMUM_DELAY) currentDelay = MAXIMUM_DELAY;
+        currentDelay =
+          doSession()?
+          ApplicationParameters.RECONNECT_INITIAL_DELAY:
+          (currentDelay << 1);
+
+        if (currentDelay > ApplicationParameters.RECONNECT_MAXIMUM_DELAY) {
+          currentDelay = ApplicationParameters.RECONNECT_MAXIMUM_DELAY;
+        }
 
         synchronized (this) {
           if (isStopping) break;
@@ -191,7 +194,7 @@ public class AlertSession {
   }
 
   public AlertSession (Context context) {
-    sessionContext = context;
+    super(context);
 
     sessionThread = new Thread(
       new Runnable() {
