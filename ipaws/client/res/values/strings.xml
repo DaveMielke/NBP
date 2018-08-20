@@ -6,4 +6,12 @@
 
   <string name="main_switch_off">Stopped</string>
   <string name="main_switch_on">Running</string>
+
+  <string name="action_addArea">Add Area</string>
+  <string name="action_removeArea">Remove Area</string>
+  <string name="action_selectState">Select State</string>
+
+  <string name="message_no_session">alert service not running</string>
+  <string name="message_session_error">server communication error</string>
+  <string name="message_long_response">data not available - try later</string>
 </resources>

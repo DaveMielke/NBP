@@ -30,11 +30,17 @@ public class AlertSession extends AlertComponent implements ResponseReader {
   private BufferedReader sessionReader = null;
 
   public final void writeCommand (String command) throws IOException {
-    synchronized (sessionWriter) {
-      Log.d(LOG_TAG, ("sending command: " + command));
-      sessionWriter.write(command);
-      sessionWriter.write('\n');
-      sessionWriter.flush();
+    synchronized (this) {
+      if (sessionWriter == null) {
+        throw new IOException("not connected to server");
+      }
+
+      synchronized (sessionWriter) {
+        Log.d(LOG_TAG, ("sending command: " + command));
+        sessionWriter.write(command);
+        sessionWriter.write('\n');
+        sessionWriter.flush();
+      }
     }
   }
 
@@ -139,34 +145,42 @@ public class AlertSession extends AlertComponent implements ResponseReader {
         try {
           sessionSocket.setKeepAlive(true);
 
-          sessionWriter =
-            new BufferedWriter(
-              new OutputStreamWriter(
-                sessionSocket.getOutputStream(),
-                ApplicationParameters.CHARACTER_ENCODING
-              )
-            );
+          synchronized (this) {
+            sessionWriter =
+              new BufferedWriter(
+                new OutputStreamWriter(
+                  sessionSocket.getOutputStream(),
+                  ApplicationParameters.CHARACTER_ENCODING
+                )
+              );
+          }
 
           try {
             setAreas();
             haveAlerts();
             writeCommand("sendAlerts");
 
-            sessionReader =
-              new BufferedReader(
-                new InputStreamReader(
-                  sessionSocket.getInputStream(),
-                  ApplicationParameters.CHARACTER_ENCODING
-                )
-              );
+            synchronized (this) {
+              sessionReader =
+                new BufferedReader(
+                  new InputStreamReader(
+                    sessionSocket.getInputStream(),
+                    ApplicationParameters.CHARACTER_ENCODING
+                  )
+                );
+            }
 
             try {
               handleResponses();
             } finally {
-              sessionReader = null;
+              synchronized (this) {
+                sessionReader = null;
+              }
             }
           } finally {
-            sessionWriter = null;
+            synchronized (this) {
+              sessionWriter = null;
+            }
           }
         } catch (IOException exception) {
           Log.e(LOG_TAG, ("session error: " + exception.getMessage()));

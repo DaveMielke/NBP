@@ -9,6 +9,7 @@ public abstract class ApplicationParameters {
 
   public final static int RECONNECT_INITIAL_DELAY = 1; // seconds
   public final static int RECONNECT_MAXIMUM_DELAY = 300; // seconds
+  public final static int RESPONSE_TIMEOUT = 1; // seconds
 
   public final static String CHARACTER_ENCODING = "UTF8";
 }

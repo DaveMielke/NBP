@@ -14,4 +14,18 @@
     android:textOff="@string/main_switch_off"
     android:textOn="@string/main_switch_on"
    />
+
+  <Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:onClick="addArea"
+    android:text="@string/action_addArea"
+   />
+
+  <Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:onClick="removeArea"
+    android:text="@string/action_removeArea"
+   />
 </LinearLayout>
