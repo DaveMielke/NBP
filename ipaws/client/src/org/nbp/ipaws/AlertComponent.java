@@ -3,13 +3,10 @@ package org.nbp.ipaws;
 import android.content.Context;
 
 public class AlertComponent {
-  private final Context applicationContext;
-
-  protected AlertComponent (Context context) {
-    applicationContext = context.getApplicationContext();
+  protected AlertComponent () {
   }
 
-  protected final Context getContext () {
-    return applicationContext;
+  public static Context getContext () {
+    return AlertApplication.getAlertApplication();
   }
 }

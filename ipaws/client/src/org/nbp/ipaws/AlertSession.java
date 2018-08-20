@@ -265,8 +265,8 @@ public class AlertSession extends AlertComponent {
     }
   }
 
-  public AlertSession (Context context) {
-    super(context);
+  public AlertSession () {
+    super();
 
     sessionThread = new Thread(
       new Runnable() {

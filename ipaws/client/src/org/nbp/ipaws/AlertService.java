@@ -27,7 +27,7 @@ public class AlertService extends Service {
     alertService = this;
 
     Log.d(LOG_TAG, "starting");
-    alertSession = new AlertSession(this);
+    alertSession = new AlertSession();
   }
 
   @Override
