@@ -1,5 +1,7 @@
 package org.nbp.ipaws;
 
+import java.util.List;
+
 public class StateCountiesHandler extends ResponseHandler {
   public StateCountiesHandler () {
     super();
@@ -11,20 +13,29 @@ public class StateCountiesHandler extends ResponseHandler {
     int count = operands.length;
     int index = 0;
 
-    String state = "";
-    if (index < count) state = operands[index++];
+    if (index == count) return;
+    String abbreviation = operands[index++];
 
-    String counties = "";
-    if (index < count) counties = operands[index++];
+    Areas.State state = Areas.getState(abbreviation);
+    if (state == null) return;
+    List<Areas.County> counties = state.getCounties();
 
-    for (String county : getOperands(counties, ",")) {
-      count = 2;
-      operands = getOperands(county, count);
+    if (index < count) {
+      synchronized (counties) {
+        for (String county : getOperands(operands[index++], ",")) {
+          count = 2;
+          operands = getOperands(county, count);
 
-      if (operands.length == count) {
-        index = 0;
-        String SAME = operands[index++];
-        String name = operands[index++];
+          if (operands.length == count) {
+            index = 0;
+            String SAME = operands[index++];
+            String name = operands[index++];
+
+            counties.add(new Areas.County(state, name, SAME));
+          }
+        }
+
+        counties.notify();
       }
     }
   }

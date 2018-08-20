@@ -18,14 +18,7 @@
   <Button
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:onClick="addArea"
-    android:text="@string/action_addArea"
-   />
-
-  <Button
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:onClick="removeArea"
-    android:text="@string/action_removeArea"
+    android:onClick="manageAreas"
+    android:text="@string/action_manageAreas"
    />
 </LinearLayout>
