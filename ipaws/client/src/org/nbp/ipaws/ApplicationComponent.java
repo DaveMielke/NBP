@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 
 import java.io.File;
 
-public class AlertComponent {
-  protected AlertComponent () {
+public class ApplicationComponent {
+  protected ApplicationComponent () {
   }
 
   public static Context getContext () {

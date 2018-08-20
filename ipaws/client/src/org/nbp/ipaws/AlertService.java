@@ -11,14 +11,14 @@ public class AlertService extends Service {
   private final static String LOG_TAG = AlertService.class.getName();
 
   private static AlertService alertService = null;
-  private static AlertSession alertSession = null;
+  private static ServerSession serverSession = null;
 
   public static AlertService getAlertService () {
     return alertService;
   }
 
-  public static AlertSession getAlertSession () {
-    return alertSession;
+  public static ServerSession getServerSession () {
+    return serverSession;
   }
 
   @Override
@@ -27,7 +27,7 @@ public class AlertService extends Service {
     alertService = this;
 
     Log.d(LOG_TAG, "starting");
-    alertSession = new AlertSession();
+    serverSession = new ServerSession();
   }
 
   @Override
@@ -36,8 +36,8 @@ public class AlertService extends Service {
       Log.d(LOG_TAG, "stopping");
       alertService = null;
 
-      alertSession.stop();
-      alertSession = null;
+      serverSession.stop();
+      serverSession = null;
     } finally {
       super.onDestroy();
     }

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 
-public abstract class Alerts extends AlertComponent {
+public abstract class Alerts extends ApplicationComponent {
   private final static String LOG_TAG = Alerts.class.getName();
 
   private Alerts () {

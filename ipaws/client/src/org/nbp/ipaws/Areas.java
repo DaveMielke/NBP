@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
-public abstract class Areas extends AlertComponent {
+public abstract class Areas extends ApplicationComponent {
   private Areas () {
     super();
   }

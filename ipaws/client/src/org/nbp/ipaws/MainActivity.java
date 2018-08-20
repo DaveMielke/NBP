@@ -52,52 +52,65 @@ public class MainActivity extends CommonActivity {
     }
   }
 
-  private final boolean requestData (Object object, final String command) {
-    final AlertSession session = AlertService.getAlertSession();
+  private interface ServerAction {
+    public void perform (ServerSession session) throws IOException;
+  }
+
+  private final boolean performServerAction (Object object, final ServerAction action) {
+    final ServerSession session = AlertService.getServerSession();
 
     if (session == null) {
       showMessage(R.string.message_no_session);
       return false;
     }
 
-    new AsyncTask<Void, Void, String>() {
+    new Thread() {
       @Override
-      protected String doInBackground (Void... arguments) {
+      public void run () {
         try {
-          session.writeCommand(command);
-          return null;
+          action.perform(session);
         } catch (IOException exception) {
-          return exception.getMessage();
+          Log.w(LOG_TAG, ("server communication error: " + exception.getMessage()));
         }
       }
+    }.start();
 
-      @Override
-      protected void onPostExecute (String error) {
+    if (object != null) {
+      try {
+        object.wait(ApplicationParameters.RESPONSE_TIMEOUT * 1000);
+      } catch (InterruptedException exception) {
+        showMessage(R.string.message_long_response);
+        return false;
       }
-    }.execute();
-
-    try {
-      object.wait(ApplicationParameters.RESPONSE_TIMEOUT * 1000);
-    } catch (InterruptedException exception) {
-      showMessage(R.string.message_long_response);
-      return false;
     }
 
     return true;
   }
 
-  private final boolean getCounties (Areas.State state) {
+  private final boolean performServerAction (ServerAction action) {
+    return performServerAction(null, action);
+  }
+
+  private final boolean getCounties (final Areas.State state) {
     List<Areas.County> counties = state.getCounties();
 
     synchronized (counties) {
       if (!counties.isEmpty()) return true;
-      return requestData(counties, ("getCounties " + state.getAbbreviation()));
+
+      return performServerAction(counties,
+        new ServerAction() {
+          @Override
+          public void perform (ServerSession session) throws IOException {
+            session.getCounties(state);
+          }
+        }
+      );
     }
   }
 
   private final void selectCounties (Areas.State state) {
-    final SharedPreferences settings = AlertComponent.getSettings();
-    final String setting = AlertComponent.SETTING_REQUESTED_AREAS;
+    final SharedPreferences settings = ApplicationComponent.getSettings();
+    final String setting = ApplicationComponent.SETTING_REQUESTED_AREAS;
 
     final Set<String> allAreas = new HashSet(settings.getStringSet(setting, Collections.EMPTY_SET));
     Set<String> stateAreas = new HashSet<String>();
@@ -181,6 +194,15 @@ public class MainActivity extends CommonActivity {
           settings.edit()
                   .putStringSet(setting, allAreas)
                   .apply();
+
+          performServerAction(
+            new ServerAction() {
+              @Override
+              public void perform (ServerSession session) throws IOException {
+                session.setAreas();
+              }
+            }
+          );
         }
       };
 
@@ -204,7 +226,15 @@ public class MainActivity extends CommonActivity {
 
     synchronized (states) {
       if (!states.isEmpty()) return true;
-      return requestData(states, "getStates");
+
+      return performServerAction(states,
+        new ServerAction() {
+          @Override
+          public void perform (ServerSession session) throws IOException {
+            session.getStates();
+          }
+        }
+      );
     }
   }
 

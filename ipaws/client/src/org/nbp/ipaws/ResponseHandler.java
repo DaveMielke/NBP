@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.HashMap;
 
-public abstract class ResponseHandler extends AlertComponent {
+public abstract class ResponseHandler extends ApplicationComponent {
   public abstract void handleResponse (String response);
 
   protected ResponseHandler () {

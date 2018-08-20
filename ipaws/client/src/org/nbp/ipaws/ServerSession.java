@@ -21,8 +21,8 @@ import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 
-public class AlertSession extends AlertComponent implements ResponseReader {
-  private final static String LOG_TAG = AlertSession.class.getName();
+public class ServerSession extends ApplicationComponent implements ResponseReader {
+  private final static String LOG_TAG = ServerSession.class.getName();
 
   private final Thread sessionThread;
   private boolean isStopping = false;
@@ -31,7 +31,7 @@ public class AlertSession extends AlertComponent implements ResponseReader {
   private Writer sessionWriter = null;
   private BufferedReader sessionReader = null;
 
-  public final void writeCommand (String command) throws IOException {
+  private final void writeCommand (String command) throws IOException {
     synchronized (this) {
       if (sessionWriter == null) {
         throw new IOException("not connected to server");
@@ -46,8 +46,19 @@ public class AlertSession extends AlertComponent implements ResponseReader {
     }
   }
 
-  public final void writeCommand (StringBuilder command) throws IOException {
+  private final void writeCommand (StringBuilder command) throws IOException {
     writeCommand(command.toString());
+  }
+
+  public final void getStates () throws IOException {
+    writeCommand("getStates");
+  }
+
+  public final void getCounties (Areas.State state) throws IOException {
+    StringBuilder command = new StringBuilder("getCounties");
+    command.append(' ');
+    command.append(state.getAbbreviation());
+    writeCommand(command);
   }
 
   public final void setAreas () throws IOException {
@@ -90,7 +101,7 @@ public class AlertSession extends AlertComponent implements ResponseReader {
         new HashMap<String, ResponseHandler>()
   {
     {
-      put("beginAlert", new BeginAlertHandler(AlertSession.this));
+      put("beginAlert", new BeginAlertHandler(ServerSession.this));
       put("removeAlert", new RemoveAlertHandler());
       put("allStates", new AllStatesHandler());
       put("stateCounties", new StateCountiesHandler());
@@ -259,7 +270,7 @@ public class AlertSession extends AlertComponent implements ResponseReader {
     }
   }
 
-  public AlertSession () {
+  public ServerSession () {
     super();
 
     sessionThread = new Thread(
