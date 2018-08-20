@@ -68,8 +68,11 @@ public class AlertSession extends AlertComponent {
         new HashMap<String, ResponseHandler>()
   {
     {
-      put(
-        "beginAlert",
+      put("allStates", new AllStatesHandler());
+      put("stateCounties", new StateCountiesHandler());
+      put("removeAlert", new RemoveAlertHandler());
+
+      put("beginAlert",
         new ResponseHandler() {
           @Override
           public void handleResponse (String response) {
