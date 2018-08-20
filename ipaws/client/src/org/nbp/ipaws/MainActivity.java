@@ -11,6 +11,7 @@ import android.widget.Switch;
 
 import android.os.AsyncTask;
 import android.content.DialogInterface;
+import android.app.AlertDialog;
 
 import java.io.IOException;
 import java.util.List;
@@ -90,20 +91,50 @@ public class MainActivity extends CommonActivity {
   private final void selectCounties (Areas.State state) {
     final List<Areas.County> counties = state.getCounties();
     String[] names;
+    final boolean[] selection;
 
     synchronized (counties) {
-      int count = counties.size();
+      int count = counties.size() + 1;
       names = new String[count];
+      selection = new boolean[count];
+      int index = 0;
 
-      for (int index=0; index<count; index+=1) {
-        names[index] = counties.get(index).getName();
+      names[index] = "Entire State";
+      selection[index] = false;
+
+      while (++index < count) {
+        Areas.County county = counties.get(index - 1);
+        names[index] = county.getName();
+        selection[index] = false;
       }
     }
 
-    DialogInterface.OnClickListener itemListener =
+    DialogInterface.OnMultiChoiceClickListener choiceListener =
+      new DialogInterface.OnMultiChoiceClickListener() {
+        public void deselectItem (DialogInterface dialog, int index) {
+          ((AlertDialog)dialog).getListView().setItemChecked(index, false);
+          selection[index] = false;
+        }
+
+        @Override
+        public void onClick (DialogInterface dialog, int index, boolean isChecked) {
+          selection[index] = isChecked;
+
+          if (isChecked) {
+            if (index == 0) {
+              int count = selection.length;
+              while (++index < count) deselectItem(dialog, index);
+            } else {
+              deselectItem(dialog, 0);
+            }
+          }
+        }
+      };
+
+    DialogInterface.OnClickListener acceptListener =
       new DialogInterface.OnClickListener() {
         @Override
-        public void onClick (DialogInterface dialog, int index) {
+        public void onClick (DialogInterface dialog, int button) {
         }
       };
 
@@ -117,7 +148,8 @@ public class MainActivity extends CommonActivity {
     newAlertDialogBuilder(R.string.action_selectCounties)
       .setCancelable(true)
       .setNegativeButton(android.R.string.no, cancelListener)
-      .setItems(names, itemListener)
+      .setPositiveButton(android.R.string.yes, acceptListener)
+      .setMultiChoiceItems(names, selection, choiceListener)
       .show();
   }
 
@@ -143,7 +175,7 @@ public class MainActivity extends CommonActivity {
       }
     }
 
-    DialogInterface.OnClickListener itemListener =
+    DialogInterface.OnClickListener choiceListener =
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int index) {
@@ -162,7 +194,7 @@ public class MainActivity extends CommonActivity {
     newAlertDialogBuilder(R.string.action_selectState)
       .setCancelable(true)
       .setNegativeButton(android.R.string.no, cancelListener)
-      .setItems(names, itemListener)
+      .setItems(names, choiceListener)
       .show();
   }
 
