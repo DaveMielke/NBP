@@ -35,6 +35,7 @@ public class BeginAlertHandler extends ResponseHandler {
         if (index < count) endIdentifier = operands[index++];
 
         if (beginIdentifier.equals(endIdentifier)) {
+          Alerts.add(beginIdentifier, alert.toString());
           return;
         }
       }

@@ -4,8 +4,12 @@ import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.HashMap;
 
-public abstract class ResponseHandler {
+public abstract class ResponseHandler extends AlertComponent {
   public abstract void handleResponse (String response);
+
+  protected ResponseHandler () {
+    super();
+  }
 
   private final static Map<String, Pattern> patterns =
                new HashMap<String, Pattern>();

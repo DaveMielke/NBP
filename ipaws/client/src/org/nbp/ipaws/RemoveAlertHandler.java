@@ -15,6 +15,7 @@ public class RemoveAlertHandler extends ResponseHandler {
     if (index < count) identifier = operands[index++];
 
     if (!identifier.isEmpty()) {
+      Alerts.remove(identifier);
     }
   }
 }
