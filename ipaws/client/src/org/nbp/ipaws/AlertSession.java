@@ -50,6 +50,12 @@ public class AlertSession extends AlertComponent implements ResponseReader {
 
   private final void haveAlerts () throws IOException {
     StringBuilder command = new StringBuilder("haveAlerts");
+
+    for (String identifier : Alerts.list()) {
+      command.append(' ');
+      command.append(identifier);
+    }
+
     writeCommand(command);
   }
 
