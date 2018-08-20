@@ -4,17 +4,24 @@ import android.util.Log;
 
 import org.nbp.common.CommonActivity;
 import android.os.Bundle;
+
+import android.content.SharedPreferences;
 import android.content.Intent;
 
 import android.view.View;
 import android.widget.Switch;
 
-import android.os.AsyncTask;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 
 import java.io.IOException;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
+import android.os.AsyncTask;
 
 public class MainActivity extends CommonActivity {
   private final static String LOG_TAG = MainActivity.class.getName();
@@ -89,23 +96,51 @@ public class MainActivity extends CommonActivity {
   }
 
   private final void selectCounties (Areas.State state) {
+    final SharedPreferences settings = AlertComponent.getSettings();
+    final String setting = AlertComponent.SETTING_REQUESTED_AREAS;
+
+    final Set<String> allAreas = new HashSet(settings.getStringSet(setting, Collections.EMPTY_SET));
+    Set<String> stateAreas = new HashSet<String>();
+
+    {
+      String stateArea = state.getSAME();
+
+      for (String area : allAreas) {
+        if (stateArea.equals(area.substring(1, 3))) {
+          stateAreas.add(area);
+        }
+      }
+
+      allAreas.remove(stateAreas);
+    }
+
     final List<Areas.County> counties = state.getCounties();
     String[] names;
+    final String[] areas;
     final boolean[] selection;
 
     synchronized (counties) {
       int count = counties.size() + 1;
       names = new String[count];
+      areas = new String[count];
       selection = new boolean[count];
-      int index = 0;
 
+      int index = 0;
       names[index] = "Entire State";
-      selection[index] = false;
+      areas[index] = "0" + state.getSAME() + "000";
 
       while (++index < count) {
         Areas.County county = counties.get(index - 1);
         names[index] = county.getName();
-        selection[index] = false;
+        areas[index] = county.getSAME();;
+      }
+    }
+
+    {
+      int count = selection.length;
+
+      for (int index=0; index<count; index+=1) {
+        selection[index] = stateAreas.contains(areas[index]);
       }
     }
 
@@ -135,6 +170,17 @@ public class MainActivity extends CommonActivity {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
+          int count = selection.length;
+
+          for (int index=0; index<count; index+=1) {
+            if (selection[index]) {
+              allAreas.add(areas[index]);
+            }
+          }
+
+          settings.edit()
+                  .putStringSet(setting, allAreas)
+                  .apply();
         }
       };
 

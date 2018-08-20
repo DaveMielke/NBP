@@ -16,6 +16,8 @@ import java.io.Writer;
 import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -50,7 +52,14 @@ public class AlertSession extends AlertComponent implements ResponseReader {
 
   public final void setAreas () throws IOException {
     StringBuilder command = new StringBuilder("setAreas");
-    command.append(" 000000");
+    Set<String> areas = getSettings().getStringSet(SETTING_REQUESTED_AREAS, Collections.EMPTY_SET);
+
+    for (String area : areas) {
+      command.append(' ');
+      command.append(area);
+    }
+
+    //command.append(" 000000");
     writeCommand(command);
   }
 
