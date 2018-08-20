@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
-import android.os.AsyncTask;
-
 public class MainActivity extends CommonActivity {
   private final static String LOG_TAG = MainActivity.class.getName();
 
