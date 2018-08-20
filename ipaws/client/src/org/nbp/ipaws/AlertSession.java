@@ -19,7 +19,7 @@ import java.io.BufferedWriter;
 import java.util.Map;
 import java.util.HashMap;
 
-public class AlertSession extends AlertComponent {
+public class AlertSession extends AlertComponent implements ResponseReader {
   private final static String LOG_TAG = AlertSession.class.getName();
 
   private final Thread sessionThread;
@@ -53,7 +53,8 @@ public class AlertSession extends AlertComponent {
     writeCommand(command);
   }
 
-  private final String readResponse () {
+  @Override
+  public final String readResponse () {
     try {
       String response = sessionReader.readLine();
       if (!Thread.interrupted()) return response;
@@ -68,49 +69,10 @@ public class AlertSession extends AlertComponent {
         new HashMap<String, ResponseHandler>()
   {
     {
+      put("beginAlert", new BeginAlertHandler(AlertSession.this));
+      put("removeAlert", new RemoveAlertHandler());
       put("allStates", new AllStatesHandler());
       put("stateCounties", new StateCountiesHandler());
-      put("removeAlert", new RemoveAlertHandler());
-
-      put("beginAlert",
-        new ResponseHandler() {
-          @Override
-          public void handleResponse (String response) {
-            String[] operands = getOperands(response, 2);
-            int count = operands.length;
-            int index = 0;
-
-            String beginIdentifier = "";
-            if (index < count) beginIdentifier = operands[index++];
-
-            StringBuilder alert = new StringBuilder();
-
-            while (true) {
-              String line = readResponse();
-              if (line == null) return;
-
-              operands = getOperands(line, 3);
-              count = operands.length;
-              index = 0;
-
-              String command = "";
-              if (index < count) command = operands[index++];
-
-              if (command.equals("endAlert")) {
-                String endIdentifier = "";
-                if (index < count) endIdentifier = operands[index++];
-
-                if (beginIdentifier.equals(endIdentifier)) {
-                  return;
-                }
-              }
-
-              alert.append(line);
-              alert.append('\n');
-            }
-          }
-        }
-      );
     }
   };
 
@@ -217,7 +179,7 @@ public class AlertSession extends AlertComponent {
     return connected;
   }
 
-  public final void doThread () {
+  private final void doThread () {
     Log.d(LOG_TAG, "startiong");
 
     try {
