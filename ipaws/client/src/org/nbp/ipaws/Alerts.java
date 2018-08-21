@@ -127,7 +127,7 @@ public abstract class Alerts extends ApplicationComponent {
     }
   }
 
-  private final static Map<String, Descriptor> alertDescriptors =
+  private final static Map<String, Descriptor> alertCache =
                new HashMap<String, Descriptor>();
 
   private static File getFile (String identifier) {
@@ -135,8 +135,8 @@ public abstract class Alerts extends ApplicationComponent {
   }
 
   public static Descriptor get (String identifier) {
-    synchronized (alertDescriptors) {
-      Descriptor descriptor = alertDescriptors.get(identifier);
+    synchronized (alertCache) {
+      Descriptor descriptor = alertCache.get(identifier);
       if (descriptor != null) return descriptor;
 
       File file = getFile(identifier);
@@ -150,7 +150,7 @@ public abstract class Alerts extends ApplicationComponent {
 
       if (properties == null) return null;
       descriptor = new Descriptor(properties);
-      alertDescriptors.put(identifier, descriptor);
+      alertCache.put(identifier, descriptor);
       return descriptor;
     }
   }
@@ -180,8 +180,8 @@ public abstract class Alerts extends ApplicationComponent {
         }
       }
 
-      synchronized (alertDescriptors) {
-        alertDescriptors.put(identifier, new Descriptor(properties));
+      synchronized (alertCache) {
+        alertCache.put(identifier, new Descriptor(properties));
       }
     }
   }
@@ -189,6 +189,10 @@ public abstract class Alerts extends ApplicationComponent {
   public static void remove (String identifier) {
     File file = getFile(identifier);
     file.delete();
+
+    synchronized (alertCache) {
+      alertCache.remove(identifier);
+    }
   }
 
   public static String[] list () {
