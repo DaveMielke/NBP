@@ -3,6 +3,9 @@ package org.nbp.ipaws;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Collections;
+import java.util.Set;
+
 import java.io.File;
 
 public class ApplicationComponent {
@@ -25,6 +28,10 @@ public class ApplicationComponent {
 
   public static SharedPreferences getSettings () {
     return getSharedPreferences("settings");
+  }
+
+  public static Set<String> getRequestedAreas () {
+    return getSettings().getStringSet(SETTING_REQUESTED_AREAS, Collections.EMPTY_SET);
   }
 
   public static File getFilesDirectory () {

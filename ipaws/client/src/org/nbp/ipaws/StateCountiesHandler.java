@@ -16,7 +16,7 @@ public class StateCountiesHandler extends ResponseHandler {
     if (index == count) return;
     String abbreviation = operands[index++];
 
-    Areas.State state = Areas.getState(abbreviation);
+    Areas.State state = Areas.getStateByAbbreviation(abbreviation);
     if (state == null) return;
     List<Areas.County> counties = state.getCounties();
 

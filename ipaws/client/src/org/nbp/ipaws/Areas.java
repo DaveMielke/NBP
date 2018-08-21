@@ -20,6 +20,7 @@ public abstract class Areas extends ApplicationComponent {
       countyState = state;
       countyName = name;
       areaSAME = SAME;
+      areaToCounty.put(SAME, this);
     }
 
     public final State getState () {
@@ -44,7 +45,8 @@ public abstract class Areas extends ApplicationComponent {
       stateAbbreviation = abbreviation;
       stateName = name;
       areaSAME = SAME;
-      stateMap.put(abbreviation, this);
+      abbreviationToState.put(abbreviation, this);
+      areaToState.put(SAME, this);
     }
 
     public final String getAbbreviation () {
@@ -70,14 +72,28 @@ public abstract class Areas extends ApplicationComponent {
   private final static List<State> stateList =
               new ArrayList<State>();
 
-  private final static Map<String, State> stateMap =
-               new HashMap<String, State>();
-
   public static List<State> getStates () {
     return stateList;
   }
 
-  public static State getState (String abbreviation) {
-    return stateMap.get(abbreviation);
+  private final static Map<String, State> abbreviationToState =
+               new HashMap<String, State>();
+
+  public static State getStateByAbbreviation (String abbreviation) {
+    return abbreviationToState.get(abbreviation);
+  }
+
+  private final static Map<String, State> areaToState =
+               new HashMap<String, State>();
+
+  public static State getStateByArea (String SAME) {
+    return areaToState.get(SAME);
+  }
+
+  private final static Map<String, County> areaToCounty =
+               new HashMap<String, County>();
+
+  public static County getCountyByArea (String SAME) {
+    return areaToCounty.get(SAME);
   }
 }

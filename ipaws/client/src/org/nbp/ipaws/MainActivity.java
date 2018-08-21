@@ -89,6 +89,22 @@ public class MainActivity extends CommonActivity {
     return performServerAction(null, action);
   }
 
+  private final void setRequestedAreas (Set<String> areas) {
+    ApplicationComponent.getSettings()
+                        .edit()
+                        .putStringSet(ApplicationComponent.SETTING_REQUESTED_AREAS, areas)
+                        .apply();
+
+    performServerAction(
+      new ServerAction() {
+        @Override
+        public void perform (ServerSession session) throws IOException {
+          session.setAreas();
+        }
+      }
+    );
+  }
+
   private final boolean getCounties (final Areas.State state) {
     List<Areas.County> counties = state.getCounties();
 
@@ -107,10 +123,7 @@ public class MainActivity extends CommonActivity {
   }
 
   private final void selectCounties (Areas.State state) {
-    final SharedPreferences settings = ApplicationComponent.getSettings();
-    final String setting = ApplicationComponent.SETTING_REQUESTED_AREAS;
-
-    final Set<String> allAreas = new HashSet(settings.getStringSet(setting, Collections.EMPTY_SET));
+    final Set<String> allAreas = new HashSet(ApplicationComponent.getRequestedAreas());
     Set<String> stateAreas = new HashSet<String>();
 
     {
@@ -177,7 +190,7 @@ public class MainActivity extends CommonActivity {
         }
       };
 
-    DialogInterface.OnClickListener acceptListener =
+    DialogInterface.OnClickListener saveListener =
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
@@ -189,32 +202,14 @@ public class MainActivity extends CommonActivity {
             }
           }
 
-          settings.edit()
-                  .putStringSet(setting, allAreas)
-                  .apply();
-
-          performServerAction(
-            new ServerAction() {
-              @Override
-              public void perform (ServerSession session) throws IOException {
-                session.setAreas();
-              }
-            }
-          );
-        }
-      };
-
-    DialogInterface.OnClickListener cancelListener =
-      new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick (DialogInterface dialog, int button) {
+          setRequestedAreas(allAreas);
         }
       };
 
     newAlertDialogBuilder(R.string.action_selectCounties)
       .setCancelable(true)
-      .setNegativeButton(android.R.string.no, cancelListener)
-      .setPositiveButton(android.R.string.yes, acceptListener)
+      .setNegativeButton(android.R.string.no, null)
+      .setPositiveButton(R.string.option_save, saveListener)
       .setMultiChoiceItems(names, selection, choiceListener)
       .show();
   }
@@ -258,21 +253,87 @@ public class MainActivity extends CommonActivity {
         }
       };
 
-    DialogInterface.OnClickListener cancelListener =
-      new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick (DialogInterface dialog, int button) {
-        }
-      };
-
     newAlertDialogBuilder(R.string.action_selectState)
       .setCancelable(true)
-      .setNegativeButton(android.R.string.no, cancelListener)
+      .setNegativeButton(android.R.string.no, null)
       .setItems(names, choiceListener)
       .show();
   }
 
   public final void manageAreas (View view) {
     if (getStates()) selectState();
+  }
+
+  public final void removeAreas (View view) {
+    Set<String> areas = ApplicationComponent.getRequestedAreas();
+
+    if (areas.isEmpty()) {
+      showMessage(R.string.message_no_areas);
+      return;
+    }
+
+    if (!getStates()) return;
+
+    int count = areas.size();
+    final String[] names = new String[count];
+    final boolean[] selection = new boolean[count];
+
+    {
+      int index = 0;
+
+      for (String area : areas) {
+        String name;
+        Areas.State state;
+
+        {
+          String SAME = area.substring(1, 3);
+          state = Areas.getStateByArea(SAME);
+
+          if (state == null) {
+            if (!getStates()) return;
+            state = Areas.getStateByArea(SAME);
+          }
+        }
+
+        if (area.endsWith("000")) {
+          name = state.getName();
+        } else {
+          Areas.County county = Areas.getCountyByArea(area);
+
+          if (county == null) {
+            if (!getCounties(state)) return;
+            county = Areas.getCountyByArea(area);
+          }
+
+          name = county.getName() + ", " + state.getAbbreviation();
+        }
+
+        names[index] = name;
+        selection[index] = false;
+        index += 1;
+      }
+    }
+
+    DialogInterface.OnMultiChoiceClickListener choiceListener =
+      new DialogInterface.OnMultiChoiceClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int index, boolean isChecked) {
+          selection[index] = isChecked;
+        }
+      };
+
+    DialogInterface.OnClickListener removeListener =
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+        }
+      };
+
+    newAlertDialogBuilder(R.string.action_removeAreas)
+      .setCancelable(true)
+      .setNegativeButton(android.R.string.no, null)
+      .setPositiveButton(R.string.option_remove, removeListener)
+      .setMultiChoiceItems(names, selection, choiceListener)
+      .show();
   }
 }
