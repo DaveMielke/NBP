@@ -1,5 +1,6 @@
 package org.nbp.ipaws;
 
+import org.nbp.common.CommonContext;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -13,7 +14,7 @@ public class ApplicationComponent {
   }
 
   public static Context getContext () {
-    return AlertApplication.getAlertApplication();
+    return CommonContext.getContext();
   }
 
   public static SharedPreferences getSharedPreferences (String name, int mode) {
