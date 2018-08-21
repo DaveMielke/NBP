@@ -265,18 +265,25 @@ public class MainActivity extends CommonActivity {
   }
 
   public final void removeAreas (View view) {
-    Set<String> areas = ApplicationComponent.getRequestedAreas();
+    final Set<String> areas = new HashSet(ApplicationComponent.getRequestedAreas());
 
     if (areas.isEmpty()) {
       showMessage(R.string.message_no_areas);
       return;
     }
 
-    if (!getStates()) return;
+    class Entry {
+      public final String area;
+      public final String name;
 
-    int count = areas.size();
-    final String[] names = new String[count];
-    final boolean[] selection = new boolean[count];
+      public Entry (String area, String name) {
+        this.area = area;
+        this.name = name;
+      }
+    }
+
+    final int count = areas.size();
+    final Entry[] entries = new Entry[count];
 
     {
       boolean gotStates = false;
@@ -315,15 +322,23 @@ public class MainActivity extends CommonActivity {
 
           if (county == null) {
             name = "(unknown county)";
+            if (state != null) name += ", " + state.getAbbreviation();
           } else {
             name = county.getName() + ", " + county.getState().getAbbreviation();
           }
         }
 
-        names[index] = name;
-        selection[index] = false;
+        entries[index] = new Entry(area, name);
         index += 1;
       }
+    }
+
+    String[] names = new String[count];
+    final boolean[] selection = new boolean[count];
+
+    for (int index=0; index<count; index+=1) {
+      names[index] = entries[index].name;
+      selection[index] = false;
     }
 
     DialogInterface.OnMultiChoiceClickListener choiceListener =
@@ -338,6 +353,18 @@ public class MainActivity extends CommonActivity {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
+          Set<String> remove = new HashSet<String>();
+
+          for (int index=0; index<count; index+=1) {
+            if (selection[index]) {
+              remove.add(entries[index].area);
+            }
+          }
+
+          if (!remove.isEmpty()) {
+            areas.removeAll(remove);
+            setRequestedAreas(areas);
+          }
         }
       };
 
