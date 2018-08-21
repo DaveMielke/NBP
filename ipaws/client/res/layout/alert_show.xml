@@ -11,6 +11,11 @@
     >
 
     <TableRow>
+      <TextView android:text="@string/alert_sender" />
+      <TextView android:id="@+id/alert_sender" />
+    </TableRow>
+
+    <TableRow>
       <TextView android:text="@string/alert_sent" />
       <TextView android:id="@+id/alert_sent" />
     </TableRow>
@@ -21,8 +26,23 @@
     </TableRow>
 
     <TableRow>
+      <TextView android:text="@string/alert_onset" />
+      <TextView android:id="@+id/alert_onset" />
+    </TableRow>
+
+    <TableRow>
       <TextView android:text="@string/alert_expires" />
       <TextView android:id="@+id/alert_expires" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/alert_event" />
+      <TextView android:id="@+id/alert_event" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/alert_area" />
+      <TextView android:id="@+id/alert_area" />
     </TableRow>
 
     <TextView android:id="@+id/alert_description" android:focusable="true" />

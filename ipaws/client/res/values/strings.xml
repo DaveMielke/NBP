@@ -17,9 +17,13 @@
   <string name="option_save">Save</string>
   <string name="option_remove">Remove</string>
 
-  <string name="alert_sent">Sent</string>
+  <string name="alert_sender">Issued by</string>
+  <string name="alert_sent">Issued at</string>
   <string name="alert_effective">Effective</string>
-  <string name="alert_expires">Expires</string>
+  <string name="alert_onset">Expected Start</string>
+  <string name="alert_expires">Expires at</string>
+  <string name="alert_event">Type of Event</string>
+  <string name="alert_area">Area(s)</string>
 
   <string name="message_no_session">alert service not running</string>
   <string name="message_session_error">server communication error</string>

@@ -157,12 +157,12 @@ public class MainActivity extends CommonActivity {
     }
 
     int count = identifiers.length;
-    String[] headlines = new String[count];
+    String[] summaries = new String[count];
 
     for (int index=0; index<count; index+=1) {
       String identifier = identifiers[index];
       Alerts.Descriptor alert = Alerts.get(identifier);
-      headlines[index] = (alert != null)? alert.getHeadline(): identifier;
+      summaries[index] = (alert != null)? alert.getSummary(): identifier;
     }
 
     DialogInterface.OnClickListener choiceListener =
@@ -176,7 +176,7 @@ public class MainActivity extends CommonActivity {
     newAlertDialogBuilder(R.string.action_reviewAlerts)
       .setCancelable(true)
       .setNegativeButton(android.R.string.no, null)
-      .setItems(headlines, choiceListener)
+      .setItems(summaries, choiceListener)
       .show();
   }
 

@@ -36,20 +36,30 @@ public abstract class Alerts extends ApplicationComponent {
   }
 
   public final static String PROPERTY_IDENTIFIER = "identifier";
+  public final static String PROPERTY_SENDER = "senderName";
   public final static String PROPERTY_SENT = "sent";
   public final static String PROPERTY_EFFECTIVE = "effective";
+  public final static String PROPERTY_ONSET = "onset";
   public final static String PROPERTY_EXPIRES = "expires";
+  public final static String PROPERTY_EVENT = "event";
+  public final static String PROPERTY_AREA = "areaDesc";
   public final static String PROPERTY_HEADLINE = "headline";
   public final static String PROPERTY_DESCRIPTION = "description";
+  public final static String PROPERTY_INSTRUCTION = "instruction";
 
   private final static Set<String> PROPERTIES = new HashSet<String>() {
     {
       add(PROPERTY_IDENTIFIER);
+      add(PROPERTY_SENDER);
       add(PROPERTY_SENT);
       add(PROPERTY_EFFECTIVE);
+      add(PROPERTY_ONSET);
       add(PROPERTY_EXPIRES);
+      add(PROPERTY_EVENT);
+      add(PROPERTY_AREA);
       add(PROPERTY_HEADLINE);
       add(PROPERTY_DESCRIPTION);
+      add(PROPERTY_INSTRUCTION);
     }
   };
 
@@ -104,11 +114,16 @@ public abstract class Alerts extends ApplicationComponent {
 
   public static class Descriptor implements DialogFinisher {
     private final String identifier;
+    private final String sender;
     private final Date sent;
     private final Date effective;
+    private final Date onset;
     private final Date expires;
+    private final String event;
+    private final String area;
     private final String headline;
     private final String description;
+    private final String instruction;
 
     private final static String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     private final static DateFormat timeFormatter = new SimpleDateFormat(TIME_FORMAT);
@@ -127,15 +142,30 @@ public abstract class Alerts extends ApplicationComponent {
 
     private Descriptor (Properties properties) {
       identifier = properties.get(PROPERTY_IDENTIFIER);
+      sender = properties.get(PROPERTY_SENDER);
       sent = parseTime(properties.get(PROPERTY_SENT));
       effective = parseTime(properties.get(PROPERTY_EFFECTIVE));
+      onset = parseTime(properties.get(PROPERTY_ONSET));
       expires = parseTime(properties.get(PROPERTY_EXPIRES));
+      event = properties.get(PROPERTY_EVENT);
+      area = properties.get(PROPERTY_AREA);
       headline = properties.get(PROPERTY_HEADLINE);
       description = properties.get(PROPERTY_DESCRIPTION);
+      instruction = properties.get(PROPERTY_INSTRUCTION);
     }
 
-    public final String getHeadline () {
-      return headline;
+    public final String getSummary () {
+      String[] strings = new String[] {headline, event};
+
+      for (String string : strings) {
+        if (string != null) {
+          if (!string.isEmpty()) {
+            return string;
+          }
+        }
+      }
+
+      return identifier;
     }
 
     private final String formatTime (Date date) {
@@ -145,9 +175,13 @@ public abstract class Alerts extends ApplicationComponent {
 
     @Override
     public void finishDialog (DialogHelper helper) {
+      helper.setText(R.id.alert_sender, sender);
       helper.setText(R.id.alert_sent, formatTime(sent));
       helper.setText(R.id.alert_effective, formatTime(effective));
+      helper.setText(R.id.alert_onset, formatTime(onset));
       helper.setText(R.id.alert_expires, formatTime(expires));
+      helper.setText(R.id.alert_event, event);
+      helper.setText(R.id.alert_area, area);
       helper.setText(R.id.alert_description, description);
     }
   }
