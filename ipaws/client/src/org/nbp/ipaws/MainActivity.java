@@ -279,33 +279,45 @@ public class MainActivity extends CommonActivity {
     final boolean[] selection = new boolean[count];
 
     {
+      boolean gotStates = false;
       int index = 0;
 
       for (String area : areas) {
         String name;
-        Areas.State state;
 
-        {
-          String SAME = area.substring(1, 3);
-          state = Areas.getStateByArea(SAME);
+        String SAME = area.substring(1, 3);
+        Areas.State state = Areas.getStateByArea(SAME);
 
+        if (!gotStates) {
           if (state == null) {
             if (!getStates()) return;
             state = Areas.getStateByArea(SAME);
           }
+
+          gotStates = true;
         }
 
         if (area.endsWith("000")) {
-          name = state.getName();
+          if (state == null) {
+            name = "(unknown state)";
+          } else {
+            name = state.getName();
+          }
         } else {
           Areas.County county = Areas.getCountyByArea(area);
 
           if (county == null) {
-            if (!getCounties(state)) return;
-            county = Areas.getCountyByArea(area);
+            if (state != null) {
+              if (!getCounties(state)) return;
+              county = Areas.getCountyByArea(area);
+            }
           }
 
-          name = county.getName() + ", " + state.getAbbreviation();
+          if (county == null) {
+            name = "(unknown county)";
+          } else {
+            name = county.getName() + ", " + county.getState().getAbbreviation();
+          }
         }
 
         names[index] = name;
