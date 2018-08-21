@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  >
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TableRow>
+      <TextView android:text="@string/alert_sent" />
+      <TextView android:id="@+id/alert_sent" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/alert_effective" />
+      <TextView android:id="@+id/alert_effective" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/alert_expires" />
+      <TextView android:id="@+id/alert_expires" />
+    </TableRow>
+
+    <TextView android:id="@+id/alert_description" android:focusable="true" />
+  </TableLayout>
+</FrameLayout>

@@ -7,6 +7,8 @@
   <string name="main_switch_off">Stopped</string>
   <string name="main_switch_on">Running</string>
 
+  <string name="action_reviewAlerts">Review Alerts</string>
+  <string name="action_showAlert">Show Alert</string>
   <string name="action_manageAreas">Manage Areas</string>
   <string name="action_selectState">Select State</string>
   <string name="action_selectCounties">Select Counties</string>
@@ -15,8 +17,13 @@
   <string name="option_save">Save</string>
   <string name="option_remove">Remove</string>
 
+  <string name="alert_sent">Sent</string>
+  <string name="alert_effective">Effective</string>
+  <string name="alert_expires">Expires</string>
+
   <string name="message_no_session">alert service not running</string>
   <string name="message_session_error">server communication error</string>
   <string name="message_long_response">data not available - try later</string>
+  <string name="message_no_alerts">no active alerts</string>
   <string name="message_no_areas">no requested areas</string>
 </resources>

@@ -4,8 +4,9 @@ import android.util.Log;
 
 import android.app.Service;
 import android.os.IBinder;
-import android.content.Context;
 import android.content.Intent;
+import android.content.Context;
+import org.nbp.common.CommonContext;
 
 public class AlertService extends Service {
   private final static String LOG_TAG = AlertService.class.getName();
@@ -25,6 +26,7 @@ public class AlertService extends Service {
   public void onCreate () {
     super.onCreate();
     alertService = this;
+    CommonContext.setContext(this);
 
     Log.d(LOG_TAG, "starting");
     serverSession = new ServerSession();

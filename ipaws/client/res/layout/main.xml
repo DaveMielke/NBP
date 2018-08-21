@@ -18,6 +18,13 @@
   <Button
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:onClick="reviewAlerts"
+    android:text="@string/action_reviewAlerts"
+   />
+
+  <Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:onClick="manageAreas"
     android:text="@string/action_manageAreas"
    />

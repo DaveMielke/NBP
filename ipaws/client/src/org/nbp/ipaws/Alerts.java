@@ -7,15 +7,21 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.FileReader;
+
 import java.io.File;
 import java.io.FileWriter;
-import java.io.StringReader;
 
 import java.util.Map;
 import java.util.HashMap;
 
 import java.util.Set;
 import java.util.HashSet;
+
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
 
 public abstract class Alerts extends ApplicationComponent {
   private final static String LOG_TAG = Alerts.class.getName();
@@ -42,12 +48,18 @@ public abstract class Alerts extends ApplicationComponent {
     }
   };
 
-  private static Map<String, String> getProperties (String xml) {
+  private static class Properties extends HashMap<String, String> {
+    private Properties () {
+      super();
+    }
+  }
+
+  private static Properties getProperties (Reader reader) {
     XmlPullParser parser = Xml.newPullParser();
-    Map<String, String> properties = new HashMap<String, String>();
+    Properties properties = new Properties();
 
     try {
-      parser.setInput(new StringReader(xml));
+      parser.setInput(reader);
 
       while (true) {
         switch (parser.next()) {
@@ -81,12 +93,70 @@ public abstract class Alerts extends ApplicationComponent {
     return null;
   }
 
+  private static Properties getProperties (String xml) {
+    return getProperties(new StringReader(xml));
+  }
+
+  public static class Descriptor implements DialogFinisher {
+    private final String identifier;
+    private final String sent;
+    private final String effective;
+    private final String expires;
+    private final String headline;
+    private final String description;
+
+    private Descriptor (Properties properties) {
+      identifier = properties.get(PROPERTY_IDENTIFIER);
+      sent = properties.get(PROPERTY_SENT);
+      effective = properties.get(PROPERTY_EFFECTIVE);
+      expires = properties.get(PROPERTY_EXPIRES);
+      headline = properties.get(PROPERTY_HEADLINE);
+      description = properties.get(PROPERTY_DESCRIPTION);
+    }
+
+    public final String getHeadline () {
+      return headline;
+    }
+
+    @Override
+    public void finishDialog (DialogHelper helper) {
+      helper.setText(R.id.alert_sent, sent);
+      helper.setText(R.id.alert_effective, effective);
+      helper.setText(R.id.alert_expires, expires);
+      helper.setText(R.id.alert_description, description);
+    }
+  }
+
+  private final static Map<String, Descriptor> alertDescriptors =
+               new HashMap<String, Descriptor>();
+
   private static File getFile (String identifier) {
     return new File(getAlertsDirectory(), identifier);
   }
 
+  public static Descriptor get (String identifier) {
+    synchronized (alertDescriptors) {
+      Descriptor descriptor = alertDescriptors.get(identifier);
+      if (descriptor != null) return descriptor;
+
+      File file = getFile(identifier);
+      Properties properties = null;
+
+      try {
+        properties = getProperties(new FileReader(file));
+      } catch (IOException exception) {
+        Log.e(LOG_TAG, ("alert read error: " + exception.getMessage()));
+      }
+
+      if (properties == null) return null;
+      descriptor = new Descriptor(properties);
+      alertDescriptors.put(identifier, descriptor);
+      return descriptor;
+    }
+  }
+
   public static void add (String identifier, String xml) {
-    Map<String, String> properties = getProperties(xml);
+    Properties properties = getProperties(xml);
 
     if (properties != null) {
       if (!identifier.isEmpty()) {
@@ -108,6 +178,10 @@ public abstract class Alerts extends ApplicationComponent {
           temporaryFile.delete();
           Log.e(LOG_TAG, ("alert file creation error: " + exception.getMessage()));
         }
+      }
+
+      synchronized (alertDescriptors) {
+        alertDescriptors.put(identifier, new Descriptor(properties));
       }
     }
   }

@@ -106,6 +106,23 @@ public class MainActivity extends CommonActivity {
     );
   }
 
+  private final boolean getStates () {
+    List<Areas.State> states = Areas.getStates();
+
+    synchronized (states) {
+      if (!states.isEmpty()) return true;
+
+      return performServerAction(states,
+        new ServerAction() {
+          @Override
+          public void perform (ServerSession session) throws IOException {
+            session.getStates();
+          }
+        }
+      );
+    }
+  }
+
   private final boolean getCounties (final Areas.State state) {
     List<Areas.County> counties = state.getCounties();
 
@@ -121,6 +138,46 @@ public class MainActivity extends CommonActivity {
         }
       );
     }
+  }
+
+  private final void showAlert (String identifier) {
+    Alerts.Descriptor alert = Alerts.get(identifier);
+
+    if (alert != null) {
+      showDialog(R.string.action_showAlert, R.layout.alert_show, alert);
+    }
+  }
+
+  public final void reviewAlerts (View view) {
+    final String[] identifiers = Alerts.list();
+
+    if (identifiers.length == 0) {
+      showMessage(R.string.message_no_alerts);
+      return;
+    }
+
+    int count = identifiers.length;
+    String[] headlines = new String[count];
+
+    for (int index=0; index<count; index+=1) {
+      String identifier = identifiers[index];
+      Alerts.Descriptor alert = Alerts.get(identifier);
+      headlines[index] = (alert != null)? alert.getHeadline(): identifier;
+    }
+
+    DialogInterface.OnClickListener choiceListener =
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int index) {
+          showAlert(identifiers[index]);
+        }
+      };
+
+    newAlertDialogBuilder(R.string.action_reviewAlerts)
+      .setCancelable(true)
+      .setNegativeButton(android.R.string.no, null)
+      .setItems(headlines, choiceListener)
+      .show();
   }
 
   private final void selectCounties (Areas.State state) {
@@ -213,23 +270,6 @@ public class MainActivity extends CommonActivity {
       .setPositiveButton(R.string.option_save, saveListener)
       .setMultiChoiceItems(names, selection, choiceListener)
       .show();
-  }
-
-  private final boolean getStates () {
-    List<Areas.State> states = Areas.getStates();
-
-    synchronized (states) {
-      if (!states.isEmpty()) return true;
-
-      return performServerAction(states,
-        new ServerAction() {
-          @Override
-          public void perform (ServerSession session) throws IOException {
-            session.getStates();
-          }
-        }
-      );
-    }
   }
 
   private final void selectState () {
