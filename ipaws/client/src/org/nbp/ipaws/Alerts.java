@@ -102,9 +102,6 @@ public abstract class Alerts extends ApplicationComponent {
     return getProperties(new StringReader(xml));
   }
 
-  private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
-  private final static DateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
-
   public static class Descriptor implements DialogFinisher {
     private final String identifier;
     private final Date sent;
@@ -113,10 +110,13 @@ public abstract class Alerts extends ApplicationComponent {
     private final String headline;
     private final String description;
 
-    private Date toDate (String time) {
+    private final static String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+    private final static DateFormat timeFormatter = new SimpleDateFormat(TIME_FORMAT);
+
+    private Date parseTime (String time) {
       if (time != null) {
         try {
-          return dateFormatter.parse(time);
+          return timeFormatter.parse(time);
         } catch (ParseException exception) {
           Log.w(LOG_TAG, ("time conversion error: " + time + ": " + exception.getMessage()));
         }
@@ -127,9 +127,9 @@ public abstract class Alerts extends ApplicationComponent {
 
     private Descriptor (Properties properties) {
       identifier = properties.get(PROPERTY_IDENTIFIER);
-      sent = toDate(properties.get(PROPERTY_SENT));
-      effective = toDate(properties.get(PROPERTY_EFFECTIVE));
-      expires = toDate(properties.get(PROPERTY_EXPIRES));
+      sent = parseTime(properties.get(PROPERTY_SENT));
+      effective = parseTime(properties.get(PROPERTY_EFFECTIVE));
+      expires = parseTime(properties.get(PROPERTY_EXPIRES));
       headline = properties.get(PROPERTY_HEADLINE);
       description = properties.get(PROPERTY_DESCRIPTION);
     }
@@ -138,16 +138,16 @@ public abstract class Alerts extends ApplicationComponent {
       return headline;
     }
 
-    private final String formatDate (Date date) {
+    private final String formatTime (Date date) {
       if (date == null) return null;
       return date.toString();
     }
 
     @Override
     public void finishDialog (DialogHelper helper) {
-      helper.setText(R.id.alert_sent, formatDate(sent));
-      helper.setText(R.id.alert_effective, formatDate(effective));
-      helper.setText(R.id.alert_expires, formatDate(expires));
+      helper.setText(R.id.alert_sent, formatTime(sent));
+      helper.setText(R.id.alert_effective, formatTime(effective));
+      helper.setText(R.id.alert_expires, formatTime(expires));
       helper.setText(R.id.alert_description, description);
     }
   }
