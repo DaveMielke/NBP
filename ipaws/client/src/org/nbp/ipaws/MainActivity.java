@@ -16,7 +16,8 @@ import android.app.AlertDialog;
 
 import java.io.IOException;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
@@ -332,6 +333,15 @@ public class MainActivity extends CommonActivity {
         index += 1;
       }
     }
+
+    Arrays.sort(entries,
+      new Comparator<Entry>() {
+        @Override
+        public int compare (Entry entry1, Entry entry2) {
+          return entry1.name.compareTo(entry2.name);
+        }
+      }
+    );
 
     String[] names = new String[count];
     final boolean[] selection = new boolean[count];
