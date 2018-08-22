@@ -7,6 +7,9 @@ import android.net.Uri;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Queue;
+import java.util.LinkedList;
+
 public abstract class AlertPlayer extends ApplicationComponent {
   private final static String LOG_TAG = AlertPlayer.class.getName();
 
@@ -50,6 +53,26 @@ public abstract class AlertPlayer extends ApplicationComponent {
     );
   }
 
+  private final static Queue<Uri> uriQueue = new LinkedList<Uri>();
+
+  private static void playNextUri (MediaPlayer player) {
+    synchronized (uriQueue) {
+      Uri uri = uriQueue.poll();
+
+      if (uri != null) {
+        try {
+          player.setDataSource(getContext(), uri);
+          player.prepareAsync();
+          return;
+        } catch (IOException exception) {
+          Log.e(LOG_TAG, ("set data source error: " + exception.getMessage()));
+        }
+      }
+    }
+
+    player.release();
+  }
+
   private static void setOnPreparedListener (MediaPlayer player) {
     player.setOnPreparedListener(
       new MediaPlayer.OnPreparedListener() {
@@ -66,7 +89,8 @@ public abstract class AlertPlayer extends ApplicationComponent {
       new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion (MediaPlayer player) {
-          player.release();
+          player.reset();
+          playNextUri(player);
         }
       }
     );
@@ -78,25 +102,27 @@ public abstract class AlertPlayer extends ApplicationComponent {
     setOnCompletionListener(player);
   }
 
-  public static void play (Uri uri) {
-    MediaPlayer player = new MediaPlayer();
-    setListeners(player);
+  public static void play (Uri uri, boolean withAttentionSignal) {
+    synchronized (uriQueue) {
+      uriQueue.offer(uri);
 
-    try {
-      player.setDataSource(getContext(), uri);
-    } catch (IOException exception) {
-      Log.e(LOG_TAG, ("set data source error: " + exception.getMessage()));
-      return;
+      if (withAttentionSignal) {
+        MediaPlayer player = MediaPlayer.create(getContext(), R.raw.attention_signal);
+        setListeners(player);
+        player.start();
+      } else {
+        MediaPlayer player = new MediaPlayer();
+        setListeners(player);
+        playNextUri(player);
+      }
     }
-
-    player.prepareAsync();
   }
 
-  public static void play (String url) {
-    play(Uri.parse(url));
+  public static void play (String url, boolean withAttentionSignal) {
+    play(Uri.parse(url), withAttentionSignal);
   }
 
-  public static void play (File file) {
-    play(Uri.fromFile(file));
+  public static void play (File file, boolean withAttentionSignal) {
+    play(Uri.fromFile(file), withAttentionSignal);
   }
 }
