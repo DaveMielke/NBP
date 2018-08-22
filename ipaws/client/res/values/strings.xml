@@ -23,7 +23,7 @@
   <string name="alert_onset">Expected Start</string>
   <string name="alert_expires">Expires at</string>
   <string name="alert_event">Type of Event</string>
-  <string name="alert_area">Area(s)</string>
+  <string name="alert_area">Affected Area(s)</string>
 
   <string name="message_no_session">alert service not running</string>
   <string name="message_session_error">server communication error</string>

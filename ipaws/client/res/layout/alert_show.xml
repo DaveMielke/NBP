@@ -46,5 +46,6 @@
     </TableRow>
 
     <TextView android:id="@+id/alert_description" android:focusable="true" />
+    <TextView android:id="@+id/alert_instruction" />
   </TableLayout>
 </FrameLayout>

@@ -144,9 +144,20 @@ public abstract class Alerts extends ApplicationComponent {
       identifier = properties.get(PROPERTY_IDENTIFIER);
       sender = properties.get(PROPERTY_SENDER);
       sent = parseTime(properties.get(PROPERTY_SENT));
-      effective = parseTime(properties.get(PROPERTY_EFFECTIVE));
+
+      {
+        Date time = parseTime(properties.get(PROPERTY_EFFECTIVE));
+        if (time == null) time = sent;
+        effective = time;
+      }
+
       onset = parseTime(properties.get(PROPERTY_ONSET));
-      expires = parseTime(properties.get(PROPERTY_EXPIRES));
+
+      {
+        Date time = parseTime(properties.get(PROPERTY_EXPIRES));
+        expires = time;
+      }
+
       event = properties.get(PROPERTY_EVENT);
       area = properties.get(PROPERTY_AREA);
       headline = properties.get(PROPERTY_HEADLINE);
@@ -183,6 +194,7 @@ public abstract class Alerts extends ApplicationComponent {
       helper.setText(R.id.alert_event, event);
       helper.setText(R.id.alert_area, area);
       helper.setText(R.id.alert_description, description);
+      helper.setText(R.id.alert_instruction, instruction);
     }
   }
 

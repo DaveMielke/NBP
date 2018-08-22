@@ -173,8 +173,8 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
           }
 
           try {
-            setAreas();
             haveAlerts();
+            setAreas();
             writeCommand("sendAlerts");
 
             synchronized (this) {
