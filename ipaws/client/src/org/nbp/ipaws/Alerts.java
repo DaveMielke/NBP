@@ -125,13 +125,15 @@ public abstract class Alerts extends ApplicationComponent {
     private final String description;
     private final String instruction;
 
-    private final static String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
-    private final static DateFormat timeFormatter = new SimpleDateFormat(TIME_FORMAT);
+    private final static String XML_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+    private final static DateFormat xmlTimeFormatter =
+      new SimpleDateFormat(XML_TIME_FORMAT
+      );
 
     private Date parseTime (String time) {
       if (time != null) {
         try {
-          return timeFormatter.parse(time);
+          return xmlTimeFormatter.parse(time);
         } catch (ParseException exception) {
           Log.w(LOG_TAG, ("time conversion error: " + time + ": " + exception.getMessage()));
         }
@@ -179,9 +181,14 @@ public abstract class Alerts extends ApplicationComponent {
       return identifier;
     }
 
+    private final static DateFormat timeFormatter =
+      new SimpleDateFormat(
+        ApplicationParameters.TIME_FORMAT
+      );
+
     private final String formatTime (Date date) {
       if (date == null) return null;
-      return date.toString();
+      return timeFormatter.format(date);
     }
 
     @Override
