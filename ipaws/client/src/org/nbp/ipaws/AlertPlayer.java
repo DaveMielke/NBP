@@ -17,26 +17,26 @@ public abstract class AlertPlayer extends ApplicationComponent {
   }
 
   private final static Queue<Uri> uriQueue = new LinkedList<Uri>();
-  private static boolean isActive = false;
+  private static MediaPlayer mediaPlayer = null;
 
-  private static void playNext (MediaPlayer player, boolean reset) {
+  private static void playNext (boolean reset) {
     synchronized (uriQueue) {
       while (true) {
         Uri uri = uriQueue.poll();
         if (uri == null) break;
-        if (reset) player.reset();
+        if (reset) mediaPlayer.reset();
 
         try {
-          player.setDataSource(getContext(), uri);
-          player.prepareAsync();
+          mediaPlayer.setDataSource(getContext(), uri);
+          mediaPlayer.prepareAsync();
           return;
         } catch (IOException exception) {
           Log.e(LOG_TAG, ("set data source error: " + exception.getMessage()));
         }
       }
 
-      player.release();
-      isActive = false;
+      mediaPlayer.release();
+      mediaPlayer = null;
     }
   }
 
@@ -50,8 +50,8 @@ public abstract class AlertPlayer extends ApplicationComponent {
     }
   }
 
-  private static void setOnErrorListener (MediaPlayer player) {
-    player.setOnErrorListener(
+  private static void setOnErrorListener () {
+    mediaPlayer.setOnErrorListener(
       new MediaPlayer.OnErrorListener() {
         @Override
         public boolean onError (MediaPlayer player, int error, int extra) {
@@ -71,59 +71,57 @@ public abstract class AlertPlayer extends ApplicationComponent {
           }
 
           Log.e(LOG_TAG, log.toString());
-          playNext(player, true);
+          playNext(true);
           return true;
         }
       }
     );
   }
 
-  private static void setOnPreparedListener (MediaPlayer player) {
-    player.setOnPreparedListener(
+  private static void setOnPreparedListener () {
+    mediaPlayer.setOnPreparedListener(
       new MediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared (MediaPlayer player) {
-          player.start();
+          mediaPlayer.start();
         }
       }
     );
   }
 
-  private static void setOnCompletionListener (MediaPlayer player) {
-    player.setOnCompletionListener(
+  private static void setOnCompletionListener () {
+    mediaPlayer.setOnCompletionListener(
       new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion (MediaPlayer player) {
-          playNext(player, true);
+          playNext(true);
         }
       }
     );
   }
 
-  private static void setListeners (MediaPlayer player) {
-    setOnErrorListener(player);
-    setOnPreparedListener(player);
-    setOnCompletionListener(player);
+  private static void setListeners () {
+    setOnErrorListener();
+    setOnPreparedListener();
+    setOnCompletionListener();
   }
 
   public static void play (Uri uri, boolean withAttentionSignal) {
     synchronized (uriQueue) {
       if (uri != null) uriQueue.offer(uri);
 
-      if (!isActive) {
+      if (mediaPlayer == null) {
         if (withAttentionSignal) {
-          MediaPlayer player = MediaPlayer.create(getContext(), R.raw.attention_signal);
-          setListeners(player);
-          player.start();
+          mediaPlayer = MediaPlayer.create(getContext(), R.raw.attention_signal);
+          setListeners();
+          mediaPlayer.start();
         } else {
           if (uriQueue.isEmpty()) return;
 
-          MediaPlayer player = new MediaPlayer();
-          setListeners(player);
-          playNext(player, false);
+          mediaPlayer = new MediaPlayer();
+          setListeners();
+          playNext(false);
         }
-
-        isActive = true;
       }
     }
   }
