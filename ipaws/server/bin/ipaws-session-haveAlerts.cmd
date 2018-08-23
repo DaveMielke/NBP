@@ -8,9 +8,9 @@ ipawsSession_haveAlerts() {
       if [ ! -f "${file}" ]
       then
          writeClientResponse "removeAlert ${identifier}"
-      elif ! ipawsHasAlert "${identifier}"
+      elif ! ipawsIsSentAlert "${identifier}"
       then
-         ipawsInsertAlert "${identifier}"
+         ipawsInsertSentAlert "${identifier}"
       fi
    done
 }
