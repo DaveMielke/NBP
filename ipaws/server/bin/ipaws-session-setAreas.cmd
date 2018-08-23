@@ -33,5 +33,6 @@ ipawsSession_setAreas() {
 
    command+=" commit;"
    sqlExecute "${command}"
+   ipawsSyncAlerts
 }
 

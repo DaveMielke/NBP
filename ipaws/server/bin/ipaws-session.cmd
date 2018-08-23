@@ -29,7 +29,13 @@ ipawsSyncAlerts() {
    for file
    do
       local identifier="${file%.*}"
-      ipawsAlertAdded "${identifier}"
+
+      if ipawsIsRequestedAlert "${identifier}"
+      then
+         ipawsIsSentAlert "${identifier}" || ipawsSendAlert "${identifier}"
+      else
+         ipawsIsSentAlert "${identifier}" && ipawsCancelAlert "${identifier}"
+      fi
    done
 } && readonly -f ipawsSyncAlerts
 
@@ -88,17 +94,13 @@ ipawsAlertAdded() {
 ipawsAlertRemoved() {
    local identifier="${1}"
 
-   ipawsIsSentAlert "${identifier}" && {
-      logInfo "cancelling alert: ${clientReference}: ${identifier}"
-      writeClientResponse "removeAlert ${identifier}"
-      ipawsDeleteSentAlert "${identifier}"
-   }
+   ipawsIsSentAlert "${identifier}" && ipawsCancelAlert "${identifier}"
 } && readonly -f ipawsAlertRemoved
 
 ipawsSendAlert() {
    local identifier="${1}"
 
-   logInfo "sending alert: ${clientReference} ${identifier}:"
+   logInfo "sending alert: ${clientReference}: ${identifier}"
    beginClientResponse
    echo "beginAlert ${identifier}"
    cat "${identifier}.${alertFileExtension}"
@@ -106,6 +108,14 @@ ipawsSendAlert() {
    endClientResponse
    ipawsInsertSentAlert "${identifier}"
 } && readonly -f ipawsSendAlert
+
+ipawsCancelAlert() {
+   local identifier="${1}"
+
+   logInfo "cancelling alert: ${clientReference}: ${identifier}"
+   writeClientResponse "removeAlert ${identifier}"
+   ipawsDeleteSentAlert "${identifier}"
+} && readonly -f ipawsCancelAlert
 
 ipawsIsRequestedAlert() {
    local identifier="${1}"
