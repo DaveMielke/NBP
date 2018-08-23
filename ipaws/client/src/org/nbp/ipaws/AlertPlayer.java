@@ -16,6 +16,31 @@ public abstract class AlertPlayer extends ApplicationComponent {
   private AlertPlayer () {
   }
 
+  private final static Queue<Uri> uriQueue = new LinkedList<Uri>();
+  private static boolean isActive = false;
+
+  private static void playNext (MediaPlayer player, boolean reset) {
+    synchronized (uriQueue) {
+      while (true) {
+        Uri uri = uriQueue.poll();
+        if (uri == null) break;
+        if (reset) player.reset();
+
+        try {
+          player.setDataSource(getContext(), uri);
+          player.prepareAsync();
+          return;
+        } catch (IOException exception) {
+          Log.e(LOG_TAG, ("set data source error: " + exception.getMessage()));
+        }
+      }
+
+      isActive = false;
+    }
+
+    player.release();
+  }
+
   private final static String getErrorMessage (int error) {
     switch (error) {
       case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
@@ -47,30 +72,11 @@ public abstract class AlertPlayer extends ApplicationComponent {
           }
 
           Log.e(LOG_TAG, log.toString());
-          return false;
+          playNext(player, true);
+          return true;
         }
       }
     );
-  }
-
-  private final static Queue<Uri> uriQueue = new LinkedList<Uri>();
-
-  private static void playNextUri (MediaPlayer player) {
-    synchronized (uriQueue) {
-      Uri uri = uriQueue.poll();
-
-      if (uri != null) {
-        try {
-          player.setDataSource(getContext(), uri);
-          player.prepareAsync();
-          return;
-        } catch (IOException exception) {
-          Log.e(LOG_TAG, ("set data source error: " + exception.getMessage()));
-        }
-      }
-    }
-
-    player.release();
   }
 
   private static void setOnPreparedListener (MediaPlayer player) {
@@ -89,8 +95,7 @@ public abstract class AlertPlayer extends ApplicationComponent {
       new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion (MediaPlayer player) {
-          player.reset();
-          playNextUri(player);
+          playNext(player, true);
         }
       }
     );
@@ -104,16 +109,20 @@ public abstract class AlertPlayer extends ApplicationComponent {
 
   public static void play (Uri uri, boolean withAttentionSignal) {
     synchronized (uriQueue) {
-      uriQueue.offer(uri);
+      if (uri != null) uriQueue.offer(uri);
 
-      if (withAttentionSignal) {
-        MediaPlayer player = MediaPlayer.create(getContext(), R.raw.attention_signal);
-        setListeners(player);
-        player.start();
-      } else {
-        MediaPlayer player = new MediaPlayer();
-        setListeners(player);
-        playNextUri(player);
+      if (!isActive) {
+        if (withAttentionSignal) {
+          MediaPlayer player = MediaPlayer.create(getContext(), R.raw.attention_signal);
+          setListeners(player);
+          player.start();
+        } else {
+          MediaPlayer player = new MediaPlayer();
+          setListeners(player);
+          playNext(player, false);
+        }
+
+        isActive = true;
       }
     }
   }

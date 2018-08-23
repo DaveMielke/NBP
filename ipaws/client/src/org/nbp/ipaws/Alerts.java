@@ -46,6 +46,7 @@ public abstract class Alerts extends ApplicationComponent {
   public final static String PROPERTY_HEADLINE = "headline";
   public final static String PROPERTY_DESCRIPTION = "description";
   public final static String PROPERTY_INSTRUCTION = "instruction";
+  public final static String PROPERTY_URI = "uri";
 
   private final static Set<String> PROPERTIES = new HashSet<String>() {
     {
@@ -60,6 +61,7 @@ public abstract class Alerts extends ApplicationComponent {
       add(PROPERTY_HEADLINE);
       add(PROPERTY_DESCRIPTION);
       add(PROPERTY_INSTRUCTION);
+      add(PROPERTY_URI);
     }
   };
 
@@ -113,18 +115,6 @@ public abstract class Alerts extends ApplicationComponent {
   }
 
   public static class Descriptor implements DialogFinisher {
-    private final String identifier;
-    private final String sender;
-    private final Date sent;
-    private final Date effective;
-    private final Date onset;
-    private final Date expires;
-    private final String event;
-    private final String area;
-    private final String headline;
-    private final String description;
-    private final String instruction;
-
     private final static String XML_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     private final static DateFormat xmlTimeFormatter =
       new SimpleDateFormat(XML_TIME_FORMAT
@@ -141,6 +131,19 @@ public abstract class Alerts extends ApplicationComponent {
 
       return null;
     }
+
+    private final String identifier;
+    private final String sender;
+    private final Date sent;
+    private final Date effective;
+    private final Date onset;
+    private final Date expires;
+    private final String event;
+    private final String area;
+    private final String headline;
+    private final String description;
+    private final String instruction;
+    private final String uri;
 
     private Descriptor (Properties properties) {
       identifier = properties.get(PROPERTY_IDENTIFIER);
@@ -165,6 +168,7 @@ public abstract class Alerts extends ApplicationComponent {
       headline = properties.get(PROPERTY_HEADLINE);
       description = properties.get(PROPERTY_DESCRIPTION);
       instruction = properties.get(PROPERTY_INSTRUCTION);
+      uri = properties.get(PROPERTY_URI);
     }
 
     public final String getSummary () {
@@ -258,9 +262,13 @@ public abstract class Alerts extends ApplicationComponent {
         }
       }
 
+      Descriptor alert = new Descriptor(properties);
+
       synchronized (alertCache) {
-        alertCache.put(identifier, new Descriptor(properties));
+        alertCache.put(identifier, alert);
       }
+
+      AlertPlayer.play(alert.uri, true);
     }
   }
 
