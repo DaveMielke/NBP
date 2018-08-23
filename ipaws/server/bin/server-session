@@ -36,7 +36,7 @@ handleClientCommands() {
       if [ -f "${scriptlet}" ]
       then
          . "${scriptlet}"
-         "${serverType}Session_${command}" "${arguments[@]}"
+         "${serverType}Session_${command}" "${arguments[@]}" || :
       else
          logWarning "unrecognized command: ${clientReference}: ${command}"
       fi
