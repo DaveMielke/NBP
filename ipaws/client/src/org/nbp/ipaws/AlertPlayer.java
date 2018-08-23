@@ -129,10 +129,14 @@ public abstract class AlertPlayer extends ApplicationComponent {
   }
 
   public static void play (String url, boolean withAttentionSignal) {
-    play(Uri.parse(url), withAttentionSignal);
+    Uri uri = null;
+    if (url != null) uri = Uri.parse(url);
+    play(uri, withAttentionSignal);
   }
 
   public static void play (File file, boolean withAttentionSignal) {
-    play(Uri.fromFile(file), withAttentionSignal);
+    Uri uri = null;
+    if (file != null) uri = Uri.fromFile(file);
+    play(uri, withAttentionSignal);
   }
 }

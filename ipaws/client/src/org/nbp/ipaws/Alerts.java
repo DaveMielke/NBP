@@ -263,12 +263,11 @@ public abstract class Alerts extends ApplicationComponent {
       }
 
       Descriptor alert = new Descriptor(properties);
+      AlertPlayer.play(alert.uri, true);
 
       synchronized (alertCache) {
         alertCache.put(identifier, alert);
       }
-
-      AlertPlayer.play(alert.uri, true);
     }
   }
 
