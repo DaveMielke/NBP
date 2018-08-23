@@ -35,10 +35,9 @@ public abstract class AlertPlayer extends ApplicationComponent {
         }
       }
 
+      player.release();
       isActive = false;
     }
-
-    player.release();
   }
 
   private final static String getErrorMessage (int error) {
@@ -117,6 +116,8 @@ public abstract class AlertPlayer extends ApplicationComponent {
           setListeners(player);
           player.start();
         } else {
+          if (uriQueue.isEmpty()) return;
+
           MediaPlayer player = new MediaPlayer();
           setListeners(player);
           playNext(player, false);
