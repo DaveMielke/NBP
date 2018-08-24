@@ -2,12 +2,22 @@ verifyCommandAvailability inotifywait
 includeScriptLibraries cap sql
 
 beginServerSession() {
+   ipawsKeepAlive
    ipawsPrepareClientTables
 } && readonly -f beginServerSession
 
 endServerSession() {
    ipawsPrepareClientTables
 } && readonly -f endServerSession
+
+ipawsKeepAlive() {
+   local interval=$((30 * 60))
+
+   while sleep "${interval}"
+   do
+      writeClientResponse "keepAlive"
+   done &
+} && readonly -f ipawsKeepAlive
 
 ipawsPrepareClientTables() {
    local command="begin transaction;"
