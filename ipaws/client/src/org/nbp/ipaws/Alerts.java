@@ -94,7 +94,7 @@ public abstract class Alerts extends ApplicationComponent {
               parser.next();
               parser.require(XmlPullParser.END_TAG, null, name);
 
-              properties.put(name, value);
+              if (properties.get(name) == null) properties.put(name, value);
             }
 
             break;
