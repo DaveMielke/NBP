@@ -19,6 +19,9 @@ import java.io.FileReader;
 import java.io.File;
 import java.io.FileWriter;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -280,7 +283,30 @@ public abstract class Alerts extends ApplicationComponent {
     }
   }
 
-  public static String[] list () {
-    return getAlertsDirectory().list();
+  public static String[] list (boolean sorted) {
+    File directory = getAlertsDirectory();
+    String[] names = directory.list();
+    int count = names.length;
+
+    if (count > 1) {
+      if (sorted) {
+        final Map<String, Long> times = new HashMap<String, Long>();
+
+        for (String name : names) {
+          times.put(name, new File(directory, name).lastModified());
+        }
+
+        Arrays.sort(names,
+          new Comparator<String>() {
+            @Override
+            public int compare (String name1, String name2) {
+              return times.get(name2).compareTo(times.get(name1));
+            }
+          }
+        );
+      }
+    }
+
+    return names;
   }
 }

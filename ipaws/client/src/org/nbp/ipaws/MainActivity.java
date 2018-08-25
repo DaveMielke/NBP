@@ -149,7 +149,7 @@ public class MainActivity extends CommonActivity {
   }
 
   public final void reviewAlerts (View view) {
-    final String[] identifiers = Alerts.list();
+    final String[] identifiers = Alerts.list(true);
 
     if (identifiers.length == 0) {
       showMessage(R.string.message_no_alerts);

@@ -74,7 +74,7 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
   private final void haveAlerts () throws IOException {
     StringBuilder command = new StringBuilder("haveAlerts");
 
-    for (String identifier : Alerts.list()) {
+    for (String identifier : Alerts.list(false)) {
       command.append(' ');
       command.append(identifier);
     }
