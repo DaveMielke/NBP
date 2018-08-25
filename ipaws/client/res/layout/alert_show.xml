@@ -5,47 +5,53 @@
   android:layout_width="match_parent"
   >
 
-  <TableLayout
+  <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
-    <TableRow>
-      <TextView android:text="@string/alert_sender" />
-      <TextView android:id="@+id/alert_sender" />
-    </TableRow>
+    <TableLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
 
-    <TableRow>
-      <TextView android:text="@string/alert_sent" />
-      <TextView android:id="@+id/alert_sent" />
-    </TableRow>
+      <TableRow>
+        <TextView android:text="@string/alert_sender" />
+        <TextView android:id="@+id/alert_sender" />
+      </TableRow>
 
-    <TableRow>
-      <TextView android:text="@string/alert_effective" />
-      <TextView android:id="@+id/alert_effective" />
-    </TableRow>
+      <TableRow>
+        <TextView android:text="@string/alert_sent" />
+        <TextView android:id="@+id/alert_sent" />
+      </TableRow>
 
-    <TableRow>
-      <TextView android:text="@string/alert_onset" />
-      <TextView android:id="@+id/alert_onset" />
-    </TableRow>
+      <TableRow>
+        <TextView android:text="@string/alert_effective" />
+        <TextView android:id="@+id/alert_effective" />
+      </TableRow>
 
-    <TableRow>
-      <TextView android:text="@string/alert_expires" />
-      <TextView android:id="@+id/alert_expires" />
-    </TableRow>
+      <TableRow>
+        <TextView android:text="@string/alert_onset" />
+        <TextView android:id="@+id/alert_onset" />
+      </TableRow>
 
-    <TableRow>
-      <TextView android:text="@string/alert_event" />
-      <TextView android:id="@+id/alert_event" />
-    </TableRow>
+      <TableRow>
+        <TextView android:text="@string/alert_expires" />
+        <TextView android:id="@+id/alert_expires" />
+      </TableRow>
 
-    <TableRow>
-      <TextView android:text="@string/alert_area" />
-      <TextView android:id="@+id/alert_area" />
-    </TableRow>
+      <TableRow>
+        <TextView android:text="@string/alert_event" />
+        <TextView android:id="@+id/alert_event" />
+      </TableRow>
 
-    <TextView android:id="@+id/alert_description" android:focusable="true" />
-    <TextView android:id="@+id/alert_instruction" />
-  </TableLayout>
+      <TableRow>
+        <TextView android:text="@string/alert_area" />
+        <TextView android:id="@+id/alert_area" />
+      </TableRow>
+
+      <TextView android:id="@+id/alert_description" android:focusable="true" />
+      <TextView android:id="@+id/alert_instruction" />
+    </TableLayout>
+  </ScrollView>
 </FrameLayout>
