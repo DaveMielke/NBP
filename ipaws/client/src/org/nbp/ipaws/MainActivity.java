@@ -142,7 +142,7 @@ public class MainActivity extends CommonActivity {
     Alerts.Descriptor alert = Alerts.get(identifier);
 
     if (alert != null) {
-      showDialog(R.string.action_showAlert, R.layout.alert, alert);
+      showDialog(R.string.alert_title, R.layout.alert, alert);
     }
   }
 
@@ -171,7 +171,7 @@ public class MainActivity extends CommonActivity {
         }
       };
 
-    newAlertDialogBuilder(R.string.action_reviewAlerts)
+    newAlertDialogBuilder(R.string.action_selectAlert)
       .setCancelable(true)
       .setNegativeButton(android.R.string.no, null)
       .setItems(summaries, choiceListener)
@@ -416,7 +416,7 @@ public class MainActivity extends CommonActivity {
         }
       };
 
-    newAlertDialogBuilder(R.string.action_removeAreas)
+    newAlertDialogBuilder(R.string.action_selectAreas)
       .setCancelable(true)
       .setNegativeButton(android.R.string.no, null)
       .setPositiveButton(R.string.option_remove, removeListener)

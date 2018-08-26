@@ -8,16 +8,18 @@
   <string name="main_switch_on">Running</string>
 
   <string name="action_reviewAlerts">Review Alerts</string>
-  <string name="action_showAlert">Show Alert</string>
+  <string name="action_selectAlert">Select an Alert</string>
   <string name="action_manageAreas">Manage Areas</string>
-  <string name="action_selectState">Select State</string>
+  <string name="action_selectState">Select a State</string>
   <string name="action_selectCounties">Select Counties</string>
   <string name="action_removeAreas">Remove Areas</string>
+  <string name="action_selectAreas">Select Areas</string>
   <string name="action_aboutApplication">About Application</string>
 
   <string name="option_save">Save</string>
   <string name="option_remove">Remove</string>
 
+  <string name="alert_title">Alert</string>
   <string name="alert_sender">Issued by</string>
   <string name="alert_sent">Issued at</string>
   <string name="alert_effective">Assessed at</string>
@@ -33,6 +35,6 @@
   <string name="message_no_session">alert service not running</string>
   <string name="message_session_error">server communication error</string>
   <string name="message_long_response">data not available - try later</string>
-  <string name="message_no_alerts">There are no active alerts for any of the areas that you\'ve selected.</string>
+  <string name="message_no_alerts">There are no alerts for any of the areas that you have selected.</string>
   <string name="message_no_areas">no requested areas</string>
 </resources>
