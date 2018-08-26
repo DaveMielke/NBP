@@ -15,7 +15,7 @@ ipawsKeepAlive() {
 
    while sleep "${interval}"
    do
-      writeClientResponse "keepAlive"
+      writeClientResponse "ping $((++pingNumber))"
    done &
 } && readonly -f ipawsKeepAlive
 
@@ -163,3 +163,4 @@ ipawsDeleteSentAlert() {
 
 cd "${dataDirectory}"
 ipawsSendingAlerts=false
+pingNumber=0
