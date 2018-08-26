@@ -13,17 +13,22 @@
   <string name="action_selectState">Select State</string>
   <string name="action_selectCounties">Select Counties</string>
   <string name="action_removeAreas">Remove Areas</string>
+  <string name="action_aboutApplication">About Application</string>
 
   <string name="option_save">Save</string>
   <string name="option_remove">Remove</string>
 
   <string name="alert_sender">Issued by</string>
   <string name="alert_sent">Issued at</string>
-  <string name="alert_effective">Effective</string>
-  <string name="alert_onset">Expected Start</string>
+  <string name="alert_effective">Assessed at</string>
+  <string name="alert_onset">Expected at</string>
   <string name="alert_expires">Expires at</string>
   <string name="alert_event">Type of Event</string>
   <string name="alert_area">Affected Area(s)</string>
+
+  <string name="about_versionNumber">Version Number</string>
+  <string name="about_buildTime">Build Time</string>
+  <string name="about_sourceRevision">Source Revision</string>
 
   <string name="message_no_session">alert service not running</string>
   <string name="message_session_error">server communication error</string>

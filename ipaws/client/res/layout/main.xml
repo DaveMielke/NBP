@@ -35,4 +35,11 @@
     android:onClick="removeAreas"
     android:text="@string/action_removeAreas"
    />
+
+  <Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:onClick="aboutApplication"
+    android:text="@string/action_aboutApplication"
+   />
 </LinearLayout>

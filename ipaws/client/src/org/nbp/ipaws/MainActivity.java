@@ -13,6 +13,8 @@ import android.widget.Switch;
 
 import android.content.DialogInterface;
 import android.app.AlertDialog;
+import org.nbp.common.DialogFinisher;
+import org.nbp.common.DialogHelper;
 
 import java.io.IOException;
 
@@ -140,7 +142,7 @@ public class MainActivity extends CommonActivity {
     Alerts.Descriptor alert = Alerts.get(identifier);
 
     if (alert != null) {
-      showDialog(R.string.action_showAlert, R.layout.alert_show, alert);
+      showDialog(R.string.action_showAlert, R.layout.alert, alert);
     }
   }
 
@@ -420,5 +422,19 @@ public class MainActivity extends CommonActivity {
       .setPositiveButton(R.string.option_remove, removeListener)
       .setMultiChoiceItems(names, selection, choiceListener)
       .show();
+  }
+
+  public final void aboutApplication (View view) {
+    DialogFinisher finisher = new DialogFinisher() {
+      @Override
+      public void finishDialog (DialogHelper helper) {
+        helper.setText(R.id.about_versionNumber, R.string.NBP_IPAWS_version_name);
+        helper.setText(R.id.about_buildTime, R.string.NBP_IPAWS_build_time);
+        helper.setText(R.id.about_sourceRevision, R.string.NBP_IPAWS_source_revision);
+        helper.setTextFromAsset(R.id.about_copyright, "copyright");
+      }
+    };
+
+    showDialog(R.string.action_aboutApplication, R.layout.about, finisher);
   }
 }
