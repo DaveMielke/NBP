@@ -19,7 +19,7 @@ import java.io.BufferedWriter;
 import java.util.Map;
 import java.util.HashMap;
 
-public class ServerSession extends ApplicationComponent implements ResponseReader {
+public class ServerSession extends ApplicationComponent implements ResponseReader, CommandWriter {
   private final static String LOG_TAG = ServerSession.class.getName();
 
   private final Thread sessionThread;
@@ -29,37 +29,48 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
   private Writer sessionWriter = null;
   private BufferedReader sessionReader = null;
 
-  private final void writeCommand (String command) throws IOException {
+  @Override
+  public final boolean writeCommand (String command) {
     synchronized (this) {
-      if (sessionWriter == null) {
-        throw new IOException("not connected to server");
-      }
+      if (sessionWriter != null) {
+        synchronized (sessionWriter) {
+          try {
+            Log.d(LOG_TAG, ("sending command: " + command));
 
-      synchronized (sessionWriter) {
-        Log.d(LOG_TAG, ("sending command: " + command));
-        sessionWriter.write(command);
-        sessionWriter.write('\n');
-        sessionWriter.flush();
+            sessionWriter.write(command);
+            sessionWriter.write('\n');
+            sessionWriter.flush();
+
+            return true;
+          } catch (IOException exception) {
+            Log.e(LOG_TAG, ("command write error: " + exception.getMessage()));
+          }
+        }
+      } else {
+        Log.e(LOG_TAG, "not connected to server");
       }
     }
+
+    return false;
   }
 
-  private final void writeCommand (StringBuilder command) throws IOException {
-    writeCommand(command.toString());
+  @Override
+  public final boolean writeCommand (StringBuilder command) {
+    return writeCommand(command.toString());
   }
 
-  public final void getStates () throws IOException {
-    writeCommand("getStates");
+  public final boolean getStates () {
+    return writeCommand("getStates");
   }
 
-  public final void getCounties (Areas.State state) throws IOException {
+  public final boolean getCounties (Areas.State state) {
     StringBuilder command = new StringBuilder("getCounties");
     command.append(' ');
     command.append(state.getAbbreviation());
-    writeCommand(command);
+    return writeCommand(command);
   }
 
-  public final void setAreas () throws IOException {
+  public final boolean  setAreas () {
     StringBuilder command = new StringBuilder("setAreas");
 
     for (String area : getRequestedAreas()) {
@@ -67,11 +78,11 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
       command.append(area);
     }
 
-    //command.append(" 000000");
-    writeCommand(command);
+  //command.append(" 000000");
+    return writeCommand(command);
   }
 
-  private final void haveAlerts () throws IOException {
+  private final boolean haveAlerts () {
     StringBuilder command = new StringBuilder("haveAlerts");
 
     for (String identifier : Alerts.list(false)) {
@@ -79,7 +90,7 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
       command.append(identifier);
     }
 
-    writeCommand(command);
+    return writeCommand(command);
   }
 
   @Override
@@ -98,8 +109,12 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
         new HashMap<String, ResponseHandler>()
   {
     {
+      put("ping", new PingHandler(ServerSession.this));
+      put("pong", new PongHandler());
+
       put("beginAlert", new BeginAlertHandler(ServerSession.this));
       put("removeAlert", new RemoveAlertHandler());
+
       put("allStates", new AllStatesHandler());
       put("stateCounties", new StateCountiesHandler());
     }
@@ -109,21 +124,21 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
     ResponseHandler responseHandler =
       new ResponseHandler() {
         @Override
-        public void handleResponse (String response) {
+        public boolean handleResponse (String response) {
           String[] operands = getOperands(response, 2);
           int count = operands.length;
           int index = 0;
 
           String command = "";
           if (index < count) command = operands[index++];
-          if (command.isEmpty()) return;
+          if (command.isEmpty()) return true;
 
           ResponseHandler argumentsHandler = responseHandlers.get(command);
-          if (argumentsHandler == null) return;
+          if (argumentsHandler == null) return true;
 
           String arguments = "";
           if (index < count) arguments = operands[index++];
-          argumentsHandler.handleResponse(arguments);
+          return argumentsHandler.handleResponse(arguments);
         }
       };
 
@@ -132,7 +147,7 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
       if (response == null) break;
 
       Log.d(LOG_TAG, ("received response: " + response));
-      responseHandler.handleResponse(response);
+     if (!responseHandler.handleResponse(response)) break;
     }
   }
 
@@ -146,71 +161,74 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
   private final boolean doSession () {
     boolean connected = false;
 
-    synchronized (this) {
-      sessionSocket = new Socket();
-    }
-
-    try {
-      SocketAddress address = makeSocketAddress();
-      Log.d(LOG_TAG, ("connecting to " + address.toString()));
-      sessionSocket.connect(address);
+  DO_SESSION:
+    {
+      synchronized (this) {
+        sessionSocket = new Socket();
+      }
 
       try {
-        connected = true;
-        Log.d(LOG_TAG, "connected");
+        SocketAddress address = makeSocketAddress();
+        Log.d(LOG_TAG, ("connecting to " + address.toString()));
+        sessionSocket.connect(address);
 
         try {
-          sessionSocket.setKeepAlive(true);
-
-          synchronized (this) {
-            sessionWriter =
-              new BufferedWriter(
-                new OutputStreamWriter(
-                  sessionSocket.getOutputStream(),
-                  ApplicationParameters.CHARACTER_ENCODING
-                )
-              );
-          }
+          connected = true;
+          Log.d(LOG_TAG, "connected");
 
           try {
-            haveAlerts();
-            setAreas();
-            writeCommand("sendAlerts");
+            sessionSocket.setKeepAlive(true);
 
             synchronized (this) {
-              sessionReader =
-                new BufferedReader(
-                  new InputStreamReader(
-                    sessionSocket.getInputStream(),
+              sessionWriter =
+                new BufferedWriter(
+                  new OutputStreamWriter(
+                    sessionSocket.getOutputStream(),
                     ApplicationParameters.CHARACTER_ENCODING
                   )
                 );
             }
 
             try {
-              handleResponses();
+              if (!haveAlerts()) break DO_SESSION;
+              if (!setAreas()) break DO_SESSION;
+              if (!writeCommand("sendAlerts")) break DO_SESSION;
+
+              synchronized (this) {
+                sessionReader =
+                  new BufferedReader(
+                    new InputStreamReader(
+                      sessionSocket.getInputStream(),
+                      ApplicationParameters.CHARACTER_ENCODING
+                    )
+                  );
+              }
+
+              try {
+                handleResponses();
+              } finally {
+                synchronized (this) {
+                  sessionReader = null;
+                }
+              }
             } finally {
               synchronized (this) {
-                sessionReader = null;
+                sessionWriter = null;
               }
             }
-          } finally {
-            synchronized (this) {
-              sessionWriter = null;
-            }
+          } catch (IOException exception) {
+            Log.e(LOG_TAG, ("session error: " + exception.getMessage()));
           }
-        } catch (IOException exception) {
-          Log.e(LOG_TAG, ("session error: " + exception.getMessage()));
+        } finally {
+          synchronized (this) {
+            Log.d(LOG_TAG, "disconnecting");
+            sessionSocket.close();
+            sessionSocket = null;
+          }
         }
-      } finally {
-        synchronized (this) {
-          Log.d(LOG_TAG, "disconnecting");
-          sessionSocket.close();
-          sessionSocket = null;
-        }
+      } catch (IOException exception) {
+        Log.e(LOG_TAG, ("socket error: " + exception.getMessage()));
       }
-    } catch (IOException exception) {
-      Log.e(LOG_TAG, ("socket error: " + exception.getMessage()));
     }
 
     return connected;

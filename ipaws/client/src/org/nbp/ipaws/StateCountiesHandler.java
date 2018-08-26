@@ -8,16 +8,16 @@ public class StateCountiesHandler extends ResponseHandler {
   }
 
   @Override
-  public final void handleResponse (String response) {
+  public final boolean handleResponse (String response) {
     String[] operands = getOperands(response, 2);
     int count = operands.length;
     int index = 0;
 
-    if (index == count) return;
+    if (index == count) return true;
     String abbreviation = operands[index++];
 
     Areas.State state = Areas.getStateByAbbreviation(abbreviation);
-    if (state == null) return;
+    if (state == null) return true;
     List<Areas.County> counties = state.getCounties();
 
     if (index < count) {
@@ -38,5 +38,7 @@ public class StateCountiesHandler extends ResponseHandler {
         counties.notify();
       }
     }
+
+    return true;
   }
 }

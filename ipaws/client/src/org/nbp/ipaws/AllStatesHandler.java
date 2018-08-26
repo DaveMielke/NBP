@@ -8,7 +8,7 @@ public class AllStatesHandler extends ResponseHandler {
   }
 
   @Override
-  public final void handleResponse (String response) {
+  public final boolean handleResponse (String response) {
     List<Areas.State> states = Areas.getStates();
 
     synchronized (states) {
@@ -28,5 +28,7 @@ public class AllStatesHandler extends ResponseHandler {
 
       states.notify();
     }
+
+    return true;
   }
 }

@@ -286,9 +286,8 @@ public abstract class Alerts extends ApplicationComponent {
   public static String[] list (boolean sorted) {
     File directory = getAlertsDirectory();
     String[] names = directory.list();
-    int count = names.length;
 
-    if (count > 1) {
+    if (names.length > 1) {
       if (sorted) {
         final Map<String, Long> times = new HashMap<String, Long>();
 

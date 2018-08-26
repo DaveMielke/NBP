@@ -9,7 +9,7 @@ public class BeginAlertHandler extends ResponseHandler {
   }
 
   @Override
-  public final void handleResponse (String response) {
+  public final boolean handleResponse (String response) {
     String[] operands = getOperands(response, 2);
     int count = operands.length;
     int index = 0;
@@ -21,7 +21,7 @@ public class BeginAlertHandler extends ResponseHandler {
 
     while (true) {
       String line = responseReader.readResponse();
-      if (line == null) return;
+      if (line == null) return true;
 
       operands = getOperands(line, 3);
       count = operands.length;
@@ -36,7 +36,7 @@ public class BeginAlertHandler extends ResponseHandler {
 
         if (beginIdentifier.equals(endIdentifier)) {
           Alerts.add(beginIdentifier, alert.toString());
-          return;
+          return true;
         }
       }
 

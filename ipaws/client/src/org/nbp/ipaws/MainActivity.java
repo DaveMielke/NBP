@@ -52,7 +52,7 @@ public class MainActivity extends CommonActivity {
   }
 
   private interface ServerAction {
-    public void perform (ServerSession session) throws IOException;
+    public boolean perform (ServerSession session);
   }
 
   private final boolean performServerAction (Object object, final ServerAction action) {
@@ -66,11 +66,7 @@ public class MainActivity extends CommonActivity {
     new Thread() {
       @Override
       public void run () {
-        try {
-          action.perform(session);
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, ("server communication error: " + exception.getMessage()));
-        }
+        action.perform(session);
       }
     }.start();
 
@@ -99,8 +95,8 @@ public class MainActivity extends CommonActivity {
     performServerAction(
       new ServerAction() {
         @Override
-        public void perform (ServerSession session) throws IOException {
-          session.setAreas();
+        public boolean perform (ServerSession session) {
+          return session.setAreas();
         }
       }
     );
@@ -115,8 +111,8 @@ public class MainActivity extends CommonActivity {
       return performServerAction(states,
         new ServerAction() {
           @Override
-          public void perform (ServerSession session) throws IOException {
-            session.getStates();
+          public boolean perform (ServerSession session) {
+            return session.getStates();
           }
         }
       );
@@ -132,8 +128,8 @@ public class MainActivity extends CommonActivity {
       return performServerAction(counties,
         new ServerAction() {
           @Override
-          public void perform (ServerSession session) throws IOException {
-            session.getCounties(state);
+          public boolean perform (ServerSession session) {
+            return session.getCounties(state);
           }
         }
       );
