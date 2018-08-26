@@ -2,14 +2,14 @@ package org.nbp.ipaws;
 
 import java.util.List;
 
-public class StateCountiesHandler extends ResponseHandler {
+public class StateCountiesHandler extends OperandsHandler {
   public StateCountiesHandler () {
     super();
   }
 
   @Override
-  public final boolean handleResponse (String response) {
-    String[] operands = getOperands(response, 2);
+  public final boolean handleOperands (String string) {
+    String[] operands = getOperands(string, 2);
     int count = operands.length;
     int index = 0;
 

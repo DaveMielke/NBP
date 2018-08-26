@@ -1,16 +1,16 @@
 package org.nbp.ipaws;
 
-public class BeginAlertHandler extends ResponseHandler {
-  private final ResponseReader responseReader;
+public class BeginAlertHandler extends OperandsHandler {
+  private final CommandReader commandReader;
 
-  public BeginAlertHandler (ResponseReader reader) {
+  public BeginAlertHandler (CommandReader reader) {
     super();
-    responseReader = reader;
+    commandReader = reader;
   }
 
   @Override
-  public final boolean handleResponse (String response) {
-    String[] operands = getOperands(response, 2);
+  public final boolean handleOperands (String string) {
+    String[] operands = getOperands(string, 2);
     int count = operands.length;
     int index = 0;
 
@@ -20,7 +20,7 @@ public class BeginAlertHandler extends ResponseHandler {
     StringBuilder alert = new StringBuilder();
 
     while (true) {
-      String line = responseReader.readResponse();
+      String line = commandReader.readCommand();
       if (line == null) return true;
 
       operands = getOperands(line, 3);

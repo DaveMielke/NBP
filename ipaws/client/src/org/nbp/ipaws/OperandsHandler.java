@@ -4,10 +4,10 @@ import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.HashMap;
 
-public abstract class ResponseHandler extends ApplicationComponent {
-  public abstract boolean handleResponse (String response);
+public abstract class OperandsHandler extends ApplicationComponent {
+  public abstract boolean handleOperands (String string);
 
-  protected ResponseHandler () {
+  protected OperandsHandler () {
     super();
   }
 

@@ -2,17 +2,17 @@ package org.nbp.ipaws;
 
 import java.util.List;
 
-public class AllStatesHandler extends ResponseHandler {
+public class AllStatesHandler extends OperandsHandler {
   public AllStatesHandler () {
     super();
   }
 
   @Override
-  public final boolean handleResponse (String response) {
+  public final boolean handleOperands (String string) {
     List<Areas.State> states = Areas.getStates();
 
     synchronized (states) {
-      for (String state : getOperands(response, ",")) {
+      for (String state : getOperands(string, ",")) {
         final int count = 3;
         String[] operands = getOperands(state, count);
 

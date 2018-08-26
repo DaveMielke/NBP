@@ -1,13 +1,13 @@
 package org.nbp.ipaws;
 
-public class RemoveAlertHandler extends ResponseHandler {
+public class RemoveAlertHandler extends OperandsHandler {
   public RemoveAlertHandler () {
     super();
   }
 
   @Override
-  public final boolean handleResponse (String response) {
-    String[] operands = getOperands(response, 2);
+  public final boolean handleOperands (String string) {
+    String[] operands = getOperands(string, 2);
     int count = operands.length;
     int index = 0;
 

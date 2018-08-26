@@ -19,7 +19,7 @@ import java.io.BufferedWriter;
 import java.util.Map;
 import java.util.HashMap;
 
-public class ServerSession extends ApplicationComponent implements ResponseReader, CommandWriter {
+public class ServerSession extends ApplicationComponent implements CommandReader, CommandWriter {
   private final static String LOG_TAG = ServerSession.class.getName();
 
   private final Thread sessionThread;
@@ -94,10 +94,10 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
   }
 
   @Override
-  public final String readResponse () {
+  public final String readCommand () {
     try {
-      String response = sessionReader.readLine();
-      if (!Thread.interrupted()) return response;
+      String command = sessionReader.readLine();
+      if (!Thread.interrupted()) return command;
     } catch (IOException exception) {
       Log.e(LOG_TAG, ("session read error: " + exception.getMessage()));
     }
@@ -105,8 +105,8 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
     return null;
   }
 
-  private final Map<String, ResponseHandler> responseHandlers =
-        new HashMap<String, ResponseHandler>()
+  private final Map<String, OperandsHandler> argumentsHandlers =
+        new HashMap<String, OperandsHandler>()
   {
     {
       put("ping", new PingHandler(ServerSession.this));
@@ -120,34 +120,38 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
     }
   };
 
-  private final void handleResponses () {
-    ResponseHandler responseHandler =
-      new ResponseHandler() {
+  private final void handleReceivedCommands () {
+    OperandsHandler commandHandler =
+      new OperandsHandler() {
         @Override
-        public boolean handleResponse (String response) {
-          String[] operands = getOperands(response, 2);
+        public boolean handleOperands (String string) {
+          String[] operands = getOperands(string, 2);
           int count = operands.length;
           int index = 0;
 
           String command = "";
           if (index < count) command = operands[index++];
-          if (command.isEmpty()) return true;
 
-          ResponseHandler argumentsHandler = responseHandlers.get(command);
-          if (argumentsHandler == null) return true;
+          if (command.isEmpty()) return true;
+          OperandsHandler argumentsHandler = argumentsHandlers.get(command);
+
+          if (argumentsHandler == null) {
+            Log.w(LOG_TAG, ("unrecognized command: " + command));
+            return true;
+          }
 
           String arguments = "";
           if (index < count) arguments = operands[index++];
-          return argumentsHandler.handleResponse(arguments);
+          return argumentsHandler.handleOperands(arguments);
         }
       };
 
     while (true) {
-      String response = readResponse();
-      if (response == null) break;
+      String command = readCommand();
+      if (command == null) break;
 
-      Log.d(LOG_TAG, ("received response: " + response));
-     if (!responseHandler.handleResponse(response)) break;
+      Log.d(LOG_TAG, ("received command: " + command));
+     if (!commandHandler.handleOperands(command)) break;
     }
   }
 
@@ -205,7 +209,7 @@ public class ServerSession extends ApplicationComponent implements ResponseReade
               }
 
               try {
-                handleResponses();
+                handleReceivedCommands();
               } finally {
                 synchronized (this) {
                   sessionReader = null;
