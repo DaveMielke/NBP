@@ -1,7 +1,6 @@
 package org.nbp.ipaws;
 
 import android.util.Log;
-import android.content.Context;
 
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
@@ -20,7 +19,9 @@ public abstract class Announcements extends ApplicationComponent {
   }
 
   public static File getAnnouncementsDirectory () {
-    return getFilesDirectory("announcements");
+    File directory = getFilesDirectory("announcements");
+    directory.setWritable(true, false);
+    return directory;
   }
 
   private static File getAnnouncementFile (String identifier) {
