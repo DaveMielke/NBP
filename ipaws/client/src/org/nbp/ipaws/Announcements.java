@@ -77,16 +77,19 @@ public abstract class Announcements extends ApplicationComponent {
         @Override
         public void onDone (String identifier) {
           Log.d(LOG_TAG, ("utterance done: " + identifier));
-
           File file = getAnnouncementFile(identifier);
-          file.setReadable(true, false);
-          file.setReadOnly();
-          AlertPlayer.play(file, false);
+
+          if (file.exists()) {
+            file.setReadOnly();
+            AlertPlayer.play(file, false);
+          } else {
+            Log.w(LOG_TAG, ("announcement file not created: " + file.getAbsolutePath()));
+          }
         }
       };
 
     private final void convertAnnouncement (Announcement announcement) {
-      File file = new File(getFilesDirectory(), "new-announcement");
+      File file = getAnnouncementFile(announcement.identifier);
       HashMap<String, String> parameters = new HashMap<String, String>();
 
       parameters.put(

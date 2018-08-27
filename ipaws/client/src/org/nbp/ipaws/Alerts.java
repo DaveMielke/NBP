@@ -244,12 +244,31 @@ public abstract class Alerts extends ApplicationComponent {
     }
   }
 
+  private static void play (Descriptor alert) {
+    String uri = alert.uri;
+    AlertPlayer.play(uri, true);
+
+    if ((uri == null) || uri.isEmpty()) {
+      String description = alert.description;
+
+      if ((description != null) && !description.isEmpty()) {
+        Announcements.add(alert.identifier, description);
+      }
+    }
+  }
+
   public static void add (String identifier, String xml) {
     Properties properties = getProperties(xml);
 
     if (properties != null) {
       if (!identifier.isEmpty()) {
         properties.put(PROPERTY_IDENTIFIER, identifier);
+      }
+
+      Descriptor alert = new Descriptor(properties);
+
+      synchronized (alertCache) {
+        alertCache.put(identifier, alert);
       }
 
       {
@@ -263,29 +282,11 @@ public abstract class Alerts extends ApplicationComponent {
 
           File permanentFile = getAlertFile(identifier);
           temporaryFile.renameTo(permanentFile);
+          play(alert);
         } catch (IOException exception) {
           temporaryFile.delete();
           Log.e(LOG_TAG, ("alert file creation error: " + exception.getMessage()));
         }
-      }
-
-      Descriptor alert = new Descriptor(properties);
-
-      {
-        String uri = alert.uri;
-        AlertPlayer.play(uri, true);
-
-        if ((uri == null) || uri.isEmpty()) {
-          String description = alert.description;
-
-          if ((description != null) && !description.isEmpty()) {
-            Announcements.add(identifier, description);
-          }
-        }
-      }
-
-      synchronized (alertCache) {
-        alertCache.put(identifier, alert);
       }
     }
   }
