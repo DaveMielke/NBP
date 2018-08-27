@@ -38,6 +38,7 @@
 
     <receiver
       android:name=".HostMonitor"
+      android:exported="false"
       >
 
       <intent-filter>
