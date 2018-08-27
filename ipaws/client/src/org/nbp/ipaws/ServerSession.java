@@ -1,6 +1,7 @@
 package org.nbp.ipaws;
 
 import android.util.Log;
+import android.os.Build;
 
 import android.content.Context;
 
@@ -70,15 +71,18 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     return writeCommand(command);
   }
 
-  public final boolean  setAreas () {
-    StringBuilder command = new StringBuilder("setAreas");
+  private final boolean sendIdentity () {
+    StringBuilder command = new StringBuilder("identity");
 
-    for (String area : getRequestedAreas()) {
-      command.append(' ');
-      command.append(area);
-    }
+    command.append(' ');
+    command.append(Build.SERIAL);
 
-  //command.append(" 000000");
+    command.append(' ');
+    command.append(Build.VERSION.SDK_INT);
+
+    command.append(' ');
+    command.append(Build.MODEL);
+
     return writeCommand(command);
   }
 
@@ -90,6 +94,18 @@ public class ServerSession extends ApplicationComponent implements CommandReader
       command.append(identifier);
     }
 
+    return writeCommand(command);
+  }
+
+  public final boolean  setAreas () {
+    StringBuilder command = new StringBuilder("setAreas");
+
+    for (String area : getRequestedAreas()) {
+      command.append(' ');
+      command.append(area);
+    }
+
+  //command.append(" 000000");
     return writeCommand(command);
   }
 
@@ -194,6 +210,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
             }
 
             try {
+              if (!sendIdentity()) break DO_SESSION;
               if (!haveAlerts()) break DO_SESSION;
               if (!setAreas()) break DO_SESSION;
               if (!writeCommand("sendAlerts")) break DO_SESSION;
