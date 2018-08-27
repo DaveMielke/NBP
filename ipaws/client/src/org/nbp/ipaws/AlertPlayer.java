@@ -14,6 +14,7 @@ public abstract class AlertPlayer extends ApplicationComponent {
   private final static String LOG_TAG = AlertPlayer.class.getName();
 
   private AlertPlayer () {
+    super();
   }
 
   private final static Queue<Uri> uriQueue = new LinkedList<Uri>();
@@ -25,6 +26,7 @@ public abstract class AlertPlayer extends ApplicationComponent {
         Uri uri = uriQueue.poll();
         if (uri == null) break;
         if (reset) mediaPlayer.reset();
+        Log.d(LOG_TAG, ("playing alert: " + uri.toString()));
 
         try {
           mediaPlayer.setDataSource(getContext(), uri);
@@ -108,7 +110,10 @@ public abstract class AlertPlayer extends ApplicationComponent {
 
   public static void play (Uri uri, boolean withAttentionSignal) {
     synchronized (uriQueue) {
-      if (uri != null) uriQueue.offer(uri);
+      if (uri != null) {
+        Log.d(LOG_TAG, ("enqueuing alert: " + uri.toString()));
+        uriQueue.offer(uri);
+      }
 
       if (mediaPlayer == null) {
         if (withAttentionSignal) {

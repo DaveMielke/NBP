@@ -215,7 +215,11 @@ public abstract class Alerts extends ApplicationComponent {
   private final static Map<String, Descriptor> alertCache =
                new HashMap<String, Descriptor>();
 
-  private static File getFile (String identifier) {
+  private static File getAlertsDirectory () {
+    return getFilesDirectory("alerts");
+  }
+
+  private static File getAlertFile (String identifier) {
     return new File(getAlertsDirectory(), identifier);
   }
 
@@ -224,7 +228,7 @@ public abstract class Alerts extends ApplicationComponent {
       Descriptor descriptor = alertCache.get(identifier);
       if (descriptor != null) return descriptor;
 
-      File file = getFile(identifier);
+      File file = getAlertFile(identifier);
       Properties properties = null;
 
       try {
@@ -257,7 +261,7 @@ public abstract class Alerts extends ApplicationComponent {
           writer.close();
           temporaryFile.setReadOnly();
 
-          File permanentFile = getFile(identifier);
+          File permanentFile = getAlertFile(identifier);
           temporaryFile.renameTo(permanentFile);
         } catch (IOException exception) {
           temporaryFile.delete();
@@ -266,7 +270,19 @@ public abstract class Alerts extends ApplicationComponent {
       }
 
       Descriptor alert = new Descriptor(properties);
-      AlertPlayer.play(alert.uri, true);
+
+      {
+        String uri = alert.uri;
+        AlertPlayer.play(uri, true);
+
+        if ((uri == null) || uri.isEmpty()) {
+          String description = alert.description;
+
+          if ((description != null) && !description.isEmpty()) {
+            Announcements.add(identifier, description);
+          }
+        }
+      }
 
       synchronized (alertCache) {
         alertCache.put(identifier, alert);
@@ -275,7 +291,9 @@ public abstract class Alerts extends ApplicationComponent {
   }
 
   public static void remove (String identifier) {
-    File file = getFile(identifier);
+    Announcements.remove(identifier);
+
+    File file = getAlertFile(identifier);
     file.delete();
 
     synchronized (alertCache) {

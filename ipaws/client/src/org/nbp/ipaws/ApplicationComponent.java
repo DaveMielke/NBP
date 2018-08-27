@@ -46,8 +46,4 @@ public class ApplicationComponent {
   public static File getFilesDirectory (String name) {
     return getFilesDirectory(name, 0);
   }
-
-  public static File getAlertsDirectory () {
-    return getFilesDirectory("alerts");
-  }
 }
