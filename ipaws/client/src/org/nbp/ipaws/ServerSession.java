@@ -298,7 +298,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
           public boolean perform (ServerSession session) {
             synchronized (session) {
               try {
-                return writeCommand("end");
+                return session.writeCommand("end");
               } finally {
                 session.notify();
               }
