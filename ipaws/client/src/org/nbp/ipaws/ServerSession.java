@@ -288,10 +288,30 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     }
   }
 
-  public final void stop () {
+  public final void endSession () {
     synchronized (this) {
       if (!isStopping) {
-        Log.d(LOG_TAG, "stopping");
+        Log.d(LOG_TAG, "ending session");
+
+        new ServerAction() {
+          @Override
+          public boolean perform (ServerSession session) {
+            synchronized (session) {
+              try {
+                return writeCommand("end");
+              } finally {
+                session.notify();
+              }
+            }
+          }
+        }.perform();
+
+        try {
+          wait(ApplicationParameters.RESPONSE_TIMEOUT);
+        } catch (InterruptedException exception) {
+          Log.d(LOG_TAG, ("session end wait interrupted: " + exception.getMessage()));
+        }
+
         isStopping = true;
         sessionThread.interrupt();
       }

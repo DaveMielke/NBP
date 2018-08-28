@@ -38,7 +38,7 @@ public class AlertService extends Service {
       Log.d(LOG_TAG, "stopping");
       alertService = null;
 
-      serverSession.stop();
+      serverSession.endSession();
       serverSession = null;
     } finally {
       super.onDestroy();

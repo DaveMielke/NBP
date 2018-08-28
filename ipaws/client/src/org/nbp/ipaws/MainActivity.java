@@ -53,28 +53,15 @@ public class MainActivity extends CommonActivity {
     }
   }
 
-  private interface ServerAction {
-    public boolean perform (ServerSession session);
-  }
-
-  private final boolean performServerAction (Object object, final ServerAction action) {
-    final ServerSession session = AlertService.getServerSession();
-
-    if (session == null) {
+  private final boolean performServerAction (Object monitor, ServerAction action) {
+    if (!action.perform()) {
       showMessage(R.string.message_no_session);
       return false;
     }
 
-    new Thread() {
-      @Override
-      public void run () {
-        action.perform(session);
-      }
-    }.start();
-
-    if (object != null) {
+    if (monitor != null) {
       try {
-        object.wait(ApplicationParameters.RESPONSE_TIMEOUT * 1000);
+        monitor.wait(ApplicationParameters.RESPONSE_TIMEOUT);
       } catch (InterruptedException exception) {
         showMessage(R.string.message_long_response);
         return false;
