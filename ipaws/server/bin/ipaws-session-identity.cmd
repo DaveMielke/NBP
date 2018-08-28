@@ -3,8 +3,8 @@ ipawsSession_identity() {
    local apiLevel="${2}"
    local modelName="${3}"
 
-   command="begin transaction;"
-   command+=" insert into current_sessions (client, serial, api, model) values ('${clientReference}', '${serialNumber}', '${apiLevel}', '${modelName}');"
+   local command="begin transaction;"
+   command+=" update current_sessions set serial='${serialNumber}', api='${apiLevel}', model='${modelName}' where client='${clientReference}';"
    command+=" commit;"
    sqlExecute "${command}"
 }

@@ -4,6 +4,11 @@ includeScriptLibraries cap sql
 beginServerSession() {
    ipawsKeepAlive
    ipawsPrepareClientTables
+
+   local command="begin transaction;"
+   command+=" insert into current_sessions (client, started) values ('${clientReference}', current_timestamp);"
+   command+=" commit;"
+   sqlExecute "${command}"
 } && readonly -f beginServerSession
 
 endServerSession() {

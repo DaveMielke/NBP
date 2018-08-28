@@ -101,7 +101,8 @@ drop table if exists requested_areas;
 drop table if exists sent_alerts;
 
 create table current_sessions (
-   client text primary key on conflict ignore,
+   client text primary key on conflict replace,
+   started text,
    serial text,
    api text,
    model text
