@@ -249,10 +249,26 @@ public abstract class Alerts extends ApplicationComponent {
     AlertPlayer.play(uri, true);
 
     if ((uri == null) || uri.isEmpty()) {
-      String description = alert.description;
+      StringBuilder message = new StringBuilder();
 
-      if ((description != null) && !description.isEmpty()) {
-        Announcements.add(alert.identifier, description);
+      String[] components = new String[] {
+        alert.event,
+        alert.description,
+        alert.instruction
+      };
+
+      for (String component : components) {
+        if (component == null) continue;
+
+        component = component.trim();
+        if (component.isEmpty()) continue;
+
+        if (message.length() > 0) message.append('\n');
+        message.append(component);
+      }
+
+      if (message.length() > 0) {
+        Announcements.add(alert.identifier, message.toString());
       }
     }
   }
