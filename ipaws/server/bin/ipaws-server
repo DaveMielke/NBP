@@ -96,8 +96,16 @@ exec 2> >(writeLog)
 sqlExecute "
 drop table if exists states;
 drop table if exists counties;
+drop table if exists current_sessions;
 drop table if exists requested_areas;
 drop table if exists sent_alerts;
+
+create table current_sessions (
+   client text primary key on conflict ignore,
+   serial text,
+   api text,
+   model text
+);
 
 create table requested_areas (
    client text not null,

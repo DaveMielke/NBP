@@ -23,7 +23,7 @@ ipawsPrepareClientTables() {
    local command="begin transaction;"
    local table
 
-   for table in requested_areas sent_alerts
+   for table in current_sessions requested_areas sent_alerts
    do
       command+=" delete from ${table} where client='${clientReference}';"
    done
