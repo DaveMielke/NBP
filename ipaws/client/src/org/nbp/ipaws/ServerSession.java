@@ -173,7 +173,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
 
   private final SocketAddress makeSocketAddress () {
     return new InetSocketAddress(
-      ApplicationParameters.SERVER_NAME,
+      ApplicationSettings.SERVER_NAME,
       ApplicationParameters.SERVER_PORT
     );
   }

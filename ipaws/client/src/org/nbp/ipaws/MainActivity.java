@@ -424,6 +424,11 @@ public class MainActivity extends CommonActivity {
       .show();
   }
 
+  public final void applicationSettings (View view) {
+    Intent intent = new Intent(this, SettingsActivity.class);
+    startActivity(intent);
+  }
+
   public final void aboutApplication (View view) {
     DialogFinisher finisher = new DialogFinisher() {
       @Override

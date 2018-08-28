@@ -4,7 +4,6 @@ public abstract class ApplicationParameters {
   private ApplicationParameters () {
   }
 
-  public final static String SERVER_NAME = "Mielke.cc";
   public final static int SERVER_PORT = 14216;
 
   public final static int RECONNECT_INITIAL_DELAY = 1; // seconds

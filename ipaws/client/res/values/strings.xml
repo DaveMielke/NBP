@@ -3,6 +3,7 @@
 <resources>
   <string name="app_name">NBP IPAWS</string>
   <string name="alert_service_label">NBP IPAWS Alert Service</string>
+  <string name="settings_activity_label">NBP IPAWS Settings</string>
 
   <string name="main_switch_off">Stopped</string>
   <string name="main_switch_on">Running</string>
@@ -14,6 +15,7 @@
   <string name="action_selectCounties">Select Counties</string>
   <string name="action_removeAreas">Remove Areas</string>
   <string name="action_selectAreas">Select Areas</string>
+  <string name="action_applicationSettings">Application Settings</string>
   <string name="action_aboutApplication">About Application</string>
 
   <string name="option_save">Save</string>

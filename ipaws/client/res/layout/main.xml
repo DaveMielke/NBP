@@ -39,6 +39,13 @@
   <Button
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:onClick="applicationSettings"
+    android:text="@string/action_applicationSettings"
+   />
+
+  <Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:onClick="aboutApplication"
     android:text="@string/action_aboutApplication"
    />
