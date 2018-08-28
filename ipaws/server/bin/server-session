@@ -25,12 +25,12 @@ handleClientCommands() {
 
    while read -r -a arguments
    do
-      logInfo "command: ${clientReference}: ${arguments[*]}"
+      logInfo "received command: ${clientReference}: ${arguments[*]}"
       [ "${#arguments[*]}" -eq 0 ] && continue
 
       local command="${arguments[0]}"
       unset "arguments[0]"
-      [ "${command}" = "quit" ] && return 0
+      [ "${command}" = "end" ] && return 0
       local scriptlet="${programDirectory}/${serverType}-session-${command}.cmd"
 
       if [ -f "${scriptlet}" ]
