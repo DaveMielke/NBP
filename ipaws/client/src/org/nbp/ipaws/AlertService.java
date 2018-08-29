@@ -27,6 +27,7 @@ public class AlertService extends Service {
     super.onCreate();
     alertService = this;
     CommonContext.setContext(this);
+    AlertNotification.create(this);
 
     Log.d(LOG_TAG, "starting");
     serverSession = new ServerSession();
@@ -40,6 +41,8 @@ public class AlertService extends Service {
 
       serverSession.endSession();
       serverSession = null;
+
+      AlertNotification.destroy();
     } finally {
       super.onDestroy();
     }
