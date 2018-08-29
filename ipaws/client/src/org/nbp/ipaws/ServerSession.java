@@ -30,22 +30,29 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   private Writer sessionWriter = null;
   private BufferedReader sessionReader = null;
 
+  private final void closeSocket () {
+    try {
+      sessionSocket.close();
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
+    }
+  }
+
   @Override
   public final boolean writeCommand (String command) {
     synchronized (this) {
       if (sessionWriter != null) {
-        synchronized (sessionWriter) {
-          try {
-            Log.d(LOG_TAG, ("sending command: " + command));
+        try {
+          Log.d(LOG_TAG, ("sending command: " + command));
 
-            sessionWriter.write(command);
-            sessionWriter.write('\n');
-            sessionWriter.flush();
+          sessionWriter.write(command);
+          sessionWriter.write('\n');
+          sessionWriter.flush();
 
-            return true;
-          } catch (IOException exception) {
-            Log.e(LOG_TAG, ("command write error: " + exception.getMessage()));
-          }
+          return true;
+        } catch (IOException exception) {
+          Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
+          closeSocket();
         }
       } else {
         Log.e(LOG_TAG, "not connected to server");
@@ -112,10 +119,9 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   @Override
   public final String readCommand () {
     try {
-      String command = sessionReader.readLine();
-      if (!Thread.interrupted()) return command;
+      return sessionReader.readLine();
     } catch (IOException exception) {
-      Log.e(LOG_TAG, ("session read error: " + exception.getMessage()));
+      Log.e(LOG_TAG, ("socket read error: " + exception.getMessage()));
     }
 
     return null;
@@ -162,12 +168,12 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         }
       };
 
-    while (true) {
+    while (!isStopping) {
       String command = readCommand();
       if (command == null) break;
 
       Log.d(LOG_TAG, ("received command: " + command));
-     if (!commandHandler.handleOperands(command)) break;
+      if (!commandHandler.handleOperands(command)) break;
     }
   }
 
@@ -243,7 +249,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         } finally {
           synchronized (this) {
             Log.d(LOG_TAG, "disconnecting");
-            sessionSocket.close();
+            closeSocket();
             sessionSocket = null;
           }
         }
@@ -313,16 +319,9 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         }
 
         isStopping = true;
-        sessionThread.interrupt();
       }
 
-      if (sessionSocket != null) {
-        try {
-          sessionSocket.close();
-        } catch (IOException exception) {
-          Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
-        }
-      }
+      if (sessionSocket != null) closeSocket();
     }
   }
 
