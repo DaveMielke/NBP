@@ -273,6 +273,9 @@ public abstract class Alerts extends ApplicationComponent {
         component = component.trim();
         if (component.isEmpty()) continue;
 
+        // remove newlines between words to reduce pauses within the speech
+        component = component.replaceAll("(\\w)\\s*\\n\\s*(\\w)", "$1 $2");
+
         if (message.length() > 0) message.append('\n');
         message.append(component);
       }
