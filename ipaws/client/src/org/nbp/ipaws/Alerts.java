@@ -311,6 +311,8 @@ public abstract class Alerts extends ApplicationComponent {
 
           File permanentFile = getAlertFile(identifier);
           temporaryFile.renameTo(permanentFile);
+
+          AlertNotification.updateAlertCount();
           play(alert);
         } catch (IOException exception) {
           temporaryFile.delete();

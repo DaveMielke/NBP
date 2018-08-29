@@ -35,6 +35,11 @@
   <string name="session_stateConnecting">Connecting</string>
   <string name="session_stateConnected">Connected</string>
 
+  <plurals name="alert">
+    <item quantity="one">%d alert</item>
+    <item quantity="other">%d alerts</item>
+  </plurals>
+
   <string name="about_versionNumber">Version Number</string>
   <string name="about_buildTime">Build Time</string>
   <string name="about_sourceRevision">Source Revision</string>

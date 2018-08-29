@@ -2,6 +2,7 @@ package org.nbp.ipaws;
 
 import org.nbp.common.CommonContext;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.SharedPreferences;
 
 import java.util.Collections;
@@ -15,6 +16,10 @@ public class ApplicationComponent {
 
   public static Context getContext () {
     return CommonContext.getContext();
+  }
+
+  public static Resources getResources () {
+    return getContext().getResources();
   }
 
   public static String getString (int resource) {

@@ -67,13 +67,27 @@ public abstract class AlertNotification extends ApplicationComponent {
   }
 
   private static void setSessionState (int state) {
-    notificationBuilder.setContentTitle(getString(state));
+    notificationBuilder.setContentText(getString(state));
   }
 
   public static void updateSessionState (int state) {
     synchronized (NOTIFICATION_IDENTIFIER) {
       if (isActive()) {
         setSessionState(state);
+        updateNotification();
+      }
+    }
+  }
+
+  private static void setAlertCount () {
+    int count = Alerts.list(false).length;
+    notificationBuilder.setSubText(getResources().getQuantityString(R.plurals.alert, count, count));
+  }
+
+  public static void updateAlertCount () {
+    synchronized (NOTIFICATION_IDENTIFIER) {
+      if (isActive()) {
+        setAlertCount();
         updateNotification();
       }
     }
@@ -87,6 +101,7 @@ public abstract class AlertNotification extends ApplicationComponent {
 
       makeBuilder();
       setSessionState(R.string.session_stateStarting);
+      setAlertCount();
       service.startForeground(NOTIFICATION_IDENTIFIER, buildNotification());
     }
   }
