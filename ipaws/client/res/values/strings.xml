@@ -30,6 +30,11 @@
   <string name="alert_event">Type of Event</string>
   <string name="alert_area">Affected Area(s)</string>
 
+  <string name="session_stateStarting">Starting</string>
+  <string name="session_stateDisconnected">Disconnected</string>
+  <string name="session_stateConnecting">Connecting</string>
+  <string name="session_stateConnected">Connected</string>
+
   <string name="about_versionNumber">Version Number</string>
   <string name="about_buildTime">Build Time</string>
   <string name="about_sourceRevision">Source Revision</string>

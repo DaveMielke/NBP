@@ -53,6 +53,7 @@ public abstract class AlertNotification extends ApplicationComponent {
       .setPriority(Notification.PRIORITY_HIGH)
       .setOngoing(true)
       .setOnlyAlertOnce(true)
+      .setSmallIcon(R.drawable.ic_launcher)
       .setContentIntent(newPendingIntent(MainActivity.class))
       ;
   }
@@ -65,6 +66,19 @@ public abstract class AlertNotification extends ApplicationComponent {
     getManager().notify(NOTIFICATION_IDENTIFIER, buildNotification());
   }
 
+  private static void setSessionState (int state) {
+    notificationBuilder.setContentTitle(getString(state));
+  }
+
+  public static void updateSessionState (int state) {
+    synchronized (NOTIFICATION_IDENTIFIER) {
+      if (isActive()) {
+        setSessionState(state);
+        updateNotification();
+      }
+    }
+  }
+
   public static void create (Service service) {
     synchronized (NOTIFICATION_IDENTIFIER) {
       if (isActive()) {
@@ -72,6 +86,7 @@ public abstract class AlertNotification extends ApplicationComponent {
       }
 
       makeBuilder();
+      setSessionState(R.string.session_stateStarting);
       service.startForeground(NOTIFICATION_IDENTIFIER, buildNotification());
     }
   }

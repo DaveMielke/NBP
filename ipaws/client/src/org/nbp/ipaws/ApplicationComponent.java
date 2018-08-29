@@ -17,6 +17,10 @@ public class ApplicationComponent {
     return CommonContext.getContext();
   }
 
+  public static String getString (int resource) {
+    return getContext().getString(resource);
+  }
+
   public static SharedPreferences getSharedPreferences (String name, int mode) {
     return getContext().getSharedPreferences(name, mode);
   }

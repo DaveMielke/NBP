@@ -196,11 +196,13 @@ public class ServerSession extends ApplicationComponent implements CommandReader
       try {
         SocketAddress address = makeSocketAddress();
         Log.d(LOG_TAG, ("connecting to " + address.toString()));
+        AlertNotification.updateSessionState(R.string.session_stateConnecting);
         sessionSocket.connect(address);
 
         try {
-          connected = true;
           Log.d(LOG_TAG, "connected");
+          AlertNotification.updateSessionState(R.string.session_stateConnected);
+          connected = true;
 
           try {
             sessionSocket.setKeepAlive(true);
@@ -258,6 +260,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
       }
     }
 
+    AlertNotification.updateSessionState(R.string.session_stateDisconnected);
     return connected;
   }
 
