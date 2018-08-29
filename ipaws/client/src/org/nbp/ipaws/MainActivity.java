@@ -133,7 +133,7 @@ public class MainActivity extends CommonActivity {
     }
   }
 
-  public final void reviewAlerts (View view) {
+  public final void currentAlerts (View view) {
     final String[] identifiers = Alerts.list(true);
 
     if (identifiers.length == 0) {
