@@ -8,6 +8,7 @@
   <string name="main_switch_off">Stopped</string>
   <string name="main_switch_on">Running</string>
 
+  <string name="action_stopSpeaking">Stop Speaking</string>
   <string name="action_currentAlerts">Current Alerts</string>
   <string name="action_selectAlert">Select an Alert</string>
   <string name="action_manageAreas">Manage Areas</string>

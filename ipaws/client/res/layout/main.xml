@@ -18,6 +18,13 @@
   <Button
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:onClick="stopSpeaking"
+    android:text="@string/action_stopSpeaking"
+   />
+
+  <Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:onClick="currentAlerts"
     android:text="@string/action_currentAlerts"
    />

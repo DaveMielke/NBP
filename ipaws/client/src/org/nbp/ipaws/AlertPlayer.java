@@ -142,4 +142,16 @@ public abstract class AlertPlayer extends ApplicationComponent {
     if (file != null) uri = Uri.fromFile(file);
     play(uri, withAttentionSignal);
   }
+
+  public static void stop () {
+    synchronized (uriQueue) {
+      uriQueue.clear();
+
+      if (mediaPlayer != null) {
+        if (mediaPlayer.isPlaying()) mediaPlayer.stop();
+        mediaPlayer.reset();
+        mediaPlayer = null;
+      }
+    }
+  }
 }

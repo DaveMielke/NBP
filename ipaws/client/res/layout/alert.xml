@@ -50,7 +50,8 @@
         <TextView android:id="@+id/alert_area" />
       </TableRow>
 
-      <TextView android:id="@+id/alert_description"
+      <TextView
+        android:id="@+id/alert_description"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:focusable="true"
        />

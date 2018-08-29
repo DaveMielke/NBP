@@ -53,6 +53,10 @@ public class MainActivity extends CommonActivity {
     }
   }
 
+  public final void stopSpeaking (View view) {
+    AlertPlayer.stop();
+  }
+
   private final boolean performServerAction (Object monitor, ServerAction action) {
     if (!action.perform()) {
       showMessage(R.string.message_no_session);
