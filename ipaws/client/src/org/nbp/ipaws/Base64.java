@@ -17,11 +17,14 @@ public class Base64 extends ApplicationComponent {
     {
       int count = encodingAlphabet.length();
 
-      if (count != ALPHABET_SIZE) throw new AssertionError(
-        String.format(
-          "illegal alphabet size: %d != %d", count, ALPHABET_SIZE
-        )
-      );
+      if (count != ALPHABET_SIZE) {
+        throw new AssertionError(
+          String.format(
+            "illegal alphabet size: %d != %d",
+            count, ALPHABET_SIZE
+          )
+        );
+      }
 
       INVALID_CHARACTER = count;
     }
@@ -58,11 +61,14 @@ public class Base64 extends ApplicationComponent {
       int extra = length % ENCODING_BLOCK_SIZE;
 
       if (extra != 0) {
-        if ((extra -= 1) < 1) throw new IllegalArgumentException(
-          String.format(
-            "illegal encoding length: %d", length
-          )
-        );
+        if ((extra -= 1) < 1) {
+          throw new IllegalArgumentException(
+            String.format(
+              "illegal encoded string length: %d",
+              length
+            )
+          );
+        }
 
         count += extra;
       }
@@ -80,11 +86,14 @@ public class Base64 extends ApplicationComponent {
       int bits = INVALID_CHARACTER;
       if (character < indexMap.length) bits = indexMap[character];
 
-      if (bits == INVALID_CHARACTER) throw new IllegalArgumentException(
-        String.format(
-          "invalid encoding character: U+%04X@[%d]", (int)character, index
-        )
-      );
+      if (bits == INVALID_CHARACTER) {
+        throw new IllegalArgumentException(
+          String.format(
+            "invalid encoding character: U+%04X@[%d]",
+            (int)character, index
+          )
+        );
+      }
 
       index += 1;
       bits <<= (state + 1) * 2;
@@ -100,11 +109,14 @@ public class Base64 extends ApplicationComponent {
       state = (state + 1) % ENCODING_BLOCK_SIZE;
     }
 
-    if (offset != count) throw new AssertionError(
-      String.format(
-        "unexpected decoded size: %d != %d", offset, count
-      )
-    );
+    if (offset != count) {
+      throw new AssertionError(
+        String.format(
+          "unexpected decoded byte count: %d != %d",
+          offset, count
+        )
+      );
+    }
 
     return decoded;
   }
