@@ -37,12 +37,14 @@ public class AlertService extends Service {
   public void onDestroy () {
     try {
       Log.d(LOG_TAG, "stopping");
-      alertService = null;
 
       serverSession.endSession();
       serverSession = null;
 
+      AlertPlayer.stop();
       AlertNotification.destroy();
+
+      alertService = null;
     } finally {
       super.onDestroy();
     }

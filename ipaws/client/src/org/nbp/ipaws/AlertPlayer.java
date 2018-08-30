@@ -149,7 +149,7 @@ public abstract class AlertPlayer extends ApplicationComponent {
 
       if (mediaPlayer != null) {
         if (mediaPlayer.isPlaying()) mediaPlayer.stop();
-        mediaPlayer.reset();
+        mediaPlayer.release();
         mediaPlayer = null;
       }
     }
