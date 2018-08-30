@@ -294,7 +294,7 @@ public class MainActivity extends CommonActivity {
     if (getStates()) selectState();
   }
 
-  public final void removeAreas (View view) {
+  public final void requestedAreas (View view) {
     final Set<String> areas = new HashSet(ApplicationComponent.getRequestedAreas());
 
     if (areas.isEmpty()) {
@@ -377,7 +377,7 @@ public class MainActivity extends CommonActivity {
 
     for (int index=0; index<count; index+=1) {
       names[index] = entries[index].name;
-      selection[index] = false;
+      selection[index] = true;
     }
 
     DialogInterface.OnMultiChoiceClickListener choiceListener =
@@ -388,14 +388,14 @@ public class MainActivity extends CommonActivity {
         }
       };
 
-    DialogInterface.OnClickListener removeListener =
+    DialogInterface.OnClickListener saveListener =
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
           Set<String> remove = new HashSet<String>();
 
           for (int index=0; index<count; index+=1) {
-            if (selection[index]) {
+            if (!selection[index]) {
               remove.add(entries[index].area);
             }
           }
@@ -407,10 +407,10 @@ public class MainActivity extends CommonActivity {
         }
       };
 
-    newAlertDialogBuilder(R.string.action_selectAreas)
+    newAlertDialogBuilder(R.string.action_requestedAreas)
       .setCancelable(true)
       .setNegativeButton(android.R.string.no, null)
-      .setPositiveButton(R.string.option_remove, removeListener)
+      .setPositiveButton(R.string.option_save, saveListener)
       .setMultiChoiceItems(names, selection, choiceListener)
       .show();
   }

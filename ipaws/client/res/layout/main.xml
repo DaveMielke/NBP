@@ -39,8 +39,8 @@
   <Button
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:onClick="removeAreas"
-    android:text="@string/action_removeAreas"
+    android:onClick="requestedAreas"
+    android:text="@string/action_requestedAreas"
    />
 
   <Button
