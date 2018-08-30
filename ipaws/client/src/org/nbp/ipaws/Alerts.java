@@ -49,8 +49,9 @@ public abstract class Alerts extends ApplicationComponent {
   public final static String PROPERTY_HEADLINE = "headline";
   public final static String PROPERTY_DESCRIPTION = "description";
   public final static String PROPERTY_INSTRUCTION = "instruction";
-  public final static String PROPERTY_MIME_TYPE = "mimeType";
-  public final static String PROPERTY_URI = "uri";
+  public final static String PROPERTY_RESOURCE_TYPE = "mimeType";
+  public final static String PROPERTY_RESOURCE_CONTENT = "derefUri";
+  public final static String PROPERTY_RESOURCE_REFERENCE = "uri";
 
   private final static Set<String> PROPERTIES = new HashSet<String>() {
     {
@@ -65,8 +66,9 @@ public abstract class Alerts extends ApplicationComponent {
       add(PROPERTY_HEADLINE);
       add(PROPERTY_DESCRIPTION);
       add(PROPERTY_INSTRUCTION);
-      add(PROPERTY_MIME_TYPE);
-      add(PROPERTY_URI);
+      add(PROPERTY_RESOURCE_TYPE);
+      add(PROPERTY_RESOURCE_CONTENT);
+      add(PROPERTY_RESOURCE_REFERENCE);
     }
   };
 
@@ -148,8 +150,9 @@ public abstract class Alerts extends ApplicationComponent {
     private final String headline;
     private final String description;
     private final String instruction;
-    private final String mimeType;
-    private final String uri;
+    private final String resourceType;
+    private final String resourceContent;
+    private final String resourceReference;
 
     private Descriptor (Properties properties) {
       identifier = properties.get(PROPERTY_IDENTIFIER);
@@ -174,8 +177,9 @@ public abstract class Alerts extends ApplicationComponent {
       headline = properties.get(PROPERTY_HEADLINE);
       description = properties.get(PROPERTY_DESCRIPTION);
       instruction = properties.get(PROPERTY_INSTRUCTION);
-      mimeType = properties.get(PROPERTY_MIME_TYPE);
-      uri = properties.get(PROPERTY_URI);
+      resourceType = properties.get(PROPERTY_RESOURCE_TYPE);
+      resourceContent = properties.get(PROPERTY_RESOURCE_CONTENT);
+      resourceReference = properties.get(PROPERTY_RESOURCE_REFERENCE);
     }
 
     public final String getSummary () {
@@ -249,16 +253,30 @@ public abstract class Alerts extends ApplicationComponent {
   }
 
   private static void play (Descriptor alert) {
-    String uri = alert.uri;
+    String reference = alert.resourceReference;
 
-    if (uri != null) {
-      String type = alert.mimeType;
-      if ((type == null) || !type.startsWith("audio/")) uri = null;
+    {
+      String type = alert.resourceType;
+
+      if ((type == null) || !type.startsWith("audio/")) {
+        reference = null;
+      } else {
+        String encoded = alert.resourceContent;
+
+        if ((encoded != null) && !encoded.isEmpty()) {
+          byte[] decoded = new Base64().decode(encoded);
+
+          if (decoded != null) {
+            File file = Announcements.create(alert.identifier, decoded);
+            if (file != null) reference = file.getAbsolutePath();
+          }
+        }
+      }
     }
 
-    AlertPlayer.play(uri, true);
+    AlertPlayer.play(reference, true);
 
-    if ((uri == null) || uri.isEmpty()) {
+    if ((reference == null) || reference.isEmpty()) {
       StringBuilder message = new StringBuilder();
 
       String[] components = new String[] {

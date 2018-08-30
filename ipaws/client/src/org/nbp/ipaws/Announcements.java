@@ -10,6 +10,10 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 
 public abstract class Announcements extends ApplicationComponent {
   private final static String LOG_TAG = Announcements.class.getName();
@@ -18,14 +22,32 @@ public abstract class Announcements extends ApplicationComponent {
     super();
   }
 
-  public static File getAnnouncementsDirectory () {
+  private static File getDirectory () {
     File directory = getFilesDirectory("announcements");
     directory.setWritable(true, false);
     return directory;
   }
 
-  private static File getAnnouncementFile (String identifier) {
-    return new File(getAnnouncementsDirectory(), identifier);
+  private static File getFile (String identifier) {
+    return new File(getDirectory(), identifier);
+  }
+
+  public static File create (String identifier, byte[] content) {
+    File file = getFile(identifier);
+
+    try {
+      OutputStream stream = new FileOutputStream(file);
+      stream.write(content);
+      stream.close();
+
+      file.setReadOnly();
+      return file;
+    } catch (IOException exception) {
+      Log.w(LOG_TAG, ("announcement creation error: " + exception.getMessage()));
+      file.delete();
+    }
+
+    return null;
   }
 
   public static void add (String identifier, String text) {
@@ -35,7 +57,7 @@ public abstract class Announcements extends ApplicationComponent {
 
   public static void remove (String identifier) {
     Log.d(LOG_TAG, ("removing announcement: " + identifier));
-    File file = getAnnouncementFile(identifier);
+    File file = getFile(identifier);
     file.delete();
   }
 
@@ -78,7 +100,7 @@ public abstract class Announcements extends ApplicationComponent {
         @Override
         public void onDone (String identifier) {
           Log.d(LOG_TAG, ("utterance done: " + identifier));
-          File file = getAnnouncementFile(identifier);
+          File file = getFile(identifier);
 
           if (file.exists()) {
             file.setReadOnly();
@@ -90,7 +112,7 @@ public abstract class Announcements extends ApplicationComponent {
       };
 
     private final void convertAnnouncement (Announcement announcement) {
-      File file = getAnnouncementFile(announcement.identifier);
+      File file = getFile(announcement.identifier);
       HashMap<String, String> parameters = new HashMap<String, String>();
 
       parameters.put(
