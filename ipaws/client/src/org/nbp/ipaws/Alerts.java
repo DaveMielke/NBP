@@ -265,11 +265,8 @@ public abstract class Alerts extends ApplicationComponent {
 
         if ((encoded != null) && !encoded.isEmpty()) {
           byte[] decoded = new Base64().decode(encoded);
-
-          if (decoded != null) {
-            File file = Announcements.create(alert.identifier, decoded);
-            if (file != null) reference = file.getAbsolutePath();
-          }
+          File file = Announcements.create(alert.identifier, decoded);
+          if (file != null) reference = file.getAbsolutePath();
         }
       }
     }

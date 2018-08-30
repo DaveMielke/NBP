@@ -1,9 +1,9 @@
 package org.nbp.ipaws;
 
-import android.util.Log;
-
 public class Base64 extends ApplicationComponent {
-  private final static String LOG_TAG = Base64.class.getName();
+  private final int ALPHABET_SIZE = 64;
+  private final int ENCODING_BLOCK_SIZE = 4;
+  private final int DECODING_BLOCK_SIZE = 3;
 
   private final String encodingAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   private final char padCharacter = '=';
@@ -14,7 +14,17 @@ public class Base64 extends ApplicationComponent {
   public Base64 () {
     super();
 
-    INVALID_CHARACTER = encodingAlphabet.length();
+    {
+      int count = encodingAlphabet.length();
+
+      if (count != ALPHABET_SIZE) throw new AssertionError(
+        String.format(
+          "illegal alphabet size: %d != %d", count, ALPHABET_SIZE
+        )
+      );
+
+      INVALID_CHARACTER = count;
+    }
 
     {
       int count = indexMap.length;
@@ -43,15 +53,16 @@ public class Base64 extends ApplicationComponent {
       length = end;
     }
 
-    int count = (length / 4) * 3;
+    int count = (length / ENCODING_BLOCK_SIZE) * DECODING_BLOCK_SIZE;
     {
-      int extra = length % 4;
+      int extra = length % ENCODING_BLOCK_SIZE;
 
       if (extra != 0) {
-        if ((extra -= 1) < 1) {
-          Log.w(LOG_TAG, ("invalid encoding length: " + length));
-          return null;
-        }
+        if ((extra -= 1) < 1) throw new IllegalArgumentException(
+          String.format(
+            "illegal encoding length: %d", length
+          )
+        );
 
         count += extra;
       }
@@ -64,21 +75,18 @@ public class Base64 extends ApplicationComponent {
     int state = 0;
 
     while (index < length) {
-      char character = encoded.charAt(index++);
+      char character = encoded.charAt(index);
 
       int bits = INVALID_CHARACTER;
       if (character < indexMap.length) bits = indexMap[character];
 
-      if (bits == INVALID_CHARACTER) {
-        Log.w(LOG_TAG,
-          String.format(
-            "invalid encoding character: U+%04X", character
-          )
-        );
+      if (bits == INVALID_CHARACTER) throw new IllegalArgumentException(
+        String.format(
+          "invalid encoding character: U+%04X@[%d]", (int)character, index
+        )
+      );
 
-        return null;
-      }
-
+      index += 1;
       bits <<= (state + 1) * 2;
 
       if (state == 0) {
@@ -89,18 +97,14 @@ public class Base64 extends ApplicationComponent {
         if (state < 3) decoded[offset] = (byte)(bits & 0XFF);
       }
 
-      state = (state + 1) % 4;
+      state = (state + 1) % ENCODING_BLOCK_SIZE;
     }
 
-    if (offset != count) {
-      Log.w(LOG_TAG,
-        String.format(
-          "unexpected decoded size: %d != %d", offset, count
-        )
-      );
-
-      return null;
-    }
+    if (offset != count) throw new AssertionError(
+      String.format(
+        "unexpected decoded size: %d != %d", offset, count
+      )
+    );
 
     return decoded;
   }
