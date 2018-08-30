@@ -53,7 +53,7 @@ public abstract class AlertNotification extends ApplicationComponent {
       .setPriority(Notification.PRIORITY_HIGH)
       .setOngoing(true)
       .setOnlyAlertOnce(true)
-      .setSmallIcon(R.drawable.ic_launcher)
+      .setSmallIcon(R.drawable.alert_notification)
       .setContentTitle(getString(R.string.app_name))
       .setContentIntent(newPendingIntent(MainActivity.class))
       ;
