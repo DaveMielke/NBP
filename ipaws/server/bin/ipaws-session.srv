@@ -2,8 +2,13 @@ verifyCommandAvailability inotifywait
 includeScriptLibraries cap sql
 
 beginServerSession() {
-   ipawsKeepAlive
+   cd "${dataDirectory}"
+
+   ipawsSendingAlerts=false
    ipawsPrepareClientTables
+
+   ipawsPingNumber=0
+   ipawsKeepAlive
 
    local command="begin transaction;"
    command+=" insert into current_sessions (client, started) values ('${clientReference}', current_timestamp);"
@@ -20,7 +25,7 @@ ipawsKeepAlive() {
 
    while sleep "${interval}"
    do
-      writeClientResponse "ping $((++pingNumber))"
+      writeClientResponse "ping $((++ipawsPingNumber))"
    done &
 } && readonly -f ipawsKeepAlive
 
@@ -166,6 +171,3 @@ ipawsDeleteSentAlert() {
    sqlExecute "delete from sent_alerts where client='${clientReference}' and identifier='${identifier}';"
 } && readonly -f ipawsDeleteSentAlert
 
-cd "${dataDirectory}"
-ipawsSendingAlerts=false
-pingNumber=0
