@@ -346,6 +346,8 @@ public abstract class Alerts extends ApplicationComponent {
     synchronized (alertCache) {
       alertCache.remove(identifier);
     }
+
+    AlertNotification.updateAlertCount();
   }
 
   public static String[] list (boolean sorted) {
