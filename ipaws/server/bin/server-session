@@ -14,7 +14,7 @@ handlePositionalCommandArguments() {
    serverType="${1}"
    shift 1
 
-   serverScriptlet="${programDirectory}/${serverType}-session.cmd"
+   serverScriptlet="${programDirectory}/${serverType}-session.srv"
    [ -f "${serverScriptlet}" ] || syntaxError "unknown server type: ${serverType}"
 
    [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"
