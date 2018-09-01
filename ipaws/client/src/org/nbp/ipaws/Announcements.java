@@ -111,7 +111,19 @@ public abstract class Announcements extends ApplicationComponent {
         }
       };
 
-    private final void convertAnnouncement (Announcement announcement) {
+    private final String fixText (String text) {
+      return text
+        // remove newlines between words to reduce pauses within the speech
+        .replaceAll("(\\w)\\s*\\n\\s*(\\w)", "$1 $2")
+
+        // the last period of an ellipsis can be interpreted
+        // as a decimal point when immediately before a digit
+        .replaceAll("(\\.{2})(\\d)", "$1 $2")
+
+        ;
+    }
+
+    private final void convertToSpeech (Announcement announcement) {
       File file = getFile(announcement.identifier);
       HashMap<String, String> parameters = new HashMap<String, String>();
 
@@ -121,7 +133,7 @@ public abstract class Announcements extends ApplicationComponent {
       );
 
       int status = ttsObject.synthesizeToFile(
-        announcement.text,
+        fixText(announcement.text),
         parameters,
         file.getAbsolutePath()
       );
@@ -179,7 +191,7 @@ public abstract class Announcements extends ApplicationComponent {
 
           try {
             announcement = announcementQueue.poll(1, TimeUnit.DAYS);
-            if (announcement != null) convertAnnouncement(announcement);
+            if (announcement != null) convertToSpeech(announcement);
           } catch (InterruptedException exception) {
           }
         }
