@@ -268,6 +268,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     Log.d(LOG_TAG, "startiong");
 
     try {
+      AlertNotification.updateSessionState(R.string.session_stateDisconnected);
       int currentDelay = ApplicationParameters.RECONNECT_INITIAL_DELAY;
 
       while (true) {
@@ -293,6 +294,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         }
       }
     } finally {
+      AlertNotification.updateSessionState(R.string.session_stateOff);
       Log.d(LOG_TAG, "stopped");
     }
   }

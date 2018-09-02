@@ -50,7 +50,7 @@ public abstract class AlertNotification extends ApplicationComponent {
     Context context = getContext();
 
     notificationBuilder = new Notification.Builder(context)
-      .setPriority(Notification.PRIORITY_HIGH)
+      .setPriority(Notification.PRIORITY_DEFAULT)
       .setOngoing(true)
       .setOnlyAlertOnce(true)
       .setSmallIcon(R.drawable.alert_notification)
@@ -96,25 +96,11 @@ public abstract class AlertNotification extends ApplicationComponent {
 
   public static void create (Service service) {
     synchronized (NOTIFICATION_IDENTIFIER) {
-      if (isActive()) {
-        throw new IllegalStateException("already active");
-      }
+      if (!isActive()) makeBuilder();
 
-      makeBuilder();
-      setSessionState(R.string.session_stateStarting);
+      setSessionState(R.string.session_stateOff);
       setAlertCount();
       service.startForeground(NOTIFICATION_IDENTIFIER, buildNotification());
-    }
-  }
-
-  public static void destroy () {
-    synchronized (NOTIFICATION_IDENTIFIER) {
-      if (!isActive()) {
-        throw new IllegalStateException("not active");
-      }
-
-      notificationBuilder = null;
-      getManager().cancel(NOTIFICATION_IDENTIFIER);
     }
   }
 }

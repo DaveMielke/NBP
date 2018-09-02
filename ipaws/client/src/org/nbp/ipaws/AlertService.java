@@ -42,7 +42,6 @@ public class AlertService extends Service {
       serverSession = null;
 
       AlertPlayer.stop();
-      AlertNotification.destroy();
 
       alertService = null;
     } finally {

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <string name="control_group_general">General Settings</string>
+  <string name="control_label_AlertMonitor">Alert Monitor</string>
+
   <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_ServerName">Server Name</string>
 </resources>

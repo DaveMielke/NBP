@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.Intent;
 
 import android.view.View;
-import android.widget.Switch;
 
 import android.content.DialogInterface;
 import android.app.AlertDialog;
@@ -27,30 +26,11 @@ import java.util.HashSet;
 public class MainActivity extends CommonActivity {
   private final static String LOG_TAG = MainActivity.class.getName();
 
-  private Switch mainSwitch = null;
-
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.main);
-    mainSwitch = (Switch)findViewById(R.id.main_switch);
-  }
-
-  @Override
-  protected void onResume () {
-    super.onResume();
-    mainSwitch.setChecked((AlertService.getAlertService() != null));
-  }
-
-  public final void onMainSwitchToggled (View view) {
-    boolean isOn = mainSwitch.isChecked();
-
-    if (isOn) {
-      startService(AlertService.makeIntent(this));
-    } else {
-      stopService(AlertService.makeIntent(this));
-    }
   }
 
   public final void stopSpeaking (View view) {

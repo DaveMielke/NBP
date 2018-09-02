@@ -7,9 +7,13 @@ public abstract class Controls {
   private Controls () {
   }
 
+  public final static AlertMonitorControl alertMonitor = new AlertMonitorControl();
+
   public final static ServerNameControl serverName = new ServerNameControl();
 
   public final static Control[] ALL = new Control[] {
+    alertMonitor,
+
     serverName
   };
 
