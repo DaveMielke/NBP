@@ -1,4 +1,5 @@
 verifyCommandAvailability sqlite3
+
 readonly sqlDatabaseFile="sqlite.db"
 readonly sqlConfigurationFile="sqlite.conf"
 
@@ -19,7 +20,8 @@ sqlEvaluate() {
 
    sqlMakeCommand -line
    sqlCommand+=("${command}")
-   local count=0 found=false field equals value
+   local count=0 found=false
+   local field equals value
 
    while read -r field equals value
    do

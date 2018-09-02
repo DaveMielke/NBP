@@ -55,7 +55,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
           closeSocket();
         }
       } else {
-        Log.e(LOG_TAG, "not connected to server");
+        Log.w(LOG_TAG, "not connected to server");
       }
     }
 
@@ -119,7 +119,9 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   @Override
   public final String readCommand () {
     try {
-      return sessionReader.readLine();
+      String command = sessionReader.readLine();
+      if (command == null) Log.w(LOG_TAG, "server disconnected");
+      return command;
     } catch (IOException exception) {
       Log.e(LOG_TAG, ("socket read error: " + exception.getMessage()));
     }
@@ -196,6 +198,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
       try {
         SocketAddress address = makeSocketAddress();
         Log.d(LOG_TAG, ("connecting to " + address.toString()));
+
         AlertNotification.updateSessionState(R.string.session_stateConnecting);
         sessionSocket.connect(address);
 
@@ -246,7 +249,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
               }
             }
           } catch (IOException exception) {
-            Log.e(LOG_TAG, ("session error: " + exception.getMessage()));
+            Log.e(LOG_TAG, ("socket configure error: " + exception.getMessage()));
           }
         } finally {
           synchronized (this) {
@@ -256,7 +259,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
           }
         }
       } catch (IOException exception) {
-        Log.e(LOG_TAG, ("socket error: " + exception.getMessage()));
+        Log.e(LOG_TAG, ("socket connect error: " + exception.getMessage()));
       }
     }
 
@@ -288,7 +291,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
             Log.d(LOG_TAG, "waiting");
             wait(currentDelay * 1000);
           } catch (InterruptedException exception) {
-            Log.d(LOG_TAG, "interrupted");
+            Log.w(LOG_TAG, ("reconnect delay interrupted: " + exception.getMessage()));
             break;
           }
         }
@@ -320,7 +323,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         try {
           wait(ApplicationParameters.RESPONSE_TIMEOUT);
         } catch (InterruptedException exception) {
-          Log.d(LOG_TAG, ("session end wait interrupted: " + exception.getMessage()));
+          Log.w(LOG_TAG, ("end wait interrupted: " + exception.getMessage()));
         }
 
         isStopping = true;
