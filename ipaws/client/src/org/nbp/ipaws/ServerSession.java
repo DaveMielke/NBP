@@ -40,23 +40,29 @@ public class ServerSession extends ApplicationComponent implements CommandReader
 
   @Override
   public final boolean writeCommand (String command) {
+    Writer writer;
+
     synchronized (this) {
-      if (sessionWriter != null) {
+      writer = sessionWriter;
+    }
+
+    if (writer != null) {
+      synchronized (writer) {
         try {
           Log.d(LOG_TAG, ("sending command: " + command));
 
-          sessionWriter.write(command);
-          sessionWriter.write('\n');
-          sessionWriter.flush();
+          writer.write(command);
+          writer.write('\n');
+          writer.flush();
 
           return true;
         } catch (IOException exception) {
           Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
           closeSocket();
         }
-      } else {
-        Log.w(LOG_TAG, "not connected to server");
       }
+    } else {
+      Log.w(LOG_TAG, "not connected to server");
     }
 
     return false;
@@ -170,7 +176,11 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         }
       };
 
-    while (!isStopping) {
+    while (true) {
+      synchronized (this) {
+        if (isStopping) break;
+      }
+
       String command = readCommand();
       if (command == null) break;
 
@@ -268,37 +278,35 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   }
 
   private final void doThread () {
-    Log.d(LOG_TAG, "startiong");
+    Log.d(LOG_TAG, "thread startiong");
+    AlertNotification.updateSessionState(R.string.session_stateDisconnected);
 
     try {
-      AlertNotification.updateSessionState(R.string.session_stateDisconnected);
-      int currentDelay = ApplicationParameters.RECONNECT_INITIAL_DELAY;
+      int reconnectDelay = ApplicationParameters.RECONNECT_INITIAL_DELAY;
 
-      while (true) {
-        currentDelay =
-          doSession()?
-          ApplicationParameters.RECONNECT_INITIAL_DELAY:
-          (currentDelay << 1);
+      while (!isStopping) {
+        reconnectDelay = doSession()?
+                         ApplicationParameters.RECONNECT_INITIAL_DELAY:
+                         (reconnectDelay << 1);
 
-        if (currentDelay > ApplicationParameters.RECONNECT_MAXIMUM_DELAY) {
-          currentDelay = ApplicationParameters.RECONNECT_MAXIMUM_DELAY;
+        if (reconnectDelay > ApplicationParameters.RECONNECT_MAXIMUM_DELAY) {
+          reconnectDelay = ApplicationParameters.RECONNECT_MAXIMUM_DELAY;
         }
 
         synchronized (this) {
           if (isStopping) break;
 
           try {
-            Log.d(LOG_TAG, "waiting");
-            wait(currentDelay * 1000);
+            Log.d(LOG_TAG, "delaying before reconnect");
+            wait(reconnectDelay * 1000L);
           } catch (InterruptedException exception) {
             Log.w(LOG_TAG, ("reconnect delay interrupted: " + exception.getMessage()));
-            break;
           }
         }
       }
     } finally {
       AlertNotification.updateSessionState(R.string.session_stateOff);
-      Log.d(LOG_TAG, "stopped");
+      Log.d(LOG_TAG, "thread done");
     }
   }
 
@@ -306,6 +314,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     synchronized (this) {
       if (!isStopping) {
         Log.d(LOG_TAG, "ending session");
+        isStopping = true;
 
         new ServerAction() {
           @Override
@@ -325,8 +334,6 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         } catch (InterruptedException exception) {
           Log.w(LOG_TAG, ("end wait interrupted: " + exception.getMessage()));
         }
-
-        isStopping = true;
       }
 
       if (sessionSocket != null) closeSocket();
