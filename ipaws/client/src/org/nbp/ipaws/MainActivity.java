@@ -29,8 +29,8 @@ public class MainActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.main);
+    Controls.restore();
   }
 
   public final void stopSpeaking (View view) {

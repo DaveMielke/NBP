@@ -17,9 +17,22 @@ public abstract class Controls {
     serverName
   };
 
+  private static boolean RESTORE = true;
+
   public final static void restore () {
-    for (Control control : ALL) {
-      control.restoreCurrentValue();
+    synchronized (ALL) {
+      if (RESTORE) {
+        RESTORE = false;
+
+        for (Control control : ALL) {
+          if (control == alertMonitor) continue;
+
+          control.restoreCurrentValue();
+        }
+
+        alertMonitor.restoreCurrentValue();
+        AlertNotification.create();
+      }
     }
   }
 }

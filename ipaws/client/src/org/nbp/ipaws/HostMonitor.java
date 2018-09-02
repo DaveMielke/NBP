@@ -8,10 +8,10 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 
 public class HostMonitor extends BroadcastReceiver {
-  private final static String LOG_TAG = MainActivity.class.getName();
+  private final static String LOG_TAG = HostMonitor.class.getName();
 
-  private final void startAlertService (Context context) {
-    context.startService(AlertService.makeIntent(context));
+  private final void startAlertService () {
+    Controls.restore();
   }
 
   @Override
@@ -23,12 +23,12 @@ public class HostMonitor extends BroadcastReceiver {
     Log.d(LOG_TAG, ("host event: " + action));
 
     if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-      startAlertService(context);
+      startAlertService();
       return;
     }
 
     if (action.equals(Intent.ACTION_MY_PACKAGE_REPLACED)) {
-      startAlertService(context);
+      startAlertService();
       return;
     }
   }

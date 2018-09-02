@@ -30,10 +30,6 @@ public abstract class AlertNotification extends ApplicationComponent {
     return notificationManager;
   }
 
-  private static boolean isActive () {
-    return notificationBuilder != null;
-  }
-
   private static PendingIntent newPendingIntent (Class<? extends Activity> activityClass) {
     Context context = getContext();
     Intent intent = new Intent(context, activityClass);
@@ -59,11 +55,15 @@ public abstract class AlertNotification extends ApplicationComponent {
       ;
   }
 
+  private static boolean haveBuilder () {
+    return notificationBuilder != null;
+  }
+
   private static Notification buildNotification () {
     return notificationBuilder.build();
   }
 
-  private static void updateNotification () {
+  private static void refreshNotification () {
     getManager().notify(NOTIFICATION_IDENTIFIER, buildNotification());
   }
 
@@ -73,9 +73,9 @@ public abstract class AlertNotification extends ApplicationComponent {
 
   public static void updateSessionState (int state) {
     synchronized (NOTIFICATION_IDENTIFIER) {
-      if (isActive()) {
+      if (haveBuilder()) {
         setSessionState(state);
-        updateNotification();
+        refreshNotification();
       }
     }
   }
@@ -87,19 +87,33 @@ public abstract class AlertNotification extends ApplicationComponent {
 
   public static void updateAlertCount () {
     synchronized (NOTIFICATION_IDENTIFIER) {
-      if (isActive()) {
+      if (haveBuilder()) {
         setAlertCount();
-        updateNotification();
+        refreshNotification();
       }
     }
   }
 
-  public static void create (Service service) {
+  private static boolean create (boolean refresh) {
     synchronized (NOTIFICATION_IDENTIFIER) {
-      if (!isActive()) makeBuilder();
+      if (haveBuilder()) return false;
 
+      makeBuilder();
       setSessionState(R.string.session_stateOff);
       setAlertCount();
+
+      if (refresh) refreshNotification();
+      return true;
+    }
+  }
+
+  public static void create () {
+    create(true);
+  }
+
+  public static void create (Service service) {
+    synchronized (NOTIFICATION_IDENTIFIER) {
+      create(false);
       service.startForeground(NOTIFICATION_IDENTIFIER, buildNotification());
     }
   }
