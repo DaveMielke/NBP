@@ -119,13 +119,18 @@ public class MainActivity extends CommonActivity {
 
   public final void currentAlerts (View view) {
     final String[] identifiers = Alerts.list(true);
+    int count = identifiers.length;
 
-    if (identifiers.length == 0) {
+    if (count == 0) {
       showMessage(R.string.message_no_alerts);
       return;
     }
 
-    int count = identifiers.length;
+    if (count == 1) {
+      showAlert(identifiers[0]);
+      return;
+    }
+
     String[] summaries = new String[count];
 
     for (int index=0; index<count; index+=1) {
