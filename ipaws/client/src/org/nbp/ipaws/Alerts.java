@@ -158,20 +158,9 @@ public abstract class Alerts extends ApplicationComponent {
       identifier = properties.get(PROPERTY_IDENTIFIER);
       sender = properties.get(PROPERTY_SENDER);
       sent = parseTime(properties.get(PROPERTY_SENT));
-
-      {
-        Date time = parseTime(properties.get(PROPERTY_EFFECTIVE));
-        if (time == null) time = sent;
-        effective = time;
-      }
-
+      effective = parseTime(properties.get(PROPERTY_EFFECTIVE));
       onset = parseTime(properties.get(PROPERTY_ONSET));
-
-      {
-        Date time = parseTime(properties.get(PROPERTY_EXPIRES));
-        expires = time;
-      }
-
+      expires = parseTime(properties.get(PROPERTY_EXPIRES));
       event = properties.get(PROPERTY_EVENT);
       area = properties.get(PROPERTY_AREA);
       headline = properties.get(PROPERTY_HEADLINE);
