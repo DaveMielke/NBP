@@ -114,6 +114,8 @@ public class MainActivity extends CommonActivity {
 
     if (alert != null) {
       showDialog(R.string.alert_title, R.layout.alert, alert);
+    } else {
+      showMessage(R.string.message_expired_alert);
     }
   }
 

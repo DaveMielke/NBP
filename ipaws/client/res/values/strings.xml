@@ -44,5 +44,6 @@
   <string name="message_session_error">server communication error</string>
   <string name="message_long_response">data not available - try later</string>
   <string name="message_no_alerts">There are no alerts for any of the areas that have been requested.</string>
+  <string name="message_expired_alert">This alert has expired.</string>
   <string name="message_no_areas">No areas have been requested.</string>
 </resources>
