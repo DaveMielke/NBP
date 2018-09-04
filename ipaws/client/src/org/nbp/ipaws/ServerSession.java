@@ -254,6 +254,9 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     };
 
     for (String server : servers) {
+      if (server == null) continue;
+      if (server.isEmpty()) continue;
+
       SocketAddress address = makeSocketAddress(server);
       Log.d(LOG_TAG, ("connecting to " + address.toString()));
 
@@ -275,7 +278,6 @@ public class ServerSession extends ApplicationComponent implements CommandReader
             break;
           } finally {
             Log.d(LOG_TAG, "disconnecting");
-            AlertNotification.updateSessionState(R.string.session_stateDisconnected);
           }
         } catch (IOException exception) {
           Log.e(LOG_TAG, ("socket connection error: " + exception.getMessage()));
@@ -288,6 +290,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
       }
     }
 
+    AlertNotification.updateSessionState(R.string.session_stateDisconnected);
     return connected;
   }
 
