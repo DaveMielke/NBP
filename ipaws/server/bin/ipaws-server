@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-verifyCommandAvailability nc
+verifyCommandAvailability ncat
 requireScriptLibraries command arguments options-common options-retrieve sql
 
 readonly defaultMaximumClients=100
@@ -73,7 +73,7 @@ awaitClients() {
    logInfo "listening: Port:${portNumber} Max:${maximumClients}"
 
    makeCommand server-session ipaws
-   nc -l "${portNumber}" --max-conns "${maximumClients}" --keep-open --sh-exec "${command[*]}"
+   ncat --listen "${portNumber}" --max-conns "${maximumClients}" --keep-open --sh-exec "${command[*]}"
 }
 
 setLogLevel info
