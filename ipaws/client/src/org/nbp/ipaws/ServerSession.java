@@ -141,6 +141,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         new HashMap<String, OperandsHandler>()
   {
     {
+      put("deny", new DenyHandler());
       put("ping", new PingHandler(ServerSession.this));
       put("pong", new PongHandler());
 

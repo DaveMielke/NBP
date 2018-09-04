@@ -40,10 +40,10 @@
   <string name="about_buildTime">Build Time</string>
   <string name="about_sourceRevision">Source Revision</string>
 
-  <string name="message_no_session">alert service not running</string>
-  <string name="message_session_error">server communication error</string>
-  <string name="message_long_response">data not available - try later</string>
+  <string name="message_no_session">The alert monitor is not running.</string>
+  <string name="message_session_error">A server communication error has occurred.</string>
+  <string name="message_long_response">That data is not available right now - try again later.</string>
   <string name="message_no_alerts">There are no alerts for any of the areas that have been requested.</string>
-  <string name="message_expired_alert">This alert has expired.</string>
+  <string name="message_expired_alert">That alert has expired.</string>
   <string name="message_no_areas">No areas have been requested.</string>
 </resources>
