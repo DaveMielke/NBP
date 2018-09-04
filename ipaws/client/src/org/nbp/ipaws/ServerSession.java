@@ -31,10 +31,12 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   private BufferedReader sessionReader = null;
 
   private final void closeSocket () {
-    try {
-      sessionSocket.close();
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
+    if (!sessionSocket.isClosed()) {
+      try {
+        sessionSocket.close();
+      } catch (IOException exception) {
+        Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
+      }
     }
   }
 
@@ -189,34 +191,51 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     }
   }
 
-  private final SocketAddress makeSocketAddress () {
+  private final SocketAddress makeSocketAddress (String server) {
     return new InetSocketAddress(
-      ApplicationSettings.SERVER_NAME,
+      server,
       ApplicationParameters.SERVER_PORT
     );
   }
 
   private final boolean doSession () {
+    AlertNotification.updateSessionState(R.string.session_stateConnecting);
     boolean connected = false;
 
   DO_SESSION:
     {
-      synchronized (this) {
-        sessionSocket = new Socket();
-      }
+      String[] servers = new String[] {
+        ApplicationSettings.PRIMARY_SERVER,
+        ApplicationSettings.SECONDARY_SERVER
+      };
 
-      try {
-        SocketAddress address = makeSocketAddress();
+      for (String server : servers) {
+        SocketAddress address = makeSocketAddress(server);
         Log.d(LOG_TAG, ("connecting to " + address.toString()));
 
-        AlertNotification.updateSessionState(R.string.session_stateConnecting);
-        sessionSocket.connect(address);
+        synchronized (this) {
+          sessionSocket = new Socket();
+        }
 
         try {
-          Log.d(LOG_TAG, "connected");
-          AlertNotification.updateSessionState(R.string.session_stateConnected);
+          sessionSocket.connect(address);
           connected = true;
+          break;
+        } catch (IOException exception) {
+          Log.e(LOG_TAG, ("socket connect error: " + exception.getMessage()));
 
+          synchronized (this) {
+            closeSocket();
+            sessionSocket = null;
+          }
+        }
+      }
+
+      if (connected) {
+        Log.d(LOG_TAG, "connected");
+        AlertNotification.updateSessionState(R.string.session_stateConnected);
+
+        try {
           try {
             sessionSocket.setKeepAlive(true);
 
@@ -231,11 +250,6 @@ public class ServerSession extends ApplicationComponent implements CommandReader
             }
 
             try {
-              if (!sendIdentity()) break DO_SESSION;
-              if (!haveAlerts()) break DO_SESSION;
-              if (!setAreas()) break DO_SESSION;
-              if (!writeCommand("sendAlerts")) break DO_SESSION;
-
               synchronized (this) {
                 sessionReader =
                   new BufferedReader(
@@ -247,6 +261,10 @@ public class ServerSession extends ApplicationComponent implements CommandReader
               }
 
               try {
+                if (!sendIdentity()) break DO_SESSION;
+                if (!haveAlerts()) break DO_SESSION;
+                if (!setAreas()) break DO_SESSION;
+                if (!writeCommand("sendAlerts")) break DO_SESSION;
                 handleReceivedCommands();
               } finally {
                 synchronized (this) {
@@ -259,7 +277,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
               }
             }
           } catch (IOException exception) {
-            Log.e(LOG_TAG, ("socket configure error: " + exception.getMessage()));
+            Log.e(LOG_TAG, ("socket prepare error: " + exception.getMessage()));
           }
         } finally {
           synchronized (this) {
@@ -268,8 +286,6 @@ public class ServerSession extends ApplicationComponent implements CommandReader
             sessionSocket = null;
           }
         }
-      } catch (IOException exception) {
-        Log.e(LOG_TAG, ("socket connect error: " + exception.getMessage()));
       }
     }
 

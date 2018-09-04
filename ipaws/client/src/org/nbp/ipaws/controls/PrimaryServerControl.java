@@ -3,10 +3,10 @@ import org.nbp.ipaws.*;
 
 import org.nbp.common.controls.StringControl;
 
-public class ServerNameControl extends StringControl {
+public class PrimaryServerControl extends StringControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_ServerName;
+    return R.string.control_label_PrimaryServer;
   }
 
   @Override
@@ -16,26 +16,26 @@ public class ServerNameControl extends StringControl {
 
   @Override
   protected String getPreferenceKey () {
-    return "server-name";
+    return "primary-server";
   }
 
   @Override
   protected String getStringDefault () {
-    return ApplicationDefaults.SERVER_NAME;
+    return ApplicationDefaults.PRIMARY_SERVER;
   }
 
   @Override
   public String getStringValue () {
-    return ApplicationSettings.SERVER_NAME;
+    return ApplicationSettings.PRIMARY_SERVER;
   }
 
   @Override
   protected boolean setStringValue (String value) {
-    ApplicationSettings.SERVER_NAME = value;
+    ApplicationSettings.PRIMARY_SERVER = value;
     return true;
   }
 
-  public ServerNameControl () {
+  public PrimaryServerControl () {
     super();
   }
 }
