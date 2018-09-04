@@ -141,20 +141,16 @@ executeOnExitCommands() {
 onExitCommandCount=0
 trap executeOnExitCommands exit
 
-declare -g -A includedScriptLibraries=()
+declare -g -A requiredScriptLibraries=()
 requireScriptLibraries() {
    local name
 
    for name
    do
-      local -n included="includedScriptLibraries["${name}"]"
-
-      [ -z "${included}" ] && {
-         included=1
+      [ -n "${requiredScriptLibraries["${name}"]}" ] || {
+         requiredScriptLibraries["${name}"]=1
          . "${programDirectory}/${name}.lib"
       }
-
-      unset -n included
    done
 } && readonly -f requireScriptLibraries
 
