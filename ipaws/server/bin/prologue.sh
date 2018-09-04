@@ -43,11 +43,8 @@ defineEnumeration() {
       while :
       do
          name="${name%?}"
-         [ -z "${name}" ] && break
-
-         local -n element="array[${name}]"
-         element=$(((${#element} == 0)? value: -1))
-         unset -n element
+         [ -n "${name}" ] || break
+         array["${name}"]=$(((${#array["${name}"]} == 0)? value: -1))
       done
 
       let value+=1
@@ -55,9 +52,7 @@ defineEnumeration() {
 
    for name in ${!array[*]}
    do
-      local -n element="array[${name}]"
-      [ "${element}" -lt 0 ] && unset element
-      unset -n element
+      [ "${array["${name}"]}" -lt 0 ] && unset "array["${name}"]"
    done
 
    readonly array
