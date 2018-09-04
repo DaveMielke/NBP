@@ -88,14 +88,14 @@ attemptSharedLock() {
 
 releaseLock() {
    local lock="${1}"
-   local -n name="lockNames[${lock}]"
 
-   if [ -n "${name}" ]
+   if [ -n "${lockNames["${lock}"]}" ]
    then
       flock -u "${lock}"
       closeLockFile "${lock}"
-      logDebug "lock released: ${name}: fd:${lock}"
-      unset name
+
+      logDebug "lock released: ${lockNames["${lock}"]}: fd:${lock}"
+      unset "lockNames["${lock}"]"
    else
       logWarning "lock not held: fd=${lock}"
    fi
