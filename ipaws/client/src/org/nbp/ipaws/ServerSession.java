@@ -152,7 +152,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     }
   };
 
-  private final void handleReceivedCommands () {
+  private final void doReceivedCommands () {
     OperandsHandler commandHandler =
       new OperandsHandler() {
         @Override
@@ -198,110 +198,108 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     );
   }
 
-  private final boolean doSession () {
+  private final void doSessionCommunication () {
+    try {
+      sessionSocket.setKeepAlive(true);
+
+      synchronized (this) {
+        sessionWriter =
+          new BufferedWriter(
+            new OutputStreamWriter(
+              sessionSocket.getOutputStream(),
+              ApplicationParameters.CHARACTER_ENCODING
+            )
+          );
+      }
+
+      try {
+        synchronized (this) {
+          sessionReader =
+            new BufferedReader(
+              new InputStreamReader(
+                sessionSocket.getInputStream(),
+                ApplicationParameters.CHARACTER_ENCODING
+              )
+            );
+        }
+
+        try {
+          if (!sendIdentity()) return;
+          if (!haveAlerts()) return;
+          if (!setAreas()) return;
+          if (!writeCommand("sendAlerts")) return;
+          doReceivedCommands();
+        } finally {
+          synchronized (this) {
+            sessionReader = null;
+          }
+        }
+      } finally {
+        synchronized (this) {
+          sessionWriter = null;
+        }
+      }
+    } catch (IOException exception) {
+      Log.e(LOG_TAG, ("socket comunication error: " + exception.getMessage()));
+    }
+  }
+
+  private final boolean doSessionConnection () {
     AlertNotification.updateSessionState(R.string.session_stateConnecting);
     boolean connected = false;
 
-  DO_SESSION:
-    {
-      String[] servers = new String[] {
-        ApplicationSettings.PRIMARY_SERVER,
-        ApplicationSettings.SECONDARY_SERVER
-      };
+    String[] servers = new String[] {
+      ApplicationSettings.PRIMARY_SERVER,
+      ApplicationSettings.SECONDARY_SERVER
+    };
 
-      for (String server : servers) {
-        SocketAddress address = makeSocketAddress(server);
-        Log.d(LOG_TAG, ("connecting to " + address.toString()));
+    for (String server : servers) {
+      SocketAddress address = makeSocketAddress(server);
+      Log.d(LOG_TAG, ("connecting to " + address.toString()));
 
-        synchronized (this) {
-          sessionSocket = new Socket();
-        }
-
-        try {
-          sessionSocket.connect(address);
-          connected = true;
-          break;
-        } catch (IOException exception) {
-          Log.e(LOG_TAG, ("socket connect error: " + exception.getMessage()));
-
-          synchronized (this) {
-            closeSocket();
-            sessionSocket = null;
-          }
-        }
+      synchronized (this) {
+        sessionSocket = new Socket();
       }
 
-      if (connected) {
-        Log.d(LOG_TAG, "connected");
-        AlertNotification.updateSessionState(R.string.session_stateConnected);
-
+      try {
         try {
+          sessionSocket.connect(address);
+
           try {
-            sessionSocket.setKeepAlive(true);
+            connected = true;
 
-            synchronized (this) {
-              sessionWriter =
-                new BufferedWriter(
-                  new OutputStreamWriter(
-                    sessionSocket.getOutputStream(),
-                    ApplicationParameters.CHARACTER_ENCODING
-                  )
-                );
-            }
+            Log.d(LOG_TAG, "connected");
+            AlertNotification.updateSessionState(R.string.session_stateConnected);
 
-            try {
-              synchronized (this) {
-                sessionReader =
-                  new BufferedReader(
-                    new InputStreamReader(
-                      sessionSocket.getInputStream(),
-                      ApplicationParameters.CHARACTER_ENCODING
-                    )
-                  );
-              }
-
-              try {
-                if (!sendIdentity()) break DO_SESSION;
-                if (!haveAlerts()) break DO_SESSION;
-                if (!setAreas()) break DO_SESSION;
-                if (!writeCommand("sendAlerts")) break DO_SESSION;
-                handleReceivedCommands();
-              } finally {
-                synchronized (this) {
-                  sessionReader = null;
-                }
-              }
-            } finally {
-              synchronized (this) {
-                sessionWriter = null;
-              }
-            }
-          } catch (IOException exception) {
-            Log.e(LOG_TAG, ("socket prepare error: " + exception.getMessage()));
-          }
-        } finally {
-          synchronized (this) {
+            doSessionCommunication();
+            break;
+          } finally {
             Log.d(LOG_TAG, "disconnecting");
-            closeSocket();
-            sessionSocket = null;
+            AlertNotification.updateSessionState(R.string.session_stateDisconnected);
           }
+        } catch (IOException exception) {
+          Log.e(LOG_TAG, ("socket connection error: " + exception.getMessage()));
+        }
+      } finally {
+        synchronized (this) {
+          closeSocket();
+          sessionSocket = null;
         }
       }
     }
 
-    AlertNotification.updateSessionState(R.string.session_stateDisconnected);
     return connected;
   }
 
-  private final void doThread () {
-    Log.d(LOG_TAG, "thread startiong");
+  private final void doSessionThread () {
+    Log.d(LOG_TAG, "session thread startiong");
     AlertNotification.updateSessionState(R.string.session_stateDisconnected);
 
     try {
       int reconnectDelay = ApplicationParameters.RECONNECT_INITIAL_DELAY;
 
       while (!isStopping) {
-        reconnectDelay = doSession()?
+        reconnectDelay = doSessionConnection()?
                          ApplicationParameters.RECONNECT_INITIAL_DELAY:
                          (reconnectDelay << 1);
 
@@ -322,7 +320,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
       }
     } finally {
       AlertNotification.updateSessionState(R.string.session_stateOff);
-      Log.d(LOG_TAG, "thread done");
+      Log.d(LOG_TAG, "session thread done");
     }
   }
 
@@ -363,7 +361,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
       new Runnable() {
         @Override
         public void run () {
-          doThread();
+          doSessionThread();
         }
       }
     );
