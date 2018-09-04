@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.app.PendingIntent;
 import android.app.Activity;
 import android.app.Service;
+import android.graphics.BitmapFactory;
 
 public abstract class AlertNotification extends ApplicationComponent {
   private final static String LOG_TAG = AlertNotification.class.getName();
@@ -50,6 +51,7 @@ public abstract class AlertNotification extends ApplicationComponent {
       .setOngoing(true)
       .setOnlyAlertOnce(true)
       .setSmallIcon(R.drawable.alert_notification)
+      .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.nbp_ipaws))
       .setContentTitle(getString(R.string.app_name))
       .setContentIntent(newPendingIntent(MainActivity.class))
       ;
