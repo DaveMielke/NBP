@@ -142,7 +142,7 @@ onExitCommandCount=0
 trap executeOnExitCommands exit
 
 declare -g -A includedScriptLibraries=()
-includeScriptLibraries() {
+requireScriptLibraries() {
    local name
 
    for name
@@ -151,12 +151,12 @@ includeScriptLibraries() {
 
       [ -z "${included}" ] && {
          included=1
-         . "${programDirectory}/${name}.sh"
+         . "${programDirectory}/${name}.lib"
       }
 
       unset -n included
    done
-} && readonly -f includeScriptLibraries
+} && readonly -f requireScriptLibraries
 
 importProperties() {
    local -n array="${1}"

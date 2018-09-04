@@ -1,4 +1,4 @@
-includeScriptLibraries command
+requireScriptLibraries command
 
 verifyIntegerValue() {
    local value="${1}"

@@ -1,4 +1,4 @@
-includeScriptLibraries sql
+requireScriptLibraries sql
 
 ipawsSession_getStates() {
    local response="allStates"

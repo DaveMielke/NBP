@@ -1,4 +1,4 @@
-includeScriptLibraries xml files
+requireScriptLibraries xml files
 
 defineEnumeration capUrgencyEnumeration Immediate Expected Future Past Unknown
 defineEnumeration capSeverityEnumeration Extreme Severe Moderate Minor Unknown

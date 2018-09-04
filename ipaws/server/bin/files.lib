@@ -1,5 +1,5 @@
 verifyCommandAvailability stat getfattr setfattr
-includeScriptLibraries time
+requireScriptLibraries time
 
 getFileProperty() {
    local path="${1}"

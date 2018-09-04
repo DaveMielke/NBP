@@ -1,4 +1,4 @@
-includeScriptLibraries xml time cap
+requireScriptLibraries xml time cap
 
 readonly filterTime="$(utcTime)"
 logDebug "filter-time ${filterTime}"

@@ -1,5 +1,5 @@
 verifyCommandAvailability inotifywait
-includeScriptLibraries cap sql
+requireScriptLibraries cap sql
 
 beginServerSession() {
    cd "${dataDirectory}"

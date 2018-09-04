@@ -1,4 +1,4 @@
-includeScriptLibraries sql
+requireScriptLibraries sql
 
 ipawsSession_getCounties() {
    local response="stateCounties"

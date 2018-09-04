@@ -2,7 +2,7 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommandAvailability curl
-includeScriptLibraries command arguments options-common options-retrieve time
+requireScriptLibraries command arguments options-common options-retrieve time
 
 showCommandUsageSummary() {
    showRetrieveUsageSummary

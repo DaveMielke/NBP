@@ -2,7 +2,7 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommandAvailability curl
-includeScriptLibraries command arguments options-common sql files
+requireScriptLibraries command arguments options-common sql files
 
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions

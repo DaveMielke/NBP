@@ -1,4 +1,4 @@
-includeScriptLibraries command arguments
+requireScriptLibraries command arguments
 
 addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
 addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"

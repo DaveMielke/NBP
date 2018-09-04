@@ -2,7 +2,7 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommandAvailability flock
-includeScriptLibraries command arguments options-common
+requireScriptLibraries command arguments options-common
 
 showCommandUsageSummary() {
 cat <<END-OF-COMMAND-SPECIFIC-OPTIONS-USAGE-SUMMARY

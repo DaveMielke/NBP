@@ -1,4 +1,4 @@
-includeScriptLibraries locks
+requireScriptLibraries locks
 
 readonly serverDirectory="${programDirectory%/*}"
 
