@@ -43,7 +43,7 @@ public abstract class Announcements extends ApplicationComponent {
       file.setReadOnly();
       return file;
     } catch (IOException exception) {
-      Log.w(LOG_TAG, ("announcement creation error: " + exception.getMessage()));
+      Log.w(LOG_TAG, ("announcement file creation error: " + exception.getMessage()));
       file.delete();
     }
 
@@ -88,25 +88,25 @@ public abstract class Announcements extends ApplicationComponent {
       new UtteranceProgressListener() {
         @Override
         public void onStart (String identifier) {
-          Log.d(LOG_TAG, ("utterance starting: " + identifier));
+          Log.d(LOG_TAG, ("utterance generation starting: " + identifier));
         }
 
         @Override
         public void onError (String identifier) {
-          Log.d(LOG_TAG, ("utterance failed: " + identifier));
+          Log.w(LOG_TAG, ("utterance generation failed: " + identifier));
           remove(identifier);
         }
 
         @Override
         public void onDone (String identifier) {
-          Log.d(LOG_TAG, ("utterance done: " + identifier));
+          Log.d(LOG_TAG, ("utterance generation done: " + identifier));
           File file = getFile(identifier);
 
           if (file.exists()) {
             file.setReadOnly();
             AlertPlayer.play(file, false);
           } else {
-            Log.w(LOG_TAG, ("announcement file not created: " + file.getAbsolutePath()));
+            Log.w(LOG_TAG, ("announcement file not found: " + file.getAbsolutePath()));
           }
         }
       };
@@ -124,13 +124,16 @@ public abstract class Announcements extends ApplicationComponent {
     }
 
     private final void convertToSpeech (Announcement announcement) {
-      File file = getFile(announcement.identifier);
+      String identifier = announcement.identifier;
+      File file = getFile(identifier);
       HashMap<String, String> parameters = new HashMap<String, String>();
 
       parameters.put(
         TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
-        announcement.identifier
+        identifier
       );
+
+      ttsObject.setOnUtteranceProgressListener(utteranceProgressListener);
 
       int status = ttsObject.synthesizeToFile(
         fixText(announcement.text),
@@ -139,7 +142,9 @@ public abstract class Announcements extends ApplicationComponent {
       );
 
       if (status == TextToSpeech.SUCCESS) {
+        Log.d(LOG_TAG, ("announcement conversion started: " + identifier));
       } else {
+        Log.w(LOG_TAG, ("announcement conversion not started: " + identifier));
       }
     }
 
@@ -166,17 +171,16 @@ public abstract class Announcements extends ApplicationComponent {
           Log.d(LOG_TAG, "waiting for TTS engine initialization");
           wait();
         } catch (InterruptedException exception) {
-          Log.d(LOG_TAG, "TTS engine initialization wait interrupted");
+          Log.w(LOG_TAG, "TTS engine initialization wait interrupted");
         }
 
         switch (ttsStatus) {
           case TextToSpeech.SUCCESS:
             Log.d(LOG_TAG, "TTS engine initialized successfully");
-            ttsObject.setOnUtteranceProgressListener(utteranceProgressListener);
             return true;
 
           default:
-            Log.d(LOG_TAG, "TTS engine failed to initialize");
+            Log.w(LOG_TAG, "TTS engine failed to initialize");
             ttsObject = null;
             return false;
         }
