@@ -15,10 +15,12 @@ sqlExecute() {
 } && readonly -f sqlExecute
 
 sqlBegin() {
+   [ -n "${sqlTransaction}" ] && internalError "SQL transaction already started: ${sqlTransaction}"
    sqlTransaction="begin exclusive transaction;"
 } && readonly -f sqlBegin
 
 sqlAppend() {
+   [ -n "${sqlTransaction}" ] || internalError "SQL transaction not started"
    sqlTransaction+=" ${1}"
 } && readonly -f sqlAppend
 
@@ -26,6 +28,7 @@ sqlEnd() {
    sqlAppend " end transaction;"
    logDebug "SQL transaction: ${sqlTransaction}"
    sqlExecute "${sqlTransaction}"
+   sqlTransaction=""
 } && readonly -f sqlEnd
 
 sqlEvaluate() {
