@@ -171,7 +171,7 @@ showOptionalCommandArgumentsSummary() {
    [ -n "${commandOptionCharacters}" ] && {
       echo -e "\nThe following options may be specified:"
 
-      local delimiter="|"
+      local separator="|"
       local option
 
       for option in $(echo "${commandOptionCharacters}" | tr " " $'\n' | sort)
@@ -182,8 +182,8 @@ showOptionalCommandArgumentsSummary() {
          local default="${commandOptionDefaults[${option}]}"
          [ -n "${default}" ] && summary+=" (default is ${default}"
 
-         echo "-${option}${delimiter}${operand}${delimiter}${summary}"
-      done | column -s "${delimiter}" -t -d -N option,operand,summary -W summary
+         echo "-${option}${separator}${operand}${separator}${summary}"
+      done | column -s "${separator}" -t -d -W 3
    }
 } && readonly -f showOptionalCommandArgumentsSummary
 
