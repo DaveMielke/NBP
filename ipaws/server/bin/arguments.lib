@@ -213,7 +213,11 @@ showCommandUsageSummary() {
    :
 }
 
+verifyNoMorePositionalArguments() {
+   [ "${#}" -eq 0 ] || syntaxError "too many positional arguments: ${*}"
+} && readonly -f verifyNoMorePositionalArguments
+
 handlePositionalCommandArguments() {
-   [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"
+   verifyNoMorePositionalArguments "${@}"
 }
 

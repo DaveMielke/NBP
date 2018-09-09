@@ -16,25 +16,69 @@ then
    "${sqlCommand[@]}"
 else
    function="${1}"
+   shift 1
+
+   columnCommand=(column -s "|" -t)
 
    case "${function}"
    in
       sessions)
+         verifyNoMorePositionalArguments "${@}"
+
          command="select
             serial as 'Serial Number',
             model as 'Model',
             api as 'API',
             datetime(started, 'localtime') as 'Started at'
             from current_sessions
+            order by started
             ;
          "
+         columnCommand+=(-N "Serial Number,Model,API,Started at" -R "API")
+         ;;
+
+      areas)
+         [ "${#}" -ge 1 ] || syntaxError "missing serial number"
+         serialNumber="${1}"
+         shift 1
+
+         verifyNoMorePositionalArguments "${@}"
+
+         "${programDirectory}/states-import"
+         "${programDirectory}/counties-import"
+
+         command="
+            select
+               counties.SAME as 'SAME',
+               name || ', ' || state as 'Name'
+               from counties
+                    inner join requested_areas
+                       on requested_areas.SAME = counties.SAME
+                    inner join current_sessions
+                       on current_sessions.client = requested_areas.client
+               where serial = '${serialNumber}'
+               union
+            select
+               '0' || states.SAME || '000' as 'SAME',
+               name
+               from states
+                    inner join requested_areas
+                       on requested_areas.SAME = states.SAME
+                    inner join current_sessions
+                       on current_sessions.client = requested_areas.client
+               where serial = '${serialNumber}'
+            order by name
+            ;
+         "
+
+         columnCommand+=(-N "SAME,Name")
          ;;
 
       *) syntaxError "unknown function: ${function}";;
    esac
 
-   sqlMakeCommand -column -header
-   "${sqlCommand[@]}" "${command}" | sed -e 's/ *$//'
+   sqlMakeCommand -batch -list
+   "${sqlCommand[@]}" "${command}" | "${columnCommand[@]}"
 fi
 
 exit "${?}"
