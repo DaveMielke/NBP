@@ -161,12 +161,19 @@ ipawsIsSentAlert() {
 ipawsInsertSentAlert() {
    local identifier="${1}"
 
-   sqlExecute "insert into sent_alerts (client, identifier) values ('${clientReference}', '${identifier}');"
+   sqlBegin
+   sqlAppend "insert into sent_alerts (client, identifier)"
+   sqlAppend "values ('${clientReference}', '${identifier}');"
+   sqlEnd
 } && readonly -f ipawsInsertSentAlert
 
 ipawsDeleteSentAlert() {
    local identifier="${1}"
 
-   sqlExecute "delete from sent_alerts where client='${clientReference}' and identifier='${identifier}';"
+   sqlBegin
+   sqlAppend "delete from sent_alerts"
+   sqlAppend "where client='${clientReference}'"
+   sqlAppend "and identifier='${identifier}';"
+   sqlEnd
 } && readonly -f ipawsDeleteSentAlert
 
