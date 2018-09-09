@@ -2,7 +2,7 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommandAvailability column
-requireScriptLibraries command arguments options-common sql
+requireScriptLibraries arguments options-common sql
 
 handlePositionalCommandArguments() {
   positionalArguments=("${@}")

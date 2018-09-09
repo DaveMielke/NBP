@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . "${0%/*}/prologue.sh"
-requireScriptLibraries command arguments options-common
+requireScriptLibraries arguments options-common
 
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions

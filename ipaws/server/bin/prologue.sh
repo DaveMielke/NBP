@@ -64,7 +64,7 @@ defineEnumeration logLevelEnumeration debug info warning error
 logMessage() {
    local type="${1}"
    local message="${2}"
-   local level="${logLevelEnumeration[${type}]}"
+   local level="${logLevelEnumeration["${type}"]}"
 
    if [ -z "${level}" ]
    then
@@ -97,7 +97,7 @@ logError() {
 
 setLogLevel() {
    local type="${1}"
-   local level="${logLevelEnumeration["${type}]"}"
+   local level="${logLevelEnumeration["${type}"]}"
 
    if [ -n "${level}" ]
    then

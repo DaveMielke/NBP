@@ -2,7 +2,7 @@
 
 . "${0%/*}/prologue.sh"
 verifyCommandAvailability curl
-requireScriptLibraries command arguments options-common sql files
+requireScriptLibraries arguments options-common sql files
 
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
@@ -31,7 +31,7 @@ then
       [ -f "${csvFile}" ] || semanticError "county data not available"
    fi
 else
-   logInfo "county data not updated"
+   logInfo "county data is up-to-date"
 fi
 
 sqlExecute "
