@@ -185,23 +185,24 @@ public abstract class Alerts extends ApplicationComponent {
       return identifier;
     }
 
-    private final static DateFormat timeFormatter =
-      new SimpleDateFormat(
-        ApplicationParameters.TIME_FORMAT
-      );
-
-    private final String formatTime (Date date) {
+    private final String formatTime (Date date, DateFormat formatter) {
       if (date == null) return null;
-      return timeFormatter.format(date);
+      return formatter.format(date);
     }
 
     @Override
     public void finishDialog (DialogHelper helper) {
+      DateFormat timeFormatter = new SimpleDateFormat(
+        android.text.format.DateFormat.is24HourFormat(getContext())?
+          ApplicationParameters.TIME_FORMAT_24:
+          ApplicationParameters.TIME_FORMAT_12
+      );
+
       helper.setText(R.id.alert_sender, sender);
-      helper.setText(R.id.alert_sent, formatTime(sent));
-      helper.setText(R.id.alert_effective, formatTime(effective));
-      helper.setText(R.id.alert_onset, formatTime(onset));
-      helper.setText(R.id.alert_expires, formatTime(expires));
+      helper.setText(R.id.alert_sent, formatTime(sent, timeFormatter));
+      helper.setText(R.id.alert_effective, formatTime(effective, timeFormatter));
+      helper.setText(R.id.alert_onset, formatTime(onset, timeFormatter));
+      helper.setText(R.id.alert_expires, formatTime(expires, timeFormatter));
       helper.setText(R.id.alert_event, event);
       helper.setText(R.id.alert_area, area);
       helper.setText(R.id.alert_description, description);

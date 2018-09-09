@@ -11,5 +11,13 @@ public abstract class ApplicationParameters {
   public final static long RESPONSE_TIMEOUT = 1000; // milliseconds
 
   public final static String CHARACTER_ENCODING = "UTF8";
-  public final static String TIME_FORMAT = "HH:mm EEE MMM d yyyy zzz";
+
+  public final static String TIME_FORMAT_24;
+  public final static String TIME_FORMAT_12;
+
+  static {
+    String suffix = " EEE MMM d yyyy zzz";
+    TIME_FORMAT_24 = "HH:mm" + suffix;
+    TIME_FORMAT_12 = "h:mma" + suffix;
+  }
 }
