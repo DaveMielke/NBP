@@ -97,7 +97,7 @@ logError() {
 
 setLogLevel() {
    local type="${1}"
-   local level="${logLevelEnumeration[${type}]}"
+   local level="${logLevelEnumeration["${type}]"}"
 
    if [ -n "${level}" ]
    then
@@ -106,6 +106,27 @@ setLogLevel() {
       logWarning "unknown log type: ${type}"
    fi
 } && readonly -f setLogLevel
+
+syntaxError() {
+   local message="${1}"
+
+   logError "${message}"
+   exit 2
+} && readonly -f syntaxError
+
+semanticError() {
+   local message="${1}"
+
+   logError "${message}"
+   exit 3
+} && readonly -f semanticError
+
+internalError() {
+   local message="${1}"
+
+   logError "${message}"
+   exit 4
+} && readonly -f internalError
 
 verifyCommandAvailability() {
    local command

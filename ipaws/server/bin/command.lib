@@ -10,27 +10,6 @@ readonly failureFileExtension="failed"
 readonly alertsFileExtension="alerts"
 readonly alertFileExtension="alert"
 
-syntaxError() {
-   local message="${1}"
-
-   logError "${message}"
-   exit 2
-} && readonly -f syntaxError
-
-semanticError() {
-   local message="${1}"
-
-   logError "${message}"
-   exit 3
-} && readonly -f semanticError
-
-internalError() {
-   local message="${1}"
-
-   logError "${message}"
-   exit 4
-} && readonly -f internalError
-
 failIfAlreadyRunning() {
    local lock
    attemptExclusiveLock lock "${programName}" || semanticError "already running"
