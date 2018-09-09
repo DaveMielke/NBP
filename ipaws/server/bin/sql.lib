@@ -20,6 +20,7 @@ sqlEvaluate() {
 
    sqlMakeCommand -line
    sqlCommand+=("${command}")
+
    local count=0 found=false
    local field equals value
 

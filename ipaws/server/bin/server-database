@@ -3,9 +3,38 @@
 . "${0%/*}/prologue.sh"
 requireScriptLibraries command arguments options-common sql
 
-handleCommandArguments "" "${@}"
+handlePositionalCommandArguments() {
+  arguments=("${@}")
+}
+
+handleCommandArguments "[function [argument ...]]" "${@}"
 prepareCommonCommandOptions
 
-sqlMakeCommand
-"${sqlCommand[@]}"
+if [ "${#arguments[@]}" -eq 0 ]
+then
+   sqlMakeCommand
+   "${sqlCommand[@]}"
+else
+   function="${1}"
+
+   case "${function}"
+   in
+      sessions)
+         command="select
+            serial as 'Serial Number',
+            model as 'Model',
+            api as 'API',
+            datetime(started, 'localtime') as 'Started at'
+            from current_sessions
+            ;
+         "
+         ;;
+
+      *) syntaxError "unknown function: ${function}";;
+   esac
+
+   sqlMakeCommand -column -header
+   "${sqlCommand[@]}" "${command}" | sed -e 's/ *$//'
+fi
+
 exit "${?}"
