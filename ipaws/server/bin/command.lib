@@ -1,9 +1,5 @@
 requireScriptLibraries locks
 
-readonly failureFileExtension="failed"
-readonly alertsFileExtension="alerts"
-readonly alertFileExtension="alert"
-
 failIfAlreadyRunning() {
    local lock
    attemptExclusiveLock lock "${programName}" || semanticError "already running"

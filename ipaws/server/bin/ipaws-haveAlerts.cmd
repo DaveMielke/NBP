@@ -1,3 +1,5 @@
+requireScriptLibraries alerts
+
 ipawsCommand_haveAlerts() {
    local identifier
 

@@ -1,4 +1,4 @@
-requireScriptLibraries arguments
+requireScriptLibraries arguments alerts
 
 readonly defaultServerType="prod"
 readonly defaultMinutesBefore=5

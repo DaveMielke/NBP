@@ -1,4 +1,4 @@
-requireScriptLibraries command arguments
+requireScriptLibraries arguments
 
 readonly defaultConfigurationDirectory="${rootDirectory}/etc"
 readonly defaultDataDirectory="${rootDirectory}/var"

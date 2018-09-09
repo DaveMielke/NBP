@@ -1,0 +1,4 @@
+readonly failureFileExtension="failed"
+readonly alertsFileExtension="alerts"
+readonly alertFileExtension="alert"
+
