@@ -1,3 +1,5 @@
+verifyCommandAvailability column
+
 verifyIntegerValue() {
    local value="${1}"
    local description="${2}"
@@ -168,42 +170,20 @@ handleCommandOption_string() {
 showOptionalCommandArgumentsSummary() {
    [ -n "${commandOptionCharacters}" ] && {
       echo -e "\nThe following options may be specified:"
-      local option optionWidth=0 operandWidth=0
 
-      for option in ${commandOptionCharacters}
-      do
-         [ "${#option}" -gt "${optionWidth}" ] && optionWidth="${#option}"
-
-         local operand="${commandOptionOperands[${option}]}"
-         [ "${#operand}" -gt "${operandWidth}" ] && operandWidth="${#operand}"
-      done
+      local delimiter="|"
+      local option
 
       for option in $(echo "${commandOptionCharacters}" | tr " " $'\n' | sort)
       do
-         while [ "${#option}" -lt "${optionWidth}" ]
-         do
-            option+=" "
-         done
-
-         local line="-${option}"
          local operand="${commandOptionOperands[${option}]}"
-
-         [ "${operandWidth}" -gt 0 ] && {
-            while [ "${#operand}" -lt "${operandWidth}" ]
-            do
-               operand+=" "
-            done
-
-            line+="  ${operand}"
-         }
-
          local summary="${commandOptionSummaries[${option}]}"
+
          local default="${commandOptionDefaults[${option}]}"
          [ -n "${default}" ] && summary+=" (default is ${default}"
-         [ -n "${summary}" ] && line+="  ${summary# }"
 
-         echo "${line}"
-      done
+         echo "-${option}${delimiter}${operand}${delimiter}${summary}"
+      done | column -s "${delimiter}" -t -d -N option,operand,summary -W summary
    }
 } && readonly -f showOptionalCommandArgumentsSummary
 
