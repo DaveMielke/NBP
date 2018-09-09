@@ -32,45 +32,75 @@ sqlEnd() {
 } && readonly -f sqlEnd
 
 sqlEvaluate() {
-   local -n sqlResponse="${1}"
-   local command="${2}"
+   local -n sqlEvaluate_response="${1}"
+   local sqlEvaluate_command="${2}"
 
-   sqlMakeCommand -line
-   sqlCommand+=("${command}")
+   sqlMakeCommand -batch -line
+   sqlCommand+=("${sqlEvaluate_command}")
 
-   local count=0 found=false
-   local field equals value
+   local sqlEvaluate_count=0 sqlEvaluate_found=false
+   local sqlEvaluate_field sqlEvaluate_equals sqlEvaluate_value
 
-   while read -r field equals value
+   while read -r sqlEvaluate_field sqlEvaluate_equals sqlEvaluate_value
    do
-      [ -z "${field}" ] && {
-         found=false
+      [ -z "${sqlEvaluate_field}" ] && {
+         sqlEvaluate_found=false
          continue
       }
 
-      "${found}" || {
-         found=true
-         let count+=1
+      "${sqlEvaluate_found}" || {
+         sqlEvaluate_found=true
+         let sqlEvaluate_count+=1
       }
 
-      [ "${equals}" = "=" ] || continue
-      sqlResponse["${count},${field}"]="${value}"
+      [ "${sqlEvaluate_equals}" = "=" ] || continue
+      sqlEvaluate_response["${sqlEvaluate_count},${sqlEvaluate_field}"]="${sqlEvaluate_value}"
    done < <("${sqlCommand[@]}")
 
-   sqlResponse["count"]="${count}"
+   sqlEvaluate_response["count"]="${sqlEvaluate_count}"
 } && readonly -f sqlEvaluate
 
 sqlCount() {
-   local -n sqlCount="${1}"
-   local sqlTable="${2}"
-   local sqlWhere="${3}"
+   local -n sqlCount_result="${1}"
+   local sqlCount_table="${2}"
+   local sqlCount_where="${3}"
+   local sqlCount_limit="${4}"
 
-   local command="select count(*) as count from ${sqlTable}"
-   [ -n "${sqlWhere}" ] && command+=" where ${sqlWhere}"
-   command+=";"
+   local sqlCount_command="select count(*) as count from ${sqlCount_table}"
+   [ -n "${sqlCount_where}" ] && sqlCount_command+=" where ${sqlCount_where}"
+   [ -n "${sqlCount_limit}" ] && sqlCount_command+=" limit ${sqlCount_limit}"
+   sqlCount_command+=";"
 
-   local -A sqlResult
-   sqlEvaluate sqlResult "${command}"
-   sqlCount="${sqlResult["1,count"]}"
+   local -A sqlCount_response
+   sqlEvaluate sqlCount_response "${sqlCount_command}"
+   sqlCount_result="${sqlCount_response["1,count"]}"
 } && readonly -f sqlCount
+
+sqlHave() {
+   local sqlHave_table="${1}"
+   local sqlHave_where="${2}"
+
+   local sqlHave_count
+   sqlCount sqlHave_count "${sqlHave_table}" "${sqlHave_where}" 1
+   return $((!sqlHave_count))
+} && readonly -f sqlHave
+
+sqlHaveColumn() {
+   local table="${1}"
+   local column="${2}"
+
+   sqlHave "pragma_table_info('${table}')" "name = '${column}'" || return "${?}"
+} && readonly -f sqlHaveColumn
+
+sqlEnsureColumn() {
+   local table="${1}"
+   local column="${2}"
+   local description="${3}"
+
+   sqlHaveColumn "${table}" "${column}" || {
+      sqlBegin
+      sqlAppend "alter table ${table} add column ${column} ${description};"
+      sqlEnd
+   }
+} && readonly -f sqlEnsureColumn
 
