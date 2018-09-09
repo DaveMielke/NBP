@@ -9,17 +9,17 @@ handlePositionalCommandArguments() {
 }
 
 performFunction() {
- local functionName="${1}"
- shift 1
+   local functionName="${1}"
+   shift 1
 
- local shellFunction="databaseFunction_${functionName}"
- [ "$(type -t "${shellFunction}")" = "function" ] || syntaxError "unknown function: ${functionName}"
+   local shellFunction="databaseFunction_${functionName}"
+   [ "$(type -t "${shellFunction}")" = "function" ] || syntaxError "unknown function: ${functionName}"
 
- local columnCommand=(column -s "|" -t)
- "${shellFunction}" "${@}"
+   local columnCommand=(column -s "|" -t)
+   "${shellFunction}" "${@}"
 
- sqlMakeCommand -batch -list
- "${sqlCommand[@]}" "${databaseCommand}" | "${columnCommand[@]}"
+   sqlMakeCommand -batch -list
+   "${sqlCommand[@]}" "${databaseCommand}" | "${columnCommand[@]}"
 }
 
 databaseFunction_sessions() {
