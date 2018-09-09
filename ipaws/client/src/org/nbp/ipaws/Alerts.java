@@ -205,7 +205,7 @@ public abstract class Alerts extends ApplicationComponent {
       helper.setText(R.id.alert_expires, formatTime(expires, timeFormatter));
       helper.setText(R.id.alert_event, event);
       helper.setText(R.id.alert_area, area);
-      helper.setText(R.id.alert_description, description);
+      helper.setText(R.id.alert_description, description, headline);
       helper.setText(R.id.alert_instruction, instruction);
     }
   }
