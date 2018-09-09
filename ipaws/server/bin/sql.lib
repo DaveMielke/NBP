@@ -10,7 +10,7 @@ sqlMakeCommand() {
 sqlExecute() {
    local command="${1}"
 
-   sqlMakeCommand -separator ,
+   sqlMakeCommand -batch -separator ,
    "${sqlCommand[@]}" <<<"${command}"
 } && readonly -f sqlExecute
 
