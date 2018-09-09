@@ -1,6 +1,6 @@
 requireScriptLibraries sql
 
-ipawsSession_getStates() {
+ipawsCommand_getStates() {
    local response="allStates"
    local -A result
 

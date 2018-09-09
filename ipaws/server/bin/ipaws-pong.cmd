@@ -1,4 +1,4 @@
-ipawsSession_pong() {
+ipawsCommand_pong() {
    local identifier="${1}"
 
 }

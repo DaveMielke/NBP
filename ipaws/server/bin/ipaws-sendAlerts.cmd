@@ -1,4 +1,4 @@
-ipawsSession_sendAlerts() {
+ipawsCommand_sendAlerts() {
    "${ipawsSendingAlerts}" || {
       ipawsSendingAlerts=true
       ipawsMonitorAlerts

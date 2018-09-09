@@ -1,6 +1,6 @@
 requireScriptLibraries sql
 
-ipawsSession_setAreas() {
+ipawsCommand_setAreas() {
    local -A areas
    areas["000000"]=1
    local area

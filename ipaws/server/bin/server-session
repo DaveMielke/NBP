@@ -14,7 +14,7 @@ handlePositionalCommandArguments() {
    serverType="${1}"
    shift 1
 
-   serverScriptlet="${programDirectory}/${serverType}-session.srv"
+   serverScriptlet="${programDirectory}/${serverType}.srv"
    [ -f "${serverScriptlet}" ] || syntaxError "unknown server type: ${serverType}"
 
    [ "${#}" -eq 0 ] || syntaxError "too many positional arguments"
@@ -31,12 +31,12 @@ handleClientCommands() {
       local command="${arguments[0]}"
       unset "arguments[0]"
       [ "${command}" = "end" ] && return 0
-      local scriptlet="${programDirectory}/${serverType}-session-${command}.cmd"
+      local scriptlet="${programDirectory}/${serverType}-${command}.cmd"
 
       if [ -f "${scriptlet}" ]
       then
          . "${scriptlet}"
-         "${serverType}Session_${command}" "${arguments[@]}" || :
+         "${serverType}Command_${command}" "${arguments[@]}" || :
       else
          logWarning "unrecognized command: ${clientReference}: ${command}"
       fi

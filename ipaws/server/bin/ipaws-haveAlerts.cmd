@@ -1,4 +1,4 @@
-ipawsSession_haveAlerts() {
+ipawsCommand_haveAlerts() {
    local identifier
 
    for identifier

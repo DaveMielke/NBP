@@ -1,6 +1,6 @@
 requireScriptLibraries sql
 
-ipawsSession_getCounties() {
+ipawsCommand_getCounties() {
    local response="stateCounties"
 
    [ "${#}" -ge 1 ] && {

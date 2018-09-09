@@ -1,4 +1,4 @@
-ipawsSession_identity() {
+ipawsCommand_identity() {
    local serialNumber="${1}"
    local apiLevel="${2}"
    local modelName="${3}"

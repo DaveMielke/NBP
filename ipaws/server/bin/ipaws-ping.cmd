@@ -1,4 +1,4 @@
-ipawsSession_ping() {
+ipawsCommand_ping() {
    local identifier="${1}"
 
    writeClientResponse "pong ${identifier}"
