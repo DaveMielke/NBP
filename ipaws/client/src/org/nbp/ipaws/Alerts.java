@@ -176,9 +176,8 @@ public abstract class Alerts extends ApplicationComponent {
 
       for (String string : strings) {
         if (string != null) {
-          if (!string.isEmpty()) {
-            return string;
-          }
+          string = string.trim();
+          if (!string.isEmpty()) return string;
         }
       }
 
