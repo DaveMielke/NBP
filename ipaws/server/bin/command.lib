@@ -16,7 +16,3 @@ waitIfAlreadyRunning() {
    pushOnExitCommand releaseLock "${lock}"
 } && readonly -f waitIfAlreadyRunning
 
-importCommandProperties() {
-   importProperties commandProperties "${configurationDirectory}/commands.conf"
-} && readonly -f importCommandProperties
-
