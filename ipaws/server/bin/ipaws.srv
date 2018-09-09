@@ -10,10 +10,10 @@ beginServerSession() {
    ipawsPingNumber=0
    ipawsKeepAlive
 
-   local command="begin transaction;"
-   command+=" insert into current_sessions (client, started) values ('${clientReference}', current_timestamp);"
-   command+=" commit;"
-   sqlExecute "${command}"
+   sqlBegin
+   sqlAppend "insert into current_sessions (client, started)"
+   sqlAppend "values ('${clientReference}', current_timestamp);"
+   sqlEnd
 } && readonly -f beginServerSession
 
 endServerSession() {
@@ -30,19 +30,18 @@ ipawsKeepAlive() {
 } && readonly -f ipawsKeepAlive
 
 ipawsPrepareClientTables() {
-   local command="begin transaction;"
+   sqlBegin
    local table
 
    for table in current_sessions requested_areas sent_alerts
    do
-      command+=" delete from ${table} where client='${clientReference}';"
+      sqlAppend "delete from ${table} where client='${clientReference}';"
    done
 
-   command+=" commit;"
-   sqlExecute "${command}"
+   sqlEnd
 } && readonly -f ipawsPrepareClientTables
 
-ipawsSyncAlerts() {
+ipawsSynchronizeAlerts() {
    set -- *".${alertFileExtension}"
    local file
 
@@ -57,7 +56,7 @@ ipawsSyncAlerts() {
          ipawsIsSentAlert "${identifier}" && ipawsCancelAlert "${identifier}"
       fi
    done
-} && readonly -f ipawsSyncAlerts
+} && readonly -f ipawsSynchronizeAlerts
 
 ipawsMonitorAlerts() {
    coproc inotify {
@@ -73,7 +72,7 @@ ipawsMonitorAlerts() {
    eval exec "9<&${inotify[0]}"
 
    (
-      ipawsSyncAlerts
+      ipawsSynchronizeAlerts
       local time file events
 
       while read -u 9 -r time file events

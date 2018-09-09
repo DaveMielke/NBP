@@ -14,6 +14,20 @@ sqlExecute() {
    "${sqlCommand[@]}" <<<"${command}"
 } && readonly -f sqlExecute
 
+sqlBegin() {
+   sqlTransaction="begin exclusive transaction;"
+} && readonly -f sqlBegin
+
+sqlAppend() {
+   sqlTransaction+=" ${1}"
+} && readonly -f sqlAppend
+
+sqlEnd() {
+   sqlAppend " end transaction;"
+   logDebug "SQL transaction: ${sqlTransaction}"
+   sqlExecute "${sqlTransaction}"
+} && readonly -f sqlEnd
+
 sqlEvaluate() {
    local -n sqlResponse="${1}"
    local command="${2}"

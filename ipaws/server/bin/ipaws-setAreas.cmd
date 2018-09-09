@@ -23,16 +23,21 @@ ipawsCommand_setAreas() {
       fi
    done
 
-   local command="begin transaction;"
-   command+=" delete from requested_areas where client='${clientReference}';"
+   sqlBegin
+   sqlAppend "delete from requested_areas where client='${clientReference}';"
+
+   sqlAppend "insert into requested_areas (client, SAME) values"
+   local separator=""
 
    for area in "${!areas[@]}"
    do
-      command+=" insert into requested_areas (client, SAME) values ('${clientReference}', '${area}');"
+      sqlAppend "${separator} ('${clientReference}', '${area}')"
+      separator=", "
    done
 
-   command+=" commit;"
-   sqlExecute "${command}"
-   ipawsSyncAlerts
+   sqlAppend ";"
+   sqlEnd
+
+   ipawsSynchronizeAlerts
 }
 

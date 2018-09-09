@@ -3,9 +3,10 @@ ipawsCommand_identity() {
    local apiLevel="${2}"
    local modelName="${3}"
 
-   local command="begin transaction;"
-   command+=" update current_sessions set serial='${serialNumber}', api='${apiLevel}', model='${modelName}' where client='${clientReference}';"
-   command+=" commit;"
-   sqlExecute "${command}"
+   sqlBegin
+   sqlAppend "update current_sessions"
+   sqlAppend "set serial='${serialNumber}', api='${apiLevel}', model='${modelName}'"
+   sqlAppend "where client='${clientReference}';"
+   sqlEnd
 }
 
