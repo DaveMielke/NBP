@@ -1,5 +1,3 @@
-requireScriptLibraries command
-
 verifyIntegerValue() {
    local value="${1}"
    local description="${2}"
