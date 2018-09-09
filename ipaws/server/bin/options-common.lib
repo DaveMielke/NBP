@@ -1,5 +1,8 @@
 requireScriptLibraries command arguments
 
+readonly defaultConfigurationDirectory="${rootDirectory}/etc"
+readonly defaultDataDirectory="${rootDirectory}/var"
+
 addCommandOption c configurationDirectory path "the configuration directory" "${defaultConfigurationDirectory}"
 addCommandOption d dataDirectory path "the data directory" "${defaultDataDirectory}"
 

@@ -1,11 +1,5 @@
 requireScriptLibraries locks
 
-readonly serverDirectory="${programDirectory%/*}"
-
-readonly defaultConfigurationDirectory="${serverDirectory}/etc"
-readonly commandConfigurationFile="ipaws.conf"
-
-readonly defaultDataDirectory="${serverDirectory}/var"
 readonly failureFileExtension="failed"
 readonly alertsFileExtension="alerts"
 readonly alertFileExtension="alert"

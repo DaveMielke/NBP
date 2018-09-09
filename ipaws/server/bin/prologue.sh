@@ -5,6 +5,7 @@ readonly programName="${0##*/}"
 programDirectory="${0%/*}"
 [ "${programDirectory}" = "${0}" ] && programDirectory="."
 readonly programDirectory="$(realpath "${programDirectory}")"
+readonly rootDirectory="${programDirectory%/*}"
 
 programMessage() {
    local message="${1}"
