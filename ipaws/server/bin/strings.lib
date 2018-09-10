@@ -1,16 +1,16 @@
 joinArrayValues()  {
-   local -n array="${1}"
-   local delimiter="${2}"
+   local -n javArray="${1}"
+   local javSeparator="${2}"
 
-   local result=""
-   local index
+   local javResult=""
+   local javIndex
 
-   for index in ${!array[*]}
+   for javIndex in "${!javArray[@]}"
    do
-      [ -z "${result}" ] || result+="${delimiter}"
-      result+="${array["${index}"]}"
+      [ -n "${javResult}" ] && javResult+="${javSeparator}"
+      javResult+="${javArray["${javIndex}"]}"
    done
 
-   echo "${result}"
+   echo "${javResult}"
 } && readonly -f joinArrayValues
 
