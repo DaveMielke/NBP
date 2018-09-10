@@ -38,7 +38,7 @@ readonly referenceTime
 logDebug "reference-time ${referenceTime}"
 
 logDebug "server-type ${serverType}"
-serverName="${commandProperties["${serverType}-server"]}"
+serverName="${configuredOptions["${serverType}-server"]}"
 [ -n "${serverName}" ] || semanticError "server type not defined: ${serverType}"
 logDebug "server-name ${serverName}"
 

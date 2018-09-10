@@ -171,38 +171,38 @@ requireScriptLibraries() {
    done
 } && readonly -f requireScriptLibraries
 
-importProperties() {
-   local -n array="${1}"
-   local file="${2}"
+importConfigurationFile() {
+   local -n icfArray="${1}"
+   local icfFile="${2}"
 
-   [ -f "${file}" ] && [ -r "${file}" ] || return 0
-   declare -g -A "${!array}"
-   local line number=0
+   [ -f "${icfFile}" ] && [ -r "${icfFile}" ] || return 0
+   declare -g -A "${!icfArray}"
+   local icfLine icfNumber=0
 
-   while read -r line
+   while read -r icfLine
    do
-      let number+=1
-      set -- ${line%%#*}
+      let icfNumber+=1
+      set -- ${icfLine%%#*}
       [ "${#}" -eq 0 ] && continue
 
-      local name="${1}"
-      local value="${2}"
+      local icfName="${1}"
+      local icfValue="${2}"
 
       if [ "${#}" -eq 2 ]
       then
-         array["${name}"]="${value}"
+         icfArray["${icfName}"]="${icfValue}"
       else
-         local problem
+         local icfProblem
 
          if [ "${#}" -eq 1 ]
          then
-            problem="missing value"
+            icfProblem="missing value"
          else
-            problem="excess data"
+            icfProblem="excess data"
          fi
 
-         logWarning "${problem}: ${file}[${number}]: ${*}"
+         logWarning "${icfProblem}: ${icfFile}[${icfNumber}]: ${*}"
       fi
-   done <"${file}"
-} && readonly -f importProperties
+   done <"${icfFile}"
+} && readonly -f importConfigurationFile
 

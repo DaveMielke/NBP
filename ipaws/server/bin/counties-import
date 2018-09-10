@@ -7,7 +7,7 @@ requireScriptLibraries arguments options-common sql files
 handleCommandArguments "" "${@}"
 prepareCommonCommandOptions
 
-sameCodes="${commandProperties["same-codes"]}"
+sameCodes="${configuredOptions["same-codes"]}"
 [ -n "${sameCodes}" ] || semanticError "SAME codes URL not defined"
 
 csvFile="${dataDirectory}/counties.csv"
