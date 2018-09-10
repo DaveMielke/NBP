@@ -27,36 +27,36 @@ setVariable() {
 } && readonly -f setVariable
 
 defineEnumeration() {
-   local array="${1}"
+   local defEnum_array="${1}"
    shift 1
 
-   eval declare -g -A "${array}=()"
-   local -n array="${array}"
+   declare -g -A "${defEnum_array}=()"
+   local -n defEnum_array="${defEnum_array}"
 
-   local value=0
-   local name
+   local defEnum_value=0
+   local defEnum_name
 
-   for name
+   for defEnum_name
    do
-      [ -z "${name}" ] && continue
-      array[${name}]="${value}"
+      [ -n "${defEnum_name}" ] || continue
+      defEnum_array["${defEnum_name}"]="${defEnum_value}"
 
       while :
       do
-         name="${name%?}"
-         [ -n "${name}" ] || break
-         array["${name}"]=$(((${#array["${name}"]} == 0)? value: -1))
+         defEnum_name="${defEnum_name%?}"
+         [ -n "${defEnum_name}" ] || break
+         defEnum_array["${defEnum_name}"]=$(((${#defEnum_array["${defEnum_name}"]} == 0)? defEnum_value: -1))
       done
 
-      let value+=1
+      let defEnum_value+=1
    done
 
-   for name in ${!array[*]}
+   for defEnum_name in "${!defEnum_array[@]}"
    do
-      [ "${array["${name}"]}" -lt 0 ] && unset "array["${name}"]"
+      [ "${defEnum_array["${defEnum_name}"]}" -lt 0 ] && unset "defEnum_array["${defEnum_name}"]"
    done
 
-   readonly array
+   readonly defEnum_array
 } && readonly -f defineEnumeration
 
 defineEnumeration logLevelEnumeration debug info warning error
