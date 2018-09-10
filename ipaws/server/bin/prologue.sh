@@ -27,12 +27,10 @@ setVariable() {
 } && readonly -f setVariable
 
 defineEnumeration() {
-   local defEnum_array="${1}"
+   local -n defEnum_array="${1}"
    shift 1
 
-   declare -g -A "${defEnum_array}=()"
-   local -n defEnum_array="${defEnum_array}"
-
+   declare -g -A "${!defEnum_array}=()"
    local defEnum_value=0
    local defEnum_name
 
@@ -176,7 +174,7 @@ importConfigurationFile() {
    local icfFile="${2}"
 
    [ -f "${icfFile}" ] && [ -r "${icfFile}" ] || return 0
-   declare -g -A "${!icfArray}"
+   declare -g -A "${!icfArray}=()"
    local icfLine icfNumber=0
 
    while read -r icfLine
