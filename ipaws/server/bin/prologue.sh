@@ -173,8 +173,8 @@ importConfigurationFile() {
    local -n icfArray="${1}"
    local icfFile="${2}"
 
-   [ -f "${icfFile}" ] && [ -r "${icfFile}" ] || return 0
    declare -g -A "${!icfArray}=()"
+   [ -f "${icfFile}" ] && [ -r "${icfFile}" ] || return 0
    local icfLine icfNumber=0
 
    while read -r icfLine
