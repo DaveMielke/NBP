@@ -85,6 +85,7 @@ public abstract class AlertNotification extends ApplicationComponent {
   private static void setAlertCount () {
     int count = Alerts.list(false).length;
     notificationBuilder.setSubText(getResources().getQuantityString(R.plurals.alert, count, count));
+    notificationBuilder.setWhen(System.currentTimeMillis());
   }
 
   public static void updateAlertCount () {
