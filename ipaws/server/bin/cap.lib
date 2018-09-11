@@ -1,8 +1,13 @@
 requireScriptLibraries xml files
 
-defineEnumeration capUrgencyEnumeration Immediate Expected Future Past Unknown
-defineEnumeration capSeverityEnumeration Extreme Severe Moderate Minor Unknown
+defineEnumeration capCategoryEnumeration Geo Met Safety Security Rescue Fire Health Env Transport Infra CBRNE Other
 defineEnumeration capCertaintyEnumeration Observed Likely Possible Unlikely Unknown
+defineEnumeration capMessageTypeEnumeration Alert Update Cancel Ack Error
+defineEnumeration capResponseTypeEnumeration Shelter Evacuate Prepare Execute Avoid Monitor Assess AllClear None
+defineEnumeration capScopeEnumeration Public Restricted Private
+defineEnumeration capSeverityEnumeration Extreme Severe Moderate Minor Unknown
+defineEnumeration capStatusEnumeration Actual Exercise System Test Draft
+defineEnumeration capUrgencyEnumeration Immediate Expected Future Past Unknown
 
 readonly capAlertElement="/ns1:alerts/alert"
 
