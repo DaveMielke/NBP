@@ -121,9 +121,9 @@ ipawsSendAlert() {
 
    logInfo "sending alert: ${clientReference}: ${identifier}"
    beginClientResponse
-   echo "beginAlert ${identifier}"
+   writeClientCommand "beginAlert ${identifier}"
    cat "${identifier}.${alertFileExtension}"
-   echo "endAlert ${identifier}"
+   writeClientCommand "endAlert ${identifier}"
    endClientResponse
    ipawsInsertSentAlert "${identifier}"
 } && readonly -f ipawsSendAlert

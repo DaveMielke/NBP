@@ -58,8 +58,15 @@ writeClientResponse() {
    local response="${1}"
 
    beginClientResponse
-   echo "${response}"
+   writeClientCommand "${response}"
    endClientResponse
+}
+
+writeClientCommand() {
+   local command="${1}"
+
+   logInfo "sending command: ${clientReference}: ${command}"
+   echo "${command}"
 }
 
 handleCommandArguments "server-type" "${@}"
