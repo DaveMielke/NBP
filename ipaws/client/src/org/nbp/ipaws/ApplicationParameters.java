@@ -8,6 +8,8 @@ public abstract class ApplicationParameters {
 
   public final static int RECONNECT_INITIAL_DELAY = 1; // seconds
   public final static int RECONNECT_MAXIMUM_DELAY = 300; // seconds
+
+  public final static long PING_INTERVAL = 29 * 60 * 1000; // milliseconds
   public final static long RESPONSE_TIMEOUT = 1000; // milliseconds
 
   public final static String CHARACTER_ENCODING = "UTF8";

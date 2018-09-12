@@ -20,6 +20,8 @@ import java.io.BufferedWriter;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.Timeout;
+
 public class ServerSession extends ApplicationComponent implements CommandReader, CommandWriter {
   private final static String LOG_TAG = ServerSession.class.getName();
 
@@ -123,6 +125,21 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   //command.append(" 000000");
     return writeCommand(command);
   }
+
+  private static int pingNumber = 0;
+  private final Timeout pingSender =
+    new Timeout(ApplicationParameters.PING_INTERVAL, "session-ping-delay") {
+      @Override
+      public void run () {
+        StringBuilder command = new StringBuilder("ping");
+
+        command.append(' ');
+        command.append(++pingNumber);
+
+        writeCommand(command.toString());
+        start();
+      }
+    };
 
   @Override
   public final String readCommand () {
@@ -229,8 +246,12 @@ public class ServerSession extends ApplicationComponent implements CommandReader
           if (!haveAlerts()) return;
           if (!setAreas()) return;
           if (!writeCommand("sendAlerts")) return;
+
+          pingSender.start();
           doReceivedCommands();
         } finally {
+          pingSender.cancel();
+
           synchronized (this) {
             sessionReader = null;
           }
