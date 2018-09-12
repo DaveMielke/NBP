@@ -21,7 +21,7 @@ endServerSession() {
 } && readonly -f endServerSession
 
 ipawsKeepAlive() {
-   local interval=$((30 * 60))
+   local interval=$((31 * 60))
 
    while sleep "${interval}"
    do
