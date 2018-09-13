@@ -2,7 +2,9 @@ package org.nbp.ipaws;
 
 import android.util.Log;
 
+import org.nbp.common.CommonUtilities;
 import org.nbp.common.CommonContext;
+
 import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -25,6 +27,13 @@ public class HostMonitor extends BroadcastReceiver {
     if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
       startAlertService();
       return;
+    }
+
+    if (CommonUtilities.haveNougat) {
+      if (action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
+        startAlertService();
+        return;
+      }
     }
 
     if (action.equals(Intent.ACTION_MY_PACKAGE_REPLACED)) {
