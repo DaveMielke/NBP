@@ -1,5 +1,7 @@
 package org.nbp.ipaws;
 
+import org.nbp.common.CommonUtilities;
+
 import android.util.Log;
 
 import android.speech.tts.TextToSpeech;
@@ -83,6 +85,7 @@ public abstract class Announcements extends ApplicationComponent {
 
     private TextToSpeech ttsObject = null;
     private int ttsStatus = TextToSpeech.ERROR;
+    private int ttsLengthLimit = 0;
 
     private final UtteranceProgressListener utteranceProgressListener =
       new UtteranceProgressListener() {
@@ -104,6 +107,7 @@ public abstract class Announcements extends ApplicationComponent {
 
           if (file.exists()) {
             file.setReadOnly();
+            file.setReadable(true, false);
             AlertPlayer.play(file, false);
           } else {
             Log.w(LOG_TAG, ("announcement file not found: " + file.getAbsolutePath()));
@@ -112,15 +116,41 @@ public abstract class Announcements extends ApplicationComponent {
       };
 
     private final String fixText (String text) {
-      return text
-        // remove newlines between words to reduce pauses within the speech
-        .replaceAll("(\\w)\\s*\\n\\s*(\\w)", "$1 $2")
+      text = text
+             // remove newlines between words to reduce pauses within the speech
+             .replaceAll("(\\w)\\s*\\n\\s*(\\w)", "$1 $2")
+             // the last period of an ellipsis can be interpreted
+             // as a decimal point when immediately before a digit
+             .replaceAll("(\\.{2})(\\d)", "$1 $2")
+             ;
 
-        // the last period of an ellipsis can be interpreted
-        // as a decimal point when immediately before a digit
-        .replaceAll("(\\.{2})(\\d)", "$1 $2")
+      {
+        int length = ttsLengthLimit;
 
-        ;
+        if (text.length() > length) {
+          while (length > 0) {
+            if (Character.isWhitespace(text.charAt(length))) break;
+            length -= 1;
+          }
+
+          while (length > 0) {
+            int last = length - 1;
+            if (!Character.isWhitespace(text.charAt(last))) break;
+            length = last;
+          }
+
+          Log.w(LOG_TAG,
+            String.format(
+              "announcement too long: %d > %d -> %d",
+              text.length(), ttsLengthLimit, length
+            )
+          );
+
+          if (length > 0) text = text.substring(0, length);
+        }
+      }
+
+      return text;
     }
 
     private final void convertToSpeech (Announcement announcement) {
@@ -177,6 +207,9 @@ public abstract class Announcements extends ApplicationComponent {
         switch (ttsStatus) {
           case TextToSpeech.SUCCESS:
             Log.d(LOG_TAG, "TTS engine initialized successfully");
+            ttsLengthLimit = CommonUtilities.haveJellyBeanMR2?
+                             ttsObject.getMaxSpeechInputLength() - 1:
+                             4000;
             return true;
 
           default:
