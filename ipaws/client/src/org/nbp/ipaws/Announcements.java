@@ -106,7 +106,8 @@ public abstract class Announcements extends ApplicationComponent {
           File file = getFile(identifier);
 
           if (file.exists()) {
-            file.setReadOnly();
+            file.setExecutable(false, false);
+            file.setWritable(false, false);
             file.setReadable(true, false);
             AlertPlayer.play(file, false);
           } else {
