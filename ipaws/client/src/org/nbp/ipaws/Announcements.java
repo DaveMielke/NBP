@@ -125,7 +125,7 @@ public abstract class Announcements extends ApplicationComponent {
              ;
 
       {
-        int length = ttsLengthLimit;
+        int length = ttsLengthLimit - 1;
 
         if (text.length() > length) {
           while (length > 0) {
@@ -208,7 +208,7 @@ public abstract class Announcements extends ApplicationComponent {
           case TextToSpeech.SUCCESS:
             Log.d(LOG_TAG, "TTS engine initialized successfully");
             ttsLengthLimit = CommonUtilities.haveJellyBeanMR2?
-                             ttsObject.getMaxSpeechInputLength() - 1:
+                             ttsObject.getMaxSpeechInputLength():
                              4000;
             return true;
 
