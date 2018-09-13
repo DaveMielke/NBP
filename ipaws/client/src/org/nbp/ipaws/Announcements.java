@@ -157,20 +157,25 @@ public abstract class Announcements extends ApplicationComponent {
     private final void convertToSpeech (Announcement announcement) {
       String identifier = announcement.identifier;
       File file = getFile(identifier);
-      HashMap<String, String> parameters = new HashMap<String, String>();
+      String text = fixText(announcement.text);
+      int status;
 
-      parameters.put(
-        TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
-        identifier
-      );
+      if (CommonUtilities.haveLollipop) {
+        status = ttsObject.synthesizeToFile(
+          text, null, file, identifier
+        );
+      } else {
+        HashMap<String, String> parameters = new HashMap<String, String>();
 
-      ttsObject.setOnUtteranceProgressListener(utteranceProgressListener);
+        parameters.put(
+          TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
+          identifier
+        );
 
-      int status = ttsObject.synthesizeToFile(
-        fixText(announcement.text),
-        parameters,
-        file.getAbsolutePath()
-      );
+        status = ttsObject.synthesizeToFile(
+          text, parameters, file.getAbsolutePath()
+        );
+      }
 
       if (status == TextToSpeech.SUCCESS) {
         Log.d(LOG_TAG, ("announcement conversion started: " + identifier));
@@ -213,6 +218,7 @@ public abstract class Announcements extends ApplicationComponent {
                              4000;
             ttsLengthLimit -= 1; // Android returns the wrong value
 
+            ttsObject.setOnUtteranceProgressListener(utteranceProgressListener);
             return true;
 
           default:
