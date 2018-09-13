@@ -2,6 +2,7 @@ package org.nbp.ipaws;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.NotificationChannel;
 import android.graphics.BitmapFactory;
 
 import android.content.Context;
@@ -20,6 +21,8 @@ public abstract class AlertNotification extends ApplicationComponent {
   }
 
   private final static Integer NOTIFICATION_IDENTIFIER = 1;
+  private final static String NOTIFICATION_CHANNEL = "alert";
+
   private static NotificationManager notificationManager = null;
   private static Notification.Builder notificationBuilder = null;
 
@@ -48,8 +51,28 @@ public abstract class AlertNotification extends ApplicationComponent {
   private static void makeBuilder () {
     Context context = getContext();
 
-    notificationBuilder = new Notification.Builder(context)
-      .setPriority(Notification.PRIORITY_DEFAULT)
+    if (CommonUtilities.haveOreo) {
+      NotificationManager manager = getManager();
+      NotificationChannel channel = manager.getNotificationChannel(NOTIFICATION_CHANNEL);
+
+      if (channel == null) {
+        channel = new NotificationChannel(
+          NOTIFICATION_CHANNEL,
+          getString(R.string.alert_channel_name),
+          NotificationManager.IMPORTANCE_DEFAULT
+        );
+
+        manager.createNotificationChannel(channel);
+      }
+
+      notificationBuilder = new Notification.Builder(context, NOTIFICATION_CHANNEL);
+    } else {
+      notificationBuilder = new Notification.Builder(context)
+        .setPriority(Notification.PRIORITY_DEFAULT)
+        ;
+    }
+
+    notificationBuilder
       .setOngoing(true)
       .setOnlyAlertOnce(true)
       .setSmallIcon(R.drawable.alert_notification)
@@ -57,6 +80,7 @@ public abstract class AlertNotification extends ApplicationComponent {
       .setContentTitle(getString(R.string.app_name))
       .setContentIntent(newPendingIntent(MainActivity.class))
       ;
+
     if (CommonUtilities.haveJellyBeanMR1) {
       notificationBuilder.setShowWhen(true);
     }

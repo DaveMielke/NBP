@@ -5,6 +5,8 @@
   <string name="alert_service_label">NBP IPAWS Alert Service</string>
   <string name="settings_activity_label">NBP IPAWS Settings</string>
 
+  <string name="alert_channel_name">Alert Monitor State</string>
+
   <string name="action_stopSpeaking">Stop Speaking</string>
   <string name="action_currentAlerts">Current Alerts</string>
   <string name="action_selectAlert">Select an Alert</string>

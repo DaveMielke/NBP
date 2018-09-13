@@ -125,7 +125,7 @@ public abstract class Announcements extends ApplicationComponent {
              ;
 
       {
-        int length = ttsLengthLimit - 1;
+        int length = ttsLengthLimit;
 
         if (text.length() > length) {
           while (length > 0) {
@@ -210,6 +210,8 @@ public abstract class Announcements extends ApplicationComponent {
             ttsLengthLimit = CommonUtilities.haveJellyBeanMR2?
                              ttsObject.getMaxSpeechInputLength():
                              4000;
+            ttsLengthLimit -= 1; // Android returns the wrong value
+
             return true;
 
           default:
