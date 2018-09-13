@@ -101,6 +101,30 @@ public abstract class Announcements extends ApplicationComponent {
         }
 
         @Override
+        public void onError (String identifier, int error) {
+          Log.w(LOG_TAG,
+            String.format(
+              "utterance generation error %d: %s",
+              error, identifier
+            )
+          );
+
+          remove(identifier);
+        }
+
+        @Override
+        public void onStop (String identifier, boolean interrupted) {
+          Log.w(LOG_TAG, 
+            String.format(
+              "utterance generation %s: %s",
+              (interrupted? "interrupted": "stopped"), identifier
+            )
+          );
+
+          remove(identifier);
+        }
+
+        @Override
         public void onDone (String identifier) {
           Log.d(LOG_TAG, ("utterance generation done: " + identifier));
           File file = getFile(identifier);
