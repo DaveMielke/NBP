@@ -2,7 +2,11 @@ package org.nbp.ipaws;
 
 import android.util.Log;
 
+import org.nbp.common.CommonUtilities;
+
 import android.media.MediaPlayer;
+import android.media.AudioAttributes;
+
 import android.net.Uri;
 import java.io.File;
 import java.io.IOException;
@@ -102,10 +106,22 @@ public abstract class AlertPlayer extends ApplicationComponent {
     );
   }
 
-  private static void setListeners () {
+  private static void setAudioAttributes () {
+    AudioAttributes.Builder builder = new AudioAttributes.Builder();
+    builder.setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED);
+    builder.setUsage(AudioAttributes.USAGE_NOTIFICATION);
+    builder.setContentType(AudioAttributes.CONTENT_TYPE_SPEECH);
+    mediaPlayer.setAudioAttributes(builder.build());
+  }
+
+  private static void configurePlayer () {
     setOnErrorListener();
     setOnPreparedListener();
     setOnCompletionListener();
+
+    if (CommonUtilities.haveLollipop) {
+      setAudioAttributes();
+    }
   }
 
   public static void play (Uri uri, boolean withAttentionSignal) {
@@ -118,13 +134,13 @@ public abstract class AlertPlayer extends ApplicationComponent {
       if (mediaPlayer == null) {
         if (withAttentionSignal) {
           mediaPlayer = MediaPlayer.create(getContext(), R.raw.attention_signal);
-          setListeners();
+          configurePlayer();
           mediaPlayer.start();
         } else {
           if (uriQueue.isEmpty()) return;
 
           mediaPlayer = new MediaPlayer();
-          setListeners();
+          configurePlayer();
           playNext(false);
         }
       }
