@@ -308,7 +308,7 @@ public abstract class TextPlayer {
   }
 
   private final TextSegmentGenerator makeSegmentGenerator () {
-    int maximumLength = getMaximumLength();
+    int maximumLength = getMaximumLength() - 1;
     logSpeechAction("maximum length", Integer.toString(maximumLength));
 
     TextSegmentGenerator.OuterGenerator speechSpanGenerator =
@@ -357,22 +357,22 @@ public abstract class TextPlayer {
   private final void setUtteranceProgressListener () {
     ttsObject.setOnUtteranceProgressListener(
       new UtteranceProgressListener() {
-        // added in API Level 15 (Icecream Sandwich)
+        @Override
         public void onStart (String utterance) {
           synchronized (TextPlayer.this) {
             logSpeechAction("starting", utterance);
           }
         }
 
-        // added in API Level 15 (Icecream Sandwich)
+        @Override
         public void onError (String utterance) {
           synchronized (TextPlayer.this) {
-            logSpeechAction("error", utterance);
+            logSpeechAction("failed", utterance);
             cancelSpeaking();
           }
         }
 
-        // added in API Level 21 (Lollipop)
+        @Override
         public void onError (String utterance, int error) {
           synchronized (TextPlayer.this) {
             logSpeechAction(("error " + Integer.toString(error)), utterance);
@@ -380,7 +380,7 @@ public abstract class TextPlayer {
           }
         }
 
-        // added in API Level 23 (MarshMallow)
+        @Override
         public void onStop (String utterance, boolean interrupted) {
           synchronized (TextPlayer.this) {
             logSpeechAction((interrupted? "interrupted": "stopped"), utterance);
@@ -388,7 +388,7 @@ public abstract class TextPlayer {
           }
         }
 
-        // added in API Level 15 (Icecream Sandwich)
+        @Override
         public void onDone (String utterance) {
           synchronized (TextPlayer.this) {
             logSpeechAction("done", utterance);
