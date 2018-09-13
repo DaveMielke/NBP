@@ -2,13 +2,15 @@ package org.nbp.ipaws;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.graphics.BitmapFactory;
 
 import android.content.Context;
 import android.content.Intent;
 import android.app.PendingIntent;
 import android.app.Activity;
 import android.app.Service;
-import android.graphics.BitmapFactory;
+
+import org.nbp.common.CommonUtilities;
 
 public abstract class AlertNotification extends ApplicationComponent {
   private final static String LOG_TAG = AlertNotification.class.getName();
@@ -55,6 +57,13 @@ public abstract class AlertNotification extends ApplicationComponent {
       .setContentTitle(getString(R.string.app_name))
       .setContentIntent(newPendingIntent(MainActivity.class))
       ;
+    if (CommonUtilities.haveJellyBeanMR1) {
+      notificationBuilder.setShowWhen(true);
+    }
+
+    if (CommonUtilities.haveLollipop) {
+      notificationBuilder.setCategory(Notification.CATEGORY_SERVICE);
+    }
   }
 
   private static boolean haveBuilder () {
