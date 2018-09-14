@@ -112,6 +112,9 @@ Space+Dots2345 (t)
 Space+Dots1246 (ed)
   |Editor|
 
+Space+Dots2346 (!)
+  |AlertMonitor|
+
 Space+Dots1456 (?)
   |Assist|
 

@@ -436,6 +436,13 @@ public class MaintenanceActivity extends ProgrammaticActivity {
     );
   }
 
+  private View createUpdateAlertMonitorButton () {
+    return createUpdatePackageButton(
+      R.string.maintenance_UpdateAlertMonitor_label,
+      R.string.uri_ipaws_apk
+    );
+  }
+
   @Override
   protected final View createContentView () {
     return newVerticalGroup(
@@ -447,6 +454,7 @@ public class MaintenanceActivity extends ProgrammaticActivity {
       createUpdateEditorButton(),
       createUpdateCalculatorButton(),
       createUpdateNavigatorButton(),
+      createUpdateAlertMonitorButton(),
 
       createVerifySystemUpdateButton(),
       createUpdateSystemButton(),

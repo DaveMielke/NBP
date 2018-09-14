@@ -73,6 +73,9 @@ The following shortcuts to other |product name| applications are provided:
 Space+ed (dots 1246)
   Go to the |organization acronym| editor.
 
+Space+! (dots 2346)
+  Go to the |organization acronym| IPAWS monitor.
+
 Describing how any of these applications work is, of course, beyond the scope
 of this document.
 

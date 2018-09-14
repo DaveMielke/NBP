@@ -48,6 +48,7 @@
   <string name="maintenance_UpdateEditor_label">Update Editor</string>
   <string name="maintenance_UpdateCalculator_label">Update Calculator</string>
   <string name="maintenance_UpdateNavigator_label">Update Navigator</string>
+  <string name="maintenance_UpdateAlertMonitor_label">Update IPAWS Monitor</string>
   <string name="maintenance_VerifySystemUpdate_label">Verify System Update</string>
   <string name="maintenance_VerifySystemUpdate_finding">finding update</string>
   <string name="maintenance_VerifySystemUpdate_progress">verifying update</string>

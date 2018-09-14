@@ -46,6 +46,11 @@ Update Navigator
   See `Updating Applications`_ for details.
   |uses internet|
 
+Update IPAWS Monitor
+  Upgrade to the latest version of the |organization acronym| IPAWS monitor.
+  See `Updating Applications`_ for details.
+  |uses internet|
+
 Verify System Update
   Verify a `System Update`_ without applying it.
   |uses file picker|
