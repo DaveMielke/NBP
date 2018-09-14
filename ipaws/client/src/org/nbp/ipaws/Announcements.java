@@ -12,7 +12,10 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
 import java.io.File;
+import java.net.URLEncoder;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import java.io.OutputStream;
 import java.io.FileOutputStream;
@@ -31,7 +34,20 @@ public abstract class Announcements extends ApplicationComponent {
   }
 
   private static File getFile (String identifier) {
-    return new File(getDirectory(), identifier);
+    File directory = getDirectory();
+    File file = new File(directory, identifier);
+
+    if (!file.exists()) {
+      String encoding = "UTF-8";
+
+      try {
+        file = new File(directory, URLEncoder.encode(identifier, encoding));
+      } catch (UnsupportedEncodingException exception) {
+        Log.w(LOG_TAG, ("unsupported character encoding: " + encoding));
+      }
+    }
+
+    return file;
   }
 
   public static File create (String identifier, byte[] content) {
