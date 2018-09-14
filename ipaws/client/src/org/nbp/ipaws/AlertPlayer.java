@@ -24,13 +24,17 @@ public abstract class AlertPlayer extends ApplicationComponent {
   private final static Queue<Uri> uriQueue = new LinkedList<Uri>();
   private static MediaPlayer mediaPlayer = null;
 
+  private static String uriToString (Uri uri) {
+    return Uri.decode(uri.toString());
+  }
+
   private static void playNext (boolean reset) {
     synchronized (uriQueue) {
       while (true) {
         Uri uri = uriQueue.poll();
         if (uri == null) break;
         if (reset) mediaPlayer.reset();
-        Log.d(LOG_TAG, ("playing alert: " + uri.toString()));
+        Log.d(LOG_TAG, ("playing alert: " + uriToString(uri)));
 
         try {
           mediaPlayer.setDataSource(getContext(), uri);
@@ -127,7 +131,7 @@ public abstract class AlertPlayer extends ApplicationComponent {
   public static void play (Uri uri, boolean withAttentionSignal) {
     synchronized (uriQueue) {
       if (uri != null) {
-        Log.d(LOG_TAG, ("enqueuing alert: " + uri.toString()));
+        Log.d(LOG_TAG, ("enqueuing alert: " + uriToString(uri)));
         uriQueue.offer(uri);
       }
 
@@ -157,6 +161,10 @@ public abstract class AlertPlayer extends ApplicationComponent {
     Uri uri = null;
     if (file != null) uri = Uri.fromFile(file);
     play(uri, withAttentionSignal);
+  }
+
+  public static void play () {
+    play((Uri)null, true);
   }
 
   public static void stop () {

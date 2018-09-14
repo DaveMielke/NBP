@@ -241,7 +241,7 @@ public abstract class Alerts extends ApplicationComponent {
     }
   }
 
-  private static void play (Descriptor alert) {
+  private static void speak (Descriptor alert) {
     String reference = alert.resourceReference;
 
     {
@@ -315,9 +315,9 @@ public abstract class Alerts extends ApplicationComponent {
           AlertNotification.updateAlertCount();
 
           if (ApplicationSettings.SPEAK_ALERTS) {
-            play(alert);
+            speak(alert);
           } else {
-            AlertPlayer.play((String)null, true);
+            AlertPlayer.play();
           }
         } catch (IOException exception) {
           temporaryFile.delete();
