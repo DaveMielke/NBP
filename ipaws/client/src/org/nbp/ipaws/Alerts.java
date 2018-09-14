@@ -312,9 +312,13 @@ public abstract class Alerts extends ApplicationComponent {
 
           File permanentFile = getAlertFile(identifier);
           temporaryFile.renameTo(permanentFile);
-
           AlertNotification.updateAlertCount();
-          play(alert);
+
+          if (ApplicationSettings.SPEAK_ALERTS) {
+            play(alert);
+          } else {
+            AlertPlayer.play((String)null, true);
+          }
         } catch (IOException exception) {
           temporaryFile.delete();
           Log.e(LOG_TAG, ("alert file creation error: " + exception.getMessage()));
