@@ -6,6 +6,7 @@ import android.os.Build;
 import android.content.Context;
 
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketAddress;
 import java.net.InetSocketAddress;
 import java.io.IOException;
@@ -40,6 +41,41 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
       }
     }
+  }
+
+  @Override
+  public final boolean setTimeout (long milliseconds) {
+    final long minimum = 1;
+    final long maximum = Integer.MAX_VALUE;
+
+    if (milliseconds >= minimum) {
+      if (milliseconds <= maximum) {
+        Log.d(LOG_TAG, ("setting socket timeout: " + milliseconds));
+
+        try {
+          sessionSocket.setSoTimeout((int)milliseconds);
+          return true;
+        } catch (SocketException exception) {
+          Log.w(LOG_TAG, ("socket set timeout exception: " + exception.getMessage()));
+        }
+      } else {
+        Log.w(LOG_TAG,
+          String.format(
+            "socket timeout too long: %d > %d",
+            milliseconds, maximum
+          )
+        );
+      }
+    } else {
+      Log.w(LOG_TAG,
+        String.format(
+          "socket timeout too short: %d < %d",
+          milliseconds, minimum
+        )
+      );
+    }
+
+    return false;
   }
 
   @Override
@@ -135,6 +171,9 @@ public class ServerSession extends ApplicationComponent implements CommandReader
 
         command.append(' ');
         command.append(++pingNumber);
+
+        command.append(' ');
+        command.append(getDelay() / 1000);
 
         writeCommand(command.toString());
         start();

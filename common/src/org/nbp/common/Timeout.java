@@ -12,6 +12,10 @@ public abstract class Timeout implements Runnable {
     timeoutName = name;
   }
 
+  public long getDelay () {
+    return defaultDelay;
+  }
+
   public String getName () {
     return timeoutName;
   }
