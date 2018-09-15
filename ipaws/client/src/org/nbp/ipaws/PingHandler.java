@@ -2,6 +2,8 @@ package org.nbp.ipaws;
 
 import android.util.Log;
 
+import java.util.concurrent.TimeUnit;
+
 public class PingHandler extends OperandsHandler {
   private final static String LOG_TAG = PingHandler.class.getName();
 
@@ -32,8 +34,8 @@ public class PingHandler extends OperandsHandler {
           throw new NumberFormatException("value not positive");
         }
 
-        timeout += 5 * 60;
-        timeout *= 1000;
+        timeout = TimeUnit.SECONDS.toMillis(timeout);
+        timeout += ApplicationParameters.PING_RECEIVE_TIMEOUT;
         commandWriter.setTimeout(timeout);
       } catch (NumberFormatException exception) {
         Log.w(LOG_TAG, ("invalid time till next ping: " + next));

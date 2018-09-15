@@ -1,16 +1,19 @@
 package org.nbp.ipaws;
 
+import java.util.concurrent.TimeUnit;
+
 public abstract class ApplicationParameters {
   private ApplicationParameters () {
   }
 
   public final static int SERVER_PORT = 14216;
 
-  public final static int RECONNECT_INITIAL_DELAY = 1; // seconds
-  public final static int RECONNECT_MAXIMUM_DELAY = 300; // seconds
+  public final static long RECONNECT_INITIAL_DELAY = TimeUnit.SECONDS.toMillis(1);
+  public final static long RECONNECT_MAXIMUM_DELAY = TimeUnit.MINUTES.toMillis(5);
 
-  public final static long PING_INTERVAL = 29 * 60 * 1000; // milliseconds
-  public final static long RESPONSE_TIMEOUT = 1000; // milliseconds
+  public final static long PING_SEND_INTERVAL = TimeUnit.MINUTES.toMillis(29);
+  public final static long PING_RECEIVE_TIMEOUT = TimeUnit.MINUTES.toMillis(5);
+  public final static long RESPONSE_TIMEOUT = TimeUnit.SECONDS.toMillis(1);
 
   public final static String CHARACTER_ENCODING = "UTF8";
 

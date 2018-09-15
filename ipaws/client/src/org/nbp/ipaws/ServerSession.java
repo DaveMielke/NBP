@@ -164,7 +164,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
 
   private static int pingNumber = 0;
   private final Timeout pingSender =
-    new Timeout(ApplicationParameters.PING_INTERVAL, "session-ping-delay") {
+    new Timeout(ApplicationParameters.PING_SEND_INTERVAL, "ping-sender") {
       @Override
       public void run () {
         StringBuilder command = new StringBuilder("ping");
@@ -258,6 +258,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   private final void doSessionCommunication () {
     try {
       sessionSocket.setKeepAlive(true);
+      setTimeout(ApplicationParameters.PING_RECEIVE_TIMEOUT);
 
       synchronized (this) {
         sessionWriter =
@@ -360,7 +361,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     AlertNotification.updateSessionState(R.string.session_stateDisconnected);
 
     try {
-      int reconnectDelay = ApplicationParameters.RECONNECT_INITIAL_DELAY;
+      long reconnectDelay = ApplicationParameters.RECONNECT_INITIAL_DELAY;
 
       while (!isStopping) {
         reconnectDelay = doSessionConnection()?
@@ -376,7 +377,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
 
           try {
             Log.d(LOG_TAG, "delaying before reconnect");
-            wait(reconnectDelay * 1000L);
+            wait(reconnectDelay);
           } catch (InterruptedException exception) {
             Log.w(LOG_TAG, ("reconnect delay interrupted: " + exception.getMessage()));
           }
