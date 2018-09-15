@@ -23,9 +23,10 @@ endServerSession() {
 ipawsKeepAlive() {
    local interval=$((31 * 60))
 
-   while sleep "${interval}"
+   while :
    do
       writeClientResponse "ping $((++ipawsPingNumber)) ${interval}"
+      sleep "${interval}"
    done &
 } && readonly -f ipawsKeepAlive
 
