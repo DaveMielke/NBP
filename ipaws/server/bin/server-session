@@ -74,12 +74,11 @@ prepareCommonCommandOptions
 
 clientReference="[${NCAT_REMOTE_ADDR}]:${NCAT_REMOTE_PORT}/${NCAT_PROTO}"
 logInfo "connected: ${clientReference}"
+pushOnExitCommand logInfo "disconnected: ${clientReference}"
 
 . "${serverScriptlet}"
 beginServerSession
 pushOnExitCommand endServerSession
 
 handleClientCommands
-logInfo "disconnected: ${clientReference}"
-
 exit 0
