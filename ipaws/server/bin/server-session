@@ -80,5 +80,6 @@ pushOnExitCommand logInfo "disconnected: ${clientReference}"
 beginServerSession
 pushOnExitCommand endServerSession
 
+pushOnExitCommand logInfo "disconnecting: ${clientReference}"
 handleClientCommands
 exit 0
