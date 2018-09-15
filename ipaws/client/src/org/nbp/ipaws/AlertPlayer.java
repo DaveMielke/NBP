@@ -28,6 +28,14 @@ public abstract class AlertPlayer extends ApplicationComponent {
     return Uri.decode(uri.toString());
   }
 
+  private static void setAudioAttributes () {
+    AudioAttributes.Builder builder = new AudioAttributes.Builder();
+    builder.setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED);
+    builder.setUsage(AudioAttributes.USAGE_NOTIFICATION);
+    builder.setContentType(AudioAttributes.CONTENT_TYPE_SPEECH);
+    mediaPlayer.setAudioAttributes(builder.build());
+  }
+
   private static void playNext (boolean reset) {
     synchronized (uriQueue) {
       while (true) {
@@ -37,6 +45,7 @@ public abstract class AlertPlayer extends ApplicationComponent {
         Log.d(LOG_TAG, ("playing alert: " + uriToString(uri)));
 
         try {
+          if (CommonUtilities.haveLollipop) setAudioAttributes();
           mediaPlayer.setDataSource(getContext(), uri);
           mediaPlayer.prepareAsync();
           return;
@@ -110,22 +119,10 @@ public abstract class AlertPlayer extends ApplicationComponent {
     );
   }
 
-  private static void setAudioAttributes () {
-    AudioAttributes.Builder builder = new AudioAttributes.Builder();
-    builder.setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED);
-    builder.setUsage(AudioAttributes.USAGE_NOTIFICATION);
-    builder.setContentType(AudioAttributes.CONTENT_TYPE_SPEECH);
-    mediaPlayer.setAudioAttributes(builder.build());
-  }
-
   private static void configurePlayer () {
     setOnErrorListener();
     setOnPreparedListener();
     setOnCompletionListener();
-
-    if (CommonUtilities.haveLollipop) {
-      setAudioAttributes();
-    }
   }
 
   public static void play (Uri uri, boolean withAttentionSignal) {
