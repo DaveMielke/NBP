@@ -2,9 +2,9 @@ package org.nbp.ipaws;
 
 import java.util.List;
 
-public class StateCountiesHandler extends OperandsHandler {
-  public StateCountiesHandler () {
-    super();
+public class StateCountiesHandler extends CommandHandler {
+  public StateCountiesHandler (SessionOperations operations) {
+    super(operations);
   }
 
   @Override

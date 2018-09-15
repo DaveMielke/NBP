@@ -2,11 +2,11 @@ package org.nbp.ipaws;
 
 import android.util.Log;
 
-public class DenyHandler extends OperandsHandler {
+public class DenyHandler extends CommandHandler {
   private final static String LOG_TAG = DenyHandler.class.getName();
 
-  public DenyHandler () {
-    super();
+  public DenyHandler (SessionOperations operations) {
+    super(operations);
   }
 
   @Override

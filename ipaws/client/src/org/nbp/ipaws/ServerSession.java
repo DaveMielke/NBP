@@ -1,15 +1,16 @@
 package org.nbp.ipaws;
 
 import android.util.Log;
-import android.os.Build;
 
 import android.content.Context;
+import android.os.Build;
 
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.SocketAddress;
 import java.net.InetSocketAddress;
+
 import java.io.IOException;
+import java.net.SocketException;
 
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -20,10 +21,11 @@ import java.io.BufferedWriter;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.nbp.common.Timeout;
 
-public class ServerSession extends ApplicationComponent implements CommandReader, CommandWriter {
+public class ServerSession extends ApplicationComponent implements SessionOperations {
   private final static String LOG_TAG = ServerSession.class.getName();
 
   private final Thread sessionThread;
@@ -44,13 +46,13 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   }
 
   @Override
-  public final boolean setTimeout (long milliseconds) {
+  public final boolean setReadTimeout (long milliseconds) {
     final long minimum = 1;
     final long maximum = Integer.MAX_VALUE;
 
     if (milliseconds >= minimum) {
       if (milliseconds <= maximum) {
-        Log.d(LOG_TAG, ("setting socket timeout: " + milliseconds));
+        Log.d(LOG_TAG, ("setting read timeout: " + milliseconds));
 
         try {
           sessionSocket.setSoTimeout((int)milliseconds);
@@ -78,7 +80,6 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     return false;
   }
 
-  @Override
   public final boolean writeCommand (String command) {
     Writer writer;
 
@@ -167,25 +168,28 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     new Timeout(ApplicationParameters.PING_SEND_INTERVAL, "ping-sender") {
       @Override
       public void run () {
-        StringBuilder command = new StringBuilder("ping");
-
-        command.append(' ');
-        command.append(++pingNumber);
-
-        command.append(' ');
-        command.append(getDelay() / 1000);
-
-        writeCommand(command.toString());
         start();
+
+        {
+          StringBuilder command = new StringBuilder("ping");
+
+          command.append(' ');
+          command.append(++pingNumber);
+
+          command.append(' ');
+          command.append(TimeUnit.MILLISECONDS.toSeconds(getDelay()));
+
+          writeCommand(command.toString());
+        }
       }
     };
 
   @Override
-  public final String readCommand () {
+  public final String readLine () {
     try {
-      String command = sessionReader.readLine();
-      if (command == null) Log.w(LOG_TAG, "server disconnected");
-      return command;
+      String line = sessionReader.readLine();
+      if (line == null) Log.w(LOG_TAG, "server disconnected");
+      return line;
     } catch (IOException exception) {
       Log.e(LOG_TAG, ("socket read error: " + exception.getMessage()));
     }
@@ -193,24 +197,26 @@ public class ServerSession extends ApplicationComponent implements CommandReader
     return null;
   }
 
-  private final Map<String, OperandsHandler> argumentsHandlers =
-        new HashMap<String, OperandsHandler>()
+  private final Map<String, CommandHandler> commandHandlers =
+        new HashMap<String, CommandHandler>()
   {
     {
-      put("deny", new DenyHandler());
-      put("ping", new PingHandler(ServerSession.this));
-      put("pong", new PongHandler());
+      SessionOperations operations = ServerSession.this;
 
-      put("beginAlert", new BeginAlertHandler(ServerSession.this));
-      put("removeAlert", new RemoveAlertHandler());
+      put("deny", new DenyHandler(operations));
+      put("ping", new PingHandler(operations));
+      put("pong", new PongHandler(operations));
 
-      put("allStates", new AllStatesHandler());
-      put("stateCounties", new StateCountiesHandler());
+      put("beginAlert", new BeginAlertHandler(operations));
+      put("removeAlert", new RemoveAlertHandler(operations));
+
+      put("allStates", new AllStatesHandler(operations));
+      put("stateCounties", new StateCountiesHandler(operations));
     }
   };
 
   private final void doReceivedCommands () {
-    OperandsHandler commandHandler =
+    OperandsHandler lineHandler =
       new OperandsHandler() {
         @Override
         public boolean handleOperands (String string) {
@@ -222,16 +228,16 @@ public class ServerSession extends ApplicationComponent implements CommandReader
           if (index < count) command = operands[index++];
 
           if (command.isEmpty()) return true;
-          OperandsHandler argumentsHandler = argumentsHandlers.get(command);
+          CommandHandler commandHandler = commandHandlers.get(command);
 
-          if (argumentsHandler == null) {
+          if (commandHandler == null) {
             Log.w(LOG_TAG, ("unrecognized command: " + command));
             return true;
           }
 
           String arguments = "";
           if (index < count) arguments = operands[index++];
-          return argumentsHandler.handleOperands(arguments);
+          return commandHandler.handleOperands(arguments);
         }
       };
 
@@ -240,11 +246,11 @@ public class ServerSession extends ApplicationComponent implements CommandReader
         if (isStopping) break;
       }
 
-      String command = readCommand();
-      if (command == null) break;
+      String line = readLine();
+      if (line == null) break;
 
-      Log.d(LOG_TAG, ("received command: " + command));
-      if (!commandHandler.handleOperands(command)) break;
+      Log.d(LOG_TAG, ("received command: " + line));
+      if (!lineHandler.handleOperands(line)) break;
     }
   }
 
@@ -258,7 +264,7 @@ public class ServerSession extends ApplicationComponent implements CommandReader
   private final void doSessionCommunication () {
     try {
       sessionSocket.setKeepAlive(true);
-      setTimeout(ApplicationParameters.PING_RECEIVE_TIMEOUT);
+      setReadTimeout(ApplicationParameters.PING_RECEIVE_TIMEOUT);
 
       synchronized (this) {
         sessionWriter =

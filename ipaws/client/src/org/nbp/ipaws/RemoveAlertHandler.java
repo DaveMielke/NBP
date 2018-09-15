@@ -1,8 +1,8 @@
 package org.nbp.ipaws;
 
-public class RemoveAlertHandler extends OperandsHandler {
-  public RemoveAlertHandler () {
-    super();
+public class RemoveAlertHandler extends CommandHandler {
+  public RemoveAlertHandler (SessionOperations operations) {
+    super(operations);
   }
 
   @Override

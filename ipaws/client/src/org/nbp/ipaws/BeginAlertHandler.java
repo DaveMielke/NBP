@@ -1,11 +1,8 @@
 package org.nbp.ipaws;
 
-public class BeginAlertHandler extends OperandsHandler {
-  private final CommandReader commandReader;
-
-  public BeginAlertHandler (CommandReader reader) {
-    super();
-    commandReader = reader;
+public class BeginAlertHandler extends CommandHandler {
+  public BeginAlertHandler (SessionOperations operations) {
+    super(operations);
   }
 
   @Override
@@ -20,7 +17,7 @@ public class BeginAlertHandler extends OperandsHandler {
     StringBuilder alert = new StringBuilder();
 
     while (true) {
-      String line = commandReader.readCommand();
+      String line = readLine();
       if (line == null) return true;
 
       operands = getOperands(line, 3);

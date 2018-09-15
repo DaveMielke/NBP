@@ -4,14 +4,11 @@ import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
-public class PingHandler extends OperandsHandler {
+public class PingHandler extends CommandHandler {
   private final static String LOG_TAG = PingHandler.class.getName();
 
-  private final CommandWriter commandWriter;
-
-  public PingHandler (CommandWriter writer) {
-    super();
-    commandWriter = writer;
+  public PingHandler (SessionOperations operations) {
+    super(operations);
   }
 
   @Override
@@ -36,7 +33,7 @@ public class PingHandler extends OperandsHandler {
 
         timeout = TimeUnit.SECONDS.toMillis(timeout);
         timeout += ApplicationParameters.PING_RECEIVE_TIMEOUT;
-        commandWriter.setTimeout(timeout);
+        setReadTimeout(timeout);
       } catch (NumberFormatException exception) {
         Log.w(LOG_TAG, ("invalid time till next ping: " + next));
       }
@@ -46,6 +43,6 @@ public class PingHandler extends OperandsHandler {
     StringBuilder command = new StringBuilder("pong");
     command.append(' ');
     command.append(identifier);
-    return commandWriter.writeCommand(command);
+    return writeCommand(command);
   }
 }

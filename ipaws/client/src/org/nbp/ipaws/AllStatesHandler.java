@@ -2,9 +2,9 @@ package org.nbp.ipaws;
 
 import java.util.List;
 
-public class AllStatesHandler extends OperandsHandler {
-  public AllStatesHandler () {
-    super();
+public class AllStatesHandler extends CommandHandler {
+  public AllStatesHandler (SessionOperations operations) {
+    super(operations);
   }
 
   @Override

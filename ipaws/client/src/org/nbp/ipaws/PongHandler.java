@@ -1,8 +1,8 @@
 package org.nbp.ipaws;
 
-public class PongHandler extends OperandsHandler {
-  public PongHandler () {
-    super();
+public class PongHandler extends CommandHandler {
+  public PongHandler (SessionOperations operations) {
+    super(operations);
   }
 
   @Override
