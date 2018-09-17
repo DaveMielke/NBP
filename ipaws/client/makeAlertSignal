@@ -57,9 +57,9 @@ removeFiles() {
 }
 
 makeTone() {
-   local frequency="${1}"
-   local length="${2}"
-   local name="${3}"
+   local name="${1}"
+   local frequency="${2}"
+   local length="${3}"
 
    sox -n -r "${sampleRate}" \
        "${namePrefix}${name}.${intirimFormat}" \
@@ -82,9 +82,9 @@ makeSound() {
 }
 
 makeBurst() {
-   local length="${1}"
+   local toName="${1}"
    local fromName="${2}"
-   local toName="${3}"
+   local length="${3}"
 
    sox "${namePrefix}${fromName}.${intirimFormat}" \
        "${namePrefix}${toName}.${intirimFormat}" \
@@ -92,8 +92,8 @@ makeBurst() {
 }
 
 makePause() {
-   local length="${1}"
-   local name="${2}"
+   local name="${1}"
+   local length="${2}"
 
    sox -n "${namePrefix}${name}.${intirimFormat}" trim 0 "${length}"
 }
@@ -150,21 +150,21 @@ shift $((OPTIND - 1))
    exit 0
 }
 
-makeTone "${lowerFrequency}" "${longLength}" "${lowerName}"
-makeTone "${upperFrequency}" "${longLength}" "${upperName}"
+makeTone "${lowerName}" "${lowerFrequency}" "${longLength}"
+makeTone "${upperName}" "${upperFrequency}" "${longLength}"
 makeSound "${soundName}" "${lowerName}" "${upperName}"
-removeFiles lower upper
+removeFiles "${lowerName}" "${upperName}" 
 
-makeBurst "${longLength}" "${soundName}" "${longName}"
-makeBurst "${shortLength}" "${soundName}" "${shortName}"
-removeFiles sound
+makeBurst "${longName}" "${soundName}" "${longLength}"
+makeBurst "${shortName}" "${soundName}" "${shortLength}"
+removeFiles "${soundName}" 
 
-makePause "${pauseLength}" "${pauseName}"
-makeSequence pattern long pause short pause short pause
-removeFiles long short pause
+makePause "${pauseName}" "${pauseLength}"
+makeSequence "${patternName}" "${longName}" "${pauseName}" "${shortName}" "${pauseName}" "${shortName}" "${pauseName}"
+removeFiles "${longName}" "${shortName}" "${pauseName}" 
 
-makeSequence signal pattern pattern
-removeFiles pattern
+makeSequence "${signalName}" "${patternName}" "${patternName}"
+removeFiles "${patternName}" 
 
 [ "${audioFormat}" = "${intirimFormat}" ] || {
    convertFormat "${signalName}" "${intirimFormat}" "${audioFormat}"
