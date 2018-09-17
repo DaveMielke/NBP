@@ -256,8 +256,7 @@ public class ServerSession extends ApplicationComponent implements SessionOperat
 
   private final SocketAddress makeSocketAddress (String server) {
     return new InetSocketAddress(
-      server,
-      ApplicationParameters.SERVER_PORT
+      server, ApplicationParameters.SERVER_PORT
     );
   }
 
@@ -338,9 +337,19 @@ public class ServerSession extends ApplicationComponent implements SessionOperat
 
           try {
             connected = true;
-
-            Log.d(LOG_TAG, "connected");
             AlertNotification.updateSessionState(R.string.session_stateConnected);
+
+            {
+              SocketAddress local = sessionSocket.getLocalSocketAddress();
+              SocketAddress remote = sessionSocket.getRemoteSocketAddress();
+
+              Log.d(LOG_TAG,
+                String.format(
+                  "connected: %s -> %s",
+                  local.toString(), remote.toString()
+                )
+              );
+            }
 
             doSessionCommunication();
             break;
