@@ -172,7 +172,9 @@ removeFiles "${patternName}"
 }
 
 "${playAlertSignal}" && {
-   vlc --quiet --intf dummy "${namePrefix}${signalName}.${audioFormat}" vlc://quit
+   vlc --quiet --intf dummy \
+       "${namePrefix}${signalName}.${audioFormat}" \
+       vlc://quit
 }
 
 exit 0
