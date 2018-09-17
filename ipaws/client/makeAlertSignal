@@ -1,6 +1,6 @@
 #!/bin/sh
 
-signalExtension="mp3"
+defaultAudioFormat="mp3"
 sampleRate=48000
 lowerFrequency=853
 upperFrequency=960
@@ -8,7 +8,7 @@ longLength=2
 shortLength=1
 pauseLength=0.5
 
-fileExtension="wav"
+intirimFormat="wav"
 namePrefix="alert-"
 lowerName="lower"
 upperName="upper"
@@ -38,9 +38,9 @@ showUsageSummary() {
 cat <<END-OF-USAGE-SUMMARY
 Usage: ${programName} [-option ...]
 The following options may be specified:
--f format  specify the audio format
+-f format  specify the audio format (default is ${defaultAudioFormat})
 -h         show this usage summary on standard output and then exit
--k         keep the intirim .${fileExtension} files
+-k         keep the intirim .${intirimFormat} files
 -p         play the generated alert signal
 END-OF-USAGE-SUMMARY
 }
@@ -51,7 +51,7 @@ removeFiles() {
 
       for name
       do
-         rm "${namePrefix}${name}.${fileExtension}"
+         rm "${namePrefix}${name}.${intirimFormat}"
       done
    }
 }
@@ -62,7 +62,7 @@ makeTone() {
    local name="${3}"
 
    sox -n -r "${sampleRate}" \
-       "${namePrefix}${name}.${fileExtension}" \
+       "${namePrefix}${name}.${intirimFormat}" \
        synth "${length}" sine "${frequency}"
 }
 
@@ -75,7 +75,7 @@ makeSound() {
 
    for name in "${@}" "${toName}"
    do
-      command+=("${namePrefix}${name}.${fileExtension}")
+      command+=("${namePrefix}${name}.${intirimFormat}")
    done
 
    "${command[@]}"
@@ -86,8 +86,8 @@ makeBurst() {
    local fromName="${2}"
    local toName="${3}"
 
-   sox "${namePrefix}${fromName}.${fileExtension}" \
-       "${namePrefix}${toName}.${fileExtension}" \
+   sox "${namePrefix}${fromName}.${intirimFormat}" \
+       "${namePrefix}${toName}.${intirimFormat}" \
        fade q 50s "${length}" 0.005
 }
 
@@ -95,7 +95,7 @@ makePause() {
    local length="${1}"
    local name="${2}"
 
-   sox -n "${namePrefix}${name}.${fileExtension}" trim 0 "${length}"
+   sox -n "${namePrefix}${name}.${intirimFormat}" trim 0 "${length}"
 }
 
 makeSequence() {
@@ -107,7 +107,7 @@ makeSequence() {
 
    for name in "${@}" "${toName}"
    do
-      command+=("${namePrefix}${name}.${fileExtension}")
+      command+=("${namePrefix}${name}.${intirimFormat}")
    done
 
    "${command[@]}"
@@ -123,6 +123,7 @@ convertFormat() {
 }
 
 helpRequested=false
+audioFormat="${defaultAudioFormat}"
 keepIntirimFiles=false
 playAlertSignal=false
 
@@ -130,7 +131,7 @@ while getopts ":f:hkp" option
 do
    case "${option}"
    in
-      f) signalExtension="${OPTARG}";;
+      f) audioFormat="${OPTARG}";;
       h) helpRequested=true;;
       k) keepIntirimFiles=true;;
       p) playAlertSignal=true;;
@@ -165,13 +166,13 @@ removeFiles long short pause
 makeSequence signal pattern pattern
 removeFiles pattern
 
-[ "${signalExtension}" = "${fileExtension}" ] || {
-   convertFormat "${signalName}" "${fileExtension}" "${signalExtension}"
+[ "${audioFormat}" = "${intirimFormat}" ] || {
+   convertFormat "${signalName}" "${intirimFormat}" "${audioFormat}"
    removeFiles "${signalName}"
 }
 
 "${playAlertSignal}" && {
-   vlc --quiet --intf dummy "${namePrefix}${signalName}.${signalExtension}" vlc://quit
+   vlc --quiet --intf dummy "${namePrefix}${signalName}.${audioFormat}" vlc://quit
 }
 
 exit 0
