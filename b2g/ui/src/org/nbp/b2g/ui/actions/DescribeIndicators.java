@@ -4,9 +4,10 @@ import org.nbp.b2g.ui.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.CommonUtilities;
+
 import android.util.Log;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import android.content.Context;
@@ -82,7 +83,7 @@ public class DescribeIndicators extends DescriptionAction {
       addValue(BatteryManager.BATTERY_PLUGGED_AC, R.string.DescribeIndicators_battery_plugged_ac);
       addValue(BatteryManager.BATTERY_PLUGGED_USB, R.string.DescribeIndicators_battery_plugged_usb);
 
-      if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR1)) {
+      if (CommonUtilities.haveJellyBeanMR1) {
         addValue(BatteryManager.BATTERY_PLUGGED_WIRELESS, R.string.DescribeIndicators_battery_plugged_wireless);
       }
     }

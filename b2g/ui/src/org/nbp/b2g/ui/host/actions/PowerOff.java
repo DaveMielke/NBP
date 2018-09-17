@@ -2,14 +2,15 @@ package org.nbp.b2g.ui.host.actions;
 import org.nbp.b2g.ui.host.*;
 import org.nbp.b2g.ui.*;
 
-import android.os.Build;
+import org.nbp.common.CommonUtilities;
+
 import android.accessibilityservice.AccessibilityService;
 import android.view.KeyEvent;
 
 public class PowerOff extends GlobalAction {
   @Override
   protected int getGlobalAction () {
-    if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.LOLLIPOP)) {
+    if (CommonUtilities.haveLollipop) {
       return AccessibilityService.GLOBAL_ACTION_POWER_DIALOG;
     } else {
       return NULL_GLOBAL_ACTION;

@@ -1,10 +1,10 @@
 package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
+import org.nbp.common.CommonUtilities;
 import org.nbp.common.LanguageUtilities;
 
 import android.util.Log;
-import android.os.Build;
 
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -160,7 +160,7 @@ public abstract class ScreenUtilities {
   public static boolean isEditable (AccessibilityNodeInfo node) {
     if (node == null) return false;
 
-    if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+    if (CommonUtilities.haveJellyBeanMR2) {
       return node.isEditable();
     }
 
@@ -186,7 +186,7 @@ public abstract class ScreenUtilities {
 
   public static AccessibilityNodeInfo getRefreshedNode (AccessibilityNodeInfo node) {
     if (node != null) {
-      if (ApplicationUtilities.haveSdkVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+      if (CommonUtilities.haveJellyBeanMR2) {
         node = AccessibilityNodeInfo.obtain(node);
 
         if (!node.refresh()) {

@@ -18,10 +18,6 @@ public abstract class ApplicationUtilities {
     return mainHandler.post(runnable);
   }
 
-  public static boolean haveSdkVersion (int version) {
-    return ApplicationParameters.SDK_VERSION >= version;
-  }
-
   public static long getSystemClock () {
     return SystemClock.uptimeMillis();
   }

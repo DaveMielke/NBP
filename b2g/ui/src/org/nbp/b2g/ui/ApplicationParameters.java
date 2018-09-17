@@ -3,8 +3,6 @@ package org.nbp.b2g.ui;
 import org.nbp.common.CommonParameters;
 import org.nbp.common.Braille;
 
-import android.os.Build;
-
 import org.liblouis.Louis;
 
 public abstract class ApplicationParameters extends CommonParameters {
@@ -49,8 +47,6 @@ public abstract class ApplicationParameters extends CommonParameters {
     Braille.CELL_DOT_6|
     Braille.CELL_DOT_7|
     Braille.CELL_DOT_8;
-
-  public final static int SDK_VERSION = Build.VERSION.SDK_INT;
 
   private ApplicationParameters () {
   }
