@@ -19,13 +19,41 @@ pauseName="pause"
 patternName="pattern"
 signalName="signal"
 
-removeFiles() {
-   local name
+programName="${0##*/}"
 
-   for name
-   do
-      rm "${namePrefix}${name}.${fileExtension}"
-   done
+programMessage() {
+   local message="${1}"
+
+   echo >&2 "${programName}: ${message}"
+}
+
+syntaxError() {
+   local message="${1}"
+
+   programMessage "${message}"
+   exit 2
+}
+
+showUsageSummary() {
+cat <<END-OF-USAGE-SUMMARY
+Usage: ${programName} [-option ...]
+The following options may be specified:
+-f format  specify the audio format
+-h         show this usage summary on standard output and then exit
+-k         keep the intirim .${fileExtension} files
+-p         play the generated alert signal
+END-OF-USAGE-SUMMARY
+}
+
+removeFiles() {
+   "${keepIntirimFiles}" || {
+      local name
+
+      for name
+      do
+         rm "${namePrefix}${name}.${fileExtension}"
+      done
+   }
 }
 
 makeTone() {
@@ -94,6 +122,33 @@ convertFormat() {
    sox "${name}.${fromExtension}" "${name}.${toExtension}"
 }
 
+helpRequested=false
+keepIntirimFiles=false
+playAlertSignal=false
+
+while getopts ":f:hkp" option
+do
+   case "${option}"
+   in
+      f) signalExtension="${OPTARG}";;
+      h) helpRequested=true;;
+      k) keepIntirimFiles=true;;
+      p) playAlertSignal=true;;
+
+      :) syntaxError "missing operand: -${OPTARG}";;
+     \?) syntaxError "unrecognized option: -${OPTARG}";;
+      *) syntaxError "unimplemented option: -${option}";;
+   esac
+done
+
+shift $((OPTIND - 1))
+[ "${#}" -eq 0 ] || syntaxError "too many parameters: ${*}"
+
+"${helpRequested}" && {
+   showUsageSummary
+   exit 0
+}
+
 makeTone "${lowerFrequency}" "${longLength}" "${lowerName}"
 makeTone "${upperFrequency}" "${longLength}" "${upperName}"
 makeSound "${soundName}" "${lowerName}" "${upperName}"
@@ -113,6 +168,10 @@ removeFiles pattern
 [ "${signalExtension}" = "${fileExtension}" ] || {
    convertFormat "${signalName}" "${fileExtension}" "${signalExtension}"
    removeFiles "${signalName}"
+}
+
+"${playAlertSignal}" && {
+   vlc --quiet --intf dummy "${namePrefix}${signalName}.${signalExtension}" vlc://quit
 }
 
 exit 0
