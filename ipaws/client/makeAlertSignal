@@ -1,0 +1,118 @@
+#!/bin/sh
+
+signalExtension="mp3"
+sampleRate=48000
+lowerFrequency=853
+upperFrequency=960
+longLength=2
+shortLength=1
+pauseLength=0.5
+
+fileExtension="wav"
+namePrefix="alert-"
+lowerName="lower"
+upperName="upper"
+soundName="sound"
+longName="long"
+shortName="short"
+pauseName="pause"
+patternName="pattern"
+signalName="signal"
+
+removeFiles() {
+   local name
+
+   for name
+   do
+      rm "${namePrefix}${name}.${fileExtension}"
+   done
+}
+
+makeTone() {
+   local frequency="${1}"
+   local length="${2}"
+   local name="${3}"
+
+   sox -n -r "${sampleRate}" \
+       "${namePrefix}${name}.${fileExtension}" \
+       synth "${length}" sine "${frequency}"
+}
+
+makeSound() {
+   local toName="${1}"
+   shift 1
+
+   local command=(sox --combine mix)
+   local name
+
+   for name in "${@}" "${toName}"
+   do
+      command+=("${namePrefix}${name}.${fileExtension}")
+   done
+
+   "${command[@]}"
+}
+
+makeBurst() {
+   local length="${1}"
+   local fromName="${2}"
+   local toName="${3}"
+
+   sox "${namePrefix}${fromName}.${fileExtension}" \
+       "${namePrefix}${toName}.${fileExtension}" \
+       fade q 50s "${length}" 0.005
+}
+
+makePause() {
+   local length="${1}"
+   local name="${2}"
+
+   sox -n "${namePrefix}${name}.${fileExtension}" trim 0 "${length}"
+}
+
+makeSequence() {
+   local toName="${1}"
+   shift 1
+
+   local command=(sox)
+   local name
+
+   for name in "${@}" "${toName}"
+   do
+      command+=("${namePrefix}${name}.${fileExtension}")
+   done
+
+   "${command[@]}"
+}
+
+convertFormat() {
+   local name="${1}"
+   local fromExtension="${2}"
+   local toExtension="${3}"
+
+   name="${namePrefix}${name}"
+   sox "${name}.${fromExtension}" "${name}.${toExtension}"
+}
+
+makeTone "${lowerFrequency}" "${longLength}" "${lowerName}"
+makeTone "${upperFrequency}" "${longLength}" "${upperName}"
+makeSound "${soundName}" "${lowerName}" "${upperName}"
+removeFiles lower upper
+
+makeBurst "${longLength}" "${soundName}" "${longName}"
+makeBurst "${shortLength}" "${soundName}" "${shortName}"
+removeFiles sound
+
+makePause "${pauseLength}" "${pauseName}"
+makeSequence pattern long pause short pause short pause
+removeFiles long short pause
+
+makeSequence signal pattern pattern
+removeFiles pattern
+
+[ "${signalExtension}" = "${fileExtension}" ] || {
+   convertFormat "${signalName}" "${fileExtension}" "${signalExtension}"
+   removeFiles "${signalName}"
+}
+
+exit 0
