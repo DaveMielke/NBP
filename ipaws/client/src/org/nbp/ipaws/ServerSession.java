@@ -313,62 +313,63 @@ public class ServerSession extends ApplicationComponent implements SessionOperat
 
   private final boolean doSessionConnection () {
     AlertNotification.updateSessionState(R.string.session_stateConnecting);
-    boolean connected = false;
 
-    String[] servers = new String[] {
-      ApplicationSettings.PRIMARY_SERVER,
-      ApplicationSettings.SECONDARY_SERVER
-    };
+    try {
+      String[] servers = new String[] {
+        ApplicationSettings.PRIMARY_SERVER,
+        ApplicationSettings.SECONDARY_SERVER
+      };
 
-    for (String server : servers) {
-      if (server == null) continue;
-      if (server.isEmpty()) continue;
+      for (String server : servers) {
+        if (server == null) continue;
+        if (server.isEmpty()) continue;
 
-      SocketAddress address = makeSocketAddress(server);
-      Log.d(LOG_TAG, ("connecting to " + address.toString()));
+        SocketAddress address = makeSocketAddress(server);
+        Log.d(LOG_TAG, ("connecting to " + address.toString()));
 
-      synchronized (this) {
-        sessionSocket = new Socket();
-      }
-
-      try {
-        try {
-          sessionSocket.connect(address);
-
-          try {
-            connected = true;
-            AlertNotification.updateSessionState(R.string.session_stateConnected);
-
-            {
-              SocketAddress local = sessionSocket.getLocalSocketAddress();
-              SocketAddress remote = sessionSocket.getRemoteSocketAddress();
-
-              Log.d(LOG_TAG,
-                String.format(
-                  "connected: %s -> %s",
-                  local.toString(), remote.toString()
-                )
-              );
-            }
-
-            doSessionCommunication();
-            break;
-          } finally {
-            Log.d(LOG_TAG, "disconnecting");
-          }
-        } catch (IOException exception) {
-          Log.e(LOG_TAG, ("socket connection error: " + exception.getMessage()));
-        }
-      } finally {
         synchronized (this) {
-          closeSocket();
-          sessionSocket = null;
+          sessionSocket = new Socket();
+        }
+
+        try {
+          try {
+            sessionSocket.connect(address);
+
+            try {
+              AlertNotification.updateSessionState(R.string.session_stateConnected);
+
+              {
+                SocketAddress local = sessionSocket.getLocalSocketAddress();
+                SocketAddress remote = sessionSocket.getRemoteSocketAddress();
+
+                Log.d(LOG_TAG,
+                  String.format(
+                    "connected: %s -> %s",
+                    local.toString(), remote.toString()
+                  )
+                );
+              }
+
+              doSessionCommunication();
+            } finally {
+              Log.d(LOG_TAG, "disconnecting");
+              return true;
+            }
+          } catch (IOException exception) {
+            Log.e(LOG_TAG, ("socket connection error: " + exception.getMessage()));
+          }
+        } finally {
+          synchronized (this) {
+            closeSocket();
+            sessionSocket = null;
+          }
         }
       }
+    } finally {
+      AlertNotification.updateSessionState(R.string.session_stateDisconnected);
     }
 
-    AlertNotification.updateSessionState(R.string.session_stateDisconnected);
-    return connected;
+    return false;
   }
 
   private final void doSessionThread () {
