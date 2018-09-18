@@ -9,9 +9,7 @@ shortLength=1
 pauseLength=0.5
 
 intirimFormat="wav"
-namePrefix="alert-"
-lowerName="lower"
-upperName="upper"
+namePrefix="attention_"
 soundName="sound"
 longName="long"
 shortName="short"
@@ -20,6 +18,17 @@ patternName="pattern"
 signalName="signal"
 
 programName="${0##*/}"
+
+showUsageSummary() {
+cat <<END-OF-USAGE-SUMMARY
+Usage: ${programName} [-option ...]
+The following options may be specified:
+-f format  specify the audio format (default is ${defaultAudioFormat})
+-h         show this usage summary on standard output and then exit
+-k         keep the intirim .${intirimFormat} files
+-p         play the generated alert signal
+END-OF-USAGE-SUMMARY
+}
 
 programMessage() {
    local message="${1}"
@@ -34,17 +43,6 @@ syntaxError() {
    exit 2
 }
 
-showUsageSummary() {
-cat <<END-OF-USAGE-SUMMARY
-Usage: ${programName} [-option ...]
-The following options may be specified:
--f format  specify the audio format (default is ${defaultAudioFormat})
--h         show this usage summary on standard output and then exit
--k         keep the intirim .${intirimFormat} files
--p         play the generated alert signal
-END-OF-USAGE-SUMMARY
-}
-
 removeFiles() {
    "${keepIntirimFiles}" || {
       local name
@@ -54,48 +52,6 @@ removeFiles() {
          rm "${namePrefix}${name}.${intirimFormat}"
       done
    }
-}
-
-makeTone() {
-   local name="${1}"
-   local frequency="${2}"
-   local length="${3}"
-
-   sox -n -r "${sampleRate}" \
-       "${namePrefix}${name}.${intirimFormat}" \
-       synth "${length}" sine "${frequency}"
-}
-
-makeSound() {
-   local toName="${1}"
-   shift 1
-
-   local command=(sox --combine mix)
-   local name
-
-   for name in "${@}" "${toName}"
-   do
-      command+=("${namePrefix}${name}.${intirimFormat}")
-   done
-
-   "${command[@]}"
-}
-
-makeBurst() {
-   local toName="${1}"
-   local fromName="${2}"
-   local length="${3}"
-
-   sox "${namePrefix}${fromName}.${intirimFormat}" \
-       "${namePrefix}${toName}.${intirimFormat}" \
-       fade q 50s "${length}" 0.005
-}
-
-makePause() {
-   local name="${1}"
-   local length="${2}"
-
-   sox -n "${namePrefix}${name}.${intirimFormat}" trim 0 "${length}"
 }
 
 makeSequence() {
@@ -113,6 +69,44 @@ makeSequence() {
    "${command[@]}"
 }
 
+makeSilence() {
+   local name="${1}"
+   local length="${2}"
+
+   sox -n "${namePrefix}${name}.${intirimFormat}" trim 0 "${length}"
+}
+
+makeSound() {
+   local name="${1}"
+   local length="${2}"
+   shift 2
+
+   local command=(sox --null --rate "${sampleRate}" --channels 1)
+   command+=("${namePrefix}${name}.${intirimFormat}")
+   command+=(synth "${length}")
+
+   local combine="create"
+   local frequency
+
+   for frequency
+   do
+      command+=(sine "${combine}" "${frequency}")
+      combine="mix"
+   done
+
+   "${command[@]}"
+}
+
+makeBurst() {
+   local toName="${1}"
+   local fromName="${2}"
+   local length="${3}"
+
+   sox "${namePrefix}${fromName}.${intirimFormat}" \
+       "${namePrefix}${toName}.${intirimFormat}" \
+       fade l 0.004 "${length}" 0.004
+}
+
 convertFormat() {
    local name="${1}"
    local fromExtension="${2}"
@@ -125,7 +119,7 @@ convertFormat() {
 helpRequested=false
 audioFormat="${defaultAudioFormat}"
 keepIntirimFiles=false
-playAlertSignal=false
+playSignal=false
 
 while getopts ":f:hkp" option
 do
@@ -134,7 +128,7 @@ do
       f) audioFormat="${OPTARG}";;
       h) helpRequested=true;;
       k) keepIntirimFiles=true;;
-      p) playAlertSignal=true;;
+      p) playSignal=true;;
 
       :) syntaxError "missing operand: -${OPTARG}";;
      \?) syntaxError "unrecognized option: -${OPTARG}";;
@@ -150,16 +144,12 @@ shift $((OPTIND - 1))
    exit 0
 }
 
-makeTone "${lowerName}" "${lowerFrequency}" "${longLength}"
-makeTone "${upperName}" "${upperFrequency}" "${longLength}"
-makeSound "${soundName}" "${lowerName}" "${upperName}"
-removeFiles "${lowerName}" "${upperName}" 
-
+makeSound "${soundName}" "${longLength}" "${lowerFrequency}" "${upperFrequency}"
 makeBurst "${longName}" "${soundName}" "${longLength}"
 makeBurst "${shortName}" "${soundName}" "${shortLength}"
 removeFiles "${soundName}" 
 
-makePause "${pauseName}" "${pauseLength}"
+makeSilence "${pauseName}" "${pauseLength}"
 makeSequence "${patternName}" "${longName}" "${pauseName}" "${shortName}" "${pauseName}" "${shortName}" "${pauseName}"
 removeFiles "${longName}" "${shortName}" "${pauseName}" 
 
@@ -171,10 +161,5 @@ removeFiles "${patternName}"
    removeFiles "${signalName}"
 }
 
-"${playAlertSignal}" && {
-   vlc --quiet --intf dummy \
-       "${namePrefix}${signalName}.${audioFormat}" \
-       vlc://quit
-}
-
+"${playSignal}" && play -q "${namePrefix}${signalName}.${audioFormat}"
 exit 0
