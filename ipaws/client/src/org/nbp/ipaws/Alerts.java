@@ -343,6 +343,7 @@ public abstract class Alerts extends ApplicationComponent {
   public static String[] list (boolean sorted) {
     File directory = getAlertsDirectory();
     String[] names = directory.list();
+    if (names == null) names = new String[0];
 
     if (names.length > 1) {
       if (sorted) {
