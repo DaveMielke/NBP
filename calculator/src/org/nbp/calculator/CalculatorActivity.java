@@ -23,7 +23,6 @@ import org.nbp.common.OnTextEditedListener;
 import android.util.Log;
 
 import android.os.Bundle;
-import android.os.Build;
 
 import android.app.Activity;
 import android.view.Menu;
@@ -1218,7 +1217,7 @@ public class CalculatorActivity extends CommonActivity {
     upButton = (Button)findViewById(R.id.button_up);
     downButton = (Button)findViewById(R.id.button_down);
 
-    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+    if (CommonUtilities.haveLollipop) {
       expressionView.setShowSoftInputOnFocus(false);
     }
 
