@@ -10,7 +10,6 @@ import org.nbp.common.CommonUtilities;
 import android.app.Fragment;
 import android.app.Activity;
 
-import android.os.Build;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -220,7 +219,7 @@ public class NavigationFragment extends NavigatorFragment {
                     boolean cancel = true;
 
                     if (isAccessibilityEnabled()) {
-                      if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+                      if (CommonUtilities.haveLollipop) {
                         if (view.isAccessibilityFocused()) {
                           cancel = false;
 

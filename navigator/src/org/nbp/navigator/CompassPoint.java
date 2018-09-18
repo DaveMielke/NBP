@@ -3,7 +3,6 @@ package org.nbp.navigator;
 import org.nbp.common.CommonContext;
 import org.nbp.common.CommonUtilities;
 
-import android.os.Build;
 import android.text.style.TtsSpan;
 
 public enum CompassPoint {
@@ -81,7 +80,7 @@ public enum CompassPoint {
   public final Object getSpeechSpan () {
     synchronized (this) {
       if (ttsSpan == null) {
-        if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+        if (CommonUtilities.haveLollipop) {
           ttsSpan = new TtsSpan.TextBuilder(getPhrase()).build();
         }
       }
