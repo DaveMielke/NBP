@@ -57,11 +57,7 @@ requestURL+="${type}"
 verifyIntegerValue "${minutesBefore}" "minutes before" 1
 requestURL+="/recent/$(utcTime "${referenceTime} -${minutesBefore} minutes")"
 
-[ -z "${requestPIN}" ] && {
-   pinFile="${configurationDirectory}/${serverType}.pin"
-   [ -f "${pinFile}" ] && [ -r "${pinFile}" ] && read -r requestPIN <"${pinFile}" || :
-}
-
+[ -n "${requestPIN}" ] || requestPIN="${configuredOptions["server-pin"]}"
 logDebug "request-url ${requestURL}"
 serverResponse=$(curl --silent --show-error --get --data-urlencode "pin=${requestPIN}" "${requestURL}") || exit "${?}"
 [ -z "${serverResponse}" ] && responseError "no data received"
