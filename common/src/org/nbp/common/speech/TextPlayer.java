@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.HashSet;
 
 import android.util.Log;
-import android.os.Build;
 import android.os.Bundle;
 
 import android.media.AudioManager;
@@ -56,7 +55,7 @@ public abstract class TextPlayer {
             new HashMap<String, String>();
 
   private final void setParameter (String key, String value) {
-    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+    if (CommonUtilities.haveLollipop) {
       synchronized (ttsParameterBundle) {
         ttsParameterBundle.putString(key, value);
       }
@@ -189,7 +188,7 @@ public abstract class TextPlayer {
             int queueMode = TextToSpeech.QUEUE_ADD;
             int status;
 
-            if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.LOLLIPOP)) {
+            if (CommonUtilities.haveLollipop) {
               status = ttsObject.speak(segment, queueMode, ttsParameterBundle, utterance);
             } else {
               setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utterance);
@@ -296,7 +295,7 @@ public abstract class TextPlayer {
   }
 
   private final int getMaximumLength () {
-    if (CommonUtilities.haveAndroidSDK(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+    if (CommonUtilities.haveJellyBeanMR2) {
       try {
         return ttsObject.getMaxSpeechInputLength();
       } catch (IllegalArgumentException exception) {

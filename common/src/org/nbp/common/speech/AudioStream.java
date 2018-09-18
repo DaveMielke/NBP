@@ -6,11 +6,10 @@ import android.content.Context;
 import android.media.AudioManager;
 
 public enum AudioStream {
-/*ACCESSIBILITY(
+  ACCESSIBILITY(
     AudioManager.STREAM_ACCESSIBILITY,
     Build.VERSION_CODES.O
   ),
-*/
 
   ALARM(
     AudioManager.STREAM_ALARM,
