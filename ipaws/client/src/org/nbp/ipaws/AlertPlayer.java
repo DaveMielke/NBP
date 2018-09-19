@@ -136,6 +136,8 @@ public abstract class AlertPlayer extends ApplicationComponent {
         if (withAttentionSignal) {
           mediaPlayer = MediaPlayer.create(getContext(), R.raw.attention_signal);
           configurePlayer();
+
+          Log.d(LOG_TAG, "playing attention signal");
           mediaPlayer.start();
         } else {
           if (uriQueue.isEmpty()) return;
