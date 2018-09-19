@@ -87,6 +87,7 @@ public abstract class AlertNotification extends ApplicationComponent {
 
     if (CommonUtilities.haveLollipop) {
       notificationBuilder.setCategory(Notification.CATEGORY_SERVICE);
+      notificationBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
     }
   }
 
