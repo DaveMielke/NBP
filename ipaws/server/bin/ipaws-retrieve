@@ -8,6 +8,47 @@ showCommandUsageSummary() {
    showRetrieveUsageSummary
 }
 
+retrieveAlerts() {
+   local type
+
+   for type
+   do
+      logDebug "server-type ${type}"
+      local name="${configuredOptions["${type}-server"]}"
+      [ -n "${name}" ] || semanticError "server type not defined: ${type}"
+      logDebug "server-name ${name}"
+
+      local url="https://${name}"
+      url+="/IPAWSOPEN_EAS_SERVICE/rest/"
+      url+="${alertCategory}"
+      url+="/recent/${requestTime}"
+      logDebug "request-url ${url}"
+
+      local response=$(curl --silent --show-error --get --data-urlencode "pin=${requestPIN}" "${url}") || exit "${?}"
+      [ -n "${response}" ] || responseError "no data received"
+      [ "${response}" = "${response#<}" ] && responseError "${response}"
+
+      if [ "${response}" != "${response#<?xml}" ]
+      then
+         local extension="${alertsFileExtension}"
+      else
+         local extension="${failureFileExtension}"
+      fi
+
+      local prefix="${currentTime}@${type}"
+      local permanentFile="${dataDirectory}/${prefix}.${extension}"
+      [ -e "${permanentFile}" ] && responseError "alerts file already exists: ${permanentFile}"
+      logDebug "alerts-file ${permanentFile##*/}"
+
+      local temporaryFile="${permanentFile%/*}/${alertsFileExtension}.retrieved"
+      echo >"${temporaryFile}" "${response}" || exit "${?}"
+
+      mv -- "${temporaryFile}" "${permanentFile}"
+      chmod -- a-w "${permanentFile}"
+      logInfo "new alert set: ${prefix##*/}"
+   done
+}
+
 responseError() {
    local message="${1}"
 
@@ -22,7 +63,7 @@ failIfAlreadyRunning
 readonly currentTime="$(utcTime)"
 logDebug "current-time ${currentTime}"
 
-readonly alertsFileList=( "${dataDirectory}/"${utcTimeGlob}".${alertsFileExtension}" )
+readonly alertsFileList=( "${dataDirectory}/"${utcTimeGlob}"@"*".${alertsFileExtension}" )
 readonly alertsFileCount="${#alertsFileList[*]}"
 
 if [ "${alertsFileCount}" -gt 0 ]
@@ -30,6 +71,7 @@ then
    referenceTime="${alertsFileList[alertsFileCount-1]}"
    referenceTime="${referenceTime##*/}"
    referenceTime="${referenceTime%.*}"
+   referenceTime="${referenceTime%@*}"
 else
    referenceTime="${currentTime}"
 fi
@@ -37,48 +79,21 @@ fi
 readonly referenceTime
 logDebug "reference-time ${referenceTime}"
 
-logDebug "server-type ${serverType}"
-serverName="${configuredOptions["${serverType}-server"]}"
-[ -n "${serverName}" ] || semanticError "server type not defined: ${serverType}"
-logDebug "server-name ${serverName}"
-
-requestURL="https://${serverName}"
-requestURL+="/IPAWSOPEN_EAS_SERVICE/rest/"
-
-readonly types=("" "eas" "public_non_eas" "public")
+readonly alertCategories=("" "eas" "public_non_eas" "public")
 index=0
 "${getEmergencyAlerts}" && let index+=1
 "${getGeneralAlerts}" && let index+=2
 (( index )) || index=3
-type="${types[index]}"
-[ -n "${type}" ] || semanticError "alert type combination not supported"
-requestURL+="${type}"
+readonly alertCategory="${alertCategories[index]}"
+[ -n "${alertCategory}" ] || semanticError "alert category combination not supported"
 
 verifyIntegerValue "${minutesBefore}" "minutes before" 1
-requestURL+="/recent/$(utcTime "${referenceTime} -${minutesBefore} minutes")"
+readonly requestTime="$(utcTime "${referenceTime} -${minutesBefore} minutes")"
+logDebug "request-time ${requestTime}"
 
 [ -n "${requestPIN}" ] || requestPIN="${configuredOptions["server-pin"]}"
-logDebug "request-url ${requestURL}"
-serverResponse=$(curl --silent --show-error --get --data-urlencode "pin=${requestPIN}" "${requestURL}") || exit "${?}"
-[ -z "${serverResponse}" ] && responseError "no data received"
-[ "${serverResponse}" = "${serverResponse#<}" ] && responseError "${serverResponse}"
+[ -n "${requestPIN}" ] || semanticError "PIN not specified"
 
-if [ "${serverResponse}" != "${serverResponse#<?xml}" ]
-then
-   readonly outputFileExtension="${alertsFileExtension}"
-else
-   readonly outputFileExtension="${failureFileExtension}"
-fi
-
-readonly outputFileName="${currentTime}"
-readonly outputFile="${dataDirectory}/${outputFileName}.${outputFileExtension}"
-[ -e "${outputFile}" ] && responseError "output file already exists: ${outputFile}"
-logDebug "output-file ${outputFile##*/}"
-
-readonly temporaryFile="${outputFile%/*}/${alertsFileExtension}.retrieved"
-echo >"${temporaryFile}" "${serverResponse}" || exit "${?}"
-
-mv -- "${temporaryFile}" "${outputFile}"
-chmod -- a-w "${outputFile}"
-logInfo "new alert set: ${outputFileName##*/}"
+retrieveAlerts ${serverType//,/ }
+logDebug "done"
 exit 0

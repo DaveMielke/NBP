@@ -147,7 +147,7 @@ executeOnExitCommands() {
    while [ "${onExitCommandCount}" -gt 0 ]
    do
       local -n command="onExitCommand$((onExitCommandCount--))"
-      logDebug "executing on exit command: ${command[*]}"
+      logDebug "executing on-exit command: ${command[*]}"
       "${command[@]}" || :
       unset -n command
    done

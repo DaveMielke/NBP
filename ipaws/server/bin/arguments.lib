@@ -180,7 +180,7 @@ showOptionalCommandArgumentsSummary() {
          local summary="${commandOptionSummaries[${option}]}"
 
          local default="${commandOptionDefaults[${option}]}"
-         [ -n "${default}" ] && summary+=" (default is ${default}"
+         [ -n "${default}" ] && summary+=" (default is ${default})"
 
          echo "-${option}${separator}${operand}${separator}${summary}"
       done | column -s "${separator}" -t -d -W 3
