@@ -1,3 +1,4 @@
+#include <string.h>
 #include "utils.h"
 MAKE_FILE_LOG_TAG;
 
