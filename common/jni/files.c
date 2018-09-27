@@ -52,7 +52,7 @@ getExtendedAttributeNames (JNIEnv *env, const FileOperationMethods *methods, con
     }
   }
 
-  jobjectArray array = (*env)->NewObjectArray(env, count, javaFindStringClass(env), NULL);
+  jobjectArray array = (*env)->NewObjectArray(env, count, findStringClass(env), NULL);
   if (!array) return NULL;
 
   while (--count >= 0) {
@@ -76,13 +76,18 @@ JAVA_INSTANCE_METHOD(
 
     while (1) {
       jNames = getExtendedAttributeNames(env, methods, cPath, size);
-      if ((*env)->ExceptionOccurred(env)) jNames = NULL;
       if (jNames) break;
       if (errno != ERANGE) break;
 
       ssize_t result = methods->getExtendedAttributeNames(cPath, NULL, 0);
       if (result == -1) break;
       size = result;
+    }
+
+    if (!jNames) {
+      if (!(*env)->ExceptionOccurred(env)) {
+        throwErrnoException(env, errno, "listxattr", cPath, NULL);
+      }
     }
 
     (*env)->ReleaseStringUTFChars(env, jPath, cPath);
@@ -117,13 +122,18 @@ JAVA_INSTANCE_METHOD(
 
       while (1) {
         jValue = getExtendedAttributeValue(env, methods, cPath, cName, size);
-        if ((*env)->ExceptionOccurred(env)) jValue = NULL;
         if (jValue) break;
         if (errno != ERANGE) break;
 
         ssize_t result = methods->getExtendedAttributeValue(cPath, cName, NULL, 0);
         if (result == -1) break;
         size = result;
+      }
+
+      if (!jValue) {
+        if (!(*env)->ExceptionOccurred(env)) {
+          throwErrnoException(env, errno, "getxattr", cPath, cName, NULL);
+        }
       }
 
       (*env)->ReleaseStringUTFChars(env, jName, cName);
@@ -149,7 +159,12 @@ JAVA_INSTANCE_METHOD(
       const char *cValue = (*env)->GetStringUTFChars(env, jValue, NULL);
 
       if (cValue) {
-        methods->setExtendedAttribute(cPath, cName, cValue, strlen(cValue), 0);
+        int result = methods->setExtendedAttribute(cPath, cName, cValue, strlen(cValue), 0);
+
+        if (result == -1) {
+          throwErrnoException(env, errno, "setxattr", cPath, cName, NULL);
+        }
+
         (*env)->ReleaseStringUTFChars(env, jValue, cValue);
       }
 
@@ -171,7 +186,12 @@ JAVA_INSTANCE_METHOD(
     const char *cName = (*env)->GetStringUTFChars(env, jName, NULL);
 
     if (cName) {
-      methods->removeExtendedAttribute(cPath, cName);
+      int result = methods->removeExtendedAttribute(cPath, cName);
+
+      if (result == -1) {
+        throwErrnoException(env, errno, "removexattr", cPath, cName, NULL);
+      }
+
       (*env)->ReleaseStringUTFChars(env, jName, cName);
     }
 

@@ -10,7 +10,9 @@
 #define JAVA_STATIC_METHOD(object, name, type, ...) \
   JAVA_METHOD(object, name, type, jclass class, ## __VA_ARGS__)
 
-extern jobject javaGlobalReference (JNIEnv *env, jobject local);
+extern jobject toGlobalReference (JNIEnv *env, jobject local);
 
-extern jclass javaFindClass (JNIEnv *env, jclass *class, const char *name);
-extern jclass javaFindStringClass (JNIEnv *env);
+extern jclass findClass (JNIEnv *env, jclass *class, const char *name);
+extern jclass findStringClass (JNIEnv *env);
+
+extern void throwErrnoException (JNIEnv *env, int error, const char *function, ...);
