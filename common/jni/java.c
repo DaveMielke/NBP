@@ -13,7 +13,7 @@ javaGlobalReference (JNIEnv *env, jobject local) {
 
 jclass
 javaFindClass (JNIEnv *env, jclass *class, const char *name) {
-  if (!*class) *class = (*env)->FindClass(env, name);
+  if (!*class) *class = javaGlobalReference(env, (*env)->FindClass(env, name));
   return *class;
 }
 
