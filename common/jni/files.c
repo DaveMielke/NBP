@@ -47,7 +47,7 @@ getExtendedAttributeNames (JNIEnv *env, const FileOperationMethods *methods, con
     const char *end = name + result;
 
     while (name < end) {
-      if (!(names[count++] = javaGlobalReference(env, (*env)->NewStringUTF(env, name)))) return NULL;
+      if (!(names[count++] = (*env)->NewStringUTF(env, name))) return NULL;
       name += strlen(name) + 1;
     }
   }
@@ -60,7 +60,7 @@ getExtendedAttributeNames (JNIEnv *env, const FileOperationMethods *methods, con
     if ((*env)->ExceptionOccurred(env)) return NULL;
   }
 
-  return javaGlobalReference(env, array);
+  return array;
 }
 
 JAVA_INSTANCE_METHOD(
@@ -98,7 +98,7 @@ getExtendedAttributeValue (JNIEnv *env, const FileOperationMethods *methods, con
   if (result == -1) return NULL;
 
   value[result] = 0;
-  return javaGlobalReference(env, (*env)->NewStringUTF(env, value));
+  return (*env)->NewStringUTF(env, value);
 }
 
 JAVA_INSTANCE_METHOD(
