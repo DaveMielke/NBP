@@ -28,21 +28,9 @@ static const FileOperationMethods symlinkOperationMethods = {
 
 static const FileOperationMethods *
 getFileOperationMethods (jboolean follow) {
-  if (follow == JNI_FALSE) return &fileOperationMethods;
-  if (follow == JNI_TRUE) return &symlinkOperationMethods;
+  if (follow == JNI_FALSE) return &symlinkOperationMethods;
+  if (follow == JNI_TRUE) return &fileOperationMethods;
   return NULL;
-}
-
-static jclass
-findClass (JNIEnv *env, jclass *class, const char *name) {
-  if (!*class) *class = (*env)->FindClass(env, name);
-  return *class;
-}
-
-static jclass
-findStringClass (JNIEnv *env) {
-  static jclass class = NULL;
-  return findClass(env, &class, "java/lang/String");
 }
 
 static jobjectArray
@@ -55,29 +43,28 @@ getExtendedAttributeNames (JNIEnv *env, const FileOperationMethods *methods, con
   int count = 0;
 
   {
-    const char *cName = buffer;
-    const char *end = cName + result;
+    const char *name = buffer;
+    const char *end = name + result;
 
-    while (cName < end) {
-      jstring jName = (*env)->NewStringUTF(env, cName);
-      if (!jName) return NULL;
-      names[count++] = jName;
-      cName += strlen(cName) + 1;
+    while (name < end) {
+      if (!(names[count++] = javaGlobalReference(env, (*env)->NewStringUTF(env, name)))) return NULL;
+      name += strlen(name) + 1;
     }
   }
 
-  jobjectArray array = (*env)->NewObjectArray(env, count, findStringClass(env), NULL);
+  jobjectArray array = (*env)->NewObjectArray(env, count, javaFindStringClass(env), NULL);
   if (!array) return NULL;
 
   while (--count >= 0) {
     (*env)->SetObjectArrayElement(env, array, count, names[count]);
+    if ((*env)->ExceptionOccurred(env)) return NULL;
   }
 
-  return array;
+  return javaGlobalReference(env, array);
 }
 
 JAVA_INSTANCE_METHOD(
-  org_nbp_common, getExtendedAttributeNames, jobjectArray,
+  org_nbp_common_FileOperations, getExtendedAttributeNames, jobjectArray,
   jstring jPath, jboolean follow
 ) {
   jobjectArray jNames = NULL;
@@ -89,6 +76,7 @@ JAVA_INSTANCE_METHOD(
 
     while (1) {
       jNames = getExtendedAttributeNames(env, methods, cPath, size);
+      if ((*env)->ExceptionOccurred(env)) jNames = NULL;
       if (jNames) break;
       if (errno != ERANGE) break;
 
@@ -105,14 +93,16 @@ JAVA_INSTANCE_METHOD(
 
 static jstring
 getExtendedAttributeValue (JNIEnv *env, const FileOperationMethods *methods, const char *path, const char *name, size_t size) {
-  char value[size];
+  char value[size+1];
   ssize_t result = methods->getExtendedAttributeValue(path, name, value, size);
   if (result == -1) return NULL;
-  return (*env)->NewStringUTF(env, value);
+
+  value[result] = 0;
+  return javaGlobalReference(env, (*env)->NewStringUTF(env, value));
 }
 
 JAVA_INSTANCE_METHOD(
-  org_nbp_common, getExtendedAttributeValue, jstring,
+  org_nbp_common_FileOperations, getExtendedAttributeValue, jstring,
   jstring jPath, jstring jName, jboolean follow
 ) {
   jstring jValue = NULL;
@@ -127,6 +117,7 @@ JAVA_INSTANCE_METHOD(
 
       while (1) {
         jValue = getExtendedAttributeValue(env, methods, cPath, cName, size);
+        if ((*env)->ExceptionOccurred(env)) jValue = NULL;
         if (jValue) break;
         if (errno != ERANGE) break;
 
@@ -145,7 +136,7 @@ JAVA_INSTANCE_METHOD(
 }
 
 JAVA_INSTANCE_METHOD(
-  org_nbp_common, setExtendedAttribute, void,
+  org_nbp_common_FileOperations, setExtendedAttribute, void,
   jstring jPath, jstring jName, jstring jValue, jboolean follow
 ) {
   const FileOperationMethods *methods = getFileOperationMethods(follow);
@@ -170,7 +161,7 @@ JAVA_INSTANCE_METHOD(
 }
 
 JAVA_INSTANCE_METHOD(
-  org_nbp_common, removeExtendedAttribute, void,
+  org_nbp_common_FileOperations, removeExtendedAttribute, void,
   jstring jPath, jstring jName, jboolean follow
 ) {
   const FileOperationMethods *methods = getFileOperationMethods(follow);

@@ -4,6 +4,10 @@ public abstract class FileOperations {
   private FileOperations () {
   }
 
+  static {
+    System.loadLibrary("nbp_common");
+  }
+
   public native static String[] getExtendedAttributeNames (
     String path, boolean follow
   );
