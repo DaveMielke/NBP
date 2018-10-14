@@ -32,7 +32,7 @@ public class TextOperations extends ContentOperations {
 
   @Override
   public final void read (InputStream stream, final Editable content) throws IOException {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    BufferedReader reader = new BufferedReader(ByteOrderMark.getInputStreamReader(stream));
 
     try {
       for (String line; ((line = reader.readLine()) != null); ) {
