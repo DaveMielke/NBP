@@ -29,6 +29,7 @@ extractAlerts() {
             while (( (alertNumber += 1) <= alertCount ))
             do
                capGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
+               echo "" >>"${temporaryFile}"
 
                local alertIdentifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
                local alertFile="${alertIdentifier}.${alertFileExtension}"
@@ -38,11 +39,11 @@ extractAlerts() {
                   let duplicateCount+=1
                else
                   logInfo "new alert: ${alertIdentifier}"
-                  capCacheAlertProperties "${temporaryFile}"
 
-                  acceptAlert "${temporaryFile}" true && {
-                     cacheAlertAreas "${temporaryFile}"
-
+                  capCacheAlertProperties "${temporaryFile}" &&
+                  acceptAlert "${temporaryFile}" true &&
+                  capCacheAlertAreas "${temporaryFile}" &&
+                  {
                      logInfo "alert accepted: ${alertIdentifier}"
                      let acceptCount+=1
 
@@ -64,34 +65,6 @@ extractAlerts() {
          rm -f -- "${alertsFile}"
       done
    done
-}
-
-cacheAlertAreas() {
-   local alert="${1}"
-
-   set -- $(capGetAlertProperty "${alert}" area.SAME)
-   local -A areas
-   local area
-
-   for area
-   do
-      areas["${area}"]=1
-
-      area="${area:1:2}"
-      areas["${area}"]=1
-   done
-
-   areas["00"]=1
-   set -- ${!areas[@]}
-   local strings=""
-
-   for area
-   do
-      [ -n "${strings}" ] && strings+=","
-      strings+="'${area}'"
-   done
-
-   capSetAlertProperty "${alert}" SQL.areas "${strings}"
 }
 
 handleCommandArguments "" "${@}"
