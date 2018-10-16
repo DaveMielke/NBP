@@ -29,7 +29,6 @@ extractAlerts() {
             while (( (alertNumber += 1) <= alertCount ))
             do
                capGetAlertElement "${alertsFile}" "${alertNumber}" >"${temporaryFile}"
-               echo "" >>"${temporaryFile}"
 
                local alertIdentifier="$(xmlEvaluate "${temporaryFile}" "/alert/identifier/text()")"
                local alertFile="${alertIdentifier}.${alertFileExtension}"
@@ -43,6 +42,7 @@ extractAlerts() {
                   capCacheAlertProperties "${temporaryFile}" &&
                   acceptAlert "${temporaryFile}" true &&
                   capCacheAlertAreas "${temporaryFile}" &&
+                  echo "" >>"${temporaryFile}" &&
                   {
                      logInfo "alert accepted: ${alertIdentifier}"
                      let acceptCount+=1
