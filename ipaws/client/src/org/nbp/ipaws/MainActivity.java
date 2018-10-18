@@ -205,8 +205,10 @@ public class MainActivity extends CommonActivity {
     DialogInterface.OnMultiChoiceClickListener choiceListener =
       new DialogInterface.OnMultiChoiceClickListener() {
         public void deselectItem (DialogInterface dialog, int index) {
-          ((AlertDialog)dialog).getListView().setItemChecked(index, false);
-          selection[index] = false;
+          if (selection[index]) {
+            selection[index] = false;
+            ((AlertDialog)dialog).getListView().setItemChecked(index, false);
+          }
         }
 
         @Override
