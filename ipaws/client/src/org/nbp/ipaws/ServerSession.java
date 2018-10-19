@@ -336,19 +336,20 @@ public class ServerSession extends ApplicationComponent implements SessionOperat
             sessionSocket.connect(address);
 
             try {
-              AlertNotification.updateSessionState(R.string.session_stateConnected);
+              SocketAddress local = sessionSocket.getLocalSocketAddress();
+              SocketAddress remote = sessionSocket.getRemoteSocketAddress();
 
-              {
-                SocketAddress local = sessionSocket.getLocalSocketAddress();
-                SocketAddress remote = sessionSocket.getRemoteSocketAddress();
+              Log.d(LOG_TAG,
+                String.format(
+                  "connected: %s -> %s",
+                  local.toString(), remote.toString()
+                )
+              );
 
-                Log.d(LOG_TAG,
-                  String.format(
-                    "connected: %s -> %s",
-                    local.toString(), remote.toString()
-                  )
-                );
-              }
+              AlertNotification.updateSessionState(
+                R.string.session_stateConnected,
+                ((InetSocketAddress)remote).getHostString()
+              );
 
               doSessionCommunication();
             } finally {

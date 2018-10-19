@@ -103,17 +103,27 @@ public abstract class AlertNotification extends ApplicationComponent {
     getManager().notify(NOTIFICATION_IDENTIFIER, buildNotification());
   }
 
-  private static void setSessionState (int state) {
-    notificationBuilder.setContentText(getString(state));
+  private static void setSessionState (int state, String detail) {
+    String text = getString(state);
+
+    if ((detail != null) && !detail.isEmpty()) {
+      text += " (" + detail + ")";
+    }
+
+    notificationBuilder.setContentText(text);
   }
 
-  public static void updateSessionState (int state) {
+  public static void updateSessionState (int state, String detail) {
     synchronized (NOTIFICATION_IDENTIFIER) {
       if (haveBuilder()) {
-        setSessionState(state);
+        setSessionState(state, detail);
         refreshNotification();
       }
     }
+  }
+
+  public static void updateSessionState (int state) {
+    updateSessionState(state, null);
   }
 
   private static void setAlertCount () {
@@ -136,7 +146,7 @@ public abstract class AlertNotification extends ApplicationComponent {
       if (haveBuilder()) return false;
 
       makeBuilder();
-      setSessionState(R.string.session_stateOff);
+      setSessionState(R.string.session_stateOff, null);
       setAlertCount();
 
       if (refresh) refreshNotification();
