@@ -111,6 +111,7 @@ public abstract class AlertNotification extends ApplicationComponent {
     }
 
     notificationBuilder.setContentText(text);
+    MainActivity.setStateText(text);
   }
 
   public static void updateSessionState (int state, String detail) {

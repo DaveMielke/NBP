@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.Intent;
 
 import android.view.View;
+import android.widget.TextView;
 
 import android.content.DialogInterface;
 import android.app.AlertDialog;
@@ -26,11 +27,53 @@ import java.util.HashSet;
 public class MainActivity extends CommonActivity {
   private final static String LOG_TAG = MainActivity.class.getName();
 
+  private final static Object LOCK = new Object();
+  private static MainActivity mainActivity = null;
+
+  private static TextView stateView = null;
+  private static String stateText = null;
+
+  public static void setStateText (final String text) {
+    stateText = text;
+
+    synchronized (LOCK) {
+      if (mainActivity != null) {
+        final TextView view = stateView;
+
+        if (view != null) {
+          mainActivity.runOnUiThread(
+            new Runnable() {
+              @Override
+              public void run () {
+                view.setText(text);
+              }
+            }
+          );
+        }
+      }
+    }
+  }
+
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    mainActivity = this;
+
     setContentView(R.layout.main);
+    stateView = (TextView)findViewById(R.id.state);
+
     Controls.restore();
+    stateView.setText(stateText);
+  }
+
+  @Override
+  protected void onDestroy () {
+    try {
+      mainActivity = null;
+      stateView = null;
+    } finally {
+      super.onDestroy();
+    }
   }
 
   public final void stopSpeaking (View view) {
