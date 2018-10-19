@@ -328,16 +328,15 @@ public abstract class Alerts extends ApplicationComponent {
   }
 
   public static void remove (String identifier) {
-    Announcements.remove(identifier);
-
-    File file = getAlertFile(identifier);
-    file.delete();
-
     synchronized (alertCache) {
       alertCache.remove(identifier);
-    }
+      Announcements.remove(identifier);
 
-    AlertNotification.updateAlertCount();
+      File file = getAlertFile(identifier);
+      file.delete();
+
+      AlertNotification.updateAlertCount();
+    }
   }
 
   public static String[] list (boolean sorted) {
