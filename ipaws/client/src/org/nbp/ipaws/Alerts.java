@@ -295,34 +295,36 @@ public abstract class Alerts extends ApplicationComponent {
         properties.put(PROPERTY_IDENTIFIER, identifier);
       }
 
-      Descriptor alert = new Descriptor(properties);
+      File temporaryFile = new File(getFilesDirectory(), "new-alert");
 
-      synchronized (alertCache) {
-        alertCache.put(identifier, alert);
-      }
-
-      {
-        File temporaryFile = new File(getFilesDirectory(), "new-alert");
+      try {
+        FileWriter writer = new FileWriter(temporaryFile);
 
         try {
-          FileWriter writer = new FileWriter(temporaryFile);
           writer.write(xml);
+        } finally {
           writer.close();
-          temporaryFile.setReadOnly();
+        }
 
+        synchronized (alertCache) {
+          temporaryFile.setReadOnly();
           File permanentFile = getAlertFile(identifier);
           temporaryFile.renameTo(permanentFile);
-          AlertNotification.updateAlertCount();
+
+          Descriptor alert = new Descriptor(properties);
+          alertCache.put(identifier, alert);
 
           if (ApplicationSettings.SPEAK_ALERTS) {
             speak(alert);
           } else {
             AlertPlayer.play();
           }
-        } catch (IOException exception) {
-          temporaryFile.delete();
-          Log.e(LOG_TAG, ("alert file creation error: " + exception.getMessage()));
+
+          AlertNotification.updateAlertCount();
         }
+      } catch (IOException exception) {
+        temporaryFile.delete();
+        Log.e(LOG_TAG, ("alert file creation error: " + exception.getMessage()));
       }
     }
   }
