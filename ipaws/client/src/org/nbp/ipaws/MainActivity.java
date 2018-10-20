@@ -34,9 +34,9 @@ public class MainActivity extends CommonActivity {
   private static String stateText = null;
 
   public static void setStateText (final String text) {
-    stateText = text;
-
     synchronized (LOCK) {
+      stateText = text;
+
       if (mainActivity != null) {
         final TextView view = stateView;
 
@@ -57,20 +57,24 @@ public class MainActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mainActivity = this;
 
     setContentView(R.layout.main);
-    stateView = (TextView)findViewById(R.id.state);
-
     Controls.restore();
-    stateView.setText(stateText);
+
+    synchronized (LOCK) {
+      mainActivity = this;
+      stateView = (TextView)findViewById(R.id.state);
+      stateView.setText(stateText);
+    }
   }
 
   @Override
   protected void onDestroy () {
     try {
-      mainActivity = null;
-      stateView = null;
+      synchronized (LOCK) {
+        mainActivity = null;
+        stateView = null;
+      }
     } finally {
       super.onDestroy();
     }
