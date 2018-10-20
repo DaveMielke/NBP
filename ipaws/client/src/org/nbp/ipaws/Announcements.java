@@ -297,6 +297,7 @@ public abstract class Announcements extends ApplicationComponent {
     public final void stopAnnouncementConversion () {
       synchronized (this) {
         if (ttsStatus == TextToSpeech.SUCCESS) {
+          Log.d(LOG_TAG, "stopping announcement conversion");
           ttsObject.stop();
         }
       }

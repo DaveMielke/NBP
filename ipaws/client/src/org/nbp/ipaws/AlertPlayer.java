@@ -168,6 +168,7 @@ public abstract class AlertPlayer extends ApplicationComponent {
 
   public static void stop () {
     synchronized (uriQueue) {
+      Log.d(LOG_TAG, "stopping alert player");
       uriQueue.clear();
 
       if (mediaPlayer != null) {
