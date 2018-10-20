@@ -107,7 +107,7 @@ public abstract class AlertNotification extends ApplicationComponent {
     String text = getString(state);
 
     if ((detail != null) && !detail.isEmpty()) {
-      text += " (" + detail + ")";
+      text += ": " + detail;
     }
 
     notificationBuilder.setContentText(text);
