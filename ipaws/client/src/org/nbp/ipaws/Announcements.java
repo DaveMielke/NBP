@@ -50,6 +50,12 @@ public abstract class Announcements extends ApplicationComponent {
     return file;
   }
 
+  public static void remove (String identifier) {
+    Log.d(LOG_TAG, ("removing announcement: " + identifier));
+    File file = getFile(identifier);
+    file.delete();
+  }
+
   public static File create (String identifier, byte[] content) {
     File file = getFile(identifier);
 
@@ -68,17 +74,6 @@ public abstract class Announcements extends ApplicationComponent {
     return null;
   }
 
-  public static void add (String identifier, String text) {
-    Log.d(LOG_TAG, ("adding announcement: " + identifier));
-    announcementQueue.offer(new Announcement(identifier, text));
-  }
-
-  public static void remove (String identifier) {
-    Log.d(LOG_TAG, ("removing announcement: " + identifier));
-    File file = getFile(identifier);
-    file.delete();
-  }
-
   private static class Announcement {
     public final String identifier;
     public final String text;
@@ -91,6 +86,11 @@ public abstract class Announcements extends ApplicationComponent {
 
   private final static LinkedBlockingDeque<Announcement> announcementQueue =
                    new LinkedBlockingDeque<Announcement>();
+
+  public static void add (String identifier, String text) {
+    Log.d(LOG_TAG, ("adding announcement: " + identifier));
+    announcementQueue.offer(new Announcement(identifier, text));
+  }
 
   private static class ConversionThread extends Thread {
     private final static String LOG_TAG = ConversionThread.class.getName();
@@ -262,6 +262,9 @@ public abstract class Announcements extends ApplicationComponent {
             return true;
 
           default:
+            Log.d(LOG_TAG, ("unexpected TTS engine initialization status: " + ttsStatus));
+            /* fall through */
+          case TextToSpeech.ERROR:
             Log.w(LOG_TAG, "TTS engine failed to initialize");
             ttsObject = null;
             return false;
@@ -271,15 +274,20 @@ public abstract class Announcements extends ApplicationComponent {
 
     @Override
     public void run () {
-      if (startEngine()) {
-        while (true) {
-          Announcement announcement;
+      while (!startEngine()) {
+        try {
+          sleep(ApplicationParameters.TTS_RETRY_DELAY);
+        } catch (InterruptedException exception) {
+        }
+      }
 
-          try {
-            announcement = announcementQueue.poll(1, TimeUnit.DAYS);
-            if (announcement != null) convertToSpeech(announcement);
-          } catch (InterruptedException exception) {
-          }
+      while (true) {
+        Announcement announcement;
+
+        try {
+          announcement = announcementQueue.poll(1, TimeUnit.DAYS);
+          if (announcement != null) convertToSpeech(announcement);
+        } catch (InterruptedException exception) {
         }
       }
     }

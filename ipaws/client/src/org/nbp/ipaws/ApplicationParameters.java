@@ -15,6 +15,8 @@ public abstract class ApplicationParameters {
   public final static long PING_RECEIVE_TIMEOUT = TimeUnit.MINUTES.toMillis(5);
   public final static long RESPONSE_TIMEOUT = TimeUnit.SECONDS.toMillis(1);
 
+  public final static long TTS_RETRY_DELAY = TimeUnit.SECONDS.toMillis(5);
+
   public final static String CHARACTER_ENCODING = "UTF8";
 
   public final static String TIME_FORMAT_24;
