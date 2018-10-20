@@ -81,6 +81,7 @@ public class MainActivity extends CommonActivity {
   }
 
   public final void stopSpeaking (View view) {
+    Announcements.stop();
     AlertPlayer.stop();
   }
 

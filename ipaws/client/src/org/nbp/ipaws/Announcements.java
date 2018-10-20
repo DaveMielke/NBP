@@ -92,10 +92,10 @@ public abstract class Announcements extends ApplicationComponent {
     announcementQueue.offer(new Announcement(identifier, text));
   }
 
-  private static class ConversionThread extends Thread {
-    private final static String LOG_TAG = ConversionThread.class.getName();
+  private static class AnnouncementConversionThread extends Thread {
+    private final static String LOG_TAG = AnnouncementConversionThread.class.getName();
 
-    public ConversionThread () {
+    public AnnouncementConversionThread () {
       super("announcement-conversion");
     }
 
@@ -194,7 +194,7 @@ public abstract class Announcements extends ApplicationComponent {
       return text;
     }
 
-    private final void convertToSpeech (Announcement announcement) {
+    private final void convertAnnouncement (Announcement announcement) {
       String identifier = announcement.identifier;
       File file = getFile(identifier);
       String text = fixText(announcement.text);
@@ -229,7 +229,7 @@ public abstract class Announcements extends ApplicationComponent {
         new TextToSpeech.OnInitListener() {
           @Override
           public void onInit (int status) {
-            Thread thread = ConversionThread.this;
+            Thread thread = AnnouncementConversionThread.this;
 
             synchronized (thread) {
               Log.d(LOG_TAG, ("TTS engine initialization status: " + status));
@@ -276,8 +276,10 @@ public abstract class Announcements extends ApplicationComponent {
     public void run () {
       while (!startEngine()) {
         try {
+          Log.d(LOG_TAG, "delaying before TTS engine start retry");
           sleep(ApplicationParameters.TTS_RETRY_DELAY);
         } catch (InterruptedException exception) {
+          Log.w(LOG_TAG, ("TTS engine start retry delay interrupted: " + exception.getMessage()));
         }
       }
 
@@ -286,14 +288,29 @@ public abstract class Announcements extends ApplicationComponent {
 
         try {
           announcement = announcementQueue.poll(1, TimeUnit.DAYS);
-          if (announcement != null) convertToSpeech(announcement);
+          if (announcement != null) convertAnnouncement(announcement);
         } catch (InterruptedException exception) {
+        }
+      }
+    }
+
+    public final void stopAnnouncementConversion () {
+      synchronized (this) {
+        if (ttsStatus == TextToSpeech.SUCCESS) {
+          ttsObject.stop();
         }
       }
     }
   }
 
+  private final static AnnouncementConversionThread announcementConversionThread;
+
   static {
-    new ConversionThread().start();
+    announcementConversionThread = new AnnouncementConversionThread();
+    announcementConversionThread.start();
+  }
+
+  public static void stop () {
+    announcementConversionThread.stopAnnouncementConversion();
   }
 }
