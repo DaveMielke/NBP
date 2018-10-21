@@ -169,20 +169,20 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return container;
   }
 
-  private View createChoiceChangeButton (final Control control) {
-    final ChoiceControl cc = (ChoiceControl)control;
-    final CharSequence[] labels = cc.getHighlightedLabels();
+  private View createItemChangeButton (final Control control) {
+    final ItemControl ic = (ItemControl)control;
+    final CharSequence[] labels = ic.getHighlightedLabels();
 
     final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
       @Override
       public void onClick (DialogInterface dialog, int which) {
-        cc.setValue(which);
+        ic.setValue(which);
         dialog.dismiss();
       }
     };
 
     final AlertDialog.Builder builder = new AlertDialog.Builder(this)
-      .setTitle(cc.getLabel())
+      .setTitle(ic.getLabel())
       .setNegativeButton(android.R.string.no, null)
       .setCancelable(true);
 
@@ -191,7 +191,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          builder.setSingleChoiceItems(labels, cc.getIntegerValue(), listener)
+          builder.setSingleChoiceItems(labels, ic.getIntegerValue(), listener)
                  .show();
         }
       }
@@ -386,8 +386,8 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     } else {
       group.addView(createTextValueView(control));
 
-      if (control instanceof ChoiceControl) {
-        group.addView(createChoiceChangeButton(control));
+      if (control instanceof ItemControl) {
+        group.addView(createItemChangeButton(control));
       } else if (control instanceof StringControl) {
         group.addView(createStringEditButton(control));
       } else {

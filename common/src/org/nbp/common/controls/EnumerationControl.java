@@ -6,7 +6,7 @@ import org.nbp.common.LanguageUtilities;
 import android.util.Log;
 import android.content.SharedPreferences;
 
-public abstract class EnumerationControl<E extends Enum> extends ChoiceControl {
+public abstract class EnumerationControl<E extends Enum> extends ItemControl {
   private final static String LOG_TAG = EnumerationControl.class.getName();
 
   protected abstract E getEnumerationDefault ();

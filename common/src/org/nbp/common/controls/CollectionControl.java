@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import android.util.Log;
 import android.content.SharedPreferences;
 
-public abstract class CollectionControl<V> extends ChoiceControl {
+public abstract class CollectionControl<V> extends ItemControl {
   private final static String LOG_TAG = CollectionControl.class.getName();
 
   protected abstract V getCollectionDefault ();
