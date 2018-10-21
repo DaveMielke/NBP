@@ -87,6 +87,20 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     controlValueChangedListeners.clear();
   }
 
+  private static void setText (TextView view, CharSequence text) {
+    view.setText(text);
+
+    if (text.length() == 0) {
+      view.setHint(R.string.control_hint_not_set);
+    } else {
+      view.setHint("");
+    }
+  }
+
+  private static void setText (TextView view, Control control) {
+    setText(view, control.getValue());
+  }
+
   private static void setChecked (CompoundButton button, Control control) {
     button.setChecked(((BooleanControl)control).getBooleanValue());
   }
@@ -188,7 +202,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
   private final void setStringControl (final StringControl control, CharSequence value) {
     final EditText view = newEditText();
-    view.setText(value);
+    setText(view, value);
     view.setSelection(value.length());
 
     DialogInterface.OnClickListener listener =
@@ -343,8 +357,8 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   private View createTextValueView (Control control) {
-    final TextView view = newTextView(control.getValue());
-    view.setHint(R.string.control_hint_not_set);
+    final TextView view = newTextView();
+    setText(view, control);
 
     addControlValueChangedListener(control,
       new Control.OnValueChangedListener() {
@@ -353,7 +367,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
           updateWidget(new Runnable() {
             @Override
             public void run () {
-              view.setText(control.getValue());
+              setText(view, control);
             }
           });
         }
