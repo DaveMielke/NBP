@@ -37,7 +37,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
 
     StringBuilder sb = new StringBuilder();
     sb.append("braille code not available: ");
-    sb.append(getValueLabel(value));
+    sb.append(getItemLabel(value));
     sb.append(": ");
     sb.append(problem);
     Log.w(LOG_TAG, sb.toString());

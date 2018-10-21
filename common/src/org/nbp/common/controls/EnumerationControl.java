@@ -50,7 +50,7 @@ public abstract class EnumerationControl<E extends Enum> extends ItemControl {
     return label;
   }
 
-  public final String getItemLabel (E value) {
+  public String getItemLabel (E value) {
     return getItemLabel(value.ordinal());
   }
 
