@@ -54,8 +54,8 @@ public abstract class EnumerationControl<E extends Enum> extends ChoiceControl {
     return getPlainLabel(value.ordinal());
   }
 
-  private final E getValue (int ordinal) {
-    return getValueArray()[ordinal];
+  private final E getValue (int index) {
+    return getValueArray()[index];
   }
 
   protected boolean testEnumerationValue (E value) {
@@ -73,11 +73,11 @@ public abstract class EnumerationControl<E extends Enum> extends ChoiceControl {
     int count = values.length;
     CharSequence[] labels = new CharSequence[count];
 
-    for (int ordinal=0; ordinal<count; ordinal+=1) {
-      E value = values[ordinal];
+    for (int index=0; index<count; index+=1) {
+      E value = values[index];
       CharSequence label = getPlainLabel(value);
       if (!testEnumerationValue(value)) label = highlightUnselectableLabel(label);
-      labels[ordinal] = label;
+      labels[index] = label;
     }
 
     return labels;

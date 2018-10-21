@@ -9,6 +9,7 @@ public abstract class Controls {
 
   public final static AlertMonitorControl alertMonitor = new AlertMonitorControl();
   public final static SpeakAlertsControl speakAlerts = new SpeakAlertsControl();
+  public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
 
   public final static PrimaryServerControl primaryServer = new PrimaryServerControl();
   public final static SecondaryServerControl secondaryServer = new SecondaryServerControl();
@@ -16,6 +17,7 @@ public abstract class Controls {
   public final static Control[] ALL = new Control[] {
     alertMonitor,
     speakAlerts,
+    speechEngine,
 
     primaryServer,
     secondaryServer
