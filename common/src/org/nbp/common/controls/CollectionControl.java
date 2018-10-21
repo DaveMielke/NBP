@@ -1,21 +1,19 @@
 package org.nbp.common.controls;
 import org.nbp.common.*;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 import android.util.Log;
 import android.content.SharedPreferences;
 
-public abstract class ObjectControl<T> extends ChoiceControl {
-  private final static String LOG_TAG = ObjectControl.class.getName();
+public abstract class CollectionControl<T> extends ChoiceControl {
+  private final static String LOG_TAG = CollectionControl.class.getName();
 
-  protected abstract T getObjectDefault ();
-  protected abstract T getObjectValue ();
-  protected abstract boolean setObjectValue (T value);
+  protected abstract T getCollectionDefault ();
+  protected abstract T getCollectionValue ();
+  protected abstract boolean setCollectionValue (T value);
 
   protected abstract String getValueName (T value);
   protected abstract String getValueLabel (T value);
@@ -23,7 +21,7 @@ public abstract class ObjectControl<T> extends ChoiceControl {
   private final ArrayList<T> valueList = new ArrayList<T>();
   private final Map<String, Integer> valueIndex = new HashMap<String, Integer>();
 
-  protected final void addObjectValue (T value) {
+  protected final void addCollectionValue (T value) {
     synchronized (this) {
       int index = valueList.size();
       valueList.add(value);
@@ -51,13 +49,13 @@ public abstract class ObjectControl<T> extends ChoiceControl {
     return getValueLabel(getValue(index));
   }
 
-  protected boolean testObjectValue (T value) {
+  protected boolean testCollectionValue (T value) {
     return true;
   }
 
   @Override
   protected final boolean testIntegerValue (int value) {
-    return testObjectValue(getValue(value));
+    return testCollectionValue(getValue(value));
   }
 
   @Override
@@ -68,7 +66,7 @@ public abstract class ObjectControl<T> extends ChoiceControl {
     for (int index=0; index<count; index+=1) {
       T value = valueList.get(index);
       CharSequence label = getValueLabel(value);
-      if (!testObjectValue(value)) label = highlightUnselectableLabel(label);
+      if (!testCollectionValue(value)) label = highlightUnselectableLabel(label);
       labels[index] = label;
     }
 
@@ -83,26 +81,26 @@ public abstract class ObjectControl<T> extends ChoiceControl {
 
   @Override
   protected final int getIntegerDefault () {
-    return getIntegerValue(getObjectDefault());
+    return getIntegerValue(getCollectionDefault());
   }
 
   @Override
   public final int getIntegerValue () {
-    return getIntegerValue(getObjectValue());
+    return getIntegerValue(getCollectionValue());
   }
 
   @Override
   protected final boolean setIntegerValue (int value) {
     if (value < 0) return false;
     if (value >= valueList.size()) return false;
-    return setObjectValue(valueList.get(value));
+    return setCollectionValue(valueList.get(value));
   }
 
   public final boolean setValue (T value) {
     synchronized (this) {
-      if (value == getObjectValue()) return true;
-      if (!testObjectValue(value)) return false;
-      if (!setObjectValue(value)) return false;
+      if (value == getCollectionValue()) return true;
+      if (!testCollectionValue(value)) return false;
+      if (!setCollectionValue(value)) return false;
       reportValueChange();
     }
 
@@ -111,12 +109,12 @@ public abstract class ObjectControl<T> extends ChoiceControl {
 
   @Override
   public CharSequence getValue () {
-    return getValueLabel(getObjectValue());
+    return getValueLabel(getCollectionValue());
   }
 
   @Override
   protected void saveValue (SharedPreferences.Editor editor, String key) {
-    editor.putString(key, getValueName(getObjectValue()));
+    editor.putString(key, getValueName(getCollectionValue()));
   }
 
   @Override
@@ -124,7 +122,7 @@ public abstract class ObjectControl<T> extends ChoiceControl {
     return new ValueRestorer<T>() {
       @Override
       protected T getDefaultValue () {
-        return getObjectDefault();
+        return getCollectionDefault();
       }
 
       @Override
@@ -140,17 +138,17 @@ public abstract class ObjectControl<T> extends ChoiceControl {
 
       @Override
       protected boolean setCurrentValue (T value) {
-        return setObjectValue(value);
+        return setCollectionValue(value);
       }
 
       @Override
       protected boolean testValue (T value) {
-        return testObjectValue(value);
+        return testCollectionValue(value);
       }
     };
   }
 
-  protected ObjectControl () {
+  protected CollectionControl () {
     super();
   }
 }

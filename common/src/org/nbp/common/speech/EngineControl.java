@@ -1,18 +1,18 @@
 package org.nbp.common.speech;
 import org.nbp.common.*;
 
-import org.nbp.common.controls.ObjectControl;
+import org.nbp.common.controls.CollectionControl;
 
 import android.speech.tts.TextToSpeech;
 
-public abstract class EngineControl extends ObjectControl<TextToSpeech.EngineInfo> {
+public abstract class EngineControl extends CollectionControl<TextToSpeech.EngineInfo> {
   private final TextToSpeech tts = new TextToSpeech(CommonContext.getContext(), null);
 
   public EngineControl () {
     super();
 
     for (TextToSpeech.EngineInfo info : tts.getEngines()) {
-      addObjectValue(info);
+      addCollectionValue(info);
     }
   }
 
@@ -27,7 +27,7 @@ public abstract class EngineControl extends ObjectControl<TextToSpeech.EngineInf
   }
 
   @Override
-  protected final TextToSpeech.EngineInfo getObjectDefault () {
+  protected final TextToSpeech.EngineInfo getCollectionDefault () {
     return getValue(tts.getDefaultEngine());
   }
 }
