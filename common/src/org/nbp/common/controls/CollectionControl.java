@@ -1,9 +1,11 @@
 package org.nbp.common.controls;
 import org.nbp.common.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
 
 import android.util.Log;
 import android.content.SharedPreferences;
@@ -18,7 +20,7 @@ public abstract class CollectionControl<V> extends ItemControl {
   protected abstract String getValueName (V value);
   protected abstract String getValueLabel (V value);
 
-  private final ArrayList<V> valueList = new ArrayList<V>();
+  private final List<V> valueList = new ArrayList<V>();
   private final Map<String, Integer> valueIndex = new HashMap<String, Integer>();
 
   protected final void addCollectionValue (V value) {
@@ -33,8 +35,8 @@ public abstract class CollectionControl<V> extends ItemControl {
     return valueList.get(index);
   }
 
-  public final V getValue (String key) {
-    Integer index = valueIndex.get(key);
+  public final V getValue (String name) {
+    Integer index = valueIndex.get(name);
     if (index == null) return null;
     return getValue(index);
   }
@@ -105,11 +107,6 @@ public abstract class CollectionControl<V> extends ItemControl {
     }
 
     return true;
-  }
-
-  @Override
-  public CharSequence getValue () {
-    return getValueLabel(getCollectionValue());
   }
 
   @Override

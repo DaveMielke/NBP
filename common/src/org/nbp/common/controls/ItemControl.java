@@ -10,17 +10,17 @@ public abstract class ItemControl extends IntegerControl {
   protected abstract String getValueLabel (int index);
   public abstract CharSequence[] getHighlightedLabels ();
 
-  private String[] plainLabels = null;
+  private String[] itemLabels = null;
 
-  protected final String[] getPlainLabels () {
+  private final String[] getItemLabels () {
     synchronized (this) {
-      if (plainLabels == null) plainLabels = new String[getValueCount()];
-      return plainLabels;
+      if (itemLabels == null) itemLabels = new String[getValueCount()];
+      return itemLabels;
     }
   }
 
-  public final String getPlainLabel (int index) {
-    String[] labels = getPlainLabels();
+  public final String getItemLabel (int index) {
+    String[] labels = getItemLabels();
 
     synchronized (labels) {
       String label = labels[index];
@@ -77,6 +77,11 @@ public abstract class ItemControl extends IntegerControl {
     }
 
     return maximumValue;
+  }
+
+  @Override
+  public CharSequence getValue () {
+    return getItemLabel(getIntegerValue());
   }
 
   protected ItemControl () {

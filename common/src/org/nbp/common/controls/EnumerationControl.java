@@ -50,8 +50,8 @@ public abstract class EnumerationControl<E extends Enum> extends ItemControl {
     return label;
   }
 
-  public final String getPlainLabel (E value) {
-    return getPlainLabel(value.ordinal());
+  public final String getItemLabel (E value) {
+    return getItemLabel(value.ordinal());
   }
 
   private final E getValue (int index) {
@@ -75,7 +75,7 @@ public abstract class EnumerationControl<E extends Enum> extends ItemControl {
 
     for (int index=0; index<count; index+=1) {
       E value = values[index];
-      CharSequence label = getPlainLabel(value);
+      CharSequence label = getItemLabel(value);
       if (!testEnumerationValue(value)) label = highlightUnselectableLabel(label);
       labels[index] = label;
     }
@@ -110,11 +110,6 @@ public abstract class EnumerationControl<E extends Enum> extends ItemControl {
     }
 
     return true;
-  }
-
-  @Override
-  public CharSequence getValue () {
-    return getPlainLabel(getEnumerationValue());
   }
 
   @Override
