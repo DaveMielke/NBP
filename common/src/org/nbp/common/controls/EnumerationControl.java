@@ -6,11 +6,7 @@ import org.nbp.common.LanguageUtilities;
 import android.util.Log;
 import android.content.SharedPreferences;
 
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.StrikethroughSpan;
-
-public abstract class EnumerationControl<E extends Enum> extends IntegerControl {
+public abstract class EnumerationControl<E extends Enum> extends ChoiceControl {
   private final static String LOG_TAG = EnumerationControl.class.getName();
 
   protected abstract E getEnumerationDefault ();
@@ -35,25 +31,27 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     }
   }
 
-  private final int getValueCount () {
+  @Override
+  protected final int getValueCount () {
     return getValueArray().length;
   }
 
-  private final static Integer minimumValue = 0;
-  private static Integer maximumValue = null;
-
   @Override
-  protected Integer getIntegerMinimum () {
-    return minimumValue;
+  protected final String getValueLabel (int index) {
+    E value = getValue(index);
+    String resource = "enum_"
+                    + value.getClass().getSimpleName()
+                    + '_'
+                    + value.name()
+                    ;
+
+    String label = CommonContext.getString(resource);
+    if (label == null) label = value.name().replace('_', ' ').toLowerCase();
+    return label;
   }
 
-  @Override
-  protected Integer getIntegerMaximum () {
-    synchronized (minimumValue) {
-      if (maximumValue == null) maximumValue = getValueCount() - 1;
-    }
-
-    return maximumValue;
+  public final String getPlainLabel (E value) {
+    return getPlainLabel(value.ordinal());
   }
 
   private final E getValue (int ordinal) {
@@ -69,56 +67,16 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
     return testEnumerationValue(getValue(value));
   }
 
-  private String[] labelArray = null;
-
-  private final String[] getLabelArray () {
-    synchronized (this) {
-      if (labelArray == null) labelArray = new String[getValueCount()];
-      return labelArray;
-    }
-  }
-
-  public String getValueLabel (E value) {
-    String labels[] = getLabelArray();
-
-    synchronized (labels) {
-      int ordinal = value.ordinal();
-
-      String label = labels[ordinal];
-      if (label != null) return label;
-
-      String resource = "enum_"
-                      + value.getClass().getSimpleName()
-                      + '_'
-                      + value.name()
-                      ;
-
-      label = CommonContext.getString(resource);
-      if (label == null) label = value.name().replace('_', ' ').toLowerCase();
-
-      return labelArray[ordinal] = label;
-    }
-  }
-
-  private final String getValueLabel (int ordinal) {
-    return getValueLabel(getValue(ordinal));
-  }
-
-  public final CharSequence[] newValueLabels () {
+  @Override
+  public final CharSequence[] getHighlightedLabels () {
     E[] values = getValueArray();
     int count = values.length;
     CharSequence[] labels = new CharSequence[count];
 
     for (int ordinal=0; ordinal<count; ordinal+=1) {
       E value = values[ordinal];
-      CharSequence label = getValueLabel(value);
-
-      if (!testEnumerationValue(value)) {
-        Spannable text = new SpannableString(label);
-        text.setSpan(new StrikethroughSpan(), 0, text.length(), text.SPAN_EXCLUSIVE_EXCLUSIVE);
-        label = text;
-      }
-
+      CharSequence label = getPlainLabel(value);
+      if (!testEnumerationValue(value)) label = highlightUnselectableLabel(label);
       labels[ordinal] = label;
     }
 
@@ -156,34 +114,7 @@ public abstract class EnumerationControl<E extends Enum> extends IntegerControl 
 
   @Override
   public CharSequence getValue () {
-    return getValueLabel(getEnumerationValue());
-  }
-
-  private String getLabel (int ordinal, int resource) {
-    E[] values = getValueArray();
-    if (values.length < 2) return null;
-    if (values.length == 2) return getValueLabel(ordinal);
-    return getString(resource);
-  }
-
-  @Override
-  protected int getResourceForNext () {
-    return R.string.control_next_default;
-  }
-
-  @Override
-  public String getLabelForNext () {
-    return getLabel(1, getResourceForNext());
-  }
-
-  @Override
-  protected int getResourceForPrevious () {
-    return R.string.control_previous_default;
-  }
-
-  @Override
-  public String getLabelForPrevious () {
-    return getLabel(0, getResourceForPrevious());
+    return getPlainLabel(getEnumerationValue());
   }
 
   @Override
