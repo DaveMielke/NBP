@@ -224,7 +224,7 @@ public abstract class Announcements extends ApplicationComponent {
       }
     }
 
-    private final boolean startEngine () {
+    private final boolean ttsStartEngine () {
       TextToSpeech.OnInitListener listener =
         new TextToSpeech.OnInitListener() {
           @Override
@@ -241,7 +241,9 @@ public abstract class Announcements extends ApplicationComponent {
 
       synchronized (this) {
         Log.d(LOG_TAG, "starting TTS engine");
-        ttsObject = new TextToSpeech(getContext(), listener);
+
+        ttsStatus = TextToSpeech.ERROR;
+        ttsObject = new TextToSpeech(getContext(), listener, ApplicationSettings.SPEECH_ENGINE);
 
         try {
           Log.d(LOG_TAG, "waiting for TTS engine initialization");
@@ -274,7 +276,7 @@ public abstract class Announcements extends ApplicationComponent {
 
     @Override
     public void run () {
-      while (!startEngine()) {
+      while (!ttsStartEngine()) {
         try {
           Log.d(LOG_TAG, "delaying before TTS engine start retry");
           sleep(ApplicationParameters.TTS_RETRY_DELAY);

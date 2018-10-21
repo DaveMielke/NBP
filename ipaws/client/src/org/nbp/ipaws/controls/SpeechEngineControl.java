@@ -23,12 +23,12 @@ public class SpeechEngineControl extends EngineControl {
 
   @Override
   public TextToSpeech.EngineInfo getObjectValue () {
-    return ApplicationSettings.SPEECH_ENGINE;
+    return getValue(ApplicationSettings.SPEECH_ENGINE);
   }
 
   @Override
   protected boolean setObjectValue (TextToSpeech.EngineInfo value) {
-    ApplicationSettings.SPEECH_ENGINE = value;
+    ApplicationSettings.SPEECH_ENGINE = getValueName(value);
     return true;
   }
 
