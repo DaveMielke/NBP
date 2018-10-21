@@ -8,20 +8,20 @@ import java.util.ArrayList;
 import android.util.Log;
 import android.content.SharedPreferences;
 
-public abstract class CollectionControl<T> extends ChoiceControl {
+public abstract class CollectionControl<V> extends ChoiceControl {
   private final static String LOG_TAG = CollectionControl.class.getName();
 
-  protected abstract T getCollectionDefault ();
-  protected abstract T getCollectionValue ();
-  protected abstract boolean setCollectionValue (T value);
+  protected abstract V getCollectionDefault ();
+  protected abstract V getCollectionValue ();
+  protected abstract boolean setCollectionValue (V value);
 
-  protected abstract String getValueName (T value);
-  protected abstract String getValueLabel (T value);
+  protected abstract String getValueName (V value);
+  protected abstract String getValueLabel (V value);
 
-  private final ArrayList<T> valueList = new ArrayList<T>();
+  private final ArrayList<V> valueList = new ArrayList<V>();
   private final Map<String, Integer> valueIndex = new HashMap<String, Integer>();
 
-  protected final void addCollectionValue (T value) {
+  protected final void addCollectionValue (V value) {
     synchronized (this) {
       int index = valueList.size();
       valueList.add(value);
@@ -29,11 +29,11 @@ public abstract class CollectionControl<T> extends ChoiceControl {
     }
   }
 
-  public final T getValue (int index) {
+  public final V getValue (int index) {
     return valueList.get(index);
   }
 
-  public final T getValue (String key) {
+  public final V getValue (String key) {
     Integer index = valueIndex.get(key);
     if (index == null) return null;
     return getValue(index);
@@ -49,7 +49,7 @@ public abstract class CollectionControl<T> extends ChoiceControl {
     return getValueLabel(getValue(index));
   }
 
-  protected boolean testCollectionValue (T value) {
+  protected boolean testCollectionValue (V value) {
     return true;
   }
 
@@ -64,7 +64,7 @@ public abstract class CollectionControl<T> extends ChoiceControl {
     CharSequence[] labels = new CharSequence[count];
 
     for (int index=0; index<count; index+=1) {
-      T value = valueList.get(index);
+      V value = valueList.get(index);
       CharSequence label = getValueLabel(value);
       if (!testCollectionValue(value)) label = highlightUnselectableLabel(label);
       labels[index] = label;
@@ -73,7 +73,7 @@ public abstract class CollectionControl<T> extends ChoiceControl {
     return labels;
   }
 
-  private final int getIntegerValue (T value) {
+  private final int getIntegerValue (V value) {
     Integer index = valueIndex.get(getValueName(value));
     if (index == null) return 0;
     return index;
@@ -96,7 +96,7 @@ public abstract class CollectionControl<T> extends ChoiceControl {
     return setCollectionValue(valueList.get(value));
   }
 
-  public final boolean setValue (T value) {
+  public final boolean setValue (V value) {
     synchronized (this) {
       if (value == getCollectionValue()) return true;
       if (!testCollectionValue(value)) return false;
@@ -119,14 +119,14 @@ public abstract class CollectionControl<T> extends ChoiceControl {
 
   @Override
   protected ValueRestorer getValueRestorer () {
-    return new ValueRestorer<T>() {
+    return new ValueRestorer<V>() {
       @Override
-      protected T getDefaultValue () {
+      protected V getDefaultValue () {
         return getCollectionDefault();
       }
 
       @Override
-      protected T getSavedValue (SharedPreferences prefs, String key, T defaultValue) {
+      protected V getSavedValue (SharedPreferences prefs, String key, V defaultValue) {
         String name = prefs.getString(key, "");
         if (name.isEmpty()) return defaultValue;
 
@@ -137,12 +137,12 @@ public abstract class CollectionControl<T> extends ChoiceControl {
       }
 
       @Override
-      protected boolean setCurrentValue (T value) {
+      protected boolean setCurrentValue (V value) {
         return setCollectionValue(value);
       }
 
       @Override
-      protected boolean testValue (T value) {
+      protected boolean testValue (V value) {
         return testCollectionValue(value);
       }
     };
