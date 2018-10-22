@@ -92,69 +92,139 @@ public abstract class Announcements extends ApplicationComponent {
     announcementQueue.offer(new Announcement(identifier, text));
   }
 
+  private final static UtteranceProgressListener utteranceProgressListener =
+    new UtteranceProgressListener() {
+      @Override
+      public void onStart (String identifier) {
+        Log.d(LOG_TAG, ("utterance generation starting: " + identifier));
+      }
+
+      @Override
+      public void onError (String identifier) {
+        Log.w(LOG_TAG, ("utterance generation failed: " + identifier));
+        remove(identifier);
+      }
+
+      @Override
+      public void onError (String identifier, int error) {
+        Log.w(LOG_TAG,
+          String.format(
+            "utterance generation error %d: %s",
+            error, identifier
+          )
+        );
+
+        remove(identifier);
+      }
+
+      @Override
+      public void onStop (String identifier, boolean interrupted) {
+        Log.w(LOG_TAG, 
+          String.format(
+            "utterance generation %s: %s",
+            (interrupted? "interrupted": "stopped"), identifier
+          )
+        );
+
+        remove(identifier);
+      }
+
+      @Override
+      public void onDone (String identifier) {
+        Log.d(LOG_TAG, ("utterance generation done: " + identifier));
+        File file = getFile(identifier);
+
+        if (file.exists()) {
+          file.setExecutable(false, false);
+          file.setWritable(false, false);
+          file.setReadable(true, false);
+          AlertPlayer.play(file, false);
+        } else {
+          Log.w(LOG_TAG, ("announcement file not found: " + file.getAbsolutePath()));
+        }
+      }
+    };
+
+  private final static Object TTS_LOCK = new Object();
+  private static TextToSpeech ttsObject = null;
+  private static String ttsEngine = null;
+  private static int ttsLengthLimit = 0;
+
+  public static void ttsStopConversion () {
+    synchronized (TTS_LOCK) {
+      if (ttsObject != null) {
+        Log.d(LOG_TAG, "stopping announcement conversion");
+        ttsObject.stop();
+      }
+    }
+  }
+
+  public static boolean ttsStartEngine () {
+    synchronized (TTS_LOCK) {
+      String engine = ApplicationSettings.SPEECH_ENGINE;
+      if (engine.equals(ttsEngine)) return true;
+
+      class Listener implements TextToSpeech.OnInitListener {
+        public int engineStatus = TextToSpeech.ERROR;
+
+        @Override
+        public void onInit (int status) {
+          synchronized (this) {
+            Log.d(LOG_TAG, ("TTS engine initialization status: " + status));
+            engineStatus = status;
+            notify();
+          }
+        }
+      }
+
+      Log.d(LOG_TAG, ("starting TTS engine: " + engine));
+      Listener listener = new Listener();
+      TextToSpeech tts;
+
+      synchronized (listener) {
+        tts = new TextToSpeech(getContext(), listener, engine);
+
+        try {
+          Log.d(LOG_TAG, "waiting for TTS engine initialization");
+          listener.wait();
+        } catch (InterruptedException exception) {
+          Log.w(LOG_TAG, "TTS engine initialization wait interrupted");
+        }
+      }
+
+      switch (listener.engineStatus) {
+        case TextToSpeech.SUCCESS: {
+          Log.d(LOG_TAG, "TTS engine initialized successfully");
+          tts.setOnUtteranceProgressListener(utteranceProgressListener);
+
+          int length = CommonUtilities.haveJellyBeanMR2?
+                       tts.getMaxSpeechInputLength():
+                       4000;
+
+          ttsStopConversion();
+          ttsObject = tts;
+          ttsEngine = engine;
+          ttsLengthLimit = length - 1; // Android returns the wrong value
+
+          return true;
+        }
+
+        default:
+          Log.d(LOG_TAG, ("unexpected TTS engine initialization status: " + listener.engineStatus));
+          /* fall through */
+        case TextToSpeech.ERROR:
+          Log.w(LOG_TAG, "TTS engine failed to initialize");
+          return false;
+      }
+    }
+  }
+
   private static class AnnouncementConversionThread extends Thread {
     private final static String LOG_TAG = AnnouncementConversionThread.class.getName();
 
     public AnnouncementConversionThread () {
       super("announcement-conversion");
     }
-
-    private TextToSpeech ttsObject = null;
-    private int ttsStatus = TextToSpeech.ERROR;
-    private int ttsLengthLimit = 0;
-
-    private final UtteranceProgressListener utteranceProgressListener =
-      new UtteranceProgressListener() {
-        @Override
-        public void onStart (String identifier) {
-          Log.d(LOG_TAG, ("utterance generation starting: " + identifier));
-        }
-
-        @Override
-        public void onError (String identifier) {
-          Log.w(LOG_TAG, ("utterance generation failed: " + identifier));
-          remove(identifier);
-        }
-
-        @Override
-        public void onError (String identifier, int error) {
-          Log.w(LOG_TAG,
-            String.format(
-              "utterance generation error %d: %s",
-              error, identifier
-            )
-          );
-
-          remove(identifier);
-        }
-
-        @Override
-        public void onStop (String identifier, boolean interrupted) {
-          Log.w(LOG_TAG, 
-            String.format(
-              "utterance generation %s: %s",
-              (interrupted? "interrupted": "stopped"), identifier
-            )
-          );
-
-          remove(identifier);
-        }
-
-        @Override
-        public void onDone (String identifier) {
-          Log.d(LOG_TAG, ("utterance generation done: " + identifier));
-          File file = getFile(identifier);
-
-          if (file.exists()) {
-            file.setExecutable(false, false);
-            file.setWritable(false, false);
-            file.setReadable(true, false);
-            AlertPlayer.play(file, false);
-          } else {
-            Log.w(LOG_TAG, ("announcement file not found: " + file.getAbsolutePath()));
-          }
-        }
-      };
 
     private final String fixText (String text) {
       text = text
@@ -200,77 +270,29 @@ public abstract class Announcements extends ApplicationComponent {
       String text = fixText(announcement.text);
       int status;
 
-      if (CommonUtilities.haveLollipop) {
-        status = ttsObject.synthesizeToFile(
-          text, null, file, identifier
-        );
-      } else {
-        HashMap<String, String> parameters = new HashMap<String, String>();
+      synchronized (TTS_LOCK) {
+        if (CommonUtilities.haveLollipop) {
+          status = ttsObject.synthesizeToFile(
+            text, null, file, identifier
+          );
+        } else {
+          HashMap<String, String> parameters = new HashMap<String, String>();
 
-        parameters.put(
-          TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
-          identifier
-        );
+          parameters.put(
+            TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
+            identifier
+          );
 
-        status = ttsObject.synthesizeToFile(
-          text, parameters, file.getAbsolutePath()
-        );
+          status = ttsObject.synthesizeToFile(
+            text, parameters, file.getAbsolutePath()
+          );
+        }
       }
 
       if (status == TextToSpeech.SUCCESS) {
         Log.d(LOG_TAG, ("announcement conversion started: " + identifier));
       } else {
         Log.w(LOG_TAG, ("announcement conversion not started: " + identifier));
-      }
-    }
-
-    private final boolean ttsStartEngine () {
-      TextToSpeech.OnInitListener listener =
-        new TextToSpeech.OnInitListener() {
-          @Override
-          public void onInit (int status) {
-            Thread thread = AnnouncementConversionThread.this;
-
-            synchronized (thread) {
-              Log.d(LOG_TAG, ("TTS engine initialization status: " + status));
-              ttsStatus = status;
-              thread.notify();
-            }
-          }
-        };
-
-      synchronized (this) {
-        Log.d(LOG_TAG, "starting TTS engine");
-
-        ttsStatus = TextToSpeech.ERROR;
-        ttsObject = new TextToSpeech(getContext(), listener, ApplicationSettings.SPEECH_ENGINE);
-
-        try {
-          Log.d(LOG_TAG, "waiting for TTS engine initialization");
-          wait();
-        } catch (InterruptedException exception) {
-          Log.w(LOG_TAG, "TTS engine initialization wait interrupted");
-        }
-
-        switch (ttsStatus) {
-          case TextToSpeech.SUCCESS:
-            Log.d(LOG_TAG, "TTS engine initialized successfully");
-            ttsLengthLimit = CommonUtilities.haveJellyBeanMR2?
-                             ttsObject.getMaxSpeechInputLength():
-                             4000;
-            ttsLengthLimit -= 1; // Android returns the wrong value
-
-            ttsObject.setOnUtteranceProgressListener(utteranceProgressListener);
-            return true;
-
-          default:
-            Log.d(LOG_TAG, ("unexpected TTS engine initialization status: " + ttsStatus));
-            /* fall through */
-          case TextToSpeech.ERROR:
-            Log.w(LOG_TAG, "TTS engine failed to initialize");
-            ttsObject = null;
-            return false;
-        }
       }
     }
 
@@ -290,18 +312,13 @@ public abstract class Announcements extends ApplicationComponent {
 
         try {
           announcement = announcementQueue.poll(1, TimeUnit.DAYS);
-          if (announcement != null) convertAnnouncement(announcement);
+          if (announcement == null) continue;
         } catch (InterruptedException exception) {
+          continue;
         }
-      }
-    }
 
-    public final void stopAnnouncementConversion () {
-      synchronized (this) {
-        if (ttsStatus == TextToSpeech.SUCCESS) {
-          Log.d(LOG_TAG, "stopping announcement conversion");
-          ttsObject.stop();
-        }
+        ttsStartEngine();
+        convertAnnouncement(announcement);
       }
     }
   }
@@ -314,6 +331,6 @@ public abstract class Announcements extends ApplicationComponent {
   }
 
   public static void stop () {
-    announcementConversionThread.stopAnnouncementConversion();
+    ttsStopConversion();
   }
 }
