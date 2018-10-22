@@ -124,6 +124,7 @@ ipawsSendAlert() {
    beginClientResponse
    writeClientCommand "beginAlert ${identifier}"
    cat "${identifier}.${alertFileExtension}"
+   echo ""
    writeClientCommand "endAlert ${identifier}"
    endClientResponse
    ipawsInsertSentAlert "${identifier}"

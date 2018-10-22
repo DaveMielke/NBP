@@ -42,7 +42,6 @@ extractAlerts() {
                   capCacheAlertProperties "${temporaryFile}" &&
                   acceptAlert "${temporaryFile}" true &&
                   capCacheAlertAreas "${temporaryFile}" &&
-                  echo "" >>"${temporaryFile}" &&
                   {
                      logInfo "alert accepted: ${alertIdentifier}"
                      let acceptCount+=1
