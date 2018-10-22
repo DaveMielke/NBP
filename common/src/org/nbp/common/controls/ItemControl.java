@@ -79,6 +79,11 @@ public abstract class ItemControl extends IntegerControl {
     return maximumValue;
   }
 
+  protected void resetItems () {
+    itemLabels = null;
+    maximumValue = null;
+  }
+
   @Override
   public CharSequence getValue () {
     return getItemLabel(getIntegerValue());

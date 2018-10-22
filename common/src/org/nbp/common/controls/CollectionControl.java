@@ -17,11 +17,19 @@ public abstract class CollectionControl<V> extends ItemControl {
   protected abstract V getCollectionValue ();
   protected abstract boolean setCollectionValue (V value);
 
+  protected abstract void addCollectionValues ();
   protected abstract String getValueName (V value);
   protected abstract String getValueLabel (V value);
 
   private final List<V> valueList = new ArrayList<V>();
   private final Map<String, Integer> valueIndex = new HashMap<String, Integer>();
+
+  @Override
+  protected void resetItems () {
+    super.resetItems();
+    valueList.clear();
+    valueIndex.clear();
+  }
 
   protected final void addCollectionValue (V value) {
     synchronized (this) {
@@ -29,6 +37,11 @@ public abstract class CollectionControl<V> extends ItemControl {
       valueList.add(value);
       valueIndex.put(getValueName(value), index);
     }
+  }
+
+  public final void refreshCollection () {
+    resetItems();
+    addCollectionValues();
   }
 
   public final V getValue (int index) {
@@ -76,8 +89,9 @@ public abstract class CollectionControl<V> extends ItemControl {
   }
 
   private final int getIntegerValue (V value) {
+    if (value == null) return -1;
     Integer index = valueIndex.get(getValueName(value));
-    if (index == null) return 0;
+    if (index == null) return -1;
     return index;
   }
 

@@ -171,28 +171,34 @@ public abstract class CommonSettingsActivity extends CommonActivity {
 
   private View createItemChangeButton (final Control control) {
     final ItemControl ic = (ItemControl)control;
-    final CharSequence[] labels = ic.getHighlightedLabels();
-
-    final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick (DialogInterface dialog, int which) {
-        ic.setValue(which);
-        dialog.dismiss();
-      }
-    };
-
-    final AlertDialog.Builder builder = new AlertDialog.Builder(this)
-      .setTitle(ic.getLabel())
-      .setNegativeButton(android.R.string.no, null)
-      .setCancelable(true);
 
     Button button = newButton(
       R.string.control_change_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          builder.setSingleChoiceItems(labels, ic.getIntegerValue(), listener)
-                 .show();
+          if (ic instanceof CollectionControl) {
+            CollectionControl cc = (CollectionControl)ic;
+            cc.refreshCollection();
+          }
+
+          final CharSequence[] labels = ic.getHighlightedLabels();
+
+          final DialogInterface.OnClickListener listener =
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick (DialogInterface dialog, int which) {
+                ic.setValue(which);
+                dialog.dismiss();
+              }
+            };
+
+          new AlertDialog.Builder(CommonSettingsActivity.this)
+            .setTitle(ic.getLabel())
+            .setSingleChoiceItems(labels, ic.getIntegerValue(), listener)
+            .setNegativeButton(android.R.string.no, null)
+            .setCancelable(true)
+            .show();
         }
       }
     );
