@@ -7,7 +7,10 @@ import android.util.Log;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
+import org.nbp.common.speech.SpeechParameters;
+import android.os.Bundle;
 import java.util.HashMap;
+
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
@@ -197,11 +200,18 @@ public abstract class Announcements extends ApplicationComponent {
           Log.d(LOG_TAG, "TTS engine initialized successfully");
           tts.setOnUtteranceProgressListener(utteranceProgressListener);
 
+          tts.setSpeechRate(SpeechParameters.RATE_REFERENCE);
+          tts.setPitch(SpeechParameters.PITCH_REFERENCE);
+
           int length = CommonUtilities.haveJellyBeanMR2?
                        tts.getMaxSpeechInputLength():
                        4000;
 
-          ttsStopConversion();
+          if (ttsObject != null) {
+            ttsObject.stop();
+            ttsObject.shutdown();
+          }
+
           ttsObject = tts;
           ttsEngine = engine;
           ttsLengthLimit = length - 1; // Android returns the wrong value
@@ -271,12 +281,19 @@ public abstract class Announcements extends ApplicationComponent {
       int status;
 
       synchronized (TTS_LOCK) {
+        String volumeKey = TextToSpeech.Engine.KEY_PARAM_VOLUME;
+        String volumeSetting = Float.toString(SpeechParameters.VOLUME_MAXIMUM);
+
         if (CommonUtilities.haveLollipop) {
+          Bundle parameters = new Bundle();
+          parameters.putString(volumeKey, volumeSetting);
+
           status = ttsObject.synthesizeToFile(
-            text, null, file, identifier
+            text, parameters, file, identifier
           );
         } else {
           HashMap<String, String> parameters = new HashMap<String, String>();
+          parameters.put(volumeKey, volumeSetting);
 
           parameters.put(
             TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
