@@ -29,14 +29,14 @@ public class AlertService extends Service {
     CommonContext.setContext(this);
     AlertNotification.create(this);
 
-    Log.d(LOG_TAG, "starting");
+    Log.d(LOG_TAG, "starting service");
     serverSession = new ServerSession();
   }
 
   @Override
   public void onDestroy () {
     try {
-      Log.d(LOG_TAG, "stopping");
+      Log.d(LOG_TAG, "stopping service");
 
       serverSession.endSession();
       serverSession = null;

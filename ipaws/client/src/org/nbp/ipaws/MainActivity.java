@@ -482,6 +482,7 @@ public class MainActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Log.d(LOG_TAG, "creating activity");
 
     setContentView(R.layout.main);
     Controls.restore();
@@ -498,6 +499,8 @@ public class MainActivity extends CommonActivity {
   @Override
   protected void onDestroy () {
     try {
+      Log.d(LOG_TAG, "destroying activity");
+
       synchronized (LOCK) {
         mainActivity = null;
         stateView = null;
@@ -509,6 +512,7 @@ public class MainActivity extends CommonActivity {
 
   @Override
   protected void onNewIntent (Intent intent) {
+    Log.d(LOG_TAG, "new intent");
     showAlert(intent);
   }
 }
