@@ -97,6 +97,10 @@ public class SpeechParameters {
     setStream(stream.getStreamNumber());
   }
 
+  public final void setLoudestStream () {
+    setStream(AudioStream.getLoudestStream());
+  }
+
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
     String reason;
 

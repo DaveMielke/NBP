@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 import android.util.Log;
 
-import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
@@ -49,52 +48,6 @@ public abstract class TextPlayer {
   private final SpeechParameters ttsParameters = new SpeechParameters();
   private int ttsStatus = TextToSpeech.ERROR;
   private final static int OK = TextToSpeech.SUCCESS;
-
-  private final AudioManager audioManager;
-
-  private final static AudioStream[] audioStreams = {
-    AudioStream.MUSIC,
-    AudioStream.NOTIFICATION,
-    AudioStream.ALARM,
-    AudioStream.RING,
-    AudioStream.SYSTEM,
-    AudioStream.CALL,
-    AudioStream.DTMF
-  };
-
-  public final void setAudioStream (int stream) {
-    ttsParameters.setStream(stream);
-  }
-
-  public final void setAudioStream () {
-    setAudioStream(TextToSpeech.Engine.DEFAULT_STREAM);
-  }
-
-  public final void setAudioStream (AudioStream stream) {
-    setAudioStream(stream.getStreamNumber());
-  }
-
-  public final AudioStream getLoudestAudioStream () {
-    AudioStream loudestStream = null;
-    float loudestVolume = -1f;
-
-    for (AudioStream stream : audioStreams) {
-      float volume = stream.getNormalizedVolume();
-
-      if (volume > loudestVolume) {
-        loudestVolume = volume;
-        loudestStream = stream;
-      }
-
-      if (loudestVolume == 1f) break;
-    }
-
-    return loudestStream;
-  }
-
-  public final void selectLoudestAudioStream () {
-    setAudioStream(getLoudestAudioStream());
-  }
 
   private final boolean isStarted () {
     return ttsStatus == OK;
@@ -390,7 +343,6 @@ public abstract class TextPlayer {
   }
 
   public TextPlayer () {
-    audioManager = CommonContext.getAudioManager();
     ttsStart();
   }
 }

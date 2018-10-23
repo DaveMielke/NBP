@@ -1,26 +1,14 @@
 package org.nbp.common.speech;
 import org.nbp.common.*;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.os.Build;
 import android.content.Context;
 import android.media.AudioManager;
 
 public enum AudioStream {
-  ACCESSIBILITY(
-    AudioManager.STREAM_ACCESSIBILITY,
-    Build.VERSION_CODES.O
-  ),
-
-  ALARM(
-    AudioManager.STREAM_ALARM,
-    Build.VERSION_CODES.BASE
-  ),
-
-  DTMF(
-    AudioManager.STREAM_DTMF,
-    Build.VERSION_CODES.ECLAIR
-  ),
-
   MUSIC(
     AudioManager.STREAM_MUSIC,
     Build.VERSION_CODES.BASE
@@ -29,6 +17,11 @@ public enum AudioStream {
   NOTIFICATION(
     AudioManager.STREAM_NOTIFICATION,
     Build.VERSION_CODES.CUPCAKE
+  ),
+
+  ALARM(
+    AudioManager.STREAM_ALARM,
+    Build.VERSION_CODES.BASE
   ),
 
   RING(
@@ -44,6 +37,16 @@ public enum AudioStream {
   CALL(
     AudioManager.STREAM_VOICE_CALL,
     Build.VERSION_CODES.BASE
+  ),
+
+  DTMF(
+    AudioManager.STREAM_DTMF,
+    Build.VERSION_CODES.ECLAIR
+  ),
+
+  ACCESSIBILITY(
+    AudioManager.STREAM_ACCESSIBILITY,
+    Build.VERSION_CODES.O
   ),
 
   ; // end of enumeration
@@ -117,5 +120,41 @@ public enum AudioStream {
 
   public final void decreaseVolume () {
     adjustVolume(AudioManager.ADJUST_LOWER);
+  }
+
+  public static AudioStream getLoudestStream () {
+    AudioStream loudestStream = null;
+    float loudestVolume = -1f;
+
+    for (AudioStream stream : values()) {
+      if (!stream.isAvailable()) continue;
+      float volume = stream.getNormalizedVolume();
+
+      if (volume > loudestVolume) {
+        loudestVolume = volume;
+        loudestStream = stream;
+      }
+
+      if (loudestVolume == 1f) break;
+    }
+
+    return loudestStream;
+  }
+
+  private final static Object AUDIO_STREAMS_LOCK = new Object();
+  private static Map<Integer, AudioStream> audioStreams = null;
+
+  public static AudioStream getAudioStream (int number) {
+    synchronized (AUDIO_STREAMS_LOCK) {
+      if (audioStreams == null) {
+        audioStreams = new HashMap<Integer, AudioStream>();
+
+        for (AudioStream stream : values()) {
+          audioStreams.put(stream.getStreamNumber(), stream);
+        }
+      }
+    }
+
+    return audioStreams.get(number);
   }
 }
