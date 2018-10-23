@@ -2,6 +2,9 @@ package org.nbp.ipaws;
 
 import android.util.Log;
 
+import android.content.Context;
+import android.content.Intent;
+
 import android.util.Xml;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -242,6 +245,19 @@ public abstract class Alerts extends ApplicationComponent {
   }
 
   private static void show (Descriptor alert) {
+    String identifier = alert.identifier;
+    Log.d(LOG_TAG, ("showing alert: " + identifier));
+
+    Context context = getContext();
+    Intent intent = new Intent(context, MainActivity.class);
+
+    intent.addFlags(
+      Intent.FLAG_ACTIVITY_SINGLE_TOP |
+      Intent.FLAG_ACTIVITY_NEW_TASK
+    );
+
+    intent.putExtra(MainActivity.INTENT_EXTRA_ALERT_IDENTIFIER, identifier);
+    context.startActivity(intent);
   }
 
   private static void speak (Descriptor alert) {

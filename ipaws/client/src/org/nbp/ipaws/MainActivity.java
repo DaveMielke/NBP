@@ -54,32 +54,6 @@ public class MainActivity extends CommonActivity {
     }
   }
 
-  @Override
-  protected void onCreate (Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    setContentView(R.layout.main);
-    Controls.restore();
-
-    synchronized (LOCK) {
-      mainActivity = this;
-      stateView = (TextView)findViewById(R.id.state);
-      stateView.setText(stateText);
-    }
-  }
-
-  @Override
-  protected void onDestroy () {
-    try {
-      synchronized (LOCK) {
-        mainActivity = null;
-        stateView = null;
-      }
-    } finally {
-      super.onDestroy();
-    }
-  }
-
   public final void stopSpeaking (View view) {
     Announcements.stop();
     AlertPlayer.stop();
@@ -157,11 +131,15 @@ public class MainActivity extends CommonActivity {
     }
   }
 
+  private final void showAlert (Alerts.Descriptor alert) {
+    showDialog(R.string.alert_title, R.layout.alert, alert);
+  }
+
   private final void showAlert (String identifier) {
     Alerts.Descriptor alert = Alerts.get(identifier);
 
     if (alert != null) {
-      showDialog(R.string.alert_title, R.layout.alert, alert);
+      showAlert(alert);
     } else {
       showMessage(R.string.message_expired_alert);
     }
@@ -469,5 +447,68 @@ public class MainActivity extends CommonActivity {
     };
 
     showDialog(R.string.action_aboutApplication, R.layout.about, finisher);
+  }
+
+  public final static String INTENT_EXTRA_ALERT_IDENTIFIER = LOG_TAG + ".INTENT_EXTRA_ALERT_IDENTIFIER";
+
+  private final boolean showAlert (Intent intent) {
+    if (ApplicationSettings.SHOW_ALERTS) {
+      Bundle extras = intent.getExtras();
+
+      if (extras != null) {
+        String identifier = extras.getString(INTENT_EXTRA_ALERT_IDENTIFIER);
+
+        if (identifier != null) {
+          Alerts.Descriptor alert = Alerts.get(identifier);
+
+          if (alert != null) {
+            Log.d(LOG_TAG, ("showing alert: " + identifier));
+            showAlert(alert);
+            return true;
+          } else {
+            Log.w(LOG_TAG, ("alert not found: " + identifier));
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private final boolean showAlert () {
+    return showAlert(getIntent());
+  }
+
+  @Override
+  protected void onCreate (Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    setContentView(R.layout.main);
+    Controls.restore();
+
+    synchronized (LOCK) {
+      mainActivity = this;
+      stateView = (TextView)findViewById(R.id.state);
+      stateView.setText(stateText);
+    }
+
+    showAlert();
+  }
+
+  @Override
+  protected void onDestroy () {
+    try {
+      synchronized (LOCK) {
+        mainActivity = null;
+        stateView = null;
+      }
+    } finally {
+      super.onDestroy();
+    }
+  }
+
+  @Override
+  protected void onNewIntent (Intent intent) {
+    showAlert(intent);
   }
 }
