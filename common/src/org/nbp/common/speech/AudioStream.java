@@ -141,20 +141,24 @@ public enum AudioStream {
     return loudestStream;
   }
 
-  private final static Object AUDIO_STREAMS_LOCK = new Object();
-  private static Map<Integer, AudioStream> audioStreams = null;
+  private final static Object AUDIO_STREAM_MAP_LOCK = new Object();
+  private static Map<Integer, AudioStream> audioStreamMap = null;
 
-  public static AudioStream getAudioStream (int number) {
-    synchronized (AUDIO_STREAMS_LOCK) {
-      if (audioStreams == null) {
-        audioStreams = new HashMap<Integer, AudioStream>();
+  private static Map<Integer, AudioStream> makeAudioStreamMap () {
+    Map<Integer, AudioStream> map = new HashMap<Integer, AudioStream>();
 
-        for (AudioStream stream : values()) {
-          audioStreams.put(stream.getStreamNumber(), stream);
-        }
-      }
+    for (AudioStream stream : values()) {
+      map.put(stream.getStreamNumber(), stream);
     }
 
-    return audioStreams.get(number);
+    return map;
+  }
+
+  public static AudioStream getAudioStream (int number) {
+    synchronized (AUDIO_STREAM_MAP_LOCK) {
+      if (audioStreamMap == null) audioStreamMap = makeAudioStreamMap();
+    }
+
+    return audioStreamMap.get(number);
   }
 }
