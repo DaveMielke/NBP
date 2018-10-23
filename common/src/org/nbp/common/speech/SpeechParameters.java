@@ -10,14 +10,21 @@ import java.util.HashMap; // old parameters
 public class SpeechParameters {
   private final static String LOG_TAG = SpeechParameters.class.getName();
 
+  public static class OldParameters extends HashMap<String, String> {
+    public OldParameters () {
+      super();
+    }
+  }
+
+  public final static boolean USE_NEW_PARAMETERS = CommonUtilities.haveLollipop;
   private Bundle newParameters = null;
-  private HashMap<String, String> oldParameters = null;
+  private OldParameters oldParameters = null;
 
   protected SpeechParameters () {
-    if (CommonUtilities.haveLollipop) {
+    if (USE_NEW_PARAMETERS) {
       newParameters = new Bundle();
     } else {
-      oldParameters = new HashMap<String, String>();
+      oldParameters = new OldParameters();
     }
   }
 
@@ -25,34 +32,28 @@ public class SpeechParameters {
     return newParameters;
   }
 
-  public final HashMap<String, String> getOldParameters () {
+  public final OldParameters getOldParameters () {
     return oldParameters;
   }
 
   public final String getParameter (String key) {
-    if (newParameters != null) {
+    if (USE_NEW_PARAMETERS) {
       synchronized (newParameters) {
         return newParameters.getString(key);
       }
-    }
-
-    if (oldParameters != null) {
+    } else {
       synchronized (oldParameters) {
         return oldParameters.get(key);
       }
     }
-
-    return null;
   }
 
   public final void setParameter (String key, String value) {
-    if (newParameters != null) {
+    if (USE_NEW_PARAMETERS) {
       synchronized (newParameters) {
         newParameters.putString(key, value);
       }
-    }
-
-    if (oldParameters != null) {
+    } else {
       synchronized (oldParameters) {
         oldParameters.put(key, value);
       }
@@ -73,6 +74,14 @@ public class SpeechParameters {
 
   public final void setUtteranceIdentifier (String identifier) {
     setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
+  }
+
+  public final String getStream () {
+    return getParameter(TextToSpeech.Engine.KEY_PARAM_STREAM);
+  }
+
+  public final void setStream (int stream) {
+    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, stream);
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {

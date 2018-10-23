@@ -1,14 +1,10 @@
 package org.nbp.common.speech;
 import org.nbp.common.*;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import java.util.Set;
 import java.util.HashSet;
 
 import android.util.Log;
-import android.os.Bundle;
 
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
@@ -50,32 +46,9 @@ public abstract class TextPlayer {
     ));
   }
 
-  private final Bundle ttsParameterBundle = new Bundle();
-  private final HashMap<String, String> ttsParameterMap =
-            new HashMap<String, String>();
-
-  private final void setParameter (String key, String value) {
-    if (CommonUtilities.haveLollipop) {
-      synchronized (ttsParameterBundle) {
-        ttsParameterBundle.putString(key, value);
-      }
-    } else {
-      synchronized (ttsParameterMap) {
-        ttsParameterMap.put(key, value);
-      }
-    }
-  }
-
-  private final void setParameter (String key, int value) {
-    setParameter(key, Integer.toString(value));
-  }
-
-  private final void setParameter (String key, float value) {
-    setParameter(key, Float.toString(value));
-  }
-
-  private final static int OK = TextToSpeech.SUCCESS;
+  private final SpeechParameters ttsParameters = new SpeechParameters();
   private int ttsStatus = TextToSpeech.ERROR;
+  private final static int OK = TextToSpeech.SUCCESS;
 
   private final AudioManager audioManager;
 
@@ -90,7 +63,7 @@ public abstract class TextPlayer {
   };
 
   public final void setAudioStream (int stream) {
-    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, stream);
+    ttsParameters.setStream(stream);
   }
 
   public final void setAudioStream () {
@@ -183,16 +156,23 @@ public abstract class TextPlayer {
 
           String utterance = Integer.toString(++utteranceIdentifier);
           logSpeechAction("speak", utterance, segment);
+          ttsParameters.setUtteranceIdentifier(utterance);
 
           try {
             int queueMode = TextToSpeech.QUEUE_ADD;
             int status;
 
             if (CommonUtilities.haveLollipop) {
-              status = ttsObject.speak(segment, queueMode, ttsParameterBundle, utterance);
+              status = ttsObject.speak(
+                segment, queueMode,
+                ttsParameters.getNewParameters(),
+                ttsParameters.getUtteranceIdentifier()
+              );
             } else {
-              setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utterance);
-              status = ttsObject.speak(segment.toString(), queueMode, ttsParameterMap);
+              status = ttsObject.speak(
+                segment.toString(), queueMode,
+                ttsParameters.getOldParameters()
+              );
             }
 
             if (status != OK) break;
@@ -225,7 +205,7 @@ public abstract class TextPlayer {
     if (SpeechParameters.verifyVolume(volume)) {
       synchronized (this) {
         if (isStarted()) {
-          setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
+          ttsParameters.setVolume(volume);
           return true;
         }
       }
@@ -270,7 +250,7 @@ public abstract class TextPlayer {
     if (SpeechParameters.verifyBalance(balance)) {
       synchronized (this) {
         if (isStarted()) {
-          setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, balance);
+          ttsParameters.setBalance(balance);
           return true;
         }
       }
