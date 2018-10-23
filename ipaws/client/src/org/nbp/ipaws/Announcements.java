@@ -200,10 +200,6 @@ public abstract class Announcements extends ApplicationComponent {
           tts.setSpeechRate(SpeechParameters.RATE_REFERENCE);
           tts.setPitch(SpeechParameters.PITCH_REFERENCE);
 
-          int length = CommonUtilities.haveJellyBeanMR2?
-                       tts.getMaxSpeechInputLength():
-                       4000;
-
           if (ttsObject != null) {
             ttsObject.stop();
             ttsObject.shutdown();
@@ -211,7 +207,7 @@ public abstract class Announcements extends ApplicationComponent {
 
           ttsObject = tts;
           ttsEngine = engine;
-          ttsLengthLimit = length - 1; // Android returns the wrong value
+          ttsLengthLimit = SpeechParameters.getMaximumLength(tts);
 
           return true;
         }

@@ -247,7 +247,7 @@ public abstract class TextPlayer {
   }
 
   private final TextSegmentGenerator makeSegmentGenerator () {
-    int maximumLength = ttsParameters.getMaximumLength(ttsObject) - 1;
+    int maximumLength = SpeechParameters.getMaximumLength(ttsObject);
     logSpeechAction("maximum length", Integer.toString(maximumLength));
 
     TextSegmentGenerator.OuterGenerator speechSpanGenerator =

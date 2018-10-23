@@ -156,15 +156,17 @@ public class SpeechParameters {
   }
 
   public static int getMaximumLength (TextToSpeech tts) {
+    int length = 4000;
+
     if (CommonUtilities.haveJellyBeanMR2) {
       try {
-        return tts.getMaxSpeechInputLength();
+        length = tts.getMaxSpeechInputLength();
       } catch (IllegalArgumentException exception) {
         Log.w(LOG_TAG, "get maximum input length", exception);
       }
     }
 
-    return 4000;
+    return length - 1; // Android returns the wrong value
   }
 
   public final int speak (TextToSpeech tts, CharSequence text, int queueMode) {
