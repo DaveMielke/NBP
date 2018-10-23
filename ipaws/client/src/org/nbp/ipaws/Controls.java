@@ -8,6 +8,7 @@ public abstract class Controls {
   }
 
   public final static AlertMonitorControl alertMonitor = new AlertMonitorControl();
+  public final static ShowAlertsControl showAlerts = new ShowAlertsControl();
   public final static SpeakAlertsControl speakAlerts = new SpeakAlertsControl();
   public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
 
@@ -16,6 +17,7 @@ public abstract class Controls {
 
   public final static Control[] ALL = new Control[] {
     alertMonitor,
+    showAlerts,
     speakAlerts,
     speechEngine,
 

@@ -5,6 +5,7 @@ public abstract class ApplicationSettings {
   }
 
   public volatile static boolean ALERT_MONITOR = ApplicationDefaults.ALERT_MONITOR;
+  public volatile static boolean SHOW_ALERTS = ApplicationDefaults.SHOW_ALERTS;
   public volatile static boolean SPEAK_ALERTS = ApplicationDefaults.SPEAK_ALERTS;
   public volatile static String SPEECH_ENGINE = ApplicationDefaults.SPEECH_ENGINE;
 

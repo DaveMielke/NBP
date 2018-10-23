@@ -3,6 +3,7 @@
 <resources>
   <string name="control_group_general">General Settings</string>
   <string name="control_label_AlertMonitor">Alert Monitor</string>
+  <string name="control_label_ShowAlerts">Show Alerts</string>
   <string name="control_label_SpeakAlerts">Speak Alerts</string>
   <string name="control_label_SpeechEngine">Speech Engine</string>
 

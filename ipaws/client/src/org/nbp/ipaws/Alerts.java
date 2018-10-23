@@ -241,6 +241,9 @@ public abstract class Alerts extends ApplicationComponent {
     }
   }
 
+  private static void show (Descriptor alert) {
+  }
+
   private static void speak (Descriptor alert) {
     String reference = alert.resourceReference;
 
@@ -320,6 +323,7 @@ public abstract class Alerts extends ApplicationComponent {
             AlertPlayer.play();
           }
 
+          if (ApplicationSettings.SHOW_ALERTS) show(alert);
           AlertNotification.updateAlertCount();
         }
       } catch (IOException exception) {
