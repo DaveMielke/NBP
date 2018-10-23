@@ -178,26 +178,22 @@ public class SpeechParameters {
   }
 
   public final int speak (TextToSpeech tts, CharSequence text, int queueMode) {
-    if (USE_NEW_PARAMETERS) {
-      synchronized (newParameters) {
+    synchronized (this) {
+      if (USE_NEW_PARAMETERS) {
         return tts.speak(text, queueMode, newParameters, getUtteranceIdentifier());
-      }
-    } else {
-      synchronized (oldParameters) {
+      } else {
         return tts.speak(text.toString(), queueMode, oldParameters);
       }
     }
   }
 
   public final int synthesize (TextToSpeech tts, CharSequence text, File file) {
-    if (USE_NEW_PARAMETERS) {
-      synchronized (newParameters) {
+    synchronized (this) {
+      if (USE_NEW_PARAMETERS) {
         return tts.synthesizeToFile(
           text, newParameters, file, getUtteranceIdentifier()
         );
-      }
-    } else {
-      synchronized (oldParameters) {
+      } else {
         return tts.synthesizeToFile(
           text.toString(), oldParameters, file.getAbsolutePath()
         );
