@@ -6,10 +6,7 @@ import android.util.Log;
 
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-
 import org.nbp.common.speech.SpeechParameters;
-import android.os.Bundle;
-import java.util.HashMap;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
