@@ -221,23 +221,8 @@ public abstract class TextPlayer {
     return true;
   }
 
-  private static boolean verifyRange (String label, float value, float minimum, float maximum) {
-    String reason;
-
-    if (value < minimum) {
-      reason = value + " less than " + minimum;
-    } else if (value > maximum) {
-      reason = value + " greater than " + maximum;
-    } else {
-      return true;
-    }
-
-    Log.w(LOG_TAG, ("invalid " + label + ": " + reason));
-    return false;
-  }
-
   public final boolean setVolume (float volume) {
-    if (verifyRange("volume", volume, SpeechParameters.VOLUME_MINIMUM, SpeechParameters.VOLUME_MAXIMUM)) {
+    if (SpeechParameters.verifyVolume(volume)) {
       synchronized (this) {
         if (isStarted()) {
           setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
@@ -250,7 +235,7 @@ public abstract class TextPlayer {
   }
 
   public final boolean setRate (float rate) {
-    if (verifyRange("rate", rate, SpeechParameters.RATE_MINIMUM, SpeechParameters.RATE_MAXIMUM)) {
+    if (SpeechParameters.verifyRate(rate)) {
       synchronized (this) {
         if (isStarted()) {
           try {
@@ -266,7 +251,7 @@ public abstract class TextPlayer {
   }
 
   public final boolean setPitch (float pitch) {
-    if (verifyRange("pitch", pitch, SpeechParameters.PITCH_MINIMUM, SpeechParameters.PITCH_MAXIMUM)) {
+    if (SpeechParameters.verifyPitch(pitch)) {
       synchronized (this) {
         if (isStarted()) {
           try {
@@ -282,7 +267,7 @@ public abstract class TextPlayer {
   }
 
   public final boolean setBalance (float balance) {
-    if (verifyRange("balance", balance, SpeechParameters.BALANCE_LEFT, SpeechParameters.BALANCE_RIGHT)) {
+    if (SpeechParameters.verifyBalance(balance)) {
       synchronized (this) {
         if (isStarted()) {
           setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, balance);

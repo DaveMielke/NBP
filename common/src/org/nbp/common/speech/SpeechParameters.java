@@ -21,7 +21,15 @@ public class SpeechParameters {
     }
   }
 
-  public final String get (String key) {
+  public final Bundle getNewParameters () {
+    return newParameters;
+  }
+
+  public final HashMap<String, String> getOldParameters () {
+    return oldParameters;
+  }
+
+  public final String getParameter (String key) {
     if (newParameters != null) {
       synchronized (newParameters) {
         return newParameters.getString(key);
@@ -37,7 +45,7 @@ public class SpeechParameters {
     return null;
   }
 
-  public final void set (String key, String value) {
+  public final void setParameter (String key, String value) {
     if (newParameters != null) {
       synchronized (newParameters) {
         newParameters.putString(key, value);
@@ -51,20 +59,20 @@ public class SpeechParameters {
     }
   }
 
-  public final void set(String key, int value) {
-    set(key, Integer.toString(value));
+  public final void setParameter (String key, int value) {
+    setParameter(key, Integer.toString(value));
   }
 
-  public final void set(String key, float value) {
-    set(key, Float.toString(value));
+  public final void setParameter (String key, float value) {
+    setParameter(key, Float.toString(value));
   }
 
   public final String getUtteranceIdentifier () {
-    return get(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
+    return getParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
   }
 
   public final void setUtteranceIdentifier (String identifier) {
-    set(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
+    setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
@@ -85,39 +93,39 @@ public class SpeechParameters {
   public final static float VOLUME_MAXIMUM = 1.0f;
   public final static float VOLUME_MINIMUM = 0.0f;
 
-  public final boolean verifyVolume (float value) {
+  public final static boolean verifyVolume (float value) {
     return verifyRange("volume", value, VOLUME_MINIMUM, VOLUME_MAXIMUM);
   }
 
   public final String getVolume () {
-    return get(TextToSpeech.Engine.KEY_PARAM_VOLUME);
+    return getParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME);
   }
 
   public final void setVolume (float value) {
-    set(TextToSpeech.Engine.KEY_PARAM_VOLUME, value);
+    setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, value);
   }
 
   public final static float BALANCE_CENTER = 0.0f;
   public final static float BALANCE_RIGHT = 1.0f;
   public final static float BALANCE_LEFT = -BALANCE_RIGHT;
 
-  public final boolean verifyBalance (float value) {
+  public final static boolean verifyBalance (float value) {
     return verifyRange("balance", value, BALANCE_LEFT, BALANCE_RIGHT);
   }
 
   public final String getBalance () {
-    return get(TextToSpeech.Engine.KEY_PARAM_PAN);
+    return getParameter(TextToSpeech.Engine.KEY_PARAM_PAN);
   }
 
   public final void setBalance (float value) {
-    set(TextToSpeech.Engine.KEY_PARAM_PAN, value);
+    setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, value);
   }
 
   public final static float RATE_REFERENCE = 1.0f;
   public final static float RATE_MAXIMUM = 4.0f;
   public final static float RATE_MINIMUM = 1.0f / 3.0f;
 
-  public final boolean verifyRate (float value) {
+  public final static boolean verifyRate (float value) {
     return verifyRange("rate", value, RATE_MINIMUM, RATE_MAXIMUM);
   }
 
@@ -125,7 +133,7 @@ public class SpeechParameters {
   public final static float PITCH_MAXIMUM = 2.0f;
   public final static float PITCH_MINIMUM = 1.0f / 2.0f;
 
-  public final boolean verifyPitch (float value) {
+  public final static boolean verifyPitch (float value) {
     return verifyRange("pitch", value, PITCH_MINIMUM, PITCH_MAXIMUM);
   }
 }
