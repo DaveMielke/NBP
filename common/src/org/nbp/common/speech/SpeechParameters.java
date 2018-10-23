@@ -78,12 +78,15 @@ public class SpeechParameters {
     setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
   }
 
-  public final String getStream () {
-    return getParameter(TextToSpeech.Engine.KEY_PARAM_STREAM);
+  private Integer currentStream = null;
+
+  public final Integer getStream () {
+    return currentStream;
   }
 
-  public final void setStream (int stream) {
-    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, stream);
+  public final void setStream (int value) {
+    currentStream = value;
+    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, value);
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
@@ -103,32 +106,36 @@ public class SpeechParameters {
 
   public final static float VOLUME_MAXIMUM = 1.0f;
   public final static float VOLUME_MINIMUM = 0.0f;
+  private Float currentVolume = null;
 
   public final static boolean verifyVolume (float value) {
     return verifyRange("volume", value, VOLUME_MINIMUM, VOLUME_MAXIMUM);
   }
 
-  public final String getVolume () {
-    return getParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME);
+  public final Float getVolume () {
+    return currentVolume;
   }
 
   public final void setVolume (float value) {
+    currentVolume = value;
     setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, value);
   }
 
   public final static float BALANCE_CENTER = 0.0f;
   public final static float BALANCE_RIGHT = 1.0f;
   public final static float BALANCE_LEFT = -BALANCE_RIGHT;
+  private Float currentBalance = null;
 
   public final static boolean verifyBalance (float value) {
     return verifyRange("balance", value, BALANCE_LEFT, BALANCE_RIGHT);
   }
 
-  public final String getBalance () {
-    return getParameter(TextToSpeech.Engine.KEY_PARAM_PAN);
+  public final Float getBalance () {
+    return currentBalance;
   }
 
   public final void setBalance (float value) {
+    currentBalance = value;
     setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, value);
   }
 
