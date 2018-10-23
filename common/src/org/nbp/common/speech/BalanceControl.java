@@ -20,7 +20,7 @@ public abstract class BalanceControl extends LinearFloatControl {
     if (value == 0.0f) return getString(R.string.control_speech_balance_center);
 
     StringBuilder sb = new StringBuilder();
-    float maximum = SpeechParameters.BALANCE_MAXIMUM;
+    float maximum = Math.abs(SpeechParameters.BALANCE_RIGHT);
 
     if (value < 0.0f) {
       sb.append(getString(R.string.control_speech_balance_left));

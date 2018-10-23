@@ -282,7 +282,7 @@ public abstract class TextPlayer {
   }
 
   public final boolean setBalance (float balance) {
-    if (verifyRange("balance", balance, SpeechParameters.BALANCE_MINIMUM, SpeechParameters.BALANCE_MAXIMUM)) {
+    if (verifyRange("balance", balance, SpeechParameters.BALANCE_LEFT, SpeechParameters.BALANCE_RIGHT)) {
       synchronized (this) {
         if (isStarted()) {
           setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, balance);
