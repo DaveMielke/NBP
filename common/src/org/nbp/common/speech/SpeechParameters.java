@@ -7,6 +7,8 @@ import android.speech.tts.TextToSpeech;
 import android.os.Bundle; // new parameters
 import java.util.HashMap; // old parameters
 
+import java.io.File;
+
 public class SpeechParameters {
   private final static String LOG_TAG = SpeechParameters.class.getName();
 
@@ -20,7 +22,7 @@ public class SpeechParameters {
   private Bundle newParameters = null;
   private OldParameters oldParameters = null;
 
-  protected SpeechParameters () {
+  public SpeechParameters () {
     if (USE_NEW_PARAMETERS) {
       newParameters = new Bundle();
     } else {
@@ -163,6 +165,18 @@ public class SpeechParameters {
       return tts.speak(text, queueMode, newParameters, getUtteranceIdentifier());
     } else {
       return tts.speak(text.toString(), queueMode, oldParameters);
+    }
+  }
+
+  public final int synthesize (TextToSpeech tts, CharSequence text, File file) {
+    if (USE_NEW_PARAMETERS) {
+      return tts.synthesizeToFile(
+        text, newParameters, file, getUtteranceIdentifier()
+      );
+    } else {
+      return tts.synthesizeToFile(
+        text.toString(), oldParameters, file.getAbsolutePath()
+      );
     }
   }
 }

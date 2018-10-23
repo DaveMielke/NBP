@@ -275,35 +275,20 @@ public abstract class Announcements extends ApplicationComponent {
     }
 
     private final void convertAnnouncement (Announcement announcement) {
-      String identifier = announcement.identifier;
-      File file = getFile(identifier);
-      String text = fixText(announcement.text);
       int status;
 
+      SpeechParameters parameters = new SpeechParameters();
+      parameters.setVolume(SpeechParameters.VOLUME_MAXIMUM);
+
+      String identifier = announcement.identifier;
+      parameters.setUtteranceIdentifier(identifier);
+
       synchronized (TTS_LOCK) {
-        String volumeKey = TextToSpeech.Engine.KEY_PARAM_VOLUME;
-        String volumeSetting = Float.toString(SpeechParameters.VOLUME_MAXIMUM);
-
-        if (CommonUtilities.haveLollipop) {
-          Bundle parameters = new Bundle();
-          parameters.putString(volumeKey, volumeSetting);
-
-          status = ttsObject.synthesizeToFile(
-            text, parameters, file, identifier
-          );
-        } else {
-          HashMap<String, String> parameters = new HashMap<String, String>();
-          parameters.put(volumeKey, volumeSetting);
-
-          parameters.put(
-            TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
-            identifier
-          );
-
-          status = ttsObject.synthesizeToFile(
-            text, parameters, file.getAbsolutePath()
-          );
-        }
+        status = parameters.synthesize(
+          ttsObject,
+          fixText(announcement.text),
+          getFile(identifier)
+        );
       }
 
       if (status == TextToSpeech.SUCCESS) {
