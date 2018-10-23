@@ -12,7 +12,7 @@ import java.io.File;
 public class SpeechParameters {
   private final static String LOG_TAG = SpeechParameters.class.getName();
 
-  public static class OldParameters extends HashMap<String, String> {
+  private static class OldParameters extends HashMap<String, String> {
     public OldParameters () {
       super();
     }
@@ -87,6 +87,14 @@ public class SpeechParameters {
       currentStream = value;
       setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, value);
     }
+  }
+
+  public final void setStream () {
+    setStream(TextToSpeech.Engine.DEFAULT_STREAM);
+  }
+
+  public final void setStream (AudioStream stream) {
+    setStream(stream.getStreamNumber());
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
