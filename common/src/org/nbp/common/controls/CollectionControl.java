@@ -89,10 +89,12 @@ public abstract class CollectionControl<V> extends ItemControl {
   }
 
   private final int getIntegerValue (V value) {
-    if (value == null) return -1;
-    Integer index = valueIndex.get(getValueName(value));
-    if (index == null) return -1;
-    return index;
+    if (value != null) {
+      Integer index = valueIndex.get(getValueName(value));
+      if (index != null) return index;
+    }
+
+    return -1;
   }
 
   @Override
