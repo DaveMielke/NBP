@@ -160,20 +160,7 @@ public abstract class TextPlayer {
 
           try {
             int queueMode = TextToSpeech.QUEUE_ADD;
-            int status;
-
-            if (CommonUtilities.haveLollipop) {
-              status = ttsObject.speak(
-                segment, queueMode,
-                ttsParameters.getNewParameters(),
-                ttsParameters.getUtteranceIdentifier()
-              );
-            } else {
-              status = ttsObject.speak(
-                segment.toString(), queueMode,
-                ttsParameters.getOldParameters()
-              );
-            }
+            int status = ttsParameters.speak(ttsObject, segment, queueMode);
 
             if (status != OK) break;
             activeUtterances.add(utterance);
@@ -259,20 +246,8 @@ public abstract class TextPlayer {
     return false;
   }
 
-  private final int getMaximumLength () {
-    if (CommonUtilities.haveJellyBeanMR2) {
-      try {
-        return ttsObject.getMaxSpeechInputLength();
-      } catch (IllegalArgumentException exception) {
-        logSpeechFailure("get length", exception);
-      }
-    }
-
-    return 4000;
-  }
-
   private final TextSegmentGenerator makeSegmentGenerator () {
-    int maximumLength = getMaximumLength() - 1;
+    int maximumLength = ttsParameters.getMaximumLength(ttsObject) - 1;
     logSpeechAction("maximum length", Integer.toString(maximumLength));
 
     TextSegmentGenerator.OuterGenerator speechSpanGenerator =

@@ -145,4 +145,24 @@ public class SpeechParameters {
   public final static boolean verifyPitch (float value) {
     return verifyRange("pitch", value, PITCH_MINIMUM, PITCH_MAXIMUM);
   }
+
+  public static int getMaximumLength (TextToSpeech tts) {
+    if (CommonUtilities.haveJellyBeanMR2) {
+      try {
+        return tts.getMaxSpeechInputLength();
+      } catch (IllegalArgumentException exception) {
+        Log.w(LOG_TAG, "get maximum input length", exception);
+      }
+    }
+
+    return 4000;
+  }
+
+  public final int speak (TextToSpeech tts, CharSequence text, int queueMode) {
+    if (USE_NEW_PARAMETERS) {
+      return tts.speak(text, queueMode, newParameters, getUtteranceIdentifier());
+    } else {
+      return tts.speak(text.toString(), queueMode, oldParameters);
+    }
+  }
 }
