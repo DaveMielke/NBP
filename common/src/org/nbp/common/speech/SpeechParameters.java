@@ -30,14 +30,6 @@ public class SpeechParameters {
     }
   }
 
-  public final Bundle getNewParameters () {
-    return newParameters;
-  }
-
-  public final OldParameters getOldParameters () {
-    return oldParameters;
-  }
-
   public final String getParameter (String key) {
     if (USE_NEW_PARAMETERS) {
       synchronized (newParameters) {
@@ -71,22 +63,30 @@ public class SpeechParameters {
   }
 
   public final String getUtteranceIdentifier () {
-    return getParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
+    synchronized (this) {
+      return getParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
+    }
   }
 
   public final void setUtteranceIdentifier (String identifier) {
-    setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
+    synchronized (this) {
+      setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
+    }
   }
 
   private Integer currentStream = null;
 
   public final Integer getStream () {
-    return currentStream;
+    synchronized (this) {
+      return currentStream;
+    }
   }
 
   public final void setStream (int value) {
-    currentStream = value;
-    setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, value);
+    synchronized (this) {
+      currentStream = value;
+      setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, value);
+    }
   }
 
   private static boolean verifyRange (String label, float value, float minimum, float maximum) {
@@ -113,12 +113,16 @@ public class SpeechParameters {
   }
 
   public final Float getVolume () {
-    return currentVolume;
+    synchronized (this) {
+      return currentVolume;
+    }
   }
 
   public final void setVolume (float value) {
-    currentVolume = value;
-    setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, value);
+    synchronized (this) {
+      currentVolume = value;
+      setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, value);
+    }
   }
 
   public final static float BALANCE_CENTER = 0.0f;
@@ -131,12 +135,16 @@ public class SpeechParameters {
   }
 
   public final Float getBalance () {
-    return currentBalance;
+    synchronized (this) {
+      return currentBalance;
+    }
   }
 
   public final void setBalance (float value) {
-    currentBalance = value;
-    setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, value);
+    synchronized (this) {
+      currentBalance = value;
+      setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, value);
+    }
   }
 
   public final static float RATE_REFERENCE = 1.0f;
@@ -171,21 +179,29 @@ public class SpeechParameters {
 
   public final int speak (TextToSpeech tts, CharSequence text, int queueMode) {
     if (USE_NEW_PARAMETERS) {
-      return tts.speak(text, queueMode, newParameters, getUtteranceIdentifier());
+      synchronized (newParameters) {
+        return tts.speak(text, queueMode, newParameters, getUtteranceIdentifier());
+      }
     } else {
-      return tts.speak(text.toString(), queueMode, oldParameters);
+      synchronized (oldParameters) {
+        return tts.speak(text.toString(), queueMode, oldParameters);
+      }
     }
   }
 
   public final int synthesize (TextToSpeech tts, CharSequence text, File file) {
     if (USE_NEW_PARAMETERS) {
-      return tts.synthesizeToFile(
-        text, newParameters, file, getUtteranceIdentifier()
-      );
+      synchronized (newParameters) {
+        return tts.synthesizeToFile(
+          text, newParameters, file, getUtteranceIdentifier()
+        );
+      }
     } else {
-      return tts.synthesizeToFile(
-        text.toString(), oldParameters, file.getAbsolutePath()
-      );
+      synchronized (oldParameters) {
+        return tts.synthesizeToFile(
+          text.toString(), oldParameters, file.getAbsolutePath()
+        );
+      }
     }
   }
 }

@@ -1,7 +1,5 @@
 package org.nbp.ipaws;
 
-import org.nbp.common.CommonUtilities;
-
 import android.util.Log;
 
 import android.speech.tts.TextToSpeech;
@@ -148,7 +146,7 @@ public abstract class Announcements extends ApplicationComponent {
   private final static Object TTS_LOCK = new Object();
   private static TextToSpeech ttsObject = null;
   private static String ttsEngine = null;
-  private static int ttsLengthLimit = 0;
+  private static int ttsMaximumLength = 0;
 
   public static void ttsStopConversion () {
     synchronized (TTS_LOCK) {
@@ -207,7 +205,7 @@ public abstract class Announcements extends ApplicationComponent {
 
           ttsObject = tts;
           ttsEngine = engine;
-          ttsLengthLimit = SpeechParameters.getMaximumLength(tts);
+          ttsMaximumLength = SpeechParameters.getMaximumLength(tts);
 
           return true;
         }
@@ -239,7 +237,7 @@ public abstract class Announcements extends ApplicationComponent {
              ;
 
       {
-        int length = ttsLengthLimit;
+        int length = ttsMaximumLength;
 
         if (text.length() > length) {
           while (length > 0) {
@@ -256,7 +254,7 @@ public abstract class Announcements extends ApplicationComponent {
           Log.w(LOG_TAG,
             String.format(
               "announcement too long: %d > %d -> %d",
-              text.length(), ttsLengthLimit, length
+              text.length(), ttsMaximumLength, length
             )
           );
 
