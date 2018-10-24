@@ -34,26 +34,22 @@ import android.content.DialogInterface;
 public abstract class CommonSettingsActivity extends CommonActivity {
   private final static String LOG_TAG = CommonSettingsActivity.class.getName();
 
-  private final Control[] settingControls;
+  private final Control[] controlsInCreationOrder;
+  private final Control[] controlsInRestoreOrder;
 
-  protected CommonSettingsActivity () {
-    settingControls = null;
+  protected CommonSettingsActivity (Control[] inCreationOrder, Control[] inRestoreOrder) {
+    super();
+    controlsInCreationOrder = inCreationOrder;
+    controlsInRestoreOrder = inRestoreOrder;
   }
 
   protected CommonSettingsActivity (Control[] controls) {
-    super();
-
-    int count = controls.length;
-    settingControls = new Control[count];
-    System.arraycopy(controls, 0, settingControls, 0, count);
+    this(controls, controls);
   }
 
-  protected CommonSettingsActivity (Collection<Control> controls) {
-    super();
-
-    int count = controls.size();
-    settingControls = new Control[count];
-    controls.toArray(settingControls);
+  protected CommonSettingsActivity () {
+    controlsInCreationOrder = null;
+    controlsInRestoreOrder = null;
   }
 
   private final static int FRAGMENT_CONTAINER_ID = R.id.settings_fragment_container;
@@ -111,7 +107,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.saveValues(settingControls);
+          Control.saveValues(controlsInCreationOrder);
           Control.confirm(R.string.control_save_confirmation);
         }
       }
@@ -126,7 +122,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.restoreSavedValues(settingControls);
+          Control.restoreSavedValues(controlsInRestoreOrder);
           Control.confirm(R.string.control_restore_confirmation);
         }
       }
@@ -141,7 +137,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.restoreDefaultValues(settingControls);
+          Control.restoreDefaultValues(controlsInRestoreOrder);
           Control.confirm(R.string.control_reset_confirmation);
         }
       }
@@ -412,7 +408,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   private Fragment createControlGroupsFragment () {
     Map<String, ViewGroup> groupTables = new LinkedHashMap<String, ViewGroup>();
 
-    for (Control control : settingControls) {
+    for (Control control : controlsInCreationOrder) {
       String label = control.getGroup();
       ViewGroup table = groupTables.get(label);
 
@@ -496,7 +492,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     lockScreenOrientation();
     setContentView(R.layout.common_settings);
 
-    if (settingControls != null) {
+    if (controlsInCreationOrder != null) {
       getFragmentManager()
         .beginTransaction()
         .add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment())

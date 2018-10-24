@@ -26,7 +26,7 @@ public abstract class Control {
     }
   }
 
-  public static Control[] getOriginalOrder () {
+  public static Control[] getControlsInCreationOrder () {
     synchronized (allControls) {
       return allControls.toArray(new Control[allControls.size()]);
     }
@@ -44,33 +44,33 @@ public abstract class Control {
     }
   }
 
-  private static void addControls (Set<Control> controls, List<Control> list, boolean[] visited) {
+  private static void addControls (Set<Control> controls, List<Control> list, boolean[] added) {
     for (Control control : controls) {
       int index = control.orderNumber;
 
-      if (!visited[index]) {
+      if (!added[index]) {
         if (control.dependentControls != null) {
-          addControls(control.dependentControls, list, visited);
+          addControls(control.dependentControls, list, added);
         }
 
-        if (visited[index]) {
+        if (added[index]) {
           Log.w(LOG_TAG, ("control dependency loop detected: " + control.getClass().getName()));
         } else {
           list.add(control);
-          visited[index] = true;
+          added[index] = true;
         }
       }
     }
   }
 
-  public static Control[] getRestoreOrder () {
+  public static Control[] getControlsInRestoreOrder () {
     synchronized (allControls) {
       int count = allControls.size();
-      boolean[] visited = new boolean[count];
-      for (int index=0; index<count; index+=1) visited[index] = false;
+      boolean[] added = new boolean[count];
+      for (int index=0; index<count; index+=1) added[index] = false;
 
       List<Control> controls = new ArrayList<Control>();
-      addControls(allControls, controls, visited);
+      addControls(allControls, controls, added);
 
       return controls.toArray(new Control[count]);
     }

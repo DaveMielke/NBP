@@ -7,38 +7,30 @@ public abstract class Controls {
   private Controls () {
   }
 
+  // general settings
   public final static AlertMonitorControl alertMonitor = new AlertMonitorControl();
   public final static ShowAlertsControl showAlerts = new ShowAlertsControl();
   public final static SpeakAlertsControl speakAlerts = new SpeakAlertsControl();
   public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
 
+  // developer settings
   public final static PrimaryServerControl primaryServer = new PrimaryServerControl();
   public final static SecondaryServerControl secondaryServer = new SecondaryServerControl();
 
-  public final static Control[] ALL = new Control[] {
-    alertMonitor,
-    showAlerts,
-    speakAlerts,
-    speechEngine,
+  static {
+    alertMonitor.addDependencies(primaryServer, secondaryServer);
+    alertMonitor.addDependencies(showAlerts, speakAlerts, speechEngine);
+  }
 
-    primaryServer,
-    secondaryServer
-  };
+  public final static Control[] inCreationOrder = Control.getControlsInCreationOrder();
+  public final static Control[] inRestoreOrder = Control.getControlsInRestoreOrder();
+  private static boolean restored = false;
 
-  private static boolean RESTORE = true;
-
-  public final static void restore () {
-    synchronized (ALL) {
-      if (RESTORE) {
-        RESTORE = false;
-
-        for (Control control : ALL) {
-          if (control == alertMonitor) continue;
-
-          control.restoreCurrentValue();
-        }
-
-        alertMonitor.restoreCurrentValue();
+  public static void restore () {
+    synchronized (inRestoreOrder) {
+      if (!restored) {
+        restored = true;
+        Control.restoreCurrentValues(inRestoreOrder);
         AlertNotification.create();
       }
     }
