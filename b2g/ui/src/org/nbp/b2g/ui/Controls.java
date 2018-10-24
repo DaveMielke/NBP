@@ -4,11 +4,6 @@ import org.nbp.b2g.ui.controls.*;
 import org.nbp.common.controls.Control;
 import org.nbp.common.controls.BooleanControl;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Collection;
-import java.util.ArrayList;
-
 public abstract class Controls {
   private Controls () {
   }
@@ -24,17 +19,20 @@ public abstract class Controls {
     );
   }
 
+  // general settings
   public final static LiteraryBrailleControl literaryBraille = new LiteraryBrailleControl();
   public final static BrailleCodeControl brailleCode = new BrailleCodeControl();
   public final static WordWrapControl wordWrap = new WordWrapControl();
   public final static ShowNotificationsControl showNotifications = new ShowNotificationsControl();
 
+  // input settings
   public final static TypingModeControl typingMode = new TypingModeControl();
   public final static TypingBoldControl typingBold = new TypingBoldControl();
   public final static TypingItalicControl typingItalic = new TypingItalicControl();
   public final static TypingStrikeControl typingStrike = new TypingStrikeControl();
   public final static TypingUnderlineControl typingUnderline = new TypingUnderlineControl();
 
+  // braille settings
   public final static ShowHighlightedControl showHighlighted = new ShowHighlightedControl();
   public final static SelectionIndicatorControl selectionIndicator = new SelectionIndicatorControl();
   public final static CursorIndicatorControl cursorIndicator = new CursorIndicatorControl();
@@ -42,6 +40,7 @@ public abstract class Controls {
   public final static BrailleMonitorControl brailleMonitor = new BrailleMonitorControl();
   public final static BrailleEnabledControl brailleEnabled = new BrailleEnabledControl();
 
+  // speech settings
   public final static SpeechEnabledControl speechEnabled = new SpeechEnabledControl();
   public final static EchoWordsControl echoWords = new EchoWordsControl();
   public final static EchoCharactersControl echoCharacters = new EchoCharactersControl();
@@ -54,21 +53,26 @@ public abstract class Controls {
   public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
   public final static SleepTalkControl sleepTalk = new SleepTalkControl();
 
+  // keyboard settings
   public final static InputEditingControl inputEditing = new InputEditingControl();
   public final static LongPressControl longPress = new LongPressControl();
   public final static ReversePanningControl reversePanning = new ReversePanningControl();
 
+  // one hand settings
   public final static OneHandControl oneHand = new OneHandControl();
   public final static SpaceTimeoutControl spaceTimeout = new SpaceTimeoutControl();
   public final static PressedTimeoutControl pressedTimeout = new PressedTimeoutControl();
 
+  // remote settings
   public final static RemoteDisplayControl remoteDisplay = new RemoteDisplayControl();
   public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
 
+  // advanced settings
   public final static ComputerBrailleControl computerBraille = new ComputerBrailleControl();
   public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
   public final static PhoneticAlphabetControl phoneticAlphabet = new PhoneticAlphabetControl();
 
+  // developer settings
   public final static CrashEmailsControl crashEmails = new CrashEmailsControl();
   public final static AdvancedActionsControl advancedActions = new AdvancedActionsControl();
   public final static ExtraIndicatorsControl extraIndicators = new ExtraIndicatorsControl();
@@ -81,91 +85,27 @@ public abstract class Controls {
   public final static LogBrailleControl logBraille = new LogBrailleControl();
   public final static LogSpeechControl logSpeech = new LogSpeechControl();
 
-  private final static Control[] allControls = new Control[] {
-    literaryBraille,
-    brailleCode,
-    wordWrap,
-    showNotifications,
-
-    typingMode,
-    typingBold,
-    typingItalic,
-    typingStrike,
-    typingUnderline,
-
-    showHighlighted,
-    selectionIndicator,
-    cursorIndicator,
-    brailleFirmness,
-    brailleMonitor,
-    brailleEnabled,
-
-    speechEnabled,
-    echoWords,
-    echoCharacters,
-    echoDeletions,
-    echoSelection,
-    speakLines,
-    speechVolume,
-    speechRate,
-    speechPitch,
-    speechBalance,
-    sleepTalk,
-
-    inputEditing,
-    longPress,
-    reversePanning,
-
-    oneHand,
-    spaceTimeout,
-    pressedTimeout,
-
-    remoteDisplay,
-    secureConnection,
-
-    computerBraille,
-    screenOrientation,
-    phoneticAlphabet,
-
-    crashEmails,
-    advancedActions,
-    extraIndicators,
-    eventMessages,
-    logActions,
-    logNavigation,
-    logUpdates,
-    logKeyboard,
-    logEmulations,
-    logBraille,
-    logSpeech
-  };
-
-  public final static Collection<Control> ALL;
   static {
-    ArrayList<Control> list = new ArrayList<Control>(allControls.length);
-
-    for (Control control : allControls) {
-      list.add(control);
-    }
-
-    list.trimToSize();
-    ALL = Collections.unmodifiableCollection(list);
+    remoteDisplay.addDependencies(secureConnection);
   }
 
+  public final static Control[] inCreationOrder = Control.getControlsInCreationOrder();
+  public final static Control[] inRestoreOrder = Control.getControlsInRestoreOrder();
+
   public static void saveValues () {
-    Control.saveValues(allControls);
+    Control.saveValues(inCreationOrder);
   }
 
   public static void restoreSavedValues () {
-    Control.restoreSavedValues(allControls);
+    Control.restoreSavedValues(inRestoreOrder);
   }
 
   public static void restoreDefaultValues () {
-    Control.restoreDefaultValues(allControls);
+    Control.restoreDefaultValues(inRestoreOrder);
   }
 
   public static void restoreCurrentValues () {
-    Control.restoreCurrentValues(allControls);
+    Control.restoreCurrentValues(inRestoreOrder);
   }
 
   private final static BooleanControl[] highlightedTypingControls = new BooleanControl[] {
