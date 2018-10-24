@@ -7,27 +7,21 @@ public abstract class Controls {
   private Controls () {
   }
 
+  // general settings
   public final static ProtectTextControl protectText = new ProtectTextControl();
   public final static SizeLimitControl sizeLimit = new SizeLimitControl();
 
+  // braille settings
   public final static BrailleModeControl brailleMode = new BrailleModeControl();
   public final static BrailleCodeControl brailleCode = new BrailleCodeControl();
 
+  // document settings
   public final static AuthorNameControl authorName = new AuthorNameControl();
 
-  public final static Control[] ALL = new Control[] {
-    protectText,
-    sizeLimit,
+  public final static Control[] inCreationOrder = Control.getControlsInCreationOrder();
+  public final static Control[] inRestoreOrder = Control.getControlsInRestoreOrder();
 
-    brailleMode,
-    brailleCode,
-
-    authorName
-  };
-
-  public final static void restore () {
-    for (Control control : ALL) {
-      control.restoreCurrentValue();
-    }
+  public static void restore () {
+    Control.restoreCurrentValues(inRestoreOrder);
   }
 }
