@@ -3,6 +3,10 @@ import org.nbp.common.*;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import android.util.Log;
 import android.content.Context;
@@ -11,7 +15,65 @@ import android.content.SharedPreferences;
 public abstract class Control {
   private final static String LOG_TAG = Control.class.getName();
 
+  private final static Set<Control> allControls = new LinkedHashSet<Control>();
+  private Set<Control> dependentControls = null;
+  private final int orderNumber;
+
   protected Control () {
+    synchronized (allControls) {
+      orderNumber = allControls.size();
+      allControls.add(this);
+    }
+  }
+
+  public static Control[] getOriginalOrder () {
+    synchronized (allControls) {
+      return allControls.toArray(new Control[allControls.size()]);
+    }
+  }
+
+  public final void addDependencies (Control... controls) {
+    synchronized (allControls) {
+      if (dependentControls == null) {
+        dependentControls = new LinkedHashSet<Control>();
+      }
+
+      for (Control control : controls) {
+        dependentControls.add(control);
+      }
+    }
+  }
+
+  private static void addControls (Set<Control> controls, List<Control> list, boolean[] visited) {
+    for (Control control : controls) {
+      int index = control.orderNumber;
+
+      if (!visited[index]) {
+        if (control.dependentControls != null) {
+          addControls(control.dependentControls, list, visited);
+        }
+
+        if (visited[index]) {
+          Log.w(LOG_TAG, ("control dependency loop detected: " + control.getClass().getName()));
+        } else {
+          list.add(control);
+          visited[index] = true;
+        }
+      }
+    }
+  }
+
+  public static Control[] getRestoreOrder () {
+    synchronized (allControls) {
+      int count = allControls.size();
+      boolean[] visited = new boolean[count];
+      for (int index=0; index<count; index+=1) visited[index] = false;
+
+      List<Control> controls = new ArrayList<Control>();
+      addControls(allControls, controls, visited);
+
+      return controls.toArray(new Control[count]);
+    }
   }
 
   protected abstract int getResourceForLabel ();
