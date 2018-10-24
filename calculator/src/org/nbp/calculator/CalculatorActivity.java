@@ -519,13 +519,17 @@ public class CalculatorActivity extends CommonActivity {
   }
 
   private final void setAlternateKeypadButtonListener () {
-    setClickListener(
-      R.id.button_alternateKeypad,
+    final View button = findViewById(R.id.button_alternateKeypad);
+
+    button.setOnClickListener(
       new View.OnClickListener() {
         @Override
         public void onClick (View view) {
           currentKeypad += 1;
           currentKeypad %= activeKeypads.length;
+
+          View keypad = getCurrentKeypad().getView();
+          button.setContentDescription(keypad.getContentDescription());
 
           showKeypad();
           setFocusToKeypad();

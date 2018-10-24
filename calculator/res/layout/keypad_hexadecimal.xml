@@ -2,6 +2,7 @@
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/keypad_hexadecimal"
+  android:contentDescription="@string/description_keypad_hexadecimal"
   >
 
   <TableRow android:layout_weight="1">

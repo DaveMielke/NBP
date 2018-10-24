@@ -54,6 +54,11 @@
   <string name="label_conversion_from">From</string>
   <string name="label_conversion_to">To</string>
 
+  <string name="description_keypad_conversion">conversion keypad</string>
+  <string name="description_keypad_decimal">decimal keypad</string>
+  <string name="description_keypad_function">function keypad</string>
+  <string name="description_keypad_hexadecimal">hexadecimal keypad</string>
+
   <string name="description_key_alternateKeypad">Alternate Keypad</string>
   <string name="description_key_clearExpression">Clear Expression</string>
   <string name="description_key_function">f of x</string>

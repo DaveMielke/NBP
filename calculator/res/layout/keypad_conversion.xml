@@ -2,6 +2,7 @@
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/keypad_conversion"
+  android:contentDescription="@string/description_keypad_conversion"
   >
 
   <include layout="@layout/conversion_buttons" />
