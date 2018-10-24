@@ -3,6 +3,7 @@ package org.nbp.calculator;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.CommonUtilities;
 import org.nbp.common.LanguageUtilities;
 
 import android.app.AlertDialog;
@@ -74,6 +75,10 @@ public class EnumerationButtonListener<E extends Enum<E>> {
   }
 
   private final void registerCycleListener () {
+    if (CommonUtilities.haveKitkat) {
+      changeButton.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
+    }
+
     changeButton.setOnClickListener(
       new View.OnClickListener() {
         @Override
