@@ -87,16 +87,17 @@ public abstract class Controls {
 
   static {
     brailleMonitor.addDependencies(brailleEnabled);
-    brailleEnabled.addDependencies(brailleFirmness);
+    brailleEnabled.addDependencies(brailleFirmness, logBraille);
     brailleEnabled.addDependencies(selectionIndicator, cursorIndicator);
     brailleEnabled.addDependencies(showHighlighted, showNotifications);
-    brailleEnabled.addDependencies(computerBraille, literaryBraille);
+    brailleEnabled.addDependencies(literaryBraille);
+    literaryBraille.addDependencies(brailleCode, computerBraille);
     computerBraille.addDependencies(wordWrap);
-    literaryBraille.addDependencies(brailleCode);
 
     sleepTalk.addDependencies(speechEnabled);
     speechEnabled.addDependencies(speechVolume, speechBalance);
     speechEnabled.addDependencies(speechRate, speechPitch);
+    speechEnabled.addDependencies(logSpeech);
 
     oneHand.addDependencies(spaceTimeout, pressedTimeout);
     remoteDisplay.addDependencies(secureConnection);
