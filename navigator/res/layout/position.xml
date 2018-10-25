@@ -12,6 +12,8 @@
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/altitude_magnitude" />
     <include layout="@layout/spacer" />
+    <TextView android:id="@+id/accuracy_altitude" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow android:id="@+id/row_position_latitude">

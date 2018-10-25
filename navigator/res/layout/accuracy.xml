@@ -17,26 +17,7 @@
   <TableRow android:id="@+id/row_accuracy_position">
     <TextView android:text="@string/label_accuracy_position" />
     <include layout="@layout/spacer" />
-    <TextView android:id="@+id/accuracy_position" />
-    <include layout="@layout/spacer" />
-  </TableRow>
-
-  <TableRow android:id="@+id/row_accuracy_altitude">
-    <TextView android:text="@string/label_accuracy_altitude" />
-    <include layout="@layout/spacer" />
-    <TextView android:id="@+id/accuracy_altitude" />
-    <include layout="@layout/spacer" />
-  </TableRow>
-
-  <TableRow android:id="@+id/row_accuracy_speed">
-    <TextView android:text="@string/label_accuracy_speed" />
-    <include layout="@layout/spacer" />
-    <TextView android:id="@+id/accuracy_speed" />
-    <include layout="@layout/spacer" />
-  </TableRow>
-
-  <TableRow android:id="@+id/row_accuracy_bearing">
-    <TextView android:text="@string/label_accuracy_bearing" />
+    <TextView android:id="@+id/accuracy_distance" />
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/accuracy_bearing" />
     <include layout="@layout/spacer" />

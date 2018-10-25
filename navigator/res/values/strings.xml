@@ -9,9 +9,6 @@
   <string name="section_accuracy">Measurement Accuracy</string>
   <string name="label_accuracy_satellites">Satellites</string>
   <string name="label_accuracy_position">Position</string>
-  <string name="label_accuracy_altitude">Altitude</string>
-  <string name="label_accuracy_speed">Speed</string>
-  <string name="label_accuracy_bearing">Bearing</string>
 
   <string name="section_address">Geocoded Location</string>
   <string name="label_address_place">Place</string>

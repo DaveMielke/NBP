@@ -43,10 +43,10 @@ public class NavigationFragment extends NavigatorFragment {
 
   // accuracy
   private TextView accuracySatellites;
-  private TextView accuracyPosition;
+  private TextView accuracyDistance;
+  private TextView accuracyBearing;
   private TextView accuracyAltitude;
   private TextView accuracySpeed;
-  private TextView accuracyBearing;
 
   // address
   private TextView addressPlace;
@@ -79,13 +79,12 @@ public class NavigationFragment extends NavigatorFragment {
   }
 
   protected final void findViews () {
-    //
     // accuracy
     accuracySatellites = (TextView)findViewById(R.id.accuracy_satellites);
-    accuracyPosition = (TextView)findViewById(R.id.accuracy_position);
+    accuracyDistance = (TextView)findViewById(R.id.accuracy_distance);
+    accuracyBearing = (TextView)findViewById(R.id.accuracy_bearing);
     accuracyAltitude = (TextView)findViewById(R.id.accuracy_altitude);
     accuracySpeed = (TextView)findViewById(R.id.accuracy_speed);
-    accuracyBearing = (TextView)findViewById(R.id.accuracy_bearing);
 
     // address
     addressPlace = (TextView)findViewById(R.id.address_place);
@@ -514,9 +513,9 @@ public class NavigationFragment extends NavigatorFragment {
           }
         }
 
-        setText(accuracyPosition, ("±" + ApplicationUtilities.toDistanceText(accuracy)));
+        setText(accuracyDistance, ("±" + ApplicationUtilities.toDistanceText(accuracy)));
       } else {
-        setText(accuracyPosition);
+        setText(accuracyDistance);
       }
 
       setPosition(latitude, longitude);
@@ -560,6 +559,29 @@ public class NavigationFragment extends NavigatorFragment {
       }
 
       setText(accuracySatellites, satelliteCount);
+    }
+
+    if (CommonUtilities.haveOreo) {
+      if (location.hasBearingAccuracy()) {
+        float degrees = location.getBearingAccuracyDegrees();
+        setText(accuracyBearing, ("±" + ApplicationUtilities.toAngleText(degrees)));
+      } else {
+        setText(accuracyBearing);
+      }
+
+      if (location.hasSpeedAccuracy()) {
+        float metersPerSecond = location.getSpeedAccuracyMetersPerSecond();
+        setText(accuracySpeed, ("±" + ApplicationUtilities.toSpeedText(metersPerSecond)));
+      } else {
+        setText(accuracySpeed);
+      }
+
+      if (location.hasVerticalAccuracy()) {
+        float meters = location.getVerticalAccuracyMeters();
+        setText(accuracyAltitude, ("±" + ApplicationUtilities.toDistanceText(meters)));
+      } else {
+        setText(accuracyAltitude);
+      }
     }
   }
 

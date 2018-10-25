@@ -12,6 +12,8 @@
     <include layout="@layout/spacer" />
     <TextView android:id="@+id/speed_magnitude" />
     <include layout="@layout/spacer" />
+    <TextView android:id="@+id/accuracy_speed" />
+    <include layout="@layout/spacer" />
   </TableRow>
 
   <TableRow android:id="@+id/row_motion_bearing">
