@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 public class TypingHighlightOff extends Action {
   @Override
   public boolean performAction () {
-    Controls.resetHighlightedTyping();
+    Controls.resetHighlightedTypingControls();
     return true;
   }
 
