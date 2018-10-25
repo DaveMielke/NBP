@@ -14,7 +14,7 @@ public abstract class CollectionControl<V> extends ItemControl {
   private final static String LOG_TAG = CollectionControl.class.getName();
 
   protected abstract V getCollectionDefault ();
-  protected abstract V getCollectionValue ();
+  public abstract V getCollectionValue ();
   protected abstract boolean setCollectionValue (V value);
 
   protected abstract void addCollectionValues ();
