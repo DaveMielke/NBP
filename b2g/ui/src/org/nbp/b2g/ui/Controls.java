@@ -86,6 +86,19 @@ public abstract class Controls {
   public final static LogSpeechControl logSpeech = new LogSpeechControl();
 
   static {
+    brailleMonitor.addDependencies(brailleEnabled);
+    brailleEnabled.addDependencies(brailleFirmness);
+    brailleEnabled.addDependencies(selectionIndicator, cursorIndicator);
+    brailleEnabled.addDependencies(showHighlighted, showNotifications);
+    brailleEnabled.addDependencies(computerBraille, literaryBraille);
+    computerBraille.addDependencies(wordWrap);
+    literaryBraille.addDependencies(brailleCode);
+
+    sleepTalk.addDependencies(speechEnabled);
+    speechEnabled.addDependencies(speechVolume, speechBalance);
+    speechEnabled.addDependencies(speechRate, speechPitch);
+
+    oneHand.addDependencies(spaceTimeout, pressedTimeout);
     remoteDisplay.addDependencies(secureConnection);
   }
 
