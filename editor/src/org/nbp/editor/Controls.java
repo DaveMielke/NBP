@@ -18,6 +18,10 @@ public abstract class Controls {
   // document settings
   public final static AuthorNameControl authorName = new AuthorNameControl();
 
+  static {
+    brailleMode.addDependencies(brailleCode);
+  }
+
   public final static Control[] inCreationOrder = Control.getControlsInCreationOrder();
   public final static Control[] inRestoreOrder = Control.getControlsInRestoreOrder();
 
