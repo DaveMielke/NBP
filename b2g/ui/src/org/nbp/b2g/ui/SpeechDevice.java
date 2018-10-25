@@ -23,11 +23,9 @@ public class SpeechDevice extends TextPlayer {
 
   @Override
   protected final void initializeProperties () {
-    Control.restoreCurrentValues(
-      Controls.speechVolume,
-      Controls.speechRate,
-      Controls.speechPitch,
-      Controls.speechBalance
-    );
+    setVolume(ApplicationSettings.SPEECH_VOLUME);
+    setRate(ApplicationSettings.SPEECH_RATE);
+    setPitch(ApplicationSettings.SPEECH_PITCH);
+    setBalance(ApplicationSettings.SPEECH_BALANCE);
   }
 }

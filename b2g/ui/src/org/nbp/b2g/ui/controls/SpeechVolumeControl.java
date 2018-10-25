@@ -2,6 +2,7 @@ package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
 import org.nbp.common.speech.VolumeControl;
+import org.nbp.common.speech.SpeechParameters;
 
 public class SpeechVolumeControl extends VolumeControl {
   @Override
@@ -31,7 +32,9 @@ public class SpeechVolumeControl extends VolumeControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!Devices.speech.get().setVolume(value)) return false;
+    if (!SpeechParameters.verifyVolume(value)) return false;
+    Devices.speech.get().setVolume(value);
+
     ApplicationSettings.SPEECH_VOLUME = value;
     return true;
   }

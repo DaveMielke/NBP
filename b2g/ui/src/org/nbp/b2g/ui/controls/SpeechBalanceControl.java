@@ -2,6 +2,7 @@ package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
 import org.nbp.common.speech.BalanceControl;
+import org.nbp.common.speech.SpeechParameters;
 
 public class SpeechBalanceControl extends BalanceControl {
   @Override
@@ -31,7 +32,9 @@ public class SpeechBalanceControl extends BalanceControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!Devices.speech.get().setBalance(value)) return false;
+    if (!SpeechParameters.verifyBalance(value)) return false;
+    Devices.speech.get().setBalance(value);
+
     ApplicationSettings.SPEECH_BALANCE = value;
     return true;
   }

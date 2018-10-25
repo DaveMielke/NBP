@@ -2,6 +2,7 @@ package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
 import org.nbp.common.speech.RateControl;
+import org.nbp.common.speech.SpeechParameters;
 
 public class SpeechRateControl extends RateControl {
   @Override
@@ -31,7 +32,9 @@ public class SpeechRateControl extends RateControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!Devices.speech.get().setRate(value)) return false;
+    if (!SpeechParameters.verifyRate(value)) return false;
+    Devices.speech.get().setRate(value);
+
     ApplicationSettings.SPEECH_RATE = value;
     return true;
   }

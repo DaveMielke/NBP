@@ -2,6 +2,7 @@ package org.nbp.b2g.ui.controls;
 import org.nbp.b2g.ui.*;
 
 import org.nbp.common.speech.PitchControl;
+import org.nbp.common.speech.SpeechParameters;
 
 public class SpeechPitchControl extends PitchControl {
   @Override
@@ -31,7 +32,9 @@ public class SpeechPitchControl extends PitchControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!Devices.speech.get().setPitch(value)) return false;
+    if (!SpeechParameters.verifyPitch(value)) return false;
+    Devices.speech.get().setPitch(value);
+
     ApplicationSettings.SPEECH_PITCH = value;
     return true;
   }
