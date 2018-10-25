@@ -110,36 +110,68 @@ public abstract class Controls {
     Control.saveValues(inCreationOrder);
   }
 
-  public static void restoreSavedValues () {
-    Control.restoreSavedValues(inRestoreOrder);
+  private final static Object RESTORE_LOCK = new Object();
+  private static boolean restoringControls = false;
+
+  public static boolean amRestoringControls () {
+    synchronized (RESTORE_LOCK) {
+      return restoringControls;
+    }
+  }
+
+  private static void preRestore () {
+    restoringControls = true;
+  }
+
+  private static void postRestore () {
+    if (!speechEnabled.getBooleanValue()) brailleEnabled.setValue(true);
+    restoringControls = false;
   }
 
   public static void restoreDefaultValues () {
-    Control.restoreDefaultValues(inRestoreOrder);
+    synchronized (RESTORE_LOCK) {
+      preRestore();
+      Control.restoreDefaultValues(inRestoreOrder);
+      postRestore();
+    }
+  }
+
+  public static void restoreSavedValues () {
+    synchronized (RESTORE_LOCK) {
+      preRestore();
+      Control.restoreSavedValues(inRestoreOrder);
+      postRestore();
+    }
   }
 
   public static void restoreCurrentValues () {
-    Control.restoreCurrentValues(inRestoreOrder);
+    synchronized (RESTORE_LOCK) {
+      preRestore();
+      ApplicationSettings.BRAILLE_ENABLED = false;
+      ApplicationSettings.SPEECH_ENABLED = false;
+      Control.restoreCurrentValues(inRestoreOrder);
+      postRestore();
+    }
   }
 
-  private final static BooleanControl[] highlightedTypingControls = new BooleanControl[] {
-    typingBold,
-    typingItalic,
-    typingStrike,
-    typingUnderline
-  };
+  private final static BooleanControl[] highlightedTypingControls =
+    new BooleanControl[] {
+      typingBold,
+      typingItalic,
+      typingStrike,
+      typingUnderline
+    };
 
-  public static void resetHighlightedTyping () {
+  public static void resetHighlightedTypingControls () {
     for (BooleanControl control : highlightedTypingControls) {
       control.setValue(false);
     }
   }
 
   public static void restoreSaneValues () {
-    if (!speechEnabled.getBooleanValue()) brailleEnabled.setValue(true);
     if (ApplicationSettings.ONE_HAND) oneHand.confirmValue();
 
     typingMode.setValue(TypingMode.TEXT);
-    resetHighlightedTyping();
+    resetHighlightedTypingControls();
   }
 }

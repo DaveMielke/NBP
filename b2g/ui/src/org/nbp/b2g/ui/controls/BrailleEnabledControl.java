@@ -31,10 +31,12 @@ public class BrailleEnabledControl extends BooleanControl {
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    if (!value) {
-      if (!Controls.speechEnabled.getBooleanValue()) {
-        ApplicationUtilities.message(R.string.error_speech_off);
-        return false;
+    if (!Controls.amRestoringControls()) {
+      if (!value) {
+        if (!Controls.speechEnabled.getBooleanValue()) {
+          ApplicationUtilities.message(R.string.error_speech_off);
+          return false;
+        }
       }
     }
 
