@@ -33,7 +33,10 @@ public class SpeechPitchControl extends PitchControl {
   @Override
   protected boolean setFloatValue (float value) {
     if (!SpeechParameters.verifyPitch(value)) return false;
-    Devices.speech.get().setPitch(value);
+
+    if (Devices.speech.isInstantiated()) {
+      Devices.speech.get().setPitch(value);
+    }
 
     ApplicationSettings.SPEECH_PITCH = value;
     return true;

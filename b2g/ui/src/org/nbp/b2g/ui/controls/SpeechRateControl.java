@@ -33,7 +33,10 @@ public class SpeechRateControl extends RateControl {
   @Override
   protected boolean setFloatValue (float value) {
     if (!SpeechParameters.verifyRate(value)) return false;
-    Devices.speech.get().setRate(value);
+
+    if (Devices.speech.isInstantiated()) {
+      Devices.speech.get().setRate(value);
+    }
 
     ApplicationSettings.SPEECH_RATE = value;
     return true;

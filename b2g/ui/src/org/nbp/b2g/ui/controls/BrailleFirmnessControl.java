@@ -31,7 +31,10 @@ public class BrailleFirmnessControl extends EnumerationControl<GenericLevel> {
 
   @Override
   protected boolean setEnumerationValue (GenericLevel value) {
-    if (!Devices.braille.get().setFirmness(value)) return false;
+    if (Devices.braille.isInstantiated()) {
+      Devices.braille.get().setFirmness(value);
+    }
+
     ApplicationSettings.BRAILLE_FIRMNESS = value;
     return true;
   }

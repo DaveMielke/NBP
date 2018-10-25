@@ -33,7 +33,10 @@ public class SpeechVolumeControl extends VolumeControl {
   @Override
   protected boolean setFloatValue (float value) {
     if (!SpeechParameters.verifyVolume(value)) return false;
-    Devices.speech.get().setVolume(value);
+
+    if (Devices.speech.isInstantiated()) {
+      Devices.speech.get().setVolume(value);
+    }
 
     ApplicationSettings.SPEECH_VOLUME = value;
     return true;

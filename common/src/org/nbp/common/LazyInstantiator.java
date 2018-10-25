@@ -8,9 +8,13 @@ public class LazyInstantiator<T> {
   private final Class<? extends T> objectType;
   private T objectReference = null;
 
-  public T get () {
+  public final boolean isInstantiated () {
+    return objectReference != null;
+  }
+
+  public final T get () {
     synchronized (this) {
-      if (objectReference == null) {
+      if (!isInstantiated()) {
         try {
           objectReference = objectType.newInstance();
         } catch (InstantiationException exception) {

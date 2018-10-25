@@ -33,7 +33,10 @@ public class SpeechBalanceControl extends BalanceControl {
   @Override
   protected boolean setFloatValue (float value) {
     if (!SpeechParameters.verifyBalance(value)) return false;
-    Devices.speech.get().setBalance(value);
+
+    if (Devices.speech.isInstantiated()) {
+      Devices.speech.get().setBalance(value);
+    }
 
     ApplicationSettings.SPEECH_BALANCE = value;
     return true;
