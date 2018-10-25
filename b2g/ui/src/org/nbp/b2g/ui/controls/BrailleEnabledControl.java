@@ -39,7 +39,7 @@ public class BrailleEnabledControl extends BooleanControl {
     }
 
     BrailleDevice braille = Devices.braille.get();
-    if (!(value? braille.enable(): braille.disable())) return false;
+    if (!braille.setEnabled(value)) return false;
 
     ApplicationSettings.BRAILLE_ENABLED = value;
     if (value) braille.refresh();

@@ -16,13 +16,6 @@ import org.liblouis.BrailleTranslation;
 public abstract class BrailleDevice {
   private final static String LOG_TAG = BrailleDevice.class.getName();
 
-  private final void restoreControls () {
-    Control.restoreCurrentValues(
-      Controls.brailleEnabled,
-      Controls.brailleFirmness
-    );
-  }
-
   private BrailleMonitorWindow monitorWindow = null;
 
   public final BrailleMonitorWindow getMonitorWindow () {
@@ -195,7 +188,8 @@ public abstract class BrailleDevice {
           messageActive = false;
 
           if (clearCells()) {
-            restoreControls();
+            setFirmness(ApplicationSettings.BRAILLE_FIRMNESS);
+            setEnabled(ApplicationSettings.BRAILLE_ENABLED);
 
             if (writeCells(false)) {
               return true;
@@ -231,6 +225,10 @@ public abstract class BrailleDevice {
 
   public boolean disable () {
     return false;
+  }
+
+  public final boolean setEnabled (boolean enabled) {
+    return enabled? enable(): disable();
   }
 
   public boolean setFirmness (GenericLevel firmness) {
