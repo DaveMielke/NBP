@@ -101,13 +101,17 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     button.setChecked(((BooleanControl)control).getBooleanValue());
   }
 
+  protected void saveSettings () {
+    Control.saveValues(controlsInCreationOrder);
+  }
+
   private View createSaveControlsButton () {
     Button button = newButton(
       R.string.control_save_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.saveValues(controlsInCreationOrder);
+          saveSettings();
           Control.confirm(R.string.control_save_confirmation);
         }
       }
@@ -116,13 +120,17 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return button;
   }
 
+  protected void restoreSettings () {
+    Control.restoreSavedValues(controlsInRestoreOrder);
+  }
+
   private View createRestoreControlsButton () {
     Button button = newButton(
       R.string.control_restore_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.restoreSavedValues(controlsInRestoreOrder);
+          restoreSettings();
           Control.confirm(R.string.control_restore_confirmation);
         }
       }
@@ -131,13 +139,17 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     return button;
   }
 
+  protected void resetSettings () {
+    Control.restoreDefaultValues(controlsInRestoreOrder);
+  }
+
   private View createResetControlsButton () {
     Button button = newButton(
       R.string.control_reset_label,
       new Button.OnClickListener() {
         @Override
         public void onClick (View view) {
-          Control.restoreDefaultValues(controlsInRestoreOrder);
+          resetSettings();
           Control.confirm(R.string.control_reset_confirmation);
         }
       }

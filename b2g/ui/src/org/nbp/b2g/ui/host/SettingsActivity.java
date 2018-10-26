@@ -34,4 +34,19 @@ public class SettingsActivity extends CommonSettingsActivity {
       createSystemMaintenanceButton()
     };
   }
+
+  @Override
+  protected void saveSettings () {
+    Controls.saveValues();
+  }
+
+  @Override
+  protected void restoreSettings () {
+    Controls.restoreSavedValues();
+  }
+
+  @Override
+  protected void resetSettings () {
+    Controls.restoreDefaultValues();
+  }
 }
