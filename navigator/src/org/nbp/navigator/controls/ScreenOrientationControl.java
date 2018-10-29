@@ -11,7 +11,7 @@ public class ScreenOrientationControl extends EnumerationControl<ScreenOrientati
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_device;
+    return R.string.control_group_developer;
   }
 
   @Override

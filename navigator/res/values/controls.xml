@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="control_group_units">Unit Settings</string>
-  <string name="control_label_DistanceUnit">Distance Unit</string>
-  <string name="control_label_SpeedUnit">Speed Unit</string>
-  <string name="control_label_AngleUnit">Angle Unit</string>
-  <string name="control_label_RelativeDirection">Relative Direction</string>
-
   <string name="control_group_location">Location Settings</string>
   <string name="control_label_AnnounceLocation">Announce Location</string>
   <string name="control_label_LocationMonitor">Location Monitor</string>
   <string name="control_label_LocationRadius">Location Radius</string>
   <string name="control_label_UpdateInterval">Update Interval</string>
-
-  <string name="control_group_device">Device Settings</string>
-  <string name="control_label_ScreenOrientation">Screen Orientation</string>
 
   <string name="control_group_speech">Speech Settings</string>
   <string name="control_label_SpeechVolume">Volume</string>
@@ -22,8 +13,15 @@
   <string name="control_label_SpeechPitch">Pitch</string>
   <string name="control_label_SpeechBalance">Balance</string>
 
+  <string name="control_group_units">Unit Settings</string>
+  <string name="control_label_DistanceUnit">Distance Unit</string>
+  <string name="control_label_SpeedUnit">Speed Unit</string>
+  <string name="control_label_AngleUnit">Angle Unit</string>
+  <string name="control_label_RelativeDirection">Relative Direction</string>
+
   <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_LogGeocoding">Log Geocoding</string>
   <string name="control_label_LogSensors">Log Sensors</string>
   <string name="control_label_LocationProvider">Location Provider</string>
+  <string name="control_label_ScreenOrientation">Screen Orientation</string>
 </resources>
