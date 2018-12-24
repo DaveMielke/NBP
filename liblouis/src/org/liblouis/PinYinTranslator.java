@@ -6,11 +6,11 @@ import com.duxburysystems.PinyinBackwardTranslator;
 
 import android.content.Context;
 
-public class PinyinTranslator extends DuxburyTranslator {
+public class PinYinTranslator extends DuxburyTranslator {
   private final BrlTrn forwardTranslator;
   private final BrlTrn backwardTranslator;
 
-  public PinyinTranslator () {
+  public PinYinTranslator () {
     super();
 
     Context context = Louis.getContext();

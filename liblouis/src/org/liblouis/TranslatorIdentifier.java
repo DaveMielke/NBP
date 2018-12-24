@@ -531,7 +531,7 @@ public enum TranslatorIdentifier {
         if (translatorObject == null) {
           switch (this) {
             case PINYIN:
-              translatorObject = new PinyinTranslator();
+              translatorObject = new PinYinTranslator();
               break;
 
             default:
