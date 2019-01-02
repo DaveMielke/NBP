@@ -10,5 +10,5 @@ public abstract class ApplicationDefaults {
   public final static String SPEECH_ENGINE = "";
 
   public final static String PRIMARY_SERVER = "";
-  public final static String SECONDARY_SERVER = "echozio.ca";
+  public final static String SECONDARY_SERVER = "nbp.echozio.ca";
 }
