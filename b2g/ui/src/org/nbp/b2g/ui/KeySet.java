@@ -232,9 +232,6 @@ public class KeySet extends BitSet {
     return null;
   }
 
-  public final static char KEY_COMBINATION_DELIMITER = ',';
-  public final static char KEY_NAME_DELIMITER = '+';
-
   public final String toString () {
     StringBuilder sb = new StringBuilder();
 
@@ -248,7 +245,7 @@ public class KeySet extends BitSet {
           boolean isDot = isDotKey(key.index);
 
           if (!(isDot && (dotCount > 0))) {
-            if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
+            if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
             sb.append(name);
           } else {
             if (dotCount == 1) sb.insert((sb.length() - 1), 's');
@@ -267,7 +264,7 @@ public class KeySet extends BitSet {
 
         for (int index=0; index<count; index+=1) {
           if (keys.get(index)) {
-            if (sb.length() > 0) sb.append(KEY_NAME_DELIMITER);
+            if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
             sb.append(String.format("key#%d", index));
           }
         }

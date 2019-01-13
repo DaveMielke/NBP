@@ -17,12 +17,15 @@ import android.util.Log;
 public class KeyBindings {
   private final static String LOG_TAG = KeyBindings.class.getName();
 
+  public final static char KEY_COMBINATION_DELIMITER = ',';
+  public final static char KEY_NAME_DELIMITER = '+';
+
   private final static Pattern KEY_COMBINATION_PATTERN = Pattern.compile(
-    "\\" + KeyMask.KEY_COMBINATION_DELIMITER
+    "\\" + KEY_COMBINATION_DELIMITER
   );
 
   private final static Pattern KEY_NAME_PATTERN = Pattern.compile(
-    "\\" + KeyMask.KEY_NAME_DELIMITER
+    "\\" + KEY_NAME_DELIMITER
   );
 
   private final Endpoint endpoint;
