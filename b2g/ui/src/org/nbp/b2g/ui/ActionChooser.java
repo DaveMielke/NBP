@@ -11,8 +11,8 @@ public class ActionChooser extends UserInterfaceComponent {
     StringBuilder sb = new StringBuilder();
     sb.append(getString(R.string.popup_select_action));
 
-    for (Integer keys : map.keySet()) {
-      boolean needsCursorKey = (keys & KeyMask.CURSOR) != 0;
+    for (KeySet keys : map.keySet()) {
+      boolean needsCursorKey = keys.get(KeySet.CURSOR);
       if (needsCursorKey != haveCursorKey) continue;
 
       Action action = map.get(keys);
@@ -23,7 +23,7 @@ public class ActionChooser extends UserInterfaceComponent {
       sb.append(Wordify.get(action.getName()));
 
       sb.append(": ");
-      sb.append(KeyMask.toString(keys));
+      sb.append(keys.toString());
 
       sb.append(": ");
       sb.append(action.getSummary());

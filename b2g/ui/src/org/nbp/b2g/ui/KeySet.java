@@ -15,6 +15,15 @@ public class KeySet extends BitSet {
     super();
   }
 
+  public final void set (KeySet keys) {
+    clear();
+    int count = keys.length();
+
+    for (int index=0; index<count; index+=1) {
+      if (keys.get(index)) set(index);
+    }
+  }
+
   private static String normalizeKeyName (String name) {
     return name.toLowerCase();
   }
@@ -65,7 +74,7 @@ public class KeySet extends BitSet {
   public final static int CURSOR       = addKey("Cursor");
   public final static int LONG_PRESS   = addKey("LongPress");
 
-  private final static KeySet panKeys = new KeySet() {
+  protected final static KeySet panKeys = new KeySet() {
     {
       set(PAN_FORWARD);
       set(PAN_BACKWARD);
@@ -76,7 +85,7 @@ public class KeySet extends BitSet {
     return panKeys.get(index);
   }
 
-  private final static KeySet padKeys = new KeySet() {
+  protected final static KeySet padKeys = new KeySet() {
     {
       set(PAD_UP);
       set(PAD_DOWN);
@@ -90,7 +99,7 @@ public class KeySet extends BitSet {
     return padKeys.get(index);
   }
 
-  private final static KeySet dotKeys = new KeySet() {
+  protected final static KeySet dotKeys = new KeySet() {
     {
       set(DOT_1);
       set(DOT_2);
@@ -107,7 +116,7 @@ public class KeySet extends BitSet {
     return dotKeys.get(index);
   }
 
-  private final static KeySet volumeKeys = new KeySet() {
+  protected final static KeySet volumeKeys = new KeySet() {
     {
       set(VOLUME_DOWN);
       set(VOLUME_UP);
@@ -135,18 +144,22 @@ public class KeySet extends BitSet {
 
   public final Byte toDots () {
     byte dots = 0;
+    boolean space = false;
     int count = length();
 
     for (int index=0; index<count; index+=1) {
-      if (index == SPACE) continue;
-
       if (get(index)) {
-        Byte dot = keyDots.get(index);
-        if (dot == null) return null;
-        dots |= dot;
+        if (index == SPACE) {
+          space = true;
+        } else {
+          Byte dot = keyDots.get(index);
+          if (dot == null) return null;
+          dots |= dot;
+        }
       }
     }
 
+    if (space == (dots != 0)) return null;
     return dots;
   }
 

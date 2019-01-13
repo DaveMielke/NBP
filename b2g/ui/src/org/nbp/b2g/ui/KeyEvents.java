@@ -28,19 +28,28 @@ public abstract class KeyEvents {
   }
 
   private static long navigationKeyReleaseTime;
-  private static int activeNavigationKeys;
-  private static int pressedNavigationKeys;
+  private final static KeySet activeNavigationKeys = new KeySet();
+  private final static KeySet pressedNavigationKeys = new KeySet();
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
 
-  private final static int oneHandCompletionKey = KeyMask.SPACE;
+  private final static int oneHandCompletionKey = KeySet.SPACE;
   private static boolean oneHandNavigationKeyPressed;
   private static long oneHandSpaceTimeout;
 
-  private final static int oneHandImmediateKeys = KeyMask.CURSOR
-                                                | KeyMask.GROUP_PAN
-                                                | KeyMask.GROUP_DPAD
-                                                | KeyMask.GROUP_VOLUME
-                                                ;
+  private final static KeySet oneHandCompletionKeySet = new KeySet() {
+    {
+      set(oneHandCompletionKey);
+    }
+  };
+
+  private final static KeySet oneHandImmediateKeys = new KeySet() {
+    {
+      set(KeySet.CURSOR);
+      or(KeySet.panKeys);
+      or(KeySet.padKeys);
+      or(KeySet.volumeKeys);
+    }
+  };
 
   public static boolean performAction (final Action action) {
     if (action.editsInput()) {
@@ -94,23 +103,28 @@ public abstract class KeyEvents {
   }
 
   private final static Map<Class<? extends Action>, Class<? extends Action>> reversePanningActionMap =
-    new HashMap<Class<? extends Action>, Class<? extends Action>>();
+               new HashMap<Class<? extends Action>, Class<? extends Action>>()
+  {
+    {
+      put(PanLeft.class, PanRight.class);
+      put(PanRight.class, PanLeft.class);
 
-  static {
-    reversePanningActionMap.put(PanLeft.class, PanRight.class);
-    reversePanningActionMap.put(PanRight.class, PanLeft.class);
+      put(MoveBackward.class, MoveForward.class);
+      put(MoveForward.class, MoveBackward.class);
+    }
+  };
 
-    reversePanningActionMap.put(MoveBackward.class, MoveForward.class);
-    reversePanningActionMap.put(MoveForward.class, MoveBackward.class);
-  }
-
-  private static Action getAction (int keys, boolean isLongPress) {
+  private static Action getAction (KeySet keys, boolean isLongPress) {
     Endpoint endpoint = Endpoints.getCurrentEndpoint();
     KeyBindings keyBindings = endpoint.getKeyBindings();
     Action action = null;
 
     if (isLongPress && ApplicationSettings.LONG_PRESS) {
-      action = keyBindings.getAction(keys | KeyMask.LONG_PRESS);
+      int longPress = KeySet.LONG_PRESS;
+
+      keys.set(longPress);
+      action = keyBindings.getAction(keys);
+      keys.clear(longPress);
     }
 
     if (action == null) {
@@ -120,7 +134,7 @@ public abstract class KeyEvents {
     if (action == null) {
       if (endpoint instanceof InputEndpoint) {
         if (keyBindings.isRootKeyBindings()) {
-          if (KeyMask.isDots(keys)) {
+          if (keys.isDots()) {
             action = keyBindings.getAction(TypeCharacter.class);
           }
         }
@@ -129,7 +143,7 @@ public abstract class KeyEvents {
 
     if (action != null) {
       if (ApplicationSettings.REVERSE_PANNING) {
-        if (((keys & KeyMask.FORWARD) != 0) != ((keys & KeyMask.BACKWARD) != 0)) {
+        if (keys.get(KeySet.PAN_FORWARD) != keys.get(KeySet.PAN_BACKWARD)) {
           Action reverse = keyBindings.getAction(reversePanningActionMap.get((Class<? extends Action>)action.getClass()));
           if (reverse != null) action = reverse;
         }
@@ -140,8 +154,8 @@ public abstract class KeyEvents {
   }
 
   private static boolean performAction (boolean isLongPress) {
-    int keys = activeNavigationKeys;
-    if (keys == 0) return true;
+    KeySet keys = activeNavigationKeys;
+    if (keys.isEmpty()) return true;
     boolean wasModifier = false;
 
     try {
@@ -157,7 +171,7 @@ public abstract class KeyEvents {
       if (!performed) Tones.beep();
       return performed;
     } finally {
-      activeNavigationKeys = 0;
+      activeNavigationKeys.clear();
       if (!wasModifier) ModifierAction.cancelModifiers();
     }
   }
@@ -199,8 +213,8 @@ public abstract class KeyEvents {
       }
 
       navigationKeyReleaseTime = 0;
-      activeNavigationKeys = 0;
-      pressedNavigationKeys = 0;
+      activeNavigationKeys.clear();
+      pressedNavigationKeys.clear();
       pressedCursorKeys.clear();
 
       oneHandNavigationKeyPressed = false;
@@ -212,79 +226,65 @@ public abstract class KeyEvents {
     resetKeys();
   }
 
-  public static int getNavigationKeys () {
+  public static KeySet getNavigationKeys () {
     return activeNavigationKeys;
   }
 
-  private static void logNavigationKeysChange (int keyMask, String action) {
+  private static void logNavigationKeysChange (int key, String action) {
     if (ApplicationSettings.LOG_KEYBOARD) {
       StringBuilder sb = new StringBuilder();
 
       sb.append("navigation key ");
       sb.append(action);
 
-      int[] masks = new int[] {keyMask, pressedNavigationKeys};
-      String delimiter = ": ";
+      sb.append(": ");
+      sb.append(key);
 
-      for (int mask : masks) {
-        sb.append(delimiter);
-        delimiter = " -> ";
-
-        sb.append(String.format("0X%02X", mask));
-        sb.append(" (");
-        sb.append(KeyMask.toString(mask));
-        sb.append(')');
-      }
+      sb.append(" -> ");
+      sb.append(pressedNavigationKeys.toString());
 
       Log.d(LOG_TAG, sb.toString());
     }
   }
 
-  private static int handleEndpointNavigationKeyEvent (int keyMask, boolean press) {
-    int alreadyPressedKeys = keyMask & pressedNavigationKeys;
-
-    return Endpoints.getCurrentEndpoint().handleNavigationKeyEvent((keyMask & ~alreadyPressedKeys), press)
-         | alreadyPressedKeys;
+  private static boolean handleEndpointNavigationKeyEvent (int key, boolean press) {
+    return false;
   }
 
-  private static void handleNavigationKeyPress (int keyMask) {
+  private static void handleNavigationKeyPress (int key) {
     onKeyPress();
-    keyMask = handleEndpointNavigationKeyEvent(keyMask, true);
 
-    if (keyMask != 0) {
+    if (!handleEndpointNavigationKeyEvent(key, true)) {
       synchronized (longPressTimeout) {
-        boolean isFirstPress = pressedNavigationKeys == 0;
-
-        pressedNavigationKeys |= keyMask;
-        logNavigationKeysChange(keyMask, "press");
+        boolean isFirstPress = pressedNavigationKeys.isEmpty();
+        pressedNavigationKeys.set(key);
+        logNavigationKeysChange(key, "press");
 
         if (ApplicationSettings.ONE_HAND) {
           if (isFirstPress) {
             if ((navigationKeyReleaseTime + ApplicationSettings.PRESSED_TIMEOUT) < SystemClock.elapsedRealtime()) {
-              activeNavigationKeys = 0;
+              activeNavigationKeys.clear();
             }
           }
 
-          activeNavigationKeys |= keyMask & ~oneHandCompletionKey;
+          if (key != oneHandCompletionKey) activeNavigationKeys.set(key);
           oneHandNavigationKeyPressed = true;
         } else {
-          activeNavigationKeys = pressedNavigationKeys;
+          activeNavigationKeys.set(pressedNavigationKeys);
           longPressTimeout.start();
         }
       }
     }
   }
 
-  private static void handleNavigationKeyRelease (int keyMask) {
-    keyMask = handleEndpointNavigationKeyEvent(keyMask, false);
-
-    if (keyMask != 0) {
+  private static void handleNavigationKeyRelease (int key) {
+    if (!handleEndpointNavigationKeyEvent(key, false)) {
       synchronized (longPressTimeout) {
         long now = SystemClock.elapsedRealtime();
         navigationKeyReleaseTime = now;
 
         boolean isComplete = !ApplicationSettings.ONE_HAND
-                           || ((activeNavigationKeys & oneHandImmediateKeys) != 0)
+                          || activeNavigationKeys.intersects(oneHandImmediateKeys)
                            ;
 
         if (oneHandNavigationKeyPressed) {
@@ -295,48 +295,52 @@ public abstract class KeyEvents {
           long spaceTimeout = oneHandSpaceTimeout;
           oneHandSpaceTimeout = 0;
 
-          if ((pressedNavigationKeys & oneHandCompletionKey) != 0) {
+          if (pressedNavigationKeys.get(oneHandCompletionKey)) {
             // the combination included Space
 
-            if ((pressedNavigationKeys & ~oneHandCompletionKey) != 0) {
+            pressedNavigationKeys.clear(oneHandCompletionKey);
+            boolean otherKeysPressed = !pressedNavigationKeys.isEmpty();
+            pressedNavigationKeys.set(oneHandCompletionKey);
+
+            if (otherKeysPressed) {
               // the combination also included at least one other key
-              activeNavigationKeys |= oneHandCompletionKey;
+              activeNavigationKeys.set(oneHandCompletionKey);
               isComplete = true;
-            } else if (activeNavigationKeys != 0) {
-              // just Space was rpessed so complete the pending combination
+            } else if (activeNavigationKeys.isEmpty()) {
+              // it's an initial Space so start a new combination with it
+              activeNavigationKeys.set(oneHandCompletionKey);
+              if (SystemClock.elapsedRealtime() < spaceTimeout) isComplete = true;
+            } else {
+              // just Space was pressed so complete the pending combination
               isComplete = true;
 
-              if (activeNavigationKeys != oneHandCompletionKey) {
+              if (!activeNavigationKeys.equals(oneHandCompletionKeySet)) {
                 // start the quick space timeout except after Space itself
                 oneHandSpaceTimeout = now + ApplicationSettings.SPACE_TIMEOUT;
               }
-            } else {
-              // it's an initial Space so start a new combination with it
-              activeNavigationKeys = oneHandCompletionKey;
-              if (SystemClock.elapsedRealtime() < spaceTimeout) isComplete = true;
             }
           }
         }
 
         longPressTimeout.cancel();
-        pressedNavigationKeys &= ~keyMask;
-        logNavigationKeysChange(keyMask, "release");
+        pressedNavigationKeys.clear(key);
+        logNavigationKeysChange(key, "release");
         if (isComplete) performAction(false);
       }
     }
   }
 
-  public static void handleNavigationKeyEvent (int keyMask, boolean press) {
+  public static void handleNavigationKeyEvent (int key, boolean press) {
     if (press) {
-      handleNavigationKeyPress(keyMask);
+      handleNavigationKeyPress(key);
     } else {
-      handleNavigationKeyRelease(keyMask);
+      handleNavigationKeyRelease(key);
     }
   }
 
-  public static void handleNavigationKey (int keyMask) {
-    handleNavigationKeyPress(keyMask);
-    handleNavigationKeyRelease(keyMask);
+  public static void handleNavigationKey (int key) {
+    handleNavigationKeyPress(key);
+    handleNavigationKeyRelease(key);
   }
 
   public static int[] getCursorKeys () {
@@ -361,10 +365,8 @@ public abstract class KeyEvents {
       sb.append(keyNumber);
 
       sb.append(" (");
-      String delimiter = "";
       for (Integer key : pressedCursorKeys) {
-        sb.append(delimiter);
-        delimiter = ", ";
+        if (sb.length() > 0) sb.append(", ");;
         sb.append(key);
       }
       sb.append(')');
@@ -386,7 +388,7 @@ public abstract class KeyEvents {
       logCursorKeyAction(keyNumber, "press");
 
       if (pressedCursorKeys.size() == 1) {
-        handleNavigationKey(KeyMask.CURSOR);
+        handleNavigationKey(KeySet.CURSOR);
       }
     }
   }

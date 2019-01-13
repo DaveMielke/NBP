@@ -5,6 +5,7 @@ import org.nbp.b2g.ui.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.nbp.common.Braille;
 import org.nbp.common.speech.SpeechSpan;
 
 import android.util.Log;
@@ -607,16 +608,16 @@ public class HostEndpoint extends InputEndpoint {
   private Movements.Movement currentMovement = null;
 
   @Override
-  public final boolean handleDotKeys (int keyMask) {
+  public final boolean handleDotKeys (byte dots) {
     Movements.Action action;
     Movements.Movement movement;
 
     {
-      final int PREVIOUS = KeyMask.DOT_7;
-      final int NEXT = KeyMask.DOT_8;
-      final int DIRECTION = PREVIOUS | NEXT;
+      final byte PREVIOUS = Braille.CELL_DOT_7;
+      final byte NEXT = Braille.CELL_DOT_8;
+      final byte DIRECTION = PREVIOUS | NEXT;
 
-      switch (keyMask & DIRECTION) {
+      switch (dots & DIRECTION) {
         case PREVIOUS:
           action = Movements.Action.BACKWARD;
           break;
@@ -633,13 +634,13 @@ public class HostEndpoint extends InputEndpoint {
           return false;
       }
 
-      keyMask &= ~DIRECTION;
+      dots &= ~DIRECTION;
     }
 
-    if (keyMask == 0) {
+    if (dots == 0) {
       movement = currentMovement;
     } else {
-      Character character = Characters.getCharacters().toCharacter(keyMask);
+      Character character = Characters.getCharacters().getCharacter(dots);
       if (character == null) return false;
       movement = getMovement(character);
     }

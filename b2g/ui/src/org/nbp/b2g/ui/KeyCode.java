@@ -7,6 +7,9 @@ import android.view.KeyEvent;
 public abstract class KeyCode {
   private final static String LOG_TAG = KeyCode.class.getName();
 
+  private KeyCode () {
+  }
+
   public final static int DOT_7     = 769;
   public final static int DOT_3     = 770;
   public final static int DOT_2     = 771;
@@ -62,34 +65,31 @@ public abstract class KeyCode {
   public final static int BACKWARD  = 818;
   public final static int FORWARD   = 819;
 
-  public static int toKeyMask (int code) {
+  public static Integer toKey (int code) {
     switch (code) {
-      case KeyCode.DOT_1:    return KeyMask.DOT_1;
-      case KeyCode.DOT_2:    return KeyMask.DOT_2;
-      case KeyCode.DOT_3:    return KeyMask.DOT_3;
-      case KeyCode.DOT_4:    return KeyMask.DOT_4;
-      case KeyCode.DOT_5:    return KeyMask.DOT_5;
-      case KeyCode.DOT_6:    return KeyMask.DOT_6;
-      case KeyCode.DOT_7:    return KeyMask.DOT_7;
-      case KeyCode.DOT_8:    return KeyMask.DOT_8;
-      case KeyCode.SPACE:    return KeyMask.SPACE;
+      case DOT_1:    return KeySet.DOT_1;
+      case DOT_2:    return KeySet.DOT_2;
+      case DOT_3:    return KeySet.DOT_3;
+      case DOT_4:    return KeySet.DOT_4;
+      case DOT_5:    return KeySet.DOT_5;
+      case DOT_6:    return KeySet.DOT_6;
+      case DOT_7:    return KeySet.DOT_7;
+      case DOT_8:    return KeySet.DOT_8;
+      case SPACE:    return KeySet.SPACE;
 
-      case KeyCode.FORWARD:  return KeyMask.FORWARD;
-      case KeyCode.BACKWARD: return KeyMask.BACKWARD;
+      case FORWARD:  return KeySet.PAN_FORWARD;
+      case BACKWARD: return KeySet.PAN_BACKWARD;
 
-      case KeyEvent.KEYCODE_DPAD_CENTER: return KeyMask.DPAD_CENTER;
-      case KeyEvent.KEYCODE_DPAD_LEFT:   return KeyMask.DPAD_LEFT;
-      case KeyEvent.KEYCODE_DPAD_RIGHT:  return KeyMask.DPAD_RIGHT;
-      case KeyEvent.KEYCODE_DPAD_UP:     return KeyMask.DPAD_UP;
-      case KeyEvent.KEYCODE_DPAD_DOWN:   return KeyMask.DPAD_DOWN;
+      case KeyEvent.KEYCODE_DPAD_UP:     return KeySet.PAD_UP;
+      case KeyEvent.KEYCODE_DPAD_DOWN:   return KeySet.PAD_DOWN;
+      case KeyEvent.KEYCODE_DPAD_LEFT:   return KeySet.PAD_LEFT;
+      case KeyEvent.KEYCODE_DPAD_RIGHT:  return KeySet.PAD_RIGHT;
+      case KeyEvent.KEYCODE_DPAD_CENTER: return KeySet.PAD_CENTER;
 
-      case KeyEvent.KEYCODE_VOLUME_DOWN: return KeyMask.VOLUME_DOWN;
-      case KeyEvent.KEYCODE_VOLUME_UP:   return KeyMask.VOLUME_UP;
+      case KeyEvent.KEYCODE_VOLUME_DOWN: return KeySet.VOLUME_DOWN;
+      case KeyEvent.KEYCODE_VOLUME_UP:   return KeySet.VOLUME_UP;
     }
 
-    return 0;
-  }
-
-  private KeyCode () {
+    return null;
   }
 }

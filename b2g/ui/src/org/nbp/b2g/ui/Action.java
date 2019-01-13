@@ -71,12 +71,12 @@ public abstract class Action extends UserInterfaceComponent {
     return getEndpoint().getKeyBindings().getAction(type);
   }
 
-  protected int getNavigationKeys () {
+  protected KeySet getNavigationKeys () {
     return KeyEvents.getNavigationKeys();
   }
 
   protected final boolean isChord () {
-    return (getNavigationKeys() & KeyMask.SPACE) != 0;
+    return getNavigationKeys().get(KeySet.SPACE);
   }
 
   protected Action (Endpoint endpoint, boolean isAdvanced) {

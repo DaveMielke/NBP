@@ -43,18 +43,20 @@ public class Characters {
     }
   }
 
-  private final Map<Integer, Character> characterMap = new HashMap<Integer, Character>();
+  private final Map<Byte, Character> characterMap = new HashMap<Byte, Character>();
 
-  private final void setCharacter (Integer keyMask, Character character) {
-    characterMap.put(keyMask, character);
+  private final void setCharacter (Byte dots, Character character) {
+    characterMap.put(dots, character);
   }
 
-  private final Character getCharacter (Integer keyMask) {
-    return characterMap.get(keyMask);
+  public final Character getCharacter (Byte dots) {
+    return characterMap.get(dots);
   }
 
-  public final Character toCharacter (int keyMask) {
-    return getCharacter(keyMask);
+  public final Character getCharacter (KeySet keys) {
+    Byte dots = keys.toDots();
+    if (dots == null) return null;
+    return getCharacter(dots);
   }
 
   private final Map<Character, Byte> dotsMap = new HashMap<Character, Byte>();
@@ -146,9 +148,45 @@ public class Characters {
     return null;
   }
 
-  private static Integer parseDots (String operand) {
-    if (operand.equals("0")) return KeyMask.SPACE;
-    return KeyMask.parseDots(operand);
+  private static Byte parseDots (String operand) {
+    if (operand.equals("0")) return 0;
+
+    if (operand.isEmpty()) {
+      Log.w(LOG_TAG, "missing dot number(s)");
+      return 0;
+    }
+
+    byte dots = 0;
+    int length = operand.length();
+
+    for (int index=0; index<length; index+=1) {
+      final char number = operand.charAt(index);
+      final int dot;
+
+      switch (number) {
+        case '1': dot = Braille.CELL_DOT_1; break;
+        case '2': dot = Braille.CELL_DOT_2; break;
+        case '3': dot = Braille.CELL_DOT_3; break;
+        case '4': dot = Braille.CELL_DOT_4; break;
+        case '5': dot = Braille.CELL_DOT_5; break;
+        case '6': dot = Braille.CELL_DOT_6; break;
+        case '7': dot = Braille.CELL_DOT_7; break;
+        case '8': dot = Braille.CELL_DOT_8; break;
+
+        default:
+          Log.w(LOG_TAG, ("unknown dot number: " + number));
+          return null;
+      }
+
+      if ((dots & dot) != 0) {
+        Log.w(LOG_TAG, ("dot number specified more than once: " + number));
+        return null;
+      }
+
+      dots |= dot;
+    }
+
+    return dots;
   }
 
   private final boolean defineCharacter (String[] operands, boolean forInput) {
@@ -169,25 +207,19 @@ public class Characters {
     }
 
     String dotsOperand = operands[index++];
-    Integer keyMask = parseDots(dotsOperand);
-    if (keyMask == null) return true;
-    Byte dots = KeyMask.toDots(keyMask);
-
-    if (dots == null) {
-      Log.w(LOG_TAG, "not space or just dots: " + dotsOperand);
-      return true;
-    }
+    Byte dots = parseDots(dotsOperand);
+    if (dots == null) return true;
 
     if (index < operands.length) {
       Log.w(LOG_TAG, "too many operands");
     }
 
     if (forInput) {
-      Character old = getCharacter(keyMask);
+      Character old = getCharacter(dots);
 
       if (old != null) {
         if (!old.equals(character)) {
-          Log.w(LOG_TAG, "key combination already bound: " + dotsOperand);
+          Log.w(LOG_TAG, "dot combination already defined: " + dotsOperand);
           return true;
         }
 
@@ -206,7 +238,7 @@ public class Characters {
       }
     }
 
-    if (forInput) setCharacter(keyMask, character);
+    if (forInput) setCharacter(dots, character);
     return true;
   }
 

@@ -2,6 +2,12 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class CursorKey extends CursorKeyAction {
+  private final static KeySet centerKey = new KeySet() {
+    {
+      set(PAD_CENTER);
+    }
+  };
+
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     if (endpoint.isInputArea()) {
@@ -10,11 +16,8 @@ public class CursorKey extends CursorKeyAction {
     }
 
     {
-      Action action = endpoint.getKeyBindings().getAction(KeyMask.DPAD_CENTER);
-
-      if (action != null) {
-        return KeyEvents.performAction(action);
-      }
+      Action action = endpoint.getKeyBindings().getAction(centerKey);
+      if (action != null) return KeyEvents.performAction(action);
     }
 
     return false;

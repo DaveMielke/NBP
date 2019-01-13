@@ -96,17 +96,17 @@ public class TypeCharacter extends InputAction {
       typingMode = TypingMode.BRAILLE;
     }
 
-    int keyMask = getNavigationKeys();
+    KeySet keys = getNavigationKeys();
     Character character;
 
     switch (typingMode) {
       case TEXT: {
-        character = Characters.getCharacters().toCharacter(keyMask);
+        character = Characters.getCharacters().getCharacter(keys);
 
         if (character == null) {
           Log.w(LOG_TAG, String.format(
             "not mapped to a character: %s",
-            KeyMask.toString(keyMask)
+            keys.toString()
           ));
 
           return false;
@@ -116,12 +116,12 @@ public class TypeCharacter extends InputAction {
       }
 
       case BRAILLE: {
-        Byte dots = KeyMask.toDots(keyMask);
+        Byte dots = keys.toDots();
 
         if (dots == null) {
           Log.w(LOG_TAG, String.format(
             "not a braille character: %s",
-            KeyMask.toString(keyMask)
+            keys.toString()
           ));
 
           return false;
@@ -141,13 +141,10 @@ public class TypeCharacter extends InputAction {
 
   @Override
   protected final boolean performNonInputAction (Endpoint endpoint) {
-    int keyMask = getNavigationKeys();
-    if (!KeyMask.isDots(keyMask)) return false;
-
-    keyMask &= ~KeyMask.SPACE;
-    if (keyMask == 0) return false;
-
-    return endpoint.handleDotKeys(keyMask);
+    Byte dots = getNavigationKeys().toDots();
+    if (dots == null) return false;
+    if (dots == 0) return false;
+    return endpoint.handleDotKeys(dots);
   }
 
   @Override

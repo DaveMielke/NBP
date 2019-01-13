@@ -2,9 +2,15 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class TypeDot7 extends TypeCharacter {
+  private final static KeySet dot7 = new KeySet() {
+    {
+      set(KeySet.DOT_7);
+    }
+  };
+
   @Override
-  protected final int getNavigationKeys () {
-    return KeyMask.DOT_7;
+  protected final KeySet getNavigationKeys () {
+    return dot7;
   }
 
   @Override

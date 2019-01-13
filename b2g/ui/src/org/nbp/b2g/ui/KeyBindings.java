@@ -100,8 +100,8 @@ public class KeyBindings {
     return action instanceof PartialEntry;
   }
 
-  public Action getAction (int keyMask) {
-    Action action = currentKeyBindings.get(keyMask);
+  public Action getAction (KeySet keys) {
+    Action action = currentKeyBindings.get(keys);
     boolean reset = true;
 
     if (action != null) {
@@ -117,17 +117,17 @@ public class KeyBindings {
     return null;
   }
 
-  public boolean addKeyBinding (Action action, int... keyMasks) {
+  public boolean addKeyBinding (Action action, KeySet... keySets) {
     KeyBindingMap bindings = rootKeyBindings;
-    int last = keyMasks.length - 1;
+    int last = keySets.length - 1;
 
     for (int index=0; index<last; index+=1) {
-      int keyMask = keyMasks[index];
-      Action partialEntry = bindings.get(keyMask);
+      KeySet keySet = keySets[index];
+      Action partialEntry = bindings.get(keySet);
 
       if (partialEntry == null) {
         partialEntry = new PartialEntry(endpoint);
-        bindings.put(keyMask, partialEntry);
+        bindings.put(keySet, partialEntry);
       } else if (!isPartialEntry(partialEntry)) {
         return false;
       }
@@ -136,9 +136,9 @@ public class KeyBindings {
     }
 
     {
-      int keyMask = keyMasks[last];
-      if (bindings.get(keyMask) != null) return false;
-      bindings.put(keyMask, action);
+      KeySet keySet = keySets[last];
+      if (bindings.get(keySet) != null) return false;
+      bindings.put(keySet, action);
     }
 
     return true;
@@ -215,28 +215,28 @@ public class KeyBindings {
     return getAction(type);
   }
 
-  private static int[] addKeyMask (int[] oldMasks, int mask) {
-    int[] newMasks;
+  private static KeySet[] addKeySet (KeySet[] oldSets, KeySet set) {
+    KeySet[] newSets;
 
-    if (mask == 0) {
+    if (set == null) {
       Log.w(LOG_TAG, "missing key combination");
       return null;
     }
 
-    if (oldMasks == null) {
-      newMasks = new int[1];
+    if (oldSets == null) {
+      newSets = new KeySet[1];
     } else {
-      newMasks = new int[oldMasks.length + 1];
-      System.arraycopy(oldMasks, 0, newMasks, 0, oldMasks.length);
+      newSets = new KeySet[oldSets.length + 1];
+      System.arraycopy(oldSets, 0, newSets, 0, oldSets.length);
     }
 
-    newMasks[newMasks.length - 1] = mask;
-    return newMasks;
+    newSets[newSets.length - 1] = set;
+    return newSets;
   }
 
-  private static int[] parseKeyCombination (String operand) {
+  private static KeySet[] parseKeyCombination (String operand) {
     String[] combinations = KEY_COMBINATION_PATTERN.split(operand);
-    int[] masks = null;
+    KeySet[] sets = null;
 
     for (String combination : combinations) {
       if (combination.isEmpty()) {
@@ -245,7 +245,7 @@ public class KeyBindings {
       }
 
       String[] names = KEY_NAME_PATTERN.split(combination);
-      int mask = 0;
+      KeySet set = new KeySet();
 
       for (String name : names) {
         {
@@ -258,22 +258,22 @@ public class KeyBindings {
           return null;
         }
 
-        Integer bit = KeyMask.toBit(name);
-        if (bit == null) return null;
+        KeySet keys = KeySet.fromName(name);
+        if (keys == null) return null;
 
-        if ((mask & bit) != 0) {
+        if (set.intersects(keys)) {
           Log.w(LOG_TAG, "key specified more than once: " + name);
           return null;
         }
 
-        mask |= bit;
+        set.or(keys);
       }
 
-      masks = addKeyMask(masks, mask);
-      if (masks == null) return null;
+      sets = addKeySet(sets, set);
+      if (sets == null) return null;
     }
 
-    return masks;
+    return sets;
   }
 
   private boolean bindKeyCombination (String[] operands) {
@@ -285,8 +285,8 @@ public class KeyBindings {
     }
 
     String keyCombination = operands[index++];
-    int[] keyMasks = parseKeyCombination(keyCombination);
-    if (keyMasks == null) return true;
+    KeySet[] keySets = parseKeyCombination(keyCombination);
+    if (keySets == null) return true;
 
     if (index == operands.length) {
       Log.w(LOG_TAG, "action not specified");
@@ -301,7 +301,7 @@ public class KeyBindings {
       Log.w(LOG_TAG, "too many operands");
     }
 
-    if (!addKeyBinding(action, keyMasks)) {
+    if (!addKeyBinding(action, keySets)) {
       Log.w(LOG_TAG, "key combination already bound: " + keyCombination);
       return true;
     }

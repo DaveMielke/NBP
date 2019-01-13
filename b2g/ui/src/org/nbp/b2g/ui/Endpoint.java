@@ -1125,7 +1125,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
     return performAction(ScrollRight.class);
   }
 
-  public boolean handleDotKeys (int keyMask) {
+  public boolean handleDotKeys (byte keys) {
     return false;
   }
 
