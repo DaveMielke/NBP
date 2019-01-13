@@ -36,11 +36,9 @@ public abstract class KeyEvents {
   private static boolean oneHandNavigationKeyPressed;
   private static long oneHandSpaceTimeout;
 
-  private final static KeySet oneHandCompletionKeySet = new KeySet() {
-    {
-      set(oneHandCompletionKey);
-    }
-  };
+  private final static KeySet oneHandCompletionKeySet = new KeySet(
+    oneHandCompletionKey
+  );
 
   private final static KeySet oneHandImmediateKeys = new KeySet() {
     {

@@ -2,11 +2,7 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 public class CursorKey extends CursorKeyAction {
-  private final static KeySet centerKey = new KeySet() {
-    {
-      set(PAD_CENTER);
-    }
-  };
+  private final static KeySet centerKey = new KeySet(KeySet.PAD_CENTER);
 
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {

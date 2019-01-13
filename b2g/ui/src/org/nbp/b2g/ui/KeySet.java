@@ -11,8 +11,12 @@ import android.util.Log;
 public class KeySet extends BitSet {
   private final static String LOG_TAG = KeySet.class.getName();
 
-  public KeySet () {
+  public KeySet (Integer... keys) {
     super();
+
+    for (int key : keys) {
+      set(key);
+    }
   }
 
   public final void set (KeySet keys) {
@@ -74,54 +78,36 @@ public class KeySet extends BitSet {
   public final static int CURSOR       = addKey("Cursor");
   public final static int LONG_PRESS   = addKey("LongPress");
 
-  protected final static KeySet panKeys = new KeySet() {
-    {
-      set(PAN_FORWARD);
-      set(PAN_BACKWARD);
-    }
-  };
+  protected final static KeySet panKeys = new KeySet(
+    PAN_FORWARD, PAN_BACKWARD
+  );
 
   public static boolean isPanKey (int index) {
     return panKeys.get(index);
   }
 
-  protected final static KeySet padKeys = new KeySet() {
-    {
-      set(PAD_UP);
-      set(PAD_DOWN);
-      set(PAD_LEFT);
-      set(PAD_RIGHT);
-      set(PAD_CENTER);
-    }
-  };
+  protected final static KeySet padKeys = new KeySet(
+    PAD_UP, PAD_DOWN,
+    PAD_LEFT, PAD_RIGHT,
+    PAD_CENTER
+  );
 
   public static boolean isPadKey (int index) {
     return padKeys.get(index);
   }
 
-  protected final static KeySet dotKeys = new KeySet() {
-    {
-      set(DOT_1);
-      set(DOT_2);
-      set(DOT_3);
-      set(DOT_4);
-      set(DOT_5);
-      set(DOT_6);
-      set(DOT_7);
-      set(DOT_8);
-    }
-  };
+  protected final static KeySet dotKeys = new KeySet(
+    DOT_1, DOT_2, DOT_3, DOT_4,
+    DOT_5, DOT_6, DOT_7, DOT_8
+  );
 
   public static boolean isDotKey (int index) {
     return dotKeys.get(index);
   }
 
-  protected final static KeySet volumeKeys = new KeySet() {
-    {
-      set(VOLUME_DOWN);
-      set(VOLUME_UP);
-    }
-  };
+  protected final static KeySet volumeKeys = new KeySet(
+    VOLUME_DOWN, VOLUME_UP
+  );
 
   public static boolean isVolumeKey (int index) {
     return volumeKeys.get(index);
