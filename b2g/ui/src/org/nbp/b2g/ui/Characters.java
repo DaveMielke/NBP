@@ -150,43 +150,7 @@ public class Characters {
 
   private static Byte parseDots (String operand) {
     if (operand.equals("0")) return 0;
-
-    if (operand.isEmpty()) {
-      Log.w(LOG_TAG, "missing dot number(s)");
-      return 0;
-    }
-
-    byte dots = 0;
-    int length = operand.length();
-
-    for (int index=0; index<length; index+=1) {
-      final char number = operand.charAt(index);
-      final int dot;
-
-      switch (number) {
-        case '1': dot = Braille.CELL_DOT_1; break;
-        case '2': dot = Braille.CELL_DOT_2; break;
-        case '3': dot = Braille.CELL_DOT_3; break;
-        case '4': dot = Braille.CELL_DOT_4; break;
-        case '5': dot = Braille.CELL_DOT_5; break;
-        case '6': dot = Braille.CELL_DOT_6; break;
-        case '7': dot = Braille.CELL_DOT_7; break;
-        case '8': dot = Braille.CELL_DOT_8; break;
-
-        default:
-          Log.w(LOG_TAG, ("unknown dot number: " + number));
-          return null;
-      }
-
-      if ((dots & dot) != 0) {
-        Log.w(LOG_TAG, ("dot number specified more than once: " + number));
-        return null;
-      }
-
-      dots |= dot;
-    }
-
-    return dots;
+    return Braille.parseDotNumbers(operand);
   }
 
   private final boolean defineCharacter (String[] operands, boolean forInput) {

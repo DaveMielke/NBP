@@ -153,43 +153,26 @@ public class KeySet extends BitSet {
     return toDots() != null;
   }
 
-  public static KeySet fromDotNumbers (String numbers) {
-    if (numbers.isEmpty()) {
-      Log.w(LOG_TAG, "missing dot number(s)");
-      return null;
-    }
-
+  public static KeySet fromDots (byte dots) {
     KeySet keys = new KeySet();
-    int length = numbers.length();
 
-    for (int index=0; index<length; index+=1) {
-      final char number = numbers.charAt(index);
-      final int key;
+    if ((dots & Braille.CELL_DOT_1) != 0) keys.set(DOT_1);
+    if ((dots & Braille.CELL_DOT_2) != 0) keys.set(DOT_2);
+    if ((dots & Braille.CELL_DOT_3) != 0) keys.set(DOT_3);
+    if ((dots & Braille.CELL_DOT_4) != 0) keys.set(DOT_4);
+    if ((dots & Braille.CELL_DOT_5) != 0) keys.set(DOT_5);
+    if ((dots & Braille.CELL_DOT_6) != 0) keys.set(DOT_6);
+    if ((dots & Braille.CELL_DOT_7) != 0) keys.set(DOT_7);
+    if ((dots & Braille.CELL_DOT_8) != 0) keys.set(DOT_8);
 
-      switch (number) {
-        case '1': key = DOT_1; break;
-        case '2': key = DOT_2; break;
-        case '3': key = DOT_3; break;
-        case '4': key = DOT_4; break;
-        case '5': key = DOT_5; break;
-        case '6': key = DOT_6; break;
-        case '7': key = DOT_7; break;
-        case '8': key = DOT_8; break;
-
-        default:
-          Log.w(LOG_TAG, ("unknown dot number: " + number));
-          return null;
-      }
-
-      if (keys.get(key)) {
-        Log.w(LOG_TAG, ("dot number specified more than once: " + number));
-        return null;
-      }
-
-      keys.set(key);
-    }
-
+    if (keys.isEmpty()) keys.set(SPACE);
     return keys;
+  }
+
+  public static KeySet fromDotNumbers (String numbers) {
+    Byte dots = Braille.parseDotNumbers(numbers);
+    if (dots == null) return null;
+    return fromDots(dots);
   }
 
   public static KeySet fromName (String name) {
