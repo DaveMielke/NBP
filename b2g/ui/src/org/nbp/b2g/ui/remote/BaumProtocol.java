@@ -25,7 +25,7 @@ public class BaumProtocol extends Protocol {
     WAITING,
     STARTED,
     ESCAPE,
-    ;
+    ; // end of enumeration
   }
 
   private final byte[] inputBuffer = new byte[2 + getCellCount()];
@@ -299,6 +299,7 @@ public class BaumProtocol extends Protocol {
 
         inputState = InputState.STARTED;
         isEscape = false;
+        /* fall through */
 
       case STARTED:
         if (isEscape) {
@@ -329,58 +330,58 @@ public class BaumProtocol extends Protocol {
     }
   }
 
-  private final Map<Integer, KeyDescriptor> keyMap = new
-      LinkedHashMap<Integer, KeyDescriptor>();
+  private final Map<Integer, KeyDescriptor> keyMap =
+  new LinkedHashMap<Integer, KeyDescriptor>();
 
-  private final void mapKey (int mask, KeyDescriptor key) {
-    keyMap.put(mask, key);
+  private final void mapKey (int index, KeyDescriptor descriptor) {
+    keyMap.put(index, descriptor);
   }
 
-  private final void mapKey (int mask, KeyGroup group, int number) {
-    mapKey(mask, new KeyDescriptor(group, number));
+  private final void mapKey (int index, KeyGroup group, int number) {
+    mapKey(index, new KeyDescriptor(group, number));
   }
 
-  private final void mapKey (int mask) {
-    mapKey(mask, null);
+  private final void mapKey (int index) {
+    mapKey(index, null);
   }
 
   private final void mapCommonKeys () {
-    mapKey(KeyMask.DPAD_UP    , joystickPositions, JoystickPositions.UP);
-    mapKey(KeyMask.DPAD_LEFT  , joystickPositions, JoystickPositions.LEFT);
-    mapKey(KeyMask.DPAD_DOWN  , joystickPositions, JoystickPositions.DOWN);
-    mapKey(KeyMask.DPAD_RIGHT , joystickPositions, JoystickPositions.RIGHT);
-    mapKey(KeyMask.DPAD_CENTER, joystickPositions, JoystickPositions.PRESS);
+    mapKey(KeySet.PAD_UP    , joystickPositions, JoystickPositions.UP);
+    mapKey(KeySet.PAD_LEFT  , joystickPositions, JoystickPositions.LEFT);
+    mapKey(KeySet.PAD_DOWN  , joystickPositions, JoystickPositions.DOWN);
+    mapKey(KeySet.PAD_RIGHT , joystickPositions, JoystickPositions.RIGHT);
+    mapKey(KeySet.PAD_CENTER, joystickPositions, JoystickPositions.PRESS);
   }
 
   private final void mapDisplayKeys () {
-    mapKey(KeyMask.DOT_1, displayKeys, DisplayKeys.D1);
-    mapKey(KeyMask.DOT_2, displayKeys, DisplayKeys.D2);
-    mapKey(KeyMask.DOT_3, displayKeys, DisplayKeys.D3);
-    mapKey(KeyMask.DOT_4, displayKeys, DisplayKeys.D4);
-    mapKey(KeyMask.DOT_5, displayKeys, DisplayKeys.D5);
-    mapKey(KeyMask.DOT_6, displayKeys, DisplayKeys.D6);
+    mapKey(KeySet.DOT_1, displayKeys, DisplayKeys.D1);
+    mapKey(KeySet.DOT_2, displayKeys, DisplayKeys.D2);
+    mapKey(KeySet.DOT_3, displayKeys, DisplayKeys.D3);
+    mapKey(KeySet.DOT_4, displayKeys, DisplayKeys.D4);
+    mapKey(KeySet.DOT_5, displayKeys, DisplayKeys.D5);
+    mapKey(KeySet.DOT_6, displayKeys, DisplayKeys.D6);
 
-    mapKey(KeyMask.BACKWARD, entryKeys, EntryKeys.F1);
-    mapKey(KeyMask.DOT_7   , entryKeys, EntryKeys.F2);
-    mapKey(KeyMask.DOT_8   , entryKeys, EntryKeys.F3);
-    mapKey(KeyMask.FORWARD , entryKeys, EntryKeys.F4);
+    mapKey(KeySet.PAN_BACKWARD, entryKeys, EntryKeys.F1);
+    mapKey(KeySet.DOT_7   ,     entryKeys, EntryKeys.F2);
+    mapKey(KeySet.DOT_8   ,     entryKeys, EntryKeys.F3);
+    mapKey(KeySet.PAN_FORWARD , entryKeys, EntryKeys.F4);
 
-    mapKey(KeyMask.SPACE);
+    mapKey(KeySet.SPACE);
   }
 
   private final void mapEntryKeys () {
-    mapKey(KeyMask.DOT_1, entryKeys, EntryKeys.B1);
-    mapKey(KeyMask.DOT_2, entryKeys, EntryKeys.B2);
-    mapKey(KeyMask.DOT_3, entryKeys, EntryKeys.B3);
-    mapKey(KeyMask.DOT_4, entryKeys, EntryKeys.B4);
-    mapKey(KeyMask.DOT_5, entryKeys, EntryKeys.B5);
-    mapKey(KeyMask.DOT_6, entryKeys, EntryKeys.B6);
-    mapKey(KeyMask.DOT_7, entryKeys, EntryKeys.B7);
-    mapKey(KeyMask.DOT_8, entryKeys, EntryKeys.B8);
+    mapKey(KeySet.DOT_1, entryKeys, EntryKeys.B1);
+    mapKey(KeySet.DOT_2, entryKeys, EntryKeys.B2);
+    mapKey(KeySet.DOT_3, entryKeys, EntryKeys.B3);
+    mapKey(KeySet.DOT_4, entryKeys, EntryKeys.B4);
+    mapKey(KeySet.DOT_5, entryKeys, EntryKeys.B5);
+    mapKey(KeySet.DOT_6, entryKeys, EntryKeys.B6);
+    mapKey(KeySet.DOT_7, entryKeys, EntryKeys.B7);
+    mapKey(KeySet.DOT_8, entryKeys, EntryKeys.B8);
 
-    mapKey(KeyMask.BACKWARD, entryKeys, EntryKeys.B9);
-    mapKey(KeyMask.FORWARD , entryKeys, EntryKeys.B10);
-    mapKey(KeyMask.SPACE   , entryKeys, EntryKeys.B11);
+    mapKey(KeySet.PAN_BACKWARD, entryKeys, EntryKeys.B9);
+    mapKey(KeySet.PAN_FORWARD , entryKeys, EntryKeys.B10);
+    mapKey(KeySet.SPACE   ,     entryKeys, EntryKeys.B11);
   }
 
   private abstract class PendingSpaceAction {
@@ -388,16 +389,16 @@ public class BaumProtocol extends Protocol {
     public abstract String getMessage ();
   }
 
-  private final Map<Integer, PendingSpaceAction> pendingSpaceActions = new
-      LinkedHashMap<Integer, PendingSpaceAction>();
+  private final Map<Integer, PendingSpaceAction> pendingSpaceActions =
+  new LinkedHashMap<Integer, PendingSpaceAction>();
 
-  private final void mapPendingSpaceAction (int keyMask, PendingSpaceAction action) {
-    pendingSpaceActions.put(keyMask, action);
+  private final void mapPendingSpaceAction (int key, PendingSpaceAction action) {
+    pendingSpaceActions.put(key, action);
   }
 
   private final void mapPendingSpaceActions () {
     mapPendingSpaceAction(
-      KeyMask.BACKWARD,
+      KeySet.PAN_BACKWARD,
       new PendingSpaceAction() {
         @Override
         public final void performAction () {
@@ -412,7 +413,7 @@ public class BaumProtocol extends Protocol {
     );
 
     mapPendingSpaceAction(
-      KeyMask.FORWARD,
+      KeySet.PAN_FORWARD,
       new PendingSpaceAction() {
         @Override
         public final void performAction () {
@@ -453,19 +454,19 @@ public class BaumProtocol extends Protocol {
     handleKeyEvent(key.group, key.number, press);
   }
 
-  private final boolean handleKeyEvent (int mask, boolean press) {
-    KeyDescriptor key = keyMap.get(mask);
+  private final boolean handleKeyEvent (int index, boolean press) {
+    KeyDescriptor key = keyMap.get(index);
 
     if ((pressedKeyCount == 0) && press) {
       if (pendingKeyPress == null) {
-        PendingSpaceAction action = pendingSpaceActions.get(mask);
+        PendingSpaceAction action = pendingSpaceActions.get(index);
 
         if (action != null) {
           pendingSpaceAction = action;
           pendingKeyPress = key;
           return true;
         }
-      } else if (mask == KeyMask.SPACE) {
+      } else if (index == KeySet.SPACE) {
         PendingSpaceAction action = pendingSpaceAction;
         pendingSpaceAction = null;
         pendingKeyPress = null;
@@ -478,7 +479,7 @@ public class BaumProtocol extends Protocol {
 
     if (key != null) {
       handleKeyEvent(key, press);
-    } else if (keyMap.containsKey(mask)) {
+    } else if (keyMap.containsKey(index)) {
       if (press) Tones.beep();
     } else {
       return false;
@@ -488,28 +489,16 @@ public class BaumProtocol extends Protocol {
   }
 
   @Override
-  public final int handleNavigationKeyEvent (int keyMask, boolean press) {
-    if (handleKeyEvent(keyMask, press)) return 0;
-
-    for (Integer mask : keyMap.keySet()) {
-      if ((keyMask & mask) != 0) {
-        if (handleKeyEvent(mask, press)) {
-          if ((keyMask &= ~mask) == 0) {
-            break;
-          }
-        }
-      }
-    }
-
-    return keyMask;
+  public final boolean handleNavigationKeyEvent (int key, boolean press) {
+    return handleKeyEvent(key, press);
   }
 
   @Override
-  public final boolean handleCursorKeyEvent (int keyNumber, boolean press) {
+  public final boolean handleCursorKeyEvent (int key, boolean press) {
     KeyGroup group = cursorKeys;
-    if (keyNumber >= group.size) return false;
+    if (key >= group.size) return false;
 
-    handleKeyEvent(group, keyNumber, press);
+    handleKeyEvent(group, key, press);
     return true;
   }
 

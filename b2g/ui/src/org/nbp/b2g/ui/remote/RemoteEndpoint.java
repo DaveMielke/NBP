@@ -33,13 +33,13 @@ public class RemoteEndpoint extends Endpoint {
   }
 
   @Override
-  public final int handleNavigationKeyEvent (int keyMask, boolean press) {
-    return currentProtocol.handleNavigationKeyEvent(keyMask, press);
+  public final boolean handleNavigationKeyEvent (int key, boolean press) {
+    return currentProtocol.handleNavigationKeyEvent(key, press);
   }
 
   @Override
-  public final boolean handleCursorKeyEvent (int keyNumber, boolean press) {
-    return currentProtocol.handleCursorKeyEvent(keyNumber, press);
+  public final boolean handleCursorKeyEvent (int key, boolean press) {
+    return currentProtocol.handleCursorKeyEvent(key, press);
   }
 
   public RemoteEndpoint () {

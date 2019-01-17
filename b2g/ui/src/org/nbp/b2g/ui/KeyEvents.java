@@ -246,7 +246,7 @@ public abstract class KeyEvents {
   }
 
   private static boolean handleEndpointNavigationKeyEvent (int key, boolean press) {
-    return false;
+    return Endpoints.getCurrentEndpoint().handleNavigationKeyEvent(key, press);
   }
 
   private static void handleNavigationKeyPress (int key) {

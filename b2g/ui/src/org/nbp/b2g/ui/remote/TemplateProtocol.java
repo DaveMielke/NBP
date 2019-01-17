@@ -17,12 +17,12 @@ public class TemplateProtocol extends Protocol {
   }
 
   @Override
-  public final int handleNavigationKeyEvent (int keyMask, boolean press) {
-    return keyMask;
+  public final boolean handleNavigationKeyEvent (int key, boolean press) {
+    return false;
   }
 
   @Override
-  public final boolean handleCursorKeyEvent (int keyNumber, boolean press) {
+  public final boolean handleCursorKeyEvent (int key, boolean press) {
     return false;
   }
 
