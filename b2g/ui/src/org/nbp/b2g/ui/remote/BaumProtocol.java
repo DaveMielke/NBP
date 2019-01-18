@@ -432,6 +432,13 @@ public class BaumProtocol extends Protocol {
   private PendingSpaceAction pendingSpaceAction = null;
 
   private final void handleKeyEvent (KeyGroup group, int number, boolean press) {
+    if (pendingKeyPress != null) {
+      KeyDescriptor key = pendingKeyPress;
+      pendingKeyPress = null;
+      pendingSpaceAction = null;
+      handleKeyEvent(key, true);
+    }
+
     if (group.set(number, press)) {
       group.send();
 
@@ -470,10 +477,6 @@ public class BaumProtocol extends Protocol {
           return true;
         }
       }
-    } else if (pendingKeyPress != null) {
-      handleKeyEvent(pendingKeyPress, true);
-      pendingKeyPress = null;
-      pendingSpaceAction = null;
     }
 
     if (key != null) {
