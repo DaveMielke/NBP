@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 
 import org.nbp.common.Tones;
-import org.nbp.common.BitSet;
 import org.nbp.common.CharacterUtilities;
 
 import android.util.Log;
@@ -77,7 +76,7 @@ public class BaumProtocol extends Protocol {
     return send(WRITE_CELLS, new byte[] {(byte)getCellCount()});
   }
 
-  private class KeyGroup extends BitSet {
+  private class KeyGroup extends BitGroup {
     private final int command;
 
     public KeyGroup (int size, int command) {
@@ -433,12 +432,6 @@ public class BaumProtocol extends Protocol {
   private PendingSpaceAction pendingSpaceAction = null;
 
   private final void handleKeyEvent (KeyGroup group, int number, boolean press) {
-    if (pendingKeyPress != null) {
-      KeyDescriptor key = pendingKeyPress;
-      pendingKeyPress = null;
-      handleKeyEvent(key, true);
-    }
-
     if (group.set(number, press)) {
       group.send();
 
@@ -457,32 +450,38 @@ public class BaumProtocol extends Protocol {
   private final boolean handleKeyEvent (int index, boolean press) {
     KeyDescriptor key = keyMap.get(index);
 
-    if ((pressedKeyCount == 0) && press) {
-      if (pendingKeyPress == null) {
-        PendingSpaceAction action = pendingSpaceActions.get(index);
+    if (press) {
+      if (pressedKeyCount == 0) {
+        if (pendingKeyPress == null) {
+          PendingSpaceAction action = pendingSpaceActions.get(index);
 
-        if (action != null) {
-          pendingSpaceAction = action;
-          pendingKeyPress = key;
+          if (action != null) {
+            pendingSpaceAction = action;
+            pendingKeyPress = key;
+            return true;
+          }
+        } else if (index == KeySet.SPACE) {
+          PendingSpaceAction action = pendingSpaceAction;
+          pendingSpaceAction = null;
+          pendingKeyPress = null;
+
+          message(action.getMessage());
+          action.performAction();
           return true;
         }
-      } else if (index == KeySet.SPACE) {
-        PendingSpaceAction action = pendingSpaceAction;
-        pendingSpaceAction = null;
-        pendingKeyPress = null;
-
-        message(action.getMessage());
-        action.performAction();
-        return true;
       }
+    } else if (pendingKeyPress != null) {
+      handleKeyEvent(pendingKeyPress, true);
+      pendingKeyPress = null;
+      pendingSpaceAction = null;
     }
 
     if (key != null) {
       handleKeyEvent(key, press);
-    } else if (keyMap.containsKey(index)) {
-      if (press) Tones.beep();
-    } else {
+    } else if (!keyMap.containsKey(index)) {
       return false;
+    } else if (press) {
+      Tones.beep();
     }
 
     return true;

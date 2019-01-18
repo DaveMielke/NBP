@@ -373,38 +373,39 @@ public abstract class KeyEvents {
     }
   }
 
-  private static boolean handleEndpointCursorKeyEvent (int keyNumber, boolean press) {
-    return Endpoints.getCurrentEndpoint().handleCursorKeyEvent(keyNumber, press);
+  private static boolean handleEndpointCursorKeyEvent (int key, boolean press) {
+    return Endpoints.getCurrentEndpoint().handleCursorKeyEvent(key, press);
   }
 
-  private static void handleCursorKeyPress (int keyNumber) {
+  private static void handleCursorKeyPress (int key) {
     onKeyPress();
-    if (handleEndpointCursorKeyEvent(keyNumber, true)) return;
 
-    synchronized (longPressTimeout) {
-      pressedCursorKeys.add(keyNumber);
-      logCursorKeyAction(keyNumber, "press");
+    if (!handleEndpointCursorKeyEvent(key, true)) {
+      synchronized (longPressTimeout) {
+        pressedCursorKeys.add(key);
+        logCursorKeyAction(key, "press");
 
-      if (pressedCursorKeys.size() == 1) {
-        handleNavigationKey(KeySet.CURSOR);
+        if (pressedCursorKeys.size() == 1) {
+          handleNavigationKey(KeySet.CURSOR);
+        }
       }
     }
   }
 
-  private static void handleCursorKeyRelease (int keyNumber) {
-    if (handleEndpointCursorKeyEvent(keyNumber, false)) return;
-
-    synchronized (longPressTimeout) {
-      pressedCursorKeys.remove(keyNumber);
-      logCursorKeyAction(keyNumber, "release");
+  private static void handleCursorKeyRelease (int key) {
+    if (!handleEndpointCursorKeyEvent(key, false)) {
+      synchronized (longPressTimeout) {
+        pressedCursorKeys.remove(key);
+        logCursorKeyAction(key, "release");
+      }
     }
   }
 
-  public static void handleCursorKeyEvent (int keyNumber, boolean press) {
+  public static void handleCursorKeyEvent (int key, boolean press) {
     if (press) {
-      handleCursorKeyPress(keyNumber);
+      handleCursorKeyPress(key);
     } else {
-      handleCursorKeyRelease(keyNumber);
+      handleCursorKeyRelease(key);
     }
   }
 }

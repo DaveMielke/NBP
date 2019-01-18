@@ -1,6 +1,7 @@
-package org.nbp.common;
+package org.nbp.b2g.ui.remote;
+import org.nbp.b2g.ui.*;
 
-public class BitSet {
+public class BitGroup {
   public final int size;
 
   protected final static int BITS_PER_ELEMENT = 8;
@@ -23,7 +24,7 @@ public class BitSet {
     return changed;
   }
 
-  public BitSet (int size) {
+  public BitGroup (int size) {
     this.size = size;
     elements = new byte[getElementCount()];
     empty();
