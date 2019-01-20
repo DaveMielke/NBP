@@ -1,10 +1,13 @@
 package org.nbp.b2g.ui;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import java.util.Set;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import java.util.Map;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 
 import org.nbp.common.Braille;
 
@@ -14,7 +17,7 @@ import android.view.KeyEvent;
 public class KeySet {
   private final static String LOG_TAG = KeySet.class.getName();
 
-  private final Set<Integer> includedKeys = new HashSet<Integer>();
+  private final Set<Integer> includedKeys = new LinkedHashSet<Integer>();
   private boolean hasBeenFrozen = false;
 
   @Override
@@ -94,43 +97,69 @@ public class KeySet {
   }
 
   private static class KeyDefinition {
-    public final int code;
-    public final String name;
+    private final int sortOrder;
+    private final int keyCode;
+    private final String keyName;
 
-    public KeyDefinition (int code, String name) {
-      this.code = code;
-      this.name = name;
+    public KeyDefinition (int order, int code, String name) {
+      sortOrder = order;
+      keyCode = code;
+      keyName = name;
+    }
+
+    public final int getOrder () {
+      return sortOrder;
+    }
+
+    public final int getCode () {
+      return keyCode;
+    }
+
+    public final String getName () {
+      return keyName;
     }
   }
 
-  private static int lastCode = KeyEvent.getMaxKeyCode();
-  private final static Map<String, KeyDefinition> keyDefinitions =
-         new LinkedHashMap<String, KeyDefinition>();
+  private final static Map<String, KeyDefinition> nameToKey =
+               new HashMap<String, KeyDefinition>();
+
+  private final static Map<Integer, KeyDefinition> codeToKey =
+               new HashMap<Integer, KeyDefinition>();
 
   private static KeyDefinition addKey (Integer code, String name) {
-    synchronized (keyDefinitions) {
-      KeyDefinition key = new KeyDefinition(code, name);
-      keyDefinitions.put(normalizeKeyName(name), key);
-      return key;
+    KeyDefinition key;
+
+    synchronized (nameToKey) {
+      int order = nameToKey.size();
+      key = new KeyDefinition(order, code, name);
+      nameToKey.put(normalizeKeyName(name), key);
     }
+
+    synchronized (codeToKey) {
+      codeToKey.put(code, key);
+    }
+
+    return key;
   }
 
+  private final static Object ADD_KEY_LOCK = new Object();
+  private static int lastCode = KeyEvent.getMaxKeyCode();
+
   private static int addKey (String name) {
-    synchronized (keyDefinitions) {
+    synchronized (ADD_KEY_LOCK) {
       int code = ++lastCode;
       addKey(code, name);
       return code;
     }
   }
 
-  private static String addKey (Integer code) {
-    synchronized (keyDefinitions) {
+  private static KeyDefinition addKey (Integer code) {
+    synchronized (ADD_KEY_LOCK) {
       String name = KeyEvent.keyCodeToString(code);
       if ((name == null) || name.isEmpty()) name = Integer.toString(code);
       if (Character.isDigit(name.charAt(0))) name = "Key#" + name;
 
-      addKey(code, name);
-      return name;
+      return addKey(code, name);
     }
   }
 
@@ -209,7 +238,7 @@ public class KeySet {
   }
 
   private final static Map<Integer, Byte> codeToDot =
-         new LinkedHashMap<Integer, Byte>()
+               new HashMap<Integer, Byte>()
   {
     {
       put(DOT_1, Braille.CELL_DOT_1);
@@ -270,9 +299,9 @@ public class KeySet {
   public static KeySet fromName (String name) {
     name = normalizeKeyName(name);
 
-    synchronized (keyDefinitions) {
-      KeyDefinition key = keyDefinitions.get(name);
-      if (key != null) return new KeySet(key.code);
+    synchronized (nameToKey) {
+      KeyDefinition key = nameToKey.get(name);
+      if (key != null) return new KeySet(key.getCode());
     }
 
     {
@@ -292,37 +321,43 @@ public class KeySet {
     StringBuilder sb = new StringBuilder();
 
     if (!isEmpty()) {
-      Set<Integer> keysLeft = new HashSet<Integer>(includedKeys);
-      int dotCount = 0;
+      KeyDefinition[] keys;
 
-      synchronized (keyDefinitions) {
-        for (KeyDefinition key : keyDefinitions.values()) {
-          int code = key.code;
-          if (!keysLeft.contains(code)) continue;
+      synchronized (codeToKey) {
+        keys = new KeyDefinition[includedKeys.size()];
+        int index = 0;
 
-          String name = key.name;
-          boolean isDot = isDotCode(code);
-
-          if (!(isDot && (dotCount > 0))) {
-            if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
-            sb.append(name);
-          } else {
-            if (dotCount == 1) sb.insert((sb.length() - 1), 's');
-            sb.append(name.charAt(name.length() - 1));
-          }
-
-          keysLeft.remove(code);
-          if (keysLeft.isEmpty()) break;
-
-          dotCount = isDot? (dotCount + 1): 0;
+        for (Integer code : includedKeys) {
+          KeyDefinition key = codeToKey.get(code);
+          if (key == null) key = addKey(code);
+          keys[index++] = key;
         }
       }
 
-      if (!keysLeft.isEmpty()) {
-        for (Integer code : keysLeft) {
-          if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
-          sb.append(addKey(code));
+      Arrays.sort(keys,
+        new Comparator<KeyDefinition>() {
+          @Override
+          public int compare (KeyDefinition key1, KeyDefinition key2) {
+            return Integer.compare(key1.getOrder(), key2.getOrder());
+          }
         }
+      );
+      int dotCount = 0;
+
+      for (KeyDefinition key : keys) {
+        int code = key.getCode();
+        String name = key.getName();
+        boolean isDot = isDotCode(code);
+
+        if (!(isDot && (dotCount > 0))) {
+          if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
+          sb.append(name);
+        } else {
+          if (dotCount == 1) sb.insert((sb.length() - 1), 's');
+          sb.append(name.charAt(name.length() - 1));
+        }
+
+        dotCount = isDot? (dotCount + 1): 0;
       }
     }
 
