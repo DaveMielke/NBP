@@ -1,7 +1,7 @@
 package org.nbp.b2g.ui;
 
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.HashSet;
 
 import java.util.Map;
 import java.util.LinkedHashMap;
@@ -14,7 +14,7 @@ import android.view.KeyEvent;
 public class KeySet {
   private final static String LOG_TAG = KeySet.class.getName();
 
-  private final Set<Integer> includedKeys = new TreeSet<Integer>();
+  private final Set<Integer> includedKeys = new HashSet<Integer>();
   private boolean hasBeenFrozen = false;
 
   @Override
@@ -33,13 +33,13 @@ public class KeySet {
     return includedKeys.isEmpty();
   }
 
-  public final boolean get (Integer key) {
-    return includedKeys.contains(key);
+  public final boolean get (Integer code) {
+    return includedKeys.contains(code);
   }
 
   public final boolean intersects (KeySet keys) {
-    for (Integer key : keys.includedKeys) {
-      if (get(key)) return true;
+    for (Integer code : keys.includedKeys) {
+      if (get(code)) return true;
     }
 
     return false;
@@ -60,14 +60,14 @@ public class KeySet {
     includedKeys.clear();
   }
 
-  public final boolean remove (Integer key) {
+  public final boolean remove (Integer code) {
     freezeCheck();
-    return includedKeys.remove(key);
+    return includedKeys.remove(code);
   }
 
-  public final boolean add (Integer key) {
+  public final boolean add (Integer code) {
     freezeCheck();
-    return includedKeys.add(key);
+    return includedKeys.add(code);
   }
 
   public final boolean or (KeySet keys) {
@@ -81,11 +81,11 @@ public class KeySet {
     includedKeys.addAll(keys.includedKeys);
   }
 
-  public KeySet (Integer... keys) {
+  public KeySet (Integer... codes) {
     super();
 
-    for (int key : keys) {
-      add(key);
+    for (int code : codes) {
+      add(code);
     }
   }
 
@@ -94,24 +94,60 @@ public class KeySet {
   }
 
   private static class KeyDefinition {
+    public final int code;
     public final String name;
-    public final int identifier;
 
-    public KeyDefinition (String name, int identifier) {
+    public KeyDefinition (int code, String name) {
+      this.code = code;
       this.name = name;
-      this.identifier = identifier;
     }
   }
 
+  private static int lastCode = KeyEvent.getMaxKeyCode();
   private final static Map<String, KeyDefinition> keyDefinitions =
          new LinkedHashMap<String, KeyDefinition>();
 
+  private static KeyDefinition addKey (Integer code, String name) {
+    synchronized (keyDefinitions) {
+      KeyDefinition key = new KeyDefinition(code, name);
+      keyDefinitions.put(normalizeKeyName(name), key);
+      return key;
+    }
+  }
+
   private static int addKey (String name) {
     synchronized (keyDefinitions) {
-      int index = keyDefinitions.size();
-      keyDefinitions.put(normalizeKeyName(name), new KeyDefinition(name, index));
-      return index;
+      int code = ++lastCode;
+      addKey(code, name);
+      return code;
     }
+  }
+
+  private static String addKey (Integer code) {
+    synchronized (keyDefinitions) {
+      String name = KeyEvent.keyCodeToString(code);
+
+      if (name == null) {
+        name = "Key#" + code;
+      }
+
+      addKey(code, name);
+      return name;
+    }
+  }
+
+  static {
+    addKey(KeyEvent.KEYCODE_SHIFT_LEFT);
+    addKey(KeyEvent.KEYCODE_SHIFT_RIGHT);
+
+    addKey(KeyEvent.KEYCODE_CTRL_LEFT);
+    addKey(KeyEvent.KEYCODE_CTRL_RIGHT);
+
+    addKey(KeyEvent.KEYCODE_ALT_LEFT);
+    addKey(KeyEvent.KEYCODE_ALT_RIGHT);
+
+    addKey(KeyEvent.KEYCODE_META_LEFT);
+    addKey(KeyEvent.KEYCODE_META_RIGHT);
   }
 
   public final static int PAN_FORWARD  = addKey("Forward");
@@ -141,40 +177,40 @@ public class KeySet {
 
   protected final static KeySet panKeys = new KeySet(
     PAN_FORWARD, PAN_BACKWARD
-  );
+  ).freeze();
 
-  public static boolean isPanKey (int index) {
-    return panKeys.get(index);
+  public static boolean isPanCode (int code) {
+    return panKeys.get(code);
   }
 
   protected final static KeySet padKeys = new KeySet(
     PAD_UP, PAD_DOWN,
     PAD_LEFT, PAD_RIGHT,
     PAD_CENTER
-  );
+  ).freeze();
 
-  public static boolean isPadKey (int index) {
-    return padKeys.get(index);
+  public static boolean isPadCode (int code) {
+    return padKeys.get(code);
   }
 
   protected final static KeySet dotKeys = new KeySet(
     DOT_1, DOT_2, DOT_3, DOT_4,
     DOT_5, DOT_6, DOT_7, DOT_8
-  );
+  ).freeze();
 
-  public static boolean isDotKey (int key) {
-    return dotKeys.get(key);
+  public static boolean isDotCode (int code) {
+    return dotKeys.get(code);
   }
 
   protected final static KeySet volumeKeys = new KeySet(
     VOLUME_DOWN, VOLUME_UP
-  );
+  ).freeze();
 
-  public static boolean isVolumeKey (int index) {
-    return volumeKeys.get(index);
+  public static boolean isVolumeCode (int code) {
+    return volumeKeys.get(code);
   }
 
-  private final static Map<Integer, Byte> keyDots =
+  private final static Map<Integer, Byte> codeToDot =
          new LinkedHashMap<Integer, Byte>()
   {
     {
@@ -193,11 +229,11 @@ public class KeySet {
     byte dots = 0;
     boolean space = false;
 
-    for (Integer key : includedKeys) {
-      if (key == SPACE) {
+    for (Integer code : includedKeys) {
+      if (code == SPACE) {
         space = true;
       } else {
-        Byte dot = keyDots.get(key);
+        Byte dot = codeToDot.get(code);
         if (dot == null) return null;
         dots |= dot;
       }
@@ -238,7 +274,7 @@ public class KeySet {
 
     synchronized (keyDefinitions) {
       KeyDefinition key = keyDefinitions.get(name);
-      if (key != null) return new KeySet(key.identifier);
+      if (key != null) return new KeySet(key.code);
     }
 
     {
@@ -258,35 +294,36 @@ public class KeySet {
     StringBuilder sb = new StringBuilder();
 
     if (!isEmpty()) {
-      Set<Integer> keysLeft = new TreeSet<Integer>(includedKeys);
+      Set<Integer> keysLeft = new HashSet<Integer>(includedKeys);
       int dotCount = 0;
 
       synchronized (keyDefinitions) {
         for (KeyDefinition key : keyDefinitions.values()) {
-          if (keysLeft.contains(key.identifier)) {
-            String name = key.name;
-            boolean isDot = isDotKey(key.identifier);
+          int code = key.code;
+          if (!keysLeft.contains(code)) continue;
 
-            if (!(isDot && (dotCount > 0))) {
-              if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
-              sb.append(name);
-            } else {
-              if (dotCount == 1) sb.insert((sb.length() - 1), 's');
-              sb.append(name.charAt(name.length() - 1));
-            }
+          String name = key.name;
+          boolean isDot = isDotCode(code);
 
-            keysLeft.remove(key.identifier);
-            if (keysLeft.isEmpty()) break;
-
-            dotCount = isDot? (dotCount + 1): 0;
+          if (!(isDot && (dotCount > 0))) {
+            if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
+            sb.append(name);
+          } else {
+            if (dotCount == 1) sb.insert((sb.length() - 1), 's');
+            sb.append(name.charAt(name.length() - 1));
           }
+
+          keysLeft.remove(code);
+          if (keysLeft.isEmpty()) break;
+
+          dotCount = isDot? (dotCount + 1): 0;
         }
       }
 
       if (!keysLeft.isEmpty()) {
-        for (Integer key : keysLeft) {
+        for (Integer code : keysLeft) {
           if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
-          sb.append(String.format("key#%d", key));
+          sb.append(String.format("Key#%d", code));
         }
       }
     }
