@@ -55,8 +55,6 @@ bind Forward+Dot8 OneHandOn
 bind Backward+Forward DescribeIndicators
 bind Space+Dots24#i DescribeIndicators
 
-bind Space+Dots12345678 Null
-
 include traditional.keys.inc
 include speech.keys.inc
 include required.keys.inc
