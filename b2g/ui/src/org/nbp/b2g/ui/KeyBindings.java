@@ -69,7 +69,7 @@ public class KeyBindings {
     setKeyBindings();
   }
 
-  private class PartialEntry extends Action {
+  private final class PartialEntry extends Action {
     public final KeyBindingMap keyBindings = new KeyBindingMap();
 
     @Override
@@ -120,31 +120,79 @@ public class KeyBindings {
     return null;
   }
 
+  private final static class IncompleteEntry extends Action {
+    @Override
+    public boolean performAction () {
+      return false;
+    }
+
+    @Override
+    public boolean isHidden () {
+      return true;
+    }
+
+    public IncompleteEntry (Endpoint endpoint) {
+      super(endpoint, false);
+    }
+  }
+
+  private final Action incompleteEntry;
+
+  private final void addIncompleteEntries (KeyBindingMap bindings, KeySet keys, boolean add) {
+    if (add) {
+      if (bindings.get(keys) != null) return;
+      bindings.put(new KeySet(keys).freeze(), incompleteEntry);
+    }
+
+    if (keys.size() > 1) {
+      for (Integer code : keys.get()) {
+        keys.remove(code);
+        addIncompleteEntries(bindings, keys, true);
+        keys.add(code);
+      }
+    }
+  }
+
+  private final boolean addAction (KeyBindingMap bindings, KeySet keys, Action action) {
+    Action current = bindings.get(keys);
+
+    if (current != null) {
+      if (current != incompleteEntry) {
+        Log.w(LOG_TAG,
+          String.format(
+            "duplicate key binding: %s: %s & %s",
+            keys.toString(), current.getName(), action.getName()
+          )
+        );
+
+        return false;
+      }
+    }
+
+    bindings.put(keys, action);
+    addIncompleteEntries(bindings, new KeySet(keys), false);
+    return true;
+  }
+
   public boolean addKeyBinding (Action action, KeySet... keySets) {
     KeyBindingMap bindings = rootKeyBindings;
     int last = keySets.length - 1;
 
     for (int index=0; index<last; index+=1) {
       KeySet keySet = keySets[index];
-      Action partialEntry = bindings.get(keySet);
+      Action current = bindings.get(keySet);
 
-      if (partialEntry == null) {
-        partialEntry = new PartialEntry(endpoint);
-        bindings.put(keySet, partialEntry);
-      } else if (!isPartialEntry(partialEntry)) {
+      if (current == null) {
+        current = new PartialEntry(endpoint);
+        addAction(bindings, keySet, current);
+      } else if (!isPartialEntry(current)) {
         return false;
       }
 
-      bindings = ((PartialEntry)partialEntry).keyBindings;
+      bindings = ((PartialEntry)current).keyBindings;
     }
 
-    {
-      KeySet keySet = keySets[last];
-      if (bindings.get(keySet) != null) return false;
-      bindings.put(keySet, action);
-    }
-
-    return true;
+    return addAction(bindings, keySets[last], action);
   }
 
   private Action newAction (Class<? extends Action> type) {
@@ -336,5 +384,6 @@ public class KeyBindings {
 
   public KeyBindings (Endpoint endpoint) {
     this.endpoint = endpoint;
+    incompleteEntry = new IncompleteEntry(endpoint);
   }
 }
