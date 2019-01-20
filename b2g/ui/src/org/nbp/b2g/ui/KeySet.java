@@ -164,17 +164,47 @@ public class KeySet {
   }
 
   static {
-    addKey(KeyEvent.KEYCODE_SHIFT_LEFT);
-    addKey(KeyEvent.KEYCODE_SHIFT_RIGHT);
+    int[] codes = new int[] {
+      KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT,
+      KeyEvent.KEYCODE_CTRL_LEFT , KeyEvent.KEYCODE_CTRL_RIGHT ,
+      KeyEvent.KEYCODE_ALT_LEFT  , KeyEvent.KEYCODE_ALT_RIGHT  ,
+      KeyEvent.KEYCODE_META_LEFT , KeyEvent.KEYCODE_META_RIGHT ,
 
-    addKey(KeyEvent.KEYCODE_CTRL_LEFT);
-    addKey(KeyEvent.KEYCODE_CTRL_RIGHT);
+      KeyEvent.KEYCODE_F1 , KeyEvent.KEYCODE_F2 , KeyEvent.KEYCODE_F3 ,
+      KeyEvent.KEYCODE_F4 , KeyEvent.KEYCODE_F5 , KeyEvent.KEYCODE_F6 ,
+      KeyEvent.KEYCODE_F7 , KeyEvent.KEYCODE_F8 , KeyEvent.KEYCODE_F9 ,
+      KeyEvent.KEYCODE_F10, KeyEvent.KEYCODE_F11, KeyEvent.KEYCODE_F12, 
 
-    addKey(KeyEvent.KEYCODE_ALT_LEFT);
-    addKey(KeyEvent.KEYCODE_ALT_RIGHT);
+      KeyEvent.KEYCODE_NUMPAD_0         , KeyEvent.KEYCODE_NUMPAD_1          ,
+      KeyEvent.KEYCODE_NUMPAD_2         , KeyEvent.KEYCODE_NUMPAD_3          ,
+      KeyEvent.KEYCODE_NUMPAD_4         , KeyEvent.KEYCODE_NUMPAD_5          ,
+      KeyEvent.KEYCODE_NUMPAD_6         , KeyEvent.KEYCODE_NUMPAD_7          ,
+      KeyEvent.KEYCODE_NUMPAD_8         , KeyEvent.KEYCODE_NUMPAD_9          ,
+      KeyEvent.KEYCODE_NUMPAD_DOT       , KeyEvent.KEYCODE_NUMPAD_COMMA      ,
+      KeyEvent.KEYCODE_NUMPAD_ADD       , KeyEvent.KEYCODE_NUMPAD_SUBTRACT   ,
+      KeyEvent.KEYCODE_NUMPAD_MULTIPLY  , KeyEvent.KEYCODE_NUMPAD_DIVIDE     ,
+      KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN, KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN,
+      KeyEvent.KEYCODE_NUMPAD_ENTER     , KeyEvent.KEYCODE_NUMPAD_EQUALS     ,
 
-    addKey(KeyEvent.KEYCODE_META_LEFT);
-    addKey(KeyEvent.KEYCODE_META_RIGHT);
+      KeyEvent.KEYCODE_A, KeyEvent.KEYCODE_B, KeyEvent.KEYCODE_C,
+      KeyEvent.KEYCODE_D, KeyEvent.KEYCODE_E, KeyEvent.KEYCODE_F,
+      KeyEvent.KEYCODE_G, KeyEvent.KEYCODE_H, KeyEvent.KEYCODE_I,
+      KeyEvent.KEYCODE_J, KeyEvent.KEYCODE_K, KeyEvent.KEYCODE_L,
+      KeyEvent.KEYCODE_M, KeyEvent.KEYCODE_N, KeyEvent.KEYCODE_O,
+      KeyEvent.KEYCODE_P, KeyEvent.KEYCODE_Q, KeyEvent.KEYCODE_R,
+      KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_T, KeyEvent.KEYCODE_U,
+      KeyEvent.KEYCODE_V, KeyEvent.KEYCODE_W, KeyEvent.KEYCODE_X,
+      KeyEvent.KEYCODE_Y, KeyEvent.KEYCODE_Z,
+
+      KeyEvent.KEYCODE_1, KeyEvent.KEYCODE_2, KeyEvent.KEYCODE_3,
+      KeyEvent.KEYCODE_4, KeyEvent.KEYCODE_5, KeyEvent.KEYCODE_6,
+      KeyEvent.KEYCODE_7, KeyEvent.KEYCODE_8, KeyEvent.KEYCODE_9,
+      KeyEvent.KEYCODE_0
+    };
+
+    for (int code : codes) {
+      addKey(code);
+    }
   }
 
   public final static int PAN_FORWARD  = addKey("Forward");
