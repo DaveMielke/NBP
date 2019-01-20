@@ -126,10 +126,8 @@ public class KeySet {
   private static String addKey (Integer code) {
     synchronized (keyDefinitions) {
       String name = KeyEvent.keyCodeToString(code);
-
-      if (name == null) {
-        name = "Key#" + code;
-      }
+      if ((name == null) || name.isEmpty()) name = Integer.toString(code);
+      if (Character.isDigit(name.charAt(0))) name = "Key#" + name;
 
       addKey(code, name);
       return name;
@@ -323,7 +321,7 @@ public class KeySet {
       if (!keysLeft.isEmpty()) {
         for (Integer code : keysLeft) {
           if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
-          sb.append(String.format("Key#%d", code));
+          sb.append(addKey(code));
         }
       }
     }
