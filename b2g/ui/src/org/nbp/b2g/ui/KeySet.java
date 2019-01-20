@@ -165,15 +165,29 @@ public class KeySet {
 
   static {
     int[] codes = new int[] {
+      KeyEvent.KEYCODE_CAPS_LOCK, KeyEvent.KEYCODE_SCROLL_LOCK,
+      KeyEvent.KEYCODE_NUM_LOCK ,
+
       KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT,
       KeyEvent.KEYCODE_CTRL_LEFT , KeyEvent.KEYCODE_CTRL_RIGHT ,
       KeyEvent.KEYCODE_ALT_LEFT  , KeyEvent.KEYCODE_ALT_RIGHT  ,
       KeyEvent.KEYCODE_META_LEFT , KeyEvent.KEYCODE_META_RIGHT ,
 
+      KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_ESCAPE,
+
       KeyEvent.KEYCODE_F1 , KeyEvent.KEYCODE_F2 , KeyEvent.KEYCODE_F3 ,
       KeyEvent.KEYCODE_F4 , KeyEvent.KEYCODE_F5 , KeyEvent.KEYCODE_F6 ,
       KeyEvent.KEYCODE_F7 , KeyEvent.KEYCODE_F8 , KeyEvent.KEYCODE_F9 ,
       KeyEvent.KEYCODE_F10, KeyEvent.KEYCODE_F11, KeyEvent.KEYCODE_F12, 
+
+      KeyEvent.KEYCODE_DPAD_UP    , KeyEvent.KEYCODE_DPAD_DOWN ,
+      KeyEvent.KEYCODE_DPAD_LEFT  , KeyEvent.KEYCODE_DPAD_RIGHT,
+      KeyEvent.KEYCODE_DPAD_CENTER,
+
+      KeyEvent.KEYCODE_PAGE_UP  , KeyEvent.KEYCODE_PAGE_DOWN  ,
+      KeyEvent.KEYCODE_MOVE_HOME, KeyEvent.KEYCODE_MOVE_END   ,
+      KeyEvent.KEYCODE_DEL      , KeyEvent.KEYCODE_FORWARD_DEL,
+      KeyEvent.KEYCODE_INSERT   ,
 
       KeyEvent.KEYCODE_NUMPAD_0         , KeyEvent.KEYCODE_NUMPAD_1          ,
       KeyEvent.KEYCODE_NUMPAD_2         , KeyEvent.KEYCODE_NUMPAD_3          ,
@@ -196,10 +210,17 @@ public class KeySet {
       KeyEvent.KEYCODE_V, KeyEvent.KEYCODE_W, KeyEvent.KEYCODE_X,
       KeyEvent.KEYCODE_Y, KeyEvent.KEYCODE_Z,
 
-      KeyEvent.KEYCODE_1, KeyEvent.KEYCODE_2, KeyEvent.KEYCODE_3,
-      KeyEvent.KEYCODE_4, KeyEvent.KEYCODE_5, KeyEvent.KEYCODE_6,
-      KeyEvent.KEYCODE_7, KeyEvent.KEYCODE_8, KeyEvent.KEYCODE_9,
-      KeyEvent.KEYCODE_0
+      KeyEvent.KEYCODE_0, KeyEvent.KEYCODE_1,
+      KeyEvent.KEYCODE_2, KeyEvent.KEYCODE_3,
+      KeyEvent.KEYCODE_4, KeyEvent.KEYCODE_5,
+      KeyEvent.KEYCODE_6, KeyEvent.KEYCODE_7,
+      KeyEvent.KEYCODE_8, KeyEvent.KEYCODE_9,
+
+      KeyEvent.KEYCODE_LEFT_BRACKET, KeyEvent.KEYCODE_RIGHT_BRACKET,
+      KeyEvent.KEYCODE_MINUS       , KeyEvent.KEYCODE_EQUALS       ,
+      KeyEvent.KEYCODE_APOSTROPHE  , KeyEvent.KEYCODE_GRAVE        ,
+      KeyEvent.KEYCODE_COMMA       , KeyEvent.KEYCODE_PERIOD       ,
+      KeyEvent.KEYCODE_SLASH
     };
 
     for (int code : codes) {
