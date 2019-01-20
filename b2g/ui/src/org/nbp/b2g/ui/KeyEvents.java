@@ -252,12 +252,12 @@ public abstract class KeyEvents {
   private static void handleNavigationKeyPress (int key) {
     onKeyPress();
 
-    if (!handleEndpointNavigationKeyEvent(key, true)) {
-      synchronized (longPressTimeout) {
-        boolean isFirstPress = pressedNavigationKeys.isEmpty();
-        pressedNavigationKeys.add(key);
-        logNavigationKeysChange(key, "press");
+    synchronized (longPressTimeout) {
+      boolean isFirstPress = pressedNavigationKeys.isEmpty();
+      pressedNavigationKeys.add(key);
+      logNavigationKeysChange(key, "press");
 
+      if (!handleEndpointNavigationKeyEvent(key, true)) {
         if (ApplicationSettings.ONE_HAND) {
           if (isFirstPress) {
             if ((navigationKeyReleaseTime + ApplicationSettings.PRESSED_TIMEOUT) < SystemClock.elapsedRealtime()) {
@@ -276,8 +276,8 @@ public abstract class KeyEvents {
   }
 
   private static void handleNavigationKeyRelease (int key) {
-    if (!handleEndpointNavigationKeyEvent(key, false)) {
-      synchronized (longPressTimeout) {
+    synchronized (longPressTimeout) {
+      if (!handleEndpointNavigationKeyEvent(key, false)) {
         long now = SystemClock.elapsedRealtime();
         navigationKeyReleaseTime = now;
 
@@ -321,10 +321,11 @@ public abstract class KeyEvents {
         }
 
         longPressTimeout.cancel();
-        pressedNavigationKeys.remove(key);
-        logNavigationKeysChange(key, "release");
         if (isComplete) performAction(false);
       }
+
+      pressedNavigationKeys.remove(key);
+      logNavigationKeysChange(key, "release");
     }
   }
 
