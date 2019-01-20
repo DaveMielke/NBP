@@ -31,6 +31,7 @@ public abstract class KeyEvents {
   private final static KeySet activeNavigationKeys = new KeySet();
   private final static KeySet pressedNavigationKeys = new KeySet();
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
+  private final static SortedSet<Integer> pressedKeyboardKeys = new TreeSet<Integer>();
 
   private final static int oneHandCompletionKey = KeySet.SPACE;
   private static boolean oneHandNavigationKeyPressed;
@@ -48,6 +49,9 @@ public abstract class KeyEvents {
       add(KeySet.volumeKeys);
     }
   }.freeze();
+
+  public static void handleKeyboardFlush () {
+  }
 
   public static boolean performAction (final Action action) {
     if (action.editsInput()) {
@@ -164,6 +168,8 @@ public abstract class KeyEvents {
         if (action instanceof ModifierAction) wasModifier = true;
         if (!action.isHidden()) Devices.braille.get().dismiss();
         if (performAction(action)) performed = true;
+      } else {
+        handleKeyboardFlush();
       }
 
       if (!performed) Tones.beep();

@@ -192,8 +192,8 @@ public class KeySet {
   }
 
   private final static Object ADD_KEY_LOCK = new Object();
-  private final static int maximumKeyCode = KeyEvent.getMaxKeyCode();
-  private static int lastKeyCode = maximumKeyCode;
+  public final static int maximumKeyboardCode = KeyEvent.getMaxKeyCode();
+  private static int lastKeyCode = maximumKeyboardCode;
 
   private static int addKey (String name) {
     synchronized (ADD_KEY_LOCK) {
@@ -208,11 +208,11 @@ public class KeySet {
       throw new IllegalArgumentException(("negative key code: " + code));
     }
 
-    if (code > maximumKeyCode) {
+    if (code > maximumKeyboardCode) {
       throw new IllegalArgumentException(
         String.format(
           "key code exceeds range: %d > %d",
-          code, maximumKeyCode
+          code, maximumKeyboardCode
         )
       );
     }

@@ -1,5 +1,6 @@
 package org.nbp.b2g.ui;
 
+import org.nbp.common.LanguageUtilities;
 import java.lang.reflect.*;
 
 import java.util.Map;
@@ -7,10 +8,11 @@ import java.util.HashMap;
 
 import java.util.regex.Pattern;
 
-import org.nbp.common.LanguageUtilities;
 import org.nbp.common.InputProcessor;
 import org.nbp.common.DirectiveProcessor;
+
 import org.nbp.common.Timeout;
+import org.nbp.common.Tones;
 
 import android.util.Log;
 
@@ -123,7 +125,13 @@ public class KeyBindings {
   private final static class IncompleteEntry extends Action {
     @Override
     public boolean performAction () {
-      return false;
+      try {
+        Tones.beep();
+      } finally {
+        KeyEvents.handleKeyboardFlush();
+      }
+
+      return true;
     }
 
     @Override
