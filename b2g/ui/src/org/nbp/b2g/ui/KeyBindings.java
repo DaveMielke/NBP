@@ -269,7 +269,7 @@ public class KeyBindings {
           return null;
         }
 
-        set.or(keys);
+        set.add(keys);
       }
 
       sets = addKeySet(sets, set.freeze());

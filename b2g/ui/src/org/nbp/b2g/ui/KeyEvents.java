@@ -43,9 +43,9 @@ public abstract class KeyEvents {
   private final static KeySet oneHandImmediateKeys = new KeySet() {
     {
       add(KeySet.CURSOR);
-      or(KeySet.panKeys);
-      or(KeySet.padKeys);
-      or(KeySet.volumeKeys);
+      add(KeySet.panKeys);
+      add(KeySet.padKeys);
+      add(KeySet.volumeKeys);
     }
   }.freeze();
 

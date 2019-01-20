@@ -1,6 +1,7 @@
 package org.nbp.b2g.ui;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 
 import java.util.Set;
@@ -40,12 +41,24 @@ public class KeySet {
     return includedKeys.contains(code);
   }
 
-  public final boolean intersects (KeySet keys) {
-    for (Integer code : keys.includedKeys) {
+  public final boolean intersects (int... codes) {
+    for (int code : codes) {
       if (get(code)) return true;
     }
 
     return false;
+  }
+
+  public final boolean intersects (Collection<Integer> codes) {
+    for (Integer code : codes) {
+      if (get(code)) return true;
+    }
+
+    return false;
+  }
+
+  public final boolean intersects (KeySet keys) {
+    return intersects(keys.includedKeys);
   }
 
   private final void freezeCheck () {
@@ -63,33 +76,61 @@ public class KeySet {
     includedKeys.clear();
   }
 
-  public final boolean remove (Integer code) {
+  public final boolean remove (Integer... codes) {
     freezeCheck();
-    return includedKeys.remove(code);
+    boolean changed = false;
+
+    for (Integer code : codes) {
+      if (includedKeys.remove(code)) changed = true;
+    }
+
+    return changed;
   }
 
-  public final boolean add (Integer code) {
+  public final boolean add (Integer... codes) {
     freezeCheck();
-    return includedKeys.add(code);
+    boolean changed = false;
+
+    for (Integer code : codes) {
+      if (includedKeys.add(code)) changed = true;
+    }
+
+    return changed;
   }
 
-  public final boolean or (KeySet keys) {
+  public final boolean add (Collection<Integer> codes) {
     freezeCheck();
-    return includedKeys.addAll(keys.includedKeys);
+    return includedKeys.addAll(codes);
+  }
+
+  public final boolean add (KeySet keys) {
+    return add(keys.includedKeys);
+  }
+
+  public final void set (Integer... codes) {
+    clear();
+    add(codes);
+  }
+
+  public final void set (Collection<Integer> codes) {
+    clear();
+    add(codes);
   }
 
   public final void set (KeySet keys) {
-    freezeCheck();
-    includedKeys.clear();
-    includedKeys.addAll(keys.includedKeys);
+    set(keys.includedKeys);
   }
 
   public KeySet (Integer... codes) {
-    super();
+    add(codes);
+  }
 
-    for (int code : codes) {
-      add(code);
-    }
+  public KeySet (Collection<Integer> codes) {
+    add(codes);
+  }
+
+  public KeySet (KeySet keys) {
+    add(keys);
   }
 
   private static String normalizeKeyName (String name) {
