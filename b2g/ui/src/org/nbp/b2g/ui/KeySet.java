@@ -380,7 +380,8 @@ public class KeySet {
       KeyEvent.KEYCODE_ALT_LEFT  , KeyEvent.KEYCODE_ALT_RIGHT  ,
       KeyEvent.KEYCODE_META_LEFT , KeyEvent.KEYCODE_META_RIGHT ,
 
-      KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_ESCAPE,
+      KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_ESCAPE,
+      KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_TAB   ,
 
       KeyEvent.KEYCODE_F1 , KeyEvent.KEYCODE_F2 , KeyEvent.KEYCODE_F3 ,
       KeyEvent.KEYCODE_F4 , KeyEvent.KEYCODE_F5 , KeyEvent.KEYCODE_F6 ,
@@ -427,7 +428,7 @@ public class KeySet {
       KeyEvent.KEYCODE_MINUS       , KeyEvent.KEYCODE_EQUALS       ,
       KeyEvent.KEYCODE_APOSTROPHE  , KeyEvent.KEYCODE_GRAVE        ,
       KeyEvent.KEYCODE_COMMA       , KeyEvent.KEYCODE_PERIOD       ,
-      KeyEvent.KEYCODE_SLASH
+      KeyEvent.KEYCODE_SLASH       , KeyEvent.KEYCODE_BACKSLASH
     );
   }
 }
