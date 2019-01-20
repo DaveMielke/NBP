@@ -38,16 +38,16 @@ public abstract class KeyEvents {
 
   private final static KeySet oneHandCompletionKeySet = new KeySet(
     oneHandCompletionKey
-  );
+  ).freeze();
 
   private final static KeySet oneHandImmediateKeys = new KeySet() {
     {
-      set(KeySet.CURSOR);
+      add(KeySet.CURSOR);
       or(KeySet.panKeys);
       or(KeySet.padKeys);
       or(KeySet.volumeKeys);
     }
-  };
+  }.freeze();
 
   public static boolean performAction (final Action action) {
     if (action.editsInput()) {
@@ -120,9 +120,9 @@ public abstract class KeyEvents {
     if (isLongPress && ApplicationSettings.LONG_PRESS) {
       int longPress = KeySet.LONG_PRESS;
 
-      keys.set(longPress);
+      keys.add(longPress);
       action = keyBindings.getAction(keys);
-      keys.clear(longPress);
+      keys.remove(longPress);
     }
 
     if (action == null) {
@@ -255,7 +255,7 @@ public abstract class KeyEvents {
     if (!handleEndpointNavigationKeyEvent(key, true)) {
       synchronized (longPressTimeout) {
         boolean isFirstPress = pressedNavigationKeys.isEmpty();
-        pressedNavigationKeys.set(key);
+        pressedNavigationKeys.add(key);
         logNavigationKeysChange(key, "press");
 
         if (ApplicationSettings.ONE_HAND) {
@@ -265,7 +265,7 @@ public abstract class KeyEvents {
             }
           }
 
-          if (key != oneHandCompletionKey) activeNavigationKeys.set(key);
+          if (key != oneHandCompletionKey) activeNavigationKeys.add(key);
           oneHandNavigationKeyPressed = true;
         } else {
           activeNavigationKeys.set(pressedNavigationKeys);
@@ -296,17 +296,17 @@ public abstract class KeyEvents {
           if (pressedNavigationKeys.get(oneHandCompletionKey)) {
             // the combination included Space
 
-            pressedNavigationKeys.clear(oneHandCompletionKey);
+            pressedNavigationKeys.remove(oneHandCompletionKey);
             boolean otherKeysPressed = !pressedNavigationKeys.isEmpty();
-            pressedNavigationKeys.set(oneHandCompletionKey);
+            pressedNavigationKeys.add(oneHandCompletionKey);
 
             if (otherKeysPressed) {
               // the combination also included at least one other key
-              activeNavigationKeys.set(oneHandCompletionKey);
+              activeNavigationKeys.add(oneHandCompletionKey);
               isComplete = true;
             } else if (activeNavigationKeys.isEmpty()) {
               // it's an initial Space so start a new combination with it
-              activeNavigationKeys.set(oneHandCompletionKey);
+              activeNavigationKeys.add(oneHandCompletionKey);
               if (SystemClock.elapsedRealtime() < spaceTimeout) isComplete = true;
             } else {
               // just Space was pressed so complete the pending combination
@@ -321,7 +321,7 @@ public abstract class KeyEvents {
         }
 
         longPressTimeout.cancel();
-        pressedNavigationKeys.clear(key);
+        pressedNavigationKeys.remove(key);
         logNavigationKeysChange(key, "release");
         if (isComplete) performAction(false);
       }

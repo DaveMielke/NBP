@@ -1,30 +1,91 @@
 package org.nbp.b2g.ui;
 
-import java.util.BitSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 import java.util.Map;
 import java.util.LinkedHashMap;
 
 import org.nbp.common.Braille;
 
 import android.util.Log;
+import android.view.KeyEvent;
 
-public class KeySet extends BitSet {
+public class KeySet {
   private final static String LOG_TAG = KeySet.class.getName();
+
+  private final Set<Integer> includedKeys = new TreeSet<Integer>();
+  private boolean hasBeenFrozen = false;
+
+  @Override
+  public final int hashCode () {
+    return includedKeys.hashCode();
+  }
+
+  @Override
+  public final boolean equals (Object object) {
+    if (object == this) return true;
+    if (!(object instanceof KeySet)) return false;
+    return includedKeys.equals(((KeySet)object).includedKeys);
+  }
+
+  public final boolean isEmpty () {
+    return includedKeys.isEmpty();
+  }
+
+  public final boolean get (Integer key) {
+    return includedKeys.contains(key);
+  }
+
+  public final boolean intersects (KeySet keys) {
+    for (Integer key : keys.includedKeys) {
+      if (get(key)) return true;
+    }
+
+    return false;
+  }
+
+  private final void freezeCheck () {
+    if (hasBeenFrozen) throw new IllegalStateException("has been frozen");
+  }
+
+  public final KeySet freeze () {
+    freezeCheck();
+    hasBeenFrozen = true;
+    return this;
+  }
+
+  public final void clear () {
+    freezeCheck();
+    includedKeys.clear();
+  }
+
+  public final boolean remove (Integer key) {
+    freezeCheck();
+    return includedKeys.remove(key);
+  }
+
+  public final boolean add (Integer key) {
+    freezeCheck();
+    return includedKeys.add(key);
+  }
+
+  public final boolean or (KeySet keys) {
+    freezeCheck();
+    return includedKeys.addAll(keys.includedKeys);
+  }
+
+  public final void set (KeySet keys) {
+    freezeCheck();
+    includedKeys.clear();
+    includedKeys.addAll(keys.includedKeys);
+  }
 
   public KeySet (Integer... keys) {
     super();
 
     for (int key : keys) {
-      set(key);
-    }
-  }
-
-  public final void set (KeySet keys) {
-    clear();
-    int count = keys.length();
-
-    for (int index=0; index<count; index+=1) {
-      if (keys.get(index)) set(index);
+      add(key);
     }
   }
 
@@ -32,23 +93,23 @@ public class KeySet extends BitSet {
     return name.toLowerCase();
   }
 
-  private static class KeyEntry {
+  private static class KeyDefinition {
     public final String name;
-    public final int index;
+    public final int identifier;
 
-    public KeyEntry (String name, int index) {
+    public KeyDefinition (String name, int identifier) {
       this.name = name;
-      this.index = index;
+      this.identifier = identifier;
     }
   }
 
-  private final static Map<String, KeyEntry> keyEntries =
-         new LinkedHashMap<String, KeyEntry>();
+  private final static Map<String, KeyDefinition> keyDefinitions =
+         new LinkedHashMap<String, KeyDefinition>();
 
   private static int addKey (String name) {
-    synchronized (keyEntries) {
-      int index = keyEntries.size();
-      keyEntries.put(normalizeKeyName(name), new KeyEntry(name, index));
+    synchronized (keyDefinitions) {
+      int index = keyDefinitions.size();
+      keyDefinitions.put(normalizeKeyName(name), new KeyDefinition(name, index));
       return index;
     }
   }
@@ -101,8 +162,8 @@ public class KeySet extends BitSet {
     DOT_5, DOT_6, DOT_7, DOT_8
   );
 
-  public static boolean isDotKey (int index) {
-    return dotKeys.get(index);
+  public static boolean isDotKey (int key) {
+    return dotKeys.get(key);
   }
 
   protected final static KeySet volumeKeys = new KeySet(
@@ -131,17 +192,14 @@ public class KeySet extends BitSet {
   public final Byte toDots () {
     byte dots = 0;
     boolean space = false;
-    int count = length();
 
-    for (int index=0; index<count; index+=1) {
-      if (get(index)) {
-        if (index == SPACE) {
-          space = true;
-        } else {
-          Byte dot = keyDots.get(index);
-          if (dot == null) return null;
-          dots |= dot;
-        }
+    for (Integer key : includedKeys) {
+      if (key == SPACE) {
+        space = true;
+      } else {
+        Byte dot = keyDots.get(key);
+        if (dot == null) return null;
+        dots |= dot;
       }
     }
 
@@ -156,16 +214,16 @@ public class KeySet extends BitSet {
   public static KeySet fromDots (byte dots) {
     KeySet keys = new KeySet();
 
-    if ((dots & Braille.CELL_DOT_1) != 0) keys.set(DOT_1);
-    if ((dots & Braille.CELL_DOT_2) != 0) keys.set(DOT_2);
-    if ((dots & Braille.CELL_DOT_3) != 0) keys.set(DOT_3);
-    if ((dots & Braille.CELL_DOT_4) != 0) keys.set(DOT_4);
-    if ((dots & Braille.CELL_DOT_5) != 0) keys.set(DOT_5);
-    if ((dots & Braille.CELL_DOT_6) != 0) keys.set(DOT_6);
-    if ((dots & Braille.CELL_DOT_7) != 0) keys.set(DOT_7);
-    if ((dots & Braille.CELL_DOT_8) != 0) keys.set(DOT_8);
+    if ((dots & Braille.CELL_DOT_1) != 0) keys.add(DOT_1);
+    if ((dots & Braille.CELL_DOT_2) != 0) keys.add(DOT_2);
+    if ((dots & Braille.CELL_DOT_3) != 0) keys.add(DOT_3);
+    if ((dots & Braille.CELL_DOT_4) != 0) keys.add(DOT_4);
+    if ((dots & Braille.CELL_DOT_5) != 0) keys.add(DOT_5);
+    if ((dots & Braille.CELL_DOT_6) != 0) keys.add(DOT_6);
+    if ((dots & Braille.CELL_DOT_7) != 0) keys.add(DOT_7);
+    if ((dots & Braille.CELL_DOT_8) != 0) keys.add(DOT_8);
 
-    if (keys.isEmpty()) keys.set(SPACE);
+    if (keys.isEmpty()) keys.add(SPACE);
     return keys;
   }
 
@@ -178,14 +236,9 @@ public class KeySet extends BitSet {
   public static KeySet fromName (String name) {
     name = normalizeKeyName(name);
 
-    {
-      KeyEntry key = keyEntries.get(name);
-
-      if (key != null) {
-        KeySet keys = new KeySet();
-        keys.set(key.index);
-        return keys;
-      }
+    synchronized (keyDefinitions) {
+      KeyDefinition key = keyDefinitions.get(name);
+      if (key != null) return new KeySet(key.identifier);
     }
 
     {
@@ -205,37 +258,35 @@ public class KeySet extends BitSet {
     StringBuilder sb = new StringBuilder();
 
     if (!isEmpty()) {
-      KeySet keys = (KeySet)clone();
+      Set<Integer> keysLeft = new TreeSet<Integer>(includedKeys);
       int dotCount = 0;
 
-      for (KeyEntry key : keyEntries.values()) {
-        if (keys.get(key.index)) {
-          String name = key.name;
-          boolean isDot = isDotKey(key.index);
+      synchronized (keyDefinitions) {
+        for (KeyDefinition key : keyDefinitions.values()) {
+          if (keysLeft.contains(key.identifier)) {
+            String name = key.name;
+            boolean isDot = isDotKey(key.identifier);
 
-          if (!(isDot && (dotCount > 0))) {
-            if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
-            sb.append(name);
-          } else {
-            if (dotCount == 1) sb.insert((sb.length() - 1), 's');
-            sb.append(name.charAt(name.length() - 1));
+            if (!(isDot && (dotCount > 0))) {
+              if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
+              sb.append(name);
+            } else {
+              if (dotCount == 1) sb.insert((sb.length() - 1), 's');
+              sb.append(name.charAt(name.length() - 1));
+            }
+
+            keysLeft.remove(key.identifier);
+            if (keysLeft.isEmpty()) break;
+
+            dotCount = isDot? (dotCount + 1): 0;
           }
-
-          keys.clear(key.index);
-          if (keys.isEmpty()) break;
-
-          dotCount = isDot? (dotCount + 1): 0;
         }
       }
 
-      if (!keys.isEmpty()) {
-        int count = keys.length();
-
-        for (int index=0; index<count; index+=1) {
-          if (keys.get(index)) {
-            if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
-            sb.append(String.format("key#%d", index));
-          }
+      if (!keysLeft.isEmpty()) {
+        for (Integer key : keysLeft) {
+          if (sb.length() > 0) sb.append(KeyBindings.KEY_NAME_DELIMITER);
+          sb.append(String.format("key#%d", key));
         }
       }
     }
