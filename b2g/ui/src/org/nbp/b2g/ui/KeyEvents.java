@@ -279,6 +279,8 @@ public abstract class KeyEvents {
     synchronized (longPressTimeout) {
       try {
         if (!handleEndpointNavigationKeyEvent(key, false)) {
+          longPressTimeout.cancel();
+
           long now = SystemClock.elapsedRealtime();
           navigationKeyReleaseTime = now;
 
@@ -321,7 +323,6 @@ public abstract class KeyEvents {
             }
           }
 
-          longPressTimeout.cancel();
           if (isComplete) performAction(false);
         }
       } finally {
