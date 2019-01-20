@@ -18,27 +18,35 @@ import android.view.KeyEvent;
 public class KeySet {
   private final static String LOG_TAG = KeySet.class.getName();
 
-  private final Set<Integer> includedKeys = new LinkedHashSet<Integer>();
+  private final Set<Integer> keyCodes = new LinkedHashSet<Integer>();
   private boolean hasBeenFrozen = false;
 
   @Override
   public final int hashCode () {
-    return includedKeys.hashCode();
+    return keyCodes.hashCode();
   }
 
   @Override
   public final boolean equals (Object object) {
     if (object == this) return true;
     if (!(object instanceof KeySet)) return false;
-    return includedKeys.equals(((KeySet)object).includedKeys);
+    return keyCodes.equals(((KeySet)object).keyCodes);
+  }
+
+  public final int size () {
+    return keyCodes.size();
   }
 
   public final boolean isEmpty () {
-    return includedKeys.isEmpty();
+    return keyCodes.isEmpty();
+  }
+
+  public final Integer[] get () {
+    return keyCodes.toArray(new Integer[size()]);
   }
 
   public final boolean get (Integer code) {
-    return includedKeys.contains(code);
+    return keyCodes.contains(code);
   }
 
   public final boolean intersects (int... codes) {
@@ -58,7 +66,7 @@ public class KeySet {
   }
 
   public final boolean intersects (KeySet keys) {
-    return intersects(keys.includedKeys);
+    return intersects(keys.keyCodes);
   }
 
   private final void freezeCheck () {
@@ -73,7 +81,7 @@ public class KeySet {
 
   public final void clear () {
     freezeCheck();
-    includedKeys.clear();
+    keyCodes.clear();
   }
 
   public final boolean remove (Integer... codes) {
@@ -81,7 +89,7 @@ public class KeySet {
     boolean changed = false;
 
     for (Integer code : codes) {
-      if (includedKeys.remove(code)) changed = true;
+      if (keyCodes.remove(code)) changed = true;
     }
 
     return changed;
@@ -92,7 +100,7 @@ public class KeySet {
     boolean changed = false;
 
     for (Integer code : codes) {
-      if (includedKeys.add(code)) changed = true;
+      if (keyCodes.add(code)) changed = true;
     }
 
     return changed;
@@ -100,11 +108,11 @@ public class KeySet {
 
   public final boolean add (Collection<Integer> codes) {
     freezeCheck();
-    return includedKeys.addAll(codes);
+    return keyCodes.addAll(codes);
   }
 
   public final boolean add (KeySet keys) {
-    return add(keys.includedKeys);
+    return add(keys.keyCodes);
   }
 
   public final void set (Integer... codes) {
@@ -118,7 +126,7 @@ public class KeySet {
   }
 
   public final void set (KeySet keys) {
-    set(keys.includedKeys);
+    set(keys.keyCodes);
   }
 
   public KeySet (Integer... codes) {
@@ -303,7 +311,7 @@ public class KeySet {
     byte dots = 0;
     boolean space = false;
 
-    for (Integer code : includedKeys) {
+    for (Integer code : keyCodes) {
       if (code == SPACE) {
         space = true;
       } else {
@@ -371,10 +379,10 @@ public class KeySet {
       KeyDefinition[] keys;
 
       synchronized (codeToKey) {
-        keys = new KeyDefinition[includedKeys.size()];
+        keys = new KeyDefinition[keyCodes.size()];
         int index = 0;
 
-        for (Integer code : includedKeys) {
+        for (Integer code : keyCodes) {
           KeyDefinition key = codeToKey.get(code);
           if (key == null) key = addKey(code);
           keys[index++] = key;
