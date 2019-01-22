@@ -1,10 +1,8 @@
 package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.host.HostEndpoint;
 
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
-
 import org.nbp.common.SettingsUtilities;
+import org.nbp.common.TaskProcessor;
 
 import android.util.Log;
 import android.os.Bundle;
@@ -20,31 +18,7 @@ public class InputService extends InputMethodService {
   private final static Class CLASS_OBJECT = InputService.class;
   private final static String LOG_TAG = CLASS_OBJECT.getName();
 
-  private final BlockingDeque taskQueue = new LinkedBlockingDeque();
-  private final Thread taskThread = new Thread() {
-    @Override
-    public void run () {
-      try {
-        Log.d(LOG_TAG, "input task thread starting");
-
-        try {
-          Runnable runnable;
-
-          while ((runnable = (Runnable)taskQueue.take()) != null) {
-            runnable.run();
-          }
-        } catch (InterruptedException exception) {
-          Log.w(LOG_TAG, "wait for task interrupted");
-        }
-      } finally {
-        Log.d(LOG_TAG, "input task thread stopping");
-      }
-    }
-  };
-
-  private final void asTask (Runnable runnable) {
-    taskQueue.offer(runnable);
-  }
+  private static TaskProcessor taskProcessor = null;
 
   public final static void start () {
     String id = CLASS_OBJECT.getPackage().getName() + "/." + CLASS_OBJECT.getSimpleName();
@@ -147,7 +121,7 @@ public class InputService extends InputMethodService {
     super.onCreate();
     Log.d(LOG_TAG, "input service started");
     ApplicationContext.setContext(this);
-    taskThread.start();
+    taskProcessor = new TaskProcessor("input-tasks");
   }
 
   @Override
@@ -288,7 +262,7 @@ public class InputService extends InputMethodService {
     logKeyEvent(code, press);
     if (ignoreKey(code)) return false;
 
-    asTask(
+    taskProcessor.enqueue(
       new Runnable() {
         @Override
         public void run () {
