@@ -67,6 +67,7 @@ public abstract class KeyEvents {
 
   private static boolean handleKeyboardFlush () {
     if (pressedKeyboardKeys.isEmpty()) return false;
+    if (!pressedCursorKeys.isEmpty()) return false;
 
     int[] keys = new int[pressedKeyboardKeys.size()];
     int count = 0;
