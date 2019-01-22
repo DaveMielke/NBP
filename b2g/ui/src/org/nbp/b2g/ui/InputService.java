@@ -1,6 +1,9 @@
 package org.nbp.b2g.ui;
 import org.nbp.b2g.ui.host.HostEndpoint;
 
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
+
 import org.nbp.common.SettingsUtilities;
 
 import android.util.Log;
@@ -16,6 +19,32 @@ import android.view.KeyEvent;
 public class InputService extends InputMethodService {
   private final static Class CLASS_OBJECT = InputService.class;
   private final static String LOG_TAG = CLASS_OBJECT.getName();
+
+  private final BlockingDeque taskQueue = new LinkedBlockingDeque();
+  private final Thread taskThread = new Thread() {
+    @Override
+    public void run () {
+      try {
+        Log.d(LOG_TAG, "input task thread starting");
+
+        try {
+          Runnable runnable;
+
+          while ((runnable = (Runnable)taskQueue.take()) != null) {
+            runnable.run();
+          }
+        } catch (InterruptedException exception) {
+          Log.w(LOG_TAG, "wait for task interrupted");
+        }
+      } finally {
+        Log.d(LOG_TAG, "input task thread stopping");
+      }
+    }
+  };
+
+  private final void asTask (Runnable runnable) {
+    taskQueue.offer(runnable);
+  }
 
   public final static void start () {
     String id = CLASS_OBJECT.getPackage().getName() + "/." + CLASS_OBJECT.getSimpleName();
@@ -118,6 +147,7 @@ public class InputService extends InputMethodService {
     super.onCreate();
     Log.d(LOG_TAG, "input service started");
     ApplicationContext.setContext(this);
+    taskThread.start();
   }
 
   @Override
@@ -254,21 +284,28 @@ public class InputService extends InputMethodService {
     }
   }
 
-  private boolean handleKeyEvent (int code, boolean press) {
+  private boolean handleKeyEvent (final int code, final boolean press) {
     logKeyEvent(code, press);
     if (ignoreKey(code)) return false;
 
-    if ((code >= KeyCode.CURSOR_0) && (code <= KeyCode.CURSOR_19)) {
-      KeyEvents.handleCursorKeyEvent((code - KeyCode.CURSOR_0), press);
-    } else {
-      Integer key = KeyCode.toKey(code);
+    asTask(
+      new Runnable() {
+        @Override
+        public void run () {
+          if ((code >= KeyCode.CURSOR_0) && (code <= KeyCode.CURSOR_19)) {
+            KeyEvents.handleCursorKeyEvent((code - KeyCode.CURSOR_0), press);
+          } else {
+            Integer key = KeyCode.toKey(code);
 
-      if (key != null) {
-        KeyEvents.handleNavigationKeyEvent(key, press);
-      } else if (KeySet.isKeyboardCode(code)) {
-        KeyEvents.handleNavigationKeyEvent(code, press);
+            if (key != null) {
+              KeyEvents.handleNavigationKeyEvent(key, press);
+            } else if (KeySet.isKeyboardCode(code)) {
+              KeyEvents.handleNavigationKeyEvent(code, press);
+            }
+          }
+        }
       }
-    }
+    );
 
     return true;
   }
