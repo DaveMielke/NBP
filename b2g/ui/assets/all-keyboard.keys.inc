@@ -1,3 +1,6 @@
+bind KeyCode_Page_Up PanLeft
+bind KeyCode_Page_Down PanRight
+
 bind KeyCode_Ctrl_Left+KeyCode_C CopyToClipboard
 bind KeyCode_Ctrl_Right+KeyCode_C CopyToClipboard
 

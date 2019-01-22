@@ -80,14 +80,7 @@ public abstract class KeyCode {
       case PAN_FORWARD:                  return KeySet.PAN_FORWARD;
       case PAN_BACKWARD:                 return KeySet.PAN_BACKWARD;
 
-      case KeyEvent.KEYCODE_DPAD_UP:     return KeySet.PAD_UP;
-      case KeyEvent.KEYCODE_DPAD_DOWN:   return KeySet.PAD_DOWN;
-      case KeyEvent.KEYCODE_DPAD_LEFT:   return KeySet.PAD_LEFT;
-      case KeyEvent.KEYCODE_DPAD_RIGHT:  return KeySet.PAD_RIGHT;
       case KeyEvent.KEYCODE_DPAD_CENTER: return KeySet.PAD_CENTER;
-
-      case KeyEvent.KEYCODE_VOLUME_DOWN: return KeySet.VOLUME_DOWN;
-      case KeyEvent.KEYCODE_VOLUME_UP:   return KeySet.VOLUME_UP;
     }
 
     return null;
