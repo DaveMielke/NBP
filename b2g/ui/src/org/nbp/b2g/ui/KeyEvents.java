@@ -6,6 +6,9 @@ import org.nbp.b2g.ui.actions.PanRight;
 import org.nbp.b2g.ui.host.actions.MoveBackward;
 import org.nbp.b2g.ui.host.actions.MoveForward;
 
+import java.util.Set;
+import java.util.LinkedHashSet;
+
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -31,7 +34,7 @@ public abstract class KeyEvents {
   private final static KeySet activeNavigationKeys = new KeySet();
   private final static KeySet pressedNavigationKeys = new KeySet();
   private final static SortedSet<Integer> pressedCursorKeys = new TreeSet<Integer>();
-  private final static SortedSet<Integer> pressedKeyboardKeys = new TreeSet<Integer>();
+  private final static Set<Integer> pressedKeyboardKeys = new LinkedHashSet<Integer>();
 
   private final static int oneHandCompletionKey = KeySet.SPACE;
   private static boolean oneHandNavigationKeyPressed;
@@ -50,7 +53,26 @@ public abstract class KeyEvents {
     }
   }.freeze();
 
+  private static void handleKeyboardPress (int key) {
+    pressedKeyboardKeys.add(key);
+  }
+
+  private static void handleKeyboardRelease (int key) {
+    if (pressedKeyboardKeys.isEmpty()) {
+      if (KeySet.isKeyboardCode(key)) {
+        InputService.injectKeyEvent(key, false);
+      }
+    }
+  }
+
   public static void handleKeyboardFlush () {
+    for (Integer key : pressedKeyboardKeys) {
+      if (KeySet.isKeyboardCode(key)) {
+        InputService.injectKeyEvent(key, true);
+      }
+    }
+
+    pressedKeyboardKeys.clear();
   }
 
   public static boolean performAction (final Action action) {
@@ -220,6 +242,7 @@ public abstract class KeyEvents {
       activeNavigationKeys.clear();
       pressedNavigationKeys.clear();
       pressedCursorKeys.clear();
+      pressedKeyboardKeys.clear();
 
       oneHandNavigationKeyPressed = false;
       oneHandSpaceTimeout = 0;
@@ -262,6 +285,7 @@ public abstract class KeyEvents {
       boolean isFirstPress = pressedNavigationKeys.isEmpty();
       pressedNavigationKeys.add(key);
       logNavigationKeysChange(key, "press");
+      handleKeyboardPress(key);
 
       if (!handleEndpointNavigationKeyEvent(key, true)) {
         if (ApplicationSettings.ONE_HAND) {
@@ -332,6 +356,7 @@ public abstract class KeyEvents {
           if (isComplete) performAction(false);
         }
       } finally {
+        handleKeyboardRelease(key);
         pressedNavigationKeys.remove(key);
         logNavigationKeysChange(key, "release");
       }

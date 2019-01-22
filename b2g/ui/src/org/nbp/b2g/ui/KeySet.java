@@ -193,11 +193,11 @@ public class KeySet {
 
   private final static Object ADD_KEY_LOCK = new Object();
   public final static int maximumKeyboardCode = KeyEvent.getMaxKeyCode();
-  private static int lastKeyCode = maximumKeyboardCode;
+  private static int lastAssignedCode = maximumKeyboardCode;
 
   private static int addKey (String name) {
     synchronized (ADD_KEY_LOCK) {
-      int code = ++lastKeyCode;
+      int code = ++lastAssignedCode;
       addKey(code, name);
       return code;
     }
@@ -419,7 +419,13 @@ public class KeySet {
     return sb.toString();
   }
 
-  static {
+  public static boolean isKeyboardCode (int code) {
+    if (code < 0) return false;
+    if (code > maximumKeyboardCode) return false;
+    return code != KeyEvent.KEYCODE_UNKNOWN;
+  }
+
+  private static void addKeyboardCodes () {
     addKeys(
       KeyEvent.KEYCODE_CAPS_LOCK, KeyEvent.KEYCODE_SCROLL_LOCK,
       KeyEvent.KEYCODE_NUM_LOCK ,
@@ -479,5 +485,9 @@ public class KeySet {
       KeyEvent.KEYCODE_COMMA       , KeyEvent.KEYCODE_PERIOD       ,
       KeyEvent.KEYCODE_SLASH       , KeyEvent.KEYCODE_BACKSLASH
     );
+  }
+
+  static {
+    addKeyboardCodes();
   }
 }
