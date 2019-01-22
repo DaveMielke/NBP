@@ -1,0 +1,3 @@
+bind KeyCode_Ctrl_Left+KeyCode_A SelectAll
+bind KeyCode_Ctrl_Left+KeyCode_X CutToClipboard
+bind KeyCode_Ctrl_Left+KeyCode_V PasteFromClipboard

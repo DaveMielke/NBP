@@ -44,3 +44,4 @@ bind Space+Dot8+Dots234#s TypingStrikeOn
 bind Space+Dot7+Dots136#u TypingUnderlineOff
 bind Space+Dot8+Dots136#u TypingUnderlineOn
 
+include input-keyboard.keys.inc

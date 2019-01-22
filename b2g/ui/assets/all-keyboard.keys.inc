@@ -1,0 +1,1 @@
+bind KeyCode_Ctrl_Left+KeyCode_C CopyToClipboard
