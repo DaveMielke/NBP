@@ -65,14 +65,18 @@ public abstract class KeyEvents {
     }
   }
 
-  public static void handleKeyboardFlush () {
+  private static boolean handleKeyboardFlush () {
+    boolean result = false;
+
     for (Integer key : pressedKeyboardKeys) {
       if (KeySet.isKeyboardCode(key)) {
+        result = true;
         InputService.injectKeyEvent(key, true);
       }
     }
 
     pressedKeyboardKeys.clear();
+    return result;
   }
 
   public static boolean performAction (final Action action) {
@@ -187,11 +191,12 @@ public abstract class KeyEvents {
       boolean performed = false;
 
       if (action != null) {
+        pressedKeyboardKeys.clear();
         if (action instanceof ModifierAction) wasModifier = true;
         if (!action.isHidden()) Devices.braille.get().dismiss();
         if (performAction(action)) performed = true;
-      } else {
-        handleKeyboardFlush();
+      } else if (handleKeyboardFlush()) {
+        performed = true;
       }
 
       if (!performed) Tones.beep();

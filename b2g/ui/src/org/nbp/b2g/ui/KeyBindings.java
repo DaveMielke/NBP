@@ -122,63 +122,21 @@ public class KeyBindings {
     return null;
   }
 
-  private final static class IncompleteEntry extends Action {
-    @Override
-    public boolean performAction () {
-      try {
-        Tones.beep();
-      } finally {
-        KeyEvents.handleKeyboardFlush();
-      }
-
-      return true;
-    }
-
-    @Override
-    public boolean isHidden () {
-      return true;
-    }
-
-    public IncompleteEntry (Endpoint endpoint) {
-      super(endpoint, false);
-    }
-  }
-
-  private final Action incompleteEntry;
-
-  private final void addIncompleteEntries (KeyBindingMap bindings, KeySet keys, boolean add) {
-    if (add) {
-      if (bindings.get(keys) != null) return;
-      bindings.put(new KeySet(keys).freeze(), incompleteEntry);
-    }
-
-    if (keys.size() > 1) {
-      for (Integer code : keys.get()) {
-        keys.remove(code);
-        addIncompleteEntries(bindings, keys, true);
-        keys.add(code);
-      }
-    }
-  }
-
   private final boolean addAction (KeyBindingMap bindings, KeySet keys, Action action) {
     Action current = bindings.get(keys);
 
     if (current != null) {
-      if (current != incompleteEntry) {
-        Log.w(LOG_TAG,
-          String.format(
-            "duplicate key binding: %s: %s & %s",
-            keys.toString(), current.getName(), action.getName()
-          )
-        );
+      Log.w(LOG_TAG,
+        String.format(
+          "duplicate key binding: %s: %s & %s",
+          keys.toString(), current.getName(), action.getName()
+        )
+      );
 
-        return false;
-      }
+      return false;
     }
 
     bindings.put(keys, action);
-    addIncompleteEntries(bindings, new KeySet(keys), false);
     return true;
   }
 
@@ -392,6 +350,5 @@ public class KeyBindings {
 
   public KeyBindings (Endpoint endpoint) {
     this.endpoint = endpoint;
-    incompleteEntry = new IncompleteEntry(endpoint);
   }
 }

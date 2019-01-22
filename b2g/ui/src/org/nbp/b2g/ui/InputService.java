@@ -248,7 +248,7 @@ public class InputService extends InputMethodService {
         return true;
 
       default:
-        return isKeyboardMonitorRunning();
+        return false;
     }
   }
 
@@ -260,7 +260,12 @@ public class InputService extends InputMethodService {
       KeyEvents.handleCursorKeyEvent((code - KeyCode.CURSOR_0), press);
     } else {
       Integer key = KeyCode.toKey(code);
-      if (key != null) KeyEvents.handleNavigationKeyEvent(key, press);
+
+      if (key != null) {
+        KeyEvents.handleNavigationKeyEvent(key, press);
+      } else if (KeySet.isKeyboardCode(code)) {
+        KeyEvents.handleNavigationKeyEvent(code, press);
+      }
     }
 
     return true;
