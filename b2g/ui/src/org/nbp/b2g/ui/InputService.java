@@ -245,6 +245,8 @@ public class InputService extends InputMethodService {
     switch (code) {
       case KeyEvent.KEYCODE_HOME:
       case KeyEvent.KEYCODE_BACK:
+      case KeyEvent.KEYCODE_VOLUME_DOWN:
+      case KeyEvent.KEYCODE_VOLUME_UP:
         return true;
 
       default:
