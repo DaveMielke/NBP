@@ -1,1 +1,3 @@
 bind KeyCode_Ctrl_Left+KeyCode_C CopyToClipboard
+bind KeyCode_Ctrl_Right+KeyCode_C CopyToClipboard
+
