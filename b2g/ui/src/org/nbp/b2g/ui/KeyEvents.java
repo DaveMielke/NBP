@@ -46,10 +46,10 @@ public abstract class KeyEvents {
 
   private final static KeySet oneHandImmediateKeys = new KeySet() {
     {
-      add(KeySet.CURSOR);
-      add(KeySet.panKeys);
-      add(KeySet.padKeys);
-      add(KeySet.volumeKeys);
+      add(CURSOR);
+      add(panKeys);
+      add(padKeys);
+      add(volumeKeys);
     }
   }.freeze();
 
@@ -58,25 +58,30 @@ public abstract class KeyEvents {
   }
 
   private static void handleKeyboardRelease (int key) {
-    if (pressedKeyboardKeys.isEmpty()) {
-      if (KeySet.isKeyboardCode(key)) {
-        InputService.injectKeyEvent(key, false);
-      }
+    if (!pressedKeyboardKeys.isEmpty()) {
+      pressedKeyboardKeys.remove(key);
+    } else {
+      InputService.injectKeyEvent(key, false);
     }
   }
 
   private static boolean handleKeyboardFlush () {
-    boolean result = false;
+    if (pressedKeyboardKeys.isEmpty()) return false;
+
+    int[] keys = new int[pressedKeyboardKeys.size()];
+    int count = 0;
 
     for (Integer key : pressedKeyboardKeys) {
-      if (KeySet.isKeyboardCode(key)) {
-        result = true;
-        InputService.injectKeyEvent(key, true);
-      }
+      if (!KeySet.isKeyboardCode(key)) return false;
+      keys[count++] = key;
+    }
+
+    for (int index=0; index<count; index+=1) {
+      InputService.injectKeyEvent(keys[index], true);
     }
 
     pressedKeyboardKeys.clear();
-    return result;
+    return true;
   }
 
   public static boolean performAction (final Action action) {
@@ -289,13 +294,11 @@ public abstract class KeyEvents {
     synchronized (longPressTimeout) {
       if (pressedNavigationKeys.add(key)) {
         logNavigationKeysChange(key, "press");
-
-        boolean isFirstPress = pressedNavigationKeys.size() == 1;
         handleKeyboardPress(key);
 
         if (!handleEndpointNavigationKeyEvent(key, true)) {
           if (ApplicationSettings.ONE_HAND) {
-            if (isFirstPress) {
+            if (pressedNavigationKeys.size() == 1) {
               if ((navigationKeyReleaseTime + ApplicationSettings.PRESSED_TIMEOUT) < SystemClock.elapsedRealtime()) {
                 activeNavigationKeys.clear();
               }
