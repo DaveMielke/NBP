@@ -287,24 +287,26 @@ public abstract class KeyEvents {
     onKeyPress();
 
     synchronized (longPressTimeout) {
-      boolean isFirstPress = pressedNavigationKeys.isEmpty();
-      pressedNavigationKeys.add(key);
-      logNavigationKeysChange(key, "press");
-      handleKeyboardPress(key);
+      if (pressedNavigationKeys.add(key)) {
+        logNavigationKeysChange(key, "press");
 
-      if (!handleEndpointNavigationKeyEvent(key, true)) {
-        if (ApplicationSettings.ONE_HAND) {
-          if (isFirstPress) {
-            if ((navigationKeyReleaseTime + ApplicationSettings.PRESSED_TIMEOUT) < SystemClock.elapsedRealtime()) {
-              activeNavigationKeys.clear();
+        boolean isFirstPress = pressedNavigationKeys.size() == 1;
+        handleKeyboardPress(key);
+
+        if (!handleEndpointNavigationKeyEvent(key, true)) {
+          if (ApplicationSettings.ONE_HAND) {
+            if (isFirstPress) {
+              if ((navigationKeyReleaseTime + ApplicationSettings.PRESSED_TIMEOUT) < SystemClock.elapsedRealtime()) {
+                activeNavigationKeys.clear();
+              }
             }
-          }
 
-          if (key != oneHandCompletionKey) activeNavigationKeys.add(key);
-          oneHandNavigationKeyPressed = true;
-        } else {
-          activeNavigationKeys.set(pressedNavigationKeys);
-          longPressTimeout.start();
+            if (key != oneHandCompletionKey) activeNavigationKeys.add(key);
+            oneHandNavigationKeyPressed = true;
+          } else {
+            activeNavigationKeys.set(pressedNavigationKeys);
+            longPressTimeout.start();
+          }
         }
       }
     }
@@ -312,58 +314,60 @@ public abstract class KeyEvents {
 
   private static void handleNavigationKeyRelease (int key) {
     synchronized (longPressTimeout) {
-      try {
-        if (!handleEndpointNavigationKeyEvent(key, false)) {
-          longPressTimeout.cancel();
+      if (pressedNavigationKeys.get(key)) {
+        try {
+          if (!handleEndpointNavigationKeyEvent(key, false)) {
+            longPressTimeout.cancel();
 
-          long now = SystemClock.elapsedRealtime();
-          navigationKeyReleaseTime = now;
+            long now = SystemClock.elapsedRealtime();
+            navigationKeyReleaseTime = now;
 
-          boolean isComplete = !ApplicationSettings.ONE_HAND
-                            || activeNavigationKeys.intersects(oneHandImmediateKeys)
-                             ;
+            boolean isComplete = !ApplicationSettings.ONE_HAND
+                              || activeNavigationKeys.intersects(oneHandImmediateKeys)
+                               ;
 
-          if (oneHandNavigationKeyPressed) {
-            // first key release of a fully pressed combination
-            oneHandNavigationKeyPressed = false;
+            if (oneHandNavigationKeyPressed) {
+              // first key release of a fully pressed combination
+              oneHandNavigationKeyPressed = false;
 
-            // capture and reset the space timeout so that only one space can be quick
-            long spaceTimeout = oneHandSpaceTimeout;
-            oneHandSpaceTimeout = 0;
+              // capture and reset the space timeout so that only one space can be quick
+              long spaceTimeout = oneHandSpaceTimeout;
+              oneHandSpaceTimeout = 0;
 
-            if (pressedNavigationKeys.get(oneHandCompletionKey)) {
-              // the combination included Space
+              if (pressedNavigationKeys.get(oneHandCompletionKey)) {
+                // the combination included Space
 
-              pressedNavigationKeys.remove(oneHandCompletionKey);
-              boolean otherKeysPressed = !pressedNavigationKeys.isEmpty();
-              pressedNavigationKeys.add(oneHandCompletionKey);
+                pressedNavigationKeys.remove(oneHandCompletionKey);
+                boolean otherKeysPressed = !pressedNavigationKeys.isEmpty();
+                pressedNavigationKeys.add(oneHandCompletionKey);
 
-              if (otherKeysPressed) {
-                // the combination also included at least one other key
-                activeNavigationKeys.add(oneHandCompletionKey);
-                isComplete = true;
-              } else if (activeNavigationKeys.isEmpty()) {
-                // it's an initial Space so start a new combination with it
-                activeNavigationKeys.add(oneHandCompletionKey);
-                if (SystemClock.elapsedRealtime() < spaceTimeout) isComplete = true;
-              } else {
-                // just Space was pressed so complete the pending combination
-                isComplete = true;
+                if (otherKeysPressed) {
+                  // the combination also included at least one other key
+                  activeNavigationKeys.add(oneHandCompletionKey);
+                  isComplete = true;
+                } else if (activeNavigationKeys.isEmpty()) {
+                  // it's an initial Space so start a new combination with it
+                  activeNavigationKeys.add(oneHandCompletionKey);
+                  if (SystemClock.elapsedRealtime() < spaceTimeout) isComplete = true;
+                } else {
+                  // just Space was pressed so complete the pending combination
+                  isComplete = true;
 
-                if (!activeNavigationKeys.equals(oneHandCompletionKeySet)) {
-                  // start the quick space timeout except after Space itself
-                  oneHandSpaceTimeout = now + ApplicationSettings.SPACE_TIMEOUT;
+                  if (!activeNavigationKeys.equals(oneHandCompletionKeySet)) {
+                    // start the quick space timeout except after Space itself
+                    oneHandSpaceTimeout = now + ApplicationSettings.SPACE_TIMEOUT;
+                  }
                 }
               }
             }
-          }
 
-          if (isComplete) performAction(false);
+            if (isComplete) performAction(false);
+          }
+        } finally {
+          handleKeyboardRelease(key);
+          pressedNavigationKeys.remove(key);
+          logNavigationKeysChange(key, "release");
         }
-      } finally {
-        handleKeyboardRelease(key);
-        pressedNavigationKeys.remove(key);
-        logNavigationKeysChange(key, "release");
       }
     }
   }
@@ -420,23 +424,28 @@ public abstract class KeyEvents {
   private static void handleCursorKeyPress (int key) {
     onKeyPress();
 
-    if (!handleEndpointCursorKeyEvent(key, true)) {
-      synchronized (longPressTimeout) {
-        pressedCursorKeys.add(key);
+    synchronized (longPressTimeout) {
+      if (pressedCursorKeys.add(key)) {
         logCursorKeyAction(key, "press");
 
-        if (pressedCursorKeys.size() == 1) {
-          handleNavigationKey(KeySet.CURSOR);
+        if (!handleEndpointCursorKeyEvent(key, true)) {
+          if (pressedCursorKeys.size() == 1) {
+            handleNavigationKey(KeySet.CURSOR);
+          }
         }
       }
     }
   }
 
   private static void handleCursorKeyRelease (int key) {
-    if (!handleEndpointCursorKeyEvent(key, false)) {
-      synchronized (longPressTimeout) {
-        pressedCursorKeys.remove(key);
-        logCursorKeyAction(key, "release");
+    synchronized (longPressTimeout) {
+      if (pressedCursorKeys.contains(key)) {
+        try {
+          handleEndpointCursorKeyEvent(key, false);
+        } finally {
+          pressedCursorKeys.remove(key);
+          logCursorKeyAction(key, "release");
+        }
       }
     }
   }
