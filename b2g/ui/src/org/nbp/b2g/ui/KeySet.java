@@ -176,19 +176,43 @@ public class KeySet {
                new HashMap<Integer, KeyDefinition>();
 
   private static KeyDefinition addKey (Integer code, String name) {
-    KeyDefinition key;
-
     synchronized (nameToKey) {
-      int order = nameToKey.size();
-      key = new KeyDefinition(order, code, name);
-      nameToKey.put(normalizeKeyName(name), key);
+      synchronized (codeToKey) {
+        int order = nameToKey.size();
+        KeyDefinition key = new KeyDefinition(order, code, name);
+
+        String normalizedName = normalizeKeyName(name);
+        KeyDefinition nameKey = nameToKey.put(normalizedName, key);
+
+        if (nameKey == null) {
+          KeyDefinition codeKey = codeToKey.put(code, key);
+
+          if (codeKey == null) {
+            return key;
+          } else {
+            Log.w(LOG_TAG,
+              String.format(
+                "key code defined more than once: %d: %s & %s",
+                code, codeKey.getName(), name
+              )
+            );
+
+            codeToKey.put(code, codeKey);
+          }
+        } else {
+          Log.w(LOG_TAG,
+            String.format(
+              "key name defined more than once: %s: %d & %d",
+              name, nameKey.getCode(), code
+            )
+          );
+
+          nameToKey.put(normalizedName, nameKey);
+        }
+      }
     }
 
-    synchronized (codeToKey) {
-      codeToKey.put(code, key);
-    }
-
-    return key;
+    return null;
   }
 
   private final static Object ADD_KEY_LOCK = new Object();

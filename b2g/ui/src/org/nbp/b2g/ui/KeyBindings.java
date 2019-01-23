@@ -123,21 +123,18 @@ public class KeyBindings {
   }
 
   private final boolean addAction (KeyBindingMap bindings, KeySet keys, Action action) {
-    Action current = bindings.get(keys);
+    Action current = bindings.put(keys, action);
+    if (current == null) return true;
 
-    if (current != null) {
-      Log.w(LOG_TAG,
-        String.format(
-          "duplicate key binding: %s: %s & %s",
-          keys.toString(), current.getName(), action.getName()
-        )
-      );
+    Log.w(LOG_TAG,
+      String.format(
+        "duplicate key binding: %s: %s & %s",
+        keys.toString(), current.getName(), action.getName()
+      )
+    );
 
-      return false;
-    }
-
-    bindings.put(keys, action);
-    return true;
+    bindings.put(keys, current);
+    return false;
   }
 
   public boolean addKeyBinding (Action action, KeySet... keySets) {

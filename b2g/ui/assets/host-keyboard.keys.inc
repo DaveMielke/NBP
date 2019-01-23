@@ -5,7 +5,6 @@ bind KeyCode_Escape BackKey
 bind KeyCode_Caps_Lock+KeyCode_C Calculator
 bind KeyCode_Caps_Lock+KeyCode_E Editor
 bind KeyCode_Caps_Lock+KeyCode_G AllApplications
-bind KeyCode_Caps_Lock+KeyCode_I DescribeBuild
 bind KeyCode_Caps_Lock+KeyCode_M MenuKey
 bind KeyCode_Caps_Lock+KeyCode_N Notifications
 bind KeyCode_Caps_Lock+KeyCode_O Settings
