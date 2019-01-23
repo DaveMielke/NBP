@@ -87,3 +87,4 @@ bind Backward+Forward+Space DescribeBuild
 bind Space+Dots1236#v DescribeBuild
 
 include host-advanced.keys.inc
+include host-keyboard.keys.inc

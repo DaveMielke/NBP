@@ -28,3 +28,4 @@ bind Dot5+VolumeUp SleepTalkOn
 bind Dot6+VolumeDown SpeechOff
 bind Dot6+VolumeUp SpeechOn
 
+include speech-keyboard.keys.inc

@@ -1,6 +1,12 @@
 bind KeyCode_Page_Up PanLeft
 bind KeyCode_Page_Down PanRight
 
+bind KeyCode_Caps_Lock+KeyCode_F FindForward
+bind KeyCode_Caps_Lock+KeyCode_I DescribeIndicators
+
+bind KeyCode_Caps_Lock+KeyCode_6 LiteraryBraille
+bind KeyCode_Caps_Lock+KeyCode_8 ComputerBraille
+
 bind KeyCode_Ctrl_Left+KeyCode_C CopyToClipboard
 bind KeyCode_Ctrl_Right+KeyCode_C CopyToClipboard
 

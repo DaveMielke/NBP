@@ -1,0 +1,55 @@
+bind KeyCode_Meta_Left HomeKey
+bind KeyCode_Meta_Right HomeKey
+bind KeyCode_Escape BackKey
+
+bind KeyCode_Caps_Lock+KeyCode_C Calculator
+bind KeyCode_Caps_Lock+KeyCode_E Editor
+bind KeyCode_Caps_Lock+KeyCode_G AllApplications
+bind KeyCode_Caps_Lock+KeyCode_I DescribeBuild
+bind KeyCode_Caps_Lock+KeyCode_M MenuKey
+bind KeyCode_Caps_Lock+KeyCode_N Notifications
+bind KeyCode_Caps_Lock+KeyCode_O Settings
+bind KeyCode_Caps_Lock+KeyCode_P PowerOff
+bind KeyCode_Caps_Lock+KeyCode_R RecentApplications
+bind KeyCode_Caps_Lock+KeyCode_T Clock
+bind KeyCode_Caps_Lock+KeyCode_V DescribeBuild
+
+bind KeyCode_Alt_Left+KeyCode_A AccessibilitySettings
+bind KeyCode_Alt_Right+KeyCode_A AccessibilitySettings
+
+bind KeyCode_Alt_Left+KeyCode_B BluetoothSettings
+bind KeyCode_Alt_Right+KeyCode_B BluetoothSettings
+
+bind KeyCode_Alt_Left+KeyCode_C Calendar
+bind KeyCode_Alt_Right+KeyCode_C Calendar
+
+bind KeyCode_Alt_Left+KeyCode_D Dialer
+bind KeyCode_Alt_Right+KeyCode_D Dialer
+
+bind KeyCode_Alt_Left+KeyCode_E EMail
+bind KeyCode_Alt_Right+KeyCode_E EMail
+
+bind KeyCode_Alt_Left+KeyCode_F FileManager
+bind KeyCode_Alt_Right+KeyCode_F FileManager
+
+bind KeyCode_Alt_Left+KeyCode_G Gallery
+bind KeyCode_Alt_Right+KeyCode_G Gallery
+
+bind KeyCode_Alt_Left+KeyCode_M MusicPlayer
+bind KeyCode_Alt_Right+KeyCode_M MusicPlayer
+
+bind KeyCode_Alt_Left+KeyCode_P People
+bind KeyCode_Alt_Right+KeyCode_P People
+
+bind KeyCode_Alt_Left+KeyCode_S AndroidSettings
+bind KeyCode_Alt_Right+KeyCode_S AndroidSettings
+
+bind KeyCode_Alt_Left+KeyCode_T TextMessaging
+bind KeyCode_Alt_Right+KeyCode_T TextMessaging
+
+bind KeyCode_Alt_Left+KeyCode_V VoiceCommand
+bind KeyCode_Alt_Right+KeyCode_V VoiceCommand
+
+bind KeyCode_Alt_Left+KeyCode_W WifiSettings
+bind KeyCode_Alt_Right+KeyCode_W WifiSettings
+
