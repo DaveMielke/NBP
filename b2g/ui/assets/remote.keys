@@ -1,2 +1,3 @@
 bind VolumeDown+VolumeUp Offline
+bind KeyCode_Meta_Left+KeyCode_Meta_Right Offline
 include required.keys.inc

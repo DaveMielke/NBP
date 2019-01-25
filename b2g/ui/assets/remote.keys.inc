@@ -1,1 +1,2 @@
 bind Space+Dots78 RemoteDisplay
+bind KeyCode_Meta_Left+KeyCode_Meta_Right RemoteDisplay

@@ -20,22 +20,30 @@ bind KeyCode_Space+KeyCode_8 ComputerBraille
 bind KeyCode_Ctrl_Left+KeyCode_C CopyToClipboard
 bind KeyCode_Ctrl_Right+KeyCode_C CopyToClipboard
 
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_A LogActionsOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_A+LongPress LogActionsOff
+
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_B LogBrailleOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_B+LongPress LogBrailleOff
+
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_E LogEmulationsOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_E+LongPress LogEmulationsOff
+
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_K LogKeyboardOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_K+LongPress LogKeyboardOff
+
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_N LogNavigationOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_N+LongPress LogNavigationOff
+
 bind KeyCode_Meta_Left+KeyCode_O RestoreSettings
 bind KeyCode_Meta_Right+KeyCode_O SaveSettings
 bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_O ResetSettings
 
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_A LogActionsOn
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_A+LongPress LogActionsOff
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_B LogBrailleOn
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_B+LongPress LogBrailleOff
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_E LogEmulationsOn
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_E+LongPress LogEmulationsOff
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_K LogKeyboardOn
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_K+LongPress LogKeyboardOff
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_N LogNavigationOn
-bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_N+LongPress LogNavigationOff
 bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_S LogSpeechOn
 bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_S+LongPress LogSpeechOff
+
 bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_U LogUpdatesOn
 bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_U+LongPress LogUpdatesOff
+
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_X ForceCrash
 
