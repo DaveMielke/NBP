@@ -1,12 +1,41 @@
 bind KeyCode_Page_Up PanLeft
 bind KeyCode_Page_Down PanRight
 
-bind KeyCode_Caps_Lock+KeyCode_F FindForward
-bind KeyCode_Caps_Lock+KeyCode_I DescribeIndicators
+bind KeyCode_Space+KeyCode_F FindForward
+bind KeyCode_Meta_Left+KeyCode_F FindPrevious
+bind KeyCode_Meta_Right+KeyCode_F FindNext
 
-bind KeyCode_Caps_Lock+KeyCode_6 LiteraryBraille
-bind KeyCode_Caps_Lock+KeyCode_8 ComputerBraille
+bind KeyCode_Meta_Left+KeyCode_G BrailleCodePrevious
+bind KeyCode_Meta_Right+KeyCode_G BrailleCodeNext
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_G BrailleCodeConfirm
+
+bind KeyCode_Space+KeyCode_I DescribeIndicators
+
+bind KeyCode_Meta_Left+KeyCode_W WordWrapOff
+bind KeyCode_Meta_Right+KeyCode_W WordWrapOn
+
+bind KeyCode_Space+KeyCode_6 LiteraryBraille
+bind KeyCode_Space+KeyCode_8 ComputerBraille
 
 bind KeyCode_Ctrl_Left+KeyCode_C CopyToClipboard
 bind KeyCode_Ctrl_Right+KeyCode_C CopyToClipboard
+
+bind KeyCode_Meta_Left+KeyCode_O RestoreSettings
+bind KeyCode_Meta_Right+KeyCode_O SaveSettings
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_O ResetSettings
+
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_A LogActionsOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_A+LongPress LogActionsOff
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_B LogBrailleOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_B+LongPress LogBrailleOff
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_E LogEmulationsOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_E+LongPress LogEmulationsOff
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_K LogKeyboardOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_K+LongPress LogKeyboardOff
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_N LogNavigationOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_N+LongPress LogNavigationOff
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_S LogSpeechOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_S+LongPress LogSpeechOff
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_U LogUpdatesOn
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_U+LongPress LogUpdatesOff
 

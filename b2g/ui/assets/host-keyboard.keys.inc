@@ -1,17 +1,25 @@
 bind KeyCode_Meta_Left HomeKey
 bind KeyCode_Meta_Right HomeKey
-bind KeyCode_Escape BackKey
 
-bind KeyCode_Caps_Lock+KeyCode_C Calculator
-bind KeyCode_Caps_Lock+KeyCode_E Editor
-bind KeyCode_Caps_Lock+KeyCode_G AllApplications
-bind KeyCode_Caps_Lock+KeyCode_M MenuKey
-bind KeyCode_Caps_Lock+KeyCode_N Notifications
-bind KeyCode_Caps_Lock+KeyCode_O Settings
-bind KeyCode_Caps_Lock+KeyCode_P PowerOff
-bind KeyCode_Caps_Lock+KeyCode_R RecentApplications
-bind KeyCode_Caps_Lock+KeyCode_T Clock
-bind KeyCode_Caps_Lock+KeyCode_V DescribeBuild
+bind KeyCode_Escape BackKey
+bind KeyCode_Alt_Left+KeyCode_F4 BackKey
+bind KeyCode_Alt_Right+KeyCode_F4 BackKey
+
+bind KeyCode_Space+KeyCode_C Calculator
+bind KeyCode_Space+KeyCode_E Editor
+bind KeyCode_Space+KeyCode_G AllApplications
+bind KeyCode_Space+KeyCode_M MenuKey
+bind KeyCode_Space+KeyCode_N Notifications
+bind KeyCode_Space+KeyCode_O Settings
+bind KeyCode_Space+KeyCode_P PowerOff
+bind KeyCode_Space+KeyCode_R RecentApplications
+bind KeyCode_Space+KeyCode_T Clock
+bind KeyCode_Space+KeyCode_V DescribeBuild
+
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_M Maintenance
+
+bind KeyCode_Meta_Left+KeyCode_N ShowNotificationsOff
+bind KeyCode_Meta_Right+KeyCode_N ShowNotificationsOn
 
 bind KeyCode_Alt_Left+KeyCode_A AccessibilitySettings
 bind KeyCode_Alt_Right+KeyCode_A AccessibilitySettings

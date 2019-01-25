@@ -451,6 +451,7 @@ public class KeySet {
 
   private static void addKeyboardCodes () {
     addKeys(
+      KeyEvent.KEYCODE_SYSRQ    , KeyEvent.KEYCODE_BREAK      ,
       KeyEvent.KEYCODE_CAPS_LOCK, KeyEvent.KEYCODE_SCROLL_LOCK,
       KeyEvent.KEYCODE_NUM_LOCK ,
 
