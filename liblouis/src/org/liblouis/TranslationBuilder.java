@@ -6,6 +6,7 @@ public class TranslationBuilder {
   private int outputLength = 1;
   private Integer cursorOffset = null;
   private boolean includeHighlighting = false;
+  private boolean expandCurrentWord = false;
   private boolean allowLongerOutput = false;
 
   public final Translator getTranslator () {
@@ -71,6 +72,15 @@ public class TranslationBuilder {
 
   public final TranslationBuilder setIncludeHighlighting (boolean yes) {
     includeHighlighting = yes;
+    return this;
+  }
+
+  public final boolean getExpandCurrentWord () {
+    return expandCurrentWord;
+  }
+
+  public final TranslationBuilder setExpandCurrentWord (boolean yes) {
+    expandCurrentWord = yes;
     return this;
   }
 
