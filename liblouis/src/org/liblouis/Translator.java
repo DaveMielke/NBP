@@ -53,7 +53,7 @@ public abstract class Translator extends TranslationComponent {
   public abstract boolean translate (
     CharSequence inputBuffer, char[] outputBuffer,
     int[] outputOffsets, int[] inputOffsets,
-    boolean backTranslate, boolean includeHighlighting,
-    int[] resultValues
+    int[] resultValues, boolean backTranslate,
+    boolean includeHighlighting
   );
 }

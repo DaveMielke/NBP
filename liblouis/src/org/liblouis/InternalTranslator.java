@@ -90,9 +90,8 @@ public class InternalTranslator extends Translator {
   }
 
   private native boolean translate (
-    String tableList,
-    String inputBuffer, char[] outputBuffer, short[] typeForm,
-    int[] outputOffsets, int[] inputOffsets,
+    String tableList, String inputBuffer, char[] outputBuffer,
+    short[] typeForm, int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate
   );
 
@@ -100,8 +99,8 @@ public class InternalTranslator extends Translator {
   public final boolean translate (
     CharSequence inputBuffer, char[] outputBuffer,
     int[] outputOffsets, int[] inputOffsets,
-    boolean backTranslate, boolean includeHighlighting,
-    int[] resultValues
+    int[] resultValues, boolean backTranslate,
+    boolean includeHighlighting
   ) {
     final InternalTable table = backTranslate? getBackwardTable(): getForwardTable();
 
@@ -117,7 +116,8 @@ public class InternalTranslator extends Translator {
     synchronized (Louis.NATIVE_LOCK) {
       boolean translated = translate(
         table.getList(), inputBuffer.toString(), outputBuffer,
-        typeForm, outputOffsets, inputOffsets, resultValues, backTranslate
+        typeForm, outputOffsets, inputOffsets,
+        resultValues, backTranslate
       );
 
       if (!translated) return false;

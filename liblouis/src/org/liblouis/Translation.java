@@ -199,7 +199,7 @@ public class Translation extends TranslationComponent {
 
       translated = translator.translate(
         suppliedInput, output, outOffsets, inOffsets,
-        backTranslate, includeHighlighting, resultValues
+        resultValues, backTranslate, includeHighlighting
       );
 
       if (!translated) {

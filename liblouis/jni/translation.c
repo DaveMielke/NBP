@@ -92,9 +92,8 @@ typedef enum {
 
 JAVA_METHOD(
   org_liblouis_InternalTranslator, translate, jboolean,
-  jstring jTableList,
-  jstring jInputBuffer, jcharArray jOutputBuffer, jshortArray jTypeForm,
-  jintArray jOutputOffsets, jintArray jInputOffsets,
+  jstring jTableList, jstring jInputBuffer, jcharArray jOutputBuffer,
+  jshortArray jTypeForm, jintArray jOutputOffsets, jintArray jInputOffsets,
   jintArray jResultValues, jboolean backTranslate
 ) {
   const char *cTableList = (*env)->GetStringUTFChars(env, jTableList, NULL);
@@ -114,9 +113,14 @@ JAVA_METHOD(
   jint *cursorOffset = &cResultValues[RVI_CURSOR_OFFSET];
 
   if (*cursorOffset < 0) cursorOffset = NULL;
-  int translationMode = backTranslate? (0): (dotsIO | ucBrl);
-
+  int translationMode = 0;
   char *spacing = NULL;
+
+  if (backTranslate) {
+    translationMode |= noUndefinedDots;
+  } else {
+    translationMode |= dotsIO | ucBrl;
+  }
 
   memset(cOutputOffsets, (*inputLength * sizeof(*cOutputOffsets)), 0);
   memset(cInputOffsets, (*outputLength * sizeof(*cInputOffsets)), 0);
