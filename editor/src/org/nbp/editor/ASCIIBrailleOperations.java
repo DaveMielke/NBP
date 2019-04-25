@@ -56,8 +56,13 @@ public class ASCIIBrailleOperations extends ByteOperations {
         char character = (char)(symbol & 0XFF);
 
         if (Character.isISOControl(character) || Character.isWhitespace(character)) {
-          content.append(character);
-          continue;
+          switch (character) {
+            default:
+              content.append(character);
+              /* fall through */
+            case '\r':
+              continue;
+          }
         }
       }
 
