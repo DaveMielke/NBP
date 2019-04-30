@@ -55,11 +55,23 @@ public class SpeechParameters {
   }
 
   public final void setParameter (String key, int value) {
-    setParameter(key, Integer.toString(value));
+    if (USE_NEW_PARAMETERS) {
+      synchronized (newParameters) {
+        newParameters.putInt(key, value);
+      }
+    } else {
+      setParameter(key, Integer.toString(value));
+    }
   }
 
   public final void setParameter (String key, float value) {
-    setParameter(key, Float.toString(value));
+    if (USE_NEW_PARAMETERS) {
+      synchronized (newParameters) {
+        newParameters.putFloat(key, value);
+      }
+    } else {
+      setParameter(key, Float.toString(value));
+    }
   }
 
   public final String getUtteranceIdentifier () {
