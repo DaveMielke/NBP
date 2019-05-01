@@ -47,6 +47,12 @@ public abstract class CommonUtilities {
   public final static boolean haveOreo =
     haveAndroidSDK(Build.VERSION_CODES.O);
 
+  public final static boolean haveOreoMR1 =
+    haveAndroidSDK(Build.VERSION_CODES.O_MR1);
+
+  public final static boolean havePie =
+    haveAndroidSDK(Build.VERSION_CODES.P);
+
   public final static void runUnsafeCode (Runnable runnable) {
     try {
       runnable.run();
