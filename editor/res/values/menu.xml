@@ -10,6 +10,7 @@
   <string name="menu_file_OpenFile">Open Existing File</string>
   <string name="menu_file_SaveCurrent">Save to Current File</string>
   <string name="menu_file_SaveAs">Save As Another File</string>
+  <string name="menu_file_CreateShortcut">Create Shortcut</string>
   <string name="menu_file_SendCurrent">Send Current File</string>
   <string name="menu_file_DeleteFile">Delete File</string>
 

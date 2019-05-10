@@ -39,6 +39,12 @@
        />
 
       <item
+        android:id="@+id/menu_file_CreateShortcut"
+        android:title="@string/menu_file_CreateShortcut"
+        android:alphabeticShortcut="c"
+       />
+
+      <item
         android:id="@+id/menu_file_SendCurrent"
         android:title="@string/menu_file_SendCurrent"
        />

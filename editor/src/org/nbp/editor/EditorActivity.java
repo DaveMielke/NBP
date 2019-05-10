@@ -732,15 +732,7 @@ public class EditorActivity extends CommonActivity {
     addInputFilters();
   }
 
-  @Override
-  protected void onCreate (Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    Louis.initialize(this);
-    setup();
-
-    int result = RESULT_CANCELED;
-    Intent intent = getIntent();
-
+  private final int handleIntent (Intent intent) {
     if (intent != null) {
       String action = intent.getAction();
 
@@ -750,18 +742,35 @@ public class EditorActivity extends CommonActivity {
 
         if (action.equals(Intent.ACTION_MAIN)) {
           restoreFile();
-          result = RESULT_OK;
-        } else if (action.equals(Intent.ACTION_VIEW)) {
+          return RESULT_OK;
+        }
+
+        if (action.equals(Intent.ACTION_VIEW)) {
           loadContent(new ContentHandle(uri, type, false));
-          result = RESULT_OK;
-        } else if (action.equals(Intent.ACTION_EDIT)) {
+          return RESULT_OK;
+        }
+
+        if (action.equals(Intent.ACTION_EDIT)) {
           loadContent(new ContentHandle(uri, type, true));
-          result = RESULT_OK;
+          return RESULT_OK;
         }
       }
     }
 
-    setResult(result);
+    return RESULT_CANCELED;
+  }
+
+  @Override
+  protected void onCreate (Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Louis.initialize(this);
+    setup();
+    setResult(handleIntent(getIntent()));
+  }
+
+  @Override
+  protected void onNewIntent (Intent intent) {
+    handleIntent(intent);
   }
 
   @Override
