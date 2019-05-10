@@ -403,7 +403,10 @@ public class EditorActivity extends CommonActivity {
         }
       };
 
-      newAlertDialogBuilder(R.string.changed_title)
+      ContentHandle handle = editArea.getContentHandle();
+      String detail = (handle != null)? handle.getNormalizedString(): getString(R.string.hint_new_file);
+
+      newAlertDialogBuilder(R.string.changed_title, detail)
         .setMessage(R.string.changed_message)
         .setPositiveButton(R.string.changed_button_positive, positiveListener)
         .setNeutralButton(R.string.changed_button_neutral, null)
@@ -769,8 +772,15 @@ public class EditorActivity extends CommonActivity {
   }
 
   @Override
-  protected void onNewIntent (Intent intent) {
-    handleIntent(intent);
+  protected void onNewIntent (final Intent intent) {
+    testHasChanged(
+      new Runnable() {
+        @Override
+        public void run () {
+          handleIntent(intent);
+        }
+      }
+    );
   }
 
   @Override

@@ -15,10 +15,18 @@ public abstract class ApplicationUtilities {
     return collection.toArray(new String[collection.size()]);
   }
 
-  public final static AlertDialog.Builder newAlertDialogBuilder (Activity owner, int... subtitles) {
-    return new AlertDialogBuilder(owner, subtitles)
+  public final static AlertDialog.Builder newAlertDialogBuilder (Activity owner, int subtitle, String detail) {
+    return new AlertDialogBuilder(owner, subtitle, detail)
               .setNegativeButton(R.string.button_cancel, null)
               .setCancelable(true)
               ;
+  }
+
+  public final static AlertDialog.Builder newAlertDialogBuilder (Activity owner, int subtitle) {
+    return newAlertDialogBuilder(owner, subtitle, null);
+  }
+
+  public final static AlertDialog.Builder newAlertDialogBuilder (Activity owner, int subtitle, int detail) {
+    return newAlertDialogBuilder(owner, subtitle, owner.getString(detail));
   }
 }

@@ -62,23 +62,27 @@ public class AlertDialogBuilder extends AlertDialog.Builder {
     );
   }
 
-  private final void setTitle (int... subtitles) {
+  private final void setTitle (int subtitle, String detail) {
     Context context = getContext();
 
     StringBuilder title = new StringBuilder();
     title.append(context.getString(R.string.app_name));
+    String delimiter = " - ";
 
-    for (Integer subtitle : subtitles) {
-      title.append(" - ");
-      title.append(context.getString(subtitle));
+    title.append(delimiter);
+    title.append(context.getString(subtitle));
+
+    if ((detail != null) && !detail.isEmpty()) {
+      title.append(delimiter);
+      title.append(detail);
     }
 
     setTitle(title.toString());
   }
 
-  public AlertDialogBuilder (Context context, int... subtitles) {
+  public AlertDialogBuilder (Context context, int subtitle, String detail) {
     super(context);
-    setTitle(subtitles);
+    setTitle(subtitle, detail);
     setKeyListener();
   }
 }

@@ -197,10 +197,14 @@ public abstract class CommonActivity extends Activity implements ProblemReporter
     return newListView(values.toArray(new String[values.size()]));
   }
 
-  public final AlertDialog.Builder newAlertDialogBuilder (int... subtitles) {
-    return new AlertDialogBuilder(this, subtitles)
+  public final AlertDialog.Builder newAlertDialogBuilder (int subtitle, String detail) {
+    return new AlertDialogBuilder(this, subtitle, detail)
               .setCancelable(false)
               ;
+  }
+
+  public final AlertDialog.Builder newAlertDialogBuilder (int subtitle) {
+    return newAlertDialogBuilder(subtitle, null);
   }
 
   public final void showChooser (
