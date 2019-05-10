@@ -46,7 +46,7 @@
   <string name="message_rename_failed">rename failed</string>
   <string name="message_save_no">save not supported</string>
   <string name="message_send_new">cannot send new file</string>
-  <string name="message_shortcut_new">cannot create shortcut for new file</string>
+  <string name="message_shortcut_new">cannot have shortcut for new file</string>
   <string name="message_truncated_content">content too large - truncated</string>
   <string name="message_uncommented_text">uncommented text</string>
   <string name="message_writing_content">writing...</string>

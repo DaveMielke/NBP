@@ -39,9 +39,9 @@
        />
 
       <item
-        android:id="@+id/menu_file_CreateShortcut"
-        android:title="@string/menu_file_CreateShortcut"
-        android:alphabeticShortcut="c"
+        android:id="@+id/menu_file_DeleteFile"
+        android:title="@string/menu_file_DeleteFile"
+        android:alphabeticShortcut="d"
        />
 
       <item
@@ -50,9 +50,15 @@
        />
 
       <item
-        android:id="@+id/menu_file_DeleteFile"
-        android:title="@string/menu_file_DeleteFile"
-        android:alphabeticShortcut="d"
+        android:id="@+id/menu_file_CreateShortcut"
+        android:title="@string/menu_file_CreateShortcut"
+        android:alphabeticShortcut="c"
+       />
+
+      <item
+        android:id="@+id/menu_file_RemoveShortcut"
+        android:title="@string/menu_file_RemoveShortcut"
+        android:alphabeticShortcut="r"
        />
     </menu>
   </item>
