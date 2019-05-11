@@ -394,10 +394,16 @@ public abstract class FileFinder {
     AlertDialog.Builder builder = newAlertDialogBuilder()
       .setView(inflateLayout(R.layout.path_manager));
 
-    setTitle(builder, getString(R.string.FileFinder_action_manage));
-    setBackButton(builder);
-    setCancelButton(builder);
+    setDoneButton(builder,
+      new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialog, int button) {
+          dialog.dismiss();
+        }
+      }
+    );
 
+    setTitle(builder, getString(R.string.FileFinder_action_manage));
     AlertDialog dialog = builder.create();
     dialog.show();
 
