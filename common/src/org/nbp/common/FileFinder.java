@@ -30,7 +30,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 
-public abstract class FileFinder {
+public abstract class FileFinder extends ActivityComponent {
   private final static String LOG_TAG = FileFinder.class.getName();
 
   public interface FileHandler {
@@ -43,6 +43,11 @@ public abstract class FileFinder {
 
   public final static class Builder {
     private final Activity ownerActivity;
+
+    public Builder (Activity owner) {
+      ownerActivity = owner;
+    }
+
     private String userTitle = null;
     private final Map<String, File> rootLocations = new LinkedHashMap<String, File>();
     private final Set<String> fileExtensions = new LinkedHashSet<String>();
@@ -126,13 +131,8 @@ public abstract class FileFinder {
     public final void find (FilesHandler handler) {
       new MultipleFileFinder(this, handler);
     }
-
-    public Builder (Activity owner) {
-      ownerActivity = owner;
-    }
   }
 
-  private final Activity ownerActivity;
   private final String userTitle;
   private final String[] fileExtensions;
   private final String fileName;
@@ -141,22 +141,6 @@ public abstract class FileFinder {
   private final Map<String, File> rootLocations = new LinkedHashMap<String, File>();
 
   private File currentReference = null;
-
-  private final String getString (int resource) {
-    return ownerActivity.getString(resource);
-  }
-
-  private final View inflateLayout (int resource) {
-    return ownerActivity.getLayoutInflater().inflate(resource, null);
-  }
-
-  private final <T extends View> T findView (int id) {
-    return ownerActivity.findViewById(id);
-  }
-
-  private final <T extends View> T findView (DialogInterface dialog, int id) {
-    return ((AlertDialog)dialog).findViewById(id);
-  }
 
   protected abstract void setItems (AlertDialog.Builder builder, String[] items, File reference);
   protected abstract void handleFiles (File[] files);
@@ -169,52 +153,8 @@ public abstract class FileFinder {
     handleFiles(null);
   }
 
-  protected final Button getButton (DialogInterface dialog, int button) {
-    return ((AlertDialog)dialog).getButton(button);
-  }
-
-  private final void setButtonEnabled (DialogInterface dialog, int button, boolean enabled) {
-    getButton(dialog, button).setEnabled(enabled);
-  }
-
-  private final AlertDialog.Builder newAlertDialogBuilder () {
-    return new AlertDialog.Builder(ownerActivity)
-                          .setCancelable(false)
-                          ;
-  }
-
   private final void setTitle (AlertDialog.Builder builder, String... details) {
-    StringBuilder sb = new StringBuilder(getString(R.string.FileFinder_title_main));
-
-    if (userTitle != null) {
-      sb.append(" - ");
-      sb.append(userTitle);
-    }
-
-    for (String detail : details) {
-      sb.append('\n');
-      sb.append(detail);
-    }
-
-    builder.setTitle(sb.toString());
-  }
-
-  private final void showMessage (
-    int message, CharSequence detail,
-    DialogInterface.OnClickListener dismissListener
-  ) {
-    newAlertDialogBuilder()
-      .setTitle(message)
-      .setMessage(detail)
-      .setNeutralButton(R.string.FileFinder_action_dismiss, dismissListener)
-      .show();
-  }
-
-  private final void setDoneButton (
-    AlertDialog.Builder builder,
-    DialogInterface.OnClickListener listener
-  ) {
-    builder.setPositiveButton(R.string.FileFinder_action_done, listener);
+    setTitle(builder, R.string.FileFinder_title_main, details);
   }
 
   private final void setBackButton (AlertDialog.Builder builder) {
@@ -645,7 +585,8 @@ public abstract class FileFinder {
   }
 
   private FileFinder (Builder builder) {
-    ownerActivity = builder.getOwnerActivity();
+    super(builder.getOwnerActivity());
+
     userTitle = builder.getUserTitle();
     fileExtensions = builder.getFileExtensions();
     fileName = builder.getFileName();
