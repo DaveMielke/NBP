@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.AdapterView;
 
 import android.text.Editable;
 import android.text.InputFilter;
@@ -257,8 +259,8 @@ public abstract class FileFinder {
     directoryView.setText(directory);
 
     final Button doneButton = dialog.getButton(dialog.BUTTON_POSITIVE);
-    EditText fileView = (EditText)dialog.findViewById(R.id.PathEditor_file);
-    fileView.setText("");
+    EditText nameView = (EditText)dialog.findViewById(R.id.PathEditor_name);
+    nameView.setText("");
 
     String extension =
       ((fileExtensions != null) && (fileExtensions.length > 0))?
@@ -267,7 +269,7 @@ public abstract class FileFinder {
     if (extension != null) {
       final int extensionLength = extension.length();
 
-      Editable text = fileView.getText();
+      Editable text = nameView.getText();
       text.append(extension);
 
       text.setSpan(
@@ -288,10 +290,10 @@ public abstract class FileFinder {
         }
       };
 
-      fileView.setFilters(new InputFilter[] {protectExtension});
+      nameView.setFilters(new InputFilter[] {protectExtension});
     }
 
-    new OnTextEditedListener(fileView) {
+    new OnTextEditedListener(nameView) {
       @Override
       protected void onTextEdited (boolean isDifferent) {
         doneButton.setEnabled(isDifferent);
@@ -308,8 +310,8 @@ public abstract class FileFinder {
       }
     }
 
-    fileView.getText().insert(0, file);
-    fileView.setSelection(0, file.length());
+    nameView.getText().insert(0, file);
+    nameView.setSelection(0, file.length());
   }
 
   private final File getEditedPath (DialogInterface dialog) {
@@ -317,11 +319,11 @@ public abstract class FileFinder {
     String directory = directoryView.getText().toString();
     if (directory.isEmpty()) return null;
 
-    EditText fileView = (EditText)findView(dialog, R.id.PathEditor_file);
-    String file = fileView.getText().toString().trim();
-    if (file.isEmpty()) return null;
+    EditText nameView = (EditText)findView(dialog, R.id.PathEditor_name);
+    String name = nameView.getText().toString().trim();
+    if (name.isEmpty()) return null;
 
-    return new File(new File(directory), file);
+    return new File(new File(directory), name);
   }
 
   private final void showPathProblem (final File file, int problem) {
@@ -336,7 +338,7 @@ public abstract class FileFinder {
     );
   }
 
-  private final void showPathEditor (File reference) {
+  private final void showPathEditor (File path) {
     AlertDialog.Builder builder = newAlertDialogBuilder()
       .setView(inflateLayout(R.layout.path_editor));
 
@@ -379,7 +381,31 @@ public abstract class FileFinder {
 
     AlertDialog dialog = builder.create();
     dialog.show();
-    setEditedPath(dialog, reference);
+    setEditedPath(dialog, path);
+  }
+
+  private final void showPathManager (File path) {
+    AlertDialog.Builder builder = newAlertDialogBuilder()
+      .setView(inflateLayout(R.layout.path_manager));
+
+    setTitle(builder, getString(R.string.FileFinder_action_manage));
+    setBackButton(builder);
+    setCancelButton(builder);
+
+    AlertDialog dialog = builder.create();
+    dialog.show();
+
+    {
+      String directory = path.getParentFile().getAbsolutePath() + File.separator;
+      TextView view = (TextView)dialog.findViewById(R.id.PathManager_directory);
+      view.setText(directory);
+    }
+
+    {
+      String name = path.getName();
+      TextView view = (TextView)dialog.findViewById(R.id.PathManager_name);
+      view.setText(name);
+    }
   }
 
   private interface ListingCreator {
@@ -391,9 +417,11 @@ public abstract class FileFinder {
     final boolean haveReference = reference != null;
 
     new AsyncTask<Void, Void, AlertDialog.Builder>() {
+      String[] items = null;
+
       final AlertDialog message = newAlertDialogBuilder()
-              .setMessage(R.string.FileFinder_message_creating_listing)
-              .create();
+        .setMessage(R.string.FileFinder_message_creating_listing)
+        .create();
 
       @Override
       protected void onPreExecute () {
@@ -416,7 +444,7 @@ public abstract class FileFinder {
         if (count == 0) {
           builder.setMessage(R.string.FileFinder_message_empty_directory);
         } else {
-          final String[] items = new String[count];
+          items = new String[count];
           count = 0;
 
           for (String item : listing) {
@@ -457,6 +485,28 @@ public abstract class FileFinder {
         message.dismiss();
 
         AlertDialog dialog = builder.create();
+
+        if (haveReference && (items != null)) {
+          final ListView list = dialog.getListView();
+
+          dialog.setOnShowListener(
+            new DialogInterface.OnShowListener() {
+              @Override
+              public void onShow (DialogInterface dialog) {
+                list.setOnItemLongClickListener(
+                  new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick (AdapterView parent, View view, int position, long id) {
+                      showPathManager(new File(reference, items[position]));
+                      return true;
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+
         dialog.show();
 
         if (forWriting) {

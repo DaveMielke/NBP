@@ -7,18 +7,16 @@
   >
 
   <TextView
-    android:id="@+id/PathEditor_directory"
+    android:id="@+id/PathManager_directory"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:hint="@string/FileFinder_hint_path_directory"
     android:singleLine="true"
    />
 
-  <EditText
-    android:id="@+id/PathEditor_name"
+  <TextView
+    android:id="@+id/PathManager_name"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:hint="@string/FileFinder_hint_path_file"
     android:singleLine="true"
    />
 </LinearLayout>

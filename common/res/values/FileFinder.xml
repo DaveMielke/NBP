@@ -17,5 +17,6 @@
   <string name="FileFinder_action_dismiss">OK</string>
   <string name="FileFinder_action_done">Done</string>
   <string name="FileFinder_action_edit">Type File Name</string>
+  <string name="FileFinder_action_manage">Manage Path</string>
   <string name="FileFinder_action_up">Parent Folder</string>
 </resources>
