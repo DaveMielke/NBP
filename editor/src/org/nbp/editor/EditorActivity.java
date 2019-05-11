@@ -187,7 +187,7 @@ public class EditorActivity extends CommonActivity {
 
     return new FileFinder
           .Builder(this)
-          .setUserTitle(getString(title))
+          .setUserTitle(title)
           .setForWriting(forWriting)
           ;
   }

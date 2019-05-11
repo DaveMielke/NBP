@@ -48,7 +48,7 @@ public abstract class FileFinder extends ActivityComponent {
       ownerActivity = owner;
     }
 
-    private String userTitle = null;
+    private Integer userTitle = null;
     private final Map<String, File> rootLocations = new LinkedHashMap<String, File>();
     private final Set<String> fileExtensions = new LinkedHashSet<String>();
     private String fileName = null;
@@ -62,17 +62,13 @@ public abstract class FileFinder extends ActivityComponent {
       return ownerActivity;
     }
 
-    public final String getUserTitle () {
+    public final Integer getUserTitle () {
       return userTitle;
     }
 
-    public final Builder setUserTitle (String title) {
+    public final Builder setUserTitle (Integer title) {
       userTitle = title;
       return this;
-    }
-
-    public final Builder setUserTitle (int title) {
-      return setUserTitle(getString(title));
     }
 
     public final String[] getRootLabels () {
@@ -133,7 +129,7 @@ public abstract class FileFinder extends ActivityComponent {
     }
   }
 
-  private final String userTitle;
+  private final Integer userTitle;
   private final String[] fileExtensions;
   private final String fileName;
   private final boolean forWriting;
@@ -144,6 +140,10 @@ public abstract class FileFinder extends ActivityComponent {
 
   protected abstract void setItems (AlertDialog.Builder builder, String[] items, File reference);
   protected abstract void handleFiles (File[] files);
+
+  private final void setTitle (AlertDialog.Builder builder, int title, CharSequence... details) {
+    setTitle(builder, title, userTitle, details);
+  }
 
   private final void handleFile (File file) {
     handleFiles(new File[] {file});

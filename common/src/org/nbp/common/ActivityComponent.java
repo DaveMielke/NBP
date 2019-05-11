@@ -52,18 +52,23 @@ public abstract class ActivityComponent {
              ;
   }
 
-  protected final void setTitle (AlertDialog.Builder builder, int subtitle, CharSequence... details) {
-    Editable title = new SpannableStringBuilder(getString(subtitle));
+  protected final void setTitle (AlertDialog.Builder builder, int title, Integer subtitle, CharSequence... details) {
+    Editable text = new SpannableStringBuilder(getString(subtitle));
+
+    if (subtitle != null) {
+      text.append(" - ");
+      text.append(getString(subtitle));
+    }
 
     for (CharSequence detail : details) {
       if (detail == null) continue;
       if (detail.length() == 0) continue;
 
-      title.append('\n');
-      title.append(detail);
+      text.append('\n');
+      text.append(detail);
     }
 
-    builder.setTitle(title.toString());
+    builder.setTitle(text.subSequence(0, text.length()));
   }
 
   protected final void showMessage (
