@@ -6,23 +6,9 @@
   android:versionName="1.0"
   >
 
+  <!-- Android 4.1 (JellyBean) -->
   <uses-sdk android:minSdkVersion="16" />
+
+  <!-- Android 8.0 (Oreo) -->
   <uses-sdk android:targetSdkVersion="26" />
-
-  <application
-    android:label="@string/app_name"
-    android:icon="@drawable/ic_launcher"
-    >
-
-    <activity
-      android:name="ACTIVITY_ENTRY_NAME"
-      android:label="@string/app_name"
-      >
-
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-  </application>
 </manifest>

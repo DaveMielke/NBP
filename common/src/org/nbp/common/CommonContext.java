@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.content.pm.PackageManager;
+import android.content.pm.ApplicationInfo;
 
 import android.util.TypedValue;
 import android.util.DisplayMetrics;
@@ -19,6 +20,9 @@ import android.media.AudioManager;
 public abstract class CommonContext {
   private final static String LOG_TAG = CommonContext.class.getName();
 
+  protected CommonContext () {
+  }
+
   private final static Object CONTEXT_LOCK = new Object();
   private static Context applicationContext = null;
 
@@ -26,9 +30,8 @@ public abstract class CommonContext {
     synchronized (CONTEXT_LOCK) {
       if (applicationContext != null) return false;
       applicationContext = context.getApplicationContext();
+      return true;
     }
-
-    return true;
   }
 
   public static Context getContext () {
@@ -37,6 +40,15 @@ public abstract class CommonContext {
       if (context == null) Log.w(LOG_TAG, "no application context");
       return context;
     }
+  }
+
+  public static String getApplicationName () {
+    Context context = getContext();
+    if (context == null) return null;
+
+    ApplicationInfo info = context.getApplicationInfo();
+    int label = info.labelRes;
+    return (label == 0)? info.nonLocalizedLabel.toString(): context.getString(label);
   }
 
   public static ContentResolver getContentResolver () {
@@ -170,8 +182,5 @@ public abstract class CommonContext {
     Object systemService = getSystemService(Context.AUDIO_SERVICE);
     if (systemService == null) return null;
     return (AudioManager)systemService;
-  }
-
-  protected CommonContext () {
   }
 }

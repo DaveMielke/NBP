@@ -66,10 +66,17 @@ public class AlertDialogBuilder extends AlertDialog.Builder {
     Context context = getContext();
 
     StringBuilder title = new StringBuilder();
-    title.append(context.getString(R.string.app_name));
     String delimiter = " - ";
 
-    title.append(delimiter);
+    {
+      String name = CommonContext.getApplicationName();
+
+      if ((name != null) && !name.isEmpty()) {
+        title.append(name);
+        title.append(delimiter);
+      }
+    }
+
     title.append(context.getString(subtitle));
 
     if ((detail != null) && !detail.isEmpty()) {
