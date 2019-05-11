@@ -12,7 +12,6 @@
   <string name="FileFinder_hint_path_file">file name</string>
 
   <string name="FileFinder_action_back">Back</string>
-  <string name="FileFinder_action_cancel">Cancel</string>
   <string name="FileFinder_action_clear">Clear Selection</string>
   <string name="FileFinder_action_edit">Type File Name</string>
   <string name="FileFinder_action_manage">Manage Path</string>

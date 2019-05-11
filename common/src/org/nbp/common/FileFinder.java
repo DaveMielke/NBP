@@ -171,7 +171,7 @@ public abstract class FileFinder extends ActivityComponent {
 
   private final void setCancelButton (AlertDialog.Builder builder) {
     builder.setNegativeButton(
-      R.string.FileFinder_action_cancel,
+      android.R.string.no,
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialog, int button) {
@@ -281,8 +281,8 @@ public abstract class FileFinder extends ActivityComponent {
   }
 
   private final void showPathEditor (File path) {
-    AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setView(inflateLayout(R.layout.path_editor));
+    AlertDialog.Builder builder = newAlertDialogBuilder();
+    setView(builder, R.layout.path_editor);
 
     setDoneButton(builder,
       new DialogInterface.OnClickListener() {
@@ -331,8 +331,8 @@ public abstract class FileFinder extends ActivityComponent {
   }
 
   private final void showPathManager (final File path) {
-    AlertDialog.Builder builder = newAlertDialogBuilder()
-      .setView(inflateLayout(R.layout.path_manager));
+    AlertDialog.Builder builder = newAlertDialogBuilder();
+    setView(builder, R.layout.path_manager);
 
     setDoneButton(builder,
       new DialogInterface.OnClickListener() {

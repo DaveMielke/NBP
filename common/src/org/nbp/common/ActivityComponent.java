@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 
+import android.text.Editable;
+import android.text.SpannableStringBuilder;
+
 public abstract class ActivityComponent {
   protected final Activity ownerActivity;
 
@@ -15,12 +18,12 @@ public abstract class ActivityComponent {
     ownerActivity = owner;
   }
 
-  protected final String getString (int resource) {
-    return ownerActivity.getString(resource);
+  protected final String getString (int string) {
+    return ownerActivity.getString(string);
   }
 
-  protected final View inflateLayout (int resource) {
-    return ownerActivity.getLayoutInflater().inflate(resource, null);
+  protected final View inflateLayout (int layout) {
+    return ownerActivity.getLayoutInflater().inflate(layout, null);
   }
 
   protected final <T extends View> T findView (int id) {
@@ -39,16 +42,23 @@ public abstract class ActivityComponent {
     getButton(dialog, button).setEnabled(yes);
   }
 
-  protected final AlertDialog.Builder newAlertDialogBuilder () {
-    return new AlertDialog.Builder(ownerActivity)
-                          .setCancelable(false)
-                          ;
+  protected final void setView (AlertDialog.Builder builder, int layout) {
+    builder.setView(inflateLayout(layout));
   }
 
-  protected final void setTitle (AlertDialog.Builder builder, int subtitle, String... details) {
-    StringBuilder title = new StringBuilder(getString(subtitle));
+  protected final AlertDialog.Builder newAlertDialogBuilder () {
+    return new AlertDialog.Builder(ownerActivity)
+             .setCancelable(false)
+             ;
+  }
 
-    for (String detail : details) {
+  protected final void setTitle (AlertDialog.Builder builder, int subtitle, CharSequence... details) {
+    Editable title = new SpannableStringBuilder(getString(subtitle));
+
+    for (CharSequence detail : details) {
+      if (detail == null) continue;
+      if (detail.length() == 0) continue;
+
       title.append('\n');
       title.append(detail);
     }
