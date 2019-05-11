@@ -27,6 +27,7 @@
   <string name="comment_hint_text">Type comment</string>
 
   <string name="message_file_saved">file saved</string>
+  <string name="message_manage_new">cannot manage new file</string>
   <string name="message_no_author_name">author name not set</string>
   <string name="message_no_next_comment">no next comment</string>
   <string name="message_no_next_edit">no next edit</string>

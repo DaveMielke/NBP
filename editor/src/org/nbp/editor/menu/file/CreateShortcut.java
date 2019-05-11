@@ -7,7 +7,7 @@ public class CreateShortcut extends ShortcutAction {
   }
 
   @Override
-  public void performAction (final EditorActivity editor) {
+  public void performAction (EditorActivity editor) {
     performShortcutAction(editor, "com.android.launcher.action.INSTALL_SHORTCUT");
   }
 }

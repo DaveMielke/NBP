@@ -7,7 +7,7 @@ public class RemoveShortcut extends ShortcutAction {
   }
 
   @Override
-  public void performAction (final EditorActivity editor) {
+  public void performAction (EditorActivity editor) {
     performShortcutAction(editor, "com.android.launcher.action.UNINSTALL_SHORTCUT");
   }
 }
