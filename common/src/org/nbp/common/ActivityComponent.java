@@ -53,7 +53,7 @@ public abstract class ActivityComponent {
   }
 
   protected final void setTitle (AlertDialog.Builder builder, int title, Integer subtitle, CharSequence... details) {
-    Editable text = new SpannableStringBuilder(getString(subtitle));
+    Editable text = new SpannableStringBuilder(getString(title));
 
     if (subtitle != null) {
       text.append(" - ");
