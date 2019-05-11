@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.AdapterView;
 
@@ -148,11 +150,11 @@ public abstract class FileFinder {
     return ownerActivity.getLayoutInflater().inflate(resource, null);
   }
 
-  private final View findView (int id) {
+  private final <T extends View> T findView (int id) {
     return ownerActivity.findViewById(id);
   }
 
-  private final View findView (DialogInterface dialog, int id) {
+  private final <T extends View> T findView (DialogInterface dialog, int id) {
     return ((AlertDialog)dialog).findViewById(id);
   }
 
@@ -255,11 +257,11 @@ public abstract class FileFinder {
       file = reference.getName();
     }
 
-    TextView directoryView = (TextView)dialog.findViewById(R.id.PathEditor_directory);
-    directoryView.setText(directory);
+    TextView directoryView = dialog.findViewById(R.id.PathEditor_directory);
+    directoryView.setText(directory + File.separator);
 
     final Button doneButton = dialog.getButton(dialog.BUTTON_POSITIVE);
-    EditText nameView = (EditText)dialog.findViewById(R.id.PathEditor_name);
+    EditText nameView = dialog.findViewById(R.id.PathEditor_name);
     nameView.setText("");
 
     String extension =
@@ -315,11 +317,11 @@ public abstract class FileFinder {
   }
 
   private final File getEditedPath (DialogInterface dialog) {
-    TextView directoryView = (TextView)findView(dialog, R.id.PathEditor_directory);
+    TextView directoryView = findView(dialog, R.id.PathEditor_directory);
     String directory = directoryView.getText().toString();
     if (directory.isEmpty()) return null;
 
-    EditText nameView = (EditText)findView(dialog, R.id.PathEditor_name);
+    EditText nameView = findView(dialog, R.id.PathEditor_name);
     String name = nameView.getText().toString().trim();
     if (name.isEmpty()) return null;
 
@@ -384,7 +386,11 @@ public abstract class FileFinder {
     setEditedPath(dialog, path);
   }
 
-  private final void showPathManager (File path) {
+  private final void setIsWriteProtected (File path, CompoundButton button) {
+    button.setChecked(!path.canWrite());
+  }
+
+  private final void showPathManager (final File path) {
     AlertDialog.Builder builder = newAlertDialogBuilder()
       .setView(inflateLayout(R.layout.path_manager));
 
@@ -397,14 +403,29 @@ public abstract class FileFinder {
 
     {
       String directory = path.getParentFile().getAbsolutePath() + File.separator;
-      TextView view = (TextView)dialog.findViewById(R.id.PathManager_directory);
+      TextView view = dialog.findViewById(R.id.PathManager_directory);
       view.setText(directory);
     }
 
     {
       String name = path.getName();
-      TextView view = (TextView)dialog.findViewById(R.id.PathManager_name);
+      TextView view = dialog.findViewById(R.id.PathManager_name);
       view.setText(name);
+    }
+
+    {
+      CheckBox checkbox = dialog.findViewById(R.id.PathManager_write_no);
+      setIsWriteProtected(path, checkbox);
+
+      checkbox.setOnCheckedChangeListener(
+        new CompoundButton.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged (CompoundButton button, boolean isChecked) {
+            path.setWritable(!isChecked, false);
+            setIsWriteProtected(path, button);
+          }
+        }
+      );
     }
   }
 

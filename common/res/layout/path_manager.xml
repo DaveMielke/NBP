@@ -19,4 +19,11 @@
     android:layout_height="wrap_content"
     android:singleLine="true"
    />
+
+  <CheckBox
+    android:id="@+id/PathManager_write_no"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/FileFinder_writable_no"
+   />
 </LinearLayout>
