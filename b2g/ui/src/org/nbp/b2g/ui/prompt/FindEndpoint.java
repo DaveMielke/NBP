@@ -9,35 +9,11 @@ import android.util.Log;
 public class FindEndpoint extends PromptEndpoint {
   private final static String LOG_TAG = FindEndpoint.class.getName();
 
-  private Pattern searchPattern = null;
-
   private abstract class Searcher {
     public abstract boolean search (Matcher matcher, int start, int end);
   }
 
-  private final boolean findOccurrence (Endpoint endpoint, Searcher searcher) {
-    if (searchPattern != null) {
-      boolean found = false;
-
-      synchronized (endpoint) {
-        int start = endpoint.getBrailleStart();
-        String text = endpoint.getText().toString();
-        Matcher matcher = searchPattern.matcher(text);
-        matcher.useAnchoringBounds(false);
-
-        if (searcher.search(matcher, start, text.length())) {
-          endpoint.setLineIndent(endpoint.setLine(matcher.start(1)));
-          found = true;
-        }
-      }
-
-      if (found) return endpoint.write();
-    }
-
-    return false;
-  }
-
-  private final Searcher forwardSearch = new Searcher() {
+  private final Searcher forwardSearcher = new Searcher() {
     @Override
     public final boolean search (Matcher matcher, int start, int end) {
       while (++start < end) {
@@ -50,11 +26,7 @@ public class FindEndpoint extends PromptEndpoint {
     }
   };
 
-  public final boolean findNextOccurrence (Endpoint endpoint) {
-    return findOccurrence(endpoint, forwardSearch);
-  }
-
-  private final Searcher backwardSearch = new Searcher() {
+  private final Searcher backwardSearcher = new Searcher() {
     @Override
     public final boolean search (Matcher matcher, int start, int end) {
       int original = start;
@@ -73,8 +45,43 @@ public class FindEndpoint extends PromptEndpoint {
     }
   };
 
+  private Searcher currentSearcher = forwardSearcher;
+  private Pattern searchPattern = null;
+
+  private final boolean findOccurrence (Endpoint endpoint) {
+    if (searchPattern != null) {
+      boolean found = false;
+
+      synchronized (endpoint) {
+        int start = endpoint.getBrailleStart();
+        String text = endpoint.getText().toString();
+        Matcher matcher = searchPattern.matcher(text);
+        matcher.useAnchoringBounds(false);
+
+        if (currentSearcher.search(matcher, start, text.length())) {
+          endpoint.setLineIndent(endpoint.setLine(matcher.start(1)));
+          found = true;
+        }
+      }
+
+      if (found) return endpoint.write();
+    }
+
+    return false;
+  }
+
+  public final boolean findNextOccurrence (Endpoint endpoint) {
+    currentSearcher = forwardSearcher;
+    return findOccurrence(endpoint);
+  }
+
   public final boolean findPreviousOccurrence (Endpoint endpoint) {
-    return findOccurrence(endpoint, backwardSearch);
+    currentSearcher = backwardSearcher;
+    return findOccurrence(endpoint);
+  }
+
+  public final void setDirection (boolean backward) {
+    currentSearcher = backward? backwardSearcher: forwardSearcher;
   }
 
   private final void setSearchPattern (String string) {
@@ -131,7 +138,7 @@ public class FindEndpoint extends PromptEndpoint {
   @Override
   protected final boolean handleResponse (String response) {
     setSearchPattern(response);
-    return findNextOccurrence(Endpoints.getPreviousEndpoint());
+    return findOccurrence(Endpoints.getPreviousEndpoint());
   }
 
   public FindEndpoint () {

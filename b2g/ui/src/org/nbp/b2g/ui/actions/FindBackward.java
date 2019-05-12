@@ -1,13 +1,13 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
-public class FindForward extends Action {
+public class FindBackward extends Action {
   @Override
   public boolean performAction () {
-    return Endpoints.setFindEndpoint(false);
+    return Endpoints.setFindEndpoint(true);
   }
 
-  public FindForward (Endpoint endpoint) {
+  public FindBackward (Endpoint endpoint) {
     super(endpoint, false);
   }
 }

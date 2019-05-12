@@ -1,9 +1,11 @@
 Finding Text within the Current Screen Element
 ----------------------------------------------
 
-To find a sequence of words within the text that's associated with the current
-screen element, press Space+f (dots 124). This brings up a prompt (see
-`Prompts`_) with the following header::
+To find a sequence of words within the text
+that's associated with the current screen element,
+press Space+f (dots 124) to search forward
+or Space++Dot7+Dot8+f (dots 124) to search backward.
+This brings up a prompt (see `Prompts`_) with the following header::
 
   find>
 
@@ -27,9 +29,7 @@ word, a trailing space to force it to match the end of a word, and both to
 force it to match an entire word.
 
 You can edit the word(s) that you're entering. Press Enter when you're done.
-
-A forward search through the text is performed. If a match is found then the
-braille display is repositioned to where it starts.
+If a match is found then the braille display is repositioned to where it starts.
 
 The following convenience key combinations have also been defined:
 

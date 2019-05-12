@@ -64,6 +64,9 @@ Space+Dot8+Dots14 (c)
 Space+Dots124 (f)
   |FindForward|
 
+Space+Dot7+Dot8+Dots124 (f)
+  |FindBackward|
+
 Space+Dot7+Dots124 (f)
   |FindPrevious|
 

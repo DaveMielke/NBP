@@ -2,6 +2,7 @@ bind KeyCode_Page_Up PanLeft
 bind KeyCode_Page_Down PanRight
 
 bind KeyCode_Space+KeyCode_F FindForward
+bind KeyCode_Meta_Left+KeyCode_Meta_Right+KeyCode_F FindBackward
 bind KeyCode_Meta_Left+KeyCode_F FindPrevious
 bind KeyCode_Meta_Right+KeyCode_F FindNext
 

@@ -112,8 +112,13 @@ public abstract class Endpoints {
     return setPopupEndpoint(text, null);
   }
 
-  public static boolean setFindEndpoint () {
-    return setCurrentEndpoint(find.get());
+  public static boolean setFindEndpoint (boolean backward) {
+    FindEndpoint endpoint = find.get();
+
+    synchronized (endpoint) {
+      if (!setCurrentEndpoint(endpoint)) return false;;
+      return true;
+    }
   }
 
   public static boolean setUnicodeEndpoint () {
