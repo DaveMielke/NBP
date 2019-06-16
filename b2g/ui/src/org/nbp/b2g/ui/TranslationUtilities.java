@@ -12,8 +12,6 @@ public abstract class TranslationUtilities {
   private final static int LENGTH_MULTIPLIER = 3;
 
   public static TranslationBuilder newTranslationBuilder (CharSequence input) {
-    if (!ApplicationSettings.LITERARY_BRAILLE) return null;
-
     return new TranslationBuilder()
               .setInputCharacters(input)
               .setOutputLength(input.length() * LENGTH_MULTIPLIER)
@@ -22,10 +20,15 @@ public abstract class TranslationUtilities {
               ;
   }
 
+  public static TranslationBuilder newLiteraryTranslationBuilder (CharSequence input) {
+    if (!ApplicationSettings.LITERARY_BRAILLE) return null;
+    return newTranslationBuilder(input);
+  }
+
   public static BrailleTranslation newBrailleTranslation (
     CharSequence text, boolean includeHighlighting
   ) {
-    TranslationBuilder builder = newTranslationBuilder(text);
+    TranslationBuilder builder = newLiteraryTranslationBuilder(text);
     if (builder == null) return null;
     builder.setIncludeHighlighting(includeHighlighting);
     return builder.newBrailleTranslation();
@@ -38,7 +41,7 @@ public abstract class TranslationUtilities {
   }
 
   public static TextTranslation newTextTranslation (CharSequence braille) {
-    TranslationBuilder builder = newTranslationBuilder(braille);
+    TranslationBuilder builder = newLiteraryTranslationBuilder(braille);
     if (builder == null) return null;
     return builder.newTextTranslation();
   }
