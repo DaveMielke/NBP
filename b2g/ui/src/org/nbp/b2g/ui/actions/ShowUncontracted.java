@@ -10,10 +10,10 @@ public class ShowUncontracted extends CursorKeyAction {
     CharSequence text = endpoint.getLineText();
 
     int from = offset;
-    if (Endpoint.isWordBreak(text.charAt(from))) return false;
+    if (endpoint.isWordBreak(from)) return false;
 
-    while (offset > 0) {
-      if (Endpoint.isWordBreak(text.charAt(--from))) {
+    while (from > 0) {
+      if (endpoint.isWordBreak(--from)) {
         from += 1;
         break;
       }
@@ -23,7 +23,7 @@ public class ShowUncontracted extends CursorKeyAction {
     int to = offset;
 
     while (++to < length) {
-      if (Endpoint.isWordBreak(text.charAt(to))) break;
+      if (endpoint.isWordBreak(to)) break;
     }
 
     text = text.subSequence(from, to);
