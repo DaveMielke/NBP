@@ -109,7 +109,7 @@ public abstract class DuxburyTranslator extends Translator {
     CharSequence inputBuffer, char[] outputBuffer,
     int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate,
-    boolean includeHighlighting
+    boolean includeHighlighting, boolean noContractions
   ) {
     BrlTrn translator =
       backTranslate?

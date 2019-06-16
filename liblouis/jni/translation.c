@@ -94,7 +94,7 @@ JAVA_METHOD(
   org_liblouis_InternalTranslator, translate, jboolean,
   jstring jTableList, jstring jInputBuffer, jcharArray jOutputBuffer,
   jshortArray jTypeForm, jintArray jOutputOffsets, jintArray jInputOffsets,
-  jintArray jResultValues, jboolean backTranslate
+  jintArray jResultValues, jboolean jBackTranslate, jboolean jNoContractions
 ) {
   const char *cTableList = (*env)->GetStringUTFChars(env, jTableList, NULL);
 
@@ -116,17 +116,21 @@ JAVA_METHOD(
   int translationMode = 0;
   char *spacing = NULL;
 
-  if (backTranslate) {
+  int cBackTranslate = jBackTranslate != JNI_FALSE;
+  int cNoContractions = jNoContractions != JNI_FALSE;
+
+  if (cBackTranslate) {
     translationMode |= noUndefinedDots;
   } else {
     translationMode |= dotsIO | ucBrl;
+    if (cNoContractions) translationMode |= noContractions;
   }
 
   memset(cOutputOffsets, (*inputLength * sizeof(*cOutputOffsets)), 0);
   memset(cInputOffsets, (*outputLength * sizeof(*cInputOffsets)), 0);
 
   int successful =
-    ((backTranslate != JNI_FALSE)? lou_backTranslate: lou_translate)(
+    (cBackTranslate? lou_backTranslate: lou_translate)(
       cTableList, cInputBuffer, inputLength, cOutputBuffer, outputLength,
       (uint16_t *)cTypeForm, spacing, cOutputOffsets, cInputOffsets,
       cursorOffset, translationMode

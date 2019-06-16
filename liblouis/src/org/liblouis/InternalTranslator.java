@@ -92,7 +92,7 @@ public class InternalTranslator extends Translator {
   private native boolean translate (
     String tableList, String inputBuffer, char[] outputBuffer,
     short[] typeForm, int[] outputOffsets, int[] inputOffsets,
-    int[] resultValues, boolean backTranslate
+    int[] resultValues, boolean backTranslate, boolean noContractions
   );
 
   @Override
@@ -100,7 +100,7 @@ public class InternalTranslator extends Translator {
     CharSequence inputBuffer, char[] outputBuffer,
     int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate,
-    boolean includeHighlighting
+    boolean includeHighlighting, boolean noContractions
   ) {
     final InternalTable table = backTranslate? getBackwardTable(): getForwardTable();
 
@@ -117,7 +117,7 @@ public class InternalTranslator extends Translator {
       boolean translated = translate(
         table.getList(), inputBuffer.toString(), outputBuffer,
         typeForm, outputOffsets, inputOffsets,
-        resultValues, backTranslate
+        resultValues, backTranslate, noContractions
       );
 
       if (!translated) return false;

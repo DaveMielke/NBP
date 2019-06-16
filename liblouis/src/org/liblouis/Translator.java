@@ -54,6 +54,6 @@ public abstract class Translator extends TranslationComponent {
     CharSequence inputBuffer, char[] outputBuffer,
     int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate,
-    boolean includeHighlighting
+    boolean includeHighlighting, boolean noContractions
   );
 }

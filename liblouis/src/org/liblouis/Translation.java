@@ -174,6 +174,7 @@ public class Translation extends TranslationComponent {
     inputCursor = builder.getCursorOffset();
 
     final boolean includeHighlighting = builder.getIncludeHighlighting();
+    final boolean noContractions = builder.getNoContractions();
     final boolean allowLongerOutput = builder.getAllowLongerOutput();
 
     final int inputLength = suppliedInput.length();
@@ -199,7 +200,7 @@ public class Translation extends TranslationComponent {
 
       translated = translator.translate(
         suppliedInput, output, outOffsets, inOffsets,
-        resultValues, backTranslate, includeHighlighting
+        resultValues, backTranslate, includeHighlighting, noContractions
       );
 
       if (!translated) {

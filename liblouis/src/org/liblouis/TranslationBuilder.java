@@ -6,7 +6,7 @@ public class TranslationBuilder {
   private int outputLength = 1;
   private Integer cursorOffset = null;
   private boolean includeHighlighting = false;
-  private boolean expandCurrentWord = false;
+  private boolean noContractions = false;
   private boolean allowLongerOutput = false;
 
   public final Translator getTranslator () {
@@ -75,12 +75,12 @@ public class TranslationBuilder {
     return this;
   }
 
-  public final boolean getExpandCurrentWord () {
-    return expandCurrentWord;
+  public final boolean getNoContractions () {
+    return noContractions;
   }
 
-  public final TranslationBuilder setExpandCurrentWord (boolean yes) {
-    expandCurrentWord = yes;
+  public final TranslationBuilder setNoContractions (boolean yes) {
+    noContractions = yes;
     return this;
   }
 
