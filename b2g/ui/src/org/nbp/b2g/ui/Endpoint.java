@@ -713,7 +713,7 @@ public abstract class Endpoint extends UserInterfaceComponent {
     return ((lineOffset >= 0) && (lineOffset <= getLineLength()));
   }
 
-  private final static boolean isWordBreak (char character) {
+  public final static boolean isWordBreak (char character) {
     switch (character) {
       // hard-code the space character for efficiency because it's so common
       case ' ':
@@ -731,12 +731,12 @@ public abstract class Endpoint extends UserInterfaceComponent {
     }
   }
 
-  private final boolean isWordBreak (int textOffset) {
+  public final boolean isWordBreak (int textOffset) {
     if (!isWordBreak(getLineText().charAt(textOffset))) return false;
     if (!ApplicationSettings.LITERARY_BRAILLE) return true;
-    if (!ApplicationSettings.BRAILLE_CODE.hasJoinableWords()) return true;
 
     // handle joined contractions - e.g. EBAE's "to" and "by" contractions
+    if (!ApplicationSettings.BRAILLE_CODE.hasJoinableWords()) return true;
     CharSequence brailleCharacters = getBrailleCharacters();
     int brailleOffset = getBrailleOffset(textOffset);
     if (brailleOffset == brailleCharacters.length()) return true;

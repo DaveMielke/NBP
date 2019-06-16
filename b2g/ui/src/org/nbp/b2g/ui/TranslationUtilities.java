@@ -11,14 +11,15 @@ public abstract class TranslationUtilities {
 
   private final static int LENGTH_MULTIPLIER = 3;
 
-  private static TranslationBuilder newTranslationBuilder (CharSequence input) {
+  public static TranslationBuilder newTranslationBuilder (CharSequence input) {
     if (!ApplicationSettings.LITERARY_BRAILLE) return null;
 
     return new TranslationBuilder()
               .setInputCharacters(input)
               .setOutputLength(input.length() * LENGTH_MULTIPLIER)
               .setAllowLongerOutput(true)
-              .setTranslator(ApplicationSettings.BRAILLE_CODE.getTranslator());
+              .setTranslator(ApplicationSettings.BRAILLE_CODE.getTranslator())
+              ;
   }
 
   public static BrailleTranslation newBrailleTranslation (
