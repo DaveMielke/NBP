@@ -47,6 +47,7 @@ public class TypeCharacter extends InputAction {
           int offset = endpoint.getLineStart();
           start -= offset;
           end -= offset;
+          end = Math.min(end, endpoint.getLineLength());
         }
 
         start = endpoint.findFirstBrailleOffset(start);
