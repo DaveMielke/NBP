@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.GridLayout;
 
 import org.nbp.common.ProgrammaticActivity;
+import org.liblouis.Louis;
 
 public class BuildDetailsActivity extends ProgrammaticActivity {
   private final static String LOG_TAG = BuildDetailsActivity.class.getName();
@@ -78,6 +79,8 @@ public class BuildDetailsActivity extends ProgrammaticActivity {
     addDetail(R.string.build_activity_label_ui_version, R.string.B2G_UI_version_name);
     addDetail(R.string.build_activity_label_ui_revision, R.string.B2G_UI_source_revision);
     addDetail(R.string.build_activity_label_ui_time, R.string.B2G_UI_build_time);
+
+    addDetail(R.string.build_activity_label_liblouis_version, Louis.getVersion());
 
     addAndroidBuildField(R.string.build_activity_label_android_version, Build.VERSION.RELEASE);
     addAndroidBuildField(R.string.build_activity_label_android_build, Build.ID);
