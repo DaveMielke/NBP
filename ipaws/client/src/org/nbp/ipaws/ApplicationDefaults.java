@@ -9,6 +9,6 @@ public abstract class ApplicationDefaults {
   public final static boolean SPEAK_ALERTS = true;
   public final static String SPEECH_ENGINE = "";
 
-  public final static String PRIMARY_SERVER = "";
+  public final static String PRIMARY_SERVER = "50.250.19.205";
   public final static String SECONDARY_SERVER = "nbp.echozio.ca";
 }
