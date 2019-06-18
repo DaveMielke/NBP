@@ -11,8 +11,8 @@
     >
 
     <TableRow>
-      <TextView android:text="@string/about_version_number" android:focusable="true" />
-      <TextView android:id="@+id/about_version_number" />
+      <TextView android:text="@string/about_package_version" android:focusable="true" />
+      <TextView android:id="@+id/about_package_version" />
     </TableRow>
 
     <TableRow>
@@ -23,6 +23,11 @@
     <TableRow>
       <TextView android:text="@string/about_source_revision" />
       <TextView android:id="@+id/about_source_revision" />
+    </TableRow>
+
+    <TableRow>
+      <TextView android:text="@string/about_liblouis_version" />
+      <TextView android:id="@+id/about_liblouis_version" />
     </TableRow>
 
     <TextView android:id="@+id/about_copyright" />
