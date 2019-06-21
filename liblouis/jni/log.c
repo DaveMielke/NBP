@@ -4,13 +4,13 @@
 static int
 toAndroidLogPriority (logLevels level) {
   switch (level) {
-    case LOG_ALL:   return ANDROID_LOG_VERBOSE;
-    case LOG_DEBUG: return ANDROID_LOG_DEBUG;
-    case LOG_INFO:  return ANDROID_LOG_INFO;
-    case LOG_WARN:  return ANDROID_LOG_WARN;
-    case LOG_ERROR: return ANDROID_LOG_ERROR;
-    case LOG_FATAL: return ANDROID_LOG_FATAL;
-    case LOG_OFF:   return ANDROID_LOG_SILENT;
+    case LOU_LOG_ALL:   return ANDROID_LOG_VERBOSE;
+    case LOU_LOG_DEBUG: return ANDROID_LOG_DEBUG;
+    case LOU_LOG_INFO:  return ANDROID_LOG_INFO;
+    case LOU_LOG_WARN:  return ANDROID_LOG_WARN;
+    case LOU_LOG_ERROR: return ANDROID_LOG_ERROR;
+    case LOU_LOG_FATAL: return ANDROID_LOG_FATAL;
+    case LOU_LOG_OFF:   return ANDROID_LOG_SILENT;
     default:        return ANDROID_LOG_UNKNOWN;
   }
 }

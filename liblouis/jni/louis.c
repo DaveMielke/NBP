@@ -7,20 +7,20 @@ JAVA_METHOD(
   int level;
 
   switch (character) {
-    case 'A': level = LOG_ALL;   break;
-    case 'D': level = LOG_DEBUG; break;
-    case 'I': level = LOG_INFO;  break;
-    case 'W': level = LOG_WARN;  break;
-    case 'E': level = LOG_ERROR; break;
-    case 'F': level = LOG_FATAL; break;
-    case 'O': level = LOG_OFF;   break;
+    case 'A': level = LOU_LOG_ALL;   break;
+    case 'D': level = LOU_LOG_DEBUG; break;
+    case 'I': level = LOU_LOG_INFO;  break;
+    case 'W': level = LOU_LOG_WARN;  break;
+    case 'E': level = LOU_LOG_ERROR; break;
+    case 'F': level = LOU_LOG_FATAL; break;
+    case 'O': level = LOU_LOG_OFF;   break;
 
     default:
-      logPrint(LOG_WARN, "ignoring unrecognized log level character: 0X%02X", character);
+      logPrint(LOU_LOG_WARN, "ignoring unrecognized log level character: 0X%02X", character);
       return;
   }
 
-  logPrint(LOG_DEBUG, "setting log level: %c -> %d", character, level);
+  logPrint(LOU_LOG_DEBUG, "setting log level: %c -> %d", character, level);
   lou_setLogLevel(level);
 }
 
@@ -54,7 +54,7 @@ JAVA_METHOD(
 ) {
   jboolean isCopy;
   const char *cPath = (*env)->GetStringUTFChars(env, jPath, &isCopy);
-  logPrint(LOG_DEBUG, "setting data path: %s", cPath);
+  logPrint(LOU_LOG_DEBUG, "setting data path: %s", cPath);
   lou_setDataPath(cPath);
   (*env)->ReleaseStringUTFChars(env, jPath, cPath);
 }
@@ -65,7 +65,7 @@ JAVA_METHOD(
 ) {
   jboolean isCopy;
   const char *cTableList = (*env)->GetStringUTFChars(env, jTableList, &isCopy);
-  logPrint(LOG_DEBUG, "compiling table: %s", cTableList);
+  logPrint(LOU_LOG_DEBUG, "compiling table: %s", cTableList);
   void *table = lou_getTable(cTableList);
   (*env)->ReleaseStringUTFChars(env, jTableList, cTableList);
   return table? JNI_TRUE: JNI_FALSE;

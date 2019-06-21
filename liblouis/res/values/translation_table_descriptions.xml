@@ -18,12 +18,9 @@
   <string name="louis_ttd_DA_DK_G26">Danish, Grade 2 (six dots)</string>
   <string name="louis_ttd_DA_DK_G28">Danish, Grade 2 (eight dots)</string>
   <string name="louis_ttd_DA_LT">Danish, LogText (ISO-8859-1)</string>
-  <string name="louis_ttd_DE_CHESS">Chess, German</string>
-  <string name="louis_ttd_DE_CH_G1">Swiss German, Grade 1</string>
-  <string name="louis_ttd_DE_CH_G2">Swiss German, Grade 2</string>
   <string name="louis_ttd_DE_DE_COMP8">German (eight-dot computer braille)</string>
-  <string name="louis_ttd_DE_DE_G1">German, Grade 1</string>
-  <string name="louis_ttd_DE_DE_G2">German, Grade 2</string>
+  <string name="louis_ttd_DE_G1">German, Grade 1</string>
+  <string name="louis_ttd_DE_G2">German, Grade 2</string>
   <string name="louis_ttd_DRA">Dravidian</string>
   <string name="louis_ttd_EL">Greek</string>
   <string name="louis_ttd_EN_CA">English, Canada</string>
@@ -35,7 +32,6 @@
   <string name="louis_ttd_EN_UEB_G2">English, Unified, Grade 2</string>
   <string name="louis_ttd_EN_US_COMP6">English, US (six-dot computer braille)</string>
   <string name="louis_ttd_EN_US_COMP8">English, US (eight-dot computer braille)</string>
-  <string name="louis_ttd_EN_US_COMPBRL">English, US (computer braille)</string>
   <string name="louis_ttd_EN_US_G1">English, US, Grade 1</string>
   <string name="louis_ttd_EN_US_G2">English, US, Grade 2</string>
   <string name="louis_ttd_EN_US_INTERLINE">English, US, Grade 1</string>
@@ -49,10 +45,9 @@
   <string name="louis_ttd_FI2">Finnish (eight dots, similar to six dots, enhanced)</string>
   <string name="louis_ttd_FI_FI">Finnish (eight dots)</string>
   <string name="louis_ttd_FI_FI_8DOT">Finnish (eight dots)</string>
-  <string name="louis_ttd_FR_2007">French, Unified (2007)</string>
+  <string name="louis_ttd_FR_BFU_COMP6">French, Unified, Grade 1</string>
+  <string name="louis_ttd_FR_BFU_COMP8">French, Unified, Computer Braille</string>
   <string name="louis_ttd_FR_BFU_G2">French, Unified, Grade 2</string>
-  <string name="louis_ttd_FR_CA_G2">French, Canada, Grade 2</string>
-  <string name="louis_ttd_FR_FR_G2">French, France, Grade 2</string>
   <string name="louis_ttd_GA_G2">Irish, Grade 2</string>
   <string name="louis_ttd_GD">Gaelic</string>
   <string name="louis_ttd_GON">Gondi</string>
@@ -73,14 +68,10 @@
   <string name="louis_ttd_KRU">Kurukh</string>
   <string name="louis_ttd_LT">Lituanian</string>
   <string name="louis_ttd_MAO_NZ_G1">Maori</string>
-  <string name="louis_ttd_MARBURG">Mathematics, Marburg</string>
-  <string name="louis_ttd_MARBURG_EDIT">Mathematics, Marburg (for post-translation editing)</string>
   <string name="louis_ttd_MT">Maltese</string>
   <string name="louis_ttd_MUN">Munda</string>
   <string name="louis_ttd_MWR">Marwari</string>
   <string name="louis_ttd_NE">Nepali</string>
-  <string name="louis_ttd_NEMETH">Mathematics, Nemeth</string>
-  <string name="louis_ttd_NEMETH_EDIT">Mathematics, Nemeth (for post-translation editing)</string>
   <string name="louis_ttd_NL_BE_G0">Dutch, Belgium</string>
   <string name="louis_ttd_NL_NL_G0">Dutch, Netherlands</string>
   <string name="louis_ttd_NO_NO_COMP8">Norwegian (based on the Offentlig Utvalg for Blindeskrift [Public Commission for Braille] translation table for CP1252)</string>
@@ -99,7 +90,6 @@
   <string name="louis_ttd_SE_SE">Swedish (1996)</string>
   <string name="louis_ttd_SL_SI_COMP8">Slovenian (eight-dot computer braille)</string>
   <string name="louis_ttd_SOT_ZA_G1">Sotho</string>
-  <string name="louis_ttd_SPACES">(space characters)</string>
   <string name="louis_ttd_SR_G1">Serbian</string>
   <string name="louis_ttd_SV_1989">Swedish (1989)</string>
   <string name="louis_ttd_SV_1996">Swedish (1996)</string>
@@ -107,12 +97,8 @@
   <string name="louis_ttd_TA_TA_G1">Tamil, Grade 1</string>
   <string name="louis_ttd_TR">Turkish</string>
   <string name="louis_ttd_TSN_ZA_G1">Tswana</string>
-  <string name="louis_ttd_UEBC_G2">English, Unified, Grade 2</string>
-  <string name="louis_ttd_UKMATHS">Mathematics, UK</string>
-  <string name="louis_ttd_UKMATHS_EDIT">Mathematics, UK (for post-translation editing)</string>
   <string name="louis_ttd_VI">Vietnamese</string>
   <string name="louis_ttd_VI_G1">Vietnamese, Grade 1</string>
-  <string name="louis_ttd_WISKUNDE">Mathematics, Flemish (Woluwe)</string>
   <string name="louis_ttd_ZH_HK">Chinese, Hong Kong, Cantonese</string>
   <string name="louis_ttd_ZH_TW">Chinese, Taiwan (traditional)</string>
 

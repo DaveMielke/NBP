@@ -33,20 +33,17 @@ public class PhoneticAlphabetControl extends EnumerationControl<PhoneticAlphabet
   @Override
   protected boolean setEnumerationValue (PhoneticAlphabet value) {
     ApplicationSettings.PHONETIC_ALPHABET = value;
-    boolean add = true;
 
     for (PhoneticAlphabet current : PhoneticAlphabet.values()) {
       TranslatorIdentifier identifier = current.getTranslatorIdentifier();
 
       if (identifier != null) {
-        if (add) {
+        if (current == value) {
           TranslatorIdentifier.addAuxiliaryTranslator(identifier);
         } else {
           TranslatorIdentifier.removeAuxiliaryTranslator(identifier);
         }
       }
-
-      if (current == value) add = false;
     }
 
     TranslationUtilities.refresh();

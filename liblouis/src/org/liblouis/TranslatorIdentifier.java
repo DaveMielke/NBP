@@ -5,15 +5,15 @@ import java.util.LinkedHashSet;
 
 public enum TranslatorIdentifier {
   BRAILLE_PATTERNS(
-    "braille-patterns.utb", R.string.louis_ttd_BRAILLE_PATTERNS
+    "braille-patterns.cti", R.string.louis_ttd_BRAILLE_PATTERNS
   ),
 
   IPA_BASE(
-    "IPA_base.utb", R.string.louis_ttd_IPA_BASE
+    "IPA-unicode-range.uti", R.string.louis_ttd_IPA_BASE
   ),
 
   IPA_EXTEND(
-    "IPA_extend.utb", R.string.louis_ttd_IPA_EXTEND
+    "IPA.utb", R.string.louis_ttd_IPA_EXTEND
   ),
 
   AFR_ZA_G1(
@@ -68,28 +68,16 @@ public enum TranslatorIdentifier {
     "da-lt.ctb", R.string.louis_ttd_DA_LT
   ),
 
-  DE_CHESS(
-    "de-chess.ctb", R.string.louis_ttd_DE_CHESS
-  ),
-
-  DE_CH_G1(
-    "de-ch-g1.ctb", R.string.louis_ttd_DE_CH_G1
-  ),
-
-  DE_CH_G2(
-    "de-ch-g2.ctb", R.string.louis_ttd_DE_CH_G2
-  ),
-
   DE_DE_COMP8(
     "de-de-comp8.ctb", R.string.louis_ttd_DE_DE_COMP8
   ),
 
-  DE_DE_G1(
-    "de-de-g1.ctb", R.string.louis_ttd_DE_DE_G1
+  DE_G1(
+    "de-g1.ctb", R.string.louis_ttd_DE_G1
   ),
 
-  DE_DE_G2(
-    "de-de-g2.ctb", R.string.louis_ttd_DE_DE_G2
+  DE_G2(
+    "de-g2.ctb", R.string.louis_ttd_DE_G2
   ),
 
   DRA(
@@ -134,10 +122,6 @@ public enum TranslatorIdentifier {
 
   EN_US_COMP8(
     "en-us-comp8.ctb", R.string.louis_ttd_EN_US_COMP8
-  ),
-
-  EN_US_COMPBRL(
-    "en-us-compbrl.ctb", R.string.louis_ttd_EN_US_COMPBRL
   ),
 
   EN_US_G1(
@@ -192,20 +176,16 @@ public enum TranslatorIdentifier {
     "fi-fi-8dot.ctb", R.string.louis_ttd_FI_FI_8DOT
   ),
 
-  FR_2007(
-    "fr-2007.ctb", R.string.louis_ttd_FR_2007
+  FR_BFU_COMP6(
+    "fr-bfu-comp6.utb", R.string.louis_ttd_FR_BFU_COMP6
+  ),
+
+  FR_BFU_COMP8(
+    "fr-bfu-comp8.utb", R.string.louis_ttd_FR_BFU_COMP8
   ),
 
   FR_BFU_G2(
     "fr-bfu-g2.ctb", R.string.louis_ttd_FR_BFU_G2
-  ),
-
-  FR_CA_G2(
-    "Fr-Ca-g2.ctb", R.string.louis_ttd_FR_CA_G2
-  ),
-
-  FR_FR_G2(
-    "Fr-Fr-g2.ctb", R.string.louis_ttd_FR_FR_G2
   ),
 
   GA_G2(
@@ -288,14 +268,6 @@ public enum TranslatorIdentifier {
     "mao-nz-g1.ctb", R.string.louis_ttd_MAO_NZ_G1
   ),
 
-  MARBURG(
-    "marburg.ctb", R.string.louis_ttd_MARBURG
-  ),
-
-  MARBURG_EDIT(
-    "marburg_edit.ctb", R.string.louis_ttd_MARBURG_EDIT
-  ),
-
   MT(
     "mt.ctb", R.string.louis_ttd_MT
   ),
@@ -310,14 +282,6 @@ public enum TranslatorIdentifier {
 
   NE(
     "ne.ctb", R.string.louis_ttd_NE
-  ),
-
-  NEMETH(
-    "nemeth.ctb", R.string.louis_ttd_NEMETH
-  ),
-
-  NEMETH_EDIT(
-    "nemeth_edit.ctb", R.string.louis_ttd_NEMETH_EDIT
   ),
 
   NL_BE_G0(
@@ -392,10 +356,6 @@ public enum TranslatorIdentifier {
     "sot-za-g1.ctb", R.string.louis_ttd_SOT_ZA_G1
   ),
 
-  SPACES(
-    "spaces.ctb", R.string.louis_ttd_SPACES
-  ),
-
   SR_G1(
     "sr-g1.ctb", R.string.louis_ttd_SR_G1
   ),
@@ -424,28 +384,12 @@ public enum TranslatorIdentifier {
     "tsn-za-g1.ctb", R.string.louis_ttd_TSN_ZA_G1
   ),
 
-  UEBC_G2(
-    "UEBC-g2.ctb", R.string.louis_ttd_UEBC_G2
-  ),
-
-  UKMATHS(
-    "ukmaths.ctb", R.string.louis_ttd_UKMATHS
-  ),
-
-  UKMATHS_EDIT(
-    "ukmaths_edit.ctb", R.string.louis_ttd_UKMATHS_EDIT
-  ),
-
   VI(
     "vi.ctb", R.string.louis_ttd_VI
   ),
 
   VI_G1(
     "vi-g1.ctb", R.string.louis_ttd_VI_G1
-  ),
-
-  WISKUNDE(
-    "wiskunde.ctb", R.string.louis_ttd_WISKUNDE
   ),
 
   ZH_HK(
