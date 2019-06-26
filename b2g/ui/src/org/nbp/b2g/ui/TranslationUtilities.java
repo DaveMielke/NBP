@@ -10,11 +10,12 @@ public abstract class TranslationUtilities {
   private final static String LOG_TAG = TranslationUtilities.class.getName();
 
   private final static int LENGTH_MULTIPLIER = 3;
+  private final static int LENGTH_EXTRA = 0X100;
 
   public static TranslationBuilder newTranslationBuilder (CharSequence input) {
     return new TranslationBuilder()
               .setInputCharacters(input)
-              .setOutputLength(input.length() * LENGTH_MULTIPLIER)
+              .setOutputLength((input.length() * LENGTH_MULTIPLIER) + LENGTH_EXTRA)
               .setAllowLongerOutput(true)
               .setTranslator(ApplicationSettings.BRAILLE_CODE.getTranslator())
               ;

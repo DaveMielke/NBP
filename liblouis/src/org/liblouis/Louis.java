@@ -257,7 +257,7 @@ public final class Louis {
     return new TranslationBuilder()
               .setTranslator(translator)
               .setInputCharacters(text)
-              .setOutputLength(text.length() * 2)
+              .setOutputLength((text.length() * 2) + 0X100)
               .setAllowLongerOutput(true)
               .newBrailleTranslation();
   }
@@ -268,7 +268,7 @@ public final class Louis {
     return new TranslationBuilder()
               .setTranslator(translator)
               .setInputCharacters(braille)
-              .setOutputLength(braille.length() * 3)
+              .setOutputLength((braille.length() * 3) + 0X100)
               .setAllowLongerOutput(true)
               .newTextTranslation();
   }
