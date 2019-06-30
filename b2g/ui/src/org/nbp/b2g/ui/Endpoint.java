@@ -276,6 +276,8 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
   private final boolean replaceLine (CharSequence newText, int cursor) {
     CharSequence oldText = getLineText();
+    if (isHintText()) oldText = "";
+
     int oldTo = oldText.length();
     int newTo = newText.length();
     int from = 0;
@@ -440,6 +442,12 @@ public abstract class Endpoint extends UserInterfaceComponent {
 
   public CharSequence getHintText () {
     return null;
+  }
+
+  public final boolean isHintText () {
+    if (getSelectionStart() != 0) return false;
+    if (getSelectionEnd() != 0) return false;
+    return getText().equals(getHintText());
   }
 
   public boolean isPasswordField () {
