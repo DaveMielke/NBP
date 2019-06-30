@@ -325,20 +325,25 @@ public abstract class Endpoint extends UserInterfaceComponent {
   }
 
   public final boolean setBrailleCharacters (CharSequence braille, int cursor) {
-    textTranslation = TranslationUtilities.newTextTranslation(braille);
+    Translation translation = textTranslation = TranslationUtilities.newTextTranslation(braille);
     brailleTranslation = null;
-
     CharSequence text = textTranslation.getTextWithSpans();
-    TranslationCache.put(text, textTranslation);
+
+    if ((text.length() == 0) && (braille.length() > 0)) {
+      text = braille;
+      translation = brailleTranslation = TranslationUtilities.newBrailleTranslation(text, false);
+      textTranslation = null;
+    }
+
+    TranslationCache.put(text, translation);
 
     if (false) {
       logText("brl", braille);
-      logText("csm", textTranslation.getConsumedInput());
       logText("txt", text);
-      logOffsets(textTranslation);
+      logOffsets(translation);
     }
 
-    return replaceLine(text, textTranslation.getTextOffset(cursor));
+    return replaceLine(text, translation.getTextOffset(cursor));
   }
 
   public final CharSequence getBrailleCharacters () {

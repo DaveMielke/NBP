@@ -7,8 +7,16 @@ import android.util.Log;
 import android.text.Spanned;
 import android.text.SpannableStringBuilder;
 
-public class Translation extends TranslationComponent {
+public abstract class Translation extends TranslationComponent {
   private final static String LOG_TAG = Translation.class.getName();
+
+  public abstract int getBrailleOffset (int textOffset);
+  public abstract int findFirstBrailleOffset (int brailleOffset);
+  public abstract int findLastBrailleOffset (int brailleOffset);
+
+  public abstract int getTextOffset (int brailleOffset);
+  public abstract int findFirstTextOffset (int textOffset);
+  public abstract int findLastTextOffset (int textOffset);
 
   private final Translator translator;
   private final boolean translationSucceeded;

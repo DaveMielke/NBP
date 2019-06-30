@@ -13,14 +13,17 @@ public class BrailleTranslation extends Translation {
     return getInputLength();
   }
 
+  @Override
   public final int getTextOffset (int brailleOffset) {
     return getInputOffset(brailleOffset);
   }
 
+  @Override
   public final int findFirstTextOffset (int textOffset) {
     return findFirstInputOffset(textOffset);
   }
 
+  @Override
   public final int findLastTextOffset (int textOffset) {
     return findLastInputOffset(textOffset);
   }
@@ -45,14 +48,17 @@ public class BrailleTranslation extends Translation {
     return getOutputLength();
   }
 
+  @Override
   public final int getBrailleOffset (int textOffset) {
     return getOutputOffset(textOffset);
   }
 
+  @Override
   public final int findFirstBrailleOffset (int brailleOffset) {
     return findFirstOutputOffset(brailleOffset);
   }
 
+  @Override
   public final int findLastBrailleOffset (int brailleOffset) {
     return findLastOutputOffset(brailleOffset);
   }
