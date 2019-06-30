@@ -9,6 +9,7 @@ public class BrailleTranslation extends Translation {
     return getConsumedInput();
   }
 
+  @Override
   public final int getTextLength () {
     return getInputLength();
   }
@@ -28,6 +29,7 @@ public class BrailleTranslation extends Translation {
     return findLastInputOffset(textOffset);
   }
 
+  @Override
   public final Integer getTextCursor () {
     return getInputCursor();
   }
@@ -44,6 +46,7 @@ public class BrailleTranslation extends Translation {
     return getOutputWithSpans();
   }
 
+  @Override
   public final int getBrailleLength () {
     return getOutputLength();
   }
@@ -63,6 +66,7 @@ public class BrailleTranslation extends Translation {
     return findLastOutputOffset(brailleOffset);
   }
 
+  @Override
   public final Integer getBrailleCursor () {
     return getOutputCursor();
   }
