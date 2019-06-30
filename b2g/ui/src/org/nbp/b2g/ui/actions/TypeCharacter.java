@@ -47,10 +47,10 @@ public class TypeCharacter extends InputAction {
           start -= lineStart;
 
           {
-            int next = lineStart + lineLength;
+            int from = lineStart + lineLength;
 
-            if (next < end) {
-              if (!endpoint.deleteText(next, end)) {
+            if (from < end) {
+              if (!endpoint.deleteText(from, end)) {
                 return false;
               }
             }
