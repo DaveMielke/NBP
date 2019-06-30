@@ -52,7 +52,7 @@ public abstract class DeleteAction extends Action {
           CharSequence braille = endpoint.isHintText()? "": endpoint.getBrailleCharacters();
           SpannableStringBuilder sb = new SpannableStringBuilder(braille);
           sb.delete(start, end);
-          return endpoint.setBrailleCharacters(sb.subSequence(0, sb.length()), start);
+          return endpoint.setBrailleCharacters(sb, start);
         }
       }
     }
