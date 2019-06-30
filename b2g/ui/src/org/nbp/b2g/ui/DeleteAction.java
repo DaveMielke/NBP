@@ -2,6 +2,8 @@ package org.nbp.b2g.ui;
 
 import android.util.Log;
 
+import android.text.SpannableStringBuilder;
+
 public abstract class DeleteAction extends Action {
   private final static String LOG_TAG = DeleteAction.class.getName();
 
@@ -38,7 +40,17 @@ public abstract class DeleteAction extends Action {
 
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
-        return deleteCharacter(endpoint, getDeleteOffset());
+        int offset = endpoint.getSelectionStart() + getDeleteOffset();
+        endpoint.adjustScroll(offset);
+        offset -= endpoint.getLineStart();
+
+        int start = endpoint.findFirstBrailleOffset(offset);
+        int end = endpoint.findFirstBrailleOffset(offset+1);
+
+        CharSequence braille = endpoint.isHintText()? "": endpoint.getBrailleCharacters();
+        SpannableStringBuilder sb = new SpannableStringBuilder(braille);
+        sb.delete(start, end);
+        return endpoint.setBrailleCharacters(sb.subSequence(0, sb.length()), start);
       }
     }
 
