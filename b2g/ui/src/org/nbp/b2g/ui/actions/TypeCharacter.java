@@ -38,24 +38,23 @@ public class TypeCharacter extends InputAction {
       int end = endpoint.getSelectionEnd();
 
       if (Endpoint.isSelected(start) && endpoint.isSelected(end)) {
-        endpoint.adjustScroll(start);
         boolean isCursor = start == end;
+        endpoint.adjustScroll(start);
 
         {
           int lineLength = endpoint.getLineLength();
           int lineStart = endpoint.getLineStart();
-          start -= lineStart;
 
           {
             int from = lineStart + lineLength;
 
             if (from < end) {
-              if (!endpoint.deleteText(from, end)) {
-                return false;
-              }
+              if (!endpoint.deleteText(from, end)) return false;
+              endpoint.adjustScroll(start);
             }
           }
 
+          start -= lineStart;
           end = Math.min((end - lineStart), lineLength);
         }
 

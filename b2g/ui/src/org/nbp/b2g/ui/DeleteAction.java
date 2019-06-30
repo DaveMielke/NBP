@@ -36,9 +36,8 @@ public abstract class DeleteAction extends Action {
               int from = lineStart + lineLength;
 
               if (from < end) {
-                if (!endpoint.deleteText(from, end)) {
-                  return false;
-                }
+                if (!endpoint.deleteText(from, end)) return false;
+                endpoint.adjustScroll(start);
               }
             }
 
