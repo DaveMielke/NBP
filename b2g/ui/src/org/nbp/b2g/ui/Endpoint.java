@@ -338,8 +338,8 @@ public abstract class Endpoint extends UserInterfaceComponent {
     TranslationCache.put(text, translation);
 
     if (false) {
-      logText("brl", braille);
-      logText("txt", text);
+      logText(translation.getInputTag(), translation.getSuppliedInput());
+      logText(translation.getOutputTag(), translation.getOutputAsString());
       logOffsets(translation);
     }
 
