@@ -10,6 +10,12 @@ import android.text.SpannableStringBuilder;
 public abstract class Translation extends TranslationComponent {
   private final static String LOG_TAG = Translation.class.getName();
 
+  protected final static String TEXT_TAG = "TXT";
+  protected final static String BRAILLE_TAG = "BRL";
+
+  public abstract String getInputTag ();
+  public abstract String getOutputTag ();
+
   public abstract int getBrailleLength ();
   public abstract int getBrailleOffset (int textOffset);
   public abstract int findFirstBrailleOffset (int brailleOffset);

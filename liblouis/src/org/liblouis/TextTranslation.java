@@ -1,6 +1,16 @@
 package org.liblouis;
 
 public class TextTranslation extends Translation {
+  @Override
+  public final String getInputTag () {
+    return BRAILLE_TAG;
+  }
+
+  @Override
+  public final String getOutputTag () {
+    return TEXT_TAG;
+  }
+
   public final CharSequence getSuppliedBraille () {
     return getSuppliedInput();
   }

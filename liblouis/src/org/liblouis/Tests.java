@@ -71,57 +71,60 @@ public abstract class Tests {
   private final static char OUT_OF_BOUNDS_CHARACTER = (char)0x28FF;
 
   private static void logOffset (
-    CharSequence label,
-    int inputOffset, char inputCharacter,
-    int outputOffset, char outputCharacter
+    CharSequence fromTag, int fromOffset, char fromCharacter,
+    CharSequence toTag, int toOffset, char toCharacter
   ) {
-    log(String.format(
-      "%s: %d->%d %c->%c %04X->%04X",
-      label,
-      inputOffset, outputOffset,
-      inputCharacter, outputCharacter,
-      (int)inputCharacter, (int)outputCharacter
-    ));
+    log(
+      String.format(
+        "%s->%s: %d->%d %c->%c %04X->%04X",
+        fromTag, toTag,
+        fromOffset, toOffset,
+        fromCharacter, toCharacter,
+        (int)fromCharacter, (int)toCharacter
+      )
+    );
   }
 
   public final static void logOutputOffsets (Translation translation) {
-    CharSequence input = translation.getConsumedInput();
-    int inputLength = input.length();
+    CharSequence inputTag = translation.getInputTag();
+    CharSequence inputCharacters = translation.getConsumedInput();
+    int inputLength = inputCharacters.length();
 
-    char[] output = translation.getOutputAsArray();
-    int outputLength = output.length;
+    CharSequence outputTag = translation.getOutputTag();
+    char[] outputCharacters = translation.getOutputAsArray();
+    int outputLength = outputCharacters.length;
 
     for (int inputOffset=0; inputOffset<inputLength; inputOffset+=1) {
       int outputOffset = translation.getOutputOffset(inputOffset);
       char outputCharacter =
         ((outputOffset >= 0) && (outputOffset < outputLength))?
-        output[outputOffset]: OUT_OF_BOUNDS_CHARACTER;
+        outputCharacters[outputOffset]: OUT_OF_BOUNDS_CHARACTER;
 
       logOffset(
-        "in->out",
-        inputOffset, input.charAt(inputOffset),
-        outputOffset, outputCharacter
+        inputTag, inputOffset, inputCharacters.charAt(inputOffset),
+        outputTag, outputOffset, outputCharacter
       );
     }
   }
 
   public final static void logInputOffsets (Translation translation) {
-    char[] output = translation.getOutputAsArray();
-    int outputLength = output.length;
+    CharSequence outputTag = translation.getOutputTag();
+    char[] outputCharacters = translation.getOutputAsArray();
+    int outputLength = outputCharacters.length;
 
-    CharSequence input = translation.getConsumedInput();
-    int inputLength = input.length();
+    CharSequence inputTag = translation.getInputTag();
+    CharSequence inputCharacters = translation.getConsumedInput();
+    int inputLength = inputCharacters.length();
 
     for (int outputOffset=0; outputOffset<outputLength; outputOffset+=1) {
       int inputOffset = translation.getInputOffset(outputOffset);
       char inputCharacter =
         ((inputOffset >= 0) && (inputOffset < inputLength))?
-        input.charAt(inputOffset): OUT_OF_BOUNDS_CHARACTER;
+        inputCharacters.charAt(inputOffset): OUT_OF_BOUNDS_CHARACTER;
 
       logOffset(
-        "out->in",
-        outputOffset, output[outputOffset],
-        inputOffset, inputCharacter
+        outputTag, outputOffset, outputCharacters[outputOffset],
+        inputTag, inputOffset, inputCharacter
       );
     }
   }
