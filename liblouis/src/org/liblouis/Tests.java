@@ -144,19 +144,19 @@ public abstract class Tests {
       new Runnable() {
         @Override
         public void run () {
-          logCharacters("txt", text, showText, showHexadecimal);
+          logCharacters(Translation.TEXT_TAG, text, showText, showHexadecimal);
 
           CharSequence braille;
           {
             BrailleTranslation translation = Louis.getBrailleTranslation(translator, text);
             braille = translation.getBrailleWithSpans();
-            logCharacters("brl", braille, showText, showHexadecimal);
+            logCharacters(Translation.BRAILLE_TAG, braille, showText, showHexadecimal);
             if (showOffsets) logOffsets(translation);
           }
 
           {
             TextTranslation translation = Louis.getTextTranslation(translator, braille);
-            logCharacters("bck", translation.getTextWithSpans(), showText, showHexadecimal);
+            logCharacters("BCK", translation.getTextWithSpans(), showText, showHexadecimal);
             if (showOffsets) logOffsets(translation);
           }
         }
@@ -174,19 +174,19 @@ public abstract class Tests {
       new Runnable() {
         @Override
         public void run () {
-          logCharacters("brl", braille, showText, showHexadecimal);
+          logCharacters(Translation.BRAILLE_TAG, braille, showText, showHexadecimal);
 
           CharSequence text;
           {
             TextTranslation translation = Louis.getTextTranslation(translator, braille);
             text = translation.getTextWithSpans();
-            logCharacters("txt", text, showText, showHexadecimal);
+            logCharacters(Translation.TEXT_TAG, text, showText, showHexadecimal);
             if (showOffsets) logOffsets(translation);
           }
 
           {
             BrailleTranslation translation = Louis.getBrailleTranslation(translator, text);
-            logCharacters("bck", translation.getBrailleWithSpans(), showText, showHexadecimal);
+            logCharacters("BCK", translation.getBrailleWithSpans(), showText, showHexadecimal);
             if (showOffsets) logOffsets(translation);
           }
         }

@@ -10,8 +10,8 @@ import android.text.SpannableStringBuilder;
 public abstract class Translation extends TranslationComponent {
   private final static String LOG_TAG = Translation.class.getName();
 
-  protected final static String TEXT_TAG = "TXT";
-  protected final static String BRAILLE_TAG = "BRL";
+  public final static String TEXT_TAG = "TXT";
+  public final static String BRAILLE_TAG = "BRL";
 
   public abstract String getInputTag ();
   public abstract String getOutputTag ();
