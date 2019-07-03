@@ -13,58 +13,58 @@ public abstract class Tests {
   private Tests () {
   }
 
-  private final static void log (String text) {
-    Log.d(LOG_TAG, text);
+  private final static void log (String message) {
+    Log.d(LOG_TAG, message);
   }
 
-  private final static void log (CharSequence text) {
-    log(text.toString());
+  private final static void log (CharSequence message) {
+    log(message.toString());
   }
 
   public final static void run (String name, Runnable test) {
-    log(("begin " + name));
+    log(("begin test: " + name));
 
     try {
       test.run();
     } finally {
-      log(("end " + name));
+      log(("end test: " + name));
     }
   }
 
   public final static void log (String label, int... values) {
-    StringBuilder sb = new StringBuilder();
-    int count = values.length;
+    StringBuilder message = new StringBuilder();
+    message.append(label);
 
-    sb.append(label);
-    sb.append(": [");
-    sb.append(count);
-    sb.append(']');
+    message.append(": [");
+    message.append(values.length);
+    message.append(']');
 
-    for (int index=0; index<count; index+=1) {
-      sb.append(' ');
-      sb.append(values[index]);
+    for (int value : values) {
+      message.append(' ');
+      message.append(value);
     }
 
-    log(sb);
+    log(message);
   }
 
-  public final static void logCharacters (
+  public final static void log (
     CharSequence label, CharSequence characters,
     boolean asText, boolean asHexadecimal
   ) {
     if (asText) log(String.format("%s: %s", label, characters));
 
     if (asHexadecimal) {
-      StringBuilder sb = new StringBuilder();
-      sb.append(label);
-      sb.append(':');
+      StringBuilder message = new StringBuilder();
+      message.append(label);
+
+      message.append(':');
       int count = characters.length();
 
       for (int index=0; index<count; index+=1) {
-        sb.append(String.format(" %04X", (int)characters.charAt(index)));
+        message.append(String.format(" %04X", (int)characters.charAt(index)));
       }
 
-      log(sb);
+      log(message);
     }
   }
 
@@ -134,29 +134,29 @@ public abstract class Tests {
     logInputOffsets(translation);
   }
 
-  public final static void testTextTranslation (
+  public final static void testForwardTranslation (
     final Translator translator, final CharSequence text,
     final boolean showText, final boolean showHexadecimal,
     final boolean showOffsets
   ) {
     run(
-      "text translation test",
+      "forward translation",
       new Runnable() {
         @Override
         public void run () {
-          logCharacters(Translation.TEXT_TAG, text, showText, showHexadecimal);
+          log(Translation.TEXT_TAG, text, showText, showHexadecimal);
 
           CharSequence braille;
           {
             BrailleTranslation translation = Louis.getBrailleTranslation(translator, text);
             braille = translation.getBrailleWithSpans();
-            logCharacters(Translation.BRAILLE_TAG, braille, showText, showHexadecimal);
+            log(Translation.BRAILLE_TAG, braille, showText, showHexadecimal);
             if (showOffsets) logOffsets(translation);
           }
 
           {
             TextTranslation translation = Louis.getTextTranslation(translator, braille);
-            logCharacters("BCK", translation.getTextWithSpans(), showText, showHexadecimal);
+            log(Translation.TEXT_TAG, translation.getTextWithSpans(), showText, showHexadecimal);
             if (showOffsets) logOffsets(translation);
           }
         }
@@ -164,51 +164,51 @@ public abstract class Tests {
     );
   }
 
-  public final static void testBrailleTranslation (
-    final Translator translator, final CharSequence braille,
-    final boolean showText, final boolean showHexadecimal,
-    final boolean showOffsets
-  ) {
-    run(
-      "braille translation test",
-      new Runnable() {
-        @Override
-        public void run () {
-          logCharacters(Translation.BRAILLE_TAG, braille, showText, showHexadecimal);
-
-          CharSequence text;
-          {
-            TextTranslation translation = Louis.getTextTranslation(translator, braille);
-            text = translation.getTextWithSpans();
-            logCharacters(Translation.TEXT_TAG, text, showText, showHexadecimal);
-            if (showOffsets) logOffsets(translation);
-          }
-
-          {
-            BrailleTranslation translation = Louis.getBrailleTranslation(translator, text);
-            logCharacters("BCK", translation.getBrailleWithSpans(), showText, showHexadecimal);
-            if (showOffsets) logOffsets(translation);
-          }
-        }
-      }
-    );
-  }
-
-  public final static void testTextTranslation (
+  public final static void testForwardTranslation (
     TranslatorIdentifier identifier, CharSequence text,
     boolean showText, boolean showHexadecimal, boolean showOffsets
   ) {
-    testTextTranslation(
+    testForwardTranslation(
       identifier.getTranslator(), text,
       showText, showHexadecimal, showOffsets
     );
   }
 
-  public final static void testBrailleTranslation (
+  public final static void testBackwardTranslation (
+    final Translator translator, final CharSequence braille,
+    final boolean showText, final boolean showHexadecimal,
+    final boolean showOffsets
+  ) {
+    run(
+      "backward translation",
+      new Runnable() {
+        @Override
+        public void run () {
+          log(Translation.BRAILLE_TAG, braille, showText, showHexadecimal);
+
+          CharSequence text;
+          {
+            TextTranslation translation = Louis.getTextTranslation(translator, braille);
+            text = translation.getTextWithSpans();
+            log(Translation.TEXT_TAG, text, showText, showHexadecimal);
+            if (showOffsets) logOffsets(translation);
+          }
+
+          {
+            BrailleTranslation translation = Louis.getBrailleTranslation(translator, text);
+            log(Translation.BRAILLE_TAG, translation.getBrailleWithSpans(), showText, showHexadecimal);
+            if (showOffsets) logOffsets(translation);
+          }
+        }
+      }
+    );
+  }
+
+  public final static void testBackwardTranslation (
     TranslatorIdentifier identifier, CharSequence braille,
     boolean showText, boolean showHexadecimal, boolean showOffsets
   ) {
-    testBrailleTranslation(
+    testBackwardTranslation(
       identifier.getTranslator(), braille,
       showText, showHexadecimal, showOffsets
     );
@@ -218,7 +218,7 @@ public abstract class Tests {
     final int outputLength, final int... outputOffsets
   ) {
     run(
-      "make input offsets test",
+      "make input offsets",
       new Runnable() {
         @Override
         public void run () {
