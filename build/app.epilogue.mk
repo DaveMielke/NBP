@@ -47,10 +47,10 @@ clean::
 	-rm -f -r gen
 	-rm -f -r obj
 
-install: all
+install:
 	adb install $(ANDROID_PROJECT_PACKAGE)
 
-reinstall: all
+reinstall:
 	adb install -r $(ANDROID_PROJECT_PACKAGE)
 
 uninstall:
