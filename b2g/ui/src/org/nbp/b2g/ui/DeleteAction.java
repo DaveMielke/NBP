@@ -26,6 +26,19 @@ public abstract class DeleteAction extends Action {
 
           if (start < 0) return false;
           if (start >= endpoint.getTextLength()) return false;
+
+          if (!ApplicationSettings.LITERARY_BRAILLE) {
+            if (ApplicationSettings.LOG_ACTIONS) {
+              Log.v(LOG_TAG,
+                String.format(
+                  "deleting text: %s", endpoint.getText().subSequence(start, end)
+                )
+              );
+            }
+
+            return endpoint.deleteText(start, end);
+          }
+
           endpoint.adjustScroll(start);
 
           {
