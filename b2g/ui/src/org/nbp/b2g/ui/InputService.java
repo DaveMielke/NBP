@@ -254,13 +254,12 @@ public class InputService extends InputMethodService {
         return true;
 
       default:
-        return false;
+        return true;
     }
   }
 
   private boolean handleKeyEvent (final int code, final boolean press) {
     logKeyEvent(code, press);
-    if (ignoreKey(code)) return false;
 
     taskProcessor.enqueue(
       new Runnable() {
@@ -286,11 +285,13 @@ public class InputService extends InputMethodService {
 
   @Override
   public boolean onKeyDown (int code, KeyEvent event) {
+    if (ignoreKey(code)) return super.onKeyDown(code, event);
     return handleKeyEvent(code, true);
   }
 
   @Override
   public boolean onKeyUp (int code, KeyEvent event) {
+    if (ignoreKey(code)) return super.onKeyUp(code, event);
     return handleKeyEvent(code, false);
   }
 }
