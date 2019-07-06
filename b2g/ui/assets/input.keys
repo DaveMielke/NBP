@@ -1,6 +1,10 @@
 bind Space+Dot7+Dots15#e InputEditingOff
 bind Space+Dot8+Dots15#e InputEditingOn
 
+bind Space+Dot7+Dots1356#z SpellPrevious
+bind Space+Dot8+Dots1356#z SpellNext
+bind Space+Dot7+Dot8+Dots1356#z SpellSuggest
+
 bind Dot7 DeletePreviousCharacter
 bind Space+Dots145#d DeleteNextCharacter
 bind Space+Dot7+Dots145#d DeletePreviousWord

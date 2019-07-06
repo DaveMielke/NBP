@@ -39,6 +39,7 @@ public abstract class MoveAction extends SpanAction {
       if (span != null) end = text.getSpanStart(span);
     }
 
+    if (end == start) return null;
     T span = null;
 
     while (true) {

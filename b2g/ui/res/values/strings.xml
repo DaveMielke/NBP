@@ -80,6 +80,7 @@
   <string name="popup_select_diacritic_add">Add a diacritical mark by pressing Center on its name:</string>
   <string name="popup_select_diacritic_remove">Remove a diacritical mark by pressing Center on its name:</string>
   <string name="popup_select_emoticon">Type an emoticon by pressing Center on its description:</string>
+  <string name="popup_select_suggestion">Press Center on the correct spelling:</string>
 
   <string name="popup_type_alert">Alert</string>
   <string name="popup_type_notification">Notification</string>
