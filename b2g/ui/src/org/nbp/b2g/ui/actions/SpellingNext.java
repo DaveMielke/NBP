@@ -10,8 +10,12 @@ public class SpellingNext extends SpanAction {
 
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
-        if (moveToSpan(endpoint, findNextSpan(endpoint, SuggestionSpan.class))) {
-          return true;
+        Object span = findNextSpan(endpoint, SuggestionSpan.class);
+
+        if (span != null) {
+          return moveToSpan(endpoint, span);
+        } else {
+          ApplicationUtilities.message(R.string.message_not_found);
         }
       }
     }

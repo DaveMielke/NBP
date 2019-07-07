@@ -117,8 +117,6 @@
   <string name="button_settings_change">Change</string>
   <string name="button_dialog_cancel">Cancel</string>
 
-  <string name="AndroidSetting_AirplaneMode_label">Airplane Mode</string>
-
   <string name="DescribeCharacter_label_block">Block</string>
   <string name="DescribeCharacter_label_category">Category</string>
   <string name="DescribeCharacter_label_codepoint">Code Point</string>
@@ -188,6 +186,7 @@
   <string name="DescribeIndicators_bluetooth_property_discoverable">discoverable</string>
   <string name="DescribeIndicators_bluetooth_property_discovering">discovering</string>
 
+  <string name="message_not_found">not found</string>
   <string name="message_password_field">password field</string>
 
   <string name="message_scroll_backward">backward scroll</string>

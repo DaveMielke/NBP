@@ -67,6 +67,7 @@ public class FindEndpoint extends PromptEndpoint {
       if (found) return endpoint.write();
     }
 
+    ApplicationUtilities.message(R.string.message_not_found);
     return false;
   }
 
