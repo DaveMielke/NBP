@@ -3,14 +3,14 @@ import org.nbp.b2g.ui.*;
 
 import android.text.style.SuggestionSpan;
 
-public class SpellNext extends SpanAction {
+public class SpellingPrevious extends SpanAction {
   @Override
   public boolean performAction () {
     Endpoint endpoint = getEndpoint();
 
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
-        if (moveToSpan(endpoint, findNextSpan(endpoint, SuggestionSpan.class))) {
+        if (moveToSpan(endpoint, findPreviousSpan(endpoint, SuggestionSpan.class))) {
           return true;
         }
       }
@@ -19,7 +19,7 @@ public class SpellNext extends SpanAction {
     return false;
   }
 
-  public SpellNext (Endpoint endpoint) {
+  public SpellingPrevious (Endpoint endpoint) {
     super(endpoint);
   }
 }

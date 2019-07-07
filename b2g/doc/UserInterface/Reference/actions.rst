@@ -147,6 +147,7 @@
 .. |ShowClipboard| replace:: Show `the clipboard`_.
 .. |ShowNotificationsOff| replace:: Don't show notifications.
 .. |ShowNotificationsOn| replace:: Show notifications.
+.. |ShowUncontracted| replace:: Show the current word as uncontracted literary braille.
 .. |SleepTalkOff| replace:: Speak only when the |product name| is awake.
 .. |SleepTalkOn| replace:: Speak even when the |product name| is asleep.
 .. |SpeakFaster| replace:: Increase the speech rate.
@@ -159,6 +160,9 @@
 .. |SpeakSofter| replace:: Decrease the speech volume.
 .. |SpeechOff| replace:: Turn off speech.
 .. |SpeechOn| replace:: Turn on speech.
+.. |SpellingNext| replace:: Go to the next spelling error.
+.. |SpellingPrevious| replace:: Go to the previous spelling error.
+.. |SpellingSuggest| replace:: Show suggestions for the current spelling error.
 .. |SpellLine| replace:: Spell the current line.
 .. |SpellWord| replace:: Spell the current word (or the selected text).
 .. |StopSpeaking| replace:: Stop speaking immediately (mute).

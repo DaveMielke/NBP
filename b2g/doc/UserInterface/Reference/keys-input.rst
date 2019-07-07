@@ -4,6 +4,15 @@ Space+Dot7+Dots15 (e)
 Space+Dot8+Dots15 (e)
   |InputEditingOn|
 
+Space+Dot7+Dots1356 (z)
+  |SpellingPrevious|
+
+Space+Dot8+Dots1356 (z)
+  |SpellingNext|
+
+Space+Dots78+Dots1356 (z)
+  |SpellingSuggest|
+
 Dot7
   |DeletePreviousCharacter|
 

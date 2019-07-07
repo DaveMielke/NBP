@@ -40,6 +40,9 @@ Dot7+Cursor
 Dot3+Cursor
   |DescribeHighlighting|
 
+Dot6+Cursor
+  |ShowUncontracted|
+
 Dot8+Cursor
   |SetLeft|
 

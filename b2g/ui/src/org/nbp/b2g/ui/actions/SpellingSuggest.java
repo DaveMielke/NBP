@@ -4,7 +4,7 @@ import org.nbp.b2g.ui.*;
 import android.text.style.SuggestionSpan;
 import android.text.Spanned;
 
-public class SpellSuggest extends SpanAction {
+public class SpellingSuggest extends SpanAction {
   @Override
   public boolean performAction () {
     final Endpoint endpoint = getEndpoint();
@@ -53,7 +53,7 @@ public class SpellSuggest extends SpanAction {
     return false;
   }
 
-  public SpellSuggest (Endpoint endpoint) {
+  public SpellingSuggest (Endpoint endpoint) {
     super(endpoint);
   }
 }

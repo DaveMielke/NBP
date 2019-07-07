@@ -1,9 +1,9 @@
 bind KeyCode_Meta_Left+KeyCode_B TypingBoldOff
 bind KeyCode_Meta_Right+KeyCode_B TypingBoldOn
 
-bind Space+KeyCode_Meta_Left+KEYCODE_Z SpellPrevious
-bind Space+KeyCode_Meta_Right+KEYCODE_Z SpellNext
-bind Space+KeyCode_Meta_Left+KeyCode_Meta_Right+KEYCODE_Z SpellSuggest
+bind Space+KeyCode_Meta_Left+KEYCODE_Z SpellingPrevious
+bind Space+KeyCode_Meta_Right+KEYCODE_Z SpellingNext
+bind Space+KeyCode_Meta_Left+KeyCode_Meta_Right+KEYCODE_Z SpellingSuggest
 
 bind KeyCode_Meta_Left+KeyCode_D DeletePreviousWord
 bind KeyCode_Meta_Right+KeyCode_D DeleteNextWord
