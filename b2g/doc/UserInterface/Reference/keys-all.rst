@@ -34,11 +34,23 @@ Space+Down
 Cursor
   |CursorKey|
 
+Backward+Cursor
+  |SetSelectionStart|
+
+Forward+Cursor
+  |SetSelectionEnd|
+
 Dot7+Cursor
   |DescribeCharacter|
 
 Dot3+Cursor
   |DescribeHighlighting|
+
+Dot1+Cursor
+  |SetSelectionStart|
+
+Dot4+Cursor
+  |SetSelectionEnd|
 
 Dot6+Cursor
   |ShowUncontracted|

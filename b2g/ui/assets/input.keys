@@ -10,12 +10,6 @@ bind Space+Dots145#d DeleteNextCharacter
 bind Space+Dot7+Dots145#d DeletePreviousWord
 bind Space+Dot8+Dots145#d DeleteNextWord
 
-bind Backward+Cursor SetSelectionStart
-bind Forward+Cursor SetSelectionEnd
-
-bind Dot1+Cursor SetSelectionStart
-bind Dot4+Cursor SetSelectionEnd
-
 bind Space+Dots17 ToSelectionStart
 bind Space+Dots48 ToSelectionEnd
 

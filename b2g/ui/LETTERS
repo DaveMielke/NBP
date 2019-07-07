@@ -23,4 +23,4 @@ v DescribeBuild          ShowClipboard          PasteFromClipboard     -
 w DescribeCurrentNode    WordWrapOff            WordWrapOn             -
 x TypeControl            ClearClipboard         CutToClipboard         -
 y -                      -                      -                      -
-z BackKey                -                      -                      -
+z BackKey                SpellingPrevious       SpellingNext           SpellingSuggest

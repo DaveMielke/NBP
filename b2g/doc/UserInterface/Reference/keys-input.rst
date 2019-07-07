@@ -25,18 +25,6 @@ Space+Dot7+Dots145 (d)
 Space+Dot8+Dots145 (d)
   |DeleteNextWord|
 
-Backward+Cursor
-  |SetSelectionStart|
-
-Forward+Cursor
-  |SetSelectionEnd|
-
-Dot1+Cursor
-  |SetSelectionStart|
-
-Dot4+Cursor
-  |SetSelectionEnd|
-
 Space+Dots17
   |ToSelectionStart|
 
