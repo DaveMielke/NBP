@@ -15,6 +15,4 @@
   <string name="FileFinder_action_clear">Clear Selection</string>
   <string name="FileFinder_action_edit">Type File Name</string>
   <string name="FileFinder_action_up">Parent Folder</string>
-
-  <string name="FileFinder_writable_no">write-protected</string>
 </resources>

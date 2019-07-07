@@ -20,12 +20,9 @@ public class PathManager extends ActivityComponent {
     super(owner);
   }
 
-  private final void setIsWriteProtected (File path, CompoundButton button) {
-    button.setChecked(!path.canWrite());
-  }
-
-  public final void managePath (final File path) {
+  private final AlertDialog makeDialog () {
     AlertDialog.Builder builder = newAlertDialogBuilder();
+    setTitle(builder, R.string.PathManager_title_main, null);
     setView(builder, R.layout.path_manager);
 
     setDoneButton(builder,
@@ -37,35 +34,46 @@ public class PathManager extends ActivityComponent {
       }
     );
 
-    setTitle(builder, R.string.PathManager_title_main, null);
     AlertDialog dialog = builder.create();
     dialog.show();
+    return dialog;
+  }
 
-    {
-      String directory = path.getParentFile().getAbsolutePath() + File.separator;
-      TextView view = dialog.findViewById(R.id.PathManager_directory);
-      view.setText(directory);
-    }
+  private final void setDirectory (AlertDialog dialog, File path) {
+    TextView view = dialog.findViewById(R.id.PathManager_directory);
+    String directory = path.getParentFile().getAbsolutePath() + File.separator;
+    view.setText(directory);
+  }
 
-    {
-      String name = path.getName();
-      TextView view = dialog.findViewById(R.id.PathManager_name);
-      view.setText(name);
-    }
+  private final void setName (AlertDialog dialog, File path) {
+    TextView view = dialog.findViewById(R.id.PathManager_name);
+    String name = path.getName();
+    view.setText(name);
+  }
 
-    {
-      CheckBox checkbox = dialog.findViewById(R.id.PathManager_write_no);
-      setIsWriteProtected(path, checkbox);
+  private final void setIsWriteProtected (CompoundButton button, File path) {
+    button.setChecked(!path.canWrite());
+  }
 
-      checkbox.setOnCheckedChangeListener(
-        new CompoundButton.OnCheckedChangeListener() {
-          @Override
-          public void onCheckedChanged (CompoundButton button, boolean isChecked) {
-            path.setWritable(!isChecked, false);
-            setIsWriteProtected(path, button);
-          }
+  private final void setWritability (AlertDialog dialog, final File path) {
+    CheckBox checkbox = dialog.findViewById(R.id.PathManager_write_no);
+    setIsWriteProtected(checkbox, path);
+
+    checkbox.setOnCheckedChangeListener(
+      new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged (CompoundButton button, boolean isChecked) {
+          path.setWritable(!isChecked, false);
+          setIsWriteProtected(button, path);
         }
-      );
-    }
+      }
+    );
+  }
+
+  public final void managePath (File path) {
+    AlertDialog dialog = makeDialog();
+    setDirectory(dialog, path);
+    setName(dialog, path);
+    setWritability(dialog, path);
   }
 }
