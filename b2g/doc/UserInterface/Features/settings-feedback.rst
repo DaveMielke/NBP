@@ -1,13 +1,12 @@
-.. table:: Input Settings
+.. table:: Speech Feedback
 
   ====================  =======  ====================  =====================
   Setting               Default  Choices               Buttons
   --------------------  -------  --------------------  ---------------------
-  Input Editing         On       Off, On
-  Typing Mode           Text     Text, Cells           Change
-  Bold                  Off      Off, On
-  Italic                Off      Off, On
-  Strike                Off      Off, On
-  Underline             Off      Off, On
+  Echo Words            On       Off, On
+  Echo Characters       On       Off, On
+  Echo Deletions        On       Off, On
+  Echo Selection        On       Off, On
+  Speak Lines           On       Off, On
   ====================  =======  ====================  =====================
 

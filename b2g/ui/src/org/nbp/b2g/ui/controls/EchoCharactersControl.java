@@ -11,7 +11,7 @@ public class EchoCharactersControl extends BooleanControl {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_speech;
+    return R.string.control_group_feedback;
   }
 
   @Override

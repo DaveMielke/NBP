@@ -50,6 +50,11 @@ Input Settings
 
 .. include:: settings-input.rst
 
+Keyboard Settings
+~~~~~~~~~~~~~~~~~
+
+.. include:: settings-keyboard.rst
+
 Braille Settings
 ~~~~~~~~~~~~~~~~
 
@@ -60,10 +65,10 @@ Speech Settings
 
 .. include:: settings-speech.rst
 
-Keyboard Settings
-~~~~~~~~~~~~~~~~~
+Speech Feedback
+~~~~~~~~~~~~~~~
 
-.. include:: settings-keyboard.rst
+.. include:: settings-feedback.rst
 
 One Hand Settings
 ~~~~~~~~~~~~~~~~~

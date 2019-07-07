@@ -11,7 +11,7 @@ public class InputEditingControl extends BooleanControl {
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_keyboard;
+    return R.string.control_group_input;
   }
 
   @Override

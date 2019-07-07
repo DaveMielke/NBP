@@ -26,11 +26,16 @@ public abstract class Controls {
   public final static ShowNotificationsControl showNotifications = new ShowNotificationsControl();
 
   // input settings
+  public final static InputEditingControl inputEditing = new InputEditingControl();
   public final static TypingModeControl typingMode = new TypingModeControl();
   public final static TypingBoldControl typingBold = new TypingBoldControl();
   public final static TypingItalicControl typingItalic = new TypingItalicControl();
   public final static TypingStrikeControl typingStrike = new TypingStrikeControl();
   public final static TypingUnderlineControl typingUnderline = new TypingUnderlineControl();
+
+  // keyboard settings
+  public final static LongPressControl longPress = new LongPressControl();
+  public final static ReversePanningControl reversePanning = new ReversePanningControl();
 
   // braille settings
   public final static ShowHighlightedControl showHighlighted = new ShowHighlightedControl();
@@ -42,21 +47,18 @@ public abstract class Controls {
 
   // speech settings
   public final static SpeechEnabledControl speechEnabled = new SpeechEnabledControl();
-  public final static EchoWordsControl echoWords = new EchoWordsControl();
-  public final static EchoCharactersControl echoCharacters = new EchoCharactersControl();
-  public final static EchoDeletionsControl echoDeletions = new EchoDeletionsControl();
-  public final static EchoSelectionControl echoSelection = new EchoSelectionControl();
-  public final static SpeakLinesControl speakLines = new SpeakLinesControl();
   public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
   public final static SpeechRateControl speechRate = new SpeechRateControl();
   public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
   public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
   public final static SleepTalkControl sleepTalk = new SleepTalkControl();
 
-  // keyboard settings
-  public final static InputEditingControl inputEditing = new InputEditingControl();
-  public final static LongPressControl longPress = new LongPressControl();
-  public final static ReversePanningControl reversePanning = new ReversePanningControl();
+  // speech feedback
+  public final static EchoWordsControl echoWords = new EchoWordsControl();
+  public final static EchoCharactersControl echoCharacters = new EchoCharactersControl();
+  public final static EchoDeletionsControl echoDeletions = new EchoDeletionsControl();
+  public final static EchoSelectionControl echoSelection = new EchoSelectionControl();
+  public final static SpeakLinesControl speakLines = new SpeakLinesControl();
 
   // one hand settings
   public final static OneHandControl oneHand = new OneHandControl();

@@ -8,11 +8,16 @@
   <string name="control_label_ShowNotifications">Notifications</string>
 
   <string name="control_group_input">Input Settings</string>
+  <string name="control_label_InputEditing">Input Editing</string>
   <string name="control_label_TypingMode">Typing Mode</string>
   <string name="control_label_TypingBold">Bold</string>
   <string name="control_label_TypingItalic">Italic</string>
   <string name="control_label_TypingStrike">Strike</string>
   <string name="control_label_TypingUnderline">Underline</string>
+
+  <string name="control_group_keyboard">Keyboard Settings</string>
+  <string name="control_label_LongPress">Long Presses</string>
+  <string name="control_label_ReversePanning">Reverse Panning</string>
 
   <string name="control_group_braille">Braille Settings</string>
   <string name="control_label_ShowHighlighted">Show Highlighted</string>
@@ -24,21 +29,18 @@
 
   <string name="control_group_speech">Speech Settings</string>
   <string name="control_label_SpeechEnabled">Speech</string>
-  <string name="control_label_EchoWords">Echo Words</string>
-  <string name="control_label_EchoCharacters">Echo Characters</string>
-  <string name="control_label_EchoDeletions">Echo Deletions</string>
-  <string name="control_label_EchoSelection">Echo Selection</string>
-  <string name="control_label_SpeakLines">Speak Lines</string>
   <string name="control_label_SpeechVolume">Volume</string>
   <string name="control_label_SpeechRate">Rate</string>
   <string name="control_label_SpeechPitch">Pitch</string>
   <string name="control_label_SpeechBalance">Balance</string>
   <string name="control_label_SleepTalk">Sleep Talk</string>
 
-  <string name="control_group_keyboard">Keyboard Settings</string>
-  <string name="control_label_InputEditing">Input Editing</string>
-  <string name="control_label_LongPress">Long Presses</string>
-  <string name="control_label_ReversePanning">Reverse Panning</string>
+  <string name="control_group_feedback">Speech Feedback</string>
+  <string name="control_label_EchoWords">Echo Words</string>
+  <string name="control_label_EchoCharacters">Echo Characters</string>
+  <string name="control_label_EchoDeletions">Echo Deletions</string>
+  <string name="control_label_EchoSelection">Echo Selection</string>
+  <string name="control_label_SpeakLines">Speak Lines</string>
 
   <string name="control_group_one_hand">One Hand Settings</string>
   <string name="control_label_OneHand">One Hand Mode</string>
