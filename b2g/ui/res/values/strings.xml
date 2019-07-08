@@ -117,6 +117,7 @@
   <string name="button_settings_change">Change</string>
   <string name="button_dialog_cancel">Cancel</string>
 
+  <string name="DescribeCharacter_no_name">no character name</string>
   <string name="DescribeCharacter_label_block">Block</string>
   <string name="DescribeCharacter_label_category">Category</string>
   <string name="DescribeCharacter_label_codepoint">Code Point</string>
@@ -186,10 +187,11 @@
   <string name="DescribeIndicators_bluetooth_property_discoverable">discoverable</string>
   <string name="DescribeIndicators_bluetooth_property_discovering">discovering</string>
 
+  <string name="SpellingSuggest_none">no suggestions</string>
+
   <string name="message_password_field">password field</string>
   <string name="message_not_found">not found</string>
   <string name="message_not_input">not an input area</string>
-  <string name="message_no_suggestions">no suggestions</string>
 
   <string name="message_scroll_backward">backward scroll</string>
   <string name="message_scroll_forward">forward scroll</string>
@@ -220,6 +222,4 @@
 
   <string name="prompt_find">find</string>
   <string name="prompt_unicode">Unicode</string>
-
-  <string name="message_no_character_name">no character name</string>
 </resources>

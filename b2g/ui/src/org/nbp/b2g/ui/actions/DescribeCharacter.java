@@ -25,7 +25,7 @@ public class DescribeCharacter extends CursorKeyAction {
       if (name != null) {
         name = name.toLowerCase();
       } else {
-        name = getString(R.string.message_no_character_name);
+        name = getString(R.string.DescribeCharacter_no_name);
       }
 
       sb.append(name);

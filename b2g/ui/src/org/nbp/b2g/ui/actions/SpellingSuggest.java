@@ -48,7 +48,7 @@ public class SpellingSuggest extends SpanAction {
           }
         }
 
-        ApplicationUtilities.message(R.string.message_no_suggestions);
+        ApplicationUtilities.message(R.string.SpellingSuggest_none);
       } else {
         ApplicationUtilities.message(R.string.message_not_input);
       }
