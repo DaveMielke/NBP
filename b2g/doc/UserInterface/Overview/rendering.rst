@@ -20,7 +20,12 @@ Space+Dots78+g (dots 1245) displays a message (see `Messages`_) that confirms
 which braille code has been selected.
 Space+Dot8+g (dots 1245) selects the next braille code,
 and Space+Dot7+g (dots 1245) selects the previous braille code.
-The default braille code is UEB Grade 2.
+The default braille code is UEB (Unified English Braille) Grade 2.
+
+If you encounter a contraction that you don't recognize
+then you can display the uncontracted version of the (space-delimited) word
+that contains it within a pop-up (see `Pop-ups`_)
+by pressing any cursor routing key associated with that word while holding Dot6.
 
 The following braille codes are supported:
 
@@ -66,6 +71,13 @@ been defined).
 The special character rendered as |the undefined character| is used to
 represent a character that doesn't have a defined representation.
 
+If you encounter a character that you don't recognize
+then you can try displaying the uncontracted `Literary Braille`_ version
+of the (space-delimited) word that contains it
+within a pop-up (see `Pop-ups`_)
+by pressing any cursor routing key associated with that word while holding Dot6.
+See also `Identifying an Unrecognized Character`_.
+
 Actual Braille Cells
 ````````````````````
 
@@ -76,11 +88,13 @@ always rendered in braille as themselves.
 Identifying an Unrecognized Character
 `````````````````````````````````````
 
-If you encounter a character that you don't recognize, then you can find out
-what it is by holding Dot7 while pressing the cursor routing key behind that
-character. This will cause a description of the character to be presented
-within a pop-up (see `Pop-ups`_). For example, the description for the letter
-``s`` is::
+If you encounter a character that you don't recognize,
+then you can find out what it is
+by pressing the cursor routing key associated with that character
+while holding Dot7.
+This will cause a description of the character to be presented
+within a pop-up (see `Pop-ups`_).
+For example, the description for the letter ``s`` is::
 
   latin small letter s
   Code Point: U+0073
@@ -190,7 +204,7 @@ This indicator serves two purposes:
 * If text hasn't been selected then it's superimposed onto each character
   that's highlighted (bold, italic, strike-through, and/or underlined).
   You can find out exactly how a character has been highlighted
-  by holding Dot3 while pressing the cursor routing key associated with it.
+  by pressing the cursor routing key associated with it while holding Dot3.
 
 It's default representation is |the selection indicator|.
 This can be changed via `The Settings Screen`_.
