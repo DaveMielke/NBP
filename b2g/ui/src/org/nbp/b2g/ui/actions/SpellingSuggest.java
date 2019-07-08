@@ -47,10 +47,13 @@ public class SpellingSuggest extends SpanAction {
             );
           }
         }
+
+        ApplicationUtilities.message(R.string.message_no_suggestions);
+      } else {
+        ApplicationUtilities.message(R.string.message_not_input);
       }
     }
 
-    ApplicationUtilities.message(R.string.message_no_suggestions);
     return false;
   }
 
