@@ -11,15 +11,11 @@ public class SpellingPrevious extends SpanAction {
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
         int offset = findPreviousSpan(endpoint, SuggestionSpan.class);
-
-        if (offset != NOT_FOUND) {
-          return endpoint.setCursor(offset);
-        } else {
-          ApplicationUtilities.message(R.string.message_not_found);
-        }
+        if (offset != NOT_FOUND) return endpoint.setCursor(offset);
       }
     }
 
+    ApplicationUtilities.message(R.string.message_not_found);
     return false;
   }
 
