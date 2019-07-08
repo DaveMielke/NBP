@@ -25,7 +25,7 @@ The default braille code is UEB (Unified English Braille) Grade 2.
 If you encounter a contraction that you don't recognize
 then you can display the uncontracted version of the (space-delimited) word
 that contains it within a pop-up (see `Pop-ups`_)
-by pressing any cursor routing key associated with that word while holding Dot6.
+by pressing any cursor routing key behind that word while holding Dot6.
 
 The following braille codes are supported:
 
@@ -75,7 +75,7 @@ If you encounter a character that you don't recognize
 then you can try displaying the uncontracted `Literary Braille`_ version
 of the (space-delimited) word that contains it
 within a pop-up (see `Pop-ups`_)
-by pressing any cursor routing key associated with that word while holding Dot6.
+by pressing any cursor routing key behind that word while holding Dot6.
 See also `Identifying an Unrecognized Character`_.
 
 Actual Braille Cells
@@ -90,8 +90,7 @@ Identifying an Unrecognized Character
 
 If you encounter a character that you don't recognize,
 then you can find out what it is
-by pressing the cursor routing key associated with that character
-while holding Dot7.
+by pressing the cursor routing key behind that character while holding Dot7.
 This will cause a description of the character to be presented
 within a pop-up (see `Pop-ups`_).
 For example, the description for the letter ``s`` is::
@@ -204,7 +203,7 @@ This indicator serves two purposes:
 * If text hasn't been selected then it's superimposed onto each character
   that's highlighted (bold, italic, strike-through, and/or underlined).
   You can find out exactly how a character has been highlighted
-  by pressing the cursor routing key associated with it while holding Dot3.
+  by pressing the cursor routing key behind it while holding Dot3.
 
 It's default representation is |the selection indicator|.
 This can be changed via `The Settings Screen`_.

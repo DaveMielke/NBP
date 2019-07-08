@@ -188,6 +188,17 @@ has been typed correctly, be aware that,
 in addition to being on the braille display (which can be read privately),
 if speech is enabled then it's also spoken (which can be overheard by others).
 
+Spelling Correction
+~~~~~~~~~~~~~~~~~~~
+
+You can browse the input area for misspelled words
+either by pressing Space+Dot8+z (dots 1356) to look for the next one
+or by pressing Space+Dot7+z (dots 1356) to look for the previous one.
+When on a misspelled word, you can get a list of suggested spellings 
+within a pop-up (see `Pop-ups`_) by pressing Space+Dots78+z (dots 1356).
+Either navigate to the correct suggestion and press Center to fix the word
+or press Enter to cancel the operation.
+
 Protecting an Input Area
 ~~~~~~~~~~~~~~~~~~~~~~~~
 

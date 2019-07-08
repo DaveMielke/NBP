@@ -24,14 +24,14 @@ these steps:
 1) If necessary, use the Forward and Backward keys to pan to a place where the
    first character to be selected can be seen.
 
-2) Hold Backward while pressing the cursor routing key behind the 
-   character that's to start the selection.
+2) Press the cursor routing key behind the character
+   that's to start the selection while holding Backward.
 
 3) If necessary, use the Forward and Backward keys to pan to a place where the
    last character to be selected can be seen.
 
-4) Hold Forward while pressing the cursor routing key behind the 
-   character that's to end the selection.
+4) Press the cursor routing key behind the character
+   that's to end the selection while holding Forward.
 
 Steps 1 and 2 may be reperformed at any time in order to change the start of
 the selection. Likewise, steps 3 and 4 may be reperformed at any time in order

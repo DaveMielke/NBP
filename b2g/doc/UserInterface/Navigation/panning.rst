@@ -79,9 +79,10 @@ according to the current `Word Wrap Mode`_ setting.
 This can make it difficult to read an indented block of related text
 (a column, a long word, a timestamp, etc).
 
-The braille display can be explicitly panned by holding Dot8 while pressing a
-cursor routing key. This positions the braille display such that the rendered
-portion of the current line starts with that character.
+The braille display can be explicitly panned by
+pressing a cursor routing key while holding Dot8.
+This positions the braille display such that
+the rendered portion of the current line starts with that character.
 
 The braille display can be directly moved
 to the start of the first line by pressing Space+Dots123,
