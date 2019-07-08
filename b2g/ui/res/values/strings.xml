@@ -187,6 +187,7 @@
   <string name="DescribeIndicators_bluetooth_property_discovering">discovering</string>
 
   <string name="message_not_found">not found</string>
+  <string name="message_no_suggestions">no suggestions</string>
   <string name="message_password_field">password field</string>
 
   <string name="message_scroll_backward">backward scroll</string>

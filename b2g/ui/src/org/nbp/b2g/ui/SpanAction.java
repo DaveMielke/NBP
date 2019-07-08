@@ -12,7 +12,7 @@ public abstract class SpanAction extends Action {
     return toSpannedText(endpoint.getText());
   }
 
-  protected final <T> T getSpan (Class<T> type, Spanned text, int start, int end) {
+  protected final <T> T getSpan (Class<? extends T> type, Spanned text, int start, int end) {
     if (end == start) end += 1;
     if (end > text.length()) return null;
 
@@ -22,68 +22,60 @@ public abstract class SpanAction extends Action {
     return spans[0];
   }
 
-  protected final <T> T getSpan (Class<T> type, Spanned text, int position) {
-    return getSpan(type, text, position, position);
+  protected final <T> T getSpan (Class<? extends T> type, Spanned text, int offset) {
+    return getSpan(type, text, offset, offset);
   }
 
-  protected final <T> T getSpan (Class<T> type, Endpoint endpoint) {
+  protected final <T> T getSpan (Class<? extends T> type, Endpoint endpoint) {
     Spanned text = toSpannedText(endpoint);
     if (text == null) return null;
 
     return getSpan(type, text, endpoint.getSelectionStart(), endpoint.getSelectionEnd());
   }
 
-  protected final <T> T findNextSpan (Endpoint endpoint, Class<T> type) {
+  protected final static int NOT_FOUND = -1;
+
+  protected final <T> int findNextSpan (Endpoint endpoint, Class<? extends T> type) {
     Spanned text = toSpannedText(endpoint);
-    if (text == null) return null;
 
-    int start = endpoint.getSelectionEnd();
-    if (start != endpoint.getSelectionStart()) start -= 1;
-    int end = text.length();
+    if (text != null) {
+      int start = endpoint.getSelectionEnd();
+      if (start != endpoint.getSelectionStart()) start -= 1;
+      int end = text.length();
 
-    while (true) {
-      start = text.nextSpanTransition(start, end, type);
-      if (start == end) return null;
+      while (true) {
+        start = text.nextSpanTransition(start, end, type);
+        if (start == end) break;
 
-      T span = getSpan(type, text, start);
-      if (span != null) return span;
+        T span = getSpan(type, text, start);
+        if (span != null) return start;
+      }
     }
+
+    return NOT_FOUND;
   }
 
-  protected final <T> T findPreviousSpan (Endpoint endpoint, Class<T> type) {
+  protected final <T> int findPreviousSpan (Endpoint endpoint, Class<? extends T> type) {
+    int offset = NOT_FOUND;
     Spanned text = toSpannedText(endpoint);
-    if (text == null) return null;
 
-    int start = 0;
-    int end = endpoint.getSelectionStart();
+    if (text != null) {
+      int start = 0;
+      int end = endpoint.getSelectionStart();
 
-    {
-      T span = getSpan(type, text, end);
-      if (span != null) end = text.getSpanStart(span);
-    }
-
-    if (end == start) return null;
-    T span = null;
-
-    while (true) {
       {
-        T next = getSpan(type, text, start);
-        if (next != null) span = next;
+        T span = getSpan(type, text, end);
+        if (span != null) end = text.getSpanStart(span);
       }
 
-      start = text.nextSpanTransition(start, end, type);
-      if (start == end) break;
+      while (start < end) {
+        T next = getSpan(type, text, start);
+        if (next != null) offset = start;
+        start = text.nextSpanTransition(start, end, type);
+      }
     }
 
-    return span;
-  }
-
-  protected final boolean moveToSpan (Endpoint endpoint, Object span) {
-    Spanned text = toSpannedText(endpoint);
-    if (text == null) return false;
-
-    if (span == null) return false;
-    return endpoint.setCursor(text.getSpanStart(span));
+    return offset;
   }
 
   protected SpanAction (Endpoint endpoint) {

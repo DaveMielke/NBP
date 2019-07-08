@@ -50,6 +50,7 @@ public class SpellingSuggest extends SpanAction {
       }
     }
 
+    ApplicationUtilities.message(R.string.message_no_suggestions);
     return false;
   }
 

@@ -10,10 +10,10 @@ public class SpellingNext extends SpanAction {
 
     synchronized (endpoint) {
       if (endpoint.isInputArea()) {
-        Object span = findNextSpan(endpoint, SuggestionSpan.class);
+        int offset = findNextSpan(endpoint, SuggestionSpan.class);
 
-        if (span != null) {
-          return moveToSpan(endpoint, span);
+        if (offset != NOT_FOUND) {
+          return endpoint.setCursor(offset);
         } else {
           ApplicationUtilities.message(R.string.message_not_found);
         }
