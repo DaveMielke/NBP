@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="enum_BrailleCodeNONE">none</string>
   <string name="enum_BrailleCode_UEB">English Unified</string>
   <string name="enum_BrailleCode_EBAE">English US</string>
 
