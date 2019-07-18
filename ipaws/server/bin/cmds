@@ -1,0 +1,10 @@
+column util-linux
+curl curl
+flock util-linux
+getfattr attr
+inotifywait inotify-tools
+ncat nmap-ncat nmap
+setfattr attr
+sqlite3 sqlite
+stat coreutils
+xpath perl-XML-XPath libxml-xpath-perl
