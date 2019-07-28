@@ -48,7 +48,7 @@ public abstract class ASCIIBraille extends Braille {
     /* 3D = */ UNICODE_DOT_1 | UNICODE_DOT_2 | UNICODE_DOT_3 | UNICODE_DOT_4 | UNICODE_DOT_5 | UNICODE_DOT_6,
     /* 3E > */ UNICODE_DOT_3 | UNICODE_DOT_4 | UNICODE_DOT_5,
     /* 3F ? */ UNICODE_DOT_1 | UNICODE_DOT_4 | UNICODE_DOT_5 | UNICODE_DOT_6,
-    /* 40 ~ */ UNICODE_DOT_4,
+    /* 40 @ */ UNICODE_DOT_4,
     /* 41 A */ UNICODE_DOT_1,
     /* 42 B */ UNICODE_DOT_1 | UNICODE_DOT_2,
     /* 43 C */ UNICODE_DOT_1 | UNICODE_DOT_4,
