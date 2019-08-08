@@ -17,6 +17,7 @@ LOCAL_SRC_FILES := \
    liblouis-location/liblouis/utils.c \
    log.c \
    translation.c \
+   emphasis.c \
    louis.c
 
 include $(BUILD_SHARED_LIBRARY)
