@@ -16,7 +16,8 @@ NATIVE_SOURCES += liblouis-location/liblouis/logging.c
 
 NATIVE_SOURCES += lljni.h
 NATIVE_SOURCES += log.c
-NATIVE_SOURCES += translation.c
+NATIVE_SOURCES += translator.c
+NATIVE_SOURCES += table.c
 NATIVE_SOURCES += emphasis.c
 NATIVE_SOURCES += louis.c
 

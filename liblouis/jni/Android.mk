@@ -16,7 +16,8 @@ LOCAL_SRC_FILES := \
    liblouis-location/liblouis/logging.c \
    liblouis-location/liblouis/utils.c \
    log.c \
-   translation.c \
+   translator.c \
+   table.c \
    emphasis.c \
    louis.c
 
