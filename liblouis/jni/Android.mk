@@ -13,11 +13,13 @@ LOCAL_SRC_FILES := \
    liblouis-location/liblouis/lou_translateString.c \
    liblouis-location/liblouis/lou_backTranslateString.c \
    liblouis-location/liblouis/pattern.c \
+   liblouis-location/liblouis/metadata.c \
    liblouis-location/liblouis/logging.c \
    liblouis-location/liblouis/utils.c \
    log.c \
    translator.c \
    table.c \
+   metadata.c \
    emphasis.c \
    louis.c
 
