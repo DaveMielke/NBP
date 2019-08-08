@@ -8,12 +8,12 @@ public enum TranslatorIdentifier {
     "braille-patterns.cti", R.string.louis_ttd_BRAILLE_PATTERNS
   ),
 
-  IPA_BASE(
-    "IPA-unicode-range.uti", R.string.louis_ttd_IPA_BASE
+  IPA_SAFE(
+    "IPA-unicode-range.uti", R.string.louis_ttd_IPA_SAFE
   ),
 
-  IPA_EXTEND(
-    "IPA.utb", R.string.louis_ttd_IPA_EXTEND
+  IPA_ALL(
+    "IPA.utb", R.string.louis_ttd_IPA_ALL
   ),
 
   AFR_ZA_G1(
@@ -200,8 +200,8 @@ public enum TranslatorIdentifier {
     "gon.ctb", R.string.louis_ttd_GON
   ),
 
-  GR_BB(
-    "gr-bb.ctb", R.string.louis_ttd_GR_BB
+  GRC_INTL_EN(
+    "grc-international-en.utb", R.string.louis_ttd_GRC_INTL_EN
   ),
 
   HAW_US_G1(

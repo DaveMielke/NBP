@@ -4,8 +4,8 @@ import org.liblouis.TranslatorIdentifier;
 
 public enum PhoneticAlphabet {
   OFF(null),
-  BASIC(TranslatorIdentifier.IPA_BASE),
-  EXTENDED(TranslatorIdentifier.IPA_EXTEND),
+  SAFE(TranslatorIdentifier.IPA_SAFE),
+  ALL(TranslatorIdentifier.IPA_ALL),
   ; // end of enumeration
 
   private final TranslatorIdentifier translatorIdentifier;

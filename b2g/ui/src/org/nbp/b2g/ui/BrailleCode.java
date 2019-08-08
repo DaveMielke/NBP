@@ -13,6 +13,7 @@ public enum BrailleCode {
   DE_G1(TranslatorIdentifier.DE_G1),
   DE_G2(TranslatorIdentifier.DE_G2),
   EL(TranslatorIdentifier.EL),
+  GRC_INTL_EN(TranslatorIdentifier.GRC_INTL_EN),
   HE(TranslatorIdentifier.HE),
   PINYIN(TranslatorIdentifier.PINYIN),
   ; // end of enumeration

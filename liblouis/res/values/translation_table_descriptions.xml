@@ -2,8 +2,8 @@
 
 <resources>
   <string name="louis_ttd_BRAILLE_PATTERNS">Actual Braille Cells</string>
-  <string name="louis_ttd_IPA_BASE">International Phonetic Alphabet (basic)</string>
-  <string name="louis_ttd_IPA_EXTEND">International Phonetic Alphabet (extended)</string>
+  <string name="louis_ttd_IPA_SAFE">International Phonetic Alphabet (non-conflicting symbols)</string>
+  <string name="louis_ttd_IPA_ALL">International Phonetic Alphabet (all symbols)</string>
 
   <string name="louis_ttd_AFR_ZA_G1">Afrikaans</string>
   <string name="louis_ttd_BG">Bulgarian</string>
@@ -22,7 +22,7 @@
   <string name="louis_ttd_DE_G1">German, Grade 1</string>
   <string name="louis_ttd_DE_G2">German, Grade 2</string>
   <string name="louis_ttd_DRA">Dravidian</string>
-  <string name="louis_ttd_EL">Greek</string>
+  <string name="louis_ttd_EL">Greek, Greece</string>
   <string name="louis_ttd_EN_CA">English, Canada</string>
   <string name="louis_ttd_EN_CHESS">Chess, English</string>
   <string name="louis_ttd_EN_GB_COMP8">English, UK (eight-dot computer braille)</string>
@@ -51,7 +51,7 @@
   <string name="louis_ttd_GA_G2">Irish, Grade 2</string>
   <string name="louis_ttd_GD">Gaelic</string>
   <string name="louis_ttd_GON">Gondi</string>
-  <string name="louis_ttd_GR_BB">(Septuagint and Greek New Testament)</string>
+  <string name="louis_ttd_GRC_INTL_EN">Greek, International (English)</string>
   <string name="louis_ttd_HAW_US_G1">Hawaiian</string>
   <string name="louis_ttd_HE">Hebrew</string>
   <string name="louis_ttd_HR_G1">Croatian</string>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-  <string name="enum_BrailleCode_UEB">English Unified</string>
-  <string name="enum_BrailleCode_EBAE">English US</string>
+  <string name="enum_BrailleCode_UEB">English, Unified</string>
+  <string name="enum_BrailleCode_EBAE">English, US</string>
+  <string name="enum_BrailleCode_EL">Greek, Greece</string>
+  <string name="enum_BrailleCode_GRC_INTL_EN">Greek, International (English)</string>
 
   <string name="enum_BrailleMode_CELLS">Braille Cells</string>
   <string name="enum_BrailleMode_TEXT">Regular Text</string>

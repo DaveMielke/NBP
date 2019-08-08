@@ -20,8 +20,8 @@
   <string name="enum_IndicatorOverlay_DOT_8">Dot 8</string>
 
   <string name="enum_PhoneticAlphabet_OFF">Off</string>
-  <string name="enum_PhoneticAlphabet_BASIC">Basic</string>
-  <string name="enum_PhoneticAlphabet_EXTENDED">Extended</string>
+  <string name="enum_PhoneticAlphabet_SAFE">Non-conflicting Symbols</string>
+  <string name="enum_PhoneticAlphabet_ALL">All Symbols</string>
 
   <string name="enum_ScreenOrientation_UNLOCKED">Unlocked</string>
   <string name="enum_ScreenOrientation_PORTRAIT">Portrait</string>
