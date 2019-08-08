@@ -190,7 +190,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
             cc.refreshCollection();
           }
 
-          final CharSequence[] labels = ic.getHighlightedLabels();
+          final CharSequence[] labels = ic.getHighlightedItemLabels();
 
           final DialogInterface.OnClickListener listener =
             new DialogInterface.OnClickListener() {

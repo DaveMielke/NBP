@@ -38,6 +38,10 @@ public enum BrailleCode {
     return translatorIdentifier.getTranslator();
   }
 
+  public final String getLabel () {
+    return getTranslatorIdentifier().getDescription();
+  }
+
   public final boolean hasJoinableWords () {
     return joinableWords;
   }

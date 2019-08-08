@@ -74,7 +74,7 @@ public abstract class CollectionControl<V> extends ItemControl {
   }
 
   @Override
-  public final CharSequence[] getHighlightedLabels () {
+  public final CharSequence[] getHighlightedItemLabels () {
     int count = valueList.size();
     CharSequence[] labels = new CharSequence[count];
 

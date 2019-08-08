@@ -36,9 +36,7 @@ public abstract class EnumerationControl<E extends Enum> extends ItemControl {
     return getValueArray().length;
   }
 
-  @Override
-  protected final String getValueLabel (int index) {
-    E value = getValue(index);
+  protected String getValueLabel (E value) {
     String resource = "enum_"
                     + value.getClass().getSimpleName()
                     + '_'
@@ -50,8 +48,9 @@ public abstract class EnumerationControl<E extends Enum> extends ItemControl {
     return label;
   }
 
-  public String getItemLabel (E value) {
-    return getItemLabel(value.ordinal());
+  @Override
+  protected final String getValueLabel (int index) {
+    return getValueLabel(getValue(index));
   }
 
   private final E getValue (int index) {
@@ -68,15 +67,14 @@ public abstract class EnumerationControl<E extends Enum> extends ItemControl {
   }
 
   @Override
-  public final CharSequence[] getHighlightedLabels () {
+  public final CharSequence[] getHighlightedItemLabels () {
     E[] values = getValueArray();
     int count = values.length;
     CharSequence[] labels = new CharSequence[count];
 
     for (int index=0; index<count; index+=1) {
-      E value = values[index];
-      CharSequence label = getItemLabel(value);
-      if (!testEnumerationValue(value)) label = highlightUnselectableLabel(label);
+      CharSequence label = getItemLabel(index);
+      if (!testEnumerationValue(values[index])) label = highlightUnselectableLabel(label);
       labels[index] = label;
     }
 

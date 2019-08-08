@@ -8,7 +8,7 @@ import android.text.style.StrikethroughSpan;
 public abstract class ItemControl extends IntegerControl {
   protected abstract int getValueCount ();
   protected abstract String getValueLabel (int index);
-  public abstract CharSequence[] getHighlightedLabels ();
+  public abstract CharSequence[] getHighlightedItemLabels ();
 
   private String[] itemLabels = null;
 

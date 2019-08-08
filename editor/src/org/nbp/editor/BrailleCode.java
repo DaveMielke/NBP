@@ -24,4 +24,8 @@ public enum BrailleCode {
     if (translatorIdentifier == null) return null;
     return translatorIdentifier.getTranslator();
   }
+
+  public final String getLabel () {
+    return getTranslatorIdentifier().getDescription();
+  }
 }

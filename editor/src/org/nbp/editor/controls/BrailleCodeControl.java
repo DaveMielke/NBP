@@ -24,8 +24,8 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
   }
 
   @Override
-  public String getItemLabel (BrailleCode code) {
-    return code.getTranslatorIdentifier().getDescription();
+  protected String getValueLabel (BrailleCode code) {
+    return code.getLabel();
   }
 
   @Override
@@ -40,12 +40,12 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
       problem = exception.getMessage();
     }
 
-    StringBuilder sb = new StringBuilder();
-    sb.append("braille code not available: ");
-    sb.append(getItemLabel(value));
-    sb.append(": ");
-    sb.append(problem);
-    Log.w(LOG_TAG, sb.toString());
+    StringBuilder log = new StringBuilder();
+    log.append("braille code not available: ");
+    log.append(value.getLabel());
+    log.append(": ");
+    log.append(problem);
+    Log.w(LOG_TAG, log.toString());
 
     return false;
   }
