@@ -24,7 +24,7 @@ public final class Louis {
 
   private final static String LIBRARY_NAME = "louis";
   private final static String LIBRARY_VERSION;
-  public static native String getVersion ();
+  public native static String getVersion ();
 
   static {
     System.loadLibrary(LIBRARY_NAME);
@@ -34,11 +34,11 @@ public final class Louis {
   }
 
   public static Object NATIVE_LOCK = new Object();
-  public static native void releaseMemory ();
-  public static native String getDataPath ();
-  public static native void setDataPath (String path);
-  private static native boolean compileTable (String tableList);
-  private static native void setLogLevel (char character);
+  public native static void releaseMemory ();
+  public native static String getDataPath ();
+  public native static void setDataPath (String path);
+  private native static boolean compileTable (String tableList);
+  private native static void setLogLevel (char character);
 
   public enum LogLevel {
     ALL  ('A'),

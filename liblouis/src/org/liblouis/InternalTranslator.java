@@ -89,7 +89,7 @@ public class InternalTranslator extends Translator {
     return typeForm;
   }
 
-  private native boolean translate (
+  private native static boolean translate (
     String tableList, String inputBuffer, char[] outputBuffer,
     short[] typeForm, int[] outputOffsets, int[] inputOffsets,
     int[] resultValues, boolean backTranslate, boolean noContractions

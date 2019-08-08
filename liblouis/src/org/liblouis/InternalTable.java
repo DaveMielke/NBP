@@ -39,14 +39,14 @@ public class InternalTable {
     return new File(getDirectory(), name);
   }
 
-  private native short getEmphasisBit (String tableList, String emphasisClass);
+  private native static short getEmphasisBit (String tableList, String emphasisClass);
   public final short getEmphasisBit (String emphasisClass) {
     synchronized (Louis.NATIVE_LOCK) {
       return getEmphasisBit(tableList, emphasisClass);
     }
   }
 
-  private native boolean addRule (String tableList, String rule);
+  private native static boolean addRule (String tableList, String rule);
   public final boolean addRule (String rule) {
     synchronized (Louis.NATIVE_LOCK) {
       return addRule(tableList, rule);

@@ -11,5 +11,5 @@ extern void logPrint (
 
 #define JAVA_METHOD(object, name, type, ...) \
   JNIEXPORT type JNICALL Java_ ## object ## _ ## name ( \
-    JNIEnv *env, jobject this, ## __VA_ARGS__ \
+    JNIEnv *env, jobject class, ## __VA_ARGS__ \
   )
