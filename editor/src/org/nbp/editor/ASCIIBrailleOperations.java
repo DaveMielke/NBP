@@ -23,8 +23,6 @@ public class ASCIIBrailleOperations extends ByteOperations {
     try {
       return code.getTranslator();
     } catch (SecurityException exception) {
-      TranslatorIdentifier identifier = code.getTranslatorIdentifier();
-
       throw new IOException(
         String.format(
           "braille code not available: %s: %s",
