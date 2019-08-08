@@ -9,6 +9,7 @@ public enum BrailleCode {
   EN_EBAE_G1(TranslatorIdentifier.EN_US_G1),
   EN_EBAE_G2(TranslatorIdentifier.EN_US_G2, true),
   ES_G1(TranslatorIdentifier.ES_G1),
+  ES_G2(TranslatorIdentifier.ES_G2),
   FR_BFU_G2(TranslatorIdentifier.FR_BFU_G2),
   DE_G1(TranslatorIdentifier.DE_G1),
   DE_G2(TranslatorIdentifier.DE_G2),
