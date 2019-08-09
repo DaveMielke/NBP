@@ -29,8 +29,14 @@ public enum TranslatorIdentifier {
   CY_G1("cy-cy-g1.utb"),
   CY_G2("cy.tbl"),
   DA_G1("da-dk-g16.ctb"),
+  DA_G1_FORWARD("da-dk-g16-lit.ctb"),
+  DA_G1_8DOT("da-dk-g18.ctb"),
   DA_G15("da-dk-g26l.ctb"),
+  DA_G15_FORWARD("da-dk-g26l-lit.ctb"),
+  DA_G15_8DOT("da-dk-g28l.ctb"),
   DA_G2("da-dk-g26.ctb"),
+  DA_G2_FORWARD("da-dk-g26-lit.ctb"),
+  DA_G2_8DOT("da-dk-g28.ctb"),
   DA_COMP8("da-dk-g08.ctb"),
   DE_G0("de-g0.utb"),
   DE_G1("de-g1.ctb"),
@@ -90,6 +96,7 @@ public enum TranslatorIdentifier {
   KOK("kok.tbl"),
   KRU("kru.tbl"),
   LT("lt-6dot.tbl"),
+  LT_8DOT("lt.tbl"),
   LV("lv.tbl"),
   MAO("mao-nz-g1.ctb"),
   ML("ml.tbl"),
@@ -104,6 +111,7 @@ public enum TranslatorIdentifier {
   NL_BE("nl_BE.tbl"),
   NL_NL("nl.tbl"),
   NO_G0("no-no-g0.utb"),
+  NO_G0_8DOT("no-no-8dot.utb"),
   NO_G1("no-no-g1.ctb"),
   NO_G2("no-no-g2.ctb"),
   NO_G3("no.tbl"),
@@ -131,6 +139,7 @@ public enum TranslatorIdentifier {
   TA("ta-ta-g1.ctb"),
   TA_COMP8("ta.tbl"),
   TE("te.tbl"),
+  TR_8DOT("tr-g2.tbl"),
   TR_COMP8("tr.tbl"),
   UK("uk.utb"),
   UR_G1("ur-pk-g1.utb"),
@@ -174,15 +183,21 @@ public enum TranslatorIdentifier {
   }
 
   public final String getDescription () {
+    if (translatorDescription != 0) {
+      return Louis.getContext().getString(translatorDescription);
+    }
+
     String table = forwardTableName;
 
     if (table != null) {
-      String description = Metadata.getValueForKey(table, "display-name");
-      if (description != null) return description;
+      String name = Metadata.getValueForKey(table, "index-name");
+      if (name != null) return name;
+
+      name = Metadata.getValueForKey(table, "display-name");
+      if (name != null) return name;
     }
 
-    if (translatorDescription == 0) return null;
-    return Louis.getContext().getString(translatorDescription);
+    return null;
   }
 
   private final static Set<TranslatorIdentifier> auxiliaryTranslators =

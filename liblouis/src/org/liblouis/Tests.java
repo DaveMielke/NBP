@@ -242,7 +242,7 @@ public abstract class Tests {
       if (file.exists()) {
         unreferencedTables.remove(file);
       } else {
-        log(("referenced table not found: " + file.getAbsolutePath()));
+        log(("referenced table not found: " + file.getName()));
       }
     }
   }
@@ -289,7 +289,7 @@ public abstract class Tests {
           }
 
           for (File file : unreferencedTables) {
-            log(("table not referenced: " + file.getAbsolutePath()));
+            log(("table not referenced: " + file.getName()));
           }
         }
       }
