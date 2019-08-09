@@ -9,17 +9,9 @@ static const formtype emphasisTable[] = {
   emph_9,
   emph_10,
 
-#ifdef comp_emph_1
-comp_emph_1,
-#endif /* comp_emph_1 */
-
-#ifdef comp_emph_2
-comp_emph_2,
-#endif /* comp_emph_2 */
-
-#ifdef comp_emph_3
-comp_emph_3,
-#endif /* comp_emph_3 */
+  emph_1, // italic
+  emph_2, // underline
+  emph_3, // bold
 };
 
 static const uint8_t emphasisCount = sizeof(emphasisTable) / sizeof(emphasisTable[0]);
