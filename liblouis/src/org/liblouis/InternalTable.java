@@ -54,21 +54,16 @@ public class InternalTable {
   }
 
   public final static File[] getAllFiles () {
-    final String[] extensions = new String[] {".ctb", ".utb", ".tbl"};
+    String[] tables = Metadata.listTables();
+    if (tables == null) return null;
 
-    return getDirectory().listFiles(
-      new FileFilter() {
-        @Override
-        public boolean accept (File file) {
-          String name = file.getName();
+    int count = tables.length;
+    File[] files = new File[count];
 
-          for (String extension : extensions) {
-            if (name.endsWith(extension)) return true;
-          }
+    for (int index=0; index<count; index+=1) {
+      files[index] = new File(tables[index]);
+    }
 
-          return false;
-        }
-      }
-    );
+    return files;
   }
 }

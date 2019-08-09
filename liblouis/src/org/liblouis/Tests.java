@@ -235,14 +235,14 @@ public abstract class Tests {
     );
   }
 
-  private final static void auditFiles (Set<File> notFound, InternalTable table) {
+  private final static void auditFiles (Set<File> notReferenced, InternalTable table) {
     for (String name : table.getNames()) {
       File file = table.getFile(name);
 
       if (file.exists()) {
-        notFound.remove(file);
+        notReferenced.remove(file);
       } else {
-        log(("file not found: " + file.getAbsolutePath()));
+        log(("table not found: " + file.getAbsolutePath()));
       }
     }
   }
@@ -253,8 +253,8 @@ public abstract class Tests {
       new Runnable() {
         @Override
         public void run () {
-          Set<File> notFound = new HashSet<File>();
-          Collections.addAll(notFound, InternalTable.getAllFiles());
+          Set<File> notReferenced = new HashSet<File>();
+          Collections.addAll(notReferenced, InternalTable.getAllFiles());
 
           for (TranslatorIdentifier identifier : TranslatorIdentifier.values()) {
             {
@@ -262,6 +262,14 @@ public abstract class Tests {
 
               if (!name.equals(name.toUpperCase())) {
                 log(("translator identifier not all uppercase: " + name));
+              }
+
+              {
+                String description = identifier.getDescription();
+
+                if (description == null) {
+                  log(("translator identifier not described: " + name));
+                }
               }
             }
 
@@ -272,16 +280,16 @@ public abstract class Tests {
                 InternalTranslator internal = (InternalTranslator)translator;
 
                 InternalTable forward = internal.getForwardTable();
-                auditFiles(notFound, forward);
+                auditFiles(notReferenced, forward);
 
                 InternalTable backward = internal.getBackwardTable();
-                if (backward != forward) auditFiles(notFound, backward);
+                if (backward != forward) auditFiles(notReferenced, backward);
               }
             }
           }
 
-          for (File file : notFound) {
-            log(("unknown table file: " + file.getAbsolutePath()));
+          for (File file : notReferenced) {
+            log(("table not referenced: " + file.getAbsolutePath()));
           }
         }
       }
