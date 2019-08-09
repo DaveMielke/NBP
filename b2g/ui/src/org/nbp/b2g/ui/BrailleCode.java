@@ -10,8 +10,6 @@ public enum BrailleCode {
   EN_EBAE_G2(TranslatorIdentifier.EN_US_G2, true),
   EN_GB_G1(TranslatorIdentifier.EN_GB_G1),
   EN_GB_G2(TranslatorIdentifier.EN_GB_G2, true),
-  ES_G1(TranslatorIdentifier.ES_G1),
-  ES_G2(TranslatorIdentifier.ES_G2),
   FR_G1(TranslatorIdentifier.FR_G1),
   FR_G2(TranslatorIdentifier.FR_G2),
   DE_G0(TranslatorIdentifier.DE_G0),
@@ -20,6 +18,9 @@ public enum BrailleCode {
   EL(TranslatorIdentifier.EL),
   GRC_INTL_EN(TranslatorIdentifier.GRC_INTL_EN),
   HE(TranslatorIdentifier.HE_COMP8),
+  IT(TranslatorIdentifier.IT),
+  ES_G1(TranslatorIdentifier.ES_G1),
+  ES_G2(TranslatorIdentifier.ES_G2),
   PINYIN(TranslatorIdentifier.PINYIN),
   ; // end of enumeration
 
