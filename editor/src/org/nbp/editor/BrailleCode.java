@@ -26,6 +26,6 @@ public enum BrailleCode {
   }
 
   public final String getLabel () {
-    return getTranslatorIdentifier().getDescription();
+    return getTranslatorIdentifier().getName();
   }
 }

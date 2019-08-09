@@ -182,7 +182,7 @@ public enum TranslatorIdentifier {
     this(name, name);
   }
 
-  public final String getDescription () {
+  public final String getName () {
     if (translatorDescription != 0) {
       return Louis.getContext().getString(translatorDescription);
     }
