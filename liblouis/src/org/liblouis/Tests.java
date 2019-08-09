@@ -235,14 +235,14 @@ public abstract class Tests {
     );
   }
 
-  private final static void auditFiles (Set<File> notReferenced, InternalTable table) {
+  private final static void auditFiles (Set<File> unreferencedTables, InternalTable table) {
     for (String name : table.getNames()) {
       File file = table.getFile(name);
 
       if (file.exists()) {
-        notReferenced.remove(file);
+        unreferencedTables.remove(file);
       } else {
-        log(("table not found: " + file.getAbsolutePath()));
+        log(("referenced table not found: " + file.getAbsolutePath()));
       }
     }
   }
@@ -253,8 +253,8 @@ public abstract class Tests {
       new Runnable() {
         @Override
         public void run () {
-          Set<File> notReferenced = new HashSet<File>();
-          Collections.addAll(notReferenced, InternalTable.getAllFiles());
+          Set<File> unreferencedTables = new HashSet<File>();
+          Collections.addAll(unreferencedTables, InternalTable.getAllFiles());
 
           for (TranslatorIdentifier identifier : TranslatorIdentifier.values()) {
             {
@@ -280,15 +280,15 @@ public abstract class Tests {
                 InternalTranslator internal = (InternalTranslator)translator;
 
                 InternalTable forward = internal.getForwardTable();
-                auditFiles(notReferenced, forward);
+                auditFiles(unreferencedTables, forward);
 
                 InternalTable backward = internal.getBackwardTable();
-                if (backward != forward) auditFiles(notReferenced, backward);
+                if (backward != forward) auditFiles(unreferencedTables, backward);
               }
             }
           }
 
-          for (File file : notReferenced) {
+          for (File file : unreferencedTables) {
             log(("table not referenced: " + file.getAbsolutePath()));
           }
         }
