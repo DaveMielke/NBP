@@ -47,14 +47,5 @@ public class LocationRadiusControl extends IntegerControl {
 
   public LocationRadiusControl () {
     super();
-
-    Controls.distanceUnit.addOnValueChangedListener(
-      new OnValueChangedListener() {
-        @Override
-        public void onValueChanged (Control control) {
-          callOnValueChangedListeners();
-        }
-      }
-    );
   }
 }
