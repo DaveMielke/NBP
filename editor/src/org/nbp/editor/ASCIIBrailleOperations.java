@@ -26,7 +26,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
       throw new IOException(
         String.format(
           "braille code not available: %s: %s",
-          code.getLabel(), exception.getMessage()
+          code.getDescription(), exception.getMessage()
         )
       );
     }

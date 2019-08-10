@@ -25,7 +25,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
 
   @Override
   protected String getValueLabel (BrailleCode code) {
-    String label = code.getLabel();
+    String label = code.getDescription();
     if (label == null) label = super.getValueLabel(code);
     return label;
   }
@@ -43,7 +43,7 @@ public class BrailleCodeControl extends EnumerationControl<BrailleCode> {
 
     StringBuilder log = new StringBuilder();
     log.append("braille code not available: ");
-    log.append(value.getLabel());
+    log.append(value.getDescription());
     log.append(": ");
     log.append(problem);
     Log.w(LOG_TAG, log.toString());

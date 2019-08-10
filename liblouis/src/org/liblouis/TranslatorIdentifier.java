@@ -183,7 +183,7 @@ public enum TranslatorIdentifier {
     this(name, name);
   }
 
-  public final String getName () {
+  public final String getDescription () {
     if (translatorDescription != 0) {
       return Louis.getContext().getString(translatorDescription);
     }
@@ -191,11 +191,11 @@ public enum TranslatorIdentifier {
     String table = forwardTableName;
 
     if (table != null) {
-      String name = Metadata.getValueForKey(table, "index-name");
-      if (name != null) return name;
+      String description = Metadata.getValueForKey(table, "index-name");
+      if (description != null) return description;
 
-      name = Metadata.getValueForKey(table, "display-name");
-      if (name != null) return name;
+      description = Metadata.getValueForKey(table, "display-name");
+      if (description != null) return description;
     }
 
     return null;
