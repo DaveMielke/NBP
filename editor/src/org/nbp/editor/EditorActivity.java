@@ -25,6 +25,7 @@ import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
 
 import org.liblouis.Louis;
+import org.liblouis.NewInternalTablesListener;
 
 import android.net.Uri;
 
@@ -766,7 +767,16 @@ public class EditorActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Louis.initialize(this);
+
+    Louis.initialize(this,
+      new NewInternalTablesListener() {
+        @Override
+        public void newTables () {
+          Controls.brailleCode.forgetItemLabels();
+        }
+      }
+    );
+
     setup();
     setResult(handleIntent(getIntent()));
   }

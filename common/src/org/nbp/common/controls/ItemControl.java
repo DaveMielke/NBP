@@ -12,6 +12,12 @@ public abstract class ItemControl extends IntegerControl {
 
   private String[] itemLabels = null;
 
+  public final void forgetItemLabels () {
+    synchronized (this) {
+      itemLabels = null;
+    }
+  }
+
   private final String[] getItemLabels () {
     synchronized (this) {
       if (itemLabels == null) itemLabels = new String[getValueCount()];

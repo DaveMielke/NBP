@@ -67,6 +67,7 @@ public abstract class ApplicationContext extends CommonContext {
           @Override
           public void newTables () {
             synchronized (START_LOCK) {
+              Controls.brailleCode.forgetItemLabels();
               TranslationUtilities.refresh();
 
               if (ApplicationSettings.EVENT_MESSAGES) {
