@@ -1,6 +1,6 @@
 package org.nbp.common.dictionary;
 
-public class DefineCommand extends DefinitionResponse {
+public class DefineCommand extends DefinitionsResponse {
   public DefineCommand (String word, String database) {
     super("define", database, word);
   }
