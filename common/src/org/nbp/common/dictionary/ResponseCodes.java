@@ -31,7 +31,7 @@ public abstract class ResponseCodes {
   public final static int SERVER_BANNER = 220; // text msg-id
   public final static int SERVER_DISCONNECTING = 221; // Closing Connection
   public final static int AUTHENTICATION_SUCCESSFUL = 230; // Authentication successful
-  public final static int RESPONSE_COMPLETE = 250; // ok (optional timing information here)
+  public final static int END_RESPONSE = 250; // ok (optional timing information here)
 
   public final static int AUTHENTICATION_REQUESTED = 330; // send response
 

@@ -145,4 +145,9 @@ public class DictionaryOperands extends ArrayList<String> {
   public final String removeLast () {
     return remove(size() - 1);
   }
+
+  public final String next () {
+    if (isEmpty()) return "";
+    return removeFirst();
+  }
 }

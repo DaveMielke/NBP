@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.io.OutputStreamWriter;
 
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class DictionaryConnection {
@@ -73,11 +74,11 @@ public class DictionaryConnection {
     }
   }
 
-  private final LinkedBlockingQueue<CommandEntry> commandQueue =
-            new LinkedBlockingQueue<CommandEntry>();
+  private final BlockingQueue<CommandEntry> commandQueue =
+      new LinkedBlockingQueue<CommandEntry>();
 
-  private final LinkedBlockingQueue<ResponseHandler> responseQueue =
-            new LinkedBlockingQueue<ResponseHandler>();
+  private final BlockingQueue<ResponseHandler> responseQueue =
+      new LinkedBlockingQueue<ResponseHandler>();
 
   private final void closeSocket () {
     if (clientSocket != null) {
@@ -118,12 +119,12 @@ public class DictionaryConnection {
       Socket socket = new Socket();
 
       try {
-        Log.d(LOG_TAG, "connecting");
+        Log.d(LOG_TAG, "client connecting");
         socket.connect(makeServerAddress());
-        Log.d(LOG_TAG, "connected");
+        Log.d(LOG_TAG, "client connected");
         clientSocket = socket;
       } catch (IOException exception) {
-        Log.e(LOG_TAG, ("connect error: " + exception.getMessage()));
+        Log.e(LOG_TAG, ("client connect error: " + exception.getMessage()));
       }
     }
 
@@ -138,14 +139,14 @@ public class DictionaryConnection {
         try {
           InputStream stream = socket.getInputStream();
           Reader reader = new InputStreamReader(stream, DictionaryParameters.CHARACTER_ENCODING);
-          return (responseReader = new BufferedReader(reader));
+          responseReader = new BufferedReader(reader);
         } catch (IOException exception) {
           Log.e(LOG_TAG, ("reader creation error: " + exception.getMessage()));
         }
       }
     }
 
-    return null;
+    return responseReader;
   }
 
   private final Writer getWriter () {
@@ -155,14 +156,43 @@ public class DictionaryConnection {
       if (socket != null) {
         try {
           OutputStream stream = socket.getOutputStream();
-          return (commandWriter = new OutputStreamWriter(stream, DictionaryParameters.CHARACTER_ENCODING));
+          commandWriter = new OutputStreamWriter(stream, DictionaryParameters.CHARACTER_ENCODING);
         } catch (IOException exception) {
           Log.e(LOG_TAG, ("writer creation error: " + exception.getMessage()));
         }
       }
     }
 
+    return commandWriter;
+  }
+
+  public final String readLine () {
+    BufferedReader reader = getReader();
+    if (reader == null) return null;
+
+    try {
+      String line = reader.readLine();
+      if (line != null) return line;
+      Log.d(LOG_TAG, "end of input");
+    } catch (IOException exception) {
+      Log.e(LOG_TAG, ("socket read error: " + exception.getMessage()));
+    }
+
     return null;
+  }
+
+  private final void handleBanner (DictionaryOperands operands) {
+  }
+
+  private final boolean handleResponse (int code, DictionaryOperands operands) {
+    switch (code) {
+      case ResponseCodes.SERVER_BANNER:
+        handleBanner(operands);
+        return true;
+
+      default:
+        return false;
+    }
   }
 
   private final void startResponseThread () {
@@ -197,43 +227,39 @@ public class DictionaryConnection {
           Log.d(LOG_TAG, "response thread starting");
 
           try {
-            BufferedReader reader = getReader();
+            while (true) {
+              String response = readLine();
+              if (response == null) break;
+              Log.i(LOG_TAG, ("response: " + response));
 
-            if (reader != null) {
-              while (true) {
-                String response;
+              try {
+                DictionaryOperands operands = new DictionaryOperands(response);
 
-                try {
-                  response = reader.readLine();
-                } catch (IOException exception) {
-                  Log.e(LOG_TAG, ("input error: " + exception.getMessage()));
-                  break;
+                if (operands.isEmpty()) {
+                  throw new ResponseException("missing response code");
                 }
 
-                if (response == null) {
-                  Log.d(LOG_TAG, "end of input");
-                  break;
+                int code = parseResponseCode(operands.removeFirst());
+                if (handleResponse(code, operands)) continue;
+                ResponseHandler handler = responseQueue.peek();
+
+                if (handler == null) {
+                  throw new ResponseException("no response handler");
                 }
 
-                try {
-                  Log.i(LOG_TAG, ("response: " + response));
-                  DictionaryOperands operands = new DictionaryOperands(response);
-
-                  if (operands.isEmpty()) {
-                    throw new ResponseException("missing response code");
-                  }
-
-                  int code = parseResponseCode(operands.removeFirst());
-                } catch (ResponseException exception) {
-                  String message = exception.getMessage();
-
-                  {
-                    String data = exception.getData();
-                    if (data != null) message += ": " + data;
-                  }
-
-                  Log.w(LOG_TAG, message);
+                if (handler.handleResponse(code, operands)) {
+                  responseQueue.remove();
+                  handler.setFinished();
                 }
+              } catch (ResponseException exception) {
+                String message = exception.getMessage();
+
+                {
+                  String data = exception.getData();
+                  if (data != null) message += ": " + data;
+                }
+
+                Log.w(LOG_TAG, message);
               }
             }
           } finally {
@@ -305,7 +331,7 @@ public class DictionaryConnection {
                   writer.write(command.toString());
                   writer.flush();
                 } catch (IOException exception) {
-                  Log.e(LOG_TAG, ("write error: " + exception.getMessage()));
+                  Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
                   break;
                 }
               }

@@ -13,6 +13,16 @@ public abstract class DictionaryResponse implements ResponseHandler {
     getConnection().startCommand(this, arguments);
   }
 
+  private boolean hasFinished = false;
+
+  @Override
+  public final void setFinished () {
+    synchronized (this) {
+      hasFinished = true;
+      notify();
+    }
+  }
+
   protected static void logProblem (String problem) {
     Log.w(LOG_TAG, problem);
   }
