@@ -88,6 +88,10 @@ public class DictionaryOperands extends ArrayList<String> {
       for (int index=0; index<length; index+=1) {
         char character = string.charAt(index);
 
+        if (Character.isISOControl(character)) {
+          throw new ControlCharacterException(character);
+        }
+
         Character newQuote =
           (character == SINGLE_QUOTE)? DOUBLE_QUOTE:
           (character == DOUBLE_QUOTE)? SINGLE_QUOTE:
