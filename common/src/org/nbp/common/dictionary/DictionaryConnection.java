@@ -19,6 +19,8 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.io.OutputStreamWriter;
 
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class DictionaryConnection {
   private final static String LOG_TAG = DictionaryConnection.class.getName();
 
@@ -56,9 +58,14 @@ public class DictionaryConnection {
   }
 
   private Socket clientSocket = null;
-  private BufferedReader responseReader = null;
   private Writer commandWriter = null;
+  private BufferedReader responseReader = null;
+
+  private Thread commandThread = null;
   private Thread responseThread = null;
+
+  private final LinkedBlockingQueue<String[]> commandQueue =
+      new LinkedBlockingQueue<String[]>();
 
   private final void closeSocket () {
     if (clientSocket != null) {
@@ -82,9 +89,11 @@ public class DictionaryConnection {
   }
 
   private final void closeConnection () {
-    closeReader();
-    closeWriter();
-    closeSocket();
+    synchronized (this) {
+      closeReader();
+      closeWriter();
+      closeSocket();
+    }
   }
 
   private final Socket getSocket () {
@@ -141,7 +150,7 @@ public class DictionaryConnection {
 
   private final void startResponseThread () {
     if (responseThread == null) {
-      responseThread = new Thread() {
+      responseThread = new Thread("dictionary-response-thread") {
         @Override
         public void run () {
           Log.d(LOG_TAG, "response thread starting");
@@ -170,10 +179,7 @@ public class DictionaryConnection {
             }
           } finally {
             Log.d(LOG_TAG, "response thread finished");
-
-            synchronized (DictionaryConnection.this) {
-              closeConnection();
-            }
+            closeConnection();
           }
         }
       };
@@ -182,35 +188,65 @@ public class DictionaryConnection {
     }
   }
 
-  public final boolean writeCommand (String... operands) {
-    StringBuilder command = new StringBuilder();
+  private final void startCommandThread () {
+    if (commandThread == null) {
+      commandThread = new Thread("dictionary-command-thread") {
+        @Override
+        public void run () {
+          Log.d(LOG_TAG, "command thread starting");
 
-    for (String operand : operands) {
-      if (command.length() > 0) command.append(' ');
-      command.append(operand);
-    }
+          try {
+            StringBuilder command = new StringBuilder();
 
-    if (command.length() == 0) return true;
-    Log.d(LOG_TAG, ("command: " + command));
-    command.append("\r\n");
+            while (true) {
+              String[] operands;
+              try {
+                operands = commandQueue.take();
+              } catch (InterruptedException exception) {
+                Log.w(LOG_TAG, "command thread interrupted");
+                break;
+              }
 
-    synchronized (this) {
-      Writer writer = getWriter();
+              if (operands.length == 0) continue;
+              command.setLength(0);
 
-      if (writer != null) {
-        try {
-          writer.write(command.toString());
-          writer.flush();
-          startResponseThread();
-          return true;
-        } catch (IOException exception) {
-          Log.e(LOG_TAG, ("write error: " + exception.getMessage()));
+              for (String operand : operands) {
+                if (command.length() > 0) command.append(' ');
+                command.append(operand.trim());
+              }
+
+              if (command.length() == 0) continue;
+              Log.d(LOG_TAG, ("command: " + command));
+              command.append("\r\n");
+
+              synchronized (DictionaryConnection.this) {
+                Writer writer = getWriter();
+                if (writer == null) break;
+
+                try {
+                  writer.write(command.toString());
+                  writer.flush();
+                } catch (IOException exception) {
+                  Log.e(LOG_TAG, ("write error: " + exception.getMessage()));
+                  break;
+                }
+              }
+
+              startResponseThread();
+            }
+          } finally {
+            Log.d(LOG_TAG, "command thread finished");
+            closeConnection();
+          }
         }
-      }
+      };
 
-      closeConnection();
+      commandThread.start();
     }
+  }
 
-    return false;
+  public final void writeCommand (String... operands) {
+    startCommandThread();
+    commandQueue.offer(operands);
   }
 }
