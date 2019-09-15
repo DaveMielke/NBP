@@ -1,0 +1,29 @@
+      * 110 n databases present - text follows
+      * 111 n strategies available - text follows
+        112 database information follows
+        113 help text follows
+        114 server information follows
+        130 challenge follows
+      * 150 n definitions retrieved - definitions follow
+      * 151 word database name - text follows
+      * 152 n matches found - text follows
+        210 (optional timing and statistical information here)
+      * 220 text msg-id
+        221 Closing Connection
+        230 Authentication successful
+        250 ok (optional timing information here)
+        330 send response
+        420 Server temporarily unavailable
+        421 Server shutting down at operator request
+        500 Syntax error, command not recognized
+        501 Syntax error, illegal parameters
+        502 Command not implemented
+        503 Command parameter not implemented
+        530 Access denied
+        531 Access denied, use "SHOW INFO" for server information
+        532 Access denied, unknown mechanism
+        550 Invalid database, use "SHOW DB" for list of databases
+        551 Invalid strategy, use "SHOW STRAT" for a list of strategies
+        552 No match
+        554 No databases present
+        555 No strategies available
