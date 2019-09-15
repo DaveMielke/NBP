@@ -17,7 +17,9 @@ public class DictionaryOperands extends ArrayList<String> {
     StringBuilder operand = new StringBuilder();
     Character quote = null;
     boolean escape = false;
+
     int length = string.length();
+    int from = 0;
 
     for (int index=0; index<length; index+=1) {
       char character = string.charAt(index);
@@ -53,6 +55,7 @@ public class DictionaryOperands extends ArrayList<String> {
             operand.setLength(0);
           }
 
+          from = index + 1;
           continue;
         }
       } else if (character == quote) {
@@ -64,11 +67,11 @@ public class DictionaryOperands extends ArrayList<String> {
     }
 
     if (escape) {
-      throw new IncompleteEscapeException(operand.toString());
+      throw new IncompleteEscapeException(string.substring(from));
     }
 
     if (quote != null) {
-      throw new UnclosedQuoteException(operand.toString());
+      throw new UnclosedQuoteException(string.substring(from));
     }
 
     if (operand.length() > 0) add(operand.toString());

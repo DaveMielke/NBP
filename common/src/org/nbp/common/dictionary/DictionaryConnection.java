@@ -8,7 +8,6 @@ import java.net.InetSocketAddress;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.net.SocketException;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -82,7 +81,12 @@ public class DictionaryConnection {
 
   private final void closeSocket () {
     if (clientSocket != null) {
-      close(clientSocket, "socket");
+      try {
+        clientSocket.close();
+      } catch (IOException exception) {
+        Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
+      }
+
       clientSocket = null;
     }
   }
@@ -188,7 +192,20 @@ public class DictionaryConnection {
                 }
 
                 Log.i(LOG_TAG, ("response: " + response));
-                DictionaryOperands operands = new DictionaryOperands(response);
+                DictionaryOperands operands;
+
+                try {
+                  operands = new DictionaryOperands(response);
+                } catch (IllegalOperandException exception) {
+                  Log.w(LOG_TAG,
+                    String.format(
+                      "illegal response operand: %s: %s",
+                      exception.getProblem(), exception.getMessage()
+                    )
+                  );
+
+                  continue;
+                }
               }
             }
           } finally {
