@@ -68,13 +68,13 @@ public class DictionaryOperands extends ArrayList<String> {
 
     if (escape) {
       throw new ResponseException(
-        string.substring(from), "incomplete escape"
+        "incomplete escape", string.substring(from)
       );
     }
 
     if (quote != null) {
       throw new ResponseException(
-        string.substring(from), "unclosed quote"
+        "unclosed quote", string.substring(from)
       );
     }
 
@@ -97,7 +97,7 @@ public class DictionaryOperands extends ArrayList<String> {
 
         if (Character.isISOControl(character)) {
           throw new CommandException(
-            String.format("U+%04X", (int)character), "control character"
+            "control character", String.format("U+%04X", (int)character)
           );
         }
 

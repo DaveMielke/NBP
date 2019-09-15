@@ -1,14 +1,18 @@
 package org.nbp.common.dictionary;
 
 public class ResponseException extends DictionaryException {
-  private final String operandProblem;
+  private final String exceptionData;
 
-  public ResponseException (String operand, String problem) {
-    super(operand);
-    operandProblem = problem;
+  public ResponseException (String message, String data) {
+    super(message);
+    exceptionData = data;
   }
 
-  public final String getProblem () {
-    return operandProblem;
+  public ResponseException (String message) {
+    this(message, null);
+  }
+
+  public final String getData () {
+    return exceptionData;
   }
 }

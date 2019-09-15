@@ -1,14 +1,18 @@
 package org.nbp.common.dictionary;
 
 public class CommandException extends DictionaryException {
-  private final String operandProblem;
+  private final String exceptionData;
 
-  public CommandException (String operand, String problem) {
-    super(operand);
-    operandProblem = problem;
+  public CommandException (String message, String data) {
+    super(message);
+    exceptionData = data;
   }
 
-  public final String getProblem () {
-    return operandProblem;
+  public CommandException (String message) {
+    this(message, null);
+  }
+
+  public final String getData () {
+    return exceptionData;
   }
 }

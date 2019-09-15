@@ -172,17 +172,21 @@ public class DictionaryConnection {
           int value;
 
           try {
-            value = Integer.parseUnsignedInt(operand, 10);
+            value = Integer.parseInt(operand, 10);
 
             if (!Character.isDigit(operand.charAt(0))) {
               throw new NumberFormatException();
             }
           } catch (NumberFormatException exception) {
-            throw new ResponseException(operand, "response code is not an integer");
+            throw new ResponseException(
+              "response code is not an integer", operand
+            );
           }
 
           if (operand.length() != 3) {
-            throw new ResponseException(operand, "response code is not three digits");
+            throw new ResponseException(
+              "response code is not three digits", operand
+            );
           }
 
           return value;
@@ -211,27 +215,24 @@ public class DictionaryConnection {
                   break;
                 }
 
-                Log.i(LOG_TAG, ("response: " + response));
-                DictionaryOperands operands;
-
                 try {
-                  operands = new DictionaryOperands(response);
+                  Log.i(LOG_TAG, ("response: " + response));
+                  DictionaryOperands operands = new DictionaryOperands(response);
 
                   if (operands.isEmpty()) {
-                    Log.w(LOG_TAG, "missing response code");
-                    continue;
+                    throw new ResponseException("missing response code");
                   }
 
                   int code = parseResponseCode(operands.removeFirst());
                 } catch (ResponseException exception) {
-                  Log.w(LOG_TAG,
-                    String.format(
-                      "illegal response operand: %s: %s",
-                      exception.getProblem(), exception.getMessage()
-                    )
-                  );
+                  String message = exception.getMessage();
 
-                  continue;
+                  {
+                    String data = exception.getData();
+                    if (data != null) message += ": " + data;
+                  }
+
+                  Log.w(LOG_TAG, message);
                 }
               }
             }
@@ -278,13 +279,14 @@ public class DictionaryConnection {
                 try {
                   operand = DictionaryOperands.quote(argument);
                 } catch (CommandException exception) {
-                  Log.w(LOG_TAG,
-                    String.format(
-                      "illegal command operand: %s: %s",
-                      exception.getProblem(), exception.getMessage()
-                    )
-                  );
+                  String message = exception.getMessage();
 
+                  {
+                    String data = exception.getData();
+                    if (data != null) message += ": " + data;
+                  }
+
+                  Log.w(LOG_TAG, message);
                   continue COMMAND_LOOP;
                 }
 
