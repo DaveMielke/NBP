@@ -1,5 +1,8 @@
 package org.nbp.common.dictionary;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public abstract class DictionaryOperands {
   private DictionaryOperands () {
   }
@@ -59,6 +62,57 @@ public abstract class DictionaryOperands {
   }
 
   public static String[] splitString (String string) {
-    return null;
+    List<String> operands = new ArrayList<String>();
+    StringBuilder operand = new StringBuilder();
+    Character quote = null;
+    boolean escape = false;
+    int length = string.length();
+
+    for (int index=0; index<length; index+=1) {
+      char character = string.charAt(index);
+
+      if (escape) {
+        switch (character) {
+        }
+
+        operand.append(character);
+        escape = false;
+        continue;
+      }
+
+      if (character == '\\') {
+        escape = true;
+        continue;
+      }
+
+      if (quote == null) {
+        if (character == DOUBLE_QUOTE) {
+          quote = DOUBLE_QUOTE;
+          continue;
+        } 
+
+        if (character == SINGLE_QUOTE) {
+          quote = SINGLE_QUOTE;
+          continue;
+        }
+
+        if (Character.isWhitespace(character)) {
+          if (operand.length() > 0) {
+            operands.add(operand.toString());
+            operand.setLength(0);
+          }
+
+          continue;
+        }
+      } else if (character == quote) {
+        quote = null;
+        continue;
+      }
+
+      operand.append(character);
+    }
+
+    if (operand.length() > 0) operands.add(operand.toString());
+    return operands.toArray(new String[operands.size()]);
   }
 }

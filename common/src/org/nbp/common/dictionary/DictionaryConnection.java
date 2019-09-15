@@ -173,21 +173,22 @@ public class DictionaryConnection {
 
             if (reader != null) {
               while (true) {
-                String line;
+                String response;
 
                 try {
-                  line = reader.readLine();
+                  response = reader.readLine();
                 } catch (IOException exception) {
                   Log.e(LOG_TAG, ("input error: " + exception.getMessage()));
                   break;
                 }
 
-                if (line == null) {
+                if (response == null) {
                   Log.d(LOG_TAG, "end of input");
                   break;
                 }
 
-                Log.i(LOG_TAG, ("response: " + line));
+                Log.i(LOG_TAG, ("response: " + response));
+                String[] operands = DictionaryOperands.splitString(response);
               }
             }
           } finally {

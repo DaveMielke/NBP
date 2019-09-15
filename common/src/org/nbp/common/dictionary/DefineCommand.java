@@ -6,6 +6,6 @@ public class DefineCommand extends DefinitionResponse {
   }
 
   public DefineCommand (String word) {
-    super(word, DictionaryConstants.DATABASE_ALL);
+    this(word, DictionaryConstants.DATABASE_ALL);
   }
 }
