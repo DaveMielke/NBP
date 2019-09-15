@@ -1,14 +1,78 @@
 package org.nbp.common.dictionary;
 
-import java.util.List;
 import java.util.ArrayList;
 
-public abstract class DictionaryOperands {
+public class DictionaryOperands extends ArrayList<String> {
   private DictionaryOperands () {
+    super();
   }
 
-  private final static Character DOUBLE_QUOTE = '"';
-  private final static Character SINGLE_QUOTE = '\'';
+  private final static Character DOUBLE_QUOTE     = '"';
+  private final static Character SINGLE_QUOTE     = '\'';
+  private final static Character ESCAPE_CHARACTER = '\\';
+
+  public DictionaryOperands (String string) {
+    this();
+
+    StringBuilder operand = new StringBuilder();
+    Character quote = null;
+    boolean escape = false;
+    int length = string.length();
+
+    for (int index=0; index<length; index+=1) {
+      char character = string.charAt(index);
+
+      if (escape) {
+        switch (character) {
+        }
+
+        operand.append(character);
+        escape = false;
+        continue;
+      }
+
+      if (character == ESCAPE_CHARACTER) {
+        escape = true;
+        continue;
+      }
+
+      if (quote == null) {
+        if (character == DOUBLE_QUOTE) {
+          quote = DOUBLE_QUOTE;
+          continue;
+        } 
+
+        if (character == SINGLE_QUOTE) {
+          quote = SINGLE_QUOTE;
+          continue;
+        }
+
+        if (Character.isWhitespace(character)) {
+          if (operand.length() > 0) {
+            add(operand.toString());
+            operand.setLength(0);
+          }
+
+          continue;
+        }
+      } else if (character == quote) {
+        quote = null;
+        continue;
+      }
+
+      operand.append(character);
+    }
+
+    if (escape) {
+      throw new IncompleteEscapeException(operand.toString());
+    }
+
+    if (quote != null) {
+      throw new UnclosedQuoteException(operand.toString());
+    }
+
+    if (operand.length() > 0) add(operand.toString());
+  }
 
   public static String quoteString (String string) {
     StringBuilder operand = new StringBuilder();
@@ -59,60 +123,5 @@ public abstract class DictionaryOperands {
 
     if (currentQuote != null) operand.append(currentQuote);
     return operand.toString();
-  }
-
-  public static String[] splitString (String string) {
-    List<String> operands = new ArrayList<String>();
-    StringBuilder operand = new StringBuilder();
-    Character quote = null;
-    boolean escape = false;
-    int length = string.length();
-
-    for (int index=0; index<length; index+=1) {
-      char character = string.charAt(index);
-
-      if (escape) {
-        switch (character) {
-        }
-
-        operand.append(character);
-        escape = false;
-        continue;
-      }
-
-      if (character == '\\') {
-        escape = true;
-        continue;
-      }
-
-      if (quote == null) {
-        if (character == DOUBLE_QUOTE) {
-          quote = DOUBLE_QUOTE;
-          continue;
-        } 
-
-        if (character == SINGLE_QUOTE) {
-          quote = SINGLE_QUOTE;
-          continue;
-        }
-
-        if (Character.isWhitespace(character)) {
-          if (operand.length() > 0) {
-            operands.add(operand.toString());
-            operand.setLength(0);
-          }
-
-          continue;
-        }
-      } else if (character == quote) {
-        quote = null;
-        continue;
-      }
-
-      operand.append(character);
-    }
-
-    if (operand.length() > 0) operands.add(operand.toString());
-    return operands.toArray(new String[operands.size()]);
   }
 }

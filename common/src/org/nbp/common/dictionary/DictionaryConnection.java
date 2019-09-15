@@ -188,7 +188,7 @@ public class DictionaryConnection {
                 }
 
                 Log.i(LOG_TAG, ("response: " + response));
-                String[] operands = DictionaryOperands.splitString(response);
+                DictionaryOperands operands = new DictionaryOperands(response);
               }
             }
           } finally {
