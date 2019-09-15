@@ -64,8 +64,21 @@ public class DictionaryConnection {
   private Thread commandThread = null;
   private Thread responseThread = null;
 
-  private final LinkedBlockingQueue<String[]> commandQueue =
-      new LinkedBlockingQueue<String[]>();
+  private class CommandEntry {
+    public final DictionaryResponse response;
+    public final String[] operands;
+
+    public CommandEntry (DictionaryResponse response, String... operands) {
+      this.response = response;
+      this.operands = operands;
+    }
+  }
+
+  private final LinkedBlockingQueue<CommandEntry> commandQueue =
+            new LinkedBlockingQueue<CommandEntry>();
+
+  private final LinkedBlockingQueue<DictionaryResponse> responseQueue =
+            new LinkedBlockingQueue<DictionaryResponse>();
 
   private final void closeSocket () {
     if (clientSocket != null) {
@@ -199,14 +212,16 @@ public class DictionaryConnection {
             StringBuilder command = new StringBuilder();
 
             while (true) {
-              String[] operands;
+              CommandEntry entry;
+
               try {
-                operands = commandQueue.take();
+                entry = commandQueue.take();
               } catch (InterruptedException exception) {
                 Log.w(LOG_TAG, "command thread interrupted");
                 break;
               }
 
+              String[] operands = entry.operands;
               if (operands.length == 0) continue;
               command.setLength(0);
 
@@ -232,6 +247,7 @@ public class DictionaryConnection {
                 }
               }
 
+              responseQueue.offer(entry.response);
               startResponseThread();
             }
           } finally {
@@ -245,8 +261,8 @@ public class DictionaryConnection {
     }
   }
 
-  public final void writeCommand (String... operands) {
+  public final void startCommand (DictionaryResponse response, String... operands) {
     startCommandThread();
-    commandQueue.offer(operands);
+    commandQueue.offer(new CommandEntry(response, operands));
   }
 }
