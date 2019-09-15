@@ -67,13 +67,13 @@ public class DictionaryOperands extends ArrayList<String> {
     }
 
     if (escape) {
-      throw new IllegalResponseOperandException(
+      throw new ResponseException(
         string.substring(from), "incomplete escape"
       );
     }
 
     if (quote != null) {
-      throw new IllegalResponseOperandException(
+      throw new ResponseException(
         string.substring(from), "unclosed quote"
       );
     }
@@ -96,7 +96,7 @@ public class DictionaryOperands extends ArrayList<String> {
         char character = string.charAt(index);
 
         if (Character.isISOControl(character)) {
-          throw new IllegalCommandOperandException(
+          throw new CommandException(
             String.format("U+%04X", (int)character), "control character"
           );
         }
@@ -136,5 +136,13 @@ public class DictionaryOperands extends ArrayList<String> {
 
     if (currentQuote != null) operand.append(currentQuote);
     return operand.toString();
+  }
+
+  public final String removeFirst () {
+    return remove(0);
+  }
+
+  public final String removeLast () {
+    return remove(size() - 1);
   }
 }

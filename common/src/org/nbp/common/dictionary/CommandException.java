@@ -1,9 +1,9 @@
 package org.nbp.common.dictionary;
 
-public class IllegalCommandOperandException extends DictionaryException {
+public class CommandException extends DictionaryException {
   private final String operandProblem;
 
-  public IllegalCommandOperandException (String operand, String problem) {
+  public CommandException (String operand, String problem) {
     super(operand);
     operandProblem = problem;
   }

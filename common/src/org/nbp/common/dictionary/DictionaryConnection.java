@@ -168,6 +168,26 @@ public class DictionaryConnection {
   private final void startResponseThread () {
     if (responseThread == null) {
       responseThread = new Thread("dictionary-response-thread") {
+        private final int parseResponseCode (String operand) {
+          int value;
+
+          try {
+            value = Integer.parseUnsignedInt(operand, 10);
+
+            if (!Character.isDigit(operand.charAt(0))) {
+              throw new NumberFormatException();
+            }
+          } catch (NumberFormatException exception) {
+            throw new ResponseException(operand, "response code is not an integer");
+          }
+
+          if (operand.length() != 3) {
+            throw new ResponseException(operand, "response code is not three digits");
+          }
+
+          return value;
+        }
+
         @Override
         public void run () {
           Log.d(LOG_TAG, "response thread starting");
@@ -196,7 +216,14 @@ public class DictionaryConnection {
 
                 try {
                   operands = new DictionaryOperands(response);
-                } catch (IllegalResponseOperandException exception) {
+
+                  if (operands.isEmpty()) {
+                    Log.w(LOG_TAG, "missing response code");
+                    continue;
+                  }
+
+                  int code = parseResponseCode(operands.removeFirst());
+                } catch (ResponseException exception) {
                   Log.w(LOG_TAG,
                     String.format(
                       "illegal response operand: %s: %s",
@@ -250,7 +277,7 @@ public class DictionaryConnection {
 
                 try {
                   operand = DictionaryOperands.quote(argument);
-                } catch (IllegalCommandOperandException exception) {
+                } catch (CommandException exception) {
                   Log.w(LOG_TAG,
                     String.format(
                       "illegal command operand: %s: %s",

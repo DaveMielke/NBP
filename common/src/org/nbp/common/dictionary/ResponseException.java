@@ -1,9 +1,9 @@
 package org.nbp.common.dictionary;
 
-public class IllegalResponseOperandException extends IllegalResponseException {
+public class ResponseException extends DictionaryException {
   private final String operandProblem;
 
-  public IllegalResponseOperandException (String operand, String problem) {
+  public ResponseException (String operand, String problem) {
     super(operand);
     operandProblem = problem;
   }
