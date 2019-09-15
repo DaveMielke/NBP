@@ -35,8 +35,8 @@ public abstract class ResponseCodes {
 
   public final static int AUTHENTICATION_REQUESTED = 330; // send response
 
-  public final static int SERVER_OFFLINE_TRANSIENT = 420; // Server temporarily unavailable
-  public final static int SERVER_OFFLINE_PERMANENT = 421; // Server shutting down at operator request
+  public final static int SERVER_PROBLEM = 420; // Server temporarily unavailable
+  public final static int SERVER_OFFLINE = 421; // Server shutting down at operator request
 
   public final static int UNKNOWN_COMMAND = 500; // Syntax error, command not recognized
   public final static int ILLEGAL_PARAMETER = 501; // Syntax error, illegal parameters

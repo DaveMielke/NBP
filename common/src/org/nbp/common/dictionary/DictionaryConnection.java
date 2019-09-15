@@ -64,11 +64,11 @@ public class DictionaryConnection {
   private Thread responseThread = null;
 
   private class CommandEntry {
-    public final DictionaryResponse response;
+    public final ResponseHandler handler;
     public final String[] arguments;
 
-    public CommandEntry (DictionaryResponse response, String... arguments) {
-      this.response = response;
+    public CommandEntry (ResponseHandler handler, String... arguments) {
+      this.handler = handler;
       this.arguments = arguments;
     }
   }
@@ -76,8 +76,8 @@ public class DictionaryConnection {
   private final LinkedBlockingQueue<CommandEntry> commandQueue =
             new LinkedBlockingQueue<CommandEntry>();
 
-  private final LinkedBlockingQueue<DictionaryResponse> responseQueue =
-            new LinkedBlockingQueue<DictionaryResponse>();
+  private final LinkedBlockingQueue<ResponseHandler> responseQueue =
+            new LinkedBlockingQueue<ResponseHandler>();
 
   private final void closeSocket () {
     if (clientSocket != null) {
@@ -281,7 +281,7 @@ public class DictionaryConnection {
                 }
               }
 
-              responseQueue.offer(entry.response);
+              responseQueue.offer(entry.handler);
               startResponseThread();
             }
           } finally {
@@ -295,8 +295,8 @@ public class DictionaryConnection {
     }
   }
 
-  public final void startCommand (DictionaryResponse response, String... arguments) {
+  public final void startCommand (ResponseHandler handler, String... arguments) {
     startCommandThread();
-    commandQueue.offer(new CommandEntry(response, arguments));
+    commandQueue.offer(new CommandEntry(handler, arguments));
   }
 }
