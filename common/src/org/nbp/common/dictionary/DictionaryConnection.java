@@ -227,7 +227,7 @@ public class DictionaryConnection {
 
               for (String operand : operands) {
                 if (command.length() > 0) command.append(' ');
-                command.append(operand.trim());
+                command.append(DictionaryOperands.quoteString(operand));
               }
 
               if (command.length() == 0) continue;

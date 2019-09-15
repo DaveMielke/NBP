@@ -4,11 +4,11 @@ public abstract class ResponseCodes {
   private ResponseCodes () {
   }
 
-  public final static int REPLY_POSITIVE_PRELIMINARY  = 100;
-  public final static int REPLY_POSITIVE_COMPLETE     = 200;
-  public final static int REPLY_POSITIVE_INTERMEDIATE = 300;
-  public final static int REPLY_NEGATIVE_TRANSIENT    = 400;
-  public final static int REPLY_NEGATIVE_PERMANENT    = 500;
+  public final static int TYPE_POSITIVE_PRELIMINARY  = 100;
+  public final static int TYPE_POSITIVE_COMPLETE     = 200;
+  public final static int TYPE_POSITIVE_INTERMEDIATE = 300;
+  public final static int TYPE_NEGATIVE_TRANSIENT    = 400;
+  public final static int TYPE_NEGATIVE_PERMANENT    = 500;
 
   public final static int CATEGORY_SYNTAX         =  0;
   public final static int CATEGORY_INFORMATIOPN   = 10;
@@ -35,8 +35,8 @@ public abstract class ResponseCodes {
 
   public final static int AUTHENTICATION_REQUESTED = 330; // send response
 
-  public final static int SERVER_UNAVAILABLE = 420; // Server temporarily unavailable
-  public final static int SERVER_SHUTDOWN = 421; // Server shutting down at operator request
+  public final static int SERVER_OFFLINE_TRANSIENT = 420; // Server temporarily unavailable
+  public final static int SERVER_OFFLINE_PERMANENT = 421; // Server shutting down at operator request
 
   public final static int UNKNOWN_COMMAND = 500; // Syntax error, command not recognized
   public final static int ILLEGAL_PARAMETER = 501; // Syntax error, illegal parameters
