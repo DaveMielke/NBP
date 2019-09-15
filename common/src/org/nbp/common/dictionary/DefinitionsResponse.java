@@ -1,7 +1,7 @@
 package org.nbp.common.dictionary;
 
 public abstract class DefinitionsResponse extends CommandResponse {
-  protected DefinitionsResponse (String... operands) {
-    super(operands);
+  protected DefinitionsResponse (String... arguments) {
+    super(arguments);
   }
 }

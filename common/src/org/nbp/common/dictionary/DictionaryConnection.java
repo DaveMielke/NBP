@@ -65,11 +65,11 @@ public class DictionaryConnection {
 
   private class CommandEntry {
     public final DictionaryResponse response;
-    public final String[] operands;
+    public final String[] arguments;
 
-    public CommandEntry (DictionaryResponse response, String... operands) {
+    public CommandEntry (DictionaryResponse response, String... arguments) {
       this.response = response;
-      this.operands = operands;
+      this.arguments = arguments;
     }
   }
 
@@ -196,7 +196,7 @@ public class DictionaryConnection {
 
                 try {
                   operands = new DictionaryOperands(response);
-                } catch (IllegalOperandException exception) {
+                } catch (IllegalResponseOperandException exception) {
                   Log.w(LOG_TAG,
                     String.format(
                       "illegal response operand: %s: %s",
@@ -229,6 +229,7 @@ public class DictionaryConnection {
           try {
             StringBuilder command = new StringBuilder();
 
+          COMMAND_LOOP:
             while (true) {
               CommandEntry entry;
 
@@ -239,13 +240,28 @@ public class DictionaryConnection {
                 break;
               }
 
-              String[] operands = entry.operands;
-              if (operands.length == 0) continue;
+              String[] arguments = entry.arguments;
+              if (arguments.length == 0) continue;
               command.setLength(0);
 
-              for (String operand : operands) {
+              for (String argument : arguments) {
                 if (command.length() > 0) command.append(' ');
-                command.append(DictionaryOperands.quoteString(operand));
+                String operand;
+
+                try {
+                  operand = DictionaryOperands.quote(argument);
+                } catch (IllegalCommandOperandException exception) {
+                  Log.w(LOG_TAG,
+                    String.format(
+                      "illegal command operand: %s: %s",
+                      exception.getProblem(), exception.getMessage()
+                    )
+                  );
+
+                  continue COMMAND_LOOP;
+                }
+
+                command.append(operand);
               }
 
               if (command.length() == 0) continue;
@@ -279,8 +295,8 @@ public class DictionaryConnection {
     }
   }
 
-  public final void startCommand (DictionaryResponse response, String... operands) {
+  public final void startCommand (DictionaryResponse response, String... arguments) {
     startCommandThread();
-    commandQueue.offer(new CommandEntry(response, operands));
+    commandQueue.offer(new CommandEntry(response, arguments));
   }
 }
