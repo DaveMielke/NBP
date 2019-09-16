@@ -1,7 +1,7 @@
 package org.nbp.common.dictionary;
 
-public abstract class DefinitionsResponse extends CommandResponse {
-  protected DefinitionsResponse (String... arguments) {
+public abstract class MatchesResponse extends CommandResponse {
+  protected MatchesResponse (String... arguments) {
     super(arguments);
   }
 
@@ -11,15 +11,8 @@ public abstract class DefinitionsResponse extends CommandResponse {
       case ResponseCodes.NO_MATCH:
         return true;
 
-      case ResponseCodes.BEGIN_DEFINITION_LIST:
-        return false;
-
-      case ResponseCodes.BEGIN_DEFINITION_TEXT: {
-        String word = operands.next();
-        String name = operands.next();
-        String title = operands.next();
+      case ResponseCodes.BEGIN_MATCH_LIST: {
         String text = getTextAsString();
-
         return false;
       }
 

@@ -5,7 +5,7 @@ public abstract class CommandResponse extends DictionaryResponse {
     super(operands);
   }
 
-  protected final String getText () {
+  protected final String getTextAsString () {
     DictionaryConnection connection = getConnection();
     StringBuilder text = new StringBuilder();
 
