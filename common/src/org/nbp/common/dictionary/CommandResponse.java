@@ -19,7 +19,7 @@ public abstract class CommandResponse extends DictionaryResponse {
       String line = connection.readLine();
 
       if (line == null) {
-        throw new ResponseException("unexpected end of text");
+        throw new OperandException("unexpected end of text");
       }
 
       if (!line.isEmpty()) {

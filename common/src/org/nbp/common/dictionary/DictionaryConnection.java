@@ -118,7 +118,12 @@ public class DictionaryConnection implements Closeable {
       closeSocket();
 
       while (true) {
-        ResponseHandler handler = responseQueue.poll();
+        ResponseHandler handler;
+
+        synchronized (DictionaryConnection.this) {
+          handler = responseQueue.poll();
+        }
+
         if (handler == null) break;
         handler.setFinished();
       }
@@ -219,13 +224,13 @@ public class DictionaryConnection implements Closeable {
               throw new NumberFormatException();
             }
           } catch (NumberFormatException exception) {
-            throw new ResponseException(
+            throw new OperandException(
               "response code is not an integer", operand
             );
           }
 
           if (operand.length() != 3) {
-            throw new ResponseException(
+            throw new OperandException(
               "response code is not three digits", operand
             );
           }
@@ -247,7 +252,7 @@ public class DictionaryConnection implements Closeable {
                 DictionaryOperands operands = new DictionaryOperands(response);
 
                 if (operands.isEmpty()) {
-                  throw new ResponseException("missing response code");
+                  throw new OperandException("missing response code");
                 }
 
                 int code = parseResponseCode(operands.removeFirst());
@@ -255,22 +260,15 @@ public class DictionaryConnection implements Closeable {
                 ResponseHandler handler = responseQueue.peek();
 
                 if (handler == null) {
-                  throw new ResponseException("no response handler");
+                  throw new OperandException("no response handler");
                 }
 
                 if (handler.handleResponse(code, operands)) {
                   responseQueue.remove();
                   handler.setFinished();
                 }
-              } catch (ResponseException exception) {
-                String message = exception.getMessage();
-
-                {
-                  String data = exception.getData();
-                  if (data != null) message += ": " + data;
-                }
-
-                Log.w(LOG_TAG, message);
+              } catch (OperandException exception) {
+                Log.w(LOG_TAG, exception.getMessage());
               }
             }
           } finally {
@@ -323,7 +321,7 @@ public class DictionaryConnection implements Closeable {
                   int length = command.length();
 
                   if (length > maximum) {
-                    throw new CommandException(
+                    throw new OperandException(
                       String.format(
                         "command line too long: %d > %d",
                         length, maximum
@@ -331,9 +329,6 @@ public class DictionaryConnection implements Closeable {
                     );
                   }
                 }
-
-                responseQueue.offer(entry.handler);
-                startResponseThread();
 
                 synchronized (DictionaryConnection.this) {
                   Writer writer = getWriter();
@@ -346,16 +341,12 @@ public class DictionaryConnection implements Closeable {
                     Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
                     break;
                   }
-                }
-              } catch (CommandException exception) {
-                String message = exception.getMessage();
 
-                {
-                  String data = exception.getData();
-                  if (data != null) message += ": " + data;
+                  responseQueue.offer(entry.handler);
+                  startResponseThread();
                 }
-
-                Log.w(LOG_TAG, message);
+              } catch (OperandException exception) {
+                Log.w(LOG_TAG, exception.getMessage());
               }
             }
           } finally {
