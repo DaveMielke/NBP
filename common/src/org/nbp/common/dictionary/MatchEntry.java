@@ -4,16 +4,16 @@ public class MatchEntry {
   private final String matchedWord;
   private final String databaseName;
 
-  public MatchEntry (String word, String database) {
+  public MatchEntry (String word, String name) {
     matchedWord = word;
-    databaseName = database;
+    databaseName = name;
   }
 
-  public final String getWord () {
+  public final String getMatchedWord () {
     return matchedWord;
   }
 
-  public final String getDatabase () {
+  public final String getDatabaseName () {
     return databaseName;
   }
 }

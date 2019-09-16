@@ -5,14 +5,14 @@ import android.util.Log;
 public abstract class MatchesResponse extends CommandResponse {
   private final static String LOG_TAG = MatchesResponse.class.getName();
 
-  private final MatchList matchList = new MatchList();
+  private final MatchList matches = new MatchList();
 
   protected MatchesResponse (String... arguments) {
     super(arguments);
   }
 
   public final MatchList getMatches () {
-    return matchList;
+    return matches;
   }
 
   @Override
@@ -24,15 +24,15 @@ public abstract class MatchesResponse extends CommandResponse {
       case ResponseCodes.BEGIN_MATCH_LIST: {
         for (String match : getTextAsList()) {
           try {
-            DictionaryOperands fields = new DictionaryOperands(match);
+            DictionaryOperands parameters = new DictionaryOperands(match);
 
-            if (fields.isEmpty()) throw new OperandException("missing database name");
-            String database = fields.removeFirst();
+            if (parameters.isEmpty()) throw new OperandException("missing database name");
+            String name = parameters.removeFirst();
 
-            if (fields.isEmpty()) throw new OperandException("missing matched word");
-            String word = fields.removeFirst();
+            if (parameters.isEmpty()) throw new OperandException("missing matched word");
+            String word = parameters.removeFirst();
 
-            matchList.add(word, database);
+            matches.add(word, name);
           } catch (OperandException exception) {
             Log.w(LOG_TAG, exception.getMessage());
           }

@@ -1,8 +1,14 @@
 package org.nbp.common.dictionary;
 
 public abstract class DefinitionsResponse extends CommandResponse {
+  private final DefinitionList definitions = new DefinitionList();
+
   protected DefinitionsResponse (String... arguments) {
     super(arguments);
+  }
+
+  public final DefinitionList getDefinitions () {
+    return definitions;
   }
 
   @Override
@@ -17,9 +23,10 @@ public abstract class DefinitionsResponse extends CommandResponse {
       case ResponseCodes.BEGIN_DEFINITION_TEXT: {
         String word = operands.next();
         String name = operands.next();
-        String title = operands.next();
+        String description = operands.next();
         String text = getTextAsString();
 
+        definitions.add(word, text, name, description);
         return false;
       }
 
