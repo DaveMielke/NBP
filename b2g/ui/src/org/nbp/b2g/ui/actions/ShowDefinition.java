@@ -5,6 +5,10 @@ import org.nbp.common.dictionary.*;
 import org.nbp.b2g.ui.popup.PopupEndpoint;
 
 public class ShowDefinition extends CursorKeyAction {
+  private static void showText (CharSequence text) {
+    Endpoints.setCurrentEndpoint(new PopupEndpoint().set(text));
+  }
+
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     int from = offset;
@@ -25,14 +29,26 @@ public class ShowDefinition extends CursorKeyAction {
       if (Character.isWhitespace(text.charAt(to))) break;
     }
 
-    new DefineCommand(text.subSequence(from, to).toString(), ApplicationSettings.DICTIONARY_DATABASE) {
+    final String word = text.subSequence(from, to).toString();
+    new DefineCommand(word, ApplicationSettings.DICTIONARY_DATABASE) {
       @Override
       protected void handleResult (final DefinitionList definitions) {
         int size = definitions.size();
-        if (size == 0) return;
+        if (size > 1) size = 1;
+
+        if (size == 0) {
+          StringBuilder text = new StringBuilder()
+            .append("definition not found")
+            .append(": ")
+            .append(word)
+            ;
+
+          showText(text);
+          return;
+        }
 
         if (size == 1) {
-          Endpoints.setCurrentEndpoint(new PopupEndpoint().set(definitions.get(0).getDefinitionText()));
+          showText(definitions.get(0).getDefinitionText());
           return;
         }
 
@@ -58,7 +74,7 @@ public class ShowDefinition extends CursorKeyAction {
             new PopupClickHandler() {
               @Override
               public boolean handleClick (int index) {
-                Endpoints.setCurrentEndpoint(new PopupEndpoint().set(definitions.get(index).getDefinitionText()));
+                showText(definitions.get(index).getDefinitionText());
                 return true;
               }
             }
