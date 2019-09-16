@@ -294,7 +294,6 @@ public class DictionaryConnection implements Closeable {
           try {
             StringBuilder command = new StringBuilder();
 
-          COMMAND_LOOP:
             while (true) {
               CommandEntry entry;
 
@@ -309,46 +308,55 @@ public class DictionaryConnection implements Closeable {
               if (arguments.length == 0) continue;
               command.setLength(0);
 
-              for (String argument : arguments) {
-                if (command.length() > 0) command.append(' ');
-                String operand;
+              try {
+                for (String argument : arguments) {
+                  if (command.length() > 0) command.append(' ');
+                  command.append(DictionaryOperands.quote(argument));
+                }
 
-                try {
-                  operand = DictionaryOperands.quote(argument);
-                } catch (CommandException exception) {
-                  String message = exception.getMessage();
+                if (command.length() == 0) continue;
+                Log.d(LOG_TAG, ("command: " + command));
+                command.append("\r\n");
 
-                  {
-                    String data = exception.getData();
-                    if (data != null) message += ": " + data;
+                {
+                  int maximum = DictionaryParameters.MAXIMUM_LENGTH;
+                  int length = command.length();
+
+                  if (length > maximum) {
+                    throw new CommandException(
+                      String.format(
+                        "command line too long: %d > %d",
+                        length, maximum
+                      )
+                    );
                   }
-
-                  Log.w(LOG_TAG, message);
-                  continue COMMAND_LOOP;
                 }
 
-                command.append(operand);
-              }
+                responseQueue.offer(entry.handler);
+                startResponseThread();
 
-              if (command.length() == 0) continue;
-              Log.d(LOG_TAG, ("command: " + command));
-              command.append("\r\n");
+                synchronized (DictionaryConnection.this) {
+                  Writer writer = getWriter();
+                  if (writer == null) break;
 
-              synchronized (DictionaryConnection.this) {
-                Writer writer = getWriter();
-                if (writer == null) break;
-
-                try {
-                  writer.write(command.toString());
-                  writer.flush();
-                } catch (IOException exception) {
-                  Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
-                  break;
+                  try {
+                    writer.write(command.toString());
+                    writer.flush();
+                  } catch (IOException exception) {
+                    Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
+                    break;
+                  }
                 }
-              }
+              } catch (CommandException exception) {
+                String message = exception.getMessage();
 
-              responseQueue.offer(entry.handler);
-              startResponseThread();
+                {
+                  String data = exception.getData();
+                  if (data != null) message += ": " + data;
+                }
+
+                Log.w(LOG_TAG, message);
+              }
             }
           } finally {
             Log.d(LOG_TAG, "command thread finished");
