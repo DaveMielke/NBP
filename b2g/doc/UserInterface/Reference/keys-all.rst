@@ -52,6 +52,9 @@ Dot1+Cursor
 Dot4+Cursor
   |SetSelectionEnd|
 
+Dot5+Cursor
+  |ShowDefinition|
+
 Dot6+Cursor
   |ShowUncontracted|
 

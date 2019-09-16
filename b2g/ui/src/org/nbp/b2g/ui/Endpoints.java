@@ -55,7 +55,7 @@ public abstract class Endpoints {
     }
   }
 
-  private static boolean setCurrentEndpoint (Endpoint endpoint) {
+  public static boolean setCurrentEndpoint (Endpoint endpoint) {
     WRITE_LOCK.lock();
     try {
       boolean prepare = true;

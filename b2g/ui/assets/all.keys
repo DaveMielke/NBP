@@ -20,6 +20,7 @@ bind Dot7+Cursor DescribeCharacter
 bind Dot3+Cursor DescribeHighlighting
 bind Dot1+Cursor SetSelectionStart
 bind Dot4+Cursor SetSelectionEnd
+bind Dot5+Cursor ShowDefinition
 bind Dot6+Cursor ShowUncontracted
 bind Dot8+Cursor SetLeft
 

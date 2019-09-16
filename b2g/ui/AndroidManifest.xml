@@ -46,6 +46,9 @@
   <!-- for the remote braille display endpoint -->
   <uses-permission android:name="android.permission.BLUETOOTH" />
 
+  <!-- for dictionary access -->
+  <uses-permission android:name="android.permission.INTERNET" />
+
   <!-- for system maintenance operations -->
   <uses-permission android:name="android.permission.REBOOT" />
 
