@@ -4,6 +4,7 @@ public enum DictionaryStrategy {
   DEFAULT(".", "the best algorithm for spelling correction"),
   EXACT("exact", "exact match"),
   PREFIX("prefix", "match the prefix"),
+
   SUBSTRING("substring", "match any substring"),
   SUFFIX("suffix", "match the suffix"),
   REGEX_POSIX("re", "extended regular expression [POSIX 1003.2]"),
