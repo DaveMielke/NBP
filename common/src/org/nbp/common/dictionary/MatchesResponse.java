@@ -12,7 +12,7 @@ public abstract class MatchesResponse extends CommandResponse {
         return true;
 
       case ResponseCodes.BEGIN_MATCH_LIST: {
-        String text = getTextAsString();
+        String[] matches = getTextAsArray();
         return false;
       }
 

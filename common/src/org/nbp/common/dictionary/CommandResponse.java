@@ -1,13 +1,19 @@
 package org.nbp.common.dictionary;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public abstract class CommandResponse extends DictionaryResponse {
   protected CommandResponse (String... operands) {
     super(operands);
   }
 
-  protected final String getTextAsString () {
+  protected interface TextLineProcessor {
+    public void processLine (String line);
+  }
+
+  protected final void getText (TextLineProcessor processor) {
     DictionaryConnection connection = getConnection();
-    StringBuilder text = new StringBuilder();
 
     while (true) {
       String line = connection.readLine();
@@ -23,11 +29,44 @@ public abstract class CommandResponse extends DictionaryResponse {
         }
       }
 
-      if (text.length() > 0) text.append('\n');
-      text.append(line);
+      processor.processLine(line);
     }
+  }
+
+  protected final String getTextAsString () {
+    final StringBuilder text = new StringBuilder();
+
+    getText(
+      new TextLineProcessor() {
+        @Override
+        public void processLine (String line) {
+          if (text.length() > 0) text.append('\n');
+          text.append(line);
+        }
+      }
+    );
 
     return text.toString();
+  }
+
+  protected final List<String> getTextAsList () {
+    final List<String> text = new ArrayList<String>();
+
+    getText(
+      new TextLineProcessor() {
+        @Override
+        public void processLine (String line) {
+          text.add(line);
+        }
+      }
+    );
+
+    return text;
+  }
+
+  protected final String[] getTextAsArray () {
+    List<String> text = getTextAsList();
+    return text.toArray(new String[text.size()]);
   }
 
   @Override
