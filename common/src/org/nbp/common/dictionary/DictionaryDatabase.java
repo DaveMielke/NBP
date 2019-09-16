@@ -1,8 +1,8 @@
 package org.nbp.common.dictionary;
 
 public enum DictionaryDatabase {
-  ALL("*", "search all of the databases"),
-  FIRST("!", "search only the first database that contains a match"),
+  ALL("*", "all of the dictionaries"),
+  FIRST("!", "the first dictionary that contains a match"),
 
   GCIDE("gcide", "The Collaborative International Dictionary of English v.0.48"),
   WN("wn", "WordNet (r) 3.0 (2006)"),
