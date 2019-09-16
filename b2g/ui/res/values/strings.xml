@@ -77,6 +77,7 @@
 
   <string name="popup_select_action">Perform an action by clicking on its name:</string>
   <string name="popup_select_activity">Launch an activity by clicking on its name:</string>
+  <string name="popup_select_definition">Select a specific definition by clicking on it:</string>
   <string name="popup_select_diacritic_add">Add a diacritical mark by clicking on its name:</string>
   <string name="popup_select_diacritic_remove">Remove a diacritical mark by clicking on its name:</string>
   <string name="popup_select_emoticon">Type an emoticon by clicking on its description:</string>

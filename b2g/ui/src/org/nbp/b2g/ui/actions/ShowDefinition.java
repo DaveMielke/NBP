@@ -39,12 +39,18 @@ public class ShowDefinition extends CursorKeyAction {
         } else {
           StringBuilder sb = new StringBuilder();
 
+          sb.append(getString(R.string.popup_select_definition));
+          first = 1;
+
           for (int index=0; index<size; index+=1) {
             DefinitionEntry definition = definitions.get(index);
-            if (sb.length() > 0) sb.append('\n');
+
+            sb.append('\n');
             sb.append(index+1);
+
             sb.append(": ");
             sb.append(definition.getMatchedWord());
+
             sb.append(": ");
             sb.append(definition.getDatabaseDescription());
           }
