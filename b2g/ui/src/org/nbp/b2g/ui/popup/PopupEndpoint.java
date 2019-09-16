@@ -59,12 +59,22 @@ public class PopupEndpoint extends Endpoint {
     }
   }
 
-  public final void set (CharSequence text, int first, PopupClickHandler handler) {
+  public final PopupEndpoint set (CharSequence text, int first, PopupClickHandler handler) {
     synchronized (this) {
       clickHandler = handler;
       headerLines = first;
       write(text);
     }
+
+    return this;
+  }
+
+  public final PopupEndpoint set (CharSequence text, PopupClickHandler handler) {
+    return set(text, 0, handler);
+  }
+
+  public final PopupEndpoint set (CharSequence text) {
+    return set(text, null);
   }
 
   public PopupEndpoint () {

@@ -7,10 +7,9 @@ import org.nbp.b2g.ui.popup.PopupEndpoint;
 public class ShowDefinition extends CursorKeyAction {
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
-    CharSequence text = endpoint.getLineText();
-
     int from = offset;
-    if (endpoint.isWordBreak(from)) return false;
+    CharSequence text = endpoint.getLineText();
+    if (Character.isWhitespace(text.charAt(from))) return false;
 
     while (from > 0) {
       if (Character.isWhitespace(text.charAt(--from))) {
@@ -30,52 +29,41 @@ public class ShowDefinition extends CursorKeyAction {
       @Override
       protected void handleResult (final DefinitionList definitions) {
         int size = definitions.size();
-        String text = null;
-        int first = 0;
-        PopupClickHandler handler = null;
+        if (size == 0) return;
 
-        if (size == 0) {
-        } else if (size == 1) {
-          text = definitions.get(0).getDefinitionText();
-        } else {
-          {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append(getString(R.string.popup_select_definition));
-            first = 1;
-
-            for (int index=0; index<size; index+=1) {
-              DefinitionEntry definition = definitions.get(index);
-
-              sb.append('\n');
-              sb.append(index+1);
-
-              sb.append(": ");
-              sb.append(definition.getMatchedWord());
-
-              sb.append(": ");
-              sb.append(definition.getDatabaseDescription());
-            }
-
-            text = sb.toString();
-          }
-
-          handler = new PopupClickHandler() {
-            @Override
-            public boolean handleClick (int index) {
-              PopupEndpoint endpoint = new PopupEndpoint();
-              endpoint.set(definitions.get(index).getDefinitionText(), 0, null);
-              Endpoints.setCurrentEndpoint(endpoint);
-              return true;
-            }
-          };
+        if (size == 1) {
+          Endpoints.setCurrentEndpoint(new PopupEndpoint().set(definitions.get(0).getDefinitionText()));
+          return;
         }
 
-        if (text != null) {
-          PopupEndpoint endpoint = new PopupEndpoint();
-          endpoint.set(text, first, handler);
-          Endpoints.setCurrentEndpoint(endpoint);
+        StringBuilder text = new StringBuilder();
+        text.append(getString(R.string.popup_select_definition));
+
+        for (int index=0; index<size; index+=1) {
+          DefinitionEntry definition = definitions.get(index);
+
+          text.append('\n');
+          text.append(index+1);
+
+          text.append(": ");
+          text.append(definition.getMatchedWord());
+
+          text.append(": ");
+          text.append(definition.getDatabaseDescription());
         }
+
+        Endpoints.setCurrentEndpoint(
+          new PopupEndpoint().set(
+            text, 1,
+            new PopupClickHandler() {
+              @Override
+              public boolean handleClick (int index) {
+                Endpoints.setCurrentEndpoint(new PopupEndpoint().set(definitions.get(index).getDefinitionText()));
+                return true;
+              }
+            }
+          )
+        );
       }
     };
 
