@@ -21,7 +21,7 @@ import java.io.OutputStreamWriter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class DictionaryConnection {
+public class DictionaryConnection implements Closeable {
   private final static String LOG_TAG = DictionaryConnection.class.getName();
 
   private DictionaryConnection () {
@@ -106,7 +106,8 @@ public class DictionaryConnection {
     }
   }
 
-  private final void closeConnection () {
+  @Override
+  public void close () {
     synchronized (this) {
       closeReader();
       closeWriter();
@@ -264,7 +265,7 @@ public class DictionaryConnection {
             }
           } finally {
             Log.d(LOG_TAG, "response thread finished");
-            closeConnection();
+            close();
           }
         }
       };
@@ -341,7 +342,7 @@ public class DictionaryConnection {
             }
           } finally {
             Log.d(LOG_TAG, "command thread finished");
-            closeConnection();
+            close();
           }
         }
       };
