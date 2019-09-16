@@ -15,17 +15,25 @@ public abstract class DictionaryResponse implements ResponseHandler {
     getConnection().startCommand(this, arguments);
   }
 
-  private boolean hasFinished = false;
+  private boolean isFinished = false;
+
+  public final boolean hasFinished () {
+    return isFinished;
+  }
+
+  protected void handleResult () {
+  }
 
   @Override
   public final void setFinished () {
     synchronized (this) {
-      if (hasFinished) {
+      if (hasFinished()) {
         throw new IllegalStateException("already finished");
       }
 
-      hasFinished = true;
+      isFinished = true;
       notify();
+      handleResult();
     }
   }
 

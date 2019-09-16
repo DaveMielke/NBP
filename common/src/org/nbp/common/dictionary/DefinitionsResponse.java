@@ -11,6 +11,14 @@ public abstract class DefinitionsResponse extends CommandResponse {
     return definitions;
   }
 
+  protected void handleResult (DefinitionList definitions) {
+  }
+
+  @Override
+  protected final void handleResult () {
+    handleResult(getDefinitions());
+  }
+
   @Override
   public boolean handleResponse (int code, DictionaryOperands operands) {
     switch (code) {

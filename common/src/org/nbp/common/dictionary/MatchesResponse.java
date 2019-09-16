@@ -15,6 +15,14 @@ public abstract class MatchesResponse extends CommandResponse {
     return matches;
   }
 
+  protected void handleResult (MatchList matches) {
+  }
+
+  @Override
+  protected final void handleResult () {
+    handleResult(getMatches());
+  }
+
   @Override
   public boolean handleResponse (int code, DictionaryOperands operands) {
     switch (code) {
