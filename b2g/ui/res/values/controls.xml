@@ -53,8 +53,9 @@
 
   <string name="control_group_advanced">Advanced Settings</string>
   <string name="control_label_ComputerBraille">Computer Braille</string>
-  <string name="control_label_ScreenOrientation">Screen Orientation</string>
+  <string name="control_label_DictionaryDatabase">Dictionary Database</string>
   <string name="control_label_PhoneticAlphabet">Phonetic Alphabet</string>
+  <string name="control_label_ScreenOrientation">Screen Orientation</string>
 
   <string name="control_group_developer">Developer Settings</string>
   <string name="control_label_CrashEmails">Crash Emails</string>

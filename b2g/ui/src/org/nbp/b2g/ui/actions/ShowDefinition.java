@@ -25,7 +25,7 @@ public class ShowDefinition extends CursorKeyAction {
       if (Character.isWhitespace(text.charAt(to))) break;
     }
 
-    new DefineCommand(text.subSequence(from, to).toString()) {
+    new DefineCommand(text.subSequence(from, to).toString(), ApplicationSettings.DICTIONARY_DATABASE) {
       @Override
       protected void handleResult (final DefinitionList definitions) {
         int size = definitions.size();

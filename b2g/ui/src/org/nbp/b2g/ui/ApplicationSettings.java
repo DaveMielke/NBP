@@ -1,5 +1,7 @@
 package org.nbp.b2g.ui;
 
+import org.nbp.common.dictionary.DictionaryDatabase;
+
 public abstract class ApplicationSettings {
   private ApplicationSettings () {
   }
@@ -46,8 +48,9 @@ public abstract class ApplicationSettings {
   public volatile static boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
   public volatile static ComputerBraille COMPUTER_BRAILLE = ApplicationDefaults.COMPUTER_BRAILLE;
-  public volatile static ScreenOrientation SCREEN_ORIENTATION = ApplicationDefaults.SCREEN_ORIENTATION;
+  public volatile static DictionaryDatabase DICTIONARY_DATABASE = ApplicationDefaults.DICTIONARY_DATABASE;
   public volatile static PhoneticAlphabet PHONETIC_ALPHABET = ApplicationDefaults.PHONETIC_ALPHABET;
+  public volatile static ScreenOrientation SCREEN_ORIENTATION = ApplicationDefaults.SCREEN_ORIENTATION;
 
   public volatile static boolean CRASH_EMAILS = ApplicationDefaults.CRASH_EMAILS;
   public volatile static boolean ADVANCED_ACTIONS = ApplicationDefaults.ADVANCED_ACTIONS;

@@ -71,8 +71,9 @@ public abstract class Controls {
 
   // advanced settings
   public final static ComputerBrailleControl computerBraille = new ComputerBrailleControl();
-  public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
+  public final static DictionaryDatabaseControl dictionaryDatabase = new DictionaryDatabaseControl();
   public final static PhoneticAlphabetControl phoneticAlphabet = new PhoneticAlphabetControl();
+  public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
 
   // developer settings
   public final static CrashEmailsControl crashEmails = new CrashEmailsControl();
