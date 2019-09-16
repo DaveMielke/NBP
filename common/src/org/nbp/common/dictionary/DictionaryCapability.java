@@ -1,12 +1,12 @@
 package org.nbp.common.dictionary;
 
 public enum DictionaryCapability {
-  MIME("mime", "the OPTION MIME command is supported"),
-  AUTH("auth", "the AUTH command is supported"),
-  KERBEROS_V4("kerberos_v4", "the SASL Kerberos version 4 mechanism is supported"),
-  GSSAPI("gssapi", "the SASL GSSAPI [RFC2078] mechanism is supported"),
-  SKEY("skey", "the SASL S/Key [RFC1760] mechanism is supported"),
-  EXTERNAL("external", "the SASL external mechanism is supported"),
+  MIME("mime", "the OPTION MIME command"),
+  AUTHORIZATION("auth", "the AUTH command"),
+  KERBEROS_V4("kerberos_v4", "the SASL Kerberos version 4 mechanism"),
+  GSSAPI("gssapi", "the SASL GSSAPI mechanism [RFC2078]"),
+  SKEY("skey", "the SASL S/Key mechanism [RFC1760]"),
+  EXTERNAL("external", "the SASL external mechanism"),
   ; // end of enumeration
 
   private final String capabilityName;

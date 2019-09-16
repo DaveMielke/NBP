@@ -1,18 +1,18 @@
 package org.nbp.common.dictionary;
 
 public enum DictionaryStrategy {
-  DEFAULT(".", "x"),
-  EXACT("exact", "match headwords exactly"),
-  PREFIX("prefix", "match prefixes"),
-  SUBSTRING("substring", "match substring occurring anywhere in a headword"),
-  SUFFIX("suffix", "match suffixes"),
-  REGEXP_EXTENDED("re", "POSIX 1003.2 (modern) regular expressions"),
-  REGEX_BASIC("regexp", "old (basic) regular expressions"),
-  SOUNDEX("soundex", "match using SOUNDEX algorithm"),
-  LEVENSHTEIN1("lev", "match headwords within Levenshtein distance one"),
-  WORD("word", "match separate words within headwords"),
-  FIRST("first", "match the first word within headwords"),
-  LAST("last", "match the last word within headwords"),
+  DEFAULT(".", "the best algorithm for spelling correction"),
+  EXACT("exact", "exact match"),
+  PREFIX("prefix", "match the prefix"),
+  SUBSTRING("substring", "match any substring"),
+  SUFFIX("suffix", "match the suffix"),
+  REGEX_POSIX("re", "extended regular expression [POSIX 1003.2]"),
+  REGEX_BASIC("regexp", "basic regular expression"),
+  SOUNDEX("soundex", "the SOUNDEX algorithm [KNUTH73]"),
+  LEVENSTEIN1("lev", "Levenstein distance one [PZ85]"),
+  WORD_ANY("word", "match any subword"),
+  WORD_FIRST("first", "match the first subword"),
+  WORD_LAST("last", "match the last subword"),
   ; // end of enumeration
 
   private final String strategyName;
