@@ -8,12 +8,16 @@ public abstract class DefinitionsResponse extends CommandResponse {
   @Override
   public boolean handleResponse (int code, DictionaryOperands operands) {
     switch (code) {
+      case ResponseCodes.NO_MATCH:
+        return true;
+
       case ResponseCodes.BEGIN_DEFINITION_LIST:
         return false;
 
       case ResponseCodes.BEGIN_DEFINITION_TEXT: {
         String word = operands.next();
-        String database = operands.next();
+        String name = operands.next();
+        String title = operands.next();
         String text = getText();
 
         return false;

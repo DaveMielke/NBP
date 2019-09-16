@@ -18,6 +18,10 @@ public abstract class DictionaryResponse implements ResponseHandler {
   @Override
   public final void setFinished () {
     synchronized (this) {
+      if (hasFinished) {
+        throw new IllegalStateException("already finished");
+      }
+
       hasFinished = true;
       notify();
     }

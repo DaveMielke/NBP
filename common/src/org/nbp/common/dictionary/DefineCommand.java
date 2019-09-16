@@ -5,7 +5,11 @@ public class DefineCommand extends DefinitionsResponse {
     super("define", database, word);
   }
 
+  public DefineCommand (String word, boolean all) {
+    this(word, (all? DictionaryConstants.DATABASE_ALL: DictionaryConstants.DATABASE_FIRST));
+  }
+
   public DefineCommand (String word) {
-    this(word, DictionaryConstants.DATABASE_ALL);
+    this(word, true);
   }
 }
