@@ -27,13 +27,13 @@ public class DictionaryConnection implements Closeable {
   private DictionaryConnection () {
   }
 
-  private final static Object SINGLETON_LOCK = new Object();
-  private static DictionaryConnection dictionaryConnection = null;
+  private final static Object GET_LOCK = new Object();
+  private static DictionaryConnection currentConnection = null;
 
-  public static DictionaryConnection singleton () {
-    synchronized (SINGLETON_LOCK) {
-      if (dictionaryConnection == null) dictionaryConnection = new DictionaryConnection();
-      return dictionaryConnection;
+  public static DictionaryConnection get () {
+    synchronized (GET_LOCK) {
+      if (currentConnection == null) currentConnection = new DictionaryConnection();
+      return currentConnection;
     }
   }
 
@@ -108,10 +108,20 @@ public class DictionaryConnection implements Closeable {
 
   @Override
   public void close () {
+    synchronized (GET_LOCK) {
+      if (this == currentConnection) currentConnection = null;
+    }
+
     synchronized (this) {
       closeReader();
       closeWriter();
       closeSocket();
+
+      while (true) {
+        ResponseHandler handler = responseQueue.poll();
+        if (handler == null) break;
+        handler.setFinished();
+      }
     }
   }
 

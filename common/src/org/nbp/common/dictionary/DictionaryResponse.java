@@ -5,8 +5,10 @@ import android.util.Log;
 public abstract class DictionaryResponse implements ResponseHandler {
   private final static String LOG_TAG = DictionaryResponse.class.getName();
 
-  protected static DictionaryConnection getConnection () {
-    return DictionaryConnection.singleton();
+  private final DictionaryConnection dictionaryConnection = DictionaryConnection.get();
+
+  protected final DictionaryConnection getConnection () {
+    return dictionaryConnection;
   }
 
   protected DictionaryResponse (String... arguments) {
