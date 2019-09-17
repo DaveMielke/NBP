@@ -15,12 +15,12 @@ public abstract class MatchesRequest extends CommandRequest {
     return matches;
   }
 
-  protected void handleResult (MatchList matches) {
+  protected void handleMatches (MatchList matches) {
   }
 
   @Override
   protected final void handleResult () {
-    handleResult(getMatches());
+    handleMatches(getMatches());
   }
 
   @Override

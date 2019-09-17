@@ -11,12 +11,12 @@ public abstract class DefinitionsRequest extends CommandRequest {
     return definitions;
   }
 
-  protected void handleResult (DefinitionList definitions) {
+  protected void handleDefinitions (DefinitionList definitions) {
   }
 
   @Override
   protected final void handleResult () {
-    handleResult(getDefinitions());
+    handleDefinitions(getDefinitions());
   }
 
   @Override
