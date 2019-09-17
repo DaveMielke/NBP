@@ -1,6 +1,6 @@
 package org.nbp.common.dictionary;
 
-public class MatchCommand extends MatchesResponse {
+public class MatchCommand extends MatchesRequest {
   public MatchCommand (String word, String strategy, String database) {
     super("match", database, strategy, word);
   }

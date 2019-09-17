@@ -2,12 +2,12 @@ package org.nbp.common.dictionary;
 
 import android.util.Log;
 
-public abstract class MatchesResponse extends CommandResponse {
-  private final static String LOG_TAG = MatchesResponse.class.getName();
+public abstract class MatchesRequest extends CommandRequest {
+  private final static String LOG_TAG = MatchesRequest.class.getName();
 
   private final MatchList matches = new MatchList();
 
-  protected MatchesResponse (String... arguments) {
+  protected MatchesRequest (String... arguments) {
     super(arguments);
   }
 

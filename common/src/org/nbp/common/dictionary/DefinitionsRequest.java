@@ -1,9 +1,9 @@
 package org.nbp.common.dictionary;
 
-public abstract class DefinitionsResponse extends CommandResponse {
+public abstract class DefinitionsRequest extends CommandRequest {
   private final DefinitionList definitions = new DefinitionList();
 
-  protected DefinitionsResponse (String... arguments) {
+  protected DefinitionsRequest (String... arguments) {
     super(arguments);
   }
 

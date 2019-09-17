@@ -1,6 +1,6 @@
 package org.nbp.common.dictionary;
 
-public class QuitCommand extends CommandResponse {
+public class QuitCommand extends CommandRequest {
   public QuitCommand () {
     super("quit");
   }

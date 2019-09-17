@@ -2,8 +2,8 @@ package org.nbp.common.dictionary;
 
 import android.util.Log;
 
-public abstract class DictionaryResponse implements ResponseHandler {
-  private final static String LOG_TAG = DictionaryResponse.class.getName();
+public abstract class DictionaryRequest implements ResponseHandler {
+  private final static String LOG_TAG = DictionaryRequest.class.getName();
 
   private final DictionaryConnection dictionaryConnection = DictionaryConnection.get();
 
@@ -11,7 +11,7 @@ public abstract class DictionaryResponse implements ResponseHandler {
     return dictionaryConnection;
   }
 
-  protected DictionaryResponse (String... arguments) {
+  protected DictionaryRequest (String... arguments) {
     getConnection().startCommand(this, arguments);
   }
 

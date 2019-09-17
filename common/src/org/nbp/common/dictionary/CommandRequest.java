@@ -3,8 +3,8 @@ package org.nbp.common.dictionary;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class CommandResponse extends DictionaryResponse {
-  protected CommandResponse (String... operands) {
+public abstract class CommandRequest extends DictionaryRequest {
+  protected CommandRequest (String... operands) {
     super(operands);
   }
 
