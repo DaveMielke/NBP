@@ -4,7 +4,7 @@ public abstract class Dictionary {
   private Dictionary () {
   }
 
-  public static void end () {
+  public static void endSession () {
     new QuitCommand();
   }
 }
