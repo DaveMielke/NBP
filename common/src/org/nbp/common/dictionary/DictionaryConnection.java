@@ -257,7 +257,11 @@ public class DictionaryConnection implements Closeable {
 
                 int code = parseResponseCode(operands.removeFirst());
                 if (handleResponse(code, operands)) continue;
-                ResponseHandler handler = responseQueue.peek();
+                ResponseHandler handler;
+
+                synchronized (DictionaryConnection.this) {
+                  handler = responseQueue.peek();
+                }
 
                 if (handler == null) {
                   throw new OperandException("no response handler");
