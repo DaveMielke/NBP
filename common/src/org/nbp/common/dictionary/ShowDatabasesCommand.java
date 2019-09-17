@@ -1,6 +1,6 @@
 package org.nbp.common.dictionary;
 
-public class ShowDatabasesCommand extends DescriptionsRequest {
+public class ShowDatabasesCommand extends ItemsRequest {
   public ShowDatabasesCommand () {
     super("show", "databases");
   }

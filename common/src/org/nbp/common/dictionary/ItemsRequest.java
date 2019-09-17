@@ -2,28 +2,28 @@ package org.nbp.common.dictionary;
 
 import android.util.Log;
 
-public abstract class DescriptionsRequest extends CommandRequest implements DescriptionsHandler {
-  private final static String LOG_TAG = DescriptionsRequest.class.getName();
+public abstract class ItemsRequest extends CommandRequest implements ItemsHandler {
+  private final static String LOG_TAG = ItemsRequest.class.getName();
 
   protected abstract int getResponseCode ();
 
-  private final DescriptionList descriptions = new DescriptionList();
+  private final ItemList items = new ItemList();
 
-  protected DescriptionsRequest (String... arguments) {
+  protected ItemsRequest (String... arguments) {
     super(arguments);
   }
 
-  public final DescriptionList getDescriptions () {
-    return descriptions;
+  public final ItemList getItems () {
+    return items;
   }
 
   @Override
-  public void handleDescriptions (DescriptionList descriptions) {
+  public void handleItems (ItemList items) {
   }
 
   @Override
   protected final void handleResult () {
-    handleDescriptions(getDescriptions());
+    handleItems(getItems());
   }
 
   @Override
@@ -39,9 +39,9 @@ public abstract class DescriptionsRequest extends CommandRequest implements Desc
           String name = parameters.removeFirst();
 
           if (parameters.isEmpty()) throw new OperandException("missing item Description");
-          String text = parameters.removeFirst();
+          String description = parameters.removeFirst();
 
-          descriptions.add(name, text);
+          items.add(name, description);
         } catch (OperandException exception) {
           Log.w(LOG_TAG, exception.getMessage());
         }
