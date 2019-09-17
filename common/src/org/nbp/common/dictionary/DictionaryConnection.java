@@ -68,28 +68,28 @@ public class DictionaryConnection implements Closeable {
   private Writer commandWriter = null;
   private BufferedReader responseReader = null;
 
-  private Thread commandThread = null;
+  private Thread requestThread = null;
   private Thread responseThread = null;
 
-  private class CommandEntry {
-    public final ResponseHandler handler;
+  private class RequestEntry {
+    public final RequestHandler handler;
     public final String[] arguments;
 
-    public CommandEntry (ResponseHandler handler, String... arguments) {
+    public RequestEntry (RequestHandler handler, String... arguments) {
       this.handler = handler;
       this.arguments = arguments;
     }
   }
 
-  private final BlockingQueue<CommandEntry> commandQueue =
-      new LinkedBlockingQueue<CommandEntry>();
+  private final BlockingQueue<RequestEntry> commandQueue =
+      new LinkedBlockingQueue<RequestEntry>();
 
-  private final BlockingQueue<ResponseHandler> responseQueue =
-      new LinkedBlockingQueue<ResponseHandler>();
+  private final BlockingQueue<RequestHandler> responseQueue =
+      new LinkedBlockingQueue<RequestHandler>();
 
   private final void flushResponseQueue () {
     while (true) {
-      ResponseHandler handler = responseQueue.poll();
+      RequestHandler handler = responseQueue.poll();
       if (handler == null) break;
       handler.setFinished();
     }
@@ -284,14 +284,14 @@ public class DictionaryConnection implements Closeable {
 
                 int code = parseResponseCode(operands.removeFirst());
                 if (handleResponse(code, operands)) continue;
-                ResponseHandler handler;
+                RequestHandler handler;
 
                 synchronized (DictionaryConnection.this) {
                   handler = responseQueue.peek();
                 }
 
                 if (handler == null) {
-                  throw new OperandException("no response handler");
+                  throw new OperandException("no request handler");
                 }
 
                 if (handler.handleResponse(code, operands)) {
@@ -313,28 +313,28 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
-  private final void startCommandThread () {
-    if (commandThread == null) {
-      commandThread = new Thread("dictionary-command-thread") {
+  private final void startRequestThread () {
+    if (requestThread == null) {
+      requestThread = new Thread("dictionary-request-thread") {
         @Override
         public void run () {
-          Log.d(LOG_TAG, "command thread starting");
+          Log.d(LOG_TAG, "request thread starting");
 
           try {
             StringBuilder command = new StringBuilder();
 
             while (true) {
-              CommandEntry entry;
+              RequestEntry request;
 
               try {
-                entry = commandQueue.take();
-                if (entry == null) break;
+                request = commandQueue.take();
+                if (request == null) break;
               } catch (InterruptedException exception) {
-                Log.w(LOG_TAG, "command thread interrupted");
+                Log.w(LOG_TAG, "request thread interrupted");
                 break;
               }
 
-              String[] arguments = entry.arguments;
+              String[] arguments = request.arguments;
               if (arguments.length == 0) continue;
               command.setLength(0);
 
@@ -374,7 +374,7 @@ public class DictionaryConnection implements Closeable {
                     break;
                   }
 
-                  responseQueue.offer(entry.handler);
+                  responseQueue.offer(request.handler);
                   startResponseThread();
                 }
               } catch (OperandException exception) {
@@ -382,18 +382,18 @@ public class DictionaryConnection implements Closeable {
               }
             }
           } finally {
-            Log.d(LOG_TAG, "command thread finished");
+            Log.d(LOG_TAG, "request thread finished");
             close();
           }
         }
       };
 
-      commandThread.start();
+      requestThread.start();
     }
   }
 
-  public final void startCommand (ResponseHandler handler, String... arguments) {
-    startCommandThread();
-    commandQueue.offer(new CommandEntry(handler, arguments));
+  public final void startCommand (RequestHandler handler, String... arguments) {
+    startRequestThread();
+    commandQueue.offer(new RequestEntry(handler, arguments));
   }
 }

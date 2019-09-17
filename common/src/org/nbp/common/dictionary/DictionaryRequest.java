@@ -2,7 +2,7 @@ package org.nbp.common.dictionary;
 
 import android.util.Log;
 
-public abstract class DictionaryRequest implements ResponseHandler {
+public abstract class DictionaryRequest implements RequestHandler {
   private final static String LOG_TAG = DictionaryRequest.class.getName();
 
   private final DictionaryConnection dictionaryConnection = DictionaryConnection.get();
