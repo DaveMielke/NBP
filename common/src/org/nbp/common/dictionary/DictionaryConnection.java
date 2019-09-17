@@ -238,159 +238,170 @@ public class DictionaryConnection implements Closeable {
   }
 
   private final void startResponseThread () {
-    if (responseThread == null) {
-      responseThread = new Thread("dictionary-response-thread") {
-        private final int parseResponseCode (String operand) {
-          int value;
+    synchronized (this) {
+      if ((responseThread == null) || !responseThread.isAlive()) {
+        responseThread = new Thread("dictionary-response-thread") {
+          private final int parseResponseCode (String operand) {
+            int value;
 
-          try {
-            value = Integer.parseInt(operand, 10);
+            try {
+              value = Integer.parseInt(operand, 10);
 
-            if (!Character.isDigit(operand.charAt(0))) {
-              throw new NumberFormatException();
-            }
-          } catch (NumberFormatException exception) {
-            throw new OperandException(
-              "response code is not an integer", operand
-            );
-          }
-
-          if (operand.length() != 3) {
-            throw new OperandException(
-              "response code is not three digits", operand
-            );
-          }
-
-          return value;
-        }
-
-        @Override
-        public void run () {
-          logEvent("response thread starting");
-
-          try {
-            while (true) {
-              String response = readLine();
-              if (response == null) break;
-              Log.i(LOG_TAG, ("response: " + response));
-
-              try {
-                DictionaryOperands operands = new DictionaryOperands(response);
-
-                if (operands.isEmpty()) {
-                  throw new OperandException("missing response code");
-                }
-
-                int code = parseResponseCode(operands.removeFirst());
-                if (handleResponse(code, operands)) continue;
-                RequestHandler handler;
-
-                synchronized (DictionaryConnection.this) {
-                  handler = responseQueue.peek();
-                }
-
-                if (handler == null) {
-                  throw new OperandException("no request handler");
-                }
-
-                if (handler.handleResponse(code, operands)) {
-                  responseQueue.remove();
-                  handler.setFinished();
-                }
-              } catch (OperandException exception) {
-                Log.w(LOG_TAG, exception.getMessage());
+              if (!Character.isDigit(operand.charAt(0))) {
+                throw new NumberFormatException();
               }
+            } catch (NumberFormatException exception) {
+              throw new OperandException(
+                "response code is not an integer", operand
+              );
             }
-          } finally {
-            logEvent("response thread finished");
-            requestThread.interrupt();
-            close();
-          }
-        }
-      };
 
-      responseThread.start();
+            if (operand.length() != 3) {
+              throw new OperandException(
+                "response code is not three digits", operand
+              );
+            }
+
+            return value;
+          }
+
+          @Override
+          public void run () {
+            logEvent("response thread starting");
+
+            try {
+              while (true) {
+                String response = readLine();
+                if (response == null) break;
+                Log.i(LOG_TAG, ("response: " + response));
+
+                try {
+                  DictionaryOperands operands = new DictionaryOperands(response);
+
+                  if (operands.isEmpty()) {
+                    throw new OperandException("missing response code");
+                  }
+
+                  int code = parseResponseCode(operands.removeFirst());
+                  if (handleResponse(code, operands)) continue;
+                  RequestHandler handler;
+
+                  synchronized (DictionaryConnection.this) {
+                    handler = responseQueue.peek();
+                  }
+
+                  if (handler == null) {
+                    throw new OperandException("no request handler");
+                  }
+
+                  if (handler.handleResponse(code, operands)) {
+                    responseQueue.remove();
+                    handler.setFinished();
+                  }
+                } catch (OperandException exception) {
+                  Log.w(LOG_TAG, exception.getMessage());
+                }
+              }
+            } finally {
+              logEvent("response thread finished");
+              requestThread.interrupt();
+              close();
+            }
+          }
+        };
+
+        responseThread.start();
+      }
     }
   }
 
   private final void startRequestThread () {
-    if (requestThread == null) {
-      requestThread = new Thread("dictionary-request-thread") {
-        @Override
-        public void run () {
-          logEvent("request thread starting");
+    synchronized (this) {
+      if ((requestThread == null) || !requestThread.isAlive()) {
+        requestThread = new Thread("dictionary-request-thread") {
+          @Override
+          public void run () {
+            logEvent("request thread starting");
 
-          try {
-            StringBuilder command = new StringBuilder();
+            try {
+              StringBuilder command = new StringBuilder();
 
-            while (true) {
-              RequestEntry request;
+              while (true) {
+                RequestEntry request;
 
-              try {
-                request = requestQueue.take();
-                if (request == null) break;
-              } catch (InterruptedException exception) {
-                logEvent("request thread interrupted");
-                break;
-              }
-
-              String[] arguments = request.arguments;
-              if (arguments.length == 0) continue;
-              command.setLength(0);
-
-              try {
-                for (String argument : arguments) {
-                  if (command.length() > 0) command.append(' ');
-                  command.append(DictionaryOperands.quote(argument));
+                try {
+                  request = requestQueue.take();
+                  if (request == null) break;
+                } catch (InterruptedException exception) {
+                  logEvent("request thread interrupted");
+                  break;
                 }
 
-                if (command.length() == 0) continue;
-                Log.d(LOG_TAG, ("command: " + command));
-                command.append("\r\n");
+                RequestHandler handler = request.handler;
+                boolean isFinal = handler.isFinal();
 
-                {
-                  int maximum = DictionaryParameters.MAXIMUM_LENGTH;
-                  int length = command.length();
-
-                  if (length > maximum) {
-                    throw new OperandException(
-                      String.format(
-                        "command line too long: %d > %d",
-                        length, maximum
-                      )
-                    );
-                  }
-                }
-
-                synchronized (DictionaryConnection.this) {
-                  Writer writer = getWriter();
-                  if (writer == null) break;
-
+                try {
                   try {
-                    writer.write(command.toString());
-                    writer.flush();
-                  } catch (IOException exception) {
-                    Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
-                    close();
-                    break;
+                    String[] arguments = request.arguments;
+                    command.setLength(0);
+
+                    for (String argument : arguments) {
+                      if (command.length() > 0) command.append(' ');
+                      command.append(DictionaryOperands.quote(argument));
+                    }
+
+                    Log.d(LOG_TAG, ("command: " + command));
+                    if (command.length() == 0) continue;
+                    command.append("\r\n");
+
+                    {
+                      int maximum = DictionaryParameters.MAXIMUM_LENGTH;
+                      int length = command.length();
+
+                      if (length > maximum) {
+                        throw new OperandException(
+                          String.format(
+                            "command line too long: %d > %d",
+                            length, maximum
+                          )
+                        );
+                      }
+                    }
+
+                    synchronized (DictionaryConnection.this) {
+                      Writer writer = getWriter();
+                      if (writer == null) break;
+
+                      try {
+                        writer.write(command.toString());
+                        writer.flush();
+                      } catch (IOException exception) {
+                        Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
+                        close();
+                        break;
+                      }
+
+                      responseQueue.offer(handler);
+                      handler = null;
+                      startResponseThread();
+                    }
+                  } catch (OperandException exception) {
+                    Log.w(LOG_TAG, exception.getMessage());
                   }
 
-                  responseQueue.offer(request.handler);
-                  startResponseThread();
+                  if (isFinal) break;
+                } finally {
+                  if (handler != null) handler.setFinished();
                 }
-              } catch (OperandException exception) {
-                Log.w(LOG_TAG, exception.getMessage());
               }
-
-              if (request.handler.isFinal()) break;
+            } finally {
+              logEvent("request thread finished");
             }
-          } finally {
-            logEvent("request thread finished");
           }
-        }
-      };
+        };
 
-      requestThread.start();
+        requestThread.start();
+      }
     }
   }
 
