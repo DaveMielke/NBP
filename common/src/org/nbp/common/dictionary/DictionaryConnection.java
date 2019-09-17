@@ -38,7 +38,7 @@ public class DictionaryConnection implements Closeable {
     return currentIdentifier;
   }
 
-  private final void logConnectionEvent (String event) {
+  private final void logEvent (String event) {
     Log.d(LOG_TAG,
       String.format(
         "connection %d: %s", getIdentifier(), event
@@ -124,7 +124,7 @@ public class DictionaryConnection implements Closeable {
   private final void closeSocket () {
     if (clientSocket != null) {
       if (!clientSocket.isClosed()) {
-        logConnectionEvent("client disconnecting");
+        logEvent("client disconnecting");
 
         try {
           closeReader();
@@ -136,7 +136,7 @@ public class DictionaryConnection implements Closeable {
             Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
           }
         } finally {
-          logConnectionEvent("client disconnected");
+          logEvent("client disconnected");
         }
       }
     }
@@ -159,9 +159,9 @@ public class DictionaryConnection implements Closeable {
       Socket socket = new Socket();
 
       try {
-        logConnectionEvent("client connecting");
+        logEvent("client connecting");
         socket.connect(makeServerAddress());
-        logConnectionEvent("client connected");
+        logEvent("client connected");
         clientSocket = socket;
       } catch (IOException exception) {
         Log.e(LOG_TAG, ("client connect error: " + exception.getMessage()));
@@ -215,7 +215,7 @@ public class DictionaryConnection implements Closeable {
     try {
       String line = reader.readLine();
       if (line != null) return line;
-      Log.d(LOG_TAG, "end of input");
+      Log.w(LOG_TAG, "server disconnected");
     } catch (IOException exception) {
       Log.e(LOG_TAG, ("socket read error: " + exception.getMessage()));
     }
@@ -266,7 +266,7 @@ public class DictionaryConnection implements Closeable {
 
         @Override
         public void run () {
-          logConnectionEvent("response thread starting");
+          logEvent("response thread starting");
 
           try {
             while (true) {
@@ -302,7 +302,8 @@ public class DictionaryConnection implements Closeable {
               }
             }
           } finally {
-            logConnectionEvent("response thread finished");
+            logEvent("response thread finished");
+            requestThread.interrupt();
             close();
           }
         }
@@ -317,7 +318,7 @@ public class DictionaryConnection implements Closeable {
       requestThread = new Thread("dictionary-request-thread") {
         @Override
         public void run () {
-          logConnectionEvent("request thread starting");
+          logEvent("request thread starting");
 
           try {
             StringBuilder command = new StringBuilder();
@@ -329,7 +330,7 @@ public class DictionaryConnection implements Closeable {
                 request = requestQueue.take();
                 if (request == null) break;
               } catch (InterruptedException exception) {
-                logConnectionEvent("request thread interrupted");
+                logEvent("request thread interrupted");
                 break;
               }
 
@@ -384,7 +385,7 @@ public class DictionaryConnection implements Closeable {
               if (request.handler.isFinal()) break;
             }
           } finally {
-            logConnectionEvent("request thread finished");
+            logEvent("request thread finished");
           }
         }
       };
