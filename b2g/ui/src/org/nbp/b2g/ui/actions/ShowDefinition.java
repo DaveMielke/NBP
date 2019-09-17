@@ -85,7 +85,7 @@ public class ShowDefinition extends CursorKeyAction {
       }
     };
 
-    new QuitCommand();
+    Dictionary.end();
     return true;
   }
 

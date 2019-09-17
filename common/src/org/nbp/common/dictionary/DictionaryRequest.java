@@ -6,6 +6,7 @@ public abstract class DictionaryRequest implements RequestHandler {
   private final static String LOG_TAG = DictionaryRequest.class.getName();
 
   private final DictionaryConnection dictionaryConnection = DictionaryConnection.get();
+  private boolean isFinished = false;
 
   protected final DictionaryConnection getConnection () {
     return dictionaryConnection;
@@ -14,8 +15,6 @@ public abstract class DictionaryRequest implements RequestHandler {
   protected DictionaryRequest (String... arguments) {
     getConnection().enqueueRequest(this, arguments);
   }
-
-  private boolean isFinished = false;
 
   public final boolean hasFinished () {
     return isFinished;
