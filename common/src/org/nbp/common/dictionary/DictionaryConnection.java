@@ -24,7 +24,27 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class DictionaryConnection implements Closeable {
   private final static String LOG_TAG = DictionaryConnection.class.getName();
 
+  private final static Object IDENTIFIER_LOCK = new Object();
+  private static int previousIdentifier = 0;
+  private final int currentIdentifier;
+
   private DictionaryConnection () {
+    synchronized (IDENTIFIER_LOCK) {
+      currentIdentifier = ++previousIdentifier;
+    }
+  }
+
+  public final int getIdentifier () {
+    return currentIdentifier;
+  }
+
+  private final void logConnectionState (String state) {
+    Log.d(LOG_TAG,
+      String.format(
+        "client %s: %d",
+        state, getIdentifier()
+      )
+    );
   }
 
   private final static Object GET_LOCK = new Object();
@@ -42,19 +62,6 @@ public class DictionaryConnection implements Closeable {
       DictionaryParameters.SERVER_NAME,
       DictionaryParameters.SERVER_PORT
     );
-  }
-
-  private static void close (Closeable closeable, String what) {
-    try {
-      closeable.close();
-    } catch (IOException exception) {
-      Log.w(LOG_TAG,
-        String.format(
-          "%s close error: %s",
-          what, exception.getMessage()
-        )
-      );
-    }
   }
 
   private Socket clientSocket = null;
@@ -80,15 +87,24 @@ public class DictionaryConnection implements Closeable {
   private final BlockingQueue<ResponseHandler> responseQueue =
       new LinkedBlockingQueue<ResponseHandler>();
 
-  private final void closeSocket () {
-    if (clientSocket != null) {
-      try {
-        clientSocket.close();
-      } catch (IOException exception) {
-        Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
-      }
+  private final void flushResponseQueue () {
+    while (true) {
+      ResponseHandler handler = responseQueue.poll();
+      if (handler == null) break;
+      handler.setFinished();
+    }
+  }
 
-      clientSocket = null;
+  private static void close (Closeable closeable, String what) {
+    try {
+      closeable.close();
+    } catch (IOException exception) {
+      Log.w(LOG_TAG,
+        String.format(
+          "%s close error: %s",
+          what, exception.getMessage()
+        )
+      );
     }
   }
 
@@ -106,6 +122,27 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
+  private final void closeSocket () {
+    if (clientSocket != null) {
+      if (!clientSocket.isClosed()) {
+        logConnectionState("disconnecting");
+
+        try {
+          closeReader();
+          closeWriter();
+
+          try {
+            clientSocket.close();
+          } catch (IOException exception) {
+            Log.w(LOG_TAG, ("socket close error: " + exception.getMessage()));
+          }
+        } finally {
+          logConnectionState("disconnected");
+        }
+      }
+    }
+  }
+
   @Override
   public void close () {
     synchronized (GET_LOCK) {
@@ -113,20 +150,8 @@ public class DictionaryConnection implements Closeable {
     }
 
     synchronized (this) {
-      closeReader();
-      closeWriter();
       closeSocket();
-
-      while (true) {
-        ResponseHandler handler;
-
-        synchronized (DictionaryConnection.this) {
-          handler = responseQueue.poll();
-        }
-
-        if (handler == null) break;
-        handler.setFinished();
-      }
+      flushResponseQueue();
     }
   }
 
@@ -135,13 +160,15 @@ public class DictionaryConnection implements Closeable {
       Socket socket = new Socket();
 
       try {
-        Log.d(LOG_TAG, "client connecting");
+        logConnectionState("connecting");
         socket.connect(makeServerAddress());
-        Log.d(LOG_TAG, "client connected");
+        logConnectionState("connected");
         clientSocket = socket;
       } catch (IOException exception) {
         Log.e(LOG_TAG, ("client connect error: " + exception.getMessage()));
       }
+    } else if (clientSocket.isClosed()) {
+      return null;
     }
 
     return clientSocket;
@@ -301,6 +328,7 @@ public class DictionaryConnection implements Closeable {
 
               try {
                 entry = commandQueue.take();
+                if (entry == null) break;
               } catch (InterruptedException exception) {
                 Log.w(LOG_TAG, "command thread interrupted");
                 break;
