@@ -2,6 +2,7 @@ Features
 ========
 
 .. include:: clock.rst
+.. include:: dictionary.rst
 .. include:: indicators.rst
 .. include:: build.rst
 .. include:: shortcuts.rst

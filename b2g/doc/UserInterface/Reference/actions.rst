@@ -145,7 +145,7 @@
 .. |SetSelectionStart| replace:: Set or change the start of the `text selection`_.
 .. |Settings| replace:: Go to the user interface Settings screen.
 .. |ShowClipboard| replace:: Show `the clipboard`_.
-.. |ShowDefinition| replace:: Show the dictionary definition for the current word.
+.. |ShowDefinition| replace:: Show the `dictionary definition`_ for the current word.
 .. |ShowNotificationsOff| replace:: Don't show notifications.
 .. |ShowNotificationsOn| replace:: Show notifications.
 .. |ShowUncontracted| replace:: Show the current word as uncontracted literary braille.

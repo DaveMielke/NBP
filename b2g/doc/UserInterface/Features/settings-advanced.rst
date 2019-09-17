@@ -1,4 +1,4 @@
-.. table:: Developer Settings
+.. table:: Advanced Settings
 
   ====================  ========  =============================  =====================
   Setting               Default   Choices                        Buttons
