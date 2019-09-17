@@ -12,7 +12,7 @@ public abstract class DictionaryRequest implements RequestHandler {
   }
 
   protected DictionaryRequest (String... arguments) {
-    getConnection().startCommand(this, arguments);
+    getConnection().enqueueRequest(this, arguments);
   }
 
   private boolean isFinished = false;

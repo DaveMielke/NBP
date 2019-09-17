@@ -81,7 +81,7 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
-  private final BlockingQueue<RequestEntry> commandQueue =
+  private final BlockingQueue<RequestEntry> requestQueue =
       new LinkedBlockingQueue<RequestEntry>();
 
   private final BlockingQueue<RequestHandler> responseQueue =
@@ -327,7 +327,7 @@ public class DictionaryConnection implements Closeable {
               RequestEntry request;
 
               try {
-                request = commandQueue.take();
+                request = requestQueue.take();
                 if (request == null) break;
               } catch (InterruptedException exception) {
                 Log.w(LOG_TAG, "request thread interrupted");
@@ -371,6 +371,7 @@ public class DictionaryConnection implements Closeable {
                     writer.flush();
                   } catch (IOException exception) {
                     Log.e(LOG_TAG, ("socket write error: " + exception.getMessage()));
+                    close();
                     break;
                   }
 
@@ -380,10 +381,11 @@ public class DictionaryConnection implements Closeable {
               } catch (OperandException exception) {
                 Log.w(LOG_TAG, exception.getMessage());
               }
+
+              if (request.handler.isFinal()) break;
             }
           } finally {
             Log.d(LOG_TAG, "request thread finished");
-            close();
           }
         }
       };
@@ -392,8 +394,8 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
-  public final void startCommand (RequestHandler handler, String... arguments) {
+  public final void enqueueRequest (RequestHandler handler, String... arguments) {
     startRequestThread();
-    commandQueue.offer(new RequestEntry(handler, arguments));
+    requestQueue.offer(new RequestEntry(handler, arguments));
   }
 }
