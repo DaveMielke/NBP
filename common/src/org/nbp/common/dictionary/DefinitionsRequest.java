@@ -1,6 +1,6 @@
 package org.nbp.common.dictionary;
 
-public abstract class DefinitionsRequest extends CommandRequest {
+public abstract class DefinitionsRequest extends CommandRequest implements DefinitionsHandler {
   private final DefinitionList definitions = new DefinitionList();
 
   protected DefinitionsRequest (String... arguments) {
@@ -11,7 +11,8 @@ public abstract class DefinitionsRequest extends CommandRequest {
     return definitions;
   }
 
-  protected void handleDefinitions (DefinitionList definitions) {
+  @Override
+  public void handleDefinitions (DefinitionList definitions) {
   }
 
   @Override

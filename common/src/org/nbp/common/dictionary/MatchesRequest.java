@@ -2,7 +2,7 @@ package org.nbp.common.dictionary;
 
 import android.util.Log;
 
-public abstract class MatchesRequest extends CommandRequest {
+public abstract class MatchesRequest extends CommandRequest implements MatchesHandler {
   private final static String LOG_TAG = MatchesRequest.class.getName();
 
   private final MatchList matches = new MatchList();
@@ -15,7 +15,8 @@ public abstract class MatchesRequest extends CommandRequest {
     return matches;
   }
 
-  protected void handleMatches (MatchList matches) {
+  @Override
+  public void handleMatches (MatchList matches) {
   }
 
   @Override

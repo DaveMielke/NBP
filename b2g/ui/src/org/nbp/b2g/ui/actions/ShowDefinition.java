@@ -34,7 +34,7 @@ public class ShowDefinition extends CursorKeyAction {
 
     new DefineCommand(word, database) {
       @Override
-      protected void handleDefinitions (final DefinitionList definitions) {
+      public void handleDefinitions (final DefinitionList definitions) {
         int size = definitions.size();
         if (size > 1) size = 1;
 
