@@ -37,6 +37,11 @@ public abstract class DictionaryRequest implements RequestHandler {
     }
   }
 
+  @Override
+  public boolean isFinal () {
+    return false;
+  }
+
   protected static void logProblem (String problem) {
     Log.w(LOG_TAG, problem);
   }
