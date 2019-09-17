@@ -188,6 +188,8 @@
   <string name="DescribeIndicators_bluetooth_property_discoverable">discoverable</string>
   <string name="DescribeIndicators_bluetooth_property_discovering">discovering</string>
 
+  <string name="ShowDefinition_no_definition">definition not found</string>
+
   <string name="SpellingSuggest_none">no suggestions</string>
 
   <string name="message_password_field">password field</string>

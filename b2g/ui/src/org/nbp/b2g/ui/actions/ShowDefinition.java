@@ -40,7 +40,7 @@ public class ShowDefinition extends CursorKeyAction {
 
         if (size == 0) {
           StringBuilder text = new StringBuilder()
-            .append("definition not found")
+            .append(getString(R.string.ShowDefinition_no_definition))
             .append(": ")
             .append(word)
             ;
