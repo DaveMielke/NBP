@@ -30,7 +30,9 @@ public class ShowDefinition extends CursorKeyAction {
     }
 
     final String word = text.subSequence(from, to).toString();
-    new DefineCommand(word, ApplicationSettings.DICTIONARY_DATABASE) {
+    final DictionaryDatabase database = ApplicationSettings.DICTIONARY_DATABASE;
+
+    new DefineCommand(word, database) {
       @Override
       protected void handleResult (final DefinitionList definitions) {
         int size = definitions.size();
@@ -83,6 +85,7 @@ public class ShowDefinition extends CursorKeyAction {
       }
     };
 
+    new QuitCommand();
     return true;
   }
 
