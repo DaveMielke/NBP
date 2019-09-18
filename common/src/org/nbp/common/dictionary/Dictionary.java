@@ -93,4 +93,9 @@ public abstract class Dictionary {
       }
     };
   }
+
+  public static void doAudits () {
+    auditDatabaseNames();
+    auditStrategyNames();
+  }
 }
