@@ -28,28 +28,26 @@ public abstract class ItemsRequest extends CommandRequest implements ItemsHandle
 
   @Override
   public boolean handleResponse (int code, DictionaryOperands operands) {
-    final int begin = getResponseCode();
-
-    if (code == begin) {
-      for (String item : getTextAsList()) {
-        try {
-          DictionaryOperands parameters = new DictionaryOperands(item);
-
-          if (parameters.isEmpty()) throw new OperandException("missing item name");
-          String name = parameters.removeFirst();
-
-          if (parameters.isEmpty()) throw new OperandException("missing item Description");
-          String description = parameters.removeFirst();
-
-          items.add(name, description);
-        } catch (OperandException exception) {
-          Log.w(LOG_TAG, exception.getMessage());
-        }
-      }
-
-      return false;
+    if (code != getResponseCode()) {
+      return super.handleResponse(code, operands);
     }
 
-    return super.handleResponse(code, operands);
+    for (String item : getTextAsList()) {
+      try {
+        DictionaryOperands parameters = new DictionaryOperands(item);
+
+        if (parameters.isEmpty()) throw new OperandException("missing item name");
+        String name = parameters.removeFirst();
+
+        if (parameters.isEmpty()) throw new OperandException("missing item Description");
+        String description = parameters.removeFirst();
+
+        items.add(name, description);
+      } catch (OperandException exception) {
+        Log.w(LOG_TAG, exception.getMessage());
+      }
+    }
+
+    return false;
   }
 }

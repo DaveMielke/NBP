@@ -1,7 +1,7 @@
 package org.nbp.common.dictionary;
 
 public enum DictionaryDatabase {
-  ALL("*", "all of the dictionaries"),
+  ALL("*", "all non-translation dictionaries"),
   FIRST("!", "the first dictionary that contains a match"),
 
   GCIDE("gcide", "The Collaborative International Dictionary of English"),

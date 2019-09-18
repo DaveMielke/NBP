@@ -24,13 +24,11 @@ public abstract class TextRequest extends CommandRequest implements TextHandler 
 
   @Override
   public boolean handleResponse (int code, DictionaryOperands operands) {
-    final int begin = getResponseCode();
-
-    if (code == begin) {
-      text = getTextAsString();
-      return false;
+    if (code != getResponseCode()) {
+      return super.handleResponse(code, operands);
     }
 
-    return super.handleResponse(code, operands);
+    text = getTextAsString();
+    return false;
   }
 }
