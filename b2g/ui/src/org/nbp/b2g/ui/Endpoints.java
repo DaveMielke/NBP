@@ -106,6 +106,18 @@ public abstract class Endpoints {
     return setCurrentEndpoint(popup.get().set(text));
   }
 
+  public static boolean pushPopupEndpoint (CharSequence text, int first, PopupClickHandler handler) {
+    return setCurrentEndpoint(new PopupEndpoint().set(text, first, handler));
+  }
+
+  public static boolean pushPopupEndpoint (CharSequence text, PopupClickHandler handler) {
+    return setCurrentEndpoint(new PopupEndpoint().set(text, handler));
+  }
+
+  public static boolean pushPopupEndpoint (CharSequence text) {
+    return setCurrentEndpoint(new PopupEndpoint().set(text));
+  }
+
   public static boolean setFindEndpoint (boolean backward) {
     FindEndpoint endpoint = find.get();
 

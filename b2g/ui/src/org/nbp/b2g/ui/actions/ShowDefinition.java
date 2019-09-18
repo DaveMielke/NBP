@@ -2,11 +2,10 @@ package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
 import org.nbp.common.dictionary.*;
-import org.nbp.b2g.ui.popup.PopupEndpoint;
 
 public class ShowDefinition extends CursorKeyAction {
   private static void showText (CharSequence text) {
-    Endpoints.setCurrentEndpoint(new PopupEndpoint().set(text));
+    Endpoints.pushPopupEndpoint(text);
   }
 
   @Override
@@ -36,7 +35,12 @@ public class ShowDefinition extends CursorKeyAction {
       @Override
       public void handleDefinitions (final DefinitionList definitions) {
         int size = definitions.size();
-        if (size > 1) size = 1;
+
+        if (true) {
+          if (size > 1) {
+            size = 1;
+          }
+        }
 
         if (size == 0) {
           StringBuilder text = new StringBuilder()
@@ -70,17 +74,15 @@ public class ShowDefinition extends CursorKeyAction {
           text.append(definition.getDatabaseDescription());
         }
 
-        Endpoints.setCurrentEndpoint(
-          new PopupEndpoint().set(
-            text, 1,
-            new PopupClickHandler() {
-              @Override
-              public boolean handleClick (int index) {
-                showText(definitions.get(index).getDefinitionText());
-                return true;
-              }
+        Endpoints.pushPopupEndpoint(
+          text, 1,
+          new PopupClickHandler() {
+            @Override
+            public boolean handleClick (int index) {
+              showText(definitions.get(index).getDefinitionText());
+              return true;
             }
-          )
+          }
         );
       }
     };
