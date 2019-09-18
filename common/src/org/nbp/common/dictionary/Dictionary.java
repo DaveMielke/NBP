@@ -23,24 +23,42 @@ public abstract class Dictionary {
     logAudit(String.format(format, arguments));
   }
 
-  private static void auditItemNames (ItemList items, Set<String> names, String type) {
-    Set<String> oldNames = new HashSet(names);
-    Set<String> newNames = new HashSet();
+  private static void runAudit (String name, Runnable audit) {
+    logAudit(("begin audit: " + name));
 
-    for (ItemEntry item : items) {
-      String name = item.getName();
+    try {
+      audit.run();
+    } finally {
+      logAudit(("end audit: " + name));
+    }
+  }
 
-      if (names.contains(name)) {
-        oldNames.remove(name);
-      } else {
-        newNames.add(name);
-        logAudit("new %s: %s: %s", type, name, item.getDescription());
+  private static void auditItemNames (final ItemList items, final Set<String> names, final String type) {
+    runAudit(
+      (type + " names"),
+      new Runnable() {
+        @Override
+        public void run () {
+          Set<String> oldNames = new HashSet(names);
+          Set<String> newNames = new HashSet();
+
+          for (ItemEntry item : items) {
+            String name = item.getName();
+
+            if (names.contains(name)) {
+              oldNames.remove(name);
+            } else {
+              newNames.add(name);
+              logAudit("new %s: %s: %s", type, name, item.getDescription());
+            }
+          }
+
+          for (String oldName : oldNames) {
+            logAudit("old %s: %s", type, oldName);
+          }
+        }
       }
-    }
-
-    for (String oldName : oldNames) {
-      logAudit("old %s: %s", type, oldName);
-    }
+    );
   }
 
   public static void auditDatabaseNames () {
