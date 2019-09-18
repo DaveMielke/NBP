@@ -1,6 +1,7 @@
 package org.nbp.b2g.ui;
 
 import org.nbp.common.dictionary.DictionaryDatabase;
+import org.nbp.common.dictionary.DictionaryStrategy;
 
 public abstract class ApplicationSettings {
   private ApplicationSettings () {
@@ -47,8 +48,12 @@ public abstract class ApplicationSettings {
   public volatile static boolean REMOTE_DISPLAY = ApplicationDefaults.REMOTE_DISPLAY;
   public volatile static boolean SECURE_CONNECTION = ApplicationDefaults.SECURE_CONNECTION;
 
-  public volatile static ComputerBraille COMPUTER_BRAILLE = ApplicationDefaults.COMPUTER_BRAILLE;
   public volatile static DictionaryDatabase DICTIONARY_DATABASE = ApplicationDefaults.DICTIONARY_DATABASE;
+  public volatile static boolean MULTIPLE_DEFINITIONS = ApplicationDefaults.MULTIPLE_DEFINITIONS;
+  public volatile static boolean MATCHING_WORDS = ApplicationDefaults.MATCHING_WORDS;
+  public volatile static DictionaryStrategy DICTIONARY_STRATEGY = ApplicationDefaults.DICTIONARY_STRATEGY;
+
+  public volatile static ComputerBraille COMPUTER_BRAILLE = ApplicationDefaults.COMPUTER_BRAILLE;
   public volatile static PhoneticAlphabet PHONETIC_ALPHABET = ApplicationDefaults.PHONETIC_ALPHABET;
   public volatile static ScreenOrientation SCREEN_ORIENTATION = ApplicationDefaults.SCREEN_ORIENTATION;
 

@@ -80,6 +80,11 @@ Remote Settings
 
 .. include:: settings-remote.rst
 
+Dictionary Settings
+~~~~~~~~~~~~~~~~~~~
+
+.. include:: settings-dictionary.rst
+
 Advanced Settings
 ~~~~~~~~~~~~~~~~~
 

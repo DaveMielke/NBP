@@ -1,10 +1,10 @@
-.. table:: Advanced Settings
+.. table:: Dictionary Settings
 
   ====================  ========  =============================  =====================
   Setting               Default   Choices                        Buttons
   --------------------  --------  -----------------------------  ---------------------
-  Computer Braille      local     local, en, ...                 Change
-  Phonetic Alphabet     off       off, basic, extended           Change
-  Screen Orientation    unlocked  unlocked, portrait, landscape  Change
+  Database Name         all       all, first, ...                Change
+  Multiple Definitions  Off       Off, On
+  Match Strategy        default   default, prefix, ...           Change
   ====================  ========  =============================  =====================
 

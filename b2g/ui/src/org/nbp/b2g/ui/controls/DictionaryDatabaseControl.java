@@ -12,7 +12,7 @@ public class DictionaryDatabaseControl extends EnumerationControl<DictionaryData
 
   @Override
   protected int getResourceForGroup () {
-    return R.string.control_group_advanced;
+    return R.string.control_group_dictionary;
   }
 
   @Override

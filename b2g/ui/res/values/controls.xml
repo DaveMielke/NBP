@@ -51,9 +51,14 @@
   <string name="control_label_RemoteDisplay">Remote Display</string>
   <string name="control_label_SecureConnection">Secure Connection</string>
 
+  <string name="control_group_dictionary">Dictionary Settings</string>
+  <string name="control_label_DictionaryDatabase">Database Name</string>
+  <string name="control_label_MultipleDefinitions">Multiple Definitions</string>
+  <string name="control_label_MatchingWords">Matching Words</string>
+  <string name="control_label_DictionaryStrategy">Match Strategy</string>
+
   <string name="control_group_advanced">Advanced Settings</string>
   <string name="control_label_ComputerBraille">Computer Braille</string>
-  <string name="control_label_DictionaryDatabase">Dictionary Database</string>
   <string name="control_label_PhoneticAlphabet">Phonetic Alphabet</string>
   <string name="control_label_ScreenOrientation">Screen Orientation</string>
 

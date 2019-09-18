@@ -69,9 +69,14 @@ public abstract class Controls {
   public final static RemoteDisplayControl remoteDisplay = new RemoteDisplayControl();
   public final static SecureConnectionControl secureConnection = new SecureConnectionControl();
 
+  // dictionary settings
+  public final static DictionaryDatabaseControl dictionaryDatabase = new DictionaryDatabaseControl();
+  public final static MultipleDefinitionsControl multipleDefinitions = new MultipleDefinitionsControl();
+  public final static MatchingWordsControl matchingWords = new MatchingWordsControl();
+  public final static DictionaryStrategyControl dictionaryStrategy = new DictionaryStrategyControl();
+
   // advanced settings
   public final static ComputerBrailleControl computerBraille = new ComputerBrailleControl();
-  public final static DictionaryDatabaseControl dictionaryDatabase = new DictionaryDatabaseControl();
   public final static PhoneticAlphabetControl phoneticAlphabet = new PhoneticAlphabetControl();
   public final static ScreenOrientationControl screenOrientation = new ScreenOrientationControl();
 

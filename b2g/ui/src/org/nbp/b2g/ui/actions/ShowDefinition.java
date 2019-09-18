@@ -36,7 +36,7 @@ public class ShowDefinition extends CursorKeyAction {
       public void handleDefinitions (final DefinitionList definitions) {
         int size = definitions.size();
 
-        if (true) {
+        if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
           if (size > 1) {
             size = 1;
           }

@@ -1,7 +1,9 @@
 package org.nbp.b2g.ui;
 
 import org.nbp.common.speech.SpeechParameters;
+
 import org.nbp.common.dictionary.DictionaryDatabase;
+import org.nbp.common.dictionary.DictionaryStrategy;
 
 public abstract class ApplicationDefaults {
   private ApplicationDefaults () {
@@ -48,8 +50,12 @@ public abstract class ApplicationDefaults {
   public final static boolean REMOTE_DISPLAY = false;
   public final static boolean SECURE_CONNECTION = false;
 
-  public final static ComputerBraille COMPUTER_BRAILLE = ComputerBraille.LOCAL;
   public final static DictionaryDatabase DICTIONARY_DATABASE = DictionaryDatabase.ALL;
+  public final static boolean MULTIPLE_DEFINITIONS = false;
+  public final static boolean MATCHING_WORDS = false;
+  public final static DictionaryStrategy DICTIONARY_STRATEGY = DictionaryStrategy.DEFAULT;
+
+  public final static ComputerBraille COMPUTER_BRAILLE = ComputerBraille.LOCAL;
   public final static PhoneticAlphabet PHONETIC_ALPHABET = PhoneticAlphabet.OFF;
   public final static ScreenOrientation SCREEN_ORIENTATION = ScreenOrientation.UNLOCKED;
 
