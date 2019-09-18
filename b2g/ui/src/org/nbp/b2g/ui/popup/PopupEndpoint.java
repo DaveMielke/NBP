@@ -54,7 +54,11 @@ public class PopupEndpoint extends Endpoint {
       try {
         return clickHandler.handleClick(index);
       } finally {
-        if (!handleKeyboardKey_enter()) return false;
+        if (Endpoints.getCurrentEndpoint() == this) {
+          if (!Endpoints.setPreviousEndpoint()) {
+            return false;
+          }
+        }
       }
     }
   }
