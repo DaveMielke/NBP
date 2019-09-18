@@ -56,13 +56,6 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
-  private static SocketAddress makeServerAddress () {
-    return new InetSocketAddress(
-      DictionaryParameters.SERVER_NAME,
-      DictionaryParameters.SERVER_PORT
-    );
-  }
-
   private Socket clientSocket = null;
   private Writer commandWriter = null;
   private BufferedReader responseReader = null;
@@ -86,6 +79,14 @@ public class DictionaryConnection implements Closeable {
   private final BlockingQueue<RequestHandler> responseQueue =
       new LinkedBlockingQueue<RequestHandler>();
 
+  private final void flushRequestQueue () {
+    while (true) {
+      RequestEntry request = requestQueue.poll();
+      if (request == null) break;
+      request.handler.setFinished();
+    }
+  }
+
   private final void flushResponseQueue () {
     while (true) {
       RequestHandler handler = responseQueue.poll();
@@ -107,17 +108,17 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
-  private final void closeReader () {
-    if (responseReader != null) {
-      close(responseReader, "reader");
-      responseReader = null;
-    }
-  }
-
   private final void closeWriter () {
     if (commandWriter != null) {
       close(commandWriter, "writer");
       commandWriter = null;
+    }
+  }
+
+  private final void closeReader () {
+    if (responseReader != null) {
+      close(responseReader, "reader");
+      responseReader = null;
     }
   }
 
@@ -154,6 +155,13 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
+  private static SocketAddress makeServerAddress () {
+    return new InetSocketAddress(
+      DictionaryParameters.SERVER_NAME,
+      DictionaryParameters.SERVER_PORT
+    );
+  }
+
   private final Socket getSocket () {
     if (clientSocket == null) {
       Socket socket = new Socket();
@@ -173,6 +181,23 @@ public class DictionaryConnection implements Closeable {
     return clientSocket;
   }
 
+  private final Writer getWriter () {
+    if (commandWriter == null) {
+      Socket socket = getSocket();
+
+      if (socket != null) {
+        try {
+          OutputStream stream = socket.getOutputStream();
+          commandWriter = new OutputStreamWriter(stream, DictionaryParameters.CHARACTER_ENCODING);
+        } catch (IOException exception) {
+          Log.e(LOG_TAG, ("writer creation error: " + exception.getMessage()));
+        }
+      }
+    }
+
+    return commandWriter;
+  }
+
   private final BufferedReader getReader () {
     if (responseReader == null) {
       Socket socket = getSocket();
@@ -189,23 +214,6 @@ public class DictionaryConnection implements Closeable {
     }
 
     return responseReader;
-  }
-
-  private final Writer getWriter () {
-    if (commandWriter == null) {
-      Socket socket = getSocket();
-
-      if (socket != null) {
-        try {
-          OutputStream stream = socket.getOutputStream();
-          commandWriter = new OutputStreamWriter(stream, DictionaryParameters.CHARACTER_ENCODING);
-        } catch (IOException exception) {
-          Log.e(LOG_TAG, ("writer creation error: " + exception.getMessage()));
-        }
-      }
-    }
-
-    return commandWriter;
   }
 
   public final String readLine () {
@@ -316,14 +324,6 @@ public class DictionaryConnection implements Closeable {
 
         responseThread.start();
       }
-    }
-  }
-
-  private final void flushRequestQueue () {
-    while (true) {
-      RequestEntry request = requestQueue.poll();
-      if (request == null) break;
-      request.handler.setFinished();
     }
   }
 
