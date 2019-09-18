@@ -319,6 +319,14 @@ public class DictionaryConnection implements Closeable {
     }
   }
 
+  private final void flushRequestQueue () {
+    while (true) {
+      RequestEntry request = requestQueue.poll();
+      if (request == null) break;
+      request.handler.setFinished();
+    }
+  }
+
   private final void runRequestLoop () {
     StringBuilder command = new StringBuilder();
 
@@ -338,8 +346,12 @@ public class DictionaryConnection implements Closeable {
 
       try {
         try {
-          String[] arguments = request.arguments;
           command.setLength(0);
+          String[] arguments = request.arguments;
+
+          if (arguments.length == 0) {
+            throw new OperandException("missing command");
+          }
 
           for (String argument : arguments) {
             if (command.length() > 0) command.append(' ');
@@ -347,7 +359,6 @@ public class DictionaryConnection implements Closeable {
           }
 
           Log.d(LOG_TAG, ("command: " + command));
-          if (command.length() == 0) continue;
           command.append("\r\n");
 
           {
@@ -403,6 +414,7 @@ public class DictionaryConnection implements Closeable {
             try {
               runRequestLoop();
             } finally {
+              flushRequestQueue();
               logEvent("request thread finished");
             }
           }
