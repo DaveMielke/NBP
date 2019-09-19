@@ -20,125 +20,131 @@ public class ShowDefinition extends CursorKeyAction {
     showText(text);
   }
 
-  private static void listMatches (MatchList matches) {
-    final ArrayList<String> words = new ArrayList<String>();
+  private final void listMatches (MatchList matches) {
+    synchronized (this) {
+      final ArrayList<String> words = new ArrayList<String>();
 
-    for (MatchEntry match : matches) {
-      String word = match.getMatchedWord();
-      if (words.contains(word)) continue;
-      words.add(word);
-    }
-
-    StringBuilder text = new StringBuilder();
-    text.append(getString(R.string.ShowDefinition_select_match));
-
-    {
-      int index = 0;
-
-      for (String word : words) {
-        text.append('\n');
-        text.append(++index);
-
-        text.append(": ");
-        text.append(word);
+      for (MatchEntry match : matches) {
+        String word = match.getMatchedWord();
+        if (words.contains(word)) continue;
+        words.add(word);
       }
-    }
 
-    Endpoints.pushPopupEndpoint(
-      text, 1,
-      new PopupClickHandler() {
-        @Override
-        public boolean handleClick (int index) {
-          requestDefinition(words.get(index));
-          return true;
+      StringBuilder text = new StringBuilder();
+      text.append(getString(R.string.ShowDefinition_select_match));
+
+      {
+        int index = 0;
+
+        for (String word : words) {
+          text.append('\n');
+          text.append(++index);
+
+          text.append(": ");
+          text.append(word);
         }
       }
-    );
-  }
 
-  private static void showMatches (final MatchList matches, String word) {
-    if (matches.isEmpty()) {
-      showNoDefinitions(word);
-      return;
-    }
-
-    listMatches(matches);
-  }
-
-  private static void requestMatches (final String word) {
-    new MatchCommand(word, ApplicationSettings.DICTIONARY_STRATEGY, ApplicationSettings.DICTIONARY_DATABASE) {
-      @Override
-      public void handleMatches (MatchList matches) {
-        showMatches(matches, word);
-      }
-    };
-  }
-
-  private static void listDefinitions (final DefinitionList definitions) {
-    StringBuilder text = new StringBuilder();
-    text.append(getString(R.string.ShowDefinition_select_definition));
-
-    {
-      int index = 0;
-
-      for (DefinitionEntry definition : definitions) {
-        text.append('\n');
-        text.append(++index);
-
-        text.append(": ");
-        text.append(definition.getMatchedWord());
-
-        text.append(": ");
-        text.append(definition.getDatabaseDescription());
-      }
-    }
-
-    Endpoints.pushPopupEndpoint(
-      text, 1,
-      new PopupClickHandler() {
-        @Override
-        public boolean handleClick (int index) {
-          showText(definitions.get(index).getDefinitionText());
-          return true;
+      Endpoints.pushPopupEndpoint(
+        text, 1,
+        new PopupClickHandler() {
+          @Override
+          public boolean handleClick (int index) {
+            requestDefinition(words.get(index));
+            return true;
+          }
         }
-      }
-    );
+      );
+    }
   }
 
-  private static void showDefinitions (final DefinitionList definitions, final String word) {
-    int count = definitions.size();
-
-    if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
-      if (count > 1) {
-        count = 1;
-      }
-    }
-
-    if (count == 0) {
-      if (ApplicationSettings.SUGGEST_WORDS) {
-        requestMatches(word);
-      } else {
+  private final void showMatches (final MatchList matches, String word) {
+    synchronized (this) {
+      if (matches.isEmpty()) {
         showNoDefinitions(word);
+      } else {
+        listMatches(matches);
       }
-
-      return;
     }
-
-    if (count == 1) {
-      showText(definitions.get(0).getDefinitionText());
-      return;
-    }
-
-    listDefinitions(definitions);
   }
 
-  private static void requestDefinition (final String word) {
-    new DefineCommand(word, ApplicationSettings.DICTIONARY_DATABASE) {
-      @Override
-      public void handleDefinitions (DefinitionList definitions) {
-        showDefinitions(definitions, word);
+  private final void requestMatches (final String word) {
+    synchronized (this) {
+      new MatchCommand(word, ApplicationSettings.DICTIONARY_STRATEGY, ApplicationSettings.DICTIONARY_DATABASE) {
+        @Override
+        public void handleMatches (MatchList matches) {
+          showMatches(matches, word);
+        }
+      };
+    }
+  }
+
+  private final void listDefinitions (final DefinitionList definitions) {
+    synchronized (this) {
+      StringBuilder text = new StringBuilder();
+      text.append(getString(R.string.ShowDefinition_select_definition));
+
+      {
+        int index = 0;
+
+        for (DefinitionEntry definition : definitions) {
+          text.append('\n');
+          text.append(++index);
+
+          text.append(": ");
+          text.append(definition.getMatchedWord());
+
+          text.append(": ");
+          text.append(definition.getDatabaseDescription());
+        }
       }
-    };
+
+      Endpoints.pushPopupEndpoint(
+        text, 1,
+        new PopupClickHandler() {
+          @Override
+          public boolean handleClick (int index) {
+            showText(definitions.get(index).getDefinitionText());
+            return true;
+          }
+        }
+      );
+    }
+  }
+
+  private final void showDefinitions (final DefinitionList definitions, final String word) {
+    synchronized (this) {
+      int count = definitions.size();
+
+      if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
+        if (count > 1) {
+          count = 1;
+        }
+      }
+
+      if (count == 0) {
+        if (ApplicationSettings.SUGGEST_WORDS) {
+          requestMatches(word);
+        } else {
+          showNoDefinitions(word);
+        }
+      } else if (count == 1) {
+        showText(definitions.get(0).getDefinitionText());
+      } else {
+        listDefinitions(definitions);
+      }
+    }
+  }
+
+  private final void requestDefinition (final String word) {
+    synchronized (this) {
+      new DefineCommand(word, ApplicationSettings.DICTIONARY_DATABASE) {
+        @Override
+        public void handleDefinitions (DefinitionList definitions) {
+          showDefinitions(definitions, word);
+        }
+      };
+    }
   }
 
   @Override
