@@ -1,6 +1,8 @@
 package org.nbp.b2g.ui.actions;
 import org.nbp.b2g.ui.*;
 
+import java.util.ArrayList;
+
 import org.nbp.common.dictionary.*;
 
 public class ShowDefinition extends CursorKeyAction {
@@ -19,18 +21,26 @@ public class ShowDefinition extends CursorKeyAction {
   }
 
   private static void listMatches (MatchList matches) {
+    final ArrayList<String> words = new ArrayList<String>();
+
+    for (MatchEntry match : matches) {
+      String word = match.getMatchedWord();
+      if (words.contains(word)) continue;
+      words.add(word);
+    }
+
     StringBuilder text = new StringBuilder();
-    text.append(getString(R.string.ShowDefinition_select_suggestion));
+    text.append(getString(R.string.ShowDefinition_select_match));
 
     {
       int index = 0;
 
-      for (MatchEntry match : matches) {
+      for (String word : words) {
         text.append('\n');
         text.append(++index);
 
         text.append(": ");
-        text.append(match.getMatchedWord());
+        text.append(word);
       }
     }
 
@@ -39,6 +49,7 @@ public class ShowDefinition extends CursorKeyAction {
       new PopupClickHandler() {
         @Override
         public boolean handleClick (int index) {
+          requestDefinition(words.get(index));
           return true;
         }
       }

@@ -189,7 +189,7 @@
 
   <string name="ShowDefinition_no_definitions">definition not found</string>
   <string name="ShowDefinition_select_definition">Select a definition by clicking on it:</string>
-  <string name="ShowDefinition_select_suggestion">Select a suggestion by clicking on it:</string>
+  <string name="ShowDefinition_select_match">Select a suggestion by clicking on it:</string>
 
   <string name="SpellingSuggest_none">no suggestions</string>
 
