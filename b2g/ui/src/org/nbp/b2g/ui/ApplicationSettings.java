@@ -50,7 +50,7 @@ public abstract class ApplicationSettings {
 
   public volatile static DictionaryDatabase DICTIONARY_DATABASE = ApplicationDefaults.DICTIONARY_DATABASE;
   public volatile static boolean MULTIPLE_DEFINITIONS = ApplicationDefaults.MULTIPLE_DEFINITIONS;
-  public volatile static boolean MATCHING_WORDS = ApplicationDefaults.MATCHING_WORDS;
+  public volatile static boolean SUGGEST_WORDS = ApplicationDefaults.SUGGEST_WORDS;
   public volatile static DictionaryStrategy DICTIONARY_STRATEGY = ApplicationDefaults.DICTIONARY_STRATEGY;
 
   public volatile static ComputerBraille COMPUTER_BRAILLE = ApplicationDefaults.COMPUTER_BRAILLE;

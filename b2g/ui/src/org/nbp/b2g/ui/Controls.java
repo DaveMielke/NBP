@@ -72,7 +72,7 @@ public abstract class Controls {
   // dictionary settings
   public final static DictionaryDatabaseControl dictionaryDatabase = new DictionaryDatabaseControl();
   public final static MultipleDefinitionsControl multipleDefinitions = new MultipleDefinitionsControl();
-  public final static MatchingWordsControl matchingWords = new MatchingWordsControl();
+  public final static SuggestWordsControl suggestWords = new SuggestWordsControl();
   public final static DictionaryStrategyControl dictionaryStrategy = new DictionaryStrategyControl();
 
   // advanced settings

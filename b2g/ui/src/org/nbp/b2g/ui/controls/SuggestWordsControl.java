@@ -3,10 +3,10 @@ import org.nbp.b2g.ui.*;
 
 import org.nbp.common.controls.BooleanControl;
 
-public class MatchingWordsControl extends BooleanControl {
+public class SuggestWordsControl extends BooleanControl {
   @Override
   protected int getResourceForLabel () {
-    return R.string.control_label_MatchingWords;
+    return R.string.control_label_SuggestWords;
   }
 
   @Override
@@ -16,26 +16,26 @@ public class MatchingWordsControl extends BooleanControl {
 
   @Override
   protected String getPreferenceKey () {
-    return "matching-words";
+    return "suggest-words";
   }
 
   @Override
   protected boolean getBooleanDefault () {
-    return ApplicationDefaults.MATCHING_WORDS;
+    return ApplicationDefaults.SUGGEST_WORDS;
   }
 
   @Override
   public boolean getBooleanValue () {
-    return ApplicationSettings.MATCHING_WORDS;
+    return ApplicationSettings.SUGGEST_WORDS;
   }
 
   @Override
   protected boolean setBooleanValue (boolean value) {
-    ApplicationSettings.MATCHING_WORDS = value;
+    ApplicationSettings.SUGGEST_WORDS = value;
     return true;
   }
 
-  public MatchingWordsControl () {
+  public SuggestWordsControl () {
     super();
   }
 }

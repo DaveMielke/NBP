@@ -52,9 +52,9 @@
   <string name="control_label_SecureConnection">Secure Connection</string>
 
   <string name="control_group_dictionary">Dictionary Settings</string>
-  <string name="control_label_DictionaryDatabase">Database Name</string>
+  <string name="control_label_DictionaryDatabase">Dictionary Name</string>
   <string name="control_label_MultipleDefinitions">Multiple Definitions</string>
-  <string name="control_label_MatchingWords">Matching Words</string>
+  <string name="control_label_SuggestWords">Suggest Words</string>
   <string name="control_label_DictionaryStrategy">Match Strategy</string>
 
   <string name="control_group_advanced">Advanced Settings</string>
