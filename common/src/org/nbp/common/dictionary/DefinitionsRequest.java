@@ -1,14 +1,14 @@
 package org.nbp.common.dictionary;
 
 public abstract class DefinitionsRequest extends CommandRequest implements DefinitionsHandler {
-  private final DefinitionList definitions = new DefinitionList();
+  private final DefinitionList savedDefinitions = new DefinitionList();
 
   protected DefinitionsRequest (String... arguments) {
     super(arguments);
   }
 
   public final DefinitionList getDefinitions () {
-    return definitions;
+    return savedDefinitions;
   }
 
   @Override
@@ -23,6 +23,10 @@ public abstract class DefinitionsRequest extends CommandRequest implements Defin
   @Override
   public boolean handleResponse (int code, DictionaryOperands operands) {
     switch (code) {
+      case ResponseCodes.UNKNOWN_DATABASE:
+        logProblem("unknown database");
+        return true;
+
       case ResponseCodes.NO_MATCH:
         return true;
 
@@ -35,7 +39,7 @@ public abstract class DefinitionsRequest extends CommandRequest implements Defin
         String description = operands.next();
         String text = getTextAsString();
 
-        definitions.add(word, text, name, description);
+        savedDefinitions.add(word, text, name, description);
         return false;
       }
 

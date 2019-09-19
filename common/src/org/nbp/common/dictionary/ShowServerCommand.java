@@ -6,7 +6,14 @@ public class ShowServerCommand extends TextRequest {
   }
 
   @Override
-  protected final int getResponseCode () {
-    return ResponseCodes.BEGIN_SERVER_TEXT;
+  public boolean handleResponse (int code, DictionaryOperands operands) {
+    switch (code) {
+      case ResponseCodes.BEGIN_SERVER_TEXT:
+        saveText();
+        return false;
+
+      default:
+        return super.handleResponse(code, operands);
+    }
   }
 }

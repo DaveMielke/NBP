@@ -10,7 +10,18 @@ public class ShowInfoCommand extends TextRequest {
   }
 
   @Override
-  protected final int getResponseCode () {
-    return ResponseCodes.BEGIN_DATABASE_TEXT;
+  public boolean handleResponse (int code, DictionaryOperands operands) {
+    switch (code) {
+      case ResponseCodes.UNKNOWN_DATABASE:
+        logProblem("unknown database");
+        return true;
+
+      case ResponseCodes.BEGIN_DATABASE_TEXT:
+        saveText();
+        return false;
+
+      default:
+        return super.handleResponse(code, operands);
+    }
   }
 }

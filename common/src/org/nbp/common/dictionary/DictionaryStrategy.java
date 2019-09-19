@@ -1,7 +1,7 @@
 package org.nbp.common.dictionary;
 
 public enum DictionaryStrategy {
-  DEFAULT(".", "the best algorithm for spelling correction"),
+  DEFAULT(".", "the server's preferred algorithm for spelling correction"),
   EXACT("exact", "exact match"),
   PREFIX("prefix", "match the prefix"),
 
