@@ -20,6 +20,14 @@ public abstract class DefinitionsRequest extends CommandRequest implements Defin
     handleDefinitions(getDefinitions());
   }
 
+  protected final void saveDefinitions (DictionaryOperands operands) {
+    String word = operands.next();
+    String name = operands.next();
+    String description = operands.next();
+    String text = getTextAsString();
+    savedDefinitions.add(word, text, name, description);
+  }
+
   @Override
   public boolean handleResponse (int code, DictionaryOperands operands) {
     switch (code) {
@@ -33,15 +41,9 @@ public abstract class DefinitionsRequest extends CommandRequest implements Defin
       case ResponseCodes.BEGIN_DEFINITION_LIST:
         return false;
 
-      case ResponseCodes.BEGIN_DEFINITION_TEXT: {
-        String word = operands.next();
-        String name = operands.next();
-        String description = operands.next();
-        String text = getTextAsString();
-
-        savedDefinitions.add(word, text, name, description);
+      case ResponseCodes.BEGIN_DEFINITION_TEXT:
+        saveDefinitions(operands);
         return false;
-      }
 
       default:
         return super.handleResponse(code, operands);
