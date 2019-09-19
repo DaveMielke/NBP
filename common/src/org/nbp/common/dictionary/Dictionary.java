@@ -98,4 +98,45 @@ public abstract class Dictionary {
     auditDatabaseNames();
     auditStrategyNames();
   }
+
+  private static void logText (String text, String... labels) {
+    String tag;
+
+    {
+      StringBuilder builder = new StringBuilder("dictionary");
+
+      for (String label : labels) {
+        builder.append('-');
+        builder.append(label);
+      }
+
+      tag = builder.toString();
+    }
+
+    for (String line : text.split("\n")) {
+      Log.d(tag, line);
+    }
+  }
+
+  public static void logServerInformation () {
+    new ShowServerCommand() {
+      @Override
+      public void handleText (String text) {
+        logText(text, "server");
+      }
+    };
+  }
+
+  public static void logDatabaseInformation (final String database) {
+    new ShowInfoCommand(database) {
+      @Override
+      public void handleText (String text) {
+        logText(text, "database", database);
+      }
+    };
+  }
+
+  public static void logDatabaseInformation (DictionaryDatabase database) {
+    logDatabaseInformation(database.getName());
+  }
 }
