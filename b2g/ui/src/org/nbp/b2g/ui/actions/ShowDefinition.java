@@ -8,6 +8,110 @@ public class ShowDefinition extends CursorKeyAction {
     Endpoints.pushPopupEndpoint(text);
   }
 
+  private static void showNoDefinition (String word) {
+    StringBuilder text = new StringBuilder()
+      .append(getString(R.string.ShowDefinition_no_definition))
+      .append(": ")
+      .append(word)
+      ;
+
+    showText(text);
+  }
+
+  private static void showMatches (final MatchList matches, String word) {
+    if (matches.isEmpty()) {
+      showNoDefinition(word);
+      return;
+    }
+
+    StringBuilder text = new StringBuilder();
+    text.append(getString(R.string.ShowDefinition_select_suggestion));
+
+    {
+      int index = 0;
+
+      for (MatchEntry match : matches) {
+        text.append('\n');
+        text.append(++index);
+
+        text.append(": ");
+        text.append(match.getMatchedWord());
+
+        text.append(": ");
+        text.append(match.getDatabaseName());
+      }
+    }
+
+    Endpoints.pushPopupEndpoint(
+      text, 1,
+      new PopupClickHandler() {
+        @Override
+        public boolean handleClick (int index) {
+          return true;
+        }
+      }
+    );
+  }
+
+  private static void showDefinitions (final DefinitionList definitions, final String word) {
+    int count = definitions.size();
+
+    if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
+      if (count > 1) {
+        count = 1;
+      }
+    }
+
+    if (count == 0) {
+      if (ApplicationSettings.SUGGEST_WORDS) {
+        new MatchCommand(word, ApplicationSettings.DICTIONARY_STRATEGY, ApplicationSettings.DICTIONARY_DATABASE) {
+          @Override
+          public void handleMatches (MatchList matches) {
+            showMatches(matches, word);
+          }
+        };
+      } else {
+        showNoDefinition(word);
+      }
+
+      return;
+    }
+
+    if (count == 1) {
+      showText(definitions.get(0).getDefinitionText());
+      return;
+    }
+
+    StringBuilder text = new StringBuilder();
+    text.append(getString(R.string.ShowDefinition_select_definition));
+
+    {
+      int index = 0;
+
+      for (DefinitionEntry definition : definitions) {
+        text.append('\n');
+        text.append(++index);
+
+        text.append(": ");
+        text.append(definition.getMatchedWord());
+
+        text.append(": ");
+        text.append(definition.getDatabaseDescription());
+      }
+    }
+
+    Endpoints.pushPopupEndpoint(
+      text, 1,
+      new PopupClickHandler() {
+        @Override
+        public boolean handleClick (int index) {
+          showText(definitions.get(index).getDefinitionText());
+          return true;
+        }
+      }
+    );
+  }
+
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     int from = offset;
@@ -33,57 +137,8 @@ public class ShowDefinition extends CursorKeyAction {
 
     new DefineCommand(word, database) {
       @Override
-      public void handleDefinitions (final DefinitionList definitions) {
-        int size = definitions.size();
-
-        if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
-          if (size > 1) {
-            size = 1;
-          }
-        }
-
-        if (size == 0) {
-          StringBuilder text = new StringBuilder()
-            .append(getString(R.string.ShowDefinition_no_definition))
-            .append(": ")
-            .append(word)
-            ;
-
-          showText(text);
-          return;
-        }
-
-        if (size == 1) {
-          showText(definitions.get(0).getDefinitionText());
-          return;
-        }
-
-        StringBuilder text = new StringBuilder();
-        text.append(getString(R.string.popup_select_definition));
-
-        for (int index=0; index<size; index+=1) {
-          DefinitionEntry definition = definitions.get(index);
-
-          text.append('\n');
-          text.append(index+1);
-
-          text.append(": ");
-          text.append(definition.getMatchedWord());
-
-          text.append(": ");
-          text.append(definition.getDatabaseDescription());
-        }
-
-        Endpoints.pushPopupEndpoint(
-          text, 1,
-          new PopupClickHandler() {
-            @Override
-            public boolean handleClick (int index) {
-              showText(definitions.get(index).getDefinitionText());
-              return true;
-            }
-          }
-        );
+      public void handleDefinitions (DefinitionList definitions) {
+        showDefinitions(definitions, word);
       }
     };
 
