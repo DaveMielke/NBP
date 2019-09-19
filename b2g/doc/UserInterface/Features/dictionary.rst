@@ -28,8 +28,7 @@ Suggest Words
   then display a list of other words that have similar spellings.
   Each line of the list contains
   the choice number,
-  the suggested word,
-  and the name of the dictionary.
+  and the suggested word.
   You can view the definition for a suggested word by clicking on it.
 
 Match Strategy

@@ -8,9 +8,9 @@ public class ShowDefinition extends CursorKeyAction {
     Endpoints.pushPopupEndpoint(text);
   }
 
-  private static void showNoDefinition (String word) {
+  private static void showNoDefinitions (String word) {
     StringBuilder text = new StringBuilder()
-      .append(getString(R.string.ShowDefinition_no_definition))
+      .append(getString(R.string.ShowDefinition_no_definitions))
       .append(": ")
       .append(word)
       ;
@@ -18,12 +18,7 @@ public class ShowDefinition extends CursorKeyAction {
     showText(text);
   }
 
-  private static void showMatches (final MatchList matches, String word) {
-    if (matches.isEmpty()) {
-      showNoDefinition(word);
-      return;
-    }
-
+  private static void listMatches (MatchList matches) {
     StringBuilder text = new StringBuilder();
     text.append(getString(R.string.ShowDefinition_select_suggestion));
 
@@ -36,9 +31,6 @@ public class ShowDefinition extends CursorKeyAction {
 
         text.append(": ");
         text.append(match.getMatchedWord());
-
-        text.append(": ");
-        text.append(match.getDatabaseName());
       }
     }
 
@@ -53,35 +45,25 @@ public class ShowDefinition extends CursorKeyAction {
     );
   }
 
-  private static void showDefinitions (final DefinitionList definitions, final String word) {
-    int count = definitions.size();
-
-    if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
-      if (count > 1) {
-        count = 1;
-      }
-    }
-
-    if (count == 0) {
-      if (ApplicationSettings.SUGGEST_WORDS) {
-        new MatchCommand(word, ApplicationSettings.DICTIONARY_STRATEGY, ApplicationSettings.DICTIONARY_DATABASE) {
-          @Override
-          public void handleMatches (MatchList matches) {
-            showMatches(matches, word);
-          }
-        };
-      } else {
-        showNoDefinition(word);
-      }
-
+  private static void showMatches (final MatchList matches, String word) {
+    if (matches.isEmpty()) {
+      showNoDefinitions(word);
       return;
     }
 
-    if (count == 1) {
-      showText(definitions.get(0).getDefinitionText());
-      return;
-    }
+    listMatches(matches);
+  }
 
+  private static void requestMatches (final String word) {
+    new MatchCommand(word, ApplicationSettings.DICTIONARY_STRATEGY, ApplicationSettings.DICTIONARY_DATABASE) {
+      @Override
+      public void handleMatches (MatchList matches) {
+        showMatches(matches, word);
+      }
+    };
+  }
+
+  private static void listDefinitions (final DefinitionList definitions) {
     StringBuilder text = new StringBuilder();
     text.append(getString(R.string.ShowDefinition_select_definition));
 
@@ -112,6 +94,42 @@ public class ShowDefinition extends CursorKeyAction {
     );
   }
 
+  private static void showDefinitions (final DefinitionList definitions, final String word) {
+    int count = definitions.size();
+
+    if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
+      if (count > 1) {
+        count = 1;
+      }
+    }
+
+    if (count == 0) {
+      if (ApplicationSettings.SUGGEST_WORDS) {
+        requestMatches(word);
+      } else {
+        showNoDefinitions(word);
+      }
+
+      return;
+    }
+
+    if (count == 1) {
+      showText(definitions.get(0).getDefinitionText());
+      return;
+    }
+
+    listDefinitions(definitions);
+  }
+
+  private static void requestDefinition (final String word) {
+    new DefineCommand(word, ApplicationSettings.DICTIONARY_DATABASE) {
+      @Override
+      public void handleDefinitions (DefinitionList definitions) {
+        showDefinitions(definitions, word);
+      }
+    };
+  }
+
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     int from = offset;
@@ -132,17 +150,7 @@ public class ShowDefinition extends CursorKeyAction {
       if (Character.isWhitespace(text.charAt(to))) break;
     }
 
-    final String word = text.subSequence(from, to).toString();
-    final DictionaryDatabase database = ApplicationSettings.DICTIONARY_DATABASE;
-
-    new DefineCommand(word, database) {
-      @Override
-      public void handleDefinitions (DefinitionList definitions) {
-        showDefinitions(definitions, word);
-      }
-    };
-
-    Dictionary.endSession();
+    requestDefinition(text.subSequence(from, to).toString());
     return true;
   }
 
