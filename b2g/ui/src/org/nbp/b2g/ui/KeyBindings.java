@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import org.nbp.common.InputProcessor;
 import org.nbp.common.DirectiveProcessor;
 
-import org.nbp.common.Timeout;
 import org.nbp.common.Tones;
 
 import android.util.Log;
@@ -55,19 +54,7 @@ public class KeyBindings {
     return setKeyBindings(rootKeyBindings);
   }
 
-  private final Timeout partialEntryTimeout = new Timeout(ApplicationParameters.PARTIAL_ENTRY_TIMEOUT, "partial-entry-timeout") {
-    @Override
-    public void run () {
-      try {
-        ActionChooser.chooseAction(currentKeyBindings);
-      } finally {
-        setKeyBindings();
-      }
-    }
-  };
-
   public void resetKeyBindings () {
-    partialEntryTimeout.cancel();
     setKeyBindings();
   }
 
@@ -76,20 +63,19 @@ public class KeyBindings {
 
     @Override
     public boolean performAction () {
-      partialEntryTimeout.cancel();
       setKeyBindings(keyBindings);
-      partialEntryTimeout.start();
+
+      try {
+        ActionChooser.chooseAction(currentKeyBindings);
+      } finally {
+        setKeyBindings();
+      }
       return true;
     }
 
     @Override
     public String getSummary () {
       return ApplicationContext.getString(R.string.message_partial_entry_summary);
-    }
-
-    @Override
-    protected Integer getConfirmation () {
-      return R.string.message_partial_entry_initiated;
     }
 
     public PartialEntry (Endpoint endpoint) {

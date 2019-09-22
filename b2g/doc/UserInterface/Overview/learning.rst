@@ -3,12 +3,11 @@ Ways to Learn
 
 There are a number of ways to learn about the |user interface|
 right on the |product name| itself.
-Pressing Space+h (dots 125) presents a list of the available documents.
-If one of the key combinations listed below is entered within
-|partial entry timeout|
-then immediately go to its corresponding document.
-If not, then an `Action Chooser`_ is presented
-that lets you select the desired document from a list.
+Pressing Space+h (dots 125) presents a list of the available documents
+within an `Action Chooser`_.
+You can view any of them
+either by scrolling to its name and clicking on it
+or by entering its corresponding key combination (see below).
 
 Each of the documents is available in one or more of the following formats:
 

@@ -14,11 +14,11 @@ Space+? (dots 1456)
   ``Google Now``.
 
 Space+s (dots 234)
-  Begin a shortcut. If one of the following key combinations is entered within
-  |partial entry timeout|
-  then the action it's bound to is immediately performed.
-  If not, then an `Action Chooser`_ is presented
-  that let's you pick from the following choices.
+  Begin a shortcut.
+  The list of available shortcuts is presented within an `Action Chooser`_.
+  You can perform one
+  either by scrolling to and clicking on it
+  or by entering its corresponding key combination.
 
   a (dot 1)
     Go to the Accessibility Settings screen.

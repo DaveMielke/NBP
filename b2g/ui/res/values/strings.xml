@@ -75,7 +75,7 @@
   <string name="drag_message_end">item dragged</string>
   <string name="drag_message_none">not dragging an item</string>
 
-  <string name="popup_select_action">Perform an action by clicking on its name:</string>
+  <string name="popup_select_action">Perform an action either by typing its shortcut or by scrolling to and clicking on it:</string>
   <string name="popup_select_activity">Launch an activity by clicking on its name:</string>
   <string name="popup_select_diacritic_add">Add a diacritical mark by clicking on its name:</string>
   <string name="popup_select_diacritic_remove">Remove a diacritical mark by clicking on its name:</string>
@@ -213,7 +213,6 @@
   <string name="message_rendering_text">rendering text</string>
 
   <string name="message_partial_entry_summary">an additional key combination is required</string>
-  <string name="message_partial_entry_initiated">next></string>
   <string name="message_modifier_cancelled">modifier cancelled</string>
 
   <string name="message_no_screen_content">no screen content</string>
