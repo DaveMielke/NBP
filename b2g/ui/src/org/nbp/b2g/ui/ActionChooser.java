@@ -1,10 +1,14 @@
 package org.nbp.b2g.ui;
 
-import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.nbp.b2g.ui.popup.PopupEndpoint;
+
 public class ActionChooser extends UserInterfaceComponent {
+  private ActionChooser () {
+  }
+
   private static String makeText (List<Action> actions, KeyBindingMap map, Integer cursorKey) {
     boolean haveCursorKey = cursorKey != null;
 
@@ -36,7 +40,14 @@ public class ActionChooser extends UserInterfaceComponent {
 
   public static void chooseAction (KeyBindingMap map, final Integer cursorKey) {
     final List<Action> actions = new ArrayList<Action>();
-    Endpoints.setPopupEndpoint(makeText(actions, map, cursorKey), 1,
+    String text = makeText(actions, map, cursorKey);
+
+    PopupEndpoint endpoint = new PopupEndpoint();
+    endpoint.set(text);
+    endpoint.set(1);
+    endpoint.set(map);
+
+    endpoint.set(
       new PopupClickHandler () {
         @Override
         public final boolean handleClick (int index) {
@@ -47,12 +58,11 @@ public class ActionChooser extends UserInterfaceComponent {
         }
       }
     );
+
+    Endpoints.setCurrentEndpoint(endpoint);
   }
 
   public static void chooseAction (final KeyBindingMap map) {
     chooseAction(map, null);
-  }
-
-  public ActionChooser () {
   }
 }

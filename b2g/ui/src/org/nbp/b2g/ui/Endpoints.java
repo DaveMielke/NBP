@@ -94,28 +94,55 @@ public abstract class Endpoints {
     return setCurrentEndpoint(host.get());
   }
 
-  public static boolean setPopupEndpoint (CharSequence text, int first, PopupClickHandler handler) {
-    return setCurrentEndpoint(popup.get().set(text, first, handler));
+  public static boolean setPopupEndpoint (CharSequence text) {
+    PopupEndpoint endpoint = popup.get();
+
+    synchronized (endpoint) {
+      endpoint.set(text);
+      return setCurrentEndpoint(endpoint);
+    }
   }
 
   public static boolean setPopupEndpoint (CharSequence text, PopupClickHandler handler) {
-    return setCurrentEndpoint(popup.get().set(text, handler));
+    PopupEndpoint endpoint = popup.get();
+
+    synchronized (endpoint) {
+      endpoint.set(text);
+      endpoint.set(handler);
+      return setCurrentEndpoint(endpoint);
+    }
   }
 
-  public static boolean setPopupEndpoint (CharSequence text) {
-    return setCurrentEndpoint(popup.get().set(text));
-  }
+  public static boolean setPopupEndpoint (CharSequence text, int header, PopupClickHandler handler) {
+    PopupEndpoint endpoint = popup.get();
 
-  public static boolean pushPopupEndpoint (CharSequence text, int first, PopupClickHandler handler) {
-    return setCurrentEndpoint(new PopupEndpoint().set(text, first, handler));
-  }
-
-  public static boolean pushPopupEndpoint (CharSequence text, PopupClickHandler handler) {
-    return setCurrentEndpoint(new PopupEndpoint().set(text, handler));
+    synchronized (endpoint) {
+      endpoint.set(text);
+      endpoint.set(handler);
+      endpoint.set(header);
+      return setCurrentEndpoint(endpoint);
+    }
   }
 
   public static boolean pushPopupEndpoint (CharSequence text) {
-    return setCurrentEndpoint(new PopupEndpoint().set(text));
+    PopupEndpoint endpoint = new PopupEndpoint();
+    endpoint.set(text);
+    return setCurrentEndpoint(endpoint);
+  }
+
+  public static boolean pushPopupEndpoint (CharSequence text, PopupClickHandler handler) {
+    PopupEndpoint endpoint = new PopupEndpoint();
+    endpoint.set(text);
+    endpoint.set(handler);
+    return setCurrentEndpoint(endpoint);
+  }
+
+  public static boolean pushPopupEndpoint (CharSequence text, int header, PopupClickHandler handler) {
+    PopupEndpoint endpoint = new PopupEndpoint();
+    endpoint.set(text);
+    endpoint.set(handler);
+    endpoint.set(header);
+    return setCurrentEndpoint(endpoint);
   }
 
   public static boolean setFindEndpoint (boolean backward) {

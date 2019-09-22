@@ -166,12 +166,8 @@ public abstract class KeyEvents {
     }
 
     if (action == null) {
-      if (endpoint instanceof InputEndpoint) {
-        if (keyBindings.isRootKeyBindings()) {
-          if (keys.isDots()) {
-            action = keyBindings.getAction(TypeCharacter.class);
-          }
-        }
+      if (keys.isDots()) {
+        action = keyBindings.getAction(TypeCharacter.class);
       }
     }
 
