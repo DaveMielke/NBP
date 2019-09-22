@@ -25,7 +25,7 @@ import android.text.SpannableStringBuilder;
 import org.nbp.common.HighlightSpans;
 import android.text.style.CharacterStyle;
 
-public class HostEndpoint extends InputEndpoint {
+public class HostEndpoint extends Endpoint {
   private final static String LOG_TAG = HostEndpoint.class.getName();
 
   protected final InputService getInputService () {
@@ -651,7 +651,7 @@ public class HostEndpoint extends InputEndpoint {
   }
 
   public HostEndpoint () {
-    super();
+    super(true);
     addKeyBindings("host");
 
     resetNode();
