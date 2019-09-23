@@ -5,9 +5,9 @@ There are a number of ways to learn about the |user interface|
 right on the |product name| itself.
 Pressing Space+h (dots 125) presents a list of the available documents
 within an `Action Chooser`_.
-You can view any of them
-either by scrolling to its name and clicking on it
-or by entering its corresponding key combination (see below).
+You can view any of them by
+either clicking on its name
+or typing its corresponding key combination (see below).
 
 Each of the documents is available in one or more of the following formats:
 

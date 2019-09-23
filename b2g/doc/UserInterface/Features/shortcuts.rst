@@ -16,9 +16,9 @@ Space+? (dots 1456)
 Space+s (dots 234)
   Begin a shortcut.
   The list of available shortcuts is presented within an `Action Chooser`_.
-  You can perform one
-  either by scrolling to and clicking on it
-  or by entering its corresponding key combination.
+  You can perform one by
+  either clicking on its name
+  or typing its corresponding key combination.
 
   a (dot 1)
     Go to the Accessibility Settings screen.
