@@ -71,11 +71,8 @@ public class PopupEndpoint extends Endpoint {
     Action action = keyBindings.get(KeySet.fromDots(dots));
     if (action == null) return false;
 
-    try {
-      return KeyEvents.performAction(action);
-    } finally {
-      Endpoints.setPreviousEndpoint();
-    }
+    Endpoints.setPreviousEndpoint();
+    return KeyEvents.performAction(action);
   }
 
   public final PopupEndpoint set (CharSequence text) {

@@ -31,31 +31,16 @@ public class KeyBindings {
 
   private final Endpoint endpoint;
 
-  private final Map<String, Class<? extends Action>> actionNameCache = new HashMap<String, Class<? extends Action>>();
-  private final Map<Class<? extends Action>, Action> actionClassCache = new HashMap<Class<? extends Action>, Action>();
+  private final Map<String, Class<? extends Action>> actionNameCache =
+        new HashMap<String, Class<? extends Action>>();
+
+  private final Map<Class<? extends Action>, Action> actionClassCache =
+        new HashMap<Class<? extends Action>, Action>();
 
   private final KeyBindingMap rootKeyBindings = new KeyBindingMap();
-  private KeyBindingMap currentKeyBindings = rootKeyBindings;
 
   public final KeyBindingMap getRootKeyBindingMap () {
     return rootKeyBindings;
-  }
-
-  private boolean setKeyBindings (KeyBindingMap keyBindings) {
-    synchronized (rootKeyBindings) {
-      if (currentKeyBindings == keyBindings) return false;
-
-      currentKeyBindings = keyBindings;
-      return true;
-    }
-  }
-
-  private boolean setKeyBindings () {
-    return setKeyBindings(rootKeyBindings);
-  }
-
-  public void resetKeyBindings () {
-    setKeyBindings();
   }
 
   private final class PartialEntry extends Action {
@@ -63,13 +48,7 @@ public class KeyBindings {
 
     @Override
     public boolean performAction () {
-      setKeyBindings(keyBindings);
-
-      try {
-        ActionChooser.chooseAction(currentKeyBindings);
-      } finally {
-        setKeyBindings();
-      }
+      ActionChooser.chooseAction(keyBindings);
       return true;
     }
 
@@ -83,25 +62,12 @@ public class KeyBindings {
     }
   }
 
-  public boolean isRootKeyBindings () {
-    return currentKeyBindings == rootKeyBindings;
-  }
-
-  private static boolean isPartialEntry (Action action) {
+  public static boolean isPartialEntry (Action action) {
     return action instanceof PartialEntry;
   }
 
   public Action getAction (KeySet keys) {
-    Action action = currentKeyBindings.get(keys);
-    boolean reset = true;
-
-    if (action != null) {
-      if (isPartialEntry(action)) {
-        reset = false;
-      }
-    }
-
-    if (reset) resetKeyBindings();
+    Action action = rootKeyBindings.get(keys);
     if (action == null) return null;
     if (!action.isAdvanced()) return action;
     if (ApplicationSettings.ADVANCED_ACTIONS) return action;
