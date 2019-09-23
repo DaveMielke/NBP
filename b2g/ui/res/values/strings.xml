@@ -75,7 +75,8 @@
   <string name="drag_message_end">item dragged</string>
   <string name="drag_message_none">not dragging an item</string>
 
-  <string name="popup_select_action">Perform an action by either typing its shortcut or clicking on its name:</string>
+  <string name="popup_select_action">Perform an action by clicking on its name:</string>
+  <string name="popup_select_shortcut">Perform an action by either typing its shortcut or clicking on its name:</string>
   <string name="popup_select_activity">Launch an activity by clicking on its name:</string>
   <string name="popup_select_diacritic_add">Add a diacritical mark by clicking on its name:</string>
   <string name="popup_select_diacritic_remove">Remove a diacritical mark by clicking on its name:</string>

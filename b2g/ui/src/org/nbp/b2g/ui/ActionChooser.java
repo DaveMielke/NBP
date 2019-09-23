@@ -10,10 +10,14 @@ public class ActionChooser extends UserInterfaceComponent {
   }
 
   private static String makeText (List<Action> actions, KeyBindingMap map, Integer cursorKey) {
+    StringBuilder text = new StringBuilder();
     boolean haveCursorKey = cursorKey != null;
 
-    StringBuilder sb = new StringBuilder();
-    sb.append(getString(R.string.popup_select_action));
+    if (haveCursorKey) {
+      text.append(getString(R.string.popup_select_action));
+    } else {
+      text.append(getString(R.string.popup_select_shortcut));
+    }
 
     for (KeySet keys : map.keySet()) {
       boolean needsCursorKey = keys.get(KeySet.CURSOR);
@@ -23,19 +27,19 @@ public class ActionChooser extends UserInterfaceComponent {
       if (action.isHidden()) continue;
       if (action.isAdvanced() && !ApplicationSettings.ADVANCED_ACTIONS) continue;
 
-      sb.append('\n');
-      sb.append(Wordify.get(action.getName()));
+      text.append('\n');
+      text.append(Wordify.get(action.getName()));
 
-      sb.append(": ");
-      sb.append(keys.toString());
+      text.append(": ");
+      text.append(keys.toString());
 
-      sb.append(": ");
-      sb.append(action.getSummary());
+      text.append(": ");
+      text.append(action.getSummary());
 
       actions.add(action);
     }
 
-    return sb.toString();
+    return text.toString();
   }
 
   public static void chooseAction (KeyBindingMap map, final Integer cursorKey) {
