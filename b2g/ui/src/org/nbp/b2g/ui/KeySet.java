@@ -366,7 +366,7 @@ public class KeySet {
     if ((dots & Braille.CELL_DOT_8) != 0) keys.add(DOT_8);
 
     if (keys.isEmpty()) keys.add(SPACE);
-    return keys;
+    return keys.freeze();
   }
 
   public static KeySet fromDotNumbers (String numbers) {
@@ -380,7 +380,7 @@ public class KeySet {
 
     synchronized (nameToKey) {
       KeyDefinition key = nameToKey.get(name);
-      if (key != null) return new KeySet(key.getCode());
+      if (key != null) return new KeySet(key.getCode()).freeze();
     }
 
     {
