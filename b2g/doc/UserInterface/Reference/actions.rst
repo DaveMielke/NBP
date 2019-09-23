@@ -62,8 +62,8 @@
 .. |HomeKey| replace:: The Android Home key. Go to `the home screen`_.
 .. |InputEditingOff| replace:: Disable the editing of `input areas`_.
 .. |InputEditingOn| replace:: Enable the editing of `input areas`_.
-.. |ListActions| replace:: Show a list of all the actions that don't involve a cursor routing key.
-.. |ListCursorKeyActions| replace:: Show a list of all the actions that do involve a cursor routing key.
+.. |ListActions| replace:: Show a list of all the actions that don't use a cursor routing key.
+.. |ListCursorKeyActions| replace:: Show a list of all the actions that use a cursor routing key.
 .. |LiteraryBraille| replace:: Switch to `typing in literary braille`_ (six dots).
 .. |LogActionsOff| replace:: Turn off the logging of user interface actions.
 .. |LogActionsOn| replace:: Turn on the logging of user interface actions.
@@ -113,8 +113,8 @@
 .. |People| replace:: Go to the People (Contacts) app.
 .. |PowerOff| replace:: Go to the Power Off screen.
 .. |ProductPage| replace:: Go to the `product page`_ for the |product name|.
-.. |QuickStartHTML| replace:: Go to the HTML version of the `Quick Start guide`_.
-.. |QuickStartText| replace:: Go to the plain text version of the `quick Start guide`_.
+.. |QuickStartHTML| replace:: View the HTML version of the `Quick Start guide`_.
+.. |QuickStartText| replace:: View the plain text version of the `quick Start guide`_.
 .. |RecentApplications| replace:: Go to the Recent Apps screen.
 .. |RemoteDisplay| replace:: Switch to `the remote braille display`_.
 .. |RemoveDiacriticalMark| replace:: Remove a diacritical mark from the previous character.
@@ -196,15 +196,15 @@
 .. |TypingStrikeOn| replace:: Turn on strike-through typing.
 .. |TypingUnderlineOff| replace:: Turn off underlined typing.
 .. |TypingUnderlineOn| replace:: Turn on underlined typing.
-.. |UserManualHTML| replace:: Go to the HTML version of the `User Interface manual`_.
-.. |UserManualText| replace:: Go to the plain text version of the `User Interface manual`_.
+.. |UserManualHTML| replace:: View the HTML version of the `User Interface manual`_.
+.. |UserManualText| replace:: View the plain text version of the `User Interface manual`_.
 .. |VoiceCommand| replace:: Initiate an Android voice command.
-.. |VoiceOverHTML| replace:: Go to the HTML version of the `VoiceOver guide`_.
-.. |VoiceOverText| replace:: Go to the plain text version of the `VoiceOver guide`_.
+.. |VoiceOverHTML| replace:: View the HTML version of the `VoiceOver guide`_.
+.. |VoiceOverText| replace:: View the plain text version of the `VoiceOver guide`_.
 .. |VolumeDown| replace:: The Android Volume Down key (applies to the current audio stream).
 .. |VolumeUp| replace:: The Android Volume Up key (applies to the current audio stream).
-.. |WarrantyHTML| replace:: Go to the HTML version of the `Limited Warranty and Return Policy`_.
-.. |WarrantyText| replace:: Go to the plain text version of the `Limited Warranty and Return Policy`_.
+.. |WarrantyHTML| replace:: View the HTML version of the `Limited Warranty and Return Policy`_.
+.. |WarrantyText| replace:: View the plain text version of the `Limited Warranty and Return Policy`_.
 .. |WifiSettings| replace:: Go to the Wi-Fi Settings screen.
 .. |WordWrapOff| replace:: Turn off `word wrap mode`_.
 .. |WordWrapOn| replace:: Turn on `word wrap mode`_.
