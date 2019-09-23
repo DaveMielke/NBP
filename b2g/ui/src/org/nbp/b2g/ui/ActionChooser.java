@@ -47,11 +47,11 @@ public class ActionChooser extends UserInterfaceComponent {
     String text = makeText(actions, map, cursorKey);
 
     PopupEndpoint endpoint = new PopupEndpoint();
-    endpoint.set(text);
-    endpoint.set(1);
-    endpoint.set(map);
+    endpoint.resetPopupEndpoint(text);
+    endpoint.setHeaderLines(1);
+    endpoint.setDotsBindings(map);
 
-    endpoint.set(
+    endpoint.setClickHandler(
       new PopupClickHandler () {
         @Override
         public final boolean handleClick (int index) {

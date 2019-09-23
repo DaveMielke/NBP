@@ -98,7 +98,7 @@ public abstract class Endpoints {
     PopupEndpoint endpoint = popup.get();
 
     synchronized (endpoint) {
-      endpoint.set(text);
+      endpoint.resetPopupEndpoint(text);
       return setCurrentEndpoint(endpoint);
     }
   }
@@ -107,8 +107,8 @@ public abstract class Endpoints {
     PopupEndpoint endpoint = popup.get();
 
     synchronized (endpoint) {
-      endpoint.set(text);
-      endpoint.set(handler);
+      endpoint.resetPopupEndpoint(text);
+      endpoint.setClickHandler(handler);
       return setCurrentEndpoint(endpoint);
     }
   }
@@ -117,31 +117,31 @@ public abstract class Endpoints {
     PopupEndpoint endpoint = popup.get();
 
     synchronized (endpoint) {
-      endpoint.set(text);
-      endpoint.set(handler);
-      endpoint.set(header);
+      endpoint.resetPopupEndpoint(text);
+      endpoint.setHeaderLines(header);
+      endpoint.setClickHandler(handler);
       return setCurrentEndpoint(endpoint);
     }
   }
 
   public static boolean pushPopupEndpoint (CharSequence text) {
     PopupEndpoint endpoint = new PopupEndpoint();
-    endpoint.set(text);
+    endpoint.resetPopupEndpoint(text);
     return setCurrentEndpoint(endpoint);
   }
 
   public static boolean pushPopupEndpoint (CharSequence text, PopupClickHandler handler) {
     PopupEndpoint endpoint = new PopupEndpoint();
-    endpoint.set(text);
-    endpoint.set(handler);
+    endpoint.resetPopupEndpoint(text);
+    endpoint.setClickHandler(handler);
     return setCurrentEndpoint(endpoint);
   }
 
   public static boolean pushPopupEndpoint (CharSequence text, int header, PopupClickHandler handler) {
     PopupEndpoint endpoint = new PopupEndpoint();
-    endpoint.set(text);
-    endpoint.set(handler);
-    endpoint.set(header);
+    endpoint.resetPopupEndpoint(text);
+    endpoint.setHeaderLines(header);
+    endpoint.setClickHandler(handler);
     return setCurrentEndpoint(endpoint);
   }
 

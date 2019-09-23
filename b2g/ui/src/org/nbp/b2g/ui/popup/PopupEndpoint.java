@@ -29,9 +29,9 @@ public class PopupEndpoint extends Endpoint {
     }
   }
 
-  private PopupClickHandler clickHandler = null;
   private int headerLines = 0;
-  private KeyBindingMap keyBindings = null;
+  private PopupClickHandler clickHandler = null;
+  private KeyBindingMap dotsBindings = null;
 
   private final int getIndex () {
     int index = 0;
@@ -66,35 +66,35 @@ public class PopupEndpoint extends Endpoint {
 
   @Override
   public boolean handleDotKeys (byte dots) {
-    if (keyBindings == null) return false;
+    if (dotsBindings == null) return false;
 
-    Action action = keyBindings.get(KeySet.fromDots(dots));
+    Action action = dotsBindings.get(KeySet.fromDots(dots));
     if (action == null) return false;
 
     Endpoints.setPreviousEndpoint();
     return KeyEvents.performAction(action);
   }
 
-  public final PopupEndpoint set (CharSequence text) {
+  public final PopupEndpoint resetPopupEndpoint (CharSequence text) {
     write(text);
-    clickHandler = null;
     headerLines = 0;
-    keyBindings = null;
+    clickHandler = null;
+    dotsBindings = null;
     return this;
   }
 
-  public final PopupEndpoint set (PopupClickHandler handler) {
+  public final PopupEndpoint setHeaderLines (int lines) {
+    headerLines = lines;
+    return this;
+  }
+
+  public final PopupEndpoint setClickHandler (PopupClickHandler handler) {
     clickHandler = handler;
     return this;
   }
 
-  public final PopupEndpoint set (int header) {
-    headerLines = header;
-    return this;
-  }
-
-  public final PopupEndpoint set (KeyBindingMap bindings) {
-    keyBindings = bindings;
+  public final PopupEndpoint setDotsBindings (KeyBindingMap bindings) {
+    dotsBindings = bindings;
     return this;
   }
 
