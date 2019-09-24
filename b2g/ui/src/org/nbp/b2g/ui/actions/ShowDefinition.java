@@ -20,6 +20,88 @@ public class ShowDefinition extends CursorKeyAction {
     showText(text);
   }
 
+  private final void showDefinition (DefinitionEntry definition) {
+    String text = definition.getDefinitionText();
+    int end = text.length();
+
+    while (end > 0) {
+      if (!Character.isWhitespace(text.charAt(--end))) {
+        end += 1;
+        break;
+      }
+    }
+
+    showText(text.substring(0, end));
+  }
+
+  private final void listDefinitions (final DefinitionList definitions) {
+    synchronized (this) {
+      StringBuilder text = new StringBuilder();
+      text.append(getString(R.string.ShowDefinition_select_definition));
+
+      {
+        int index = 0;
+
+        for (DefinitionEntry definition : definitions) {
+          text.append('\n');
+          text.append(++index);
+
+          text.append(": ");
+          text.append(definition.getMatchedWord());
+
+          text.append(": ");
+          text.append(definition.getDatabaseDescription());
+        }
+      }
+
+      Endpoints.pushPopupEndpoint(
+        text, 1,
+        new PopupClickHandler() {
+          @Override
+          public boolean handleClick (int index) {
+            showDefinition(definitions.get(index));
+            return true;
+          }
+        }
+      );
+    }
+  }
+
+  private final void showDefinitions (final DefinitionList definitions, final String word) {
+    synchronized (this) {
+      int count = definitions.size();
+
+      if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
+        if (count > 1) {
+          count = 1;
+        }
+      }
+
+      if (count == 0) {
+        if (ApplicationSettings.SUGGEST_WORDS) {
+          requestMatches(word);
+        } else {
+          showNoDefinitions(word);
+        }
+      } else if (count == 1) {
+        showDefinition(definitions.get(0));
+      } else {
+        listDefinitions(definitions);
+      }
+    }
+  }
+
+  private final void requestDefinitions (final String word) {
+    synchronized (this) {
+      new DefineCommand(word, ApplicationSettings.DICTIONARY_DATABASE) {
+        @Override
+        public void handleDefinitions (DefinitionList definitions) {
+          showDefinitions(definitions, word);
+        }
+      };
+    }
+  }
+
   private final void listMatches (MatchList matches) {
     synchronized (this) {
       final ArrayList<String> words = new ArrayList<String>();
@@ -50,7 +132,7 @@ public class ShowDefinition extends CursorKeyAction {
         new PopupClickHandler() {
           @Override
           public boolean handleClick (int index) {
-            requestDefinition(words.get(index));
+            requestDefinitions(words.get(index));
             return true;
           }
         }
@@ -79,74 +161,6 @@ public class ShowDefinition extends CursorKeyAction {
     }
   }
 
-  private final void listDefinitions (final DefinitionList definitions) {
-    synchronized (this) {
-      StringBuilder text = new StringBuilder();
-      text.append(getString(R.string.ShowDefinition_select_definition));
-
-      {
-        int index = 0;
-
-        for (DefinitionEntry definition : definitions) {
-          text.append('\n');
-          text.append(++index);
-
-          text.append(": ");
-          text.append(definition.getMatchedWord());
-
-          text.append(": ");
-          text.append(definition.getDatabaseDescription());
-        }
-      }
-
-      Endpoints.pushPopupEndpoint(
-        text, 1,
-        new PopupClickHandler() {
-          @Override
-          public boolean handleClick (int index) {
-            showText(definitions.get(index).getDefinitionText());
-            return true;
-          }
-        }
-      );
-    }
-  }
-
-  private final void showDefinitions (final DefinitionList definitions, final String word) {
-    synchronized (this) {
-      int count = definitions.size();
-
-      if (!ApplicationSettings.MULTIPLE_DEFINITIONS) {
-        if (count > 1) {
-          count = 1;
-        }
-      }
-
-      if (count == 0) {
-        if (ApplicationSettings.SUGGEST_WORDS) {
-          requestMatches(word);
-        } else {
-          showNoDefinitions(word);
-        }
-      } else if (count == 1) {
-        showText(definitions.get(0).getDefinitionText());
-      } else {
-        listDefinitions(definitions);
-      }
-    }
-  }
-
-  private final void requestDefinition (final String word) {
-    synchronized (this) {
-      new DefineCommand(word, ApplicationSettings.DICTIONARY_DATABASE) {
-        @Override
-        public void handleDefinitions (DefinitionList definitions) {
-          showDefinitions(definitions, word);
-        }
-      };
-    }
-  }
-
   @Override
   protected final boolean performCursorKeyAction (Endpoint endpoint, int offset) {
     int from = offset;
@@ -167,7 +181,7 @@ public class ShowDefinition extends CursorKeyAction {
       if (Character.isWhitespace(text.charAt(to))) break;
     }
 
-    requestDefinition(text.subSequence(from, to).toString());
+    requestDefinitions(text.subSequence(from, to).toString());
     return true;
   }
 
