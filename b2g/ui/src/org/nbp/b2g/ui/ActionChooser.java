@@ -46,24 +46,23 @@ public class ActionChooser extends UserInterfaceComponent {
     final List<Action> actions = new ArrayList<Action>();
     String text = makeText(actions, map, cursorKey);
 
-    PopupEndpoint endpoint = new PopupEndpoint();
-    endpoint.resetPopupEndpoint(text);
-    endpoint.setHeaderLines(1);
-    endpoint.setDotsBindings(map);
+    Endpoints.setCurrentEndpoint(
+      new PopupEndpoint()
+      .resetPopupEndpoint(text)
+      .setHeaderLines(1)
+      .setDotsBindings(map)
+      .setClickHandler(
+        new PopupClickHandler () {
+          @Override
+          public final boolean handleClick (int index) {
+            Action action = actions.get(index);
 
-    endpoint.setClickHandler(
-      new PopupClickHandler () {
-        @Override
-        public final boolean handleClick (int index) {
-          Action action = actions.get(index);
-
-          if (cursorKey != null) return KeyEvents.performAction(action, cursorKey);
-          return KeyEvents.performAction(action);
+            if (cursorKey != null) return KeyEvents.performAction(action, cursorKey);
+            return KeyEvents.performAction(action);
+          }
         }
-      }
+      )
     );
-
-    Endpoints.setCurrentEndpoint(endpoint);
   }
 
   public static void chooseAction (final KeyBindingMap map) {
