@@ -34,6 +34,7 @@
   <string name="control_label_SpeechPitch">Pitch</string>
   <string name="control_label_SpeechBalance">Balance</string>
   <string name="control_label_SleepTalk">Sleep Talk</string>
+  <string name="control_label_SpeechEngine">Speech Engine</string>
 
   <string name="control_group_feedback">Speech Feedback</string>
   <string name="control_label_EchoWords">Echo Words</string>

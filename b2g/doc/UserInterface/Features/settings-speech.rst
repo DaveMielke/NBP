@@ -9,5 +9,6 @@
   Pitch                 0        -10 - 10              Lower, Higher
   Balance               Center   Left100% - Right100%  More Left, More Right
   Sleep Talk            Off      Off, On
+  Speech Engine         Google   Google, Pico, ...
   ====================  =======  ====================  =====================
 

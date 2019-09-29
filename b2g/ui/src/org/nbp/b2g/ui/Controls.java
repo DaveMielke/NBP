@@ -52,6 +52,7 @@ public abstract class Controls {
   public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
   public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
   public final static SleepTalkControl sleepTalk = new SleepTalkControl();
+  public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
 
   // speech feedback
   public final static EchoWordsControl echoWords = new EchoWordsControl();
