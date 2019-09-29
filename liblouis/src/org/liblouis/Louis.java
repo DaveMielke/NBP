@@ -212,7 +212,7 @@ public final class Louis {
     synchronized (INITIALIZATION_LOCK) {
       if (applicationContext == null) {
         applicationContext = context;
-        dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_WORLD_READABLE);
+        dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_PRIVATE);
         setDataPath(dataDirectory.getAbsolutePath());
         com.duxburysystems.AssetUtilities.setRootFolder(toAssetsPath("duxbury"));
         updatePackageData(newInternalTablesListener);
