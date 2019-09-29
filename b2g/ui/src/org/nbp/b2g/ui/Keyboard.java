@@ -9,25 +9,28 @@ import android.util.Log;
 public abstract class Keyboard {
   private final static String LOG_TAG = Keyboard.class.getName();
 
+  private Keyboard () {
+  }
+
   private final static KeyboardInjector injector = Devices.keyboard.get();
 
   private static void logKeyboardEvent (int key, String action) {
     if (ApplicationSettings.LOG_ACTIONS) {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder log = new StringBuilder();
       String name = getScanCodeName(key);
 
-      sb.append("injecting scan code ");
-      sb.append(action);
-      sb.append(": ");
-      sb.append(key);
+      log.append("injecting scan code ");
+      log.append(action);
+      log.append(": ");
+      log.append(key);
 
       if (name != null) {
-        sb.append(" (");
-        sb.append(name);
-        sb.append(')');
+        log.append(" (");
+        log.append(name);
+        log.append(')');
       }
 
-      Log.v(LOG_TAG, sb.toString());
+      Log.v(LOG_TAG, log.toString());
     }
   }
 
@@ -62,8 +65,12 @@ public abstract class Keyboard {
   }
 
   public final static int NULL_SCAN_CODE = 0;
-  private static Map<String, Integer> scanCodeMap_nameToValue = new HashMap<String, Integer>();
-  private static Map<Integer, String> scanCodeMap_valueToName = new HashMap<Integer, String>();
+
+  private static Map<String, Integer> scanCodeMap_nameToValue =
+         new HashMap<String, Integer>();
+
+  private static Map<Integer, String> scanCodeMap_valueToName =
+         new HashMap<Integer, String>();
 
   public static Collection<Integer> getScanCodeValues () {
     return scanCodeMap_nameToValue.values();
@@ -73,7 +80,7 @@ public abstract class Keyboard {
     Integer value = scanCodeMap_nameToValue.get(name);
     if (value != null) return value;
 
-    Log.w(LOG_TAG, "keyboard scan code not defined: " + name);
+    Log.w(LOG_TAG, ("keyboard scan code not defined: " + name));
     return NULL_SCAN_CODE;
   }
 
@@ -81,11 +88,8 @@ public abstract class Keyboard {
     String name = scanCodeMap_valueToName.get(value);
     if (name != null) return name;
 
-    Log.w(LOG_TAG, "keyboard scan code not defined: " + value);
+    Log.w(LOG_TAG, ("keyboard scan code not defined: " + value));
     return null;
-  }
-
-  private Keyboard () {
   }
 
   private static void defineScanCode (String name, int code) {
