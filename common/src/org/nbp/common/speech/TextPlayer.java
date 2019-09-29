@@ -45,21 +45,31 @@ public abstract class TextPlayer {
     ));
   }
 
-  private final SpeechParameters ttsParameters = new SpeechParameters();
-  private int ttsStatus = TextToSpeech.ERROR;
+  protected String getEngineName () {
+    return null;
+  }
+
   private final static int OK = TextToSpeech.SUCCESS;
 
-  private final boolean isStarted () {
-    return ttsStatus == OK;
+  private String defaultEngineName = null;
+  private String currentEngineName = null;
+
+  private TextToSpeech currentEngine = null;
+  private TextToSpeech newEngine = null;
+
+  private final boolean hasStarted () {
+    synchronized (this) {
+      return currentEngine != null;
+    }
   }
 
   protected boolean isActive () {
-    return isStarted();
+    return hasStarted();
   }
 
-  private TextToSpeech ttsObject = null;
   private CharSequence pendingText = null;
 
+  private final SpeechParameters speechParameters = new SpeechParameters();
   private TextSegmentGenerator segmentGenerator;
   private int utteranceIdentifier = 0;
   private final Set<String> activeUtterances = new HashSet<String>();
@@ -75,9 +85,9 @@ public abstract class TextPlayer {
     synchronized (this) {
       cancelSpeaking();
 
-      if (isStarted()) {
+      if (hasStarted()) {
         try {
-          if (!ttsObject.isSpeaking()) return true;
+          if (!currentEngine.isSpeaking()) return true;
         } catch (IllegalArgumentException exception) {
           logSpeechFailure("test speaking", exception);
           return false;
@@ -86,7 +96,7 @@ public abstract class TextPlayer {
         logSpeechAction("stop");
 
         try {
-          if (ttsObject.stop() == OK) return true;
+          if (currentEngine.stop() == OK) return true;
         } catch (IllegalArgumentException exception) {
           logSpeechFailure("stop speaking", exception);
         }
@@ -109,11 +119,11 @@ public abstract class TextPlayer {
 
           String utterance = Integer.toString(++utteranceIdentifier);
           logSpeechAction("speak", utterance, segment);
-          ttsParameters.setUtteranceIdentifier(utterance);
+          speechParameters.setUtteranceIdentifier(utterance);
 
           try {
             int queueMode = TextToSpeech.QUEUE_ADD;
-            int status = ttsParameters.speak(ttsObject, segment, queueMode);
+            int status = speechParameters.speak(currentEngine, segment, queueMode);
 
             if (status != OK) break;
             activeUtterances.add(utterance);
@@ -144,8 +154,8 @@ public abstract class TextPlayer {
   public final boolean setVolume (float volume) {
     if (SpeechParameters.verifyVolume(volume)) {
       synchronized (this) {
-        if (isStarted()) {
-          ttsParameters.setVolume(volume);
+        if (hasStarted()) {
+          speechParameters.setVolume(volume);
           return true;
         }
       }
@@ -157,9 +167,9 @@ public abstract class TextPlayer {
   public final boolean setRate (float rate) {
     if (SpeechParameters.verifyRate(rate)) {
       synchronized (this) {
-        if (isStarted()) {
+        if (hasStarted()) {
           try {
-            if (ttsObject.setSpeechRate(rate) == OK) return true;
+            if (currentEngine.setSpeechRate(rate) == OK) return true;
           } catch (IllegalArgumentException exception) {
             logSpeechFailure("set rate", exception);
           }
@@ -173,9 +183,9 @@ public abstract class TextPlayer {
   public final boolean setPitch (float pitch) {
     if (SpeechParameters.verifyPitch(pitch)) {
       synchronized (this) {
-        if (isStarted()) {
+        if (hasStarted()) {
           try {
-            if (ttsObject.setPitch(pitch) == OK) return true;
+            if (currentEngine.setPitch(pitch) == OK) return true;
           } catch (IllegalArgumentException exception) {
             logSpeechFailure("set pitch", exception);
           }
@@ -189,8 +199,8 @@ public abstract class TextPlayer {
   public final boolean setBalance (float balance) {
     if (SpeechParameters.verifyBalance(balance)) {
       synchronized (this) {
-        if (isStarted()) {
-          ttsParameters.setBalance(balance);
+        if (hasStarted()) {
+          speechParameters.setBalance(balance);
           return true;
         }
       }
@@ -200,7 +210,7 @@ public abstract class TextPlayer {
   }
 
   private final TextSegmentGenerator makeSegmentGenerator () {
-    int maximumLength = SpeechParameters.getMaximumLength(ttsObject);
+    int maximumLength = SpeechParameters.getMaximumLength(currentEngine);
     logSpeechAction("maximum length", Integer.toString(maximumLength));
 
     TextSegmentGenerator.OuterGenerator speechSpanGenerator =
@@ -247,7 +257,7 @@ public abstract class TextPlayer {
   }
 
   private final void setUtteranceProgressListener () {
-    ttsObject.setOnUtteranceProgressListener(
+    currentEngine.setOnUtteranceProgressListener(
       new UtteranceProgressListener() {
         @Override
         public void onStart (String utterance) {
@@ -292,57 +302,95 @@ public abstract class TextPlayer {
     );
   }
 
-  private final Timeout ttsRetry = new Timeout(CommonParameters.SPEECH_RETRY_DELAY, "speech-retry-delay") {
-    @Override
-    public void run () {
-      synchronized (TextPlayer.this) {
-        ttsStart();
-      }
-    }
-  };
-
-  private final void ttsStart () {
+  public final void startEngine () {
     synchronized (this) {
-      Log.d(LOG_TAG, "speech starting");
+      String engineName = getEngineName();
+      if (engineName == null) engineName = "";
 
-      TextToSpeech.OnInitListener onInitListener = new TextToSpeech.OnInitListener() {
-        @Override
-        public void onInit (int status) {
-          synchronized (TextPlayer.this) {
-            ttsStatus = status;
+      if (currentEngineName != null) {
+        if (engineName.isEmpty()) engineName = defaultEngineName;
+        if (currentEngineName.equals(engineName)) return;
+      }
 
-            if (isStarted()) {
-              Log.d(LOG_TAG, "speech started");
-              initializeProperties();
-              segmentGenerator = makeSegmentGenerator();
-              setUtteranceProgressListener();
+      {
+        StringBuilder log = new StringBuilder();
+        log.append("starting engine");
 
-              if (pendingText != null) {
-                CharSequence text = pendingText;
-                pendingText = null;
-                say(text);
-              }
-            } else {
-              Log.d(LOG_TAG, "speech failed with status " + ttsStatus);
+        if (engineName != null) {
+          log.append(": ");
 
-              try {
-                ttsObject.shutdown();
-              } catch (IllegalArgumentException exception) {
-                logSpeechFailure("shut down", exception);
-              }
-
-              ttsObject = null;
-              ttsRetry.start();
-            }
+          if (engineName.isEmpty()) {
+            log.append("(default)");
+          } else {
+            log.append(engineName);
           }
         }
-      };
 
-      ttsObject = new TextToSpeech(CommonContext.getContext(), onInitListener);
+        Log.d(LOG_TAG, log.toString());
+      }
+
+      TextToSpeech.OnInitListener listener =
+        new TextToSpeech.OnInitListener() {
+          @Override
+          public void onInit (int status) {
+            synchronized (TextPlayer.this) {
+              try {
+                if (status == OK) {
+                  Log.d(LOG_TAG, "engine started successfully");
+
+                  if (currentEngine != null) {
+                    stopSpeaking();
+                    currentEngine.shutdown();
+                  }
+
+                  currentEngine = newEngine;
+                  initializeProperties();
+                  segmentGenerator = makeSegmentGenerator();
+                  setUtteranceProgressListener();
+
+                  if (pendingText != null) {
+                    CharSequence text = pendingText;
+                    pendingText = null;
+                    say(text);
+                  }
+                } else {
+                  Log.w(LOG_TAG, "engine start failed with status " + status);
+
+                  try {
+                    newEngine.shutdown();
+                  } catch (IllegalArgumentException exception) {
+                    logSpeechFailure("shut down", exception);
+                  }
+
+                  retryDelay.start();
+                }
+              } finally {
+                newEngine = null;
+              }
+            }
+          }
+        };
+
+      if (newEngine != null) newEngine.shutdown();
+      newEngine = new TextToSpeech(CommonContext.getContext(), listener, engineName);
+
+      if (defaultEngineName == null) defaultEngineName = newEngine.getDefaultEngine();
+      if (engineName.isEmpty()) engineName = defaultEngineName;
+      currentEngineName = engineName;
     }
   }
 
+  private final Timeout retryDelay =
+    new Timeout(CommonParameters.SPEECH_RETRY_DELAY, "speech-retry-delay") {
+      @Override
+      public void run () {
+        synchronized (TextPlayer.this) {
+          startEngine();
+        }
+      }
+    };
+
   public TextPlayer () {
-    ttsStart();
+    startEngine();
   }
 }

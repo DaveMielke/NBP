@@ -22,6 +22,11 @@ public class SpeechDevice extends TextPlayer {
   }
 
   @Override
+  protected String getEngineName () {
+    return ApplicationSettings.SPEECH_ENGINE;
+  }
+
+  @Override
   protected final void initializeProperties () {
     setVolume(ApplicationSettings.SPEECH_VOLUME);
     setRate(ApplicationSettings.SPEECH_RATE);

@@ -29,6 +29,7 @@ public class SpeechEngineControl extends EngineControl {
   @Override
   protected boolean setCollectionValue (TextToSpeech.EngineInfo value) {
     ApplicationSettings.SPEECH_ENGINE = getValueName(value);
+    Devices.speech.get().startEngine();
     return true;
   }
 
