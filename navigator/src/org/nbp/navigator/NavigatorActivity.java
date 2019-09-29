@@ -15,8 +15,6 @@ import android.view.MenuItem;
 public class NavigatorActivity extends CommonActivity {
   private final static String LOG_TAG = NavigatorActivity.class.getName();
 
-  private final NavigationFragment navigationFragment = new NavigationFragment();
-
   private final void menuAction_settings () {
     Intent intent = new Intent(this, SettingsActivity.class);
     startActivity(intent);
@@ -74,12 +72,12 @@ public class NavigatorActivity extends CommonActivity {
     navigatorActivity = this;
 
     setContentView(R.layout.navigator);
+    Controls.restore();
+
     getFragmentManager()
       .beginTransaction()
-      .add(R.id.navigator_fragment_container, navigationFragment)
+      .add(R.id.navigator_fragment_container, new NavigationFragment())
       .commit();
-
-    Controls.restore();
   }
 
   @Override

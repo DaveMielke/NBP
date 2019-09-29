@@ -13,6 +13,11 @@ public abstract class Announcements extends NavigatorComponent {
       super();
     }
 
+    @Override
+    protected final String getEngineName () {
+      return ApplicationSettings.SPEECH_ENGINE;
+    }
+
     private boolean isInitializing = false;
 
     @Override
@@ -37,9 +42,8 @@ public abstract class Announcements extends NavigatorComponent {
   public final static Announcer getAnnouncer () {
     synchronized (SINGLETON_LOCK) {
       if (announcer == null) announcer = new Announcer();
+      return announcer;
     }
-
-    return announcer;
   }
 
   public final static boolean say (CharSequence text, boolean interrupt) {

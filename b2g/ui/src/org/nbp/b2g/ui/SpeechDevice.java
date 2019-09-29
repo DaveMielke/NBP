@@ -9,12 +9,12 @@ public class SpeechDevice extends TextPlayer {
   }
 
   @Override
-  protected boolean isLogging () {
+  protected final boolean isLogging () {
     return ApplicationSettings.LOG_SPEECH;
   }
 
   @Override
-  protected boolean isActive () {
+  protected final boolean isActive () {
     if (!super.isActive()) return false;
     if (!ApplicationSettings.SPEECH_ENABLED) return false;
     if (ApplicationSettings.SLEEP_TALK) return true;
@@ -22,7 +22,7 @@ public class SpeechDevice extends TextPlayer {
   }
 
   @Override
-  protected String getEngineName () {
+  protected final String getEngineName () {
     return ApplicationSettings.SPEECH_ENGINE;
   }
 

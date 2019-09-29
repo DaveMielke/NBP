@@ -18,6 +18,7 @@ public abstract class Controls {
   public final static SpeechRateControl speechRate = new SpeechRateControl();
   public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
   public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
+  public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
 
   // unit settings
   public final static DistanceUnitControl distanceUnit = new DistanceUnitControl();

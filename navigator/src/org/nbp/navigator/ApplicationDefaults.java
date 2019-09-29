@@ -22,6 +22,7 @@ public abstract class ApplicationDefaults {
   public final static float SPEECH_RATE = SpeechParameters.RATE_REFERENCE;
   public final static float SPEECH_PITCH = SpeechParameters.PITCH_REFERENCE;
   public final static float SPEECH_BALANCE = SpeechParameters.BALANCE_CENTER;
+  public final static String SPEECH_ENGINE = "";
 
   public final static boolean LOG_GEOCODING = false;
   public final static boolean LOG_SENSORS = false;
