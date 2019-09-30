@@ -3,8 +3,9 @@
   ====================  ========  =============================  =====================
   Setting               Default   Choices                        Buttons
   --------------------  --------  -----------------------------  ---------------------
-  Database Name         all       all, first, ...                Change
+  Database Name         All       All, First, ...                Change
   Multiple Definitions  Off       Off, On
-  Match Strategy        default   default, prefix, ...           Change
+  Suggest Words         On        Off, On
+  Match Strategy        Approx    Approx, Prefix, ...            Change
   ====================  ========  =============================  =====================
 

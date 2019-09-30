@@ -54,7 +54,7 @@ public abstract class ApplicationDefaults {
 
   public final static DictionaryDatabase DICTIONARY_DATABASE = DictionaryDatabase.ALL;
   public final static boolean MULTIPLE_DEFINITIONS = false;
-  public final static boolean SUGGEST_WORDS = false;
+  public final static boolean SUGGEST_WORDS = true;
   public final static DictionaryStrategy DICTIONARY_STRATEGY = DictionaryStrategy.APPROXIMATE;
 
   public final static ComputerBraille COMPUTER_BRAILLE = ComputerBraille.LOCAL;

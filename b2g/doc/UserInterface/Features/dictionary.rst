@@ -33,5 +33,5 @@ Suggest Words
 
 Match Strategy
   The strategy to use when searching for words to suggest.
-  The default is to use the dictionary server's preferred strategy.
+  The default is to use an approximate match.
 
