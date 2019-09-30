@@ -12,77 +12,119 @@ import java.io.File;
 public class SpeechParameters {
   private final static String LOG_TAG = SpeechParameters.class.getName();
 
-  private static class OldParameters extends HashMap<String, String> {
-    public OldParameters () {
-      super();
-    }
+  private interface Paradigm {
+    public String get (String key);
+
+    public void set (String key, String value);
+    public void set (String key, int value);
+    public void set (String key, float value);
+
+    public int speak (TextToSpeech tts, CharSequence text, int queueMode);
+    public int synthesize (TextToSpeech tts, CharSequence text, File file);
   }
 
-  public final static boolean USE_NEW_PARAMETERS = CommonUtilities.haveLollipop;
-  private Bundle newParameters = null;
-  private OldParameters oldParameters = null;
+  private final Paradigm paradigm;
 
   public SpeechParameters () {
-    if (USE_NEW_PARAMETERS) {
-      newParameters = new Bundle();
-    } else {
-      oldParameters = new OldParameters();
-    }
-  }
+    if (CommonUtilities.haveLollipop) {
+      paradigm = new Paradigm() {
+        private final Bundle arguments = new Bundle();
 
-  public final String getParameter (String key) {
-    if (USE_NEW_PARAMETERS) {
-      synchronized (newParameters) {
-        return newParameters.getString(key);
-      }
-    } else {
-      synchronized (oldParameters) {
-        return oldParameters.get(key);
-      }
-    }
-  }
+        @Override
+        public final String get (String key) {
+          synchronized (arguments) {
+            return arguments.getString(key);
+          }
+        }
 
-  public final void setParameter (String key, String value) {
-    if (USE_NEW_PARAMETERS) {
-      synchronized (newParameters) {
-        newParameters.putString(key, value);
-      }
-    } else {
-      synchronized (oldParameters) {
-        oldParameters.put(key, value);
-      }
-    }
-  }
+        private final String getUtteranceIdentifier () {
+          return get(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
+        }
 
-  public final void setParameter (String key, int value) {
-    if (USE_NEW_PARAMETERS) {
-      synchronized (newParameters) {
-        newParameters.putInt(key, value);
-      }
-    } else {
-      setParameter(key, Integer.toString(value));
-    }
-  }
+        @Override
+        public final void set (String key, String value) {
+          synchronized (arguments) {
+            arguments.putString(key, value);
+          }
+        }
 
-  public final void setParameter (String key, float value) {
-    if (USE_NEW_PARAMETERS) {
-      synchronized (newParameters) {
-        newParameters.putFloat(key, value);
-      }
-    } else {
-      setParameter(key, Float.toString(value));
-    }
-  }
+        @Override
+        public final void set (String key, int value) {
+          synchronized (arguments) {
+            arguments.putInt(key, value);
+          }
+        }
 
-  public final String getUtteranceIdentifier () {
-    synchronized (this) {
-      return getParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
+        @Override
+        public final void set (String key, float value) {
+          synchronized (arguments) {
+            arguments.putFloat(key, value);
+          }
+        }
+
+        @Override
+        public final int speak (TextToSpeech tts, CharSequence text, int queueMode) {
+          synchronized (arguments) {
+            return tts.speak(text, queueMode, arguments, getUtteranceIdentifier());
+          }
+        }
+
+        @Override
+        public final int synthesize (TextToSpeech tts, CharSequence text, File file) {
+          synchronized (arguments) {
+            return tts.synthesizeToFile(text, arguments, file, getUtteranceIdentifier());
+          }
+        }
+      };
+    } else {
+      paradigm = new Paradigm() {
+        private final HashMap<String, String> arguments =
+                  new HashMap<String, String>();
+
+        @Override
+        public final String get (String key) {
+          synchronized (arguments) {
+            return arguments.get(key);
+          }
+        }
+
+        @Override
+        public final void set (String key, String value) {
+          synchronized (arguments) {
+            arguments.put(key, value);
+          }
+        }
+
+        @Override
+        public final void set (String key, int value) {
+          set(key, Integer.toString(value));
+        }
+
+        @Override
+        public final void set (String key, float value) {
+          set(key, Float.toString(value));
+        }
+
+        @Override
+        public final int speak (TextToSpeech tts, CharSequence text, int queueMode) {
+          synchronized (arguments) {
+            return tts.speak(text.toString(), queueMode, arguments);
+          }
+        }
+
+        @Override
+        public final int synthesize (TextToSpeech tts, CharSequence text, File file) {
+          synchronized (arguments) {
+            return tts.synthesizeToFile(text.toString(), arguments, file.getAbsolutePath());
+          }
+        }
+      };
     }
   }
 
   public final void setUtteranceIdentifier (String identifier) {
     synchronized (this) {
-      setParameter(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
+      paradigm.set(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, identifier);
     }
   }
 
@@ -97,7 +139,7 @@ public class SpeechParameters {
   public final void setStream (int value) {
     synchronized (this) {
       currentStream = value;
-      setParameter(TextToSpeech.Engine.KEY_PARAM_STREAM, value);
+      paradigm.set(TextToSpeech.Engine.KEY_PARAM_STREAM, value);
     }
   }
 
@@ -145,7 +187,7 @@ public class SpeechParameters {
   public final void setVolume (float value) {
     synchronized (this) {
       currentVolume = value;
-      setParameter(TextToSpeech.Engine.KEY_PARAM_VOLUME, value);
+      paradigm.set(TextToSpeech.Engine.KEY_PARAM_VOLUME, value);
     }
   }
 
@@ -167,7 +209,7 @@ public class SpeechParameters {
   public final void setBalance (float value) {
     synchronized (this) {
       currentBalance = value;
-      setParameter(TextToSpeech.Engine.KEY_PARAM_PAN, value);
+      paradigm.set(TextToSpeech.Engine.KEY_PARAM_PAN, value);
     }
   }
 
@@ -203,25 +245,13 @@ public class SpeechParameters {
 
   public final int speak (TextToSpeech tts, CharSequence text, int queueMode) {
     synchronized (this) {
-      if (USE_NEW_PARAMETERS) {
-        return tts.speak(text, queueMode, newParameters, getUtteranceIdentifier());
-      } else {
-        return tts.speak(text.toString(), queueMode, oldParameters);
-      }
+      return paradigm.speak(tts, text, queueMode);
     }
   }
 
   public final int synthesize (TextToSpeech tts, CharSequence text, File file) {
     synchronized (this) {
-      if (USE_NEW_PARAMETERS) {
-        return tts.synthesizeToFile(
-          text, newParameters, file, getUtteranceIdentifier()
-        );
-      } else {
-        return tts.synthesizeToFile(
-          text.toString(), oldParameters, file.getAbsolutePath()
-        );
-      }
+      return paradigm.synthesize(tts, text, file);
     }
   }
 }
