@@ -29,12 +29,12 @@
 
   <string name="control_group_speech">Speech Settings</string>
   <string name="control_label_SpeechEnabled">Speech</string>
+  <string name="control_label_SleepTalk">Sleep Talk</string>
+  <string name="control_label_SpeechEngine">TTS Engine</string>
   <string name="control_label_SpeechVolume">Volume</string>
   <string name="control_label_SpeechRate">Rate</string>
   <string name="control_label_SpeechPitch">Pitch</string>
   <string name="control_label_SpeechBalance">Balance</string>
-  <string name="control_label_SleepTalk">Sleep Talk</string>
-  <string name="control_label_SpeechEngine">TTS Engine</string>
 
   <string name="control_group_feedback">Speech Feedback</string>
   <string name="control_label_EchoWords">Echo Words</string>

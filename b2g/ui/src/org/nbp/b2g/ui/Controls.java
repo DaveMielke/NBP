@@ -47,12 +47,12 @@ public abstract class Controls {
 
   // speech settings
   public final static SpeechEnabledControl speechEnabled = new SpeechEnabledControl();
+  public final static SleepTalkControl sleepTalk = new SleepTalkControl();
+  public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
   public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
   public final static SpeechRateControl speechRate = new SpeechRateControl();
   public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
   public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
-  public final static SleepTalkControl sleepTalk = new SleepTalkControl();
-  public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
 
   // speech feedback
   public final static EchoWordsControl echoWords = new EchoWordsControl();
@@ -106,7 +106,7 @@ public abstract class Controls {
     sleepTalk.addDependencies(speechEnabled);
     speechEnabled.addDependencies(speechVolume, speechBalance);
     speechEnabled.addDependencies(speechRate, speechPitch);
-    speechEnabled.addDependencies(logSpeech);
+    speechEnabled.addDependencies(logSpeech, speechEngine);
 
     oneHand.addDependencies(spaceTimeout, pressedTimeout);
     remoteDisplay.addDependencies(secureConnection);
