@@ -22,19 +22,19 @@ public abstract class TextPlayer {
 
   private final void logSpeechAction (CharSequence... phrases) {
     if (isLogging()) {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder log = new StringBuilder();
 
       for (CharSequence phrase : phrases) {
         if (phrase == null) continue;
         if (phrase.length() == 0) continue;
 
-        if (sb.length() > 0) sb.append(": ");
-        sb.append(phrase);
+        if (log.length() > 0) log.append(": ");
+        log.append(phrase);
       }
 
-      if (sb.length() > 0) {
-        sb.insert(0, "speech action: ");
-        Log.d(LOG_TAG, sb.toString());
+      if (log.length() > 0) {
+        log.insert(0, "speech action: ");
+        Log.d(LOG_TAG, log.toString());
       }
     }
   }
@@ -45,15 +45,9 @@ public abstract class TextPlayer {
     ));
   }
 
-  protected String getEngineName () {
-    return null;
-  }
-
   private final static int OK = TextToSpeech.SUCCESS;
 
-  private String defaultEngineName = null;
-  private String currentEngineName = null;
-
+  private String engineName = null;
   private TextToSpeech currentEngine = null;
   private TextToSpeech newEngine = null;
 
@@ -300,40 +294,51 @@ public abstract class TextPlayer {
     );
   }
 
+  protected String getEngineName () {
+    return null;
+  }
+
   public final void startEngine () {
     synchronized (this) {
       String name = getEngineName();
       if (name == null) name = "";
       if (name.isEmpty()) name = TTS.getDefaultEngine();
-      if (name.equals(currentEngineName)) return;
+      if (name.equals(engineName)) return;
 
-      {
-        StringBuilder log = new StringBuilder();
-        log.append("starting engine");
+      class TTSWrapper {
+        private final String ttsName;
+        private final TextToSpeech ttsEngine;
 
-        log.append(": ");
-        log.append(name);
-
-        Log.d(LOG_TAG, log.toString());
-      }
-
-      class Engine {
-        private final TextToSpeech engine;
+        public final String getName () {
+          return ttsName;
+        }
 
         public final TextToSpeech getEngine () {
-          return engine;
+          return ttsEngine;
+        }
+
+        private final void log (String message) {
+          if (isLogging()) {
+            StringBuilder log = new StringBuilder();
+            log.append(message);
+            log.append(": ");
+            log.append(getName());
+            Log.d(LOG_TAG, log.toString());
+          }
         }
 
         final TextToSpeech.OnInitListener listener =
           new TextToSpeech.OnInitListener() {
             @Override
             public void onInit (int status) {
+              TextToSpeech engine = getEngine();
+
               synchronized (TextPlayer.this) {
                 if (engine == newEngine) {
                   newEngine = null;
 
                   if (status == TextToSpeech.SUCCESS) {
-                    Log.d(LOG_TAG, "engine started successfully");
+                    log("engine started successfully");
 
                     if (currentEngine != null) {
                       stopSpeaking();
@@ -351,7 +356,7 @@ public abstract class TextPlayer {
                       say(text);
                     }
                   } else {
-                    Log.w(LOG_TAG, "engine start failed with status " + status);
+                    log(("engine start failed with status " + status));
 
                     try {
                       engine.shutdown();
@@ -366,14 +371,17 @@ public abstract class TextPlayer {
             }
           };
 
-        public Engine (String name) {
-          engine = new TextToSpeech(CommonContext.getContext(), listener, name);
+        public TTSWrapper (String name) {
+          ttsName = name;
+          log("starting engine");
+          ttsEngine = new TextToSpeech(CommonContext.getContext(), listener, name);
         }
       }
 
       if (newEngine != null) newEngine.shutdown();
-      newEngine = new Engine(name).getEngine();
-      currentEngineName = name;
+      TTSWrapper tts = new TTSWrapper(name);
+      newEngine = tts.getEngine();
+      engineName = name;
     }
   }
 
