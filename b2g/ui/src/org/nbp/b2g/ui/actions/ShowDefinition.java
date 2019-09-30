@@ -79,7 +79,7 @@ public class ShowDefinition extends CursorKeyAction {
 
       if (count == 0) {
         if (ApplicationSettings.SUGGEST_WORDS) {
-          requestMatches(word);
+          requestMatches(word, DictionaryStrategy.APPROXIMATE);
         } else {
           showNoDefinitions(word);
         }
@@ -150,15 +150,19 @@ public class ShowDefinition extends CursorKeyAction {
     }
   }
 
-  private final void requestMatches (final String word) {
+  private final void requestMatches (final String word, DictionaryStrategy strategy) {
     synchronized (this) {
-      new MatchCommand(word, ApplicationSettings.DICTIONARY_STRATEGY, ApplicationSettings.DICTIONARY_DATABASE) {
+      new MatchCommand(word, strategy, ApplicationSettings.DICTIONARY_DATABASE) {
         @Override
         public void handleMatches (MatchList matches) {
           showMatches(matches, word);
         }
       };
     }
+  }
+
+  private final void requestMatches (final String word) {
+    requestMatches(word, ApplicationSettings.DICTIONARY_STRATEGY);
   }
 
   @Override

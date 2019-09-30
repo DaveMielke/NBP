@@ -82,7 +82,7 @@ public abstract class Dictionary {
     final Set<String> names = new HashSet();
 
     for (DictionaryStrategy strategy : DictionaryStrategy.values()) {
-      if (strategy == DictionaryStrategy.DEFAULT) continue;
+      if (strategy == DictionaryStrategy.APPROXIMATE) continue;
       names.add(strategy.getName());
     }
 

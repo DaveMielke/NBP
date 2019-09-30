@@ -26,10 +26,10 @@ public class MatchCommand extends MatchesRequest {
   }
 
   public MatchCommand (String word, DictionaryDatabase database) {
-    this(word, DictionaryStrategy.DEFAULT, database);
+    this(word, DictionaryStrategy.APPROXIMATE, database);
   }
 
   public MatchCommand (String word) {
-    this(word, DictionaryStrategy.DEFAULT);
+    this(word, DictionaryStrategy.APPROXIMATE);
   }
 }

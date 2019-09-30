@@ -1,7 +1,7 @@
 package org.nbp.common.dictionary;
 
 public enum DictionaryStrategy {
-  DEFAULT(".", "the server's preferred algorithm for spelling correction"),
+  APPROXIMATE(".", "approximate match"),
   EXACT("exact", "exact match"),
   PREFIX("prefix", "match the prefix"),
 
@@ -10,7 +10,7 @@ public enum DictionaryStrategy {
   REGEX_POSIX("re", "extended regular expression [POSIX 1003.2]"),
   REGEX_BASIC("regexp", "basic regular expression"),
   SOUNDEX("soundex", "the SOUNDEX algorithm [KNUTH73]"),
-  LEVENSTEIN1("lev", "Levenstein distance one [PZ85]"),
+  LEVENSHTEIN1("lev", "Levenshtein distance one [PZ85]"),
   WORD_ANY("word", "match any subword"),
   WORD_FIRST("first", "match the first subword"),
   WORD_LAST("last", "match the last subword"),
