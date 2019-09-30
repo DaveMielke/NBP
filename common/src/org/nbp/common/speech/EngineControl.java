@@ -9,7 +9,6 @@ import org.nbp.common.controls.CollectionControl;
 import android.speech.tts.TextToSpeech;
 
 public abstract class EngineControl extends CollectionControl<TextToSpeech.EngineInfo> {
-  private final TextToSpeech tts = new TextToSpeech(CommonContext.getContext(), null);
   private final Set<String> engineNames = new HashSet<String>();
 
   @Override
@@ -20,7 +19,7 @@ public abstract class EngineControl extends CollectionControl<TextToSpeech.Engin
 
   @Override
   protected final void addCollectionValues () {
-    for (TextToSpeech.EngineInfo engine : tts.getEngines()) {
+    for (TextToSpeech.EngineInfo engine : TTS.getEngines()) {
       addCollectionValue(engine);
       engineNames.add(engine.name);
     }
@@ -43,7 +42,7 @@ public abstract class EngineControl extends CollectionControl<TextToSpeech.Engin
 
   @Override
   protected final TextToSpeech.EngineInfo getCollectionDefault () {
-    return getValue(tts.getDefaultEngine());
+    return getValue(TTS.getDefaultEngine());
   }
 
   @Override

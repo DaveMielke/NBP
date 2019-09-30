@@ -58,9 +58,7 @@ public abstract class TextPlayer {
   private TextToSpeech newEngine = null;
 
   private final boolean hasStarted () {
-    synchronized (this) {
-      return currentEngine != null;
-    }
+    return currentEngine != null;
   }
 
   protected boolean isActive () {
@@ -304,79 +302,78 @@ public abstract class TextPlayer {
 
   public final void startEngine () {
     synchronized (this) {
-      String engineName = getEngineName();
-      if (engineName == null) engineName = "";
-
-      if (currentEngineName != null) {
-        if (engineName.isEmpty()) engineName = defaultEngineName;
-        if (currentEngineName.equals(engineName)) return;
-      }
+      String name = getEngineName();
+      if (name == null) name = "";
+      if (name.isEmpty()) name = TTS.getDefaultEngine();
+      if (name.equals(currentEngineName)) return;
 
       {
         StringBuilder log = new StringBuilder();
         log.append("starting engine");
 
-        if (engineName != null) {
-          log.append(": ");
-
-          if (engineName.isEmpty()) {
-            log.append("(default)");
-          } else {
-            log.append(engineName);
-          }
-        }
+        log.append(": ");
+        log.append(name);
 
         Log.d(LOG_TAG, log.toString());
       }
 
-      TextToSpeech.OnInitListener listener =
-        new TextToSpeech.OnInitListener() {
-          @Override
-          public void onInit (int status) {
-            synchronized (TextPlayer.this) {
-              try {
-                if (status == OK) {
-                  Log.d(LOG_TAG, "engine started successfully");
+      class Engine {
+        private final TextToSpeech engine;
 
-                  if (currentEngine != null) {
-                    stopSpeaking();
-                    currentEngine.shutdown();
+        public final TextToSpeech getEngine () {
+          return engine;
+        }
+
+        final TextToSpeech.OnInitListener listener =
+          new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit (int status) {
+              synchronized (TextPlayer.this) {
+                if (engine == newEngine) {
+                  newEngine = null;
+
+                  if (status == TextToSpeech.SUCCESS) {
+                    Log.d(LOG_TAG, "engine started successfully");
+
+                    if (currentEngine != null) {
+                      stopSpeaking();
+                      currentEngine.shutdown();
+                    }
+
+                    currentEngine = engine;
+                    initializeProperties();
+                    segmentGenerator = makeSegmentGenerator();
+                    setUtteranceProgressListener();
+
+                    if (pendingText != null) {
+                      CharSequence text = pendingText;
+                      pendingText = null;
+                      say(text);
+                    }
+                  } else {
+                    Log.w(LOG_TAG, "engine start failed with status " + status);
+
+                    try {
+                      engine.shutdown();
+                    } catch (IllegalArgumentException exception) {
+                      logSpeechFailure("shut down", exception);
+                    }
+
+                    retryDelay.start();
                   }
-
-                  currentEngine = newEngine;
-                  initializeProperties();
-                  segmentGenerator = makeSegmentGenerator();
-                  setUtteranceProgressListener();
-
-                  if (pendingText != null) {
-                    CharSequence text = pendingText;
-                    pendingText = null;
-                    say(text);
-                  }
-                } else {
-                  Log.w(LOG_TAG, "engine start failed with status " + status);
-
-                  try {
-                    newEngine.shutdown();
-                  } catch (IllegalArgumentException exception) {
-                    logSpeechFailure("shut down", exception);
-                  }
-
-                  retryDelay.start();
                 }
-              } finally {
-                newEngine = null;
               }
             }
-          }
-        };
+          };
+
+        public Engine (String name) {
+          engine = new TextToSpeech(CommonContext.getContext(), listener, name);
+        }
+      }
 
       if (newEngine != null) newEngine.shutdown();
-      newEngine = new TextToSpeech(CommonContext.getContext(), listener, engineName);
-
-      if (defaultEngineName == null) defaultEngineName = newEngine.getDefaultEngine();
-      if (engineName.isEmpty()) engineName = defaultEngineName;
-      currentEngineName = engineName;
+      newEngine = new Engine(name).getEngine();
+      currentEngineName = name;
     }
   }
 
