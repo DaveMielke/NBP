@@ -19,6 +19,9 @@ public abstract class ApplicationSettings {
   public volatile static boolean TYPING_STRIKE = ApplicationDefaults.TYPING_STRIKE;
   public volatile static boolean TYPING_UNDERLINE = ApplicationDefaults.TYPING_UNDERLINE;
 
+  public volatile static boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
+  public volatile static boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
+
   public volatile static boolean SHOW_HIGHLIGHTED = ApplicationDefaults.SHOW_HIGHLIGHTED;
   public volatile static IndicatorOverlay SELECTION_INDICATOR = ApplicationDefaults.SELECTION_INDICATOR;
   public volatile static IndicatorOverlay CURSOR_INDICATOR = ApplicationDefaults.CURSOR_INDICATOR;
@@ -39,9 +42,6 @@ public abstract class ApplicationSettings {
   public volatile static boolean ECHO_DELETIONS = ApplicationDefaults.ECHO_DELETIONS;
   public volatile static boolean ECHO_SELECTION = ApplicationDefaults.ECHO_SELECTION;
   public volatile static boolean SPEAK_LINES = ApplicationDefaults.SPEAK_LINES;
-
-  public volatile static boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
-  public volatile static boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
 
   public volatile static boolean ONE_HAND = ApplicationDefaults.ONE_HAND;
   public volatile static int SPACE_TIMEOUT = ApplicationDefaults.SPACE_TIMEOUT;

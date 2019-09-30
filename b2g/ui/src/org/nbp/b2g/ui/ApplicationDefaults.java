@@ -21,6 +21,9 @@ public abstract class ApplicationDefaults {
   public final static boolean TYPING_STRIKE = false;
   public final static boolean TYPING_UNDERLINE = false;
 
+  public final static boolean LONG_PRESS = true;
+  public final static boolean REVERSE_PANNING = false;
+
   public final static boolean SHOW_HIGHLIGHTED = true;
   public final static IndicatorOverlay SELECTION_INDICATOR = IndicatorOverlay.DOT_8;
   public final static IndicatorOverlay CURSOR_INDICATOR = IndicatorOverlay.DOTS_78;
@@ -41,9 +44,6 @@ public abstract class ApplicationDefaults {
   public final static boolean ECHO_DELETIONS = true;
   public final static boolean ECHO_SELECTION = true;
   public final static boolean SPEAK_LINES = true;
-
-  public final static boolean LONG_PRESS = true;
-  public final static boolean REVERSE_PANNING = false;
 
   public final static boolean ONE_HAND = false;
   public final static int SPACE_TIMEOUT = 1000; // milliseconds
