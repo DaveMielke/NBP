@@ -16,11 +16,11 @@ public abstract class ApplicationSettings {
 
   public volatile static ScreenOrientation SCREEN_ORIENTATION = ApplicationDefaults.SCREEN_ORIENTATION;
 
+  public volatile static String SPEECH_ENGINE = ApplicationDefaults.SPEECH_ENGINE;
   public volatile static float SPEECH_VOLUME = ApplicationDefaults.SPEECH_VOLUME;
   public volatile static float SPEECH_RATE = ApplicationDefaults.SPEECH_RATE;
   public volatile static float SPEECH_PITCH = ApplicationDefaults.SPEECH_PITCH;
   public volatile static float SPEECH_BALANCE = ApplicationDefaults.SPEECH_BALANCE;
-  public volatile static String SPEECH_ENGINE = ApplicationDefaults.SPEECH_ENGINE;
 
   public volatile static boolean LOG_GEOCODING = ApplicationDefaults.LOG_GEOCODING;
   public volatile static boolean LOG_SENSORS = ApplicationDefaults.LOG_SENSORS;

@@ -31,7 +31,7 @@ public class SpeechRateControl extends RateControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!Announcements.setRate(value)) return false;
+    if (!Announcements.getAnnouncer().setRate(value)) return false;
     ApplicationSettings.SPEECH_RATE = value;
     Announcements.confirmSetting(R.string.control_label_SpeechRate, getValue());
     return true;

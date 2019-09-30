@@ -14,11 +14,11 @@ public abstract class Controls {
   public final static UpdateIntervalControl updateInterval = new UpdateIntervalControl();
 
   // speech settings
+  public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
   public final static SpeechVolumeControl speechVolume = new SpeechVolumeControl();
   public final static SpeechRateControl speechRate = new SpeechRateControl();
   public final static SpeechPitchControl speechPitch = new SpeechPitchControl();
   public final static SpeechBalanceControl speechBalance = new SpeechBalanceControl();
-  public final static SpeechEngineControl speechEngine = new SpeechEngineControl();
 
   // unit settings
   public final static DistanceUnitControl distanceUnit = new DistanceUnitControl();
@@ -43,6 +43,7 @@ public abstract class Controls {
     locationRadius.addDependencies(distanceUnit);
 
     locationMonitor.addDependencies(announceLocation);
+    announceLocation.addDependencies(speechEngine);
     announceLocation.addDependencies(speechVolume, speechBalance);
     announceLocation.addDependencies(speechRate, speechPitch);
   }

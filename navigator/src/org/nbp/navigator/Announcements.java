@@ -80,20 +80,4 @@ public abstract class Announcements extends NavigatorComponent {
     if (!announcer.stopSpeaking()) return false;
     return announcer.say(confirmation.toString());
   }
-
-  public final static boolean setVolume (float volume) {
-    return getAnnouncer().setVolume(volume);
-  }
-
-  public final static boolean setBalance (float balance) {
-    return getAnnouncer().setBalance(balance);
-  }
-
-  public final static boolean setRate (float rate) {
-    return getAnnouncer().setRate(rate);
-  }
-
-  public final static boolean setPitch (float pitch) {
-    return getAnnouncer().setPitch(pitch);
-  }
 }

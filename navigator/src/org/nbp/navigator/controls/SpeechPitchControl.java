@@ -31,7 +31,7 @@ public class SpeechPitchControl extends PitchControl {
 
   @Override
   protected boolean setFloatValue (float value) {
-    if (!Announcements.setPitch(value)) return false;
+    if (!Announcements.getAnnouncer().setPitch(value)) return false;
     ApplicationSettings.SPEECH_PITCH = value;
     Announcements.confirmSetting(R.string.control_label_SpeechPitch, getValue());
     return true;
