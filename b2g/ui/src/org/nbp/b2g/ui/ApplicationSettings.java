@@ -12,6 +12,7 @@ public abstract class ApplicationSettings {
   public volatile static boolean WORD_WRAP = ApplicationDefaults.WORD_WRAP;
   public volatile static boolean SHOW_NOTIFICATIONS = ApplicationDefaults.SHOW_NOTIFICATIONS;
 
+  public volatile static boolean INPUT_EDITING = ApplicationDefaults.INPUT_EDITING;
   public volatile static TypingMode TYPING_MODE = ApplicationDefaults.TYPING_MODE;
   public volatile static boolean TYPING_BOLD = ApplicationDefaults.TYPING_BOLD;
   public volatile static boolean TYPING_ITALIC = ApplicationDefaults.TYPING_ITALIC;
@@ -39,7 +40,6 @@ public abstract class ApplicationSettings {
   public volatile static boolean ECHO_SELECTION = ApplicationDefaults.ECHO_SELECTION;
   public volatile static boolean SPEAK_LINES = ApplicationDefaults.SPEAK_LINES;
 
-  public volatile static boolean INPUT_EDITING = ApplicationDefaults.INPUT_EDITING;
   public volatile static boolean LONG_PRESS = ApplicationDefaults.LONG_PRESS;
   public volatile static boolean REVERSE_PANNING = ApplicationDefaults.REVERSE_PANNING;
 

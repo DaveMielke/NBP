@@ -14,6 +14,7 @@ public abstract class ApplicationDefaults {
   public final static boolean WORD_WRAP = true;
   public final static boolean SHOW_NOTIFICATIONS = true;
 
+  public final static boolean INPUT_EDITING = true;
   public final static TypingMode TYPING_MODE = TypingMode.TEXT;
   public final static boolean TYPING_BOLD = false;
   public final static boolean TYPING_ITALIC = false;
@@ -41,7 +42,6 @@ public abstract class ApplicationDefaults {
   public final static boolean ECHO_SELECTION = true;
   public final static boolean SPEAK_LINES = true;
 
-  public final static boolean INPUT_EDITING = true;
   public final static boolean LONG_PRESS = true;
   public final static boolean REVERSE_PANNING = false;
 
