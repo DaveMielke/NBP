@@ -34,23 +34,8 @@ import android.content.DialogInterface;
 public abstract class CommonSettingsActivity extends CommonActivity {
   private final static String LOG_TAG = CommonSettingsActivity.class.getName();
 
-  private final Control[] controlsInCreationOrder;
-  private final Control[] controlsInRestoreOrder;
-
-  protected CommonSettingsActivity (Control[] inCreationOrder, Control[] inRestoreOrder) {
-    super();
-    controlsInCreationOrder = inCreationOrder;
-    controlsInRestoreOrder = inRestoreOrder;
-  }
-
-  protected CommonSettingsActivity (Control[] controls) {
-    this(controls, controls);
-  }
-
-  protected CommonSettingsActivity () {
-    controlsInCreationOrder = null;
-    controlsInRestoreOrder = null;
-  }
+  protected abstract Control[] getControlsInCreationOrder ();
+  protected abstract Control[] getControlsInRestoreOrder ();
 
   private final static int FRAGMENT_CONTAINER_ID = R.id.settings_fragment_container;
 
@@ -102,7 +87,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   protected void saveSettings () {
-    Control.saveValues(controlsInCreationOrder);
+    Control.saveValues(getControlsInCreationOrder());
   }
 
   private View createSaveControlsButton () {
@@ -121,7 +106,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   protected void restoreSettings () {
-    Control.restoreSavedValues(controlsInRestoreOrder);
+    Control.restoreSavedValues(getControlsInRestoreOrder());
   }
 
   private View createRestoreControlsButton () {
@@ -140,7 +125,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   }
 
   protected void resetSettings () {
-    Control.restoreDefaultValues(controlsInRestoreOrder);
+    Control.restoreDefaultValues(getControlsInRestoreOrder());
   }
 
   private View createResetControlsButton () {
@@ -420,7 +405,7 @@ public abstract class CommonSettingsActivity extends CommonActivity {
   private Fragment createControlGroupsFragment () {
     Map<String, ViewGroup> groupTables = new LinkedHashMap<String, ViewGroup>();
 
-    for (Control control : controlsInCreationOrder) {
+    for (Control control : getControlsInCreationOrder()) {
       String label = control.getGroup();
       ViewGroup table = groupTables.get(label);
 
@@ -504,15 +489,10 @@ public abstract class CommonSettingsActivity extends CommonActivity {
     lockScreenOrientation();
     setContentView(R.layout.common_settings);
 
-    if (controlsInCreationOrder != null) {
-      getFragmentManager()
-        .beginTransaction()
-        .add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment())
-        .commit();
-    } else {
-      ViewGroup container = (ViewGroup)findViewById(FRAGMENT_CONTAINER_ID);
-      container.addView(newTextView(R.string.control_group_none));
-    }
+    getFragmentManager()
+      .beginTransaction()
+      .add(FRAGMENT_CONTAINER_ID, createControlGroupsFragment())
+      .commit();
   }
 
   @Override

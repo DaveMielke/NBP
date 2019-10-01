@@ -2,7 +2,6 @@
 
 <resources>
   <string name="control_group_main">Main Screen</string>
-  <string name="control_group_none">no settings yet</string>
   <string name="control_hint_not_set">[not set]</string>
 
   <string name="control_save_label">Save Settings</string>

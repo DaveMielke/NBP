@@ -1,11 +1,16 @@
 package org.nbp.navigator;
 
 import org.nbp.common.CommonSettingsActivity;
+import org.nbp.common.controls.Control;
 
 public class SettingsActivity extends CommonSettingsActivity {
-  private final static String LOG_TAG = SettingsActivity.class.getName();
+  @Override
+  protected final Control[] getControlsInCreationOrder () {
+    return Controls.inCreationOrder;
+  }
 
-  public SettingsActivity () {
-    super(Controls.inCreationOrder, Controls.inRestoreOrder);
+  @Override
+  protected final Control[] getControlsInRestoreOrder () {
+    return Controls.inRestoreOrder;
   }
 }

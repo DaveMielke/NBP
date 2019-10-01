@@ -2,16 +2,22 @@ package org.nbp.b2g.ui.host;
 import org.nbp.b2g.ui.*;
 
 import org.nbp.common.CommonSettingsActivity;
-import org.nbp.common.LaunchUtilities;
+import org.nbp.common.controls.Control;
 
 import android.view.View;
 import android.widget.Button;
 
-public class SettingsActivity extends CommonSettingsActivity {
-  private final static String LOG_TAG = SettingsActivity.class.getName();
+import org.nbp.common.LaunchUtilities;
 
-  public SettingsActivity () {
-    super(Controls.inCreationOrder, Controls.inRestoreOrder);
+public class SettingsActivity extends CommonSettingsActivity {
+  @Override
+  protected final Control[] getControlsInCreationOrder () {
+    return Controls.inCreationOrder;
+  }
+
+  @Override
+  protected final Control[] getControlsInRestoreOrder () {
+    return Controls.inRestoreOrder;
   }
 
   private View createSystemMaintenanceButton () {
