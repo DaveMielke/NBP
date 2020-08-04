@@ -21,6 +21,7 @@ public enum BrailleCode {
   IT(TranslatorIdentifier.IT),
   PT_G1(TranslatorIdentifier.PT_G1),
   PT_G2(TranslatorIdentifier.PT_G2),
+  RU(TranslatorIdentifier.RU),
   ES_G1(TranslatorIdentifier.ES_G1),
   ES_G2(TranslatorIdentifier.ES_G2),
   PINYIN(TranslatorIdentifier.PINYIN),
