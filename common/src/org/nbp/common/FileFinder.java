@@ -465,39 +465,42 @@ public abstract class FileFinder extends ActivityComponent {
 
   private final Set<String> createDirectoryListing (File directory) {
     Set<String> listing = new TreeSet();
+    File[] files = directory.listFiles();
 
-    for (File file : directory.listFiles()) {
-      if (file.isHidden()) continue;
+    if (files != null) {
+      for (File file : files) {
+        if (file.isHidden()) continue;
 
-      String name = file.getName();
-      char indicator = 0;
+        String name = file.getName();
+        char indicator = 0;
 
-      if (file.isDirectory()) {
-        if (!canAccessDirectory(file)) continue;
-        indicator = File.separatorChar;
-      } else {
-        if (!file.isFile()) continue;
+        if (file.isDirectory()) {
+          if (!canAccessDirectory(file)) continue;
+          indicator = File.separatorChar;
+        } else {
+          if (!file.isFile()) continue;
 
-      EXTENSION_CHECK:
-        if (fileExtensions != null) {
-          if (fileExtensions.length > 0) {
-            for (String extension : fileExtensions) {
-              if (name.endsWith(extension)) break EXTENSION_CHECK;
+        EXTENSION_CHECK:
+          if (fileExtensions != null) {
+            if (fileExtensions.length > 0) {
+              for (String extension : fileExtensions) {
+                if (name.endsWith(extension)) break EXTENSION_CHECK;
+              }
+
+              continue;
             }
+          }
 
-            continue;
+          if (forWriting) {
+            if (!file.canWrite()) continue;
+          } else {
+            if (!file.canRead()) continue;
           }
         }
 
-        if (forWriting) {
-          if (!file.canWrite()) continue;
-        } else {
-          if (!file.canRead()) continue;
-        }
+        if (indicator != 0) name += indicator;
+        listing.add(name);
       }
-
-      if (indicator != 0) name += indicator;
-      listing.add(name);
     }
 
     return listing;
