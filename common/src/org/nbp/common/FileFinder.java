@@ -357,13 +357,14 @@ public abstract class FileFinder extends ActivityComponent {
         }
 
         Set<String> listing = listingCreator.createListing();
-        int count = listing.size();
 
-        if (count == 0) {
+        if (listing == null) {
+          builder.setMessage(R.string.FileFinder_message_unreadable_directory);
+        } else if (listing.isEmpty()) {
           builder.setMessage(R.string.FileFinder_message_empty_directory);
         } else {
-          items = new String[count];
-          count = 0;
+          items = new String[listing.size()];
+          int count = 0;
 
           for (String item : listing) {
             items[count++] = item;
@@ -464,43 +465,42 @@ public abstract class FileFinder extends ActivityComponent {
   }
 
   private final Set<String> createDirectoryListing (File directory) {
-    Set<String> listing = new TreeSet();
     File[] files = directory.listFiles();
+    if (files == null) return null;
+    Set<String> listing = new TreeSet();
 
-    if (files != null) {
-      for (File file : files) {
-        if (file.isHidden()) continue;
+    for (File file : files) {
+      if (file.isHidden()) continue;
 
-        String name = file.getName();
-        char indicator = 0;
+      String name = file.getName();
+      char indicator = 0;
 
-        if (file.isDirectory()) {
-          if (!canAccessDirectory(file)) continue;
-          indicator = File.separatorChar;
-        } else {
-          if (!file.isFile()) continue;
+      if (file.isDirectory()) {
+        if (!canAccessDirectory(file)) continue;
+        indicator = File.separatorChar;
+      } else {
+        if (!file.isFile()) continue;
 
-        EXTENSION_CHECK:
-          if (fileExtensions != null) {
-            if (fileExtensions.length > 0) {
-              for (String extension : fileExtensions) {
-                if (name.endsWith(extension)) break EXTENSION_CHECK;
-              }
-
-              continue;
+      EXTENSION_CHECK:
+        if (fileExtensions != null) {
+          if (fileExtensions.length > 0) {
+            for (String extension : fileExtensions) {
+              if (name.endsWith(extension)) break EXTENSION_CHECK;
             }
-          }
 
-          if (forWriting) {
-            if (!file.canWrite()) continue;
-          } else {
-            if (!file.canRead()) continue;
+            continue;
           }
         }
 
-        if (indicator != 0) name += indicator;
-        listing.add(name);
+        if (forWriting) {
+          if (!file.canWrite()) continue;
+        } else {
+          if (!file.canRead()) continue;
+        }
       }
+
+      if (indicator != 0) name += indicator;
+      listing.add(name);
     }
 
     return listing;
