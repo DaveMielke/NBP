@@ -11,11 +11,26 @@ import android.os.Bundle;
 
 import android.widget.TextView;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Map;
 import java.util.HashMap;
 
 public class Permissions {
   private final static String LOG_TAG = Permissions.class.getName();
+
+  private static String joinStrings (String delimiter, String... strings) {
+    StringBuilder builder = new StringBuilder();
+
+    for (String string : strings) {
+      if (string == null) continue;
+      if (string.isEmpty()) continue;
+
+      if (builder.length() > 0) builder.append(delimiter);
+      builder.append(string);
+    }
+
+    return builder.toString();
+  }
 
   private static Context getContext () {
     return CommonContext.getContext();
@@ -35,31 +50,27 @@ public class Permissions {
     return result == PackageManager.PERMISSION_GRANTED;
   }
 
-  private static enum RequestState {
-    WAITING, GRANTED, DENIED, UNKNOWN;
-  }
-
-  private final static Map<Integer, RequestState> requestStates =
-               new HashMap<Integer, RequestState>();
+  private final static Map<Integer, AtomicBoolean> requestMonitors =
+               new HashMap<Integer, AtomicBoolean>();
 
   private final static Object REQUEST_CODE_LOCK = new Object();
   private static int requestCode = 0;
 
   private final static String EXTRA_REQUEST_CODE = "code";
-  private final static String EXTRA_REQUEST_PERMISSION = "permission";
+  private final static String EXTRA_REQUEST_PERMISSIONS = "permissions";
 
   public static class RequestActivity extends Activity {
     private final void handleIntent (Intent intent) {
       Bundle extras = intent.getExtras();
-      String permission = extras.getString(EXTRA_REQUEST_PERMISSION);
       int code = extras.getInt(EXTRA_REQUEST_CODE);
+      String[] permissions = extras.getStringArray(EXTRA_REQUEST_PERMISSIONS);
 
       {
         TextView view = findViewById(R.id.PermissionRequest_permission);
-        view.setText(permission);
+        view.setText(joinStrings("\n", permissions));
       }
 
-      requestPermissions(new String[] {permission}, code);
+      requestPermissions(permissions, code);
     }
 
     @Override
@@ -71,85 +82,92 @@ public class Permissions {
 
     @Override
     public void onRequestPermissionsResult (int code, String[] permissions, int[] results) {
-      RequestState state;
+      AtomicBoolean monitor;
 
-      synchronized (requestStates) {
-        state = requestStates.get(code);
+      synchronized (requestMonitors) {
+        monitor = requestMonitors.remove(code);
       }
 
-      if (state != null) {
-        if (state.equals(RequestState.WAITING)) {
-          String permission = permissions[0];
-          int result = results[0];
+      {
+        int count = permissions.length;
+
+        for (int index=0; index<count; index+=1) {
+          String permission = permissions[index];
+          int result = results[index];
 
           switch (result) {
             case PackageManager.PERMISSION_GRANTED:
-              state = RequestState.GRANTED;
               Log.i(LOG_TAG, ("permission granted: " + permission));
               break;
 
             case PackageManager.PERMISSION_DENIED:
-              state = RequestState.DENIED;
               Log.i(LOG_TAG, ("permission denied: " + permission));
               break;
 
             default:
-              state = RequestState.UNKNOWN;
               Log.w(LOG_TAG, String.format("unknown permission request result: %d: %s", result, permission));
               break;
           }
-
-          synchronized (requestStates) {
-            requestStates.put(code, state);
-            requestStates.notifyAll();
-            finish();
-          }
         }
       }
+
+      if (monitor != null) {
+        synchronized (monitor) {
+          monitor.set(true);
+          monitor.notify();
+        }
+      }
+
+      finish();
     }
   }
 
-  public static boolean request (String permission) {
+  public static void request (boolean wait, String... permissions) {
     if (CommonUtilities.haveMarshmallow) {
+      Log.i(LOG_TAG, ("requesting permissions: " + joinStrings(", ", permissions)));
+
       Context context = getContext();
       Intent intent = new Intent(context, RequestActivity.class);
       int code;
-
-      intent.setFlags(
-        Intent.FLAG_ACTIVITY_NEW_TASK
-      );
 
       synchronized (REQUEST_CODE_LOCK) {
         code = ++requestCode;
       }
 
-      intent.putExtra(EXTRA_REQUEST_PERMISSION, permission);
       intent.putExtra(EXTRA_REQUEST_CODE, code);
+      intent.putExtra(EXTRA_REQUEST_PERMISSIONS, permissions);
 
-      synchronized (requestStates) {
-        requestStates.put(code, RequestState.WAITING);
+      intent.setFlags(
+        Intent.FLAG_ACTIVITY_NEW_TASK
+      );
 
-        Log.i(LOG_TAG, ("requesting permission: " + permission));
-        context.startActivity(intent);
+      if (wait) {
+        AtomicBoolean monitor = wait? new AtomicBoolean(): null;
 
-        while (true) {
-          try {
-            requestStates.wait(30000);
-            RequestState state = requestStates.get(code);
+        synchronized (requestMonitors) {
+          requestMonitors.put(code, monitor);
+        }
 
-            if (state != null) {
-              if (!state.equals(RequestState.WAITING)) {
-                return state.equals(RequestState.GRANTED);
-              }
+        synchronized (monitor) {
+          context.startActivity(intent);
+
+          while (true) {
+            try {
+              monitor.wait(30000);
+              if (monitor.get()) break;
+            } catch (InterruptedException exception) {
+              Log.w(LOG_TAG, ("permission request wait interrupted: " + joinStrings(", ", permissions)));
+              break;
             }
-          } catch (InterruptedException exception) {
-            Log.w(LOG_TAG, ("permission request wait interrupted: " + permission));
-            return false;
           }
         }
+      } else {
+        context.startActivity(intent);
       }
-    } else {
-      return false;
     }
+  }
+
+  public static void request (String... permissions) {
+    request(false, permissions);
   }
 }

@@ -21,6 +21,7 @@ import org.nbp.common.DialogHelper;
 import org.nbp.common.LanguageUtilities;
 import java.lang.reflect.Constructor;
 
+import org.nbp.common.Permissions;
 import org.nbp.common.FileFinder;
 import org.nbp.common.FileSystems;
 
@@ -767,6 +768,12 @@ public class EditorActivity extends CommonActivity {
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    Permissions.request(
+      android.Manifest.permission.READ_EXTERNAL_STORAGE
+    , android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+    , "android.permission.WRITE_MEDIA_STORAGE"
+    );
 
     Louis.initialize(this,
       new NewInternalTablesListener() {

@@ -359,16 +359,6 @@ public abstract class FileFinder extends ActivityComponent {
         Set<String> listing = listingCreator.createListing();
 
         if (listing == null) {
-          String permission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
-
-          if (!Permissions.have(permission)) {
-            if (Permissions.request(permission)) {
-              listing = listingCreator.createListing();
-            }
-          }
-        }
-
-        if (listing == null) {
           builder.setMessage(R.string.FileFinder_message_unreadable_directory);
         } else if (listing.isEmpty()) {
           builder.setMessage(R.string.FileFinder_message_empty_directory);
