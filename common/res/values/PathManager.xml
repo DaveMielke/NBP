@@ -2,5 +2,16 @@
 
 <resources>
   <string name="PathManager_title_main">NBP Path Manager</string>
-  <string name="PathManager_writable_no">write-protected</string>
+
+  <string name="PathManager_name">Name</string>
+  <string name="PathManager_size">Size</string>
+  <string name="PathManager_modified">Modified</string>
+
+  <string name="PathManager_readable">Readable</string>
+  <string name="PathManager_writable">Writable</string>
+  <string name="PathManager_executable">Executable</string>
+  <string name="PathManager_searchable">Searchable</string>
+
+  <string name="PathManager_state_false">No</string>
+  <string name="PathManager_state_true">Yes</string>
 </resources>

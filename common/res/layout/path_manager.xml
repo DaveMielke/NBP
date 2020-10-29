@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   >
 
-  <TextView
-    android:id="@+id/PathManager_directory"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:singleLine="true"
-   />
+  <TextView android:id="@+id/PathManager_directory" />
 
-  <TextView
-    android:id="@+id/PathManager_name"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:singleLine="true"
-   />
+  <TableRow>
+    <TextView android:text="@string/PathManager_name" />
+    <TextView android:id="@+id/PathManager_name" />
+  </TableRow>
 
-  <CheckBox
-    android:id="@+id/PathManager_write_no"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/PathManager_writable_no"
-   />
-</LinearLayout>
+  <TableRow>
+    <TextView android:text="@string/PathManager_size" />
+    <TextView android:id="@+id/PathManager_size" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/PathManager_modified" />
+    <TextView android:id="@+id/PathManager_modified" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/PathManager_readable" />
+    <CheckBox android:id="@+id/PathManager_readable" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:text="@string/PathManager_writable" />
+    <CheckBox android:id="@+id/PathManager_writable" />
+  </TableRow>
+
+  <TableRow>
+    <TextView android:id="@+id/PathManager_executable_label" />
+    <CheckBox android:id="@+id/PathManager_executable" />
+  </TableRow>
+</TableLayout>
