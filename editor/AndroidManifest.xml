@@ -12,6 +12,7 @@
   <!-- Android 8.0 (Oreo) -->
   <uses-sdk android:targetSdkVersion="26" />
 
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="com.android.email.permission.READ_ATTACHMENT" />
 
@@ -129,6 +130,11 @@
     <activity
       android:name=".SettingsActivity"
       android:label="@string/settings_activity_label"
+     />
+
+    <activity
+      android:name="org.nbp.common.Permissions$RequestActivity"
+      android:label="@string/Permissions_RequestActivity_label"
      />
   </application>
 </manifest>

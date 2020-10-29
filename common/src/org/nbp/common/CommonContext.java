@@ -5,7 +5,6 @@ import android.util.Log;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.Resources;
-import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
 
 import android.util.TypedValue;
@@ -107,15 +106,6 @@ public abstract class CommonContext {
     DisplayMetrics metrics = getDisplayMetrics();
     if (metrics == null) return dips;
     return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, metrics));
-  }
-
-  public static boolean havePermission (String permission) {
-    Context context = getContext();
-    if (context == null) return false;
-
-    PackageManager pm = context.getPackageManager();
-    int result = pm.checkPermission(permission, context.getPackageName());
-    return result == PackageManager.PERMISSION_GRANTED;
   }
 
   public static Object getSystemService (String name) {
