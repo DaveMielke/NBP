@@ -62,33 +62,48 @@ public abstract class FileSystems {
   }
 
   private final static void addRemovableFileSystems () {
-    try {
-      Reader reader = new FileReader("/system/etc/vold.fstab");
+    String voldPath = "/system/etc/vold.fstab";
+    File voldFile = new File(voldPath);
 
+    if (voldFile.exists()) {
       try {
-        BufferedReader buffer = new BufferedReader(reader);
+        Reader reader = new FileReader(voldFile);
 
         try {
-          while (true) {
-            String line = buffer.readLine();
-            if (line == null) break;
+          BufferedReader buffer = new BufferedReader(reader);
 
-            String[] fields = line.split("\\s+");
-            if (fields.length < 3) continue;
-            if (!fields[0].equals("dev_mount")) continue;
+          try {
+            while (true) {
+              String line = buffer.readLine();
+              if (line == null) break;
 
-            String name = fields[1];
-            String mountpoint = fields[2];
-            addFileSystem(name, mountpoint, true);
+              String[] fields = line.split("\\s+");
+              if (fields.length < 3) continue;
+              if (!fields[0].equals("dev_mount")) continue;
+
+              String name = fields[1];
+              String mountpoint = fields[2];
+              addFileSystem(name, mountpoint, true);
+            }
+          } finally {
+            buffer.close();
           }
         } finally {
-          buffer.close();
+          reader.close();
         }
-      } finally {
-        reader.close();
+      } catch (IOException exception) {
+        Log.w(LOG_TAG, exception.getMessage());
       }
-    } catch (IOException exception) {
-      Log.w(LOG_TAG, exception.getMessage());
+    } else {
+      String mountpointsPath = "/mnt";
+      File mountpointsDirectory = new File(mountpointsPath);
+      File[] mountpoints = mountpointsDirectory.listFiles();
+
+      if (mountpoints != null) {
+        for (File mountpoint : mountpoints) {
+          addFileSystem(mountpoint.getName(), mountpoint.getAbsolutePath(), true);
+        }
+      }
     }
   }
 
