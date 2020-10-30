@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.CompoundButton;
 import android.widget.CheckBox;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import android.text.format.DateFormat;
 
@@ -61,43 +62,54 @@ public class PathManager extends ActivityComponent {
     view.setText(Long.toString(bytes));
   }
 
-  private final void setTime (TextView view, long time) {
-    String format = DateFormat.is24HourFormat(CommonContext.getContext())? "HH:mm": "h:mma";
-    format = "yyyy-MM-dd " + format;
-    view.setText(new SimpleDateFormat(format).format(time));
+  private static String makeTimeFormat () {
+    boolean use24Hours = DateFormat.is24HourFormat(CommonContext.getContext());
+
+    return new StringBuilder()
+          .append("yyyy-MM-dd ")
+          .append(use24Hours? "HH": "h")
+          .append(":mm:ss")
+          .append(use24Hours? "": "a")
+          .toString();
   }
 
-  private final void setModified (AlertDialog dialog, File path) {
+  private final void setTime (TextView view, long time, Format formatter) {
+    view.setText(formatter.format(time));
+  }
+
+  private final void setModified (AlertDialog dialog, File path, Format formatter) {
     TextView view = dialog.findViewById(R.id.PathManager_modified);
     long time = path.lastModified();
-    setTime(view, time);
+    setTime(view, time, formatter);
   }
 
-  private interface PathStateManager {
+  private interface StateManager {
     public boolean getState ();
     public void setState (boolean state);
   }
 
-  private final void showState (CompoundButton button, PathStateManager psm) {
-    boolean state = psm.getState();
+  private final void showState (StateManager sm, CompoundButton button) {
+    boolean state = sm.getState();
     button.setChecked(state);
 
     button.setText(
-      state? R.string.PathManager_state_true:
-      R.string.PathManager_state_false
+      state? R.string.PathManager_state_true: R.string.PathManager_state_false
     );
   }
 
-  private final void manageState (CheckBox checkbox, final PathStateManager psm) {
-    showState(checkbox, psm);
+  private final void manageState (final StateManager sm, CompoundButton button) {
+    showState(sm, button);
 
-    checkbox.setOnCheckedChangeListener(
+    button.setOnCheckedChangeListener(
       new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged (CompoundButton button, boolean isChecked) {
-          psm.setState(isChecked);
-          showState(button, psm);
-          if (button.isChecked() == isChecked) Tones.beep();
+          sm.setState(isChecked);
+          showState(sm, button);
+
+          if (sm.getState() != isChecked) {
+            Tones.beep();
+          }
         }
       }
     );
@@ -106,7 +118,7 @@ public class PathManager extends ActivityComponent {
   private final void setReadable (AlertDialog dialog, final File path) {
     final CheckBox checkbox = dialog.findViewById(R.id.PathManager_readable);
 
-    PathStateManager psm = new PathStateManager() {
+    StateManager sm = new StateManager() {
       @Override
       public boolean getState () {
         return path.canRead();
@@ -118,13 +130,13 @@ public class PathManager extends ActivityComponent {
       }
     };
 
-    manageState(checkbox, psm);
+    manageState(sm, checkbox);
   }
 
   private final void setWritable (AlertDialog dialog, final File path) {
     final CheckBox checkbox = dialog.findViewById(R.id.PathManager_writable);
 
-    PathStateManager psm = new PathStateManager() {
+    StateManager sm = new StateManager() {
       @Override
       public boolean getState () {
         return path.canWrite();
@@ -136,13 +148,13 @@ public class PathManager extends ActivityComponent {
       }
     };
 
-    manageState(checkbox, psm);
+    manageState(sm, checkbox);
   }
 
   private final void setExecutable (AlertDialog dialog, final File path) {
     final CheckBox checkbox = dialog.findViewById(R.id.PathManager_executable);
 
-    PathStateManager psm = new PathStateManager() {
+    StateManager sm = new StateManager() {
       @Override
       public boolean getState () {
         return path.canExecute();
@@ -154,7 +166,7 @@ public class PathManager extends ActivityComponent {
       }
     };
 
-    manageState(checkbox, psm);
+    manageState(sm, checkbox);
   }
 
   public final void managePath (File path) {
@@ -162,9 +174,12 @@ public class PathManager extends ActivityComponent {
 
     setDirectory(dialog, path);
     setName(dialog, path);
-
     setSize(dialog, path);
-    setModified(dialog, path);
+
+    {
+      Format formatter = new SimpleDateFormat(makeTimeFormat());
+      setModified(dialog, path, formatter);
+    }
 
     {
       TextView view = dialog.findViewById(R.id.PathManager_executable_label);
