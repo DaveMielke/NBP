@@ -36,7 +36,7 @@ public class Permissions {
     return CommonContext.getContext();
   }
 
-  public static boolean isAllowed (String permission) {
+  public static boolean isRequested (String permission) {
     Context context = getContext();
     PackageManager pm = context.getPackageManager();
     return pm.checkPermission(permission, context.getPackageName()) == PackageManager.PERMISSION_GRANTED;
@@ -49,7 +49,7 @@ public class Permissions {
       return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    return isAllowed(permission);
+    return isRequested(permission);
   }
 
   private final static Map<Integer, AtomicBoolean> requestMonitors =
