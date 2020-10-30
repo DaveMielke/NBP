@@ -36,18 +36,20 @@ public class Permissions {
     return CommonContext.getContext();
   }
 
-  public static boolean have (String permission) {
+  public static boolean isAllowed (String permission) {
     Context context = getContext();
-    int result;
+    PackageManager pm = context.getPackageManager();
+    return pm.checkPermission(permission, context.getPackageName()) == PackageManager.PERMISSION_GRANTED;
+  }
+
+  public static boolean isGranted (String permission) {
+    Context context = getContext();
 
     if (CommonUtilities.haveMarshmallow) {
-      result = context.checkSelfPermission(permission);
-    } else {
-      PackageManager pm = context.getPackageManager();
-      result = pm.checkPermission(permission, context.getPackageName());
+      return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    return result == PackageManager.PERMISSION_GRANTED;
+    return isAllowed(permission);
   }
 
   private final static Map<Integer, AtomicBoolean> requestMonitors =
@@ -66,7 +68,7 @@ public class Permissions {
       String[] permissions = extras.getStringArray(EXTRA_REQUEST_PERMISSIONS);
 
       {
-        TextView view = findViewById(R.id.PermissionRequest_permission);
+        TextView view = findViewById(R.id.PermissionRequest_permissions);
         view.setText(joinStrings("\n", permissions));
       }
 
@@ -111,63 +113,65 @@ public class Permissions {
         }
       }
 
-      if (monitor != null) {
-        synchronized (monitor) {
-          monitor.set(true);
-          monitor.notify();
-        }
+      synchronized (monitor) {
+        monitor.set(true);
+        monitor.notifyAll();
       }
 
       finish();
     }
   }
 
-  public static void request (boolean wait, String... permissions) {
+  public static int request (String... permissions) {
+    Log.i(LOG_TAG, ("requesting permissions: " + joinStrings(", ", permissions)));
+
+    Context context = getContext();
+    int code;
+
+    synchronized (REQUEST_CODE_LOCK) {
+      code = ++requestCode;
+    }
+
     if (CommonUtilities.haveMarshmallow) {
-      Log.i(LOG_TAG, ("requesting permissions: " + joinStrings(", ", permissions)));
-
-      Context context = getContext();
       Intent intent = new Intent(context, RequestActivity.class);
-      int code;
-
-      synchronized (REQUEST_CODE_LOCK) {
-        code = ++requestCode;
-      }
-
-      intent.putExtra(EXTRA_REQUEST_CODE, code);
-      intent.putExtra(EXTRA_REQUEST_PERMISSIONS, permissions);
 
       intent.setFlags(
         Intent.FLAG_ACTIVITY_NEW_TASK
       );
 
-      if (wait) {
-        AtomicBoolean monitor = wait? new AtomicBoolean(): null;
+      intent.putExtra(EXTRA_REQUEST_CODE, code);
+      intent.putExtra(EXTRA_REQUEST_PERMISSIONS, permissions);
 
-        synchronized (requestMonitors) {
-          requestMonitors.put(code, monitor);
-        }
-
-        synchronized (monitor) {
-          context.startActivity(intent);
-
-          while (true) {
-            try {
-              monitor.wait(30000);
-              if (monitor.get()) break;
-            } catch (InterruptedException exception) {
-              Log.w(LOG_TAG, ("permission request wait interrupted: " + joinStrings(", ", permissions)));
-              break;
-            }
-          }
-        }
-      } else {
-        context.startActivity(intent);
+      synchronized (requestMonitors) {
+        requestMonitors.put(code, new AtomicBoolean());
       }
+
+      context.startActivity(intent);
     }
+
+    return code;
   }
 
-  public static void request (String... permissions) {
-    request(false, permissions);
+  public static boolean await (int code) {
+    AtomicBoolean monitor;
+
+    synchronized (requestMonitors) {
+      monitor = requestMonitors.get(code);
+    }
+
+    if (monitor != null) {
+      synchronized (monitor) {
+        while (!monitor.get()) {
+          try {
+            monitor.wait(30000);
+          } catch (InterruptedException exception) {
+            Log.w(LOG_TAG, "permission request wait interrupted");
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
   }
 }

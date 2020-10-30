@@ -11,7 +11,7 @@
     >
 
     <TextView
-      android:id="@+id/PermissionRequest_permission"
+      android:id="@+id/PermissionRequest_permissions"
      />
   </TableLayout>
 </FrameLayout>
