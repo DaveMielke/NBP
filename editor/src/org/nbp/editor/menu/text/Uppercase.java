@@ -1,7 +1,7 @@
 package org.nbp.editor.menu.text;
 import org.nbp.editor.*;
 
-public class Uppercase extends CharacterAction {
+public class Uppercase extends TextAction {
   public Uppercase (EditorActivity editor) {
     super(editor);
   }

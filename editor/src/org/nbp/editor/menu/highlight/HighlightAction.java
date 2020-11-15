@@ -1,4 +1,5 @@
-package org.nbp.editor;
+package org.nbp.editor.menu.highlight;
+import org.nbp.editor.*;
 
 import android.text.Editable;
 import android.text.Spanned;

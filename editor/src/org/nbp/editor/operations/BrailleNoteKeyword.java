@@ -1,4 +1,5 @@
-package org.nbp.editor;
+package org.nbp.editor.operations;
+import org.nbp.editor.*;
 
 public abstract class BrailleNoteKeyword {
   public final static int HEADER_SIZE = 0X26E;

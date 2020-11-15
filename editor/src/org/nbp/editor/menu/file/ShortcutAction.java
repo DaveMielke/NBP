@@ -1,4 +1,5 @@
-package org.nbp.editor;
+package org.nbp.editor.menu.file;
+import org.nbp.editor.*;
 
 import java.io.File;
 

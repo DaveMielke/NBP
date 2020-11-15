@@ -1,9 +1,10 @@
-package org.nbp.editor;
+package org.nbp.editor.menu.text;
+import org.nbp.editor.*;
 
 import android.text.Editable;
 
-public abstract class CharacterAction extends EditorAction {
-  protected CharacterAction (EditorActivity editor) {
+public abstract class TextAction extends EditorAction {
+  protected TextAction (EditorActivity editor) {
     super(editor);
   }
 
