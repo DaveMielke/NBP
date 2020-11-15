@@ -1,4 +1,5 @@
-package org.nbp.editor;
+package org.nbp.editor.operations;
+import org.nbp.editor.*;
 
 import java.io.IOException;
 import java.io.OutputStream;

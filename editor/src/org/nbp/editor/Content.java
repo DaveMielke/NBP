@@ -1,4 +1,5 @@
 package org.nbp.editor;
+import org.nbp.editor.operations.*;
 
 import java.util.List;
 import java.util.ArrayList;
