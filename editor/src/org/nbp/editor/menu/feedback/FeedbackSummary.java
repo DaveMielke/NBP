@@ -1,4 +1,6 @@
-package org.nbp.editor;
+package org.nbp.editor.menu.feedback;
+import org.nbp.editor.*;
+import org.nbp.editor.spans.*;
 
 import java.util.Map;
 import java.util.HashMap;

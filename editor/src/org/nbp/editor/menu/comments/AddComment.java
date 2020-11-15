@@ -1,5 +1,6 @@
 package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
+import org.nbp.editor.spans.CommentSpan;
 
 import org.nbp.common.CommonUtilities;
 import java.util.Date;

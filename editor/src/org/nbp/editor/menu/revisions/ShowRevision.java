@@ -1,5 +1,6 @@
 package org.nbp.editor.menu.revisions;
 import org.nbp.editor.*;
+import org.nbp.editor.spans.RevisionSpan;
 
 public class ShowRevision extends RevisionAction {
   public ShowRevision (EditorActivity editor) {

@@ -1,4 +1,5 @@
-package org.nbp.editor;
+package org.nbp.editor.spans;
+import org.nbp.editor.*;
 
 import org.nbp.common.DialogFinisher;
 import org.nbp.common.DialogHelper;

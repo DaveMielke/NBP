@@ -1,5 +1,6 @@
 package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
+import org.nbp.editor.spans.CommentSpan;
 
 public class NextComment extends MoveAction {
   public NextComment (EditorActivity editor) {

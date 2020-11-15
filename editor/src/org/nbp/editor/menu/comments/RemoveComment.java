@@ -1,5 +1,6 @@
 package org.nbp.editor.menu.comments;
 import org.nbp.editor.*;
+import org.nbp.editor.spans.CommentSpan;
 
 import android.content.DialogInterface;
 

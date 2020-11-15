@@ -1,4 +1,7 @@
 package org.nbp.editor;
+import org.nbp.editor.spans.RevisionSpan;
+import org.nbp.editor.spans.InsertionSpan;
+import org.nbp.editor.spans.DeletionSpan;
 
 import java.util.Date;
 

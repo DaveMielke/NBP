@@ -1,4 +1,5 @@
-package org.nbp.editor;
+package org.nbp.editor.spans;
+import org.nbp.editor.*;
 
 public class InsertionSpan extends RevisionSpan {
   private final static String prefixDecoration = "⣏⢎";

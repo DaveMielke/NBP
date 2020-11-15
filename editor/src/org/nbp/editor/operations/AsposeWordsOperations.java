@@ -1,5 +1,6 @@
 package org.nbp.editor.operations;
 import org.nbp.editor.*;
+import org.nbp.editor.spans.*;
 
 import java.util.Date;
 

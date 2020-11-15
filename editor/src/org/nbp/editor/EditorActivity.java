@@ -1,4 +1,5 @@
 package org.nbp.editor;
+import org.nbp.editor.spans.DecorationSpan;
 
 import java.io.File;
 

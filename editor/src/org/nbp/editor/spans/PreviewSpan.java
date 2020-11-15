@@ -1,4 +1,5 @@
-package org.nbp.editor;
+package org.nbp.editor.spans;
+import org.nbp.editor.*;
 
 public class PreviewSpan extends EditorSpan implements Comparable<PreviewSpan> {
   private final RevisionSpan revisionSpan;
