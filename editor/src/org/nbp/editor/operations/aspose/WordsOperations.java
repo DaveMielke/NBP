@@ -193,34 +193,7 @@ public class WordsOperations extends ContentOperations {
         run.isDeleteRevision()
       );
 
-      {
-        Font font = run.getFont();
-
-        if (font.getBold()) {
-          addSpan(content, start,
-                  font.getItalic()?
-                    HighlightSpans.BOLD_ITALIC:
-                    HighlightSpans.BOLD);
-        } else if (font.getItalic()) {
-          addSpan(content, start, HighlightSpans.ITALIC);
-        }
-
-        if (font.getStrikeThrough()) {
-          addSpan(content, start, HighlightSpans.STRIKE);
-        }
-
-        if (font.getSubscript()) {
-          addSpan(content, start, HighlightSpans.SUBSCRIPT);
-        }
-
-        if (font.getSuperscript()) {
-          addSpan(content, start, HighlightSpans.SUPERSCRIPT);
-        }
-
-        if (font.getUnderline() != Underline.NONE) {
-          addSpan(content, start, HighlightSpans.UNDERLINE);
-        }
-      }
+      new WordsFontSpan(run.getFont(), content, start).addAndroidSpans();
     }
 
     private final void addParagraph (Editable content, Paragraph paragraph) throws Exception {
@@ -559,6 +532,14 @@ public class WordsOperations extends ContentOperations {
           font.clearFormatting();
 
           boolean isDecoration = false;
+          boolean isBold = false;
+          boolean isItalic = false;
+          boolean isUnderline = false;
+          boolean isStrikeThrough = false;
+          boolean isSuperscript = false;
+          boolean isSubscript = false;
+
+          Font explicit = null;
           Object[] spans = text.getSpans(start, end, Object.class);
 
           if (spans != null) {
@@ -566,24 +547,26 @@ public class WordsOperations extends ContentOperations {
               boolean isStart = text.getSpanStart(span) == start;
               boolean isEnd = text.getSpanEnd(span) == end;
 
-              if (span instanceof CharacterStyle) {
-                CharacterStyle characterStyle = (CharacterStyle)span;
+              if (span instanceof WordsFontSpan) {
+                WordsFontSpan wfs = (WordsFontSpan)span;
+                explicit = wfs.getFont();
+              } else if (span instanceof CharacterStyle) {
+                CharacterStyle cs = (CharacterStyle)span;
 
-                if (HighlightSpans.BOLD_ITALIC.isFor(characterStyle)) {
-                  font.setBold(true);
-                  font.setItalic(true);
-                } else if (HighlightSpans.BOLD.isFor(characterStyle)) {
-                  font.setBold(true);
-                } else if (HighlightSpans.ITALIC.isFor(characterStyle)) {
-                  font.setItalic(true);
-                } else if (HighlightSpans.STRIKE.isFor(characterStyle)) {
-                  font.setStrikeThrough(true);
-                } else if (HighlightSpans.SUBSCRIPT.isFor(characterStyle)) {
-                  font.setSubscript(true);
-                } else if (HighlightSpans.SUPERSCRIPT.isFor(characterStyle)) {
-                  font.setSuperscript(true);
-                } else if (HighlightSpans.UNDERLINE.isFor(characterStyle)) {
-                  font.setUnderline(Underline.DASH);
+                if (HighlightSpans.BOLD_ITALIC.isFor(cs)) {
+                  isBold = isItalic = true;
+                } else if (HighlightSpans.BOLD.isFor(cs)) {
+                  isBold = true;
+                } else if (HighlightSpans.ITALIC.isFor(cs)) {
+                  isItalic = true;
+                } else if (HighlightSpans.UNDERLINE.isFor(cs)) {
+                  isUnderline = true;
+                } else if (HighlightSpans.STRIKE.isFor(cs)) {
+                  isStrikeThrough = true;
+                } else if (HighlightSpans.SUPERSCRIPT.isFor(cs)) {
+                  isSuperscript = true;
+                } else if (HighlightSpans.SUBSCRIPT.isFor(cs)) {
+                  isSubscript = true;
                 }
               } else if (span instanceof DecorationSpan) {
                 isDecoration = true;
@@ -602,6 +585,17 @@ public class WordsOperations extends ContentOperations {
               }
             }
           }
+
+          if (explicit != null) {
+            WordsUtilities.copyFormatting(explicit, font);
+          }
+
+          font.setBold(isBold);
+          font.setItalic(isItalic);
+          font.setUnderline(isUnderline? Underline.DASH: Underline.NONE);
+          font.setStrikeThrough(isStrikeThrough);
+          font.setSuperscript(isSuperscript);
+          font.setSubscript(isSubscript);
 
           if (!isDecoration) {
             writeText(text.subSequence(start, end));

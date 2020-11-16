@@ -9,8 +9,9 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.Spanned;
 
-public abstract class EditorSpan implements DialogFinisher {
+public abstract class EditorSpan extends DocumentComponent implements DialogFinisher {
   protected EditorSpan () {
+    super();
   }
 
   private boolean containsProtectedText = true;

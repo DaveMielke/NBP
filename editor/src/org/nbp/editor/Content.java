@@ -383,31 +383,38 @@ public abstract class Content {
     String path = file.getAbsolutePath();
     String newPath = path + ".new";
     File newFile = new File(newPath);
+
     newFile.delete();
+    boolean ok = false;
 
     try {
-      OutputStream stream = new FileOutputStream(newFile);
-
       try {
-        operations.write(stream, content);
+        OutputStream stream = new FileOutputStream(newFile);
 
-        if (!newFile.renameTo(file)) {
-          throw new IOException(String.format(
-            LOG_TAG, "%s: %s -> %s",
-            getString(R.string.message_rename_failed),
-            newFile.getAbsolutePath(), file.getAbsolutePath()
-          ));
+        try {
+          operations.write(stream, content);
+
+          if (!newFile.renameTo(file)) {
+            throw new IOException(String.format(
+              LOG_TAG, "%s: %s -> %s",
+              getString(R.string.message_rename_failed),
+              newFile.getAbsolutePath(), file.getAbsolutePath()
+            ));
+          }
+
+          ok = true;
+          return true;
+        } finally {
+          stream.close();
         }
-
-        return true;
-      } finally {
-        stream.close();
+      } catch (IOException exception) {
+        CommonUtilities.reportError(
+          LOG_TAG, "output file error: %s: %s",
+          file.getAbsolutePath(), exception.getMessage()
+        );
       }
-    } catch (IOException exception) {
-      CommonUtilities.reportError(
-        LOG_TAG, "output file error: %s: %s",
-        file.getAbsolutePath(), exception.getMessage()
-      );
+    } finally {
+      if (!ok) newFile.delete();
     }
 
     return false;

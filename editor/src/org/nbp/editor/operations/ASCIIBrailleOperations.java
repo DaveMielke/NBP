@@ -19,7 +19,7 @@ public class ASCIIBrailleOperations extends ByteOperations {
   }
 
   private final static Translator getTranslator () throws IOException {
-    BrailleCode code = ApplicationSettings.BRAILLE_CODE;;
+    BrailleCode code = ApplicationSettings.BRAILLE_CODE;
 
     try {
       return code.getTranslator();
