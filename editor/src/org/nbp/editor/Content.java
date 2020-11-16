@@ -1,5 +1,6 @@
 package org.nbp.editor;
 import org.nbp.editor.operations.*;
+import org.nbp.editor.operations.aspose.*;
 
 import java.util.List;
 import java.util.ArrayList;

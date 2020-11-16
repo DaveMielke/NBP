@@ -1,4 +1,4 @@
-package org.nbp.editor.operations;
+package org.nbp.editor.operations.aspose;
 import org.nbp.editor.*;
 
 import android.util.Log;
@@ -7,20 +7,20 @@ import android.content.Context;
 import com.aspose.words.*;
 import java.io.IOException;
 
-public class AsposeWordsLicense {
-  private final static String LOG_TAG = AsposeWordsLicense.class.getName();
+public class WordsLicense {
+  private final static String LOG_TAG = WordsLicense.class.getName();
 
-  private final static AsposeWordsApplication asposeApplication = new AsposeWordsApplication();
+  private final static AsposeWordsApplication wordsApplication = new AsposeWordsApplication();
 
   static {
     Context context = ApplicationContext.getContext();
-    asposeApplication.loadLibs(context);
+    wordsApplication.loadLibs(context);
   }
 
   private License licenseObject = null;
   private Throwable licenseProblem = null;
 
-  private AsposeWordsLicense () {
+  private WordsLicense () {
     final Context context = ApplicationContext.getContext();
     final Object licenseLock = this;
     final Object threadLock = new Object();
@@ -38,7 +38,7 @@ public class AsposeWordsLicense {
 
             try {
               licenseObject = new License();
-              licenseObject.setLicense(context.getAssets().open(ApplicationParameters.ASPOSE_LICENSE_FILE));
+              licenseObject.setLicense(context.getAssets().open(ApplicationParameters.ASPOSE_WORDS_LICENSE_FILE));
               Log.d(LOG_TAG, "license ready");
             } catch (Throwable problem) {
               Log.w(LOG_TAG, ("license problem: " + problem.getMessage()));
@@ -61,12 +61,12 @@ public class AsposeWordsLicense {
     }   
   }
 
-  private static Object singletonLock = new Object();
-  private static AsposeWordsLicense singletonObject = null;
+  private static Object SINGLETON_LOCK = new Object();
+  private static WordsLicense singletonObject = null;
 
-  public final static AsposeWordsLicense singleton () {
-    synchronized (singletonLock) {
-      if (singletonObject == null) singletonObject = new AsposeWordsLicense();
+  public final static WordsLicense singleton () {
+    synchronized (SINGLETON_LOCK) {
+      if (singletonObject == null) singletonObject = new WordsLicense();
     }
 
     return singletonObject;

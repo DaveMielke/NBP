@@ -1,4 +1,4 @@
-package org.nbp.editor.operations;
+package org.nbp.editor.operations.aspose;
 import org.nbp.editor.*;
 import org.nbp.editor.spans.*;
 
@@ -30,22 +30,22 @@ import android.text.style.CharacterStyle;
 
 import com.aspose.words.*;
 
-public class AsposeWordsOperations extends ContentOperations {
-  private final static String LOG_TAG = AsposeWordsOperations.class.getName();
+public class WordsOperations extends ContentOperations {
+  private final static String LOG_TAG = WordsOperations.class.getName();
 
-  private final static AsposeWordsLicense asposeLicense = AsposeWordsLicense.singleton();
+  private final static WordsLicense wordsLicense = WordsLicense.singleton();
 
   private final int saveFormat;
   private final int loadFormat;
 
-  public AsposeWordsOperations (int saveFormat, int loadFormat) throws IOException {
+  public WordsOperations (int saveFormat, int loadFormat) throws IOException {
     super(true);
 
     this.saveFormat = saveFormat;
     this.loadFormat = loadFormat;
   }
 
-  public AsposeWordsOperations (int saveFormat) throws IOException {
+  public WordsOperations (int saveFormat) throws IOException {
     this(saveFormat, LoadFormat.UNKNOWN);
   }
 
@@ -173,11 +173,13 @@ public class AsposeWordsOperations extends ContentOperations {
 
     private final void logUnhandledChildNode (Node parent, Object child) {
       if (ApplicationParameters.ASPOSE_LOG_UNHANDLED_CHILDREN) {
-        Log.d(LOG_TAG, String.format(
-          "unhandled child node: %s contains %s",
-          parent.getClass().getSimpleName(),
-          child.getClass().getSimpleName()
-        ));
+        Log.d(LOG_TAG,
+          String.format(
+            "unhandled child node: %s contains %s",
+            parent.getClass().getSimpleName(),
+            child.getClass().getSimpleName()
+          )
+        );
       }
     }
 
@@ -377,7 +379,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
   @Override
   public final void read (InputStream stream, Editable content) throws IOException {
-    asposeLicense.check();
+    wordsLicense.check();
     if (loadFormat == LoadFormat.UNKNOWN) readingNotSupported();
 
     try {
@@ -622,7 +624,7 @@ public class AsposeWordsOperations extends ContentOperations {
 
   @Override
   public final void write (OutputStream stream, CharSequence content) throws IOException {
-    asposeLicense.check();
+    wordsLicense.check();
     if (saveFormat == SaveFormat.UNKNOWN) writingNotSupported();
 
     try {
