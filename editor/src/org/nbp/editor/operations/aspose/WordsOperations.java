@@ -587,7 +587,7 @@ public class WordsOperations extends ContentOperations {
           }
 
           if (explicit != null) {
-            WordsUtilities.copyFormatting(explicit, font);
+            WordsFontCopier.copyFont(explicit, font);
           }
 
           font.setBold(isBold);
