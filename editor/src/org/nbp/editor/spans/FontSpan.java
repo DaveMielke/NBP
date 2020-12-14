@@ -14,6 +14,7 @@ public class FontSpan extends EditorSpan {
 
   public FontSpan (Spannable content, int start) {
     super();
+    setContainsProtectedText(false);
 
     spannableContent = content;
     spanStart = start;
