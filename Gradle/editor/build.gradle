@@ -1,0 +1,27 @@
+plugins {
+  id "com.android.application"
+}
+
+description = """
+An accessible editor.
+"""
+
+dependencies {
+  implementation project(":common")
+  implementation project(":liblouis")
+
+  implementation project.fileTree(
+    dir: "src/main/libs",
+    include: "*.jar"
+  )
+}
+
+android {
+  compileSdkVersion "android-29"
+  buildToolsVersion "29.0.3"
+
+  defaultConfig {
+    targetSdkVersion 29
+    minSdkVersion 16
+  }
+}

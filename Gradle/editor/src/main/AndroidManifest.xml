@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.nbp.editor"
-    android:versionCode="@integer/NBP_Editor_version_code"
-    android:versionName="@string/NBP_Editor_version_name"
-    >
-
-  <!-- Android 4.1 (JellyBean) -->
-  <uses-sdk android:minSdkVersion="16" />
-
-  <!-- Android 8.0 (Oreo) -->
-  <uses-sdk android:targetSdkVersion="26" />
+  package="org.nbp.editor"
+  >
 
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
