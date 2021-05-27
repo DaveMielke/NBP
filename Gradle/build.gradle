@@ -11,7 +11,7 @@ buildscript {
 }
 
 description = """
-Apps published by the National Braille Press.
+Apps and object libraries published by the National Braille Press.
 """
 
 subprojects {

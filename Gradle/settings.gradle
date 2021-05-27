@@ -1,3 +1,4 @@
 rootProject.name = "NBP"
 
 include ":common"
+include ":liblouis", ":duxbury"

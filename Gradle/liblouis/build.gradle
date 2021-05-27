@@ -1,0 +1,21 @@
+plugins {
+  id "com.android.library"
+}
+
+description = """
+Java objects that wrap the LibLouis native code.
+"""
+
+dependencies {
+  implementation project(":duxbury")
+}
+
+android {
+  compileSdkVersion "android-29"
+  buildToolsVersion "29.0.3"
+
+  defaultConfig {
+    targetSdkVersion 29
+    minSdkVersion 16
+  }
+}
