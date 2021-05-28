@@ -1,37 +1,11 @@
-ext.nbp.revisionIdentifier = [
-  "git", "describe", "--long", "--tags", "--abbrev=16", "--match", "${nbp.applicationPrefix}-*"
-].execute().text.trim()
-
-def nbpRevisionComponents = nbp.revisionIdentifier.split(/-/)
-nbp.revisionVersion = nbpRevisionComponents[1]
-nbp.revisionIncrement = nbpRevisionComponents[2]
-nbp.revisionCommit = nbpRevisionComponents[3].replaceAll(/^g/, "")
-
-def nbpVersionComponents = nbp.revisionVersion.split(/\./)
-nbp.versionMajor = nbpVersionComponents[0]
-nbp.versionMinor = nbpVersionComponents[1]
-nbp.versionCode = ((nbp.versionMajor as int) << 0X18) | ((nbp.versionMinor as int) << 0X10) | (nbp.revisionIncrement as int)
+apply from: rootProject.file("nbp-app-config.gradle")
+apply from: rootProject.file("nbp-app-sign.gradle")
 
 android {
-  defaultConfig {
-    versionName nbp.revisionVersion
-    versionCode nbp.versionCode
-
-    resValue("string",
-      "${nbp.applicationPrefix}_version_name",
-      "${nbp.revisionVersion}"
-    )
-
-    resValue("string",
-      "${nbp.applicationPrefix}_source_revision",
-      "git:${nbp.revisionCommit}"
-    )
-
-    resValue("string",
-      "${nbp.applicationPrefix}_build_time",
-      Instant.now().toString()
-             .replace('T', '@')
-             .replaceAll(/:\d{2}\..*/, " UTC")
-    )
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFile getDefaultProguardFile("proguard-android.txt")
+    }
   }
 }

@@ -1,4 +1,4 @@
-all: common
+all: calculator editor navigator
 FORCE:
 
 GRADLE_WRAPPER_COMMAND = ./gradlew -q
@@ -7,5 +7,5 @@ common liblouis duxbury: FORCE
 	$(GRADLE_WRAPPER_COMMAND) :$(@):assembleDebug
 
 calculator editor navigator: FORCE
-	$(GRADLE_WRAPPER_COMMAND) :$(@):assembleDebug
+	$(GRADLE_WRAPPER_COMMAND) :$(@):assembleRelease
 

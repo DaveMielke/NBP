@@ -1,3 +1,4 @@
 /.gradle/
+/credentials
 /local.properties
 build/

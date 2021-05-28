@@ -1,0 +1,28 @@
+def nbpSigningPropertiesPath = "credentials" + File.separator + "signing.properties"
+
+Properties loadProperties (String path) {
+  def properties = new Properties()
+
+  def file = rootProject.file(path)
+  if (file.exists()) properties.load(new FileInputStream(file))
+
+  return properties
+}
+
+android {
+  signingConfigs {
+    release {
+      def properties = loadProperties(nbpSigningPropertiesPath)
+      storeFile     rootProject.file(properties.storeFile)
+      storePassword properties.storePassword
+      keyAlias      properties.keyAlias
+      keyPassword   properties.keyPassword
+    }
+  }
+
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+    }
+  }
+}
