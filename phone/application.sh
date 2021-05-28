@@ -1,1 +1,0 @@
-applicationPrefix="NBP_Phone"

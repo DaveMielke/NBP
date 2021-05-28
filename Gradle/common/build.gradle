@@ -14,4 +14,10 @@ android {
     targetSdkVersion 29
     minSdkVersion 16
   }
+
+  externalNativeBuild {
+    ndkBuild {
+      path project.file("src/main/jni/Android.mk")
+    }
+  }
 }

@@ -1,0 +1,21 @@
+plugins {
+  id "com.android.application"
+}
+
+description = """
+An accessible calculator.
+"""
+
+dependencies {
+  implementation project(":common")
+}
+
+android {
+  compileSdkVersion "android-29"
+  buildToolsVersion "29.0.3"
+
+  defaultConfig {
+    targetSdkVersion 29
+    minSdkVersion 16
+  }
+}
