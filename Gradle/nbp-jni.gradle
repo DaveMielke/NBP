@@ -1,0 +1,7 @@
+android {
+  externalNativeBuild {
+    ndkBuild {
+      path project.file("src/main/jni/Android.mk")
+    }
+  }
+}
