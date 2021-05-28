@@ -6,4 +6,4 @@ description = """
 Java objects that wrap the Duxbury Systems native code.
 """
 
-apply from: rootProject.file("nbp-build.gradle")
+apply from: rootProject.file("nbp-all.gradle")

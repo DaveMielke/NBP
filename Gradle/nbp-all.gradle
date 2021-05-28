@@ -1,3 +1,5 @@
+ext.nbp = [:]
+
 android {
   compileSdkVersion "android-29"
   buildToolsVersion "29.0.3"

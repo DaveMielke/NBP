@@ -10,4 +10,6 @@ dependencies {
   implementation project(":common")
 }
 
-apply from: rootProject.file("nbp-build.gradle")
+apply from: rootProject.file("nbp-all.gradle")
+nbp.applicationPrefix = "NBP_Calculator"
+apply from: rootProject.file("nbp-app.gradle")

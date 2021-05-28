@@ -10,5 +10,5 @@ dependencies {
   implementation project(":duxbury")
 }
 
-apply from: rootProject.file("nbp-build.gradle")
+apply from: rootProject.file("nbp-all.gradle")
 apply from: rootProject.file("nbp-jni.gradle")
