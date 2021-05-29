@@ -247,18 +247,18 @@ public abstract class Tests {
     }
   }
 
-  public static void auditTranslatorIdentifiers () {
+  public static void auditInternalTranslatorIdentifiers () {
     run(
-      "translator identifier audit",
+      "internal translator identifier audit",
       new Runnable() {
         @Override
         public void run () {
           Set<File> unreferencedTables = new HashSet<File>();
           Collections.addAll(unreferencedTables, InternalTable.getAllFiles());
 
-          for (TranslatorIdentifier identifier : TranslatorIdentifier.values()) {
+          for (TranslatorIdentifier identifier : InternalTranslatorIdentifier.values()) {
             {
-              String name = identifier.name();
+              String name = identifier.getName();
 
               if (!name.equals(name.toUpperCase())) {
                 log(("translator identifier not all uppercase: " + name));
