@@ -1,7 +1,9 @@
 rootProject.name = "NBP"
 
 include ":common"
-include ":liblouis", ":duxbury"
+include ":liblouis"
+//include ":duxbury"
+
 include ":calculator"
 include ":editor"
 include ":navigator"

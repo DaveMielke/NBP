@@ -154,8 +154,6 @@ public enum TranslatorIdentifier {
   ZH_CN_2CELL("zhcn-g2.ctb"),
   ZH_HK("zh_HK.tbl"),
   ZH_TW("zh_TW.tbl"),
-
-  PINYIN(R.string.louis_ttd_PINYIN),
   ; // end of enumeration
 
   private final String forwardTableName;
@@ -250,33 +248,25 @@ public enum TranslatorIdentifier {
         }
 
         if (translatorObject == null) {
-          switch (this) {
-            case PINYIN:
-              translatorObject = new PinYinTranslator();
-              break;
+          translatorObject = new InternalTranslator(
+            makeTableList(
+              new TableNameGetter() {
+                @Override
+                public String getTableName (TranslatorIdentifier identifier) {
+                  return identifier.forwardTableName;
+                }
+              }
+            ),
 
-            default:
-              translatorObject = new InternalTranslator(
-                makeTableList(
-                  new TableNameGetter() {
-                    @Override
-                    public String getTableName (TranslatorIdentifier identifier) {
-                      return identifier.forwardTableName;
-                    }
-                  }
-                ),
-
-                makeTableList(
-                  new TableNameGetter() {
-                    @Override
-                    public String getTableName (TranslatorIdentifier identifier) {
-                      return identifier.backwardTableName;
-                    }
-                  }
-                )
-              );
-              break;
-          }
+            makeTableList(
+              new TableNameGetter() {
+                @Override
+                public String getTableName (TranslatorIdentifier identifier) {
+                  return identifier.backwardTableName;
+                }
+              }
+            )
+          );
         }
       }
     }

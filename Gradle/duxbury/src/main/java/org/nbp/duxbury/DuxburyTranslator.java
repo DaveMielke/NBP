@@ -1,4 +1,6 @@
-package org.liblouis;
+package org.nbp.duxbury;
+
+import org.liblouis.Translator;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;

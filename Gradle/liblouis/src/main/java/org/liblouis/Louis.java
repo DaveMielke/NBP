@@ -214,7 +214,6 @@ public final class Louis {
         applicationContext = context;
         dataDirectory = context.getDir(LIBRARY_NAME, Context.MODE_PRIVATE);
         setDataPath(dataDirectory.getAbsolutePath());
-        com.duxburysystems.AssetUtilities.setRootFolder(toAssetsPath("duxbury"));
         updatePackageData(newInternalTablesListener);
       } else if (context != applicationContext) {
         throw new IllegalArgumentException("different application context");

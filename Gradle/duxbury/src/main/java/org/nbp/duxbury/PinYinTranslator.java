@@ -1,4 +1,4 @@
-package org.liblouis;
+package org.nbp.duxbury;
 
 import com.duxburysystems.BrlTrn;
 import com.duxburysystems.PinyinForwardTranslator;
