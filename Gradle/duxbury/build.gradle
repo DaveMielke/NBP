@@ -6,4 +6,9 @@ description = """
 Java objects that wrap the Duxbury Systems native code.
 """
 
+dependencies {
+  implementation project.files("src/main/duxbury-repository/bin/classes.jar")
+  implementation project(":liblouis")
+}
+
 apply from: rootProject.file("nbp-all.gradle")

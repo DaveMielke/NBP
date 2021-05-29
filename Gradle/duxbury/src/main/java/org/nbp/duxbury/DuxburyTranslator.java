@@ -1,11 +1,11 @@
 package org.nbp.duxbury;
 
+import org.liblouis.Louis;
 import org.liblouis.Translator;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
-import java.io.InputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -23,7 +23,7 @@ import android.content.res.AssetManager;
 public abstract class DuxburyTranslator extends Translator {
   private final static String LOG_TAG = DuxburyTranslator.class.getName();
 
-  private final static String authorizationAsset = Louis.toAssetsPath("duxbury.auth");
+  private final static String authorizationAsset = Louis.toAssetsPath("authorized-devices");
   private static Boolean isAuthorized = null;
 
   private final static void verifyAuthorization () {
