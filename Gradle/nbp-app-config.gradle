@@ -1,6 +1,10 @@
-ext.nbp.revisionIdentifier = [
+nbp.revisionIdentifier = [
   "git", "describe", "--long", "--tags", "--abbrev=16", "--match", "${nbp.applicationPrefix}-*"
 ].execute().text.trim()
+
+if (nbp.revisionIdentifier.isEmpty()) {
+  throw new GradleException("revision identifier not found for ${project.name}")
+}
 
 def nbpRevisionComponents = nbp.revisionIdentifier.split(/-/)
 nbp.revisionVersion = nbpRevisionComponents[1]
