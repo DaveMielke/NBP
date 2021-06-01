@@ -21,6 +21,15 @@ android {
     versionName nbp.revisionVersion
     versionCode nbp.versionCode
 
+    ndk {
+      splits {
+        abi {
+          enable true
+          universalApk false
+        }
+      }
+    }
+
     resValue("string",
       "${nbp.applicationPrefix}_version_name",
       "${nbp.revisionVersion}"

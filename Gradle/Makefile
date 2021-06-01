@@ -9,3 +9,6 @@ common liblouis duxbury: FORCE
 calculator editor navigator: FORCE
 	$(GRADLE_WRAPPER_COMMAND) :$(@):assembleRelease
 
+install-%: %
+	$(GRADLE_WRAPPER_COMMAND) :$^:installRelease
+
