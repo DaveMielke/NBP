@@ -1,14 +1,19 @@
-all: calculator editor navigator
-FORCE:
-
 GRADLE_WRAPPER_COMMAND = ./gradlew -q
 
-common liblouis duxbury: FORCE
-	$(GRADLE_WRAPPER_COMMAND) :$(@):assembleDebug
+all: calculator editor navigator
 
-calculator editor navigator: FORCE
-	$(GRADLE_WRAPPER_COMMAND) :$(@):assembleRelease
+calculator: calculator-app
+editor: editor-app
+navigator: navigator-app
+calculator-app editor-app navigator-app:
+	$(GRADLE_WRAPPER_COMMAND) :$(@:-app=):assembleRelease
 
-install-%: %
-	$(GRADLE_WRAPPER_COMMAND) :$^:installRelease
+common: common-lib
+duxbury: duxbury-lib
+liblouis: liblouis-lib
+common-lib duxbury-lib liblouis-lib:
+	$(GRADLE_WRAPPER_COMMAND) :$(@:-lib=):assembleDebug
+
+install-%: %-app
+	$(GRADLE_WRAPPER_COMMAND) :$(^:-app=):installRelease
 

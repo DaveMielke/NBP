@@ -346,7 +346,8 @@ public abstract class Content {
     } catch (IOException exception) {
       CommonUtilities.reportError(
         LOG_TAG, "input error: %s: %s",
-        handle.getNormalizedString(), exception.getMessage()
+        handle.getNormalizedString(),
+        CommonUtilities.toMessage(exception)
       );
     }
 
@@ -410,7 +411,8 @@ public abstract class Content {
       } catch (IOException exception) {
         CommonUtilities.reportError(
           LOG_TAG, "output file error: %s: %s",
-          file.getAbsolutePath(), exception.getMessage()
+          file.getAbsolutePath(),
+          CommonUtilities.toMessage(exception)
         );
       }
     } finally {

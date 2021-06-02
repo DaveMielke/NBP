@@ -1,3 +1,6 @@
+// Install Aspose.Words for Android via Java from Maven Repository
+// https://docs.aspose.com/words/java/install-aspose-words-for-android-via-java/
+
 repositories {
   maven {
     url "https://repository.aspose.com/repo/"
@@ -8,7 +11,7 @@ dependencies {
   implementation(
     group: "com.aspose",
     name: "aspose-words",
-    version: "21.5",
-    classifier: "jdk17"
+    version: "21.4",
+    classifier: "android.via.java"
   )
 }

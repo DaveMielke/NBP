@@ -32,7 +32,7 @@ public class WordsLicense {
             try {
               licenseObject = new License();
               licenseObject.setLicense(context.getAssets().open(ApplicationParameters.ASPOSE_WORDS_LICENSE_FILE));
-              Log.d(LOG_TAG, "license ready");
+              Log.d(LOG_TAG, "license activated");
             } catch (Throwable problem) {
               Log.w(LOG_TAG, ("license problem: " + problem.getMessage()));
               licenseProblem = problem;

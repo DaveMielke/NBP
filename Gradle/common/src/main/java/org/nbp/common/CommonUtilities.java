@@ -61,6 +61,23 @@ public abstract class CommonUtilities {
     }
   }
 
+  public static String toMessage (Throwable cause) {
+    StringBuilder sb = new StringBuilder();
+
+    while (cause != null) {
+      String message = cause.getMessage();
+
+      if ((message != null) && !message.isEmpty()) {
+        if (sb.length() > 0) sb.append(": ");
+        sb.append(message);
+      }
+
+      cause = cause.getCause();
+    }
+
+    return sb.toString();
+  }
+
   private static ProblemReporter errorReporter = new ProblemReporter() {
     @Override
     public final void reportProblem (String tag, String message) {
