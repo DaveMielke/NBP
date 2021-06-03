@@ -17,3 +17,6 @@ common-lib duxbury-lib liblouis-lib:
 install-%: %-app
 	$(GRADLE_WRAPPER_COMMAND) :$(^:-app=):installRelease
 
+clean:
+	$(GRADLE_WRAPPER_COMMAND) clean
+
