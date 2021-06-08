@@ -9,10 +9,15 @@ An accessible editor.
 dependencies {
   implementation project(":common")
   implementation project(":liblouis")
+
+  implementation fileTree(
+    dir: "src/main/libs",
+    include: "*.jar"
+  )
 }
 
 apply from: rootProject.file("nbp-all.gradle")
 nbp.applicationPrefix = "NBP_Editor"
 apply from: rootProject.file("nbp-app.gradle")
-apply from: rootProject.file("nbp-multidex.gradle")
-apply from: rootProject.file("nbp-aspose.gradle")
+//apply from: rootProject.file("nbp-multidex.gradle")
+//apply from: rootProject.file("nbp-aspose.gradle")

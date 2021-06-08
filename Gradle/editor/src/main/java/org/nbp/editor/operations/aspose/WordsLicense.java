@@ -10,6 +10,14 @@ import java.io.IOException;
 public class WordsLicense {
   private final static String LOG_TAG = WordsLicense.class.getName();
 
+  private final static AsposeWordsApplication wordsApplication =
+                   new AsposeWordsApplication();
+
+  static {
+    Context context = ApplicationContext.getContext();
+    wordsApplication.loadLibs(context);
+  }
+
   private License licenseObject = null;
   private Throwable licenseProblem = null;
 
